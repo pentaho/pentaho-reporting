@@ -24,15 +24,12 @@ import java.util.EventObject;
  *
  * @author Thomas Morgner
  */
-public class ReportRenderEvent extends EventObject
-{
-  public ReportRenderEvent(final RootBandRenderingModel source)
-  {
-    super(source);
+public class ReportRenderEvent extends EventObject {
+  public ReportRenderEvent( final RootBandRenderingModel source ) {
+    super( source );
   }
 
-  public RootBandRenderingModel getModel()
-  {
+  public RootBandRenderingModel getModel() {
     return (RootBandRenderingModel) getSource();
   }
 }

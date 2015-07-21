@@ -17,16 +17,10 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown;
 
-import java.awt.Component;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.SwingUtilities;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterTable;
 import org.pentaho.reporting.designer.core.editor.drilldown.basic.DefaultXulDrillDownController;
 import org.pentaho.reporting.designer.core.editor.drilldown.basic.XulDrillDownParameterTable;
@@ -42,131 +36,102 @@ import org.pentaho.ui.xul.binding.Binding;
 import org.pentaho.ui.xul.binding.DefaultBindingFactory;
 import org.pentaho.ui.xul.dom.Document;
 
-public abstract class PentahoDrillDownController extends DefaultXulDrillDownController
-{
-  private class LoginCompleteTask implements AuthenticatedServerTask
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public abstract class PentahoDrillDownController extends DefaultXulDrillDownController {
+  private class LoginCompleteTask implements AuthenticatedServerTask {
     private AuthenticationData loginData;
     private boolean storeUpdates;
     private AuthenticatedServerTask nextTask;
 
-    private LoginCompleteTask(final AuthenticatedServerTask nextTask)
-    {
+    private LoginCompleteTask( final AuthenticatedServerTask nextTask ) {
       this.nextTask = nextTask;
     }
 
-    public void setLoginData(final AuthenticationData loginData,
-                             final boolean storeUpdates)
-    {
+    public void setLoginData( final AuthenticationData loginData,
+                              final boolean storeUpdates ) {
       this.loginData = loginData;
       this.storeUpdates = storeUpdates;
     }
 
     /**
-     * When an object implementing interface <code>Runnable</code> is used
-     * to create a thread, starting the thread causes the object's
-     * <code>run</code> method to be called in that separately executing
-     * thread.
+     * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread
+     * causes the object's <code>run</code> method to be called in that separately executing thread.
      * <p/>
-     * The general contract of the method <code>run</code> is that it may
-     * take any action whatsoever.
+     * The general contract of the method <code>run</code> is that it may take any action whatsoever.
      *
      * @see Thread#run()
      */
-    public void run()
-    {
-      pentahoPathWrapper.setLoginData(loginData);
+    public void run() {
+      pentahoPathWrapper.setLoginData( loginData );
 
       final ReportDocumentContext reportRenderContext = reportDesignerContext.getActiveContext();
-      final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
-      if (o == null)
-      {
-        reportRenderContext.getProperties().put("pentaho-login-url", loginData.getUrl());
+      final Object o = reportRenderContext.getProperties().get( "pentaho-login-url" );
+      if ( o == null ) {
+        reportRenderContext.getProperties().put( "pentaho-login-url", loginData.getUrl() );
       }
 
-      if (nextTask != null)
-      {
-        nextTask.setLoginData(loginData, storeUpdates);
-        SwingUtilities.invokeLater(nextTask);
+      if ( nextTask != null ) {
+        nextTask.setLoginData( loginData, storeUpdates );
+        SwingUtilities.invokeLater( nextTask );
       }
     }
   }
 
-  private class PentahoWrapperUpdateHandler implements PropertyChangeListener
-  {
-    private PentahoWrapperUpdateHandler()
-    {
+  private class PentahoWrapperUpdateHandler implements PropertyChangeListener {
+    private PentahoWrapperUpdateHandler() {
     }
 
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (PentahoPathModel.LOCAL_PATH_PROPERTY.equals(evt.getPropertyName()))
-      {
-        getWrapper().setDrillDownParameter(filterParameter(getWrapper().getDrillDownParameter()));
-        getWrapper().setDrillDownConfig(pentahoPathWrapper.getDrillDownProfile());
-      }
-      else if (PentahoPathModel.USE_REMOTE_SERVER_PROPERTY.equals(evt.getPropertyName()))
-      {
-        getWrapper().setDrillDownConfig(pentahoPathWrapper.getDrillDownProfile());
-        if (pentahoPathWrapper.isUseRemoteServer() == false)
-        {
-          getWrapper().setDrillDownPath(null);
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( PentahoPathModel.LOCAL_PATH_PROPERTY.equals( evt.getPropertyName() ) ) {
+        getWrapper().setDrillDownParameter( filterParameter( getWrapper().getDrillDownParameter() ) );
+        getWrapper().setDrillDownConfig( pentahoPathWrapper.getDrillDownProfile() );
+      } else if ( PentahoPathModel.USE_REMOTE_SERVER_PROPERTY.equals( evt.getPropertyName() ) ) {
+        getWrapper().setDrillDownConfig( pentahoPathWrapper.getDrillDownProfile() );
+        if ( pentahoPathWrapper.isUseRemoteServer() == false ) {
+          getWrapper().setDrillDownPath( null );
+        } else {
+          getWrapper().setDrillDownPath( pentahoPathWrapper.getServerPath() );
         }
-        else
-        {
-          getWrapper().setDrillDownPath(pentahoPathWrapper.getServerPath());
-        }
-      }
-      else if (PentahoPathModel.HIDE_PARAMETER_UI_PROPERTY.equals(evt.getPropertyName()))
-      {
-        getWrapper().setDrillDownConfig(pentahoPathWrapper.getDrillDownProfile());
-      }
-      else if (PentahoPathModel.LOGIN_DATA_PROPERTY.equals(evt.getPropertyName()))
-      {
-        if (pentahoPathWrapper.isUseRemoteServer() == false)
-        {
-          getWrapper().setDrillDownPath(null);
-        }
-        else
-        {
-          getWrapper().setDrillDownPath(pentahoPathWrapper.getServerPath());
+      } else if ( PentahoPathModel.HIDE_PARAMETER_UI_PROPERTY.equals( evt.getPropertyName() ) ) {
+        getWrapper().setDrillDownConfig( pentahoPathWrapper.getDrillDownProfile() );
+      } else if ( PentahoPathModel.LOGIN_DATA_PROPERTY.equals( evt.getPropertyName() ) ) {
+        if ( pentahoPathWrapper.isUseRemoteServer() == false ) {
+          getWrapper().setDrillDownPath( null );
+        } else {
+          getWrapper().setDrillDownPath( pentahoPathWrapper.getServerPath() );
         }
       }
     }
   }
 
 
-  private class CheckEmptyPathHandler implements PropertyChangeListener
-  {
+  private class CheckEmptyPathHandler implements PropertyChangeListener {
     private XulComponent paramTableElement;
 
-    private CheckEmptyPathHandler(final XulComponent paramTableElement)
-    {
+    private CheckEmptyPathHandler( final XulComponent paramTableElement ) {
       this.paramTableElement = paramTableElement;
-      propertyChange(null);
+      propertyChange( null );
     }
 
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (StringUtils.isEmpty(pentahoPathWrapper.getLocalPath()))
-      {
-        paramTableElement.setDisabled(true);
-      }
-      else
-      {
-        paramTableElement.setDisabled(false);
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( StringUtils.isEmpty( pentahoPathWrapper.getLocalPath() ) ) {
+        paramTableElement.setDisabled( true );
+      } else {
+        paramTableElement.setDisabled( false );
       }
     }
   }
@@ -175,201 +140,168 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
   private PentahoParameterRefreshHandler parameterRefreshHandler;
   private ReportDesignerContext reportDesignerContext;
 
-  protected PentahoDrillDownController()
-  {
+  protected PentahoDrillDownController() {
   }
 
-  protected PentahoPathModel getPentahoPathWrapper()
-  {
+  protected PentahoPathModel getPentahoPathWrapper() {
     return pentahoPathWrapper;
   }
 
   protected abstract String getProfileName();
 
-  public void init(final ReportDesignerContext reportDesignerContext,
-                   final DrillDownModel model,
-                   final String[] fields)
-  {
+  public void init( final ReportDesignerContext reportDesignerContext,
+                    final DrillDownModel model,
+                    final String[] fields ) {
     this.reportDesignerContext = reportDesignerContext;
-    super.init(reportDesignerContext, model, fields);
+    super.init( reportDesignerContext, model, fields );
 
     final DrillDownParameter[] drillDownParameter = model.getDrillDownParameter();
 
-    pentahoPathWrapper = new PentahoPathModel(reportDesignerContext);
-    pentahoPathWrapper.addPropertyChangeListener(new PentahoWrapperUpdateHandler());
+    pentahoPathWrapper = new PentahoPathModel( reportDesignerContext );
+    pentahoPathWrapper.addPropertyChangeListener( new PentahoWrapperUpdateHandler() );
 
     final DrillDownProfile[] drillDownProfileByGroup =
-        DrillDownProfileMetaData.getInstance().getDrillDownProfileByGroup(getProfileName());
-    for (int i = 0; i < drillDownProfileByGroup.length; i++)
-    {
-      final DrillDownProfile profile = drillDownProfileByGroup[i];
+      DrillDownProfileMetaData.getInstance().getDrillDownProfileByGroup( getProfileName() );
+    for ( int i = 0; i < drillDownProfileByGroup.length; i++ ) {
+      final DrillDownProfile profile = drillDownProfileByGroup[ i ];
       final String profileName = profile.getName();
-      final String extension = profile.getAttribute("extension");
-      final boolean noParameter = profileName.endsWith("-no-parameter");
-      final boolean local = profileName.startsWith("local-");
-      if (StringUtils.isEmpty(extension))
-      {
-        pentahoPathWrapper.registerExtension(null, local, noParameter, profileName);
-      }
-      else
-      {
-        pentahoPathWrapper.registerExtension("." + extension, local, noParameter, profileName);
+      final String extension = profile.getAttribute( "extension" );
+      final boolean noParameter = profileName.endsWith( "-no-parameter" );
+      final boolean local = profileName.startsWith( "local-" );
+      if ( StringUtils.isEmpty( extension ) ) {
+        pentahoPathWrapper.registerExtension( null, local, noParameter, profileName );
+      } else {
+        pentahoPathWrapper.registerExtension( "." + extension, local, noParameter, profileName );
       }
     }
 
     final Component c;
     final Object context = getXulDomContainer().getOuterContext();
-    if (context instanceof Component)
-    {
+    if ( context instanceof Component ) {
       c = (Component) context;
-    }
-    else
-    {
+    } else {
       c = getReportDesignerContext().getView().getParent();
     }
-    parameterRefreshHandler = new PentahoParameterRefreshHandler(pentahoPathWrapper, reportDesignerContext, c);
+    parameterRefreshHandler = new PentahoParameterRefreshHandler( pentahoPathWrapper, reportDesignerContext, c );
 
     final Document doc = getXulDomContainer().getDocumentRoot();
     final DefaultBindingFactory bindingFactory = new DefaultBindingFactory();
-    bindingFactory.setDocument(doc);
-    bindingFactory.setBindingType(Binding.Type.BI_DIRECTIONAL);
-    final XulComponent configElement = doc.getElementById("local-path");
-    if (configElement != null)
-    {
-      bindingFactory.createBinding(pentahoPathWrapper, PentahoPathModel.LOCAL_PATH_PROPERTY, "local-path", "value");
+    bindingFactory.setDocument( doc );
+    bindingFactory.setBindingType( Binding.Type.BI_DIRECTIONAL );
+    final XulComponent configElement = doc.getElementById( "local-path" );
+    if ( configElement != null ) {
+      bindingFactory.createBinding( pentahoPathWrapper, PentahoPathModel.LOCAL_PATH_PROPERTY, "local-path", "value" );
     }
 
-    final XulComponent localServerElement = doc.getElementById("local-server-used");
-    if (localServerElement != null)
-    {
-      bindingFactory.createBinding(pentahoPathWrapper, PentahoPathModel.USE_REMOTE_SERVER_PROPERTY, "local-server-used", "checked");
+    final XulComponent localServerElement = doc.getElementById( "local-server-used" );
+    if ( localServerElement != null ) {
+      bindingFactory
+        .createBinding( pentahoPathWrapper, PentahoPathModel.USE_REMOTE_SERVER_PROPERTY, "local-server-used",
+          "checked" );
     }
 
-    final XulComponent hideParameterUiElement = doc.getElementById("parameter-table");
-    if (hideParameterUiElement != null)
-    {
-      bindingFactory.createBinding(pentahoPathWrapper, PentahoPathModel.HIDE_PARAMETER_UI_PROPERTY, "parameter-table", "hideParameterUi");
+    final XulComponent hideParameterUiElement = doc.getElementById( "parameter-table" );
+    if ( hideParameterUiElement != null ) {
+      bindingFactory.createBinding( pentahoPathWrapper, PentahoPathModel.HIDE_PARAMETER_UI_PROPERTY, "parameter-table",
+        "hideParameterUi" );
     }
 
-    final XulComponent serverElement = doc.getElementById("server-login");
-    if (serverElement != null)
-    {
-      bindingFactory.createBinding(pentahoPathWrapper, PentahoPathModel.SERVER_PATH_PROPERTY, "server-login", "value");
+    final XulComponent serverElement = doc.getElementById( "server-login" );
+    if ( serverElement != null ) {
+      bindingFactory
+        .createBinding( pentahoPathWrapper, PentahoPathModel.SERVER_PATH_PROPERTY, "server-login", "value" );
     }
 
     final DrillDownParameterTable drillDownParameterTable = getTable();
-    if (drillDownParameterTable != null)
-    {
-      drillDownParameterTable.setFilteredParameterNames(new String[]{"solution", "path", "name"});
-      drillDownParameterTable.addDrillDownParameterRefreshListener(parameterRefreshHandler);
-      parameterRefreshHandler.setParameterTable(drillDownParameterTable);
+    if ( drillDownParameterTable != null ) {
+      drillDownParameterTable.setFilteredParameterNames( new String[] { "solution", "path", "name" } );
+      drillDownParameterTable.addDrillDownParameterRefreshListener( parameterRefreshHandler );
+      parameterRefreshHandler.setParameterTable( drillDownParameterTable );
     }
 
     // restore any parameters that might have been lost while initializing the UI.
-    model.setDrillDownParameter(drillDownParameter);
+    model.setDrillDownParameter( drillDownParameter );
 
-    pentahoPathWrapper.setLocalPathFromParameter(model.getDrillDownParameter());
-    if (StringUtils.isEmpty(model.getDrillDownPath()))
-    {
-      pentahoPathWrapper.setUseRemoteServer(false);
+    pentahoPathWrapper.setLocalPathFromParameter( model.getDrillDownParameter() );
+    if ( StringUtils.isEmpty( model.getDrillDownPath() ) ) {
+      pentahoPathWrapper.setUseRemoteServer( false );
       final ReportDocumentContext reportRenderContext = reportDesignerContext.getActiveContext();
-      if (reportRenderContext != null)
-      {
-        final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
-        if (o != null)
-        {
-          pentahoPathWrapper.setServerPath(String.valueOf(o));
+      if ( reportRenderContext != null ) {
+        final Object o = reportRenderContext.getProperties().get( "pentaho-login-url" );
+        if ( o != null ) {
+          pentahoPathWrapper.setServerPath( String.valueOf( o ) );
+        } else {
+          pentahoPathWrapper.setServerPath( null );
         }
-        else
-        {
-          pentahoPathWrapper.setServerPath(null);
-        }
+      } else {
+        pentahoPathWrapper.setServerPath( null );
       }
-      else
-      {
-        pentahoPathWrapper.setServerPath(null);
-      }
-    }
-    else
-    {
-      pentahoPathWrapper.setUseRemoteServer(true);
-      pentahoPathWrapper.setServerPath(model.getDrillDownPath());
+    } else {
+      pentahoPathWrapper.setUseRemoteServer( true );
+      pentahoPathWrapper.setServerPath( model.getDrillDownPath() );
     }
 
     configureDisableTableOnEmptyFile();
   }
 
 
-  protected void configureDisableTableOnEmptyFile()
-  {
+  protected void configureDisableTableOnEmptyFile() {
     final Document doc = getXulDomContainer().getDocumentRoot();
-    final XulComponent paramTableElement = doc.getElementById("parameter-table");//NON-NLS
-    if (paramTableElement instanceof XulDrillDownParameterTable == false)
-    {
+    final XulComponent paramTableElement = doc.getElementById( "parameter-table" );//NON-NLS
+    if ( paramTableElement instanceof XulDrillDownParameterTable == false ) {
       return;
     }
 
     pentahoPathWrapper.addPropertyChangeListener
-        (PentahoPathModel.LOCAL_PATH_PROPERTY, new CheckEmptyPathHandler(paramTableElement));
+      ( PentahoPathModel.LOCAL_PATH_PROPERTY, new CheckEmptyPathHandler( paramTableElement ) );
   }
 
 
   /**
    * @noinspection UnusedDeclaration
    */
-  public void login()
-  {
+  public void login() {
     final Component c;
     final Object context = getXulDomContainer().getOuterContext();
-    if (context instanceof Component)
-    {
+    if ( context instanceof Component ) {
       c = (Component) context;
-    }
-    else
-    {
+    } else {
       c = getReportDesignerContext().getView().getParent();
     }
-    final LoginTask loginTask = new LoginTask(getReportDesignerContext(), c, new LoginCompleteTask(null));
-    SwingUtilities.invokeLater(loginTask);
+    final LoginTask loginTask = new LoginTask( getReportDesignerContext(), c, new LoginCompleteTask( null ) );
+    SwingUtilities.invokeLater( loginTask );
   }
 
   /**
    * @noinspection UnusedDeclaration
    */
-  public void browse()
-  {
+  public void browse() {
     final ReportDocumentContext activeContext = getReportDesignerContext().getActiveContext();
-    if (pentahoPathWrapper.getLoginData() == null)
-    {
+    if ( pentahoPathWrapper.getLoginData() == null ) {
       final String path = getModel().getDrillDownPath();
-      if (path != null)
-      {
+      if ( path != null ) {
         final AuthenticationStore authStore = activeContext.getAuthenticationStore();
-        final String username = authStore.getUsername(path);
-        final String password = authStore.getPassword(path);
-        final int timeout = authStore.getIntOption(path, "timeout", 0);
-        pentahoPathWrapper.setLoginData(new AuthenticationData(path, username, password, timeout));
+        final String username = authStore.getUsername( path );
+        final String password = authStore.getPassword( path );
+        final int timeout = authStore.getIntOption( path, "timeout", 0 );
+        pentahoPathWrapper.setLoginData( new AuthenticationData( path, username, password, timeout ) );
       }
     }
 
     final Component c;
     final Object context = getXulDomContainer().getOuterContext();
-    if (context instanceof Component)
-    {
+    if ( context instanceof Component ) {
       c = (Component) context;
-    }
-    else
-    {
+    } else {
       c = getReportDesignerContext().getView().getParent();
     }
-    final LoginTask loginTask = new LoginTask(getReportDesignerContext(), c, new LoginCompleteTask
-        (new SelectDrillTargetTask(pentahoPathWrapper, c, new RefreshParameterTask(), activeContext)),
-        pentahoPathWrapper.getLoginData());
-    SwingUtilities.invokeLater(loginTask);
+    final LoginTask loginTask = new LoginTask( getReportDesignerContext(), c, new LoginCompleteTask
+      ( new SelectDrillTargetTask( pentahoPathWrapper, c, new RefreshParameterTask(), activeContext ) ),
+      pentahoPathWrapper.getLoginData() );
+    SwingUtilities.invokeLater( loginTask );
   }
 
-  public void deactivate()
-  {
+  public void deactivate() {
 
   }
 }

@@ -23,10 +23,8 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class FontSizeConceptMapper implements ConceptQueryMapper
-{
-  public FontSizeConceptMapper()
-  {
+public class FontSizeConceptMapper implements ConceptQueryMapper {
+  public FontSizeConceptMapper() {
   }
 
   /**
@@ -34,34 +32,26 @@ public class FontSizeConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof Font == false)
-    {
+    if ( value instanceof Font == false ) {
       return null;
     }
 
     final Font fontSettings = (Font) value;
-    final String valueAsString = String.valueOf(fontSettings.getHeight());
-    if (type == null || Object.class.equals(type) || Number.class.isAssignableFrom(type))
-    {
-      try
-      {
-        final Object returnValue = ConverterRegistry.toPropertyValue(valueAsString, type);
+    final String valueAsString = String.valueOf( fontSettings.getHeight() );
+    if ( type == null || Object.class.equals( type ) || Number.class.isAssignableFrom( type ) ) {
+      try {
+        final Object returnValue = ConverterRegistry.toPropertyValue( valueAsString, type );
         return returnValue;
-      }
-      catch (BeanException e)
-      {
+      } catch ( BeanException e ) {
         // ignore ..
       }
     }
-    if (String.class.isAssignableFrom(type))
-    {
+    if ( String.class.isAssignableFrom( type ) ) {
       return valueAsString;
     }
     return null;

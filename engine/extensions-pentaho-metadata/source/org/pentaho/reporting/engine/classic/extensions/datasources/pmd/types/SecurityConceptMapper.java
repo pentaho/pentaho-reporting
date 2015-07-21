@@ -22,10 +22,8 @@ import org.pentaho.metadata.model.concept.security.Security;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class SecurityConceptMapper implements ConceptQueryMapper
-{
-  public SecurityConceptMapper()
-  {
+public class SecurityConceptMapper implements ConceptQueryMapper {
+  public SecurityConceptMapper() {
   }
 
   /**
@@ -33,25 +31,20 @@ public class SecurityConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof Security == false)
-    {
+    if ( value instanceof Security == false ) {
       return null;
     }
 
-    if (type == null || Object.class.equals(type) || Security.class.equals(type))
-    {
-      if (value instanceof SecurityWrapper)
-      {
+    if ( type == null || Object.class.equals( type ) || Security.class.equals( type ) ) {
+      if ( value instanceof SecurityWrapper ) {
         return value;
       }
-      return new SecurityWrapper((Security) value);
+      return new SecurityWrapper( (Security) value );
     }
 
     return null;

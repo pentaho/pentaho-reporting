@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.PasswordPropertiesReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DataSourceProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider;
@@ -30,15 +26,18 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DriverDataSourceProviderReadHandler extends AbstractXmlReadHandler implements DataSourceProviderReadHandler
-{
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+
+public class DriverDataSourceProviderReadHandler extends AbstractXmlReadHandler
+  implements DataSourceProviderReadHandler {
   private StringReadHandler driverReadHandler;
   private StringReadHandler urlReadHandler;
   private PasswordPropertiesReadHandler propertiesReadHandler;
   private DriverDataSourceProvider driverConnectionProvider;
 
-  public DriverDataSourceProviderReadHandler()
-  {
+  public DriverDataSourceProviderReadHandler() {
   }
 
   /**
@@ -49,27 +48,22 @@ public class DriverDataSourceProviderReadHandler extends AbstractXmlReadHandler 
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("driver".equals(tagName))
-    {
+    if ( "driver".equals( tagName ) ) {
       driverReadHandler = new StringReadHandler();
       return driverReadHandler;
     }
-    if ("url".equals(tagName))
-    {
+    if ( "url".equals( tagName ) ) {
       urlReadHandler = new StringReadHandler();
       return urlReadHandler;
     }
-    if ("properties".equals(tagName))
-    {
+    if ( "properties".equals( tagName ) ) {
       propertiesReadHandler = new PasswordPropertiesReadHandler();
       return propertiesReadHandler;
     }
@@ -81,25 +75,20 @@ public class DriverDataSourceProviderReadHandler extends AbstractXmlReadHandler 
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final DriverDataSourceProvider provider = new DriverDataSourceProvider();
-    if (driverReadHandler != null)
-    {
-      provider.setDriver(driverReadHandler.getResult());
+    if ( driverReadHandler != null ) {
+      provider.setDriver( driverReadHandler.getResult() );
     }
-    if (urlReadHandler != null)
-    {
-      provider.setUrl(urlReadHandler.getResult());
+    if ( urlReadHandler != null ) {
+      provider.setUrl( urlReadHandler.getResult() );
     }
-    if (propertiesReadHandler != null)
-    {
+    if ( propertiesReadHandler != null ) {
       final Properties p = (Properties) propertiesReadHandler.getObject();
       final Iterator it = p.entrySet().iterator();
-      while (it.hasNext())
-      {
+      while ( it.hasNext() ) {
         final Map.Entry entry = (Map.Entry) it.next();
-        provider.setProperty((String) entry.getKey(), (String) entry.getValue());
+        provider.setProperty( (String) entry.getKey(), (String) entry.getValue() );
       }
     }
     driverConnectionProvider = provider;
@@ -111,13 +100,11 @@ public class DriverDataSourceProviderReadHandler extends AbstractXmlReadHandler 
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return driverConnectionProvider;
   }
 
-  public DataSourceProvider getProvider()
-  {
+  public DataSourceProvider getProvider() {
     return driverConnectionProvider;
   }
 }

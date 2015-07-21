@@ -23,12 +23,10 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 /**
  * Todo: Document me!
  * <p/>
- * Date: 25.08.2009
- * Time: 10:06:56
+ * Date: 25.08.2009 Time: 10:06:56
  *
  * @author Thomas Morgner.
  */
-public interface CubeFileProviderReadHandler extends XmlReadHandler
-{
+public interface CubeFileProviderReadHandler extends XmlReadHandler {
   public CubeFileProvider getProvider();
 }

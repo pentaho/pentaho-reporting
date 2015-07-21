@@ -21,10 +21,8 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class ScriptableDataSourceModule extends AbstractModule
-{
-  public ScriptableDataSourceModule() throws ModuleInitializeException
-  {
+public class ScriptableDataSourceModule extends AbstractModule {
+  public ScriptableDataSourceModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -36,8 +34,7 @@ public class ScriptableDataSourceModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
 
   }
 }

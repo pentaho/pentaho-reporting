@@ -17,37 +17,32 @@
 
 package org.pentaho.reporting.designer.core.editor.styles.styleeditor;
 
-import java.util.EventObject;
-
 import org.pentaho.reporting.engine.classic.core.style.css.ElementStyleDefinition;
 import org.pentaho.reporting.engine.classic.core.style.css.ElementStyleRule;
 
-public class ElementStyleDefinitionChangeEvent extends EventObject
-{
+import java.util.EventObject;
+
+public class ElementStyleDefinitionChangeEvent extends EventObject {
   private ElementStyleDefinition styleDefinition;
   private ElementStyleRule styleRule;
 
-  public ElementStyleDefinitionChangeEvent(final Object source,
-                                           final ElementStyleDefinition styleDefinition,
-                                           final ElementStyleRule styleRule)
-  {
-    super(source);
-    if (styleDefinition == null)
-    {
+  public ElementStyleDefinitionChangeEvent( final Object source,
+                                            final ElementStyleDefinition styleDefinition,
+                                            final ElementStyleRule styleRule ) {
+    super( source );
+    if ( styleDefinition == null ) {
       throw new IllegalStateException();
     }
-    
+
     this.styleDefinition = styleDefinition;
     this.styleRule = styleRule;
   }
 
-  public ElementStyleDefinition getStyleDefinition()
-  {
+  public ElementStyleDefinition getStyleDefinition() {
     return styleDefinition;
   }
 
-  public ElementStyleRule getStyleRule()
-  {
+  public ElementStyleRule getStyleRule() {
     return styleRule;
   }
 }

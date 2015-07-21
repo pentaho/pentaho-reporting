@@ -23,14 +23,15 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.Kettle
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public interface KettleTransformationProducerReadHandler extends XmlReadHandler
-{
+public interface KettleTransformationProducerReadHandler extends XmlReadHandler {
   public String getName();
 
   public String getStepName();
+
   public String getUsername();
 
   public String getPassword();
+
   public String getRepositoryName();
 
   public FormulaArgument[] getDefinedArgumentNames();

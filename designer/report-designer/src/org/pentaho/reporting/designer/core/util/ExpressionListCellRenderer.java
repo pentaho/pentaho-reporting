@@ -17,31 +17,24 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.util.Locale;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JList;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 
-public class ExpressionListCellRenderer extends DefaultListCellRenderer
-{
-  public ExpressionListCellRenderer()
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.util.Locale;
+
+public class ExpressionListCellRenderer extends DefaultListCellRenderer {
+  public ExpressionListCellRenderer() {
   }
 
-  public Component getListCellRendererComponent(final JList list,
-                                                final Object value,
-                                                final int index,
-                                                final boolean isSelected,
-                                                final boolean cellHasFocus)
-  {
+  public Component getListCellRendererComponent( final JList list,
+                                                 final Object value,
+                                                 final int index,
+                                                 final boolean isSelected,
+                                                 final boolean cellHasFocus ) {
     final JLabel rendererComponent = (JLabel)
-        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-    if (value instanceof ExpressionMetaData)
-    {
+      super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+    if ( value instanceof ExpressionMetaData ) {
       final ExpressionMetaData metaData = (ExpressionMetaData) value;
 
       final boolean deprecated;
@@ -52,28 +45,23 @@ public class ExpressionListCellRenderer extends DefaultListCellRenderer
       preferred = metaData.isPreferred();
 
       String prefix = "";
-      if (deprecated)
-      {
+      if ( deprecated ) {
         prefix = "*";
       }
       int fontStyle = Font.PLAIN;
-      if (expert)
-      {
+      if ( expert ) {
         fontStyle |= Font.ITALIC;
       }
-      if (preferred)
-      {
+      if ( preferred ) {
         fontStyle |= Font.BOLD;
       }
-      rendererComponent.setFont(getFont().deriveFont(fontStyle));
-      final String displayName = metaData.getDisplayName(Locale.getDefault());
-      final String groupName = metaData.getGrouping(Locale.getDefault());
-      rendererComponent.setToolTipText(metaData.getDeprecationMessage(Locale.getDefault()));
-      rendererComponent.setText(prefix + displayName + " (" + groupName + ")");
-    }
-    else
-    {
-      rendererComponent.setText(" ");
+      rendererComponent.setFont( getFont().deriveFont( fontStyle ) );
+      final String displayName = metaData.getDisplayName( Locale.getDefault() );
+      final String groupName = metaData.getGrouping( Locale.getDefault() );
+      rendererComponent.setToolTipText( metaData.getDeprecationMessage( Locale.getDefault() ) );
+      rendererComponent.setText( prefix + displayName + " (" + groupName + ")" );
+    } else {
+      rendererComponent.setText( " " );
     }
     return rendererComponent;
   }

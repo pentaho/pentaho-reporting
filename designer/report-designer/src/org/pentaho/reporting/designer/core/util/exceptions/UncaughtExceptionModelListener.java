@@ -22,9 +22,8 @@ import java.util.EventListener;
 /**
  * User: Martin Date: 24.02.2006 Time: 09:37:37
  */
-public interface UncaughtExceptionModelListener extends EventListener
-{
-  void exceptionCaught(Throwable throwable);
+public interface UncaughtExceptionModelListener extends EventListener {
+  void exceptionCaught( Throwable throwable );
 
 
   void exceptionsCleared();

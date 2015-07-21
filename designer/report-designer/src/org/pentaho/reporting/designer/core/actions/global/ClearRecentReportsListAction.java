@@ -17,32 +17,30 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public final class ClearRecentReportsListAction extends AbstractDesignerContextAction
-{
-  public ClearRecentReportsListAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("ClearRecentReportsListAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ClearRecentReportsListAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ClearRecentReportsListAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ClearRecentReportsListAction.Accelerator"));
+public final class ClearRecentReportsListAction extends AbstractDesignerContextAction {
+  public ClearRecentReportsListAction() {
+    putValue( Action.NAME, ActionMessages.getString( "ClearRecentReportsListAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "ClearRecentReportsListAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "ClearRecentReportsListAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY,
+      ActionMessages.getOptionalKeyStroke( "ClearRecentReportsListAction.Accelerator" ) );
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     getReportDesignerContext().getRecentFilesModel().clear();
   }
 

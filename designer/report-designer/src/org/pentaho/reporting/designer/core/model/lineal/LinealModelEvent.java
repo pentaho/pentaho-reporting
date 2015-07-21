@@ -24,10 +24,8 @@ import java.util.EventObject;
  *
  * @author Thomas Morgner
  */
-public class LinealModelEvent extends EventObject
-{
-  public LinealModelEvent(final Object source)
-  {
-    super(source);
+public class LinealModelEvent extends EventObject {
+  public LinealModelEvent( final Object source ) {
+    super( source );
   }
 }

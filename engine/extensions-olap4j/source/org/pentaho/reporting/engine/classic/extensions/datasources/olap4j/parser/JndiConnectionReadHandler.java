@@ -31,13 +31,11 @@ import org.xml.sax.SAXException;
  * @author Thomas Morgner
  */
 public class JndiConnectionReadHandler extends AbstractXmlReadHandler
-    implements OlapConnectionReadHandler
-{
+  implements OlapConnectionReadHandler {
   private StringReadHandler pathReadHandler;
   private JndiConnectionProvider jndiConnectionProvider;
 
-  public JndiConnectionReadHandler()
-  {
+  public JndiConnectionReadHandler() {
   }
 
   /**
@@ -48,17 +46,14 @@ public class JndiConnectionReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("path".equals(tagName))
-    {
+    if ( "path".equals( tagName ) ) {
       pathReadHandler = new StringReadHandler();
       return pathReadHandler;
     }
@@ -70,30 +65,25 @@ public class JndiConnectionReadHandler extends AbstractXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final JndiConnectionProvider provider = new JndiConnectionProvider();
-    if (pathReadHandler != null)
-    {
-      provider.setConnectionPath(pathReadHandler.getResult());
+    if ( pathReadHandler != null ) {
+      provider.setConnectionPath( pathReadHandler.getResult() );
     }
     jndiConnectionProvider = provider;
   }
 
   /**
-   * Returns the object for this element or null, if this element does not
-   * create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return jndiConnectionProvider;
   }
 
-  public OlapConnectionProvider getProvider()
-  {
+  public OlapConnectionProvider getProvider() {
     return jndiConnectionProvider;
   }
 }

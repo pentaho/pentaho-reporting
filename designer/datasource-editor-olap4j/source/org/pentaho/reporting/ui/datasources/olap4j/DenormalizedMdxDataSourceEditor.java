@@ -17,55 +17,46 @@
 
 package org.pentaho.reporting.ui.datasources.olap4j;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.AbstractNamedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.DenormalizedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.OlapConnectionProvider;
 
+import java.awt.*;
+
 /**
  * @author Michael D'Amour
  */
-public class DenormalizedMdxDataSourceEditor extends Olap4JDataSourceEditor
-{
+public class DenormalizedMdxDataSourceEditor extends Olap4JDataSourceEditor {
 
-  public DenormalizedMdxDataSourceEditor(final DesignTimeContext context)
-  {
-    super(context);
+  public DenormalizedMdxDataSourceEditor( final DesignTimeContext context ) {
+    super( context );
   }
 
-  public DenormalizedMdxDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-  {
-    super(context, owner);
+  public DenormalizedMdxDataSourceEditor( final DesignTimeContext context, final Dialog owner ) {
+    super( context, owner );
   }
 
-  public DenormalizedMdxDataSourceEditor(final DesignTimeContext context, final Frame owner)
-  {
-    super(context, owner);
+  public DenormalizedMdxDataSourceEditor( final DesignTimeContext context, final Frame owner ) {
+    super( context, owner );
   }
 
-  protected void init(final DesignTimeContext context)
-  {
-    super.init(context);
-    setTitle(Messages.getString("DenormalizedMdxDataSourceEditor.Title"));
+  protected void init( final DesignTimeContext context ) {
+    super.init( context );
+    setTitle( Messages.getString( "DenormalizedMdxDataSourceEditor.Title" ) );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "Olap4JDataSourceEditor.Denormalized";
   }
 
-  protected AbstractNamedMDXDataFactory createDataFactory()
-  {
+  protected AbstractNamedMDXDataFactory createDataFactory() {
     final OlapConnectionProvider connectionProvider = createConnectionProvider();
-    if (connectionProvider == null)
-    {
+    if ( connectionProvider == null ) {
       return null;
     }
-    final DenormalizedMDXDataFactory returnDataFactory = new DenormalizedMDXDataFactory(connectionProvider);
-    configureQueries(returnDataFactory);
+    final DenormalizedMDXDataFactory returnDataFactory = new DenormalizedMDXDataFactory( connectionProvider );
+    configureQueries( returnDataFactory );
     return returnDataFactory;
 
   }

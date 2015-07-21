@@ -17,18 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyEditor;
 
 /**
- * A property editor for the deprecated  
+ * A property editor for the deprecated
  */
-public class TimePeriodStringPropertyEditor implements PropertyEditor
-{
+public class TimePeriodStringPropertyEditor implements PropertyEditor {
   public static final String DAY_PERIOD_TYPE_STR = "Day"; //$NON-NLS-1$
   public static final String FIXEDMILLISECOND_PERIOD_TYPE_STR = "FixedMillisecond"; //$NON-NLS-1$
   public static final String HOUR_PERIOD_TYPE_STR = "Hour"; //$NON-NLS-1$
@@ -43,84 +40,56 @@ public class TimePeriodStringPropertyEditor implements PropertyEditor
   private String value;
   private PropertyChangeSupport propertyChangeSupport;
 
-  public TimePeriodStringPropertyEditor()
-  {
-    propertyChangeSupport = new PropertyChangeSupport(this);
+  public TimePeriodStringPropertyEditor() {
+    propertyChangeSupport = new PropertyChangeSupport( this );
   }
 
   /**
-   * Set (or change) the object that is to be edited.  Primitive types such
-   * as "int" must be wrapped as the corresponding object type such as
-   * "java.lang.Integer".
+   * Set (or change) the object that is to be edited.  Primitive types such as "int" must be wrapped as the
+   * corresponding object type such as "java.lang.Integer".
    *
-   * @param value The new target object to be edited.  Note that this
-   *              object should not be modified by the PropertyEditor, rather
-   *              the PropertyEditor should create a new object to hold any
-   *              modified value.
+   * @param value The new target object to be edited.  Note that this object should not be modified by the
+   *              PropertyEditor, rather the PropertyEditor should create a new object to hold any modified value.
    */
-  public void setValue(final Object value)
-  {
+  public void setValue( final Object value ) {
     final Object oldValue = this.value;
-    if (value instanceof String == false)
-    {
+    if ( value instanceof String == false ) {
       this.value = null;
-    }
-    else
-    {
+    } else {
       final String timePeriodStr = (String) value;
 
-      if (timePeriodStr.equalsIgnoreCase(MILLISECOND_PERIOD_TYPE_STR))
-      {
+      if ( timePeriodStr.equalsIgnoreCase( MILLISECOND_PERIOD_TYPE_STR ) ) {
         this.value = MILLISECOND_PERIOD_TYPE_STR;
-      }
-      else if (timePeriodStr.equalsIgnoreCase(SECOND_PERIOD_TYPE_STR))
-      {
+      } else if ( timePeriodStr.equalsIgnoreCase( SECOND_PERIOD_TYPE_STR ) ) {
         this.value = SECOND_PERIOD_TYPE_STR;
-      }
-      else if (timePeriodStr.equalsIgnoreCase(MINUTE_PERIOD_TYPE_STR))
-      {
+      } else if ( timePeriodStr.equalsIgnoreCase( MINUTE_PERIOD_TYPE_STR ) ) {
         this.value = MINUTE_PERIOD_TYPE_STR;
-      }
-      else if (timePeriodStr.equalsIgnoreCase(HOUR_PERIOD_TYPE_STR))
-      {
+      } else if ( timePeriodStr.equalsIgnoreCase( HOUR_PERIOD_TYPE_STR ) ) {
         this.value = HOUR_PERIOD_TYPE_STR;
-      }
-      else if (timePeriodStr.equalsIgnoreCase(DAY_PERIOD_TYPE_STR))
-      {
+      } else if ( timePeriodStr.equalsIgnoreCase( DAY_PERIOD_TYPE_STR ) ) {
         this.value = DAY_PERIOD_TYPE_STR;
-      }
-      else if (timePeriodStr.equalsIgnoreCase(WEEK_PERIOD_TYPE_STR))
-      {
+      } else if ( timePeriodStr.equalsIgnoreCase( WEEK_PERIOD_TYPE_STR ) ) {
         this.value = WEEK_PERIOD_TYPE_STR;
-      }
-      else if (timePeriodStr.equalsIgnoreCase(MONTH_PERIOD_TYPE_STR))
-      {
+      } else if ( timePeriodStr.equalsIgnoreCase( MONTH_PERIOD_TYPE_STR ) ) {
         this.value = MONTH_PERIOD_TYPE_STR;
-      }
-      else if (timePeriodStr.equalsIgnoreCase(QUARTER_PERIOD_TYPE_STR))
-      {
+      } else if ( timePeriodStr.equalsIgnoreCase( QUARTER_PERIOD_TYPE_STR ) ) {
         this.value = QUARTER_PERIOD_TYPE_STR;
-      }
-      else if (timePeriodStr.equalsIgnoreCase(YEAR_PERIOD_TYPE_STR))
-      {
+      } else if ( timePeriodStr.equalsIgnoreCase( YEAR_PERIOD_TYPE_STR ) ) {
         this.value = YEAR_PERIOD_TYPE_STR;
-      }
-      else
-      {
+      } else {
         this.value = null;
       }
     }
-    propertyChangeSupport.firePropertyChange(null, oldValue, this.value);
+    propertyChangeSupport.firePropertyChange( null, oldValue, this.value );
   }
 
   /**
    * Gets the property value.
    *
-   * @return The value of the property.  Primitive types such as "int" will
-   *         be wrapped as the corresponding object type such as "java.lang.Integer".
+   * @return The value of the property.  Primitive types such as "int" will be wrapped as the corresponding object type
+   * such as "java.lang.Integer".
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
@@ -129,135 +98,104 @@ public class TimePeriodStringPropertyEditor implements PropertyEditor
    *
    * @return True if the class will honor the paintValue method.
    */
-  public boolean isPaintable()
-  {
+  public boolean isPaintable() {
     return false;
   }
 
   /**
-   * Paint a representation of the value into a given area of screen
-   * real estate.  Note that the propertyEditor is responsible for doing
-   * its own clipping so that it fits into the given rectangle.
+   * Paint a representation of the value into a given area of screen real estate.  Note that the propertyEditor is
+   * responsible for doing its own clipping so that it fits into the given rectangle.
    * <p/>
-   * If the PropertyEditor doesn't honor paint requests (see isPaintable)
-   * this method should be a silent noop.
+   * If the PropertyEditor doesn't honor paint requests (see isPaintable) this method should be a silent noop.
    * <p/>
-   * The given Graphics object will have the default font, color, etc of
-   * the parent container.  The PropertyEditor may change graphics attributes
-   * such as font and color and doesn't need to restore the old values.
+   * The given Graphics object will have the default font, color, etc of the parent container.  The PropertyEditor may
+   * change graphics attributes such as font and color and doesn't need to restore the old values.
    *
    * @param gfx Graphics object to paint into.
    * @param box Rectangle within graphics object into which we should paint.
    */
-  public void paintValue(final Graphics gfx, final Rectangle box)
-  {
+  public void paintValue( final Graphics gfx, final Rectangle box ) {
 
   }
 
   /**
-   * Returns a fragment of Java code that can be used to set a property
-   * to match the editors current state. This method is intended
-   * for use when generating Java code to reflect changes made through the
-   * property editor.
+   * Returns a fragment of Java code that can be used to set a property to match the editors current state. This method
+   * is intended for use when generating Java code to reflect changes made through the property editor.
    * <p/>
-   * The code fragment should be context free and must be a legal Java
-   * expression as specified by the JLS.
+   * The code fragment should be context free and must be a legal Java expression as specified by the JLS.
    * <p/>
-   * Specifically, if the expression represents a computation then all
-   * classes and static members should be fully qualified. This rule
-   * applies to constructors, static methods and non primitive arguments.
+   * Specifically, if the expression represents a computation then all classes and static members should be fully
+   * qualified. This rule applies to constructors, static methods and non primitive arguments.
    * <p/>
-   * Caution should be used when evaluating the expression as it may throw
-   * exceptions. In particular, code generators must ensure that generated
-   * code will compile in the presence of an expression that can throw
-   * checked exceptions.
+   * Caution should be used when evaluating the expression as it may throw exceptions. In particular, code generators
+   * must ensure that generated code will compile in the presence of an expression that can throw checked exceptions.
    * <p/>
-   * Example results are:
-   * <ul>
-   * <li>Primitive expresssion: <code>2</code>
-   * <li>Class constructor: <code>new java.awt.Color(127,127,34)</code>
-   * <li>Static field: <code>java.awt.Color.orange</code>
-   * <li>Static method: <code>javax.swing.Box.createRigidArea(new
-   * java.awt.Dimension(0, 5))</code>
-   * </ul>
+   * Example results are: <ul> <li>Primitive expresssion: <code>2</code> <li>Class constructor: <code>new
+   * java.awt.Color(127,127,34)</code> <li>Static field: <code>java.awt.Color.orange</code> <li>Static method:
+   * <code>javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))</code> </ul>
    *
-   * @return a fragment of Java code representing an initializer for the
-   *         current value. It should not contain a semi-colon
-   *         ('<code>;</code>') to end the expression.
+   * @return a fragment of Java code representing an initializer for the current value. It should not contain a
+   * semi-colon ('<code>;</code>') to end the expression.
    */
-  public String getJavaInitializationString()
-  {
+  public String getJavaInitializationString() {
     return null;
   }
 
   /**
    * Gets the property value as text.
    *
-   * @return The property value as a human editable string.
-   *         <p>   Returns null if the value can't be expressed as an editable string.
-   *         <p>   If a non-null value is returned, then the PropertyEditor should
-   *         be prepared to parse that string back in setAsText().
+   * @return The property value as a human editable string. <p>   Returns null if the value can't be expressed as an
+   * editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse that
+   * string back in setAsText().
    */
-  public String getAsText()
-  {
+  public String getAsText() {
     return value;
   }
 
   /**
-   * Set the property value by parsing a given String.  May raise
-   * java.lang.IllegalArgumentException if either the String is
-   * badly formatted or if this kind of property can't be expressed
-   * as text.
+   * Set the property value by parsing a given String.  May raise java.lang.IllegalArgumentException if either the
+   * String is badly formatted or if this kind of property can't be expressed as text.
    *
    * @param text The string to be parsed.
    */
-  public void setAsText(final String text) throws IllegalArgumentException
-  {
-    setValue(text);
+  public void setAsText( final String text ) throws IllegalArgumentException {
+    setValue( text );
   }
 
   /**
-   * If the property value must be one of a set of known tagged values,
-   * then this method should return an array of the tags.  This can
-   * be used to represent (for example) enum values.  If a PropertyEditor
-   * supports tags, then it should support the use of setAsText with
-   * a tag value as a way of setting the value and the use of getAsText
-   * to identify the current value.
+   * If the property value must be one of a set of known tagged values, then this method should return an array of the
+   * tags.  This can be used to represent (for example) enum values.  If a PropertyEditor supports tags, then it should
+   * support the use of setAsText with a tag value as a way of setting the value and the use of getAsText to identify
+   * the current value.
    *
-   * @return The tag values for this property.  May be null if this
-   *         property cannot be represented as a tagged value.
+   * @return The tag values for this property.  May be null if this property cannot be represented as a tagged value.
    */
-  public String[] getTags()
-  {
+  public String[] getTags() {
     return new String[] {
-        MILLISECOND_PERIOD_TYPE_STR,
-        SECOND_PERIOD_TYPE_STR,
-        MINUTE_PERIOD_TYPE_STR,
-        HOUR_PERIOD_TYPE_STR,
-        DAY_PERIOD_TYPE_STR,
-        WEEK_PERIOD_TYPE_STR,
-        MONTH_PERIOD_TYPE_STR,
-        QUARTER_PERIOD_TYPE_STR,
-        YEAR_PERIOD_TYPE_STR, 
+      MILLISECOND_PERIOD_TYPE_STR,
+      SECOND_PERIOD_TYPE_STR,
+      MINUTE_PERIOD_TYPE_STR,
+      HOUR_PERIOD_TYPE_STR,
+      DAY_PERIOD_TYPE_STR,
+      WEEK_PERIOD_TYPE_STR,
+      MONTH_PERIOD_TYPE_STR,
+      QUARTER_PERIOD_TYPE_STR,
+      YEAR_PERIOD_TYPE_STR,
     };
   }
 
   /**
-   * A PropertyEditor may choose to make available a full custom Component
-   * that edits its property value.  It is the responsibility of the
-   * PropertyEditor to hook itself up to its editor Component itself and
-   * to report property value changes by firing a PropertyChange event.
+   * A PropertyEditor may choose to make available a full custom Component that edits its property value.  It is the
+   * responsibility of the PropertyEditor to hook itself up to its editor Component itself and to report property value
+   * changes by firing a PropertyChange event.
    * <p/>
-   * The higher-level code that calls getCustomEditor may either embed
-   * the Component in some larger property sheet, or it may put it in
-   * its own individual dialog, or ...
+   * The higher-level code that calls getCustomEditor may either embed the Component in some larger property sheet, or
+   * it may put it in its own individual dialog, or ...
    *
-   * @return A java.awt.Component that will allow a human to directly
-   *         edit the current property value.  May be null if this is
-   *         not supported.
+   * @return A java.awt.Component that will allow a human to directly edit the current property value.  May be null if
+   * this is not supported.
    */
-  public Component getCustomEditor()
-  {
+  public Component getCustomEditor() {
     return null;
   }
 
@@ -266,23 +204,19 @@ public class TimePeriodStringPropertyEditor implements PropertyEditor
    *
    * @return True if the propertyEditor can provide a custom editor.
    */
-  public boolean supportsCustomEditor()
-  {
+  public boolean supportsCustomEditor() {
     return false;
   }
 
   /**
-   * Register a listener for the PropertyChange event.  When a
-   * PropertyEditor changes its value it should fire a PropertyChange
-   * event on all registered PropertyChangeListeners, specifying the
-   * null value for the property name and itself as the source.
+   * Register a listener for the PropertyChange event.  When a PropertyEditor changes its value it should fire a
+   * PropertyChange event on all registered PropertyChangeListeners, specifying the null value for the property name and
+   * itself as the source.
    *
-   * @param listener An object to be invoked when a PropertyChange
-   *                 event is fired.
+   * @param listener An object to be invoked when a PropertyChange event is fired.
    */
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( listener );
   }
 
   /**
@@ -290,8 +224,7 @@ public class TimePeriodStringPropertyEditor implements PropertyEditor
    *
    * @param listener The PropertyChange listener to be removed.
    */
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( listener );
   }
 }

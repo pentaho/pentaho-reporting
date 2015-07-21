@@ -35,103 +35,84 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class DesignerLayoutModelBuilder extends DefaultLayoutModelBuilder
-{
-  private static class DesignerSubReportStyleSheet extends AbstractStyleSheet
-  {
+public class DesignerLayoutModelBuilder extends DefaultLayoutModelBuilder {
+  private static class DesignerSubReportStyleSheet extends AbstractStyleSheet {
     private StyleSheet parent;
     private Float minHeight;
 
-    public DesignerSubReportStyleSheet(final StyleSheet parent)
-    {
-      if (parent == null)
-      {
+    public DesignerSubReportStyleSheet( final StyleSheet parent ) {
+      if ( parent == null ) {
         throw new NullPointerException();
       }
       this.parent = parent;
 
-      final float minHeightDefined = (float) parent.getDoubleStyleProperty(ElementStyleKeys.MIN_HEIGHT, 0);
-      this.minHeight = Math.max (10f, minHeightDefined);
+      final float minHeightDefined = (float) parent.getDoubleStyleProperty( ElementStyleKeys.MIN_HEIGHT, 0 );
+      this.minHeight = Math.max( 10f, minHeightDefined );
     }
 
-    public StyleSheet getParent()
-    {
+    public StyleSheet getParent() {
       return parent;
     }
 
-    public InstanceID getId()
-    {
+    public InstanceID getId() {
       return parent.getId();
     }
 
-    public long getChangeTracker()
-    {
+    public long getChangeTracker() {
       return parent.getChangeTracker();
     }
 
-    public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-    {
-      if (ElementStyleKeys.MIN_HEIGHT.equals(key))
-      {
+    public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+      if ( ElementStyleKeys.MIN_HEIGHT.equals( key ) ) {
         return minHeight;
       }
-      return parent.getStyleProperty(key, defaultValue);
+      return parent.getStyleProperty( key, defaultValue );
     }
 
-    public Object[] toArray()
-    {
+    public Object[] toArray() {
       final Object[] objects = parent.toArray();
-      objects[ElementStyleKeys.MIN_HEIGHT.getIdentifier()] = minHeight;
+      objects[ ElementStyleKeys.MIN_HEIGHT.getIdentifier() ] = minHeight;
       return objects;
     }
   }
 
   private DesignerRenderComponentFactory renderComponentFactory;
 
-  public DesignerLayoutModelBuilder(final String legacySectionName,
-                                    final DesignerRenderComponentFactory renderComponentFactory)
-  {
-    super(legacySectionName);
+  public DesignerLayoutModelBuilder( final String legacySectionName,
+                                     final DesignerRenderComponentFactory renderComponentFactory ) {
+    super( legacySectionName );
     this.renderComponentFactory = renderComponentFactory;
   }
 
-  protected TextProducer createTextProducer()
-  {
+  protected TextProducer createTextProducer() {
     return renderComponentFactory.createTextProducer();
   }
 
-  public void startSubFlow(final ReportElement element)
-  {
+  public void startSubFlow( final ReportElement element ) {
     final StyleSheet resolverStyleSheet = element.getComputedStyle();
 
     final RenderBox box;
-    if (getMetaData().isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY))
-    {
-      final StyleSheet styleSheet = new DesignerSubReportStyleSheet(new SubReportStyleSheet
-          (resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE),
-              (resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.PAGEBREAK_AFTER))));
+    if ( getMetaData().isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY ) ) {
+      final StyleSheet styleSheet = new DesignerSubReportStyleSheet( new SubReportStyleSheet
+        ( resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE ),
+          ( resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER ) ) ) );
 
-      final SimpleStyleSheet reportStyle = new SimpleStyleSheet(styleSheet);
-      final BoxDefinition boxDefinition = getRenderNodeFactory().getBoxDefinition(reportStyle);
+      final SimpleStyleSheet reportStyle = new SimpleStyleSheet( styleSheet );
+      final BoxDefinition boxDefinition = getRenderNodeFactory().getBoxDefinition( reportStyle );
       box = new BlockRenderBox
-          (reportStyle, element.getObjectID(), boxDefinition, SubReportType.INSTANCE, element.getAttributes(), null);
-    }
-    else
-    {
+        ( reportStyle, element.getObjectID(), boxDefinition, SubReportType.INSTANCE, element.getAttributes(), null );
+    } else {
       box = getRenderNodeFactory().produceRenderBox
-          (element, new DesignerSubReportStyleSheet(resolverStyleSheet), BandStyleKeys.LAYOUT_BLOCK, getStateKey());
+        ( element, new DesignerSubReportStyleSheet( resolverStyleSheet ), BandStyleKeys.LAYOUT_BLOCK, getStateKey() );
     }
 
-    box.getStaticBoxLayoutProperties().setPlaceholderBox(StaticBoxLayoutProperties.PlaceholderType.SECTION);
-    if (element.getName() != null)
-    {
-      box.setName("Banded-SubReport-Section" + ": name=" + element.getName());
-    }
-    else
-    {
-      box.setName("Banded-SubReport-Section");
+    box.getStaticBoxLayoutProperties().setPlaceholderBox( StaticBoxLayoutProperties.PlaceholderType.SECTION );
+    if ( element.getName() != null ) {
+      box.setName( "Banded-SubReport-Section" + ": name=" + element.getName() );
+    } else {
+      box.setName( "Banded-SubReport-Section" );
     }
 
-    pushBoxToContext(box, false);
+    pushBoxToContext( box, false );
   }
 }

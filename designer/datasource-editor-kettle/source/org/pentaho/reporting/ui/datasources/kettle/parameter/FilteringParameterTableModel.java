@@ -17,26 +17,22 @@
 
 package org.pentaho.reporting.ui.datasources.kettle.parameter;
 
+import org.pentaho.reporting.libraries.designtime.swing.table.PropertyTableModel;
+import org.pentaho.reporting.libraries.designtime.swing.table.RowMapperTableModel;
+
 import java.beans.PropertyEditor;
 
-import org.pentaho.reporting.libraries.designtime.swing.table.RowMapperTableModel;
-import org.pentaho.reporting.libraries.designtime.swing.table.PropertyTableModel;
-
-public class FilteringParameterTableModel extends RowMapperTableModel implements PropertyTableModel
-{
+public class FilteringParameterTableModel extends RowMapperTableModel implements PropertyTableModel {
   private FormulaParameterTableModel backend;
   private FilterStrategy<FormulaParameterTableModel> filterType;
 
-  public FilteringParameterTableModel(final FilterStrategy<FormulaParameterTableModel> filterType,
-                                      final FormulaParameterTableModel backend)
-  {
-    super(backend);
-    if (filterType == null)
-    {
+  public FilteringParameterTableModel( final FilterStrategy<FormulaParameterTableModel> filterType,
+                                       final FormulaParameterTableModel backend ) {
+    super( backend );
+    if ( filterType == null ) {
       throw new NullPointerException();
     }
-    if (backend == null)
-    {
+    if ( backend == null ) {
       throw new NullPointerException();
     }
 
@@ -45,18 +41,15 @@ public class FilteringParameterTableModel extends RowMapperTableModel implements
     recomputeRowCount();
   }
 
-  protected boolean isFiltered(final int row)
-  {
-    return filterType.isAcceptedRow(row, backend) == false;
+  protected boolean isFiltered( final int row ) {
+    return filterType.isAcceptedRow( row, backend ) == false;
   }
 
-  public Class getClassForCell(final int row, final int col)
-  {
-    return backend.getClassForCell(mapToModel(row), col);
+  public Class getClassForCell( final int row, final int col ) {
+    return backend.getClassForCell( mapToModel( row ), col );
   }
 
-  public PropertyEditor getEditorForCell(final int row, final int column)
-  {
-    return backend.getEditorForCell(mapToModel(row), column);
+  public PropertyEditor getEditorForCell( final int row, final int column ) {
+    return backend.getEditorForCell( mapToModel( row ), column );
   }
 }

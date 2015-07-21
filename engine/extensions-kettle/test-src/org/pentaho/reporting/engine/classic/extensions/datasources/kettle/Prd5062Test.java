@@ -17,115 +17,107 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.testsupport.ReportWritingUtil;
 
-public class Prd5062Test
-{
-  private static final String QUERY = "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/kettle/row-gen.ktr";
+import static org.junit.Assert.*;
+
+public class Prd5062Test {
+  private static final String QUERY =
+    "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/kettle/row-gen.ktr";
   private static final String STEP = "Formula";
 
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testQueryNameEmpty() throws Exception
-  {
+  public void testQueryNameEmpty() throws Exception {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-    kettleDataFactory.setQuery("", new KettleTransFromFileProducer(QUERY, STEP));
+    kettleDataFactory.setQuery( "", new KettleTransFromFileProducer( QUERY, STEP ) );
 
     MasterReport report = new MasterReport();
-    report.setDataFactory(kettleDataFactory);
+    report.setDataFactory( kettleDataFactory );
 
-    MasterReport r2 = ReportWritingUtil.saveAndLoad(report);
-    assertTrue(r2.getDataFactory() instanceof KettleDataFactory);
+    MasterReport r2 = ReportWritingUtil.saveAndLoad( report );
+    assertTrue( r2.getDataFactory() instanceof KettleDataFactory );
     KettleDataFactory kdf = (KettleDataFactory) r2.getDataFactory();
-    KettleTransformationProducer query = kdf.getQuery("");
-    assertNotNull(query);
-    assertNotNull(query.getTransformationFile());
-    assertNotNull(query.getStepName());
+    KettleTransformationProducer query = kdf.getQuery( "" );
+    assertNotNull( query );
+    assertNotNull( query.getTransformationFile() );
+    assertNotNull( query.getStepName() );
   }
 
   @Test
-  public void testStepNameNull() throws Exception
-  {
+  public void testStepNameNull() throws Exception {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-    kettleDataFactory.setQuery("default", new KettleTransFromFileProducer(QUERY, null));
+    kettleDataFactory.setQuery( "default", new KettleTransFromFileProducer( QUERY, null ) );
 
     MasterReport report = new MasterReport();
-    report.setDataFactory(kettleDataFactory);
+    report.setDataFactory( kettleDataFactory );
 
-    MasterReport r2 = ReportWritingUtil.saveAndLoad(report);
-    assertTrue(r2.getDataFactory() instanceof KettleDataFactory);
+    MasterReport r2 = ReportWritingUtil.saveAndLoad( report );
+    assertTrue( r2.getDataFactory() instanceof KettleDataFactory );
     KettleDataFactory kdf = (KettleDataFactory) r2.getDataFactory();
-    KettleTransformationProducer query = kdf.getQuery("default");
-    assertNotNull(query);
-    assertNotNull(query.getTransformationFile());
-    assertNull(query.getStepName());
+    KettleTransformationProducer query = kdf.getQuery( "default" );
+    assertNotNull( query );
+    assertNotNull( query.getTransformationFile() );
+    assertNull( query.getStepName() );
   }
 
   @Test
-  public void testStepNameEmpty() throws Exception
-  {
+  public void testStepNameEmpty() throws Exception {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-    kettleDataFactory.setQuery("default", new KettleTransFromFileProducer(QUERY, ""));
+    kettleDataFactory.setQuery( "default", new KettleTransFromFileProducer( QUERY, "" ) );
 
     MasterReport report = new MasterReport();
-    report.setDataFactory(kettleDataFactory);
+    report.setDataFactory( kettleDataFactory );
 
-    MasterReport r2 = ReportWritingUtil.saveAndLoad(report);
-    assertTrue(r2.getDataFactory() instanceof KettleDataFactory);
+    MasterReport r2 = ReportWritingUtil.saveAndLoad( report );
+    assertTrue( r2.getDataFactory() instanceof KettleDataFactory );
     KettleDataFactory kdf = (KettleDataFactory) r2.getDataFactory();
-    KettleTransformationProducer query = kdf.getQuery("default");
-    assertNotNull(query);
-    assertNotNull(query.getTransformationFile());
-    assertEquals("", query.getStepName());
+    KettleTransformationProducer query = kdf.getQuery( "default" );
+    assertNotNull( query );
+    assertNotNull( query.getTransformationFile() );
+    assertEquals( "", query.getStepName() );
   }
 
   @Test
-  public void testTransformationNull() throws Exception
-  {
+  public void testTransformationNull() throws Exception {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-    kettleDataFactory.setQuery("default", new KettleTransFromFileProducer(null, STEP));
+    kettleDataFactory.setQuery( "default", new KettleTransFromFileProducer( null, STEP ) );
 
     MasterReport report = new MasterReport();
-    report.setDataFactory(kettleDataFactory);
+    report.setDataFactory( kettleDataFactory );
 
-    MasterReport r2 = ReportWritingUtil.saveAndLoad(report);
-    assertTrue(r2.getDataFactory() instanceof KettleDataFactory);
+    MasterReport r2 = ReportWritingUtil.saveAndLoad( report );
+    assertTrue( r2.getDataFactory() instanceof KettleDataFactory );
     KettleDataFactory kdf = (KettleDataFactory) r2.getDataFactory();
-    KettleTransformationProducer query = kdf.getQuery("default");
-    assertNotNull(query);
-    assertNull(query.getTransformationFile());
-    assertNotNull(query.getStepName());
+    KettleTransformationProducer query = kdf.getQuery( "default" );
+    assertNotNull( query );
+    assertNull( query.getTransformationFile() );
+    assertNotNull( query.getStepName() );
   }
 
   @Test
-  public void testTransformationNameEmpty() throws Exception
-  {
+  public void testTransformationNameEmpty() throws Exception {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-    kettleDataFactory.setQuery("default", new KettleTransFromFileProducer(null, STEP));
+    kettleDataFactory.setQuery( "default", new KettleTransFromFileProducer( null, STEP ) );
 
     MasterReport report = new MasterReport();
-    report.setDataFactory(kettleDataFactory);
+    report.setDataFactory( kettleDataFactory );
 
-    MasterReport r2 = ReportWritingUtil.saveAndLoad(report);
-    assertTrue(r2.getDataFactory() instanceof KettleDataFactory);
+    MasterReport r2 = ReportWritingUtil.saveAndLoad( report );
+    assertTrue( r2.getDataFactory() instanceof KettleDataFactory );
     KettleDataFactory kdf = (KettleDataFactory) r2.getDataFactory();
-    KettleTransformationProducer query = kdf.getQuery("default");
-    assertNotNull(query);
-    assertNull(query.getTransformationFile());
-    assertNotNull(query.getStepName());
+    KettleTransformationProducer query = kdf.getQuery( "default" );
+    assertNotNull( query );
+    assertNull( query.getTransformationFile() );
+    assertNotNull( query.getStepName() );
   }
 
 

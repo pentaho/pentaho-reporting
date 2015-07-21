@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.table;
 
-import java.awt.Window;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChangeRecorder;
@@ -29,41 +25,35 @@ import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 
-public class TableDataSourcePlugin implements DataSourcePlugin
-{
+import javax.swing.*;
+import java.awt.*;
 
-  public TableDataSourcePlugin()
-  {
+public class TableDataSourcePlugin implements DataSourcePlugin {
+
+  public TableDataSourcePlugin() {
   }
 
-  public DataFactory performEdit(final DesignTimeContext designTimeContext,
-                                 final DataFactory anInput, final String queryName, final DataFactoryChangeRecorder changeRecorder)
-  {
+  public DataFactory performEdit( final DesignTimeContext designTimeContext,
+                                  final DataFactory anInput, final String queryName,
+                                  final DataFactoryChangeRecorder changeRecorder ) {
     final TableDataSourceEditor editor;
     final Window parentWindow = designTimeContext.getParentWindow();
 
-    if (parentWindow instanceof JDialog)
-    {
-      editor = new TableDataSourceEditor((JDialog) parentWindow);
-    }
-    else if (parentWindow instanceof JFrame)
-    {
-      editor = new TableDataSourceEditor((JFrame) parentWindow);
-    }
-    else
-    {
+    if ( parentWindow instanceof JDialog ) {
+      editor = new TableDataSourceEditor( (JDialog) parentWindow );
+    } else if ( parentWindow instanceof JFrame ) {
+      editor = new TableDataSourceEditor( (JFrame) parentWindow );
+    } else {
       editor = new TableDataSourceEditor();
     }
-    return editor.performConfiguration(designTimeContext, (TableDataFactory) anInput, queryName);
+    return editor.performConfiguration( designTimeContext, (TableDataFactory) anInput, queryName );
   }
 
-  public boolean canHandle(final DataFactory aDataFactory)
-  {
+  public boolean canHandle( final DataFactory aDataFactory ) {
     return aDataFactory instanceof TableDataFactory;
   }
 
-  public DataFactoryMetaData getMetaData()
-  {
-    return DataFactoryRegistry.getInstance().getMetaData(TableDataFactory.class.getName());
+  public DataFactoryMetaData getMetaData() {
+    return DataFactoryRegistry.getInstance().getMetaData( TableDataFactory.class.getName() );
   }
 }

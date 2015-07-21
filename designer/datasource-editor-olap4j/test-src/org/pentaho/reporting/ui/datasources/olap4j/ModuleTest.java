@@ -26,47 +26,41 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Denorm
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.LegacyBandedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.JndiConnectionProvider;
 
-public class ModuleTest extends TestCase
-{
-  public ModuleTest()
-  {
+public class ModuleTest extends TestCase {
+  public ModuleTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testModuleExists()
-  {
-    assertTrue(ClassicEngineBoot.getInstance().getPackageManager().isModuleAvailable(Olap4jDataSourceModule.class.getName()));
+  public void testModuleExists() {
+    assertTrue(
+      ClassicEngineBoot.getInstance().getPackageManager().isModuleAvailable( Olap4jDataSourceModule.class.getName() ) );
   }
 
-  public void testEditorRegistered()
-  {
+  public void testEditorRegistered() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(LegacyBandedMDXDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( LegacyBandedMDXDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
-    assertTrue(editor.canHandle(new LegacyBandedMDXDataFactory(new JndiConnectionProvider())));
+    assertTrue( editor.canHandle( new LegacyBandedMDXDataFactory( new JndiConnectionProvider() ) ) );
   }
 
-  public void testEditorRegistered2()
-  {
+  public void testEditorRegistered2() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(DenormalizedMDXDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( DenormalizedMDXDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
-    assertTrue(editor.canHandle(new DenormalizedMDXDataFactory(new JndiConnectionProvider())));
+    assertTrue( editor.canHandle( new DenormalizedMDXDataFactory( new JndiConnectionProvider() ) ) );
   }
 
-  public void testEditorRegistered3()
-  {
+  public void testEditorRegistered3() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(BandedMDXDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( BandedMDXDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
-    assertTrue(editor.canHandle(new BandedMDXDataFactory(new JndiConnectionProvider())));
+    assertTrue( editor.canHandle( new BandedMDXDataFactory( new JndiConnectionProvider() ) ) );
   }
 
 }

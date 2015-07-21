@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class QueryReadHandler extends AbstractXmlReadHandler
-{
+public class QueryReadHandler extends AbstractXmlReadHandler {
   private PropertyReadHandler query;
   private String queryName;
 
-  public QueryReadHandler()
-  {
+  public QueryReadHandler() {
   }
 
   /**
@@ -39,13 +37,11 @@ public class QueryReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    queryName = attrs.getValue(getUri(), "queryName");
-    if (queryName == null)
-    {
-      throw new ParseException("QueryName is required", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    queryName = attrs.getValue( getUri(), "queryName" );
+    if ( queryName == null ) {
+      throw new ParseException( "QueryName is required", getLocator() );
     }
   }
 
@@ -58,18 +54,16 @@ public class QueryReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("property".equals(tagName) && "query".equals(atts.getValue(uri, "name")))
-    {
+    if ( "property".equals( tagName ) && "query".equals( atts.getValue( uri, "name" ) ) ) {
       query = new PropertyReadHandler();
       return query;
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -77,38 +71,31 @@ public class QueryReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    if (query == null)
-    {
-      throw new ParseException("Query is not there", getLocator());
+    if ( query == null ) {
+      throw new ParseException( "Query is not there", getLocator() );
     }
   }
 
-  public String getQuery()
-  {
-    if (query == null)
-    {
+  public String getQuery() {
+    if ( query == null ) {
       return null;
     }
     return query.getResult();
   }
 
-  public String getQueryName()
-  {
+  public String getQueryName() {
     return queryName;
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

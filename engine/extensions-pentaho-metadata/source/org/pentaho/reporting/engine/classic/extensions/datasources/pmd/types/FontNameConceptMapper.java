@@ -21,10 +21,8 @@ import org.pentaho.metadata.model.concept.types.Font;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class FontNameConceptMapper implements ConceptQueryMapper
-{
-  public FontNameConceptMapper()
-  {
+public class FontNameConceptMapper implements ConceptQueryMapper {
+  public FontNameConceptMapper() {
   }
 
   /**
@@ -32,20 +30,16 @@ public class FontNameConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof Font == false)
-    {
+    if ( value instanceof Font == false ) {
       return null;
     }
 
-    if (type == null || Object.class.equals(type) || String.class.equals(type))
-    {
+    if ( type == null || Object.class.equals( type ) || String.class.equals( type ) ) {
       final Font fontSettings = (Font) value;
       return fontSettings.getName();
     }

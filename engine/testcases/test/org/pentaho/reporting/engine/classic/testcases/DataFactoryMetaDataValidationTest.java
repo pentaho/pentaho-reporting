@@ -17,46 +17,38 @@
 
 package org.pentaho.reporting.engine.classic.testcases;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.testsupport.base.MetaDataValidationTestBase;
 
-public class DataFactoryMetaDataValidationTest extends MetaDataValidationTestBase<DataFactoryMetaData>
-{
-  public DataFactoryMetaDataValidationTest()
-  {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DataFactoryMetaDataValidationTest extends MetaDataValidationTestBase<DataFactoryMetaData> {
+  public DataFactoryMetaDataValidationTest() {
   }
 
   @Test
-  public void testMetaData()
-  {
+  public void testMetaData() {
     DataFactoryMetaData[] m = DataFactoryRegistry.getInstance().getAll();
-    List list = super.performTest(m);
-    Assert.assertEquals(new ArrayList(), list);
+    List list = super.performTest( m );
+    Assert.assertEquals( new ArrayList(), list );
   }
 
-  protected void performTestOnElement(final DataFactoryMetaData metaData)
-  {
+  protected void performTestOnElement( final DataFactoryMetaData metaData ) {
     final String typeName = metaData.getName();
-    logger.debug("Processing " + typeName);
+    logger.debug( "Processing " + typeName );
 
-    try
-    {
-      if (metaData.isEditable())
-      {
+    try {
+      if ( metaData.isEditable() ) {
         final Object type = metaData.createEditor();
       }
-    }
-    catch (Exception e)
-    {
-      Assert.fail("metadata creation failed");
+    } catch ( Exception e ) {
+      Assert.fail( "metadata creation failed" );
     }
 
-    validate(metaData);
+    validate( metaData );
   }
 }

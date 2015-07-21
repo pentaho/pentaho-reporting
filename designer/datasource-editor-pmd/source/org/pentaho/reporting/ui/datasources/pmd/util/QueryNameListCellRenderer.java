@@ -17,30 +17,23 @@
 
 package org.pentaho.reporting.ui.datasources.pmd.util;
 
-import java.awt.Component;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.*;
+import java.awt.*;
 
-public class QueryNameListCellRenderer extends DefaultListCellRenderer
-{
-  public Component getListCellRendererComponent(final JList list,
-                                                final Object value,
-                                                final int index,
-                                                final boolean isSelected,
-                                                final boolean cellHasFocus)
-  {
-    final JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-    if (value != null)
-    {
-      final String queryName = ((DataSetQuery) value).getQueryName();
-      if (!"".equals(queryName))
-      {
-        listCellRendererComponent.setText(queryName);
-      }
-      else
-      {
-        listCellRendererComponent.setText(" ");
+public class QueryNameListCellRenderer extends DefaultListCellRenderer {
+  public Component getListCellRendererComponent( final JList list,
+                                                 final Object value,
+                                                 final int index,
+                                                 final boolean isSelected,
+                                                 final boolean cellHasFocus ) {
+    final JLabel listCellRendererComponent =
+      (JLabel) super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+    if ( value != null ) {
+      final String queryName = ( (DataSetQuery) value ).getQueryName();
+      if ( !"".equals( queryName ) ) {
+        listCellRendererComponent.setText( queryName );
+      } else {
+        listCellRendererComponent.setText( " " );
       }
     }
     return listCellRendererComponent;

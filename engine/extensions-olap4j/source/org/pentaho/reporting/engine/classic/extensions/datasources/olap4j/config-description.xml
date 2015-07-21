@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factories.namespace.driver" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factories.namespace.driver"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factories.tag.driver.connection" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factories.tag.driver.connection"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factory-prefix.built-in.driver" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factory-prefix.built-in.driver"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.writer.handler.sql-connection-provider.org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.DriverConnectionProvider" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.writer.handler.sql-connection-provider.org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.DriverConnectionProvider"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.olap4j-datafactory.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.olap4j-datafactory.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.olap4j-banded" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.olap4j-banded"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.olap4j-denormalized" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.olap4j-denormalized"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.olap4j-legacy-banded" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.olap4j-legacy-banded"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.DataSchemaDefinition.built-in.olap4j" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.DataSchemaDefinition.built-in.olap4j" global="true"
+       hidden="true">
     <description>Internal Configuration setting. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.olap4j" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.olap4j" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.toc.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterState;
@@ -27,34 +25,29 @@ import org.pentaho.reporting.engine.classic.extensions.toc.IndexElement;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-public class IndexElementWriteHandler extends AbstractElementWriteHandler
-{
-  public IndexElementWriteHandler()
-  {
+import java.io.IOException;
+
+public class IndexElementWriteHandler extends AbstractElementWriteHandler {
+  public IndexElementWriteHandler() {
   }
 
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element) throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element ) throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
-    if (xmlWriter == null)
-    {
+    if ( xmlWriter == null ) {
       throw new NullPointerException();
     }
-    if (element == null)
-    {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    writeSubReport(bundle, state, xmlWriter, (IndexElement) element);
+    writeSubReport( bundle, state, xmlWriter, (IndexElement) element );
   }
 }

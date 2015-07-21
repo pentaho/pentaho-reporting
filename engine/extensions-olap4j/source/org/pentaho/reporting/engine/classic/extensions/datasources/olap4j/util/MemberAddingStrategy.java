@@ -18,13 +18,12 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.util;
 
 
-import java.util.Collection;
-
 import org.olap4j.metadata.Member;
 
-public interface MemberAddingStrategy
-{
-  public void add(Member m);
+import java.util.Collection;
+
+public interface MemberAddingStrategy {
+  public void add( Member m );
 
   public Collection<Member> values();
 

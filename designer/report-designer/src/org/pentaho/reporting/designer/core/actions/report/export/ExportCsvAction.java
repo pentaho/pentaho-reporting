@@ -24,10 +24,8 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.csv.CSVTableExportP
  *
  * @author Ezequiel Cuellar
  */
-public final class ExportCsvAction extends AbstractExportAction
-{
-  public ExportCsvAction()
-  {
-    super(new CSVTableExportPlugin());
+public final class ExportCsvAction extends AbstractExportAction {
+  public ExportCsvAction() {
+    super( new CSVTableExportPlugin() );
   }
 }

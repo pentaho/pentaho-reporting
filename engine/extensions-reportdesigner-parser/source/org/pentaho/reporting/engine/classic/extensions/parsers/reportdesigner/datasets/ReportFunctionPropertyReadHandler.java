@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.datasets;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter.ObjectConverterFactory;
@@ -28,18 +25,18 @@ import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ReportFunctionPropertyReadHandler extends StringReadHandler
-{
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+public class ReportFunctionPropertyReadHandler extends StringReadHandler {
   private String propertyName;
   private BeanUtility beanUtility;
   private boolean array;
   private ArrayList properties;
 
-  public ReportFunctionPropertyReadHandler(final BeanUtility beanUtility)
-  {
-    if (beanUtility == null)
-    {
-      throw new NullPointerException("No current beanUtility");
+  public ReportFunctionPropertyReadHandler( final BeanUtility beanUtility ) {
+    if ( beanUtility == null ) {
+      throw new NullPointerException( "No current beanUtility" );
     }
 
     this.beanUtility = beanUtility;
@@ -52,17 +49,15 @@ public class ReportFunctionPropertyReadHandler extends StringReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    propertyName = attrs.getValue(getUri(), "name");
-    if (propertyName == null)
-    {
-      throw new ParseException("Required attribute 'name' is null.", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    propertyName = attrs.getValue( getUri(), "name" );
+    if ( propertyName == null ) {
+      throw new ParseException( "Required attribute 'name' is null.", getLocator() );
     }
 
     // yes, this is how the report designer parses this property, so we have to follow that strange road too
-    array = (attrs.getValue(getUri(), "array") != null);
+    array = ( attrs.getValue( getUri(), "array" ) != null );
   }
 
   /**
@@ -70,44 +65,35 @@ public class ReportFunctionPropertyReadHandler extends StringReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    try
-    {
-      final Class propertyType = beanUtility.getPropertyType(propertyName);
-      if (array == false)
-      {
+    try {
+      final Class propertyType = beanUtility.getPropertyType( propertyName );
+      if ( array == false ) {
         final String value = getResult();
-        final Object o = ObjectConverterFactory.convert(propertyType, value, getLocator());
-        beanUtility.setProperty(propertyName, o);
-      }
-      else
-      {
-        final Object[] value = (Object[]) Array.newInstance(propertyType, properties.size());
-        for (int i = 0; i < properties.size(); i++)
-        {
-          final ReportFunctionPropertyArrayReadHandler handler = (ReportFunctionPropertyArrayReadHandler) properties.get(i);
-          value[i] = handler.getObject();
+        final Object o = ObjectConverterFactory.convert( propertyType, value, getLocator() );
+        beanUtility.setProperty( propertyName, o );
+      } else {
+        final Object[] value = (Object[]) Array.newInstance( propertyType, properties.size() );
+        for ( int i = 0; i < properties.size(); i++ ) {
+          final ReportFunctionPropertyArrayReadHandler handler =
+            (ReportFunctionPropertyArrayReadHandler) properties.get( i );
+          value[ i ] = handler.getObject();
         }
-        beanUtility.setProperty(propertyName, value);
+        beanUtility.setProperty( propertyName, value );
       }
-    }
-    catch (BeanException e)
-    {
-      throw new ParseException("Failed to set property", getLocator());
+    } catch ( BeanException e ) {
+      throw new ParseException( "Failed to set property", getLocator() );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

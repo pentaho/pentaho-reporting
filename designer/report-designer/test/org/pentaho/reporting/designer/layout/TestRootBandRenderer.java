@@ -22,16 +22,13 @@ import org.pentaho.reporting.designer.core.editor.report.DesignerPageDrawable;
 import org.pentaho.reporting.designer.core.editor.report.layouting.RootBandRenderer;
 import org.pentaho.reporting.engine.classic.core.Band;
 
-public class TestRootBandRenderer extends RootBandRenderer
-{
-  public TestRootBandRenderer(final Band visualReportElement,
-                              final ReportRenderContext renderContext)
-  {
-    super(visualReportElement, renderContext);
+public class TestRootBandRenderer extends RootBandRenderer {
+  public TestRootBandRenderer( final Band visualReportElement,
+                               final ReportRenderContext renderContext ) {
+    super( visualReportElement, renderContext );
   }
 
-  public DesignerPageDrawable getLogicalPageDrawable()
-  {
+  public DesignerPageDrawable getLogicalPageDrawable() {
     return super.getLogicalPageDrawable();
   }
 }

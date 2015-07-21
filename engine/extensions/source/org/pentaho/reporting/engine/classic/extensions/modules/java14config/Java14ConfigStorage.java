@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.java14config;
 
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
-
 import org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigStorage;
 import org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigStoreException;
@@ -30,13 +24,18 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
 
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
 /**
  * A configuration storage provider which stores the entries using the JDK 1.4 configuration API.
  *
  * @author Thomas Morgner
  */
-public class Java14ConfigStorage implements ConfigStorage
-{
+public class Java14ConfigStorage implements ConfigStorage {
   /**
    * The preferences node used to store the configuration.
    */
@@ -47,8 +46,7 @@ public class Java14ConfigStorage implements ConfigStorage
    *
    * @param base the base node.
    */
-  public Java14ConfigStorage(final Preferences base)
-  {
+  public Java14ConfigStorage( final Preferences base ) {
     this.base = base;
   }
 
@@ -59,33 +57,26 @@ public class Java14ConfigStorage implements ConfigStorage
    * @param config     the properties which should be stored.
    * @throws ConfigStoreException if an error occured.
    */
-  public void store(final String configPath, final Configuration config)
-      throws ConfigStoreException
-  {
-    if (ConfigFactory.isValidPath(configPath) == false)
-    {
-      throw new IllegalArgumentException("The give path is not valid.");
+  public void store( final String configPath, final Configuration config )
+    throws ConfigStoreException {
+    if ( ConfigFactory.isValidPath( configPath ) == false ) {
+      throw new IllegalArgumentException( "The give path is not valid." );
     }
 
-    try
-    {
+    try {
       final Enumeration keys = config.getConfigProperties();
-      final Preferences pref = base.node(configPath);
+      final Preferences pref = base.node( configPath );
       pref.clear();
-      while (keys.hasMoreElements())
-      {
+      while ( keys.hasMoreElements() ) {
         final String key = (String) keys.nextElement();
-        final String value = config.getConfigProperty(key);
-        if (value != null)
-        {
-          pref.put(key, value);
+        final String value = config.getConfigProperty( key );
+        if ( value != null ) {
+          pref.put( key, value );
         }
       }
       pref.sync();
-    }
-    catch (BackingStoreException be)
-    {
-      throw new ConfigStoreException("Failed to store config" + configPath, be);
+    } catch ( BackingStoreException be ) {
+      throw new ConfigStoreException( "Failed to store config" + configPath, be );
     }
   }
 
@@ -97,41 +88,33 @@ public class Java14ConfigStorage implements ConfigStorage
    * @return the loaded properties
    * @throws ConfigStoreException if an error occured.
    */
-  public Configuration load(final String configPath, final Configuration defaults)
-      throws ConfigStoreException
-  {
-    if (ConfigFactory.isValidPath(configPath) == false)
-    {
-      throw new IllegalArgumentException("The give path is not valid.");
+  public Configuration load( final String configPath, final Configuration defaults )
+    throws ConfigStoreException {
+    if ( ConfigFactory.isValidPath( configPath ) == false ) {
+      throw new IllegalArgumentException( "The give path is not valid." );
     }
 
-    try
-    {
+    try {
       final Properties props = new Properties();
-      final Preferences pref = base.node(configPath);
+      final Preferences pref = base.node( configPath );
       final String[] keysArray = pref.keys();
-      for (int i = 0; i < keysArray.length; i++)
-      {
-        final String key = keysArray[i];
-        final String value = pref.get(key, null);
-        if (value != null)
-        {
-          props.setProperty(key, value);
+      for ( int i = 0; i < keysArray.length; i++ ) {
+        final String key = keysArray[ i ];
+        final String value = pref.get( key, null );
+        if ( value != null ) {
+          props.setProperty( key, value );
         }
       }
 
-      final ModifiableConfiguration config = new HierarchicalConfiguration(defaults);
+      final ModifiableConfiguration config = new HierarchicalConfiguration( defaults );
       final Iterator keys = props.keySet().iterator();
-      while (keys.hasNext())
-      {
+      while ( keys.hasNext() ) {
         final String key = (String) keys.next();
-        config.setConfigProperty(key, props.getProperty(key));
+        config.setConfigProperty( key, props.getProperty( key ) );
       }
       return config;
-    }
-    catch (BackingStoreException be)
-    {
-      throw new ConfigStoreException("Failed to load config" + configPath, be);
+    } catch ( BackingStoreException be ) {
+      throw new ConfigStoreException( "Failed to load config" + configPath, be );
     }
   }
 
@@ -141,19 +124,14 @@ public class Java14ConfigStorage implements ConfigStorage
    * @param configPath the configuration path to the property storage.
    * @return true, if there are properties under this path, false otherwise.
    */
-  public boolean isAvailable(final String configPath)
-  {
-    if (ConfigFactory.isValidPath(configPath) == false)
-    {
-      throw new IllegalArgumentException("The give path is not valid.");
+  public boolean isAvailable( final String configPath ) {
+    if ( ConfigFactory.isValidPath( configPath ) == false ) {
+      throw new IllegalArgumentException( "The give path is not valid." );
     }
 
-    try
-    {
-      return base.nodeExists(configPath);
-    }
-    catch (BackingStoreException bse)
-    {
+    try {
+      return base.nodeExists( configPath );
+    } catch ( BackingStoreException bse ) {
       return false;
     }
   }

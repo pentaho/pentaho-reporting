@@ -17,45 +17,37 @@
 
 package org.pentaho.reporting.ui.datasources.table;
 
-import javax.swing.DefaultCellEditor;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
-public class EditableHeaderTableColumn extends TableColumn
-{
+public class EditableHeaderTableColumn extends TableColumn {
   private TableCellEditor headerEditor;
   private boolean isHeaderEditable;
 
-  public EditableHeaderTableColumn(final int modelIndex)
-  {
-    super(modelIndex);
-    setHeaderEditor(createDefaultHeaderEditor());
+  public EditableHeaderTableColumn( final int modelIndex ) {
+    super( modelIndex );
+    setHeaderEditor( createDefaultHeaderEditor() );
     isHeaderEditable = true;
   }
 
-  public void setHeaderEditor(final TableCellEditor headerEditor)
-  {
+  public void setHeaderEditor( final TableCellEditor headerEditor ) {
     this.headerEditor = headerEditor;
   }
 
-  public TableCellEditor getHeaderEditor()
-  {
+  public TableCellEditor getHeaderEditor() {
     return headerEditor;
   }
 
-  public void setHeaderEditable(final boolean isEditable)
-  {
+  public void setHeaderEditable( final boolean isEditable ) {
     isHeaderEditable = isEditable;
   }
 
-  public boolean isHeaderEditable()
-  {
+  public boolean isHeaderEditable() {
     return isHeaderEditable;
   }
 
-  protected TableCellEditor createDefaultHeaderEditor()
-  {
-    return new DefaultCellEditor(new JTextField());
+  protected TableCellEditor createDefaultHeaderEditor() {
+    return new DefaultCellEditor( new JTextField() );
   }
 }

@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.scriptable;
 
-import java.util.LinkedHashMap;
-import javax.swing.table.TableModel;
-
 import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;
 import org.apache.commons.logging.Log;
@@ -34,76 +31,65 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import javax.swing.table.TableModel;
+import java.util.LinkedHashMap;
+
 /**
  * A datafactory that uses a bean-scripting framework script to produce a tablemodel.
  *
  * @author Thomas Morgner
  */
-public class ScriptableDataFactory extends AbstractDataFactory
-{
-  private static final Log logger = LogFactory.getLog(ScriptableDataFactory.class);
-  private LinkedHashMap<String,String> queries;
+public class ScriptableDataFactory extends AbstractDataFactory {
+  private static final Log logger = LogFactory.getLog( ScriptableDataFactory.class );
+  private LinkedHashMap<String, String> queries;
   private String language;
   private transient BSFManager interpreter;
   private transient LegacyDataRowWrapper dataRowWrapper;
   private String script;
   private String shutdownScript;
 
-  public ScriptableDataFactory()
-  {
-    queries = new LinkedHashMap<String,String>();
+  public ScriptableDataFactory() {
+    queries = new LinkedHashMap<String, String>();
   }
 
-  public String getLanguage()
-  {
+  public String getLanguage() {
     return language;
   }
 
-  public void setLanguage(final String language)
-  {
+  public void setLanguage( final String language ) {
     this.language = language;
   }
 
-  public void setQuery(final String name, final String value)
-  {
-    if (value == null)
-    {
-      queries.remove(name);
-    }
-    else
-    {
-      queries.put(name, value);
+  public void setQuery( final String name, final String value ) {
+    if ( value == null ) {
+      queries.remove( name );
+    } else {
+      queries.put( name, value );
     }
   }
 
-  public String getScript()
-  {
+  public String getScript() {
     return script;
   }
 
-  public void setScript(final String script)
-  {
+  public void setScript( final String script ) {
     this.script = script;
   }
 
-  public String getShutdownScript()
-  {
+  public String getShutdownScript() {
     return shutdownScript;
   }
 
-  public void setShutdownScript(final String shutdownScript)
-  {
+  public void setShutdownScript( final String shutdownScript ) {
     this.shutdownScript = shutdownScript;
   }
 
-  public String getQuery(final String name)
-  {
-    return queries.get(name);
+  public String getQuery( final String name ) {
+    return queries.get( name );
   }
 
-  public String[] getQueryNames()
-  {
-    return queries.keySet().toArray(new String[queries.size()]);
+  public String[] getQueryNames() {
+    return queries.keySet().toArray( new String[ queries.size() ] );
   }
 
 
@@ -112,10 +98,9 @@ public class ScriptableDataFactory extends AbstractDataFactory
    *
    * @return the interpreter or null, if there was an error.
    */
-  protected BSFManager createInterpreter() throws BSFException
-  {
+  protected BSFManager createInterpreter() throws BSFException {
     final BSFManager interpreter = new BSFManager();
-    initializeInterpreter(interpreter);
+    initializeInterpreter( interpreter );
     return interpreter;
   }
 
@@ -125,19 +110,18 @@ public class ScriptableDataFactory extends AbstractDataFactory
    * @param interpreter the BSF-Manager that should be initialized.
    * @throws BSFException if an error occured.
    */
-  protected void initializeInterpreter(final BSFManager interpreter)
-      throws BSFException
-  {
+  protected void initializeInterpreter( final BSFManager interpreter )
+    throws BSFException {
     dataRowWrapper = new LegacyDataRowWrapper();
-    interpreter.declareBean("dataRow", dataRowWrapper, DataRow.class); //$NON-NLS-1$
-    interpreter.declareBean("configuration", getConfiguration(), Configuration.class); //$NON-NLS-1$
-    interpreter.declareBean("contextKey", getContextKey(), ResourceKey.class); //$NON-NLS-1$
-    interpreter.declareBean("resourceManager", getResourceManager(), ResourceManager.class); //$NON-NLS-1$
-    interpreter.declareBean("resourceBundleFactory", getResourceBundleFactory(), ResourceBundleFactory.class); //$NON-NLS-1$
-    interpreter.declareBean("dataFactoryContext", getDataFactoryContext(), ResourceBundleFactory.class); //$NON-NLS-1$
-    if (script != null)
-    {
-      interpreter.exec(getLanguage(), "startup-script", 1, 1, getScript()); //$NON-NLS-1$
+    interpreter.declareBean( "dataRow", dataRowWrapper, DataRow.class ); //$NON-NLS-1$
+    interpreter.declareBean( "configuration", getConfiguration(), Configuration.class ); //$NON-NLS-1$
+    interpreter.declareBean( "contextKey", getContextKey(), ResourceKey.class ); //$NON-NLS-1$
+    interpreter.declareBean( "resourceManager", getResourceManager(), ResourceManager.class ); //$NON-NLS-1$
+    interpreter
+      .declareBean( "resourceBundleFactory", getResourceBundleFactory(), ResourceBundleFactory.class ); //$NON-NLS-1$
+    interpreter.declareBean( "dataFactoryContext", getDataFactoryContext(), ResourceBundleFactory.class ); //$NON-NLS-1$
+    if ( script != null ) {
+      interpreter.exec( getLanguage(), "startup-script", 1, 1, getScript() ); //$NON-NLS-1$
     }
   }
 
@@ -153,51 +137,38 @@ public class ScriptableDataFactory extends AbstractDataFactory
    * @return the result of the query as table model.
    * @throws ReportDataFactoryException if an error occured while performing the query.
    */
-  public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-  {
-    final String queryScript = queries.get(query);
-    if (queryScript == null)
-    {
-      throw new ReportDataFactoryException("No such query");
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    final String queryScript = queries.get( query );
+    if ( queryScript == null ) {
+      throw new ReportDataFactoryException( "No such query" );
     }
 
-    if (interpreter == null)
-    {
-      try
-      {
+    if ( interpreter == null ) {
+      try {
         this.interpreter = createInterpreter();
-      }
-      catch (BSFException e)
-      {
-        throw new ReportDataFactoryException("Failed to initialize the BSF-Framework", e);
+      } catch ( BSFException e ) {
+        throw new ReportDataFactoryException( "Failed to initialize the BSF-Framework", e );
       }
     }
 
-    try
-    {
-      dataRowWrapper.setParent(parameters);
-      final Object o = interpreter.eval(getLanguage(), "expression", 1, 1, queryScript);
-      if (o instanceof TableModel == false)
-      {
-        throw new ReportDataFactoryException("Resulting value is not a tablemodel");
+    try {
+      dataRowWrapper.setParent( parameters );
+      final Object o = interpreter.eval( getLanguage(), "expression", 1, 1, queryScript );
+      if ( o instanceof TableModel == false ) {
+        throw new ReportDataFactoryException( "Resulting value is not a tablemodel" );
       }
       return (TableModel) o; //$NON-NLS-1$
-    }
-    catch (ReportDataFactoryException rde)
-    {
+    } catch ( ReportDataFactoryException rde ) {
       throw rde;
-    }
-    catch (Exception e)
-    {
-      throw new ReportDataFactoryException("Evaluation error", e);
+    } catch ( Exception e ) {
+      throw new ReportDataFactoryException( "Evaluation error", e );
     }
 
   }
 
-  public ScriptableDataFactory clone()
-  {
+  public ScriptableDataFactory clone() {
     final ScriptableDataFactory dataFactory = (ScriptableDataFactory) super.clone();
-    dataFactory.queries = (LinkedHashMap<String,String>) queries.clone();
+    dataFactory.queries = (LinkedHashMap<String, String>) queries.clone();
     dataFactory.interpreter = null;
     dataFactory.dataRowWrapper = null;
     return dataFactory;
@@ -209,25 +180,19 @@ public class ScriptableDataFactory extends AbstractDataFactory
    *
    * @return a copy of the data factory.
    */
-  public DataFactory derive()
-  {
+  public DataFactory derive() {
     return clone();
   }
 
   /**
    * Closes the data factory and frees all resources held by this instance.
    */
-  public void close()
-  {
-    if (this.interpreter != null && this.shutdownScript != null)
-    {
-      try
-      {
-        this.interpreter.eval(getLanguage(), "shutdown-script", 1, 1, getShutdownScript());
-      }
-      catch (BSFException e)
-      {
-        logger.warn("Failed to evaluate shutdown-script", e);
+  public void close() {
+    if ( this.interpreter != null && this.shutdownScript != null ) {
+      try {
+        this.interpreter.eval( getLanguage(), "shutdown-script", 1, 1, getShutdownScript() );
+      } catch ( BSFException e ) {
+        logger.warn( "Failed to evaluate shutdown-script", e );
       }
     }
     this.dataRowWrapper = null;
@@ -241,16 +206,13 @@ public class ScriptableDataFactory extends AbstractDataFactory
    * @param parameters
    * @return
    */
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    return queries.containsKey(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    return queries.containsKey( query );
   }
 
-  public void cancelRunningQuery()
-  {
+  public void cancelRunningQuery() {
     // not all scripting engines actually support that.
-    if (interpreter != null)
-    {
+    if ( interpreter != null ) {
       interpreter.terminate();
     }
   }

@@ -23,8 +23,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ConfigReadHandler extends AbstractXmlReadHandler
-{
+public class ConfigReadHandler extends AbstractXmlReadHandler {
   private String baseUrl;
   private String baseUrlField;
   private String username;
@@ -35,8 +34,7 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
   private boolean useLocalCall;
   private boolean sugarMode;
 
-  public ConfigReadHandler()
-  {
+  public ConfigReadHandler() {
   }
 
   /**
@@ -45,52 +43,45 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    baseUrl = attrs.getValue(getUri(), "base-url");
-    baseUrlField = attrs.getValue(getUri(), "base-url-field");
-    path = attrs.getValue(getUri(), "path");
-    file = attrs.getValue(getUri(), "file");
-    solution = attrs.getValue(getUri(), "solution");
-    username = attrs.getValue(getUri(), "username");
-    password = PasswordEncryptionService.getInstance().decrypt(getRootHandler(), attrs.getValue(getUri(), "password"));
-    useLocalCall = ParserUtil.parseBoolean(attrs.getValue(getUri(), "use-local-call"), true);
-    sugarMode = ParserUtil.parseBoolean(attrs.getValue(getUri(), "is-sugar-mode"), false);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    baseUrl = attrs.getValue( getUri(), "base-url" );
+    baseUrlField = attrs.getValue( getUri(), "base-url-field" );
+    path = attrs.getValue( getUri(), "path" );
+    file = attrs.getValue( getUri(), "file" );
+    solution = attrs.getValue( getUri(), "solution" );
+    username = attrs.getValue( getUri(), "username" );
+    password =
+      PasswordEncryptionService.getInstance().decrypt( getRootHandler(), attrs.getValue( getUri(), "password" ) );
+    useLocalCall = ParserUtil.parseBoolean( attrs.getValue( getUri(), "use-local-call" ), true );
+    sugarMode = ParserUtil.parseBoolean( attrs.getValue( getUri(), "is-sugar-mode" ), false );
   }
 
-  public String getBaseUrl()
-  {
+  public String getBaseUrl() {
     return baseUrl;
   }
 
-  public String getBaseUrlField()
-  {
+  public String getBaseUrlField() {
     return baseUrlField;
   }
 
-  public String getUsername()
-  {
+  public String getUsername() {
     return username;
   }
 
-  public String getPassword()
-  {
+  public String getPassword() {
     return password;
   }
 
-  public String getFile()
-  {
+  public String getFile() {
     return file;
   }
 
-  public String getPath()
-  {
+  public String getPath() {
     return path;
   }
 
-  public String getSolution()
-  {
+  public String getSolution() {
     return solution;
   }
 
@@ -100,13 +91,11 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 
-  public boolean isUseLocalCall()
-  {
+  public boolean isUseLocalCall() {
     return useLocalCall;
   }
 

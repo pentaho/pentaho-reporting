@@ -25,52 +25,39 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
  *
  * @author : Thomas Morgner
  */
-public class FontStrikethroughConceptMapper implements ConceptQueryMapper
-{
-  public FontStrikethroughConceptMapper()
-  {
+public class FontStrikethroughConceptMapper implements ConceptQueryMapper {
+  public FontStrikethroughConceptMapper() {
   }
 
-  public Object getValue(final Object value,
-                         final Class type,
-                         final DataAttributeContext context)
-  {
-    if (value == null) return null;
-
-    final int nvalue;
-    if (value instanceof String)
-    {
-      try
-      {
-        nvalue = Integer.parseInt(String.valueOf(value));
-      }
-      catch (NumberFormatException nfe)
-      {
-        return null;
-      }
-    }
-    else if (value instanceof Number)
-    {
-      final Number numvalue = (Number) value;
-      nvalue = numvalue.intValue();
-    }
-    else
-    {
+  public Object getValue( final Object value,
+                          final Class type,
+                          final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
-    if (Boolean.class.isAssignableFrom(type))
-    {
-      if ((nvalue & 8) == 8)
-      {
+
+    final int nvalue;
+    if ( value instanceof String ) {
+      try {
+        nvalue = Integer.parseInt( String.valueOf( value ) );
+      } catch ( NumberFormatException nfe ) {
+        return null;
+      }
+    } else if ( value instanceof Number ) {
+      final Number numvalue = (Number) value;
+      nvalue = numvalue.intValue();
+    } else {
+      return null;
+    }
+    if ( Boolean.class.isAssignableFrom( type ) ) {
+      if ( ( nvalue & 8 ) == 8 ) {
         return Boolean.TRUE;
       }
       return Boolean.FALSE;
     }
 
-    if (String.class.isAssignableFrom(type))
-    {
-      if ((nvalue & 8) == 8)
-      {
+    if ( String.class.isAssignableFrom( type ) ) {
+      if ( ( nvalue & 8 ) == 8 ) {
         return "true";
       }
       return "false";

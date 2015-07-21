@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.designer.core.editor.report;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public interface ReportElementEditor
-{
+public interface ReportElementEditor {
   public ReportElementInlineEditor createInlineEditor();
 
   public ReportElementDragHandler createDragHandler();

@@ -17,35 +17,28 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types;
 
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
+import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class StringConceptMapper implements ConceptQueryMapper
-{
-  public StringConceptMapper()
-  {
+public class StringConceptMapper implements ConceptQueryMapper {
+  public StringConceptMapper() {
   }
 
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof String == false)
-    {
+    if ( value instanceof String == false ) {
       return null;
     }
 
-    if (type == null)
-    {
+    if ( type == null ) {
       return value;
     }
 
 
-    if (String.class.equals(type))
-    {
+    if ( String.class.equals( type ) ) {
       return value.toString();
     }
     return null;

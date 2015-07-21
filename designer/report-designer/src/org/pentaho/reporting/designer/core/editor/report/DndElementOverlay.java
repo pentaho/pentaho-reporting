@@ -17,40 +17,31 @@
 
 package org.pentaho.reporting.designer.core.editor.report;
 
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.font.LineMetrics;
-import javax.swing.Icon;
-import javax.swing.JLabel;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.ComponentUI;
+import java.awt.*;
+import java.awt.font.LineMetrics;
 
 /**
  * This is the graphical representation of a element that is currently dragged into a editor-pane.
  *
  * @author Thomas Morgner
  */
-public class DndElementOverlay extends JLabel
-{
+public class DndElementOverlay extends JLabel {
   private float zoom;
 
-  public DndElementOverlay()
-  {
-    setDoubleBuffered(true);
-    setOpaque(false);
+  public DndElementOverlay() {
+    setDoubleBuffered( true );
+    setOpaque( false );
     zoom = 1;
   }
 
-  public float getZoom()
-  {
+  public float getZoom() {
     return zoom;
   }
 
-  public void setZoom(final float zoom)
-  {
+  public void setZoom( final float zoom ) {
     this.zoom = zoom;
   }
 
@@ -63,10 +54,10 @@ public class DndElementOverlay extends JLabel
    * @see #setPreferredSize
    * @see ComponentUI
    */
-  public Dimension getPreferredSize()
-  {
+  public Dimension getPreferredSize() {
     final Dimension preferredSize = super.getPreferredSize();
-    preferredSize.setSize(Math.ceil(preferredSize.getWidth() * zoom), Math.ceil(preferredSize.getHeight() * zoom));
+    preferredSize
+      .setSize( Math.ceil( preferredSize.getWidth() * zoom ), Math.ceil( preferredSize.getHeight() * zoom ) );
     return preferredSize;
   }
 
@@ -79,10 +70,10 @@ public class DndElementOverlay extends JLabel
    * @see #setMaximumSize
    * @see ComponentUI
    */
-  public Dimension getMaximumSize()
-  {
+  public Dimension getMaximumSize() {
     final Dimension preferredSize = super.getMaximumSize();
-    preferredSize.setSize(Math.ceil(preferredSize.getWidth() * zoom), Math.ceil(preferredSize.getHeight() * zoom));
+    preferredSize
+      .setSize( Math.ceil( preferredSize.getWidth() * zoom ), Math.ceil( preferredSize.getHeight() * zoom ) );
     return preferredSize;
   }
 
@@ -95,10 +86,10 @@ public class DndElementOverlay extends JLabel
    * @see #setMinimumSize
    * @see ComponentUI
    */
-  public Dimension getMinimumSize()
-  {
+  public Dimension getMinimumSize() {
     final Dimension preferredSize = super.getMinimumSize();
-    preferredSize.setSize(Math.ceil(preferredSize.getWidth() * zoom), Math.ceil(preferredSize.getHeight() * zoom));
+    preferredSize
+      .setSize( Math.ceil( preferredSize.getWidth() * zoom ), Math.ceil( preferredSize.getHeight() * zoom ) );
     return preferredSize;
   }
 
@@ -120,50 +111,43 @@ public class DndElementOverlay extends JLabel
    * @see #getComponentGraphics
    * @see #repaint
    */
-  public void paintComponent(final Graphics g)
-  {
+  public void paintComponent( final Graphics g ) {
     final Graphics2D g2 = (Graphics2D) g;
-    g2.scale(zoom, zoom);
-    g2.setColor(getBackground());
-    g2.fillRect(0, 0, getWidth(), getHeight());
+    g2.scale( zoom, zoom );
+    g2.setColor( getBackground() );
+    g2.fillRect( 0, 0, getWidth(), getHeight() );
 
-    g2.setColor(getForeground());
+    g2.setColor( getForeground() );
     final Icon icon = getIcon();
     final int gap = getIconTextGap();
     final String text = getText();
     final Insets insets = getInsets();
-    if (icon != null && text != null)
-    {
-      icon.paintIcon(this, g2, insets.left, insets.top);
-      g2.setFont(getFont());
+    if ( icon != null && text != null ) {
+      icon.paintIcon( this, g2, insets.left, insets.top );
+      g2.setFont( getFont() );
       final FontMetrics fontMetrics = g2.getFontMetrics();
-      final LineMetrics lineMetrics = fontMetrics.getLineMetrics(text, g2);
+      final LineMetrics lineMetrics = fontMetrics.getLineMetrics( text, g2 );
       final float baseLine = lineMetrics.getAscent();
       final float iconWidth = icon.getIconWidth();
       final float textX = insets.left + gap + iconWidth;
       final float iconHeight = icon.getIconHeight();
-      final float textY = insets.top + baseLine + (iconHeight - lineMetrics.getHeight());
-      g2.drawString(text, textX, textY);
-    }
-    else if (icon != null)
-    {
-      icon.paintIcon(this, g2, insets.left, insets.top);
-    }
-    else if (text != null)
-    {
-      g2.setFont(getFont());
+      final float textY = insets.top + baseLine + ( iconHeight - lineMetrics.getHeight() );
+      g2.drawString( text, textX, textY );
+    } else if ( icon != null ) {
+      icon.paintIcon( this, g2, insets.left, insets.top );
+    } else if ( text != null ) {
+      g2.setFont( getFont() );
       final FontMetrics fontMetrics = g2.getFontMetrics();
-      final LineMetrics lineMetrics = fontMetrics.getLineMetrics(text, g2);
+      final LineMetrics lineMetrics = fontMetrics.getLineMetrics( text, g2 );
       final float baseLine = lineMetrics.getAscent();
       final int textX = insets.left;
       final float textY = insets.top + baseLine;
-      g2.drawString(text, textX, textY);
+      g2.drawString( text, textX, textY );
     }
 
     final Border border = getBorder();
-    if (border != null)
-    {
-      border.paintBorder(this, g2, 0, 0, (int) (getWidth() / zoom), (int) (getHeight() / zoom));
+    if ( border != null ) {
+      border.paintBorder( this, g2, 0, 0, (int) ( getWidth() / zoom ), (int) ( getHeight() / zoom ) );
     }
     g2.dispose();
   }

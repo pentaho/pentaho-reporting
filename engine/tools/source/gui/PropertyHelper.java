@@ -19,8 +19,7 @@ package gui;
 
 import java.io.PrintWriter;
 
-public class PropertyHelper
-{
+public class PropertyHelper {
   /**
    * A constant defining that text should be escaped in a way which is suitable for property keys.
    */
@@ -42,75 +41,58 @@ public class PropertyHelper
    * @param escapeMode the mode that should be applied.
    * @param writer     the writer that should receive the content.
    */
-  public static void saveConvert(final String text,
-                                 final int escapeMode,
-                                 final PrintWriter writer)
-  {
-    if (text == null)
-    {
+  public static void saveConvert( final String text,
+                                  final int escapeMode,
+                                  final PrintWriter writer ) {
+    if ( text == null ) {
       return;
     }
-    
-    final char[] string = text.toCharArray();
-    final char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7',
-        '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-    for (int x = 0; x < string.length; x++)
-    {
-      final char aChar = string[x];
-      switch (aChar)
-      {
-        case ' ':
-        {
-          if ((escapeMode != ESCAPE_COMMENT) &&
-              (x == 0 || escapeMode == ESCAPE_KEY))
-          {
-            writer.print('\\');
+    final char[] string = text.toCharArray();
+    final char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7',
+      '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
+    for ( int x = 0; x < string.length; x++ ) {
+      final char aChar = string[ x ];
+      switch( aChar ) {
+        case ' ': {
+          if ( ( escapeMode != ESCAPE_COMMENT ) &&
+            ( x == 0 || escapeMode == ESCAPE_KEY ) ) {
+            writer.print( '\\' );
           }
-          writer.print(' ');
+          writer.print( ' ' );
           break;
         }
-        case '\\':
-        {
-          writer.print('\\');
-          writer.print('\\');
+        case '\\': {
+          writer.print( '\\' );
+          writer.print( '\\' );
           break;
         }
-        case '\t':
-        {
-          if (escapeMode == ESCAPE_COMMENT)
-          {
-            writer.print(aChar);
-          }
-          else
-          {
-            writer.print('\\');
-            writer.print('t');
+        case '\t': {
+          if ( escapeMode == ESCAPE_COMMENT ) {
+            writer.print( aChar );
+          } else {
+            writer.print( '\\' );
+            writer.print( 't' );
           }
           break;
         }
-        case '\n':
-        {
-          writer.print('\\');
-          writer.print('n');
+        case '\n': {
+          writer.print( '\\' );
+          writer.print( 'n' );
           break;
         }
-        case '\r':
-        {
-          writer.print('\\');
-          writer.print('r');
+        case '\r': {
+          writer.print( '\\' );
+          writer.print( 'r' );
           break;
         }
-        case '\f':
-        {
-          if (escapeMode == ESCAPE_COMMENT)
-          {
-            writer.print(aChar);
-          }
-          else
-          {
-            writer.print('\\');
-            writer.print('f');
+        case '\f': {
+          if ( escapeMode == ESCAPE_COMMENT ) {
+            writer.print( aChar );
+          } else {
+            writer.print( '\\' );
+            writer.print( 'f' );
           }
           break;
         }
@@ -118,32 +100,25 @@ public class PropertyHelper
         case '"':
         case '!':
         case '=':
-        case ':':
-        {
-          if (escapeMode == ESCAPE_COMMENT)
-          {
-            writer.print(aChar);
-          }
-          else
-          {
-            writer.print('\\');
-            writer.print(aChar);
+        case ':': {
+          if ( escapeMode == ESCAPE_COMMENT ) {
+            writer.print( aChar );
+          } else {
+            writer.print( '\\' );
+            writer.print( aChar );
           }
           break;
         }
         default:
-          if ((aChar < 0x0020) || (aChar > 0x007e))
-          {
-            writer.print('\\');
-            writer.print('u');
-            writer.print(hexChars[(aChar >> 12) & 0xF]);
-            writer.print(hexChars[(aChar >> 8) & 0xF]);
-            writer.print(hexChars[(aChar >> 4) & 0xF]);
-            writer.print(hexChars[aChar & 0xF]);
-          }
-          else
-          {
-            writer.print(aChar);
+          if ( ( aChar < 0x0020 ) || ( aChar > 0x007e ) ) {
+            writer.print( '\\' );
+            writer.print( 'u' );
+            writer.print( hexChars[ ( aChar >> 12 ) & 0xF ] );
+            writer.print( hexChars[ ( aChar >> 8 ) & 0xF ] );
+            writer.print( hexChars[ ( aChar >> 4 ) & 0xF ] );
+            writer.print( hexChars[ aChar & 0xF ] );
+          } else {
+            writer.print( aChar );
           }
       }
     }

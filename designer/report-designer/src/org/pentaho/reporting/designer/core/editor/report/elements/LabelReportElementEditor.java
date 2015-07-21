@@ -17,35 +17,30 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import javax.swing.JComponent;
-
 import org.pentaho.reporting.designer.core.editor.report.ReportElementDragHandler;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditor;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEditor;
+
+import javax.swing.*;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class LabelReportElementEditor implements ReportElementEditor
-{
-  public LabelReportElementEditor()
-  {
+public class LabelReportElementEditor implements ReportElementEditor {
+  public LabelReportElementEditor() {
   }
 
-  public ReportElementInlineEditor createInlineEditor()
-  {
+  public ReportElementInlineEditor createInlineEditor() {
     return new LabelReportElementInlineEditor();
   }
 
-  public ReportElementDragHandler createDragHandler()
-  {
+  public ReportElementDragHandler createDragHandler() {
     return new DefaultReportElementDragHandler();
   }
 
-  public JComponent createPropertiesPane()
-  {
+  public JComponent createPropertiesPane() {
     return null;
   }
 }

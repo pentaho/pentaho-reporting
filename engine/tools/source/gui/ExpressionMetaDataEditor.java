@@ -17,268 +17,212 @@
 
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.Arrays;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-public class ExpressionMetaDataEditor extends JFrame
-{
-  private class ShowPropertiesAction extends AbstractAction
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.Arrays;
+
+public class ExpressionMetaDataEditor extends JFrame {
+  private class ShowPropertiesAction extends AbstractAction {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private ShowPropertiesAction()
-    {
-      putValue(Action.NAME, "Show Properties");
+    private ShowPropertiesAction() {
+      putValue( Action.NAME, "Show Properties" );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       StringBuffer completeText = new StringBuffer();
       final int[] selectedRows = expressionsTable.getSelectedRows();
-      for (int i = 0; i < selectedRows.length; i++)
-      {
-        final int selectedRow = selectedRows[i];
-        final int modelRow = expressionsTable.convertRowIndexToModel(selectedRow);
-        final EditableExpressionMetaData data = metaData[modelRow];
-        data.sort(expressionsTableModel.getLocale());
-        final String text = data.printBundleText(expressionsTableModel.getLocale());
-        System.out.println("# Printing metadata for " + metaData[modelRow].getName());
-        System.out.println(text);
-        completeText.append("# Printing metadata for " + metaData[modelRow].getName());
-        completeText.append("\n");
-        completeText.append(text);
+      for ( int i = 0; i < selectedRows.length; i++ ) {
+        final int selectedRow = selectedRows[ i ];
+        final int modelRow = expressionsTable.convertRowIndexToModel( selectedRow );
+        final EditableExpressionMetaData data = metaData[ modelRow ];
+        data.sort( expressionsTableModel.getLocale() );
+        final String text = data.printBundleText( expressionsTableModel.getLocale() );
+        System.out.println( "# Printing metadata for " + metaData[ modelRow ].getName() );
+        System.out.println( text );
+        completeText.append( "# Printing metadata for " + metaData[ modelRow ].getName() );
+        completeText.append( "\n" );
+        completeText.append( text );
       }
 
-      dialog.showText(completeText.toString());
+      dialog.showText( completeText.toString() );
     }
   }
 
-  private class ShowModifiedAction extends AbstractAction
-  {
+  private class ShowModifiedAction extends AbstractAction {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private ShowModifiedAction()
-    {
-      putValue(Action.NAME, "Show Modified");
+    private ShowModifiedAction() {
+      putValue( Action.NAME, "Show Modified" );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       StringBuffer completeText = new StringBuffer();
-      for (int modelRow = 0; modelRow < metaData.length; modelRow++)
-      {
-        final EditableExpressionMetaData data = metaData[modelRow];
-        if (data.isModified() == false)
-        {
+      for ( int modelRow = 0; modelRow < metaData.length; modelRow++ ) {
+        final EditableExpressionMetaData data = metaData[ modelRow ];
+        if ( data.isModified() == false ) {
           continue;
         }
-        data.sort(expressionsTableModel.getLocale());
-        final String text = data.printBundleText(expressionsTableModel.getLocale());
-        System.out.println("# Printing metadata for " + data.getName());
-        System.out.println(text);
-        completeText.append("# Printing metadata for " + data.getName());
-        completeText.append("\n");
-        completeText.append(text);
+        data.sort( expressionsTableModel.getLocale() );
+        final String text = data.printBundleText( expressionsTableModel.getLocale() );
+        System.out.println( "# Printing metadata for " + data.getName() );
+        System.out.println( text );
+        completeText.append( "# Printing metadata for " + data.getName() );
+        completeText.append( "\n" );
+        completeText.append( text );
       }
 
-      if (completeText.length() == 0)
-      {
+      if ( completeText.length() == 0 ) {
         return;
       }
 
-      dialog.showText(completeText.toString());
+      dialog.showText( completeText.toString() );
     }
   }
 
-  private class EditExpressionAction extends AbstractAction
-  {
+  private class EditExpressionAction extends AbstractAction {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private EditExpressionAction()
-    {
-      putValue(Action.NAME, "Edit Expression");
+    private EditExpressionAction() {
+      putValue( Action.NAME, "Edit Expression" );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final int selectedRow = expressionsTable.getSelectedRow();
-      if (selectedRow == -1)
-      {
+      if ( selectedRow == -1 ) {
         return;
       }
-      final int mapped = expressionsTable.convertRowIndexToModel(selectedRow);
-      final EditableExpressionMetaData data = metaData[mapped];
-      expressionPropertyMetaDataEditor.performEdit(data.getName(), data.getProperties());
+      final int mapped = expressionsTable.convertRowIndexToModel( selectedRow );
+      final EditableExpressionMetaData data = metaData[ mapped ];
+      expressionPropertyMetaDataEditor.performEdit( data.getName(), data.getProperties() );
     }
   }
 
-  private class SortAction extends AbstractAction
-  {
+  private class SortAction extends AbstractAction {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private SortAction()
-    {
-      putValue(Action.NAME, "Sort");
+    private SortAction() {
+      putValue( Action.NAME, "Sort" );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      Arrays.sort(metaData, new GroupedMetaDataComparator(expressionsTableModel.getLocale()));
-      for (int i = 0; i < metaData.length; i++)
-      {
-        final EditableExpressionMetaData expressionMetaData = metaData[i];
-        expressionMetaData.sort(expressionsTableModel.getLocale());
+    public void actionPerformed( final ActionEvent e ) {
+      Arrays.sort( metaData, new GroupedMetaDataComparator( expressionsTableModel.getLocale() ) );
+      for ( int i = 0; i < metaData.length; i++ ) {
+        final EditableExpressionMetaData expressionMetaData = metaData[ i ];
+        expressionMetaData.sort( expressionsTableModel.getLocale() );
       }
-      expressionsTableModel.populate(metaData);
+      expressionsTableModel.populate( metaData );
 
     }
   }
 
 
-  private class ExitAction extends AbstractAction implements WindowListener
-  {
+  private class ExitAction extends AbstractAction implements WindowListener {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private ExitAction()
-    {
-      putValue(Action.NAME, "Quit");
+    private ExitAction() {
+      putValue( Action.NAME, "Quit" );
     }
 
     /**
      * Invoked the first time a window is made visible.
      */
-    public void windowOpened(final WindowEvent e)
-    {
+    public void windowOpened( final WindowEvent e ) {
 
     }
 
     /**
-     * Invoked when the user attempts to close the window
-     * from the window's system menu.
+     * Invoked when the user attempts to close the window from the window's system menu.
      */
-    public void windowClosing(final WindowEvent e)
-    {
-      actionPerformed(null);
+    public void windowClosing( final WindowEvent e ) {
+      actionPerformed( null );
     }
 
     /**
-     * Invoked when a window has been closed as the result
-     * of calling dispose on the window.
+     * Invoked when a window has been closed as the result of calling dispose on the window.
      */
-    public void windowClosed(final WindowEvent e)
-    {
+    public void windowClosed( final WindowEvent e ) {
 
     }
 
-    public void windowIconified(final WindowEvent e)
-    {
+    public void windowIconified( final WindowEvent e ) {
 
     }
 
     /**
-     * Invoked when a window is changed from a minimized
-     * to a normal state.
+     * Invoked when a window is changed from a minimized to a normal state.
      */
-    public void windowDeiconified(final WindowEvent e)
-    {
+    public void windowDeiconified( final WindowEvent e ) {
 
     }
 
     /**
-     * Invoked when the Window is set to be the active Window. Only a Frame or
-     * a Dialog can be the active Window. The native windowing system may
-     * denote the active Window or its children with special decorations, such
-     * as a highlighted title bar. The active Window is always either the
-     * focused Window, or the first Frame or Dialog that is an owner of the
-     * focused Window.
+     * Invoked when the Window is set to be the active Window. Only a Frame or a Dialog can be the active Window. The
+     * native windowing system may denote the active Window or its children with special decorations, such as a
+     * highlighted title bar. The active Window is always either the focused Window, or the first Frame or Dialog that
+     * is an owner of the focused Window.
      */
-    public void windowActivated(final WindowEvent e)
-    {
+    public void windowActivated( final WindowEvent e ) {
 
     }
 
     /**
-     * Invoked when a Window is no longer the active Window. Only a Frame or a
-     * Dialog can be the active Window. The native windowing system may denote
-     * the active Window or its children with special decorations, such as a
-     * highlighted title bar. The active Window is always either the focused
-     * Window, or the first Frame or Dialog that is an owner of the focused
-     * Window.
+     * Invoked when a Window is no longer the active Window. Only a Frame or a Dialog can be the active Window. The
+     * native windowing system may denote the active Window or its children with special decorations, such as a
+     * highlighted title bar. The active Window is always either the focused Window, or the first Frame or Dialog that
+     * is an owner of the focused Window.
      */
-    public void windowDeactivated(final WindowEvent e)
-    {
+    public void windowDeactivated( final WindowEvent e ) {
 
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       boolean modified = false;
-      for (int i = 0; i < metaData.length; i++)
-      {
-        EditableExpressionMetaData data = metaData[i];
-        if (data.isModified())
-        {
+      for ( int i = 0; i < metaData.length; i++ ) {
+        EditableExpressionMetaData data = metaData[ i ];
+        if ( data.isModified() ) {
           modified = true;
           break;
         }
       }
 
-      if (modified)
-      {
-        if (JOptionPane.showConfirmDialog(ExpressionMetaDataEditor.this,
-            "Really Quit? You have modified something.", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-        {
-          System.exit(0);
+      if ( modified ) {
+        if ( JOptionPane.showConfirmDialog( ExpressionMetaDataEditor.this,
+          "Really Quit? You have modified something.", "Warning", JOptionPane.YES_NO_OPTION )
+          == JOptionPane.YES_OPTION ) {
+          System.exit( 0 );
         }
-      }
-      else
-      {
-        System.exit(0);
+      } else {
+        System.exit( 0 );
       }
     }
   }
@@ -290,65 +234,62 @@ public class ExpressionMetaDataEditor extends JFrame
   private ExpressionPropertyMetaDataEditor expressionPropertyMetaDataEditor;
 
   public ExpressionMetaDataEditor()
-      throws HeadlessException
-  {
-    setTitle("Expression Metadata Editor");
-    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    throws HeadlessException {
+    setTitle( "Expression Metadata Editor" );
+    setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
 
     final ExitAction exitAction = new ExitAction();
-    addWindowListener(exitAction);
+    addWindowListener( exitAction );
 
     expressionsTableModel = new EditableMetaDataTableModel();
-    expressionsTable = new JTable(expressionsTableModel);
-    expressionsTable.setDefaultRenderer(String.class, new EditableMetaDataRenderer());
+    expressionsTable = new JTable( expressionsTableModel );
+    expressionsTable.setDefaultRenderer( String.class, new EditableMetaDataRenderer() );
 
     final JPanel contentPane = new JPanel();
-    contentPane.setLayout(new BorderLayout());
-    contentPane.add(new JScrollPane(expressionsTable), BorderLayout.CENTER);
-    setContentPane(contentPane);
+    contentPane.setLayout( new BorderLayout() );
+    contentPane.add( new JScrollPane( expressionsTable ), BorderLayout.CENTER );
+    setContentPane( contentPane );
 
-    final JMenu actionsMenu = new JMenu("Actions");
+    final JMenu actionsMenu = new JMenu( "Actions" );
     final SortAction sortAction = new SortAction();
-    actionsMenu.add(sortAction);
-    actionsMenu.add(new EditExpressionAction());
-    actionsMenu.add(new ShowPropertiesAction());
-    actionsMenu.add(new ShowModifiedAction());
+    actionsMenu.add( sortAction );
+    actionsMenu.add( new EditExpressionAction() );
+    actionsMenu.add( new ShowPropertiesAction() );
+    actionsMenu.add( new ShowModifiedAction() );
     actionsMenu.addSeparator();
-    actionsMenu.add(exitAction);
+    actionsMenu.add( exitAction );
 
     final JMenuBar menuBar = new JMenuBar();
-    menuBar.add(actionsMenu);
-    setJMenuBar(menuBar);
+    menuBar.add( actionsMenu );
+    setJMenuBar( menuBar );
 
     final JToolBar toolBar = new JToolBar();
-    toolBar.add(sortAction);
-    toolBar.add(new EditExpressionAction());
-    toolBar.add(new ShowPropertiesAction());
-    toolBar.add(new ShowModifiedAction());
-    contentPane.add(toolBar, BorderLayout.NORTH);
+    toolBar.add( sortAction );
+    toolBar.add( new EditExpressionAction() );
+    toolBar.add( new ShowPropertiesAction() );
+    toolBar.add( new ShowModifiedAction() );
+    contentPane.add( toolBar, BorderLayout.NORTH );
 
     final ExpressionMetaData[] allExpressionMetaDatas = ExpressionRegistry.getInstance().getAllExpressionMetaDatas();
-    metaData = new EditableExpressionMetaData[allExpressionMetaDatas.length];
-    for (int i = 0; i < allExpressionMetaDatas.length; i++)
-    {
-      ExpressionMetaData expressionMetaData = allExpressionMetaDatas[i];
-      metaData[i] = new EditableExpressionMetaData((DefaultExpressionMetaData) expressionMetaData);
+    metaData = new EditableExpressionMetaData[ allExpressionMetaDatas.length ];
+    for ( int i = 0; i < allExpressionMetaDatas.length; i++ ) {
+      ExpressionMetaData expressionMetaData = allExpressionMetaDatas[ i ];
+      metaData[ i ] = new EditableExpressionMetaData( (DefaultExpressionMetaData) expressionMetaData );
     }
-    expressionsTableModel.populate(metaData);
-    sortAction.actionPerformed(null);
+    expressionsTableModel.populate( metaData );
+    sortAction.actionPerformed( null );
 
-    dialog = new ShowTextDialog(this);
-    expressionPropertyMetaDataEditor = new ExpressionPropertyMetaDataEditor(this);
+    dialog = new ShowTextDialog( this );
+    expressionPropertyMetaDataEditor = new ExpressionPropertyMetaDataEditor( this );
   }
 
-  public static void main(String[] args)
-  {
+  public static void main( String[] args ) {
     ClassicEngineBoot.getInstance().start();
     ExpressionMetaDataEditor editor = new ExpressionMetaDataEditor();
     editor.pack();
-    editor.setSize(800, 600);
-    LibSwingUtil.centerFrameOnScreen(editor);
-    editor.setVisible(true);
+    editor.setSize( 800, 600 );
+    LibSwingUtil.centerFrameOnScreen( editor );
+    editor.setVisible( true );
   }
 
 }

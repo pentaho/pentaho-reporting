@@ -17,16 +17,14 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 
-public class MenuEditGroupsAction extends EditGroupsAction
-{
-  public MenuEditGroupsAction()
-  {
+import javax.swing.*;
+
+public class MenuEditGroupsAction extends EditGroupsAction {
+  public MenuEditGroupsAction() {
     super();
-    putValue(Action.NAME, ActionMessages.getString("MenuEditGroupsAction.Text"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getString("MenuEditGroupsAction.Mnemonic"));
+    putValue( Action.NAME, ActionMessages.getString( "MenuEditGroupsAction.Text" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getString( "MenuEditGroupsAction.Mnemonic" ) );
   }
 }

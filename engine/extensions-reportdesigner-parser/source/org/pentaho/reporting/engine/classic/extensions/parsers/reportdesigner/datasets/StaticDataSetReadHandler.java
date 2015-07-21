@@ -20,22 +20,20 @@ package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.d
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.NamedStaticDataFactory;
 import org.pentaho.reporting.libraries.base.util.LinkedMap;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
+import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class StaticDataSetReadHandler extends AbstractXmlReadHandler
-{
+public class StaticDataSetReadHandler extends AbstractXmlReadHandler {
   private String queryName;
   private String className;
   private String methodName;
   private StaticDataSetParametersReadHandler parameters;
   private NamedStaticDataFactory staticDataFactory;
 
-  public StaticDataSetReadHandler()
-  {
+  public StaticDataSetReadHandler() {
   }
 
   /**
@@ -44,24 +42,20 @@ public class StaticDataSetReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    queryName = attrs.getValue(getUri(), "queryName");
-    if (queryName == null)
-    {
-      throw new ParseException("Attribute 'queryName' must be given");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    queryName = attrs.getValue( getUri(), "queryName" );
+    if ( queryName == null ) {
+      throw new ParseException( "Attribute 'queryName' must be given" );
     }
 
-    className = attrs.getValue(getUri(), "className");
-    if (className == null)
-    {
-      throw new ParseException("Attribute 'className' must be given");
+    className = attrs.getValue( getUri(), "className" );
+    if ( className == null ) {
+      throw new ParseException( "Attribute 'className' must be given" );
     }
 
-    methodName = attrs.getValue(getUri(), "methodName");
-    if (methodName == null)
-    {
-      throw new ParseException("Attribute 'methodName' must be given");
+    methodName = attrs.getValue( getUri(), "methodName" );
+    if ( methodName == null ) {
+      throw new ParseException( "Attribute 'methodName' must be given" );
     }
   }
 
@@ -74,19 +68,16 @@ public class StaticDataSetReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("padding".equals(tagName))
-    {
+    if ( "padding".equals( tagName ) ) {
       return new IgnoreAnyChildReadHandler();
     }
 
-    if ("parameters".equals(tagName))
-    {
+    if ( "parameters".equals( tagName ) ) {
       parameters = new StaticDataSetParametersReadHandler();
       return parameters;
     }
@@ -98,39 +89,31 @@ public class StaticDataSetReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final LinkedMap map = (LinkedMap) parameters.getObject();
     staticDataFactory = new NamedStaticDataFactory();
-    if (map.isEmpty())
-    {
-      staticDataFactory.setQuery(queryName, className + '#' + methodName);
-    }
-    else
-    {
+    if ( map.isEmpty() ) {
+      staticDataFactory.setQuery( queryName, className + '#' + methodName );
+    } else {
       String query = className + '#' + methodName + '(';
       final Object[] objects = map.keys();
-      for (int i = 0; i < objects.length; i++)
-      {
-        if (i != 0)
-        {
+      for ( int i = 0; i < objects.length; i++ ) {
+        if ( i != 0 ) {
           query += ",";
         }
-        query += String.valueOf(objects[i]);
+        query += String.valueOf( objects[ i ] );
       }
-      staticDataFactory.setQuery(queryName, query);
+      staticDataFactory.setQuery( queryName, query );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return staticDataFactory;
   }
 }

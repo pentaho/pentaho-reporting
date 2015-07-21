@@ -20,14 +20,11 @@ package org.pentaho.reporting.designer.extensions.legacycharts;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEditor;
 import org.pentaho.reporting.designer.core.editor.report.elements.DefaultReportElementEditor;
 
-public class LegacyChartReportElementEditor extends DefaultReportElementEditor
-{
-  public LegacyChartReportElementEditor()
-  {
+public class LegacyChartReportElementEditor extends DefaultReportElementEditor {
+  public LegacyChartReportElementEditor() {
   }
 
-  public ReportElementInlineEditor createInlineEditor()
-  {
+  public ReportElementInlineEditor createInlineEditor() {
     return new LegacyChartReportElementInlineEditor();
   }
 }

@@ -17,41 +17,35 @@
 
 package org.pentaho.reporting.designer.core.util.jndi;
 
-import java.io.File;
-import java.util.Hashtable;
-import javax.naming.Context;
-import javax.naming.NamingException;
-
 import org.osjava.sj.SimpleContext;
 import org.osjava.sj.SimpleContextFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-public class SmarterContextFactory extends SimpleContextFactory
-{
-  public SmarterContextFactory()
-  {
+import javax.naming.Context;
+import javax.naming.NamingException;
+import java.io.File;
+import java.util.Hashtable;
+
+public class SmarterContextFactory extends SimpleContextFactory {
+  public SmarterContextFactory() {
   }
 
-  public Context getInitialContext(final Hashtable hashtable) throws NamingException
-  {
-    final Object root = hashtable.get(SimpleContext.SIMPLE_ROOT);
-    if (root == null)
-    {
+  public Context getInitialContext( final Hashtable hashtable ) throws NamingException {
+    final Object root = hashtable.get( SimpleContext.SIMPLE_ROOT );
+    if ( root == null ) {
       final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-      final String userHome =  configuration.getConfigProperty("user.home"); // NON-NLS
-      if (userHome != null)
-      {
-        final File directory = new File(userHome, ".pentaho/simple-jndi");// NON-NLS
+      final String userHome = configuration.getConfigProperty( "user.home" ); // NON-NLS
+      if ( userHome != null ) {
+        final File directory = new File( userHome, ".pentaho/simple-jndi" );// NON-NLS
         //noinspection ResultOfMethodCallIgnored
         directory.mkdirs();
-        if(directory.exists() && directory.isDirectory())
-        {
+        if ( directory.exists() && directory.isDirectory() ) {
           //noinspection unchecked
-          hashtable.put (SimpleContext.SIMPLE_ROOT, directory.getAbsolutePath());
+          hashtable.put( SimpleContext.SIMPLE_ROOT, directory.getAbsolutePath() );
         }
       }
     }
-    return new SimpleContext(hashtable);
+    return new SimpleContext( hashtable );
   }
 }

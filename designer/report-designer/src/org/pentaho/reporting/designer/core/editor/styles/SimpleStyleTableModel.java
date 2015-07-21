@@ -17,15 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.styles;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import javax.swing.SwingUtilities;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
@@ -41,76 +32,68 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTableModel.SimpleStyleDataBackend>
-{
-  private static final Log logger = LogFactory.getLog(SimpleStyleTableModel.class);
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-  public static class SimpleStyleDataBackend extends AbstractStyleDataBackend
-  {
+public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTableModel.SimpleStyleDataBackend> {
+  private static final Log logger = LogFactory.getLog( SimpleStyleTableModel.class );
+
+  public static class SimpleStyleDataBackend extends AbstractStyleDataBackend {
     private ElementStyleSheet styleSheet;
 
-    public SimpleStyleDataBackend()
-    {
+    public SimpleStyleDataBackend() {
     }
 
-    public SimpleStyleDataBackend(final StyleMetaData[] metaData,
-                                  final GroupingHeader[] groupings,
-                                  final ElementStyleSheet styleSheet)
-    {
-      super(metaData, groupings);
+    public SimpleStyleDataBackend( final StyleMetaData[] metaData,
+                                   final GroupingHeader[] groupings,
+                                   final ElementStyleSheet styleSheet ) {
+      super( metaData, groupings );
       this.styleSheet = styleSheet;
 
-      if (this.styleSheet != null)
-      {
-        getResolvedStyle().copyFrom(styleSheet);
+      if ( this.styleSheet != null ) {
+        getResolvedStyle().copyFrom( styleSheet );
       }
     }
 
-    public void resetCache()
-    {
+    public void resetCache() {
       super.resetCache();
-      if (this.styleSheet != null)
-      {
-        getResolvedStyle().copyFrom(styleSheet);
+      if ( this.styleSheet != null ) {
+        getResolvedStyle().copyFrom( styleSheet );
       }
     }
 
-    public ElementStyleSheet getStyleSheet()
-    {
+    public ElementStyleSheet getStyleSheet() {
       return styleSheet;
     }
   }
 
-  private class UpdateDataTask implements Runnable
-  {
+  private class UpdateDataTask implements Runnable {
     private ElementStyleSheet elements;
     private boolean synchronous;
 
-    private UpdateDataTask(final ElementStyleSheet elements,
-                           final boolean synchronous)
-    {
+    private UpdateDataTask( final ElementStyleSheet elements,
+                            final boolean synchronous ) {
       this.elements = elements;
       this.synchronous = synchronous;
     }
 
-    public void run()
-    {
-      try
-      {
-        final SimpleStyleDataBackend dataBackend = updateData(elements);
-        if (synchronous || SwingUtilities.isEventDispatchThread())
-        {
-          setDataBackend(dataBackend);
+    public void run() {
+      try {
+        final SimpleStyleDataBackend dataBackend = updateData( elements );
+        if ( synchronous || SwingUtilities.isEventDispatchThread() ) {
+          setDataBackend( dataBackend );
           fireTableDataChanged();
+        } else {
+          SwingUtilities.invokeAndWait( new NotifyChangeTask( dataBackend ) );
         }
-        else
-        {
-          SwingUtilities.invokeAndWait(new NotifyChangeTask(dataBackend));
-        }
-      }
-      catch (Exception e)
-      {
-        UncaughtExceptionsModel.getInstance().addException(e);
+      } catch ( Exception e ) {
+        UncaughtExceptionsModel.getInstance().addException( e );
       }
     }
   }
@@ -118,106 +101,84 @@ public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTa
   private SimpleStyleDataBackend oldDataBackend;
   private Executor pool;
 
-  public SimpleStyleTableModel()
-  {
+  public SimpleStyleTableModel() {
     pool = Executors.newSingleThreadExecutor();
-    super.setDataBackend(new SimpleStyleDataBackend());
+    super.setDataBackend( new SimpleStyleDataBackend() );
   }
 
-  public void setTableStyle(final TableStyle tableStyle)
-  {
-    super.setTableStyle(tableStyle);
-    pool.execute(new UpdateDataTask(getData(), isSynchronous()));
+  public void setTableStyle( final TableStyle tableStyle ) {
+    super.setTableStyle( tableStyle );
+    pool.execute( new UpdateDataTask( getData(), isSynchronous() ) );
   }
 
-  public void setData(final ElementStyleSheet elements)
-  {
+  public void setData( final ElementStyleSheet elements ) {
     final SimpleStyleDataBackend backend = this.getDataBackend();
-    if (isSameStyleSheet(elements, backend.getStyleSheet()))
-    {
-      SwingUtilities.invokeLater(new SameElementsUpdateDataTask(backend, isSynchronous()));
+    if ( isSameStyleSheet( elements, backend.getStyleSheet() ) ) {
+      SwingUtilities.invokeLater( new SameElementsUpdateDataTask( backend, isSynchronous() ) );
       return;
     }
 
-    pool.execute(new UpdateDataTask(elements, isSynchronous()));
+    pool.execute( new UpdateDataTask( elements, isSynchronous() ) );
   }
 
-  private boolean isSameStyleSheet(final ElementStyleSheet elements, final ElementStyleSheet styleSheet)
-  {
-    if (elements == styleSheet)
-    {
+  private boolean isSameStyleSheet( final ElementStyleSheet elements, final ElementStyleSheet styleSheet ) {
+    if ( elements == styleSheet ) {
       return true;
     }
-    if (elements == null)
-    {
+    if ( elements == null ) {
       return false;
     }
-    if (styleSheet == null)
-    {
+    if ( styleSheet == null ) {
       return false;
     }
     return styleSheet.getId() == elements.getId();
   }
 
-  public ElementStyleSheet getData()
-  {
+  public ElementStyleSheet getData() {
     return getDataBackend().getStyleSheet();
   }
 
-  protected synchronized void setDataBackend(final SimpleStyleDataBackend dataBackend)
-  {
+  protected synchronized void setDataBackend( final SimpleStyleDataBackend dataBackend ) {
     this.oldDataBackend = getDataBackend();
-    super.setDataBackend(dataBackend);
+    super.setDataBackend( dataBackend );
   }
 
-  protected SimpleStyleDataBackend updateData(final ElementStyleSheet styleSheet)
-  {
+  protected SimpleStyleDataBackend updateData( final ElementStyleSheet styleSheet ) {
     final StyleMetaData[] metaData = selectCommonAttributes();
     final TableStyle tableStyle = getTableStyle();
-    if (tableStyle == TableStyle.ASCENDING)
-    {
-      Arrays.sort(metaData, new PlainMetaDataComparator());
-      return (new SimpleStyleDataBackend(metaData, new GroupingHeader[metaData.length], styleSheet));
-    }
-    else if (tableStyle == TableStyle.DESCENDING)
-    {
-      Arrays.sort(metaData, Collections.reverseOrder(new PlainMetaDataComparator()));
-      return (new SimpleStyleDataBackend(metaData, new GroupingHeader[metaData.length], styleSheet));
-    }
-    else
-    {
-      Arrays.sort(metaData, new GroupedMetaDataComparator());
+    if ( tableStyle == TableStyle.ASCENDING ) {
+      Arrays.sort( metaData, new PlainMetaDataComparator() );
+      return ( new SimpleStyleDataBackend( metaData, new GroupingHeader[ metaData.length ], styleSheet ) );
+    } else if ( tableStyle == TableStyle.DESCENDING ) {
+      Arrays.sort( metaData, Collections.reverseOrder( new PlainMetaDataComparator() ) );
+      return ( new SimpleStyleDataBackend( metaData, new GroupingHeader[ metaData.length ], styleSheet ) );
+    } else {
+      Arrays.sort( metaData, new GroupedMetaDataComparator() );
       final Locale locale = Locale.getDefault();
       int groupCount = 0;
       int metaDataCount = 0;
-      if (metaData.length > 0)
-      {
+      if ( metaData.length > 0 ) {
         String oldValue = null;
 
-        for (int i = 0; i < metaData.length; i++)
-        {
-          final StyleMetaData data = metaData[i];
-          if (data.isHidden())
-          {
+        for ( int i = 0; i < metaData.length; i++ ) {
+          final StyleMetaData data = metaData[ i ];
+          if ( data.isHidden() ) {
             continue;
           }
-          if (!WorkspaceSettings.getInstance().isVisible(data))
-          {
+          if ( !WorkspaceSettings.getInstance().isVisible( data ) ) {
             continue;
           }
 
           metaDataCount += 1;
 
-          if (groupCount == 0)
-          {
+          if ( groupCount == 0 ) {
             groupCount = 1;
-            oldValue = data.getGrouping(locale);
+            oldValue = data.getGrouping( locale );
             continue;
           }
 
-          final String grouping = data.getGrouping(locale);
-          if ((ObjectUtilities.equal(oldValue, grouping)) == false)
-          {
+          final String grouping = data.getGrouping( locale );
+          if ( ( ObjectUtilities.equal( oldValue, grouping ) ) == false ) {
             groupCount += 1;
             oldValue = grouping;
             continue;
@@ -225,107 +186,90 @@ public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTa
         }
       }
 
-      final StyleMetaData[] groupedMetaData = new StyleMetaData[metaDataCount + groupCount];
+      final StyleMetaData[] groupedMetaData = new StyleMetaData[ metaDataCount + groupCount ];
       int targetIdx = 0;
-      GroupingHeader[] groupings = new GroupingHeader[groupedMetaData.length];
+      GroupingHeader[] groupings = new GroupingHeader[ groupedMetaData.length ];
       GroupingHeader group = null;
-      for (int sourceIdx = 0; sourceIdx < metaData.length; sourceIdx++)
-      {
-        final StyleMetaData data = metaData[sourceIdx];
-        if (data.isHidden())
-        {
+      for ( int sourceIdx = 0; sourceIdx < metaData.length; sourceIdx++ ) {
+        final StyleMetaData data = metaData[ sourceIdx ];
+        if ( data.isHidden() ) {
           continue;
         }
-        if (!WorkspaceSettings.getInstance().isVisible(data))
-        {
+        if ( !WorkspaceSettings.getInstance().isVisible( data ) ) {
           continue;
         }
 
-        if (targetIdx == 0)
-        {
-          group = new GroupingHeader(data.getGrouping(locale));
-          groupings[targetIdx] = group;
+        if ( targetIdx == 0 ) {
+          group = new GroupingHeader( data.getGrouping( locale ) );
+          groupings[ targetIdx ] = group;
           targetIdx += 1;
-        }
-        else
-        {
-          final String newgroup = data.getGrouping(locale);
-          if ((ObjectUtilities.equal(newgroup, group.getHeaderText())) == false)
-          {
-            group = new GroupingHeader(newgroup);
-            groupings[targetIdx] = group;
+        } else {
+          final String newgroup = data.getGrouping( locale );
+          if ( ( ObjectUtilities.equal( newgroup, group.getHeaderText() ) ) == false ) {
+            group = new GroupingHeader( newgroup );
+            groupings[ targetIdx ] = group;
             targetIdx += 1;
           }
         }
 
-        groupings[targetIdx] = group;
-        groupedMetaData[targetIdx] = data;
+        groupings[ targetIdx ] = group;
+        groupedMetaData[ targetIdx ] = data;
 
         targetIdx += 1;
       }
 
-      if (oldDataBackend != null)
-      {
-        groupings = reconcileState(groupings, oldDataBackend.getGroupings());
+      if ( oldDataBackend != null ) {
+        groupings = reconcileState( groupings, oldDataBackend.getGroupings() );
       }
 
 
-      return new SimpleStyleDataBackend(groupedMetaData, groupings, styleSheet);
+      return new SimpleStyleDataBackend( groupedMetaData, groupings, styleSheet );
     }
   }
 
-  private StyleMetaData[] selectCommonAttributes()
-  {
+  private StyleMetaData[] selectCommonAttributes() {
     final HashSet<StyleKey> seenKeys = new HashSet<StyleKey>();
     final ArrayList<StyleMetaData> result = new ArrayList<StyleMetaData>();
 
     final ElementMetaData[] allElementTypes = ElementTypeRegistry.getInstance().getAllElementTypes();
-    for (int i = 0; i < allElementTypes.length; i++)
-    {
-      final ElementMetaData elementType = allElementTypes[i];
+    for ( int i = 0; i < allElementTypes.length; i++ ) {
+      final ElementMetaData elementType = allElementTypes[ i ];
       final StyleMetaData[] datas = elementType.getStyleDescriptions();
-      for (int j = 0; j < datas.length; j++)
-      {
-        final StyleMetaData data = datas[j];
+      for ( int j = 0; j < datas.length; j++ ) {
+        final StyleMetaData data = datas[ j ];
 
-        if (seenKeys.add(data.getStyleKey()))
-        {
-          result.add(data);
+        if ( seenKeys.add( data.getStyleKey() ) ) {
+          result.add( data );
         }
       }
     }
-    return result.toArray(new StyleMetaData[result.size()]);
+    return result.toArray( new StyleMetaData[ result.size() ] );
   }
 
-  protected Object computeInheritValue(final StyleMetaData metaData, final int rowIndex)
-  {
+  protected Object computeInheritValue( final StyleMetaData metaData, final int rowIndex ) {
     final ElementStyleSheet styleSheet = getDataBackend().getStyleSheet();
-    if (styleSheet == null)
-    {
+    if ( styleSheet == null ) {
       return null;
     }
 
-    return styleSheet.isLocalKey(metaData.getStyleKey()) == false;
+    return styleSheet.isLocalKey( metaData.getStyleKey() ) == false;
   }
 
-  protected boolean defineFullValue(final StyleMetaData metaData, final Object value)
-  {
-    if (value != null && metaData.getTargetType().isInstance(value) == false)
-    {
+  protected boolean defineFullValue( final StyleMetaData metaData, final Object value ) {
+    if ( value != null && metaData.getTargetType().isInstance( value ) == false ) {
       // not the correct type
-      logger.warn("Invalid type: " + value + "(" + value.getClass() + ") but expected " +  // NON-NLS
-          metaData.getTargetType());
+      logger.warn( "Invalid type: " + value + "(" + value.getClass() + ") but expected " +  // NON-NLS
+        metaData.getTargetType() );
       return false;
     }
 
     final ElementStyleSheet styleSheet = getDataBackend().getStyleSheet();
-    if (styleSheet == null)
-    {
+    if ( styleSheet == null ) {
       return false;
     }
-    
+
     final long changeTrackerHash = styleSheet.getChangeTrackerHash();
-    styleSheet.setStyleProperty(metaData.getStyleKey(), value);
+    styleSheet.setStyleProperty( metaData.getStyleKey(), value );
     return changeTrackerHash != styleSheet.getChangeTrackerHash();
   }
 }

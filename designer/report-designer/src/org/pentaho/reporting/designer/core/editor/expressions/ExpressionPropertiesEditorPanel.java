@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
-import java.awt.BorderLayout;
-import java.util.List;
-import javax.swing.JScrollPane;
-import javax.swing.table.TableCellEditor;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
@@ -32,86 +27,78 @@ import org.pentaho.reporting.designer.core.util.table.GroupedNameCellRenderer;
 import org.pentaho.reporting.designer.core.util.table.SortHeaderPanel;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 
-public class ExpressionPropertiesEditorPanel extends SidePanel
-{
+import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.util.List;
+
+public class ExpressionPropertiesEditorPanel extends SidePanel {
   private ExpressionPropertiesTableModel dataModel;
   private ElementMetaDataTable table;
 
-  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[0];
+  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[ 0 ];
   private SortHeaderPanel headerPanel;
 
-  public ExpressionPropertiesEditorPanel()
-  {
-    setLayout(new BorderLayout());
+  public ExpressionPropertiesEditorPanel() {
+    setLayout( new BorderLayout() );
 
     dataModel = new ExpressionPropertiesTableModel();
 
     table = new ElementMetaDataTable();
-    table.setModel(new GroupedMetaTableModel(dataModel));
-    table.getColumnModel().getColumn(0).setCellRenderer(new GroupedNameCellRenderer());
+    table.setModel( new GroupedMetaTableModel( dataModel ) );
+    table.getColumnModel().getColumn( 0 ).setCellRenderer( new GroupedNameCellRenderer() );
 
-    headerPanel = new SortHeaderPanel(dataModel);
+    headerPanel = new SortHeaderPanel( dataModel );
 
-    add(headerPanel, BorderLayout.NORTH);
-    add(new JScrollPane(table), BorderLayout.CENTER);
+    add( headerPanel, BorderLayout.NORTH );
+    add( new JScrollPane( table ), BorderLayout.CENTER );
   }
 
-  public Expression[] getData()
-  {
+  public Expression[] getData() {
     return dataModel.getData();
   }
 
-  public void setData(final Expression[] elements)
-  {
+  public void setData( final Expression[] elements ) {
     stopEditing();
 
-    dataModel.setData(elements);
+    dataModel.setData( elements );
   }
 
-  public void stopEditing()
-  {
+  public void stopEditing() {
     final TableCellEditor tableCellEditor = table.getCellEditor();
-    if (tableCellEditor != null)
-    {
+    if ( tableCellEditor != null ) {
       tableCellEditor.stopCellEditing();
     }
   }
 
-  protected void updateDesignerContext(final ReportDesignerContext oldContext, final ReportDesignerContext newContext)
-  {
-    super.updateDesignerContext(oldContext, newContext);
-    table.setReportDesignerContext(newContext);
+  protected void updateDesignerContext( final ReportDesignerContext oldContext,
+                                        final ReportDesignerContext newContext ) {
+    super.updateDesignerContext( oldContext, newContext );
+    table.setReportDesignerContext( newContext );
   }
 
-  protected void updateSelection(final DocumentContextSelectionModel model)
-  {
-    if (model == null)
-    {
-      setData(EMPTY_EXPRESSIONS);
-    }
-    else
-    {
-      final List<Expression> filter = model.getSelectedElementsOfType(Expression.class);
-      setData(filter.toArray(new Expression[filter.size()]));
+  protected void updateSelection( final DocumentContextSelectionModel model ) {
+    if ( model == null ) {
+      setData( EMPTY_EXPRESSIONS );
+    } else {
+      final List<Expression> filter = model.getSelectedElementsOfType( Expression.class );
+      setData( filter.toArray( new Expression[ filter.size() ] ) );
     }
   }
 
-  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
-  {
+  protected void updateActiveContext( final ReportDocumentContext oldContext, final ReportDocumentContext newContext ) {
     stopEditing();
 
-    super.updateActiveContext(oldContext, newContext);
-    dataModel.setActiveContext(newContext);
-    if (newContext == null)
-    {
-      setData(EMPTY_EXPRESSIONS);
+    super.updateActiveContext( oldContext, newContext );
+    dataModel.setActiveContext( newContext );
+    if ( newContext == null ) {
+      setData( EMPTY_EXPRESSIONS );
     }
   }
 
-  public void setEnabled(final boolean enabled)
-  {
-    super.setEnabled(enabled);
-    table.setEnabled(enabled);
-    headerPanel.setEnabled(enabled);
+  public void setEnabled( final boolean enabled ) {
+    super.setEnabled( enabled );
+    table.setEnabled( enabled );
+    headerPanel.setEnabled( enabled );
   }
 }

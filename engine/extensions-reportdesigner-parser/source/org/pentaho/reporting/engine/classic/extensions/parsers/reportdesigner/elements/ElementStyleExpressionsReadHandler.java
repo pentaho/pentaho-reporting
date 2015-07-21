@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserUtil;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
@@ -27,13 +24,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ElementStyleExpressionsReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class ElementStyleExpressionsReadHandler extends AbstractXmlReadHandler {
   private ArrayList styleExpressions;
   private HashMap expressions;
 
-  public ElementStyleExpressionsReadHandler()
-  {
+  public ElementStyleExpressionsReadHandler() {
     styleExpressions = new ArrayList();
   }
 
@@ -46,20 +44,18 @@ public class ElementStyleExpressionsReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("styleExpression".equals(tagName))
-    {
+    if ( "styleExpression".equals( tagName ) ) {
       final ElementStyleExpressionReadHandler readHandler = new ElementStyleExpressionReadHandler();
-      styleExpressions.add(readHandler);
+      styleExpressions.add( readHandler );
       return readHandler;
     }
 
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -67,28 +63,24 @@ public class ElementStyleExpressionsReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     expressions = new HashMap();
-    for (int i = 0; i < styleExpressions.size(); i++)
-    {
-      final ElementStyleExpressionReadHandler handler = (ElementStyleExpressionReadHandler) styleExpressions.get(i);
+    for ( int i = 0; i < styleExpressions.size(); i++ ) {
+      final ElementStyleExpressionReadHandler handler = (ElementStyleExpressionReadHandler) styleExpressions.get( i );
       final FormulaExpression expression = new FormulaExpression();
-      expression.setFormula(ReportDesignerParserUtil.normalizeFormula(handler.getFormula()));
-      expressions.put(handler.getStyleKey(), expression);
+      expression.setFormula( ReportDesignerParserUtil.normalizeFormula( handler.getFormula() ) );
+      expressions.put( handler.getStyleKey(), expression );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return expressions;
   }
 }

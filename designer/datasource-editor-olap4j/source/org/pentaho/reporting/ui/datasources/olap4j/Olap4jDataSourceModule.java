@@ -21,10 +21,8 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class Olap4jDataSourceModule extends AbstractModule
-{
-  public Olap4jDataSourceModule() throws ModuleInitializeException
-  {
+public class Olap4jDataSourceModule extends AbstractModule {
+  public Olap4jDataSourceModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -36,8 +34,7 @@ public class Olap4jDataSourceModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
 
   }
 }

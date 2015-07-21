@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines.elementfactory;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.elementfactory.AbstractContentElementFactory;
@@ -28,8 +26,9 @@ import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.PieSpa
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.SparklineAttributeNames;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.SparklineStyleKeys;
 
-public class PieSparklineElementFactory extends AbstractContentElementFactory
-{
+import java.awt.*;
+
+public class PieSparklineElementFactory extends AbstractContentElementFactory {
   private Object content;
   private String fieldname;
   private String formula;
@@ -44,127 +43,102 @@ public class PieSparklineElementFactory extends AbstractContentElementFactory
   private Integer startAngle;
   private Boolean counterClockwise;
 
-  public PieSparklineElementFactory()
-  {
+  public PieSparklineElementFactory() {
   }
 
-  public Object getContent()
-  {
+  public Object getContent() {
     return content;
   }
 
-  public void setContent(final Object content)
-  {
+  public void setContent( final Object content ) {
     this.content = content;
   }
 
-  public Object getNullValue()
-  {
+  public Object getNullValue() {
     return nullValue;
   }
 
-  public void setNullValue(final Object nullValue)
-  {
+  public void setNullValue( final Object nullValue ) {
     this.nullValue = nullValue;
   }
 
-  public String getFormula()
-  {
+  public String getFormula() {
     return formula;
   }
 
-  public void setFormula(final String formula)
-  {
+  public void setFormula( final String formula ) {
     this.formula = formula;
   }
 
-  public Color getHighColor()
-  {
+  public Color getHighColor() {
     return highColor;
   }
 
-  public void setHighColor(final Color highColor)
-  {
+  public void setHighColor( final Color highColor ) {
     this.highColor = highColor;
   }
 
-  public Color getLowColor()
-  {
+  public Color getLowColor() {
     return lowColor;
   }
 
-  public void setLowColor(final Color lowColor)
-  {
+  public void setLowColor( final Color lowColor ) {
     this.lowColor = lowColor;
   }
 
-  public Color getMediumColor()
-  {
+  public Color getMediumColor() {
     return mediumColor;
   }
 
-  public void setMediumColor(Color mediumColor)
-  {
+  public void setMediumColor( Color mediumColor ) {
     this.mediumColor = mediumColor;
   }
 
-  public Integer getStartAngle()
-  {
+  public Integer getStartAngle() {
     return startAngle;
   }
 
-  public void setStartAngle(final Integer startAngle)
-  {
+  public void setStartAngle( final Integer startAngle ) {
     this.startAngle = startAngle;
   }
 
-  public Double getHighSlice()
-  {
+  public Double getHighSlice() {
     return highSlice;
   }
 
-  public void setHighSlice(Double highSlice)
-  {
+  public void setHighSlice( Double highSlice ) {
     this.highSlice = highSlice;
   }
 
-  public Double getMediumSlice()
-  {
+  public Double getMediumSlice() {
     return mediumSlice;
   }
 
-  public void setMediumSlice(Double mediumSlice)
-  {
+  public void setMediumSlice( Double mediumSlice ) {
     this.mediumSlice = mediumSlice;
   }
 
-  public Double getLowSlice()
-  {
+  public Double getLowSlice() {
     return lowSlice;
   }
 
-  public void setLowSlice(Double lowSlice)
-  {
+  public void setLowSlice( Double lowSlice ) {
     this.lowSlice = lowSlice;
   }
 
-  public Boolean getCounterClockwise()
-  {
+  public Boolean getCounterClockwise() {
     return counterClockwise;
   }
 
-  public void setCounterClockwise(Boolean counterClockwise)
-  {
+  public void setCounterClockwise( Boolean counterClockwise ) {
     this.counterClockwise = counterClockwise;
   }
 
-  public String getFieldname()
-  {
+  public String getFieldname() {
     return fieldname;
   }
 
-  public void setFieldname(final String fieldname)
-  {
+  public void setFieldname( final String fieldname ) {
     this.fieldname = fieldname;
   }
 
@@ -173,20 +147,16 @@ public class PieSparklineElementFactory extends AbstractContentElementFactory
    *
    * @param style the element stylesheet which should receive the style definition.
    */
-  protected void applyStyle(final ElementStyleSheet style)
-  {
-    super.applyStyle(style);
-    if (highColor != null)
-    {
-      style.setStyleProperty(SparklineStyleKeys.HIGH_COLOR, getHighColor());
+  protected void applyStyle( final ElementStyleSheet style ) {
+    super.applyStyle( style );
+    if ( highColor != null ) {
+      style.setStyleProperty( SparklineStyleKeys.HIGH_COLOR, getHighColor() );
     }
-    if (lowColor != null)
-    {
-      style.setStyleProperty(SparklineStyleKeys.LOW_COLOR, getLowColor());
+    if ( lowColor != null ) {
+      style.setStyleProperty( SparklineStyleKeys.LOW_COLOR, getLowColor() );
     }
-    if (mediumColor != null)
-    {
-      style.setStyleProperty(SparklineStyleKeys.MEDIUM_COLOR, getMediumColor());
+    if ( mediumColor != null ) {
+      style.setStyleProperty( SparklineStyleKeys.MEDIUM_COLOR, getMediumColor() );
     }
   }
 
@@ -195,47 +165,38 @@ public class PieSparklineElementFactory extends AbstractContentElementFactory
    *
    * @return the newly generated instance of the element.
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setElementType(new PieSparklineType());
-    if (getContent() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getContent());
+    element.setElementType( new PieSparklineType() );
+    if ( getContent() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getContent() );
     }
-    if (getFieldname() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname());
+    if ( getFieldname() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname() );
     }
-    if (getFormula() != null)
-    {
+    if ( getFormula() != null ) {
       final FormulaExpression formulaExpression = new FormulaExpression();
-      formulaExpression.setFormula(getFormula());
-      element.setAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression);
+      formulaExpression.setFormula( getFormula() );
+      element.setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression );
     }
-    if (startAngle != null)
-    {
-      element.setAttribute(SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.START_ANGLE, startAngle);
+    if ( startAngle != null ) {
+      element.setAttribute( SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.START_ANGLE, startAngle );
     }
-    if (lowSlice != null)
-    {
-      element.setAttribute(SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.LOW_SLICE, lowSlice);
+    if ( lowSlice != null ) {
+      element.setAttribute( SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.LOW_SLICE, lowSlice );
     }
-    if (mediumSlice != null)
-    {
-      element.setAttribute(SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.MEDIUM_SLICE, mediumSlice);
+    if ( mediumSlice != null ) {
+      element.setAttribute( SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.MEDIUM_SLICE, mediumSlice );
     }
-    if (highSlice != null)
-    {
-      element.setAttribute(SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.HIGH_SLICE, highSlice);
+    if ( highSlice != null ) {
+      element.setAttribute( SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.HIGH_SLICE, highSlice );
     }
-    if (counterClockwise != null)
-    {
-      element.setAttribute(SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.COUNTER_CLOCKWISE,
-          counterClockwise);
+    if ( counterClockwise != null ) {
+      element.setAttribute( SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.COUNTER_CLOCKWISE,
+        counterClockwise );
     }
 
     return element;

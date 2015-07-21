@@ -24,10 +24,8 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class LegacyChartModule extends AbstractModule
-{
-  public LegacyChartModule() throws ModuleInitializeException
-  {
+public class LegacyChartModule extends AbstractModule {
+  public LegacyChartModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -39,20 +37,19 @@ public class LegacyChartModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error occurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/plugin/jfreereport/reportcharts/meta-xy-chart-expressions.xml");
+      ( "org/pentaho/plugin/jfreereport/reportcharts/meta-xy-chart-expressions.xml" );
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/plugin/jfreereport/reportcharts/meta-other-chart-expressions.xml");
+      ( "org/pentaho/plugin/jfreereport/reportcharts/meta-other-chart-expressions.xml" );
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/plugin/jfreereport/reportcharts/meta-categorical-chart-expressions.xml");
+      ( "org/pentaho/plugin/jfreereport/reportcharts/meta-categorical-chart-expressions.xml" );
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/plugin/jfreereport/reportcharts/meta-collector-expressions.xml");
+      ( "org/pentaho/plugin/jfreereport/reportcharts/meta-collector-expressions.xml" );
 
 
     // Set the ChartFactory to the Legacy Theme
-    ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
+    ChartFactory.setChartTheme( StandardChartTheme.createLegacyTheme() );
 
   }
 }

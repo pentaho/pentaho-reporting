@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.wizard.model;
 
-public abstract class AbstractFieldDefinition extends AbstractElementFormatDefinition implements FieldDefinition
-{
+public abstract class AbstractFieldDefinition extends AbstractElementFormatDefinition implements FieldDefinition {
   private String nullString;
   private String displayName;
   private String dataFormat;
@@ -27,82 +26,66 @@ public abstract class AbstractFieldDefinition extends AbstractElementFormatDefin
   private Class fieldTypeHint;
   private Length width;
 
-  protected AbstractFieldDefinition()
-  {
+  protected AbstractFieldDefinition() {
   }
 
-  protected AbstractFieldDefinition(final String field)
-  {
+  protected AbstractFieldDefinition( final String field ) {
     this.field = field;
   }
 
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
-  public String getNullString()
-  {
+  public String getNullString() {
     return nullString;
   }
 
-  public void setNullString(final String nullString)
-  {
+  public void setNullString( final String nullString ) {
     this.nullString = nullString;
   }
 
-  public String getDisplayName()
-  {
+  public String getDisplayName() {
     return displayName;
   }
 
-  public void setDisplayName(final String displayName)
-  {
+  public void setDisplayName( final String displayName ) {
     this.displayName = displayName;
   }
 
-  public String getDataFormat()
-  {
+  public String getDataFormat() {
     return dataFormat;
   }
 
-  public void setDataFormat(final String dataFormat)
-  {
+  public void setDataFormat( final String dataFormat ) {
     this.dataFormat = dataFormat;
   }
 
-  public Class getAggregationFunction()
-  {
+  public Class getAggregationFunction() {
     return aggregationFunction;
   }
 
-  public void setAggregationFunction(final Class aggregationFunction)
-  {
+  public void setAggregationFunction( final Class aggregationFunction ) {
     this.aggregationFunction = aggregationFunction;
   }
 
-  public Class getFieldTypeHint()
-  {
+  public Class getFieldTypeHint() {
     return fieldTypeHint;
   }
 
-  public void setFieldTypeHint(final Class fieldTypeHint)
-  {
+  public void setFieldTypeHint( final Class fieldTypeHint ) {
     this.fieldTypeHint = fieldTypeHint;
   }
 
-  public Length getWidth()
-  {
+  public Length getWidth() {
     return width;
   }
 
-  public void setWidth(final Length width)
-  {
+  public void setWidth( final Length width ) {
     this.width = width;
   }
 

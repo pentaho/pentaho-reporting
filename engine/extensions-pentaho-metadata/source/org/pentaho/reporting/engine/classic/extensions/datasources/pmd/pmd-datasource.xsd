@@ -6,7 +6,6 @@
 
 <xsd:schema version="0.9"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:core="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
             xmlns:sql="http://jfreereport.sourceforge.net/namespaces/datasources/sql"
             xmlns="http://reporting.pentaho.org/namespaces/datasources/pmd"
             targetNamespace="http://reporting.pentaho.org/namespaces/datasources/pmd">

@@ -25,14 +25,11 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.Deno
  *
  * @author Thomas Morgner
  */
-public class DenormalizedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler
-{
-  public DenormalizedMDXDataSourceReadHandler()
-  {
+public class DenormalizedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler {
+  public DenormalizedMDXDataSourceReadHandler() {
   }
 
-  protected AbstractMDXDataFactory createDataFactory()
-  {
+  protected AbstractMDXDataFactory createDataFactory() {
     return new DenormalizedMDXDataFactory();
   }
 

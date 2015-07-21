@@ -24,7 +24,6 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner
  */
-public interface ReportRenderListener extends EventListener
-{
-  public void layoutChanged(ReportRenderEvent event);
+public interface ReportRenderListener extends EventListener {
+  public void layoutChanged( ReportRenderEvent event );
 }

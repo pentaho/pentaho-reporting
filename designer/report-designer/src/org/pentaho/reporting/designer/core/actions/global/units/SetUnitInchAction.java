@@ -24,10 +24,8 @@ import org.pentaho.reporting.designer.core.util.Unit;
  *
  * @author Thomas Morgner
  */
-public final class SetUnitInchAction extends SetUnitAction
-{
-  public SetUnitInchAction()
-  {
-    super(Unit.INCH);
+public final class SetUnitInchAction extends SetUnitAction {
+  public SetUnitInchAction() {
+    super( Unit.INCH );
   }
 }

@@ -20,46 +20,36 @@ package org.pentaho.plugin.jfreereport.reportcharts.collectors;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultValueDataset;
 
-public class ValueDataSetCollector extends AbstractCollectorFunction
-{
+public class ValueDataSetCollector extends AbstractCollectorFunction {
   private String valueColumn;
 
-  public ValueDataSetCollector()
-  {
+  public ValueDataSetCollector() {
   }
 
-  public String getValueColumn()
-  {
+  public String getValueColumn() {
     return valueColumn;
   }
 
-  public void setValueColumn(final String valueColumn)
-  {
+  public void setValueColumn( final String valueColumn ) {
     this.valueColumn = valueColumn;
   }
 
-  protected Dataset createNewDataset()
-  {
+  protected Dataset createNewDataset() {
     return new DefaultValueDataset();
   }
 
-  protected void buildDataset()
-  {
+  protected void buildDataset() {
     final DefaultValueDataset localValueDataset = (DefaultValueDataset) getDataSet();
 
-    final Object valueObject = getDataRow().get(getValueColumn());
-    final Number value = (valueObject instanceof Number) ? (Number) valueObject : null;
-    final Number existingValue = CollectorFunctionUtil.queryExistingValueFromDataSet(localValueDataset);
-    if (existingValue != null)
-    {
-      if (value != null)
-      {
-        localValueDataset.setValue(CollectorFunctionUtil.add(existingValue, value));
+    final Object valueObject = getDataRow().get( getValueColumn() );
+    final Number value = ( valueObject instanceof Number ) ? (Number) valueObject : null;
+    final Number existingValue = CollectorFunctionUtil.queryExistingValueFromDataSet( localValueDataset );
+    if ( existingValue != null ) {
+      if ( value != null ) {
+        localValueDataset.setValue( CollectorFunctionUtil.add( existingValue, value ) );
       }
-    }
-    else
-    {
-      localValueDataset.setValue(value);
+    } else {
+      localValueDataset.setValue( value );
     }
   }
 }

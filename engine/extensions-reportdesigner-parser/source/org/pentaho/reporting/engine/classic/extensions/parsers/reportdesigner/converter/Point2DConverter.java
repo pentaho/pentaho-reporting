@@ -17,29 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter;
 
-import java.awt.geom.Point2D;
-
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Locator;
 
-public class Point2DConverter implements ObjectConverter
-{
+import java.awt.geom.Point2D;
 
-  public Object convertFromString(final String s, final Locator locator) throws ParseException
-  {
-    if (s == null)
-    {
-      throw new IllegalArgumentException("s must not be null");
+public class Point2DConverter implements ObjectConverter {
+
+  public Object convertFromString( final String s, final Locator locator ) throws ParseException {
+    if ( s == null ) {
+      throw new IllegalArgumentException( "s must not be null" );
     }
 
-    int i = s.indexOf(',');
-    if (i == -1)
-    {
-      throw new ParseException("Malformed format");
+    int i = s.indexOf( ',' );
+    if ( i == -1 ) {
+      throw new ParseException( "Malformed format" );
     }
 
-    double d1 = Double.parseDouble(s.substring(0, i).trim());
-    double d2 = Double.parseDouble(s.substring(i + 1).trim());
-    return new Point2D.Double(d1, d2);
+    double d1 = Double.parseDouble( s.substring( 0, i ).trim() );
+    double d2 = Double.parseDouble( s.substring( i + 1 ).trim() );
+    return new Point2D.Double( d1, d2 );
   }
 }

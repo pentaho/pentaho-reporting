@@ -17,36 +17,29 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Locator;
 
-public class DateConverter implements ObjectConverter
-{
-  public Object convertFromString(final String s, final Locator locator) throws ParseException
-  {
-    if (s == null)
-    {
-      throw new ParseException("s must not be null");
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateConverter implements ObjectConverter {
+  public Object convertFromString( final String s, final Locator locator ) throws ParseException {
+    if ( s == null ) {
+      throw new ParseException( "s must not be null" );
     }
 
-    try
-    {
-      final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSSZ");
-      simpleDateFormat.setLenient(false);
-      return simpleDateFormat.parse(s);
-    }
-    catch (Exception e)
-    {
-      throw new ParseException(e, locator);
+    try {
+      final SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy.MM.dd HH:mm:ss.SSSZ" );
+      simpleDateFormat.setLenient( false );
+      return simpleDateFormat.parse( s );
+    } catch ( Exception e ) {
+      throw new ParseException( e, locator );
     }
   }
 
-  public static Date getObject(String s) throws ParseException
-  {
-    return (Date) new DateConverter().convertFromString(s, null);
+  public static Date getObject( String s ) throws ParseException {
+    return (Date) new DateConverter().convertFromString( s, null );
   }
 
 

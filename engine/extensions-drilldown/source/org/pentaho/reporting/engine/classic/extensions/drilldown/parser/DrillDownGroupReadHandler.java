@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.drilldown.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfile;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
@@ -26,14 +24,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DrillDownGroupReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class DrillDownGroupReadHandler extends AbstractXmlReadHandler {
   private ArrayList<DrillDownProfileReadHandler> elements;
   private String groupName;
   private DrillDownProfile[] result;
 
-  public DrillDownGroupReadHandler()
-  {
+  public DrillDownGroupReadHandler() {
     elements = new ArrayList<DrillDownProfileReadHandler>();
   }
 
@@ -43,13 +41,11 @@ public class DrillDownGroupReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    groupName = attrs.getValue(getUri(), "name");
-    if (groupName == null)
-    {
-      throw new ParseException("Mandatory attribute 'name' is missing", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    groupName = attrs.getValue( getUri(), "name" );
+    if ( groupName == null ) {
+      throw new ParseException( "Mandatory attribute 'name' is missing", getLocator() );
     }
   }
 
@@ -62,18 +58,15 @@ public class DrillDownGroupReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
-    if ("drilldown-profile".equals(tagName))
-    {
-      final DrillDownProfileReadHandler readHandler = new DrillDownProfileReadHandler(groupName);
-      elements.add(readHandler);
+    if ( "drilldown-profile".equals( tagName ) ) {
+      final DrillDownProfileReadHandler readHandler = new DrillDownProfileReadHandler( groupName );
+      elements.add( readHandler );
       return readHandler;
     }
     return null;
@@ -84,13 +77,11 @@ public class DrillDownGroupReadHandler extends AbstractXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    final DrillDownProfile[] result = new DrillDownProfile[elements.size()];
-    for (int i = 0; i < elements.size(); i++)
-    {
-      final DrillDownProfileReadHandler handler = elements.get(i);
-      result[i] = (DrillDownProfile) handler.getObject();
+  protected void doneParsing() throws SAXException {
+    final DrillDownProfile[] result = new DrillDownProfile[ elements.size() ];
+    for ( int i = 0; i < elements.size(); i++ ) {
+      final DrillDownProfileReadHandler handler = elements.get( i );
+      result[ i ] = (DrillDownProfile) handler.getObject();
     }
     this.result = result;
   }
@@ -101,8 +92,7 @@ public class DrillDownGroupReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return result;
   }
 }

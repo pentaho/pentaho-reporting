@@ -17,25 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.ListSelectionModel;
-
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -44,32 +25,31 @@ import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.FixDefaultListCellRenderer;
 import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 
-public class QuerySelectorDialog extends CommonDialog
-{
-  private class MouseHandler extends MouseAdapter
-  {
-    public void mouseClicked(final MouseEvent e)
-    {
-      if (e.getClickCount() > 1 && e.getButton() == MouseEvent.BUTTON1)
-      {
-        setConfirmed(true);
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class QuerySelectorDialog extends CommonDialog {
+  private class MouseHandler extends MouseAdapter {
+    public void mouseClicked( final MouseEvent e ) {
+      if ( e.getClickCount() > 1 && e.getButton() == MouseEvent.BUTTON1 ) {
+        setConfirmed( true );
         QuerySelectorDialog.this.dispose();
       }
     }
   }
 
-  private class SyntaxHighlightAction implements ActionListener
-  {
-    private SyntaxHighlightAction()
-    {
+  private class SyntaxHighlightAction implements ActionListener {
+    private SyntaxHighlightAction() {
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final Object o = syntaxModel.getSelectedKey();
-      if (o instanceof String)
-      {
-        textArea.setSyntaxEditingStyle((String) o);
+      if ( o instanceof String ) {
+        textArea.setSyntaxEditingStyle( (String) o );
       }
     }
   }
@@ -90,126 +70,120 @@ public class QuerySelectorDialog extends CommonDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public QuerySelectorDialog(final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public QuerySelectorDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public QuerySelectorDialog(final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public QuerySelectorDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
   public QuerySelectorDialog()
-      throws HeadlessException
-  {
+    throws HeadlessException {
     init();
   }
 
-  protected void init()
-  {
-    setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+  protected void init() {
+    setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
 
     fieldList = new JList();
-    fieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    fieldList.setVisibleRowCount(5);
-    fieldList.setCellRenderer(new FixDefaultListCellRenderer());
-    fieldList.addMouseListener(new MouseHandler());
+    fieldList.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+    fieldList.setVisibleRowCount( 5 );
+    fieldList.setCellRenderer( new FixDefaultListCellRenderer() );
+    fieldList.addMouseListener( new MouseHandler() );
 
     syntaxModel = new KeyedComboBoxModel<String, String>();
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_NONE), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.None"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_JAVA), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.Java"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.JavaScript"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_GROOVY), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.Groovy"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_HTML), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.Html"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_CSS), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.CSS"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_SQL), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.SQL"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_XML), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.XML"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_PYTHON), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.Python"));
-    syntaxModel.add((SyntaxConstants.SYNTAX_STYLE_TCL), UtilMessages.getInstance().getString("RSyntaxAreaLanguages.TCL"));
+    syntaxModel.add( ( SyntaxConstants.SYNTAX_STYLE_NONE ),
+      UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.None" ) );
+    syntaxModel.add( ( SyntaxConstants.SYNTAX_STYLE_JAVA ),
+      UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.Java" ) );
+    syntaxModel.add( ( SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT ),
+      UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.JavaScript" ) );
+    syntaxModel.add( ( SyntaxConstants.SYNTAX_STYLE_GROOVY ),
+      UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.Groovy" ) );
+    syntaxModel.add( ( SyntaxConstants.SYNTAX_STYLE_HTML ),
+      UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.Html" ) );
+    syntaxModel
+      .add( ( SyntaxConstants.SYNTAX_STYLE_CSS ), UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.CSS" ) );
+    syntaxModel
+      .add( ( SyntaxConstants.SYNTAX_STYLE_SQL ), UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.SQL" ) );
+    syntaxModel
+      .add( ( SyntaxConstants.SYNTAX_STYLE_XML ), UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.XML" ) );
+    syntaxModel.add( ( SyntaxConstants.SYNTAX_STYLE_PYTHON ),
+      UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.Python" ) );
+    syntaxModel
+      .add( ( SyntaxConstants.SYNTAX_STYLE_TCL ), UtilMessages.getInstance().getString( "RSyntaxAreaLanguages.TCL" ) );
 
     textArea = new RSyntaxTextArea();
-    textArea.setBracketMatchingEnabled(true);
-    textArea.setSyntaxEditingStyle(RSyntaxTextArea.SYNTAX_STYLE_JAVA);
-    textArea.setColumns(60);
-    textArea.setRows(20);
+    textArea.setBracketMatchingEnabled( true );
+    textArea.setSyntaxEditingStyle( RSyntaxTextArea.SYNTAX_STYLE_JAVA );
+    textArea.setColumns( 60 );
+    textArea.setRows( 20 );
 
     final JPanel syntaxSelectionPane = new JPanel();
-    syntaxSelectionPane.setLayout(new FlowLayout());
-    final JComboBox syntaxBox = new JComboBox(syntaxModel);
-    syntaxBox.addActionListener(new SyntaxHighlightAction());
-    syntaxSelectionPane.add(syntaxBox);
+    syntaxSelectionPane.setLayout( new FlowLayout() );
+    final JComboBox syntaxBox = new JComboBox( syntaxModel );
+    syntaxBox.addActionListener( new SyntaxHighlightAction() );
+    syntaxSelectionPane.add( syntaxBox );
 
     final JPanel contentPane = new JPanel();
-    contentPane.setLayout(new BorderLayout());
-    contentPane.add(new RTextScrollPane(500, 300, textArea, true), BorderLayout.CENTER);
-    contentPane.add(syntaxBox, BorderLayout.NORTH);
+    contentPane.setLayout( new BorderLayout() );
+    contentPane.add( new RTextScrollPane( 500, 300, textArea, true ), BorderLayout.CENTER );
+    contentPane.add( syntaxBox, BorderLayout.NORTH );
 
     tab = new JTabbedPane();
-    tab.addTab(UtilMessages.getInstance().getString("QuerySelectorDialog.DefinedQueries"), new JScrollPane(fieldList));
-    tab.addTab(UtilMessages.getInstance().getString("QuerySelectorDialog.CustomQuery"), contentPane);
+    tab.addTab( UtilMessages.getInstance().getString( "QuerySelectorDialog.DefinedQueries" ),
+      new JScrollPane( fieldList ) );
+    tab.addTab( UtilMessages.getInstance().getString( "QuerySelectorDialog.CustomQuery" ), contentPane );
 
-    setTitle(UtilMessages.getInstance().getString("QuerySelectorDialog.SelectQuery"));
+    setTitle( UtilMessages.getInstance().getString( "QuerySelectorDialog.SelectQuery" ) );
 
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.QuerySelector";
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     return tab;
   }
 
-  public void setQueries(final String[] queries, final String reportQuery)
-  {
+  public void setQueries( final String[] queries, final String reportQuery ) {
     final DefaultListModel listModel = new DefaultListModel();
     boolean found = false;
-    for (int i = 0; i < queries.length; i++)
-    {
-      final String query = queries[i];
-      if (ObjectUtilities.equal(query, reportQuery))
-      {
+    for ( int i = 0; i < queries.length; i++ ) {
+      final String query = queries[ i ];
+      if ( ObjectUtilities.equal( query, reportQuery ) ) {
         found = true;
       }
-      listModel.addElement(query);
+      listModel.addElement( query );
     }
-    fieldList.setModel(listModel);
-    fieldList.setSelectedValue(reportQuery, true);
-    this.textArea.setText(reportQuery);
-    if (found == false)
-    {
-      tab.setSelectedIndex(1);
-    }
-    else
-    {
-      tab.setSelectedIndex(0);
+    fieldList.setModel( listModel );
+    fieldList.setSelectedValue( reportQuery, true );
+    this.textArea.setText( reportQuery );
+    if ( found == false ) {
+      tab.setSelectedIndex( 1 );
+    } else {
+      tab.setSelectedIndex( 0 );
     }
   }
 
-  public String performEdit(final String[] queries, final String selectedQuery)
-  {
-    setQueries(queries, selectedQuery);
+  public String performEdit( final String[] queries, final String selectedQuery ) {
+    setQueries( queries, selectedQuery );
 
-    if (performEdit() == false)
-    {
+    if ( performEdit() == false ) {
       return selectedQuery;
     }
 
-    if (tab.getSelectedIndex() == 1)
-    {
+    if ( tab.getSelectedIndex() == 1 ) {
       return textArea.getText();
-    }
-    else
-    {
-      return ((String) fieldList.getSelectedValue());
+    } else {
+      return ( (String) fieldList.getSelectedValue() );
     }
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.layouting.SharedElementRenderer;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -26,10 +24,12 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public interface ReportDocumentContext extends ReportDesignerDocumentContext<MasterReport>
-{
-  void addReportDataChangeListener(ReportDataChangeListener l);
-  void removeReportDataChangeListener(ReportDataChangeListener l);
+import java.util.HashMap;
+
+public interface ReportDocumentContext extends ReportDesignerDocumentContext<MasterReport> {
+  void addReportDataChangeListener( ReportDataChangeListener l );
+
+  void removeReportDataChangeListener( ReportDataChangeListener l );
 
   AbstractReportDefinition getReportDefinition();
 

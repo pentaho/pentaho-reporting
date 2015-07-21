@@ -17,23 +17,20 @@
 
 package org.pentaho.reporting.designer.core.editor.drilldown;
 
-import java.util.EventObject;
-
 import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownParameter;
 
-public class DrillDownParameterRefreshEvent extends EventObject
-{
+import java.util.EventObject;
+
+public class DrillDownParameterRefreshEvent extends EventObject {
   private DrillDownParameter[] parameter;
 
-  public DrillDownParameterRefreshEvent(final Object source,
-                                        final DrillDownParameter[] parameter)
-  {
-    super(source);
+  public DrillDownParameterRefreshEvent( final Object source,
+                                         final DrillDownParameter[] parameter ) {
+    super( source );
     this.parameter = parameter.clone();
   }
 
-  public DrillDownParameter[] getParameter()
-  {
+  public DrillDownParameter[] getParameter() {
     return parameter.clone();
   }
 }

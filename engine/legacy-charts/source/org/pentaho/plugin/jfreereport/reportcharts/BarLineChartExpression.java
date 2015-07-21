@@ -17,14 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Font;
-import java.text.DateFormatSymbols;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
@@ -44,8 +36,15 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
-public class BarLineChartExpression extends BarChartExpression implements MultiPlotChartExpression
-{
+import java.awt.*;
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class BarLineChartExpression extends BarChartExpression implements MultiPlotChartExpression {
   private static final long serialVersionUID = 7082583397390897215L;
 
   private String linesDataSource;
@@ -75,8 +74,7 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
   private boolean lineAxisStickyZero;
 
   //constructor
-  public BarLineChartExpression()
-  {
+  public BarLineChartExpression() {
     lineSeriesColor = new ArrayList<String>();
     secondValueAxisLabel = "";
     linesLabelFont = "SansSerif--8";
@@ -92,93 +90,75 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
     lineAxisStickyZero = true;
   }
 
-  public boolean isLineAxisIncludesZero()
-  {
+  public boolean isLineAxisIncludesZero() {
     return lineAxisIncludesZero;
   }
 
-  public void setLineAxisIncludesZero(final boolean lineAxisIncludesZero)
-  {
+  public void setLineAxisIncludesZero( final boolean lineAxisIncludesZero ) {
     this.lineAxisIncludesZero = lineAxisIncludesZero;
   }
 
-  public boolean isLineAxisStickyZero()
-  {
+  public boolean isLineAxisStickyZero() {
     return lineAxisStickyZero;
   }
 
-  public void setLineAxisStickyZero(final boolean lineAxisStickyZero)
-  {
+  public void setLineAxisStickyZero( final boolean lineAxisStickyZero ) {
     this.lineAxisStickyZero = lineAxisStickyZero;
   }
 
-  public Font getLineTitleFont()
-  {
+  public Font getLineTitleFont() {
     return lineTitleFont;
   }
 
-  public void setLineTitleFont(final Font lineTitleFont)
-  {
+  public void setLineTitleFont( final Font lineTitleFont ) {
     this.lineTitleFont = lineTitleFont;
   }
 
-  public Font getLineTickFont()
-  {
+  public Font getLineTickFont() {
     return lineTickFont;
   }
 
-  public void setLineTickFont(final Font lineTickFont)
-  {
+  public void setLineTickFont( final Font lineTickFont ) {
     this.lineTickFont = lineTickFont;
   }
 
-  public double getLineRangeMinimum()
-  {
+  public double getLineRangeMinimum() {
     return lineRangeMinimum;
   }
 
-  public void setLineRangeMinimum(final double lineRangeMinimum)
-  {
+  public void setLineRangeMinimum( final double lineRangeMinimum ) {
     this.lineRangeMinimum = lineRangeMinimum;
   }
 
-  public double getLineRangeMaximum()
-  {
+  public double getLineRangeMaximum() {
     return lineRangeMaximum;
   }
 
-  public void setLineRangeMaximum(final double lineRangeMaximum)
-  {
+  public void setLineRangeMaximum( final double lineRangeMaximum ) {
     this.lineRangeMaximum = lineRangeMaximum;
   }
 
-  public double getLinePeriodCount()
-  {
+  public double getLinePeriodCount() {
     return linePeriodCount;
   }
 
-  public void setLinePeriodCount(final double linePeriodCount)
-  {
+  public void setLinePeriodCount( final double linePeriodCount ) {
     this.linePeriodCount = linePeriodCount;
   }
 
-  public Class getLineTimePeriod()
-  {
+  public Class getLineTimePeriod() {
     return lineTimePeriod;
   }
 
-  public void setLineTimePeriod(final Class lineTimePeriod)
-  {
+  public void setLineTimePeriod( final Class lineTimePeriod ) {
     this.lineTimePeriod = lineTimePeriod;
   }
 
-  public boolean isSharedRangeAxis()
-  {
+  public boolean isSharedRangeAxis() {
     return sharedRangeAxis;
   }
 
-  public void setSharedRangeAxis(final boolean sharedRangeAxis)
-  {
+  public void setSharedRangeAxis( final boolean sharedRangeAxis ) {
     this.sharedRangeAxis = sharedRangeAxis;
   }
 
@@ -188,197 +168,163 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final BarLineChartExpression chartExpression = (BarLineChartExpression) super.getInstance();
     chartExpression.lineSeriesColor = (ArrayList<String>) lineSeriesColor.clone();
     return chartExpression;
   }
 
-  public String getLinesDataSource()
-  {
+  public String getLinesDataSource() {
     return linesDataSource;
   }
 
-  public void setLinesDataSource(final String linesDataSource)
-  {
+  public void setLinesDataSource( final String linesDataSource ) {
     this.linesDataSource = linesDataSource;
   }
 
-  public String getSecondaryDataSet()
-  {
+  public String getSecondaryDataSet() {
     return getLinesDataSource();
   }
 
-  public void setSecondaryDataSet(final String dataset)
-  {
-    setLinesDataSource(dataset);
+  public void setSecondaryDataSet( final String dataset ) {
+    setLinesDataSource( dataset );
   }
 
-  public String getLinesLabelFont()
-  {
+  public String getLinesLabelFont() {
     return linesLabelFont;
   }
 
-  public void setLinesLabelFont(final String linesLabelFont)
-  {
+  public void setLinesLabelFont( final String linesLabelFont ) {
     this.linesLabelFont = linesLabelFont;
   }
 
   @Deprecated
-  public String getLinesTickLabelFont()
-  {
+  public String getLinesTickLabelFont() {
     return linesTickLabelFont;
   }
 
   @Deprecated
-  public void setLinesTickLabelFont(final String linesTickLabelFont)
-  {
+  public void setLinesTickLabelFont( final String linesTickLabelFont ) {
     this.linesTickLabelFont = linesTickLabelFont;
   }
 
-  public String getSecondValueAxisLabel()
-  {
+  public String getSecondValueAxisLabel() {
     return secondValueAxisLabel;
   }
 
-  public void setSecondValueAxisLabel(final String secondValueAxisLabel)
-  {
+  public void setSecondValueAxisLabel( final String secondValueAxisLabel ) {
     this.secondValueAxisLabel = secondValueAxisLabel;
   }
 
-  public String getLineTicksLabelFormat()
-  {
+  public String getLineTicksLabelFormat() {
     return lineTicksLabelFormat;
   }
 
-  public void setLineTicksLabelFormat(final String lineTicksLabelFormat)
-  {
+  public void setLineTicksLabelFormat( final String lineTicksLabelFormat ) {
     this.lineTicksLabelFormat = lineTicksLabelFormat;
   }
 
-  public void setLineSeriesColor(final int index, final String field)
-  {
-    if (lineSeriesColor.size() == index)
-    {
-      lineSeriesColor.add(field);
-    }
-    else
-    {
-      lineSeriesColor.set(index, field);
+  public void setLineSeriesColor( final int index, final String field ) {
+    if ( lineSeriesColor.size() == index ) {
+      lineSeriesColor.add( field );
+    } else {
+      lineSeriesColor.set( index, field );
     }
   }
 
-  public String getLineSeriesColor(final int index)
-  {
-    return (String) this.lineSeriesColor.get(index);
+  public String getLineSeriesColor( final int index ) {
+    return (String) this.lineSeriesColor.get( index );
   }
 
-  public int getLineSeriesColorCount()
-  {
+  public int getLineSeriesColorCount() {
     return this.lineSeriesColor.size();
   }
 
-  public String[] getLineSeriesColor()
-  {
-    final Object[] toArray = this.lineSeriesColor.toArray(new String[this.lineSeriesColor.size()]);
+  public String[] getLineSeriesColor() {
+    final Object[] toArray = this.lineSeriesColor.toArray( new String[ this.lineSeriesColor.size() ] );
     return (String[]) toArray;
   }
 
-  public void setLineSeriesColor(final String[] fields)
-  {
+  public void setLineSeriesColor( final String[] fields ) {
     this.lineSeriesColor.clear();
-    this.lineSeriesColor.addAll(Arrays.asList(fields));
+    this.lineSeriesColor.addAll( Arrays.asList( fields ) );
   }
 
   /**
    * @return returns the style set for the lines
    */
-  public String getLineStyle()
-  {
+  public String getLineStyle() {
     return lineStyle;
   }
 
   /**
    * @param value set the style for all line series
    */
-  public void setLineStyle(final String value)
-  {
+  public void setLineStyle( final String value ) {
     lineStyle = value;
   }
 
   /**
-   * @return the width of all line series
-   *         Valid values are float numbers zero or greater
+   * @return the width of all line series Valid values are float numbers zero or greater
    */
-  public float getLineWidth()
-  {
+  public float getLineWidth() {
     return lineWidth;
   }
 
   /**
-   * @param value set the width of all line series
-   *              Valid values are float numbers zero or greater
+   * @param value set the width of all line series Valid values are float numbers zero or greater
    */
-  public void setLineWidth(final float value)
-  {
+  public void setLineWidth( final float value ) {
     lineWidth = value;
   }
 
   /**
    * @return boolean whether the markers (data points) for all series are displayed
    */
-  public boolean isMarkersVisible()
-  {
+  public boolean isMarkersVisible() {
     return markersVisible;
   }
 
   /**
    * @param markersVisible set whether the markers (data points) for all series should be displayed
    */
-  public void setMarkersVisible(final boolean markersVisible)
-  {
+  public void setMarkersVisible( final boolean markersVisible ) {
     this.markersVisible = markersVisible;
   }
 
   /**
    * @deprecated
    */
-  public String getBarsTickLabelFont()
-  {
-    return convertFontToString(getRangeTickFont());
+  public String getBarsTickLabelFont() {
+    return convertFontToString( getRangeTickFont() );
   }
 
   /**
    * @deprecated
    */
-  public void setBarsTickLabelFont(final String barsTickLabelFont)
-  {
-    setRangeTickFont(Font.decode(barsTickLabelFont));
+  public void setBarsTickLabelFont( final String barsTickLabelFont ) {
+    setRangeTickFont( Font.decode( barsTickLabelFont ) );
   }
 
   /**
    * @deprecated
    */
-  public String getCategoryTickLabelFont()
-  {
+  public String getCategoryTickLabelFont() {
     return getLabelFont();
   }
 
   /**
    * @deprecated
    */
-  public void setCategoryTickLabelFont(final String categoryTickLabelFont)
-  {
-    this.setLabelFont(categoryTickLabelFont);
+  public void setCategoryTickLabelFont( final String categoryTickLabelFont ) {
+    this.setLabelFont( categoryTickLabelFont );
   }
 
   /**
    * @return
    * @deprecated duplicate property.
    */
-  public String getBarTicksLabelFormat()
-  {
+  public String getBarTicksLabelFormat() {
     return getRangeTickFormatString();
   }
 
@@ -386,251 +332,196 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
    * @param lineTicksLabelDateFormat
    * @deprecated duplicate property.
    */
-  public void setBarTicksLabelFormat(final String lineTicksLabelDateFormat)
-  {
-    setRangeTickFormatString(lineTicksLabelDateFormat);
+  public void setBarTicksLabelFormat( final String lineTicksLabelDateFormat ) {
+    setRangeTickFormatString( lineTicksLabelDateFormat );
   }
 
   /**
    * @deprecated
    */
-  public String getBarsLabelFont()
-  {
-    return convertFontToString(getRangeTitleFont());
+  public String getBarsLabelFont() {
+    return convertFontToString( getRangeTitleFont() );
   }
 
   /**
    * @deprecated
    */
-  public void setBarsLabelFont(final String barsLabelFont)
-  {
-    setRangeTitleFont(Font.decode(barsLabelFont));
+  public void setBarsLabelFont( final String barsLabelFont ) {
+    setRangeTitleFont( Font.decode( barsLabelFont ) );
   }
 
-  public boolean isLineAxisAutoRange()
-  {
+  public boolean isLineAxisAutoRange() {
     return lineAxisAutoRange;
   }
 
-  public void setLineAxisAutoRange(final boolean lineAxisAutoRange)
-  {
+  public void setLineAxisAutoRange( final boolean lineAxisAutoRange ) {
     this.lineAxisAutoRange = lineAxisAutoRange;
   }
 
-  public JFreeChart computeCategoryChart(final CategoryDataset barsDataset)
-  {
-    final JFreeChart chart = super.computeCategoryChart(barsDataset);
+  public JFreeChart computeCategoryChart( final CategoryDataset barsDataset ) {
+    final JFreeChart chart = super.computeCategoryChart( barsDataset );
     final CategoryDataset linesDataset = createLinesDataset();
 
     //Create the renderer with the barchart, use a different bar renderer depending
     //if 3D chart or not
     final CategoryPlot plot = chart.getCategoryPlot();
     final CategoryItemRenderer lineRenderer;
-    if (isThreeD())
-    {
+    if ( isThreeD() ) {
       lineRenderer = new LineRenderer3D();
-    }
-    else
-    {
+    } else {
       lineRenderer = new LineAndShapeRenderer();
     }
 
     //add lines dataset and axis to plot
-    if (linesDataset != null)
-    {
+    if ( linesDataset != null ) {
 
       //Create Axis Objects
       final ValueAxis linesAxis;
-      if (isSharedRangeAxis())
-      {
+      if ( isSharedRangeAxis() ) {
         linesAxis = plot.getRangeAxis();
-      }
-      else if (isThreeD())
-      {
-        linesAxis = new NumberAxis3D(getSecondValueAxisLabel());
-      }
-      else
-      {
-        linesAxis = new NumberAxis(getSecondValueAxisLabel());
+      } else if ( isThreeD() ) {
+        linesAxis = new NumberAxis3D( getSecondValueAxisLabel() );
+      } else {
+        linesAxis = new NumberAxis( getSecondValueAxisLabel() );
       }
 
-      plot.setRenderer(1, lineRenderer);
-      plot.setDataset(1, linesDataset);
-      plot.setRangeAxis(1, linesAxis);
+      plot.setRenderer( 1, lineRenderer );
+      plot.setDataset( 1, linesDataset );
+      plot.setRangeAxis( 1, linesAxis );
 
       //map lines to second axis
-      plot.mapDatasetToRangeAxis(1, 1);
+      plot.mapDatasetToRangeAxis( 1, 1 );
 
       //set location of second axis
-      plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
+      plot.setRangeAxisLocation( 1, AxisLocation.BOTTOM_OR_RIGHT );
     }
 
     //set rendering order
-    plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
+    plot.setDatasetRenderingOrder( DatasetRenderingOrder.FORWARD );
 
     return chart;
   }
 
-  private CategoryDataset createLinesDataset()
-  {
-    final Object maybeCollector = getDataRow().get(getLinesDataSource());
+  private CategoryDataset createLinesDataset() {
+    final Object maybeCollector = getDataRow().get( getLinesDataSource() );
     final Dataset dataset;
-    if (maybeCollector instanceof ICollectorFunction)
-    {
+    if ( maybeCollector instanceof ICollectorFunction ) {
       final ICollectorFunction collector = (ICollectorFunction) maybeCollector;
       dataset = (Dataset) collector.getDatasourceValue();
-    }
-    else if (maybeCollector instanceof CollectorFunctionResult)
-    {
+    } else if ( maybeCollector instanceof CollectorFunctionResult ) {
       final CollectorFunctionResult collector = (CollectorFunctionResult) maybeCollector;
       dataset = collector.getDataSet();
-    }
-    else
-    {
+    } else {
       dataset = null;
     }
 
 
     final CategoryDataset linesDataset;
-    if (dataset instanceof CategoryDataset)
-    {
+    if ( dataset instanceof CategoryDataset ) {
       linesDataset = (CategoryDataset) dataset;
-    }
-    else
-    {
+    } else {
       linesDataset = null;
     }
     return linesDataset;
   }
 
-  protected void configureChart(final JFreeChart chart)
-  {
-    super.configureChart(chart);
+  protected void configureChart( final JFreeChart chart ) {
+    super.configureChart( chart );
 
     final CategoryPlot plot = chart.getCategoryPlot();
 
-    if (isSharedRangeAxis() == false)
-    {
-      final ValueAxis linesAxis = plot.getRangeAxis(1);
-      if (linesAxis instanceof NumberAxis)
-      {
+    if ( isSharedRangeAxis() == false ) {
+      final ValueAxis linesAxis = plot.getRangeAxis( 1 );
+      if ( linesAxis instanceof NumberAxis ) {
         final NumberAxis numberAxis = (NumberAxis) linesAxis;
-        numberAxis.setAutoRangeIncludesZero(isLineAxisIncludesZero());
-        numberAxis.setAutoRangeStickyZero(isLineAxisStickyZero());
+        numberAxis.setAutoRangeIncludesZero( isLineAxisIncludesZero() );
+        numberAxis.setAutoRangeStickyZero( isLineAxisStickyZero() );
 
-        if (getLinePeriodCount() > 0)
-        {
-          if (getLineTicksLabelFormat() != null)
-          {
+        if ( getLinePeriodCount() > 0 ) {
+          if ( getLineTicksLabelFormat() != null ) {
             final FastDecimalFormat formatter = new FastDecimalFormat
-                (getLineTicksLabelFormat(), getResourceBundleFactory().getLocale());
-            numberAxis.setTickUnit(new FastNumberTickUnit(getLinePeriodCount(), formatter));
+              ( getLineTicksLabelFormat(), getResourceBundleFactory().getLocale() );
+            numberAxis.setTickUnit( new FastNumberTickUnit( getLinePeriodCount(), formatter ) );
+          } else {
+            numberAxis.setTickUnit( new FastNumberTickUnit( getLinePeriodCount() ) );
           }
-          else
-          {
-            numberAxis.setTickUnit(new FastNumberTickUnit(getLinePeriodCount()));
-          }
-        }
-        else
-        {
-          if (getLineTicksLabelFormat() != null)
-          {
+        } else {
+          if ( getLineTicksLabelFormat() != null ) {
             final DecimalFormat formatter = new DecimalFormat
-                (getLineTicksLabelFormat(), new DecimalFormatSymbols(getResourceBundleFactory().getLocale()));
-            numberAxis.setNumberFormatOverride(formatter);
+              ( getLineTicksLabelFormat(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
+            numberAxis.setNumberFormatOverride( formatter );
           }
         }
-      }
-      else if (linesAxis instanceof DateAxis)
-      {
+      } else if ( linesAxis instanceof DateAxis ) {
         final DateAxis numberAxis = (DateAxis) linesAxis;
 
-        if (getLinePeriodCount() > 0 && getLineTimePeriod() != null)
-        {
-          if (getLineTicksLabelFormat() != null)
-          {
+        if ( getLinePeriodCount() > 0 && getLineTimePeriod() != null ) {
+          if ( getLineTicksLabelFormat() != null ) {
             final SimpleDateFormat formatter = new SimpleDateFormat
-                (getLineTicksLabelFormat(), new DateFormatSymbols(getResourceBundleFactory().getLocale()));
+              ( getLineTicksLabelFormat(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
             numberAxis.setTickUnit
-                (new DateTickUnit(getDateUnitAsInt(getLineTimePeriod()), (int) getLinePeriodCount(), formatter));
-          }
-          else
-          {
+              ( new DateTickUnit( getDateUnitAsInt( getLineTimePeriod() ), (int) getLinePeriodCount(), formatter ) );
+          } else {
             numberAxis.setTickUnit
-                (new DateTickUnit(getDateUnitAsInt(getLineTimePeriod()), (int) getLinePeriodCount()));
+              ( new DateTickUnit( getDateUnitAsInt( getLineTimePeriod() ), (int) getLinePeriodCount() ) );
           }
-        }
-        else if (getRangeTickFormatString() != null)
-        {
+        } else if ( getRangeTickFormatString() != null ) {
           final SimpleDateFormat formatter = new SimpleDateFormat
-              (getRangeTickFormatString(), new DateFormatSymbols(getResourceBundleFactory().getLocale()));
-          numberAxis.setDateFormatOverride(formatter);
+            ( getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          numberAxis.setDateFormatOverride( formatter );
         }
       }
 
-      if (linesAxis != null)
-      {
-        final Font labelFont = Font.decode(getLabelFont());
-        linesAxis.setLabelFont(labelFont);
-        linesAxis.setTickLabelFont(labelFont);
+      if ( linesAxis != null ) {
+        final Font labelFont = Font.decode( getLabelFont() );
+        linesAxis.setLabelFont( labelFont );
+        linesAxis.setTickLabelFont( labelFont );
 
-        if (getLineTitleFont() != null)
-        {
-          linesAxis.setLabelFont(getLineTitleFont());
+        if ( getLineTitleFont() != null ) {
+          linesAxis.setLabelFont( getLineTitleFont() );
         }
-        if (getLineTickFont() != null)
-        {
-          linesAxis.setTickLabelFont(getLineTickFont());
+        if ( getLineTickFont() != null ) {
+          linesAxis.setTickLabelFont( getLineTickFont() );
         }
         final int level = getRuntime().getProcessingContext().getCompatibilityLevel();
-        if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8))
-        {
-          if (getRangeMinimum() != 0)
-          {
-            linesAxis.setLowerBound(getLineRangeMinimum());
+        if ( ClassicEngineBoot.isEnforceCompatibilityFor( level, 3, 8 ) ) {
+          if ( getRangeMinimum() != 0 ) {
+            linesAxis.setLowerBound( getLineRangeMinimum() );
           }
-          if (getRangeMaximum() != 1)
-          {
-            linesAxis.setUpperBound(getLineRangeMaximum());
+          if ( getRangeMaximum() != 1 ) {
+            linesAxis.setUpperBound( getLineRangeMaximum() );
           }
-          if (getLineRangeMinimum() == 0 && getLineRangeMaximum() == 1)
-          {
-            linesAxis.setLowerBound(0);
-            linesAxis.setUpperBound(1);
-            linesAxis.setAutoRange(true);
+          if ( getLineRangeMinimum() == 0 && getLineRangeMaximum() == 1 ) {
+            linesAxis.setLowerBound( 0 );
+            linesAxis.setUpperBound( 1 );
+            linesAxis.setAutoRange( true );
           }
-        }
-        else
-        {
-          linesAxis.setLowerBound(getLineRangeMinimum());
-          linesAxis.setUpperBound(getLineRangeMaximum());
-          linesAxis.setAutoRange(isLineAxisAutoRange());
+        } else {
+          linesAxis.setLowerBound( getLineRangeMinimum() );
+          linesAxis.setUpperBound( getLineRangeMaximum() );
+          linesAxis.setAutoRange( isLineAxisAutoRange() );
         }
       }
     }
 
-    final LineAndShapeRenderer linesRenderer = (LineAndShapeRenderer) plot.getRenderer(1);
-    if (linesRenderer != null)
-    {
+    final LineAndShapeRenderer linesRenderer = (LineAndShapeRenderer) plot.getRenderer( 1 );
+    if ( linesRenderer != null ) {
       //set stroke with line width
-      linesRenderer.setStroke(translateLineStyle(lineWidth, lineStyle));
+      linesRenderer.setStroke( translateLineStyle( lineWidth, lineStyle ) );
       //hide shapes on line
-      linesRenderer.setShapesVisible(isMarkersVisible());
-      linesRenderer.setBaseShapesFilled(isMarkersVisible());
+      linesRenderer.setShapesVisible( isMarkersVisible() );
+      linesRenderer.setBaseShapesFilled( isMarkersVisible() );
 
       //set colors for each line
-      for (int i = 0; i < lineSeriesColor.size(); i++)
-      {
-        final String s = (String) lineSeriesColor.get(i);
-        linesRenderer.setSeriesPaint(i, parseColorFromString(s));
+      for ( int i = 0; i < lineSeriesColor.size(); i++ ) {
+        final String s = (String) lineSeriesColor.get( i );
+        linesRenderer.setSeriesPaint( i, parseColorFromString( s ) );
       }
     }
   }
 
-  private String convertFontToString(final Font font)
-  {
-    if (font == null)
-    {
+  private String convertFontToString( final Font font ) {
+    if ( font == null ) {
       return null;
     }
 
@@ -638,32 +529,23 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
     final int fontSize = font.getSize();
     final int fontStyle = font.getStyle();
     final String fontStyleText;
-    if ((fontStyle & (Font.BOLD | Font.ITALIC)) == (Font.BOLD | Font.ITALIC))
-    {
+    if ( ( fontStyle & ( Font.BOLD | Font.ITALIC ) ) == ( Font.BOLD | Font.ITALIC ) ) {
       fontStyleText = "BOLDITALIC";
-    }
-    else if ((fontStyle & Font.BOLD) == Font.BOLD)
-    {
+    } else if ( ( fontStyle & Font.BOLD ) == Font.BOLD ) {
       fontStyleText = "BOLD";
-    }
-    else if ((fontStyle & Font.ITALIC) == Font.ITALIC)
-    {
+    } else if ( ( fontStyle & Font.ITALIC ) == Font.ITALIC ) {
       fontStyleText = "ITALIC";
-    }
-    else
-    {
+    } else {
       fontStyleText = "PLAIN";
     }
-    return (fontName + "-" + fontStyleText + "-" + fontSize);
+    return ( fontName + "-" + fontStyleText + "-" + fontSize );
   }
 
-  public void reconfigureForCompatibility(final int versionTag)
-  {
-    super.reconfigureForCompatibility(versionTag);
+  public void reconfigureForCompatibility( final int versionTag ) {
+    super.reconfigureForCompatibility( versionTag );
 
-    if (ClassicEngineBoot.isEnforceCompatibilityFor(versionTag, 3, 8))
-    {
-      setLineAxisAutoRange(getLineRangeMinimum() == 0 && getLineRangeMaximum() == 1);
+    if ( ClassicEngineBoot.isEnforceCompatibilityFor( versionTag, 3, 8 ) ) {
+      setLineAxisAutoRange( getLineRangeMinimum() == 0 && getLineRangeMaximum() == 1 );
     }
   }
 }

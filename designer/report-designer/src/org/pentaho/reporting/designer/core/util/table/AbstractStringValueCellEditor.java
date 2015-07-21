@@ -17,39 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util.table;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.util.EventObject;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.CellEditor;
-import javax.swing.ComboBoxEditor;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.EventListenerList;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.openformula.ui.util.FieldDefinitionCellRenderer;
@@ -88,217 +55,172 @@ import org.pentaho.reporting.libraries.designtime.swing.filechooser.FileChooserS
 import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 
-public abstract class AbstractStringValueCellEditor extends JPanel implements CellEditor
-{
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.EventListenerList;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.plaf.basic.BasicComboBoxEditor;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.EventObject;
 
-  protected class ExtendedEditorAction extends AbstractAction
-  {
+public abstract class AbstractStringValueCellEditor extends JPanel implements CellEditor {
+
+  protected class ExtendedEditorAction extends AbstractAction {
     /**
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    protected ExtendedEditorAction()
-    {
+    protected ExtendedEditorAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final String valueRole = getValueRole();
       final JComboBox comboBox = getComboBox();
-      if (RESOURCE_VALUE_ROLE.equals(valueRole))
-      {
+      if ( RESOURCE_VALUE_ROLE.equals( valueRole ) ) {
         final FileFilter[] filters = {
-            new FilesystemFilter(".properties", // NON-NLS
-                Messages.getString("BundledResourceEditor.PropertiesTranslations")),
-            new FilesystemFilter(new String[]{".xml", ".report", ".prpt", ".prpti", ".prptstyle"}, // NON-NLS
-                Messages.getString("BundledResourceEditor.Resources"), true),
-            new FilesystemFilter(new String[]{".gif", ".jpg", ".jpeg", ".png", ".svg", ".wmf"}, // NON-NLS
-                Messages.getString("BundledResourceEditor.Images"), true),
+          new FilesystemFilter( ".properties", // NON-NLS
+            Messages.getString( "BundledResourceEditor.PropertiesTranslations" ) ),
+          new FilesystemFilter( new String[] { ".xml", ".report", ".prpt", ".prpti", ".prptstyle" }, // NON-NLS
+            Messages.getString( "BundledResourceEditor.Resources" ), true ),
+          new FilesystemFilter( new String[] { ".gif", ".jpg", ".jpeg", ".png", ".svg", ".wmf" }, // NON-NLS
+            Messages.getString( "BundledResourceEditor.Images" ), true ),
         };
 
-        final CommonFileChooser chooser = FileChooserService.getInstance().getFileChooser("resources");
-        chooser.setFilters(filters);
+        final CommonFileChooser chooser = FileChooserService.getInstance().getFileChooser( "resources" );
+        chooser.setFilters( filters );
         final String text = getTextField().getText();
-        if (StringUtils.isEmpty(text) == false)
-        {
-          chooser.setSelectedFile(new File(text));
+        if ( StringUtils.isEmpty( text ) == false ) {
+          chooser.setSelectedFile( new File( text ) );
         }
 
-        if (chooser.showDialog(AbstractStringValueCellEditor.this, JFileChooser.OPEN_DIALOG))
-        {
+        if ( chooser.showDialog( AbstractStringValueCellEditor.this, JFileChooser.OPEN_DIALOG ) ) {
           final File file = chooser.getSelectedFile();
-          if (file == null)
-          {
+          if ( file == null ) {
             return;
           }
 
           final ReportRenderContext reportRenderContext = getReportContext();
-          if (reportRenderContext == null)
-          {
-            getTextField().setText(file.getPath());
-          }
-          else
-          {
-            final File reportContextFile = DesignTimeUtil.getContextAsFile(reportRenderContext.getReportDefinition());
+          if ( reportRenderContext == null ) {
+            getTextField().setText( file.getPath() );
+          } else {
+            final File reportContextFile = DesignTimeUtil.getContextAsFile( reportRenderContext.getReportDefinition() );
             final String path;
-            if (reportContextFile != null)
-            {
-              path = IOUtils.getInstance().createRelativePath(file.getPath(), reportContextFile.getAbsolutePath());
-            }
-            else
-            {
+            if ( reportContextFile != null ) {
+              path = IOUtils.getInstance().createRelativePath( file.getPath(), reportContextFile.getAbsolutePath() );
+            } else {
               path = file.getPath();
             }
-            getTextField().setText(path);
+            getTextField().setText( path );
           }
         }
-      }
-      else if (FIELD_VALUE_ROLE.equals(valueRole))
-      {
-        final Window window = LibSwingUtil.getWindowAncestor(AbstractStringValueCellEditor.this);
+      } else if ( FIELD_VALUE_ROLE.equals( valueRole ) ) {
+        final Window window = LibSwingUtil.getWindowAncestor( AbstractStringValueCellEditor.this );
         final FieldSelectorDialog editorDialog;
-        if (window instanceof Frame)
-        {
-          editorDialog = new FieldSelectorDialog((Frame) window);
-        }
-        else if (window instanceof Dialog)
-        {
-          editorDialog = new FieldSelectorDialog((Dialog) window);
-        }
-        else
-        {
+        if ( window instanceof Frame ) {
+          editorDialog = new FieldSelectorDialog( (Frame) window );
+        } else if ( window instanceof Dialog ) {
+          editorDialog = new FieldSelectorDialog( (Dialog) window );
+        } else {
           editorDialog = new FieldSelectorDialog();
         }
 
         final FieldDefinition[] fields = getFields();
         final String selectedItem = (String) comboBox.getSelectedItem();
         FieldDefinition selected = null;
-        if (selectedItem != null)
-        {
-          for (int i = 0; i < fields.length; i++)
-          {
-            final FieldDefinition field = fields[i];
-            if (selectedItem.equals(field.getName()))
-            {
+        if ( selectedItem != null ) {
+          for ( int i = 0; i < fields.length; i++ ) {
+            final FieldDefinition field = fields[ i ];
+            if ( selectedItem.equals( field.getName() ) ) {
               selected = field;
               break;
             }
           }
         }
-        final FieldDefinition fieldDefinition = editorDialog.performEdit(fields, selected);
-        if (fieldDefinition != null)
-        {
-          comboBox.setSelectedItem(fieldDefinition.getName());
+        final FieldDefinition fieldDefinition = editorDialog.performEdit( fields, selected );
+        if ( fieldDefinition != null ) {
+          comboBox.setSelectedItem( fieldDefinition.getName() );
         }
-      }
-      else if (QUERY_VALUE_ROLE.equals(valueRole))
-      {
-        final Window window = LibSwingUtil.getWindowAncestor(AbstractStringValueCellEditor.this);
+      } else if ( QUERY_VALUE_ROLE.equals( valueRole ) ) {
+        final Window window = LibSwingUtil.getWindowAncestor( AbstractStringValueCellEditor.this );
         final QuerySelectorDialog editorDialog;
-        if (window instanceof Frame)
-        {
-          editorDialog = new QuerySelectorDialog((Frame) window);
-        }
-        else if (window instanceof Dialog)
-        {
-          editorDialog = new QuerySelectorDialog((Dialog) window);
-        }
-        else
-        {
+        if ( window instanceof Frame ) {
+          editorDialog = new QuerySelectorDialog( (Frame) window );
+        } else if ( window instanceof Dialog ) {
+          editorDialog = new QuerySelectorDialog( (Dialog) window );
+        } else {
           editorDialog = new QuerySelectorDialog();
         }
 
         final String selectedQuery =
-            editorDialog.performEdit(getQueryNames(), (String) comboBox.getSelectedItem());
-        if (editorDialog.isConfirmed())
-        {
-          comboBox.setSelectedItem(selectedQuery);
+          editorDialog.performEdit( getQueryNames(), (String) comboBox.getSelectedItem() );
+        if ( editorDialog.isConfirmed() ) {
+          comboBox.setSelectedItem( selectedQuery );
         }
-      }
-      else if (GROUP_VALUE_ROLE.equals(valueRole))
-      {
-        final Window window = LibSwingUtil.getWindowAncestor(AbstractStringValueCellEditor.this);
+      } else if ( GROUP_VALUE_ROLE.equals( valueRole ) ) {
+        final Window window = LibSwingUtil.getWindowAncestor( AbstractStringValueCellEditor.this );
         final GroupSelectorDialog editorDialog;
-        if (window instanceof Frame)
-        {
-          editorDialog = new GroupSelectorDialog((Frame) window);
-        }
-        else if (window instanceof Dialog)
-        {
-          editorDialog = new GroupSelectorDialog((Dialog) window);
-        }
-        else
-        {
+        if ( window instanceof Frame ) {
+          editorDialog = new GroupSelectorDialog( (Frame) window );
+        } else if ( window instanceof Dialog ) {
+          editorDialog = new GroupSelectorDialog( (Dialog) window );
+        } else {
           editorDialog = new GroupSelectorDialog();
         }
 
         final String originalGroup = (String) comboBox.getSelectedItem();
-        final String selectedGroup = editorDialog.performEdit(getGroups(), originalGroup);
-        if (editorDialog.isConfirmed())
-        {
-          comboBox.setSelectedItem(selectedGroup);
+        final String selectedGroup = editorDialog.performEdit( getGroups(), originalGroup );
+        if ( editorDialog.isConfirmed() ) {
+          comboBox.setSelectedItem( selectedGroup );
         }
-      }
-      else if (FORMULA_VALUE_ROLE.equals(valueRole))
-      {
+      } else if ( FORMULA_VALUE_ROLE.equals( valueRole ) ) {
         final FormulaEditorDialog editorDialog =
-            GUIUtils.createFormulaEditorDialog(getReportDesignerContext(), AbstractStringValueCellEditor.this);
+          GUIUtils.createFormulaEditorDialog( getReportDesignerContext(), AbstractStringValueCellEditor.this );
 
         final String originalFormula = (String) comboBox.getSelectedItem();
-        final String formula = editorDialog.editFormula(originalFormula, getFields());
-        if (formula != null)
-        {
-          comboBox.setSelectedItem(formula);
+        final String formula = editorDialog.editFormula( originalFormula, getFields() );
+        if ( formula != null ) {
+          comboBox.setSelectedItem( formula );
         }
-      }
-      else if (NUMBER_FORMAT_VALUE_ROLE.equals(valueRole) || DATE_FORMAT_VALUE_ROLE.equals(valueRole))
-      {
-        final Window window = LibSwingUtil.getWindowAncestor(AbstractStringValueCellEditor.this);
+      } else if ( NUMBER_FORMAT_VALUE_ROLE.equals( valueRole ) || DATE_FORMAT_VALUE_ROLE.equals( valueRole ) ) {
+        final Window window = LibSwingUtil.getWindowAncestor( AbstractStringValueCellEditor.this );
         final TextAreaPropertyEditorDialog editorDialog;
-        if (window instanceof Frame)
-        {
-          editorDialog = new TextAreaPropertyEditorDialog((Frame) window);
-        }
-        else if (window instanceof Dialog)
-        {
-          editorDialog = new TextAreaPropertyEditorDialog((Dialog) window);
-        }
-        else
-        {
+        if ( window instanceof Frame ) {
+          editorDialog = new TextAreaPropertyEditorDialog( (Frame) window );
+        } else if ( window instanceof Dialog ) {
+          editorDialog = new TextAreaPropertyEditorDialog( (Dialog) window );
+        } else {
           editorDialog = new TextAreaPropertyEditorDialog();
         }
         final String originalFormula = (String) comboBox.getSelectedItem();
-        final String text = editorDialog.performEdit(originalFormula);
-        if (editorDialog.isConfirmed())
-        {
-          comboBox.setSelectedItem(text);
+        final String text = editorDialog.performEdit( originalFormula );
+        if ( editorDialog.isConfirmed() ) {
+          comboBox.setSelectedItem( text );
         }
-      }
-      else
-      {
-        final Window window = LibSwingUtil.getWindowAncestor(AbstractStringValueCellEditor.this);
+      } else {
+        final Window window = LibSwingUtil.getWindowAncestor( AbstractStringValueCellEditor.this );
         final TextAreaPropertyEditorDialog editorDialog;
-        if (window instanceof Frame)
-        {
-          editorDialog = new TextAreaPropertyEditorDialog((Frame) window);
-        }
-        else if (window instanceof Dialog)
-        {
-          editorDialog = new TextAreaPropertyEditorDialog((Dialog) window);
-        }
-        else
-        {
+        if ( window instanceof Frame ) {
+          editorDialog = new TextAreaPropertyEditorDialog( (Frame) window );
+        } else if ( window instanceof Dialog ) {
+          editorDialog = new TextAreaPropertyEditorDialog( (Dialog) window );
+        } else {
           editorDialog = new TextAreaPropertyEditorDialog();
         }
 
         final JTextComponent textField = getTextField();
         final String originalValue = textField.getText();
-        final String text = editorDialog.performEdit(originalValue);
-        if (editorDialog.isConfirmed())
-        {
-          textField.setText(text);
+        final String text = editorDialog.performEdit( originalValue );
+        if ( editorDialog.isConfirmed() ) {
+          textField.setText( text );
         }
       }
 
@@ -306,83 +228,65 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
     }
   }
 
-  protected class SelectionAction extends AbstractAction
-  {
+  protected class SelectionAction extends AbstractAction {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    public SelectionAction()
-    {
-      putValue(Action.NAME, UtilMessages.getInstance().getString("AbstractStringValueCellEditor.SelectValue"));
+    public SelectionAction() {
+      putValue( Action.NAME, UtilMessages.getInstance().getString( "AbstractStringValueCellEditor.SelectValue" ) );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      if (filterEvents)
-      {
+    public void actionPerformed( final ActionEvent e ) {
+      if ( filterEvents ) {
         return;
       }
       stopCellEditing();
     }
   }
 
-  protected class CancelAction extends AbstractAction
-  {
-    public CancelAction()
-    {
+  protected class CancelAction extends AbstractAction {
+    public CancelAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       cancelCellEditing();
     }
   }
 
-  private class InsertNewLineAction extends AbstractAction
-  {
+  private class InsertNewLineAction extends AbstractAction {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private InsertNewLineAction()
-    {
-      putValue(Action.NAME, UtilMessages.getInstance().getString("AbstractStringValueCellEditor.InsertNewLine"));
+    private InsertNewLineAction() {
+      putValue( Action.NAME, UtilMessages.getInstance().getString( "AbstractStringValueCellEditor.InsertNewLine" ) );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final JTextComponent textComponent = getTextField();
       final int position = textComponent.getCaretPosition();
-      try
-      {
-        textComponent.getDocument().insertString(position, "\n", null);
-      }
-      catch (BadLocationException e1)
-      {
+      try {
+        textComponent.getDocument().insertString( position, "\n", null );
+      } catch ( BadLocationException e1 ) {
         // yeah, whatever
-        UncaughtExceptionsModel.getInstance().addException(e1);
+        UncaughtExceptionsModel.getInstance().addException( e1 );
       }
     }
   }
 
-  private class ReportModelChangeHandler implements ReportModelListener
-  {
-    private ReportModelChangeHandler()
-    {
+  private class ReportModelChangeHandler implements ReportModelListener {
+    private ReportModelChangeHandler() {
     }
 
-    public void nodeChanged(final ReportModelEvent event)
-    {
+    public void nodeChanged( final ReportModelEvent event ) {
       // any node change must cause the editing to stop
       cancelCellEditing();
     }
@@ -401,8 +305,8 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
   private static final String NUMBER_FORMAT_VALUE_ROLE = "NumberFormat";
   private static final String DATE_FORMAT_VALUE_ROLE = "DateFormat";
 
-  protected static final String[] EMPTY_EXTRA_FIELDS = new String[0];
-  protected static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
+  protected static final String[] EMPTY_EXTRA_FIELDS = new String[ 0 ];
+  protected static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[ 0 ];
   private JTextArea textField;
   private JButton ellipsisButton;
   private EventListenerList eventListenerList;
@@ -419,9 +323,8 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
   private MasterReport currentMasterReport;
   private ReportModelChangeHandler modelChangeHandler;
 
-  public AbstractStringValueCellEditor()
-  {
-    setLayout(new BorderLayout());
+  public AbstractStringValueCellEditor() {
+    setLayout( new BorderLayout() );
 
     modelChangeHandler = new ReportModelChangeHandler();
 
@@ -431,230 +334,193 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
     this.dataAttributeContext = new DefaultDataAttributeContext();
     this.extraFields = EMPTY_EXTRA_FIELDS;
 
-    ellipsisButton = new EllipsisButton("...");
-    ellipsisButton.addActionListener(action);
+    ellipsisButton = new EllipsisButton( "..." );
+    ellipsisButton.addActionListener( action );
 
     textField = new JTextArea();
-    textField.setLineWrap(true);
-    textField.setDocument(new NonFilteringPlainDocument());
-    textField.getInputMap().put(UtilMessages.getInstance().getKeyStroke
-        ("AbstractStringValueCellEditor.Popup.Accelerator"), POPUP_EDITOR);
-    textField.getActionMap().put(POPUP_EDITOR, action);
-    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), CANCEL_EDITOR);
-    textField.getActionMap().put(CANCEL_EDITOR, new CancelAction());
-    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.SHIFT_MASK), NEWLINE_EDITOR);
-    textField.getActionMap().put(NEWLINE_EDITOR, new InsertNewLineAction());
-    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), CONFIRM_EDITOR);
-    textField.getActionMap().put(CONFIRM_EDITOR, new SelectionAction());
-    textField.setBorder(BorderFactory.createEmptyBorder());
+    textField.setLineWrap( true );
+    textField.setDocument( new NonFilteringPlainDocument() );
+    textField.getInputMap().put( UtilMessages.getInstance().getKeyStroke
+      ( "AbstractStringValueCellEditor.Popup.Accelerator" ), POPUP_EDITOR );
+    textField.getActionMap().put( POPUP_EDITOR, action );
+    textField.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ), CANCEL_EDITOR );
+    textField.getActionMap().put( CANCEL_EDITOR, new CancelAction() );
+    textField.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, KeyEvent.SHIFT_MASK ), NEWLINE_EDITOR );
+    textField.getActionMap().put( NEWLINE_EDITOR, new InsertNewLineAction() );
+    textField.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0 ), CONFIRM_EDITOR );
+    textField.getActionMap().put( CONFIRM_EDITOR, new SelectionAction() );
+    textField.setBorder( BorderFactory.createEmptyBorder() );
 
     comboBox = new JComboBox();
     final ComboBoxEditor boxEditor = comboBox.getEditor();
-    if (boxEditor instanceof BasicComboBoxEditor)
-    {
+    if ( boxEditor instanceof BasicComboBoxEditor ) {
       final BasicComboBoxEditor basicComboBoxEditor = (BasicComboBoxEditor) boxEditor;
       final Object editorComponent = basicComboBoxEditor.getEditorComponent();
-      if (editorComponent instanceof JTextField)
-      {
+      if ( editorComponent instanceof JTextField ) {
         final JTextField editorTextField = (JTextField) editorComponent;
-        editorTextField.setDocument(new NonFilteringPlainDocument());
+        editorTextField.setDocument( new NonFilteringPlainDocument() );
       }
     }
-    comboBox.setRenderer(new EmptyValueListCellRenderer());
-    comboBox.addActionListener(new SelectionAction());
-    comboBox.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), new CancelAction());
-    comboBox.getInputMap().put(UtilMessages.getInstance().getKeyStroke
-        ("AbstractStringValueCellEditor.Popup.Accelerator"), POPUP_EDITOR);
-    comboBox.setBorder(BorderFactory.createEmptyBorder());
-    comboBox.setEditable(true);
+    comboBox.setRenderer( new EmptyValueListCellRenderer() );
+    comboBox.addActionListener( new SelectionAction() );
+    comboBox.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ), new CancelAction() );
+    comboBox.getInputMap().put( UtilMessages.getInstance().getKeyStroke
+      ( "AbstractStringValueCellEditor.Popup.Accelerator" ), POPUP_EDITOR );
+    comboBox.setBorder( BorderFactory.createEmptyBorder() );
+    comboBox.setEditable( true );
 
-    add(textField, BorderLayout.CENTER);
-    add(ellipsisButton, BorderLayout.EAST);
+    add( textField, BorderLayout.CENTER );
+    add( ellipsisButton, BorderLayout.EAST );
 
     nullable = false;
   }
 
-  public boolean isFormulaFragment()
-  {
+  public boolean isFormulaFragment() {
     return formulaFragment;
   }
 
-  public void setFormulaFragment(final boolean formulaFragment)
-  {
+  public void setFormulaFragment( final boolean formulaFragment ) {
     this.formulaFragment = formulaFragment;
   }
 
-  protected Action createExtendedEditorAction()
-  {
+  protected Action createExtendedEditorAction() {
     return new ExtendedEditorAction();
   }
 
-  protected Component create(final String valueRole, final String[] extraFields, final Object value)
-  {
+  protected Component create( final String valueRole, final String[] extraFields, final Object value ) {
     final ReportRenderContext reportContext = getReportContext();
-    if (reportContext != null)
-    {
+    if ( reportContext != null ) {
       currentMasterReport = reportContext.getMasterReportElement();
-      currentMasterReport.addReportModelListener(modelChangeHandler);
+      currentMasterReport.addReportModelListener( modelChangeHandler );
     }
 
-    try
-    {
+    try {
       filterEvents = true;
-      setExtraFields(extraFields);
+      setExtraFields( extraFields );
 
-      if (QUERY_VALUE_ROLE.equals(valueRole))
-      {
-        comboBox.setModel(new DefaultComboBoxModel(getQueryNames()));
-        comboBox.setRenderer(new EmptyValueListCellRenderer());
-        comboBox.setEditable(true);
-        add(comboBox, BorderLayout.CENTER);
-        add(ellipsisButton, BorderLayout.EAST);
+      if ( QUERY_VALUE_ROLE.equals( valueRole ) ) {
+        comboBox.setModel( new DefaultComboBoxModel( getQueryNames() ) );
+        comboBox.setRenderer( new EmptyValueListCellRenderer() );
+        comboBox.setEditable( true );
+        add( comboBox, BorderLayout.CENTER );
+        add( ellipsisButton, BorderLayout.EAST );
         comboBox.requestFocus();
-        setValueRole(valueRole);
+        setValueRole( valueRole );
         comboBoxActive = true;
-      }
-      else if (FIELD_VALUE_ROLE.equals(valueRole))
-      {
-        comboBox.setModel(new DefaultComboBoxModel(getFields()));
-        comboBox.setRenderer(new FieldDefinitionCellRenderer());
-        comboBox.setEditable(true);
-        add(comboBox, BorderLayout.CENTER);
-        add(ellipsisButton, BorderLayout.EAST);
+      } else if ( FIELD_VALUE_ROLE.equals( valueRole ) ) {
+        comboBox.setModel( new DefaultComboBoxModel( getFields() ) );
+        comboBox.setRenderer( new FieldDefinitionCellRenderer() );
+        comboBox.setEditable( true );
+        add( comboBox, BorderLayout.CENTER );
+        add( ellipsisButton, BorderLayout.EAST );
         comboBox.requestFocus();
-        setValueRole(valueRole);
+        setValueRole( valueRole );
         comboBoxActive = true;
-      }
-      else if (GROUP_VALUE_ROLE.equals(valueRole))
-      {
-        comboBox.setModel(new DefaultComboBoxModel(getGroups()));
-        comboBox.setRenderer(new EmptyValueListCellRenderer());
-        comboBox.setEditable(true);
-        add(comboBox, BorderLayout.CENTER);
-        add(ellipsisButton, BorderLayout.EAST);
+      } else if ( GROUP_VALUE_ROLE.equals( valueRole ) ) {
+        comboBox.setModel( new DefaultComboBoxModel( getGroups() ) );
+        comboBox.setRenderer( new EmptyValueListCellRenderer() );
+        comboBox.setEditable( true );
+        add( comboBox, BorderLayout.CENTER );
+        add( ellipsisButton, BorderLayout.EAST );
         comboBox.requestFocus();
-        setValueRole(valueRole);
+        setValueRole( valueRole );
         comboBoxActive = true;
-      }
-      else if (NUMBER_FORMAT_VALUE_ROLE.equals(valueRole))
-      {
-        comboBox.setModel(new DefaultComboBoxModel(new NumberFormatModel().getNumberFormats()));
-        comboBox.setRenderer(new EmptyValueListCellRenderer());
-        comboBox.setEditable(true);
-        add(comboBox, BorderLayout.CENTER);
-        add(ellipsisButton, BorderLayout.EAST);
+      } else if ( NUMBER_FORMAT_VALUE_ROLE.equals( valueRole ) ) {
+        comboBox.setModel( new DefaultComboBoxModel( new NumberFormatModel().getNumberFormats() ) );
+        comboBox.setRenderer( new EmptyValueListCellRenderer() );
+        comboBox.setEditable( true );
+        add( comboBox, BorderLayout.CENTER );
+        add( ellipsisButton, BorderLayout.EAST );
         comboBox.requestFocus();
-        setValueRole(valueRole);
+        setValueRole( valueRole );
         comboBoxActive = true;
-      }
-      else if (DATE_FORMAT_VALUE_ROLE.equals(valueRole))
-      {
-        comboBox.setModel(new DefaultComboBoxModel(new DateFormatModel().getNumberFormats()));
-        comboBox.setRenderer(new EmptyValueListCellRenderer());
-        comboBox.setEditable(true);
-        add(comboBox, BorderLayout.CENTER);
-        add(ellipsisButton, BorderLayout.EAST);
+      } else if ( DATE_FORMAT_VALUE_ROLE.equals( valueRole ) ) {
+        comboBox.setModel( new DefaultComboBoxModel( new DateFormatModel().getNumberFormats() ) );
+        comboBox.setRenderer( new EmptyValueListCellRenderer() );
+        comboBox.setEditable( true );
+        add( comboBox, BorderLayout.CENTER );
+        add( ellipsisButton, BorderLayout.EAST );
         comboBox.requestFocus();
-        setValueRole(valueRole);
+        setValueRole( valueRole );
         comboBoxActive = true;
-      }
-      else if (FORMULA_VALUE_ROLE.equals(valueRole))
-      {
+      } else if ( FORMULA_VALUE_ROLE.equals( valueRole ) ) {
         final DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
         final FieldDefinition[] definitions = getFields();
-        for (int i = 0; i < definitions.length; i++)
-        {
-          final FieldDefinition fieldDefinition = definitions[i];
-          comboBoxModel.addElement("=" + FormulaUtil.quoteReference(fieldDefinition.getName()));
+        for ( int i = 0; i < definitions.length; i++ ) {
+          final FieldDefinition fieldDefinition = definitions[ i ];
+          comboBoxModel.addElement( "=" + FormulaUtil.quoteReference( fieldDefinition.getName() ) );
         }
-        comboBox.setModel(comboBoxModel);
-        comboBox.setRenderer(new EmptyValueListCellRenderer());
-        comboBox.setEditable(true);
-        add(comboBox, BorderLayout.CENTER);
-        add(ellipsisButton, BorderLayout.EAST);
+        comboBox.setModel( comboBoxModel );
+        comboBox.setRenderer( new EmptyValueListCellRenderer() );
+        comboBox.setEditable( true );
+        add( comboBox, BorderLayout.CENTER );
+        add( ellipsisButton, BorderLayout.EAST );
         comboBox.requestFocus();
-        setValueRole(valueRole);
+        setValueRole( valueRole );
         comboBoxActive = true;
-      }
-      else
-      {
-        add(textField, BorderLayout.CENTER);
-        add(ellipsisButton, BorderLayout.EAST);
+      } else {
+        add( textField, BorderLayout.CENTER );
+        add( ellipsisButton, BorderLayout.EAST );
         textField.requestFocus();
-        setValueRole(valueRole);
+        setValueRole( valueRole );
         comboBoxActive = false;
       }
 
-      if (value == null)
-      {
-        comboBox.setSelectedItem(null);
-        textField.setText(null);
-      }
-      else
-      {
-        if (FORMULA_VALUE_ROLE.equals(valueRole) && isFormulaFragment())
-        {
+      if ( value == null ) {
+        comboBox.setSelectedItem( null );
+        textField.setText( null );
+      } else {
+        if ( FORMULA_VALUE_ROLE.equals( valueRole ) && isFormulaFragment() ) {
           final GenericExpressionRuntime expressionRuntime = new GenericExpressionRuntime
-              (new StaticDataRow(), new DefaultTableModel(), -1, new DefaultProcessingContext());
+            ( new StaticDataRow(), new DefaultTableModel(), -1, new DefaultProcessingContext() );
           final String formulaText = FormulaUtil.createEditorTextFromFormula
-              (String.valueOf(value), new ReportFormulaContext(new DefaultFormulaContext(), expressionRuntime));
-          textField.setText(formulaText);
-          comboBox.setSelectedItem(formulaText);
-        }
-        else
-        {
-          comboBox.setSelectedItem(value);
-          textField.setText(String.valueOf(value));
+            ( String.valueOf( value ), new ReportFormulaContext( new DefaultFormulaContext(), expressionRuntime ) );
+          textField.setText( formulaText );
+          comboBox.setSelectedItem( formulaText );
+        } else {
+          comboBox.setSelectedItem( value );
+          textField.setText( String.valueOf( value ) );
         }
       }
 
       originalValue = value;
       return this;
-    }
-    finally
-    {
+    } finally {
       filterEvents = false;
     }
   }
 
-  protected void configureEditorStyle(final Font font, final Color foreground, final Color background)
-  {
-    comboBox.setFont(font);
-    comboBox.setForeground(foreground);
-    comboBox.setBackground(background);
+  protected void configureEditorStyle( final Font font, final Color foreground, final Color background ) {
+    comboBox.setFont( font );
+    comboBox.setForeground( foreground );
+    comboBox.setBackground( background );
 
-    textField.setFont(font);
-    textField.setForeground(foreground);
-    textField.setBackground(background);
+    textField.setFont( font );
+    textField.setForeground( foreground );
+    textField.setBackground( background );
   }
 
-  protected JComboBox getComboBox()
-  {
+  protected JComboBox getComboBox() {
     return comboBox;
   }
 
-  protected boolean isNullable()
-  {
+  protected boolean isNullable() {
     return nullable;
   }
 
-  protected void setNullable(final boolean nullable)
-  {
+  protected void setNullable( final boolean nullable ) {
     this.nullable = nullable;
   }
 
-  public void requestFocus()
-  {
+  public void requestFocus() {
     textField.requestFocus();
   }
 
-  protected JTextComponent getTextField()
-  {
+  protected JTextComponent getTextField() {
     return textField;
   }
 
-  protected JButton getEllipsisButton()
-  {
+  protected JButton getEllipsisButton() {
     return ellipsisButton;
   }
 
@@ -663,41 +529,32 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
    *
    * @return the value contained in the editor
    */
-  public Object getCellEditorValue()
-  {
-    if (comboBoxActive)
-    {
+  public Object getCellEditorValue() {
+    if ( comboBoxActive ) {
       final Object selectedItem = comboBox.getSelectedItem();
-      if (selectedItem instanceof FieldDefinition)
-      {
+      if ( selectedItem instanceof FieldDefinition ) {
         final FieldDefinition fieldDefinition = (FieldDefinition) selectedItem;
         return fieldDefinition.getName();
       }
-      if ("".equals(selectedItem))
-      {
+      if ( "".equals( selectedItem ) ) {
         return null;
       }
 
-      if (selectedItem instanceof String && FORMULA_VALUE_ROLE.equals(getValueRole()))
-      {
-        if (isFormulaFragment())
-        {
-          return FormulaUtil.createFormulaFromUIText((String) selectedItem);
+      if ( selectedItem instanceof String && FORMULA_VALUE_ROLE.equals( getValueRole() ) ) {
+        if ( isFormulaFragment() ) {
+          return FormulaUtil.createFormulaFromUIText( (String) selectedItem );
         }
       }
       return selectedItem;
     }
     final String s = textField.getText();
-    if ("".equals(s))
-    {
+    if ( "".equals( s ) ) {
       return null;
     }
 
-    if (FORMULA_VALUE_ROLE.equals(getValueRole()))
-    {
-      if (isFormulaFragment())
-      {
-        return FormulaUtil.createFormulaFromUIText(s);
+    if ( FORMULA_VALUE_ROLE.equals( getValueRole() ) ) {
+      if ( isFormulaFragment() ) {
+        return FormulaUtil.createFormulaFromUIText( s );
       }
     }
     return s;
@@ -713,8 +570,7 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
    * @param anEvent the event the editor should use to consider whether to begin editing or not
    * @return true if editing can be started
    */
-  public boolean isCellEditable(final EventObject anEvent)
-  {
+  public boolean isCellEditable( final EventObject anEvent ) {
     return true;
   }
 
@@ -729,8 +585,7 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
    * @param anEvent the event the editor should use to start editing
    * @return true if the editor would like the editing cell to be selected; otherwise returns false
    */
-  public boolean shouldSelectCell(final EventObject anEvent)
-  {
+  public boolean shouldSelectCell( final EventObject anEvent ) {
     return true;
   }
 
@@ -741,119 +596,89 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
    *
    * @return true if editing was stopped; false otherwise
    */
-  public boolean stopCellEditing()
-  {
-    try
-    {
-      if (comboBoxActive)
-      {
+  public boolean stopCellEditing() {
+    try {
+      if ( comboBoxActive ) {
         // ugly hack to make the combobox editor commit any changes before we go out of focus.
-        comboBox.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, comboBox.getActionCommand()));
+        comboBox.actionPerformed( new ActionEvent( this, ActionEvent.ACTION_PERFORMED, comboBox.getActionCommand() ) );
       }
       fireEditingStopped();
       return true;
-    }
-    catch (final Exception e)
-    {
-      DebugLog.log("Exception caught while editing cell-value", e); // NON-NLS
+    } catch ( final Exception e ) {
+      DebugLog.log( "Exception caught while editing cell-value", e ); // NON-NLS
       // exception ignored
       fireEditingCanceled();
-      if (originalValue != null)
-      {
-        textField.setText(String.valueOf(originalValue));
-      }
-      else
-      {
-        textField.setText(null);
+      if ( originalValue != null ) {
+        textField.setText( String.valueOf( originalValue ) );
+      } else {
+        textField.setText( null );
       }
       return true;
-    }
-    finally
-    {
+    } finally {
       unregisterListener();
     }
 
   }
 
-  protected void unregisterListener()
-  {
-    if (currentMasterReport != null)
-    {
-      currentMasterReport.removeReportModelListener(modelChangeHandler);
+  protected void unregisterListener() {
+    if ( currentMasterReport != null ) {
+      currentMasterReport.removeReportModelListener( modelChangeHandler );
     }
   }
 
   /**
    * Tells the editor to cancel editing and not accept any partially edited value.
    */
-  public void cancelCellEditing()
-  {
-    try
-    {
-      if (originalValue != null)
-      {
-        textField.setText(String.valueOf(originalValue));
+  public void cancelCellEditing() {
+    try {
+      if ( originalValue != null ) {
+        textField.setText( String.valueOf( originalValue ) );
+      } else {
+        textField.setText( null );
       }
-      else
-      {
-        textField.setText(null);
-      }
-      try
-      {
+      try {
         filterEvents = true;
-        comboBox.setSelectedItem(originalValue);
-      }
-      finally
-      {
+        comboBox.setSelectedItem( originalValue );
+      } finally {
         filterEvents = false;
       }
       fireEditingCanceled();
-    }
-    finally
-    {
+    } finally {
       unregisterListener();
     }
   }
 
-  protected void fireEditingCanceled()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingCanceled(event);
+  protected void fireEditingCanceled() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingCanceled( event );
     }
   }
 
-  protected void fireEditingStopped()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingStopped(event);
+  protected void fireEditingStopped() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingStopped( event );
     }
   }
 
-  protected String getValueRole()
-  {
+  protected String getValueRole() {
     return valueRole;
   }
 
-  protected void setValueRole(final String valueRole)
-  {
+  protected void setValueRole( final String valueRole ) {
     this.valueRole = valueRole;
   }
 
-  protected String[] getExtraFields()
-  {
+  protected String[] getExtraFields() {
     return extraFields;
   }
 
-  protected void setExtraFields(final String[] extraFields)
-  {
+  protected void setExtraFields( final String[] extraFields ) {
     this.extraFields = extraFields.clone();
   }
 
@@ -862,9 +687,8 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
    *
    * @param l the CellEditorListener
    */
-  public void addCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.add(CellEditorListener.class, l);
+  public void addCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.add( CellEditorListener.class, l );
   }
 
   /**
@@ -872,53 +696,43 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
    *
    * @param l the CellEditorListener
    */
-  public void removeCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.remove(CellEditorListener.class, l);
+  public void removeCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.remove( CellEditorListener.class, l );
   }
 
-  protected String[] getQueryNames()
-  {
-    return CellEditorUtility.getQueryNames(getReportDesignerContext());
+  protected String[] getQueryNames() {
+    return CellEditorUtility.getQueryNames( getReportDesignerContext() );
   }
 
-  public ReportRenderContext getReportContext()
-  {
-    if (designerContext == null)
-    {
+  public ReportRenderContext getReportContext() {
+    if ( designerContext == null ) {
       return null;
     }
     ReportDesignerDocumentContext documentContext = designerContext.getActiveContext();
-    if (documentContext instanceof ReportRenderContext)
-    {
+    if ( documentContext instanceof ReportRenderContext ) {
       return (ReportRenderContext) documentContext;
     }
     return null;
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext designerContext)
-  {
+  public void setReportDesignerContext( final ReportDesignerContext designerContext ) {
     this.designerContext = designerContext;
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return designerContext;
   }
 
-  protected FieldDefinition[] getFields()
-  {
-    return CellEditorUtility.getFields(designerContext, getExtraFields());
+  protected FieldDefinition[] getFields() {
+    return CellEditorUtility.getFields( designerContext, getExtraFields() );
   }
 
-  protected String[] getGroups()
-  {
+  protected String[] getGroups() {
     final ReportRenderContext reportContext = getReportContext();
-    if (reportContext == null)
-    {
-      return new String[0];
+    if ( reportContext == null ) {
+      return new String[ 0 ];
     }
 
-    return ModelUtility.getGroups(reportContext.getReportDefinition());
+    return ModelUtility.getGroups( reportContext.getReportDefinition() );
   }
 }

@@ -17,64 +17,55 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
+import java.util.List;
+
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class MassElementStyleUndoEntryBuilder
-{
+public class MassElementStyleUndoEntryBuilder {
   private ReportElement[] visualElements;
   private Object[][] styleProperties;
 
-  public MassElementStyleUndoEntryBuilder(final List<? extends Element> visualElements)
-  {
-    this.visualElements = visualElements.toArray(new ReportElement[visualElements.size()]);
-    this.styleProperties = new Object[visualElements.size()][];
+  public MassElementStyleUndoEntryBuilder( final List<? extends Element> visualElements ) {
+    this.visualElements = visualElements.toArray( new ReportElement[ visualElements.size() ] );
+    this.styleProperties = new Object[ visualElements.size() ][];
 
-    for (int i = 0; i < visualElements.size(); i++)
-    {
-      final ReportElement visualElement = visualElements.get(i);
-      styleProperties[i] = computeStyleChangeSet(visualElement);
+    for ( int i = 0; i < visualElements.size(); i++ ) {
+      final ReportElement visualElement = visualElements.get( i );
+      styleProperties[ i ] = computeStyleChangeSet( visualElement );
     }
   }
 
-  public MassElementStyleUndoEntry finish()
-  {
-    final Object[][] currentStyle = new Object[visualElements.length][];
-    final InstanceID[] targets = new InstanceID[visualElements.length];
-    for (int i = 0; i < visualElements.length; i++)
-    {
-      final ReportElement visualElement = visualElements[i];
-      currentStyle[i] = computeStyleChangeSet(visualElement);
-      targets[i] = visualElement.getObjectID();
+  public MassElementStyleUndoEntry finish() {
+    final Object[][] currentStyle = new Object[ visualElements.length ][];
+    final InstanceID[] targets = new InstanceID[ visualElements.length ];
+    for ( int i = 0; i < visualElements.length; i++ ) {
+      final ReportElement visualElement = visualElements[ i ];
+      currentStyle[ i ] = computeStyleChangeSet( visualElement );
+      targets[ i ] = visualElement.getObjectID();
     }
-    return new MassElementStyleUndoEntry(targets, styleProperties, currentStyle);
+    return new MassElementStyleUndoEntry( targets, styleProperties, currentStyle );
   }
 
-  public static Object[] computeStyleChangeSet(final ReportElement visualElement)
-  {
+  public static Object[] computeStyleChangeSet( final ReportElement visualElement ) {
     final ElementStyleSheet styleSheet = visualElement.getStyle();
     final StyleKey[] definedPropertyNamesArray = styleSheet.getDefinedPropertyNamesArray();
-    final Object[] retval = new Object[StyleKey.getDefinedStyleKeyCount()];
-    for (int i = 0; i < definedPropertyNamesArray.length; i++)
-    {
-      final StyleKey styleKey = definedPropertyNamesArray[i];
-      if (styleKey == null)
-      {
+    final Object[] retval = new Object[ StyleKey.getDefinedStyleKeyCount() ];
+    for ( int i = 0; i < definedPropertyNamesArray.length; i++ ) {
+      final StyleKey styleKey = definedPropertyNamesArray[ i ];
+      if ( styleKey == null ) {
         continue;
       }
-      if (styleSheet.isLocalKey(styleKey))
-      {
-        retval[styleKey.identifier] = styleSheet.getStyleProperty(styleKey);
+      if ( styleSheet.isLocalKey( styleKey ) ) {
+        retval[ styleKey.identifier ] = styleSheet.getStyleProperty( styleKey );
       }
     }
     return retval;

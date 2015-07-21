@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.HorizontalLineType;
 import org.pentaho.reporting.engine.classic.core.filter.types.VerticalLineType;
@@ -31,17 +27,18 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class LineReportElementReadHandler extends AbstractReportElementReadHandler
-{
+import java.awt.*;
+import java.util.Properties;
+
+public class LineReportElementReadHandler extends AbstractReportElementReadHandler {
   private Element element;
   private StrokeStyleDefinitionReadHandler strokeStyleDefinitionReadHandler;
 
-  public LineReportElementReadHandler()
-  {
+  public LineReportElementReadHandler() {
     element = new Element();
-    element.setElementType(new HorizontalLineType());
-    element.getStyle().setStyleProperty(ElementStyleKeys.SCALE, Boolean.TRUE);
-    element.getStyle().setStyleProperty(ElementStyleKeys.DRAW_SHAPE, Boolean.TRUE);
+    element.setElementType( new HorizontalLineType() );
+    element.getStyle().setStyleProperty( ElementStyleKeys.SCALE, Boolean.TRUE );
+    element.getStyle().setStyleProperty( ElementStyleKeys.DRAW_SHAPE, Boolean.TRUE );
   }
 
   /**
@@ -53,17 +50,15 @@ public class LineReportElementReadHandler extends AbstractReportElementReadHandl
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("lineDefinition".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "lineDefinition".equals( tagName ) ) {
         strokeStyleDefinitionReadHandler = new StrokeStyleDefinitionReadHandler();
         return strokeStyleDefinitionReadHandler;
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -71,42 +66,35 @@ public class LineReportElementReadHandler extends AbstractReportElementReadHandl
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    if (strokeStyleDefinitionReadHandler != null)
-    {
-      element.getStyle().setStyleProperty(ElementStyleKeys.STROKE, strokeStyleDefinitionReadHandler.getStroke());
-      element.getStyle().setStyleProperty(ElementStyleKeys.PAINT, strokeStyleDefinitionReadHandler.getColor());
+    if ( strokeStyleDefinitionReadHandler != null ) {
+      element.getStyle().setStyleProperty( ElementStyleKeys.STROKE, strokeStyleDefinitionReadHandler.getStroke() );
+      element.getStyle().setStyleProperty( ElementStyleKeys.PAINT, strokeStyleDefinitionReadHandler.getColor() );
     }
 
     final Properties result1 = getResult();
-    final String color = result1.getProperty("color");
-    if (color != null)
-    {
-      final Color c = ColorConverter.getObject(color);
-      element.getStyle().setStyleProperty(ElementStyleKeys.PAINT, c);
+    final String color = result1.getProperty( "color" );
+    if ( color != null ) {
+      final Color c = ColorConverter.getObject( color );
+      element.getStyle().setStyleProperty( ElementStyleKeys.PAINT, c );
     }
 
-    final String lineWidth = result1.getProperty("lineWidth");
-    if (lineWidth != null)
-    {
-      final float lineWidthf = ParserUtil.parseFloat(lineWidth, "Failed to parse lineWidth", getLocator());
-      element.getStyle().setStyleProperty(ElementStyleKeys.STROKE, new BasicStroke(lineWidthf));
+    final String lineWidth = result1.getProperty( "lineWidth" );
+    if ( lineWidth != null ) {
+      final float lineWidthf = ParserUtil.parseFloat( lineWidth, "Failed to parse lineWidth", getLocator() );
+      element.getStyle().setStyleProperty( ElementStyleKeys.STROKE, new BasicStroke( lineWidthf ) );
     }
 
-    final String drawBorder = result1.getProperty("direction");
-    if (drawBorder != null)
-    {
-      if ("VERTICAL".equals(drawBorder))
-      {
-        element.setElementType(new VerticalLineType());
+    final String drawBorder = result1.getProperty( "direction" );
+    if ( drawBorder != null ) {
+      if ( "VERTICAL".equals( drawBorder ) ) {
+        element.setElementType( new VerticalLineType() );
       }
     }
   }
 
-  protected Element getElement()
-  {
+  protected Element getElement() {
     return element;
   }
 }

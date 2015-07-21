@@ -19,10 +19,8 @@ package org.pentaho.reporting.designer.core.actions.elements.layout;
 
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
-public final class LayoutCanvasAction extends LayoutAction
-{
-  public LayoutCanvasAction()
-  {
-    super("LayoutCanvasAction", BandStyleKeys.LAYOUT_CANVAS);
+public final class LayoutCanvasAction extends LayoutAction {
+  public LayoutCanvasAction() {
+    super( "LayoutCanvasAction", BandStyleKeys.LAYOUT_CANVAS );
   }
 }

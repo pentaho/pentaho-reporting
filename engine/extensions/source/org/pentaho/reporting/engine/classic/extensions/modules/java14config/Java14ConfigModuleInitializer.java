@@ -17,25 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.java14config;
 
-import java.util.prefs.Preferences;
-
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigFactory;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializer;
+
+import java.util.prefs.Preferences;
 
 /**
  * An initializer for the Java 1.4 configuration provider.
  *
  * @author Thomas Morgner
  */
-public class Java14ConfigModuleInitializer implements ModuleInitializer
-{
+public class Java14ConfigModuleInitializer implements ModuleInitializer {
   /**
    * Default Constructor.
    */
-  public Java14ConfigModuleInitializer()
-  {
+  public Java14ConfigModuleInitializer() {
   }
 
   /**
@@ -43,12 +41,11 @@ public class Java14ConfigModuleInitializer implements ModuleInitializer
    *
    * @throws ModuleInitializeException if an error ocurred.
    */
-  public void performInit() throws ModuleInitializeException
-  {
+  public void performInit() throws ModuleInitializeException {
     final ConfigFactory factory = ConfigFactory.getInstance();
     factory.defineUserStorage
-        (new Java14ConfigStorage(Preferences.userNodeForPackage(MasterReport.class)));
+      ( new Java14ConfigStorage( Preferences.userNodeForPackage( MasterReport.class ) ) );
     factory.defineSystemStorage
-        (new Java14ConfigStorage(Preferences.systemNodeForPackage(MasterReport.class)));
+      ( new Java14ConfigStorage( Preferences.systemNodeForPackage( MasterReport.class ) ) );
   }
 }

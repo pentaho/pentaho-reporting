@@ -17,56 +17,38 @@
 
 package org.pentaho.reporting.designer.core.settings.ui;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import org.pentaho.reporting.designer.core.settings.SettingsMessages;
+import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.pentaho.reporting.designer.core.settings.SettingsMessages;
-import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class ToolSettingsPanel extends JPanel
-{
-  private class SelectExecutableAction extends AbstractAction
-  {
-    private SelectExecutableAction()
-    {
-      putValue(Action.NAME, SettingsMessages.getInstance().getString("ToolSettingsPanel.showFileChooserButton"));
+public class ToolSettingsPanel extends JPanel {
+  private class SelectExecutableAction extends AbstractAction {
+    private SelectExecutableAction() {
+      putValue( Action.NAME, SettingsMessages.getInstance().getString( "ToolSettingsPanel.showFileChooserButton" ) );
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       performSelectFile();
     }
   }
 
-  private class EnableTextFieldsHandler implements ChangeListener
-  {
-    private EnableTextFieldsHandler()
-    {
+  private class EnableTextFieldsHandler implements ChangeListener {
+    private EnableTextFieldsHandler() {
     }
 
-    public void stateChanged(final ChangeEvent e)
-    {
+    public void stateChanged( final ChangeEvent e ) {
       updateState();
     }
   }
@@ -82,29 +64,31 @@ public class ToolSettingsPanel extends JPanel
   private JLabel customExecutableLabel;
   private JLabel customParametersLabel;
 
-  protected ToolSettingsPanel()
-  {
-    setLayout(new GridBagLayout());
+  protected ToolSettingsPanel() {
+    setLayout( new GridBagLayout() );
 
-    defaultBrowserRadioButton = new JRadioButton(getDefaultApplicationTranslation());
-    defaultBrowserRadioButton.setEnabled(true);
-    defaultBrowserRadioButton.addChangeListener(new EnableTextFieldsHandler());
-    customExecutableRadioButton = new JRadioButton(getCustomApplicationTranslation());
-    customExecutableRadioButton.addChangeListener(new EnableTextFieldsHandler());
+    defaultBrowserRadioButton = new JRadioButton( getDefaultApplicationTranslation() );
+    defaultBrowserRadioButton.setEnabled( true );
+    defaultBrowserRadioButton.addChangeListener( new EnableTextFieldsHandler() );
+    customExecutableRadioButton = new JRadioButton( getCustomApplicationTranslation() );
+    customExecutableRadioButton.addChangeListener( new EnableTextFieldsHandler() );
 
     final ButtonGroup buttonGroup = new ButtonGroup();
-    buttonGroup.add(defaultBrowserRadioButton);
-    buttonGroup.add(customExecutableRadioButton);
+    buttonGroup.add( defaultBrowserRadioButton );
+    buttonGroup.add( customExecutableRadioButton );
 
-    showFileChooserButton = new JButton(new SelectExecutableAction());
-    showFileChooserButton.setMargin(new Insets(0, 0, 0, 0));
+    showFileChooserButton = new JButton( new SelectExecutableAction() );
+    showFileChooserButton.setMargin( new Insets( 0, 0, 0, 0 ) );
 
-    customExecutableTextField = new JTextField(null, 0);
-    customParametersTextField = new JTextField("{0}", 0);
-    sampleCustomExecutableLabel = new JLabel(SettingsMessages.getInstance().getString("ToolSettingsPanel.sampleCustomExecutableTextArea"));
+    customExecutableTextField = new JTextField( null, 0 );
+    customParametersTextField = new JTextField( "{0}", 0 );
+    sampleCustomExecutableLabel =
+      new JLabel( SettingsMessages.getInstance().getString( "ToolSettingsPanel.sampleCustomExecutableTextArea" ) );
 
-    customExecutableLabel = new JLabel(SettingsMessages.getInstance().getString("ToolSettingsPanel.customExecutableTextField"));
-    customParametersLabel = new JLabel(SettingsMessages.getInstance().getString("ToolSettingsPanel.customParametersTextField"));
+    customExecutableLabel =
+      new JLabel( SettingsMessages.getInstance().getString( "ToolSettingsPanel.customExecutableTextField" ) );
+    customParametersLabel =
+      new JLabel( SettingsMessages.getInstance().getString( "ToolSettingsPanel.customParametersTextField" ) );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -112,17 +96,17 @@ public class ToolSettingsPanel extends JPanel
     gbc.gridwidth = 3;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(4, 4, 4, 4);
-    add(defaultBrowserRadioButton, gbc);
+    gbc.insets = new Insets( 4, 4, 4, 4 );
+    add( defaultBrowserRadioButton, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 1;
     gbc.gridwidth = 3;
-    gbc.insets = new Insets(0, 4, 4, 4);
+    gbc.insets = new Insets( 0, 4, 4, 4 );
     gbc.anchor = GridBagConstraints.WEST;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    add(customExecutableRadioButton, gbc);
+    add( customExecutableRadioButton, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -130,8 +114,8 @@ public class ToolSettingsPanel extends JPanel
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(4, 4, 4, 4);
-    add(customExecutableLabel, gbc);
+    gbc.insets = new Insets( 4, 4, 4, 4 );
+    add( customExecutableLabel, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -140,8 +124,8 @@ public class ToolSettingsPanel extends JPanel
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(4, 4, 4, 4);
-    add(customExecutableTextField, gbc);
+    gbc.insets = new Insets( 4, 4, 4, 4 );
+    add( customExecutableTextField, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 2;
@@ -149,8 +133,8 @@ public class ToolSettingsPanel extends JPanel
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(4, 4, 4, 4);
-    add(showFileChooserButton, gbc);
+    gbc.insets = new Insets( 4, 4, 4, 4 );
+    add( showFileChooserButton, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -158,8 +142,8 @@ public class ToolSettingsPanel extends JPanel
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(0, 4, 4, 4);
-    add(customParametersLabel, gbc);
+    gbc.insets = new Insets( 0, 4, 4, 4 );
+    add( customParametersLabel, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -168,8 +152,8 @@ public class ToolSettingsPanel extends JPanel
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(0, 4, 4, 4);
-    add(customParametersTextField, gbc);
+    gbc.insets = new Insets( 0, 4, 4, 4 );
+    add( customParametersTextField, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -178,8 +162,8 @@ public class ToolSettingsPanel extends JPanel
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(0, 4, 4, 4);
-    add(sampleCustomExecutableLabel, gbc);
+    gbc.insets = new Insets( 0, 4, 4, 4 );
+    add( sampleCustomExecutableLabel, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -187,92 +171,75 @@ public class ToolSettingsPanel extends JPanel
     gbc.gridheight = GridBagConstraints.REMAINDER;
     gbc.fill = GridBagConstraints.VERTICAL;
     gbc.weighty = 1;
-    add(Box.createGlue(), gbc);
+    add( Box.createGlue(), gbc );
 
     updateState();
   }
 
-  protected String getCustomApplicationTranslation()
-  {
-    return SettingsMessages.getInstance().getString("ToolSettingsPanel.customExecutableRadioButton");
+  protected String getCustomApplicationTranslation() {
+    return SettingsMessages.getInstance().getString( "ToolSettingsPanel.customExecutableRadioButton" );
   }
 
-  protected String getDefaultApplicationTranslation()
-  {
-    return SettingsMessages.getInstance().getString("ToolSettingsPanel.defaultBrowserRadioButton");
+  protected String getDefaultApplicationTranslation() {
+    return SettingsMessages.getInstance().getString( "ToolSettingsPanel.defaultBrowserRadioButton" );
   }
 
-  protected void updateState()
-  {
+  protected void updateState() {
     final boolean enable = customExecutableRadioButton.isSelected();
-    customExecutableLabel.setEnabled(enable);
-    customParametersLabel.setEnabled(enable);
-    customExecutableTextField.setEnabled(enable);
-    customParametersTextField.setEnabled(enable);
-    sampleCustomExecutableLabel.setEnabled(enable);
-    showFileChooserButton.setEnabled(enable);
+    customExecutableLabel.setEnabled( enable );
+    customParametersLabel.setEnabled( enable );
+    customExecutableTextField.setEnabled( enable );
+    customParametersTextField.setEnabled( enable );
+    sampleCustomExecutableLabel.setEnabled( enable );
+    showFileChooserButton.setEnabled( enable );
   }
 
 
-  protected void performSelectFile()
-  {
+  protected void performSelectFile() {
     final JFileChooser fileChooser = new JFileChooser();
-    final int value = fileChooser.showOpenDialog(ToolSettingsPanel.this);
-    if (value == JFileChooser.APPROVE_OPTION)
-    {
+    final int value = fileChooser.showOpenDialog( ToolSettingsPanel.this );
+    if ( value == JFileChooser.APPROVE_OPTION ) {
       final File selectedFile = fileChooser.getSelectedFile();
-      try
-      {
-        customExecutableTextField.setText(selectedFile.getCanonicalPath());
-      }
-      catch (IOException e1)
-      {
-        UncaughtExceptionsModel.getInstance().addException(e1);
+      try {
+        customExecutableTextField.setText( selectedFile.getCanonicalPath() );
+      } catch ( IOException e1 ) {
+        UncaughtExceptionsModel.getInstance().addException( e1 );
       }
     }
   }
 
-  public boolean isUseDefaultApplication()
-  {
+  public boolean isUseDefaultApplication() {
     return defaultBrowserRadioButton.isSelected();
   }
 
-  public void setUseDefaultApplication(final boolean useDefaultApplication)
-  {
-    defaultBrowserRadioButton.setSelected(useDefaultApplication);
-    customExecutableRadioButton.setSelected(!useDefaultApplication);
+  public void setUseDefaultApplication( final boolean useDefaultApplication ) {
+    defaultBrowserRadioButton.setSelected( useDefaultApplication );
+    customExecutableRadioButton.setSelected( !useDefaultApplication );
   }
 
-  public String getCustomExecutable()
-  {
+  public String getCustomExecutable() {
     return customExecutableTextField.getText();
   }
 
-  public void setCustomExecutable(final String customApplication)
-  {
-    customExecutableTextField.setText(customApplication);
+  public void setCustomExecutable( final String customApplication ) {
+    customExecutableTextField.setText( customApplication );
   }
 
-  public String getCustomExecutableParameters()
-  {
+  public String getCustomExecutableParameters() {
     return customParametersTextField.getText();
   }
 
-  public void setCustomExecutableParameters(final String customApplication)
-  {
-    customParametersTextField.setText(customApplication);
+  public void setCustomExecutableParameters( final String customApplication ) {
+    customParametersTextField.setText( customApplication );
   }
 
-  public ValidationResult validate(final ValidationResult result)
-  {
-    if (isUseDefaultApplication())
-    {
+  public ValidationResult validate( final ValidationResult result ) {
+    if ( isUseDefaultApplication() ) {
       return result;
     }
-    if (getCustomExecutableParameters().contains("{0}") == false)
-    {
-      result.addValidationMessage(new ValidationMessage(ValidationMessage.Severity.ERROR,
-          SettingsMessages.getInstance().getString("ToolSettingsPanel.MissingVariable")));
+    if ( getCustomExecutableParameters().contains( "{0}" ) == false ) {
+      result.addValidationMessage( new ValidationMessage( ValidationMessage.Severity.ERROR,
+        SettingsMessages.getInstance().getString( "ToolSettingsPanel.MissingVariable" ) ) );
     }
     return result;
   }

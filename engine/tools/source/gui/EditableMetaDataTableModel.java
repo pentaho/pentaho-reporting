@@ -17,90 +17,72 @@
 
 package gui;
 
-import java.util.Arrays;
-import java.util.Locale;
-import javax.swing.table.AbstractTableModel;
-
-import org.pentaho.reporting.engine.classic.core.metadata.AbstractMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataComparator;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class EditableMetaDataTableModel extends AbstractTableModel
-{
+import javax.swing.table.AbstractTableModel;
+import java.util.Locale;
+
+public class EditableMetaDataTableModel extends AbstractTableModel {
   private EditableMetaData[] backend;
   private Locale locale;
 
-  public EditableMetaDataTableModel()
-  {
+  public EditableMetaDataTableModel() {
     locale = Locale.getDefault();
-    backend = new EditableMetaData[0];
+    backend = new EditableMetaData[ 0 ];
   }
 
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
-  public void setLocale(final Locale locale)
-  {
-    if (locale == null)
-    {
+  public void setLocale( final Locale locale ) {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
     this.locale = locale;
     fireTableDataChanged();
   }
 
-  public void populate(EditableMetaData[] data)
-  {
+  public void populate( EditableMetaData[] data ) {
     backend = data.clone();
     fireTableDataChanged();
   }
 
-  public EditableMetaData getMetaData(int row)
-  {
-    return backend[row];
+  public EditableMetaData getMetaData( int row ) {
+    return backend[ row ];
   }
 
   /**
-   * Returns the number of rows in the model. A
-   * <code>JTable</code> uses this method to determine how many rows it
-   * should display.  This method should be quick, as it
-   * is called frequently during rendering.
+   * Returns the number of rows in the model. A <code>JTable</code> uses this method to determine how many rows it
+   * should display.  This method should be quick, as it is called frequently during rendering.
    *
    * @return the number of rows in the model
    * @see #getColumnCount
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return backend.length;
   }
 
   /**
-   * Returns the number of columns in the model. A
-   * <code>JTable</code> uses this method to determine how many columns it
+   * Returns the number of columns in the model. A <code>JTable</code> uses this method to determine how many columns it
    * should create and display by default.
    *
    * @return the number of columns in the model
    * @see #getRowCount
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return 8;
   }
 
   /**
-   * Returns a default name for the column using spreadsheet conventions:
-   * A, B, C, ... Z, AA, AB, etc.  If <code>column</code> cannot be found,
-   * returns an empty string.
+   * Returns a default name for the column using spreadsheet conventions: A, B, C, ... Z, AA, AB, etc.  If
+   * <code>column</code> cannot be found, returns an empty string.
    *
    * @param column the column being queried
    * @return a string containing the default name of <code>column</code>
    */
-  public String getColumnName(final int column)
-  {
-    switch (column)
-    {
+  public String getColumnName( final int column ) {
+    switch( column ) {
       case 0:
         return "ID";
       case 1:
@@ -128,8 +110,7 @@ public class EditableMetaDataTableModel extends AbstractTableModel
    * @param columnIndex the column being queried
    * @return false
    */
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
     return columnIndex != 0 && columnIndex != 7;
   }
 
@@ -139,52 +120,43 @@ public class EditableMetaDataTableModel extends AbstractTableModel
    * @param columnIndex the column being queried
    * @return the Object.class
    */
-  public Class getColumnClass(final int columnIndex)
-  {
+  public Class getColumnClass( final int columnIndex ) {
     return String.class;
   }
 
   /**
-   * Returns the value for the cell at <code>columnIndex</code> and
-   * <code>rowIndex</code>.
+   * Returns the value for the cell at <code>columnIndex</code> and <code>rowIndex</code>.
    *
    * @param rowIndex    the row whose value is to be queried
    * @param columnIndex the column whose value is to be queried
    * @return the value Object at the specified cell
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final EditableMetaData abstractMetaData = getMetaData(rowIndex);
-    switch (columnIndex)
-    {
-      case 0:
-      {
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final EditableMetaData abstractMetaData = getMetaData( rowIndex );
+    switch( columnIndex ) {
+      case 0: {
         return abstractMetaData.getName();
       }
       case 1:
-        return abstractMetaData.getMetaAttribute("display-name", locale);
+        return abstractMetaData.getMetaAttribute( "display-name", locale );
       case 2:
-        return abstractMetaData.getMetaAttribute("grouping", locale);
+        return abstractMetaData.getMetaAttribute( "grouping", locale );
       case 3:
-        return abstractMetaData.getMetaAttribute("grouping.ordinal", locale);
+        return abstractMetaData.getMetaAttribute( "grouping.ordinal", locale );
       case 4:
-        return abstractMetaData.getMetaAttribute("ordinal", locale);
+        return abstractMetaData.getMetaAttribute( "ordinal", locale );
       case 5:
-        return abstractMetaData.getMetaAttribute("description", locale);
+        return abstractMetaData.getMetaAttribute( "description", locale );
       case 6:
-        return abstractMetaData.getMetaAttribute("deprecated", locale);
+        return abstractMetaData.getMetaAttribute( "deprecated", locale );
       case 7:
         String result = "";
-        if (abstractMetaData.isValid(locale, false) == false)
-        {
+        if ( abstractMetaData.isValid( locale, false ) == false ) {
           result += "error ";
-        }
-        else if (abstractMetaData.isValid(locale, true) == false)
-        {
+        } else if ( abstractMetaData.isValid( locale, true ) == false ) {
           result += "child-error ";
         }
-        if (abstractMetaData.isModified())
-        {
+        if ( abstractMetaData.isModified() ) {
           result += "modified";
         }
         return result;
@@ -193,92 +165,83 @@ public class EditableMetaDataTableModel extends AbstractTableModel
   }
 
   /**
-   * This empty implementation is provided so users don't have to implement
-   * this method if their data model is not editable.
+   * This empty implementation is provided so users don't have to implement this method if their data model is not
+   * editable.
    *
    * @param aValue      value to assign to cell
    * @param rowIndex    row of cell
    * @param columnIndex column of cell
    */
-  public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-  {
-    final EditableMetaData abstractMetaData = getMetaData(rowIndex);
+  public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+    final EditableMetaData abstractMetaData = getMetaData( rowIndex );
     final String sValue;
-    if (aValue == null)
-    {
+    if ( aValue == null ) {
       sValue = null;
-    }
-    else
-    {
-      final String source = String.valueOf(aValue);
-      if (StringUtils.isEmpty(source))
-      {
+    } else {
+      final String source = String.valueOf( aValue );
+      if ( StringUtils.isEmpty( source ) ) {
         sValue = null;
-      }
-      else
-      {
+      } else {
         sValue = source;
       }
     }
-    switch (columnIndex)
-    {
-      case 0:
-      {
+    switch( columnIndex ) {
+      case 0: {
         return;
       }
       case 1:
-        abstractMetaData.setMetaAttribute("display-name", locale, sValue);
-        fireTableCellUpdated(rowIndex, columnIndex);
-        fireTableCellUpdated(rowIndex, 7);
+        abstractMetaData.setMetaAttribute( "display-name", locale, sValue );
+        fireTableCellUpdated( rowIndex, columnIndex );
+        fireTableCellUpdated( rowIndex, 7 );
         return;
       case 2:
-        abstractMetaData.setMetaAttribute("grouping", locale, sValue);
-        fireTableCellUpdated(rowIndex, columnIndex);
-        fireTableCellUpdated(rowIndex, 7);
+        abstractMetaData.setMetaAttribute( "grouping", locale, sValue );
+        fireTableCellUpdated( rowIndex, columnIndex );
+        fireTableCellUpdated( rowIndex, 7 );
         return;
       case 3:
-        abstractMetaData.setMetaAttribute("grouping.ordinal", locale, sValue);
-        fireTableCellUpdated(rowIndex, columnIndex);
-        fireTableCellUpdated(rowIndex, 7);
+        abstractMetaData.setMetaAttribute( "grouping.ordinal", locale, sValue );
+        fireTableCellUpdated( rowIndex, columnIndex );
+        fireTableCellUpdated( rowIndex, 7 );
         return;
       case 4:
-        abstractMetaData.setMetaAttribute("ordinal", locale, sValue);
-        fireTableCellUpdated(rowIndex, columnIndex);
-        fireTableCellUpdated(rowIndex, 7);
+        abstractMetaData.setMetaAttribute( "ordinal", locale, sValue );
+        fireTableCellUpdated( rowIndex, columnIndex );
+        fireTableCellUpdated( rowIndex, 7 );
         return;
       case 5:
-        abstractMetaData.setMetaAttribute("description", locale, sValue);
-        fireTableCellUpdated(rowIndex, columnIndex);
-        fireTableCellUpdated(rowIndex, 7);
+        abstractMetaData.setMetaAttribute( "description", locale, sValue );
+        fireTableCellUpdated( rowIndex, columnIndex );
+        fireTableCellUpdated( rowIndex, 7 );
         return;
       case 6:
-        abstractMetaData.setMetaAttribute("deprecated", locale, sValue);
-        fireTableCellUpdated(rowIndex, columnIndex);
-        fireTableCellUpdated(rowIndex, 7);
+        abstractMetaData.setMetaAttribute( "deprecated", locale, sValue );
+        fireTableCellUpdated( rowIndex, columnIndex );
+        fireTableCellUpdated( rowIndex, 7 );
         return;
     }
 
   }
 
-  public boolean isValidValue(final int row, final int col)
-  {
-    final EditableMetaData abstractMetaData = getMetaData(row);
-    switch (col)
-    {
-      case 0: return true;
+  public boolean isValidValue( final int row, final int col ) {
+    final EditableMetaData abstractMetaData = getMetaData( row );
+    switch( col ) {
+      case 0:
+        return true;
       case 1:
-        return abstractMetaData.isValidValue("display-name", locale);
+        return abstractMetaData.isValidValue( "display-name", locale );
       case 2:
-        return abstractMetaData.isValidValue("grouping", locale);
+        return abstractMetaData.isValidValue( "grouping", locale );
       case 3:
-        return abstractMetaData.isValidValue("grouping.ordinal", locale);
+        return abstractMetaData.isValidValue( "grouping.ordinal", locale );
       case 4:
-        return abstractMetaData.isValidValue("ordinal", locale);
+        return abstractMetaData.isValidValue( "ordinal", locale );
       case 5:
-        return abstractMetaData.isValidValue("description", locale);
+        return abstractMetaData.isValidValue( "description", locale );
       case 6:
-        return abstractMetaData.isValidValue("deprecated", locale);
-      case 7: return true;
+        return abstractMetaData.isValidValue( "deprecated", locale );
+      case 7:
+        return true;
     }
     return false;
   }

@@ -21,19 +21,18 @@ import org.pentaho.reporting.designer.core.util.table.GroupingHeader;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 
-public interface StyleDataBackend
-{
+public interface StyleDataBackend {
   public static final Object NULL_INDICATOR = new Object();
 
   int getRowCount();
 
-  StyleMetaData getMetaData(int row);
+  StyleMetaData getMetaData( int row );
 
-  GroupingHeader getGroupings(int row);
+  GroupingHeader getGroupings( int row );
 
   void resetCache();
 
-  void clearCache(int rowIndex);
+  void clearCache( int rowIndex );
 
   ResolverStyleSheet getResolvedStyle();
 

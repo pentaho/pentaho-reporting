@@ -17,93 +17,77 @@
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
-import java.awt.BorderLayout;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
-public abstract class ScriptingExpressionEditor implements ExpressionEditor
-{
+import javax.swing.*;
+import java.awt.*;
+
+public abstract class ScriptingExpressionEditor implements ExpressionEditor {
   private JPanel panel;
   private RSyntaxTextArea textArea;
   private JLabel statusText;
 
-  public ScriptingExpressionEditor()
-  {
+  public ScriptingExpressionEditor() {
     statusText = new JLabel();
 
     textArea = new RSyntaxTextArea();
-    textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+    textArea.setSyntaxEditingStyle( SyntaxConstants.SYNTAX_STYLE_NONE );
 
-    final JPanel queryContentHolder = new JPanel(new BorderLayout());
-    queryContentHolder.add(BorderLayout.NORTH,
-        new JLabel(EditorExpressionsMessages.getString("ScriptingExpressionEditor.Script")));
-    queryContentHolder.add(BorderLayout.CENTER, new RTextScrollPane(500, 300, textArea, true));
+    final JPanel queryContentHolder = new JPanel( new BorderLayout() );
+    queryContentHolder.add( BorderLayout.NORTH,
+      new JLabel( EditorExpressionsMessages.getString( "ScriptingExpressionEditor.Script" ) ) );
+    queryContentHolder.add( BorderLayout.CENTER, new RTextScrollPane( 500, 300, textArea, true ) );
 
 
     panel = new JPanel();
-    panel.setLayout(new BorderLayout());
-    panel.add(queryContentHolder, BorderLayout.CENTER);
+    panel.setLayout( new BorderLayout() );
+    panel.add( queryContentHolder, BorderLayout.CENTER );
   }
 
-  protected void addValidateButton(final Action action)
-  {
+  protected void addValidateButton( final Action action ) {
     final JPanel validatePanel = new JPanel();
-    validatePanel.setLayout(new BorderLayout());
-    validatePanel.add(new JButton(action), BorderLayout.EAST);
-    validatePanel.add(statusText, BorderLayout.CENTER);
+    validatePanel.setLayout( new BorderLayout() );
+    validatePanel.add( new JButton( action ), BorderLayout.EAST );
+    validatePanel.add( statusText, BorderLayout.CENTER );
 
-    panel.add(validatePanel, BorderLayout.SOUTH);
+    panel.add( validatePanel, BorderLayout.SOUTH );
   }
 
-  public String getStatus()
-  {
+  public String getStatus() {
     return statusText.getText();
   }
 
-  public void setStatus(final String text)
-  {
-    statusText.setText(text);
+  public void setStatus( final String text ) {
+    statusText.setText( text );
   }
 
-  public String getText()
-  {
+  public String getText() {
     return textArea.getText();
   }
 
-  public void setText(final String t)
-  {
-    textArea.setText(t);
+  public void setText( final String t ) {
+    textArea.setText( t );
   }
 
-  public String getSyntaxEditingStyle()
-  {
+  public String getSyntaxEditingStyle() {
     return textArea.getSyntaxEditingStyle();
   }
 
-  public void setSyntaxEditingStyle(final String styleKey)
-  {
-    textArea.setSyntaxEditingStyle(styleKey);
+  public void setSyntaxEditingStyle( final String styleKey ) {
+    textArea.setSyntaxEditingStyle( styleKey );
   }
 
-  public JPanel getPanel()
-  {
+  public JPanel getPanel() {
     return panel;
   }
 
-  public JComponent getEditorComponent()
-  {
+  public JComponent getEditorComponent() {
     return panel;
   }
 
-  public String getTitle()
-  {
-    return EditorExpressionsMessages.getString("ScriptingExpressionEditor.Script");
+  public String getTitle() {
+    return EditorExpressionsMessages.getString( "ScriptingExpressionEditor.Script" );
   }
 }

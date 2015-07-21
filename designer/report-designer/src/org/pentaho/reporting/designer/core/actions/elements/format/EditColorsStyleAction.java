@@ -17,31 +17,28 @@
 
 package org.pentaho.reporting.designer.core.actions.elements.format;
 
-import java.awt.Window;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.format.ElementFormatDialog;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class EditColorsStyleAction extends ElementFormatAction
-{
-  public EditColorsStyleAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("EditColorsStyleAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("EditColorsStyleAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditColorsStyleAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditColorsStyleAction.Accelerator"));
+public class EditColorsStyleAction extends ElementFormatAction {
+  public EditColorsStyleAction() {
+    putValue( Action.NAME, ActionMessages.getString( "EditColorsStyleAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "EditColorsStyleAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "EditColorsStyleAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "EditColorsStyleAction.Accelerator" ) );
   }
 
-  protected ElementFormatDialog createDialog(final Window window)
-  {
-    final ElementFormatDialog elementFormatDialog = super.createDialog(window);
-    elementFormatDialog.setActivePane(ElementFormatDialog.COLOR_PANE);
+  protected ElementFormatDialog createDialog( final Window window ) {
+    final ElementFormatDialog elementFormatDialog = super.createDialog( window );
+    elementFormatDialog.setActivePane( ElementFormatDialog.COLOR_PANE );
     return elementFormatDialog;
   }
 }

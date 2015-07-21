@@ -22,9 +22,9 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-        <xsd:sequence>
-          <xsd:element ref="config" minOccurs="1" maxOccurs="1"/>
-        </xsd:sequence>
+      <xsd:sequence>
+        <xsd:element ref="config" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 
@@ -42,7 +42,7 @@
       <xsd:attribute name="searchFieldList" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
-  
+
   <xsd:element name="filter">
     <xsd:complexType>
       <xsd:attribute name="operator" type="xsd:string"/>

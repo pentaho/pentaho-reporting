@@ -17,15 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter;
 
+import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
+import org.xml.sax.Locator;
+
 import java.util.TimeZone;
 
-import org.xml.sax.Locator;
-import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
-
-public class TimezoneConverter implements ObjectConverter
-{
-  public Object convertFromString(final String s, final Locator locator) throws ParseException
-  {
-    return TimeZone.getTimeZone(s);
+public class TimezoneConverter implements ObjectConverter {
+  public Object convertFromString( final String s, final Locator locator ) throws ParseException {
+    return TimeZone.getTimeZone( s );
   }
 }

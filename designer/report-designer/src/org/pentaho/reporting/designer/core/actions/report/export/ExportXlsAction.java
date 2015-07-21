@@ -24,10 +24,8 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.xls.ExcelExportPlug
  *
  * @author Ezequiel Cuellar
  */
-public final class ExportXlsAction extends AbstractExportAction
-{
-  public ExportXlsAction()
-  {
-    super(new ExcelExportPlugin());
+public final class ExportXlsAction extends AbstractExportAction {
+  public ExportXlsAction() {
+    super( new ExcelExportPlugin() );
   }
 }

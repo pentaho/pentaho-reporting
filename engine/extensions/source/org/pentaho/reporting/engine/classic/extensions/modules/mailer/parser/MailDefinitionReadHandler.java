@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer.parser;
 
-import java.util.ArrayList;
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data.DataSourceElementHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data.MasterParameterDefinitionReadHandler;
@@ -32,8 +29,10 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class MailDefinitionReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+import java.util.Properties;
+
+public class MailDefinitionReadHandler extends AbstractXmlReadHandler {
   private MailDefinition mailDefinition;
   private HeadersReadHandler headersReadHandler;
   private SessionPropertiesReadHandler sessionPropertiesReadHandler;
@@ -44,8 +43,7 @@ public class MailDefinitionReadHandler extends AbstractXmlReadHandler
   private MasterParameterDefinitionReadHandler parameterDefinitionReadHandler;
   private DataSourceElementHandler dataSourceElementHandler;
 
-  public MailDefinitionReadHandler()
-  {
+  public MailDefinitionReadHandler() {
     attachmentReportReadHandlers = new ArrayList();
   }
 
@@ -58,58 +56,47 @@ public class MailDefinitionReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (BundleNamespaces.DATADEFINITION.equals(uri))
-    {
-      if ("parameter-definition".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( BundleNamespaces.DATADEFINITION.equals( uri ) ) {
+      if ( "parameter-definition".equals( tagName ) ) {
         parameterDefinitionReadHandler = new MasterParameterDefinitionReadHandler();
         return parameterDefinitionReadHandler;
       }
-      if ("data-source".equals(tagName))
-      {
+      if ( "data-source".equals( tagName ) ) {
         dataSourceElementHandler = new DataSourceElementHandler();
         return dataSourceElementHandler;
       }
       return null;
     }
 
-    if (isSameNamespace(uri) == false)
-    {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("header".equals(tagName))
-    {
+    if ( "header".equals( tagName ) ) {
       headersReadHandler = new HeadersReadHandler();
       return headersReadHandler;
     }
-    if ("session".equals(tagName))
-    {
+    if ( "session".equals( tagName ) ) {
       sessionPropertiesReadHandler = new SessionPropertiesReadHandler();
       return sessionPropertiesReadHandler;
     }
-    if ("burst-query".equals(tagName))
-    {
+    if ( "burst-query".equals( tagName ) ) {
       burstQueryReadHandler = new StringReadHandler();
       return burstQueryReadHandler;
     }
-    if ("recipients-query".equals(tagName))
-    {
+    if ( "recipients-query".equals( tagName ) ) {
       recipientsQueryReadHandler = new StringReadHandler();
       return recipientsQueryReadHandler;
     }
-    if ("body-report".equals(tagName))
-    {
+    if ( "body-report".equals( tagName ) ) {
       bodyReportReadHandler = new ReportReadHandler();
       return bodyReportReadHandler;
     }
-    if ("attachment-report".equals(tagName))
-    {
+    if ( "attachment-report".equals( tagName ) ) {
       final ReportReadHandler reportReadHandler = new ReportReadHandler();
-      attachmentReportReadHandlers.add(reportReadHandler);
+      attachmentReportReadHandlers.add( reportReadHandler );
       return reportReadHandler;
     }
     return null;
@@ -120,59 +107,47 @@ public class MailDefinitionReadHandler extends AbstractXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
 
     mailDefinition = new MailDefinition();
 
-    if (bodyReportReadHandler != null)
-    {
-      mailDefinition.setBodyReport(bodyReportReadHandler.getTargetType(), bodyReportReadHandler.getReport());
+    if ( bodyReportReadHandler != null ) {
+      mailDefinition.setBodyReport( bodyReportReadHandler.getTargetType(), bodyReportReadHandler.getReport() );
     }
-    for (int i = 0; i < attachmentReportReadHandlers.size(); i++)
-    {
-      final ReportReadHandler handler = (ReportReadHandler) attachmentReportReadHandlers.get(i);
-      mailDefinition.addAttachmentReport(handler.getTargetType(), handler.getReport());
+    for ( int i = 0; i < attachmentReportReadHandlers.size(); i++ ) {
+      final ReportReadHandler handler = (ReportReadHandler) attachmentReportReadHandlers.get( i );
+      mailDefinition.addAttachmentReport( handler.getTargetType(), handler.getReport() );
     }
-    if (sessionPropertiesReadHandler != null)
-    {
-      mailDefinition.setSessionProperties((Properties) sessionPropertiesReadHandler.getObject());
+    if ( sessionPropertiesReadHandler != null ) {
+      mailDefinition.setSessionProperties( (Properties) sessionPropertiesReadHandler.getObject() );
     }
-    if (headersReadHandler != null)
-    {
+    if ( headersReadHandler != null ) {
       final MailHeader[] headers = headersReadHandler.getHeaders();
-      for (int i = 0; i < headers.length; i++)
-      {
-        mailDefinition.addHeader(headers[i]);
+      for ( int i = 0; i < headers.length; i++ ) {
+        mailDefinition.addHeader( headers[ i ] );
       }
     }
-    if (burstQueryReadHandler != null)
-    {
-      mailDefinition.setBurstQuery(burstQueryReadHandler.getResult());
+    if ( burstQueryReadHandler != null ) {
+      mailDefinition.setBurstQuery( burstQueryReadHandler.getResult() );
     }
-    if (recipientsQueryReadHandler != null)
-    {
-      mailDefinition.setBurstQuery(recipientsQueryReadHandler.getResult());
+    if ( recipientsQueryReadHandler != null ) {
+      mailDefinition.setBurstQuery( recipientsQueryReadHandler.getResult() );
     }
-    if (parameterDefinitionReadHandler != null)
-    {
-      mailDefinition.setParameterDefinition((ReportParameterDefinition) parameterDefinitionReadHandler.getObject());
+    if ( parameterDefinitionReadHandler != null ) {
+      mailDefinition.setParameterDefinition( (ReportParameterDefinition) parameterDefinitionReadHandler.getObject() );
     }
-    if (dataSourceElementHandler != null)
-    {
-      mailDefinition.getDataFactory().add(dataSourceElementHandler.getDataFactory());
+    if ( dataSourceElementHandler != null ) {
+      mailDefinition.getDataFactory().add( dataSourceElementHandler.getDataFactory() );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return mailDefinition;
   }
 }

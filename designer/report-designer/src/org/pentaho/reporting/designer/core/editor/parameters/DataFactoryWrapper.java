@@ -22,45 +22,37 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 /**
  * Todo: Document me!
  * <p/>
- * Date: 09.04.2009
- * Time: 20:11:09
+ * Date: 09.04.2009 Time: 20:11:09
  *
  * @author Thomas Morgner.
  */
-public class DataFactoryWrapper
-{
+public class DataFactoryWrapper {
   private DataFactory originalDataFactory;
   private DataFactory editedDataFactory;
 
-  public DataFactoryWrapper(final DataFactory originalDataFactory)
-  {
+  public DataFactoryWrapper( final DataFactory originalDataFactory ) {
     this.originalDataFactory = originalDataFactory;
     this.editedDataFactory = originalDataFactory;
   }
 
-  public DataFactoryWrapper(final DataFactory originalDataFactory, final DataFactory editedDataFactory)
-  {
+  public DataFactoryWrapper( final DataFactory originalDataFactory, final DataFactory editedDataFactory ) {
     this.originalDataFactory = originalDataFactory;
     this.editedDataFactory = editedDataFactory;
   }
 
-  public DataFactory getOriginalDataFactory()
-  {
+  public DataFactory getOriginalDataFactory() {
     return originalDataFactory;
   }
 
-  public void setEditedDataFactory(final DataFactory editedDataFactory)
-  {
+  public void setEditedDataFactory( final DataFactory editedDataFactory ) {
     this.editedDataFactory = editedDataFactory;
   }
 
-  public DataFactory getEditedDataFactory()
-  {
+  public DataFactory getEditedDataFactory() {
     return editedDataFactory;
   }
 
-  public boolean isRemoved()
-  {
+  public boolean isRemoved() {
     return editedDataFactory == null;
   }
 }

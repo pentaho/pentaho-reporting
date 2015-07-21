@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.structuretree;
 
-import java.awt.Component;
-import java.awt.Image;
-import java.beans.BeanInfo;
-import java.util.Locale;
-import javax.swing.ImageIcon;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeCellRenderer;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
@@ -47,268 +39,205 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import java.awt.*;
+import java.beans.BeanInfo;
+import java.util.Locale;
+
 /**
  * Todo: Document me!
  *
  * @author Thomas Morgner
  */
-public class StructureTreeCellRenderer extends DefaultTreeCellRenderer
-{
-  public StructureTreeCellRenderer()
-  {
+public class StructureTreeCellRenderer extends DefaultTreeCellRenderer {
+  public StructureTreeCellRenderer() {
   }
 
-  private String formatElement(final Element element)
-  {
+  private String formatElement( final Element element ) {
     final ElementMetaData data = element.getMetaData();
-    final String displayName = data.getDisplayName(Locale.getDefault());
-    if (WorkspaceSettings.getInstance().isElementsDisplayNames())
-    {
+    final String displayName = data.getDisplayName( Locale.getDefault() );
+    if ( WorkspaceSettings.getInstance().isElementsDisplayNames() ) {
       final String name = element.getName();
 
-      if (StringUtils.isEmpty(name))
-      {
-        return (displayName);
+      if ( StringUtils.isEmpty( name ) ) {
+        return ( displayName );
+      } else {
+        return Messages.getString( "StructureTreeCellRenderer.NamedElementMessage", displayName, name );
       }
-      else
-      {
-        return Messages.getString("StructureTreeCellRenderer.NamedElementMessage", displayName, name);
-      }
-    }
-    else // values ..
+    } else // values ..
     {
-      final Object field = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD);
-      if (field != null)
-      {
-        return Messages.getString("StructureTreeCellRenderer.NamedElementMessage", displayName, field);
+      final Object field = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD );
+      if ( field != null ) {
+        return Messages.getString( "StructureTreeCellRenderer.NamedElementMessage", displayName, field );
       }
-      final Object value = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE);
-      if (value != null)
-      {
-        return Messages.getString("StructureTreeCellRenderer.NamedElementMessage", displayName, value);
+      final Object value = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE );
+      if ( value != null ) {
+        return Messages.getString( "StructureTreeCellRenderer.NamedElementMessage", displayName, value );
       }
       final Object translationKey =
-          element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER);
-      if (translationKey != null)
-      {
-        return Messages.getString("StructureTreeCellRenderer.NamedElementMessage", displayName, translationKey);
+        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER );
+      if ( translationKey != null ) {
+        return Messages.getString( "StructureTreeCellRenderer.NamedElementMessage", displayName, translationKey );
       }
-      final Object fields = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS);
-      if (fields instanceof String[])
-      {
+      final Object fields = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS );
+      if ( fields instanceof String[] ) {
         final String[] fieldsArray = (String[]) fields;
         final StringBuilder b = new StringBuilder();
-        for (int i = 0; i < fieldsArray.length; i++)
-        {
-          final String f = fieldsArray[i];
-          if (i != 0)
-          {
-            b.append(", ");
+        for ( int i = 0; i < fieldsArray.length; i++ ) {
+          final String f = fieldsArray[ i ];
+          if ( i != 0 ) {
+            b.append( ", " );
           }
-          b.append(f);
+          b.append( f );
         }
-        return Messages.getString("StructureTreeCellRenderer.NamedElementMessage", displayName, b.toString());
+        return Messages.getString( "StructureTreeCellRenderer.NamedElementMessage", displayName, b.toString() );
       }
       return displayName;
     }
   }
 
   /**
-   * Configures the renderer based on the passed in components. The value is set
-   * from messaging the tree with <code>convertValueToText</code>, which
-   * ultimately invokes <code>toString</code> on <code>value</code>. The
-   * foreground color is set based on the selection and the icon is set based on
-   * on leaf and expanded.
+   * Configures the renderer based on the passed in components. The value is set from messaging the tree with
+   * <code>convertValueToText</code>, which ultimately invokes <code>toString</code> on <code>value</code>. The
+   * foreground color is set based on the selection and the icon is set based on on leaf and expanded.
    */
-  public Component getTreeCellRendererComponent(final JTree tree,
-                                                final Object value,
-                                                final boolean sel,
-                                                final boolean expanded,
-                                                final boolean leaf,
-                                                final int row,
-                                                final boolean hasFocus)
-  {
-    super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-    setToolTipText(null);
+  public Component getTreeCellRendererComponent( final JTree tree,
+                                                 final Object value,
+                                                 final boolean sel,
+                                                 final boolean expanded,
+                                                 final boolean leaf,
+                                                 final int row,
+                                                 final boolean hasFocus ) {
+    super.getTreeCellRendererComponent( tree, value, sel, expanded, leaf, row, hasFocus );
+    setToolTipText( null );
 
-    if (value instanceof Element)
-    {
+    if ( value instanceof Element ) {
       final Element vr = (Element) value;
       final ElementMetaData data = vr.getMetaData();
-      setText(formatElement(vr));
-      final Image icon = data.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
-      if (icon != null)
-      {
-        setIcon(new ImageIcon(icon));
+      setText( formatElement( vr ) );
+      final Image icon = data.getIcon( Locale.getDefault(), BeanInfo.ICON_COLOR_32x32 );
+      if ( icon != null ) {
+        setIcon( new ImageIcon( icon ) );
       }
-      setToolTipText(data.getDescription(Locale.getDefault()));
-    }
-    else if (value instanceof CompoundDataFactory)
-    {
-      setText(Messages.getString("StructureTreeCellRenderer.DataSets"));
-      setIcon(IconLoader.getInstance().getDataSetsIcon());
-    }
-    else if (value instanceof ReportEnvironmentDataRow)
-    {
-      setText(Messages.getString("StructureTreeCellRenderer.Environment"));
-      setIcon(IconLoader.getInstance().getPropertiesDataSetIcon());
-    }
-    else if (value instanceof ReportFunctionNode)
-    {
-      setText(Messages.getString("StructureTreeCellRenderer.Functions"));
-      setIcon(IconLoader.getInstance().getFunctionsIcon());
-    }
-    else if (value instanceof ReportParametersNode || value instanceof SubReportParametersNode)
-    {
-      setText(Messages.getString("StructureTreeCellRenderer.Parameters"));
-      setIcon(IconLoader.getInstance().getParameterIcon());
-    }
-    else if (value instanceof SubReportParametersNode.ExportParametersNode)
-    {
-      setText(Messages.getString("StructureTreeCellRenderer.ExportParameters"));
-      setIcon(IconLoader.getInstance().getParameterIcon());
-    }
-    else if (value instanceof SubReportParametersNode.ImportParametersNode)
-    {
-      setText(Messages.getString("StructureTreeCellRenderer.ImportParameters"));
-      setIcon(IconLoader.getInstance().getParameterIcon());
-    }
-    else if (value instanceof ParameterMapping)
-    {
+      setToolTipText( data.getDescription( Locale.getDefault() ) );
+    } else if ( value instanceof CompoundDataFactory ) {
+      setText( Messages.getString( "StructureTreeCellRenderer.DataSets" ) );
+      setIcon( IconLoader.getInstance().getDataSetsIcon() );
+    } else if ( value instanceof ReportEnvironmentDataRow ) {
+      setText( Messages.getString( "StructureTreeCellRenderer.Environment" ) );
+      setIcon( IconLoader.getInstance().getPropertiesDataSetIcon() );
+    } else if ( value instanceof ReportFunctionNode ) {
+      setText( Messages.getString( "StructureTreeCellRenderer.Functions" ) );
+      setIcon( IconLoader.getInstance().getFunctionsIcon() );
+    } else if ( value instanceof ReportParametersNode || value instanceof SubReportParametersNode ) {
+      setText( Messages.getString( "StructureTreeCellRenderer.Parameters" ) );
+      setIcon( IconLoader.getInstance().getParameterIcon() );
+    } else if ( value instanceof SubReportParametersNode.ExportParametersNode ) {
+      setText( Messages.getString( "StructureTreeCellRenderer.ExportParameters" ) );
+      setIcon( IconLoader.getInstance().getParameterIcon() );
+    } else if ( value instanceof SubReportParametersNode.ImportParametersNode ) {
+      setText( Messages.getString( "StructureTreeCellRenderer.ImportParameters" ) );
+      setIcon( IconLoader.getInstance().getParameterIcon() );
+    } else if ( value instanceof ParameterMapping ) {
       final ParameterMapping mapping = (ParameterMapping) value;
-      setText(Messages.getString("StructureTreeCellRenderer.ParameterMappingMessage", mapping.getAlias(), mapping.getName()));
-      setIcon(IconLoader.getInstance().getParameterIcon());
-    }
-    else if (value instanceof ReportFieldNode)
-    {
+      setText( Messages
+        .getString( "StructureTreeCellRenderer.ParameterMappingMessage", mapping.getAlias(), mapping.getName() ) );
+      setIcon( IconLoader.getInstance().getParameterIcon() );
+    } else if ( value instanceof ReportFieldNode ) {
       final ReportFieldNode fieldNode = (ReportFieldNode) value;
       final ContextAwareDataSchemaModel model = fieldNode.getDataSchemaModel();
-      final DataAttributes attributes = model.getDataSchema().getAttributes(fieldNode.getFieldName());
-      setToolTipText(fieldNode.getFieldClass().getSimpleName());
-      if (attributes == null)
-      {
-        setText(fieldNode.toString());
-      }
-      else
-      {
+      final DataAttributes attributes = model.getDataSchema().getAttributes( fieldNode.getFieldName() );
+      setToolTipText( fieldNode.getFieldClass().getSimpleName() );
+      if ( attributes == null ) {
+        setText( fieldNode.toString() );
+      } else {
         final String displayName = (String) attributes.getMetaAttribute
-            (MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL,
-                String.class, model.getDataAttributeContext());
-        setText(formatFieldType(displayName, fieldNode.getFieldName(), fieldNode.getFieldClass()));
+          ( MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL,
+            String.class, model.getDataAttributeContext() );
+        setText( formatFieldType( displayName, fieldNode.getFieldName(), fieldNode.getFieldClass() ) );
       }
-    }
-    else if (value instanceof ReportQueryNode)
-    {
+    } else if ( value instanceof ReportQueryNode ) {
       final ReportQueryNode queryNode = (ReportQueryNode) value;
-      setText(queryNode.getQueryName());
-      setToolTipText(queryNode.getDataFactory().getClass().getSimpleName());
-    }
-    else if (value instanceof Expression)
-    {
+      setText( queryNode.getQueryName() );
+      setToolTipText( queryNode.getDataFactory().getClass().getSimpleName() );
+    } else if ( value instanceof Expression ) {
       final Expression expression = (Expression) value;
-      if (ExpressionRegistry.getInstance().isExpressionRegistered(expression.getClass().getName()) == false)
-      {
+      if ( ExpressionRegistry.getInstance().isExpressionRegistered( expression.getClass().getName() ) == false ) {
 
-        setText(expression.getClass().getName());
-      }
-      else
-      {
+        setText( expression.getClass().getName() );
+      } else {
         final ExpressionMetaData expressionMetaData =
-            ExpressionRegistry.getInstance().getExpressionMetaData(expression.getClass().getName());
+          ExpressionRegistry.getInstance().getExpressionMetaData( expression.getClass().getName() );
 
-        if (expression.getName() == null)
-        {
-          setText(expressionMetaData.getDisplayName(Locale.getDefault()));
-        }
-        else
-        {
-          setText(Messages.getString("StructureTreeCellRenderer.NamedExpressionMessage",
-              expressionMetaData.getDisplayName(Locale.getDefault()), expression.getName()));
+        if ( expression.getName() == null ) {
+          setText( expressionMetaData.getDisplayName( Locale.getDefault() ) );
+        } else {
+          setText( Messages.getString( "StructureTreeCellRenderer.NamedExpressionMessage",
+            expressionMetaData.getDisplayName( Locale.getDefault() ), expression.getName() ) );
         }
       }
-    }
-    else if (value instanceof ParameterDefinitionEntry)
-    {
+    } else if ( value instanceof ParameterDefinitionEntry ) {
       final ParameterDefinitionEntry params = (ParameterDefinitionEntry) value;
-      setText(params.getName());
-    }
-    else if (value instanceof DataFactory)
-    {
+      setText( params.getName() );
+    } else if ( value instanceof DataFactory ) {
       final DataFactory dfac = (DataFactory) value;
       final DataFactoryMetaData data = dfac.getMetaData();
 
-      final Image image = data.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
-      if (image != null)
-      {
-        setIcon(new ImageIcon(image));
+      final Image image = data.getIcon( Locale.getDefault(), BeanInfo.ICON_COLOR_32x32 );
+      if ( image != null ) {
+        setIcon( new ImageIcon( image ) );
       }
 
-      final String connectionName = data.getDisplayConnectionName(dfac);
-      if (connectionName != null)
-      {
-        setText(Messages.getString("StructureTreeCellRenderer.NamedDataFactoryMessage",
-            data.getDisplayName(Locale.getDefault()), connectionName));
+      final String connectionName = data.getDisplayConnectionName( dfac );
+      if ( connectionName != null ) {
+        setText( Messages.getString( "StructureTreeCellRenderer.NamedDataFactoryMessage",
+          data.getDisplayName( Locale.getDefault() ), connectionName ) );
+      } else {
+        setText( data.getDisplayName( Locale.getDefault() ) );
       }
-      else
-      {
-        setText(data.getDisplayName(Locale.getDefault()));
-      }
-    }
-    else if (value instanceof ParentDataFactoryNode)
-    {
-      setText(Messages.getString("StructureTreeCellRenderer.InheritedDataFactories"));
-    }
-    else if (value instanceof InheritedDataFactoryWrapper)
-    {
+    } else if ( value instanceof ParentDataFactoryNode ) {
+      setText( Messages.getString( "StructureTreeCellRenderer.InheritedDataFactories" ) );
+    } else if ( value instanceof InheritedDataFactoryWrapper ) {
       final InheritedDataFactoryWrapper wrapper = (InheritedDataFactoryWrapper) value;
       final DataFactory dfac = wrapper.getDataFactory();
-      if (DataFactoryRegistry.getInstance().isRegistered(dfac.getClass().getName()) == false)
-      {
-        setText(dfac.getClass().getSimpleName());
-      }
-      else
-      {
+      if ( DataFactoryRegistry.getInstance().isRegistered( dfac.getClass().getName() ) == false ) {
+        setText( dfac.getClass().getSimpleName() );
+      } else {
         final DataFactoryMetaData data = dfac.getMetaData();
 
-        final Image image = data.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
-        if (image != null)
-        {
-          setIcon(new ImageIcon(image));
+        final Image image = data.getIcon( Locale.getDefault(), BeanInfo.ICON_COLOR_32x32 );
+        if ( image != null ) {
+          setIcon( new ImageIcon( image ) );
         }
 
-        final String connectionName = data.getDisplayConnectionName(dfac);
-        if (connectionName != null)
-        {
-          setText(Messages.getString("StructureTreeCellRenderer.NamedDataFactoryMessage",
-              data.getDisplayName(Locale.getDefault()), connectionName));
-        }
-        else
-        {
-          setText(data.getDisplayName(Locale.getDefault()));
+        final String connectionName = data.getDisplayConnectionName( dfac );
+        if ( connectionName != null ) {
+          setText( Messages.getString( "StructureTreeCellRenderer.NamedDataFactoryMessage",
+            data.getDisplayName( Locale.getDefault() ), connectionName ) );
+        } else {
+          setText( data.getDisplayName( Locale.getDefault() ) );
         }
       }
     }
     return this;
   }
 
-  private String formatFieldType(final String displayName,
-                                 final String fieldName,
-                                 final Class fieldClass)
-  {
-    if (displayName == null || ObjectUtilities.equal(displayName, fieldName))
-    {
-      if (fieldClass == null)
-      {
+  private String formatFieldType( final String displayName,
+                                  final String fieldName,
+                                  final Class fieldClass ) {
+    if ( displayName == null || ObjectUtilities.equal( displayName, fieldName ) ) {
+      if ( fieldClass == null ) {
         return fieldName;
       }
-      return Messages.getString("StructureTreeCellRenderer.TypedElementMessage", fieldName, fieldClass.getSimpleName());
+      return Messages
+        .getString( "StructureTreeCellRenderer.TypedElementMessage", fieldName, fieldClass.getSimpleName() );
     }
 
-    if (fieldClass == null)
-    {
-      return Messages.getString("StructureTreeCellRenderer.TypedElementMessage", displayName, fieldName);
+    if ( fieldClass == null ) {
+      return Messages.getString( "StructureTreeCellRenderer.TypedElementMessage", displayName, fieldName );
     }
-    return Messages.getString("StructureTreeCellRenderer.TypedElementMessage",
-        displayName, fieldName, fieldClass.getSimpleName());
+    return Messages.getString( "StructureTreeCellRenderer.TypedElementMessage",
+      displayName, fieldName, fieldClass.getSimpleName() );
   }
 }

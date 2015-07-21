@@ -18,7 +18,6 @@
 
 package org.pentaho.reporting.engine.classic.testcases;
 
-import static junit.framework.Assert.assertTrue;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -30,22 +29,21 @@ import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class GoldSaveLoadTest extends GoldTestBase
-{
-  public GoldSaveLoadTest()
-  {
+import static junit.framework.Assert.assertTrue;
+
+public class GoldSaveLoadTest extends GoldTestBase {
+  public GoldSaveLoadTest() {
   }
 
-  protected MasterReport postProcess(final MasterReport originalReport) throws Exception
-  {
+  protected MasterReport postProcess( final MasterReport originalReport ) throws Exception {
     final DocumentMetaData originalMeta = originalReport.getBundle().getMetaData();
     final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
-    BundleWriter.writeReportToZipStream(originalReport, bout, originalMeta);
-    assertTrue(bout.getLength() > 0);
+    BundleWriter.writeReportToZipStream( originalReport, bout, originalMeta );
+    assertTrue( bout.getLength() > 0 );
 
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource reportRes = mgr.createDirectly(bout.toByteArray(), MasterReport.class);
+    final Resource reportRes = mgr.createDirectly( bout.toByteArray(), MasterReport.class );
     return (MasterReport) reportRes.getResource();
   }
 
@@ -54,18 +52,15 @@ public class GoldSaveLoadTest extends GoldTestBase
    *
    * @return
    */
-  protected FilesystemFilter createReportFilter()
-  {
+  protected FilesystemFilter createReportFilter() {
     return new FilesystemFilter
-        (new String[]{".prpt"}, "Reports", false);
+      ( new String[] { ".prpt" }, "Reports", false );
   }
 
   @Test
-  public void testExecuteReports() throws Exception
-  {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
-    {
+  public void testExecuteReports() throws Exception {
+    if ( "false".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" ) ) ) {
       return;
     }
     runAllGoldReports();

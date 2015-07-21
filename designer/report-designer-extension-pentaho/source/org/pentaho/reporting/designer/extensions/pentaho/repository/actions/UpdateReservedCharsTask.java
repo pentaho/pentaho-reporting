@@ -28,80 +28,68 @@ import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishException;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 
-public class UpdateReservedCharsTask implements AuthenticatedServerTask
-{
+public class UpdateReservedCharsTask implements AuthenticatedServerTask {
   private AuthenticationData loginData;
 
-  public UpdateReservedCharsTask(final AuthenticationData loginData)
-  {
+  public UpdateReservedCharsTask( final AuthenticationData loginData ) {
     this.loginData = loginData;
   }
 
-  public void setLoginData (AuthenticationData loginData, boolean storeUpdates)
-  {
+  public void setLoginData( AuthenticationData loginData, boolean storeUpdates ) {
     this.loginData = loginData;
   }
 
-  private HttpClient createHttpClient()
-  {
+  private HttpClient createHttpClient() {
     final HttpClient client = new HttpClient();
-    client.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
-    client.getParams().setSoTimeout(WorkspaceSettings.getInstance().getConnectionTimeout() * 1000);
-    client.getParams().setAuthenticationPreemptive(true);
-    client.getState().setCredentials(AuthScope.ANY,
-        AuthenticationHelper.getCredentials(loginData.getUsername(), loginData.getPassword()));
+    client.getParams().setCookiePolicy( CookiePolicy.BROWSER_COMPATIBILITY );
+    client.getParams().setSoTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 );
+    client.getParams().setAuthenticationPreemptive( true );
+    client.getState().setCredentials( AuthScope.ANY,
+      AuthenticationHelper.getCredentials( loginData.getUsername(), loginData.getPassword() ) );
     return client;
-  }  
-  
-  private boolean checkResult(int result) throws PublishException {
-    return (result == HttpStatus.SC_OK);
   }
-  
+
+  private boolean checkResult( int result ) throws PublishException {
+    return ( result == HttpStatus.SC_OK );
+  }
+
   /**
-   * When an object implementing interface <code>Runnable</code> is used
-   * to create a thread, starting the thread causes the object's
-   * <code>run</code> method to be called in that separately executing
-   * thread.
+   * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
+   * the object's <code>run</code> method to be called in that separately executing thread.
    * <p/>
-   * The general contract of the method <code>run</code> is that it may
-   * take any action whatsoever.
+   * The general contract of the method <code>run</code> is that it may take any action whatsoever.
    *
    * @see Thread#run()
    */
-  public void run()
-  {
+  public void run() {
     HttpClient client = createHttpClient();
-    final GetMethod reservedCharactersMethod = new GetMethod(loginData.getUrl() + "/api/repo/files/reservedCharacters");
-    reservedCharactersMethod.setFollowRedirects(false);
+    final GetMethod reservedCharactersMethod =
+      new GetMethod( loginData.getUrl() + "/api/repo/files/reservedCharacters" );
+    reservedCharactersMethod.setFollowRedirects( false );
 
-    final GetMethod reservedCharactersDisplayMethod = new GetMethod(loginData.getUrl() + "/api/repo/files/reservedCharactersDisplay");
-    reservedCharactersDisplayMethod.setFollowRedirects(false);
-    
+    final GetMethod reservedCharactersDisplayMethod =
+      new GetMethod( loginData.getUrl() + "/api/repo/files/reservedCharactersDisplay" );
+    reservedCharactersDisplayMethod.setFollowRedirects( false );
+
     try {
-      final int result = client.executeMethod(reservedCharactersMethod);
-      if (!checkResult(result))
-      {
-        throw new PublishException(1);
+      final int result = client.executeMethod( reservedCharactersMethod );
+      if ( !checkResult( result ) ) {
+        throw new PublishException( 1 );
       }
-      PublishUtil.setReservedChars(reservedCharactersMethod.getResponseBodyAsString());
-    } 
-    catch (Exception e)
-    {
-      throw new RuntimeException(e);
+      PublishUtil.setReservedChars( reservedCharactersMethod.getResponseBodyAsString() );
+    } catch ( Exception e ) {
+      throw new RuntimeException( e );
     }
-    
+
     try {
-      final int result = client.executeMethod(reservedCharactersDisplayMethod);
-      if (!checkResult(result))
-      {
-        throw new PublishException(1);
+      final int result = client.executeMethod( reservedCharactersDisplayMethod );
+      if ( !checkResult( result ) ) {
+        throw new PublishException( 1 );
       }
-      PublishUtil.setReservedCharsDisplay(reservedCharactersDisplayMethod.getResponseBodyAsString());
-    } 
-    catch (Exception e)
-    {
-      throw new RuntimeException(e);
+      PublishUtil.setReservedCharsDisplay( reservedCharactersDisplayMethod.getResponseBodyAsString() );
+    } catch ( Exception e ) {
+      throw new RuntimeException( e );
     }
-    
+
   }
 }

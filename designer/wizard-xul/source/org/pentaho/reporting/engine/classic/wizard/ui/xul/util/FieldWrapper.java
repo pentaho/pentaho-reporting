@@ -23,52 +23,44 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.engine.classic.wizard.model.FieldDefinition;
 
-public class FieldWrapper
-{
+public class FieldWrapper {
   private FieldDefinition fieldDefinition;
   private String displayName;
 
-  public FieldWrapper(final FieldDefinition fieldDefinition,
-                      final DataSchema dataSchema)
-  {
-    if (fieldDefinition == null)
-    {
+  public FieldWrapper( final FieldDefinition fieldDefinition,
+                       final DataSchema dataSchema ) {
+    if ( fieldDefinition == null ) {
       throw new NullPointerException();
     }
 
     this.fieldDefinition = fieldDefinition;
 
-    final DataAttributes attributes = dataSchema.getAttributes(fieldDefinition.getField());
-    if (attributes != null)
-    {
+    final DataAttributes attributes = dataSchema.getAttributes( fieldDefinition.getField() );
+    if ( attributes != null ) {
       final DefaultDataAttributeContext dataAttributeContext = new DefaultDataAttributeContext();
       displayName = (String) attributes.getMetaAttribute
-          (MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL,
-              String.class, dataAttributeContext);
-      if (displayName != null)
-      {
+        ( MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL,
+          String.class, dataAttributeContext );
+      if ( displayName != null ) {
         final Object indexColumn = attributes.getMetaAttribute
-            (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.INDEXED_COLUMN, Boolean.class, dataAttributeContext);
-        if (Boolean.TRUE.equals(indexColumn))
-        {
-          displayName += (" (" + fieldDefinition.getField() + ")");
+          ( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.INDEXED_COLUMN, Boolean.class,
+            dataAttributeContext );
+        if ( Boolean.TRUE.equals( indexColumn ) ) {
+          displayName += ( " (" + fieldDefinition.getField() + ")" );
         }
       }
     }
 
-    if (displayName == null)
-    {
+    if ( displayName == null ) {
       displayName = fieldDefinition.getField();
     }
   }
 
-  public FieldDefinition getFieldDefinition()
-  {
+  public FieldDefinition getFieldDefinition() {
     return fieldDefinition;
   }
 
-  public String getDisplayFieldName()
-  {
+  public String getDisplayFieldName() {
     return displayName;
   }
 }

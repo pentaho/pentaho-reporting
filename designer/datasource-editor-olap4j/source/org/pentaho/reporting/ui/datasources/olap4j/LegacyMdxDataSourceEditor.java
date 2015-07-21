@@ -17,55 +17,46 @@
 
 package org.pentaho.reporting.ui.datasources.olap4j;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.AbstractNamedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.LegacyBandedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.OlapConnectionProvider;
 
+import java.awt.*;
+
 /**
  * @author Michael D'Amour
  */
-public class LegacyMdxDataSourceEditor extends Olap4JDataSourceEditor
-{
+public class LegacyMdxDataSourceEditor extends Olap4JDataSourceEditor {
 
-  public LegacyMdxDataSourceEditor(final DesignTimeContext context)
-  {
-    super(context);
+  public LegacyMdxDataSourceEditor( final DesignTimeContext context ) {
+    super( context );
   }
 
-  public LegacyMdxDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-  {
-    super(context, owner);
+  public LegacyMdxDataSourceEditor( final DesignTimeContext context, final Dialog owner ) {
+    super( context, owner );
   }
 
-  public LegacyMdxDataSourceEditor(final DesignTimeContext context, final Frame owner)
-  {
-    super(context, owner);
+  public LegacyMdxDataSourceEditor( final DesignTimeContext context, final Frame owner ) {
+    super( context, owner );
   }
 
-  protected void init(final DesignTimeContext context)
-  {
-    super.init(context);
-    setTitle(Messages.getString("LegacyMdxDataSourceEditor.Title"));
+  protected void init( final DesignTimeContext context ) {
+    super.init( context );
+    setTitle( Messages.getString( "LegacyMdxDataSourceEditor.Title" ) );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "Olap4JDataSourceEditor.Legacy";
   }
 
-  protected AbstractNamedMDXDataFactory createDataFactory()
-  {
+  protected AbstractNamedMDXDataFactory createDataFactory() {
     final OlapConnectionProvider connectionProvider = createConnectionProvider();
-    if (connectionProvider == null)
-    {
+    if ( connectionProvider == null ) {
       return null;
     }
-    final LegacyBandedMDXDataFactory returnDataFactory = new LegacyBandedMDXDataFactory(connectionProvider);
-    configureQueries(returnDataFactory);
+    final LegacyBandedMDXDataFactory returnDataFactory = new LegacyBandedMDXDataFactory( connectionProvider );
+    configureQueries( returnDataFactory );
     return returnDataFactory;
   }
 }

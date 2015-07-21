@@ -21,11 +21,9 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.el
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.BarSparklineType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class BarSparklineElementReadHandler extends AbstractElementReadHandler
-{
+public class BarSparklineElementReadHandler extends AbstractElementReadHandler {
   public BarSparklineElementReadHandler()
-      throws ParseException
-  {
-    super(new BarSparklineType());
+    throws ParseException {
+    super( new BarSparklineType() );
   }
 }

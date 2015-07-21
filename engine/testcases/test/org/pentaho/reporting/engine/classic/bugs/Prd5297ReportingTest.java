@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,31 +26,29 @@ import org.pentaho.reporting.libraries.formula.LibFormulaBoot;
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
 import org.pentaho.reporting.libraries.formula.function.FunctionRegistry;
 
-public class Prd5297ReportingTest
-{
+import java.util.Locale;
+import java.util.TimeZone;
+
+public class Prd5297ReportingTest {
 
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     LibFormulaBoot.getInstance().start();
   }
 
   @Test
-  public void testFunctionMetaData()
-  {
-    FormulaContext ctx = DefaultFormulaContextFactory.INSTANCE.create(Locale.US, TimeZone.getTimeZone("UTC"));
+  public void testFunctionMetaData() {
+    FormulaContext ctx = DefaultFormulaContextFactory.INSTANCE.create( Locale.US, TimeZone.getTimeZone( "UTC" ) );
 
     FunctionRegistry functionRegistry = ctx.getFunctionRegistry();
-    for (final String name : functionRegistry.getFunctionNames())
-    {
-      FunctionDescription metaData = functionRegistry.getMetaData(name);
-      if (metaData.getClass().getName().startsWith("org.pentaho.metadata"))
-      {
+    for ( final String name : functionRegistry.getFunctionNames() ) {
+      FunctionDescription metaData = functionRegistry.getMetaData( name );
+      if ( metaData.getClass().getName().startsWith( "org.pentaho.metadata" ) ) {
         continue;
       }
 
-      Assert.assertEquals(metaData.getClass().getName(), name, metaData.getCanonicalName());
-      Assert.assertEquals(name, functionRegistry.createFunction(name).getCanonicalName());
+      Assert.assertEquals( metaData.getClass().getName(), name, metaData.getCanonicalName() );
+      Assert.assertEquals( name, functionRegistry.createFunction( name ).getCanonicalName() );
     }
   }
 }

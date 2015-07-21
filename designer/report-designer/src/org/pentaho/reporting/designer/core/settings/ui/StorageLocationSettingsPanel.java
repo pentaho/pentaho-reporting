@@ -17,90 +17,63 @@
 
 package org.pentaho.reporting.designer.core.settings.ui;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import org.pentaho.reporting.designer.core.settings.SettingsMessages;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.FileChooserService;
 
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+
 /**
  * User: Martin Date: 01.03.2006 Time: 18:15:58
  */
-public class StorageLocationSettingsPanel extends JPanel implements SettingsPlugin
-{
-  private static class LocationPanel extends JPanel
-  {
-    private class BrowseAction extends AbstractAction
-    {
+public class StorageLocationSettingsPanel extends JPanel implements SettingsPlugin {
+  private static class LocationPanel extends JPanel {
+    private class BrowseAction extends AbstractAction {
       private JFileChooser fileChooser;
 
       /**
-       * Defines an <code>Action</code> object with a default
-       * description string and default icon.
+       * Defines an <code>Action</code> object with a default description string and default icon.
        */
-      private BrowseAction()
-      {
-        putValue(Action.NAME, "..");
+      private BrowseAction() {
+        putValue( Action.NAME, ".." );
       }
 
       /**
        * Invoked when an action occurs.
        */
-      public void actionPerformed(final ActionEvent e)
-      {
+      public void actionPerformed( final ActionEvent e ) {
 
-        if (fileChooser == null)
-        {
+        if ( fileChooser == null ) {
           fileChooser = new JFileChooser();
-          fileChooser.setAcceptAllFileFilterUsed(false);
-          fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+          fileChooser.setAcceptAllFileFilterUsed( false );
+          fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
         }
-        if (fileChooser.showOpenDialog(LocationPanel.this) != JFileChooser.APPROVE_OPTION)
-        {
+        if ( fileChooser.showOpenDialog( LocationPanel.this ) != JFileChooser.APPROVE_OPTION ) {
           return;
         }
         final File selectedFile = fileChooser.getSelectedFile();
-        if (selectedFile != null)
-        {
-          if (selectedFile.isDirectory() == false)
-          {
-            predefinedLocationField.setText(selectedFile.getParentFile().getAbsolutePath());
-          }
-          else
-          {
-            predefinedLocationField.setText(selectedFile.getAbsolutePath());
+        if ( selectedFile != null ) {
+          if ( selectedFile.isDirectory() == false ) {
+            predefinedLocationField.setText( selectedFile.getParentFile().getAbsolutePath() );
+          } else {
+            predefinedLocationField.setText( selectedFile.getAbsolutePath() );
           }
         }
       }
     }
 
-    private class PredefinedLocationSelectionHandler implements ChangeListener
-    {
-      private PredefinedLocationSelectionHandler()
-      {
+    private class PredefinedLocationSelectionHandler implements ChangeListener {
+      private PredefinedLocationSelectionHandler() {
       }
 
-      public void stateChanged(final ChangeEvent e)
-      {
-        predefinedLocationField.setEnabled(predefinedLocationButton.isSelected());
+      public void stateChanged( final ChangeEvent e ) {
+        predefinedLocationField.setEnabled( predefinedLocationButton.isSelected() );
       }
     }
 
@@ -112,38 +85,36 @@ public class StorageLocationSettingsPanel extends JPanel implements SettingsPlug
     private String locationType;
 
     /**
-     * Creates a new <code>JPanel</code> with a double buffer
-     * and a flow layout.
+     * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
      *
      * @param locationType
      */
-    private LocationPanel(final String locationType)
-    {
+    private LocationPanel( final String locationType ) {
       this.locationType = locationType;
 
       noStoreButton = new JRadioButton();
       lastLocationButton = new JRadioButton();
       predefinedLocationButton = new JRadioButton();
-      predefinedLocationButton.addChangeListener(new PredefinedLocationSelectionHandler());
+      predefinedLocationButton.addChangeListener( new PredefinedLocationSelectionHandler() );
       predefinedLocationField = new JTextField();
-      predefinedLocationField.setEnabled(false);
+      predefinedLocationField.setEnabled( false );
 
       final ButtonGroup bg = new ButtonGroup();
-      bg.add(noStoreButton);
-      bg.add(lastLocationButton);
-      bg.add(predefinedLocationButton);
-      final JButton browseButton = new JButton(new BrowseAction());
+      bg.add( noStoreButton );
+      bg.add( lastLocationButton );
+      bg.add( predefinedLocationButton );
+      final JButton browseButton = new JButton( new BrowseAction() );
 
-      final JLabel noStoreLabel = new JLabel("Do not remember anything.");
-      final JLabel lastLocationLabel = new JLabel("Remember my last location.");
-      final JLabel predefinedLocationLabel = new JLabel("Always use this directory.");
+      final JLabel noStoreLabel = new JLabel( "Do not remember anything." );
+      final JLabel lastLocationLabel = new JLabel( "Remember my last location." );
+      final JLabel predefinedLocationLabel = new JLabel( "Always use this directory." );
 
-      setLayout(new GridBagLayout());
+      setLayout( new GridBagLayout() );
 
       GridBagConstraints gbc = new GridBagConstraints();
       gbc.gridx = 0;
       gbc.gridy = 0;
-      add(noStoreButton, gbc);
+      add( noStoreButton, gbc );
 
       gbc = new GridBagConstraints();
       gbc.gridx = 1;
@@ -151,12 +122,12 @@ public class StorageLocationSettingsPanel extends JPanel implements SettingsPlug
       gbc.gridwidth = 2;
       gbc.weightx = 1;
       gbc.fill = GridBagConstraints.HORIZONTAL;
-      add(noStoreLabel, gbc);
+      add( noStoreLabel, gbc );
 
       gbc = new GridBagConstraints();
       gbc.gridx = 0;
       gbc.gridy = 1;
-      add(lastLocationButton, gbc);
+      add( lastLocationButton, gbc );
 
       gbc = new GridBagConstraints();
       gbc.gridx = 1;
@@ -164,12 +135,12 @@ public class StorageLocationSettingsPanel extends JPanel implements SettingsPlug
       gbc.gridwidth = 2;
       gbc.weightx = 1;
       gbc.fill = GridBagConstraints.HORIZONTAL;
-      add(lastLocationLabel, gbc);
+      add( lastLocationLabel, gbc );
 
       gbc = new GridBagConstraints();
       gbc.gridx = 0;
       gbc.gridy = 2;
-      add(predefinedLocationButton, gbc);
+      add( predefinedLocationButton, gbc );
 
       gbc = new GridBagConstraints();
       gbc.gridx = 1;
@@ -177,68 +148,53 @@ public class StorageLocationSettingsPanel extends JPanel implements SettingsPlug
       gbc.gridwidth = 2;
       gbc.weightx = 1;
       gbc.fill = GridBagConstraints.HORIZONTAL;
-      add(predefinedLocationLabel, gbc);
+      add( predefinedLocationLabel, gbc );
 
       gbc = new GridBagConstraints();
       gbc.gridx = 1;
       gbc.gridy = 3;
       gbc.weightx = 1;
       gbc.fill = GridBagConstraints.HORIZONTAL;
-      add(predefinedLocationField, gbc);
+      add( predefinedLocationField, gbc );
 
       gbc = new GridBagConstraints();
       gbc.gridx = 2;
       gbc.gridy = 3;
-      add(browseButton, gbc);
+      add( browseButton, gbc );
     }
 
-    public void apply()
-    {
-      if (noStoreButton.isSelected())
-      {
-        FileChooserService.getInstance().setStoreLocations(locationType, false);
-        FileChooserService.getInstance().setStaticLocation(locationType, null);
-      }
-      else if (lastLocationButton.isSelected())
-      {
-        FileChooserService.getInstance().setStoreLocations(locationType, true);
-        FileChooserService.getInstance().setStaticLocation(locationType, null);
-      }
-      else
-      {
-        FileChooserService.getInstance().setStoreLocations(locationType, false);
-        if (StringUtils.isEmpty(predefinedLocationField.getText(), true))
-        {
-          FileChooserService.getInstance().setStaticLocation(locationType, null);
-        }
-        else
-        {
-          FileChooserService.getInstance().setStaticLocation(locationType, new File(predefinedLocationField.getText()));
+    public void apply() {
+      if ( noStoreButton.isSelected() ) {
+        FileChooserService.getInstance().setStoreLocations( locationType, false );
+        FileChooserService.getInstance().setStaticLocation( locationType, null );
+      } else if ( lastLocationButton.isSelected() ) {
+        FileChooserService.getInstance().setStoreLocations( locationType, true );
+        FileChooserService.getInstance().setStaticLocation( locationType, null );
+      } else {
+        FileChooserService.getInstance().setStoreLocations( locationType, false );
+        if ( StringUtils.isEmpty( predefinedLocationField.getText(), true ) ) {
+          FileChooserService.getInstance().setStaticLocation( locationType, null );
+        } else {
+          FileChooserService.getInstance()
+            .setStaticLocation( locationType, new File( predefinedLocationField.getText() ) );
         }
       }
     }
 
-    public void reset()
-    {
-      final File staticLocation = FileChooserService.getInstance().getStaticLocation(locationType);
-      final boolean storePolicy = FileChooserService.getInstance().isStoreLocations(locationType);
+    public void reset() {
+      final File staticLocation = FileChooserService.getInstance().getStaticLocation( locationType );
+      final boolean storePolicy = FileChooserService.getInstance().isStoreLocations( locationType );
 
-      if (storePolicy == true)
-      {
-        lastLocationButton.setSelected(true);
-        predefinedLocationField.setText(null);
-      }
-      else
-      {
-        if (staticLocation == null)
-        {
-          noStoreButton.setSelected(true);
-          predefinedLocationField.setText(null);
-        }
-        else
-        {
-          predefinedLocationButton.setSelected(true);
-          predefinedLocationField.setText(staticLocation.getAbsolutePath());
+      if ( storePolicy == true ) {
+        lastLocationButton.setSelected( true );
+        predefinedLocationField.setText( null );
+      } else {
+        if ( staticLocation == null ) {
+          noStoreButton.setSelected( true );
+          predefinedLocationField.setText( null );
+        } else {
+          predefinedLocationButton.setSelected( true );
+          predefinedLocationField.setText( staticLocation.getAbsolutePath() );
         }
       }
     }
@@ -247,78 +203,68 @@ public class StorageLocationSettingsPanel extends JPanel implements SettingsPlug
   private LocationPanel[] locationPanels;
   private String[] locationTypes;
 
-  public StorageLocationSettingsPanel()
-  {
-    setLayout(new BorderLayout());
+  public StorageLocationSettingsPanel() {
+    setLayout( new BorderLayout() );
 
-    locationTypes = new String[]{
-        "report", "resources", "mondrian", "kettle", "xmifile", "xls" // NON-NLS
+    locationTypes = new String[] {
+      "report", "resources", "mondrian", "kettle", "xmifile", "xls" // NON-NLS
     };
 
-    locationPanels = new LocationPanel[locationTypes.length];
+    locationPanels = new LocationPanel[ locationTypes.length ];
 
     final JPanel contentPanel = new JPanel();
-    contentPanel.setLayout(new GridBagLayout());
-    for (int i = 0; i < locationTypes.length; i++)
-    {
-      final String locationType = locationTypes[i];
-      locationPanels[i] = new LocationPanel(locationType);
+    contentPanel.setLayout( new GridBagLayout() );
+    for ( int i = 0; i < locationTypes.length; i++ ) {
+      final String locationType = locationTypes[ i ];
+      locationPanels[ i ] = new LocationPanel( locationType );
 
       GridBagConstraints c = new GridBagConstraints();
       c.gridx = 0;
       c.gridy = i;
       c.weightx = 0;
       c.anchor = GridBagConstraints.NORTHWEST;
-      contentPanel.add(new JLabel
-          (SettingsMessages.getInstance().getString("StorageLocationSettingsPanel." + locationType)), c);//NON-NLS
+      contentPanel.add( new JLabel
+        ( SettingsMessages.getInstance().getString( "StorageLocationSettingsPanel." + locationType ) ), c );//NON-NLS
 
       c = new GridBagConstraints();
       c.gridx = 1;
       c.gridy = i;
       c.weightx = 1;
       c.fill = GridBagConstraints.HORIZONTAL;
-      contentPanel.add(locationPanels[i], c);
+      contentPanel.add( locationPanels[ i ], c );
 
     }
-    add(contentPanel, BorderLayout.NORTH);
+    add( contentPanel, BorderLayout.NORTH );
 
     reset();
   }
 
-  public JComponent getComponent()
-  {
+  public JComponent getComponent() {
     return this;
   }
 
-  public Icon getIcon()
-  {
+  public Icon getIcon() {
     return IconLoader.getInstance().getGeneralSettingsIcon32();
   }
 
-  public String getTitle()
-  {
-    return SettingsMessages.getInstance().getString("SettingsDialog.Locations");
+  public String getTitle() {
+    return SettingsMessages.getInstance().getString( "SettingsDialog.Locations" );
   }
 
-  public ValidationResult validate(final ValidationResult result)
-  {
+  public ValidationResult validate( final ValidationResult result ) {
     return result;
   }
 
-  public void apply()
-  {
-    for (int i = 0; i < locationPanels.length; i++)
-    {
-      final LocationPanel locationPanel = locationPanels[i];
+  public void apply() {
+    for ( int i = 0; i < locationPanels.length; i++ ) {
+      final LocationPanel locationPanel = locationPanels[ i ];
       locationPanel.apply();
     }
   }
 
-  public void reset()
-  {
-    for (int i = 0; i < locationPanels.length; i++)
-    {
-      final LocationPanel locationPanel = locationPanels[i];
+  public void reset() {
+    for ( int i = 0; i < locationPanels.length; i++ ) {
+      final LocationPanel locationPanel = locationPanels[ i ];
       locationPanel.reset();
     }
   }

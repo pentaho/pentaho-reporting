@@ -17,29 +17,26 @@
 
 package org.pentaho.reporting.designer.core.util.dnd;
 
+import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-
-import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class ElementMetaDataTransferable implements Transferable
-{
+public class ElementMetaDataTransferable implements Transferable {
   public static final DataFlavor ELEMENT_FLAVOR =
-      new DataFlavor("application/x-pentaho-report-designer;class=" + ElementMetaData.class.getName(), //NON-NLS
-          "ElementMetaData"); //NON-NLS
+    new DataFlavor( "application/x-pentaho-report-designer;class=" + ElementMetaData.class.getName(), //NON-NLS
+      "ElementMetaData" ); //NON-NLS
   private ElementMetaData metaData;
 
-  public ElementMetaDataTransferable(final ElementMetaData metaData)
-  {
-    if (metaData == null)
-    {
+  public ElementMetaDataTransferable( final ElementMetaData metaData ) {
+    if ( metaData == null ) {
       throw new NullPointerException();
     }
     this.metaData = metaData;
@@ -51,9 +48,8 @@ public class ElementMetaDataTransferable implements Transferable
    *
    * @return an array of data flavors in which this data can be transferred
    */
-  public DataFlavor[] getTransferDataFlavors()
-  {
-    return new DataFlavor[]{ELEMENT_FLAVOR};
+  public DataFlavor[] getTransferDataFlavors() {
+    return new DataFlavor[] { ELEMENT_FLAVOR };
   }
 
   /**
@@ -62,9 +58,8 @@ public class ElementMetaDataTransferable implements Transferable
    * @param flavor the requested flavor for the data
    * @return boolean indicating whether or not the data flavor is supported
    */
-  public boolean isDataFlavorSupported(final DataFlavor flavor)
-  {
-    return ELEMENT_FLAVOR.equals(flavor);
+  public boolean isDataFlavorSupported( final DataFlavor flavor ) {
+    return ELEMENT_FLAVOR.equals( flavor );
   }
 
   /**
@@ -76,11 +71,9 @@ public class ElementMetaDataTransferable implements Transferable
    * @throws UnsupportedFlavorException if the requested data flavor is not supported.
    * @see DataFlavor#getRepresentationClass
    */
-  public Object getTransferData(final DataFlavor flavor) throws UnsupportedFlavorException, IOException
-  {
-    if (isDataFlavorSupported(flavor) == false)
-    {
-      throw new UnsupportedFlavorException(flavor);
+  public Object getTransferData( final DataFlavor flavor ) throws UnsupportedFlavorException, IOException {
+    if ( isDataFlavorSupported( flavor ) == false ) {
+      throw new UnsupportedFlavorException( flavor );
     }
 
     return metaData;

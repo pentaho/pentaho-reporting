@@ -17,36 +17,34 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import javax.swing.SwingUtilities;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 
-public final class LoadReportFromRepositoryAction extends AbstractDesignerContextAction
-{
-  public LoadReportFromRepositoryAction()
-  {
-    putValue(Action.NAME, Messages.getInstance().getString("LoadReportFromRepositoryAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, Messages.getInstance().getString("LoadReportFromRepositoryAction.Description"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getOpenIcon());
-    putValue(Action.ACCELERATOR_KEY, Messages.getInstance().getOptionalKeyStroke("LoadReportFromRepositoryAction.Accelerator"));
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public final class LoadReportFromRepositoryAction extends AbstractDesignerContextAction {
+  public LoadReportFromRepositoryAction() {
+    putValue( Action.NAME, Messages.getInstance().getString( "LoadReportFromRepositoryAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION,
+      Messages.getInstance().getString( "LoadReportFromRepositoryAction.Description" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getOpenIcon() );
+    putValue( Action.ACCELERATOR_KEY,
+      Messages.getInstance().getOptionalKeyStroke( "LoadReportFromRepositoryAction.Accelerator" ) );
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
     final OpenFileFromRepositoryTask openFileFromRepositoryTask =
-        new OpenFileFromRepositoryTask(reportDesignerContext, reportDesignerContext.getView().getParent());
+      new OpenFileFromRepositoryTask( reportDesignerContext, reportDesignerContext.getView().getParent() );
     final LoginTask loginTask = new LoginTask
-        (reportDesignerContext, reportDesignerContext.getView().getParent(), openFileFromRepositoryTask);
+      ( reportDesignerContext, reportDesignerContext.getView().getParent(), openFileFromRepositoryTask );
 
-    SwingUtilities.invokeLater(loginTask);
+    SwingUtilities.invokeLater( loginTask );
   }
 }

@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Todo: Document Me
@@ -32,39 +32,34 @@ import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
  * @author Thomas Morgner
  */
 public final class ElementDisplayStyleNamesAction extends AbstractDesignerContextAction
-    implements ToggleStateAction, SettingsListener
-{
-  public ElementDisplayStyleNamesAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("ElementDisplayStyleNamesAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ElementDisplayStyleNamesAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ElementDisplayStyleNamesAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ElementDisplayStyleNamesAction.Accelerator"));
+  implements ToggleStateAction, SettingsListener {
+  public ElementDisplayStyleNamesAction() {
+    putValue( Action.NAME, ActionMessages.getString( "ElementDisplayStyleNamesAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "ElementDisplayStyleNamesAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "ElementDisplayStyleNamesAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY,
+      ActionMessages.getOptionalKeyStroke( "ElementDisplayStyleNamesAction.Accelerator" ) );
 
-    WorkspaceSettings.getInstance().addSettingsListener(this);
+    WorkspaceSettings.getInstance().addSettingsListener( this );
     settingsChanged();
   }
 
-  public boolean isSelected()
-  {
-    return Boolean.TRUE.equals(getValue(Action.SELECTED_KEY));
+  public boolean isSelected() {
+    return Boolean.TRUE.equals( getValue( Action.SELECTED_KEY ) );
   }
 
-  public void setSelected(final boolean selected)
-  {
-    putValue(Action.SELECTED_KEY, selected);
+  public void setSelected( final boolean selected ) {
+    putValue( Action.SELECTED_KEY, selected );
   }
 
-  public void settingsChanged()
-  {
-    putValue(Action.SELECTED_KEY, WorkspaceSettings.getInstance().isElementsDisplayNames());
+  public void settingsChanged() {
+    putValue( Action.SELECTED_KEY, WorkspaceSettings.getInstance().isElementsDisplayNames() );
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     WorkspaceSettings.getInstance().setElementsDisplayNames();
   }
 }

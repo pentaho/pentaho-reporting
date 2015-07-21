@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.xpath.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.xpath.XPathDataFactory;
@@ -28,14 +26,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class XPathDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler
-{
+import java.util.ArrayList;
+
+public class XPathDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler {
   private ConfigReadHandler configReadHandler;
   private ArrayList<XPathQueryReadHandler> queries;
   private XPathDataFactory dataFactory;
 
-  public XPathDataSourceReadHandler()
-  {
+  public XPathDataSourceReadHandler() {
     queries = new ArrayList<XPathQueryReadHandler>();
   }
 
@@ -48,24 +46,20 @@ public class XPathDataSourceReadHandler extends AbstractXmlReadHandler implement
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("config".equals(tagName))
-    {
+    if ( "config".equals( tagName ) ) {
       configReadHandler = new ConfigReadHandler();
       return configReadHandler;
     }
 
-    if ("query".equals(tagName))
-    {
+    if ( "query".equals( tagName ) ) {
       final XPathQueryReadHandler queryReadHandler = new XPathQueryReadHandler();
-      queries.add(queryReadHandler);
+      queries.add( queryReadHandler );
       return queryReadHandler;
     }
 
@@ -77,19 +71,16 @@ public class XPathDataSourceReadHandler extends AbstractXmlReadHandler implement
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final XPathDataFactory srdf = new XPathDataFactory();
-    if (configReadHandler == null)
-    {
-      throw new ParseException("Required element 'config' is missing.", getLocator());
+    if ( configReadHandler == null ) {
+      throw new ParseException( "Required element 'config' is missing.", getLocator() );
     }
 
-    srdf.setXqueryDataFile(configReadHandler.getSourceFile());
-    for (int i = 0; i < queries.size(); i++)
-    {
-      final XPathQueryReadHandler handler = queries.get(i);
-      srdf.setQuery(handler.getName(), handler.getResult(), handler.isLegacyMode());
+    srdf.setXqueryDataFile( configReadHandler.getSourceFile() );
+    for ( int i = 0; i < queries.size(); i++ ) {
+      final XPathQueryReadHandler handler = queries.get( i );
+      srdf.setQuery( handler.getName(), handler.getResult(), handler.isLegacyMode() );
     }
     dataFactory = srdf;
   }
@@ -100,13 +91,11 @@ public class XPathDataSourceReadHandler extends AbstractXmlReadHandler implement
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.designer.layout;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
@@ -33,38 +31,35 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class BandLayouterTest extends TestCase
-{
-  public BandLayouterTest()
-  {
+import java.net.URL;
+
+public class BandLayouterTest extends TestCase {
+  public BandLayouterTest() {
   }
 
-  public BandLayouterTest(final String name)
-  {
-    super(name);
+  public BandLayouterTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
     ReportDesignerBoot.getInstance().start();
   }
 
   public void testPrd2054() throws
-      ResourceException, ReportProcessingException, ContentProcessingException
-  {
-    final URL url = getClass().getResource("Prd-2054.prpt");
-    assertNotNull(url);
+    ResourceException, ReportProcessingException, ContentProcessingException {
+    final URL url = getClass().getResource( "Prd-2054.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    ReportRenderContext rcontext = new ReportRenderContext(report, report, null, new GlobalAuthenticationStore());
-    final ReportLayouter layouter = new ReportLayouter(rcontext);
+    ReportRenderContext rcontext = new ReportRenderContext( report, report, null, new GlobalAuthenticationStore() );
+    final ReportLayouter layouter = new ReportLayouter( rcontext );
     final LogicalPageBox logicalPageBox = layouter.layout();
 
-    assertEquals(2000000, logicalPageBox.getHeight());
+    assertEquals( 2000000, logicalPageBox.getHeight() );
   }
 
 }

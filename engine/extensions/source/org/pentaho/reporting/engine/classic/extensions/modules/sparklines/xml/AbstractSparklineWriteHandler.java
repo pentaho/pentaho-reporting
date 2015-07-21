@@ -20,10 +20,8 @@ package org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.AbstractElementWriteHandler;
 
 @Deprecated
-public abstract class AbstractSparklineWriteHandler extends AbstractElementWriteHandler
-{
-  protected AbstractSparklineWriteHandler()
-  {
+public abstract class AbstractSparklineWriteHandler extends AbstractElementWriteHandler {
+  protected AbstractSparklineWriteHandler() {
   }
 
 

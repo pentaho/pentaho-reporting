@@ -17,17 +17,15 @@
 
 package org.pentaho.reporting.designer.core.util.table;
 
-import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 
-public class StringValueCellEditor extends AbstractStringValueCellEditor implements TableCellEditor
-{
-  public StringValueCellEditor()
-  {
+import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableModel;
+import java.awt.*;
+
+public class StringValueCellEditor extends AbstractStringValueCellEditor implements TableCellEditor {
+  public StringValueCellEditor() {
   }
 
   /**
@@ -46,38 +44,31 @@ public class StringValueCellEditor extends AbstractStringValueCellEditor impleme
    * @param column     the column of the cell being edited
    * @return the component for editing
    */
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
     removeAll();
 
     final TableModel tableModel = table.getModel();
     final ReportRenderContext reportContext = getReportContext();
     final String valueRole;
     final String[] extraFields;
-    if (reportContext != null)
-    {
-      if (tableModel instanceof ElementMetaDataTableModel)
-      {
+    if ( reportContext != null ) {
+      if ( tableModel instanceof ElementMetaDataTableModel ) {
         final ElementMetaDataTableModel metaDataTableModel = (ElementMetaDataTableModel) tableModel;
-        valueRole = metaDataTableModel.getValueRole(row, column);
-        extraFields = metaDataTableModel.getExtraFields(row, column);
-      }
-      else
-      {
+        valueRole = metaDataTableModel.getValueRole( row, column );
+        extraFields = metaDataTableModel.getExtraFields( row, column );
+      } else {
         valueRole = getValueRole();
         extraFields = EMPTY_EXTRA_FIELDS;
       }
-    }
-    else
-    {
+    } else {
       valueRole = null;
       extraFields = getExtraFields();
     }
-    return create(valueRole, extraFields, value);
+    return create( valueRole, extraFields, value );
   }
 
 }

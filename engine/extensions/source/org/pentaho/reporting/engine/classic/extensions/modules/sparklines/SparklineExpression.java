@@ -17,17 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.filter.types.ElementTypeUtils;
 import org.pentaho.reporting.engine.classic.core.function.ColumnAggregationExpression;
 import org.pentaho.reporting.libraries.libsparklines.BarGraphDrawable;
 import org.pentaho.reporting.libraries.libsparklines.LineGraphDrawable;
 import org.pentaho.reporting.libraries.libsparklines.PieGraphDrawable;
 
-public class SparklineExpression extends ColumnAggregationExpression
-{
+import java.awt.*;
+import java.util.ArrayList;
+
+public class SparklineExpression extends ColumnAggregationExpression {
   public static final Color DEFAULT_COLOR = Color.GRAY;
   public static final Color DEFAULT_HIGH_COLOR = Color.BLACK;
   public static final Color DEFAULT_MEDIUM_COLOR = Color.YELLOW;
@@ -50,8 +49,7 @@ public class SparklineExpression extends ColumnAggregationExpression
 
   private String rawDataField;
 
-  public SparklineExpression()
-  {
+  public SparklineExpression() {
     spacing = 2;
     color = DEFAULT_COLOR;
     highColor = DEFAULT_HIGH_COLOR;
@@ -61,8 +59,7 @@ public class SparklineExpression extends ColumnAggregationExpression
     type = "bar";
   }
 
-  public String getType()
-  {
+  public String getType() {
     return type;
   }
 
@@ -71,38 +68,31 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param type
    */
-  public void setType(final String type)
-  {
+  public void setType( final String type ) {
     this.type = type;
   }
 
-  public String getRawDataField()
-  {
+  public String getRawDataField() {
     return rawDataField;
   }
 
-  public void setRawDataField(final String rawDataField)
-  {
+  public void setRawDataField( final String rawDataField ) {
     this.rawDataField = rawDataField;
   }
 
-  public Color getColor()
-  {
+  public Color getColor() {
     return color;
   }
 
-  public void setColor(final Color color)
-  {
+  public void setColor( final Color color ) {
     this.color = color;
   }
 
-  public Color getBackgroundColor()
-  {
+  public Color getBackgroundColor() {
     return backgroundColor;
   }
 
-  public void setBackgroundColor(final Color backgroundColor)
-  {
+  public void setBackgroundColor( final Color backgroundColor ) {
     this.backgroundColor = backgroundColor;
   }
 
@@ -111,8 +101,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The High bar/slice color.
    */
-  public Color getHighColor()
-  {
+  public Color getHighColor() {
     return highColor;
   }
 
@@ -121,8 +110,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param highColor The color to use.
    */
-  public void setHighColor(final Color highColor)
-  {
+  public void setHighColor( final Color highColor ) {
     this.highColor = highColor;
   }
 
@@ -131,8 +119,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The last bar color
    */
-  public Color getLastColor()
-  {
+  public Color getLastColor() {
     return lastColor;
   }
 
@@ -141,8 +128,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param lastColor The color to use.
    */
-  public void setLastColor(final Color lastColor)
-  {
+  public void setLastColor( final Color lastColor ) {
     this.lastColor = lastColor;
   }
 
@@ -151,8 +137,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The Medium color.
    */
-  public Color getMediumColor()
-  {
+  public Color getMediumColor() {
     return mediumColor;
   }
 
@@ -161,8 +146,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param mediumColor The color to use.
    */
-  public void setMediumColor(Color mediumColor)
-  {
+  public void setMediumColor( Color mediumColor ) {
     this.mediumColor = mediumColor;
   }
 
@@ -171,8 +155,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The Low color.
    */
-  public Color getLowColor()
-  {
+  public Color getLowColor() {
     return lowColor;
   }
 
@@ -181,8 +164,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param lowColor The color to use.
    */
-  public void setLowColor(Color lowColor)
-  {
+  public void setLowColor( Color lowColor ) {
     this.lowColor = lowColor;
   }
 
@@ -191,8 +173,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The slice percentage
    */
-  public Double getHighSlice()
-  {
+  public Double getHighSlice() {
     return highSlice;
   }
 
@@ -201,8 +182,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param highSlice The begin in percentage.
    */
-  public void setHighSlice(Double highSlice)
-  {
+  public void setHighSlice( Double highSlice ) {
     this.highSlice = highSlice;
   }
 
@@ -211,8 +191,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The slice percentage
    */
-  public Double getMediumSlice()
-  {
+  public Double getMediumSlice() {
     return mediumSlice;
   }
 
@@ -221,8 +200,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param mediumSlice The begin in percentage.
    */
-  public void setMediumSlice(Double mediumSlice)
-  {
+  public void setMediumSlice( Double mediumSlice ) {
     this.mediumSlice = mediumSlice;
   }
 
@@ -231,8 +209,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The slice percentage
    */
-  public Double getLowSlice()
-  {
+  public Double getLowSlice() {
     return lowSlice;
   }
 
@@ -241,8 +218,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param lowSlice The begin in percentage.
    */
-  public void setLowSlice(Double lowSlice)
-  {
+  public void setLowSlice( Double lowSlice ) {
     this.lowSlice = lowSlice;
   }
 
@@ -251,8 +227,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return true if counter clockwise or false.
    */
-  public boolean isCounterClockWise()
-  {
+  public boolean isCounterClockWise() {
     return counterClockWise;
   }
 
@@ -261,8 +236,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param counterClockWise The new clockwise value.
    */
-  public void setCounterClockWise(boolean counterClockWise)
-  {
+  public void setCounterClockWise( boolean counterClockWise ) {
     this.counterClockWise = counterClockWise;
   }
 
@@ -271,8 +245,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The angle in degrees.
    */
-  public int getStartAngle()
-  {
+  public int getStartAngle() {
     return startAngle;
   }
 
@@ -281,8 +254,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param startAngle The new angle in degrees.
    */
-  public void setStartAngle(int startAngle)
-  {
+  public void setStartAngle( int startAngle ) {
     this.startAngle = startAngle;
   }
 
@@ -291,8 +263,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return The spacing.
    */
-  public int getSpacing()
-  {
+  public int getSpacing() {
     return spacing;
   }
 
@@ -301,8 +272,7 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @param spacing The new spacing value to use.
    */
-  public void setSpacing(final int spacing)
-  {
+  public void setSpacing( final int spacing ) {
     this.spacing = spacing;
   }
 
@@ -313,55 +283,45 @@ public class SparklineExpression extends ColumnAggregationExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Number[] data = getData();
-    if ("line".equals(type))
-    {
+    if ( "line".equals( type ) ) {
       final LineGraphDrawable drawable = new LineGraphDrawable();
-      drawable.setBackground(backgroundColor);
-      drawable.setColor(color);
-      drawable.setSpacing(spacing);
-      drawable.setData(data);
+      drawable.setBackground( backgroundColor );
+      drawable.setColor( color );
+      drawable.setSpacing( spacing );
+      drawable.setData( data );
       return drawable;
-    }
-    else if ("bar".equals(type))
-    {
+    } else if ( "bar".equals( type ) ) {
       final BarGraphDrawable drawable = new BarGraphDrawable();
-      drawable.setBackground(backgroundColor);
-      drawable.setColor(color);
-      drawable.setHighColor(highColor);
-      drawable.setLastColor(lastColor);
-      drawable.setData(data);
-      drawable.setSpacing(spacing);
+      drawable.setBackground( backgroundColor );
+      drawable.setColor( color );
+      drawable.setHighColor( highColor );
+      drawable.setLastColor( lastColor );
+      drawable.setData( data );
+      drawable.setSpacing( spacing );
       return drawable;
-    }
-    else if ("pie".equals(type))
-    {
+    } else if ( "pie".equals( type ) ) {
       final PieGraphDrawable drawable = new PieGraphDrawable();
-      if (data.length < 1)
-      {
+      if ( data.length < 1 ) {
         return null;
       }
-      drawable.setValue(data[0]);
-      drawable.setColor(color);
-      drawable.setBackground(backgroundColor);
-      drawable.setLowColor(lowColor);
-      drawable.setHighColor(highColor);
-      drawable.setMediumColor(mediumColor);
-      drawable.setCounterClockWise(counterClockWise);
-      drawable.setStartAngle(startAngle);
-      if (lowSlice != null)
-      {
-        drawable.setLowSlice(lowSlice);
+      drawable.setValue( data[ 0 ] );
+      drawable.setColor( color );
+      drawable.setBackground( backgroundColor );
+      drawable.setLowColor( lowColor );
+      drawable.setHighColor( highColor );
+      drawable.setMediumColor( mediumColor );
+      drawable.setCounterClockWise( counterClockWise );
+      drawable.setStartAngle( startAngle );
+      if ( lowSlice != null ) {
+        drawable.setLowSlice( lowSlice );
       }
-      if (mediumSlice != null)
-      {
-        drawable.setMediumSlice(mediumSlice);
+      if ( mediumSlice != null ) {
+        drawable.setMediumSlice( mediumSlice );
       }
-      if (highSlice != null)
-      {
-        drawable.setHighSlice(highSlice);
+      if ( highSlice != null ) {
+        drawable.setHighSlice( highSlice );
       }
 
       return drawable;
@@ -369,15 +329,12 @@ public class SparklineExpression extends ColumnAggregationExpression
     return null;
   }
 
-  protected Number[] getData()
-  {
+  protected Number[] getData() {
 
-    if (rawDataField != null)
-    {
-      final Object o = getDataRow().get(rawDataField);
-      final Number[] retval = ElementTypeUtils.getData(o);
-      if (retval != null)
-      {
+    if ( rawDataField != null ) {
+      final Object o = getDataRow().get( rawDataField );
+      final Number[] retval = ElementTypeUtils.getData( o );
+      if ( retval != null ) {
         return retval;
       }
     }
@@ -385,16 +342,14 @@ public class SparklineExpression extends ColumnAggregationExpression
     final ArrayList numbers = new ArrayList();
 
     final Object[] values = getFieldValues();
-    for (int i = 0; i < values.length; i++)
-    {
-      final Object value = values[i];
-      if (value instanceof Number)
-      {
+    for ( int i = 0; i < values.length; i++ ) {
+      final Object value = values[ i ];
+      if ( value instanceof Number ) {
         final Number n = (Number) value;
-        numbers.add(n);
+        numbers.add( n );
       }
     }
-    return (Number[]) numbers.toArray(new Number[numbers.size()]);
+    return (Number[]) numbers.toArray( new Number[ numbers.size() ] );
   }
 
 }

@@ -17,67 +17,56 @@
 
 package org.pentaho.reporting.designer.core.util.table;
 
-import java.awt.Component;
-import java.util.EventObject;
-import javax.swing.AbstractCellEditor;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.util.EventObject;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class GroupingHeaderCellEditor extends AbstractCellEditor implements TableCellEditor
-{
+public class GroupingHeaderCellEditor extends AbstractCellEditor implements TableCellEditor {
   private GroupingHeaderCellRenderer renderer;
   private GroupingHeader header;
 
-  public GroupingHeaderCellEditor()
-  {
+  public GroupingHeaderCellEditor() {
     renderer = new GroupingHeaderCellRenderer();
-    renderer.setRequestFocusEnabled(false);
+    renderer.setRequestFocusEnabled( false );
   }
 
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
     this.header = (GroupingHeader) value;
     final Component rendererComponent =
-        renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
-    SwingUtilities.invokeLater(new AutoInvokeRunnable(header));
+      renderer.getTableCellRendererComponent( table, value, isSelected, true, row, column );
+    SwingUtilities.invokeLater( new AutoInvokeRunnable( header ) );
     return rendererComponent;
   }
 
-  public Object getCellEditorValue()
-  {
+  public Object getCellEditorValue() {
     return header;
   }
 
-  public boolean shouldSelectCell(final EventObject anEvent)
-  {
+  public boolean shouldSelectCell( final EventObject anEvent ) {
     return true;
   }
 
 
-  private class AutoInvokeRunnable implements Runnable
-  {
+  private class AutoInvokeRunnable implements Runnable {
     private GroupingHeader header;
 
-    private AutoInvokeRunnable(final GroupingHeader header)
-    {
+    private AutoInvokeRunnable( final GroupingHeader header ) {
       this.header = header;
     }
 
-    public void run()
-    {
-      if (header != null)
-      {
-        this.header.setCollapsed(this.header.isCollapsed() == false);
+    public void run() {
+      if ( header != null ) {
+        this.header.setCollapsed( this.header.isCollapsed() == false );
         fireEditingStopped();
       }
     }

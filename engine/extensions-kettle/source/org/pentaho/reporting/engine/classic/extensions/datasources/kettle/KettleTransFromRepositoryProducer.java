@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import java.util.ArrayList;
-
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.repository.RepositoryDirectoryInterface;
@@ -27,35 +25,33 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.util.ArrayList;
+
 /**
- * This class requires access to the system-properties and the local filesystem. I do not believe
- * that this code can be safely executed under a restrictive security manager rule.
+ * This class requires access to the system-properties and the local filesystem. I do not believe that this code can be
+ * safely executed under a restrictive security manager rule.
  *
  * @author Thomas Morgner
  */
-public class KettleTransFromRepositoryProducer extends AbstractKettleTransformationProducer
-{
+public class KettleTransFromRepositoryProducer extends AbstractKettleTransformationProducer {
   private static final long serialVersionUID = -2029785159214228120L;
-  
+
   private String directoryName;
   private String transformationName;
 
-  public KettleTransFromRepositoryProducer(final String repositoryName,
-                                           final String directoryName,
-                                           final String transformationName,
-                                           final String stepName,
-                                           final String username,
-                                           final String password,
-                                           final FormulaArgument[] definedArgumentNames,
-                                           final FormulaParameter[] definedVariableNames)
-  {
-    super(repositoryName, stepName, username, password, definedArgumentNames, definedVariableNames);
-    if (directoryName == null)
-    {
+  public KettleTransFromRepositoryProducer( final String repositoryName,
+                                            final String directoryName,
+                                            final String transformationName,
+                                            final String stepName,
+                                            final String username,
+                                            final String password,
+                                            final FormulaArgument[] definedArgumentNames,
+                                            final FormulaParameter[] definedVariableNames ) {
+    super( repositoryName, stepName, username, password, definedArgumentNames, definedVariableNames );
+    if ( directoryName == null ) {
       throw new NullPointerException();
     }
-    if (transformationName == null)
-    {
+    if ( transformationName == null ) {
       throw new NullPointerException();
     }
 
@@ -63,35 +59,31 @@ public class KettleTransFromRepositoryProducer extends AbstractKettleTransformat
     this.transformationName = transformationName;
   }
 
-  public String getDirectoryName()
-  {
+  public String getDirectoryName() {
     return directoryName;
   }
 
-  public String getTransformationName()
-  {
+  public String getTransformationName() {
     return transformationName;
   }
 
-  protected TransMeta loadTransformation(final Repository repository,
-                                         final ResourceManager resourceManager,
-                                         final ResourceKey contextKey)
-      throws ReportDataFactoryException, KettleException
-  {
+  protected TransMeta loadTransformation( final Repository repository,
+                                          final ResourceManager resourceManager,
+                                          final ResourceKey contextKey )
+    throws ReportDataFactoryException, KettleException {
     // Find the directory specified.
-    final RepositoryDirectoryInterface repositoryDirectory = repository.loadRepositoryDirectoryTree().findDirectory(directoryName);
-    if (repositoryDirectory == null)
-    {
-      throw new ReportDataFactoryException("No such directory in repository: " + directoryName);
+    final RepositoryDirectoryInterface repositoryDirectory =
+      repository.loadRepositoryDirectoryTree().findDirectory( directoryName );
+    if ( repositoryDirectory == null ) {
+      throw new ReportDataFactoryException( "No such directory in repository: " + directoryName );
     }
-    return repository.loadTransformation(transformationName, repositoryDirectory, null, true, null);
+    return repository.loadTransformation( transformationName, repositoryDirectory, null, true, null );
   }
 
-  public Object getQueryHash(final ResourceManager resourceManager, final ResourceKey resourceKey)
-  {
+  public Object getQueryHash( final ResourceManager resourceManager, final ResourceKey resourceKey ) {
     final ArrayList<Object> retval = internalGetQueryHash();
-    retval.add(getDirectoryName());
-    retval.add(getTransformationName());
+    retval.add( getDirectoryName() );
+    retval.add( getTransformationName() );
     return retval;
   }
 

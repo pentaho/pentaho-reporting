@@ -43,13 +43,11 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class SparklineModule extends AbstractModule
-{
+public class SparklineModule extends AbstractModule {
   // Extensions share the same namespace for the XML-Element itself and the Attributes for the sake of simplicity.
   public static final String NAMESPACE = SparklineAttributeNames.NAMESPACE;
 
-  public SparklineModule() throws ModuleInitializeException
-  {
+  public SparklineModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -61,36 +59,31 @@ public class SparklineModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    try
-    {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(getClass());
-      Class.forName("org.pentaho.reporting.libraries.libsparklines.BarGraphDrawable", false, loader);
-    }
-    catch (Exception e)
-    {
-      throw new ModuleInitializeException("Unable to load the Sparkline library class.");
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    try {
+      final ClassLoader loader = ObjectUtilities.getClassLoader( getClass() );
+      Class.forName( "org.pentaho.reporting.libraries.libsparklines.BarGraphDrawable", false, loader );
+    } catch ( Exception e ) {
+      throw new ModuleInitializeException( "Unable to load the Sparkline library class." );
     }
 
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(NAMESPACE, "sparkline");
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( NAMESPACE, "sparkline" );
     ElementMetaDataParser.initializeOptionalElementMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/modules/sparklines/meta-elements.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/modules/sparklines/meta-elements.xml" );
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/modules/sparklines/meta-expressions.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/modules/sparklines/meta-expressions.xml" );
 
-    BundleElementRegistry.getInstance().registerGenericElement(LineSparklineType.INSTANCE);
-    BundleElementRegistry.getInstance().registerGenericElement(BarSparklineType.INSTANCE);
-    BundleElementRegistry.getInstance().registerGenericElement(PieSparklineType.INSTANCE);
+    BundleElementRegistry.getInstance().registerGenericElement( LineSparklineType.INSTANCE );
+    BundleElementRegistry.getInstance().registerGenericElement( BarSparklineType.INSTANCE );
+    BundleElementRegistry.getInstance().registerGenericElement( PieSparklineType.INSTANCE );
     // legacy element handling
-    BundleElementRegistry.getInstance().register(NAMESPACE, "line-spark", LineSparklineElementReadHandler.class);
-    BundleElementRegistry.getInstance().register(NAMESPACE, "pie-spark", PieSparklineElementReadHandler.class);
-    BundleElementRegistry.getInstance().register(NAMESPACE, "bar-spark", BarSparklineElementReadHandler.class);
-    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
+    BundleElementRegistry.getInstance().register( NAMESPACE, "line-spark", LineSparklineElementReadHandler.class );
+    BundleElementRegistry.getInstance().register( NAMESPACE, "pie-spark", PieSparklineElementReadHandler.class );
+    BundleElementRegistry.getInstance().register( NAMESPACE, "bar-spark", BarSparklineElementReadHandler.class );
+    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData( NAMESPACE, false );
 
-    BundleStyleRegistry.getInstance().register(SparklineStyleSetWriteHandler.class);
-    BundleStyleRegistry.getInstance().register(NAMESPACE, "spark-styles", SparklineStylesReadHandler.class);
-
+    BundleStyleRegistry.getInstance().register( SparklineStyleSetWriteHandler.class );
+    BundleStyleRegistry.getInstance().register( NAMESPACE, "spark-styles", SparklineStylesReadHandler.class );
 
 
   }

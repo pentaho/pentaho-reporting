@@ -26,24 +26,23 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class CdaModule extends AbstractModule
-{
+public class CdaModule extends AbstractModule {
   public static final String NAMESPACE = "http://jfreereport.sourceforge.net/namespaces/datasources/cda";
-  public static final String TAG_DEF_PREFIX = "org.pentaho.reporting.engine.classic.extensions.datasources.cda.tag-def.";
+  public static final String TAG_DEF_PREFIX =
+    "org.pentaho.reporting.engine.classic.extensions.datasources.cda.tag-def.";
 
-  public CdaModule() throws ModuleInitializeException
-  {
+  public CdaModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    DataFactoryXmlResourceFactory.register(CdaDataSourceXmlFactoryModule.class);
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    DataFactoryXmlResourceFactory.register( CdaDataSourceXmlFactoryModule.class );
 
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "cda-datasource", CdaDataSourceReadHandler.class);
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "cda-datasource", CdaDataSourceReadHandler.class );
 
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/datasources/cda/meta-datafactory.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/datasources/cda/meta-datafactory.xml" );
 
   }
 }

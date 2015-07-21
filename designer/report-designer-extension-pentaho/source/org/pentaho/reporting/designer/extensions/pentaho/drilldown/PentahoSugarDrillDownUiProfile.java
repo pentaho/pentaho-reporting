@@ -21,22 +21,19 @@ import org.pentaho.reporting.designer.core.editor.drilldown.basic.XulDrillDownUi
 import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfile;
 import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfileMetaData;
 
-public class PentahoSugarDrillDownUiProfile extends XulDrillDownUiProfile
-{
-  public PentahoSugarDrillDownUiProfile()
-  {
-    final DrillDownProfile[] profiles = DrillDownProfileMetaData.getInstance().getDrillDownProfileByGroup("pentaho-sugar");
-    final String[] profileNames = new String[profiles.length];
-    for (int i = 0; i < profileNames.length; i++)
-    {
-      profileNames[i] = profiles[i].getName();
+public class PentahoSugarDrillDownUiProfile extends XulDrillDownUiProfile {
+  public PentahoSugarDrillDownUiProfile() {
+    final DrillDownProfile[] profiles =
+      DrillDownProfileMetaData.getInstance().getDrillDownProfileByGroup( "pentaho-sugar" );
+    final String[] profileNames = new String[ profiles.length ];
+    for ( int i = 0; i < profileNames.length; i++ ) {
+      profileNames[ i ] = profiles[ i ].getName();
     }
 
-    init(profileNames);
+    init( profileNames );
   }
 
-  public int getOrderKey()
-  {
+  public int getOrderKey() {
     return 3000;
   }
 }

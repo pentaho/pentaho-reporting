@@ -17,63 +17,50 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.groups.EditGroupsDialog;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-public class EditGroupsAction extends AbstractReportContextAction
-{
-  public EditGroupsAction()
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class EditGroupsAction extends AbstractReportContextAction {
+  public EditGroupsAction() {
     super();
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getGenericSquare());
-    putValue(Action.NAME, ActionMessages.getString("EditGroupsAction.Text"));
-    putValue(Action.DEFAULT, ActionMessages.getString("EditGroupsAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditGroupsAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditGroupsAction.Accelerator"));
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getGenericSquare() );
+    putValue( Action.NAME, ActionMessages.getString( "EditGroupsAction.Text" ) );
+    putValue( Action.DEFAULT, ActionMessages.getString( "EditGroupsAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "EditGroupsAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "EditGroupsAction.Accelerator" ) );
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       return;
     }
 
     final ReportDesignerContext context = getReportDesignerContext();
     final Component parent = context.getView().getParent();
-    final Window window = LibSwingUtil.getWindowAncestor(parent);
+    final Window window = LibSwingUtil.getWindowAncestor( parent );
     final EditGroupsDialog dialog;
-    if (window instanceof JDialog)
-    {
-      dialog = new EditGroupsDialog((JDialog) window);
-    }
-    else if (window instanceof JFrame)
-    {
-      dialog = new EditGroupsDialog((JFrame) window);
-    }
-    else
-    {
+    if ( window instanceof JDialog ) {
+      dialog = new EditGroupsDialog( (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      dialog = new EditGroupsDialog( (JFrame) window );
+    } else {
       dialog = new EditGroupsDialog();
     }
 
 
-    dialog.editGroups(activeContext);
+    dialog.editGroups( activeContext );
   }
 }

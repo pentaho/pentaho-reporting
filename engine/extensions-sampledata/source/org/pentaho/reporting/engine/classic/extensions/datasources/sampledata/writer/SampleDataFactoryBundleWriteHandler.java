@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.sampledata.writer;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleDataFactoryWriterHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
@@ -34,15 +30,17 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 /**
  * Creation-Date: Jan 19, 2007, 4:44:05 PM
  *
  * @author Thomas Morgner
  */
-public class SampleDataFactoryBundleWriteHandler implements BundleDataFactoryWriterHandler
-{
-  public SampleDataFactoryBundleWriteHandler()
-  {
+public class SampleDataFactoryBundleWriteHandler implements BundleDataFactoryWriterHandler {
+  public SampleDataFactoryBundleWriteHandler() {
   }
 
   /**
@@ -57,40 +55,38 @@ public class SampleDataFactoryBundleWriteHandler implements BundleDataFactoryWri
    * @throws IOException           if any error occured
    * @throws BundleWriterException if a bundle-management error occured.
    */
-  public String writeDataFactory(final WriteableDocumentBundle bundle,
-                                 final DataFactory dataFactory,
-                                 final BundleWriterState state)
-      throws IOException, BundleWriterException
-  {
-    final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(), "datasources/sample-ds{0}.xml");
-    if (fileName == null)
-    {
-      throw new IOException("Unable to generate unique name for Inline-Data-Source");
+  public String writeDataFactory( final WriteableDocumentBundle bundle,
+                                  final DataFactory dataFactory,
+                                  final BundleWriterState state )
+    throws IOException, BundleWriterException {
+    final String fileName =
+      BundleUtilities.getUniqueName( bundle, state.getFileName(), "datasources/sample-ds{0}.xml" );
+    if ( fileName == null ) {
+      throw new IOException( "Unable to generate unique name for Inline-Data-Source" );
     }
 
-    final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
+    final OutputStream outputStream = bundle.createEntry( fileName, "text/xml" );
     final DefaultTagDescription tagDescription = new DefaultTagDescription();
-    tagDescription.setDefaultNamespace(SampleDataModule.NAMESPACE);
-    tagDescription.setNamespaceHasCData(SampleDataModule.NAMESPACE, false);
-    tagDescription.setElementHasCData(SampleDataModule.NAMESPACE, "query", true);
+    tagDescription.setDefaultNamespace( SampleDataModule.NAMESPACE );
+    tagDescription.setNamespaceHasCData( SampleDataModule.NAMESPACE, false );
+    tagDescription.setElementHasCData( SampleDataModule.NAMESPACE, "query", true );
 
-    final XmlWriter xmlWriter = new XmlWriter(new OutputStreamWriter(outputStream, "UTF-8"), tagDescription, "  ",
-        "\n");
+    final XmlWriter xmlWriter = new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ",
+      "\n" );
 
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", SampleDataModule.NAMESPACE);
+    rootAttrs.addNamespaceDeclaration( "data", SampleDataModule.NAMESPACE );
 
-    xmlWriter.writeTag(SampleDataModule.NAMESPACE, "sample-datasource", rootAttrs, XmlWriter.OPEN);
+    xmlWriter.writeTag( SampleDataModule.NAMESPACE, "sample-datasource", rootAttrs, XmlWriter.OPEN );
 
     final SampleDataFactory pmdDataFactory = (SampleDataFactory) dataFactory;
 
     final String[] queryNames = pmdDataFactory.getQueryNames();
-    for (int i = 0; i < queryNames.length; i++)
-    {
-      final String queryName = queryNames[i];
-      final String query = pmdDataFactory.getQuery(queryName);
-      xmlWriter.writeTag(SampleDataModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN);
-      xmlWriter.writeTextNormalized(query, false);
+    for ( int i = 0; i < queryNames.length; i++ ) {
+      final String queryName = queryNames[ i ];
+      final String query = pmdDataFactory.getQuery( queryName );
+      xmlWriter.writeTag( SampleDataModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN );
+      xmlWriter.writeTextNormalized( query, false );
       xmlWriter.writeCloseTag();
     }
     xmlWriter.writeCloseTag();

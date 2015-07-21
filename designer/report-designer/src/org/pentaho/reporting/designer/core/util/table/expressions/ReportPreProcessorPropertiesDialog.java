@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util.table.expressions;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTable;
@@ -32,10 +24,11 @@ import org.pentaho.reporting.designer.core.util.table.SortHeaderPanel;
 import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
-public class ReportPreProcessorPropertiesDialog extends CommonDialog
-{
-  private static class ReportPreProcessorPropertiesEditorPanel extends JPanel
-  {
+import javax.swing.*;
+import java.awt.*;
+
+public class ReportPreProcessorPropertiesDialog extends CommonDialog {
+  private static class ReportPreProcessorPropertiesEditorPanel extends JPanel {
     private ReportPreProcessorPropertiesTableModel dataModel;
     private ElementMetaDataTable table;
     private SortHeaderPanel headerPanel;
@@ -43,61 +36,51 @@ public class ReportPreProcessorPropertiesDialog extends CommonDialog
     /**
      * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
      */
-    public ReportPreProcessorPropertiesEditorPanel()
-    {
-      setLayout(new BorderLayout());
+    public ReportPreProcessorPropertiesEditorPanel() {
+      setLayout( new BorderLayout() );
 
       dataModel = new ReportPreProcessorPropertiesTableModel();
 
       table = new ElementMetaDataTable();
-      table.setModel(dataModel);
+      table.setModel( dataModel );
 
-      headerPanel = new SortHeaderPanel(dataModel);
+      headerPanel = new SortHeaderPanel( dataModel );
 
-      add(headerPanel, BorderLayout.NORTH);
-      add(new JScrollPane(table), BorderLayout.CENTER);
+      add( headerPanel, BorderLayout.NORTH );
+      add( new JScrollPane( table ), BorderLayout.CENTER );
     }
 
-    public ReportPreProcessor getData()
-    {
+    public ReportPreProcessor getData() {
       return dataModel.getData();
     }
 
-    public void setData(final ReportPreProcessor elements)
-    {
-      dataModel.setData(elements);
+    public void setData( final ReportPreProcessor elements ) {
+      dataModel.setData( elements );
     }
 
-    protected void updateDesignerContext(final ReportDesignerContext newContext)
-    {
-      table.setReportDesignerContext(newContext);
+    protected void updateDesignerContext( final ReportDesignerContext newContext ) {
+      table.setReportDesignerContext( newContext );
     }
 
-    protected void updateSelection(final ReportPreProcessor model)
-    {
-      if (model == null)
-      {
-        dataModel.setData(null);
-      }
-      else
-      {
-        dataModel.setData(model);
+    protected void updateSelection( final ReportPreProcessor model ) {
+      if ( model == null ) {
+        dataModel.setData( null );
+      } else {
+        dataModel.setData( model );
       }
     }
 
-    protected void updateActiveContext(final ReportRenderContext newContext)
-    {
-      if (newContext == null)
-      {
-        dataModel.setData(null);
+    protected void updateActiveContext( final ReportRenderContext newContext ) {
+      if ( newContext == null ) {
+        dataModel.setData( null );
       }
     }
 
     /**
      * Sets whether or not this component is enabled. A component that is enabled may respond to user input, while a
-     * component that is not enabled cannot respond to user input.  Some components may alter their visual representation
-     * when they are disabled in order to provide feedback to the user that they cannot take input. <p>Note: Disabling a
-     * component does not disable it's children.
+     * component that is not enabled cannot respond to user input.  Some components may alter their visual
+     * representation when they are disabled in order to provide feedback to the user that they cannot take input.
+     * <p>Note: Disabling a component does not disable it's children.
      * <p/>
      * <p>Note: Disabling a lightweight component does not prevent it from receiving MouseEvents.
      *
@@ -105,11 +88,10 @@ public class ReportPreProcessorPropertiesDialog extends CommonDialog
      * @see java.awt.Component#isEnabled
      * @see java.awt.Component#isLightweight
      */
-    public void setEnabled(final boolean enabled)
-    {
-      super.setEnabled(enabled);
-      table.setEnabled(enabled);
-      headerPanel.setEnabled(enabled);
+    public void setEnabled( final boolean enabled ) {
+      super.setEnabled( enabled );
+      table.setEnabled( enabled );
+      headerPanel.setEnabled( enabled );
     }
   }
 
@@ -127,8 +109,7 @@ public class ReportPreProcessorPropertiesDialog extends CommonDialog
    * @see javax.swing.JComponent#getDefaultLocale
    */
   public ReportPreProcessorPropertiesDialog()
-      throws HeadlessException
-  {
+    throws HeadlessException {
     init();
   }
 
@@ -144,10 +125,9 @@ public class ReportPreProcessorPropertiesDialog extends CommonDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public ReportPreProcessorPropertiesDialog(final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public ReportPreProcessorPropertiesDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
@@ -162,34 +142,27 @@ public class ReportPreProcessorPropertiesDialog extends CommonDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public ReportPreProcessorPropertiesDialog(final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public ReportPreProcessorPropertiesDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.ReportPreProcessorProperties";
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     editorPanel = new ReportPreProcessorPropertiesEditorPanel();
     return editorPanel;
   }
 
-  public ReportPreProcessor editExpression(final ReportPreProcessor input)
-  {
-    editorPanel.setData((ReportPreProcessor) input.clone());
+  public ReportPreProcessor editExpression( final ReportPreProcessor input ) {
+    editorPanel.setData( (ReportPreProcessor) input.clone() );
 
-    if (performEdit())
-    {
+    if ( performEdit() ) {
       return editorPanel.getData();
-    }
-    else
-    {
+    } else {
       return input;
     }
   }

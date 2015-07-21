@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class SimplePmdDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler
-{
+public class SimplePmdDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler {
   private IPmdConfigReadHandler configReadHandler;
   private SimplePmdDataFactory dataFactory;
 
-  public SimplePmdDataSourceReadHandler()
-  {
+  public SimplePmdDataSourceReadHandler() {
   }
 
   /**
@@ -43,20 +41,17 @@ public class SimplePmdDataSourceReadHandler extends AbstractXmlReadHandler imple
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
     final PmdConfigReadHandlerFactory configfactory = PmdConfigReadHandlerFactory.getInstance();
-    final XmlReadHandler confighandler = configfactory.getHandler(uri, tagName);
-    if (confighandler instanceof IPmdConfigReadHandler)
-    {
+    final XmlReadHandler confighandler = configfactory.getHandler( uri, tagName );
+    if ( confighandler instanceof IPmdConfigReadHandler ) {
       configReadHandler = (IPmdConfigReadHandler) confighandler;
       return confighandler;
     }
 
-    if (isSameNamespace(uri) == false)
-    {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
@@ -68,12 +63,11 @@ public class SimplePmdDataSourceReadHandler extends AbstractXmlReadHandler imple
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final SimplePmdDataFactory pmddf = new SimplePmdDataFactory();
-    pmddf.setConnectionProvider(configReadHandler.getConnectionProvider());
-    pmddf.setDomainId(configReadHandler.getDomain());
-    pmddf.setXmiFile(configReadHandler.getXmiFile());
+    pmddf.setConnectionProvider( configReadHandler.getConnectionProvider() );
+    pmddf.setDomainId( configReadHandler.getDomain() );
+    pmddf.setXmiFile( configReadHandler.getXmiFile() );
 
     dataFactory = pmddf;
   }
@@ -84,13 +78,11 @@ public class SimplePmdDataSourceReadHandler extends AbstractXmlReadHandler imple
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

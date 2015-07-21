@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -30,19 +27,19 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListen
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public abstract class ElementSelectionComponentSupport implements DesignerContextComponent
-{
+public abstract class ElementSelectionComponentSupport implements DesignerContextComponent {
   private ReportDesignerContext reportDesignerContext;
 
-  private class ActiveContextChangeHandler implements PropertyChangeListener
-  {
-    private ActiveContextChangeHandler()
-    {
+  private class ActiveContextChangeHandler implements PropertyChangeListener {
+    private ActiveContextChangeHandler() {
     }
 
     /**
@@ -51,45 +48,36 @@ public abstract class ElementSelectionComponentSupport implements DesignerContex
      * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
+    public void propertyChange( final PropertyChangeEvent evt ) {
       final ReportRenderContext oldContext = (ReportRenderContext) evt.getOldValue();
       final ReportRenderContext activeContext = (ReportRenderContext) evt.getNewValue();
-      updateActiveContext(oldContext, activeContext);
+      updateActiveContext( oldContext, activeContext );
     }
   }
 
-  private class SelectionUpdateHandler implements ReportSelectionListener
-  {
-    private SelectionUpdateHandler()
-    {
+  private class SelectionUpdateHandler implements ReportSelectionListener {
+    private SelectionUpdateHandler() {
     }
 
-    public void selectionAdded(final ReportSelectionEvent event)
-    {
+    public void selectionAdded( final ReportSelectionEvent event ) {
       updateSelection();
     }
 
-    public void selectionRemoved(final ReportSelectionEvent event)
-    {
+    public void selectionRemoved( final ReportSelectionEvent event ) {
       updateSelection();
     }
 
-    public void leadSelectionChanged(final ReportSelectionEvent event)
-    {
+    public void leadSelectionChanged( final ReportSelectionEvent event ) {
 
     }
   }
 
-  private class ReportModelChangeHandler implements ReportModelListener
-  {
-    private ReportModelChangeHandler()
-    {
+  private class ReportModelChangeHandler implements ReportModelListener {
+    private ReportModelChangeHandler() {
     }
 
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      ElementSelectionComponentSupport.this.nodeChanged(event);
+    public void nodeChanged( final ReportModelEvent event ) {
+      ElementSelectionComponentSupport.this.nodeChanged( event );
     }
   }
 
@@ -98,61 +86,49 @@ public abstract class ElementSelectionComponentSupport implements DesignerContex
   private ActiveContextChangeHandler changeHandler;
   private ReportModelChangeHandler modelChangeHandler;
 
-  public ElementSelectionComponentSupport()
-  {
+  public ElementSelectionComponentSupport() {
     updateHandler = new SelectionUpdateHandler();
     changeHandler = new ActiveContextChangeHandler();
     modelChangeHandler = new ReportModelChangeHandler();
   }
 
-  protected void updateDesignerContext(final ReportDesignerContext oldContext,
-                                       final ReportDesignerContext newContext)
-  {
-    if (oldContext != null)
-    {
-      oldContext.removePropertyChangeListener(ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, changeHandler);
-      updateActiveContext(oldContext.getActiveContext(), null);
+  protected void updateDesignerContext( final ReportDesignerContext oldContext,
+                                        final ReportDesignerContext newContext ) {
+    if ( oldContext != null ) {
+      oldContext.removePropertyChangeListener( ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, changeHandler );
+      updateActiveContext( oldContext.getActiveContext(), null );
     }
 
-    if (newContext != null)
-    {
-      newContext.addPropertyChangeListener(ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, changeHandler);
-      updateActiveContext(null, newContext.getActiveContext());
+    if ( newContext != null ) {
+      newContext.addPropertyChangeListener( ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, changeHandler );
+      updateActiveContext( null, newContext.getActiveContext() );
     }
 
   }
 
-  public DocumentContextSelectionModel getSelectionModel()
-  {
+  public DocumentContextSelectionModel getSelectionModel() {
     return selectionModel;
   }
 
-  protected ReportDocumentContext getActiveContext()
-  {
+  protected ReportDocumentContext getActiveContext() {
     return getReportDesignerContext().getActiveContext();
   }
 
-  protected void updateActiveContext(final ReportDocumentContext oldContext,
-                                     final ReportDocumentContext newContext)
-  {
-    if (oldContext != null)
-    {
-      oldContext.getReportDefinition().removeReportModelListener(modelChangeHandler);
+  protected void updateActiveContext( final ReportDocumentContext oldContext,
+                                      final ReportDocumentContext newContext ) {
+    if ( oldContext != null ) {
+      oldContext.getReportDefinition().removeReportModelListener( modelChangeHandler );
     }
-    if (this.selectionModel != null)
-    {
-      this.selectionModel.removeReportSelectionListener(updateHandler);
+    if ( this.selectionModel != null ) {
+      this.selectionModel.removeReportSelectionListener( updateHandler );
     }
 
-    if (newContext != null)
-    {
+    if ( newContext != null ) {
       this.selectionModel = newContext.getSelectionModel();
-      this.selectionModel.addReportSelectionListener(updateHandler);
+      this.selectionModel.addReportSelectionListener( updateHandler );
       updateSelection();
-      newContext.getReportDefinition().addReportModelListener(modelChangeHandler);
-    }
-    else
-    {
+      newContext.getReportDefinition().addReportModelListener( modelChangeHandler );
+    } else {
       this.selectionModel = null;
       updateSelection();
     }
@@ -160,30 +136,25 @@ public abstract class ElementSelectionComponentSupport implements DesignerContex
 
   protected abstract void updateSelection();
 
-  protected abstract void nodeChanged(ReportModelEvent event);
-  
-  protected boolean isSingleElementSelection()
-  {
-    if (selectionModel == null)
-    {
+  protected abstract void nodeChanged( ReportModelEvent event );
+
+  protected boolean isSingleElementSelection() {
+    if ( selectionModel == null ) {
       return false;
     }
-    if (selectionModel.getSelectionCount() != 1)
-    {
+    if ( selectionModel.getSelectionCount() != 1 ) {
       return false;
     }
     return true;
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext context)
-  {
+  public void setReportDesignerContext( final ReportDesignerContext context ) {
     final ReportDesignerContext old = this.reportDesignerContext;
     this.reportDesignerContext = context;
-    updateDesignerContext(old, reportDesignerContext);
+    updateDesignerContext( old, reportDesignerContext );
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return reportDesignerContext;
   }
 

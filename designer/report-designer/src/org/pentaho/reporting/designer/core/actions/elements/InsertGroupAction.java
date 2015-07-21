@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.elements;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -38,75 +35,66 @@ import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public final class InsertGroupAction extends AbstractElementSelectionAction
-{
-  private static class InsertGroupOnReportUndoEntry implements UndoEntry
-  {
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public final class InsertGroupAction extends AbstractElementSelectionAction {
+  private static class InsertGroupOnReportUndoEntry implements UndoEntry {
     private Group newRootGroup;
     private Group oldRootGroup;
 
-    private InsertGroupOnReportUndoEntry(final Group oldRootGroup, final Group newRootGroup)
-    {
+    private InsertGroupOnReportUndoEntry( final Group oldRootGroup, final Group newRootGroup ) {
       this.oldRootGroup = oldRootGroup;
       this.newRootGroup = newRootGroup;
     }
 
-    public void undo(final ReportDocumentContext renderContext)
-    {
+    public void undo( final ReportDocumentContext renderContext ) {
       final AbstractReportDefinition report = renderContext.getReportDefinition();
-      report.setRootGroup(oldRootGroup);
+      report.setRootGroup( oldRootGroup );
     }
 
-    public void redo(final ReportDocumentContext renderContext)
-    {
+    public void redo( final ReportDocumentContext renderContext ) {
       final AbstractReportDefinition report = renderContext.getReportDefinition();
       final SubGroupBody body = new SubGroupBody();
-      newRootGroup.setBody(body);
-      report.setRootGroup(newRootGroup);
-      body.setGroup(oldRootGroup);
+      newRootGroup.setBody( body );
+      report.setRootGroup( newRootGroup );
+      body.setGroup( oldRootGroup );
     }
 
-    public UndoEntry merge(final UndoEntry newEntry)
-    {
+    public UndoEntry merge( final UndoEntry newEntry ) {
       return null;
     }
   }
 
-  private static class InsertGroupOnGroupUndoEntry implements UndoEntry
-  {
+  private static class InsertGroupOnGroupUndoEntry implements UndoEntry {
     private InstanceID target;
     private Group newRootGroup;
     private Group oldRootGroup;
 
-    private InsertGroupOnGroupUndoEntry(final InstanceID target, final Group oldRootGroup, final Group newRootGroup)
-    {
+    private InsertGroupOnGroupUndoEntry( final InstanceID target, final Group oldRootGroup, final Group newRootGroup ) {
       this.target = target;
       this.oldRootGroup = oldRootGroup;
       this.newRootGroup = newRootGroup;
     }
 
-    public void undo(final ReportDocumentContext renderContext)
-    {
+    public void undo( final ReportDocumentContext renderContext ) {
       final RelationalGroup selectedGroup = (RelationalGroup)
-          ModelUtility.findElementById(renderContext.getReportDefinition(), target);
+        ModelUtility.findElementById( renderContext.getReportDefinition(), target );
       final GroupBody bodyElement = selectedGroup.getBody();
-      if (bodyElement instanceof SubGroupBody == false)
-      {
+      if ( bodyElement instanceof SubGroupBody == false ) {
         throw new IllegalStateException();
       }
 
       final SubGroupBody subGroupBodyReportElement = (SubGroupBody) bodyElement;
-      subGroupBodyReportElement.setGroup(oldRootGroup);
+      subGroupBodyReportElement.setGroup( oldRootGroup );
     }
 
-    public void redo(final ReportDocumentContext renderContext)
-    {
+    public void redo( final ReportDocumentContext renderContext ) {
       final RelationalGroup selectedGroup = (RelationalGroup)
-          ModelUtility.findElementById(renderContext.getReportDefinition(), target);
+        ModelUtility.findElementById( renderContext.getReportDefinition(), target );
 
       final GroupBody bodyElement = selectedGroup.getBody();
-      if (bodyElement instanceof SubGroupBody == false)
-      {
+      if ( bodyElement instanceof SubGroupBody == false ) {
         throw new IllegalStateException();
       }
 
@@ -114,197 +102,170 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
       final Group oldBodyContent = subGroupBodyReportElement.getGroup();
 
       final SubGroupBody body = new SubGroupBody();
-      newRootGroup.setBody(body);
-      subGroupBodyReportElement.setGroup(newRootGroup);
-      body.setGroup(oldBodyContent);
+      newRootGroup.setBody( body );
+      subGroupBodyReportElement.setGroup( newRootGroup );
+      body.setGroup( oldBodyContent );
     }
 
-    public UndoEntry merge(final UndoEntry newEntry)
-    {
+    public UndoEntry merge( final UndoEntry newEntry ) {
       return null;
     }
   }
 
-  private class InsertGroupOnDetailsUndoEntry implements UndoEntry
-  {
+  private class InsertGroupOnDetailsUndoEntry implements UndoEntry {
     private InstanceID target;
     private RelationalGroup newGroup;
 
-    public InsertGroupOnDetailsUndoEntry(final InstanceID target,
-                                         final RelationalGroup newGroup)
-    {
+    public InsertGroupOnDetailsUndoEntry( final InstanceID target,
+                                          final RelationalGroup newGroup ) {
       this.target = target;
       this.newGroup = newGroup;
     }
 
-    public void undo(final ReportDocumentContext renderContext)
-    {
+    public void undo( final ReportDocumentContext renderContext ) {
       final RelationalGroup selectedGroup = (RelationalGroup)
-          ModelUtility.findElementById(renderContext.getReportDefinition(), target);
+        ModelUtility.findElementById( renderContext.getReportDefinition(), target );
 
       final GroupBody bodyElement = selectedGroup.getBody();
-      if (bodyElement instanceof SubGroupBody == false)
-      {
+      if ( bodyElement instanceof SubGroupBody == false ) {
         throw new IllegalStateException();
       }
       final SubGroupBody sgb = (SubGroupBody) bodyElement;
       final GroupBody maybeDataBody = sgb.getGroup().getBody();
-      if (maybeDataBody instanceof GroupDataBody == false)
-      {
+      if ( maybeDataBody instanceof GroupDataBody == false ) {
         throw new IllegalStateException();
       }
 
-      selectedGroup.setBody(maybeDataBody);
+      selectedGroup.setBody( maybeDataBody );
     }
 
-    public void redo(final ReportDocumentContext renderContext)
-    {
+    public void redo( final ReportDocumentContext renderContext ) {
       final RelationalGroup selectedGroup = (RelationalGroup)
-          ModelUtility.findElementById(renderContext.getReportDefinition(), target);
+        ModelUtility.findElementById( renderContext.getReportDefinition(), target );
 
       final GroupBody bodyElement = selectedGroup.getBody();
-      if (bodyElement instanceof GroupDataBody == false)
-      {
+      if ( bodyElement instanceof GroupDataBody == false ) {
         throw new IllegalStateException();
       }
 
       final GroupDataBody oldBody = (GroupDataBody) bodyElement;
-      selectedGroup.setBody(new SubGroupBody(newGroup));
-      newGroup.setBody(oldBody);
+      selectedGroup.setBody( new SubGroupBody( newGroup ) );
+      newGroup.setBody( oldBody );
     }
 
-    public UndoEntry merge(final UndoEntry newEntry)
-    {
+    public UndoEntry merge( final UndoEntry newEntry ) {
       return null;
     }
   }
 
-  public InsertGroupAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("InsertGroupAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("InsertGroupAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("InsertGroupAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("InsertGroupAction.Accelerator"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getGenericSquare());
+  public InsertGroupAction() {
+    putValue( Action.NAME, ActionMessages.getString( "InsertGroupAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "InsertGroupAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "InsertGroupAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "InsertGroupAction.Accelerator" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getGenericSquare() );
   }
 
-  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
-  {
+  protected void selectedElementPropertiesChanged( final ReportModelEvent event ) {
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       return;
     }
 
     final RelationalGroup newGroup = new RelationalGroup();
-    final EditGroupUndoEntry groupUndoEntry = EditGroupAction.performEditGroup(getReportDesignerContext(), newGroup, true);
-    if (groupUndoEntry == null)
-    {
+    final EditGroupUndoEntry groupUndoEntry =
+      EditGroupAction.performEditGroup( getReportDesignerContext(), newGroup, true );
+    if ( groupUndoEntry == null ) {
       return;
     }
 
     // apply the data from the EditGroupAction ..
-    newGroup.setName(groupUndoEntry.getNewName());
-    newGroup.setFieldsArray(groupUndoEntry.getNewFields());
+    newGroup.setName( groupUndoEntry.getNewName() );
+    newGroup.setFieldsArray( groupUndoEntry.getNewFields() );
 
-    try
-    {
+    try {
       Object selectedElement = activeContext.getReportDefinition();
-      if (getSelectionModel().getSelectionCount() > 0)
-      {
-        selectedElement = getSelectionModel().getSelectedElement(0);
+      if ( getSelectionModel().getSelectionCount() > 0 ) {
+        selectedElement = getSelectionModel().getSelectedElement( 0 );
       }
-      if (selectedElement == activeContext.getReportDefinition()  )
-      {
+      if ( selectedElement == activeContext.getReportDefinition() ) {
         // execution order is important here.
         // first unlink the old root-group by setting a new one ...
         final AbstractReportDefinition report = (AbstractReportDefinition) selectedElement;
         final Group rootGroup = report.getRootGroup();
 
         final SubGroupBody body = new SubGroupBody();
-        newGroup.setBody(body);
-        report.setRootGroup(newGroup);
+        newGroup.setBody( body );
+        report.setRootGroup( newGroup );
 
         // *then* you can set the old-root to the newly inserted group ..
-        body.setGroup(rootGroup);
+        body.setGroup( rootGroup );
 
-        activeContext.getUndo().addChange(ActionMessages.getString("InsertGroupAction.UndoName"),
-            new InsertGroupOnReportUndoEntry(rootGroup, newGroup));
+        activeContext.getUndo().addChange( ActionMessages.getString( "InsertGroupAction.UndoName" ),
+          new InsertGroupOnReportUndoEntry( rootGroup, newGroup ) );
         return;
       }
 
-      if (selectedElement instanceof RelationalGroup == false)
-      {
+      if ( selectedElement instanceof RelationalGroup == false ) {
         return;
       }
       final RelationalGroup selectedGroup = (RelationalGroup) selectedElement;
 
       final GroupBody bodyElement = selectedGroup.getBody();
-      if (bodyElement instanceof SubGroupBody)
-      {
+      if ( bodyElement instanceof SubGroupBody ) {
         final SubGroupBody subGroupBodyReportElement = (SubGroupBody) bodyElement;
         final Group oldBodyContent = subGroupBodyReportElement.getGroup();
 
         final SubGroupBody body = new SubGroupBody();
-        newGroup.setBody(body);
-        subGroupBodyReportElement.setGroup(newGroup);
-        body.setGroup(oldBodyContent);
+        newGroup.setBody( body );
+        subGroupBodyReportElement.setGroup( newGroup );
+        body.setGroup( oldBodyContent );
 
-        activeContext.getUndo().addChange(ActionMessages.getString("InsertGroupAction.UndoName"),
-            new InsertGroupOnGroupUndoEntry(selectedGroup.getObjectID(), oldBodyContent, newGroup));
-      }
-      else if (bodyElement instanceof GroupDataBody)
-      {
+        activeContext.getUndo().addChange( ActionMessages.getString( "InsertGroupAction.UndoName" ),
+          new InsertGroupOnGroupUndoEntry( selectedGroup.getObjectID(), oldBodyContent, newGroup ) );
+      } else if ( bodyElement instanceof GroupDataBody ) {
         final GroupDataBody oldBody = (GroupDataBody) bodyElement;
-        selectedGroup.setBody(new SubGroupBody(newGroup));
-        newGroup.setBody(oldBody);
-        activeContext.getUndo().addChange(ActionMessages.getString("InsertGroupAction.UndoName"),
-            new InsertGroupOnDetailsUndoEntry(selectedGroup.getObjectID(), newGroup));
+        selectedGroup.setBody( new SubGroupBody( newGroup ) );
+        newGroup.setBody( oldBody );
+        activeContext.getUndo().addChange( ActionMessages.getString( "InsertGroupAction.UndoName" ),
+          new InsertGroupOnDetailsUndoEntry( selectedGroup.getObjectID(), newGroup ) );
       }
-    }
-    catch (Exception ex)
-    {
-      UncaughtExceptionsModel.getInstance().addException(ex);
+    } catch ( Exception ex ) {
+      UncaughtExceptionsModel.getInstance().addException( ex );
     }
   }
 
-  protected void updateSelection()
-  {
+  protected void updateSelection() {
     final DocumentContextSelectionModel selectionModel = getSelectionModel();
-    if (selectionModel == null)
-    {
-      setEnabled(false);
+    if ( selectionModel == null ) {
+      setEnabled( false );
       return;
     }
-    if (selectionModel.getSelectionCount() == 0)
-    {
+    if ( selectionModel.getSelectionCount() == 0 ) {
       // there's nothing selected, we can safely add a new group
       // at the report level (AbstractReportDefinition)
-      setEnabled(true);
+      setEnabled( true );
       return;
     }
-    if (isSingleElementSelection() == false)
-    {
+    if ( isSingleElementSelection() == false ) {
       // there's more than 1 element selected, disable because
       // we can't know where to insert in this case
-      setEnabled(false);
+      setEnabled( false );
       return;
     }
 
-    final Object selectedElement = selectionModel.getSelectedElement(0);
-    if (selectedElement == getActiveContext().getReportDefinition() || selectedElement instanceof RelationalGroup)
-    {
+    final Object selectedElement = selectionModel.getSelectedElement( 0 );
+    if ( selectedElement == getActiveContext().getReportDefinition() || selectedElement instanceof RelationalGroup ) {
       // if the selectedElement is the report-definition or a relational group
       // then we can safely insert to those
-      setEnabled(true);
+      setEnabled( true );
       return;
     }
 
-    setEnabled(false);
+    setEnabled( false );
   }
 
 }

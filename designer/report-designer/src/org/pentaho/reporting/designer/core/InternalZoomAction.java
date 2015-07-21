@@ -17,24 +17,20 @@
 
 package org.pentaho.reporting.designer.core;
 
-import java.awt.event.ActionEvent;
-
 import org.pentaho.reporting.designer.core.actions.global.ZoomAction;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 
-class InternalZoomAction extends ZoomAction
-{
-  InternalZoomAction(final int percentage)
-  {
-    super(percentage);
+import java.awt.event.ActionEvent;
+
+class InternalZoomAction extends ZoomAction {
+  InternalZoomAction( final int percentage ) {
+    super( percentage );
   }
 
-  public boolean isSelected()
-  {
+  public boolean isSelected() {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext != null)
-    {
-      return activeContext.getZoomModel().getZoomAsPercentage() == (getPercentage() / 100f);
+    if ( activeContext != null ) {
+      return activeContext.getZoomModel().getZoomAsPercentage() == ( getPercentage() / 100f );
     }
     return false;
   }
@@ -42,12 +38,10 @@ class InternalZoomAction extends ZoomAction
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext != null)
-    {
-      activeContext.getZoomModel().setZoomAsPercentage(getPercentage() / 100f);
+    if ( activeContext != null ) {
+      activeContext.getZoomModel().setZoomAsPercentage( getPercentage() / 100f );
     }
   }
 }

@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -31,13 +26,14 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.libsparklines.BarGraphDrawable;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-public class BarSparklinesWrapper extends DrawableWrapper implements ReportDrawable
-{
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
+public class BarSparklinesWrapper extends DrawableWrapper implements ReportDrawable {
   private BarGraphDrawable sparkline;
 
-  public BarSparklinesWrapper(final BarGraphDrawable sparkline)
-  {
-    super(sparkline);
+  public BarSparklinesWrapper( final BarGraphDrawable sparkline ) {
+    super( sparkline );
     this.sparkline = sparkline;
   }
 
@@ -47,8 +43,7 @@ public class BarSparklinesWrapper extends DrawableWrapper implements ReportDrawa
    *
    * @param config the report configuration.
    */
-  public void setConfiguration(final Configuration config)
-  {
+  public void setConfiguration( final Configuration config ) {
 
   }
 
@@ -57,14 +52,12 @@ public class BarSparklinesWrapper extends DrawableWrapper implements ReportDrawa
    *
    * @param style the stylesheet.
    */
-  public void setStyleSheet(final StyleSheet style)
-  {
-    if (style != null)
-    {
-      sparkline.setBackground((Color) style.getStyleProperty(ElementStyleKeys.BACKGROUND_COLOR));
-      sparkline.setColor((Color) style.getStyleProperty(ElementStyleKeys.PAINT));
-      sparkline.setLastColor((Color) style.getStyleProperty(SparklineStyleKeys.LAST_COLOR));
-      sparkline.setHighColor((Color) style.getStyleProperty(SparklineStyleKeys.HIGH_COLOR));
+  public void setStyleSheet( final StyleSheet style ) {
+    if ( style != null ) {
+      sparkline.setBackground( (Color) style.getStyleProperty( ElementStyleKeys.BACKGROUND_COLOR ) );
+      sparkline.setColor( (Color) style.getStyleProperty( ElementStyleKeys.PAINT ) );
+      sparkline.setLastColor( (Color) style.getStyleProperty( SparklineStyleKeys.LAST_COLOR ) );
+      sparkline.setHighColor( (Color) style.getStyleProperty( SparklineStyleKeys.HIGH_COLOR ) );
     }
   }
 
@@ -73,8 +66,7 @@ public class BarSparklinesWrapper extends DrawableWrapper implements ReportDrawa
    *
    * @param bundleFactory the resource-bundle factory.
    */
-  public void setResourceBundleFactory(final ResourceBundleFactory bundleFactory)
-  {
+  public void setResourceBundleFactory( final ResourceBundleFactory bundleFactory ) {
 
   }
 
@@ -84,23 +76,19 @@ public class BarSparklinesWrapper extends DrawableWrapper implements ReportDrawa
    * @param bounds the bounds for which the image map is computed.
    * @return the computed image-map or null if there is no image-map available.
    */
-  public ImageMap getImageMap(final Rectangle2D bounds)
-  {
+  public ImageMap getImageMap( final Rectangle2D bounds ) {
     return null;
   }
 
-  public boolean isPreserveAspectRatio()
-  {
+  public boolean isPreserveAspectRatio() {
     return false;
   }
 
-  public Dimension getPreferredSize()
-  {
+  public Dimension getPreferredSize() {
     return null;
   }
 
-  public void draw(final Graphics2D g2, final Rectangle2D bounds)
-  {
-    sparkline.draw(g2, bounds);
+  public void draw( final Graphics2D g2, final Rectangle2D bounds ) {
+    sparkline.draw( g2, bounds );
   }
 }

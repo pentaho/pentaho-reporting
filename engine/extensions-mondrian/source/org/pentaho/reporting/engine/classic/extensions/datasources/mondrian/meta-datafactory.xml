@@ -19,14 +19,16 @@
                 metadata-source="false" freeform-query="true" expert="true"
                 impl="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryCore"/>
 
-  <data-factory name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleLegacyBandedMDXDataFactory"
-                bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleBandedMDXDataFactoryBundle"
-                metadata-source="false" freeform-query="true" expert="true" deprecated="true"
-                impl="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryCore"/>
+  <data-factory
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleLegacyBandedMDXDataFactory"
+      bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleBandedMDXDataFactoryBundle"
+      metadata-source="false" freeform-query="true" expert="true" deprecated="true"
+      impl="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryCore"/>
 
-  <data-factory name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleDenormalizedMDXDataFactory"
-                bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleDenormalizedMDXDataFactoryBundle"
-                metadata-source="false" freeform-query="true" expert="true"
-                impl="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryCore"/>
-  
+  <data-factory
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleDenormalizedMDXDataFactory"
+      bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleDenormalizedMDXDataFactoryBundle"
+      metadata-source="false" freeform-query="true" expert="true"
+      impl="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryCore"/>
+
 </meta-data>

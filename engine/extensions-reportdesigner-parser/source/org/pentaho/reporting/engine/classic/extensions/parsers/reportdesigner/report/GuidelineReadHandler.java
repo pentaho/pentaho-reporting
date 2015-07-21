@@ -17,17 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.report;
 
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.model.Guideline;
-import org.xml.sax.SAXException;
+import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
-public class GuidelineReadHandler extends AbstractXmlReadHandler
-{
-  private Guideline guideline; 
+public class GuidelineReadHandler extends AbstractXmlReadHandler {
+  private Guideline guideline;
 
-  public GuidelineReadHandler()
-  {
+  public GuidelineReadHandler() {
   }
 
   /**
@@ -36,22 +34,19 @@ public class GuidelineReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
     guideline = new Guideline();
-    guideline.setActive(Boolean.parseBoolean(attrs.getValue(getUri(), "active")));
-    guideline.setPosition(Double.parseDouble(attrs.getValue(getUri(), "position")));
+    guideline.setActive( Boolean.parseBoolean( attrs.getValue( getUri(), "active" ) ) );
+    guideline.setPosition( Double.parseDouble( attrs.getValue( getUri(), "position" ) ) );
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return guideline;
   }
 }

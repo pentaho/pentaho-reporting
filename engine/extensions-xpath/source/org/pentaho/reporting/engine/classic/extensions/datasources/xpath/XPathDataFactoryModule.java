@@ -26,25 +26,24 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class XPathDataFactoryModule extends AbstractModule
-{
+public class XPathDataFactoryModule extends AbstractModule {
   public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/datasources/xpath";
-  public static final String TAG_DEF_PREFIX = "org.pentaho.reporting.engine.classic.extensions.datasources.xpath.tag-def.";
+  public static final String TAG_DEF_PREFIX =
+    "org.pentaho.reporting.engine.classic.extensions.datasources.xpath.tag-def.";
 
-  public XPathDataFactoryModule() throws ModuleInitializeException
-  {
+  public XPathDataFactoryModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    DataFactoryXmlResourceFactory.register(XPathDataSourceXmlFactoryModule.class);
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    DataFactoryXmlResourceFactory.register( XPathDataSourceXmlFactoryModule.class );
 
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "xpath-datasource", XPathDataSourceReadHandler.class);
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "xpath-datasource", XPathDataSourceReadHandler.class );
 
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/datasources/xpath/meta-datafactory.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/datasources/xpath/meta-datafactory.xml" );
 
   }
 }

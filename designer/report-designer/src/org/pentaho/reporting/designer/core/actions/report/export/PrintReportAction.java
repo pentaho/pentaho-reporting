@@ -24,10 +24,8 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.print.PrintingPlugi
  *
  * @author Thomas Morgner
  */
-public class PrintReportAction extends AbstractExportAction
-{
-  public PrintReportAction()
-  {
-    super(new PrintingPlugin());
+public class PrintReportAction extends AbstractExportAction {
+  public PrintReportAction() {
+    super( new PrintingPlugin() );
   }
 }

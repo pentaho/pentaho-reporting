@@ -17,36 +17,26 @@
 
 package org.pentaho.reporting.designer.core.util.table;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.BasicTextPropertyEditorDialog;
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.PropertyCellEditorWithEllipsis;
 
-public class DesignerPropertyCellEditorWithEllipsis extends PropertyCellEditorWithEllipsis
-{
-  public DesignerPropertyCellEditorWithEllipsis()
-  {
+import java.awt.*;
+
+public class DesignerPropertyCellEditorWithEllipsis extends PropertyCellEditorWithEllipsis {
+  public DesignerPropertyCellEditorWithEllipsis() {
   }
 
 
-  protected BasicTextPropertyEditorDialog createTextEditorDialog()
-  {
-    final Window window = LibSwingUtil.getWindowAncestor(DesignerPropertyCellEditorWithEllipsis.this);
+  protected BasicTextPropertyEditorDialog createTextEditorDialog() {
+    final Window window = LibSwingUtil.getWindowAncestor( DesignerPropertyCellEditorWithEllipsis.this );
 
     final TextAreaPropertyEditorDialog editorDialog;
-    if (window instanceof Frame)
-    {
-      editorDialog = new TextAreaPropertyEditorDialog((Frame) window);
-    }
-    else if (window instanceof Dialog)
-    {
-      editorDialog = new TextAreaPropertyEditorDialog((Dialog) window);
-    }
-    else
-    {
+    if ( window instanceof Frame ) {
+      editorDialog = new TextAreaPropertyEditorDialog( (Frame) window );
+    } else if ( window instanceof Dialog ) {
+      editorDialog = new TextAreaPropertyEditorDialog( (Dialog) window );
+    } else {
       editorDialog = new TextAreaPropertyEditorDialog();
     }
     return editorDialog;

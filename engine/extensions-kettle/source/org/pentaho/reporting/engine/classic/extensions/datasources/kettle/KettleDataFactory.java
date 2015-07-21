@@ -17,70 +17,59 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javax.swing.table.TableModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 
+import javax.swing.table.TableModel;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Fires a Kettle-Query by executing a Kettle-Transformation.
  *
  * @author Thomas Morgner
  */
-public class KettleDataFactory extends AbstractDataFactory
-{
+public class KettleDataFactory extends AbstractDataFactory {
   private static final long serialVersionUID = 3378733681824193349L;
-  private static final Log logger = LogFactory.getLog(KettleDataFactory.class);
+  private static final Log logger = LogFactory.getLog( KettleDataFactory.class );
 
   private LinkedHashMap<String, KettleTransformationProducer> queries;
   private transient KettleTransformationProducer currentlyRunningQuery;
 
   /**
-   * This attribute will only have a value when the KettleDataFactory is
-   * serving an embedded unified datasource, versus the typical
-   * Kettle transformation datasource.
+   * This attribute will only have a value when the KettleDataFactory is serving an embedded unified datasource, versus
+   * the typical Kettle transformation datasource.
    */
   private DataFactoryMetaData metadata;
 
-  public void setMetadata(final DataFactoryMetaData metadata)
-  {
+  public void setMetadata( final DataFactoryMetaData metadata ) {
     this.metadata = metadata;
   }
 
-  public KettleDataFactory()
-  {
+  public KettleDataFactory() {
     queries = new LinkedHashMap<String, KettleTransformationProducer>();
   }
 
-  public void setQuery(final String name, final KettleTransformationProducer value)
-  {
-    if (value == null)
-    {
-      queries.remove(name);
-    }
-    else
-    {
-      queries.put(name, value);
+  public void setQuery( final String name, final KettleTransformationProducer value ) {
+    if ( value == null ) {
+      queries.remove( name );
+    } else {
+      queries.put( name, value );
     }
   }
 
-  public KettleTransformationProducer getQuery(final String name)
-  {
-    return queries.get(name);
+  public KettleTransformationProducer getQuery( final String name ) {
+    return queries.get( name );
   }
 
-  public String[] getQueryNames()
-  {
-    return queries.keySet().toArray(new String[queries.size()]);
+  public String[] getQueryNames() {
+    return queries.keySet().toArray( new String[ queries.size() ] );
   }
 
   /**
@@ -95,72 +84,52 @@ public class KettleDataFactory extends AbstractDataFactory
    * @return the result of the query as table model.
    * @throws ReportDataFactoryException if an error occured while performing the query.
    */
-  public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-  {
-    int queryLimit = calculateQueryLimit(parameters);
-    final KettleTransformationProducer producer = queries.get(query);
-    if (producer == null)
-    {
-      throw new ReportDataFactoryException("There is no such query defined: " + query);
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    int queryLimit = calculateQueryLimit( parameters );
+    final KettleTransformationProducer producer = queries.get( query );
+    if ( producer == null ) {
+      throw new ReportDataFactoryException( "There is no such query defined: " + query );
     }
 
-    try
-    {
+    try {
       currentlyRunningQuery = producer;
-      return producer.performQuery(parameters, queryLimit, getDataFactoryContext());
-    }
-    catch (final ReportDataFactoryException rdfe)
-    {
+      return producer.performQuery( parameters, queryLimit, getDataFactoryContext() );
+    } catch ( final ReportDataFactoryException rdfe ) {
       throw rdfe;
-    }
-    catch (final Throwable e)
-    {
-      throw new ReportDataFactoryException("Caught Kettle Exception: Check your configuration", e);
-    }
-    finally
-    {
+    } catch ( final Throwable e ) {
+      throw new ReportDataFactoryException( "Caught Kettle Exception: Check your configuration", e );
+    } finally {
       currentlyRunningQuery = null;
     }
   }
 
-  @SuppressWarnings("unchecked")
-  public KettleDataFactory clone()
-  {
+  @SuppressWarnings( "unchecked" )
+  public KettleDataFactory clone() {
     final KettleDataFactory df = (KettleDataFactory) super.clone();
     df.queries = (LinkedHashMap<String, KettleTransformationProducer>) queries.clone();
     df.currentlyRunningQuery = null;
-    for (final Map.Entry<String, KettleTransformationProducer> entry : df.queries.entrySet())
-    {
+    for ( final Map.Entry<String, KettleTransformationProducer> entry : df.queries.entrySet() ) {
       final KettleTransformationProducer value = entry.getValue();
-      entry.setValue((KettleTransformationProducer) value.clone());
+      entry.setValue( (KettleTransformationProducer) value.clone() );
     }
     return df;
   }
 
-  public TableModel queryDesignTimeStructure(final String query,
-                                             final DataRow parameter) throws ReportDataFactoryException
-  {
-    final KettleTransformationProducer producer = queries.get(query);
-    if (producer == null)
-    {
-      throw new ReportDataFactoryException("There is no such query defined: " + query);
+  public TableModel queryDesignTimeStructure( final String query,
+                                              final DataRow parameter ) throws ReportDataFactoryException {
+    final KettleTransformationProducer producer = queries.get( query );
+    if ( producer == null ) {
+      throw new ReportDataFactoryException( "There is no such query defined: " + query );
     }
 
-    try
-    {
+    try {
       currentlyRunningQuery = producer;
-      return producer.queryDesignTimeStructure(parameter, getDataFactoryContext());
-    }
-    catch (final ReportDataFactoryException rdfe)
-    {
+      return producer.queryDesignTimeStructure( parameter, getDataFactoryContext() );
+    } catch ( final ReportDataFactoryException rdfe ) {
       throw rdfe;
-    }
-    catch (final Throwable e)
-    {
-      throw new ReportDataFactoryException("Caught Kettle Exception: Check your configuration", e);
-    }
-    finally
-    {
+    } catch ( final Throwable e ) {
+      throw new ReportDataFactoryException( "Caught Kettle Exception: Check your configuration", e );
+    } finally {
       currentlyRunningQuery = null;
     }
   }
@@ -168,8 +137,7 @@ public class KettleDataFactory extends AbstractDataFactory
   /**
    * Closes the data factory and frees all resources held by this instance.
    */
-  public void close()
-  {
+  public void close() {
   }
 
   /**
@@ -179,62 +147,49 @@ public class KettleDataFactory extends AbstractDataFactory
    * @param parameters the parameters, never null.
    * @return true, if the query would be executable, false if the query is not recognized.
    */
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    return queries.containsKey(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    return queries.containsKey( query );
   }
 
-  public void cancelRunningQuery()
-  {
+  public void cancelRunningQuery() {
     final KettleTransformationProducer producer = this.currentlyRunningQuery;
-    if (producer != null)
-    {
+    if ( producer != null ) {
       producer.cancelQuery();
       this.currentlyRunningQuery = null;
     }
   }
 
-  public Object getQueryHash(final String queryName)
-  {
-    final KettleTransformationProducer transformationProducer = getQuery(queryName);
-    if (transformationProducer == null)
-    {
+  public Object getQueryHash( final String queryName ) {
+    final KettleTransformationProducer transformationProducer = getQuery( queryName );
+    if ( transformationProducer == null ) {
       return null;
     }
-    return transformationProducer.getQueryHash(getResourceManager(), getContextKey());
+    return transformationProducer.getQueryHash( getResourceManager(), getContextKey() );
   }
 
-  public boolean queriesAreHomogeneous()
-  {
+  public boolean queriesAreHomogeneous() {
 
-    if ((queries == null) || (queries.isEmpty()))
-    {
+    if ( ( queries == null ) || ( queries.isEmpty() ) ) {
       return true;
     }
 
     KettleTransformationProducer key = null;
-    for (final KettleTransformationProducer producer : queries.values())
-    {
-      if (key == null)
-      {
+    for ( final KettleTransformationProducer producer : queries.values() ) {
+      if ( key == null ) {
         key = producer;
-        if (!(key instanceof EmbeddedKettleTransformationProducer))
-        {
+        if ( !( key instanceof EmbeddedKettleTransformationProducer ) ) {
           return false;
         }
         continue;
       }
-      if (key.getClass() != producer.getClass())
-      {
+      if ( key.getClass() != producer.getClass() ) {
         return false;
       }
-      if ((key instanceof EmbeddedKettleTransformationProducer) &&
-          (producer instanceof EmbeddedKettleTransformationProducer))
-      {
+      if ( ( key instanceof EmbeddedKettleTransformationProducer ) &&
+        ( producer instanceof EmbeddedKettleTransformationProducer ) ) {
         final EmbeddedKettleTransformationProducer k = (EmbeddedKettleTransformationProducer) key;
         final EmbeddedKettleTransformationProducer p = (EmbeddedKettleTransformationProducer) producer;
-        if (!k.getPluginId().equals(p.getPluginId()))
-        {
+        if ( !k.getPluginId().equals( p.getPluginId() ) ) {
           return false;
         }
       }
@@ -243,40 +198,32 @@ public class KettleDataFactory extends AbstractDataFactory
     return true;
   }
 
-  public DataFactoryMetaData getMetaData()
-  {
+  public DataFactoryMetaData getMetaData() {
 
-    if (metadata != null)
-    {
+    if ( metadata != null ) {
       return metadata;
     }
 
-    if (!queries.isEmpty())
-    {
+    if ( !queries.isEmpty() ) {
       // First query is acceptable; if the queries are "mixed", we are not using this metadata anyway
       final KettleTransformationProducer defaultProducer = queries.values().iterator().next();
-      if (defaultProducer instanceof EmbeddedKettleTransformationProducer)
-      {
+      if ( defaultProducer instanceof EmbeddedKettleTransformationProducer ) {
         final EmbeddedKettleTransformationProducer producer = (EmbeddedKettleTransformationProducer) defaultProducer;
         final String pluginId = producer.getPluginId();
-        try
-        {
-          metadata = DataFactoryRegistry.getInstance().getMetaData(pluginId);
+        try {
+          metadata = DataFactoryRegistry.getInstance().getMetaData( pluginId );
           return metadata;
-        }
-        catch (MetaDataLookupException e)
-        {
+        } catch ( MetaDataLookupException e ) {
           // we are on the server... plugin metadata instances are not registered
           // Return the default Kettle datafactory metadata...
-          if (logger.isTraceEnabled())
-          {
-            logger.trace("Failed to lookup metadata for plugin-id " + pluginId, e); // NON-NLS
+          if ( logger.isTraceEnabled() ) {
+            logger.trace( "Failed to lookup metadata for plugin-id " + pluginId, e ); // NON-NLS
           }
         }
       }
 
     }
-    return DataFactoryRegistry.getInstance().getMetaData(this.getClass().getName());
+    return DataFactoryRegistry.getInstance().getMetaData( this.getClass().getName() );
   }
 
 }

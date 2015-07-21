@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
 
-import java.net.URL;
-
-import javax.naming.spi.NamingManager;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -30,40 +26,37 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd4125Test extends TestCase
-{
-  public Prd4125Test()
-  {
+import javax.naming.spi.NamingManager;
+import java.net.URL;
+
+public class Prd4125Test extends TestCase {
+  public Prd4125Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
-    if (NamingManager.hasInitialContextFactoryBuilder() == false)
-    {
-      NamingManager.setInitialContextFactoryBuilder(new DebugJndiContextFactoryBuilder());
+    if ( NamingManager.hasInitialContextFactoryBuilder() == false ) {
+      NamingManager.setInitialContextFactoryBuilder( new DebugJndiContextFactoryBuilder() );
     }
   }
 
-  public void testRuntime() throws Exception
-  {
-    URL resource = getClass().getResource("Prd-4125.prpt");
+  public void testRuntime() throws Exception {
+    URL resource = getClass().getResource( "Prd-4125.prpt" );
     ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+    MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
 
-    DebugReportRunner.executeAll(report);
+    DebugReportRunner.executeAll( report );
   }
 
-  public void testDesignTime() throws ResourceException
-  {
-    URL resource = getClass().getResource("Prd-4125.prpt");
+  public void testDesignTime() throws ResourceException {
+    URL resource = getClass().getResource( "Prd-4125.prpt" );
     ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+    MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
 
-    DesignTimeDataSchemaModel model = new DesignTimeDataSchemaModel(report);
+    DesignTimeDataSchemaModel model = new DesignTimeDataSchemaModel( report );
     String[] columnNames = model.getColumnNames();
-    assertEquals(23, columnNames.length);
+    assertEquals( 23, columnNames.length );
   }
 }

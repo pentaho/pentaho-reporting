@@ -17,58 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.pmd;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.net.URL;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptEngineManager;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileFilter;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -104,230 +52,207 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import javax.script.ScriptEngineFactory;
+import javax.script.ScriptEngineManager;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.URL;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * @author David Kincade
  */
-public class PmdDataSourceEditor extends CommonDialog
-{
+public class PmdDataSourceEditor extends CommonDialog {
 
-  private class BrowseAction extends AbstractAction
-  {
-    protected BrowseAction()
-    {
-      putValue(Action.NAME, Messages.getString("PmdDataSourceEditor.Browse.Name"));
+  private class BrowseAction extends AbstractAction {
+    protected BrowseAction() {
+      putValue( Action.NAME, Messages.getString( "PmdDataSourceEditor.Browse.Name" ) );
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final File initiallySelectedFile;
-      final File reportContextFile = DesignTimeUtil.getContextAsFile(context.getReport());
-      if (StringUtils.isEmpty(filenameField.getText(), true) == false)
-      {
-        if (reportContextFile != null)
-        {
-          initiallySelectedFile = new File(reportContextFile.getParentFile(), filenameField.getText());
+      final File reportContextFile = DesignTimeUtil.getContextAsFile( context.getReport() );
+      if ( StringUtils.isEmpty( filenameField.getText(), true ) == false ) {
+        if ( reportContextFile != null ) {
+          initiallySelectedFile = new File( reportContextFile.getParentFile(), filenameField.getText() );
+        } else {
+          initiallySelectedFile = new File( filenameField.getText() );
         }
-        else
-        {
-          initiallySelectedFile = new File(filenameField.getText());
-        }
-      }
-      else
-      {
+      } else {
         initiallySelectedFile = null; // NON-NLS
       }
 
-      final FileFilter[] fileFilters = new FileFilter[]{new FilesystemFilter(new String[]{".xmi"}, // NON-NLS
-          Messages.getString("PmdDataSourceEditor.XmiFileName") + " (*.xmi)", true)}; // NON-NLS
+      final FileFilter[] fileFilters = new FileFilter[] { new FilesystemFilter( new String[] { ".xmi" }, // NON-NLS
+        Messages.getString( "PmdDataSourceEditor.XmiFileName" ) + " (*.xmi)", true ) }; // NON-NLS
 
-      final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser("xmifile");
-      fileChooser.setSelectedFile(initiallySelectedFile);
-      fileChooser.setFilters(fileFilters);
-      if (fileChooser.showDialog(PmdDataSourceEditor.this, JFileChooser.OPEN_DIALOG) == false)
-      {
+      final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser( "xmifile" );
+      fileChooser.setSelectedFile( initiallySelectedFile );
+      fileChooser.setFilters( fileFilters );
+      if ( fileChooser.showDialog( PmdDataSourceEditor.this, JFileChooser.OPEN_DIALOG ) == false ) {
         return;
       }
 
       final File file = fileChooser.getSelectedFile();
-      if (file == null)
-      {
+      if ( file == null ) {
         return;
       }
 
       final String path;
-      if (reportContextFile != null)
-      {
-        path = IOUtils.getInstance().createRelativePath(file.getPath(), reportContextFile.getAbsolutePath());
-      }
-      else
-      {
+      if ( reportContextFile != null ) {
+        path = IOUtils.getInstance().createRelativePath( file.getPath(), reportContextFile.getAbsolutePath() );
+      } else {
         path = file.getPath();
       }
-      filenameField.setText(path);
+      filenameField.setText( path );
     }
   }
 
-  private class QueryNameListSelectionListener implements ListSelectionListener
-  {
-    public void valueChanged(final ListSelectionEvent e)
-    {
-      if (inQueryNameUpdate)
-      {
+  private class QueryNameListSelectionListener implements ListSelectionListener {
+    public void valueChanged( final ListSelectionEvent e ) {
+      if ( inQueryNameUpdate ) {
         return;
       }
 
       final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
-      if (query != null)
-      {
-        queryNameTextField.setText(query.getQueryName());
-        queryTextArea.setText(query.getQuery());
-        queryScriptTextArea.setText(query.getScript());
-        setScriptingLanguage(query.getScriptLanguage(), queryLanguageField);
+      if ( query != null ) {
+        queryNameTextField.setText( query.getQueryName() );
+        queryTextArea.setText( query.getQuery() );
+        queryScriptTextArea.setText( query.getScript() );
+        setScriptingLanguage( query.getScriptLanguage(), queryLanguageField );
         updateComponents();
-      }
-      else
-      {
-        queryNameTextField.setText("");
-        queryTextArea.setText("");
-        queryScriptTextArea.setText("");
-        setScriptingLanguage(null, queryLanguageField);
+      } else {
+        queryNameTextField.setText( "" );
+        queryTextArea.setText( "" );
+        queryScriptTextArea.setText( "" );
+        setScriptingLanguage( null, queryLanguageField );
         updateComponents();
       }
     }
 
   }
 
-  private class AddQueryAction extends AbstractAction
-  {
-    public AddQueryAction()
-    {
+  private class AddQueryAction extends AbstractAction {
+    public AddQueryAction() {
       final URL resource = PmdDataSourceEditor.class.getResource
-          ("/org/pentaho/reporting/ui/datasources/pmd/resources/Add.png"); // NON-NLS
-      if (resource != null)
-      {
-        putValue(Action.SMALL_ICON, new ImageIcon(resource));
-      }
-      else
-      {
-        putValue(Action.NAME, Messages.getString("PmdDataSourceEditor.AddQuery.Name"));
+        ( "/org/pentaho/reporting/ui/datasources/pmd/resources/Add.png" ); // NON-NLS
+      if ( resource != null ) {
+        putValue( Action.SMALL_ICON, new ImageIcon( resource ) );
+      } else {
+        putValue( Action.NAME, Messages.getString( "PmdDataSourceEditor.AddQuery.Name" ) );
       }
 
-      putValue(Action.SHORT_DESCRIPTION, Messages.getString("PmdDataSourceEditor.AddQuery.Description"));
+      putValue( Action.SHORT_DESCRIPTION, Messages.getString( "PmdDataSourceEditor.AddQuery.Description" ) );
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       // Find a unique query name
       String queryName = "PmdDataSourceEditor.Query";
-      for (int i = 1; i < 1000; ++i)
-      {
-        final String newQueryName = Messages.getString("PmdDataSourceEditor.Query") + " " + i;
-        if (!queries.containsKey(newQueryName))
-        {
+      for ( int i = 1; i < 1000; ++i ) {
+        final String newQueryName = Messages.getString( "PmdDataSourceEditor.Query" ) + " " + i;
+        if ( !queries.containsKey( newQueryName ) ) {
           queryName = newQueryName;
           break;
         }
       }
 
-      final DataSetQuery newQuery = new DataSetQuery(queryName, "", null, null);
-      queries.put(newQuery.getQueryName(), newQuery);
+      final DataSetQuery newQuery = new DataSetQuery( queryName, "", null, null );
+      queries.put( newQuery.getQueryName(), newQuery );
 
       inModifyingQueryNameList = true;
       updateQueryList();
-      queryNameList.setSelectedValue(newQuery, true);
+      queryNameList.setSelectedValue( newQuery, true );
       inModifyingQueryNameList = false;
       updateComponents();
     }
   }
 
-  private class PrepareAndInvokeMqlEditorTask implements Runnable
-  {
-    private PrepareAndInvokeMqlEditorTask()
-    {
+  private class PrepareAndInvokeMqlEditorTask implements Runnable {
+    private PrepareAndInvokeMqlEditorTask() {
     }
 
-    public void run()
-    {
-      final DataSetQuery query = queries.get(queryNameTextField.getText());
-      if (query == null)
-      {
+    public void run() {
+      final DataSetQuery query = queries.get( queryNameTextField.getText() );
+      if ( query == null ) {
         return;
       }
 
-      try
-      {
+      try {
         final LoadRepositoryRunnable loadRepositoryRunnable =
-            new LoadRepositoryRunnable(context, domainIdTextField.getText(), filenameField.getText());
-        final Thread loadRepositoryThread = new Thread(loadRepositoryRunnable);
+          new LoadRepositoryRunnable( context, domainIdTextField.getText(), filenameField.getText() );
+        final Thread loadRepositoryThread = new Thread( loadRepositoryRunnable );
 
-        BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(loadRepositoryThread, null,
-            PmdDataSourceEditor.this, Messages.getString("PmdDataSourceEditor.PreviewTask"));
+        BackgroundCancellableProcessHelper.executeProcessWithCancelDialog( loadRepositoryThread, null,
+          PmdDataSourceEditor.this, Messages.getString( "PmdDataSourceEditor.PreviewTask" ) );
         final IMetadataDomainRepository repository = loadRepositoryRunnable.getRepository();
-        if (repository == null)
-        {
+        if ( repository == null ) {
           return;
         }
 
 
-        SwingUtilities.invokeLater(new CreateMqlEditorTask(repository, context, query, queryTextArea));
-      }
-      catch (Exception exc)
-      {
-        context.error(exc);
+        SwingUtilities.invokeLater( new CreateMqlEditorTask( repository, context, query, queryTextArea ) );
+      } catch ( Exception exc ) {
+        context.error( exc );
       }
     }
   }
 
-  private class QueryDesignerAction extends AbstractAction
-  {
-    public QueryDesignerAction()
-    {
+  private class QueryDesignerAction extends AbstractAction {
+    public QueryDesignerAction() {
       final URL resource = PmdDataSourceModule.class.getResource
-          ("/org/pentaho/reporting/ui/datasources/pmd/resources/Edit.png"); // NON-NLS
-      if (resource != null)
-      {
-        putValue(Action.SMALL_ICON, new ImageIcon(resource));
-      }
-      else
-      {
-        putValue(Action.NAME, Messages.getString("PmdDataSourceEditor.EditQuery.Name"));
+        ( "/org/pentaho/reporting/ui/datasources/pmd/resources/Edit.png" ); // NON-NLS
+      if ( resource != null ) {
+        putValue( Action.SMALL_ICON, new ImageIcon( resource ) );
+      } else {
+        putValue( Action.NAME, Messages.getString( "PmdDataSourceEditor.EditQuery.Name" ) );
       }
 
-      putValue(Action.SHORT_DESCRIPTION, Messages.getString("PmdDataSourceEditor.EditQuery.Description"));
-      setEnabled(false);
+      putValue( Action.SHORT_DESCRIPTION, Messages.getString( "PmdDataSourceEditor.EditQuery.Description" ) );
+      setEnabled( false );
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
-      final Thread t = new Thread(new PrepareAndInvokeMqlEditorTask());
+    public void actionPerformed( final ActionEvent e ) {
+      final Thread t = new Thread( new PrepareAndInvokeMqlEditorTask() );
       t.start();
     }
   }
 
-  private class RemoveQueryAction extends AbstractAction
-  {
-    public RemoveQueryAction()
-    {
+  private class RemoveQueryAction extends AbstractAction {
+    public RemoveQueryAction() {
       final URL resource = PmdDataSourceEditor.class.getResource
-          ("/org/pentaho/reporting/ui/datasources/pmd/resources/Remove.png"); // NON-NLS
-      if (resource != null)
-      {
-        putValue(Action.SMALL_ICON, new ImageIcon(resource));
-      }
-      else
-      {
-        putValue(Action.NAME, Messages.getString("PmdDataSourceEditor.RemoveQuery.Name"));
+        ( "/org/pentaho/reporting/ui/datasources/pmd/resources/Remove.png" ); // NON-NLS
+      if ( resource != null ) {
+        putValue( Action.SMALL_ICON, new ImageIcon( resource ) );
+      } else {
+        putValue( Action.NAME, Messages.getString( "PmdDataSourceEditor.RemoveQuery.Name" ) );
       }
 
-      putValue(Action.SHORT_DESCRIPTION, Messages.getString("PmdDataSourceEditor.RemoveQuery.Description"));
+      putValue( Action.SHORT_DESCRIPTION, Messages.getString( "PmdDataSourceEditor.RemoveQuery.Description" ) );
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
-      if (query != null)
-      {
-        queries.remove(query.getQueryName());
+      if ( query != null ) {
+        queries.remove( query.getQueryName() );
       }
 
       inModifyingQueryNameList = true;
@@ -338,156 +263,122 @@ public class PmdDataSourceEditor extends CommonDialog
     }
   }
 
-  private class QueryDocumentListener extends DocumentChangeHandler
-  {
-    private QueryDocumentListener()
-    {
+  private class QueryDocumentListener extends DocumentChangeHandler {
+    private QueryDocumentListener() {
     }
 
-    protected void handleChange(final DocumentEvent e)
-    {
+    protected void handleChange( final DocumentEvent e ) {
       final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
-      if (query != null)
-      {
-        query.setQuery(queryTextArea.getText());
+      if ( query != null ) {
+        query.setQuery( queryTextArea.getText() );
       }
     }
   }
 
-  private class QueryScriptDocumentListener extends DocumentChangeHandler
-  {
-    private QueryScriptDocumentListener()
-    {
+  private class QueryScriptDocumentListener extends DocumentChangeHandler {
+    private QueryScriptDocumentListener() {
     }
 
-    protected void handleChange(final DocumentEvent e)
-    {
+    protected void handleChange( final DocumentEvent e ) {
       final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
-      if (query != null)
-      {
-        query.setScript(queryScriptTextArea.getText());
+      if ( query != null ) {
+        query.setScript( queryScriptTextArea.getText() );
       }
     }
   }
 
-  private class QueryNameTextFieldDocumentListener extends DocumentChangeHandler
-  {
-    protected void handleChange(final DocumentEvent e)
-    {
-      if (inModifyingQueryNameList)
-      {
+  private class QueryNameTextFieldDocumentListener extends DocumentChangeHandler {
+    protected void handleChange( final DocumentEvent e ) {
+      if ( inModifyingQueryNameList ) {
         return;
       }
       final String queryName = queryNameTextField.getText();
       final DataSetQuery currentQuery = (DataSetQuery) queryNameList.getSelectedValue();
-      if (currentQuery == null)
-      {
+      if ( currentQuery == null ) {
         return;
       }
-      if (queryName.equals(currentQuery.getQueryName()))
-      {
+      if ( queryName.equals( currentQuery.getQueryName() ) ) {
         return;
       }
-      if (queries.containsKey(queryName))
-      {
+      if ( queries.containsKey( queryName ) ) {
         return;
       }
 
       inQueryNameUpdate = true;
-      queries.remove(currentQuery.getQueryName());
-      currentQuery.setQueryName(queryName);
-      queries.put(currentQuery.getQueryName(), currentQuery);
+      queries.remove( currentQuery.getQueryName() );
+      currentQuery.setQueryName( queryName );
+      queries.put( currentQuery.getQueryName(), currentQuery );
       updateQueryList();
-      queryNameList.setSelectedValue(currentQuery, true);
+      queryNameList.setSelectedValue( currentQuery, true );
       inQueryNameUpdate = false;
     }
   }
 
 
-  private class DomainTextFieldDocumentListener extends DocumentChangeHandler implements Runnable
-  {
-    protected void handleChange(final DocumentEvent e)
-    {
+  private class DomainTextFieldDocumentListener extends DocumentChangeHandler implements Runnable {
+    protected void handleChange( final DocumentEvent e ) {
       updateComponents();
-      SwingUtilities.invokeLater(this);
+      SwingUtilities.invokeLater( this );
     }
 
-    public void run()
-    {
+    public void run() {
       updateQueries();
     }
   }
 
-  private class FilenameDocumentListener extends DocumentChangeHandler
-  {
-    protected void handleChange(final DocumentEvent e)
-    {
+  private class FilenameDocumentListener extends DocumentChangeHandler {
+    protected void handleChange( final DocumentEvent e ) {
       updateComponents();
     }
   }
 
-  private class PreviewAction extends AbstractAction
-  {
-    private PreviewAction()
-    {
-      putValue(Action.NAME, Messages.getString("PmdDataSourceEditor.Preview.Name"));
+  private class PreviewAction extends AbstractAction {
+    private PreviewAction() {
+      putValue( Action.NAME, Messages.getString( "PmdDataSourceEditor.Preview.Name" ) );
     }
 
-    public void actionPerformed(final ActionEvent evt)
-    {
-      try
-      {
-        final DataPreviewDialog previewDialog = new DataPreviewDialog(PmdDataSourceEditor.this);
+    public void actionPerformed( final ActionEvent evt ) {
+      try {
+        final DataPreviewDialog previewDialog = new DataPreviewDialog( PmdDataSourceEditor.this );
         final String query = queryNameTextField.getText();
         Integer theMaxRows = 0;
-        if (maxPreviewRowsSpinner.isEnabled())
-        {
+        if ( maxPreviewRowsSpinner.isEnabled() ) {
           theMaxRows = (Integer) maxPreviewRowsSpinner.getValue();
         }
 
         final PmdDataFactory dataFactory = createDataFactory();
-        DataFactoryEditorSupport.configureDataFactoryForPreview(dataFactory, context);
+        DataFactoryEditorSupport.configureDataFactoryForPreview( dataFactory, context );
 
-        final PmdPreviewWorker worker = new PmdPreviewWorker(dataFactory, query, 0, theMaxRows);
-        previewDialog.showData(worker);
+        final PmdPreviewWorker worker = new PmdPreviewWorker( dataFactory, query, 0, theMaxRows );
+        previewDialog.showData( worker );
 
         final ReportDataFactoryException factoryException = worker.getException();
-        if (factoryException != null)
-        {
-          ExceptionDialog.showExceptionDialog(PmdDataSourceEditor.this,
-              Messages.getString("PmdDataSourceEditor.PreviewError.Title"),
-              Messages.getString("PmdDataSourceEditor.PreviewError.Message"), factoryException);
+        if ( factoryException != null ) {
+          ExceptionDialog.showExceptionDialog( PmdDataSourceEditor.this,
+            Messages.getString( "PmdDataSourceEditor.PreviewError.Title" ),
+            Messages.getString( "PmdDataSourceEditor.PreviewError.Message" ), factoryException );
         }
-      }
-      catch (Exception e)
-      {
-        context.error(e);
-        ExceptionDialog.showExceptionDialog(PmdDataSourceEditor.this,
-            Messages.getString("PmdDataSourceEditor.PreviewError.Title"),
-            Messages.getString("PmdDataSourceEditor.PreviewError.Message"), e);
+      } catch ( Exception e ) {
+        context.error( e );
+        ExceptionDialog.showExceptionDialog( PmdDataSourceEditor.this,
+          Messages.getString( "PmdDataSourceEditor.PreviewError.Title" ),
+          Messages.getString( "PmdDataSourceEditor.PreviewError.Message" ), e );
       }
     }
   }
 
-  private class UpdateScriptLanguageHandler implements ActionListener, ListSelectionListener
-  {
-    private UpdateScriptLanguageHandler()
-    {
+  private class UpdateScriptLanguageHandler implements ActionListener, ListSelectionListener {
+    private UpdateScriptLanguageHandler() {
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
-      if (query != null)
-      {
+      if ( query != null ) {
         final ScriptEngineFactory selectedItem = (ScriptEngineFactory) queryLanguageField.getSelectedItem();
-        if (selectedItem != null)
-        {
-          query.setScriptLanguage(selectedItem.getLanguageName());
-        }
-        else
-        {
-          query.setScriptLanguage(null);
+        if ( selectedItem != null ) {
+          query.setScriptLanguage( selectedItem.getLanguageName() );
+        } else {
+          query.setScriptLanguage( null );
         }
       }
       updateComponents();
@@ -498,133 +389,104 @@ public class PmdDataSourceEditor extends CommonDialog
      *
      * @param e the event that characterizes the change.
      */
-    public void valueChanged(final ListSelectionEvent e)
-    {
+    public void valueChanged( final ListSelectionEvent e ) {
       updateComponents();
     }
   }
 
-  private class GlobalTemplateAction extends AbstractAction
-  {
+  private class GlobalTemplateAction extends AbstractAction {
     private URL resource;
 
-    private GlobalTemplateAction()
-    {
-      putValue(Action.NAME, Messages.getString("PmdDataSourceEditor.InsertTemplate"));
+    private GlobalTemplateAction() {
+      putValue( Action.NAME, Messages.getString( "PmdDataSourceEditor.InsertTemplate" ) );
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
-      if (resource == null)
-      {
+    public void actionPerformed( final ActionEvent e ) {
+      if ( resource == null ) {
         return;
       }
 
-      if (StringUtils.isEmpty(globalScriptTextArea.getText(), true) == false)
-      {
-        if (JOptionPane.showConfirmDialog(PmdDataSourceEditor.this,
-            Messages.getString("PmdDataSourceEditor.OverwriteScript"),
-            Messages.getString("PmdDataSourceEditor.OverwriteScriptTitle"),
-            JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
-        {
+      if ( StringUtils.isEmpty( globalScriptTextArea.getText(), true ) == false ) {
+        if ( JOptionPane.showConfirmDialog( PmdDataSourceEditor.this,
+          Messages.getString( "PmdDataSourceEditor.OverwriteScript" ),
+          Messages.getString( "PmdDataSourceEditor.OverwriteScriptTitle" ),
+          JOptionPane.YES_NO_OPTION ) != JOptionPane.YES_OPTION ) {
           return;
         }
       }
 
-      try
-      {
-        final InputStreamReader r = new InputStreamReader(resource.openStream(), "UTF-8");
-        try
-        {
+      try {
+        final InputStreamReader r = new InputStreamReader( resource.openStream(), "UTF-8" );
+        try {
           final StringWriter w = new StringWriter();
-          IOUtils.getInstance().copyWriter(r, w);
+          IOUtils.getInstance().copyWriter( r, w );
 
-          globalScriptTextArea.setText(w.toString());
-        }
-        finally
-        {
+          globalScriptTextArea.setText( w.toString() );
+        } finally {
           r.close();
         }
-      }
-      catch (IOException ex)
-      {
-        logger.warn("Unable to read template.", ex);
+      } catch ( IOException ex ) {
+        logger.warn( "Unable to read template.", ex );
       }
     }
 
-    public void update()
-    {
+    public void update() {
       String key = globalScriptTextArea.getSyntaxEditingStyle();
-      if (key.startsWith("text/"))
-      {
-        key = key.substring(5);
+      if ( key.startsWith( "text/" ) ) {
+        key = key.substring( 5 );
       }
-      resource = PmdDataSourceEditor.class.getResource("resources/global-template-" + key + ".txt");
-      setEnabled(resource != null);
+      resource = PmdDataSourceEditor.class.getResource( "resources/global-template-" + key + ".txt" );
+      setEnabled( resource != null );
     }
   }
 
-  private class QueryTemplateAction extends AbstractAction
-  {
+  private class QueryTemplateAction extends AbstractAction {
     private URL resource;
 
-    private QueryTemplateAction()
-    {
-      putValue(Action.NAME, Messages.getString("PmdDataSourceEditor.InsertTemplate"));
+    private QueryTemplateAction() {
+      putValue( Action.NAME, Messages.getString( "PmdDataSourceEditor.InsertTemplate" ) );
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
-      if (resource == null)
-      {
+    public void actionPerformed( final ActionEvent e ) {
+      if ( resource == null ) {
         return;
       }
 
-      if (StringUtils.isEmpty(queryScriptTextArea.getText(), true) == false)
-      {
-        if (JOptionPane.showConfirmDialog(PmdDataSourceEditor.this,
-            Messages.getString("PmdDataSourceEditor.OverwriteScript"),
-            Messages.getString("PmdDataSourceEditor.OverwriteScriptTitle"),
-            JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
-        {
+      if ( StringUtils.isEmpty( queryScriptTextArea.getText(), true ) == false ) {
+        if ( JOptionPane.showConfirmDialog( PmdDataSourceEditor.this,
+          Messages.getString( "PmdDataSourceEditor.OverwriteScript" ),
+          Messages.getString( "PmdDataSourceEditor.OverwriteScriptTitle" ),
+          JOptionPane.YES_NO_OPTION ) != JOptionPane.YES_OPTION ) {
           return;
         }
       }
-      try
-      {
-        final InputStreamReader r = new InputStreamReader(resource.openStream(), "UTF-8");
-        try
-        {
+      try {
+        final InputStreamReader r = new InputStreamReader( resource.openStream(), "UTF-8" );
+        try {
           final StringWriter w = new StringWriter();
-          IOUtils.getInstance().copyWriter(r, w);
+          IOUtils.getInstance().copyWriter( r, w );
 
-          queryScriptTextArea.insert(w.toString(), 0);
-        }
-        finally
-        {
+          queryScriptTextArea.insert( w.toString(), 0 );
+        } finally {
           r.close();
         }
-      }
-      catch (IOException ex)
-      {
-        logger.warn("Unable to read template.", ex);
+      } catch ( IOException ex ) {
+        logger.warn( "Unable to read template.", ex );
       }
     }
 
-    public void update()
-    {
+    public void update() {
       String key = queryScriptTextArea.getSyntaxEditingStyle();
-      if (key.startsWith("text/"))
-      {
-        key = key.substring(5);
+      if ( key.startsWith( "text/" ) ) {
+        key = key.substring( 5 );
       }
-      resource = PmdDataSourceEditor.class.getResource("resources/query-template-" + key + ".txt");
-      setEnabled(resource != null);
+      resource = PmdDataSourceEditor.class.getResource( "resources/query-template-" + key + ".txt" );
+      setEnabled( resource != null );
     }
   }
 
 
-  private static final Log logger = LogFactory.getLog(PmdDataSourceEditor.class);
+  private static final Log logger = LogFactory.getLog( PmdDataSourceEditor.class );
 
   private JList queryNameList;
   private JButton queryRemoveButton;
@@ -649,449 +511,397 @@ public class PmdDataSourceEditor extends CommonDialog
   private GlobalTemplateAction globalTemplateAction;
   private QueryTemplateAction queryTemplateAction;
 
-  public PmdDataSourceEditor(final DesignTimeContext context)
-  {
-    init(context);
+  public PmdDataSourceEditor( final DesignTimeContext context ) {
+    init( context );
   }
 
-  public PmdDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-  {
-    super(owner);
-    init(context);
+  public PmdDataSourceEditor( final DesignTimeContext context, final Dialog owner ) {
+    super( owner );
+    init( context );
   }
 
-  public PmdDataSourceEditor(final DesignTimeContext context, final Frame owner)
-  {
-    super(owner);
-    init(context);
+  public PmdDataSourceEditor( final DesignTimeContext context, final Frame owner ) {
+    super( owner );
+    init( context );
   }
 
-  private void init(final DesignTimeContext context)
-  {
-    if (context == null)
-    {
+  private void init( final DesignTimeContext context ) {
+    if ( context == null ) {
       throw new NullPointerException();
     }
 
     this.context = context;
-    setModal(true);
-    setTitle(Messages.getString("PmdDataSourceEditor.Title"));
+    setModal( true );
+    setTitle( Messages.getString( "PmdDataSourceEditor.Title" ) );
 
-    maxPreviewRowsSpinner = new JSpinner(new SpinnerNumberModel(10000, 1, Integer.MAX_VALUE, 1));
+    maxPreviewRowsSpinner = new JSpinner( new SpinnerNumberModel( 10000, 1, Integer.MAX_VALUE, 1 ) );
     previewAction = new PreviewAction();
     globalTemplateAction = new GlobalTemplateAction();
     queryTemplateAction = new QueryTemplateAction();
 
-    filenameField = new JTextField(null, 0);
-    filenameField.setColumns(30);
-    filenameField.getDocument().addDocumentListener(new FilenameDocumentListener());
+    filenameField = new JTextField( null, 0 );
+    filenameField.setColumns( 30 );
+    filenameField.getDocument().addDocumentListener( new FilenameDocumentListener() );
 
     queryNameList = new JList();
-    queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    queryNameList.setVisibleRowCount(5);
-    queryNameList.addListSelectionListener(new QueryNameListSelectionListener());
-    queryNameList.setCellRenderer(new QueryNameListCellRenderer());
+    queryNameList.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+    queryNameList.setVisibleRowCount( 5 );
+    queryNameList.addListSelectionListener( new QueryNameListSelectionListener() );
+    queryNameList.setCellRenderer( new QueryNameListCellRenderer() );
 
-    queryAddButton = new BorderlessButton(new AddQueryAction());
-    queryRemoveButton = new BorderlessButton(new RemoveQueryAction());
+    queryAddButton = new BorderlessButton( new AddQueryAction() );
+    queryRemoveButton = new BorderlessButton( new RemoveQueryAction() );
 
-    queryNameTextField = new JTextField(null, 0);
-    queryNameTextField.setColumns(35);
-    queryNameTextField.getDocument().addDocumentListener(new QueryNameTextFieldDocumentListener());
+    queryNameTextField = new JTextField( null, 0 );
+    queryNameTextField.setColumns( 35 );
+    queryNameTextField.getDocument().addDocumentListener( new QueryNameTextFieldDocumentListener() );
 
-    domainIdTextField = new JTextField(null, 0);
-    domainIdTextField.setColumns(35);
-    domainIdTextField.getDocument().addDocumentListener(new DomainTextFieldDocumentListener());
+    domainIdTextField = new JTextField( null, 0 );
+    domainIdTextField.setColumns( 35 );
+    domainIdTextField.getDocument().addDocumentListener( new DomainTextFieldDocumentListener() );
 
     queryTextArea = new RSyntaxTextArea();
-    queryTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
-    queryTextArea.setWrapStyleWord(true);
-    queryTextArea.setLineWrap(true);
-    queryTextArea.setRows(5);
-    queryTextArea.getDocument().addDocumentListener(new QueryDocumentListener());
+    queryTextArea.setSyntaxEditingStyle( SyntaxConstants.SYNTAX_STYLE_XML );
+    queryTextArea.setWrapStyleWord( true );
+    queryTextArea.setLineWrap( true );
+    queryTextArea.setRows( 5 );
+    queryTextArea.getDocument().addDocumentListener( new QueryDocumentListener() );
 
-    queryDesignerButton = new JButton(new QueryDesignerAction());
-    queryDesignerButton.setEnabled(false);
-    queryDesignerButton.setBorder(new EmptyBorder(0, 0, 0, 0));
+    queryDesignerButton = new JButton( new QueryDesignerAction() );
+    queryDesignerButton.setEnabled( false );
+    queryDesignerButton.setBorder( new EmptyBorder( 0, 0, 0, 0 ) );
 
     globalScriptTextArea = new RSyntaxTextArea();
-    globalScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+    globalScriptTextArea.setSyntaxEditingStyle( SyntaxConstants.SYNTAX_STYLE_NONE );
 
-    globalLanguageField = new SmartComboBox(new DefaultComboBoxModel(getScriptEngineLanguages()));
-    globalLanguageField.setRenderer(new QueryLanguageListCellRenderer());
-    globalLanguageField.addActionListener(new UpdateScriptLanguageHandler());
+    globalLanguageField = new SmartComboBox( new DefaultComboBoxModel( getScriptEngineLanguages() ) );
+    globalLanguageField.setRenderer( new QueryLanguageListCellRenderer() );
+    globalLanguageField.addActionListener( new UpdateScriptLanguageHandler() );
 
     queryScriptTextArea = new RSyntaxTextArea();
-    queryScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
-    queryScriptTextArea.getDocument().addDocumentListener(new QueryScriptDocumentListener());
+    queryScriptTextArea.setSyntaxEditingStyle( SyntaxConstants.SYNTAX_STYLE_NONE );
+    queryScriptTextArea.getDocument().addDocumentListener( new QueryScriptDocumentListener() );
 
     queryLanguageListCellRenderer = new QueryLanguageListCellRenderer();
 
-    queryLanguageField = new SmartComboBox(new DefaultComboBoxModel(getScriptEngineLanguages()));
-    queryLanguageField.setRenderer(queryLanguageListCellRenderer);
-    queryLanguageField.addActionListener(new UpdateScriptLanguageHandler());
+    queryLanguageField = new SmartComboBox( new DefaultComboBoxModel( getScriptEngineLanguages() ) );
+    queryLanguageField.setRenderer( queryLanguageListCellRenderer );
+    queryLanguageField.addActionListener( new UpdateScriptLanguageHandler() );
 
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "PmdDataSourceEditor";
   }
 
-  private ScriptEngineFactory[] getScriptEngineLanguages()
-  {
+  private ScriptEngineFactory[] getScriptEngineLanguages() {
     final LinkedHashSet<ScriptEngineFactory> langSet = new LinkedHashSet<ScriptEngineFactory>();
-    langSet.add(null);
+    langSet.add( null );
     final List<ScriptEngineFactory> engineFactories = new ScriptEngineManager().getEngineFactories();
-    for (final ScriptEngineFactory engineFactory : engineFactories)
-    {
-      langSet.add(engineFactory);
+    for ( final ScriptEngineFactory engineFactory : engineFactories ) {
+      langSet.add( engineFactory );
     }
-    return langSet.toArray(new ScriptEngineFactory[langSet.size()]);
+    return langSet.toArray( new ScriptEngineFactory[ langSet.size() ] );
   }
 
-  protected Component createContentPane()
-  {
-    final JPanel queryTextAreaHeaderPanel = new JPanel(new BorderLayout());
-    queryTextAreaHeaderPanel.add(new JLabel(Messages.getString("PmdDataSourceEditor.QueryLabel")), BorderLayout.WEST);
-    queryTextAreaHeaderPanel.add(queryDesignerButton, BorderLayout.EAST);
+  protected Component createContentPane() {
+    final JPanel queryTextAreaHeaderPanel = new JPanel( new BorderLayout() );
+    queryTextAreaHeaderPanel
+      .add( new JLabel( Messages.getString( "PmdDataSourceEditor.QueryLabel" ) ), BorderLayout.WEST );
+    queryTextAreaHeaderPanel.add( queryDesignerButton, BorderLayout.EAST );
 
     final JPanel queryConfigurationPanel = new JPanel();
-    queryConfigurationPanel.setLayout(new BorderLayout());
-    queryConfigurationPanel.add(queryTextAreaHeaderPanel, BorderLayout.NORTH);
-    queryConfigurationPanel.add(new RTextScrollPane(700, 500, queryTextArea, true), BorderLayout.CENTER);
+    queryConfigurationPanel.setLayout( new BorderLayout() );
+    queryConfigurationPanel.add( queryTextAreaHeaderPanel, BorderLayout.NORTH );
+    queryConfigurationPanel.add( new RTextScrollPane( 700, 500, queryTextArea, true ), BorderLayout.CENTER );
 
     final JTabbedPane queryScriptTabPane = new JTabbedPane();
-    queryScriptTabPane.addTab(Messages.getString("PmdDataSourceEditor.StaticQuery"), queryConfigurationPanel);
-    queryScriptTabPane.addTab(Messages.getString("PmdDataSourceEditor.QueryScripting"), createQueryScriptTab());
+    queryScriptTabPane.addTab( Messages.getString( "PmdDataSourceEditor.StaticQuery" ), queryConfigurationPanel );
+    queryScriptTabPane.addTab( Messages.getString( "PmdDataSourceEditor.QueryScripting" ), createQueryScriptTab() );
 
     final JPanel queryAreaPanel = new JPanel();
-    queryAreaPanel.setLayout(new BorderLayout());
-    queryAreaPanel.add(createGlobalPropertiesPanel(), BorderLayout.NORTH);
-    queryAreaPanel.add(queryScriptTabPane, BorderLayout.CENTER);
+    queryAreaPanel.setLayout( new BorderLayout() );
+    queryAreaPanel.add( createGlobalPropertiesPanel(), BorderLayout.NORTH );
+    queryAreaPanel.add( queryScriptTabPane, BorderLayout.CENTER );
 
     final JTabbedPane tabbedPane = new JTabbedPane();
-    tabbedPane.addTab(Messages.getString("PmdDataSourceEditor.DataSource"), queryAreaPanel);
-    tabbedPane.addTab(Messages.getString("PmdDataSourceEditor.GlobalScripting"), createGlobalScriptTab());
+    tabbedPane.addTab( Messages.getString( "PmdDataSourceEditor.DataSource" ), queryAreaPanel );
+    tabbedPane.addTab( Messages.getString( "PmdDataSourceEditor.GlobalScripting" ), createGlobalScriptTab() );
 
-    final JPanel contentPanel = new JPanel(new BorderLayout());
-    contentPanel.add(tabbedPane, BorderLayout.CENTER);
-    contentPanel.add(createPreviewButtonsPanel(), BorderLayout.SOUTH);
-    contentPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    final JPanel contentPanel = new JPanel( new BorderLayout() );
+    contentPanel.add( tabbedPane, BorderLayout.CENTER );
+    contentPanel.add( createPreviewButtonsPanel(), BorderLayout.SOUTH );
+    contentPanel.setBorder( BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) );
 
     return contentPanel;
   }
 
-  private JPanel createQueryScriptTab()
-  {
-    final JPanel queryHeader2 = new JPanel(new BorderLayout());
-    queryHeader2.add(new JLabel(Messages.getString("PmdDataSourceEditor.QueryScript")), BorderLayout.CENTER);
-    queryHeader2.add(new JButton(queryTemplateAction), BorderLayout.EAST);
+  private JPanel createQueryScriptTab() {
+    final JPanel queryHeader2 = new JPanel( new BorderLayout() );
+    queryHeader2.add( new JLabel( Messages.getString( "PmdDataSourceEditor.QueryScript" ) ), BorderLayout.CENTER );
+    queryHeader2.add( new JButton( queryTemplateAction ), BorderLayout.EAST );
 
-    final JPanel queryScriptHeader = new JPanel(new VerticalLayout(5, VerticalLayout.BOTH, VerticalLayout.TOP));
-    queryScriptHeader.add(new JLabel(Messages.getString("PmdDataSourceEditor.QueryScriptLanguage")));
-    queryScriptHeader.add(queryLanguageField);
-    queryScriptHeader.add(queryHeader2);
+    final JPanel queryScriptHeader = new JPanel( new VerticalLayout( 5, VerticalLayout.BOTH, VerticalLayout.TOP ) );
+    queryScriptHeader.add( new JLabel( Messages.getString( "PmdDataSourceEditor.QueryScriptLanguage" ) ) );
+    queryScriptHeader.add( queryLanguageField );
+    queryScriptHeader.add( queryHeader2 );
 
-    final JPanel queryScriptContentHolder = new JPanel(new BorderLayout());
-    queryScriptContentHolder.add(queryScriptHeader, BorderLayout.NORTH);
-    queryScriptContentHolder.add(new RTextScrollPane(700, 300, queryScriptTextArea, true), BorderLayout.CENTER);
+    final JPanel queryScriptContentHolder = new JPanel( new BorderLayout() );
+    queryScriptContentHolder.add( queryScriptHeader, BorderLayout.NORTH );
+    queryScriptContentHolder.add( new RTextScrollPane( 700, 300, queryScriptTextArea, true ), BorderLayout.CENTER );
     return queryScriptContentHolder;
   }
 
-  private JPanel createGlobalScriptTab()
-  {
-    final JPanel globalHeader2 = new JPanel(new BorderLayout());
-    globalHeader2.add(new JLabel(Messages.getString("PmdDataSourceEditor.GlobalScript")), BorderLayout.CENTER);
-    globalHeader2.add(new JButton(globalTemplateAction), BorderLayout.EAST);
+  private JPanel createGlobalScriptTab() {
+    final JPanel globalHeader2 = new JPanel( new BorderLayout() );
+    globalHeader2.add( new JLabel( Messages.getString( "PmdDataSourceEditor.GlobalScript" ) ), BorderLayout.CENTER );
+    globalHeader2.add( new JButton( globalTemplateAction ), BorderLayout.EAST );
 
-    final JPanel globalScriptHeader = new JPanel(new VerticalLayout(5, VerticalLayout.BOTH, VerticalLayout.TOP));
-    globalScriptHeader.add(new JLabel(Messages.getString("PmdDataSourceEditor.GlobalScriptLanguage")));
-    globalScriptHeader.add(globalLanguageField);
-    globalScriptHeader.add(globalHeader2);
+    final JPanel globalScriptHeader = new JPanel( new VerticalLayout( 5, VerticalLayout.BOTH, VerticalLayout.TOP ) );
+    globalScriptHeader.add( new JLabel( Messages.getString( "PmdDataSourceEditor.GlobalScriptLanguage" ) ) );
+    globalScriptHeader.add( globalLanguageField );
+    globalScriptHeader.add( globalHeader2 );
 
-    final JPanel globalScriptContentHolder = new JPanel(new BorderLayout());
-    globalScriptContentHolder.add(globalScriptHeader, BorderLayout.NORTH);
-    globalScriptContentHolder.add(new RTextScrollPane(700, 600, globalScriptTextArea, true), BorderLayout.CENTER);
+    final JPanel globalScriptContentHolder = new JPanel( new BorderLayout() );
+    globalScriptContentHolder.add( globalScriptHeader, BorderLayout.NORTH );
+    globalScriptContentHolder.add( new RTextScrollPane( 700, 600, globalScriptTextArea, true ), BorderLayout.CENTER );
     return globalScriptContentHolder;
   }
 
-  private JPanel createGlobalPropertiesPanel()
-  {
+  private JPanel createGlobalPropertiesPanel() {
     final JPanel filePanel = new JPanel();
-    filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.X_AXIS));
-    filePanel.add(filenameField);
-    filePanel.add(new JButton(new BrowseAction()));
+    filePanel.setLayout( new BoxLayout( filePanel, BoxLayout.X_AXIS ) );
+    filePanel.add( filenameField );
+    filePanel.add( new JButton( new BrowseAction() ) );
 
-    final JPanel queryListButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    queryListButtonsPanel.add(queryAddButton);
-    queryListButtonsPanel.add(queryRemoveButton);
+    final JPanel queryListButtonsPanel = new JPanel( new FlowLayout( FlowLayout.RIGHT ) );
+    queryListButtonsPanel.add( queryAddButton );
+    queryListButtonsPanel.add( queryRemoveButton );
 
-    final JPanel queryListButtonsPanelWrapper = new JPanel(new BorderLayout());
-    queryListButtonsPanelWrapper.add(new JLabel(Messages.getString("PmdDataSourceEditor.AvailableQueries")), BorderLayout.WEST);
-    queryListButtonsPanelWrapper.add(queryListButtonsPanel, BorderLayout.EAST);
+    final JPanel queryListButtonsPanelWrapper = new JPanel( new BorderLayout() );
+    queryListButtonsPanelWrapper
+      .add( new JLabel( Messages.getString( "PmdDataSourceEditor.AvailableQueries" ) ), BorderLayout.WEST );
+    queryListButtonsPanelWrapper.add( queryListButtonsPanel, BorderLayout.EAST );
 
     final JPanel dataSourceConfigurationPanel = new JPanel();
-    dataSourceConfigurationPanel.setLayout(new VerticalLayout(5, VerticalLayout.BOTH, VerticalLayout.TOP));
-    dataSourceConfigurationPanel.add(new JLabel(Messages.getString("PmdDataSourceEditor.XmiFileLabel")));
-    dataSourceConfigurationPanel.add(filePanel);
-    dataSourceConfigurationPanel.add(new JLabel(Messages.getString("PmdDataSourceEditor.DomainId")));
-    dataSourceConfigurationPanel.add(domainIdTextField);
-    dataSourceConfigurationPanel.add(queryListButtonsPanelWrapper);
-    dataSourceConfigurationPanel.add(new JScrollPane(queryNameList));
-    dataSourceConfigurationPanel.add(new JLabel(Messages.getString("PmdDataSourceEditor.QueryName")));
-    dataSourceConfigurationPanel.add(queryNameTextField);
+    dataSourceConfigurationPanel.setLayout( new VerticalLayout( 5, VerticalLayout.BOTH, VerticalLayout.TOP ) );
+    dataSourceConfigurationPanel.add( new JLabel( Messages.getString( "PmdDataSourceEditor.XmiFileLabel" ) ) );
+    dataSourceConfigurationPanel.add( filePanel );
+    dataSourceConfigurationPanel.add( new JLabel( Messages.getString( "PmdDataSourceEditor.DomainId" ) ) );
+    dataSourceConfigurationPanel.add( domainIdTextField );
+    dataSourceConfigurationPanel.add( queryListButtonsPanelWrapper );
+    dataSourceConfigurationPanel.add( new JScrollPane( queryNameList ) );
+    dataSourceConfigurationPanel.add( new JLabel( Messages.getString( "PmdDataSourceEditor.QueryName" ) ) );
+    dataSourceConfigurationPanel.add( queryNameTextField );
     return dataSourceConfigurationPanel;
   }
 
-  private JPanel createPreviewButtonsPanel()
-  {
-    final JPanel previewButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    previewButtonsPanel.add(new JCheckBox(new LimitRowsCheckBoxActionListener(maxPreviewRowsSpinner)));
-    previewButtonsPanel.add(maxPreviewRowsSpinner);
-    previewButtonsPanel.add(new JButton(previewAction));
+  private JPanel createPreviewButtonsPanel() {
+    final JPanel previewButtonsPanel = new JPanel( new FlowLayout( FlowLayout.RIGHT ) );
+    previewButtonsPanel.add( new JCheckBox( new LimitRowsCheckBoxActionListener( maxPreviewRowsSpinner ) ) );
+    previewButtonsPanel.add( maxPreviewRowsSpinner );
+    previewButtonsPanel.add( new JButton( previewAction ) );
     return previewButtonsPanel;
   }
 
-  public PmdDataFactory performConfiguration(final PmdDataFactory dataFactory, final String selectedQuery)
-  {
+  public PmdDataFactory performConfiguration( final PmdDataFactory dataFactory, final String selectedQuery ) {
     // Initialize the internal storage
     queries = new TreeMap<String, DataSetQuery>();
 
     // Load the current configuration
-    if (dataFactory != null)
-    {
-      filenameField.setText(dataFactory.getXmiFile());
-      domainIdTextField.setText(dataFactory.getDomainId());
-      setGlobalScriptingLanguage(dataFactory.getGlobalScriptLanguage());
-      globalScriptTextArea.setText(dataFactory.getGlobalScript());
+    if ( dataFactory != null ) {
+      filenameField.setText( dataFactory.getXmiFile() );
+      domainIdTextField.setText( dataFactory.getDomainId() );
+      setGlobalScriptingLanguage( dataFactory.getGlobalScriptLanguage() );
+      globalScriptTextArea.setText( dataFactory.getGlobalScript() );
 
       final String[] queryNames = dataFactory.getQueryNames();
-      for (int i = 0; i < queryNames.length; i++)
-      {
-        final String queryName = queryNames[i];
-        final String query = dataFactory.getQuery(queryName);
-        final String scriptLanguage = dataFactory.getScriptingLanguage(queryName);
-        final String script = dataFactory.getScript(queryName);
-        queries.put(queryName, new DataSetQuery(queryName, query, scriptLanguage, script));
+      for ( int i = 0; i < queryNames.length; i++ ) {
+        final String queryName = queryNames[ i ];
+        final String query = dataFactory.getQuery( queryName );
+        final String scriptLanguage = dataFactory.getScriptingLanguage( queryName );
+        final String script = dataFactory.getScript( queryName );
+        queries.put( queryName, new DataSetQuery( queryName, query, scriptLanguage, script ) );
       }
     }
 
     // Prepare the data and the enable the proper buttons
     updateComponents();
     updateQueryList();
-    setSelectedQuery(selectedQuery);
+    setSelectedQuery( selectedQuery );
 
-    if (!performEdit())
-    {
+    if ( !performEdit() ) {
       return null;
     }
 
     return createDataFactory();
   }
 
-  private void setGlobalScriptingLanguage(final String lang)
-  {
-    setScriptingLanguage(lang, globalLanguageField);
+  private void setGlobalScriptingLanguage( final String lang ) {
+    setScriptingLanguage( lang, globalLanguageField );
   }
 
-  protected void setScriptingLanguage(final String lang, final JComboBox languageField)
-  {
-    if (lang == null)
-    {
-      languageField.setSelectedItem(null);
+  protected void setScriptingLanguage( final String lang, final JComboBox languageField ) {
+    if ( lang == null ) {
+      languageField.setSelectedItem( null );
       return;
     }
 
     final ListModel model = languageField.getModel();
-    for (int i = 0; i < model.getSize(); i++)
-    {
-      final ScriptEngineFactory elementAt = (ScriptEngineFactory) model.getElementAt(i);
-      if (elementAt == null)
-      {
+    for ( int i = 0; i < model.getSize(); i++ ) {
+      final ScriptEngineFactory elementAt = (ScriptEngineFactory) model.getElementAt( i );
+      if ( elementAt == null ) {
         continue;
       }
-      if (elementAt.getNames().contains(lang))
-      {
-        languageField.setSelectedItem(elementAt);
+      if ( elementAt.getNames().contains( lang ) ) {
+        languageField.setSelectedItem( elementAt );
         return;
       }
     }
   }
 
-  private String getGlobalScriptingLanguage()
-  {
+  private String getGlobalScriptingLanguage() {
     final ScriptEngineFactory selectedValue = (ScriptEngineFactory) globalLanguageField.getSelectedItem();
-    if (selectedValue == null)
-    {
+    if ( selectedValue == null ) {
       return null;
     }
     return selectedValue.getLanguageName();
   }
 
-  private PmdDataFactory createDataFactory()
-  {
+  private PmdDataFactory createDataFactory() {
     final PmdDataFactory returnDataFactory = new PmdDataFactory();
-    returnDataFactory.setXmiFile(filenameField.getText());
-    returnDataFactory.setDomainId(domainIdTextField.getText());
-    returnDataFactory.setConnectionProvider(new PmdConnectionProvider());
-    returnDataFactory.setGlobalScriptLanguage(getGlobalScriptingLanguage());
-    if (StringUtils.isEmpty(globalScriptTextArea.getText()) == false)
-    {
-      returnDataFactory.setGlobalScript(globalScriptTextArea.getText());
+    returnDataFactory.setXmiFile( filenameField.getText() );
+    returnDataFactory.setDomainId( domainIdTextField.getText() );
+    returnDataFactory.setConnectionProvider( new PmdConnectionProvider() );
+    returnDataFactory.setGlobalScriptLanguage( getGlobalScriptingLanguage() );
+    if ( StringUtils.isEmpty( globalScriptTextArea.getText() ) == false ) {
+      returnDataFactory.setGlobalScript( globalScriptTextArea.getText() );
     }
 
-    for (final DataSetQuery query : this.queries.values())
-    {
-      returnDataFactory.setQuery(query.getQueryName(), query.getQuery(), query.getScriptLanguage(), query.getScript());
+    for ( final DataSetQuery query : this.queries.values() ) {
+      returnDataFactory
+        .setQuery( query.getQueryName(), query.getQuery(), query.getScriptLanguage(), query.getScript() );
     }
     return returnDataFactory;
   }
 
-  protected void updateQueryList()
-  {
-    if (!queries.isEmpty())
-    {
-      queryNameList.setListData(queries.values().toArray(new DataSetQuery[queries.size()]));
-    }
-    else
-    {
-      queryNameList.setListData(new Object[0]);
+  protected void updateQueryList() {
+    if ( !queries.isEmpty() ) {
+      queryNameList.setListData( queries.values().toArray( new DataSetQuery[ queries.size() ] ) );
+    } else {
+      queryNameList.setListData( new Object[ 0 ] );
     }
   }
 
-  private void setSelectedQuery(final String query)
-  {
+  private void setSelectedQuery( final String query ) {
     final ListModel listModel = queryNameList.getModel();
-    for (int i = 0; i < listModel.getSize(); i++)
-    {
-      final DataSetQuery dataSet = (DataSetQuery) listModel.getElementAt(i);
-      if (dataSet.getQueryName().equals(query))
-      {
-        queryNameList.setSelectedValue(dataSet, true);
+    for ( int i = 0; i < listModel.getSize(); i++ ) {
+      final DataSetQuery dataSet = (DataSetQuery) listModel.getElementAt( i );
+      if ( dataSet.getQueryName().equals( query ) ) {
+        queryNameList.setSelectedValue( dataSet, true );
         break;
       }
     }
   }
 
-  protected void updateComponents()
-  {
+  protected void updateComponents() {
     final boolean querySelected = queryNameList.getSelectedIndex() != -1;
     final boolean hasQueries = queryNameList.getModel().getSize() > 0;
-    final boolean isFileSelected = !StringUtils.isEmpty(filenameField.getText(), true);
-    final boolean hasDomain = !StringUtils.isEmpty(domainIdTextField.getText(), true);
+    final boolean isFileSelected = !StringUtils.isEmpty( filenameField.getText(), true );
+    final boolean hasDomain = !StringUtils.isEmpty( domainIdTextField.getText(), true );
 
-    queryLanguageListCellRenderer.setDefaultValue((ScriptEngineFactory) globalLanguageField.getSelectedItem());
+    queryLanguageListCellRenderer.setDefaultValue( (ScriptEngineFactory) globalLanguageField.getSelectedItem() );
 
-    domainIdTextField.setEnabled(isFileSelected);
+    domainIdTextField.setEnabled( isFileSelected );
 
-    previewAction.setEnabled(isFileSelected && querySelected);
-    queryNameTextField.setEnabled(querySelected);
-    queryTextArea.setEnabled(querySelected);
-    queryRemoveButton.setEnabled(querySelected);
-    queryDesignerButton.setEnabled(hasDomain && querySelected && isFileSelected);
-    queryAddButton.setEnabled(true);
+    previewAction.setEnabled( isFileSelected && querySelected );
+    queryNameTextField.setEnabled( querySelected );
+    queryTextArea.setEnabled( querySelected );
+    queryRemoveButton.setEnabled( querySelected );
+    queryDesignerButton.setEnabled( hasDomain && querySelected && isFileSelected );
+    queryAddButton.setEnabled( true );
 
-    globalScriptTextArea.setSyntaxEditingStyle(mapLanguageToSyntaxHighlighting
-        ((ScriptEngineFactory) globalLanguageField.getSelectedItem()));
+    globalScriptTextArea.setSyntaxEditingStyle( mapLanguageToSyntaxHighlighting
+      ( (ScriptEngineFactory) globalLanguageField.getSelectedItem() ) );
 
     final ScriptEngineFactory queryScriptLanguage = (ScriptEngineFactory) queryLanguageField.getSelectedItem();
-    if (queryScriptLanguage == null)
-    {
-      queryScriptTextArea.setSyntaxEditingStyle(globalScriptTextArea.getSyntaxEditingStyle());
-    }
-    else
-    {
-      queryScriptTextArea.setSyntaxEditingStyle(mapLanguageToSyntaxHighlighting(queryScriptLanguage));
+    if ( queryScriptLanguage == null ) {
+      queryScriptTextArea.setSyntaxEditingStyle( globalScriptTextArea.getSyntaxEditingStyle() );
+    } else {
+      queryScriptTextArea.setSyntaxEditingStyle( mapLanguageToSyntaxHighlighting( queryScriptLanguage ) );
     }
 
-    getConfirmAction().setEnabled(hasQueries && isFileSelected);
+    getConfirmAction().setEnabled( hasQueries && isFileSelected );
 
-    queryScriptTextArea.setEnabled(querySelected);
-    queryLanguageField.setEnabled(querySelected);
+    queryScriptTextArea.setEnabled( querySelected );
+    queryLanguageField.setEnabled( querySelected );
     queryTemplateAction.update();
-    if (querySelected == false)
-    {
-      queryTemplateAction.setEnabled(false);
+    if ( querySelected == false ) {
+      queryTemplateAction.setEnabled( false );
     }
 
     globalTemplateAction.update();
   }
 
-  private String mapLanguageToSyntaxHighlighting(final ScriptEngineFactory script)
-  {
-    if (script == null)
-    {
+  private String mapLanguageToSyntaxHighlighting( final ScriptEngineFactory script ) {
+    if ( script == null ) {
       return SyntaxConstants.SYNTAX_STYLE_NONE;
     }
 
     final String language = script.getLanguageName();
-    if ("ECMAScript".equalsIgnoreCase(language) ||
-        "js".equalsIgnoreCase(language) ||
-        "rhino".equalsIgnoreCase(language) ||
-        "javascript".equalsIgnoreCase(language))
-    {
+    if ( "ECMAScript".equalsIgnoreCase( language ) ||
+      "js".equalsIgnoreCase( language ) ||
+      "rhino".equalsIgnoreCase( language ) ||
+      "javascript".equalsIgnoreCase( language ) ) {
       return SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT;
     }
-    if ("groovy".equalsIgnoreCase(language))
-    {
+    if ( "groovy".equalsIgnoreCase( language ) ) {
       return SyntaxConstants.SYNTAX_STYLE_GROOVY;
     }
     return SyntaxConstants.SYNTAX_STYLE_NONE;
   }
 
-  protected void updateQueries()
-  {
-    try
-    {
+  protected void updateQueries() {
+    try {
       final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       final DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 
-      final DataSetQuery[] objects = queries.values().toArray(new DataSetQuery[queries.size()]);
-      for (int i = 0; i < objects.length; i++)
-      {
-        final DataSetQuery object = objects[i];
+      final DataSetQuery[] objects = queries.values().toArray( new DataSetQuery[ queries.size() ] );
+      for ( int i = 0; i < objects.length; i++ ) {
+        final DataSetQuery object = objects[ i ];
         final String text = object.getQuery();
-        if (StringUtils.isEmpty(text, true))
-        {
+        if ( StringUtils.isEmpty( text, true ) ) {
           continue;
         }
 
-        try
-        {
-          final Document doc = documentBuilder.parse(new InputSource(new StringReader(text)));
-          final NodeList list = doc.getDocumentElement().getElementsByTagName("domain_id");
-          if (list.getLength() == 0)
-          {
+        try {
+          final Document doc = documentBuilder.parse( new InputSource( new StringReader( text ) ) );
+          final NodeList list = doc.getDocumentElement().getElementsByTagName( "domain_id" );
+          if ( list.getLength() == 0 ) {
             continue;
           }
-          list.item(0).setTextContent(domainIdTextField.getText());
+          list.item( 0 ).setTextContent( domainIdTextField.getText() );
 
           final TransformerFactory tfactory = TransformerFactory.newInstance();
           final StringWriter stringWriter = new StringWriter();
           final StreamResult result = new StreamResult();
-          result.setWriter(stringWriter);
-          tfactory.newTransformer().transform(new DOMSource(doc), result);
-          object.setQuery(stringWriter.getBuffer().toString());
+          result.setWriter( stringWriter );
+          tfactory.newTransformer().transform( new DOMSource( doc ), result );
+          object.setQuery( stringWriter.getBuffer().toString() );
 
-        }
-        catch (Exception e)
-        {
-          context.error(e);
+        } catch ( Exception e ) {
+          context.error( e );
         }
       }
-    }
-    catch (Exception e)
-    {
-      context.error(e);
+    } catch ( Exception e ) {
+      context.error( e );
     }
 
     final Object o = queryNameList.getSelectedValue();
-    if (o != null)
-    {
+    if ( o != null ) {
       final DataSetQuery q = (DataSetQuery) o;
-      queryTextArea.setText(q.getQuery());
+      queryTextArea.setText( q.getQuery() );
     }
   }
 }

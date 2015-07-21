@@ -23,44 +23,37 @@ import org.jfree.chart.plot.RingPlot;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.PieDataset;
 
-public class RingChartExpression extends PieChartExpression
-{
+public class RingChartExpression extends PieChartExpression {
 
   private static final long serialVersionUID = 8157232155813173422L;
 
   private double sectionDepth;
 
-  public RingChartExpression()
-  {
+  public RingChartExpression() {
     sectionDepth = 0.5;
   }
 
-  protected JFreeChart computeChart(final Dataset dataset)
-  {
+  protected JFreeChart computeChart( final Dataset dataset ) {
     PieDataset pieDataset = null;
-    if (dataset instanceof PieDataset)
-    {
+    if ( dataset instanceof PieDataset ) {
       pieDataset = (PieDataset) dataset;
     }
 
-    return ChartFactory.createRingChart(computeTitle(), pieDataset, isShowLegend(), false, false);
+    return ChartFactory.createRingChart( computeTitle(), pieDataset, isShowLegend(), false, false );
   }
 
-  protected void configureChart(final JFreeChart chart)
-  {
-    super.configureChart(chart);
+  protected void configureChart( final JFreeChart chart ) {
+    super.configureChart( chart );
 
     final RingPlot ringPlot = (RingPlot) chart.getPlot();
-    ringPlot.setSectionDepth(sectionDepth);
+    ringPlot.setSectionDepth( sectionDepth );
   }
 
-  public double getSectionDepth()
-  {
+  public double getSectionDepth() {
     return sectionDepth;
   }
 
-  public void setSectionDepth(final double sectionDepth)
-  {
+  public void setSectionDepth( final double sectionDepth ) {
     this.sectionDepth = sectionDepth;
   }
 

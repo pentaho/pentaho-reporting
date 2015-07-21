@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types;
 
-import java.util.Locale;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.metadata.model.concept.types.LocalizedString;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class LocalizedStringConceptMapper implements ConceptQueryMapper
-{
-  private static final Log logger = LogFactory.getLog(LocalizedStringConceptMapper.class);
+import java.util.Locale;
 
-  public LocalizedStringConceptMapper()
-  {
+public class LocalizedStringConceptMapper implements ConceptQueryMapper {
+  private static final Log logger = LogFactory.getLog( LocalizedStringConceptMapper.class );
+
+  public LocalizedStringConceptMapper() {
   }
 
   /**
@@ -38,40 +36,33 @@ public class LocalizedStringConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof LocalizedString == false)
-    {
+    if ( value instanceof LocalizedString == false ) {
       return null;
     }
 
-    if (type == null || Object.class.equals(type) || LocalizedString.class.equals(type))
-    {
-      if (value instanceof LocalizedStringWrapper)
-      {
+    if ( type == null || Object.class.equals( type ) || LocalizedString.class.equals( type ) ) {
+      if ( value instanceof LocalizedStringWrapper ) {
         return value;
       }
-      return new LocalizedStringWrapper((LocalizedString) value);
+      return new LocalizedStringWrapper( (LocalizedString) value );
     }
 
-    if (String.class.equals(type) == false)
-    {
+    if ( String.class.equals( type ) == false ) {
       return null;
     }
 
     final LocalizedString settings = (LocalizedString) value;
     final Locale locale = context.getLocale();
     final String localeAsText = locale.toString();
-    final Object o = settings.getLocalizedString(localeAsText);
-    if (o == null)
-    {
-      logger.warn("Unable to translate localized-string property for locale [" + locale + "]. " +
-          "The localization does not contain a translation for this locale and does not provide a fallback.");
+    final Object o = settings.getLocalizedString( localeAsText );
+    if ( o == null ) {
+      logger.warn( "Unable to translate localized-string property for locale [" + locale + "]. " +
+        "The localization does not contain a translation for this locale and does not provide a fallback." );
     }
     return o;
   }

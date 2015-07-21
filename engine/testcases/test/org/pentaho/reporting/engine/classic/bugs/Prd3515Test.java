@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.io.IOException;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -29,32 +26,30 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd3515Test extends TestCase
-{
-  public Prd3515Test()
-  {
+import java.io.IOException;
+import java.net.URL;
+
+public class Prd3515Test extends TestCase {
+  public Prd3515Test() {
   }
 
-  public Prd3515Test(final String name)
-  {
-    super(name);
+  public Prd3515Test( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testChartReport() throws ResourceException, IOException, ReportProcessingException
-  {
-    final URL url = getClass().getResource("Prd-3515.prpt");
-    assertNotNull(url);
+  public void testChartReport() throws ResourceException, IOException, ReportProcessingException {
+    final URL url = getClass().getResource( "Prd-3515.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    DebugReportRunner.createPDF(report);
+    DebugReportRunner.createPDF( report );
     //System.out.println (new String(bytes, "UTF-8"));
   }
 

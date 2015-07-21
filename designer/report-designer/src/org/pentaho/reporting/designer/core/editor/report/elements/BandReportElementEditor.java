@@ -25,19 +25,15 @@ import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEdit
  *
  * @author Thomas Morgner
  */
-public class BandReportElementEditor extends DefaultReportElementEditor
-{
-  public BandReportElementEditor()
-  {
+public class BandReportElementEditor extends DefaultReportElementEditor {
+  public BandReportElementEditor() {
   }
 
-  public ReportElementInlineEditor createInlineEditor()
-  {
+  public ReportElementInlineEditor createInlineEditor() {
     return null;
   }
 
-  public ReportElementDragHandler createDragHandler()
-  {
+  public ReportElementDragHandler createDragHandler() {
     return new BandReportElementDragHandler();
   }
 }

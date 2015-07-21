@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import javax.swing.table.TableModel;
-
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.parameters.UnknownParamException;
 import org.pentaho.di.core.plugins.PluginRegistry;
@@ -51,8 +43,15 @@ import org.pentaho.reporting.libraries.formula.parser.ParseException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public abstract class AbstractKettleTransformationProducer implements KettleTransformationProducer
-{
+import javax.swing.table.TableModel;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+
+public abstract class AbstractKettleTransformationProducer implements KettleTransformationProducer {
   private static final long serialVersionUID = -2287953597208384424L;
 
   private String stepName;
@@ -65,35 +64,30 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
   private boolean stopOnError;
 
   @Deprecated
-  public AbstractKettleTransformationProducer(final String repositoryName,
-                                              final String stepName,
-                                              final String username,
-                                              final String password,
-                                              final String[] definedArgumentNames,
-                                              final ParameterMapping[] definedVariableNames)
-  {
-    this(repositoryName, stepName, username, password,
-        FormulaArgument.convert(definedArgumentNames),
-        FormulaParameter.convert(definedVariableNames));
+  public AbstractKettleTransformationProducer( final String repositoryName,
+                                               final String stepName,
+                                               final String username,
+                                               final String password,
+                                               final String[] definedArgumentNames,
+                                               final ParameterMapping[] definedVariableNames ) {
+    this( repositoryName, stepName, username, password,
+      FormulaArgument.convert( definedArgumentNames ),
+      FormulaParameter.convert( definedVariableNames ) );
   }
 
-  protected AbstractKettleTransformationProducer(final String repositoryName,
-                                                 final String stepName,
-                                                 final String username,
-                                                 final String password,
-                                                 final FormulaArgument[] definedArgumentNames,
-                                                 final FormulaParameter[] definedVariableNames)
-  {
-    if (repositoryName == null)
-    {
+  protected AbstractKettleTransformationProducer( final String repositoryName,
+                                                  final String stepName,
+                                                  final String username,
+                                                  final String password,
+                                                  final FormulaArgument[] definedArgumentNames,
+                                                  final FormulaParameter[] definedVariableNames ) {
+    if ( repositoryName == null ) {
       throw new NullPointerException();
     }
-    if (definedArgumentNames == null)
-    {
+    if ( definedArgumentNames == null ) {
       throw new NullPointerException();
     }
-    if (definedVariableNames == null)
-    {
+    if ( definedVariableNames == null ) {
       throw new NullPointerException();
     }
 
@@ -107,285 +101,226 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
 
   }
 
-  public boolean isStopOnError()
-  {
+  public boolean isStopOnError() {
     return stopOnError;
   }
 
-  public void setStopOnError(final boolean stopOnError)
-  {
+  public void setStopOnError( final boolean stopOnError ) {
     this.stopOnError = stopOnError;
   }
 
-  public String getStepName()
-  {
+  public String getStepName() {
     return stepName;
   }
 
-  public String getUsername()
-  {
+  public String getUsername() {
     return username;
   }
 
-  public String getPassword()
-  {
+  public String getPassword() {
     return password;
   }
 
-  public String getRepositoryName()
-  {
+  public String getRepositoryName() {
     return repositoryName;
   }
 
-  public String[] getDefinedArgumentNames()
-  {
-    return FormulaArgument.convert(arguments);
+  public String[] getDefinedArgumentNames() {
+    return FormulaArgument.convert( arguments );
   }
 
-  public ParameterMapping[] getDefinedVariableNames()
-  {
-    return FormulaParameter.convert(parameter);
+  public ParameterMapping[] getDefinedVariableNames() {
+    return FormulaParameter.convert( parameter );
   }
 
-  public FormulaArgument[] getArguments()
-  {
+  public FormulaArgument[] getArguments() {
     return arguments.clone();
   }
 
-  public FormulaParameter[] getParameter()
-  {
+  public FormulaParameter[] getParameter() {
     return parameter.clone();
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final AbstractKettleTransformationProducer prod = (AbstractKettleTransformationProducer) super.clone();
       prod.arguments = arguments.clone();
       prod.parameter = parameter.clone();
       prod.currentlyRunningTransformation = null;
       return prod;
-    }
-    catch (final CloneNotSupportedException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( final CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 
-  public TransMeta loadTransformation(final DataFactoryContext context)
-      throws KettleException, ReportDataFactoryException
-  {
+  public TransMeta loadTransformation( final DataFactoryContext context )
+    throws KettleException, ReportDataFactoryException {
     final Repository repository = connectToRepository();
-    try
-    {
-      return loadTransformation(repository, context.getResourceManager(), context.getContextKey());
-    }
-    finally
-    {
+    try {
+      return loadTransformation( repository, context.getResourceManager(), context.getContextKey() );
+    } finally {
       currentlyRunningTransformation = null;
-      if (repository != null)
-      {
+      if ( repository != null ) {
         repository.disconnect();
       }
     }
   }
 
-  public TableModel queryDesignTimeStructure(final DataRow parameter,
-                                             final DataFactoryContext context)
-      throws ReportDataFactoryException, KettleException
-  {
+  public TableModel queryDesignTimeStructure( final DataRow parameter,
+                                              final DataFactoryContext context )
+    throws ReportDataFactoryException, KettleException {
     String stepName = getStepName();
-    if (stepName == null)
-    {
-      throw new ReportDataFactoryException("No step name defined.");
+    if ( stepName == null ) {
+      throw new ReportDataFactoryException( "No step name defined." );
     }
 
     final Repository repository = connectToRepository();
-    try
-    {
+    try {
       ResourceManager resourceManager = context.getResourceManager();
-      final TransMeta transMeta = loadTransformation(repository, resourceManager, context.getContextKey());
-      if (isDynamicTransformation(transMeta))
-      {
+      final TransMeta transMeta = loadTransformation( repository, resourceManager, context.getContextKey() );
+      if ( isDynamicTransformation( transMeta ) ) {
         // we cannot safely guess columns from transformations that use Metadata-Injection.
         // So lets solve them the traditional way.
-        return performQueryOnTransformation(parameter, 1, context, transMeta);
+        return performQueryOnTransformation( parameter, 1, context, transMeta );
       }
 
-      StepMeta step = transMeta.findStep(stepName);
-      if (step == null)
-      {
-        throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
+      StepMeta step = transMeta.findStep( stepName );
+      if ( step == null ) {
+        throw new ReportDataFactoryException( "Cannot find the specified transformation step " + stepName );
       }
 
-      final RowMetaInterface row = transMeta.getStepFields(getStepName());
-      final TableProducer tableProducer = new TableProducer(row, 1, true);
+      final RowMetaInterface row = transMeta.getStepFields( getStepName() );
+      final TableProducer tableProducer = new TableProducer( row, 1, true );
       return tableProducer.getTableModel();
-    }
-    catch (final EvaluationException e)
-    {
-      throw new ReportDataFactoryException("Failed to evaluate parameter", e);
-    }
-    catch (final ParseException e)
-    {
-      throw new ReportDataFactoryException("Failed to evaluate parameter", e);
-    }
-    finally
-    {
-      if (repository != null)
-      {
+    } catch ( final EvaluationException e ) {
+      throw new ReportDataFactoryException( "Failed to evaluate parameter", e );
+    } catch ( final ParseException e ) {
+      throw new ReportDataFactoryException( "Failed to evaluate parameter", e );
+    } finally {
+      if ( repository != null ) {
         repository.disconnect();
       }
     }
   }
 
-  private boolean isDynamicTransformation(final TransMeta transMeta)
-  {
+  private boolean isDynamicTransformation( final TransMeta transMeta ) {
     List<StepMeta> steps = transMeta.getSteps();
-    for (final StepMeta step : steps)
-    {
-      if (step.getStepMetaInterface() instanceof MetaInjectMeta)
-      {
+    for ( final StepMeta step : steps ) {
+      if ( step.getStepMetaInterface() instanceof MetaInjectMeta ) {
         return true;
       }
     }
     return false;
   }
 
-  public TableModel performQuery(final DataRow parameters,
-                                 final int queryLimit,
-                                 final DataFactoryContext context)
-      throws KettleException, ReportDataFactoryException
-  {
-    ArgumentNullException.validate("context", context);
-    ArgumentNullException.validate("parameters", parameters);
+  public TableModel performQuery( final DataRow parameters,
+                                  final int queryLimit,
+                                  final DataFactoryContext context )
+    throws KettleException, ReportDataFactoryException {
+    ArgumentNullException.validate( "context", context );
+    ArgumentNullException.validate( "parameters", parameters );
 
     String targetStepName = getStepName();
-    if (targetStepName == null)
-    {
-      throw new ReportDataFactoryException("No step name defined.");
+    if ( targetStepName == null ) {
+      throw new ReportDataFactoryException( "No step name defined." );
     }
 
     final Repository repository = connectToRepository();
-    try
-    {
-      final TransMeta transMeta = loadTransformation(repository, context.getResourceManager(), context.getContextKey());
-      return performQueryOnTransformation(parameters, queryLimit, context, transMeta);
-    }
-    catch (final EvaluationException e)
-    {
-      throw new ReportDataFactoryException("Failed to evaluate parameter", e);
-    }
-    catch (final ParseException e)
-    {
-      throw new ReportDataFactoryException("Failed to evaluate parameter", e);
-    }
-    finally
-    {
-      if (repository != null)
-      {
+    try {
+      final TransMeta transMeta =
+        loadTransformation( repository, context.getResourceManager(), context.getContextKey() );
+      return performQueryOnTransformation( parameters, queryLimit, context, transMeta );
+    } catch ( final EvaluationException e ) {
+      throw new ReportDataFactoryException( "Failed to evaluate parameter", e );
+    } catch ( final ParseException e ) {
+      throw new ReportDataFactoryException( "Failed to evaluate parameter", e );
+    } finally {
+      if ( repository != null ) {
         repository.disconnect();
       }
     }
   }
 
-  private TableModel performQueryOnTransformation(final DataRow parameters,
-                                                  final int queryLimit,
-                                                  final DataFactoryContext context,
-                                                  final TransMeta transMeta) throws EvaluationException, ParseException, KettleException, ReportDataFactoryException
-  {
-    final Trans trans = prepareTransformation(parameters, context, transMeta);
+  private TableModel performQueryOnTransformation( final DataRow parameters,
+                                                   final int queryLimit,
+                                                   final DataFactoryContext context,
+                                                   final TransMeta transMeta )
+    throws EvaluationException, ParseException, KettleException, ReportDataFactoryException {
+    final Trans trans = prepareTransformation( parameters, context, transMeta );
 
-    StepInterface targetStep = findTargetStep(trans);
+    StepInterface targetStep = findTargetStep( trans );
 
-    final RowMetaInterface row = transMeta.getStepFields(getStepName());
-    TableProducer tableProducer = new TableProducer(row, queryLimit, isStopOnError());
-    targetStep.addRowListener(tableProducer);
+    final RowMetaInterface row = transMeta.getStepFields( getStepName() );
+    TableProducer tableProducer = new TableProducer( row, queryLimit, isStopOnError() );
+    targetStep.addRowListener( tableProducer );
 
     currentlyRunningTransformation = trans;
-    try
-    {
+    try {
       trans.startThreads();
       trans.waitUntilFinished();
-    }
-    finally
-    {
+    } finally {
       trans.cleanup();
       currentlyRunningTransformation = null;
     }
-    if (trans.getErrors() != 0 && isStopOnError()) {
-      throw new ReportDataFactoryException(String.format
-          ("Transformation reported %d records with errors and stop-on-error is true. Aborting.", trans.getErrors()));
+    if ( trans.getErrors() != 0 && isStopOnError() ) {
+      throw new ReportDataFactoryException( String.format
+        ( "Transformation reported %d records with errors and stop-on-error is true. Aborting.", trans.getErrors() ) );
     }
 
     return tableProducer.getTableModel();
   }
 
-  private Trans prepareTransformation(final DataRow parameters,
-                                      final DataFactoryContext context,
-                                      final TransMeta transMeta) throws EvaluationException, ParseException, KettleException
-  {
-    final FormulaContext formulaContext = new WrappingFormulaContext(context.getFormulaContext(), parameters);
-    final String[] params = fillArguments(formulaContext);
+  private Trans prepareTransformation( final DataRow parameters,
+                                       final DataFactoryContext context,
+                                       final TransMeta transMeta )
+    throws EvaluationException, ParseException, KettleException {
+    final FormulaContext formulaContext = new WrappingFormulaContext( context.getFormulaContext(), parameters );
+    final String[] params = fillArguments( formulaContext );
 
-    final Trans trans = new Trans(transMeta);
-    trans.setArguments(params);
-    updateTransformationParameter(formulaContext, trans);
+    final Trans trans = new Trans( transMeta );
+    trans.setArguments( params );
+    updateTransformationParameter( formulaContext, trans );
     transMeta.setInternalKettleVariables();
-    trans.prepareExecution(params);
+    trans.prepareExecution( params );
     return trans;
   }
 
-  private StepInterface findTargetStep(final Trans trans) throws ReportDataFactoryException
-  {
+  private StepInterface findTargetStep( final Trans trans ) throws ReportDataFactoryException {
     final String stepName = getStepName();
     final List<StepMetaDataCombi> stepList = trans.getSteps();
-    for (int i = 0; i < stepList.size(); i++)
-    {
-      final StepMetaDataCombi metaDataCombi = stepList.get(i);
-      if (stepName.equals(metaDataCombi.stepname))
-      {
+    for ( int i = 0; i < stepList.size(); i++ ) {
+      final StepMetaDataCombi metaDataCombi = stepList.get( i );
+      if ( stepName.equals( metaDataCombi.stepname ) ) {
         return metaDataCombi.step;
       }
     }
-    throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
+    throw new ReportDataFactoryException( "Cannot find the specified transformation step " + stepName );
   }
 
-  private void updateTransformationParameter(final FormulaContext formulaContext,
-                                             final Trans trans)
-      throws UnknownParamException, EvaluationException, ParseException
-  {
-    for (int i = 0; i < this.parameter.length; i++)
-    {
-      final FormulaParameter mapping = this.parameter[i];
+  private void updateTransformationParameter( final FormulaContext formulaContext,
+                                              final Trans trans )
+    throws UnknownParamException, EvaluationException, ParseException {
+    for ( int i = 0; i < this.parameter.length; i++ ) {
+      final FormulaParameter mapping = this.parameter[ i ];
       final String sourceName = mapping.getName();
-      final Object value = mapping.compute(formulaContext);
-      if (value != null)
-      {
-        trans.setParameterValue(sourceName, String.valueOf(value));
-      }
-      else
-      {
-        trans.setParameterValue(sourceName, null);
+      final Object value = mapping.compute( formulaContext );
+      if ( value != null ) {
+        trans.setParameterValue( sourceName, String.valueOf( value ) );
+      } else {
+        trans.setParameterValue( sourceName, null );
       }
     }
   }
 
-  private String[] fillArguments(final FormulaContext context) throws EvaluationException, ParseException
-  {
-    final String[] params = new String[arguments.length];
-    for (int i = 0; i < arguments.length; i++)
-    {
-      final FormulaArgument arg = arguments[i];
-      Object compute = arg.compute(context);
-      if (compute == null)
-      {
-        params[i] = null;
-      }
-      else
-      {
-        params[i] = String.valueOf(compute);
+  private String[] fillArguments( final FormulaContext context ) throws EvaluationException, ParseException {
+    final String[] params = new String[ arguments.length ];
+    for ( int i = 0; i < arguments.length; i++ ) {
+      final FormulaArgument arg = arguments[ i ];
+      Object compute = arg.compute( context );
+      if ( compute == null ) {
+        params[ i ] = null;
+      } else {
+        params[ i ] = String.valueOf( compute );
       }
     }
     return params;
@@ -393,20 +328,15 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
 
 
   private Repository connectToRepository()
-      throws ReportDataFactoryException, KettleException
-  {
-    if (repositoryName == null)
-    {
+    throws ReportDataFactoryException, KettleException {
+    if ( repositoryName == null ) {
       throw new NullPointerException();
     }
 
     final RepositoriesMeta repositoriesMeta = new RepositoriesMeta();
-    try
-    {
+    try {
       repositoriesMeta.readData();
-    }
-    catch (final KettleException ke)
-    {
+    } catch ( final KettleException ke ) {
       // we're a bit low to bubble a dialog to the user here..
       // when ramaiz fixes readData() to stop throwing exceptions
       // even when successful we can remove this and use
@@ -415,74 +345,65 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     }
 
     // Find the specified repository.
-    final RepositoryMeta repositoryMeta = repositoriesMeta.findRepository(repositoryName);
+    final RepositoryMeta repositoryMeta = repositoriesMeta.findRepository( repositoryName );
 
-    if (repositoryMeta == null)
-    {
+    if ( repositoryMeta == null ) {
       // repository object is not necessary for filesystem transformations
       return null;
       // throw new ReportDataFactoryException("The specified repository " + repositoryName + " is not defined.");
     }
 
-    final Repository repository = PluginRegistry.getInstance().loadClass(RepositoryPluginType.class, repositoryMeta.getId(), Repository.class);
-    repository.init(repositoryMeta);
-    repository.connect(username, password);
+    final Repository repository =
+      PluginRegistry.getInstance().loadClass( RepositoryPluginType.class, repositoryMeta.getId(), Repository.class );
+    repository.init( repositoryMeta );
+    repository.connect( username, password );
     return repository;
   }
 
-  protected abstract TransMeta loadTransformation(Repository repository,
-                                                  ResourceManager resourceManager,
-                                                  ResourceKey contextKey)
-      throws ReportDataFactoryException, KettleException;
+  protected abstract TransMeta loadTransformation( Repository repository,
+                                                   ResourceManager resourceManager,
+                                                   ResourceKey contextKey )
+    throws ReportDataFactoryException, KettleException;
 
-  public void cancelQuery()
-  {
+  public void cancelQuery() {
     final Trans currentlyRunningTransformation = this.currentlyRunningTransformation;
-    if (currentlyRunningTransformation != null)
-    {
+    if ( currentlyRunningTransformation != null ) {
       currentlyRunningTransformation.stopAll();
       this.currentlyRunningTransformation = null;
     }
   }
 
-  public String[] getReferencedFields() throws ParseException
-  {
+  public String[] getReferencedFields() throws ParseException {
     final LinkedHashSet<String> retval = new LinkedHashSet<String>();
     HashSet<String> args = new HashSet<String>();
-    for (final FormulaArgument argument : arguments)
-    {
-      args.addAll(Arrays.asList(argument.getReferencedFields()));
+    for ( final FormulaArgument argument : arguments ) {
+      args.addAll( Arrays.asList( argument.getReferencedFields() ) );
     }
-    for (final FormulaParameter formulaParameter : parameter)
-    {
-      args.addAll(Arrays.asList(formulaParameter.getReferencedFields()));
+    for ( final FormulaParameter formulaParameter : parameter ) {
+      args.addAll( Arrays.asList( formulaParameter.getReferencedFields() ) );
     }
-    retval.addAll(args);
-    retval.add(DataFactory.QUERY_LIMIT);
-    return retval.toArray(new String[retval.size()]);
+    retval.addAll( args );
+    retval.add( DataFactory.QUERY_LIMIT );
+    return retval.toArray( new String[ retval.size() ] );
   }
 
-  protected ArrayList<Object> internalGetQueryHash()
-  {
+  protected ArrayList<Object> internalGetQueryHash() {
     final ArrayList<Object> retval = new ArrayList<Object>();
-    retval.add(getClass().getName());
-    retval.add(getUsername());
-    retval.add(getPassword());
-    retval.add(getStepName());
-    retval.add(isStopOnError());
-    retval.add(getRepositoryName());
-    retval.add(new ArrayList<FormulaArgument>(Arrays.asList(getArguments())));
-    retval.add(new ArrayList<FormulaParameter>(Arrays.asList(getParameter())));
+    retval.add( getClass().getName() );
+    retval.add( getUsername() );
+    retval.add( getPassword() );
+    retval.add( getStepName() );
+    retval.add( isStopOnError() );
+    retval.add( getRepositoryName() );
+    retval.add( new ArrayList<FormulaArgument>( Arrays.asList( getArguments() ) ) );
+    retval.add( new ArrayList<FormulaParameter>( Arrays.asList( getParameter() ) ) );
     return retval;
   }
 
-  protected String computeFullFilename(ResourceKey key)
-  {
-    while (key != null)
-    {
+  protected String computeFullFilename( ResourceKey key ) {
+    while ( key != null ) {
       final Object identifier = key.getIdentifier();
-      if (identifier instanceof File)
-      {
+      if ( identifier instanceof File ) {
         final File file = (File) identifier;
         return file.getAbsolutePath();
       }

@@ -24,10 +24,8 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.html.HtmlDirExportP
  *
  * @author Ezequiel Cuellar
  */
-public final class ExportHtmlAction extends AbstractExportAction
-{
-  public ExportHtmlAction()
-  {
-    super(new HtmlDirExportPlugin());
+public final class ExportHtmlAction extends AbstractExportAction {
+  public ExportHtmlAction() {
+    super( new HtmlDirExportPlugin() );
   }
 }

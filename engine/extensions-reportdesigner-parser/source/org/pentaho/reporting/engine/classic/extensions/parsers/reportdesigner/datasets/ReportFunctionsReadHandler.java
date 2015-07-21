@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.datasets;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
@@ -28,12 +26,12 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ReportFunctionsReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class ReportFunctionsReadHandler extends AbstractXmlReadHandler {
   private ArrayList functions;
 
-  public ReportFunctionsReadHandler()
-  {
+  public ReportFunctionsReadHandler() {
     functions = new ArrayList();
   }
 
@@ -46,25 +44,21 @@ public class ReportFunctionsReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("padding".equals(tagName))
-    {
+    if ( "padding".equals( tagName ) ) {
       return new IgnoreAnyChildReadHandler();
     }
 
-    if ("child".equals(tagName))
-    {
+    if ( "child".equals( tagName ) ) {
       final ReportFunctionReadHandler readHandler = new ReportFunctionReadHandler();
-      functions.add(readHandler);
+      functions.add( readHandler );
       return readHandler;
     }
-    if ("property".equals(tagName))
-    {
+    if ( "property".equals( tagName ) ) {
       return new IgnoreAnyChildReadHandler();
     }
 
@@ -76,28 +70,24 @@ public class ReportFunctionsReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final AbstractReportDefinition report = (AbstractReportDefinition)
-        getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
+      getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
 
-    for (int i = 0; i < functions.size(); i++)
-    {
-      final ReportFunctionReadHandler handler = (ReportFunctionReadHandler) functions.get(i);
-      report.addExpression((Expression) handler.getObject());
+    for ( int i = 0; i < functions.size(); i++ ) {
+      final ReportFunctionReadHandler handler = (ReportFunctionReadHandler) functions.get( i );
+      report.addExpression( (Expression) handler.getObject() );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

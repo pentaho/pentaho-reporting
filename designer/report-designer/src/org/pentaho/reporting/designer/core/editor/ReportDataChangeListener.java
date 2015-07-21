@@ -19,7 +19,6 @@ package org.pentaho.reporting.designer.core.editor;
 
 import java.util.EventListener;
 
-public interface ReportDataChangeListener extends EventListener
-{
-  public void dataModelChanged(ReportDocumentContext context);
+public interface ReportDataChangeListener extends EventListener {
+  public void dataModelChanged( ReportDocumentContext context );
 }

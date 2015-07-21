@@ -28,24 +28,20 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class ElementEditUndoEntry implements UndoEntry
-{
+public class ElementEditUndoEntry implements UndoEntry {
   private InstanceID target;
   private int position;
   private Element oldElement;
   private Element newElement;
 
-  public ElementEditUndoEntry(final InstanceID target,
-                              final int position,
-                              final Element oldElement,
-                              final Element newElement)
-  {
-    if (position < 0)
-    {
+  public ElementEditUndoEntry( final InstanceID target,
+                               final int position,
+                               final Element oldElement,
+                               final Element newElement ) {
+    if ( position < 0 ) {
       throw new IllegalArgumentException();
     }
-    if (target == null)
-    {
+    if ( target == null ) {
       throw new NullPointerException();
     }
 
@@ -55,36 +51,29 @@ public class ElementEditUndoEntry implements UndoEntry
     this.newElement = newElement;
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
+  public void undo( final ReportDocumentContext renderContext ) {
     final Band elementById = (Band)
-        ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-    if (newElement != null)
-    {
-      elementById.removeElement(newElement);
+      ModelUtility.findElementById( renderContext.getReportDefinition(), target );
+    if ( newElement != null ) {
+      elementById.removeElement( newElement );
     }
-    if (oldElement != null)
-    {
-      elementById.addElement(position, oldElement);
+    if ( oldElement != null ) {
+      elementById.addElement( position, oldElement );
     }
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
+  public void redo( final ReportDocumentContext renderContext ) {
     final Band elementById = (Band)
-        ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-    if (oldElement != null)
-    {
-      elementById.removeElement(oldElement);
+      ModelUtility.findElementById( renderContext.getReportDefinition(), target );
+    if ( oldElement != null ) {
+      elementById.removeElement( oldElement );
     }
-    if (newElement != null)
-    {
-      elementById.addElement(position, newElement);
+    if ( newElement != null ) {
+      elementById.addElement( position, newElement );
     }
   }
 
-  public UndoEntry merge(final UndoEntry newEntry)
-  {
+  public UndoEntry merge( final UndoEntry newEntry ) {
     return null;
   }
 }

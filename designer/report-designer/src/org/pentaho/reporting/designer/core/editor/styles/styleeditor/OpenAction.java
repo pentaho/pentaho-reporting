@@ -17,32 +17,30 @@
 
 package org.pentaho.reporting.designer.core.editor.styles.styleeditor;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.editor.styles.Messages;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 
-public class OpenAction extends AbstractDesignerContextAction
-{
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public class OpenAction extends AbstractDesignerContextAction {
   private StyleDefinitionEditorContext editorContext;
 
-  public OpenAction(final StyleDefinitionEditorContext editorContext)
-  {
+  public OpenAction( final StyleDefinitionEditorContext editorContext ) {
     this.editorContext = editorContext;
-    putValue(Action.NAME, Messages.getString("StyleDefinitionEditorDialog.OpenAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, Messages.getString("StyleDefinitionEditorDialog.OpenAction.Description"));
-    putValue(Action.MNEMONIC_KEY, Messages.getOptionalMnemonic("StyleDefinitionEditorDialog.OpenAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, Messages.getOptionalKeyStroke("StyleDefinitionEditorDialog.OpenAction.Accelerator"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getOpenIcon());
+    putValue( Action.NAME, Messages.getString( "StyleDefinitionEditorDialog.OpenAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, Messages.getString( "StyleDefinitionEditorDialog.OpenAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, Messages.getOptionalMnemonic( "StyleDefinitionEditorDialog.OpenAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY,
+      Messages.getOptionalKeyStroke( "StyleDefinitionEditorDialog.OpenAction.Accelerator" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getOpenIcon() );
 
-    setReportDesignerContext(editorContext.getDesignerContext());
-    setEnabled(true);
+    setReportDesignerContext( editorContext.getDesignerContext() );
+    setEnabled( true );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
-    StyleDefinitionUtilities.openStyleDefinition(editorContext);
+  public void actionPerformed( final ActionEvent e ) {
+    StyleDefinitionUtilities.openStyleDefinition( editorContext );
   }
 }

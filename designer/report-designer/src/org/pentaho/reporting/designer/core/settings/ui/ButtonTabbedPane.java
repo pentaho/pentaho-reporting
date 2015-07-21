@@ -17,82 +17,56 @@
 
 package org.pentaho.reporting.designer.core.settings.ui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
-import java.awt.Rectangle;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
-import javax.swing.Scrollable;
 
 /**
  * User: Martin Date: 12.03.2005 Time: 13:57:59
  */
-public class ButtonTabbedPane extends JPanel
-{
-  private static class ScrollablePanel extends JPanel implements Scrollable
-  {
-    private ScrollablePanel(final LayoutManager layout)
-    {
-      super(layout);
+public class ButtonTabbedPane extends JPanel {
+  private static class ScrollablePanel extends JPanel implements Scrollable {
+    private ScrollablePanel( final LayoutManager layout ) {
+      super( layout );
     }
 
 
-    public Dimension getPreferredScrollableViewportSize()
-    {
+    public Dimension getPreferredScrollableViewportSize() {
       return getPreferredSize();
     }
 
 
-    public int getScrollableUnitIncrement(final Rectangle visibleRect, final int orientation, final int direction)
-    {
+    public int getScrollableUnitIncrement( final Rectangle visibleRect, final int orientation, final int direction ) {
       return 20;
     }
 
 
-    public int getScrollableBlockIncrement(final Rectangle visibleRect, final int orientation, final int direction)
-    {
+    public int getScrollableBlockIncrement( final Rectangle visibleRect, final int orientation, final int direction ) {
       return 20;
     }
 
 
-    public boolean getScrollableTracksViewportWidth()
-    {
+    public boolean getScrollableTracksViewportWidth() {
       return true;
     }
 
 
-    public boolean getScrollableTracksViewportHeight()
-    {
+    public boolean getScrollableTracksViewportHeight() {
       return false;
     }
   }
 
-  private class SelectPanelAction implements ActionListener
-  {
+  private class SelectPanelAction implements ActionListener {
     private final String magicKey;
 
-    public SelectPanelAction(final String magicKey)
-    {
+    public SelectPanelAction( final String magicKey ) {
       this.magicKey = magicKey;
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
-      cardLayout.show(cardPanel, magicKey);
+    public void actionPerformed( final ActionEvent e ) {
+      cardLayout.show( cardPanel, magicKey );
     }
   }
 
@@ -103,71 +77,66 @@ public class ButtonTabbedPane extends JPanel
   private CardLayout cardLayout;
   private ButtonGroup panelButtons;
 
-  public ButtonTabbedPane()
-  {
+  public ButtonTabbedPane() {
     settingPlugins = new ArrayList<Component>();
     settingsButtons = new ArrayList<JToggleButton>();
-    
-    setLayout(new BorderLayout(0, 0));
 
-    buttonPanel = new JPanel(new GridLayout(0, 1));
+    setLayout( new BorderLayout( 0, 0 ) );
+
+    buttonPanel = new JPanel( new GridLayout( 0, 1 ) );
 
     panelButtons = new ButtonGroup();
     cardLayout = new CardLayout();
-    cardPanel = new JPanel(cardLayout);
+    cardPanel = new JPanel( cardLayout );
 
-    final JPanel buttonHelperPanel = new ScrollablePanel(new BorderLayout());
-    buttonHelperPanel.setOpaque(true);
-    buttonHelperPanel.add(buttonPanel, BorderLayout.NORTH);
+    final JPanel buttonHelperPanel = new ScrollablePanel( new BorderLayout() );
+    buttonHelperPanel.setOpaque( true );
+    buttonHelperPanel.add( buttonPanel, BorderLayout.NORTH );
 
-    final JScrollPane scrollPane = new JScrollPane(buttonHelperPanel);
-    scrollPane.setOpaque(false);
-    scrollPane.setBorder(null);
-    scrollPane.getViewport().setBorder(null);
-    scrollPane.getViewport().setOpaque(false);
-    
-    final JPanel buttonArea = new JPanel(new BorderLayout());
-    buttonArea.add(scrollPane, BorderLayout.CENTER);
+    final JScrollPane scrollPane = new JScrollPane( buttonHelperPanel );
+    scrollPane.setOpaque( false );
+    scrollPane.setBorder( null );
+    scrollPane.getViewport().setBorder( null );
+    scrollPane.getViewport().setOpaque( false );
 
-    final JPanel helperPanel = new JPanel(new BorderLayout());
-    helperPanel.add(buttonArea, BorderLayout.WEST);
-    helperPanel.add(Box.createHorizontalStrut(5), BorderLayout.CENTER);
-    add(helperPanel, BorderLayout.WEST);
-    add(cardPanel, BorderLayout.CENTER);
+    final JPanel buttonArea = new JPanel( new BorderLayout() );
+    buttonArea.add( scrollPane, BorderLayout.CENTER );
+
+    final JPanel helperPanel = new JPanel( new BorderLayout() );
+    helperPanel.add( buttonArea, BorderLayout.WEST );
+    helperPanel.add( Box.createHorizontalStrut( 5 ), BorderLayout.CENTER );
+    add( helperPanel, BorderLayout.WEST );
+    add( cardPanel, BorderLayout.CENTER );
   }
 
-  public void showFirst()
-  {
-    if (settingsButtons.isEmpty() == false)
-    {
-      settingsButtons.get(0).setSelected(true);
-      cardLayout.first(cardPanel);
+  public void showFirst() {
+    if ( settingsButtons.isEmpty() == false ) {
+      settingsButtons.get( 0 ).setSelected( true );
+      cardLayout.first( cardPanel );
     }
   }
 
-  public void addTab(final Icon icon, final String title, final JComponent component)
-  {
-    final String magicKey = String.valueOf(settingPlugins.size());
-    settingPlugins.add(component);
-    cardPanel.add(component, magicKey);
+  public void addTab( final Icon icon, final String title, final JComponent component ) {
+    final String magicKey = String.valueOf( settingPlugins.size() );
+    settingPlugins.add( component );
+    cardPanel.add( component, magicKey );
 
-    final JToggleButton toggleButton = new JToggleButton(title, icon);
-    toggleButton.setHorizontalTextPosition(JToggleButton.CENTER);
-    toggleButton.setVerticalTextPosition(JToggleButton.BOTTOM);
-    toggleButton.addActionListener(new SelectPanelAction(magicKey));
+    final JToggleButton toggleButton = new JToggleButton( title, icon );
+    toggleButton.setHorizontalTextPosition( JToggleButton.CENTER );
+    toggleButton.setVerticalTextPosition( JToggleButton.BOTTOM );
+    toggleButton.addActionListener( new SelectPanelAction( magicKey ) );
 
-    panelButtons.add(toggleButton);
-    settingsButtons.add(toggleButton);
+    panelButtons.add( toggleButton );
+    settingsButtons.add( toggleButton );
 
-    final JPanel helperPanel = new JPanel(new BorderLayout());
-    helperPanel.setOpaque(false);
-    helperPanel.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));
-    helperPanel.add(toggleButton, BorderLayout.CENTER);
-    buttonPanel.add(helperPanel);
+    final JPanel helperPanel = new JPanel( new BorderLayout() );
+    helperPanel.setOpaque( false );
+    helperPanel.setBorder( BorderFactory.createEmptyBorder( 2, 4, 2, 4 ) );
+    helperPanel.add( toggleButton, BorderLayout.CENTER );
+    buttonPanel.add( helperPanel );
   }
 
-  public int getCardCount()
-  {
+  public int getCardCount() {
     return settingPlugins.size();
   }
 }

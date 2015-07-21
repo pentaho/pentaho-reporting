@@ -20,52 +20,43 @@ package org.pentaho.reporting.designer.core.util;
 /**
  * Implements a simple FPS calculator using a simple average.
  */
-public class FpsCalculator
-{
+public class FpsCalculator {
   private int frames;
   private long startTime;
   private long endTime;
   private boolean active;
 
-  public FpsCalculator()
-  {
+  public FpsCalculator() {
     reset();
   }
 
-  public boolean isActive()
-  {
+  public boolean isActive() {
     return active;
   }
 
-  public void setActive(final boolean active)
-  {
+  public void setActive( final boolean active ) {
     this.active = active;
   }
 
-  public void reset()
-  {
+  public void reset() {
     startTime = 0;
     endTime = 0;
     frames = 0;
   }
 
-  public void tick()
-  {
-    if (startTime == 0)
-    {
+  public void tick() {
+    if ( startTime == 0 ) {
       startTime = System.currentTimeMillis();
     }
     frames += 1;
     endTime = System.currentTimeMillis();
   }
 
-  public double getFps()
-  {
-    if (frames == 0)
-    {
+  public double getFps() {
+    if ( frames == 0 ) {
       return 0;
     }
-    final double time = (endTime - startTime) / 1000.0;
+    final double time = ( endTime - startTime ) / 1000.0;
     return (double) frames / time;
   }
 }

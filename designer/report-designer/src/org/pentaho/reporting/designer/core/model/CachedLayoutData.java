@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.designer.core.model;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
+
+import java.util.ArrayList;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class CachedLayoutData
-{
-  private static final StrictBounds[] EMPTY_BOUNDS = new StrictBounds[0];
+public class CachedLayoutData {
+  private static final StrictBounds[] EMPTY_BOUNDS = new StrictBounds[ 0 ];
 
   private boolean conflictsInTableMode;
   private int elementType;
@@ -39,133 +38,107 @@ public class CachedLayoutData
   private long height;
   private long paddingX;
   private long paddingY;
-  
+
   private ArrayList<StrictBounds> additionalBounds;
 
-  protected CachedLayoutData()
-  {
+  protected CachedLayoutData() {
     layoutAge = -1;
   }
 
-  public boolean isConflictsInTableMode()
-  {
+  public boolean isConflictsInTableMode() {
     return conflictsInTableMode;
   }
 
-  public void setConflictsInTableMode(final boolean conflictsInTableMode)
-  {
+  public void setConflictsInTableMode( final boolean conflictsInTableMode ) {
     this.conflictsInTableMode = conflictsInTableMode;
   }
 
-  public int getElementType()
-  {
+  public int getElementType() {
     return elementType;
   }
 
-  public void setElementType(final int elementType)
-  {
+  public void setElementType( final int elementType ) {
     this.elementType = elementType;
   }
 
-  public long getLayoutAge()
-  {
+  public long getLayoutAge() {
     return layoutAge;
   }
 
-  public void setLayoutAge(final long layoutAge)
-  {
+  public void setLayoutAge( final long layoutAge ) {
     this.layoutAge = layoutAge;
   }
 
-  public long getX()
-  {
+  public long getX() {
     return x;
   }
 
-  public void setX(final long x)
-  {
+  public void setX( final long x ) {
     this.x = x;
   }
 
-  public long getY()
-  {
+  public long getY() {
     return y;
   }
 
-  public void setY(final long y)
-  {
+  public void setY( final long y ) {
     this.y = y;
   }
 
-  public long getWidth()
-  {
+  public long getWidth() {
     return width;
   }
 
-  public void setWidth(final long width)
-  {
+  public void setWidth( final long width ) {
     this.width = width;
   }
 
-  public long getHeight()
-  {
+  public long getHeight() {
     return height;
   }
 
-  public void setHeight(final long height)
-  {
+  public void setHeight( final long height ) {
     this.height = height;
   }
 
-  public long getPaddingX()
-  {
+  public long getPaddingX() {
     return paddingX;
   }
 
-  public void setPaddingX(final long paddingX)
-  {
+  public void setPaddingX( final long paddingX ) {
     this.paddingX = paddingX;
   }
 
-  public long getPaddingY()
-  {
+  public long getPaddingY() {
     return paddingY;
   }
 
-  public void setPaddingY(final long paddingY)
-  {
+  public void setPaddingY( final long paddingY ) {
     this.paddingY = paddingY;
   }
 
-  public void clearAdditionalBounds()
-  {
-    if (additionalBounds == null)
-    {
+  public void clearAdditionalBounds() {
+    if ( additionalBounds == null ) {
       return;
     }
     additionalBounds.clear();
   }
 
-  public StrictBounds[] getAdditionalBounds()
-  {
-    if (additionalBounds == null)
-    {
+  public StrictBounds[] getAdditionalBounds() {
+    if ( additionalBounds == null ) {
       return EMPTY_BOUNDS;
     }
-    return additionalBounds.toArray(new StrictBounds[additionalBounds.size()]);
+    return additionalBounds.toArray( new StrictBounds[ additionalBounds.size() ] );
   }
 
-  public void addAdditionalBounds(final StrictBounds bounds)
-  {
-    if (bounds == null)
-    {
+  public void addAdditionalBounds( final StrictBounds bounds ) {
+    if ( bounds == null ) {
       throw new NullPointerException();
     }
-    if (additionalBounds == null)
-    {
+    if ( additionalBounds == null ) {
       additionalBounds = new ArrayList<StrictBounds>();
     }
-    additionalBounds.add(bounds);
+    additionalBounds.add( bounds );
   }
 
 }

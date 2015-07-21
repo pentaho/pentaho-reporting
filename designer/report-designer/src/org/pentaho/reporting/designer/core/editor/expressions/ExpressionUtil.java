@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.engine.classic.core.function.Function;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataComparator;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A helper util that filter all known function and expressions and returns only the expressions, but not the
@@ -32,14 +32,11 @@ import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataCompara
  *
  * @author Thomas Morgner
  */
-public class ExpressionUtil
-{
+public class ExpressionUtil {
   private static ExpressionUtil instance;
 
-  public static synchronized ExpressionUtil getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ExpressionUtil getInstance() {
+    if ( instance == null ) {
       instance = new ExpressionUtil();
     }
     return instance;
@@ -48,42 +45,35 @@ public class ExpressionUtil
   private ExpressionMetaData[] expressions;
   private ExpressionMetaData[] functions;
 
-  public ExpressionMetaData[] getKnownFunctions()
-  {
+  public ExpressionMetaData[] getKnownFunctions() {
     return functions.clone();
   }
 
-  public ExpressionMetaData[] getKnownExpressions()
-  {
+  public ExpressionMetaData[] getKnownExpressions() {
     return expressions.clone();
   }
 
-  private ExpressionUtil()
-  {
+  private ExpressionUtil() {
     final ArrayList<ExpressionMetaData> allRealExpressions = new ArrayList<ExpressionMetaData>();
     final ArrayList<ExpressionMetaData> allExpressions = new ArrayList<ExpressionMetaData>();
-    for (final ExpressionMetaData metaData : ExpressionRegistry.getInstance().getAllExpressionMetaDatas())
-    {
-      if (metaData.isHidden())
-      {
+    for ( final ExpressionMetaData metaData : ExpressionRegistry.getInstance().getAllExpressionMetaDatas() ) {
+      if ( metaData.isHidden() ) {
         continue;
       }
-      if (!WorkspaceSettings.getInstance().isVisible(metaData))
-      {
+      if ( !WorkspaceSettings.getInstance().isVisible( metaData ) ) {
         continue;
       }
 
-      if (Function.class.isAssignableFrom(metaData.getExpressionType()) == false)
-      {
-        allRealExpressions.add(metaData);
+      if ( Function.class.isAssignableFrom( metaData.getExpressionType() ) == false ) {
+        allRealExpressions.add( metaData );
       }
-      allExpressions.add(metaData);
+      allExpressions.add( metaData );
     }
-    
-    Collections.sort(allRealExpressions, new GroupedMetaDataComparator());
-    Collections.sort(allExpressions, new GroupedMetaDataComparator());
-    this.expressions = allRealExpressions.toArray(new ExpressionMetaData[allRealExpressions.size()]);
-    this.functions = allExpressions.toArray(new ExpressionMetaData[allExpressions.size()]);
+
+    Collections.sort( allRealExpressions, new GroupedMetaDataComparator() );
+    Collections.sort( allExpressions, new GroupedMetaDataComparator() );
+    this.expressions = allRealExpressions.toArray( new ExpressionMetaData[ allRealExpressions.size() ] );
+    this.functions = allExpressions.toArray( new ExpressionMetaData[ allExpressions.size() ] );
   }
 
 }

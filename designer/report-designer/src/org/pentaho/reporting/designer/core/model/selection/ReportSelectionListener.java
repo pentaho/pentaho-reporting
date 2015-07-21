@@ -24,11 +24,10 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner
  */
-public interface ReportSelectionListener extends EventListener
-{
-  public void selectionAdded(ReportSelectionEvent event);
+public interface ReportSelectionListener extends EventListener {
+  public void selectionAdded( ReportSelectionEvent event );
 
-  public void selectionRemoved(ReportSelectionEvent event);
+  public void selectionRemoved( ReportSelectionEvent event );
 
-  public void leadSelectionChanged(ReportSelectionEvent event);
+  public void leadSelectionChanged( ReportSelectionEvent event );
 }

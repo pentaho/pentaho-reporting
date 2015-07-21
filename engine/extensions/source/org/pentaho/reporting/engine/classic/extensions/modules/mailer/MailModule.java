@@ -23,17 +23,14 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class MailModule extends AbstractModule
-{
+public class MailModule extends AbstractModule {
   public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/classic/mail-definition/1.0";
 
-  public MailModule() throws ModuleInitializeException
-  {
+  public MailModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    MailDefinitionXmlResourceFactory.register(MailDefinitionXmlFactoryModule.class);
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    MailDefinitionXmlResourceFactory.register( MailDefinitionXmlFactoryModule.class );
   }
 }

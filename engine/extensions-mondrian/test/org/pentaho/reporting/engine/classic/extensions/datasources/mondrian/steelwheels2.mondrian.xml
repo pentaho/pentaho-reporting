@@ -5,7 +5,7 @@
     <Dimension name="Markets" foreignKey="CUSTOMERNUMBER">
       <Hierarchy hasAll="true" allMemberName="All Markets" primaryKey="CUSTOMERNUMBER">
         <Table name="CUSTOMER_W_TER"/>
-        <Level name="Territory" column="TERRITORY" uniqueMembers="true"/>  
+        <Level name="Territory" column="TERRITORY" uniqueMembers="true"/>
         <Level name="Country" column="COUNTRY" uniqueMembers="true"/>
         <Level name="State Province" column="STATE" uniqueMembers="true"/>
         <Level name="City" column="CITY" uniqueMembers="true"/>
@@ -37,7 +37,7 @@
       <Hierarchy hasAll="true" allMemberName="All Status Types" primaryKey="STATUS">
         <Level name="Type" column="STATUS" uniqueMembers="true"/>
       </Hierarchy>
-    </Dimension>    
+    </Dimension>
     <Measure name="Quantity" column="QUANTITYORDERED" aggregator="sum" formatString="#,###"/>
     <Measure name="Sales" column="TOTALPRICE" aggregator="sum" formatString="#,###"/>
   </Cube>

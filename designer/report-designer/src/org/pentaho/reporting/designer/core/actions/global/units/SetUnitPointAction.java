@@ -24,10 +24,8 @@ import org.pentaho.reporting.designer.core.util.Unit;
  *
  * @author Thomas Morgner
  */
-public final class SetUnitPointAction extends SetUnitAction
-{
-  public SetUnitPointAction()
-  {
-    super(Unit.POINTS);
+public final class SetUnitPointAction extends SetUnitAction {
+  public SetUnitPointAction() {
+    super( Unit.POINTS );
   }
 }

@@ -19,16 +19,12 @@ package org.pentaho.reporting.designer.core.util.table.filter;
 
 import org.pentaho.reporting.designer.core.util.table.GroupingHeader;
 
-public class AcceptGroupHeaderFilter implements Filter
-{
-  public AcceptGroupHeaderFilter()
-  {
+public class AcceptGroupHeaderFilter implements Filter {
+  public AcceptGroupHeaderFilter() {
   }
 
-  public Result isMatch(final Object o)
-  {
-    if (o instanceof GroupingHeader)
-    {
+  public Result isMatch( final Object o ) {
+    if ( o instanceof GroupingHeader ) {
       return Result.ACCEPT;
     }
     return Result.UNDECIDED;

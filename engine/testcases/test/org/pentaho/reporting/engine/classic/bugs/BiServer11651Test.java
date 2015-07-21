@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URL;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,108 +40,104 @@ import org.pentaho.reporting.libraries.repository.zip.ZipRepository;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class BiServer11651Test
-{
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
+
+public class BiServer11651Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testTooltips() throws ContentIOException, ReportProcessingException, IOException, ResourceException
-  {
-    URL res = getClass().getResource("BISERVER-11651-tooltip.prpt");
-    Assert.assertNotNull(res);
+  public void testTooltips() throws ContentIOException, ReportProcessingException, IOException, ResourceException {
+    URL res = getClass().getResource( "BISERVER-11651-tooltip.prpt" );
+    Assert.assertNotNull( res );
 
-    MasterReport report = (MasterReport) new ResourceManager().createDirectly(res, MasterReport.class).getResource();
+    MasterReport report = (MasterReport) new ResourceManager().createDirectly( res, MasterReport.class ).getResource();
     final ByteArrayOutputStream boutFast = new ByteArrayOutputStream();
     final ByteArrayOutputStream boutSlow = new ByteArrayOutputStream();
-    processFastStreamHtml(report, boutFast);
-    processSlowStreamHtml(report, boutSlow);
-    String htmlFast = boutFast.toString("UTF-8");
-    String htmlSlow = boutSlow.toString("UTF-8");
-    Assert.assertEquals(htmlSlow, htmlFast);
+    processFastStreamHtml( report, boutFast );
+    processSlowStreamHtml( report, boutSlow );
+    String htmlFast = boutFast.toString( "UTF-8" );
+    String htmlSlow = boutSlow.toString( "UTF-8" );
+    Assert.assertEquals( htmlSlow, htmlFast );
   }
 
   @Test
-  public void testEPAMsample() throws ContentIOException, ReportProcessingException, IOException, ResourceException
-  {
-    URL res = getClass().getResource("BISERVER-11651-validation.prpt");
-    Assert.assertNotNull(res);
+  public void testEPAMsample() throws ContentIOException, ReportProcessingException, IOException, ResourceException {
+    URL res = getClass().getResource( "BISERVER-11651-validation.prpt" );
+    Assert.assertNotNull( res );
 
-    MasterReport report = (MasterReport) new ResourceManager().createDirectly(res, MasterReport.class).getResource();
+    MasterReport report = (MasterReport) new ResourceManager().createDirectly( res, MasterReport.class ).getResource();
     final ByteArrayOutputStream boutFast = new ByteArrayOutputStream();
     final ByteArrayOutputStream boutSlow = new ByteArrayOutputStream();
-    processFastStreamHtml(report, boutFast);
-    processSlowStreamHtml(report, boutSlow);
-    String htmlFast = boutFast.toString("UTF-8");
-    String htmlSlow = boutSlow.toString("UTF-8");
-    Assert.assertEquals(htmlSlow, htmlFast);
+    processFastStreamHtml( report, boutFast );
+    processSlowStreamHtml( report, boutSlow );
+    String htmlFast = boutFast.toString( "UTF-8" );
+    String htmlSlow = boutSlow.toString( "UTF-8" );
+    Assert.assertEquals( htmlSlow, htmlFast );
   }
 
   @Test
-  public void testURLs() throws ContentIOException, ReportProcessingException, IOException, ResourceException
-  {
-    URL res = getClass().getResource("BISERVER-11651-url.prpt");
-    Assert.assertNotNull(res);
+  public void testURLs() throws ContentIOException, ReportProcessingException, IOException, ResourceException {
+    URL res = getClass().getResource( "BISERVER-11651-url.prpt" );
+    Assert.assertNotNull( res );
 
-    MasterReport report = (MasterReport) new ResourceManager().createDirectly(res, MasterReport.class).getResource();
+    MasterReport report = (MasterReport) new ResourceManager().createDirectly( res, MasterReport.class ).getResource();
     final ByteArrayOutputStream boutFast = new ByteArrayOutputStream();
     final ByteArrayOutputStream boutSlow = new ByteArrayOutputStream();
-    processFastStreamHtml(report, boutFast);
-    processSlowStreamHtml(report, boutSlow);
-    String htmlFast = boutFast.toString("UTF-8");
-    String htmlSlow = boutSlow.toString("UTF-8");
-    Assert.assertEquals(htmlSlow, htmlFast);
+    processFastStreamHtml( report, boutFast );
+    processSlowStreamHtml( report, boutSlow );
+    String htmlFast = boutFast.toString( "UTF-8" );
+    String htmlSlow = boutSlow.toString( "UTF-8" );
+    Assert.assertEquals( htmlSlow, htmlFast );
   }
 
 
-  public static void processSlowStreamHtml(final MasterReport report,
-                                           final OutputStream outputStream)
-      throws ReportProcessingException, ContentIOException
-  {
-    if (report == null)
-    {
+  public static void processSlowStreamHtml( final MasterReport report,
+                                            final OutputStream outputStream )
+    throws ReportProcessingException, ContentIOException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (outputStream == null)
-    {
+    if ( outputStream == null ) {
       throw new NullPointerException();
     }
 
     final ZipRepository zipRepository = new ZipRepository();
-    final StreamRepository targetRepository = new StreamRepository(outputStream);
+    final StreamRepository targetRepository = new StreamRepository( outputStream );
     final ContentLocation targetRoot = targetRepository.getRoot();
 
-    final HtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor(report.getConfiguration());
-    final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-    printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));
-    printer.setDataWriter(zipRepository.getRoot(), new DefaultNameGenerator(targetRoot, "data", "bin"));
-    printer.setUrlRewriter(new StaticURLRewriter("http://localhost:12345/content/{0}"));
-    outputProcessor.setPrinter(printer);
+    final HtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor( report.getConfiguration() );
+    final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
+    printer.setContentWriter( targetRoot, new DefaultNameGenerator( targetRoot, "index", "html" ) );
+    printer.setDataWriter( zipRepository.getRoot(), new DefaultNameGenerator( targetRoot, "data", "bin" ) );
+    printer.setUrlRewriter( new StaticURLRewriter( "http://localhost:12345/content/{0}" ) );
+    outputProcessor.setPrinter( printer );
 
-    final StreamReportProcessor sp = new StreamReportProcessor(report, outputProcessor);
+    final StreamReportProcessor sp = new StreamReportProcessor( report, outputProcessor );
     sp.processReport();
     sp.close();
   }
 
-  public static void processFastStreamHtml(MasterReport report,
-                                           OutputStream out)
-      throws ReportProcessingException, IOException, ContentIOException
-  {
+  public static void processFastStreamHtml( MasterReport report,
+                                            OutputStream out )
+    throws ReportProcessingException, IOException, ContentIOException {
     ReportStructureValidator validator = new ReportStructureValidator();
-    Assert.assertTrue(validator.isValidForFastProcessing(report));
+    Assert.assertTrue( validator.isValidForFastProcessing( report ) );
 
     final ZipRepository zipRepository = new ZipRepository();
-    final StreamRepository targetRepository = new StreamRepository(out);
+    final StreamRepository targetRepository = new StreamRepository( out );
     final ContentLocation targetRoot = targetRepository.getRoot();
     final FastHtmlContentItems contentItems = new FastHtmlContentItems();
-    contentItems.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));
-    contentItems.setDataWriter(zipRepository.getRoot(), new DefaultNameGenerator(targetRoot, "data", "bin"));
-    contentItems.setUrlRewriter(new StaticURLRewriter("http://localhost:12345/content/{0}"));
+    contentItems.setContentWriter( targetRoot, new DefaultNameGenerator( targetRoot, "index", "html" ) );
+    contentItems.setDataWriter( zipRepository.getRoot(), new DefaultNameGenerator( targetRoot, "data", "bin" ) );
+    contentItems.setUrlRewriter( new StaticURLRewriter( "http://localhost:12345/content/{0}" ) );
 
-    final FastHtmlExportProcessor reportProcessor = new FastHtmlExportProcessor(report, contentItems);
+    final FastHtmlExportProcessor reportProcessor = new FastHtmlExportProcessor( report, contentItems );
     reportProcessor.processReport();
     reportProcessor.close();
     out.flush();

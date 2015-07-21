@@ -23,12 +23,10 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ElementAlignmentValu
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class AlignmentConceptMapper implements ConceptQueryMapper
-{
+public class AlignmentConceptMapper implements ConceptQueryMapper {
   private ElementAlignmentValueConverter alignmentValueConverter;
 
-  public AlignmentConceptMapper()
-  {
+  public AlignmentConceptMapper() {
     alignmentValueConverter = new ElementAlignmentValueConverter();
   }
 
@@ -37,64 +35,45 @@ public class AlignmentConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof Alignment == false)
-    {
+    if ( value instanceof Alignment == false ) {
       return null;
     }
 
-    if (Alignment.class.equals(type))
-    {
+    if ( Alignment.class.equals( type ) ) {
       return value;
     }
 
-    if (type == null || Object.class.equals(type) || Alignment.class.equals(type))
-    {
+    if ( type == null || Object.class.equals( type ) || Alignment.class.equals( type ) ) {
       return value;
     }
 
     final String textAlignment;
-    if (Alignment.LEFT.equals(value))
-    {
+    if ( Alignment.LEFT.equals( value ) ) {
       textAlignment = "left";
-    }
-    else if (Alignment.CENTERED.equals(value))
-    {
+    } else if ( Alignment.CENTERED.equals( value ) ) {
       textAlignment = "center";
-    }
-    else if (Alignment.RIGHT.equals(value))
-    {
+    } else if ( Alignment.RIGHT.equals( value ) ) {
       textAlignment = "right";
-    }
-    else if (Alignment.JUSTIFIED.equals(value))
-    {
+    } else if ( Alignment.JUSTIFIED.equals( value ) ) {
       textAlignment = "justified";
-    }
-    else
-    {
+    } else {
       return null;
     }
 
-    if (Alignment.class.equals(type))
-    {
-      try
-      {
-        return alignmentValueConverter.toPropertyValue(textAlignment);
-      }
-      catch (BeanException e)
-      {
+    if ( Alignment.class.equals( type ) ) {
+      try {
+        return alignmentValueConverter.toPropertyValue( textAlignment );
+      } catch ( BeanException e ) {
         // ignore ...
         return null;
       }
     }
-    if (String.class.equals(type))
-    {
+    if ( String.class.equals( type ) ) {
       return textAlignment;
     }
 

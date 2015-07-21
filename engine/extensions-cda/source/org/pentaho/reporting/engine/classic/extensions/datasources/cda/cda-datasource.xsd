@@ -23,10 +23,10 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-        <xsd:sequence>
-          <xsd:element ref="config" minOccurs="1" maxOccurs="1"/>
-          <xsd:element ref="query" minOccurs="1" maxOccurs="unbounded"/>
-        </xsd:sequence>
+      <xsd:sequence>
+        <xsd:element ref="config" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="query" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 

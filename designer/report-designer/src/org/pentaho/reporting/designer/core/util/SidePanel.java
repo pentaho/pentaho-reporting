@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.JPanel;
-
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -28,18 +24,19 @@ import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelect
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionEvent;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListener;
 
+import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * Although in the report designer the designer-context never changes, for better testability of the side-panels we
  * allow the tests to define a own context and track that here.
  *
  * @author Thomas Morgner
  */
-public abstract class SidePanel extends JPanel implements DesignerContextComponent
-{
-  private class ActiveContextChangeHandler implements PropertyChangeListener
-  {
-    private ActiveContextChangeHandler()
-    {
+public abstract class SidePanel extends JPanel implements DesignerContextComponent {
+  private class ActiveContextChangeHandler implements PropertyChangeListener {
+    private ActiveContextChangeHandler() {
     }
 
     /**
@@ -48,26 +45,21 @@ public abstract class SidePanel extends JPanel implements DesignerContextCompone
      * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      updateActiveContext((ReportDocumentContext) evt.getOldValue(), (ReportDocumentContext) evt.getNewValue());
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      updateActiveContext( (ReportDocumentContext) evt.getOldValue(), (ReportDocumentContext) evt.getNewValue() );
     }
   }
 
-  private class SelectionHandler implements ReportSelectionListener
-  {
-    public void selectionAdded(final ReportSelectionEvent event)
-    {
-      updateSelection(event.getModel());
+  private class SelectionHandler implements ReportSelectionListener {
+    public void selectionAdded( final ReportSelectionEvent event ) {
+      updateSelection( event.getModel() );
     }
 
-    public void selectionRemoved(final ReportSelectionEvent event)
-    {
-      updateSelection(event.getModel());
+    public void selectionRemoved( final ReportSelectionEvent event ) {
+      updateSelection( event.getModel() );
     }
 
-    public void leadSelectionChanged(final ReportSelectionEvent event)
-    {
+    public void leadSelectionChanged( final ReportSelectionEvent event ) {
 
     }
   }
@@ -80,67 +72,54 @@ public abstract class SidePanel extends JPanel implements DesignerContextCompone
   /**
    * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
    */
-  protected SidePanel()
-  {
+  protected SidePanel() {
     contextChangeHandler = new ActiveContextChangeHandler();
     selectionHandler = new SelectionHandler();
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return reportDesignerContext;
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext reportDesignerContext)
-  {
+  public void setReportDesignerContext( final ReportDesignerContext reportDesignerContext ) {
     final ReportDesignerContext oldContext = this.reportDesignerContext;
     this.reportDesignerContext = reportDesignerContext;
-    updateDesignerContext(oldContext, reportDesignerContext);
+    updateDesignerContext( oldContext, reportDesignerContext );
   }
 
-  protected void updateDesignerContext(final ReportDesignerContext oldContext, final ReportDesignerContext newContext)
-  {
+  protected void updateDesignerContext( final ReportDesignerContext oldContext,
+                                        final ReportDesignerContext newContext ) {
     final ReportDocumentContext oldRenderContext;
-    if (oldContext != null)
-    {
-      oldContext.removePropertyChangeListener(ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, contextChangeHandler);
+    if ( oldContext != null ) {
+      oldContext.removePropertyChangeListener( ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, contextChangeHandler );
       oldRenderContext = oldContext.getActiveContext();
-    }
-    else
-    {
+    } else {
       oldRenderContext = null;
     }
 
     final ReportDocumentContext newRenderContext;
-    if (newContext != null)
-    {
-      newContext.addPropertyChangeListener(ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, contextChangeHandler);
+    if ( newContext != null ) {
+      newContext.addPropertyChangeListener( ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, contextChangeHandler );
       newRenderContext = newContext.getActiveContext();
-    }
-    else
-    {
+    } else {
       newRenderContext = null;
     }
 
-    updateActiveContext(oldRenderContext, newRenderContext);
+    updateActiveContext( oldRenderContext, newRenderContext );
   }
 
-  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
-  {
-    if (oldContext != null)
-    {
-      oldContext.getSelectionModel().removeReportSelectionListener(selectionHandler);
+  protected void updateActiveContext( final ReportDocumentContext oldContext, final ReportDocumentContext newContext ) {
+    if ( oldContext != null ) {
+      oldContext.getSelectionModel().removeReportSelectionListener( selectionHandler );
     }
-    if (newContext != null)
-    {
-      newContext.getSelectionModel().addReportSelectionListener(selectionHandler);
-      updateSelection(newContext.getSelectionModel());
+    if ( newContext != null ) {
+      newContext.getSelectionModel().addReportSelectionListener( selectionHandler );
+      updateSelection( newContext.getSelectionModel() );
     }
-    setEnabled(newContext != null);
+    setEnabled( newContext != null );
   }
 
-  @SuppressWarnings({"NoopMethodInAbstractClass"})
-  protected void updateSelection(final DocumentContextSelectionModel model)
-  {
+  @SuppressWarnings( { "NoopMethodInAbstractClass" } )
+  protected void updateSelection( final DocumentContextSelectionModel model ) {
   }
 }

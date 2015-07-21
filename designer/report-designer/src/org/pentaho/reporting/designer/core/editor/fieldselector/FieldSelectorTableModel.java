@@ -17,30 +17,26 @@
 
 package org.pentaho.reporting.designer.core.editor.fieldselector;
 
-import javax.swing.table.AbstractTableModel;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportFieldNode;
+
+import javax.swing.table.AbstractTableModel;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class FieldSelectorTableModel extends AbstractTableModel
-{
-  public static final ReportFieldNode[] EMPTY_NODES = new ReportFieldNode[0];
+public class FieldSelectorTableModel extends AbstractTableModel {
+  public static final ReportFieldNode[] EMPTY_NODES = new ReportFieldNode[ 0 ];
   private ReportFieldNode[] columns;
 
-  public FieldSelectorTableModel()
-  {
+  public FieldSelectorTableModel() {
     columns = EMPTY_NODES;
   }
 
-  public void setDataSchema(final ReportFieldNode[] columnNames)
-  {
-    if (columnNames == null)
-    {
+  public void setDataSchema( final ReportFieldNode[] columnNames ) {
+    if ( columnNames == null ) {
       throw new NullPointerException();
     }
     this.columns = columnNames.clone();
@@ -54,8 +50,7 @@ public class FieldSelectorTableModel extends AbstractTableModel
    * @return the number of rows in the model
    * @see #getColumnCount
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return columns.length;
   }
 
@@ -66,8 +61,7 @@ public class FieldSelectorTableModel extends AbstractTableModel
    * @return the number of columns in the model
    * @see #getRowCount
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return 1;
   }
 
@@ -78,21 +72,17 @@ public class FieldSelectorTableModel extends AbstractTableModel
    * @param column the column being queried
    * @return a string containing the default name of <code>column</code>
    */
-  public String getColumnName(final int column)
-  {
-    switch (column)
-    {
+  public String getColumnName( final int column ) {
+    switch( column ) {
       case 0:
-        return Messages.getString("FieldSelectorTableModel.Field");
+        return Messages.getString( "FieldSelectorTableModel.Field" );
       default:
         throw new IndexOutOfBoundsException();
     }
   }
 
-  public Class getColumnClass(final int column)
-  {
-    switch (column)
-    {
+  public Class getColumnClass( final int column ) {
+    switch( column ) {
       case 0:
         return ReportFieldNode.class;
       default:
@@ -107,17 +97,14 @@ public class FieldSelectorTableModel extends AbstractTableModel
    * @param columnIndex the column whose value is to be queried
    * @return the value Object at the specified cell
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    if (columnIndex == 0)
-    {
-      return columns[rowIndex];
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    if ( columnIndex == 0 ) {
+      return columns[ rowIndex ];
     }
     throw new IndexOutOfBoundsException();
   }
 
-  public String getFieldName(final int selectedRow)
-  {
-    return columns[selectedRow].getFieldName();
+  public String getFieldName( final int selectedRow ) {
+    return columns[ selectedRow ].getFieldName();
   }
 }

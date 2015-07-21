@@ -29,35 +29,29 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
  *
  * @author Thomas Morgner
  */
-public class AddHorizontalGuidelinesUndoEntry implements UndoEntry
-{
+public class AddHorizontalGuidelinesUndoEntry implements UndoEntry {
   private final GuideLine guideLine;
 
-  public AddHorizontalGuidelinesUndoEntry(final GuideLine guideLine)
-  {
-    if (guideLine == null)
-    {
+  public AddHorizontalGuidelinesUndoEntry( final GuideLine guideLine ) {
+    if ( guideLine == null ) {
       throw new NullPointerException();
     }
     this.guideLine = guideLine;
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
+  public void undo( final ReportDocumentContext renderContext ) {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
-    final LinealModel linealModel = ModelUtility.getHorizontalLinealModel(abstractReportDefinition);
-    linealModel.removeGuideLine(guideLine);
+    final LinealModel linealModel = ModelUtility.getHorizontalLinealModel( abstractReportDefinition );
+    linealModel.removeGuideLine( guideLine );
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
+  public void redo( final ReportDocumentContext renderContext ) {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
-    final LinealModel linealModel = ModelUtility.getHorizontalLinealModel(abstractReportDefinition);
-    linealModel.addGuidLine(guideLine);
+    final LinealModel linealModel = ModelUtility.getHorizontalLinealModel( abstractReportDefinition );
+    linealModel.addGuidLine( guideLine );
   }
 
-  public UndoEntry merge(final UndoEntry other)
-  {
+  public UndoEntry merge( final UndoEntry other ) {
     return null;
   }
 }

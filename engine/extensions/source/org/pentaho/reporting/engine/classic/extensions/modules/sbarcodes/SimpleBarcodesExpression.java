@@ -21,8 +21,6 @@ import net.sourceforge.barbecue.Barcode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.krysalis.barcode4j.BarcodeGenerator;
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
-import org.pentaho.reporting.engine.classic.core.function.ColumnAggregationExpression;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 
 /**
@@ -35,9 +33,8 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
  *
  * @author Cedric Pronzato
  */
-public class SimpleBarcodesExpression extends AbstractExpression
-{
-  private static final Log logger = LogFactory.getLog(SimpleBarcodesExpression.class);
+public class SimpleBarcodesExpression extends AbstractExpression {
+  private static final Log logger = LogFactory.getLog( SimpleBarcodesExpression.class );
 
   private String type;
   private int barHeight;
@@ -48,8 +45,7 @@ public class SimpleBarcodesExpression extends AbstractExpression
   private String rawDataField;
   private String rawTypeField;
 
-  public SimpleBarcodesExpression()
-  {
+  public SimpleBarcodesExpression() {
     showText = true;
     checksum = false;
     barWidth = 1;
@@ -63,167 +59,130 @@ public class SimpleBarcodesExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final String data = getData();
-    if (data == null)
-    {
-      logger.info("No data supplied to barcode element.");
+    if ( data == null ) {
+      logger.info( "No data supplied to barcode element." );
       return null;
     }
     String ltype;
-    if (type == null)
-    {
+    if ( type == null ) {
       // if no static type, retrieve it from the type field
       ltype = computeRawType();
-    }
-    else
-    {
+    } else {
       ltype = type;
     }
-    if (ltype == null)
-    {
-      logger.info("No type supplied to barcode element.");
+    if ( ltype == null ) {
+      logger.info( "No type supplied to barcode element." );
       return null;
     }
 
-    try
-    {
+    try {
       final BarcodeGenerator generator = SimpleBarcodesUtility.createBarcode4J
-          (type, showText, checksum, Integer.valueOf(barHeight));
-      if (generator != null)
-      {
-        return new BarcodeDrawable(generator, data);
+        ( type, showText, checksum, Integer.valueOf( barHeight ) );
+      if ( generator != null ) {
+        return new BarcodeDrawable( generator, data );
       }
-    }
-    catch (Exception e)
-    {
-      if (logger.isInfoEnabled())
-      {
-        logger.info("Error creating barcode, falling back to null value", e);
+    } catch ( Exception e ) {
+      if ( logger.isInfoEnabled() ) {
+        logger.info( "Error creating barcode, falling back to null value", e );
       }
       return null;
     }
 
 
-    final Barcode barcode = SimpleBarcodesUtility.createBarcode(data, ltype, checksum);
-    if (barcode == null)
-    {
+    final Barcode barcode = SimpleBarcodesUtility.createBarcode( data, ltype, checksum );
+    if ( barcode == null ) {
       return null;
     }
-    barcode.setDrawingText(showText);
-    barcode.setBarWidth(barWidth);
-    barcode.setBarHeight(barHeight);
-    return new BarcodeWrapper(barcode);
+    barcode.setDrawingText( showText );
+    barcode.setBarWidth( barWidth );
+    barcode.setBarHeight( barHeight );
+    return new BarcodeWrapper( barcode );
   }
 
-  private String getData()
-  {
-    if (rawDataField == null)
-    {
+  private String getData() {
+    if ( rawDataField == null ) {
       return null;
     }
-    final Object o = getDataRow().get(rawDataField);
-    if (o == null)
-    {
+    final Object o = getDataRow().get( rawDataField );
+    if ( o == null ) {
       return null;
     }
 
-    if (o instanceof String)
-    {
+    if ( o instanceof String ) {
       return (String) o;
-    }
-    else
-    {
-      logger.info("Barcode input is not a String? Using toString() method.");
+    } else {
+      logger.info( "Barcode input is not a String? Using toString() method." );
       return o.toString();
     }
   }
 
-  private String computeRawType()
-  {
-    if (rawTypeField == null)
-    {
+  private String computeRawType() {
+    if ( rawTypeField == null ) {
       return null;
     }
-    final Object o = getDataRow().get(rawTypeField);
-    if (o instanceof String)
-    {
+    final Object o = getDataRow().get( rawTypeField );
+    if ( o instanceof String ) {
       return (String) o;
-    }
-    else
-    {
+    } else {
       return null;
     }
   }
 
-  public String getType()
-  {
+  public String getType() {
     return type;
   }
 
-  public void setType(final String type)
-  {
+  public void setType( final String type ) {
     this.type = type;
   }
 
-  public int getBarHeight()
-  {
+  public int getBarHeight() {
     return barHeight;
   }
 
-  public void setBarHeight(final int barHeight)
-  {
+  public void setBarHeight( final int barHeight ) {
     this.barHeight = barHeight;
   }
 
-  public int getBarWidth()
-  {
+  public int getBarWidth() {
     return barWidth;
   }
 
-  public void setBarWidth(final int barWidth)
-  {
+  public void setBarWidth( final int barWidth ) {
     this.barWidth = barWidth;
   }
 
-  public boolean isChecksum()
-  {
+  public boolean isChecksum() {
     return checksum;
   }
 
-  public void setChecksum(final boolean checksum)
-  {
+  public void setChecksum( final boolean checksum ) {
     this.checksum = checksum;
   }
 
-  public boolean isShowText()
-  {
+  public boolean isShowText() {
     return showText;
   }
 
-  public void setShowText(final boolean showText)
-  {
+  public void setShowText( final boolean showText ) {
     this.showText = showText;
   }
 
-  public String getRawDataField()
-  {
+  public String getRawDataField() {
     return rawDataField;
   }
 
-  public void setRawDataField(final String rawDataField)
-  {
+  public void setRawDataField( final String rawDataField ) {
     this.rawDataField = rawDataField;
   }
 
-  public String getRawTypeField()
-  {
+  public String getRawTypeField() {
     return rawTypeField;
   }
 
-  public void setRawTypeField(String rawTypeField)
-  {
+  public void setRawTypeField( String rawTypeField ) {
     this.rawTypeField = rawTypeField;
   }
 }

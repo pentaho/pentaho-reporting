@@ -17,34 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer.parser;
 
-import org.pentaho.reporting.engine.classic.core.modules.parser.simple.readhandlers.JFreeReportReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.modules.mailer.MailModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-public class MailDefinitionXmlFactoryModule implements XmlFactoryModule
-{
-  public MailDefinitionXmlFactoryModule()
-  {
+public class MailDefinitionXmlFactoryModule implements XmlFactoryModule {
+  public MailDefinitionXmlFactoryModule() {
   }
 
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (MailModule.NAMESPACE.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( MailModule.NAMESPACE.equals( rootNamespace ) == false ) {
         return XmlFactoryModule.NOT_RECOGNIZED;
-      }
-      else if ("mail-definition".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "mail-definition".equals( documentInfo.getRootElement() ) ) {
         return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("mail-definition".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "mail-definition".equals( documentInfo.getRootElement() ) ) {
       return XmlFactoryModule.RECOGNIZED_BY_TAGNAME;
     }
 
@@ -52,13 +42,11 @@ public class MailDefinitionXmlFactoryModule implements XmlFactoryModule
 
   }
 
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return MailModule.NAMESPACE;
   }
 
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new MailDefinitionReadHandler();
   }
 }

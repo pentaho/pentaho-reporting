@@ -17,45 +17,37 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.model;
 
-public class Guideline
-{
+public class Guideline {
   private boolean active;
   private double position;
 
-  public Guideline()
-  {
+  public Guideline() {
   }
 
-  public boolean isActive()
-  {
+  public boolean isActive() {
     return active;
   }
 
-  public void setActive(final boolean active)
-  {
+  public void setActive( final boolean active ) {
     this.active = active;
   }
 
-  public double getPosition()
-  {
+  public double getPosition() {
     return position;
   }
 
-  public void setPosition(final double position)
-  {
+  public void setPosition( final double position ) {
     this.position = position;
   }
 
-  public String externalize()
-  {
+  public String externalize() {
     return "(" + active + ',' + position + ')';
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.model.Guideline{" +
-        "active=" + active +
-        ", position=" + position +
-        '}';
+      "active=" + active +
+      ", position=" + position +
+      '}';
   }
 }

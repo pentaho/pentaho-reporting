@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
-import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.EventListenerList;
-
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -39,11 +31,18 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Sheet
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableLayoutProducer;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Thomas Morgner
  */
-public class SharedElementRenderer
-{
+public class SharedElementRenderer {
   private final ReportLayouter reportLayouter;
   private final MasterReport masterReport;
   private long minimumVersionNeeded;
@@ -59,21 +58,18 @@ public class SharedElementRenderer
   private TableLayoutProducer tableLayoutProducer;
   private DesignerTableContentProducer tableContentProducer;
 
-  public SharedElementRenderer(final ReportRenderContext reportRenderContext)
-  {
-    if (reportRenderContext == null)
-    {
+  public SharedElementRenderer( final ReportRenderContext reportRenderContext ) {
+    if ( reportRenderContext == null ) {
       throw new NullPointerException();
     }
 
     this.masterReport = reportRenderContext.getMasterReportElement();
-    if (this.masterReport == null)
-    {
+    if ( this.masterReport == null ) {
       throw new NullPointerException();
     }
 
     this.warnMigration = true;
-    this.reportLayouter = new ReportLayouter(reportRenderContext);
+    this.reportLayouter = new ReportLayouter( reportRenderContext );
     this.listenerList = new EventListenerList();
     this.transferGlobalLayoutProcessor = new TransferGlobalLayoutProcessStep();
     this.transferLayoutProcessor = new TransferLayoutProcessStep();
@@ -81,60 +77,48 @@ public class SharedElementRenderer
     this.minimumVersionNeeded = -1;
   }
 
-  public void addChangeListener(final ChangeListener changeListener)
-  {
-    listenerList.add(ChangeListener.class, changeListener);
+  public void addChangeListener( final ChangeListener changeListener ) {
+    listenerList.add( ChangeListener.class, changeListener );
   }
 
-  public void removeChangeListener(final ChangeListener changeListener)
-  {
-    listenerList.remove(ChangeListener.class, changeListener);
+  public void removeChangeListener( final ChangeListener changeListener ) {
+    listenerList.remove( ChangeListener.class, changeListener );
   }
 
-  public void fireChangeEvent()
-  {
-    final ChangeEvent ce = new ChangeEvent(this);
-    final ChangeListener[] changeListeners = listenerList.getListeners(ChangeListener.class);
-    for (int i = 0; i < changeListeners.length; i++)
-    {
-      final ChangeListener listener = changeListeners[i];
-      listener.stateChanged(ce);
+  public void fireChangeEvent() {
+    final ChangeEvent ce = new ChangeEvent( this );
+    final ChangeListener[] changeListeners = listenerList.getListeners( ChangeListener.class );
+    for ( int i = 0; i < changeListeners.length; i++ ) {
+      final ChangeListener listener = changeListeners[ i ];
+      listener.stateChanged( ce );
     }
   }
 
-  protected OutputProcessorMetaData getOutputProcessorMetaData()
-  {
+  protected OutputProcessorMetaData getOutputProcessorMetaData() {
     return reportLayouter.getOutputProcessorMetaData();
   }
 
-  public boolean isLayoutValid()
-  {
-    return (this.layoutAge == masterReport.getChangeTracker());
+  public boolean isLayoutValid() {
+    return ( this.layoutAge == masterReport.getChangeTracker() );
   }
 
-  public boolean performLayouting()
-  {
-    if (this.isLayoutValid())
-    {
+  public boolean performLayouting() {
+    if ( this.isLayoutValid() ) {
       return lastResult;
     }
-    try
-    {
+    try {
       this.pageBox = reportLayouter.layout();
-    }
-    catch (final Exception e)
-    {
+    } catch ( final Exception e ) {
       //noinspection ThrowableInstanceNeverThrown
-      UncaughtExceptionsModel.getInstance().addException(new ReportProcessingException
-          ("Fatal Layouter Error: This report cannot be processed due to a unrecoverable error in the reporting-engine. " +
-              "Please file a bug-report.", e));
+      UncaughtExceptionsModel.getInstance().addException( new ReportProcessingException
+        ( "Fatal Layouter Error: This report cannot be processed due to a unrecoverable error in the reporting-engine. "
+          +
+          "Please file a bug-report.", e ) );
 
-      if (warnMigration)
-      {
-        @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
-        final IncompatibleFeatureException ife = extractIncompatibleFeatureException(e);
-        if (ife != null)
-        {
+      if ( warnMigration ) {
+        @SuppressWarnings( "ThrowableResultOfMethodCallIgnored" )
+        final IncompatibleFeatureException ife = extractIncompatibleFeatureException( e );
+        if ( ife != null ) {
           minimumVersionNeeded = ife.getMinimumVersionNeeded();
         }
         warnMigration = false;
@@ -144,51 +128,42 @@ public class SharedElementRenderer
 
     transferGlobalLayoutProcessor.reset();
 
-    try
-    {
-      if (pageBox != null)
-      {
+    try {
+      if ( pageBox != null ) {
         final OutputProcessorMetaData outputProcessorMetaData = getOutputProcessorMetaData();
-        if (tableLayoutProducer == null)
-        {
-          tableLayoutProducer = new TableLayoutProducer(outputProcessorMetaData);
-          tableLayoutProducer.setProcessWatermark(false);
-        }
-        else
-        {
+        if ( tableLayoutProducer == null ) {
+          tableLayoutProducer = new TableLayoutProducer( outputProcessorMetaData );
+          tableLayoutProducer.setProcessWatermark( false );
+        } else {
           tableLayoutProducer.clear();
         }
         // we need to work on a copy here, as the layout computation marks boxes as finished to keep track
         // of the progress.
-        tableLayoutProducer.update(pageBox, false);
-        if (tableContentProducer == null)
-        {
-          tableContentProducer = new DesignerTableContentProducer(tableLayoutProducer.getLayout(), outputProcessorMetaData);
-        }
-        else
-        {
-          tableContentProducer.reset(tableLayoutProducer.getLayout());
+        tableLayoutProducer.update( pageBox, false );
+        if ( tableContentProducer == null ) {
+          tableContentProducer =
+            new DesignerTableContentProducer( tableLayoutProducer.getLayout(), outputProcessorMetaData );
+        } else {
+          tableContentProducer.reset( tableLayoutProducer.getLayout() );
         }
 
         conflicts.clear();
-        conflicts = tableContentProducer.computeConflicts(pageBox, conflicts);
+        conflicts = tableContentProducer.computeConflicts( pageBox, conflicts );
 
         // watermark needs extra pass, or it will produce bogus warnings.
-        tableLayoutProducer.computeDesigntimeConflicts(pageBox.getWatermarkArea());
+        tableLayoutProducer.computeDesigntimeConflicts( pageBox.getWatermarkArea() );
         final SheetLayout watermarkLayout = tableLayoutProducer.getLayout();
-        tableContentProducer.reset(watermarkLayout);
-        conflicts = tableContentProducer.computeWatermarkConflics(pageBox, conflicts);
+        tableContentProducer.reset( watermarkLayout );
+        conflicts = tableContentProducer.computeWatermarkConflics( pageBox, conflicts );
 
-        transferGlobalLayoutProcessor.performTransfer(pageBox, conflicts, masterReport);
+        transferGlobalLayoutProcessor.performTransfer( pageBox, conflicts, masterReport );
       }
       lastResult = true;
       layoutAge = masterReport.getChangeTracker();
       fireChangeEvent();
       return true;
-    }
-    catch (Exception e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
+    } catch ( Exception e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
       lastResult = false;
       layoutAge = masterReport.getChangeTracker();
       fireChangeEvent();
@@ -196,31 +171,24 @@ public class SharedElementRenderer
     }
   }
 
-  public long getMinimumVersionNeeded()
-  {
+  public long getMinimumVersionNeeded() {
     return minimumVersionNeeded;
   }
 
-  public boolean isMigrationError()
-  {
+  public boolean isMigrationError() {
     return minimumVersionNeeded != -1;
   }
 
-  public void clearMigrationError()
-  {
+  public void clearMigrationError() {
     minimumVersionNeeded = -1;
   }
 
-  private IncompatibleFeatureException extractIncompatibleFeatureException(Throwable e)
-  {
-    while (e != null)
-    {
-      if (e instanceof IncompatibleFeatureException)
-      {
+  private IncompatibleFeatureException extractIncompatibleFeatureException( Throwable e ) {
+    while ( e != null ) {
+      if ( e instanceof IncompatibleFeatureException ) {
         return (IncompatibleFeatureException) e;
       }
-      if (e == e.getCause())
-      {
+      if ( e == e.getCause() ) {
         return null;
       }
       e = e.getCause();
@@ -228,45 +196,37 @@ public class SharedElementRenderer
     return null;
   }
 
-  public void transferLocalLayout(final Section section,
-                                  final Map<InstanceID, Element> elementsById,
-                                  final BreakPositionsList verticalEdgePositions)
-  {
+  public void transferLocalLayout( final Section section,
+                                   final Map<InstanceID, Element> elementsById,
+                                   final BreakPositionsList verticalEdgePositions ) {
     elementsById.clear();
     verticalEdgePositions.clear();
-    if (pageBox != null)
-    {
-      transferLayoutProcessor.performTransfer(section, pageBox, elementsById, verticalEdgePositions);
+    if ( pageBox != null ) {
+      transferLayoutProcessor.performTransfer( section, pageBox, elementsById, verticalEdgePositions );
     }
   }
 
-  public Map<InstanceID, Element> getElementsById()
-  {
+  public Map<InstanceID, Element> getElementsById() {
     return transferGlobalLayoutProcessor.getElementsById();
   }
 
-  public Map<InstanceID, Set<InstanceID>> getConflicts()
-  {
+  public Map<InstanceID, Set<InstanceID>> getConflicts() {
     return conflicts;
   }
 
-  public BreakPositionsList getHorizontalEdgePositions()
-  {
+  public BreakPositionsList getHorizontalEdgePositions() {
     return transferGlobalLayoutProcessor.getHorizontalEdgePositions();
   }
 
-  public ReportLayouter getLayouter()
-  {
+  public ReportLayouter getLayouter() {
     return reportLayouter;
   }
 
-  public LogicalPageBox getPageBox()
-  {
+  public LogicalPageBox getPageBox() {
     return pageBox;
   }
 
-  public Rectangle2D getFallbackBounds()
-  {
-    return new Rectangle2D.Float(0, 0, masterReport.getPageDefinition().getWidth(), 0);
+  public Rectangle2D getFallbackBounds() {
+    return new Rectangle2D.Float( 0, 0, masterReport.getPageDefinition().getWidth(), 0 );
   }
 }

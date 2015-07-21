@@ -29,37 +29,32 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
  *
  * @author Thomas Morgner
  */
-public class UpdateHorizontalGuidelineUndoEntry implements UndoEntry
-{
+public class UpdateHorizontalGuidelineUndoEntry implements UndoEntry {
   private int index;
   private GuideLine guideLine;
   private GuideLine oldGuideLine;
 
-  public UpdateHorizontalGuidelineUndoEntry(final int index,
-                                            final GuideLine guideLine,
-                                            final GuideLine oldGuideLine)
-  {
+  public UpdateHorizontalGuidelineUndoEntry( final int index,
+                                             final GuideLine guideLine,
+                                             final GuideLine oldGuideLine ) {
     this.index = index;
     this.guideLine = guideLine;
     this.oldGuideLine = oldGuideLine;
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
+  public void undo( final ReportDocumentContext renderContext ) {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
-    final LinealModel linealModel = ModelUtility.getHorizontalLinealModel(abstractReportDefinition);
-    linealModel.updateGuideLine(index, oldGuideLine);
+    final LinealModel linealModel = ModelUtility.getHorizontalLinealModel( abstractReportDefinition );
+    linealModel.updateGuideLine( index, oldGuideLine );
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
+  public void redo( final ReportDocumentContext renderContext ) {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
-    final LinealModel linealModel = ModelUtility.getHorizontalLinealModel(abstractReportDefinition);
-    linealModel.updateGuideLine(index, guideLine);
+    final LinealModel linealModel = ModelUtility.getHorizontalLinealModel( abstractReportDefinition );
+    linealModel.updateGuideLine( index, guideLine );
   }
 
-  public UndoEntry merge(final UndoEntry other)
-  {
+  public UndoEntry merge( final UndoEntry other ) {
     return null;
   }
 }

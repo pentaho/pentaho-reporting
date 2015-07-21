@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.DataFactoryWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterContext;
@@ -30,15 +28,15 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 /**
  * Creation-Date: Jan 19, 2007, 4:44:05 PM
  *
  * @author Thomas Morgner
  */
-public class ScriptableDataFactoryWriteHandler implements DataFactoryWriteHandler
-{
-  public ScriptableDataFactoryWriteHandler()
-  {
+public class ScriptableDataFactoryWriteHandler implements DataFactoryWriteHandler {
+  public ScriptableDataFactoryWriteHandler() {
   }
 
   /**
@@ -50,40 +48,36 @@ public class ScriptableDataFactoryWriteHandler implements DataFactoryWriteHandle
    * @throws IOException           if any error occured
    * @throws ReportWriterException if the data factory cannot be written.
    */
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory dataFactory)
-      throws IOException, ReportWriterException
-  {
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory dataFactory )
+    throws IOException, ReportWriterException {
     final ScriptableDataFactory scriptableDataFactory = (ScriptableDataFactory) dataFactory;
 
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", ScriptableDataFactoryModule.NAMESPACE);
+    rootAttrs.addNamespaceDeclaration( "data", ScriptableDataFactoryModule.NAMESPACE );
 
-    xmlWriter.writeTag(ScriptableDataFactoryModule.NAMESPACE, "scriptable-datasource", rootAttrs, XmlWriter.OPEN);
+    xmlWriter.writeTag( ScriptableDataFactoryModule.NAMESPACE, "scriptable-datasource", rootAttrs, XmlWriter.OPEN );
 
     final AttributeList configAttrs = new AttributeList();
-    configAttrs.setAttribute(ScriptableDataFactoryModule.NAMESPACE,
-        "language", String.valueOf(scriptableDataFactory.getLanguage()));
-    if (StringUtils.isEmpty(scriptableDataFactory.getScript()) == false)
-    {
-      configAttrs.setAttribute(ScriptableDataFactoryModule.NAMESPACE,
-          "script", String.valueOf(scriptableDataFactory.getScript()));
+    configAttrs.setAttribute( ScriptableDataFactoryModule.NAMESPACE,
+      "language", String.valueOf( scriptableDataFactory.getLanguage() ) );
+    if ( StringUtils.isEmpty( scriptableDataFactory.getScript() ) == false ) {
+      configAttrs.setAttribute( ScriptableDataFactoryModule.NAMESPACE,
+        "script", String.valueOf( scriptableDataFactory.getScript() ) );
     }
-    if (StringUtils.isEmpty(scriptableDataFactory.getScript()) == false)
-    {
-      configAttrs.setAttribute(ScriptableDataFactoryModule.NAMESPACE,
-          "shutdown-script", String.valueOf(scriptableDataFactory.getShutdownScript()));
+    if ( StringUtils.isEmpty( scriptableDataFactory.getScript() ) == false ) {
+      configAttrs.setAttribute( ScriptableDataFactoryModule.NAMESPACE,
+        "shutdown-script", String.valueOf( scriptableDataFactory.getShutdownScript() ) );
     }
-    xmlWriter.writeTag(ScriptableDataFactoryModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE);
+    xmlWriter.writeTag( ScriptableDataFactoryModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE );
 
     final String[] queryNames = scriptableDataFactory.getQueryNames();
-    for (int i = 0; i < queryNames.length; i++)
-    {
-      final String queryName = queryNames[i];
-      final String query = scriptableDataFactory.getQuery(queryName);
-      xmlWriter.writeTag(ScriptableDataFactoryModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN);
-      xmlWriter.writeTextNormalized(query, false);
+    for ( int i = 0; i < queryNames.length; i++ ) {
+      final String queryName = queryNames[ i ];
+      final String query = scriptableDataFactory.getQuery( queryName );
+      xmlWriter.writeTag( ScriptableDataFactoryModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN );
+      xmlWriter.writeTextNormalized( query, false );
       xmlWriter.writeCloseTag();
     }
     xmlWriter.writeCloseTag();

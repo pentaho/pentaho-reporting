@@ -17,72 +17,54 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.types;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
+import org.pentaho.reporting.engine.classic.core.util.beans.ColorValueConverter;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
-import org.pentaho.reporting.engine.classic.core.util.beans.ColorValueConverter;
 
-public class ColorConceptMapper implements ConceptQueryMapper
-{
+import java.awt.*;
+
+public class ColorConceptMapper implements ConceptQueryMapper {
   private ColorValueConverter valueConverter;
 
-  public ColorConceptMapper()
-  {
+  public ColorConceptMapper() {
     valueConverter = new ColorValueConverter();
   }
 
-  public Object getValue(final Object value,
-                         final Class type,
-                         final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value,
+                          final Class type,
+                          final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof String)
-    {
-      try
-      {
-        final int nvalue = Integer.parseInt(String.valueOf(value));
-        final Color c = new Color(nvalue);
-        if (type == null || Object.class.equals(type) || Color.class.isAssignableFrom(type))
-        {
+    if ( value instanceof String ) {
+      try {
+        final int nvalue = Integer.parseInt( String.valueOf( value ) );
+        final Color c = new Color( nvalue );
+        if ( type == null || Object.class.equals( type ) || Color.class.isAssignableFrom( type ) ) {
           return c;
         }
-        if (String.class.isAssignableFrom(type))
-        {
-          return valueConverter.toAttributeValue(c);
+        if ( String.class.isAssignableFrom( type ) ) {
+          return valueConverter.toAttributeValue( c );
         }
-      }
-      catch (NumberFormatException nfe)
-      {
+      } catch ( NumberFormatException nfe ) {
         return null;
-      }
-      catch (BeanException e)
-      {
+      } catch ( BeanException e ) {
         return null;
       }
     }
 
-    if (value instanceof Number)
-    {
+    if ( value instanceof Number ) {
       final Number nvalue = (Number) value;
-      final Color c = new Color(nvalue.intValue());
-      if (type == null || Object.class.equals(type) || Color.class.isAssignableFrom(type))
-      {
+      final Color c = new Color( nvalue.intValue() );
+      if ( type == null || Object.class.equals( type ) || Color.class.isAssignableFrom( type ) ) {
         return c;
       }
-      if (String.class.isAssignableFrom(type))
-      {
-        try
-        {
-          return valueConverter.toAttributeValue(c);
-        }
-        catch (BeanException e)
-        {
+      if ( String.class.isAssignableFrom( type ) ) {
+        try {
+          return valueConverter.toAttributeValue( c );
+        } catch ( BeanException e ) {
           return null;
         }
       }

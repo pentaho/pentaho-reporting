@@ -21,58 +21,49 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 
-public class BandedQueryDataSourceJndiTest extends DataSourceTestBase
-{
-  private static final String[][] QUERIES_AND_RESULTS = MondrianTestUtil.createQueryArray("-banded");
+public class BandedQueryDataSourceJndiTest extends DataSourceTestBase {
+  private static final String[][] QUERIES_AND_RESULTS = MondrianTestUtil.createQueryArray( "-banded" );
 
-  public BandedQueryDataSourceJndiTest()
-  {
+  public BandedQueryDataSourceJndiTest() {
   }
 
-  public BandedQueryDataSourceJndiTest(final String s)
-  {
-    super(s);
+  public BandedQueryDataSourceJndiTest( final String s ) {
+    super( s );
   }
 
 
-  public void testSaveAndLoad() throws Exception
-  {
-    runSaveAndLoad(QUERIES_AND_RESULTS);
+  public void testSaveAndLoad() throws Exception {
+    runSaveAndLoad( QUERIES_AND_RESULTS );
   }
 
-  public void testDerive() throws Exception
-  {
-    runDerive(QUERIES_AND_RESULTS);
+  public void testDerive() throws Exception {
+    runDerive( QUERIES_AND_RESULTS );
   }
 
-  public void testSerialize() throws Exception
-  {
-    runSerialize(QUERIES_AND_RESULTS);
+  public void testSerialize() throws Exception {
+    runSerialize( QUERIES_AND_RESULTS );
   }
 
-  public void testQuery() throws Exception
-  {
-    runTest(QUERIES_AND_RESULTS);
+  public void testQuery() throws Exception {
+    runTest( QUERIES_AND_RESULTS );
   }
 
-  protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException
-  {
-    final JndiDataSourceProvider provider = new JndiDataSourceProvider("SampleData");
+  protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
+    final JndiDataSourceProvider provider = new JndiDataSourceProvider( "SampleData" );
 
     final BandedMDXDataFactory mondrianDataFactory = new BandedMDXDataFactory();
-    mondrianDataFactory.setCubeFileProvider(new DefaultCubeFileProvider
-        ("test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml"));
-    mondrianDataFactory.setDataSourceProvider(provider);
-    mondrianDataFactory.setQuery("default", query, null, null);
-    initializeDataFactory(mondrianDataFactory);
+    mondrianDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
+      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
+    mondrianDataFactory.setDataSourceProvider( provider );
+    mondrianDataFactory.setQuery( "default", query, null, null );
+    initializeDataFactory( mondrianDataFactory );
     return mondrianDataFactory;
   }
 
-  public static void _main(String[] args) throws Exception
-  {
+  public static void _main( String[] args ) throws Exception {
     final BandedQueryDataSourceJndiTest test = new BandedQueryDataSourceJndiTest();
     test.setUp();
-    test.runGenerate(QUERIES_AND_RESULTS);
+    test.runGenerate( QUERIES_AND_RESULTS );
   }
 
 }

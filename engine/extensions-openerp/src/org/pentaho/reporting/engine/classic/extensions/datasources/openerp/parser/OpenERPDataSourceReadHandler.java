@@ -36,37 +36,32 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.openerp.pars
  * Copyright (c) 2011 - 2012 De Bortoli Wines Pty Limited (Australia). All Rights Reserved.
  */
 
-import java.util.ArrayList;
-
-import org.pentaho.reporting.engine.classic.extensions.datasources.openerp.OpenERPDataFactory;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-
 import com.debortoliwines.openerp.reporting.di.OpenERPConfiguration;
 import com.debortoliwines.openerp.reporting.di.OpenERPFieldInfo;
 import com.debortoliwines.openerp.reporting.di.OpenERPFilterInfo;
+import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
+import org.pentaho.reporting.engine.classic.extensions.datasources.openerp.OpenERPDataFactory;
+import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
+import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
+import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+
+import java.util.ArrayList;
 
 /**
- * 
  * @author Pieter van der Merwe
- *
  */
-public class OpenERPDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler
-{
+public class OpenERPDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler {
   private ConfigReadHandler configReadHandler;
   private ArrayList<FilterReadHandler> filters = new ArrayList<FilterReadHandler>();
   private OpenERPDataFactory dataFactory;
 
   private ArrayList<SelectedFieldReadHandler> selectedFieldHandlers = new ArrayList<SelectedFieldReadHandler>();
   private ArrayList<OpenERPFieldInfo> allFields = new ArrayList<OpenERPFieldInfo>();
-  
-  public OpenERPDataSourceReadHandler()
-  {
+
+  public OpenERPDataSourceReadHandler() {
   }
 
   /**
@@ -78,32 +73,27 @@ public class OpenERPDataSourceReadHandler extends AbstractXmlReadHandler impleme
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    
-    if ("config".equals(tagName))
-    {
+
+    if ( "config".equals( tagName ) ) {
       configReadHandler = new ConfigReadHandler();
       return configReadHandler;
     }
 
-    if ("filter".equals(tagName))
-    {
+    if ( "filter".equals( tagName ) ) {
       final FilterReadHandler filterReadHandler = new FilterReadHandler();
-      filters.add(filterReadHandler);
+      filters.add( filterReadHandler );
       return filterReadHandler;
     }
-    
-    if ("selectedField".equals(tagName))
-    {
-      final SelectedFieldReadHandler selectedFieldReadHandler = new SelectedFieldReadHandler(allFields);
-      selectedFieldHandlers.add(selectedFieldReadHandler);
+
+    if ( "selectedField".equals( tagName ) ) {
+      final SelectedFieldReadHandler selectedFieldReadHandler = new SelectedFieldReadHandler( allFields );
+      selectedFieldHandlers.add( selectedFieldReadHandler );
       return selectedFieldReadHandler;
     }
 
@@ -115,31 +105,29 @@ public class OpenERPDataSourceReadHandler extends AbstractXmlReadHandler impleme
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final OpenERPDataFactory srdf = new OpenERPDataFactory();
-    if (configReadHandler == null)
-    {
-      throw new ParseException("Required element 'config' is missing.", getLocator());
-    }    
+    if ( configReadHandler == null ) {
+      throw new ParseException( "Required element 'config' is missing.", getLocator() );
+    }
 
-    srdf.setQueryName(configReadHandler.getQueryName());
-    
+    srdf.setQueryName( configReadHandler.getQueryName() );
+
     OpenERPConfiguration config = configReadHandler.getConfig();
-    srdf.setConfig(config);
-    
+    srdf.setConfig( config );
+
     ArrayList<OpenERPFilterInfo> filterRows = new ArrayList<OpenERPFilterInfo>();
-    for (FilterReadHandler handler : filters){
-    	filterRows.add(handler.getFilter());
+    for ( FilterReadHandler handler : filters ) {
+      filterRows.add( handler.getFilter() );
     }
-    config.setFilters(filterRows);
-    
+    config.setFilters( filterRows );
+
     ArrayList<OpenERPFieldInfo> selectedFields = new ArrayList<OpenERPFieldInfo>();
-    for (SelectedFieldReadHandler handler : selectedFieldHandlers){
-      selectedFields.add(handler.getField());
+    for ( SelectedFieldReadHandler handler : selectedFieldHandlers ) {
+      selectedFields.add( handler.getField() );
     }
-    config.setSelectedFields(selectedFields);
-    
+    config.setSelectedFields( selectedFields );
+
     dataFactory = srdf;
   }
 
@@ -149,13 +137,11 @@ public class OpenERPDataSourceReadHandler extends AbstractXmlReadHandler impleme
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

@@ -20,34 +20,27 @@ package org.pentaho.reporting.designer.core.editor.report.drag;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class CompoundDragOperation implements MouseDragOperation
-{
+public class CompoundDragOperation implements MouseDragOperation {
   private ArrayList<MouseDragOperation> operations;
 
-  public CompoundDragOperation()
-  {
+  public CompoundDragOperation() {
     operations = new ArrayList<MouseDragOperation>();
   }
 
-  public void add(final MouseDragOperation operation)
-  {
-    operations.add(operation);
+  public void add( final MouseDragOperation operation ) {
+    operations.add( operation );
   }
 
-  public void update(final Point2D normalizedPoint, final double zoomFactor)
-  {
-    for (int i = 0; i < operations.size(); i++)
-    {
-      final MouseDragOperation operation = operations.get(i);
-      operation.update(normalizedPoint, zoomFactor);
+  public void update( final Point2D normalizedPoint, final double zoomFactor ) {
+    for ( int i = 0; i < operations.size(); i++ ) {
+      final MouseDragOperation operation = operations.get( i );
+      operation.update( normalizedPoint, zoomFactor );
     }
   }
 
-  public void finish()
-  {
-    for (int i = 0; i < operations.size(); i++)
-    {
-      final MouseDragOperation operation = operations.get(i);
+  public void finish() {
+    for ( int i = 0; i < operations.size(); i++ ) {
+      final MouseDragOperation operation = operations.get( i );
       operation.finish();
     }
   }

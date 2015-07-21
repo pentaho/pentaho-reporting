@@ -19,55 +19,44 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.par
 
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandlerFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryModule;
-import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
+import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class SimpleBandedMDXDataSourceXmlFactoryModule implements XmlFactoryModule
-{
-  public SimpleBandedMDXDataSourceXmlFactoryModule()
-  {
+public class SimpleBandedMDXDataSourceXmlFactoryModule implements XmlFactoryModule {
+  public SimpleBandedMDXDataSourceXmlFactoryModule() {
   }
 
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (MondrianDataFactoryModule.NAMESPACE.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( MondrianDataFactoryModule.NAMESPACE.equals( rootNamespace ) == false ) {
         return NOT_RECOGNIZED;
-      }
-      else if ("simple-banded-mdx-datasource".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "simple-banded-mdx-datasource".equals( documentInfo.getRootElement() ) ) {
         return RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("simple-banded-mdx-datasource".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "simple-banded-mdx-datasource".equals( documentInfo.getRootElement() ) ) {
       return RECOGNIZED_BY_TAGNAME;
     }
 
     return NOT_RECOGNIZED;
   }
 
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return MondrianDataFactoryModule.NAMESPACE;
   }
 
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     final DataFactoryReadHandlerFactory factory = DataFactoryReadHandlerFactory.getInstance();
-    final XmlReadHandler result = factory.getHandler(MondrianDataFactoryModule.NAMESPACE, "simple-banded-mdx-datasource");
-    if (result == null)
-    {
-      throw new IllegalStateException("Failed to return a valid readhandler");
+    final XmlReadHandler result =
+      factory.getHandler( MondrianDataFactoryModule.NAMESPACE, "simple-banded-mdx-datasource" );
+    if ( result == null ) {
+      throw new IllegalStateException( "Failed to return a valid readhandler" );
     }
     return result;
   }

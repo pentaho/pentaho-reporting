@@ -22,13 +22,11 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.MessageType;
 import org.xml.sax.SAXException;
 
-public class MessageReportElementReadHandler extends AbstractTextElementReadHandler
-{
-  public MessageReportElementReadHandler()
-  {
+public class MessageReportElementReadHandler extends AbstractTextElementReadHandler {
+  public MessageReportElementReadHandler() {
     final Element element = new Element();
-    element.setElementType(new MessageType());
-    setElement(element);
+    element.setElementType( new MessageType() );
+    setElement( element );
   }
 
   /**
@@ -36,13 +34,11 @@ public class MessageReportElementReadHandler extends AbstractTextElementReadHand
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    final String formatString = getResult().getProperty("formatString");
-    if (formatString != null)
-    {
-      getElement().setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formatString);
+    final String formatString = getResult().getProperty( "formatString" );
+    if ( formatString != null ) {
+      getElement().setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formatString );
     }
 
     // formula does not make any sense at all..

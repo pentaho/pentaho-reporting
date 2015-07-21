@@ -17,40 +17,37 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterContext;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterException;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.BandedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryModule;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleBandedMDXDataFactory;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
+
+import java.io.IOException;
 
 /**
  * Todo: Document me!
  *
  * @author : Thomas Morgner
  */
-public class SimpleBandedMDXDataFactoryWriteHandler extends AbstractMDXDataFactoryWriteHandler
-{
-  public SimpleBandedMDXDataFactoryWriteHandler()
-  {
+public class SimpleBandedMDXDataFactoryWriteHandler extends AbstractMDXDataFactoryWriteHandler {
+  public SimpleBandedMDXDataFactoryWriteHandler() {
   }
 
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory dataFactory)
-      throws IOException, ReportWriterException
-  {
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory dataFactory )
+    throws IOException, ReportWriterException {
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", MondrianDataFactoryModule.NAMESPACE);
+    rootAttrs.addNamespaceDeclaration( "data", MondrianDataFactoryModule.NAMESPACE );
 
-    xmlWriter.writeTag(MondrianDataFactoryModule.NAMESPACE, "simple-banded-mdx-datasource", rootAttrs, XmlWriter.OPEN);
+    xmlWriter
+      .writeTag( MondrianDataFactoryModule.NAMESPACE, "simple-banded-mdx-datasource", rootAttrs, XmlWriter.OPEN );
 
     final SimpleBandedMDXDataFactory pmdDataFactory = (SimpleBandedMDXDataFactory) dataFactory;
-    writeBody(reportWriter, pmdDataFactory, xmlWriter);
+    writeBody( reportWriter, pmdDataFactory, xmlWriter );
     xmlWriter.writeCloseTag();
   }
 }

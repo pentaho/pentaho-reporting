@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -34,67 +27,60 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public final class AddExpressionsAction extends AbstractReportContextAction
-{
+public final class AddExpressionsAction extends AbstractReportContextAction {
   private static int nameCounter = 0;
 
-  public AddExpressionsAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("AddExpressionsAction.Text"));
-    putValue(Action.DEFAULT, ActionMessages.getString("AddExpressionsAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("AddExpressionsAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("AddExpressionsAction.Accelerator"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getFunctionIcon());
+  public AddExpressionsAction() {
+    putValue( Action.NAME, ActionMessages.getString( "AddExpressionsAction.Text" ) );
+    putValue( Action.DEFAULT, ActionMessages.getString( "AddExpressionsAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "AddExpressionsAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "AddExpressionsAction.Accelerator" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getFunctionIcon() );
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       return;
     }
 
     final Component parent = getReportDesignerContext().getView().getParent();
-    final Window window = LibSwingUtil.getWindowAncestor(parent);
+    final Window window = LibSwingUtil.getWindowAncestor( parent );
     final ExpressionChooserDialog dialog;
-    if (window instanceof JDialog)
-    {
-      dialog = new ExpressionChooserDialog((JDialog) window);
-    }
-    else if (window instanceof JFrame)
-    {
-      dialog = new ExpressionChooserDialog((JFrame) window);
-    }
-    else
-    {
+    if ( window instanceof JDialog ) {
+      dialog = new ExpressionChooserDialog( (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      dialog = new ExpressionChooserDialog( (JFrame) window );
+    } else {
       dialog = new ExpressionChooserDialog();
     }
 
     final Expression expression = dialog.performSelect();
-    if (expression == null)
-    {
+    if ( expression == null ) {
       return;
     }
     final AbstractReportDefinition definition = activeContext.getReportDefinition();
     // try generate a unique expression name
     String possibleName = expression.getClass().getSimpleName() + nameCounter++;
-    while (definition.getExpressions().get(possibleName) != null)
-    {
+    while ( definition.getExpressions().get( possibleName ) != null ) {
       possibleName = expression.getClass().getSimpleName() + nameCounter++;
     }
-    expression.setName(possibleName);
+    expression.setName( possibleName );
     final int position = definition.getExpressions().size();
-    activeContext.getUndo().addChange(ActionMessages.getString("AddExpressionsAction.Text"),
-        new ExpressionAddedUndoEntry(position, expression));
-    definition.addExpression(expression);
+    activeContext.getUndo().addChange( ActionMessages.getString( "AddExpressionsAction.Text" ),
+      new ExpressionAddedUndoEntry( position, expression ) );
+    definition.addExpression( expression );
   }
 }

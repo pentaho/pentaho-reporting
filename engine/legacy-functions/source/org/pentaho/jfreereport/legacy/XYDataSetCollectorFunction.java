@@ -17,25 +17,24 @@
 
 package org.pentaho.jfreereport.legacy;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
+import org.pentaho.reporting.engine.classic.core.function.AbstractFunction;
+import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.function.FunctionUtilities;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
-import org.pentaho.reporting.engine.classic.core.function.AbstractFunction;
-import org.pentaho.reporting.engine.classic.core.function.FunctionUtilities;
-import org.pentaho.reporting.engine.classic.core.function.Expression;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.data.xy.XYSeries;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * @deprecated These functions are no longer supported.
  */
-public class XYDataSetCollectorFunction extends AbstractFunction
-{
-  private static final Log LOG = LogFactory.getLog(XYDataSetCollectorFunction.class.getName());
+public class XYDataSetCollectorFunction extends AbstractFunction {
+  private static final Log LOG = LogFactory.getLog( XYDataSetCollectorFunction.class.getName() );
 
   private ArrayList seriesNames;
   private String domainColumn;
@@ -44,8 +43,7 @@ public class XYDataSetCollectorFunction extends AbstractFunction
   private HashMap series;
 
 
-  public XYDataSetCollectorFunction()
-  {
+  public XYDataSetCollectorFunction() {
     this.seriesNames = new ArrayList();
     series = new HashMap();
 
@@ -53,122 +51,96 @@ public class XYDataSetCollectorFunction extends AbstractFunction
   }
 
 
-  public void setSeriesName(final int index, final String field)
-  {
-    if (seriesNames.size() == index)
-    {
-      seriesNames.add(field);
-    }
-    else
-    {
-      seriesNames.set(index, field);
+  public void setSeriesName( final int index, final String field ) {
+    if ( seriesNames.size() == index ) {
+      seriesNames.add( field );
+    } else {
+      seriesNames.set( index, field );
     }
   }
 
-  public String getSeriesName(final int index)
-  {
-    return (String) seriesNames.get(index);
+  public String getSeriesName( final int index ) {
+    return (String) seriesNames.get( index );
   }
 
 
-  public int getSeriesNameCount()
-  {
+  public int getSeriesNameCount() {
     return seriesNames.size();
   }
 
 
-  public String[] getSeriesName()
-  {
-    return (String[]) seriesNames.toArray(new String[seriesNames.size()]);
+  public String[] getSeriesName() {
+    return (String[]) seriesNames.toArray( new String[ seriesNames.size() ] );
   }
 
 
-  public void setSeriesName(final String[] fields)
-  {
+  public void setSeriesName( final String[] fields ) {
     this.seriesNames.clear();
-    this.seriesNames.addAll(Arrays.asList(fields));
+    this.seriesNames.addAll( Arrays.asList( fields ) );
   }
 
 
-  public String getDomainColumn()
-  {
+  public String getDomainColumn() {
     return domainColumn;
   }
 
 
-  public void setDomainColumn(String domainColumn)
-  {
+  public void setDomainColumn( String domainColumn ) {
     this.domainColumn = domainColumn;
   }
 
 
-  public String getResetGroup()
-  {
+  public String getResetGroup() {
     return resetGroup;
   }
 
 
-  public void setResetGroup(String resetGroup)
-  {
+  public void setResetGroup( String resetGroup ) {
     this.resetGroup = resetGroup;
   }
 
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return xyDataset;
   }
 
 
-  public void groupStarted(ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getResetGroup(), event))
-    {
+  public void groupStarted( ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getResetGroup(), event ) ) {
       // reset ...
-      if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-      {
-        if (LOG.isDebugEnabled())
-        {
-          LOG.debug("XYDataSetCollectorFunction.groupStarted ");//NON-NLS
+      if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
+        if ( LOG.isDebugEnabled() ) {
+          LOG.debug( "XYDataSetCollectorFunction.groupStarted " );//NON-NLS
         }
         XYSeriesCollection xyDataset = new XYSeriesCollection();
-        for (int i = 0; i < getSeriesName().length; i++)
-        {
-          String s = getSeriesName()[i];
-          XYSeries series = new XYSeries(s, true, true);
-          xyDataset.addSeries(series);
-          this.series.put(s, series);
+        for ( int i = 0; i < getSeriesName().length; i++ ) {
+          String s = getSeriesName()[ i ];
+          XYSeries series = new XYSeries( s, true, true );
+          xyDataset.addSeries( series );
+          this.series.put( s, series );
 
         }
         this.xyDataset = xyDataset;
         //results.add(categoryDataset);
-      }
-      else
-      {
-        if (FunctionUtilities.isLayoutLevel(event))
-        {
+      } else {
+        if ( FunctionUtilities.isLayoutLevel( event ) ) {
           // Activate the current group, which was filled in the prepare run.
           //currentIndex += 1;
           //categoryDataset = results.get(currentIndex);
         }
       }
-    }
-    else
-    {
+    } else {
       // reset ...
-      if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-      {
-        if (LOG.isDebugEnabled())
-        {
-          LOG.debug("XYDataSetCollectorFunction.groupStarted ");//NON-NLS
+      if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
+        if ( LOG.isDebugEnabled() ) {
+          LOG.debug( "XYDataSetCollectorFunction.groupStarted " );//NON-NLS
         }
         XYSeriesCollection xyDataset = new XYSeriesCollection();
-        for (int i = 0; i < getSeriesName().length; i++)
-        {
-          String s = getSeriesName()[i];
-          XYSeries series = new XYSeries(s, true, true);
-          xyDataset.addSeries(series);
-          this.series.put(s, series);
+        for ( int i = 0; i < getSeriesName().length; i++ ) {
+          String s = getSeriesName()[ i ];
+          XYSeries series = new XYSeries( s, true, true );
+          xyDataset.addSeries( series );
+          this.series.put( s, series );
         }
         this.xyDataset = xyDataset;
         //results.add(categoryDataset);
@@ -177,30 +149,24 @@ public class XYDataSetCollectorFunction extends AbstractFunction
   }
 
 
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
-      final Object domainValue = getDataRow().get(getDomainColumn());
-      if (domainValue == null)
-      {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
+      final Object domainValue = getDataRow().get( getDomainColumn() );
+      if ( domainValue == null ) {
         return;
       }
-      if (!(domainValue instanceof Number))
-      {
+      if ( !( domainValue instanceof Number ) ) {
         return;
       }
 
       final Number x = (Number) domainValue;
-      for (int i = 0; i < seriesNames.size(); i++)
-      {
-        String sn = (String) seriesNames.get(i);
-        final Object o = getDataRow().get(sn);
-        if (o instanceof Number)
-        {
+      for ( int i = 0; i < seriesNames.size(); i++ ) {
+        String sn = (String) seriesNames.get( i );
+        final Object o = getDataRow().get( sn );
+        if ( o instanceof Number ) {
           Number y = (Number) o;
-          final XYSeries o1 = (XYSeries) series.get(sn);
-          o1.add(x, y);
+          final XYSeries o1 = (XYSeries) series.get( sn );
+          o1.add( x, y );
         }
       }
     }
@@ -208,8 +174,7 @@ public class XYDataSetCollectorFunction extends AbstractFunction
   }
 
 
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final XYDataSetCollectorFunction fn = (XYDataSetCollectorFunction) super.getInstance();
     fn.xyDataset = null;
     fn.series = new HashMap();

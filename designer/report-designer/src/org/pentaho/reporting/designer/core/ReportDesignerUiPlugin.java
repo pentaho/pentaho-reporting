@@ -17,17 +17,16 @@
 
 package org.pentaho.reporting.designer.core;
 
-import java.util.Map;
-
 import org.pentaho.ui.xul.impl.XulEventHandler;
+
+import java.util.Map;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public interface ReportDesignerUiPlugin
-{
+public interface ReportDesignerUiPlugin {
   /**
    * Returny any extra handlers. Never return null.
    *

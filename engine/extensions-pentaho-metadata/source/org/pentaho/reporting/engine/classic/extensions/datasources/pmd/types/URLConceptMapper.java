@@ -17,15 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types;
 
+import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
+import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
+
 import java.net.URL;
 
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
-import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
-
-public class URLConceptMapper implements ConceptQueryMapper
-{
-  public URLConceptMapper()
-  {
+public class URLConceptMapper implements ConceptQueryMapper {
+  public URLConceptMapper() {
   }
 
   /**
@@ -33,23 +31,18 @@ public class URLConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof URL == false)
-    {
+    if ( value instanceof URL == false ) {
       return null;
     }
-    if (type == null || Object.class.equals(type) || URL.class.equals(type))
-    {
+    if ( type == null || Object.class.equals( type ) || URL.class.equals( type ) ) {
       return value;
     }
-    if (String.class.equals(type))
-    {
+    if ( String.class.equals( type ) ) {
       final URL url = (URL) value;
       return url.toExternalForm();
     }

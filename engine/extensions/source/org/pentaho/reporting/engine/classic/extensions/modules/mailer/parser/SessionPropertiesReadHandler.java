@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer.parser;
 
-import java.util.Properties;
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
-import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
-public class SessionPropertiesReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+import java.util.Properties;
+
+public class SessionPropertiesReadHandler extends AbstractXmlReadHandler {
   private Properties sessionProperties;
   private ArrayList sessionPropertyHandlers;
 
-  public SessionPropertiesReadHandler()
-  {
+  public SessionPropertiesReadHandler() {
     sessionPropertyHandlers = new ArrayList();
   }
 
@@ -44,15 +42,15 @@ public class SessionPropertiesReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false) return null;
-    if ("property".equals(tagName))
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
+      return null;
+    }
+    if ( "property".equals( tagName ) ) {
       final SessionPropertyReadHandler readHandler = new SessionPropertyReadHandler();
-      sessionPropertyHandlers.add(readHandler);
+      sessionPropertyHandlers.add( readHandler );
       return readHandler;
     }
     return null;
@@ -63,25 +61,21 @@ public class SessionPropertiesReadHandler extends AbstractXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     sessionProperties = new Properties();
-    for (int i = 0; i < sessionPropertyHandlers.size(); i++)
-    {
-      final SessionPropertyReadHandler readHandler = (SessionPropertyReadHandler) sessionPropertyHandlers.get(i);
-      sessionProperties.setProperty(readHandler.getName(), readHandler.getValue());
+    for ( int i = 0; i < sessionPropertyHandlers.size(); i++ ) {
+      final SessionPropertyReadHandler readHandler = (SessionPropertyReadHandler) sessionPropertyHandlers.get( i );
+      sessionProperties.setProperty( readHandler.getName(), readHandler.getValue() );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return sessionProperties;
   }
 }

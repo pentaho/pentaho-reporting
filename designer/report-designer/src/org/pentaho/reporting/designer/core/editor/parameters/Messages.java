@@ -17,24 +17,22 @@
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
-import java.util.Locale;
-import java.util.MissingResourceException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
-public class Messages
-{
-  private static final Log logger = LogFactory.getLog(Messages.class);
-  private static ResourceBundleSupport bundle =
-      new ResourceBundleSupport(Locale.getDefault(),
-          "org.pentaho.reporting.designer.core.editor.parameters.messages.messages", // NON-NLS
-          ObjectUtilities.getClassLoader(Messages.class));
+import java.util.Locale;
+import java.util.MissingResourceException;
 
-  private Messages()
-  {
+public class Messages {
+  private static final Log logger = LogFactory.getLog( Messages.class );
+  private static ResourceBundleSupport bundle =
+    new ResourceBundleSupport( Locale.getDefault(),
+      "org.pentaho.reporting.designer.core.editor.parameters.messages.messages", // NON-NLS
+      ObjectUtilities.getClassLoader( Messages.class ) );
+
+  private Messages() {
   }
 
 
@@ -45,15 +43,11 @@ public class Messages
    * @param param1 the parameter for the message
    * @return the formated string
    */
-  public static String getString(final String key, final Object... param1)
-  {
-    try
-    {
-      return bundle.formatMessage(key, param1);
-    }
-    catch (MissingResourceException e)
-    {
-      logger.warn("Missing localization: "+ key, e); // NON-NLS
+  public static String getString( final String key, final Object... param1 ) {
+    try {
+      return bundle.formatMessage( key, param1 );
+    } catch ( MissingResourceException e ) {
+      logger.warn( "Missing localization: " + key, e ); // NON-NLS
       return '!' + key + '!';
     }
   }

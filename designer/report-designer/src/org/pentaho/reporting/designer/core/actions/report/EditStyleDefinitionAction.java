@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
@@ -30,37 +27,37 @@ import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.style.css.ElementStyleDefinition;
 
-public class EditStyleDefinitionAction extends AbstractReportContextAction
-{
-  public EditStyleDefinitionAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("EditStyleDefinitionAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("EditStyleDefinitionAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditStyleDefinitionAction.Mnemonic"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getEmptyIcon());
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditStyleDefinitionAction.Accelerator"));
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public class EditStyleDefinitionAction extends AbstractReportContextAction {
+  public EditStyleDefinitionAction() {
+    putValue( Action.NAME, ActionMessages.getString( "EditStyleDefinitionAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "EditStyleDefinitionAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "EditStyleDefinitionAction.Mnemonic" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getEmptyIcon() );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "EditStyleDefinitionAction.Accelerator" ) );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final MasterReport masterReportElement = getActiveContext().getContextRoot();
     ElementStyleDefinition styleDefinition = masterReportElement.getStyleDefinition();
-    if(styleDefinition != null) 
-    {
+    if ( styleDefinition != null ) {
       styleDefinition = styleDefinition.clone();
     }
 
     final ReportDesignerContext context = getReportDesignerContext();
-    final StyleDefinitionEditorDialog dialog = StyleDefinitionEditorDialog.createDialog(context.getView().getParent(), context);
-    final ElementStyleDefinition elementStyleDefinition = dialog.performEdit(styleDefinition);
-    if (elementStyleDefinition == styleDefinition)
-    {
+    final StyleDefinitionEditorDialog dialog =
+      StyleDefinitionEditorDialog.createDialog( context.getView().getParent(), context );
+    final ElementStyleDefinition elementStyleDefinition = dialog.performEdit( styleDefinition );
+    if ( elementStyleDefinition == styleDefinition ) {
       return;
     }
 
-    masterReportElement.setStyleDefinition(elementStyleDefinition);
-    final AttributeEditUndoEntry undoEntry = new AttributeEditUndoEntry(masterReportElement.getObjectID(),
-        AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET, styleDefinition, elementStyleDefinition);
-    getActiveContext().getUndo().addChange(ActionMessages.getString("EditStyleDefinitionAction.UndoName"), undoEntry);
+    masterReportElement.setStyleDefinition( elementStyleDefinition );
+    final AttributeEditUndoEntry undoEntry = new AttributeEditUndoEntry( masterReportElement.getObjectID(),
+      AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET, styleDefinition, elementStyleDefinition );
+    getActiveContext().getUndo()
+      .addChange( ActionMessages.getString( "EditStyleDefinitionAction.UndoName" ), undoEntry );
   }
 }

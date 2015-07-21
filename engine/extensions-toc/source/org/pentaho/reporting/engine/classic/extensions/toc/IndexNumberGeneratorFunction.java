@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.toc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
@@ -28,14 +25,15 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.FunctionUtilities;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 
+import java.util.ArrayList;
+
 /**
- * A data-collector that collects table-of-contents items at group-starts. The function
- * collects these items accross subreport boundaries.
+ * A data-collector that collects table-of-contents items at group-starts. The function collects these items accross
+ * subreport boundaries.
  *
  * @author Thomas Morgner.
  */
-public class IndexNumberGeneratorFunction extends AbstractFunction
-{
+public class IndexNumberGeneratorFunction extends AbstractFunction {
   private int depth;
   private ArrayList groupCount;
   private boolean collectDetails;
@@ -47,28 +45,23 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
    * is added to the report's function collection.
    */
-  public IndexNumberGeneratorFunction()
-  {
+  public IndexNumberGeneratorFunction() {
     this.groupIndex = -1;
   }
 
-  public boolean isCollectDetails()
-  {
+  public boolean isCollectDetails() {
     return collectDetails;
   }
 
-  public void setCollectDetails(final boolean collectDetails)
-  {
+  public void setCollectDetails( final boolean collectDetails ) {
     this.collectDetails = collectDetails;
   }
 
-  public int getDepth()
-  {
+  public int getDepth() {
     return depth;
   }
 
-  public void setDepth(final int depth)
-  {
+  public void setDepth( final int depth ) {
     this.depth = depth;
   }
 
@@ -78,18 +71,15 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
-    if (initialized == false)
-    {
+    if ( initialized == false ) {
       initialized = true;
 
-      groupCount = new ArrayList(depth);
+      groupCount = new ArrayList( depth );
     }
     groupCount.clear();
     groupIndex = -1;
@@ -100,48 +90,36 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportStarted( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
     groupIndex = -1;
   }
 
-  public void groupStarted(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void groupStarted( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
     groupIndex += 1;
-    if (groupCount.size() == groupIndex)
-    {
+    if ( groupCount.size() == groupIndex ) {
       // new level entered
-      groupCount.add(IntegerCache.getInteger(1));
-    }
-    else
-    {
+      groupCount.add( IntegerCache.getInteger( 1 ) );
+    } else {
       final int lastIndex = groupCount.size() - 1;
-      if (lastIndex == groupIndex)
-      {
+      if ( lastIndex == groupIndex ) {
         // existing level increased
-        final Integer o = (Integer) groupCount.get(lastIndex);
-        if (o == null)
-        {
+        final Integer o = (Integer) groupCount.get( lastIndex );
+        if ( o == null ) {
           throw new IllegalStateException();
         }
-        groupCount.set(lastIndex, IntegerCache.getInteger(o.intValue() + 1));
-      }
-      else
-      {
-        throw new IllegalStateException("Out of index error: " + groupIndex + " " + groupCount.size());
+        groupCount.set( lastIndex, IntegerCache.getInteger( o.intValue() + 1 ) );
+      } else {
+        throw new IllegalStateException( "Out of index error: " + groupIndex + " " + groupCount.size() );
       }
     }
   }
@@ -152,18 +130,14 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void itemsStarted( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    if (collectDetails)
-    {
+    if ( collectDetails ) {
       groupIndex += 1;
     }
   }
@@ -173,41 +147,29 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    if (collectDetails)
-    {
-      if (groupIndex < depth || depth == 0)
-      {
-        if (groupCount.size() == groupIndex)
-        {
+    if ( collectDetails ) {
+      if ( groupIndex < depth || depth == 0 ) {
+        if ( groupCount.size() == groupIndex ) {
           // new level entered
-          groupCount.add(IntegerCache.getInteger(1));
-        }
-        else
-        {
+          groupCount.add( IntegerCache.getInteger( 1 ) );
+        } else {
           final int lastIndex = groupCount.size() - 1;
-          if (lastIndex == groupIndex)
-          {
+          if ( lastIndex == groupIndex ) {
             // existing level increased
-            final Integer o = (Integer) groupCount.get(lastIndex);
-            if (o == null)
-            {
+            final Integer o = (Integer) groupCount.get( lastIndex );
+            if ( o == null ) {
               throw new IllegalStateException();
             }
-            groupCount.set(lastIndex, IntegerCache.getInteger(o.intValue() + 1));
-          }
-          else
-          {
-            throw new IllegalStateException("Out of index error: " + groupIndex + " " + groupCount.size());
+            groupCount.set( lastIndex, IntegerCache.getInteger( o.intValue() + 1 ) );
+          } else {
+            throw new IllegalStateException( "Out of index error: " + groupIndex + " " + groupCount.size() );
           }
         }
       }
@@ -221,21 +183,16 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void itemsFinished(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void itemsFinished( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    if (collectDetails)
-    {
-      if ((groupIndex + 2) == groupCount.size())
-      {
-        groupCount.remove(groupCount.size() - 1);
+    if ( collectDetails ) {
+      if ( ( groupIndex + 2 ) == groupCount.size() ) {
+        groupCount.remove( groupCount.size() - 1 );
       }
       groupIndex -= 1;
     }
@@ -246,26 +203,21 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    super.groupFinished(event);
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void groupFinished( final ReportEvent event ) {
+    super.groupFinished( event );
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    final Group group = FunctionUtilities.getCurrentDeepTraverseGroup(event);
-    if (group instanceof RelationalGroup == false)
-    {
+    final Group group = FunctionUtilities.getCurrentDeepTraverseGroup( event );
+    if ( group instanceof RelationalGroup == false ) {
       return;
     }
 
-    if ((groupIndex + 2) == groupCount.size())
-    {
-      groupCount.remove(groupCount.size() - 1);
+    if ( ( groupIndex + 2 ) == groupCount.size() ) {
+      groupCount.remove( groupCount.size() - 1 );
     }
     groupIndex -= 1;
   }
@@ -277,12 +229,10 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Integer[] indexValues = new Integer[groupCount.size()];
-    for (int i = 0; i < indexValues.length; i++)
-    {
-      indexValues[i] = (Integer) this.groupCount.get(i);
+  public Object getValue() {
+    final Integer[] indexValues = new Integer[ groupCount.size() ];
+    for ( int i = 0; i < indexValues.length; i++ ) {
+      indexValues[ i ] = (Integer) this.groupCount.get( i );
     }
     return indexValues;
   }
@@ -295,11 +245,9 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    * @return a clone of this expression.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final IndexNumberGeneratorFunction o = (IndexNumberGeneratorFunction) super.clone();
-    if (groupCount != null)
-    {
+    if ( groupCount != null ) {
       o.groupCount = (ArrayList) groupCount.clone();
     }
     return o;
@@ -311,8 +259,7 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @return false.
    */
-  public boolean isDeepTraversing()
-  {
+  public boolean isDeepTraversing() {
     return true;
   }
 
@@ -322,8 +269,7 @@ public class IndexNumberGeneratorFunction extends AbstractFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final IndexNumberGeneratorFunction instance = (IndexNumberGeneratorFunction) super.getInstance();
     instance.groupCount = null;
     return instance;

@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.core.model;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.drag.MoveDragOperation;
@@ -41,16 +36,19 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-public class AlignmentUtilities
-{
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class AlignmentUtilities {
   private final UndoManager undo;
   private PageDefinition originalPageDefinition;
   private PageDefinition currentPageDefinition;
   private List<Element> visualElements;
   private MassElementStyleUndoEntryBuilder builder;
 
-  public AlignmentUtilities(final ReportDocumentContext reportRenderContext, final PageDefinition pageDefinition)
-  {
+  public AlignmentUtilities( final ReportDocumentContext reportRenderContext, final PageDefinition pageDefinition ) {
     undo = reportRenderContext.getUndo();
 
     final MasterReport masterReport = reportRenderContext.getContextRoot();
@@ -58,108 +56,94 @@ public class AlignmentUtilities
     originalPageDefinition = pageDefinition;
 
     final ArrayList<Element> elementArrayList = new ArrayList<Element>();
-    collectAlignableElements(masterReport, elementArrayList);
-    visualElements = Collections.unmodifiableList(elementArrayList);
+    collectAlignableElements( masterReport, elementArrayList );
+    visualElements = Collections.unmodifiableList( elementArrayList );
 
-    builder = new MassElementStyleUndoEntryBuilder(visualElements);
+    builder = new MassElementStyleUndoEntryBuilder( visualElements );
   }
 
-  public void alignRight()
-  {
+  public void alignRight() {
     final double theCurrentPageWidth = currentPageDefinition.getWidth();
-    final int theShiftRight = (int) (theCurrentPageWidth - StrictGeomUtility.toExternalValue(computeFarRightPostion()));
-    align(theShiftRight, visualElements);
+    final int theShiftRight =
+      (int) ( theCurrentPageWidth - StrictGeomUtility.toExternalValue( computeFarRightPostion() ) );
+    align( theShiftRight, visualElements );
     registerChanges();
   }
 
-  public void alignLeft()
-  {
-    final int theShiftLeft = (int) (0 - StrictGeomUtility.toExternalValue(computeFarLeftPosition()));
-    align(theShiftLeft, visualElements);
+  public void alignLeft() {
+    final int theShiftLeft = (int) ( 0 - StrictGeomUtility.toExternalValue( computeFarLeftPosition() ) );
+    align( theShiftLeft, visualElements );
     registerChanges();
   }
 
-  public void resizeProportional()
-  {
+  public void resizeProportional() {
     final float originalPageWidth = originalPageDefinition.getWidth();
     final float currentPageWidth = currentPageDefinition.getWidth();
     final float scaleFactor = currentPageWidth / originalPageWidth;
 
-    for (Element element : visualElements)
-    {
+    for ( Element element : visualElements ) {
       // Resize the element.
-      final CachedLayoutData cachedLayoutData = ModelUtility.getCachedLayoutData(element);
+      final CachedLayoutData cachedLayoutData = ModelUtility.getCachedLayoutData( element );
 
-      final double elementWidth = StrictGeomUtility.toExternalValue(cachedLayoutData.getWidth());
+      final double elementWidth = StrictGeomUtility.toExternalValue( cachedLayoutData.getWidth() );
       final ElementStyleSheet styleSheet = element.getStyle();
-      styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, new Float(elementWidth * scaleFactor));
+      styleSheet.setStyleProperty( ElementStyleKeys.MIN_WIDTH, new Float( elementWidth * scaleFactor ) );
 
       // Reposition the element.
-      final double origin = StrictGeomUtility.toExternalValue(cachedLayoutData.getX());
+      final double origin = StrictGeomUtility.toExternalValue( cachedLayoutData.getX() );
       final double destination = scaleFactor * origin;
-      final int theShift = (int) (destination - origin);
+      final int theShift = (int) ( destination - origin );
 
-      final List<Element> elementsCarrier = new ArrayList<Element>(1);
-      elementsCarrier.add(element);
-      align(theShift, elementsCarrier);
+      final List<Element> elementsCarrier = new ArrayList<Element>( 1 );
+      elementsCarrier.add( element );
+      align( theShift, elementsCarrier );
     }
     registerChanges();
   }
 
-  public void alignCenter()
-  {
+  public void alignCenter() {
 
     final long farLeftPostion = computeFarLeftPosition();
     final long farRightPostion = computeFarRightPostion();
-    final long currentPageWidth = StrictGeomUtility.toInternalValue(currentPageDefinition.getWidth());
+    final long currentPageWidth = StrictGeomUtility.toInternalValue( currentPageDefinition.getWidth() );
     final long remainingRightSpace = currentPageWidth - farRightPostion;
-    final long normalizedSpace = (farLeftPostion + remainingRightSpace) / 2;
+    final long normalizedSpace = ( farLeftPostion + remainingRightSpace ) / 2;
 
     long requiredShift = normalizedSpace - farLeftPostion;
-    if (remainingRightSpace > farLeftPostion)
-    {
+    if ( remainingRightSpace > farLeftPostion ) {
       // move to the Right
-      requiredShift = Math.abs(requiredShift);
-    }
-    else
-    {
+      requiredShift = Math.abs( requiredShift );
+    } else {
       // move to the Left
-      requiredShift = 0 - Math.abs(requiredShift);
+      requiredShift = 0 - Math.abs( requiredShift );
     }
 
-    final int shiftInPoints = (int) StrictGeomUtility.toExternalValue(requiredShift);
-    align(shiftInPoints, visualElements);
+    final int shiftInPoints = (int) StrictGeomUtility.toExternalValue( requiredShift );
+    align( shiftInPoints, visualElements );
     registerChanges();
   }
 
-  private void align(final int theShiftValue, final List<Element> elements)
-  {
+  private void align( final int theShiftValue, final List<Element> elements ) {
     final MoveDragOperation mop =
-        new MoveDragOperation(elements, new Point(), EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
-    mop.update(new Point(theShiftValue, 0), 1);
+      new MoveDragOperation( elements, new Point(), EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE );
+    mop.update( new Point( theShiftValue, 0 ), 1 );
     mop.finish();
   }
 
-  private void registerChanges()
-  {
+  private void registerChanges() {
     final MassElementStyleUndoEntry massElementStyleUndoEntry = builder.finish();
-    undo.addChange(Messages.getString("AlignmentUtilities.Undo"), massElementStyleUndoEntry);
+    undo.addChange( Messages.getString( "AlignmentUtilities.Undo" ), massElementStyleUndoEntry );
   }
 
-  private long computeFarRightPostion()
-  {
+  private long computeFarRightPostion() {
     boolean first = true;
     long theFarRightPostion = 0;
-    for (Element visualElement : visualElements)
-    {
-      final CachedLayoutData theElementData = ModelUtility.getCachedLayoutData(visualElement);
+    for ( Element visualElement : visualElements ) {
+      final CachedLayoutData theElementData = ModelUtility.getCachedLayoutData( visualElement );
       final long theCurrentPosition = theElementData.getX() + theElementData.getWidth();
-      if (first)
-      {
+      if ( first ) {
         theFarRightPostion = theCurrentPosition;
-      }
-      else if (theCurrentPosition > theFarRightPostion)
-      {
+      } else if ( theCurrentPosition > theFarRightPostion ) {
         theFarRightPostion = theCurrentPosition;
       }
       first = false;
@@ -167,20 +151,15 @@ public class AlignmentUtilities
     return theFarRightPostion;
   }
 
-  private long computeFarLeftPosition()
-  {
+  private long computeFarLeftPosition() {
     boolean first = true;
     long theFarLeftPostion = 0;
-    for (Element visualElement : visualElements)
-    {
-      final CachedLayoutData theElementData = ModelUtility.getCachedLayoutData(visualElement);
+    for ( Element visualElement : visualElements ) {
+      final CachedLayoutData theElementData = ModelUtility.getCachedLayoutData( visualElement );
       final long theCurrentPosition = theElementData.getX();
-      if (first)
-      {
+      if ( first ) {
         theFarLeftPostion = theCurrentPosition;
-      }
-      else
-      {
+      } else {
         theFarLeftPostion = theCurrentPosition < theFarLeftPostion ? theCurrentPosition : theFarLeftPostion;
       }
       first = false;
@@ -188,35 +167,28 @@ public class AlignmentUtilities
     return theFarLeftPostion;
   }
 
-  private void collectAlignableElements(final Section section, final List<Element> collectedElements)
-  {
-    if (section instanceof CrosstabGroup)
-    {
+  private void collectAlignableElements( final Section section, final List<Element> collectedElements ) {
+    if ( section instanceof CrosstabGroup ) {
       return;
     }
 
     final int theElementCount = section.getElementCount();
-    for (int i = 0; i < theElementCount; i++)
-    {
-      final ReportElement reportElement = section.getElement(i);
-      if (reportElement instanceof Section)
-      {
-        collectAlignableElements((Section) reportElement, collectedElements);
+    for ( int i = 0; i < theElementCount; i++ ) {
+      final ReportElement reportElement = section.getElement( i );
+      if ( reportElement instanceof Section ) {
+        collectAlignableElements( (Section) reportElement, collectedElements );
       }
 
-      final CachedLayoutData cachedLayoutData = ModelUtility.getCachedLayoutData((Element) reportElement);
+      final CachedLayoutData cachedLayoutData = ModelUtility.getCachedLayoutData( (Element) reportElement );
       final long layoutAge = cachedLayoutData.getLayoutAge();
-      if (layoutAge != -1)
-      {
-        if (reportElement instanceof RootLevelBand)
-        {
+      if ( layoutAge != -1 ) {
+        if ( reportElement instanceof RootLevelBand ) {
           continue;
         }
 
-        if (reportElement instanceof Band ||
-            reportElement instanceof Section == false)
-        {
-          collectedElements.add((Element) reportElement);
+        if ( reportElement instanceof Band ||
+          reportElement instanceof Section == false ) {
+          collectedElements.add( (Element) reportElement );
         }
       }
     }

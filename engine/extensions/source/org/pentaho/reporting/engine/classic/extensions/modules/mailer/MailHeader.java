@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 
-public interface MailHeader extends Serializable, Cloneable
-{
+import java.io.Serializable;
+
+public interface MailHeader extends Serializable, Cloneable {
   public String getName();
-  public String getValue(final ParameterContext parameterContext);
+
+  public String getValue( final ParameterContext parameterContext );
 }

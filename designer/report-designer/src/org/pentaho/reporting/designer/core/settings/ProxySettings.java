@@ -17,28 +17,25 @@
 
 package org.pentaho.reporting.designer.core.settings;
 
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
 /**
  * User: Martin Date: 03.03.2006 Time: 14:12:13
  */
-public class ProxySettings
-{
-  private class SettingsAuthenticator extends Authenticator
-  {
+public class ProxySettings {
+  private class SettingsAuthenticator extends Authenticator {
     @Override
-    protected PasswordAuthentication getPasswordAuthentication()
-    {
-      return new PasswordAuthentication(getProxyUser(),
-          getProxyPassword().toCharArray());
+    protected PasswordAuthentication getPasswordAuthentication() {
+      return new PasswordAuthentication( getProxyUser(),
+        getProxyPassword().toCharArray() );
     }
   }
 
@@ -53,17 +50,15 @@ public class ProxySettings
   public static final String PROXY_PORT = "proxyPort";
   public static final String PROXY_HOST = "proxyHost";
 
-  private static final Log logger = LogFactory.getLog(ProxySettings.class);
+  private static final Log logger = LogFactory.getLog( ProxySettings.class );
   private static ProxySettings instance;
   private static final String PROXY_TYPE_KEY = "ProxyType";
   private static final String PROXY_USER_KEY = "ProxyUser";
   private static final String PROXY_PASSWORD_KEY = "ProxyPassword";
   private static final String USE_SOCKS_PROXY_KEY = "UseSocksProxy";
 
-  public static synchronized ProxySettings getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ProxySettings getInstance() {
+    if ( instance == null ) {
       instance = new ProxySettings();
     }
     return instance;
@@ -71,279 +66,221 @@ public class ProxySettings
 
   private Preferences preferences;
 
-  public ProxySettings()
-  {
-    preferences = Preferences.userRoot().node("org/pentaho/reporting/designer/core/settings/proxy-settings");//NON-NLS
+  public ProxySettings() {
+    preferences = Preferences.userRoot().node( "org/pentaho/reporting/designer/core/settings/proxy-settings" );//NON-NLS
   }
 
-  public void installAuthenticator()
-  {
-    Authenticator.setDefault(new SettingsAuthenticator());
+  public void installAuthenticator() {
+    Authenticator.setDefault( new SettingsAuthenticator() );
   }
 
-  public ProxyType getProxyType()
-  {
-    final String unitText = preferences.get(PROXY_TYPE_KEY, ProxyType.AUTO_DETECT_PROXY.toString());
-    try
-    {
-      return ProxyType.valueOf(unitText);
-    }
-    catch (Exception e)
-    {
+  public ProxyType getProxyType() {
+    final String unitText = preferences.get( PROXY_TYPE_KEY, ProxyType.AUTO_DETECT_PROXY.toString() );
+    try {
+      return ProxyType.valueOf( unitText );
+    } catch ( Exception e ) {
       return null;
     }
   }
 
-  public void setProxyType(final ProxyType proxyType)
-  {
-    if (proxyType == null)
-    {
-      throw new IllegalArgumentException("proxyType must not be null");
+  public void setProxyType( final ProxyType proxyType ) {
+    if ( proxyType == null ) {
+      throw new IllegalArgumentException( "proxyType must not be null" );
     }
 
-    preferences.put(PROXY_TYPE_KEY, String.valueOf(proxyType));
+    preferences.put( PROXY_TYPE_KEY, String.valueOf( proxyType ) );
   }
 
 
-  public String getHTTPProxyHost()
-  {
-    return preferences.get(HTTP_DOT_PROXY_HOST, System.getProperty(HTTP_DOT_PROXY_HOST));
+  public String getHTTPProxyHost() {
+    return preferences.get( HTTP_DOT_PROXY_HOST, System.getProperty( HTTP_DOT_PROXY_HOST ) );
   }
 
 
-  public void setHTTPProxyHost(final String httpProxyHost)
-  {
+  public void setHTTPProxyHost( final String httpProxyHost ) {
     //noinspection ConstantConditions
-    if (httpProxyHost == null)
-    {
-      preferences.remove(HTTP_DOT_PROXY_HOST);
-    }
-    else
-    {
-      preferences.put(HTTP_DOT_PROXY_HOST, httpProxyHost);
+    if ( httpProxyHost == null ) {
+      preferences.remove( HTTP_DOT_PROXY_HOST );
+    } else {
+      preferences.put( HTTP_DOT_PROXY_HOST, httpProxyHost );
     }
   }
 
 
-  public int getHTTPProxyPort()
-  {
-    return preferences.getInt(HTTP_DOT_PROXY_PORT, ParserUtil.parseInt(System.getProperty(HTTP_DOT_PROXY_PORT), -1));
+  public int getHTTPProxyPort() {
+    return preferences
+      .getInt( HTTP_DOT_PROXY_PORT, ParserUtil.parseInt( System.getProperty( HTTP_DOT_PROXY_PORT ), -1 ) );
   }
 
 
-  public void setHTTPProxyPort(final int httpProxyPort)
-  {
-    preferences.putInt(HTTP_DOT_PROXY_PORT, httpProxyPort);
+  public void setHTTPProxyPort( final int httpProxyPort ) {
+    preferences.putInt( HTTP_DOT_PROXY_PORT, httpProxyPort );
   }
 
-  public String getProxyUser()
-  {
-    return preferences.get(PROXY_USER_KEY, "");
+  public String getProxyUser() {
+    return preferences.get( PROXY_USER_KEY, "" );
   }
 
-  public void setProxyUser(final String proxyUser)
-  {
-    preferences.put(PROXY_USER_KEY, proxyUser);
+  public void setProxyUser( final String proxyUser ) {
+    preferences.put( PROXY_USER_KEY, proxyUser );
   }
 
 
-  public String getProxyPassword()
-  {
-    return preferences.get(PROXY_PASSWORD_KEY, "");
+  public String getProxyPassword() {
+    return preferences.get( PROXY_PASSWORD_KEY, "" );
   }
 
 
-  public void setProxyPassword(final String proxyPassword)
-  {
-    preferences.put(PROXY_PASSWORD_KEY, proxyPassword);
+  public void setProxyPassword( final String proxyPassword ) {
+    preferences.put( PROXY_PASSWORD_KEY, proxyPassword );
   }
 
-  public boolean isUseSocksProxy()
-  {
-    return preferences.getBoolean(USE_SOCKS_PROXY_KEY, false);
+  public boolean isUseSocksProxy() {
+    return preferences.getBoolean( USE_SOCKS_PROXY_KEY, false );
   }
 
-  public void setUseSocksProxy(final boolean useSocksProxy)
-  {
-    preferences.putBoolean(USE_SOCKS_PROXY_KEY, useSocksProxy);
+  public void setUseSocksProxy( final boolean useSocksProxy ) {
+    preferences.putBoolean( USE_SOCKS_PROXY_KEY, useSocksProxy );
   }
 
-  public int getSocksProxyPort()
-  {
-    return preferences.getInt(SOCKS_PROXY_PORT, ParserUtil.parseInt(System.getProperty(SOCKS_PROXY_PORT), -1));
+  public int getSocksProxyPort() {
+    return preferences.getInt( SOCKS_PROXY_PORT, ParserUtil.parseInt( System.getProperty( SOCKS_PROXY_PORT ), -1 ) );
   }
 
-  public void setSocksProxyPort(final int socksProxyPort)
-  {
-    preferences.putInt(SOCKS_PROXY_PORT, socksProxyPort);
+  public void setSocksProxyPort( final int socksProxyPort ) {
+    preferences.putInt( SOCKS_PROXY_PORT, socksProxyPort );
   }
 
 
-  public String getSocksProxyHost()
-  {
-    return preferences.get(SOCKS_PROXY_HOST, System.getProperty(SOCKS_PROXY_HOST));
+  public String getSocksProxyHost() {
+    return preferences.get( SOCKS_PROXY_HOST, System.getProperty( SOCKS_PROXY_HOST ) );
   }
 
 
-  public void setSocksProxyHost(final String socksProxyHost)
-  {
+  public void setSocksProxyHost( final String socksProxyHost ) {
     //noinspection ConstantConditions
-    if (socksProxyHost == null)
-    {
-      preferences.remove(SOCKS_PROXY_HOST);
-    }
-    else
-    {
-      preferences.put(SOCKS_PROXY_HOST, socksProxyHost);
+    if ( socksProxyHost == null ) {
+      preferences.remove( SOCKS_PROXY_HOST );
+    } else {
+      preferences.put( SOCKS_PROXY_HOST, socksProxyHost );
     }
   }
 
 
-  public void applySettings()
-  {
-    try
-    {
-    System.setProperty(HTTP_DOT_PROXY_HOST, "");
-    System.setProperty(HTTP_DOT_PROXY_PORT, "");
-    System.setProperty(SOCKS_PROXY_HOST, "");
-    System.setProperty(SOCKS_PROXY_PORT, "");
+  public void applySettings() {
+    try {
+      System.setProperty( HTTP_DOT_PROXY_HOST, "" );
+      System.setProperty( HTTP_DOT_PROXY_PORT, "" );
+      System.setProperty( SOCKS_PROXY_HOST, "" );
+      System.setProperty( SOCKS_PROXY_PORT, "" );
 
-    switch (getProxyType())
-    {
-      case AUTO_DETECT_PROXY:
-      {
-        final String host = getWebstartHTTPProxyHost();
-        boolean httpProxySet = false;
-        if (host != null && host.trim().length() > 0)
-        {
-          System.setProperty(HTTP_DOT_PROXY_HOST, host);
-          httpProxySet = true;
-        }
-        final String port = getWebstartHTTPProxyPort();
-        if (port != null)
-        {
-          System.setProperty(HTTP_DOT_PROXY_PORT, port);
-        }
-
-        if (!httpProxySet)
-        {
-          final String socksHost = getWebstartSOCKSProxyHost();
-          if (StringUtils.isEmpty(socksHost, true) == false)
-          {
-            System.setProperty(SOCKS_PROXY_HOST, socksHost);
+      switch( getProxyType() ) {
+        case AUTO_DETECT_PROXY: {
+          final String host = getWebstartHTTPProxyHost();
+          boolean httpProxySet = false;
+          if ( host != null && host.trim().length() > 0 ) {
+            System.setProperty( HTTP_DOT_PROXY_HOST, host );
+            httpProxySet = true;
+          }
+          final String port = getWebstartHTTPProxyPort();
+          if ( port != null ) {
+            System.setProperty( HTTP_DOT_PROXY_PORT, port );
           }
 
-          final String socksPort = getWebstartSOCKSProxyPort();
-          if (StringUtils.isEmpty(socksPort, true) == false)
-          {
-            System.setProperty(SOCKS_PROXY_PORT, socksPort);
+          if ( !httpProxySet ) {
+            final String socksHost = getWebstartSOCKSProxyHost();
+            if ( StringUtils.isEmpty( socksHost, true ) == false ) {
+              System.setProperty( SOCKS_PROXY_HOST, socksHost );
+            }
+
+            final String socksPort = getWebstartSOCKSProxyPort();
+            if ( StringUtils.isEmpty( socksPort, true ) == false ) {
+              System.setProperty( SOCKS_PROXY_PORT, socksPort );
+            }
           }
+          break;
         }
-        break;
+        case NO_PROXY: {
+          break;
+        }
+        case USER_PROXY: {
+          if ( isUseSocksProxy() ) {
+            System.setProperty( HTTP_DOT_PROXY_HOST, "" );
+            System.setProperty( HTTP_DOT_PROXY_PORT, "" );
+
+            final String host = getSocksProxyHost();
+            if ( StringUtils.isEmpty( host ) == false ) {
+              System.setProperty( SOCKS_PROXY_HOST, host );
+            }
+
+            final int port = getSocksProxyPort();
+            if ( port != -1 ) {
+              System.setProperty( SOCKS_PROXY_PORT, String.valueOf( port ) );
+            }
+          } else {
+            final String host = getHTTPProxyHost();
+            if ( StringUtils.isEmpty( host ) == false ) {
+              System.setProperty( HTTP_DOT_PROXY_HOST, host );
+            }
+            final int port = getHTTPProxyPort();
+            if ( port != -1 ) {
+              System.setProperty( HTTP_DOT_PROXY_PORT, String.valueOf( port ) );
+            }
+            System.setProperty( SOCKS_PROXY_HOST, "" );
+            System.setProperty( SOCKS_PROXY_PORT, "" );
+          }
+          break;
+        }
       }
-      case NO_PROXY:
-      {
-        break;
-      }
-      case USER_PROXY:
-      {
-        if (isUseSocksProxy())
-        {
-          System.setProperty(HTTP_DOT_PROXY_HOST, "");
-          System.setProperty(HTTP_DOT_PROXY_PORT, "");
 
-          final String host = getSocksProxyHost();
-          if (StringUtils.isEmpty(host) == false)
-          {
-            System.setProperty(SOCKS_PROXY_HOST, host);
-          }
-
-          final int port = getSocksProxyPort();
-          if (port != -1)
-          {
-            System.setProperty(SOCKS_PROXY_PORT, String.valueOf(port));
-          }
-        }
-        else
-        {
-          final String host = getHTTPProxyHost();
-          if (StringUtils.isEmpty(host) == false)
-          {
-            System.setProperty(HTTP_DOT_PROXY_HOST, host);
-          }
-          final int port = getHTTPProxyPort();
-          if (port != -1)
-          {
-            System.setProperty(HTTP_DOT_PROXY_PORT, String.valueOf(port));
-          }
-          System.setProperty(SOCKS_PROXY_HOST, "");
-          System.setProperty(SOCKS_PROXY_PORT, "");
-        }
-        break;
-      }
-    }
-
-    }
-    catch (Throwable t)
-    {
-      logger.error("Failed to configure proxy settings.", t);
+    } catch ( Throwable t ) {
+      logger.error( "Failed to configure proxy settings.", t );
     }
     printProxyConfiguration();
   }
 
-  private void printProxyConfiguration()
-  {
-    logger.info(HTTP_DOT_PROXY_HOST + System.getProperty(HTTP_DOT_PROXY_HOST, "<undefined>"));
-    logger.info(HTTP_DOT_PROXY_PORT + System.getProperty(HTTP_DOT_PROXY_PORT, "<undefined>"));
-    logger.info(SOCKS_PROXY_HOST + System.getProperty(SOCKS_PROXY_HOST, "<undefined>"));
-    logger.info(SOCKS_PROXY_PORT + System.getProperty(SOCKS_PROXY_PORT, "<undefined>"));
+  private void printProxyConfiguration() {
+    logger.info( HTTP_DOT_PROXY_HOST + System.getProperty( HTTP_DOT_PROXY_HOST, "<undefined>" ) );
+    logger.info( HTTP_DOT_PROXY_PORT + System.getProperty( HTTP_DOT_PROXY_PORT, "<undefined>" ) );
+    logger.info( SOCKS_PROXY_HOST + System.getProperty( SOCKS_PROXY_HOST, "<undefined>" ) );
+    logger.info( SOCKS_PROXY_PORT + System.getProperty( SOCKS_PROXY_PORT, "<undefined>" ) );
 
   }
 
 
-  private static String getWebstartHTTPProxyHost()
-  {
-    final String host = System.getProperty(DEPLOYMENT_PROXY_HTTP_HOST);
-    if (host != null)
-    {
+  private static String getWebstartHTTPProxyHost() {
+    final String host = System.getProperty( DEPLOYMENT_PROXY_HTTP_HOST );
+    if ( host != null ) {
       return host;
     }
 
-    return System.getProperty(PROXY_HOST);
+    return System.getProperty( PROXY_HOST );
   }
 
 
-  private static String getWebstartHTTPProxyPort()
-  {
-    final String port = System.getProperty(DEPLOYMENT_PROXY_HTTP_PORT);
-    if (port != null)
-    {
+  private static String getWebstartHTTPProxyPort() {
+    final String port = System.getProperty( DEPLOYMENT_PROXY_HTTP_PORT );
+    if ( port != null ) {
       return port;
     }
 
-    return System.getProperty(PROXY_PORT);
+    return System.getProperty( PROXY_PORT );
   }
 
 
-  private static String getWebstartSOCKSProxyHost()
-  {
-    return System.getProperty(DEPLOYMENT_PROXY_SOCKS_HOST);
+  private static String getWebstartSOCKSProxyHost() {
+    return System.getProperty( DEPLOYMENT_PROXY_SOCKS_HOST );
   }
 
 
-  private static String getWebstartSOCKSProxyPort()
-  {
-    return System.getProperty(DEPLOYMENT_PROXY_SOCKS_PORT);
+  private static String getWebstartSOCKSProxyPort() {
+    return System.getProperty( DEPLOYMENT_PROXY_SOCKS_PORT );
   }
 
-  public void flush()
-  {
-    try
-    {
+  public void flush() {
+    try {
       preferences.flush();
-    }
-    catch (BackingStoreException e)
-    {
+    } catch ( BackingStoreException e ) {
       e.printStackTrace();
     }
   }

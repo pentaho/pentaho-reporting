@@ -25,22 +25,18 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
  *
  * @author Thomas Morgner
  */
-public class StyleExpressionPropertyLocationInfo extends LocationInfo
-{
+public class StyleExpressionPropertyLocationInfo extends LocationInfo {
   private StyleKey styleKey;
   private String expressionProperty;
 
-  public StyleExpressionPropertyLocationInfo(final ReportElement reportElement,
-                                             final StyleKey styleKey,
-                                             final String expressionProperty)
-  {
-    super(reportElement);
-    if (styleKey == null)
-    {
+  public StyleExpressionPropertyLocationInfo( final ReportElement reportElement,
+                                              final StyleKey styleKey,
+                                              final String expressionProperty ) {
+    super( reportElement );
+    if ( styleKey == null ) {
       throw new NullPointerException();
     }
-    if (expressionProperty == null)
-    {
+    if ( expressionProperty == null ) {
       throw new NullPointerException();
     }
 
@@ -48,13 +44,11 @@ public class StyleExpressionPropertyLocationInfo extends LocationInfo
     this.expressionProperty = expressionProperty;
   }
 
-  public StyleKey getStyleKey()
-  {
+  public StyleKey getStyleKey() {
     return styleKey;
   }
 
-  public String getExpressionProperty()
-  {
+  public String getExpressionProperty() {
     return expressionProperty;
   }
 }

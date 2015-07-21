@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements;
 
-import java.util.ArrayList;
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
@@ -28,19 +25,19 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class BandElementReadHandler extends AbstractReportElementReadHandler
-{
+import java.util.ArrayList;
+import java.util.Properties;
+
+public class BandElementReadHandler extends AbstractReportElementReadHandler {
   private Band band;
   private ArrayList<AbstractReportElementReadHandler> childElements;
 
-  public BandElementReadHandler(final Band band)
-  {
+  public BandElementReadHandler( final Band band ) {
     this.childElements = new ArrayList<AbstractReportElementReadHandler>();
     this.band = band;
   }
 
-  protected Element getElement()
-  {
+  protected Element getElement() {
     return band;
   }
 
@@ -53,125 +50,105 @@ public class BandElementReadHandler extends AbstractReportElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("child".equalsIgnoreCase(tagName))
-      {
-        final String type = atts.getValue(uri, "type");
-        if ("org.pentaho.reportdesigner.crm.report.model.BandReportElement".equals(type))
-        {
-          final AbstractReportElementReadHandler readHandler = new BandElementReadHandler(new Band());
-          childElements.add(readHandler);
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "child".equalsIgnoreCase( tagName ) ) {
+        final String type = atts.getValue( uri, "type" );
+        if ( "org.pentaho.reportdesigner.crm.report.model.BandReportElement".equals( type ) ) {
+          final AbstractReportElementReadHandler readHandler = new BandElementReadHandler( new Band() );
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.AnchorFieldReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.AnchorFieldReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new AnchorFieldElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.DateFieldReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.DateFieldReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new DateFieldReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
 
-        if ("org.pentaho.reportdesigner.crm.report.model.ChartReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.ChartReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new ChartElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
 
-        if ("org.pentaho.reportdesigner.crm.report.model.EllipseReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.EllipseReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new EllipseElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.ImageURLFieldReportElement".equals(type) ||
-            "org.pentaho.reportdesigner.crm.report.model.ImageFieldReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.ImageURLFieldReportElement".equals( type ) ||
+          "org.pentaho.reportdesigner.crm.report.model.ImageFieldReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new ImageFieldReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.LabelReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.LabelReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new LabelReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.LineReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.LineReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new LineReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.MessageFieldReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.MessageFieldReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new MessageReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.NumberFieldReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.NumberFieldReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new NumberFieldReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.RectangleReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.RectangleReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new RectangleElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.ResourceFieldReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.ResourceFieldReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new ResourceFieldReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.ResourceLabelReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.ResourceLabelReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new ResourceLabelReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.ResourceMessageReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.ResourceMessageReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new ResourceMessageReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.StaticImageReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.StaticImageReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new StaticImageReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.TextFieldReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.TextFieldReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new TextFieldReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
-        if ("org.pentaho.reportdesigner.crm.report.model.DrawableFieldReportElement".equals(type))
-        {
+        if ( "org.pentaho.reportdesigner.crm.report.model.DrawableFieldReportElement".equals( type ) ) {
           final AbstractReportElementReadHandler readHandler = new DrawableFieldReportElementReadHandler();
-          childElements.add(readHandler);
+          childElements.add( readHandler );
           return readHandler;
         }
         //
 
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -179,56 +156,45 @@ public class BandElementReadHandler extends AbstractReportElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final Properties result = getResult();
 
 
-    final String showInGUI = result.getProperty("showInLayoutGUI");
-    if (showInGUI != null)
-    {
-      if ("true".equals(showInGUI))
-      {
-        band.setAttribute(ReportDesignerParserModule.NAMESPACE,
-            ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.FALSE);
-      }
-      else
-      {
-        band.setAttribute(ReportDesignerParserModule.NAMESPACE,
-            ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    final String showInGUI = result.getProperty( "showInLayoutGUI" );
+    if ( showInGUI != null ) {
+      if ( "true".equals( showInGUI ) ) {
+        band.setAttribute( ReportDesignerParserModule.NAMESPACE,
+          ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.FALSE );
+      } else {
+        band.setAttribute( ReportDesignerParserModule.NAMESPACE,
+          ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE );
       }
     }
 
-    final String layoutType = result.getProperty("reportLayoutManagerType");
-    band.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, parseLayoutManager(layoutType));
+    final String layoutType = result.getProperty( "reportLayoutManagerType" );
+    band.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, parseLayoutManager( layoutType ) );
 
-    for (int i = 0; i < childElements.size(); i++)
-    {
-      final AbstractReportElementReadHandler handler = childElements.get(i);
-      band.addElement(handler.getElement());
+    for ( int i = 0; i < childElements.size(); i++ ) {
+      final AbstractReportElementReadHandler handler = childElements.get( i );
+      band.addElement( handler.getElement() );
     }
   }
 
-  private Object parseLayoutManager(final String layoutType)
-  {
-    if (layoutType == null)
-    {
+  private Object parseLayoutManager( final String layoutType ) {
+    if ( layoutType == null ) {
       return null;
     }
-    if ("STACKED".equals(layoutType))
-    {
+    if ( "STACKED".equals( layoutType ) ) {
       return "block";
     }
-    if ("NULL".equals(layoutType))
-    {
+    if ( "NULL".equals( layoutType ) ) {
       return "canvas";
     }
     return null;
   }
 
-  public Band getBand()
-  {
+  public Band getBand() {
     return band;
   }
 
@@ -238,8 +204,7 @@ public class BandElementReadHandler extends AbstractReportElementReadHandler
    * @return the properties.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return band;
   }
 }

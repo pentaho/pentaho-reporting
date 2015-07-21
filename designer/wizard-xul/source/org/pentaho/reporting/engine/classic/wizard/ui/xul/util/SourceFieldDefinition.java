@@ -35,12 +35,12 @@ public class SourceFieldDefinition {
     if ( attributes != null ) {
       final DefaultDataAttributeContext dataAttributeContext = new DefaultDataAttributeContext();
       displayName =
-          (String) attributes.getMetaAttribute( MetaAttributeNames.Formatting.NAMESPACE,
-              MetaAttributeNames.Formatting.LABEL, String.class, dataAttributeContext );
+        (String) attributes.getMetaAttribute( MetaAttributeNames.Formatting.NAMESPACE,
+          MetaAttributeNames.Formatting.LABEL, String.class, dataAttributeContext );
       if ( displayName != null ) {
         final Object indexColumn =
-            attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.INDEXED_COLUMN,
-                Boolean.class, dataAttributeContext );
+          attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.INDEXED_COLUMN,
+            Boolean.class, dataAttributeContext );
         if ( Boolean.TRUE.equals( indexColumn ) ) {
           displayName += ( " (" + fieldName + ")" );
         }
@@ -50,7 +50,7 @@ public class SourceFieldDefinition {
 
   /**
    * Returns the formatted display name. This method is used via reflection by the Xul code.
-   * 
+   *
    * @return the display field name.
    * @noinspection UnusedDeclaration
    */

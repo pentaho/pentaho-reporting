@@ -19,8 +19,8 @@ package org.pentaho.plugin.jfreereport.reportcharts;
 
 import org.jfree.data.general.Dataset;
 
-public interface CollectorFunctionResult
-{
+public interface CollectorFunctionResult {
   public Dataset getDataSet();
+
   public Object getCacheKey();
 }

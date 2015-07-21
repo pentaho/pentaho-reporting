@@ -17,29 +17,28 @@
 
 package org.pentaho.reporting.designer.core.editor.report;
 
+import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 
-import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+public interface ReportElementDragHandler {
+  public int dragStarted( final DropTargetDragEvent event,
+                          final ReportElementEditorContext dragContext,
+                          final ElementMetaData elementMetaData,
+                          final String fieldName );
 
-public interface ReportElementDragHandler
-{
-  public int dragStarted(final DropTargetDragEvent event,
-                         final ReportElementEditorContext dragContext,
-                         final ElementMetaData elementMetaData,
-                         final String fieldName);
+  public int dragUpdated( final DropTargetDragEvent event,
+                          final ReportElementEditorContext dragContext,
+                          final ElementMetaData elementMetaData,
+                          final String fieldName );
 
-  public int dragUpdated(final DropTargetDragEvent event,
-                         final ReportElementEditorContext dragContext,
-                         final ElementMetaData elementMetaData,
-                         final String fieldName);
+  public void dragAborted( final DropTargetEvent event,
+                           final ReportElementEditorContext dragContext );
 
-  public void dragAborted(final DropTargetEvent event,
-                          final ReportElementEditorContext dragContext);
-
-  public void drop(final DropTargetDropEvent event,
-                   final ReportElementEditorContext dragContext,
-                   final ElementMetaData elementMetaData,
-                   final String fieldName);
+  public void drop( final DropTargetDropEvent event,
+                    final ReportElementEditorContext dragContext,
+                    final ElementMetaData elementMetaData,
+                    final String fieldName );
 }

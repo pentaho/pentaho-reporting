@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
@@ -33,62 +26,54 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
 /**
  * Todo: Document me!
  * <p/>
- * Date: 18.08.2009
- * Time: 17:16:07
+ * Date: 18.08.2009 Time: 17:16:07
  *
  * @author Thomas Morgner.
  */
-public class EditResourcesAction extends AbstractReportContextAction
-{
+public class EditResourcesAction extends AbstractReportContextAction {
   /**
-   * Defines an <code>Action</code> object with a default
-   * description string and default icon.
+   * Defines an <code>Action</code> object with a default description string and default icon.
    */
-  public EditResourcesAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("EditResourcesAction.Text"));
-    putValue(Action.DEFAULT, ActionMessages.getString("EditResourcesAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditResourcesAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditResourcesAction.Accelerator"));
+  public EditResourcesAction() {
+    putValue( Action.NAME, ActionMessages.getString( "EditResourcesAction.Text" ) );
+    putValue( Action.DEFAULT, ActionMessages.getString( "EditResourcesAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "EditResourcesAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "EditResourcesAction.Accelerator" ) );
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       return;
     }
 
     final ReportDesignerContext context = getReportDesignerContext();
     final Component parent = context.getView().getParent();
-    final Window window = LibSwingUtil.getWindowAncestor(parent);
+    final Window window = LibSwingUtil.getWindowAncestor( parent );
     final BundledResourceEditor dialog;
-    if (window instanceof JDialog)
-    {
-      dialog = new BundledResourceEditor((JDialog) window, getReportDesignerContext());
-    }
-    else if (window instanceof JFrame)
-    {
-      dialog = new BundledResourceEditor((JFrame) window, getReportDesignerContext());
-    }
-    else
-    {
-      dialog = new BundledResourceEditor(getReportDesignerContext());
+    if ( window instanceof JDialog ) {
+      dialog = new BundledResourceEditor( (JDialog) window, getReportDesignerContext() );
+    } else if ( window instanceof JFrame ) {
+      dialog = new BundledResourceEditor( (JFrame) window, getReportDesignerContext() );
+    } else {
+      dialog = new BundledResourceEditor( getReportDesignerContext() );
     }
 
 
-    if (dialog.editResources())
-    {
+    if ( dialog.editResources() ) {
       final MasterReport masterReportElement = activeContext.getContextRoot();
       masterReportElement.fireModelLayoutChanged
-          (masterReportElement, ReportModelEvent.NODE_PROPERTIES_CHANGED, masterReportElement.getBundle());
+        ( masterReportElement, ReportModelEvent.NODE_PROPERTIES_CHANGED, masterReportElement.getBundle() );
     }
   }
 }

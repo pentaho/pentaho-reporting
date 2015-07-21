@@ -17,76 +17,70 @@
 
 package org.pentaho.reporting.designer.core.editor.format;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.libraries.designtime.swing.ColorComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
 
-public class ColorPropertiesPane extends JPanel
-{
+import javax.swing.*;
+import java.awt.*;
+
+public class ColorPropertiesPane extends JPanel {
   private JComboBox colorSelectorBox;
   private JComboBox backgroundSelectorBox;
   private FontPreviewPane previewPane;
 
-  public ColorPropertiesPane()
-  {
+  public ColorPropertiesPane() {
     colorSelectorBox = new ColorComboBox();
     backgroundSelectorBox = new ColorComboBox();
     previewPane = new FontPreviewPane();
 
-    setLayout(new GridBagLayout());
+    setLayout( new GridBagLayout() );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(new JLabel(Messages.getString("ColorPropertiesPane.Foreground")), gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( new JLabel( Messages.getString( "ColorPropertiesPane.Foreground" ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
     gbc.gridy = 0;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(colorSelectorBox, gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( colorSelectorBox, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 2;
     gbc.gridy = 0;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
     gbc.fill = GridBagConstraints.VERTICAL;
-    add(new EllipsisButton(new SelectCustomColorAction(colorSelectorBox)), gbc);
+    add( new EllipsisButton( new SelectCustomColorAction( colorSelectorBox ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(new JLabel(Messages.getString("ColorPropertiesPane.Background")), gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( new JLabel( Messages.getString( "ColorPropertiesPane.Background" ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
     gbc.gridy = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(backgroundSelectorBox, gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( backgroundSelectorBox, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 2;
     gbc.gridy = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
     gbc.fill = GridBagConstraints.VERTICAL;
-    add(new EllipsisButton(new SelectCustomColorAction(backgroundSelectorBox)), gbc);
+    add( new EllipsisButton( new SelectCustomColorAction( backgroundSelectorBox ) ), gbc );
 
 
     gbc = new GridBagConstraints();
@@ -97,23 +91,21 @@ public class ColorPropertiesPane extends JPanel
     gbc.weightx = 1;
     gbc.weighty = 1;
     gbc.fill = GridBagConstraints.BOTH;
-    gbc.insets = new Insets(5, 5, 5, 5);
-    add(previewPane, gbc);
+    gbc.insets = new Insets( 5, 5, 5, 5 );
+    add( previewPane, gbc );
 
   }
 
-  public void initializeFromStyle(final ElementStyleSheet styleSheet)
-  {
-    final Object paint = styleSheet.getStyleProperty(ElementStyleKeys.PAINT);
-    final Object background = styleSheet.getStyleProperty(ElementStyleKeys.BACKGROUND_COLOR);
+  public void initializeFromStyle( final ElementStyleSheet styleSheet ) {
+    final Object paint = styleSheet.getStyleProperty( ElementStyleKeys.PAINT );
+    final Object background = styleSheet.getStyleProperty( ElementStyleKeys.BACKGROUND_COLOR );
 
-    colorSelectorBox.setSelectedItem(paint);
-    backgroundSelectorBox.setSelectedItem(background);
+    colorSelectorBox.setSelectedItem( paint );
+    backgroundSelectorBox.setSelectedItem( background );
   }
 
-  public void commitValues(final ElementStyleSheet styleSheet)
-  {
-    styleSheet.setStyleProperty(ElementStyleKeys.PAINT, colorSelectorBox.getSelectedItem());
-    styleSheet.setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, backgroundSelectorBox.getSelectedItem());
+  public void commitValues( final ElementStyleSheet styleSheet ) {
+    styleSheet.setStyleProperty( ElementStyleKeys.PAINT, colorSelectorBox.getSelectedItem() );
+    styleSheet.setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, backgroundSelectorBox.getSelectedItem() );
   }
 }

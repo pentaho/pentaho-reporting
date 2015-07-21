@@ -17,75 +17,62 @@
 
 package org.pentaho.reporting.designer.core.util.table.filter;
 
-import java.beans.PropertyEditor;
-
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTableModel;
 import org.pentaho.reporting.designer.core.util.table.GroupingHeader;
 import org.pentaho.reporting.designer.core.util.table.GroupingModel;
 import org.pentaho.reporting.designer.core.util.table.TableStyle;
 
+import java.beans.PropertyEditor;
+
 public class DefaultMetaDataFilterTableModel
-    extends DefaultFilterTableModel implements ElementMetaDataTableModel, GroupingModel
-{
+  extends DefaultFilterTableModel implements ElementMetaDataTableModel, GroupingModel {
   private ElementMetaDataTableModel metaParent;
   private GroupingModel groupingBackend;
 
-  public DefaultMetaDataFilterTableModel(final ElementMetaDataTableModel backend, final int filterColumn)
-  {
-    super(backend, filterColumn);
-    if (backend instanceof GroupingModel)
-    {
+  public DefaultMetaDataFilterTableModel( final ElementMetaDataTableModel backend, final int filterColumn ) {
+    super( backend, filterColumn );
+    if ( backend instanceof GroupingModel ) {
       this.groupingBackend = (GroupingModel) backend;
     }
     this.metaParent = backend;
   }
 
-  public String[] getExtraFields(final int row, final int column)
-  {
-    return metaParent.getExtraFields(mapToModel(row), column);
+  public String[] getExtraFields( final int row, final int column ) {
+    return metaParent.getExtraFields( mapToModel( row ), column );
   }
 
-  public Class getClassForCell(final int row, final int column)
-  {
-    return metaParent.getClassForCell(mapToModel(row), column);
+  public Class getClassForCell( final int row, final int column ) {
+    return metaParent.getClassForCell( mapToModel( row ), column );
   }
 
-  public PropertyEditor getEditorForCell(final int row, final int column)
-  {
-    return metaParent.getEditorForCell(mapToModel(row), column);
+  public PropertyEditor getEditorForCell( final int row, final int column ) {
+    return metaParent.getEditorForCell( mapToModel( row ), column );
   }
 
-  public String getValueRole(final int row, final int column)
-  {
-    return metaParent.getValueRole(mapToModel(row), column);
+  public String getValueRole( final int row, final int column ) {
+    return metaParent.getValueRole( mapToModel( row ), column );
   }
 
-  public void setTableStyle(final TableStyle tableStyle)
-  {
-    metaParent.setTableStyle(tableStyle);
+  public void setTableStyle( final TableStyle tableStyle ) {
+    metaParent.setTableStyle( tableStyle );
     applyFilter();
   }
 
-  public TableStyle getTableStyle()
-  {
+  public TableStyle getTableStyle() {
     return metaParent.getTableStyle();
   }
 
-  public GroupingHeader getGroupHeader(final int index)
-  {
-    if (groupingBackend == null)
-    {
+  public GroupingHeader getGroupHeader( final int index ) {
+    if ( groupingBackend == null ) {
       return null;
     }
-    return groupingBackend.getGroupHeader(mapToModel(index));
+    return groupingBackend.getGroupHeader( mapToModel( index ) );
   }
 
-  public boolean isHeaderRow(final int index)
-  {
-    if (groupingBackend == null)
-    {
+  public boolean isHeaderRow( final int index ) {
+    if ( groupingBackend == null ) {
       return false;
     }
-    return groupingBackend.isHeaderRow(mapToModel(index));
+    return groupingBackend.isHeaderRow( mapToModel( index ) );
   }
 }

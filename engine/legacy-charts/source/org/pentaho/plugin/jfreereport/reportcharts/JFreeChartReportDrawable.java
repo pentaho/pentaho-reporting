@@ -17,16 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.entity.CategoryItemEntity;
@@ -49,8 +39,15 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.LibXmlInfo;
 
-public class JFreeChartReportDrawable implements ReportDrawable
-{
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
+public class JFreeChartReportDrawable implements ReportDrawable {
   private boolean debugRendering;
   private boolean buggyDrawArea;
 
@@ -58,62 +55,51 @@ public class JFreeChartReportDrawable implements ReportDrawable
   private ChartRenderingInfo chartRenderingInfo;
   private Rectangle2D bounds;
 
-  public JFreeChartReportDrawable(final JFreeChart chart, final boolean collectRenderingInfo)
-  {
+  public JFreeChartReportDrawable( final JFreeChart chart, final boolean collectRenderingInfo ) {
     debugRendering = ClassicEngineBoot.getInstance().getExtendedConfig().
-        getBoolProperty("org.pentaho.plugin.jfreereport.reportcharts.DebugChartEntities");
+      getBoolProperty( "org.pentaho.plugin.jfreereport.reportcharts.DebugChartEntities" );
     buggyDrawArea = ClassicEngineBoot.getInstance().getExtendedConfig().
-        getBoolProperty("org.pentaho.plugin.jfreereport.reportcharts.DrawAreaBug");
+      getBoolProperty( "org.pentaho.plugin.jfreereport.reportcharts.DrawAreaBug" );
     this.chart = chart;
-    if (collectRenderingInfo)
-    {
+    if ( collectRenderingInfo ) {
       this.chartRenderingInfo = new ChartRenderingInfo();
     }
   }
 
-  public void draw(final Graphics2D graphics2D, final Rectangle2D bounds)
-  {
+  public void draw( final Graphics2D graphics2D, final Rectangle2D bounds ) {
     this.bounds = (Rectangle2D) bounds.clone();
-    if (chartRenderingInfo != null)
-    {
+    if ( chartRenderingInfo != null ) {
       this.chartRenderingInfo.clear();
     }
     final Graphics2D g2 = (Graphics2D) graphics2D.create();
-    this.chart.draw(g2, bounds, chartRenderingInfo);
+    this.chart.draw( g2, bounds, chartRenderingInfo );
     g2.dispose();
 
-    if (chartRenderingInfo == null || debugRendering == false)
-    {
+    if ( chartRenderingInfo == null || debugRendering == false ) {
       return;
     }
 
-    graphics2D.setColor(Color.RED);
+    graphics2D.setColor( Color.RED );
     final Rectangle2D dataArea = getDataAreaOffset();
     final EntityCollection entityCollection = chartRenderingInfo.getEntityCollection();
-    for (int i = 0; i < entityCollection.getEntityCount(); i++)
-    {
-      final ChartEntity chartEntity = entityCollection.getEntity(i);
-      if (chartEntity instanceof XYItemEntity ||
-          chartEntity instanceof CategoryItemEntity ||
-          chartEntity instanceof PieSectionEntity)
-      {
-        final Area a = new Area(chartEntity.getArea());
-        if (buggyDrawArea)
-        {
-          a.transform(AffineTransform.getTranslateInstance(dataArea.getX(), dataArea.getY()));
+    for ( int i = 0; i < entityCollection.getEntityCount(); i++ ) {
+      final ChartEntity chartEntity = entityCollection.getEntity( i );
+      if ( chartEntity instanceof XYItemEntity ||
+        chartEntity instanceof CategoryItemEntity ||
+        chartEntity instanceof PieSectionEntity ) {
+        final Area a = new Area( chartEntity.getArea() );
+        if ( buggyDrawArea ) {
+          a.transform( AffineTransform.getTranslateInstance( dataArea.getX(), dataArea.getY() ) );
         }
-        a.intersect(new Area(dataArea));
-        graphics2D.draw(a);
-      }
-      else
-      {
-        graphics2D.draw(chartEntity.getArea());
+        a.intersect( new Area( dataArea ) );
+        graphics2D.draw( a );
+      } else {
+        graphics2D.draw( chartEntity.getArea() );
       }
     }
   }
 
-  private Rectangle2D getDataAreaOffset()
-  {
+  private Rectangle2D getDataAreaOffset() {
     return chartRenderingInfo.getPlotInfo().getDataArea();
   }
 
@@ -123,8 +109,7 @@ public class JFreeChartReportDrawable implements ReportDrawable
    *
    * @param config the report configuration.
    */
-  public void setConfiguration(final Configuration config)
-  {
+  public void setConfiguration( final Configuration config ) {
 
   }
 
@@ -133,8 +118,7 @@ public class JFreeChartReportDrawable implements ReportDrawable
    *
    * @param style the stylesheet.
    */
-  public void setStyleSheet(final StyleSheet style)
-  {
+  public void setStyleSheet( final StyleSheet style ) {
 
   }
 
@@ -143,13 +127,11 @@ public class JFreeChartReportDrawable implements ReportDrawable
    *
    * @param bundleFactory the resource-bundle factory.
    */
-  public void setResourceBundleFactory(final ResourceBundleFactory bundleFactory)
-  {
+  public void setResourceBundleFactory( final ResourceBundleFactory bundleFactory ) {
 
   }
 
-  public JFreeChart getChart()
-  {
+  public JFreeChart getChart() {
     return chart;
   }
 
@@ -159,141 +141,111 @@ public class JFreeChartReportDrawable implements ReportDrawable
    * @param bounds the bounds for which the image map is computed.
    * @return the computed image-map or null if there is no image-map available.
    */
-  public ImageMap getImageMap(final Rectangle2D bounds)
-  {
-    if (chartRenderingInfo == null)
-    {
+  public ImageMap getImageMap( final Rectangle2D bounds ) {
+    if ( chartRenderingInfo == null ) {
       return null;
     }
     final Rectangle2D dataArea = getDataAreaOffset();
     final Rectangle2D otherArea = new Rectangle2D.Double();
 
-    if ((ObjectUtilities.equal(bounds, this.bounds)) == false)
-    {
-      final BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
+    if ( ( ObjectUtilities.equal( bounds, this.bounds ) ) == false ) {
+      final BufferedImage image = new BufferedImage( 1, 1, BufferedImage.TYPE_4BYTE_ABGR );
       final Graphics2D graphics = image.createGraphics();
-      draw(graphics, bounds);
+      draw( graphics, bounds );
       graphics.dispose();
     }
 
     final ImageMap map = new ImageMap();
     final EntityCollection entityCollection = chartRenderingInfo.getEntityCollection();
     final int count = entityCollection.getEntityCount();
-    for (int i = 0; i < count; i++)
-    {
-      final ChartEntity chartEntity = entityCollection.getEntity(i);
+    for ( int i = 0; i < count; i++ ) {
+      final ChartEntity chartEntity = entityCollection.getEntity( i );
       final Shape area = chartEntity.getArea();
       final String hrefValue = chartEntity.getURLText();
       final String tooltipValue = chartEntity.getToolTipText();
-      if (StringUtils.isEmpty(tooltipValue) == false ||
-          StringUtils.isEmpty(hrefValue) == false)
-      {
+      if ( StringUtils.isEmpty( tooltipValue ) == false ||
+        StringUtils.isEmpty( hrefValue ) == false ) {
         final AbstractImageMapEntry entry;
-        if (chartEntity instanceof XYItemEntity ||
-            chartEntity instanceof CategoryItemEntity ||
-            chartEntity instanceof PieSectionEntity)
-        {
-          entry = createMapEntry(area, dataArea);
+        if ( chartEntity instanceof XYItemEntity ||
+          chartEntity instanceof CategoryItemEntity ||
+          chartEntity instanceof PieSectionEntity ) {
+          entry = createMapEntry( area, dataArea );
+        } else {
+          entry = createMapEntry( area, otherArea );
         }
-        else
-        {
-          entry = createMapEntry(area, otherArea);
-        }
-        if (entry == null)
-        {
+        if ( entry == null ) {
           continue;
         }
-        if (StringUtils.isEmpty(hrefValue) == false)
-        {
-          entry.setAttribute(LibXmlInfo.XHTML_NAMESPACE, "href", hrefValue);
+        if ( StringUtils.isEmpty( hrefValue ) == false ) {
+          entry.setAttribute( LibXmlInfo.XHTML_NAMESPACE, "href", hrefValue );
+        } else {
+          entry.setAttribute( LibXmlInfo.XHTML_NAMESPACE, "href", "#" );
         }
-        else
-        {
-          entry.setAttribute(LibXmlInfo.XHTML_NAMESPACE, "href", "#");
+        if ( StringUtils.isEmpty( tooltipValue ) == false ) {
+          entry.setAttribute( LibXmlInfo.XHTML_NAMESPACE, "title", tooltipValue );
         }
-        if (StringUtils.isEmpty(tooltipValue) == false)
-        {
-          entry.setAttribute(LibXmlInfo.XHTML_NAMESPACE, "title", tooltipValue);
-        }
-        map.addMapEntry(entry);
+        map.addMapEntry( entry );
       }
     }
 
     return map;
   }
 
-  private AbstractImageMapEntry createMapEntry(final Shape area,
-                                               final Rectangle2D dataArea)
-  {
-    if (buggyDrawArea)
-    {
-      if (area instanceof Ellipse2D)
-      {
+  private AbstractImageMapEntry createMapEntry( final Shape area,
+                                                final Rectangle2D dataArea ) {
+    if ( buggyDrawArea ) {
+      if ( area instanceof Ellipse2D ) {
         final Ellipse2D ellipse2D = (Ellipse2D) area;
-        if (ellipse2D.getWidth() == ellipse2D.getHeight())
-        {
-          return new CircleImageMapEntry((float) (ellipse2D.getCenterX() + dataArea.getX()),
-              (float) (ellipse2D.getCenterY() + dataArea.getY()), (float) (ellipse2D.getWidth() / 2));
+        if ( ellipse2D.getWidth() == ellipse2D.getHeight() ) {
+          return new CircleImageMapEntry( (float) ( ellipse2D.getCenterX() + dataArea.getX() ),
+            (float) ( ellipse2D.getCenterY() + dataArea.getY() ), (float) ( ellipse2D.getWidth() / 2 ) );
         }
-      }
-      else if (area instanceof Rectangle2D)
-      {
+      } else if ( area instanceof Rectangle2D ) {
         final Rectangle2D rect = (Rectangle2D) area;
-        return (new RectangleImageMapEntry((float) (rect.getX() + dataArea.getX()),
-            (float) (rect.getY() + dataArea.getY()),
-            (float) (rect.getX() + rect.getWidth()),
-            (float) (rect.getY() + rect.getHeight())));
+        return ( new RectangleImageMapEntry( (float) ( rect.getX() + dataArea.getX() ),
+          (float) ( rect.getY() + dataArea.getY() ),
+          (float) ( rect.getX() + rect.getWidth() ),
+          (float) ( rect.getY() + rect.getHeight() ) ) );
       }
-    }
-    else
-    {
-      if (area instanceof Ellipse2D)
-      {
+    } else {
+      if ( area instanceof Ellipse2D ) {
         final Ellipse2D ellipse2D = (Ellipse2D) area;
-        if (ellipse2D.getWidth() == ellipse2D.getHeight())
-        {
-          return new CircleImageMapEntry((float) (ellipse2D.getCenterX()),
-              (float) (ellipse2D.getCenterY()), (float) (ellipse2D.getWidth() / 2));
+        if ( ellipse2D.getWidth() == ellipse2D.getHeight() ) {
+          return new CircleImageMapEntry( (float) ( ellipse2D.getCenterX() ),
+            (float) ( ellipse2D.getCenterY() ), (float) ( ellipse2D.getWidth() / 2 ) );
         }
-      }
-      else if (area instanceof Rectangle2D)
-      {
+      } else if ( area instanceof Rectangle2D ) {
         final Rectangle2D rect = (Rectangle2D) area;
-        return (new RectangleImageMapEntry((float) (rect.getX()),
-            (float) (rect.getY()),
-            (float) (rect.getX() + rect.getWidth()),
-            (float) (rect.getY() + rect.getHeight())));
+        return ( new RectangleImageMapEntry( (float) ( rect.getX() ),
+          (float) ( rect.getY() ),
+          (float) ( rect.getX() + rect.getWidth() ),
+          (float) ( rect.getY() + rect.getHeight() ) ) );
       }
     }
 
-    final Area a = new Area(area);
-    if (buggyDrawArea)
-    {
-      a.transform(AffineTransform.getTranslateInstance(dataArea.getX(), dataArea.getY()));
+    final Area a = new Area( area );
+    if ( buggyDrawArea ) {
+      a.transform( AffineTransform.getTranslateInstance( dataArea.getX(), dataArea.getY() ) );
     }
-    if (dataArea.isEmpty() == false)
-    {
-      a.intersect(new Area(dataArea));
+    if ( dataArea.isEmpty() == false ) {
+      a.intersect( new Area( dataArea ) );
     }
-    final PathIterator pathIterator = a.getPathIterator(null, 2);
-    final FloatList floats = new FloatList(100);
-    final float[] coords = new float[6];
-    while (pathIterator.isDone() == false)
-    {
-      final int retval = pathIterator.currentSegment(coords);
-      if (retval == PathIterator.SEG_MOVETO ||
-          retval == PathIterator.SEG_LINETO)
-      {
-        floats.add(coords[0]);
-        floats.add(coords[1]);
+    final PathIterator pathIterator = a.getPathIterator( null, 2 );
+    final FloatList floats = new FloatList( 100 );
+    final float[] coords = new float[ 6 ];
+    while ( pathIterator.isDone() == false ) {
+      final int retval = pathIterator.currentSegment( coords );
+      if ( retval == PathIterator.SEG_MOVETO ||
+        retval == PathIterator.SEG_LINETO ) {
+        floats.add( coords[ 0 ] );
+        floats.add( coords[ 1 ] );
       }
       pathIterator.next();
     }
 
-    if (floats.size() == 0)
-    {
+    if ( floats.size() == 0 ) {
       return null;
     }
-    return (new PolygonImageMapEntry(floats.toArray()));
+    return ( new PolygonImageMapEntry( floats.toArray() ) );
   }
 }

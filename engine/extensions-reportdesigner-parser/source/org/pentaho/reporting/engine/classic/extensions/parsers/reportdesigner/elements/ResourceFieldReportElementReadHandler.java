@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements;
 
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.ResourceFieldType;
 import org.xml.sax.SAXException;
 
-public class ResourceFieldReportElementReadHandler extends AbstractTextElementReadHandler
-{
-  public ResourceFieldReportElementReadHandler()
-  {
+import java.util.Properties;
+
+public class ResourceFieldReportElementReadHandler extends AbstractTextElementReadHandler {
+  public ResourceFieldReportElementReadHandler() {
     final Element element = new Element();
-    element.setElementType(new ResourceFieldType());
-    setElement(element);
+    element.setElementType( new ResourceFieldType() );
+    setElement( element );
   }
 
   /**
@@ -38,14 +36,12 @@ public class ResourceFieldReportElementReadHandler extends AbstractTextElementRe
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final Properties result = getResult();
-    final String format = result.getProperty("resourceBase");
-    if (format != null)
-    {
-      getElement().setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER, format);
+    final String format = result.getProperty( "resourceBase" );
+    if ( format != null ) {
+      getElement().setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER, format );
     }
   }
 }

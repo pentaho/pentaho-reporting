@@ -17,7 +17,10 @@
 
 package org.pentaho.reporting.designer.core.util.dnd;
 
-import java.awt.Point;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -26,22 +29,16 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-public class GenericDNDHandler implements DropTargetListener
-{
-  private static final Log logger = LogFactory.getLog(GenericDNDHandler.class);
+public class GenericDNDHandler implements DropTargetListener {
+  private static final Log logger = LogFactory.getLog( GenericDNDHandler.class );
 
   private Point position;
   private Object transferData;
   private DataFlavor flavor;
   private DataFlavor[] acceptedFlavors;
 
-  public GenericDNDHandler(final DataFlavor[] acceptedFlavors)
-  {
-    if (acceptedFlavors == null)
-    {
+  public GenericDNDHandler( final DataFlavor[] acceptedFlavors ) {
+    if ( acceptedFlavors == null ) {
       throw new NullPointerException();
     }
     this.acceptedFlavors = acceptedFlavors.clone();
@@ -54,9 +51,8 @@ public class GenericDNDHandler implements DropTargetListener
    * @param dtde the <code>DropTargetDragEvent</code>
    */
 
-  public void dragEnter(final DropTargetDragEvent dtde)
-  {
-    dragOver(dtde);
+  public void dragEnter( final DropTargetDragEvent dtde ) {
+    dragOver( dtde );
   }
 
   /**
@@ -66,40 +62,30 @@ public class GenericDNDHandler implements DropTargetListener
    * @param dtde the <code>DropTargetDragEvent</code>
    */
 
-  public void dragOver(final DropTargetDragEvent dtde)
-  {
+  public void dragOver( final DropTargetDragEvent dtde ) {
     final Transferable transferable = dtde.getTransferable();
 
-    for (int i = 0; i < acceptedFlavors.length; i++)
-    {
-      final DataFlavor acceptedFlavor = acceptedFlavors[i];
-      if (transferable.isDataFlavorSupported(acceptedFlavor))
-      {
+    for ( int i = 0; i < acceptedFlavors.length; i++ ) {
+      final DataFlavor acceptedFlavor = acceptedFlavors[ i ];
+      if ( transferable.isDataFlavorSupported( acceptedFlavor ) ) {
         // a transfer from the palette.
-        try
-        {
-          transferData = transferable.getTransferData(acceptedFlavor);
+        try {
+          transferData = transferable.getTransferData( acceptedFlavor );
           position = dtde.getLocation();
           flavor = acceptedFlavor;
-          final int result = updateDragOver(dtde);
-          if (result > 0)
-          {
-            dtde.acceptDrag(DnDConstants.ACTION_COPY);
-          }
-          else
-          {
+          final int result = updateDragOver( dtde );
+          if ( result > 0 ) {
+            dtde.acceptDrag( DnDConstants.ACTION_COPY );
+          } else {
             transferData = null;
             position = null;
             flavor = null;
             dtde.rejectDrag();
           }
           break;
-        }
-        catch (Exception e)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.debug("ReportPanel.dragOver ", e); // NON-NLS
+        } catch ( Exception e ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.debug( "ReportPanel.dragOver ", e ); // NON-NLS
           }
           transferData = null;
           position = null;
@@ -110,23 +96,19 @@ public class GenericDNDHandler implements DropTargetListener
     }
   }
 
-  public Point getPosition()
-  {
+  public Point getPosition() {
     return position;
   }
 
-  public Object getTransferData()
-  {
+  public Object getTransferData() {
     return transferData;
   }
 
-  public DataFlavor getFlavor()
-  {
+  public DataFlavor getFlavor() {
     return flavor;
   }
 
-  protected int updateDragOver(final DropTargetDragEvent event)
-  {
+  protected int updateDragOver( final DropTargetDragEvent event ) {
     return DnDConstants.ACTION_COPY;
   }
 
@@ -137,8 +119,7 @@ public class GenericDNDHandler implements DropTargetListener
    * @param dtde the <code>DropTargetDragEvent</code>
    */
 
-  public void dropActionChanged(final DropTargetDragEvent dtde)
-  {
+  public void dropActionChanged( final DropTargetDragEvent dtde ) {
 
   }
 
@@ -149,8 +130,7 @@ public class GenericDNDHandler implements DropTargetListener
    * @param dte the <code>DropTargetEvent</code>
    */
 
-  public void dragExit(final DropTargetEvent dte)
-  {
+  public void dragExit( final DropTargetEvent dte ) {
     transferData = null;
     position = null;
     flavor = null;
@@ -183,16 +163,14 @@ public class GenericDNDHandler implements DropTargetListener
    * @param dtde the <code>DropTargetDropEvent</code>
    */
 
-  public void drop(final DropTargetDropEvent dtde)
-  {
+  public void drop( final DropTargetDropEvent dtde ) {
     dtde.rejectDrop();
     transferData = null;
     position = null;
     flavor = null;
   }
 
-  public void cleanup()
-  {
+  public void cleanup() {
     transferData = null;
     position = null;
     flavor = null;

@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import java.awt.Component;
-import java.awt.Window;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
@@ -33,77 +30,64 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 
-public class ReportDesignerDesignTimeContext implements DesignTimeContext
-{
+import java.awt.*;
+
+public class ReportDesignerDesignTimeContext implements DesignTimeContext {
   private ReportDesignerContext designerContext;
   private ReportDocumentContext activeContext;
 
-  public ReportDesignerDesignTimeContext(final ReportDesignerContext designerContext)
-  {
-    if (designerContext == null)
-    {
+  public ReportDesignerDesignTimeContext( final ReportDesignerContext designerContext ) {
+    if ( designerContext == null ) {
       throw new NullPointerException();
     }
     this.designerContext = designerContext;
     this.activeContext = this.designerContext.getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       throw new NullPointerException();
     }
   }
 
-  public AbstractReportDefinition getReport()
-  {
+  public AbstractReportDefinition getReport() {
     return activeContext.getReportDefinition();
   }
 
-  public Window getParentWindow()
-  {
+  public Window getParentWindow() {
     final Component component = designerContext.getView().getParent();
-    if (component instanceof Window)
-    {
+    if ( component instanceof Window ) {
       return (Window) component;
     }
-    return LibSwingUtil.getWindowAncestor(component);
+    return LibSwingUtil.getWindowAncestor( component );
   }
 
-  public DataSchemaModel getDataSchemaModel()
-  {
+  public DataSchemaModel getDataSchemaModel() {
     return activeContext.getReportDataSchemaModel();
   }
 
-  public void error(final Exception e)
-  {
-    UncaughtExceptionsModel.getInstance().addException(e);
+  public void error( final Exception e ) {
+    UncaughtExceptionsModel.getInstance().addException( e );
   }
 
-  public void userError(final Exception e)
-  {
-    UncaughtExceptionsModel.getInstance().addException(e);
+  public void userError( final Exception e ) {
+    UncaughtExceptionsModel.getInstance().addException( e );
   }
 
-  public LocaleSettings getLocaleSettings()
-  {
+  public LocaleSettings getLocaleSettings() {
     return WorkspaceSettings.getInstance();
   }
 
-  public boolean isShowExpertItems()
-  {
+  public boolean isShowExpertItems() {
     return WorkspaceSettings.getInstance().isShowExpertItems();
   }
 
-  public boolean isShowDeprecatedItems()
-  {
+  public boolean isShowDeprecatedItems() {
     return WorkspaceSettings.getInstance().isShowDeprecatedItems();
   }
 
-  public MaturityLevel getMaturityLevel()
-  {
+  public MaturityLevel getMaturityLevel() {
     return WorkspaceSettings.getInstance().getMaturityLevel();
   }
 
-  public DataFactoryContext getDataFactoryContext()
-  {
-    return new DesignTimeDataFactoryContext(activeContext.getContextRoot());
+  public DataFactoryContext getDataFactoryContext() {
+    return new DesignTimeDataFactoryContext( activeContext.getContextRoot() );
   }
 }

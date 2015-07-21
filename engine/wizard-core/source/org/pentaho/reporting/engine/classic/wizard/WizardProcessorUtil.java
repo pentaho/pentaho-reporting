@@ -47,25 +47,19 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationExcepti
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class WizardProcessorUtil
-{
-  private WizardProcessorUtil()
-  {
+public class WizardProcessorUtil {
+  private WizardProcessorUtil() {
   }
 
-  public static boolean isCacheEnabled(ReportDefinition reportDefinition)
-  {
-    while (reportDefinition != null)
-    {
+  public static boolean isCacheEnabled( ReportDefinition reportDefinition ) {
+    while ( reportDefinition != null ) {
       final Object dataCacheEnabledRaw =
-          reportDefinition.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE);
-      if (Boolean.FALSE.equals(dataCacheEnabledRaw))
-      {
+        reportDefinition.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
+      if ( Boolean.FALSE.equals( dataCacheEnabledRaw ) ) {
         return false;
       }
       final Section parentSection = reportDefinition.getParentSection();
-      if (parentSection == null)
-      {
+      if ( parentSection == null ) {
         break;
       }
       reportDefinition = parentSection.getReportDefinition();
@@ -73,93 +67,78 @@ public class WizardProcessorUtil
     return true;
   }
 
-  public static SubReport materialize(final SubReport report,
-                                      final WizardProcessor processor) throws ReportProcessingException
-  {
+  public static SubReport materialize( final SubReport report,
+                                       final WizardProcessor processor ) throws ReportProcessingException {
     final PerformanceMonitorContext performanceMonitorContext =
-        ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
-    try
-    {
+      ClassicEngineBoot.getInstance().getObjectFactory().get( PerformanceMonitorContext.class );
+    try {
       final DefaultProcessingContext processingContext;
-      final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
-      if (masterReport != null)
-      {
-        processingContext = new DefaultProcessingContext(masterReport);
-      }
-      else
-      {
+      final MasterReport masterReport = DesignTimeUtil.getMasterReport( report );
+      if ( masterReport != null ) {
+        processingContext = new DefaultProcessingContext( masterReport );
+      } else {
         processingContext = new DefaultProcessingContext();
       }
 
       final DataSchemaDefinition definition = report.getDataSchemaDefinition();
       final DefaultFlowController flowController =
-          new DefaultFlowController(processingContext, definition,
-              StateUtilities.computeParameterValueSet(report), performanceMonitorContext);
-      final CachingDataFactory dataFactory = new CachingDataFactory(report.getDataFactory(), isCacheEnabled(report));
-      dataFactory.initialize(new ProcessingDataFactoryContext(processingContext, dataFactory));
+        new DefaultFlowController( processingContext, definition,
+          StateUtilities.computeParameterValueSet( report ), performanceMonitorContext );
+      final CachingDataFactory dataFactory =
+        new CachingDataFactory( report.getDataFactory(), isCacheEnabled( report ) );
+      dataFactory.initialize( new ProcessingDataFactoryContext( processingContext, dataFactory ) );
 
-      try
-      {
+      try {
         final DefaultFlowController postQueryFlowController = flowController.performDesignTimeQuery
-            (dataFactory, report.getQuery(), report.getQueryLimit(),
-                report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
+          ( dataFactory, report.getQuery(), report.getQueryLimit(),
+            report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory() );
 
         final Object originalEnable =
-            report.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE);
-        report.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE);
-        final SubReport subReport = processor.performPreProcessing(report, postQueryFlowController);
-        subReport.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable);
+          report.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE );
+        report.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE );
+        final SubReport subReport = processor.performPreProcessing( report, postQueryFlowController );
+        subReport.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable );
         return subReport;
-      }
-      finally
-      {
+      } finally {
         dataFactory.close();
       }
-    }
-    finally
-    {
+    } finally {
       performanceMonitorContext.close();
     }
   }
 
 
-  public static MasterReport materialize(final MasterReport report,
-                                         final WizardProcessor processor) throws ReportProcessingException
-  {
+  public static MasterReport materialize( final MasterReport report,
+                                          final WizardProcessor processor ) throws ReportProcessingException {
     final PerformanceMonitorContext performanceMonitorContext =
-        ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
-    try
-    {
-      final DefaultProcessingContext processingContext = new DefaultProcessingContext(report);
+      ClassicEngineBoot.getInstance().getObjectFactory().get( PerformanceMonitorContext.class );
+    try {
+      final DefaultProcessingContext processingContext = new DefaultProcessingContext( report );
       final DataSchemaDefinition definition = report.getDataSchemaDefinition();
-      final DefaultFlowController flowController = new DefaultFlowController(processingContext,
-          definition, StateUtilities.computeParameterValueSet(report), performanceMonitorContext);
-      final CachingDataFactory dataFactory = new CachingDataFactory(report.getDataFactory(), isCacheEnabled(report));
-      dataFactory.initialize(new ProcessingDataFactoryContext(processingContext, dataFactory));
+      final DefaultFlowController flowController = new DefaultFlowController( processingContext,
+        definition, StateUtilities.computeParameterValueSet( report ), performanceMonitorContext );
+      final CachingDataFactory dataFactory =
+        new CachingDataFactory( report.getDataFactory(), isCacheEnabled( report ) );
+      dataFactory.initialize( new ProcessingDataFactoryContext( processingContext, dataFactory ) );
 
-      try
-      {
+      try {
         final DefaultFlowController postQueryFlowController = flowController.performDesignTimeQuery
-            (dataFactory, report.getQuery(), report.getQueryLimit(),
-                report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
+          ( dataFactory, report.getQuery(), report.getQueryLimit(),
+            report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory() );
 
         final Object originalEnable =
-            report.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE);
-        report.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE);
-        final MasterReport masterReport = processor.performPreProcessing(report, postQueryFlowController);
-        masterReport.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable);
+          report.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE );
+        report.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE );
+        final MasterReport masterReport = processor.performPreProcessing( report, postQueryFlowController );
+        masterReport.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable );
 
-        masterReport.setName(null);
-        DesignTimeUtil.resetDocumentMetaData(masterReport);
+        masterReport.setName( null );
+        DesignTimeUtil.resetDocumentMetaData( masterReport );
         return masterReport;
-      }
-      finally
-      {
+      } finally {
         dataFactory.close();
       }
-    }
-    finally
-    {
+    } finally {
       performanceMonitorContext.close();
     }
   }
@@ -168,115 +147,82 @@ public class WizardProcessorUtil
    * @param masterReport
    * @deprecated Use DesignTimeUtil.resetTemplate(..) to reset the template properties.
    */
-  public static void resetDocumentMetaData(final MasterReport masterReport)
-  {
-    DesignTimeUtil.resetDocumentMetaData(masterReport);
+  public static void resetDocumentMetaData( final MasterReport masterReport ) {
+    DesignTimeUtil.resetDocumentMetaData( masterReport );
   }
 
-  public static void ensureWizardProcessorIsAdded(final AbstractReportDefinition element,
-                                                  final WizardProcessor processor)
-  {
+  public static void ensureWizardProcessorIsAdded( final AbstractReportDefinition element,
+                                                   final WizardProcessor processor ) {
     final ReportPreProcessor[] processors = element.getPreProcessors();
     boolean hasWizardProcessor = false;
-    for (int i = 0; i < processors.length; i++)
-    {
-      final ReportPreProcessor preProcessor = processors[i];
-      if (preProcessor instanceof WizardProcessor)
-      {
+    for ( int i = 0; i < processors.length; i++ ) {
+      final ReportPreProcessor preProcessor = processors[ i ];
+      if ( preProcessor instanceof WizardProcessor ) {
         hasWizardProcessor = true;
       }
     }
-    if (hasWizardProcessor == false)
-    {
-      if (processor == null)
-      {
-        element.addPreProcessor(new WizardProcessor());
-      }
-      else
-      {
-        element.addPreProcessor(processor);
+    if ( hasWizardProcessor == false ) {
+      if ( processor == null ) {
+        element.addPreProcessor( new WizardProcessor() );
+      } else {
+        element.addPreProcessor( processor );
       }
     }
   }
 
-  public static void applyWizardSpec(final AbstractReportDefinition definition,
-                                     final WizardSpecification wizardSpecification)
-  {
-    definition.setAttribute(AttributeNames.Wizard.NAMESPACE, "wizard-spec", wizardSpecification);
+  public static void applyWizardSpec( final AbstractReportDefinition definition,
+                                      final WizardSpecification wizardSpecification ) {
+    definition.setAttribute( AttributeNames.Wizard.NAMESPACE, "wizard-spec", wizardSpecification );
   }
 
-  public static WizardSpecification loadWizardSpecification(final AbstractReportDefinition definition,
-                                                            final ResourceManager resourceManager)
-      throws ReportProcessingException
-  {
-    final Object maybeWizardSpec = definition.getAttribute(AttributeNames.Wizard.NAMESPACE, "wizard-spec");
-    if (maybeWizardSpec instanceof WizardSpecification)
-    {
+  public static WizardSpecification loadWizardSpecification( final AbstractReportDefinition definition,
+                                                             final ResourceManager resourceManager )
+    throws ReportProcessingException {
+    final Object maybeWizardSpec = definition.getAttribute( AttributeNames.Wizard.NAMESPACE, "wizard-spec" );
+    if ( maybeWizardSpec instanceof WizardSpecification ) {
       return (WizardSpecification) maybeWizardSpec;
     }
 
-    final Object attribute = definition.getAttribute(AttributeNames.Wizard.NAMESPACE, "source");
-    if (attribute != null)
-    {
-      try
-      {
+    final Object attribute = definition.getAttribute( AttributeNames.Wizard.NAMESPACE, "source" );
+    if ( attribute != null ) {
+      try {
         final ResourceKey contentBase = definition.getContentBase();
-        final ResourceKey resourceKey = resourceManager.deriveKey(contentBase, String.valueOf(attribute));
-        final Resource resource = resourceManager.create(resourceKey, contentBase, WizardSpecification.class);
+        final ResourceKey resourceKey = resourceManager.deriveKey( contentBase, String.valueOf( attribute ) );
+        final Resource resource = resourceManager.create( resourceKey, contentBase, WizardSpecification.class );
         return (WizardSpecification) resource.getResource();
-      }
-      catch (ResourceKeyCreationException e)
-      {
-        throw new ReportProcessingException("Failed to load the wizard-specification", e);
-      }
-      catch (ResourceException e)
-      {
-        throw new ReportProcessingException("Failed to load the wizard-specification", e);
+      } catch ( ResourceKeyCreationException e ) {
+        throw new ReportProcessingException( "Failed to load the wizard-specification", e );
+      } catch ( ResourceException e ) {
+        throw new ReportProcessingException( "Failed to load the wizard-specification", e );
       }
     }
 
-    try
-    {
+    try {
       final ResourceKey contentBase = definition.getContentBase();
-      final ResourceKey resourceKey = resourceManager.deriveKey(contentBase, "wizard-specification.xml");
-      final Resource resource = resourceManager.create(resourceKey, contentBase, WizardSpecification.class);
+      final ResourceKey resourceKey = resourceManager.deriveKey( contentBase, "wizard-specification.xml" );
+      final Resource resource = resourceManager.create( resourceKey, contentBase, WizardSpecification.class );
       return (WizardSpecification) resource.getResource();
-    }
-    catch (final ResourceKeyCreationException e)
-    {
+    } catch ( final ResourceKeyCreationException e ) {
       // not a error.
-    }
-    catch (final ResourceLoadingException e)
-    {
+    } catch ( final ResourceLoadingException e ) {
       // not a error
-    }
-    catch (ResourceException e)
-    {
-      throw new ReportProcessingException("Failed to load the wizard-specification", e);
+    } catch ( ResourceException e ) {
+      throw new ReportProcessingException( "Failed to load the wizard-specification", e );
     }
     return null;
   }
 
-  public static boolean isGroupMatchesType(final Group group, final GroupType type)
-  {
-    if (GroupType.RELATIONAL.equals(type))
-    {
-      if (group instanceof RelationalGroup)
-      {
+  public static boolean isGroupMatchesType( final Group group, final GroupType type ) {
+    if ( GroupType.RELATIONAL.equals( type ) ) {
+      if ( group instanceof RelationalGroup ) {
         return true;
       }
-    }
-    else if (GroupType.CT_COLUMN.equals(type))
-    {
-      if (group instanceof CrosstabColumnGroup)
-      {
+    } else if ( GroupType.CT_COLUMN.equals( type ) ) {
+      if ( group instanceof CrosstabColumnGroup ) {
         return true;
       }
-    }
-    else if (GroupType.CT_ROW.equals(type))
-    {
-      if (group instanceof CrosstabRowGroup)
-      {
+    } else if ( GroupType.CT_ROW.equals( type ) ) {
+      if ( group instanceof CrosstabRowGroup ) {
         return true;
       }
     }

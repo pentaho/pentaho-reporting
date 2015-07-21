@@ -17,50 +17,42 @@
 
 package org.pentaho.reporting.ui.datasources.mondrian;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.AbstractMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.LegacyBandedMDXDataFactory;
 
+import java.awt.*;
+
 /**
  * @author Michael D'Amour
  */
-public class LegacyMdxDataSourceEditor extends MondrianDataSourceEditor
-{
+public class LegacyMdxDataSourceEditor extends MondrianDataSourceEditor {
 
-  public LegacyMdxDataSourceEditor(final DesignTimeContext context)
-  {
-    super(context);
+  public LegacyMdxDataSourceEditor( final DesignTimeContext context ) {
+    super( context );
   }
 
-  public LegacyMdxDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-  {
-    super(context, owner);
+  public LegacyMdxDataSourceEditor( final DesignTimeContext context, final Dialog owner ) {
+    super( context, owner );
   }
 
-  public LegacyMdxDataSourceEditor(final DesignTimeContext context, final Frame owner)
-  {
-    super(context, owner);
+  public LegacyMdxDataSourceEditor( final DesignTimeContext context, final Frame owner ) {
+    super( context, owner );
   }
 
-  protected void init(final DesignTimeContext context)
-  {
-    super.init(context);
-    setTitle(Messages.getString("LegacyMdxDataSourceEditor.Title"));
+  protected void init( final DesignTimeContext context ) {
+    super.init( context );
+    setTitle( Messages.getString( "LegacyMdxDataSourceEditor.Title" ) );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "MondrianDataSourceEditor.Legacy";
   }
 
-  protected AbstractMDXDataFactory createDataFactory()
-  {
+  protected AbstractMDXDataFactory createDataFactory() {
     final LegacyBandedMDXDataFactory returnDataFactory = new LegacyBandedMDXDataFactory();
-    configureConnection(returnDataFactory);
-    configureQueries(returnDataFactory);
+    configureConnection( returnDataFactory );
+    configureQueries( returnDataFactory );
     return returnDataFactory;
   }
 }

@@ -24,22 +24,18 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
  *
  * @author Michael D'Amour
  */
-public class ReportQueryNode
-{
+public class ReportQueryNode {
   private String queryName;
   private DataFactory dataFactory;
   private boolean allowEdit;
 
-  public ReportQueryNode(final DataFactory dataFactory,
-                         final String queryName,
-                         final boolean allowEdit)
-  {
-    if (dataFactory == null)
-    {
+  public ReportQueryNode( final DataFactory dataFactory,
+                          final String queryName,
+                          final boolean allowEdit ) {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
-    if (queryName == null)
-    {
+    if ( queryName == null ) {
       throw new NullPointerException();
     }
     this.dataFactory = dataFactory;
@@ -47,60 +43,49 @@ public class ReportQueryNode
     this.allowEdit = allowEdit;
   }
 
-  public boolean isAllowEdit()
-  {
+  public boolean isAllowEdit() {
     return allowEdit;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return queryName;
   }
 
-  public String getQueryName()
-  {
+  public String getQueryName() {
     return queryName;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final ReportQueryNode that = (ReportQueryNode) o;
 
-    if (allowEdit != that.allowEdit)
-    {
+    if ( allowEdit != that.allowEdit ) {
       return false;
     }
-    if (!dataFactory.equals(that.dataFactory))
-    {
+    if ( !dataFactory.equals( that.dataFactory ) ) {
       return false;
     }
-    if (!queryName.equals(that.queryName))
-    {
+    if ( !queryName.equals( that.queryName ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = queryName.hashCode();
     result = 31 * result + dataFactory.hashCode();
-    result = 31 * result + (allowEdit ? 1 : 0);
+    result = 31 * result + ( allowEdit ? 1 : 0 );
     return result;
   }
 }

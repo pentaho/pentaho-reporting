@@ -23,73 +23,62 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractFunction;
 /**
  * @deprecated These functions are no longer supported.
  */
-public class TimeDiffFormatFunction extends AbstractFunction
-{
+public class TimeDiffFormatFunction extends AbstractFunction {
   private String field;
   private String formatted;
 
 
-  public TimeDiffFormatFunction()
-  {
+  public TimeDiffFormatFunction() {
   }
 
 
-  public TimeDiffFormatFunction(final String name)
-  {
+  public TimeDiffFormatFunction( final String name ) {
     this();
-    setName(name);
+    setName( name );
   }
 
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
 
-  public void setField(String field)
-  {
+  public void setField( String field ) {
     this.field = field;
   }
 
 
-  public void itemsAdvanced(final ReportEvent event)
-  {
+  public void itemsAdvanced( final ReportEvent event ) {
     formatted = null;
 
-    final Object fieldValue1 = getDataRow().get(getField());
-    if (!(fieldValue1 instanceof Number))
-    {
+    final Object fieldValue1 = getDataRow().get( getField() );
+    if ( !( fieldValue1 instanceof Number ) ) {
       return;
     }
-    long value1 = ((Number) fieldValue1).longValue();
-    format(value1);
+    long value1 = ( (Number) fieldValue1 ).longValue();
+    format( value1 );
   }
 
 
-  private void format(long value1)
-  {
-    long hours = value1 / (60 * 60 * 1000);
-    long rest = value1 - (hours * 60 * 60 * 1000);
-    long minutes = rest / (60 * 1000);
+  private void format( long value1 ) {
+    long hours = value1 / ( 60 * 60 * 1000 );
+    long rest = value1 - ( hours * 60 * 60 * 1000 );
+    long minutes = rest / ( 60 * 1000 );
     rest -= minutes * 60 * 1000;
     long seconds = rest / 1000;
 
-    String min = String.valueOf(minutes);
-    String sec = String.valueOf(seconds);
-    if (min.length() < 2)
-    {
+    String min = String.valueOf( minutes );
+    String sec = String.valueOf( seconds );
+    if ( min.length() < 2 ) {
       min = "0" + min;
     }
-    if (sec.length() < 2)
-    {
+    if ( sec.length() < 2 ) {
       sec = "0" + sec;
     }
     formatted = hours + ":" + min + ":" + sec;
   }
 
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return formatted;
   }
 

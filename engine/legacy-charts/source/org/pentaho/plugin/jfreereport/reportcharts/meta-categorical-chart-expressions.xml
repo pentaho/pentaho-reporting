@@ -6,8 +6,10 @@
               expert="false" hidden="false" preferred="false">
     <property name="autoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false" compatibility-level="3.9.0"/>
-    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="upperMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="lowerMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -28,7 +30,8 @@
               hidden="false"/>
     <property name="categoricalAxisMessageFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -108,7 +111,8 @@
               deprecated="true"/>
     <property name="valueAxisLabel" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="rangeIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -131,17 +135,23 @@
               hidden="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
               expert="false" hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
-    <property name="shadowVisible" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="shadowVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="shadowColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
   </expression>
 
 
@@ -157,8 +167,10 @@
               hidden="false" compatibility-level="3.9.0"/>
     <property name="lineAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false" compatibility-level="3.9.0"/>
-    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="upperMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="lowerMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -180,7 +192,8 @@
 
     <property name="categoricalAxisMessageFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -309,10 +322,12 @@
     <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
-    <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="rangeTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -326,17 +341,23 @@
               hidden="true"/>
     <property name="sharedRangeAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
-    <property name="shadowVisible" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="shadowVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="shadowColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.WaterfallChartExpressions"
@@ -345,8 +366,10 @@
               expert="false" hidden="false" preferred="false">
     <property name="autoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false" compatibility-level="3.9.0"/>
-    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="upperMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="lowerMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -366,7 +389,8 @@
 
     <property name="categoricalAxisMessageFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -449,7 +473,8 @@
     <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -463,12 +488,15 @@
               hidden="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
               expert="false" hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -478,8 +506,10 @@
               expert="false" hidden="false" preferred="false">
     <property name="autoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false" compatibility-level="3.9.0"/>
-    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="upperMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="lowerMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -499,7 +529,8 @@
 
     <property name="categoricalAxisMessageFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -587,7 +618,8 @@
     <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -601,12 +633,15 @@
               hidden="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
               expert="false" hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -617,8 +652,10 @@
               expert="false" hidden="false" preferred="false">
     <property name="autoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false" compatibility-level="3.9.0"/>
-    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="categoryTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="categoryTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="upperMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="lowerMargin" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -638,7 +675,8 @@
 
     <property name="categoricalAxisMessageFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -722,7 +760,8 @@
     <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -737,12 +776,15 @@
               expert="false" hidden="false"/>
     <property name="renderAsPercentages" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
   </expression>
 

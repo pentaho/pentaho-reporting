@@ -17,80 +17,65 @@
 
 package org.pentaho.reporting.engine.classic.webapp.servlet;
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
-import javax.servlet.http.HttpSession;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
 
-public class SessionReportEnvironment implements ReportEnvironment
-{
+import javax.servlet.http.HttpSession;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
+
+public class SessionReportEnvironment implements ReportEnvironment {
   public static final String SESSION_PREFIX = "session:";
   private ReportEnvironment parent;
   private HttpSession session;
 
-  public SessionReportEnvironment(final ReportEnvironment parent, HttpSession session)
-  {
-    if (parent == null)
-    {
-      throw new NullPointerException("parent");
+  public SessionReportEnvironment( final ReportEnvironment parent, HttpSession session ) {
+    if ( parent == null ) {
+      throw new NullPointerException( "parent" );
     }
-    if (session == null)
-    {
-      throw new NullPointerException("session");
+    if ( session == null ) {
+      throw new NullPointerException( "session" );
     }
     this.session = session;
     this.parent = parent;
   }
 
-  public SessionReportEnvironment(HttpSession session)
-  {
-    this(new DefaultReportEnvironment(ClassicEngineBoot.getInstance().getGlobalConfig()), session);
+  public SessionReportEnvironment( HttpSession session ) {
+    this( new DefaultReportEnvironment( ClassicEngineBoot.getInstance().getGlobalConfig() ), session );
   }
 
-  public Object getEnvironmentProperty(final String key)
-  {
-    if (key.startsWith(SESSION_PREFIX))
-    {
-      session.getAttribute(key.substring(SESSION_PREFIX.length()));
+  public Object getEnvironmentProperty( final String key ) {
+    if ( key.startsWith( SESSION_PREFIX ) ) {
+      session.getAttribute( key.substring( SESSION_PREFIX.length() ) );
     }
-    return parent.getEnvironmentProperty(key);
+    return parent.getEnvironmentProperty( key );
   }
 
-  public String getURLEncoding()
-  {
+  public String getURLEncoding() {
     return parent.getURLEncoding();
   }
 
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return parent.getLocale();
   }
 
-  public TimeZone getTimeZone()
-  {
+  public TimeZone getTimeZone() {
     return parent.getTimeZone();
   }
 
-  public SessionReportEnvironment clone()
-  {
-    try
-    {
+  public SessionReportEnvironment clone() {
+    try {
       SessionReportEnvironment re = (SessionReportEnvironment) super.clone();
       re.parent = (ReportEnvironment) parent.clone();
       return re;
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 
-  public Map<String, String[]> getUrlExtraParameter()
-  {
+  public Map<String, String[]> getUrlExtraParameter() {
     return parent.getUrlExtraParameter();
   }
 }

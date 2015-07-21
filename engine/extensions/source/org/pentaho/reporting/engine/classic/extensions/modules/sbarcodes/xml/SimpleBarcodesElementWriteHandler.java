@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.xml;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterState;
@@ -28,6 +26,8 @@ import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+
 /**
  * This class is responsible to write SimpleBarcodes element properties (attributes and styles) to XML Unified File
  * Format.
@@ -35,10 +35,8 @@ import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
  * @author Thomas Morgner
  */
 @Deprecated
-public class SimpleBarcodesElementWriteHandler extends AbstractElementWriteHandler
-{
-  public SimpleBarcodesElementWriteHandler()
-  {
+public class SimpleBarcodesElementWriteHandler extends AbstractElementWriteHandler {
+  public SimpleBarcodesElementWriteHandler() {
   }
 
   /**
@@ -51,14 +49,13 @@ public class SimpleBarcodesElementWriteHandler extends AbstractElementWriteHandl
    * @throws IOException           if an IO error occured.
    * @throws BundleWriterException if an Bundle writer.
    */
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element) throws IOException, BundleWriterException
-  {
-    final AttributeList attList = createMainAttributes(element, xmlWriter);
-    xmlWriter.writeTag(SimpleBarcodesModule.NAMESPACE, "simple-barcode", attList, XmlWriter.OPEN);
-    writeElementBody(bundle, state, element, xmlWriter);
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element ) throws IOException, BundleWriterException {
+    final AttributeList attList = createMainAttributes( element, xmlWriter );
+    xmlWriter.writeTag( SimpleBarcodesModule.NAMESPACE, "simple-barcode", attList, XmlWriter.OPEN );
+    writeElementBody( bundle, state, element, xmlWriter );
     xmlWriter.writeCloseTag();
   }
 }

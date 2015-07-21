@@ -17,14 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types;
 
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
-import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.metadata.model.concept.types.FieldType;
+import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
+import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class FieldTypeConceptMapper implements ConceptQueryMapper
-{
-  public FieldTypeConceptMapper()
-  {
+public class FieldTypeConceptMapper implements ConceptQueryMapper {
+  public FieldTypeConceptMapper() {
   }
 
   /**
@@ -32,43 +30,34 @@ public class FieldTypeConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof FieldType == false)
-    {
+    if ( value instanceof FieldType == false ) {
       return null;
     }
 
-    if (type == null || Object.class.equals(type) || FieldType.class.equals(type))
-    {
+    if ( type == null || Object.class.equals( type ) || FieldType.class.equals( type ) ) {
       return value;
     }
 
-    if (String.class.equals(type) == false)
-    {
+    if ( String.class.equals( type ) == false ) {
       return null;
     }
 
     final FieldType fieldTypeSettings = (FieldType) value;
-    if (FieldType.ATTRIBUTE.equals(fieldTypeSettings))
-    {
+    if ( FieldType.ATTRIBUTE.equals( fieldTypeSettings ) ) {
       return "attribute";
     }
-    if (FieldType.FACT.equals(fieldTypeSettings))
-    {
+    if ( FieldType.FACT.equals( fieldTypeSettings ) ) {
       return "fact";
     }
-    if (FieldType.KEY.equals(fieldTypeSettings))
-    {
+    if ( FieldType.KEY.equals( fieldTypeSettings ) ) {
       return "key";
     }
-    if (FieldType.DIMENSION.equals(fieldTypeSettings))
-    {
+    if ( FieldType.DIMENSION.equals( fieldTypeSettings ) ) {
       return "dimension";
     }
     return null;

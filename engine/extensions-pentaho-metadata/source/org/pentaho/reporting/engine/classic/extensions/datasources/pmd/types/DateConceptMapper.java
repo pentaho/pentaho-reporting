@@ -17,17 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types;
 
-import java.util.Date;
-
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.DateValueConverter;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
+import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class DateConceptMapper implements ConceptQueryMapper
-{
-  public DateConceptMapper()
-  {
+import java.util.Date;
+
+public class DateConceptMapper implements ConceptQueryMapper {
+  public DateConceptMapper() {
   }
 
   /**
@@ -35,31 +33,23 @@ public class DateConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof Date == false)
-    {
+    if ( value instanceof Date == false ) {
       return null;
     }
 
-    if (type == null || Object.class.equals(type) ||  Date.class.equals(type))
-    {
+    if ( type == null || Object.class.equals( type ) || Date.class.equals( type ) ) {
       return value;
     }
-    if (String.class.equals(type))
-    {
+    if ( String.class.equals( type ) ) {
       DateValueConverter dateValueConverter = new DateValueConverter();
-      try
-      {
-        return dateValueConverter.toAttributeValue(value);
-      }
-      catch (BeanException e)
-      {
+      try {
+        return dateValueConverter.toAttributeValue( value );
+      } catch ( BeanException e ) {
         // ignore, should not happen
       }
       return null;

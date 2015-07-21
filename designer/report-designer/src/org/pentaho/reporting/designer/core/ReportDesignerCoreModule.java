@@ -37,10 +37,8 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class ReportDesignerCoreModule extends AbstractModule
-{
-  public ReportDesignerCoreModule() throws ModuleInitializeException
-  {
+public class ReportDesignerCoreModule extends AbstractModule {
+  public ReportDesignerCoreModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -52,21 +50,20 @@ public class ReportDesignerCoreModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    ParameterDocumentResourceFactory.register(ParameterDocumentXmlFactoryModule.class);
-    InspectionsRegistry.getInstance().addInspection(new DeprecatedUsagesInspection());
-    InspectionsRegistry.getInstance().addInspection(new DuplicateFieldInspection());
-    InspectionsRegistry.getInstance().addInspection(new ExpressionsParameterInspection());
-    InspectionsRegistry.getInstance().addInspection(new FontSizeInspection());
-    InspectionsRegistry.getInstance().addInspection(new FormulaErrorInspection());
-    InspectionsRegistry.getInstance().addInspection(new InvalidElementReferenceInspection());
-    InspectionsRegistry.getInstance().addInspection(new InvalidFieldReferenceInspection());
-    InspectionsRegistry.getInstance().addInspection(new InvalidFormatInspection());
-    InspectionsRegistry.getInstance().addInspection(new InvalidGroupReferenceInspection());
-    InspectionsRegistry.getInstance().addInspection(new InvalidQueryNameReferenceInspection());
-    InspectionsRegistry.getInstance().addInspection(new MandatoryAttributeMissingInspection());
-    InspectionsRegistry.getInstance().addInspection(new OverlappingElementsInspection());
-    InspectionsRegistry.getInstance().addInspection(new ReportMigrationInspection());
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    ParameterDocumentResourceFactory.register( ParameterDocumentXmlFactoryModule.class );
+    InspectionsRegistry.getInstance().addInspection( new DeprecatedUsagesInspection() );
+    InspectionsRegistry.getInstance().addInspection( new DuplicateFieldInspection() );
+    InspectionsRegistry.getInstance().addInspection( new ExpressionsParameterInspection() );
+    InspectionsRegistry.getInstance().addInspection( new FontSizeInspection() );
+    InspectionsRegistry.getInstance().addInspection( new FormulaErrorInspection() );
+    InspectionsRegistry.getInstance().addInspection( new InvalidElementReferenceInspection() );
+    InspectionsRegistry.getInstance().addInspection( new InvalidFieldReferenceInspection() );
+    InspectionsRegistry.getInstance().addInspection( new InvalidFormatInspection() );
+    InspectionsRegistry.getInstance().addInspection( new InvalidGroupReferenceInspection() );
+    InspectionsRegistry.getInstance().addInspection( new InvalidQueryNameReferenceInspection() );
+    InspectionsRegistry.getInstance().addInspection( new MandatoryAttributeMissingInspection() );
+    InspectionsRegistry.getInstance().addInspection( new OverlappingElementsInspection() );
+    InspectionsRegistry.getInstance().addInspection( new ReportMigrationInspection() );
   }
 }

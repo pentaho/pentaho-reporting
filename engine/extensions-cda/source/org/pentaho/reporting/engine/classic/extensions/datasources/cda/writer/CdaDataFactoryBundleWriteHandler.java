@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.cda.writer;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
@@ -39,15 +35,17 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 /**
  * Creation-Date: Jan 19, 2007, 4:44:05 PM
  *
  * @author Thomas Morgner
  */
-public class CdaDataFactoryBundleWriteHandler implements BundleDataFactoryWriterHandler
-{
-  public CdaDataFactoryBundleWriteHandler()
-  {
+public class CdaDataFactoryBundleWriteHandler implements BundleDataFactoryWriterHandler {
+  public CdaDataFactoryBundleWriteHandler() {
   }
 
   /**
@@ -62,87 +60,76 @@ public class CdaDataFactoryBundleWriteHandler implements BundleDataFactoryWriter
    * @throws IOException           if any error occured
    * @throws BundleWriterException if a bundle-management error occured.
    */
-  public String writeDataFactory(final WriteableDocumentBundle bundle,
-                                 final DataFactory rawDataFactory,
-                                 final BundleWriterState state)
-      throws IOException, BundleWriterException
-  {
-    final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(), "datasources/cda-ds{0}.xml");
-    if (fileName == null)
-    {
-      throw new IOException("Unable to generate unique name for cda-Data-Source");
+  public String writeDataFactory( final WriteableDocumentBundle bundle,
+                                  final DataFactory rawDataFactory,
+                                  final BundleWriterState state )
+    throws IOException, BundleWriterException {
+    final String fileName = BundleUtilities.getUniqueName( bundle, state.getFileName(), "datasources/cda-ds{0}.xml" );
+    if ( fileName == null ) {
+      throw new IOException( "Unable to generate unique name for cda-Data-Source" );
     }
     //TODO: refactor with CdaDataFactoryWriteHandler
-    final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
+    final OutputStream outputStream = bundle.createEntry( fileName, "text/xml" );
     final DefaultTagDescription tagDescription =
-        new DefaultTagDescription(ClassicEngineBoot.getInstance().getGlobalConfig(), CdaModule.TAG_DEF_PREFIX);
+      new DefaultTagDescription( ClassicEngineBoot.getInstance().getGlobalConfig(), CdaModule.TAG_DEF_PREFIX );
     final XmlWriter xmlWriter = new XmlWriter
-        (new OutputStreamWriter(outputStream, "UTF-8"), tagDescription, "  ","\n");
+      ( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ", "\n" );
 
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", CdaModule.NAMESPACE);
+    rootAttrs.addNamespaceDeclaration( "data", CdaModule.NAMESPACE );
 
-    xmlWriter.writeTag(CdaModule.NAMESPACE, "cda-datasource", rootAttrs, XmlWriter.OPEN);
+    xmlWriter.writeTag( CdaModule.NAMESPACE, "cda-datasource", rootAttrs, XmlWriter.OPEN );
 
     final CdaDataFactory dataFactory = (CdaDataFactory) rawDataFactory;
     final AttributeList configAttrs = new AttributeList();
-    if (StringUtils.isEmpty(dataFactory.getBaseUrl()) == false)
-    {
-      configAttrs.setAttribute(CdaModule.NAMESPACE, "base-url", dataFactory.getBaseUrl());
+    if ( StringUtils.isEmpty( dataFactory.getBaseUrl() ) == false ) {
+      configAttrs.setAttribute( CdaModule.NAMESPACE, "base-url", dataFactory.getBaseUrl() );
     }
-    if (StringUtils.isEmpty(dataFactory.getBaseUrlField()) == false)
-    {
-      configAttrs.setAttribute(CdaModule.NAMESPACE, "base-url-field", dataFactory.getBaseUrlField());
+    if ( StringUtils.isEmpty( dataFactory.getBaseUrlField() ) == false ) {
+      configAttrs.setAttribute( CdaModule.NAMESPACE, "base-url-field", dataFactory.getBaseUrlField() );
     }
-    if (StringUtils.isEmpty(dataFactory.getSolution()) == false)
-    {
-      configAttrs.setAttribute(CdaModule.NAMESPACE, "solution", dataFactory.getSolution());
+    if ( StringUtils.isEmpty( dataFactory.getSolution() ) == false ) {
+      configAttrs.setAttribute( CdaModule.NAMESPACE, "solution", dataFactory.getSolution() );
     }
-    if (StringUtils.isEmpty(dataFactory.getPath()) == false)
-    {
-      configAttrs.setAttribute(CdaModule.NAMESPACE, "path", dataFactory.getPath());
+    if ( StringUtils.isEmpty( dataFactory.getPath() ) == false ) {
+      configAttrs.setAttribute( CdaModule.NAMESPACE, "path", dataFactory.getPath() );
     }
-    if (StringUtils.isEmpty(dataFactory.getFile()) == false)
-    {
-      configAttrs.setAttribute(CdaModule.NAMESPACE, "file", dataFactory.getFile());
+    if ( StringUtils.isEmpty( dataFactory.getFile() ) == false ) {
+      configAttrs.setAttribute( CdaModule.NAMESPACE, "file", dataFactory.getFile() );
     }
-    if (StringUtils.isEmpty(dataFactory.getUsername()) == false)
-    {
-      configAttrs.setAttribute(CdaModule.NAMESPACE, "username", dataFactory.getUsername());
+    if ( StringUtils.isEmpty( dataFactory.getUsername() ) == false ) {
+      configAttrs.setAttribute( CdaModule.NAMESPACE, "username", dataFactory.getUsername() );
     }
-    if (StringUtils.isEmpty(dataFactory.getPassword()) == false)
-    {
-      configAttrs.setAttribute(CdaModule.NAMESPACE,
-          "password", PasswordEncryptionService.getInstance().encrypt(dataFactory.getPassword()));
+    if ( StringUtils.isEmpty( dataFactory.getPassword() ) == false ) {
+      configAttrs.setAttribute( CdaModule.NAMESPACE,
+        "password", PasswordEncryptionService.getInstance().encrypt( dataFactory.getPassword() ) );
     }
 
-    configAttrs.setAttribute(CdaModule.NAMESPACE, "use-local-call", String.valueOf(dataFactory.isUseLocalCall()));
-    configAttrs.setAttribute(CdaModule.NAMESPACE, "is-sugar-mode", String.valueOf(dataFactory.isSugarMode()));
+    configAttrs.setAttribute( CdaModule.NAMESPACE, "use-local-call", String.valueOf( dataFactory.isUseLocalCall() ) );
+    configAttrs.setAttribute( CdaModule.NAMESPACE, "is-sugar-mode", String.valueOf( dataFactory.isSugarMode() ) );
 
-    xmlWriter.writeTag(CdaModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE);
+    xmlWriter.writeTag( CdaModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE );
 
     final String[] queryNames = dataFactory.getQueryNames();
-    for (int i = 0; i < queryNames.length; i++)
-      {
-    	final String queryName = queryNames[i];
-        final CdaQueryEntry query = dataFactory.getQueryEntry(queryName);
-        final AttributeList queryAttr = new AttributeList();
-        queryAttr.setAttribute(CdaModule.NAMESPACE, "query", query.getId());
-        queryAttr.setAttribute(CdaModule.NAMESPACE, "name", query.getName());
-        xmlWriter.writeTag(CdaModule.NAMESPACE, "query", queryAttr, XmlWriterSupport.OPEN);
+    for ( int i = 0; i < queryNames.length; i++ ) {
+      final String queryName = queryNames[ i ];
+      final CdaQueryEntry query = dataFactory.getQueryEntry( queryName );
+      final AttributeList queryAttr = new AttributeList();
+      queryAttr.setAttribute( CdaModule.NAMESPACE, "query", query.getId() );
+      queryAttr.setAttribute( CdaModule.NAMESPACE, "name", query.getName() );
+      xmlWriter.writeTag( CdaModule.NAMESPACE, "query", queryAttr, XmlWriterSupport.OPEN );
 
-        final ParameterMapping[] parameterMappings = query.getParameters();
-        for (int j = 0; j < parameterMappings.length; j++)
-        {
-          final ParameterMapping parameterMapping = parameterMappings[j];
-          final AttributeList paramAttr = new AttributeList();
-          paramAttr.setAttribute(CdaModule.NAMESPACE, "datarow-name", parameterMapping.getName());
-          paramAttr.setAttribute(CdaModule.NAMESPACE, "variable-name", parameterMapping.getAlias());
-          xmlWriter.writeTag(CdaModule.NAMESPACE, "variable", paramAttr, XmlWriterSupport.CLOSE);
-        }
-        
-        xmlWriter.writeCloseTag();
+      final ParameterMapping[] parameterMappings = query.getParameters();
+      for ( int j = 0; j < parameterMappings.length; j++ ) {
+        final ParameterMapping parameterMapping = parameterMappings[ j ];
+        final AttributeList paramAttr = new AttributeList();
+        paramAttr.setAttribute( CdaModule.NAMESPACE, "datarow-name", parameterMapping.getName() );
+        paramAttr.setAttribute( CdaModule.NAMESPACE, "variable-name", parameterMapping.getAlias() );
+        xmlWriter.writeTag( CdaModule.NAMESPACE, "variable", paramAttr, XmlWriterSupport.CLOSE );
       }
+
+      xmlWriter.writeCloseTag();
+    }
     xmlWriter.writeCloseTag();
     xmlWriter.close();
     return fileName;

@@ -20,9 +20,10 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.parser;
 import org.pentaho.reporting.engine.classic.extensions.datasources.pmd.IPmdConnectionProvider;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-public interface IPmdConfigReadHandler extends XmlReadHandler
-{
+public interface IPmdConfigReadHandler extends XmlReadHandler {
   public IPmdConnectionProvider getConnectionProvider();
+
   public String getDomain();
+
   public String getXmiFile();
 }

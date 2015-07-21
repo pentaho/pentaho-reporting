@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.kettle;
 
-import java.util.ArrayList;
-import javax.swing.JComponent;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.di.core.exception.KettleException;
@@ -38,121 +33,109 @@ import org.pentaho.reporting.ui.datasources.kettle.embedded.XulDialogHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-public class EmbeddedKettleQueryEntry extends KettleQueryEntry
-{
-  private class ValidatePropertyBinding implements ChangeListener
-  {
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.util.ArrayList;
+
+public class EmbeddedKettleQueryEntry extends KettleQueryEntry {
+  private class ValidatePropertyBinding implements ChangeListener {
     private boolean recursionPrevention;
 
-    public void stateChanged(final ChangeEvent e)
-    {
-      if (recursionPrevention)
-      {
+    public void stateChanged( final ChangeEvent e ) {
+      if ( recursionPrevention ) {
         return;
       }
-      try
-      {
+      try {
         recursionPrevention = true;
-        setValidated(dialogHelper.validate());
-      }
-      finally
-      {
+        setValidated( dialogHelper.validate() );
+      } finally {
         recursionPrevention = false;
       }
     }
   }
 
-  private static final Log logger = LogFactory.getLog(EmbeddedKettleQueryEntry.class);
+  private static final Log logger = LogFactory.getLog( EmbeddedKettleQueryEntry.class );
   private static final String AUTO_GENERATED_PARAMETER = "AUTO.GENERATED.PARAMETER";
 
   private String pluginId;
   private XulDialogHelper dialogHelper;
 
-  private EmbeddedKettleQueryEntry(String name, String pluginId,
-                                   XulDialogHelper dialogHelper) throws KettleException
-  {
-    super(name);
+  private EmbeddedKettleQueryEntry( String name, String pluginId,
+                                    XulDialogHelper dialogHelper ) throws KettleException {
+    super( name );
 
     this.pluginId = pluginId;
     this.dialogHelper = dialogHelper;
-    this.dialogHelper.addChangeListener(new ValidatePropertyBinding());
+    this.dialogHelper.addChangeListener( new ValidatePropertyBinding() );
   }
 
-  public static EmbeddedKettleQueryEntry createFromExisting(String name,
-                                                            EmbeddedKettleTransformationProducer producer,
-                                                            DataFactoryContext dataFactoryContext)
-      throws KettleException, ReportDataFactoryException
-  {
-    XulDialogHelper dialogHelper = new XulDialogHelper(producer.loadTransformation(dataFactoryContext));
-    EmbeddedKettleQueryEntry entry = new EmbeddedKettleQueryEntry(name, producer.getPluginId(), dialogHelper);
-    entry.setArguments(producer.getArguments());
-    entry.setParameters(producer.getParameter());
-    entry.setStopOnErrors(producer.isStopOnError());
+  public static EmbeddedKettleQueryEntry createFromExisting( String name,
+                                                             EmbeddedKettleTransformationProducer producer,
+                                                             DataFactoryContext dataFactoryContext )
+    throws KettleException, ReportDataFactoryException {
+    XulDialogHelper dialogHelper = new XulDialogHelper( producer.loadTransformation( dataFactoryContext ) );
+    EmbeddedKettleQueryEntry entry = new EmbeddedKettleQueryEntry( name, producer.getPluginId(), dialogHelper );
+    entry.setArguments( producer.getArguments() );
+    entry.setParameters( producer.getParameter() );
+    entry.setStopOnErrors( producer.isStopOnError() );
     return entry;
   }
 
-  public static EmbeddedKettleQueryEntry createFromTemplate(String name,
-                                                            String pluginId)
-      throws KettleException
-  {
+  public static EmbeddedKettleQueryEntry createFromTemplate( String name,
+                                                             String pluginId )
+    throws KettleException {
 
-    XulDialogHelper dialogHelper = new XulDialogHelper(loadTemplate(pluginId));
-    return new EmbeddedKettleQueryEntry(name, pluginId, dialogHelper);
+    XulDialogHelper dialogHelper = new XulDialogHelper( loadTemplate( pluginId ) );
+    return new EmbeddedKettleQueryEntry( name, pluginId, dialogHelper );
   }
 
-  private static TransMeta loadTemplate(String pluginId) throws KettleException
-  {
-    final Document document = DocumentHelper.loadDocumentFromPlugin(pluginId);
-    final Node node = XMLHandler.getSubNode(document, TransMeta.XML_TAG);
+  private static TransMeta loadTemplate( String pluginId ) throws KettleException {
+    final Document document = DocumentHelper.loadDocumentFromPlugin( pluginId );
+    final Node node = XMLHandler.getSubNode( document, TransMeta.XML_TAG );
     final TransMeta meta = new TransMeta();
-    meta.loadXML(node, null, true, null, null);
+    meta.loadXML( node, null, true, null, null );
     return meta;
   }
 
   @Override
-  public boolean validate()
-  {
+  public boolean validate() {
     return dialogHelper.validate();
   }
 
   @Override
   public KettleTransformationProducer createProducer()
-      throws KettleException
-  {
+    throws KettleException {
     EmbeddedKettleTransformationProducer p =
-        new EmbeddedKettleTransformationProducer(getArguments(), getParameters(), pluginId, dialogHelper.getRawData());
-    p.setStopOnError(isStopOnErrors());
+      new EmbeddedKettleTransformationProducer( getArguments(), getParameters(), pluginId, dialogHelper.getRawData() );
+    p.setStopOnError( isStopOnErrors() );
     return p;
   }
 
-  public JComponent createUI() throws ReportDataFactoryException
-  {
+  public JComponent createUI() throws ReportDataFactoryException {
     return dialogHelper.createEditor();
   }
 
-  public void clear()
-  {
+  public void clear() {
     dialogHelper.clear();
   }
 
-  protected AbstractKettleTransformationProducer loadTransformation(final DataFactoryContext context)
-      throws KettleException
-  {
-    return new EmbeddedKettleTransformationProducer(getArguments(), getParameters(), pluginId, dialogHelper.getRawData());
+  protected AbstractKettleTransformationProducer loadTransformation( final DataFactoryContext context )
+    throws KettleException {
+    return new EmbeddedKettleTransformationProducer( getArguments(), getParameters(), pluginId,
+      dialogHelper.getRawData() );
   }
 
-  public KettleParameterInfo[] getDeclaredParameters(final DataFactoryContext context) throws KettleException, ReportDataFactoryException
-  {
-    KettleParameterInfo[] declaredParameters = super.getDeclaredParameters(context);
+  public KettleParameterInfo[] getDeclaredParameters( final DataFactoryContext context )
+    throws KettleException, ReportDataFactoryException {
+    KettleParameterInfo[] declaredParameters = super.getDeclaredParameters( context );
     ArrayList<KettleParameterInfo> infos = new ArrayList<KettleParameterInfo>();
-    for (KettleParameterInfo declaredParameter : declaredParameters)
-    {
-      if (AUTO_GENERATED_PARAMETER.equalsIgnoreCase(declaredParameter.getDescription()))
-      {
-        infos.add(declaredParameter);
+    for ( KettleParameterInfo declaredParameter : declaredParameters ) {
+      if ( AUTO_GENERATED_PARAMETER.equalsIgnoreCase( declaredParameter.getDescription() ) ) {
+        infos.add( declaredParameter );
       }
     }
 
-    return infos.toArray(new KettleParameterInfo[infos.size()]);
+    return infos.toArray( new KettleParameterInfo[ infos.size() ] );
   }
 }

@@ -27,14 +27,11 @@ import org.pentaho.reporting.engine.classic.wizard.model.ElementFormatDefinition
 import org.pentaho.reporting.engine.classic.wizard.model.FieldDefinition;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class WizardOverrideFormattingFunction extends AbstractElementFormatFunction implements StructureFunction
-{
-  public WizardOverrideFormattingFunction()
-  {
+public class WizardOverrideFormattingFunction extends AbstractElementFormatFunction implements StructureFunction {
+  public WizardOverrideFormattingFunction() {
   }
 
-  public int getProcessingPriority()
-  {
+  public int getProcessingPriority() {
     // executed after the metadata has been applied, but before the style-expressions get applied. 
     return 6000;
   }
@@ -46,96 +43,79 @@ public class WizardOverrideFormattingFunction extends AbstractElementFormatFunct
    * @param e the element that should be updated.
    * @return true, if attributes or style were changed, false if no change was made.
    */
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (e == null)
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( e == null ) {
       throw new NullPointerException();
     }
 
     boolean retval = false;
-    final Object maybeFormatData = e.getAttribute(AttributeNames.Wizard.NAMESPACE, "CachedWizardFormatData");
-    if (maybeFormatData instanceof ElementFormatDefinition)
-    {
+    final Object maybeFormatData = e.getAttribute( AttributeNames.Wizard.NAMESPACE, "CachedWizardFormatData" );
+    if ( maybeFormatData instanceof ElementFormatDefinition ) {
       final ElementFormatDefinition formatDefinition = (ElementFormatDefinition) maybeFormatData;
-      if (formatDefinition.getBackgroundColor() != null)
-      {
-        e.getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, formatDefinition.getBackgroundColor());
+      if ( formatDefinition.getBackgroundColor() != null ) {
+        e.getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, formatDefinition.getBackgroundColor() );
         retval = true;
       }
-      if (formatDefinition.getFontColor() != null)
-      {
-        e.getStyle().setStyleProperty(ElementStyleKeys.PAINT, formatDefinition.getFontColor());
+      if ( formatDefinition.getFontColor() != null ) {
+        e.getStyle().setStyleProperty( ElementStyleKeys.PAINT, formatDefinition.getFontColor() );
         retval = true;
       }
-      if (formatDefinition.getFontBold() != null)
-      {
-        e.getStyle().setStyleProperty(TextStyleKeys.BOLD, formatDefinition.getFontBold());
+      if ( formatDefinition.getFontBold() != null ) {
+        e.getStyle().setStyleProperty( TextStyleKeys.BOLD, formatDefinition.getFontBold() );
         retval = true;
       }
-      if (formatDefinition.getFontItalic() != null)
-      {
-        e.getStyle().setStyleProperty(TextStyleKeys.ITALIC, formatDefinition.getFontItalic());
+      if ( formatDefinition.getFontItalic() != null ) {
+        e.getStyle().setStyleProperty( TextStyleKeys.ITALIC, formatDefinition.getFontItalic() );
         retval = true;
       }
-      if (formatDefinition.getFontName() != null)
-      {
-        e.getStyle().setStyleProperty(TextStyleKeys.FONT, formatDefinition.getFontName());
+      if ( formatDefinition.getFontName() != null ) {
+        e.getStyle().setStyleProperty( TextStyleKeys.FONT, formatDefinition.getFontName() );
         retval = true;
       }
-      if (formatDefinition.getFontUnderline() != null)
-      {
-        e.getStyle().setStyleProperty(TextStyleKeys.UNDERLINED, formatDefinition.getFontUnderline());
+      if ( formatDefinition.getFontUnderline() != null ) {
+        e.getStyle().setStyleProperty( TextStyleKeys.UNDERLINED, formatDefinition.getFontUnderline() );
         retval = true;
       }
-      if (formatDefinition.getFontItalic() != null)
-      {
-        e.getStyle().setStyleProperty(TextStyleKeys.ITALIC, formatDefinition.getFontItalic());
+      if ( formatDefinition.getFontItalic() != null ) {
+        e.getStyle().setStyleProperty( TextStyleKeys.ITALIC, formatDefinition.getFontItalic() );
         retval = true;
       }
-      if (formatDefinition.getFontSize() != null)
-      {
-        e.getStyle().setStyleProperty(TextStyleKeys.FONTSIZE, formatDefinition.getFontSize());
+      if ( formatDefinition.getFontSize() != null ) {
+        e.getStyle().setStyleProperty( TextStyleKeys.FONTSIZE, formatDefinition.getFontSize() );
         retval = true;
       }
-      if (formatDefinition.getFontStrikethrough() != null)
-      {
-        e.getStyle().setStyleProperty(TextStyleKeys.STRIKETHROUGH, formatDefinition.getFontStrikethrough());
+      if ( formatDefinition.getFontStrikethrough() != null ) {
+        e.getStyle().setStyleProperty( TextStyleKeys.STRIKETHROUGH, formatDefinition.getFontStrikethrough() );
         retval = true;
       }
-      if (formatDefinition.getHorizontalAlignment() != null)
-      {
-        e.getStyle().setStyleProperty(ElementStyleKeys.ALIGNMENT, formatDefinition.getHorizontalAlignment());
+      if ( formatDefinition.getHorizontalAlignment() != null ) {
+        e.getStyle().setStyleProperty( ElementStyleKeys.ALIGNMENT, formatDefinition.getHorizontalAlignment() );
         retval = true;
       }
-      if (formatDefinition.getVerticalAlignment() != null)
-      {
-        e.getStyle().setStyleProperty(ElementStyleKeys.VALIGNMENT, formatDefinition.getVerticalAlignment());
+      if ( formatDefinition.getVerticalAlignment() != null ) {
+        e.getStyle().setStyleProperty( ElementStyleKeys.VALIGNMENT, formatDefinition.getVerticalAlignment() );
         retval = true;
       }
     }
 
-    final Object maybeFieldData = e.getAttribute(AttributeNames.Wizard.NAMESPACE, "CachedWizardFieldData");
-    if (maybeFieldData instanceof FieldDefinition)
-    {
+    final Object maybeFieldData = e.getAttribute( AttributeNames.Wizard.NAMESPACE, "CachedWizardFieldData" );
+    if ( maybeFieldData instanceof FieldDefinition ) {
       final FieldDefinition fieldDefinition = (FieldDefinition) maybeFieldData;
 
-      if (fieldDefinition.getDataFormat() != null)
-      {
-        e.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING,
-            fieldDefinition.getDataFormat());
+      if ( fieldDefinition.getDataFormat() != null ) {
+        e.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING,
+          fieldDefinition.getDataFormat() );
         retval = true;
       }
-      if (fieldDefinition.getNullString() != null)
-      {
-        e.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, fieldDefinition.getNullString());
+      if ( fieldDefinition.getNullString() != null ) {
+        e.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE,
+          fieldDefinition.getNullString() );
         retval = true;
       }
 
-      if ("label".equals(e.getElementType().getMetaData().getName()) &&
-          !StringUtils.isEmpty(fieldDefinition.getDisplayName()))
-      {
-        e.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, fieldDefinition.getDisplayName());
+      if ( "label".equals( e.getElementType().getMetaData().getName() ) &&
+        !StringUtils.isEmpty( fieldDefinition.getDisplayName() ) ) {
+        e.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, fieldDefinition.getDisplayName() );
       }
 
     }

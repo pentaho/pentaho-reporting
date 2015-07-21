@@ -11,10 +11,13 @@
               hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <!-- input -->
-    <property name="collectDetails" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="collectDetails" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="group" mandatory="false" preferred="true" value-role="Field" expert="false" hidden="false"/>
-    <property name="indexSeparator" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
-    <property name="titleFormula" mandatory="false" preferred="false" value-role="Formula" expert="true" hidden="false"/>
+    <property name="indexSeparator" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="titleFormula" mandatory="false" preferred="false" value-role="Formula" expert="true"
+              hidden="false"/>
     <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="true" hidden="false"/>
   </expression>
 
@@ -25,10 +28,12 @@
               hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <!-- input -->
-    <property name="indexSeparator" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="indexSeparator" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="dataFormula" mandatory="false" preferred="false" value-role="Formula" expert="true" hidden="false"/>
     <property name="dataField" mandatory="false" preferred="false" value-role="Field" expert="true" hidden="false"/>
-    <property name="condensedStyle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="condensedStyle" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
   </expression>
 
 
@@ -39,7 +44,8 @@
               hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <!-- input -->
-    <property name="collectDetails" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="collectDetails" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="depth" mandatory="false" preferred="true" value-role="Value" expert="false" hidden="false"/>
   </expression>
 
@@ -51,9 +57,12 @@
               hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <!-- input -->
-    <property name="collectDetails" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="collectDetails" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="depth" mandatory="false" preferred="true" value-role="Value" expert="false" hidden="false"/>
-    <property name="indexSeparator" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
-    <property name="condensedStyle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="indexSeparator" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="condensedStyle" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
   </expression>
 </meta-data>

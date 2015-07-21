@@ -22,8 +22,7 @@ package org.pentaho.reporting.designer.core.util;
  *
  * @author Thomas Morgner
  */
-public enum DrawSelectionType
-{
+public enum DrawSelectionType {
   OUTLINE,
   CLAMP,;
 }

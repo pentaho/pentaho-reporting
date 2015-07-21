@@ -17,72 +17,60 @@
 
 package org.pentaho.reporting.designer.core.util.table;
 
+import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
+
 import java.io.Serializable;
 import java.util.Locale;
 
-import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
-
-public class GroupedName implements Serializable, Comparable
-{
+public class GroupedName implements Serializable, Comparable {
   private String name;
   private String groupName;
   private MetaData metaData;
 
-  public GroupedName(final MetaData metaData)
-  {
+  public GroupedName( final MetaData metaData ) {
     this.metaData = metaData;
-    this.name = metaData.getDisplayName(Locale.getDefault());
-    this.groupName = metaData.getGrouping(Locale.getDefault());
+    this.name = metaData.getDisplayName( Locale.getDefault() );
+    this.groupName = metaData.getGrouping( Locale.getDefault() );
   }
 
-  public GroupedName(final MetaData metaData, final String name, final String groupName)
-  {
+  public GroupedName( final MetaData metaData, final String name, final String groupName ) {
     this.metaData = metaData;
-    if (groupName == null)
-    {
+    if ( groupName == null ) {
       throw new NullPointerException();
     }
-    if (name == null)
-    {
+    if ( name == null ) {
       throw new NullPointerException();
     }
     this.name = name;
     this.groupName = groupName;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public void setName(final String name)
-  {
+  public void setName( final String name ) {
     this.name = name;
   }
 
-  public String getGroupName()
-  {
+  public String getGroupName() {
     return groupName;
   }
 
-  public MetaData getMetaData()
-  {
+  public MetaData getMetaData() {
     return metaData;
   }
 
-  public int compareTo(final Object o)
-  {
+  public int compareTo( final Object o ) {
     final GroupedName other = (GroupedName) o;
-    if (other == null)
-    {
+    if ( other == null ) {
       return 1;
     }
-    final int nameResult = name.compareTo(other.name);
-    if (nameResult != 0)
-    {
+    final int nameResult = name.compareTo( other.name );
+    if ( nameResult != 0 ) {
       return nameResult;
     }
 
-    return groupName.compareTo(other.groupName);
+    return groupName.compareTo( other.groupName );
   }
 }

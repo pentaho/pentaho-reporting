@@ -20,28 +20,23 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.par
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractReadHandlerFactory;
 
-public class MondrianConnectionReadHandlerFactory extends AbstractReadHandlerFactory<CubeFileProviderReadHandler>
-{
+public class MondrianConnectionReadHandlerFactory extends AbstractReadHandlerFactory<CubeFileProviderReadHandler> {
   private static final String PREFIX_SELECTOR =
-      "org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factory-prefix.";
+    "org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factory-prefix.";
 
   private static MondrianConnectionReadHandlerFactory readHandlerFactory;
 
-  public MondrianConnectionReadHandlerFactory()
-  {
+  public MondrianConnectionReadHandlerFactory() {
   }
 
-  protected Class<CubeFileProviderReadHandler> getTargetClass()
-  {
+  protected Class<CubeFileProviderReadHandler> getTargetClass() {
     return CubeFileProviderReadHandler.class;
   }
 
-  public static synchronized MondrianConnectionReadHandlerFactory getInstance()
-  {
-    if (readHandlerFactory == null)
-    {
+  public static synchronized MondrianConnectionReadHandlerFactory getInstance() {
+    if ( readHandlerFactory == null ) {
       readHandlerFactory = new MondrianConnectionReadHandlerFactory();
-      readHandlerFactory.configureGlobal(ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR);
+      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
     }
     return readHandlerFactory;
   }

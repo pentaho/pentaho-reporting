@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor;
 
-import java.io.IOException;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -36,15 +33,17 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationExcepti
 import org.pentaho.reporting.libraries.resourceloader.ResourceKeyUtils;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 
+import java.io.IOException;
+import java.util.Map;
+
 /**
  * This listener is notified when a potential embedded resource is modified (added / updated / deleted).
  * <p/>
- * If the resource is determined to be an embedded resource, and that resource is not current embedded, then
- * this will convert the resource to an embedded resource and alter the information in the report.
+ * If the resource is determined to be an embedded resource, and that resource is not current embedded, then this will
+ * convert the resource to an embedded resource and alter the information in the report.
  */
-public class ResourceLoaderListener implements ReportModelListener
-{
-  private static final Log logger = LogFactory.getLog(ResourceLoaderListener.class);
+public class ResourceLoaderListener implements ReportModelListener {
+  private static final Log logger = LogFactory.getLog( ResourceLoaderListener.class );
   private MasterReport masterReportElement;
 
   /**
@@ -53,8 +52,7 @@ public class ResourceLoaderListener implements ReportModelListener
    * @param masterReportElement
    * @param report
    */
-  public ResourceLoaderListener(final MasterReport masterReportElement, final AbstractReportDefinition report)
-  {
+  public ResourceLoaderListener( final MasterReport masterReportElement, final AbstractReportDefinition report ) {
     this.masterReportElement = masterReportElement;
   }
 
@@ -63,41 +61,35 @@ public class ResourceLoaderListener implements ReportModelListener
    *
    * @param event the event that triggered this listener
    */
-  public void nodeChanged(final ReportModelEvent event)
-  {
-    if (event.getParameter() instanceof AttributeChange == false || event.getElement() instanceof ReportElement == false)
-    {
+  public void nodeChanged( final ReportModelEvent event ) {
+    if ( event.getParameter() instanceof AttributeChange == false
+      || event.getElement() instanceof ReportElement == false ) {
       return;
     }
 
     // This is an attribute change event ... see if it is one we are concerned about
     final AttributeChange attributeChange = (AttributeChange) event.getParameter();
     final ReportElement reportElement = (ReportElement) event.getElement();
-    final AttributeMetaData attributeDescription = reportElement.getMetaData().getAttributeDescription(attributeChange.getNamespace(), attributeChange.getName());
-    if (attributeDescription == null ||
-        AttributeMetaData.VALUEROLE_RESOURCE.equals(attributeDescription.getValueRole()) == false)
-    {
+    final AttributeMetaData attributeDescription =
+      reportElement.getMetaData().getAttributeDescription( attributeChange.getNamespace(), attributeChange.getName() );
+    if ( attributeDescription == null ||
+      AttributeMetaData.VALUEROLE_RESOURCE.equals( attributeDescription.getValueRole() ) == false ) {
       return;
     }
 
     // See if we need to load the resource's value into the resource key
     final Object newValue = attributeChange.getNewValue();
-    if (newValue instanceof ResourceKey && shouldBeLoaded((ResourceKey) newValue))
-    {
-      try
-      {
+    if ( newValue instanceof ResourceKey && shouldBeLoaded( (ResourceKey) newValue ) ) {
+      try {
         // Embed the file and swap in the key which refers to the embedded resource
-        final ResourceKey newKey = loadResourceIntoKey((ResourceKey) newValue);
-        if (newKey != null)
-        {
+        final ResourceKey newKey = loadResourceIntoKey( (ResourceKey) newValue );
+        if ( newKey != null ) {
           // Swap out the old key with the new key (the new key has the resource loaded)
-          reportElement.setAttribute(attributeChange.getNamespace(), attributeChange.getName(), newKey);
+          reportElement.setAttribute( attributeChange.getNamespace(), attributeChange.getName(), newKey );
         }
-      }
-      catch (Exception e)
-      {
-        reportElement.setAttribute(attributeChange.getNamespace(), attributeChange.getName(), null);
-        UncaughtExceptionsModel.getInstance().addException(e);
+      } catch ( Exception e ) {
+        reportElement.setAttribute( attributeChange.getNamespace(), attributeChange.getName(), null );
+        UncaughtExceptionsModel.getInstance().addException( e );
       }
     }
   }
@@ -110,19 +102,19 @@ public class ResourceLoaderListener implements ReportModelListener
    * @throws IOException                  indicates an error reading the source
    * @throws ResourceKeyCreationException indicates the file could not be loaded
    */
-  private ResourceKey loadResourceIntoKey(final ResourceKey key) throws IOException, ResourceKeyCreationException, ResourceLoadingException
-  {
-    if (logger.isDebugEnabled())
-    {
+  private ResourceKey loadResourceIntoKey( final ResourceKey key )
+    throws IOException, ResourceKeyCreationException, ResourceLoadingException {
+    if ( logger.isDebugEnabled() ) {
       final Map factoryParameters = key.getFactoryParameters();
-      final String mimeType = (String) factoryParameters.get(ClassicEngineFactoryParameters.MIME_TYPE);
-      final String pattern = (String) factoryParameters.get(ClassicEngineFactoryParameters.PATTERN);
-      final String original = (String) factoryParameters.get(ClassicEngineFactoryParameters.ORIGINAL_VALUE);
-      logger.debug("Loading resource into key: original=[" +  // NON-NLS
-          original + "] mimeType=[" + mimeType + "] pattern=[" + pattern + "]"); // NON-NLS
+      final String mimeType = (String) factoryParameters.get( ClassicEngineFactoryParameters.MIME_TYPE );
+      final String pattern = (String) factoryParameters.get( ClassicEngineFactoryParameters.PATTERN );
+      final String original = (String) factoryParameters.get( ClassicEngineFactoryParameters.ORIGINAL_VALUE );
+      logger.debug( "Loading resource into key: original=[" +  // NON-NLS
+        original + "] mimeType=[" + mimeType + "] pattern=[" + pattern + "]" ); // NON-NLS
     }
 
-    return ResourceKeyUtils.embedResourceInKey(masterReportElement.getResourceManager(), key, key.getFactoryParameters());
+    return ResourceKeyUtils
+      .embedResourceInKey( masterReportElement.getResourceManager(), key, key.getFactoryParameters() );
   }
 
   /**
@@ -131,12 +123,9 @@ public class ResourceLoaderListener implements ReportModelListener
    * @param key the key to test
    * @return <code>true</code> if the key contains information about embedding, <code>false</code>otherwise</code>
    */
-  private static boolean shouldBeLoaded(final ResourceKey key)
-  {
-    if ("true".equals(key.getFactoryParameters().get(ClassicEngineFactoryParameters.EMBED)))
-    {
-      if (false == key.getIdentifier() instanceof byte[])
-      {
+  private static boolean shouldBeLoaded( final ResourceKey key ) {
+    if ( "true".equals( key.getFactoryParameters().get( ClassicEngineFactoryParameters.EMBED ) ) ) {
+      if ( false == key.getIdentifier() instanceof byte[] ) {
         return true;
       }
     }

@@ -24,10 +24,8 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.pdf.PdfExportPlugin
  *
  * @author Ezequiel Cuellar
  */
-public final class ExportPdfAction extends AbstractExportAction
-{
-  public ExportPdfAction()
-  {
-    super(new PdfExportPlugin());
+public final class ExportPdfAction extends AbstractExportAction {
+  public ExportPdfAction() {
+    super( new PdfExportPlugin() );
   }
 }

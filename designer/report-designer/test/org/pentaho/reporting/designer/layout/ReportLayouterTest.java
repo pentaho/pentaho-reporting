@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.designer.layout;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
@@ -29,34 +27,31 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ReportLayouterTest extends TestCase
-{
-  public ReportLayouterTest()
-  {
+import java.net.URL;
+
+public class ReportLayouterTest extends TestCase {
+  public ReportLayouterTest() {
   }
 
-  public ReportLayouterTest(final String name)
-  {
-    super(name);
+  public ReportLayouterTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ReportDesignerBoot.getInstance().start();
   }
 
-  public void testLayoutEmptyBand() throws Exception
-  {
-    final URL url = ReportLayouterTest.class.getResource("report-layouter-01.prpt");
+  public void testLayoutEmptyBand() throws Exception {
+    final URL url = ReportLayouterTest.class.getResource( "report-layouter-01.prpt" );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource resource = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource resource = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) resource.getResource();
 
     final ReportLayouter l = new ReportLayouter
-        (new ReportRenderContext(report, report, null, new GlobalAuthenticationStore()));
+      ( new ReportRenderContext( report, report, null, new GlobalAuthenticationStore() ) );
     final LogicalPageBox layout = l.layout();
-  //  ModelPrinter.print(layout);
+    //  ModelPrinter.print(layout);
 
   }
 }

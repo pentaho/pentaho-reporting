@@ -27,20 +27,18 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class EditGroupUndoEntry implements UndoEntry
-{
+public class EditGroupUndoEntry implements UndoEntry {
   private InstanceID group;
   private String oldName;
   private String newName;
   private String[] oldFields;
   private String[] newFields;
 
-  public EditGroupUndoEntry(final InstanceID group,
-                            final String oldName,
-                            final String newName,
-                            final String[] oldFields,
-                            final String[] newFields)
-  {
+  public EditGroupUndoEntry( final InstanceID group,
+                             final String oldName,
+                             final String newName,
+                             final String[] oldFields,
+                             final String[] newFields ) {
     this.group = group;
     this.oldName = oldName;
     this.newName = newName;
@@ -48,34 +46,29 @@ public class EditGroupUndoEntry implements UndoEntry
     this.newFields = newFields.clone();
   }
 
-  public String getNewName()
-  {
+  public String getNewName() {
     return newName;
   }
 
-  public String[] getNewFields()
-  {
+  public String[] getNewFields() {
     return newFields.clone();
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
+  public void undo( final ReportDocumentContext renderContext ) {
     final RelationalGroup elementById =
-        (RelationalGroup) ModelUtility.findElementById(renderContext.getReportDefinition(), group);
-    elementById.setName(oldName);
-    elementById.setFieldsArray(oldFields);
+      (RelationalGroup) ModelUtility.findElementById( renderContext.getReportDefinition(), group );
+    elementById.setName( oldName );
+    elementById.setFieldsArray( oldFields );
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
+  public void redo( final ReportDocumentContext renderContext ) {
     final RelationalGroup elementById =
-        (RelationalGroup) ModelUtility.findElementById(renderContext.getReportDefinition(), group);
-    elementById.setName(newName);
-    elementById.setFieldsArray(newFields);
+      (RelationalGroup) ModelUtility.findElementById( renderContext.getReportDefinition(), group );
+    elementById.setName( newName );
+    elementById.setFieldsArray( newFields );
   }
 
-  public UndoEntry merge(final UndoEntry newEntry)
-  {
+  public UndoEntry merge( final UndoEntry newEntry ) {
     return null;
   }
 }

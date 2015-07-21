@@ -19,10 +19,8 @@ package org.pentaho.reporting.engine.classic.wizard.ui.xul;
 
 import junit.framework.TestCase;
 
-public class DummyTest extends TestCase
-{
-  public void testNothing()
-  {
+public class DummyTest extends TestCase {
+  public void testNothing() {
 
   }
 }

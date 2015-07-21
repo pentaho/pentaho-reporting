@@ -19,35 +19,34 @@ package org.pentaho.reporting.engine.classic.wizard.model;
 
 import java.io.Serializable;
 
-public interface FieldDefinition extends Serializable, Cloneable
-{
+public interface FieldDefinition extends Serializable, Cloneable {
   public String getNullString();
 
-  public void setNullString(String nullString);
+  public void setNullString( String nullString );
 
   public String getDisplayName();
 
-  public void setDisplayName(String name);
+  public void setDisplayName( String name );
 
   public String getField();
 
-  public void setField(String field);
+  public void setField( String field );
 
   public Class getFieldTypeHint();
 
-  public void setFieldTypeHint(Class c);
+  public void setFieldTypeHint( Class c );
 
   public Class getAggregationFunction();
 
-  public void setAggregationFunction(Class c);
+  public void setAggregationFunction( Class c );
 
   public String getDataFormat();
 
-  public void setDataFormat(String name);
+  public void setDataFormat( String name );
 
   public Length getWidth();
 
-  public void setWidth(Length length);
+  public void setWidth( Length length );
 
   public Object clone() throws CloneNotSupportedException;
 }

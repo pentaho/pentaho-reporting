@@ -29,32 +29,25 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class Java14PrintingPlugin extends PrintingPlugin
-{
+public class Java14PrintingPlugin extends PrintingPlugin {
   /**
    * Default constructor.
    */
-  public Java14PrintingPlugin()
-  {
+  public Java14PrintingPlugin() {
   }
 
-  protected String getConfigurationPrefix()
-  {
+  protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.extensions.modules.java14print.print.";
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
-    if (ObjectUtilities.isJDK14() == false)
-    {
+  public boolean initialize( final SwingGuiContext context ) {
+    if ( ObjectUtilities.isJDK14() == false ) {
       return false;
     }
-    if (super.initialize(context) == false)
-    {
+    if ( super.initialize( context ) == false ) {
       return false;
     }
-    if (ClassicEngineBoot.getInstance().isModuleAvailable(Java14PrintModule.class.getName()) == false)
-    {
+    if ( ClassicEngineBoot.getInstance().isModuleAvailable( Java14PrintModule.class.getName() ) == false ) {
       return false;
     }
     return true;
@@ -66,31 +59,24 @@ public class Java14PrintingPlugin extends PrintingPlugin
    * @param report the report.
    * @return true, if the export was successfull, false otherwise.
    */
-  public boolean performExport(final MasterReport report)
-  {
+  public boolean performExport( final MasterReport report ) {
 
     // need to connect to the report pane to receive state updates ...
     final ReportProgressDialog progressDialog;
-    if ("true".equals(report.getReportConfiguration().getConfigProperty(PROGRESS_DIALOG_ENABLE_KEY, "false")))
-    {
+    if ( "true".equals( report.getReportConfiguration().getConfigProperty( PROGRESS_DIALOG_ENABLE_KEY, "false" ) ) ) {
       progressDialog = createProgressDialog();
-      if (report.getTitle() == null)
-      {
-        progressDialog.setTitle(getResources().getString("ProgressDialog.EMPTY_TITLE"));
+      if ( report.getTitle() == null ) {
+        progressDialog.setTitle( getResources().getString( "ProgressDialog.EMPTY_TITLE" ) );
+      } else {
+        progressDialog.setTitle( getResources().formatMessage( "ProgressDialog.TITLE", report.getTitle() ) );
       }
-      else
-      {
-        progressDialog.setTitle(getResources().formatMessage("ProgressDialog.TITLE", report.getTitle()));
-      }
-    }
-    else
-    {
+    } else {
       progressDialog = null;
     }
 
     final Java14RepaginateAndPrintExportTask task = new Java14RepaginateAndPrintExportTask
-        (report, progressDialog, getContext().getStatusListener());
-    final Thread worker = new Thread(task);
+      ( report, progressDialog, getContext().getStatusListener() );
+    final Thread worker = new Thread( task );
     worker.start();
     return true;
 

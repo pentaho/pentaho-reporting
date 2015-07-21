@@ -17,75 +17,60 @@
 
 package org.pentaho.reporting.designer.core.editor.format;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
-import java.awt.Insets;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.util.ExpressionEditorPane;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
-public class ConditionalVisibilityDialog extends CommonDialog
-{
+import javax.swing.*;
+import java.awt.*;
+
+public class ConditionalVisibilityDialog extends CommonDialog {
   private ExpressionEditorPane editorPane;
 
   public ConditionalVisibilityDialog()
-          throws HeadlessException
-  {
+    throws HeadlessException {
     init();
   }
 
-  public ConditionalVisibilityDialog(final Frame owner)
-          throws HeadlessException
-  {
-    super(owner);
+  public ConditionalVisibilityDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public ConditionalVisibilityDialog(final Dialog owner)
-          throws HeadlessException
-  {
-    super(owner);
+  public ConditionalVisibilityDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  protected void init()
-  {
-    setTitle(Messages.getString("ConditionalVisibilityDialog.HideObject"));
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    setLayout(new BorderLayout());
+  protected void init() {
+    setTitle( Messages.getString( "ConditionalVisibilityDialog.HideObject" ) );
+    setDefaultCloseOperation( DISPOSE_ON_CLOSE );
+    setLayout( new BorderLayout() );
 
     editorPane = new ExpressionEditorPane();
-    setModal(true);
+    setModal( true );
 
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.ConditionalVisibility";
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     final JPanel floatingPanel = new JPanel();
-    floatingPanel.setLayout(new GridBagLayout());
+    floatingPanel.setLayout( new GridBagLayout() );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
-    gbc.insets = new Insets(5, 5, 5, 5);
+    gbc.insets = new Insets( 5, 5, 5, 5 );
     gbc.anchor = GridBagConstraints.WEST;
-    floatingPanel.add(new JLabel(Messages.getString("ConditionalVisibilityDialog.Condition")), gbc);
+    floatingPanel.add( new JLabel( Messages.getString( "ConditionalVisibilityDialog.Condition" ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.anchor = GridBagConstraints.WEST;
@@ -93,30 +78,26 @@ public class ConditionalVisibilityDialog extends CommonDialog
     gbc.gridy = 0;
     gbc.weightx = 1;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.insets = new Insets(5, 5, 5, 5);
-    floatingPanel.add(editorPane, gbc);
+    gbc.insets = new Insets( 5, 5, 5, 5 );
+    floatingPanel.add( editorPane, gbc );
     return floatingPanel;
   }
 
-  public Expression performEdit(final Expression expression)
-  {
-    editorPane.setValue(expression);
+  public Expression performEdit( final Expression expression ) {
+    editorPane.setValue( expression );
 
-    if (performEdit() == false)
-    {
+    if ( performEdit() == false ) {
       return null;
     }
 
     return editorPane.getValue();
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return editorPane.getReportDesignerContext();
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext reportDesignerContext)
-  {
-    editorPane.setReportDesignerContext(reportDesignerContext);
+  public void setReportDesignerContext( final ReportDesignerContext reportDesignerContext ) {
+    editorPane.setReportDesignerContext( reportDesignerContext );
   }
 }

@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -37,9 +33,12 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class MondrianConnectionReadHandler extends AbstractXmlReadHandler
-{
-  private static final Log logger = LogFactory.getLog(MondrianConnectionReadHandler.class);
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+
+public class MondrianConnectionReadHandler extends AbstractXmlReadHandler {
+  private static final Log logger = LogFactory.getLog( MondrianConnectionReadHandler.class );
 
   private String driverClass;
   private String connectionString;
@@ -54,79 +53,65 @@ public class MondrianConnectionReadHandler extends AbstractXmlReadHandler
   private String designTimeName;
   private String role;
   private String roleField;
-  
+
   private DataSourceProviderReadHandler dataSourceProviderHandler;
   private CubeFileProviderReadHandler cubeFileProviderReadHandler;
 
-  public MondrianConnectionReadHandler()
-  {
+  public MondrianConnectionReadHandler() {
   }
 
-  public String getJdbcPassword()
-  {
+  public String getJdbcPassword() {
     return jdbcPassword;
   }
 
-  public String getJdbcUser()
-  {
+  public String getJdbcUser() {
     return jdbcUser;
   }
 
-  public String getRole()
-  {
+  public String getRole() {
     return role;
   }
 
-  public String getRoleField()
-  {
+  public String getRoleField() {
     return roleField;
   }
 
-  public String getDesignTimeName()
-  {
+  public String getDesignTimeName() {
     return designTimeName;
   }
 
-  public CubeFileProvider getCubeFileProvider()
-  {
-    if (cubeFileProviderReadHandler != null)
-    {
+  public CubeFileProvider getCubeFileProvider() {
+    if ( cubeFileProviderReadHandler != null ) {
       return cubeFileProviderReadHandler.getProvider();
     }
 
-    if (mondrianCubeDefinitionFile != null)
-    {
+    if ( mondrianCubeDefinitionFile != null ) {
       // legacy report usecase
-      final CubeFileProvider cubeFileProvider = ClassicEngineBoot.getInstance().getObjectFactory().get(CubeFileProvider.class);
-      cubeFileProvider.setDesignTimeFile(mondrianCubeDefinitionFile);
+      final CubeFileProvider cubeFileProvider =
+        ClassicEngineBoot.getInstance().getObjectFactory().get( CubeFileProvider.class );
+      cubeFileProvider.setDesignTimeFile( mondrianCubeDefinitionFile );
       return cubeFileProvider;
     }
     return null;
   }
 
-  public DataSourceProvider getDataSourceProvider()
-  {
-    if (dataSourceProviderHandler != null)
-    {
+  public DataSourceProvider getDataSourceProvider() {
+    if ( dataSourceProviderHandler != null ) {
       return dataSourceProviderHandler.getProvider();
     }
-    if (dataSourceName != null)
-    {
-      return new JndiDataSourceProvider(dataSourceName);
+    if ( dataSourceName != null ) {
+      return new JndiDataSourceProvider( dataSourceName );
     }
-    if (connectionString != null)
-    {
+    if ( connectionString != null ) {
       final DriverDataSourceProvider driverDataSourceProvider = new DriverDataSourceProvider();
-      driverDataSourceProvider.setDriver(driverClass);
-      driverDataSourceProvider.setUrl(connectionString);
-      if (propertiesReadHandler != null)
-      {
+      driverDataSourceProvider.setDriver( driverClass );
+      driverDataSourceProvider.setUrl( connectionString );
+      if ( propertiesReadHandler != null ) {
         final Properties p = propertiesReadHandler.getResult();
         final Iterator it = p.entrySet().iterator();
-        while (it.hasNext())
-        {
+        while ( it.hasNext() ) {
           final Map.Entry entry = (Map.Entry) it.next();
-          driverDataSourceProvider.setProperty((String) entry.getKey(), (String) entry.getValue());
+          driverDataSourceProvider.setProperty( (String) entry.getKey(), (String) entry.getValue() );
         }
       }
       return driverDataSourceProvider;
@@ -134,13 +119,11 @@ public class MondrianConnectionReadHandler extends AbstractXmlReadHandler
     return null;
   }
 
-  public String getJdbcPasswordField()
-  {
+  public String getJdbcPasswordField() {
     return jdbcPasswordField;
   }
 
-  public String getJdbcUserField()
-  {
+  public String getJdbcUserField() {
     return jdbcUserField;
   }
 
@@ -150,26 +133,25 @@ public class MondrianConnectionReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
 
-    dataSourceName = attrs.getValue(getUri(), "datasource-name");
-    connectionString = attrs.getValue(getUri(), "connection-string");
-    driverClass = attrs.getValue(getUri(), "jdbc-driver");
-    mondrianCubeDefinitionFile = attrs.getValue(getUri(), "mondrian-cube-definition");
+    dataSourceName = attrs.getValue( getUri(), "datasource-name" );
+    connectionString = attrs.getValue( getUri(), "connection-string" );
+    driverClass = attrs.getValue( getUri(), "jdbc-driver" );
+    mondrianCubeDefinitionFile = attrs.getValue( getUri(), "mondrian-cube-definition" );
 
-    designTimeName = attrs.getValue(getUri(), "design-time-name");
-    
+    designTimeName = attrs.getValue( getUri(), "design-time-name" );
+
     jdbcPassword = PasswordEncryptionService.getInstance().decrypt
-        (getRootHandler(), attrs.getValue(getUri(), "jdbc-password"));
-    jdbcPasswordField = attrs.getValue(getUri(), "jdbc-password-field");
+      ( getRootHandler(), attrs.getValue( getUri(), "jdbc-password" ) );
+    jdbcPasswordField = attrs.getValue( getUri(), "jdbc-password-field" );
 
-    jdbcUser = attrs.getValue(getUri(), "jdbc-user");
-    jdbcUserField = attrs.getValue(getUri(), "jdbc-user-field");
+    jdbcUser = attrs.getValue( getUri(), "jdbc-user" );
+    jdbcUserField = attrs.getValue( getUri(), "jdbc-user-field" );
 
-    role = attrs.getValue(getUri(), "role");
-    roleField = attrs.getValue(getUri(), "role-field");
+    role = attrs.getValue( getUri(), "role" );
+    roleField = attrs.getValue( getUri(), "role-field" );
   }
 
   /**
@@ -181,35 +163,30 @@ public class MondrianConnectionReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
     final DataSourceProviderReadHandlerFactory dataSourceProviderReadHandlerFactory =
-        DataSourceProviderReadHandlerFactory.getInstance();
-    final XmlReadHandler dataSourceHandler = dataSourceProviderReadHandlerFactory.getHandler(uri, tagName);
-    if (dataSourceHandler instanceof DataSourceProviderReadHandler)
-    {
+      DataSourceProviderReadHandlerFactory.getInstance();
+    final XmlReadHandler dataSourceHandler = dataSourceProviderReadHandlerFactory.getHandler( uri, tagName );
+    if ( dataSourceHandler instanceof DataSourceProviderReadHandler ) {
       dataSourceProviderHandler = (DataSourceProviderReadHandler) dataSourceHandler;
       return dataSourceProviderHandler;
     }
 
     final CubeFileProviderReadHandlerFactory cubeFileProviderReadHandlerFactory =
-        CubeFileProviderReadHandlerFactory.getInstance();
-    final XmlReadHandler cubeHandler = cubeFileProviderReadHandlerFactory.getHandler(uri, tagName);
-    if (cubeHandler instanceof CubeFileProviderReadHandler)
-    {
+      CubeFileProviderReadHandlerFactory.getInstance();
+    final XmlReadHandler cubeHandler = cubeFileProviderReadHandlerFactory.getHandler( uri, tagName );
+    if ( cubeHandler instanceof CubeFileProviderReadHandler ) {
       cubeFileProviderReadHandler = (CubeFileProviderReadHandler) cubeHandler;
       return cubeFileProviderReadHandler;
     }
 
-    if (isSameNamespace(uri) == false)
-    {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("properties".equals(tagName))
-    {
+    if ( "properties".equals( tagName ) ) {
       propertiesReadHandler = new PropertiesReadHandler();
       return propertiesReadHandler;
     }
@@ -222,56 +199,47 @@ public class MondrianConnectionReadHandler extends AbstractXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    if (cubeFileProviderReadHandler != null && dataSourceProviderHandler != null)
-    {
+  protected void doneParsing() throws SAXException {
+    if ( cubeFileProviderReadHandler != null && dataSourceProviderHandler != null ) {
       return;
     }
 
-    if (cubeFileProviderReadHandler == null)
-    {
-      if (mondrianCubeDefinitionFile == null)
-      {
-        throw new ParseException("Mondrian-schema file is not defined.", getLocator());
+    if ( cubeFileProviderReadHandler == null ) {
+      if ( mondrianCubeDefinitionFile == null ) {
+        throw new ParseException( "Mondrian-schema file is not defined.", getLocator() );
       }
     }
 
-    if (dataSourceProviderHandler == null)
-    {
-      if (dataSourceName == null && connectionString == null)
-      {
-        throw new ParseException("No Connection Information found. This is a invalid datasource.", getLocator());
+    if ( dataSourceProviderHandler == null ) {
+      if ( dataSourceName == null && connectionString == null ) {
+        throw new ParseException( "No Connection Information found. This is a invalid datasource.", getLocator() );
       }
     }
 
-    logger.warn("This is a obsolete modrian-datasource definition. " +
-        "Load and save the report in PRD-3.5 to migrate it to the final version.");
+    logger.warn( "This is a obsolete modrian-datasource definition. " +
+      "Load and save the report in PRD-3.5 to migrate it to the final version." );
   }
 
   /**
-   * Returns the object for this element or null, if this element does not
-   * create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 
-  public void configure (final AbstractMDXDataFactory dataFactory)
-  {
-    dataFactory.setCubeFileProvider(getCubeFileProvider());
-    dataFactory.setDataSourceProvider(getDataSourceProvider());
-    dataFactory.setJdbcPassword(getJdbcPassword());
-    dataFactory.setJdbcUser(getJdbcUser());
-    dataFactory.setJdbcPasswordField(getJdbcPasswordField());
-    dataFactory.setJdbcUserField(getJdbcUserField());
-    dataFactory.setRole(getRole());
-    dataFactory.setRoleField(getRoleField());
-    dataFactory.setDesignTimeName(getDesignTimeName());
+  public void configure( final AbstractMDXDataFactory dataFactory ) {
+    dataFactory.setCubeFileProvider( getCubeFileProvider() );
+    dataFactory.setDataSourceProvider( getDataSourceProvider() );
+    dataFactory.setJdbcPassword( getJdbcPassword() );
+    dataFactory.setJdbcUser( getJdbcUser() );
+    dataFactory.setJdbcPasswordField( getJdbcPasswordField() );
+    dataFactory.setJdbcUserField( getJdbcUserField() );
+    dataFactory.setRole( getRole() );
+    dataFactory.setRoleField( getRoleField() );
+    dataFactory.setDesignTimeName( getDesignTimeName() );
   }
 
 

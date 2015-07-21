@@ -17,41 +17,36 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.util.IconLoader;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Todo: Document Me
  *
  * @author Ezequiel Cuellar
  */
-public final class ShowEditorPaneAction extends AbstractViewStateAction
-{
-  public ShowEditorPaneAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("ShowEditorPaneAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ShowEditorPaneAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ShowEditorPaneAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ShowEditorPaneAction.Accelerator"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getGenericSquareDisabled());
+public final class ShowEditorPaneAction extends AbstractViewStateAction {
+  public ShowEditorPaneAction() {
+    putValue( Action.NAME, ActionMessages.getString( "ShowEditorPaneAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "ShowEditorPaneAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "ShowEditorPaneAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "ShowEditorPaneAction.Accelerator" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getGenericSquareDisabled() );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
   }
 
-  protected boolean recomputeEnabled()
-  {
+  protected boolean recomputeEnabled() {
     final ReportDesignerContext context = getReportDesignerContext();
-    if (context == null)
-    {
+    if ( context == null ) {
       return false;
     }
-    return (context.getReportRenderContextCount() > 0);
+    return ( context.getReportRenderContextCount() > 0 );
   }
 }
 

@@ -26,36 +26,30 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
  *
  * @author Thomas Morgner
  */
-public class ExpressionAddedUndoEntry implements UndoEntry
-{
+public class ExpressionAddedUndoEntry implements UndoEntry {
   private int position;
   private Expression expression;
 
-  public ExpressionAddedUndoEntry(final int position, final Expression expression)
-  {
+  public ExpressionAddedUndoEntry( final int position, final Expression expression ) {
     this.position = position;
     this.expression = expression;
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
+  public void undo( final ReportDocumentContext renderContext ) {
     final AbstractReportDefinition definition = renderContext.getReportDefinition();
-    definition.getExpressions().removeExpression(expression);
-    definition.notifyNodeChildRemoved(expression);
+    definition.getExpressions().removeExpression( expression );
+    definition.notifyNodeChildRemoved( expression );
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
+  public void redo( final ReportDocumentContext renderContext ) {
     final AbstractReportDefinition definition = renderContext.getReportDefinition();
-    if (definition.getExpressions().contains(expression) == false)
-    {
-      definition.getExpressions().add(position, expression);
-      definition.notifyNodeChildAdded(expression);
+    if ( definition.getExpressions().contains( expression ) == false ) {
+      definition.getExpressions().add( position, expression );
+      definition.notifyNodeChildAdded( expression );
     }
   }
 
-  public UndoEntry merge(final UndoEntry newEntry)
-  {
+  public UndoEntry merge( final UndoEntry newEntry ) {
     return null;
   }
 }

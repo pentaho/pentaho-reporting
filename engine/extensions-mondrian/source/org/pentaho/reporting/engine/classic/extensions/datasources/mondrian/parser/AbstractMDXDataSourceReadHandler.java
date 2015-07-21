@@ -26,18 +26,16 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler
-{
+public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHandler
+  implements DataFactoryReadHandler {
   private MondrianConnectionReadHandler connectionReadHandler;
   private AbstractMDXDataFactory dataFactory;
   private PropertiesReadHandler propertiesReadHandler;
 
-  public AbstractMDXDataSourceReadHandler()
-  {
+  public AbstractMDXDataSourceReadHandler() {
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
@@ -50,22 +48,18 @@ public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHa
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("connection".equals(tagName))
-    {
+    if ( "connection".equals( tagName ) ) {
       connectionReadHandler = new MondrianConnectionReadHandler();
       return connectionReadHandler;
     }
-    if ("mondrian-properties".equals(tagName))
-    {
+    if ( "mondrian-properties".equals( tagName ) ) {
       propertiesReadHandler = new PropertiesReadHandler();
       return propertiesReadHandler;
     }
@@ -79,17 +73,14 @@ public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHa
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final AbstractMDXDataFactory srdf = createDataFactory();
-    if (connectionReadHandler != null)
-    {
-      connectionReadHandler.configure(srdf);
+    if ( connectionReadHandler != null ) {
+      connectionReadHandler.configure( srdf );
     }
-    
-    if (propertiesReadHandler != null)
-    {
-      srdf.setBaseConnectionProperties(propertiesReadHandler.getResult());
+
+    if ( propertiesReadHandler != null ) {
+      srdf.setBaseConnectionProperties( propertiesReadHandler.getResult() );
     }
     dataFactory = srdf;
   }
@@ -100,8 +91,7 @@ public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHa
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 }

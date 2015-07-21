@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
-import javax.swing.Action;
-import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileFilter;
-
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
@@ -52,34 +44,34 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public final class OpenReportAction extends AbstractDesignerContextAction
-{
-  public OpenReportAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("OpenReportAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("OpenReportAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("OpenReportAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("OpenReportAction.Accelerator"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getOpenIcon());
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+
+public final class OpenReportAction extends AbstractDesignerContextAction {
+  public OpenReportAction() {
+    putValue( Action.NAME, ActionMessages.getString( "OpenReportAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "OpenReportAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "OpenReportAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "OpenReportAction.Accelerator" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getOpenIcon() );
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
-    if (e.getSource() instanceof MacOSXIntegration.ApplicationEventSupport)
-    {
+  public void actionPerformed( final ActionEvent e ) {
+    if ( e.getSource() instanceof MacOSXIntegration.ApplicationEventSupport ) {
       final MacOSXIntegration.ApplicationEventSupport integration =
-          (MacOSXIntegration.ApplicationEventSupport) e.getSource();
+        (MacOSXIntegration.ApplicationEventSupport) e.getSource();
       final String fileName = integration.getFileName();
-      if (fileName != null)
-      {
-        SwingUtilities.invokeLater(new OpenReportTask(new File(fileName), getReportDesignerContext()));
+      if ( fileName != null ) {
+        SwingUtilities.invokeLater( new OpenReportTask( new File( fileName ), getReportDesignerContext() ) );
       }
 
-      if (e instanceof ConsumableActionEvent)
-      {
+      if ( e instanceof ConsumableActionEvent ) {
         final ConsumableActionEvent ce = (ConsumableActionEvent) e;
         ce.consume();
       }
@@ -88,197 +80,161 @@ public final class OpenReportAction extends AbstractDesignerContextAction
     }
 
     final FileFilter filter = new FilesystemFilter
-        (new String[]{".xml", ".report", ".prpt", ".prpti"}, // NON-NLS
-            ActionMessages.getString("OpenReportAction.FileTypeDescriptor"), true);
+      ( new String[] { ".xml", ".report", ".prpt", ".prpti" }, // NON-NLS
+        ActionMessages.getString( "OpenReportAction.FileTypeDescriptor" ), true );
 
-    final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser("report");//NON-NLS
-    fileChooser.setFilters(new FileFilter[]{filter});
-    fileChooser.setAllowMultiSelection(true);
-    if (fileChooser.showDialog(getReportDesignerContext().getView().getParent(), JFileChooser.OPEN_DIALOG) == false)
-    {
+    final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser( "report" );//NON-NLS
+    fileChooser.setFilters( new FileFilter[] { filter } );
+    fileChooser.setAllowMultiSelection( true );
+    if ( fileChooser.showDialog( getReportDesignerContext().getView().getParent(), JFileChooser.OPEN_DIALOG )
+      == false ) {
       return;
     }
     final File[] selectedFiles = fileChooser.getSelectedFiles();
-    for (final File selectedFile : selectedFiles)
-    {
-      SwingUtilities.invokeLater(new OpenReportTask(selectedFile, getReportDesignerContext()));
+    for ( final File selectedFile : selectedFiles ) {
+      SwingUtilities.invokeLater( new OpenReportTask( selectedFile, getReportDesignerContext() ) );
     }
   }
 
-  public static class OpenReportTask implements Runnable
-  {
+  public static class OpenReportTask implements Runnable {
     private File selectedFile;
     private ReportDesignerContext context;
 
-    public OpenReportTask(final File selectedFile, final ReportDesignerContext context)
-    {
+    public OpenReportTask( final File selectedFile, final ReportDesignerContext context ) {
       this.selectedFile = selectedFile;
       this.context = context;
     }
 
-    public void run()
-    {
-      openReport(selectedFile, context);
+    public void run() {
+      openReport( selectedFile, context );
       // Even if the database is not valid, never ever tell the user that the report definition
       // cannot be opened when in the next minute that same report pops up. 
-      context.getView().setWelcomeVisible(false);
+      context.getView().setWelcomeVisible( false );
     }
   }
 
 
-  public static void openReport(final File selectedFile,
-                                final ReportDesignerContext context)
-  {
-    if (selectedFile == null)
-    {
+  public static void openReport( final File selectedFile,
+                                 final ReportDesignerContext context ) {
+    if ( selectedFile == null ) {
       throw new NullPointerException();
     }
-    if (context == null)
-    {
+    if ( context == null ) {
       throw new NullPointerException();
     }
 
-    final LoadReportTask target = new LoadReportTask(selectedFile);
-    final Thread loadThread = new Thread(target);
-    loadThread.setDaemon(true);
+    final LoadReportTask target = new LoadReportTask( selectedFile );
+    final Thread loadThread = new Thread( target );
+    loadThread.setDaemon( true );
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog
-        (loadThread, null, context.getView().getParent(), ActionMessages.getString("OpenReportAction.LoadReportMessage"));
+      ( loadThread, null, context.getView().getParent(),
+        ActionMessages.getString( "OpenReportAction.LoadReportMessage" ) );
     final AbstractReportDefinition report = target.getReport();
-    if (report instanceof MasterReport)
-    {
-      try
-      {
-        context.addMasterReport((MasterReport) report);
-        context.getRecentFilesModel().addFile(selectedFile);
+    if ( report instanceof MasterReport ) {
+      try {
+        context.addMasterReport( (MasterReport) report );
+        context.getRecentFilesModel().addFile( selectedFile );
 
         final ReportDocumentContext activeContext = context.getActiveContext();
-        if (activeContext != null)
-        {
+        if ( activeContext != null ) {
           activeContext.resetChangeTracker();
         }
+      } catch ( ReportDataFactoryException e ) {
+        UncaughtExceptionsModel.getInstance().addException( e );
       }
-      catch (ReportDataFactoryException e)
-      {
-        UncaughtExceptionsModel.getInstance().addException(e);
-      }
-    }
-    else
-    {
+    } else {
       final Exception exception = target.getException();
-      if (exception instanceof ResourceCreationException)
-      {
-        ExceptionDialog.showExceptionDialog(context.getView().getParent(), ActionMessages.getString("FailedToOpen.Error.Title"),
-            ActionMessages.getString("FailedToOpen.Error.Message"), exception);
-        UncaughtExceptionsModel.getInstance().addException(exception);
-      }
-      else if (exception != null)
-      {
-        UncaughtExceptionsModel.getInstance().addException(exception);
+      if ( exception instanceof ResourceCreationException ) {
+        ExceptionDialog
+          .showExceptionDialog( context.getView().getParent(), ActionMessages.getString( "FailedToOpen.Error.Title" ),
+            ActionMessages.getString( "FailedToOpen.Error.Message" ), exception );
+        UncaughtExceptionsModel.getInstance().addException( exception );
+      } else if ( exception != null ) {
+        UncaughtExceptionsModel.getInstance().addException( exception );
       }
     }
 
   }
 
-  private static class LoadReportTask implements Runnable
-  {
+  private static class LoadReportTask implements Runnable {
     private File file;
     private AbstractReportDefinition report;
     private Exception exception;
 
-    private LoadReportTask(final File file)
-    {
-      if (file == null)
-      {
+    private LoadReportTask( final File file ) {
+      if ( file == null ) {
         throw new NullPointerException();
       }
       this.file = file;
     }
 
     /**
-     * When an object implementing interface <code>Runnable</code> is used
-     * to create a thread, starting the thread causes the object's
-     * <code>run</code> method to be called in that separately executing
-     * thread.
+     * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread
+     * causes the object's <code>run</code> method to be called in that separately executing thread.
      * <p/>
-     * The general contract of the method <code>run</code> is that it may
-     * take any action whatsoever.
+     * The general contract of the method <code>run</code> is that it may take any action whatsoever.
      *
      * @see Thread#run()
      */
-    public void run()
-    {
-      try
-      {
-        report = loadReport(file);
-      }
-      catch (Exception e)
-      {
+    public void run() {
+      try {
+        report = loadReport( file );
+      } catch ( Exception e ) {
         this.exception = e;
       }
     }
 
-    public AbstractReportDefinition getReport()
-    {
+    public AbstractReportDefinition getReport() {
       return report;
     }
 
-    public Exception getException()
-    {
+    public Exception getException() {
       return exception;
     }
   }
 
-  public static MasterReport loadReport(final File selectedFile)
-      throws ResourceException, IOException
-  {
+  public static MasterReport loadReport( final File selectedFile )
+    throws ResourceException, IOException {
     final ResourceManager resourceManager = new ResourceManager();
-    final MasterReport reportDefinition = loadReport(selectedFile, resourceManager);
-    try
-    {
+    final MasterReport reportDefinition = loadReport( selectedFile, resourceManager );
+    try {
       reportDefinition.setAttribute
-          (ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", selectedFile.getCanonicalPath()); // NON-NLS
-    }
-    catch (IOException ioe)
-    {
+        ( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", selectedFile.getCanonicalPath() ); // NON-NLS
+    } catch ( IOException ioe ) {
       reportDefinition.setAttribute
-          (ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", selectedFile.getAbsolutePath()); // NON-NLS
+        ( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", selectedFile.getAbsolutePath() ); // NON-NLS
     }
 
     return reportDefinition;
   }
 
-  public static MasterReport loadReport(final Object selectedFile, final ResourceManager resourceManager)
-      throws ResourceException, IOException
-  {
-    final Resource directly = resourceManager.createDirectly(selectedFile, MasterReport.class);
+  public static MasterReport loadReport( final Object selectedFile, final ResourceManager resourceManager )
+    throws ResourceException, IOException {
+    final Resource directly = resourceManager.createDirectly( selectedFile, MasterReport.class );
     final MasterReport resource = (MasterReport) directly.getResource();
     final DocumentBundle bundle = resource.getBundle();
-    if (bundle == null)
-    {
+    if ( bundle == null ) {
       // Ok, that should not happen if we work with the engine's parsers, but better safe than sorry.
-      final MemoryDocumentBundle documentBundle = new MemoryDocumentBundle(resource.getContentBase());
-      documentBundle.getWriteableDocumentMetaData().setBundleType(ClassicEngineBoot.BUNDLE_TYPE);
-      resource.setBundle(documentBundle);
-      resource.setContentBase(documentBundle.getBundleMainKey());
-    }
-    else
-    {
-      final MemoryDocumentBundle mem = new MemoryDocumentBundle(resource.getContentBase());
-      BundleUtilities.copyStickyInto(mem, bundle);
-      BundleUtilities.copyMetaData(mem, bundle);
-      resource.setBundle(mem);
-      resource.setContentBase(mem.getBundleMainKey());
+      final MemoryDocumentBundle documentBundle = new MemoryDocumentBundle( resource.getContentBase() );
+      documentBundle.getWriteableDocumentMetaData().setBundleType( ClassicEngineBoot.BUNDLE_TYPE );
+      resource.setBundle( documentBundle );
+      resource.setContentBase( documentBundle.getBundleMainKey() );
+    } else {
+      final MemoryDocumentBundle mem = new MemoryDocumentBundle( resource.getContentBase() );
+      BundleUtilities.copyStickyInto( mem, bundle );
+      BundleUtilities.copyMetaData( mem, bundle );
+      resource.setBundle( mem );
+      resource.setContentBase( mem.getBundleMainKey() );
     }
 
     final Object visible =
-        resource.getBundle().getMetaData().getBundleAttribute(ClassicEngineBoot.METADATA_NAMESPACE, "visible");//NON-NLS
-    if ("true".equals(visible))//NON-NLS
+      resource.getBundle().getMetaData().getBundleAttribute( ClassicEngineBoot.METADATA_NAMESPACE, "visible" );//NON-NLS
+    if ( "true".equals( visible ) )//NON-NLS
     {
-      resource.setAttribute(AttributeNames.Pentaho.NAMESPACE, "visible", Boolean.TRUE);//NON-NLS
-    }
-    else if ("false".equals(visible))//NON-NLS
+      resource.setAttribute( AttributeNames.Pentaho.NAMESPACE, "visible", Boolean.TRUE );//NON-NLS
+    } else if ( "false".equals( visible ) )//NON-NLS
     {
-      resource.setAttribute(AttributeNames.Pentaho.NAMESPACE, "visible", Boolean.FALSE);//NON-NLS
+      resource.setAttribute( AttributeNames.Pentaho.NAMESPACE, "visible", Boolean.FALSE );//NON-NLS
     }
     return resource;
   }

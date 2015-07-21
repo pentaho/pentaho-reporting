@@ -22,24 +22,20 @@ package org.pentaho.reporting.designer.core.inspections;
  *
  * @author Thomas Morgner
  */
-public class PropertyLocationInfo extends LocationInfo
-{
+public class PropertyLocationInfo extends LocationInfo {
   private String attributeName;
 
-  public PropertyLocationInfo(final Object reportElement,
-                              final String attributeName)
-  {
-    super(reportElement);
-    if (attributeName == null)
-    {
+  public PropertyLocationInfo( final Object reportElement,
+                               final String attributeName ) {
+    super( reportElement );
+    if ( attributeName == null ) {
       throw new NullPointerException();
     }
 
     this.attributeName = attributeName;
   }
 
-  public String getAttributeName()
-  {
+  public String getAttributeName() {
     return attributeName;
   }
 

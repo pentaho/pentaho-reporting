@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.attributes;
 
-import java.awt.BorderLayout;
-import java.util.List;
-import javax.swing.JScrollPane;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
@@ -37,20 +31,21 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.libraries.designtime.swing.DefaultTableHeaderRenderer;
 
-public class VisualAttributeEditorPanel extends SidePanel
-{
-  protected static final Element[] EMPTY_DATA = new Element[0];
+import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import java.awt.*;
+import java.util.List;
 
-  private class ReportModelChangeHandler implements ReportModelListener
-  {
-    private ReportModelChangeHandler()
-    {
+public class VisualAttributeEditorPanel extends SidePanel {
+  protected static final Element[] EMPTY_DATA = new Element[ 0 ];
+
+  private class ReportModelChangeHandler implements ReportModelListener {
+    private ReportModelChangeHandler() {
     }
 
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      if (event.getElement() instanceof Element == false)
-      {
+    public void nodeChanged( final ReportModelEvent event ) {
+      if ( event.getElement() instanceof Element == false ) {
         return;
       }
 
@@ -58,13 +53,11 @@ public class VisualAttributeEditorPanel extends SidePanel
       // once the selection changed, we will get informed through other channels.
       final Object element = event.getElement();
       final Element[] data = getData();
-      for (int i = 0; i < data.length; i++)
-      {
-        final Element reportElement = data[i];
-        if (element == reportElement)
-        {
+      for ( int i = 0; i < data.length; i++ ) {
+        final Element reportElement = data[ i ];
+        if ( element == reportElement ) {
           // refresh, dont call stopCellEditing ..
-          dataModel.setData(data);
+          dataModel.setData( data );
           return;
         }
       }
@@ -78,86 +71,74 @@ public class VisualAttributeEditorPanel extends SidePanel
 
   private SortHeaderPanel headerPanel;
 
-  public VisualAttributeEditorPanel()
-  {
-    setLayout(new BorderLayout());
+  public VisualAttributeEditorPanel() {
+    setLayout( new BorderLayout() );
 
     dataModel = new VisualAttributeTableModel();
     changeHandler = new ReportModelChangeHandler();
 
     table = new ElementMetaDataTable();
-    table.setModel(new GroupedMetaTableModel(dataModel));
-    table.getColumnModel().getColumn(0).setCellRenderer(new GroupedNameCellRenderer());
-    applyHeaderSize(table.getColumnModel().getColumn(2));
+    table.setModel( new GroupedMetaTableModel( dataModel ) );
+    table.getColumnModel().getColumn( 0 ).setCellRenderer( new GroupedNameCellRenderer() );
+    applyHeaderSize( table.getColumnModel().getColumn( 2 ) );
 
-    headerPanel = new SortHeaderPanel(dataModel);
+    headerPanel = new SortHeaderPanel( dataModel );
 
-    add(headerPanel, BorderLayout.NORTH);
-    add(new JScrollPane(table), BorderLayout.CENTER);
+    add( headerPanel, BorderLayout.NORTH );
+    add( new JScrollPane( table ), BorderLayout.CENTER );
   }
 
-  private void applyHeaderSize(final TableColumn col)
-  {
-    col.setHeaderRenderer(new DefaultTableHeaderRenderer());
+  private void applyHeaderSize( final TableColumn col ) {
+    col.setHeaderRenderer( new DefaultTableHeaderRenderer() );
     col.sizeWidthToFit();
   }
 
-  public Element[] getData()
-  {
+  public Element[] getData() {
     return dataModel.getData();
   }
 
-  public void setData(final Element[] elements)
-  {
+  public void setData( final Element[] elements ) {
     final TableCellEditor tableCellEditor = table.getCellEditor();
-    if (tableCellEditor != null)
-    {
+    if ( tableCellEditor != null ) {
       tableCellEditor.stopCellEditing();
     }
 
-    dataModel.setData(elements);
+    dataModel.setData( elements );
   }
 
-  public void setEnabled(final boolean enabled)
-  {
-    super.setEnabled(enabled);
-    table.setEnabled(enabled);
-    headerPanel.setEnabled(enabled);
+  public void setEnabled( final boolean enabled ) {
+    super.setEnabled( enabled );
+    table.setEnabled( enabled );
+    headerPanel.setEnabled( enabled );
   }
 
-  protected void updateSelection(final DocumentContextSelectionModel model)
-  {
-    List<Element> selectedElementsOfType = model.getSelectedElementsOfType(Element.class);
-    final Element[] visualElements = selectedElementsOfType.toArray(new Element[selectedElementsOfType.size()]);
-    setData(visualElements);
+  protected void updateSelection( final DocumentContextSelectionModel model ) {
+    List<Element> selectedElementsOfType = model.getSelectedElementsOfType( Element.class );
+    final Element[] visualElements = selectedElementsOfType.toArray( new Element[ selectedElementsOfType.size() ] );
+    setData( visualElements );
   }
 
-  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
-  {
+  protected void updateActiveContext( final ReportDocumentContext oldContext, final ReportDocumentContext newContext ) {
     table.stopEditing();
-    
-    super.updateActiveContext(oldContext, newContext);
-    if (report != null)
-    {
-      report.removeReportModelListener(changeHandler);
+
+    super.updateActiveContext( oldContext, newContext );
+    if ( report != null ) {
+      report.removeReportModelListener( changeHandler );
     }
-    if (newContext == null)
-    {
+    if ( newContext == null ) {
       report = null;
-      dataModel.setReportRenderContext(null);
-      setData(EMPTY_DATA);
-    }
-    else
-    {
+      dataModel.setReportRenderContext( null );
+      setData( EMPTY_DATA );
+    } else {
       report = newContext.getReportDefinition();
-      report.addReportModelListener(changeHandler);
-      dataModel.setReportRenderContext(newContext);
+      report.addReportModelListener( changeHandler );
+      dataModel.setReportRenderContext( newContext );
     }
   }
 
-  protected void updateDesignerContext(final ReportDesignerContext oldContext, final ReportDesignerContext newContext)
-  {
-    super.updateDesignerContext(oldContext, newContext);
-    table.setReportDesignerContext(newContext);
+  protected void updateDesignerContext( final ReportDesignerContext oldContext,
+                                        final ReportDesignerContext newContext ) {
+    super.updateDesignerContext( oldContext, newContext );
+    table.setReportDesignerContext( newContext );
   }
 }

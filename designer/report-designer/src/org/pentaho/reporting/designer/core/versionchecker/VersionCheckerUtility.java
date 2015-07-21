@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.designer.core.versionchecker;
 
-import java.awt.Component;
-import java.awt.Frame;
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JOptionPane;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -35,157 +28,134 @@ import org.pentaho.versionchecker.IVersionCheckErrorHandler;
 import org.pentaho.versionchecker.IVersionCheckResultHandler;
 import org.pentaho.versionchecker.VersionChecker;
 
-public class VersionCheckerUtility
-{
-  private static final Log logger = LogFactory.getLog(VersionCheckerUtility.class);
+import javax.swing.*;
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-  private VersionCheckerUtility()
-  {
+public class VersionCheckerUtility {
+  private static final Log logger = LogFactory.getLog( VersionCheckerUtility.class );
+
+  private VersionCheckerUtility() {
   }
 
-  public static void handlerVersionCheck(final Frame parent)
-  {
-    if (VersionCheckerUtility.isInitialCheck())
-    {
-      VersionCheckerUtility.setCheckVersion(VersionCheckerUtility.getUserApprovalForVersionChecker(parent));
+  public static void handlerVersionCheck( final Frame parent ) {
+    if ( VersionCheckerUtility.isInitialCheck() ) {
+      VersionCheckerUtility.setCheckVersion( VersionCheckerUtility.getUserApprovalForVersionChecker( parent ) );
     }
-    if (VersionCheckerUtility.getCheckVersion())
-    {
-      VersionCheckerUtility.checkVersion(parent, false, true);
+    if ( VersionCheckerUtility.getCheckVersion() ) {
+      VersionCheckerUtility.checkVersion( parent, false, true );
     }
   }
 
-  private static void setCheckVersion(final boolean checkVersion)
-  {
-    WorkspaceSettings.getInstance().setUseVersionChecker(checkVersion);
+  private static void setCheckVersion( final boolean checkVersion ) {
+    WorkspaceSettings.getInstance().setUseVersionChecker( checkVersion );
   }
 
-  private static boolean isInitialCheck()
-  {
+  private static boolean isInitialCheck() {
     return WorkspaceSettings.getInstance().isInitialVersionCheck();
   }
 
-  private static boolean getCheckVersion()
-  {
+  private static boolean getCheckVersion() {
     return WorkspaceSettings.getInstance().isUseVersionChecker();
   }
 
-  private static boolean getUserApprovalForVersionChecker(final Frame owner)
-  {
-    final VersionCheckerEnableDialog dialog = new VersionCheckerEnableDialog(owner);
+  private static boolean getUserApprovalForVersionChecker( final Frame owner ) {
+    final VersionCheckerEnableDialog dialog = new VersionCheckerEnableDialog( owner );
     return dialog.performEdit();
   }
 
-  public static void checkVersion(final Component parent, final boolean forcePrompt, final boolean exitOnLaunch)
-  {
-    final BasicVersionCheckerProvider dataProvider = new BasicVersionCheckerProvider(VersionCheckerUtility.class);
+  public static void checkVersion( final Component parent, final boolean forcePrompt, final boolean exitOnLaunch ) {
+    final BasicVersionCheckerProvider dataProvider = new BasicVersionCheckerProvider( VersionCheckerUtility.class );
     final boolean gaOnly = !WorkspaceSettings.getInstance().isNotifyForAllBuilds();
-    if (gaOnly)
-    {
-      dataProvider.setVersionRequestFlags(BasicVersionCheckerProvider.DEPTH_GA_MASK);
-    }
-    else
-    {
-      dataProvider.setVersionRequestFlags(BasicVersionCheckerProvider.DEPTH_ALL_MASK);
+    if ( gaOnly ) {
+      dataProvider.setVersionRequestFlags( BasicVersionCheckerProvider.DEPTH_GA_MASK );
+    } else {
+      dataProvider.setVersionRequestFlags( BasicVersionCheckerProvider.DEPTH_ALL_MASK );
     }
     final VersionChecker vc = new VersionChecker();
-    vc.setDataProvider(dataProvider);
-    vc.addResultHandler(new InternalResultHandler(parent, forcePrompt, exitOnLaunch));
-    vc.addErrorHandler(new NoPromptErrorHandler());
+    vc.setDataProvider( dataProvider );
+    vc.addResultHandler( new InternalResultHandler( parent, forcePrompt, exitOnLaunch ) );
+    vc.addErrorHandler( new NoPromptErrorHandler() );
 
     // start new thread; do not run in event thread
-    final Thread vcThread = new Thread(new VersionCheckerRunnable(vc));
-    vcThread.setDaemon(true);
+    final Thread vcThread = new Thread( new VersionCheckerRunnable( vc ) );
+    vcThread.setDaemon( true );
     vcThread.start();
   }
 
-  private static class VersionCheckerRunnable implements Runnable
-  {
+  private static class VersionCheckerRunnable implements Runnable {
     private VersionChecker vc;
 
-    public VersionCheckerRunnable(final VersionChecker vc)
-    {
-      if (vc == null)
-      {
+    public VersionCheckerRunnable( final VersionChecker vc ) {
+      if ( vc == null ) {
         throw new NullPointerException();
       }
       this.vc = vc;
     }
 
-    public void run()
-    {
-      vc.performCheck(false);
+    public void run() {
+      vc.performCheck( false );
     }
   }
 
-  private static class InternalResultHandler implements IVersionCheckResultHandler
-  {
+  private static class InternalResultHandler implements IVersionCheckResultHandler {
     private Component parent;
     private final boolean forcePrompt;
     private final boolean exitOnLaunch;
 
-    protected InternalResultHandler(final Component parent, final boolean forcePrompt, final boolean exitOnLaunch)
-    {
+    protected InternalResultHandler( final Component parent, final boolean forcePrompt, final boolean exitOnLaunch ) {
       this.parent = parent;
       this.forcePrompt = forcePrompt;
       this.exitOnLaunch = exitOnLaunch;
     }
 
-    public void processResults(final String result)
-    {
-      try
-      {
+    public void processResults( final String result ) {
+      try {
         final SAXReader reader = new SAXReader();
-        final Document templateDoc = reader.read(new ByteArrayInputStream(result.getBytes()));
+        final Document templateDoc = reader.read( new ByteArrayInputStream( result.getBytes() ) );
         final List<UpdateInfo> updates = new ArrayList<UpdateInfo>();
-        final List updateElements = templateDoc.getRootElement().selectNodes("/vercheck/product/update");//NON-NLS
-        for (int i = 0; i < updateElements.size(); i++)
-        {
-          final Element updateElement = (Element) updateElements.get(i);
-          final String version = updateElement.attributeValue("version");//NON-NLS
-          final String type = updateElement.attributeValue("type");//NON-NLS
+        final List updateElements = templateDoc.getRootElement().selectNodes( "/vercheck/product/update" );//NON-NLS
+        for ( int i = 0; i < updateElements.size(); i++ ) {
+          final Element updateElement = (Element) updateElements.get( i );
+          final String version = updateElement.attributeValue( "version" );//NON-NLS
+          final String type = updateElement.attributeValue( "type" );//NON-NLS
           //final String os = updateElement.attributeValue("os");
-          final String downloadUrl = updateElement.selectSingleNode("downloadurl").getText();//NON-NLS
-          final UpdateInfo info = new UpdateInfo(version, type, downloadUrl);
-          updates.add(info);
+          final String downloadUrl = updateElement.selectSingleNode( "downloadurl" ).getText();//NON-NLS
+          final UpdateInfo info = new UpdateInfo( version, type, downloadUrl );
+          updates.add( info );
         }
 
-        if (updates.isEmpty())
-        {
-          if (forcePrompt)
-          {
-            JOptionPane.showMessageDialog(parent,
-                "No update is available at this time.", "Version Update Info",
-                JOptionPane.INFORMATION_MESSAGE);
+        if ( updates.isEmpty() ) {
+          if ( forcePrompt ) {
+            JOptionPane.showMessageDialog( parent,
+              "No update is available at this time.", "Version Update Info",
+              JOptionPane.INFORMATION_MESSAGE );
           }
           return;
         }
 
-        if ((forcePrompt ||
-            !updates.get(updates.size() - 1).getVersion().equals(
-                WorkspaceSettings.getInstance().getLastPromptedVersionUpdate())))
-        {
-          final UpdateInfo[] updateInfos = updates.toArray(new UpdateInfo[updates.size()]);
-          VersionConfirmationDialog.performUpdateAvailable(parent, updateInfos, exitOnLaunch);
+        if ( ( forcePrompt ||
+          !updates.get( updates.size() - 1 ).getVersion().equals(
+            WorkspaceSettings.getInstance().getLastPromptedVersionUpdate() ) ) ) {
+          final UpdateInfo[] updateInfos = updates.toArray( new UpdateInfo[ updates.size() ] );
+          VersionConfirmationDialog.performUpdateAvailable( parent, updateInfos, exitOnLaunch );
         }
-      }
-      catch (Exception e)
-      {
+      } catch ( Exception e ) {
         // we cannot give errors
-        logger.error("The version checker encountered an error", e);
-        JOptionPane.showMessageDialog(parent,
-            "No update is available at this time.", "Version Update Info",
-            JOptionPane.INFORMATION_MESSAGE);
+        logger.error( "The version checker encountered an error", e );
+        JOptionPane.showMessageDialog( parent,
+          "No update is available at this time.", "Version Update Info",
+          JOptionPane.INFORMATION_MESSAGE );
       }
     }
   }
 
-  private static class NoPromptErrorHandler implements IVersionCheckErrorHandler
-  {
-    public void handleException(final Exception e)
-    {
+  private static class NoPromptErrorHandler implements IVersionCheckErrorHandler {
+    public void handleException( final Exception e ) {
       // Disable the logging via the configuration. 
-      logger.error("The version checker encountered an error", e);
+      logger.error( "The version checker encountered an error", e );
     }
   }
 }

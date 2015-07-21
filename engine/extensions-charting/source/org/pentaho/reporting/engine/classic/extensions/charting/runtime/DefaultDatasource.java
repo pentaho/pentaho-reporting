@@ -21,29 +21,23 @@ package org.pentaho.reporting.engine.classic.extensions.charting.runtime;
 import java.util.Date;
 import java.util.List;
 
-public class DefaultDatasource implements Datasource
-{
-  public DefaultDatasource()
-  {
+public class DefaultDatasource implements Datasource {
+  public DefaultDatasource() {
   }
 
-  public String execute()
-  {
+  public String execute() {
     return null;
   }
 
-  public void setParameter(final String param, final String val)
-  {
+  public void setParameter( final String param, final String val ) {
 
   }
 
-  public void setParameter(final String param, final Date val)
-  {
+  public void setParameter( final String param, final Date val ) {
 
   }
 
-  public void setParameter(final String param, final List val)
-  {
+  public void setParameter( final String param, final List val ) {
 
   }
 }

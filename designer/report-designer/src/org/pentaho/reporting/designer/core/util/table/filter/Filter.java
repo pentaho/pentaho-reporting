@@ -17,12 +17,10 @@
 
 package org.pentaho.reporting.designer.core.util.table.filter;
 
-public interface Filter
-{
-  public enum Result
-  {
+public interface Filter {
+  public enum Result {
     ACCEPT, REJECT, UNDECIDED
   }
-  
-  public Result isMatch (final Object o);
+
+  public Result isMatch( final Object o );
 }

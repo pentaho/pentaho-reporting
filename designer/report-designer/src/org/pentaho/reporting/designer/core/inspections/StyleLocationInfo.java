@@ -25,31 +25,26 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
  *
  * @author Thomas Morgner
  */
-public class StyleLocationInfo extends LocationInfo
-{
+public class StyleLocationInfo extends LocationInfo {
   private StyleKey styleKey;
   private boolean expression;
 
-  public StyleLocationInfo(final ReportElement reportElement,
-                           final StyleKey styleKey,
-                           final boolean expression)
-  {
-    super(reportElement);
+  public StyleLocationInfo( final ReportElement reportElement,
+                            final StyleKey styleKey,
+                            final boolean expression ) {
+    super( reportElement );
     this.expression = expression;
-    if (styleKey == null)
-    {
+    if ( styleKey == null ) {
       throw new NullPointerException();
     }
     this.styleKey = styleKey;
   }
 
-  public StyleKey getStyleKey()
-  {
+  public StyleKey getStyleKey() {
     return styleKey;
   }
 
-  public boolean isExpression()
-  {
+  public boolean isExpression() {
     return expression;
   }
 }

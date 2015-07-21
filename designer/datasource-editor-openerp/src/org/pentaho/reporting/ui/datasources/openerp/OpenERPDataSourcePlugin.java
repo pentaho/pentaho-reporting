@@ -34,10 +34,6 @@ package org.pentaho.reporting.ui.datasources.openerp;
  * Copyright (c) 2011-2012 De Bortoli Wines Pty Limited (Australia). All Rights Reserved.
  */
 
-import java.awt.Window;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChangeRecorder;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
@@ -46,46 +42,37 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.openerp.OpenERPDataFactory;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
- * 
  * @author Pieter van der Merwe
- *
  */
-public class OpenERPDataSourcePlugin implements DataSourcePlugin
-{
-  public OpenERPDataSourcePlugin()
-  {
+public class OpenERPDataSourcePlugin implements DataSourcePlugin {
+  public OpenERPDataSourcePlugin() {
   }
 
-  public DataFactory performEdit(final DesignTimeContext context,
-                                 final DataFactory input,
-                                 final String queryName,
-                                 final DataFactoryChangeRecorder changeRecorder)
-  {
+  public DataFactory performEdit( final DesignTimeContext context,
+                                  final DataFactory input,
+                                  final String queryName,
+                                  final DataFactoryChangeRecorder changeRecorder ) {
     final OpenERPDataSourceEditor editor;
     final Window window = context.getParentWindow();
-    if (window instanceof JDialog)
-    {
-      editor = new OpenERPDataSourceEditor(context, (JDialog) window);
+    if ( window instanceof JDialog ) {
+      editor = new OpenERPDataSourceEditor( context, (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      editor = new OpenERPDataSourceEditor( context, (JFrame) window );
+    } else {
+      editor = new OpenERPDataSourceEditor( context );
     }
-    else if (window instanceof JFrame)
-    {
-      editor = new OpenERPDataSourceEditor(context, (JFrame) window);
-    }
-    else
-    {
-      editor = new OpenERPDataSourceEditor(context);
-    }
-    return editor.performConfiguration((OpenERPDataFactory) input);
+    return editor.performConfiguration( (OpenERPDataFactory) input );
   }
 
-  public boolean canHandle(final DataFactory dataFactory)
-  {
+  public boolean canHandle( final DataFactory dataFactory ) {
     return dataFactory instanceof OpenERPDataFactory;
   }
 
-  public DataFactoryMetaData getMetaData()
-  {
-    return DataFactoryRegistry.getInstance().getMetaData(OpenERPDataFactory.class.getName());
+  public DataFactoryMetaData getMetaData() {
+    return DataFactoryRegistry.getInstance().getMetaData( OpenERPDataFactory.class.getName() );
   }
 }

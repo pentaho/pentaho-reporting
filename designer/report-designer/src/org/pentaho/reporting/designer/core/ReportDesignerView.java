@@ -17,19 +17,16 @@
 
 package org.pentaho.reporting.designer.core;
 
-import java.awt.Component;
-import java.beans.PropertyChangeListener;
-import javax.swing.Action;
-import javax.swing.JComponent;
-import javax.swing.JPopupMenu;
-
 import org.pentaho.reporting.designer.core.xul.ActionSwingMenuitem;
 import org.pentaho.ui.xul.XulComponent;
 import org.pentaho.ui.xul.XulException;
 import org.pentaho.ui.xul.containers.XulMenupopup;
 
-public interface ReportDesignerView
-{
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeListener;
+
+public interface ReportDesignerView {
   public static final String REPORT_DESIGNER_VIEW_STATE_PROPERTY = "reportDesignerViewState";
   public static final String PALETTE_VISIBLE_PROPERTY = "paletteVisible";
   public static final String STRUCTURE_VISIBLE_PROPERTY = "structureVisible";
@@ -39,37 +36,37 @@ public interface ReportDesignerView
   public static final String WELCOME_VISIBLE_PROPERTY = "welcomeVisible";
   public static final String FIELD_SELECTOR_VISIBLE_PROPERTY = "fieldSelectorVisible";
 
-  public void addPropertyChangeListener(final PropertyChangeListener listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener );
 
-  public void addPropertyChangeListener(final String property, final PropertyChangeListener listener);
+  public void addPropertyChangeListener( final String property, final PropertyChangeListener listener );
 
-  public void removePropertyChangeListener(final PropertyChangeListener listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener );
 
-  public void removePropertyChangeListener(final String property, final PropertyChangeListener listener);
+  public void removePropertyChangeListener( final String property, final PropertyChangeListener listener );
 
   public boolean isStructureVisible();
 
-  public void setStructureVisible(final boolean visible);
+  public void setStructureVisible( final boolean visible );
 
   public boolean isPropertiesEditorVisible();
 
-  public void setPropertiesEditorVisible(final boolean visible);
+  public void setPropertiesEditorVisible( final boolean visible );
 
   public boolean isPreviewVisible();
 
-  public void setPreviewVisible(final boolean visible);
+  public void setPreviewVisible( final boolean visible );
 
   public boolean isMessagesVisible();
 
-  public void setMessagesVisible(final boolean visible);
+  public void setMessagesVisible( final boolean visible );
 
   public boolean isWelcomeVisible();
 
-  public void setWelcomeVisible(final boolean visible);
+  public void setWelcomeVisible( final boolean visible );
 
   public boolean isFieldSelectorVisible();
 
-  public void setFieldSelectorVisible(final boolean visible);
+  public void setFieldSelectorVisible( final boolean visible );
 
   public void redrawAll();
 
@@ -77,13 +74,15 @@ public interface ReportDesignerView
 
   public Component getParent();
 
-  public JPopupMenu getPopupMenu(final String id);
+  public JPopupMenu getPopupMenu( final String id );
 
-  public JComponent getToolBar(final String id);
+  public JComponent getToolBar( final String id );
 
-  public <T extends JComponent> T getComponent(String id, Class<T> type);
-  public <T extends XulComponent> T getXulComponent(String id, Class<T> type);
+  public <T extends JComponent> T getComponent( String id, Class<T> type );
 
-  ActionSwingMenuitem createMenuItem(Action action);
-  XulMenupopup createPopupMenu (String label, XulComponent parent) throws XulException;
+  public <T extends XulComponent> T getXulComponent( String id, Class<T> type );
+
+  ActionSwingMenuitem createMenuItem( Action action );
+
+  XulMenupopup createPopupMenu( String label, XulComponent parent ) throws XulException;
 }

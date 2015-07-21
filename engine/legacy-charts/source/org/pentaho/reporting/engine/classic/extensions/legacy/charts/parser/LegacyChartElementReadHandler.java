@@ -22,17 +22,15 @@ import org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChart
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 /**
- * A read handler that produces line-sparkline elements. As the attributes and style is already
- * handled in the abstract super-class, there is no need to add any other implementation here.
+ * A read handler that produces line-sparkline elements. As the attributes and style is already handled in the abstract
+ * super-class, there is no need to add any other implementation here.
  *
  * @author Thomas Morgner
  */
 @Deprecated
-public class LegacyChartElementReadHandler extends AbstractElementReadHandler
-{
+public class LegacyChartElementReadHandler extends AbstractElementReadHandler {
   public LegacyChartElementReadHandler()
-      throws ParseException
-  {
-    super(new LegacyChartType());
+    throws ParseException {
+    super( new LegacyChartType() );
   }
 }

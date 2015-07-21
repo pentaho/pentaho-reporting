@@ -25,37 +25,30 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class SnapToPositionModel implements SnapPositionsModel
-{
+public class SnapToPositionModel implements SnapPositionsModel {
   private BreakPositionsList positionList;
 
-  public SnapToPositionModel()
-  {
-    this.positionList = new BreakPositionsList(20, true);
+  public SnapToPositionModel() {
+    this.positionList = new BreakPositionsList( 20, true );
   }
 
-  public boolean add(final long key, final InstanceID owner)
-  {
-    return positionList.add(key, owner);
+  public boolean add( final long key, final InstanceID owner ) {
+    return positionList.add( key, owner );
   }
 
-  public void clear()
-  {
+  public void clear() {
     positionList.clear();
   }
 
-  public long[] getKeys()
-  {
+  public long[] getKeys() {
     return positionList.getKeys();
   }
 
-  public InstanceID getOwner(final long key)
-  {
-    return positionList.getOwner(key);
+  public InstanceID getOwner( final long key ) {
+    return positionList.getOwner( key );
   }
 
-  public int size()
-  {
+  public int size() {
     return positionList.size();
   }
 
@@ -65,44 +58,33 @@ public class SnapToPositionModel implements SnapPositionsModel
    * @param position
    * @return
    */
-  public long getNearestSnapPosition(final long position,
-                                     final InstanceID owner)
-  {
-    final long next = positionList.getNext(position);
-    final long prev = positionList.getPrevious(position);
+  public long getNearestSnapPosition( final long position,
+                                      final InstanceID owner ) {
+    final long next = positionList.getNext( position );
+    final long prev = positionList.getPrevious( position );
 
-    if (owner == null)
-    {
-      if (Math.abs(next - position) > Math.abs(prev - position))
-      {
+    if ( owner == null ) {
+      if ( Math.abs( next - position ) > Math.abs( prev - position ) ) {
         return prev;
-      }
-      else
-      {
+      } else {
         return next;
       }
     }
 
-    final InstanceID ownerNext = positionList.getOwner(next);
-    final InstanceID ownerPrev = positionList.getOwner(prev);
-    if (ownerNext == owner && ownerPrev == owner)
-    {
+    final InstanceID ownerNext = positionList.getOwner( next );
+    final InstanceID ownerPrev = positionList.getOwner( prev );
+    if ( ownerNext == owner && ownerPrev == owner ) {
       return position;
     }
-    if (ownerPrev == owner)
-    {
+    if ( ownerPrev == owner ) {
       return next;
     }
-    if (ownerNext == owner)
-    {
+    if ( ownerNext == owner ) {
       return prev;
     }
-    if (Math.abs(next - position) > Math.abs(prev - position))
-    {
+    if ( Math.abs( next - position ) > Math.abs( prev - position ) ) {
       return prev;
-    }
-    else
-    {
+    } else {
       return next;
     }
   }

@@ -17,13 +17,12 @@
 
 package org.pentaho.reporting.designer.core.editor.report;
 
-import java.awt.Component;
-import javax.swing.CellEditor;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public interface ReportElementInlineEditor extends CellEditor
-{
-  public Component getElementCellEditorComponent(ReportElementEditorContext rootBandRenderComponent,
-                                                 ReportElement value);
+import javax.swing.*;
+import java.awt.*;
+
+public interface ReportElementInlineEditor extends CellEditor {
+  public Component getElementCellEditorComponent( ReportElementEditorContext rootBandRenderComponent,
+                                                  ReportElement value );
 }

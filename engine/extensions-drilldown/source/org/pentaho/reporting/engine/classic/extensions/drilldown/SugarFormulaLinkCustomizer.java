@@ -17,33 +17,27 @@
 
 package org.pentaho.reporting.engine.classic.extensions.drilldown;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
-
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 
-public class SugarFormulaLinkCustomizer extends FormulaLinkCustomizer
-{
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
+
+public class SugarFormulaLinkCustomizer extends FormulaLinkCustomizer {
   private static final String PENTAHO_PATH = "::pentaho-path";
 
-  public SugarFormulaLinkCustomizer()
-  {
+  public SugarFormulaLinkCustomizer() {
   }
 
-  private String computePentahoPath(final ParameterEntry[] entries) throws EvaluationException
-  {
-    for (int i = 0; i < entries.length; i++)
-    {
-      final ParameterEntry parameterEntry = entries[i];
+  private String computePentahoPath( final ParameterEntry[] entries ) throws EvaluationException {
+    for ( int i = 0; i < entries.length; i++ ) {
+      final ParameterEntry parameterEntry = entries[ i ];
       final String parameterName = parameterEntry.getParameterName();
-      if ("::pentaho-path".equals(parameterName))
-      {
+      if ( "::pentaho-path".equals( parameterName ) ) {
         final Object o = parameterEntry.getParameterValue();
-        if (o != null)
-        {
-          return PentahoPathNormalizerFunction.normalizePath(String.valueOf(o));
+        if ( o != null ) {
+          return PentahoPathNormalizerFunction.normalizePath( String.valueOf( o ) );
         }
       }
     }
@@ -51,47 +45,40 @@ public class SugarFormulaLinkCustomizer extends FormulaLinkCustomizer
     return null;
   }
 
-  protected Map<String, Object> createParameterMap(final FormulaContext formulaContext,
-                                                   final String configIndicator,
-                                                   final String reportPath,
-                                                   final ParameterEntry[] entries) throws UnsupportedEncodingException, BeanException, EvaluationException
-  {
+  protected Map<String, Object> createParameterMap( final FormulaContext formulaContext,
+                                                    final String configIndicator,
+                                                    final String reportPath,
+                                                    final ParameterEntry[] entries )
+    throws UnsupportedEncodingException, BeanException, EvaluationException {
     final Map<String, Object> parameterMap =
-        super.createParameterMap(formulaContext, configIndicator, reportPath, entries);
-    parameterMap.put(PENTAHO_PATH, computePentahoPath(entries));
+      super.createParameterMap( formulaContext, configIndicator, reportPath, entries );
+    parameterMap.put( PENTAHO_PATH, computePentahoPath( entries ) );
     return parameterMap;
   }
 
-  public String format(final FormulaContext formulaContext,
-                       final String configIndicator,
-                       final String reportPath,
-                       final ParameterEntry[] entries) throws EvaluationException
-  {
-    return super.format(formulaContext, configIndicator, reportPath, entries);
+  public String format( final FormulaContext formulaContext,
+                        final String configIndicator,
+                        final String reportPath,
+                        final ParameterEntry[] entries ) throws EvaluationException {
+    return super.format( formulaContext, configIndicator, reportPath, entries );
   }
 
-  protected boolean isFiltered(final ParameterEntry entry)
-  {
-    if (PENTAHO_PATH.equals(entry.getParameterName()))
-    {
+  protected boolean isFiltered( final ParameterEntry entry ) {
+    if ( PENTAHO_PATH.equals( entry.getParameterName() ) ) {
       return true;
     }
-    if ("path".equals(entry.getParameterName()))
-    {
+    if ( "path".equals( entry.getParameterName() ) ) {
       return true;
     }
-    if ("name".equals(entry.getParameterName()))
-    {
+    if ( "name".equals( entry.getParameterName() ) ) {
       return true;
     }
-    if ("solution".equals(entry.getParameterName()))
-    {
+    if ( "solution".equals( entry.getParameterName() ) ) {
       return true;
     }
-    if ("action".equals(entry.getParameterName()))
-    {
+    if ( "action".equals( entry.getParameterName() ) ) {
       return true;
     }
-    return super.isFiltered(entry);
+    return super.isFiltered( entry );
   }
 }

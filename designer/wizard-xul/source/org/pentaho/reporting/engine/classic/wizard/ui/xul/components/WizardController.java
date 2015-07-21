@@ -20,8 +20,7 @@ package org.pentaho.reporting.engine.classic.wizard.ui.xul.components;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.ui.xul.binding.BindingFactory;
 
-public interface WizardController
-{
+public interface WizardController {
   public static final String ACTIVE_STEP_PROPERTY_NAME = "activeStep"; //$NON-NLS-1$
 
   public static final String STEP_COUNT_PROPERTY_NAME = "stepCount"; //$NON-NLS-1$
@@ -34,11 +33,11 @@ public interface WizardController
 
   public static final String PREVIEWABLE_PROPERTY_NAME = "previewable"; //$NON-NLS-1$
 
-  public WizardStep getStep(int step);
+  public WizardStep getStep( int step );
 
   public int getStepCount();
 
-  public void setActiveStep(int step);
+  public void setActiveStep( int step );
 
   public int getActiveStep();
 
@@ -52,9 +51,9 @@ public interface WizardController
 
   public boolean isCancelled();
 
-  public void setBindingFactory(BindingFactory factory);
+  public void setBindingFactory( BindingFactory factory );
 
   public BindingFactory getBindingFactory();
 
-  public void setDesignTimeContext(DesignTimeContext context);
+  public void setDesignTimeContext( DesignTimeContext context );
 }

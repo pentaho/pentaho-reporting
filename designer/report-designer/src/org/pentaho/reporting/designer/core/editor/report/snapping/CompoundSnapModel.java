@@ -17,41 +17,35 @@
 
 package org.pentaho.reporting.designer.core.editor.report.snapping;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+
+import java.util.ArrayList;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class CompoundSnapModel implements SnapPositionsModel
-{
+public class CompoundSnapModel implements SnapPositionsModel {
   private ArrayList<SnapPositionsModel> snapModels;
   private transient SnapPositionsModel[] snapModelsAsArray;
 
-  public CompoundSnapModel()
-  {
+  public CompoundSnapModel() {
     snapModels = new ArrayList<SnapPositionsModel>();
   }
 
-  public void add(final SnapPositionsModel model)
-  {
-    if (model == null)
-    {
+  public void add( final SnapPositionsModel model ) {
+    if ( model == null ) {
       throw new NullPointerException();
     }
-    snapModels.add(model);
+    snapModels.add( model );
   }
 
-  public void remove(final SnapPositionsModel model)
-  {
-    if (model == null)
-    {
+  public void remove( final SnapPositionsModel model ) {
+    if ( model == null ) {
       throw new NullPointerException();
     }
-    snapModels.remove(model);
+    snapModels.remove( model );
   }
 
   /**
@@ -60,24 +54,20 @@ public class CompoundSnapModel implements SnapPositionsModel
    * @param position
    * @return
    */
-  public long getNearestSnapPosition(final long position,
-                                     final InstanceID owner)
-  {
-    if (snapModelsAsArray == null)
-    {
-      snapModelsAsArray = snapModels.toArray(new SnapPositionsModel[snapModels.size()]);
+  public long getNearestSnapPosition( final long position,
+                                      final InstanceID owner ) {
+    if ( snapModelsAsArray == null ) {
+      snapModelsAsArray = snapModels.toArray( new SnapPositionsModel[ snapModels.size() ] );
     }
 
     long retval = position;
     long delta = Long.MAX_VALUE;
 
-    for (int i = 0; i < snapModelsAsArray.length; i++)
-    {
-      final SnapPositionsModel positionsModel = snapModelsAsArray[i];
-      final long snapPos = positionsModel.getNearestSnapPosition(position, owner);
-      final long newDelta = Math.abs(position - snapPos);
-      if (newDelta < delta)
-      {
+    for ( int i = 0; i < snapModelsAsArray.length; i++ ) {
+      final SnapPositionsModel positionsModel = snapModelsAsArray[ i ];
+      final long snapPos = positionsModel.getNearestSnapPosition( position, owner );
+      final long newDelta = Math.abs( position - snapPos );
+      if ( newDelta < delta ) {
         retval = snapPos;
         delta = newDelta;
       }

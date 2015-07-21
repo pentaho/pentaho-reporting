@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.wizard.model;
 
-public class DefaultWatermarkDefinition implements WatermarkDefinition
-{
+public class DefaultWatermarkDefinition implements WatermarkDefinition {
   private String source;
   private Length x;
   private Length y;
@@ -28,93 +27,75 @@ public class DefaultWatermarkDefinition implements WatermarkDefinition
   private Boolean scale;
   private boolean visible;
 
-  public DefaultWatermarkDefinition()
-  {
+  public DefaultWatermarkDefinition() {
     visible = true;
   }
 
-  public String getSource()
-  {
+  public String getSource() {
     return source;
   }
 
-  public void setSource(final String source)
-  {
+  public void setSource( final String source ) {
     this.source = source;
   }
 
-  public Length getX()
-  {
+  public Length getX() {
     return x;
   }
 
-  public void setX(final Length x)
-  {
+  public void setX( final Length x ) {
     this.x = x;
   }
 
-  public Length getY()
-  {
+  public Length getY() {
     return y;
   }
 
-  public void setY(final Length y)
-  {
+  public void setY( final Length y ) {
     this.y = y;
   }
 
-  public Length getWidth()
-  {
+  public Length getWidth() {
     return width;
   }
 
-  public void setWidth(final Length width)
-  {
+  public void setWidth( final Length width ) {
     this.width = width;
   }
 
-  public Length getHeight()
-  {
+  public Length getHeight() {
     return height;
   }
 
-  public void setHeight(final Length height)
-  {
+  public void setHeight( final Length height ) {
     this.height = height;
   }
 
-  public Boolean getKeepAspectRatio()
-  {
+  public Boolean getKeepAspectRatio() {
     return keepAspectRatio;
   }
 
-  public void setKeepAspectRatio(final Boolean keepAspectRatio)
-  {
+  public void setKeepAspectRatio( final Boolean keepAspectRatio ) {
     this.keepAspectRatio = keepAspectRatio;
   }
 
-  public Boolean getScale()
-  {
+  public Boolean getScale() {
     return scale;
   }
 
-  public void setScale(final Boolean scale)
-  {
+  public void setScale( final Boolean scale ) {
     this.scale = scale;
   }
 
-  public boolean isVisible()
-  {
+  public boolean isVisible() {
     return visible;
   }
 
-  public void setVisible(final boolean visible)
-  {
+  public void setVisible( final boolean visible ) {
     this.visible = visible;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 }

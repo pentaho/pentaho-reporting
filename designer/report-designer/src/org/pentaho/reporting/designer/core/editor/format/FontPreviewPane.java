@@ -17,55 +17,46 @@
 
 package org.pentaho.reporting.designer.core.editor.format;
 
-import java.awt.Color;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class FontPreviewPane extends JPanel
-{
+public class FontPreviewPane extends JPanel {
   private boolean strikeThrough;
   private boolean underline;
   private boolean aliased;
 
-  public FontPreviewPane()
-  {
-    setBorder(BorderFactory.createLineBorder(Color.BLACK));
+  public FontPreviewPane() {
+    setBorder( BorderFactory.createLineBorder( Color.BLACK ) );
   }
 
-  public boolean isStrikeThrough()
-  {
+  public boolean isStrikeThrough() {
     return strikeThrough;
   }
 
-  public void setStrikeThrough(final boolean strikeThrough)
-  {
+  public void setStrikeThrough( final boolean strikeThrough ) {
     this.strikeThrough = strikeThrough;
     repaint();
   }
 
-  public boolean isUnderline()
-  {
+  public boolean isUnderline() {
     return underline;
   }
 
-  public void setUnderline(final boolean underline)
-  {
+  public void setUnderline( final boolean underline ) {
     this.underline = underline;
     repaint();
   }
 
-  public boolean isAliased()
-  {
+  public boolean isAliased() {
     return aliased;
   }
 
-  public void setAliased(final boolean aliased)
-  {
+  public void setAliased( final boolean aliased ) {
     this.aliased = aliased;
     repaint();
   }

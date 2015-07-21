@@ -17,58 +17,52 @@
 
 package generators;
 
-import java.util.TreeMap;
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 
-public class ElementMetaGenerator
-{
-  public static void main(String[] args)
-  {
+import java.util.Iterator;
+import java.util.TreeMap;
+
+public class ElementMetaGenerator {
+  public static void main( String[] args ) {
     ClassicEngineBoot.getInstance().start();
     final TreeMap allStyles = new TreeMap();
     final ElementMetaData[] allTypes = ElementTypeRegistry.getInstance().getAllElementTypes();
-    for (int i = 0; i < allTypes.length; i++)
-    {
-      final ElementMetaData type = allTypes[i];
+    for ( int i = 0; i < allTypes.length; i++ ) {
+      final ElementMetaData type = allTypes[ i ];
       final String prefix = "element." + type.getName();
-      System.out.println(prefix + ".display-name=" + type.getName());
-      System.out.println(prefix + ".description="+ type.getName());
-      System.out.println(prefix + ".grouping=Group");
+      System.out.println( prefix + ".display-name=" + type.getName() );
+      System.out.println( prefix + ".description=" + type.getName() );
+      System.out.println( prefix + ".grouping=Group" );
 
       final AttributeMetaData[] attributes = type.getAttributeDescriptions();
-      for (int j = 0; j < attributes.length; j++)
-      {
-        final AttributeMetaData attribute = attributes[j];
-        final String attrNsPrefix = ElementTypeRegistry.getInstance().getNamespacePrefix(attribute.getNameSpace());
+      for ( int j = 0; j < attributes.length; j++ ) {
+        final AttributeMetaData attribute = attributes[ j ];
+        final String attrNsPrefix = ElementTypeRegistry.getInstance().getNamespacePrefix( attribute.getNameSpace() );
         final String attrPrefix = "element." + type.getName() + ".attribute." +
-            attrNsPrefix + "." + attribute.getName();
-        System.out.println(attrPrefix + ".display-name=" + attribute.getName());
-        System.out.println(attrPrefix + ".description=" + attribute.getName());
-        System.out.println(attrPrefix + ".grouping=" + attrNsPrefix);
+          attrNsPrefix + "." + attribute.getName();
+        System.out.println( attrPrefix + ".display-name=" + attribute.getName() );
+        System.out.println( attrPrefix + ".description=" + attribute.getName() );
+        System.out.println( attrPrefix + ".grouping=" + attrNsPrefix );
       }
 
       final StyleMetaData[] styles = type.getStyleDescriptions();
-      for (int j = 0; j < styles.length; j++)
-      {
-        final StyleMetaData style = styles[j];
-        allStyles.put(style.getName(), style);
+      for ( int j = 0; j < styles.length; j++ ) {
+        final StyleMetaData style = styles[ j ];
+        allStyles.put( style.getName(), style );
       }
     }
 
     final Iterator styleIt = allStyles.values().iterator();
-    while (styleIt.hasNext())
-    {
+    while ( styleIt.hasNext() ) {
       StyleMetaData style = (StyleMetaData) styleIt.next();
       final String attrPrefix = "style." + style.getName();
-      System.out.println(attrPrefix + ".display-name=" + style.getName());
-      System.out.println(attrPrefix + ".description=");
-      System.out.println(attrPrefix + ".grouping=Group");
+      System.out.println( attrPrefix + ".display-name=" + style.getName() );
+      System.out.println( attrPrefix + ".description=" );
+      System.out.println( attrPrefix + ".grouping=Group" );
     }
   }
 }

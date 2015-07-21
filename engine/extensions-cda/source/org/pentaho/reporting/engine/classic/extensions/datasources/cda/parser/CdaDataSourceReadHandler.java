@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.cda.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaDataFactory;
@@ -29,14 +27,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class CdaDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler
-{
+import java.util.ArrayList;
+
+public class CdaDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler {
   private ConfigReadHandler configReadHandler;
   private ArrayList<XmlReadHandler> queries;
   private CdaDataFactory dataFactory;
 
-  public CdaDataSourceReadHandler()
-  {
+  public CdaDataSourceReadHandler() {
     queries = new ArrayList<XmlReadHandler>();
   }
 
@@ -49,24 +47,20 @@ public class CdaDataSourceReadHandler extends AbstractXmlReadHandler implements 
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("config".equals(tagName))
-    {
+    if ( "config".equals( tagName ) ) {
       configReadHandler = new ConfigReadHandler();
       return configReadHandler;
     }
 
-    if ("query".equals(tagName))
-    {
+    if ( "query".equals( tagName ) ) {
       final QueryReadHandler readHandler = new QueryReadHandler();
-      queries.add(readHandler);
+      queries.add( readHandler );
       return readHandler;
     }
 
@@ -78,30 +72,27 @@ public class CdaDataSourceReadHandler extends AbstractXmlReadHandler implements 
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final CdaDataFactory srdf = new CdaDataFactory();
-    if (configReadHandler == null)
-    {
-      throw new ParseException("Required element 'config' is missing.", getLocator());
+    if ( configReadHandler == null ) {
+      throw new ParseException( "Required element 'config' is missing.", getLocator() );
     }
 
-    srdf.setBaseUrl(configReadHandler.getBaseUrl());
-    srdf.setBaseUrlField(configReadHandler.getBaseUrlField());
-    srdf.setFile(configReadHandler.getFile());
-    srdf.setPath(configReadHandler.getPath());
-    srdf.setSolution(configReadHandler.getSolution());
-    srdf.setUsername(configReadHandler.getUsername());
-    srdf.setPassword(configReadHandler.getPassword());
-    srdf.setUseLocalCall(configReadHandler.isUseLocalCall());
-    srdf.setSugarMode(configReadHandler.isSugarMode());
+    srdf.setBaseUrl( configReadHandler.getBaseUrl() );
+    srdf.setBaseUrlField( configReadHandler.getBaseUrlField() );
+    srdf.setFile( configReadHandler.getFile() );
+    srdf.setPath( configReadHandler.getPath() );
+    srdf.setSolution( configReadHandler.getSolution() );
+    srdf.setUsername( configReadHandler.getUsername() );
+    srdf.setPassword( configReadHandler.getPassword() );
+    srdf.setUseLocalCall( configReadHandler.isUseLocalCall() );
+    srdf.setSugarMode( configReadHandler.isSugarMode() );
 
-    for (int i = 0; i < queries.size(); i++)
-    {
-      final QueryReadHandler handler = (QueryReadHandler) queries.get(i);
-      final CdaQueryEntry cdaqueryentry = new CdaQueryEntry(handler.getQueryName(),handler.getQueryId());
-      cdaqueryentry.setParameters(handler.getParameters());
-      srdf.setQueryEntry(handler.getQueryName(), cdaqueryentry);
+    for ( int i = 0; i < queries.size(); i++ ) {
+      final QueryReadHandler handler = (QueryReadHandler) queries.get( i );
+      final CdaQueryEntry cdaqueryentry = new CdaQueryEntry( handler.getQueryName(), handler.getQueryId() );
+      cdaqueryentry.setParameters( handler.getParameters() );
+      srdf.setQueryEntry( handler.getQueryName(), cdaqueryentry );
     }
     dataFactory = srdf;
   }
@@ -112,13 +103,11 @@ public class CdaDataSourceReadHandler extends AbstractXmlReadHandler implements 
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

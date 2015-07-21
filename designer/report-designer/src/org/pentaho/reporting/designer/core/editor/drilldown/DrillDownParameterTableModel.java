@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.drilldown;
 
-import java.beans.PropertyEditor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import javax.swing.table.AbstractTableModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownParameter;
@@ -36,86 +28,78 @@ import org.pentaho.reporting.designer.core.util.table.TableStyle;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
+import javax.swing.table.AbstractTableModel;
+import java.beans.PropertyEditor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+
 public class DrillDownParameterTableModel extends AbstractTableModel
-    implements ElementMetaDataTableModel, GroupingModel
-{
-  private static class PlainParameterComparator implements Comparator
-  {
-    public int compare(final Object o1, final Object o2)
-    {
+  implements ElementMetaDataTableModel, GroupingModel {
+  private static class PlainParameterComparator implements Comparator {
+    public int compare( final Object o1, final Object o2 ) {
       final DrillDownParameter parameter1 = (DrillDownParameter) o1;
       final DrillDownParameter parameter2 = (DrillDownParameter) o2;
-      if (parameter1 == null && parameter2 == null)
-      {
+      if ( parameter1 == null && parameter2 == null ) {
         return 0;
       }
-      if (parameter1 == null)
-      {
+      if ( parameter1 == null ) {
         return -1;
       }
-      if (parameter2 == null)
-      {
+      if ( parameter2 == null ) {
         return 1;
       }
 
-      if (parameter1.getPosition() < parameter2.getPosition())
-      {
+      if ( parameter1.getPosition() < parameter2.getPosition() ) {
         return -1;
       }
-      if (parameter1.getPosition() > parameter2.getPosition())
-      {
+      if ( parameter1.getPosition() > parameter2.getPosition() ) {
         return 1;
       }
-      return parameter1.getName().compareTo(parameter2.getName());
+      return parameter1.getName().compareTo( parameter2.getName() );
     }
   }
 
-  private static class GroupedParameterComparator implements Comparator
-  {
-    public int compare(final Object o1, final Object o2)
-    {
+  private static class GroupedParameterComparator implements Comparator {
+    public int compare( final Object o1, final Object o2 ) {
       final DrillDownParameter parameter1 = (DrillDownParameter) o1;
       final DrillDownParameter parameter2 = (DrillDownParameter) o2;
-      if (parameter1 == null && parameter2 == null)
-      {
+      if ( parameter1 == null && parameter2 == null ) {
         return 0;
       }
-      if (parameter1 == null)
-      {
+      if ( parameter1 == null ) {
         return -1;
       }
-      if (parameter2 == null)
-      {
+      if ( parameter2 == null ) {
         return 1;
       }
       final DrillDownParameter.Type type1 = parameter1.getType();
       final DrillDownParameter.Type type2 = parameter2.getType();
-      final int compareType = type1.compareTo(type2);
-      if (compareType != 0)
-      {
+      final int compareType = type1.compareTo( type2 );
+      if ( compareType != 0 ) {
         return compareType;
       }
-      
-      if (parameter1.getPosition() < parameter2.getPosition())
-      {
+
+      if ( parameter1.getPosition() < parameter2.getPosition() ) {
         return -1;
       }
-      if (parameter1.getPosition() > parameter2.getPosition())
-      {
+      if ( parameter1.getPosition() > parameter2.getPosition() ) {
         return 1;
       }
-      return parameter1.getName().compareTo(parameter2.getName());
+      return parameter1.getName().compareTo( parameter2.getName() );
     }
   }
 
-  private static final Log logger = LogFactory.getLog(DrillDownParameterTableModel.class);
+  private static final Log logger = LogFactory.getLog( DrillDownParameterTableModel.class );
 
-  private static final DrillDownParameter[] EMPTY_ELEMENTS = new DrillDownParameter[0];
-  private static final GroupingHeader[] EMPTY_GROUPINGS = new GroupingHeader[0];
+  private static final DrillDownParameter[] EMPTY_ELEMENTS = new DrillDownParameter[ 0 ];
+  private static final GroupingHeader[] EMPTY_GROUPINGS = new GroupingHeader[ 0 ];
 
   private HashSet filteredParameterNames;
   private String[] filteredParameterNamesArray;
-  
+
   private GroupingHeader[] groupings;
   private TableStyle tableStyle;
   private DrillDownParameter[] elements;
@@ -123,177 +107,144 @@ public class DrillDownParameterTableModel extends AbstractTableModel
   private String[] extraFields;
 
   /**
-   * Constructs a default <code>DefaultTableModel</code>
-   * which is a table of zero columns and zero rows.
+   * Constructs a default <code>DefaultTableModel</code> which is a table of zero columns and zero rows.
    */
-  public DrillDownParameterTableModel()
-  {
-    this.filteredParameterNamesArray = new String[0];
+  public DrillDownParameterTableModel() {
+    this.filteredParameterNamesArray = new String[ 0 ];
     this.filteredParameterNames = new HashSet();
     this.tableStyle = TableStyle.GROUPED;
     this.elements = EMPTY_ELEMENTS;
     this.groupings = EMPTY_GROUPINGS;
     this.groupedElements = EMPTY_ELEMENTS;
-    this.extraFields = new String[0];
+    this.extraFields = new String[ 0 ];
   }
 
-  public String[] getExtraFields()
-  {
+  public String[] getExtraFields() {
     return extraFields.clone();
   }
 
-  public void setExtraFields(final String[] extraFields)
-  {
+  public void setExtraFields( final String[] extraFields ) {
     this.extraFields = extraFields.clone();
   }
 
   /**
-   * Returns the number of rows in the model. A
-   * <code>JTable</code> uses this method to determine how many rows it
-   * should display.  This method should be quick, as it
-   * is called frequently during rendering.
+   * Returns the number of rows in the model. A <code>JTable</code> uses this method to determine how many rows it
+   * should display.  This method should be quick, as it is called frequently during rendering.
    *
    * @return the number of rows in the model
    * @see #getColumnCount
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return groupedElements.length;
   }
 
   /**
-   * Returns the number of columns in the model. A
-   * <code>JTable</code> uses this method to determine how many columns it
+   * Returns the number of columns in the model. A <code>JTable</code> uses this method to determine how many columns it
    * should create and display by default.
    *
    * @return the number of columns in the model
    * @see #getRowCount
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return 2;
   }
 
   /**
-   * Returns a default name for the column using spreadsheet conventions:
-   * A, B, C, ... Z, AA, AB, etc.  If <code>column</code> cannot be found,
-   * returns an empty string.
+   * Returns a default name for the column using spreadsheet conventions: A, B, C, ... Z, AA, AB, etc.  If
+   * <code>column</code> cannot be found, returns an empty string.
    *
    * @param column the column being queried
    * @return a string containing the default name of <code>column</code>
    */
-  public String getColumnName(final int column)
-  {
-    if (column == 0)
-    {
+  public String getColumnName( final int column ) {
+    if ( column == 0 ) {
       return "Name";
     }
     return "Value";
   }
 
 
-  public TableStyle getTableStyle()
-  {
+  public TableStyle getTableStyle() {
     return tableStyle;
   }
 
-  public void setTableStyle(final TableStyle tableStyle)
-  {
-    if (tableStyle == null)
-    {
+  public void setTableStyle( final TableStyle tableStyle ) {
+    if ( tableStyle == null ) {
       throw new NullPointerException();
     }
     this.tableStyle = tableStyle;
-    updateData(getData());
+    updateData( getData() );
   }
 
-  private DrillDownParameter[] filter(final DrillDownParameter[] elements)
-  {
-    final ArrayList<DrillDownParameter> retval = new ArrayList<DrillDownParameter>(elements.length);
-    for (int i = 0; i < elements.length; i++)
-    {
-      final DrillDownParameter element = elements[i];
-      if (filteredParameterNames.contains(element.getName()))
-      {
+  private DrillDownParameter[] filter( final DrillDownParameter[] elements ) {
+    final ArrayList<DrillDownParameter> retval = new ArrayList<DrillDownParameter>( elements.length );
+    for ( int i = 0; i < elements.length; i++ ) {
+      final DrillDownParameter element = elements[ i ];
+      if ( filteredParameterNames.contains( element.getName() ) ) {
         continue;
       }
-      retval.add(element);
+      retval.add( element );
     }
-    return retval.toArray(new DrillDownParameter[retval.size()]);
+    return retval.toArray( new DrillDownParameter[ retval.size() ] );
   }
 
-  protected void updateData(final DrillDownParameter[] elements)
-  {
+  protected void updateData( final DrillDownParameter[] elements ) {
     this.elements = elements.clone();
 
-    final DrillDownParameter[] metaData = filter(elements);
-    if (tableStyle == TableStyle.ASCENDING)
-    {
-      Arrays.sort(metaData, new PlainParameterComparator());
-      this.groupings = new GroupingHeader[metaData.length];
+    final DrillDownParameter[] metaData = filter( elements );
+    if ( tableStyle == TableStyle.ASCENDING ) {
+      Arrays.sort( metaData, new PlainParameterComparator() );
+      this.groupings = new GroupingHeader[ metaData.length ];
       this.groupedElements = metaData;
-    }
-    else if (tableStyle == TableStyle.DESCENDING)
-    {
-      Arrays.sort(metaData, Collections.reverseOrder(new PlainParameterComparator()));
-      this.groupings = new GroupingHeader[metaData.length];
+    } else if ( tableStyle == TableStyle.DESCENDING ) {
+      Arrays.sort( metaData, Collections.reverseOrder( new PlainParameterComparator() ) );
+      this.groupings = new GroupingHeader[ metaData.length ];
       this.groupedElements = metaData;
-    }
-    else
-    {
-      Arrays.sort(metaData, new GroupedParameterComparator());
+    } else {
+      Arrays.sort( metaData, new GroupedParameterComparator() );
 
       int groupCount = 0;
-      if (metaData.length > 0)
-      {
+      if ( metaData.length > 0 ) {
         DrillDownParameter.Type oldValue = null;
 
-        for (int i = 0; i < metaData.length; i++)
-        {
-          if (groupCount == 0)
-          {
+        for ( int i = 0; i < metaData.length; i++ ) {
+          if ( groupCount == 0 ) {
             groupCount = 1;
-            final DrillDownParameter firstdata = metaData[i];
+            final DrillDownParameter firstdata = metaData[ i ];
             oldValue = firstdata.getType();
             continue;
           }
 
-          final DrillDownParameter data = metaData[i];
+          final DrillDownParameter data = metaData[ i ];
           final DrillDownParameter.Type grouping = data.getType();
-          if ((ObjectUtilities.equal(oldValue, grouping)) == false)
-          {
+          if ( ( ObjectUtilities.equal( oldValue, grouping ) ) == false ) {
             oldValue = grouping;
             groupCount += 1;
           }
         }
       }
 
-      final DrillDownParameter[] groupedMetaData = new DrillDownParameter[metaData.length + groupCount];
-      this.groupings = new GroupingHeader[groupedMetaData.length];
+      final DrillDownParameter[] groupedMetaData = new DrillDownParameter[ metaData.length + groupCount ];
+      this.groupings = new GroupingHeader[ groupedMetaData.length ];
       int targetIdx = 0;
       GroupingHeader group = null;
-      for (int sourceIdx = 0; sourceIdx < metaData.length; sourceIdx++)
-      {
-        final DrillDownParameter data = metaData[sourceIdx];
-        if (sourceIdx == 0)
-        {
-          group = new GroupingHeader(data.getType().toString());
-          groupings[targetIdx] = group;
+      for ( int sourceIdx = 0; sourceIdx < metaData.length; sourceIdx++ ) {
+        final DrillDownParameter data = metaData[ sourceIdx ];
+        if ( sourceIdx == 0 ) {
+          group = new GroupingHeader( data.getType().toString() );
+          groupings[ targetIdx ] = group;
           targetIdx += 1;
-        }
-        else
-        {
+        } else {
           final String newgroup = data.getType().toString();
-          if ((ObjectUtilities.equal(newgroup, group.getHeaderText())) == false)
-          {
-            group = new GroupingHeader(newgroup);
-            groupings[targetIdx] = group;
+          if ( ( ObjectUtilities.equal( newgroup, group.getHeaderText() ) ) == false ) {
+            group = new GroupingHeader( newgroup );
+            groupings[ targetIdx ] = group;
             targetIdx += 1;
           }
         }
 
-        groupings[targetIdx] = group;
-        groupedMetaData[targetIdx] = data;
+        groupings[ targetIdx ] = group;
+        groupedMetaData[ targetIdx ] = data;
         targetIdx += 1;
       }
       this.groupedElements = groupedMetaData;
@@ -303,25 +254,21 @@ public class DrillDownParameterTableModel extends AbstractTableModel
   }
 
   /**
-   * Returns the value for the cell at <code>columnIndex</code> and
-   * <code>rowIndex</code>.
+   * Returns the value for the cell at <code>columnIndex</code> and <code>rowIndex</code>.
    *
    * @param rowIndex    the row whose value is to be queried
    * @param columnIndex the column whose value is to be queried
    * @return the value Object at the specified cell
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final DrillDownParameter metaData = groupedElements[rowIndex];
-    if (metaData == null)
-    {
-      return groupings[rowIndex];
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final DrillDownParameter metaData = groupedElements[ rowIndex ];
+    if ( metaData == null ) {
+      return groupings[ rowIndex ];
     }
 
-    switch (columnIndex)
-    {
+    switch( columnIndex ) {
       case 0:
-        return new GroupedName(metaData, metaData.getName(), metaData.getType().toString());
+        return new GroupedName( metaData, metaData.getName(), metaData.getType().toString() );
       case 1:
         return metaData.getFormulaFragment();
       default:
@@ -336,16 +283,13 @@ public class DrillDownParameterTableModel extends AbstractTableModel
    * @param columnIndex the column being queried
    * @return false
    */
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
-    final DrillDownParameter metaData = groupedElements[rowIndex];
-    if (metaData == null)
-    {
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
+    final DrillDownParameter metaData = groupedElements[ rowIndex ];
+    if ( metaData == null ) {
       return false;
     }
 
-    switch (columnIndex)
-    {
+    switch( columnIndex ) {
       case 0:
         return metaData.getType() == DrillDownParameter.Type.MANUAL;
       case 1:
@@ -356,33 +300,25 @@ public class DrillDownParameterTableModel extends AbstractTableModel
   }
 
 
-  public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-  {
-    final DrillDownParameter metaData = groupedElements[rowIndex];
-    if (metaData == null)
-    {
+  public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+    final DrillDownParameter metaData = groupedElements[ rowIndex ];
+    if ( metaData == null ) {
       return;
     }
 
-    switch (columnIndex)
-    {
+    switch( columnIndex ) {
       case 0:
-        if (aValue instanceof GroupedName)
-        {
+        if ( aValue instanceof GroupedName ) {
           final GroupedName name = (GroupedName) aValue;
-          metaData.setName(name.getName());
+          metaData.setName( name.getName() );
           fireTableDataChanged();
         }
         return;
-      case 1:
-      {
-        if (aValue == null)
-        {
-          metaData.setFormulaFragment(null);
-        }
-        else
-        {
-          metaData.setFormulaFragment(String.valueOf(aValue));
+      case 1: {
+        if ( aValue == null ) {
+          metaData.setFormulaFragment( null );
+        } else {
+          metaData.setFormulaFragment( String.valueOf( aValue ) );
         }
         fireTableDataChanged();
         break;
@@ -393,95 +329,77 @@ public class DrillDownParameterTableModel extends AbstractTableModel
 
   }
 
-  public Class getClassForCell(final int row, final int column)
-  {
-    final DrillDownParameter metaData = groupedElements[row];
-    if (metaData == null)
-    {
+  public Class getClassForCell( final int row, final int column ) {
+    final DrillDownParameter metaData = groupedElements[ row ];
+    if ( metaData == null ) {
       return GroupingHeader.class;
     }
 
-    if (column == 0)
-    {
+    if ( column == 0 ) {
       return GroupedName.class;
     }
 
     return String.class;
   }
 
-  public PropertyEditor getEditorForCell(final int row, final int column)
-  {
+  public PropertyEditor getEditorForCell( final int row, final int column ) {
     return null;
   }
 
-  public String getValueRole(final int row, final int column)
-  {
-    if (column == 0)
-    {
+  public String getValueRole( final int row, final int column ) {
+    if ( column == 0 ) {
       return AttributeMetaData.VALUEROLE_VALUE; // NON-NLS
     }
     return AttributeMetaData.VALUEROLE_FORMULA;// NON-NLS
   }
 
-  public String[] getExtraFields(final int row, final int column)
-  {
+  public String[] getExtraFields( final int row, final int column ) {
     return extraFields;
   }
 
-  public GroupingHeader getGroupHeader(final int index)
-  {
-    return groupings[index];
+  public GroupingHeader getGroupHeader( final int index ) {
+    return groupings[ index ];
   }
 
-  public boolean isHeaderRow(final int index)
-  {
-    return groupedElements[index] == null;
+  public boolean isHeaderRow( final int index ) {
+    return groupedElements[ index ] == null;
   }
 
-  public String[] getFilteredParameterNames()
-  {
+  public String[] getFilteredParameterNames() {
     return filteredParameterNamesArray.clone();
   }
 
-  public void setFilteredParameterNames(final String[] names)
-  {
+  public void setFilteredParameterNames( final String[] names ) {
     this.filteredParameterNamesArray = names.clone();
     this.filteredParameterNames.clear();
-    this.filteredParameterNames.addAll(Arrays.asList(names));
+    this.filteredParameterNames.addAll( Arrays.asList( names ) );
 
-    updateData(elements);
+    updateData( elements );
   }
 
-  public void setData(final DrillDownParameter[] parameter)
-  {
-    updateData(parameter);
+  public void setData( final DrillDownParameter[] parameter ) {
+    updateData( parameter );
   }
 
-  public DrillDownParameter[] getData()
-  {
+  public DrillDownParameter[] getData() {
     return elements.clone();
   }
 
-  public DrillDownParameter[] getGroupedData()
-  {
+  public DrillDownParameter[] getGroupedData() {
     return groupedElements.clone();
   }
 
-  public DrillDownParameter.Type getParameterType(final int row)
-  {
-    final DrillDownParameter downParameter = groupedElements[row];
-    if (downParameter != null)
-    {
+  public DrillDownParameter.Type getParameterType( final int row ) {
+    final DrillDownParameter downParameter = groupedElements[ row ];
+    if ( downParameter != null ) {
       return downParameter.getType();
     }
     return null;
   }
 
-  public boolean isPreferred(final int row)
-  {
-    final DrillDownParameter downParameter = groupedElements[row];
-    if (downParameter != null)
-    {
+  public boolean isPreferred( final int row ) {
+    final DrillDownParameter downParameter = groupedElements[ row ];
+    if ( downParameter != null ) {
       return downParameter.isPreferred();
     }
     return true;

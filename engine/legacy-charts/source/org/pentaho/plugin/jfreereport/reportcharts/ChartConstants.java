@@ -17,8 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Stroke;
-
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Hour;
 import org.jfree.data.time.Millisecond;
@@ -28,19 +26,19 @@ import org.jfree.data.time.Quarter;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.Week;
 import org.jfree.data.time.Year;
-import org.pentaho.reporting.engine.classic.core.util.StrokeUtility;
 import org.jfree.util.Log;
+import org.pentaho.reporting.engine.classic.core.util.StrokeUtility;
+
+import java.awt.*;
 
 /**
- * This class is a monolithic mess that was a left over of the chart-component. Therefore it must not be used anymore.
- * A utility method that collects properties and methods which are used in only one class is a sign of bad design.
+ * This class is a monolithic mess that was a left over of the chart-component. Therefore it must not be used anymore. A
+ * utility method that collects properties and methods which are used in only one class is a sign of bad design.
  *
  * @deprecated Do not use this class, do not extend this class. This thing will be removed!
  */
-public final class ChartConstants
-{
-  private ChartConstants()
-  {
+public final class ChartConstants {
+  private ChartConstants() {
   }
 
   public static final String DIAL_CHART_STR = "DialChart"; //$NON-NLS-1$
@@ -148,13 +146,11 @@ public final class ChartConstants
    * @param type int type for chart
    * @return String representing the chart
    */
-  public static String getChartTypeName(final int type)
-  {
+  public static String getChartTypeName( final int type ) {
 
     String rtn = ""; //$NON-NLS-1$
 
-    switch (type)
-    {
+    switch( type ) {
       case PIE_CHART_TYPE:
         rtn = PIE_CHART_STR;
         break;
@@ -197,39 +193,23 @@ public final class ChartConstants
     return rtn;
   }
 
-  public static Class getTimePeriodClass(final String timePeriodStr)
-  {
+  public static Class getTimePeriodClass( final String timePeriodStr ) {
     Class retClass = Millisecond.class;
-    if (timePeriodStr.equalsIgnoreCase(SECOND_PERIOD_TYPE_STR))
-    {
+    if ( timePeriodStr.equalsIgnoreCase( SECOND_PERIOD_TYPE_STR ) ) {
       retClass = Second.class;
-    }
-    else if (timePeriodStr.equalsIgnoreCase(MINUTE_PERIOD_TYPE_STR))
-    {
+    } else if ( timePeriodStr.equalsIgnoreCase( MINUTE_PERIOD_TYPE_STR ) ) {
       retClass = Minute.class;
-    }
-    else if (timePeriodStr.equalsIgnoreCase(HOUR_PERIOD_TYPE_STR))
-    {
+    } else if ( timePeriodStr.equalsIgnoreCase( HOUR_PERIOD_TYPE_STR ) ) {
       retClass = Hour.class;
-    }
-    else if (timePeriodStr.equalsIgnoreCase(DAY_PERIOD_TYPE_STR))
-    {
+    } else if ( timePeriodStr.equalsIgnoreCase( DAY_PERIOD_TYPE_STR ) ) {
       retClass = Day.class;
-    }
-    else if (timePeriodStr.equalsIgnoreCase(WEEK_PERIOD_TYPE_STR))
-    {
+    } else if ( timePeriodStr.equalsIgnoreCase( WEEK_PERIOD_TYPE_STR ) ) {
       retClass = Week.class;
-    }
-    else if (timePeriodStr.equalsIgnoreCase(MONTH_PERIOD_TYPE_STR))
-    {
+    } else if ( timePeriodStr.equalsIgnoreCase( MONTH_PERIOD_TYPE_STR ) ) {
       retClass = Month.class;
-    }
-    else if (timePeriodStr.equalsIgnoreCase(QUARTER_PERIOD_TYPE_STR))
-    {
+    } else if ( timePeriodStr.equalsIgnoreCase( QUARTER_PERIOD_TYPE_STR ) ) {
       retClass = Quarter.class;
-    }
-    else if (timePeriodStr.equalsIgnoreCase(YEAR_PERIOD_TYPE_STR))
-    {
+    } else if ( timePeriodStr.equalsIgnoreCase( YEAR_PERIOD_TYPE_STR ) ) {
       retClass = Year.class;
     }
     return retClass;
@@ -238,45 +218,31 @@ public final class ChartConstants
   /**
    * @return java.awt.Stroke for JFreeChart renderer to draw lines
    */
-  public static Stroke translateLineStyle(float lineWidth, final String lineStyle)
-  {
+  public static Stroke translateLineStyle( float lineWidth, final String lineStyle ) {
     // Negative linewidths not allowed, reset to default.
-    if (lineWidth < 0)
-    {
-      Log.error(("LineChartExpression.ERROR_0001_INVALID_LINE_WIDTH")); //$NON-NLS-1$
+    if ( lineWidth < 0 ) {
+      Log.error( ( "LineChartExpression.ERROR_0001_INVALID_LINE_WIDTH" ) ); //$NON-NLS-1$
       lineWidth = 1.0f;
     }
 
     final int strokeType;
-    if (LINE_STYLE_DASH_STR.equals(lineStyle))
-    {
+    if ( LINE_STYLE_DASH_STR.equals( lineStyle ) ) {
       strokeType = StrokeUtility.STROKE_DASHED;
-    }
-    else if (LINE_STYLE_DOT_STR.equals(lineStyle))
-    {
+    } else if ( LINE_STYLE_DOT_STR.equals( lineStyle ) ) {
       strokeType = StrokeUtility.STROKE_DOTTED;
-    }
-    else if (LINE_STYLE_DASHDOT_STR.equals(lineStyle))
-    {
+    } else if ( LINE_STYLE_DASHDOT_STR.equals( lineStyle ) ) {
       strokeType = StrokeUtility.STROKE_DOT_DASH;
-    }
-    else if (LINE_STYLE_DASHDOTDOT_STR.equals(lineStyle))
-    {
+    } else if ( LINE_STYLE_DASHDOTDOT_STR.equals( lineStyle ) ) {
       strokeType = StrokeUtility.STROKE_DOT_DOT_DASH;
-    }
-    else
-    {
-      if (lineWidth == 0)
-      {
+    } else {
+      if ( lineWidth == 0 ) {
         strokeType = StrokeUtility.STROKE_NONE;
-      }
-      else
-      {
+      } else {
         strokeType = StrokeUtility.STROKE_SOLID;
       }
     }
 
-    return StrokeUtility.createStroke(strokeType, lineWidth);
+    return StrokeUtility.createStroke( strokeType, lineWidth );
   }
 
 }

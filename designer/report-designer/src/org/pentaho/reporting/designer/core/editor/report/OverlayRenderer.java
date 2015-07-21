@@ -17,22 +17,21 @@
 
 package org.pentaho.reporting.designer.core.editor.report;
 
-import java.awt.Graphics2D;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
-import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-
 /**
- * Overlay renderers draw additional information on the canvas. This drawing happens after the complete
- * logical page has been rendered and always happens on the natural zoom level (where one point equals one
- * pixel). 
+ * Overlay renderers draw additional information on the canvas. This drawing happens after the complete logical page has
+ * been rendered and always happens on the natural zoom level (where one point equals one pixel).
  *
  * @author Thomas Morgner.
  */
-public interface OverlayRenderer
-{
-  public void validate(final ReportDocumentContext context, final double zoomFactor, Point2D sectionOffset);
-  public void draw(final Graphics2D graphics, final Rectangle2D bounds, final ImageObserver obs);
+public interface OverlayRenderer {
+  public void validate( final ReportDocumentContext context, final double zoomFactor, Point2D sectionOffset );
+
+  public void draw( final Graphics2D graphics, final Rectangle2D bounds, final ImageObserver obs );
 }

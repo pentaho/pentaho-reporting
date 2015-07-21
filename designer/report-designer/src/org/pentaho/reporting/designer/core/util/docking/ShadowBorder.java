@@ -17,24 +17,18 @@
 
 package org.pentaho.reporting.designer.core.util.docking;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.SystemColor;
 import javax.swing.border.AbstractBorder;
+import java.awt.*;
 
 /**
  * User: Martin Date: 03.02.2006 Time: 08:13:47
  */
-public class ShadowBorder extends AbstractBorder
-{
+public class ShadowBorder extends AbstractBorder {
   private static final int OFFSET_1 = 20;
   private static final int OFFSET_2 = 30;
   private static final int OFFSET_3 = 40;
 
-  public ShadowBorder()
-  {
+  public ShadowBorder() {
   }
 
   /**
@@ -46,15 +40,13 @@ public class ShadowBorder extends AbstractBorder
    */
   @Override
 
-  public Insets getBorderInsets(final Component c)
-  {
-    return new Insets(1, 1, 4, 4);
+  public Insets getBorderInsets( final Component c ) {
+    return new Insets( 1, 1, 4, 4 );
   }
 
 
   @Override
-  public boolean isBorderOpaque()
-  {
+  public boolean isBorderOpaque() {
     return false;
   }
 
@@ -71,41 +63,39 @@ public class ShadowBorder extends AbstractBorder
    * @param height the height of the painted border
    */
   @Override
-  public void paintBorder(final Component c,
-                          final Graphics g,
-                          final int x,
-                          final int y,
-                          final int width,
-                          final int height)
-  {
+  public void paintBorder( final Component c,
+                           final Graphics g,
+                           final int x,
+                           final int y,
+                           final int width,
+                           final int height ) {
 
     Color base = c.getBackground();
-    if (base == null)
-    {
+    if ( base == null ) {
       base = SystemColor.controlShadow;
     }
 
-    final Color col3 = new Color(base.getRed() - OFFSET_1, base.getGreen() - OFFSET_1, base.getBlue() - OFFSET_1);
-    final Color col2 = new Color(base.getRed() - OFFSET_2, base.getGreen() - OFFSET_2, base.getBlue() - OFFSET_2);
-    final Color col1 = new Color(base.getRed() - OFFSET_3, base.getGreen() - OFFSET_3, base.getBlue() - OFFSET_3);
+    final Color col3 = new Color( base.getRed() - OFFSET_1, base.getGreen() - OFFSET_1, base.getBlue() - OFFSET_1 );
+    final Color col2 = new Color( base.getRed() - OFFSET_2, base.getGreen() - OFFSET_2, base.getBlue() - OFFSET_2 );
+    final Color col1 = new Color( base.getRed() - OFFSET_3, base.getGreen() - OFFSET_3, base.getBlue() - OFFSET_3 );
 
-    g.setColor(col3);
-    g.drawLine(x + width - 4, y, x + width - 3, y);
-    g.drawLine(x, y + height - 4, x, y + height - 3);
-    g.drawLine(x + 1, y + height - 2, x + width - 3, y + height - 2);
-    g.drawLine(x + width - 3, y + height - 3, x + width - 3, y + height - 3);
-    g.drawLine(x + width - 2, y + 1, x + width - 2, y + height - 3);
+    g.setColor( col3 );
+    g.drawLine( x + width - 4, y, x + width - 3, y );
+    g.drawLine( x, y + height - 4, x, y + height - 3 );
+    g.drawLine( x + 1, y + height - 2, x + width - 3, y + height - 2 );
+    g.drawLine( x + width - 3, y + height - 3, x + width - 3, y + height - 3 );
+    g.drawLine( x + width - 2, y + 1, x + width - 2, y + height - 3 );
 
-    g.setColor(col2);
-    g.drawLine(x + width - 5, y, x + width - 4, y);
-    g.drawLine(x, y + height - 5, x, y + height - 4);
-    g.drawLine(x + 1, y + height - 3, x + width - 4, y + height - 3);
-    g.drawLine(x + width - 3, y + 1, x + width - 3, y + height - 4);
+    g.setColor( col2 );
+    g.drawLine( x + width - 5, y, x + width - 4, y );
+    g.drawLine( x, y + height - 5, x, y + height - 4 );
+    g.drawLine( x + 1, y + height - 3, x + width - 4, y + height - 3 );
+    g.drawLine( x + width - 3, y + 1, x + width - 3, y + height - 4 );
 
-    g.setColor(col1);
-    g.drawLine(x, y, x + width - 5, y);
-    g.drawLine(x, y, x, y + height - 5);
-    g.drawLine(x + 1, y + height - 4, x + width - 4, y + height - 4);
-    g.drawLine(x + width - 4, y + 1, x + width - 4, y + height - 4);
+    g.setColor( col1 );
+    g.drawLine( x, y, x + width - 5, y );
+    g.drawLine( x, y, x, y + height - 5 );
+    g.drawLine( x + 1, y + height - 4, x + width - 4, y + height - 4 );
+    g.drawLine( x + width - 4, y + 1, x + width - 4, y + height - 4 );
   }
 }

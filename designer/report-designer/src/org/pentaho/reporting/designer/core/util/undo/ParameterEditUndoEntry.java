@@ -29,91 +29,76 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
  *
  * @author Thomas Morgner
  */
-public class ParameterEditUndoEntry implements UndoEntry
-{
+public class ParameterEditUndoEntry implements UndoEntry {
   private int position;
   private ParameterDefinitionEntry oldElement;
   private ParameterDefinitionEntry newElement;
 
-  public ParameterEditUndoEntry(final int position,
-                                final ParameterDefinitionEntry oldElement,
-                                final ParameterDefinitionEntry newElement)
-  {
+  public ParameterEditUndoEntry( final int position,
+                                 final ParameterDefinitionEntry oldElement,
+                                 final ParameterDefinitionEntry newElement ) {
     this.position = position;
     this.oldElement = oldElement;
     this.newElement = newElement;
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
+  public void undo( final ReportDocumentContext renderContext ) {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
-    if (abstractReportDefinition instanceof MasterReport == false)
-    {
+    if ( abstractReportDefinition instanceof MasterReport == false ) {
       return;
     }
     final MasterReport report = (MasterReport) abstractReportDefinition;
     final ReportParameterDefinition definition = report.getParameterDefinition();
-    if (definition instanceof ModifiableReportParameterDefinition == false)
-    {
+    if ( definition instanceof ModifiableReportParameterDefinition == false ) {
       return;
     }
 
     final ModifiableReportParameterDefinition mdef = (ModifiableReportParameterDefinition) definition;
-    if (newElement != null)
-    {
-      mdef.removeParameterDefinition(position);
-      clearParameterValues(report);
-      report.notifyNodeChildRemoved(newElement);
+    if ( newElement != null ) {
+      mdef.removeParameterDefinition( position );
+      clearParameterValues( report );
+      report.notifyNodeChildRemoved( newElement );
     }
-    if (oldElement != null)
-    {
-      mdef.addParameterDefinition(position, oldElement);
-      clearParameterValues(report);
-      report.notifyNodeChildAdded(oldElement);
+    if ( oldElement != null ) {
+      mdef.addParameterDefinition( position, oldElement );
+      clearParameterValues( report );
+      report.notifyNodeChildAdded( oldElement );
     }
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
+  public void redo( final ReportDocumentContext renderContext ) {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
-    if (abstractReportDefinition instanceof MasterReport == false)
-    {
+    if ( abstractReportDefinition instanceof MasterReport == false ) {
       return;
     }
     final MasterReport report = (MasterReport) abstractReportDefinition;
     final ReportParameterDefinition definition = report.getParameterDefinition();
-    if (definition instanceof ModifiableReportParameterDefinition == false)
-    {
+    if ( definition instanceof ModifiableReportParameterDefinition == false ) {
       return;
     }
 
     final ModifiableReportParameterDefinition mdef = (ModifiableReportParameterDefinition) definition;
-    if (oldElement != null)
-    {
-      mdef.removeParameterDefinition(position);
-      clearParameterValues(report);
-      report.notifyNodeChildRemoved(oldElement);
+    if ( oldElement != null ) {
+      mdef.removeParameterDefinition( position );
+      clearParameterValues( report );
+      report.notifyNodeChildRemoved( oldElement );
     }
-    if (newElement != null)
-    {
-      mdef.addParameterDefinition(position, newElement);
-      clearParameterValues(report);
-      report.notifyNodeChildAdded(newElement);
+    if ( newElement != null ) {
+      mdef.addParameterDefinition( position, newElement );
+      clearParameterValues( report );
+      report.notifyNodeChildAdded( newElement );
     }
   }
 
-  private void clearParameterValues(final MasterReport report)
-  {
+  private void clearParameterValues( final MasterReport report ) {
     final String[] columnNames = report.getParameterValues().getColumnNames();
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      final String columnName = columnNames[i];
-      report.getParameterValues().put(columnName, null);
+    for ( int i = 0; i < columnNames.length; i++ ) {
+      final String columnName = columnNames[ i ];
+      report.getParameterValues().put( columnName, null );
     }
   }
 
-  public UndoEntry merge(final UndoEntry newEntry)
-  {
+  public UndoEntry merge( final UndoEntry newEntry ) {
     return null;
   }
 }

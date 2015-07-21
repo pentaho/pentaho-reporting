@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class VariableReadHandler extends AbstractXmlReadHandler
-{
+public class VariableReadHandler extends AbstractXmlReadHandler {
   private String formula;
   private String variableName;
 
-  public VariableReadHandler()
-  {
+  public VariableReadHandler() {
   }
 
   /**
@@ -39,41 +37,34 @@ public class VariableReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    this.formula = attrs.getValue(getUri(), "formula");
-    if (formula == null)
-    {
-      String dataRowName = attrs.getValue(getUri(), "datarow-name");
-      if (dataRowName == null)
-      {
-        throw new ParseException("Required attribute 'datarow-name' is not defined");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    this.formula = attrs.getValue( getUri(), "formula" );
+    if ( formula == null ) {
+      String dataRowName = attrs.getValue( getUri(), "datarow-name" );
+      if ( dataRowName == null ) {
+        throw new ParseException( "Required attribute 'datarow-name' is not defined" );
       }
 
-      this.formula = '=' + FormulaUtil.quoteReference(dataRowName);
+      this.formula = '=' + FormulaUtil.quoteReference( dataRowName );
     }
 
-    variableName = attrs.getValue(getUri(), "variable-name");
-    if (variableName == null)
-    {
-      variableName = attrs.getValue(getUri(), "datarow-name");
-      if (variableName == null)
-      {
+    variableName = attrs.getValue( getUri(), "variable-name" );
+    if ( variableName == null ) {
+      variableName = attrs.getValue( getUri(), "datarow-name" );
+      if ( variableName == null ) {
         throw new ParseException
-            ("Required attribute 'variable-name' is not defined, and legacy 'data-row' name is also undefined.");
+          ( "Required attribute 'variable-name' is not defined, and legacy 'data-row' name is also undefined." );
       }
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public FormulaParameter getObject() throws SAXException
-  {
-    return new FormulaParameter(variableName, formula);
+  public FormulaParameter getObject() throws SAXException {
+    return new FormulaParameter( variableName, formula );
   }
 }

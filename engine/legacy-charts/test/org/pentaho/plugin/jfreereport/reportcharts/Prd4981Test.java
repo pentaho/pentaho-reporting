@@ -17,8 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
@@ -37,43 +35,41 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-public class Prd4981Test extends TestCase
-{
-  public Prd4981Test()
-  {
+import java.net.URL;
+
+public class Prd4981Test extends TestCase {
+  public Prd4981Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
 
-  public void testChartProcessing50_Hidden() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-4981.prpt");
-    assertNotNull(url);
+  public void testChartProcessing50_Hidden() throws Exception {
+    final URL url = getClass().getResource( "Prd-4981.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
-    final RenderNode[] elementsByElementType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_CONTENT);
+    final RenderNode[] elementsByElementType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_CONTENT );
 
-    Assert.assertTrue(elementsByElementType.length > 0);
+    Assert.assertTrue( elementsByElementType.length > 0 );
 
-    for (final RenderNode renderNode : elementsByElementType)
-    {
+    for ( final RenderNode renderNode : elementsByElementType ) {
       final RenderableReplacedContentBox c = (RenderableReplacedContentBox) renderNode;
       final DrawableWrapper rawObject = (DrawableWrapper) c.getContent().getRawObject();
       final JFreeChartReportDrawable backend = (JFreeChartReportDrawable) rawObject.getBackend();
       final JFreeChart chart = backend.getChart();
       final CategoryPlot p = (CategoryPlot) chart.getPlot();
       final CategoryDataset dataset = p.getDataset();
-      Assert.assertNotNull(dataset);
-      DebugLog.log(rawObject);
+      Assert.assertNotNull( dataset );
+      DebugLog.log( rawObject );
     }
   }
 }

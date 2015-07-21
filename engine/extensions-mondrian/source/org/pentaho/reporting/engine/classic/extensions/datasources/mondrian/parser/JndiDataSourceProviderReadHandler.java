@@ -29,29 +29,24 @@ import org.xml.sax.SAXException;
 /**
  * Todo: Document me!
  * <p/>
- * Date: 25.08.2009
- * Time: 10:09:05
+ * Date: 25.08.2009 Time: 10:09:05
  *
  * @author Thomas Morgner.
  */
-public class JndiDataSourceProviderReadHandler extends AbstractXmlReadHandler implements DataSourceProviderReadHandler
-{
+public class JndiDataSourceProviderReadHandler extends AbstractXmlReadHandler implements DataSourceProviderReadHandler {
   private StringReadHandler pathReadHandler;
   private JndiDataSourceProvider dataSourceProvider;
 
-  public JndiDataSourceProviderReadHandler()
-  {
+  public JndiDataSourceProviderReadHandler() {
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return getProvider();
   }
 
@@ -64,17 +59,14 @@ public class JndiDataSourceProviderReadHandler extends AbstractXmlReadHandler im
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("path".equals(tagName))
-    {
+    if ( "path".equals( tagName ) ) {
       pathReadHandler = new StringReadHandler();
       return pathReadHandler;
     }
@@ -86,22 +78,19 @@ public class JndiDataSourceProviderReadHandler extends AbstractXmlReadHandler im
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    if (pathReadHandler == null)
-    {
-      throw new ParseException("JNDI connections need a JNDI path", getLocator());
+  protected void doneParsing() throws SAXException {
+    if ( pathReadHandler == null ) {
+      throw new ParseException( "JNDI connections need a JNDI path", getLocator() );
     }
-    this.dataSourceProvider = new JndiDataSourceProvider(pathReadHandler.getResult());
+    this.dataSourceProvider = new JndiDataSourceProvider( pathReadHandler.getResult() );
   }
-  protected String getPath()
-  {
+
+  protected String getPath() {
     return pathReadHandler.getResult();
   }
 
 
-  public DataSourceProvider getProvider()
-  {
+  public DataSourceProvider getProvider() {
     return dataSourceProvider;
   }
 }

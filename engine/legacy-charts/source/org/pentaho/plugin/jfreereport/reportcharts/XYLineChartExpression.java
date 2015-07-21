@@ -22,51 +22,43 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
-public class XYLineChartExpression extends XYChartExpression
-{
+public class XYLineChartExpression extends XYChartExpression {
   private static final long serialVersionUID = 588996014868712814L;
 
   private String lineStyle;
   private float lineWidth;
   private boolean markersVisible;
 
-  public XYLineChartExpression()
-  {
+  public XYLineChartExpression() {
     lineWidth = 1.0f;
   }
 
 
-  protected JFreeChart computeXYChart(final XYDataset xyDataset)
-  {
+  protected JFreeChart computeXYChart( final XYDataset xyDataset ) {
     final JFreeChart chart;
-    if (xyDataset instanceof TimeSeriesCollection)
-    {
-      chart = ChartFactory.createTimeSeriesChart(computeTitle(), getDomainTitle(), getRangeTitle(), xyDataset,
-          isShowLegend(), false, false);
-    }
-    else
-    {
+    if ( xyDataset instanceof TimeSeriesCollection ) {
+      chart = ChartFactory.createTimeSeriesChart( computeTitle(), getDomainTitle(), getRangeTitle(), xyDataset,
+        isShowLegend(), false, false );
+    } else {
       final PlotOrientation orientation = computePlotOrientation();
-      chart = ChartFactory.createXYLineChart(computeTitle(), getDomainTitle(), getRangeTitle(),
-          xyDataset, orientation, isShowLegend(), false, false);
+      chart = ChartFactory.createXYLineChart( computeTitle(), getDomainTitle(), getRangeTitle(),
+        xyDataset, orientation, isShowLegend(), false, false );
     }
-    configureLogarithmicAxis(chart.getXYPlot());
+    configureLogarithmicAxis( chart.getXYPlot() );
     return chart;
   }
 
 
-  protected void configureChart(final JFreeChart chart)
-  {
-    super.configureChart(chart);
+  protected void configureChart( final JFreeChart chart ) {
+    super.configureChart( chart );
 
     final XYPlot xypl = chart.getXYPlot();
     final XYItemRenderer renderer = xypl.getRenderer();
-    renderer.setStroke(translateLineStyle(lineWidth, lineStyle));
-    if (renderer instanceof XYLineAndShapeRenderer)
-    {
+    renderer.setStroke( translateLineStyle( lineWidth, lineStyle ) );
+    if ( renderer instanceof XYLineAndShapeRenderer ) {
       final XYLineAndShapeRenderer renderer1 = (XYLineAndShapeRenderer) renderer;
-      renderer1.setShapesVisible(isMarkersVisible());
-      renderer1.setBaseShapesFilled(isMarkersVisible());
+      renderer1.setShapesVisible( isMarkersVisible() );
+      renderer1.setBaseShapesFilled( isMarkersVisible() );
     }
 
   }
@@ -74,50 +66,42 @@ public class XYLineChartExpression extends XYChartExpression
   /**
    * @return returns the style set for the lines
    */
-  public String getLineStyle()
-  {
+  public String getLineStyle() {
     return lineStyle;
   }
 
   /**
    * @param value set the style for all line series
    */
-  public void setLineStyle(final String value)
-  {
+  public void setLineStyle( final String value ) {
     lineStyle = value;
   }
 
   /**
-   * @return the width of all line series
-   *         Valid values are float numbers zero or greater
+   * @return the width of all line series Valid values are float numbers zero or greater
    */
-  public float getLineWidth()
-  {
+  public float getLineWidth() {
     return lineWidth;
   }
 
   /**
-   * @param value set the width of all line series
-   *              Valid values are float numbers zero or greater
+   * @param value set the width of all line series Valid values are float numbers zero or greater
    */
-  public void setLineWidth(final float value)
-  {
+  public void setLineWidth( final float value ) {
     lineWidth = value;
   }
 
   /**
    * @return boolean whether the markers (data points) for all series are displayed
    */
-  public boolean isMarkersVisible()
-  {
+  public boolean isMarkersVisible() {
     return markersVisible;
   }
 
   /**
    * @param markersVisible set whether the markers (data points) for all series should be displayed
    */
-  public void setMarkersVisible(final boolean markersVisible)
-  {
+  public void setMarkersVisible( final boolean markersVisible ) {
     this.markersVisible = markersVisible;
   }
 

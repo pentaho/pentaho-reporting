@@ -24,8 +24,7 @@ import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.LineSparklineType;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.SparklineAttributeNames;
 
-public class LineSparklineElementFactory extends AbstractContentElementFactory
-{
+public class LineSparklineElementFactory extends AbstractContentElementFactory {
   private Object content;
   private String fieldname;
   private String formula;
@@ -33,57 +32,46 @@ public class LineSparklineElementFactory extends AbstractContentElementFactory
 
   private Integer spacing;
 
-  public LineSparklineElementFactory()
-  {
+  public LineSparklineElementFactory() {
   }
 
-  public Object getContent()
-  {
+  public Object getContent() {
     return content;
   }
 
-  public void setContent(final Object content)
-  {
+  public void setContent( final Object content ) {
     this.content = content;
   }
 
-  public Object getNullValue()
-  {
+  public Object getNullValue() {
     return nullValue;
   }
 
-  public void setNullValue(final Object nullValue)
-  {
+  public void setNullValue( final Object nullValue ) {
     this.nullValue = nullValue;
   }
 
-  public String getFormula()
-  {
+  public String getFormula() {
     return formula;
   }
 
-  public void setFormula(final String formula)
-  {
+  public void setFormula( final String formula ) {
     this.formula = formula;
   }
 
-  public Integer getSpacing()
-  {
+  public Integer getSpacing() {
     return spacing;
   }
 
-  public void setSpacing(final Integer spacing)
-  {
+  public void setSpacing( final Integer spacing ) {
     this.spacing = spacing;
   }
 
-  public String getFieldname()
-  {
+  public String getFieldname() {
     return fieldname;
   }
 
-  public void setFieldname(final String fieldname)
-  {
+  public void setFieldname( final String fieldname ) {
     this.fieldname = fieldname;
   }
 
@@ -92,30 +80,25 @@ public class LineSparklineElementFactory extends AbstractContentElementFactory
    *
    * @return the newly generated instance of the element.
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setElementType(new LineSparklineType());
-    if (getContent() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getContent());
+    element.setElementType( new LineSparklineType() );
+    if ( getContent() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getContent() );
     }
-    if (getFieldname() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname());
+    if ( getFieldname() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname() );
     }
-    if (getFormula() != null)
-    {
+    if ( getFormula() != null ) {
       final FormulaExpression formulaExpression = new FormulaExpression();
-      formulaExpression.setFormula(getFormula());
-      element.setAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression);
+      formulaExpression.setFormula( getFormula() );
+      element.setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression );
     }
-    if (spacing != null)
-    {
-      element.setAttribute(SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.SPACING, spacing);
+    if ( spacing != null ) {
+      element.setAttribute( SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.SPACING, spacing );
     }
     return element;
   }

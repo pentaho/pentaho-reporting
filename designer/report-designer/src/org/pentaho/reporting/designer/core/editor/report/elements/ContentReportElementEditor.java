@@ -22,19 +22,15 @@ import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEdit
 /**
  * Todo: Document me!
  * <p/>
- * Date: 06.05.2009
- * Time: 10:39:44
+ * Date: 06.05.2009 Time: 10:39:44
  *
  * @author Thomas Morgner.
  */
-public class ContentReportElementEditor extends DefaultReportElementEditor
-{
-  public ContentReportElementEditor()
-  {
+public class ContentReportElementEditor extends DefaultReportElementEditor {
+  public ContentReportElementEditor() {
   }
 
-  public ReportElementInlineEditor createInlineEditor()
-  {
+  public ReportElementInlineEditor createInlineEditor() {
     return new ContentReportElementInlineEditor();
   }
 }

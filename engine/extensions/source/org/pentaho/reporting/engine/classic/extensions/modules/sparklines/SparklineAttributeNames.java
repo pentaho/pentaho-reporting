@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines;
 
-public class SparklineAttributeNames
-{
-  public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0";
+public class SparklineAttributeNames {
+  public static final String NAMESPACE =
+    "http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0";
   public static final String SPACING = "spacing";
   public static final String LOW_SLICE = "low-slice";
   public static final String MEDIUM_SLICE = "medium-slice";
@@ -28,7 +28,6 @@ public class SparklineAttributeNames
   public static final String COUNTER_CLOCKWISE = "counter-clockwise";
 
 
-  private SparklineAttributeNames()
-  {
+  private SparklineAttributeNames() {
   }
 }

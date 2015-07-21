@@ -23,8 +23,7 @@ import java.util.prefs.Preferences;
 /**
  * User: Martin Date: 28.05.2006 Time: 09:58:37
  */
-public class ExternalToolSettings
-{
+public class ExternalToolSettings {
   private static ExternalToolSettings instance;
   private static final String USE_DEFAULT_PDFVIEWER_KEY = "UseDefaultPDFViewer";
   private static final String CUSTOM_PDFVIEWER_EXECUTABLE_KEY = "CustomPDFViewerExecutable";
@@ -42,10 +41,8 @@ public class ExternalToolSettings
   private static final String CUSTOM_BROWSER_EXECUTABLE_KEY = "CustomBrowserExecutable";
   private static final String CUSTOM_BROWSER_PARAMETERS_KEY = "CustomBrowserParameters";
 
-  public static synchronized ExternalToolSettings getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ExternalToolSettings getInstance() {
+    if ( instance == null ) {
       instance = new ExternalToolSettings();
     }
     return instance;
@@ -53,171 +50,136 @@ public class ExternalToolSettings
 
   private Preferences preferences;
 
-  public ExternalToolSettings()
-  {
+  public ExternalToolSettings() {
     preferences = Preferences.userRoot().node
-        ("org/pentaho/reporting/designer/application-settings/external-tools-settings"); // NON-NLS
+      ( "org/pentaho/reporting/designer/application-settings/external-tools-settings" ); // NON-NLS
   }
 
-  public boolean isUseDefaultBrowser()
-  {
-    return preferences.getBoolean(USE_DEFAULT_BROWSER_KEY, true);
+  public boolean isUseDefaultBrowser() {
+    return preferences.getBoolean( USE_DEFAULT_BROWSER_KEY, true );
   }
 
-  public void setUseDefaultBrowser(final boolean useDefaultBrowser)
-  {
-    preferences.put(USE_DEFAULT_BROWSER_KEY, String.valueOf(useDefaultBrowser));
+  public void setUseDefaultBrowser( final boolean useDefaultBrowser ) {
+    preferences.put( USE_DEFAULT_BROWSER_KEY, String.valueOf( useDefaultBrowser ) );
   }
 
-  public String getCustomBrowserExecutable()
-  {
-    return preferences.get(CUSTOM_BROWSER_EXECUTABLE_KEY, null);
+  public String getCustomBrowserExecutable() {
+    return preferences.get( CUSTOM_BROWSER_EXECUTABLE_KEY, null );
   }
 
-  public void setCustomBrowserExecutable(final String customBrowserExecutable)
-  {
-    preferences.put(CUSTOM_BROWSER_EXECUTABLE_KEY, String.valueOf(customBrowserExecutable));
+  public void setCustomBrowserExecutable( final String customBrowserExecutable ) {
+    preferences.put( CUSTOM_BROWSER_EXECUTABLE_KEY, String.valueOf( customBrowserExecutable ) );
   }
 
-  public String getCustomBrowserParameters()
-  {
-    return preferences.get(CUSTOM_BROWSER_PARAMETERS_KEY, "{0}");
+  public String getCustomBrowserParameters() {
+    return preferences.get( CUSTOM_BROWSER_PARAMETERS_KEY, "{0}" );
   }
 
-  public void setCustomBrowserParameters(final String customBrowserParameters)
-  {
-    preferences.put(CUSTOM_BROWSER_PARAMETERS_KEY, String.valueOf(customBrowserParameters));
+  public void setCustomBrowserParameters( final String customBrowserParameters ) {
+    preferences.put( CUSTOM_BROWSER_PARAMETERS_KEY, String.valueOf( customBrowserParameters ) );
   }
 
-  public boolean isUseDefaultPDFViewer()
-  {
-    return preferences.getBoolean(USE_DEFAULT_PDFVIEWER_KEY, true);
+  public boolean isUseDefaultPDFViewer() {
+    return preferences.getBoolean( USE_DEFAULT_PDFVIEWER_KEY, true );
   }
 
 
-  public void setUseDefaultPDFViewer(final boolean useDefaultPDFViewer)
-  {
-    preferences.putBoolean(USE_DEFAULT_PDFVIEWER_KEY, useDefaultPDFViewer);
+  public void setUseDefaultPDFViewer( final boolean useDefaultPDFViewer ) {
+    preferences.putBoolean( USE_DEFAULT_PDFVIEWER_KEY, useDefaultPDFViewer );
   }
 
-  public String getCustomPDFViewerExecutable()
-  {
-    return preferences.get(CUSTOM_PDFVIEWER_EXECUTABLE_KEY, null);
+  public String getCustomPDFViewerExecutable() {
+    return preferences.get( CUSTOM_PDFVIEWER_EXECUTABLE_KEY, null );
   }
 
-  public void setCustomPDFViewerExecutable(final String customPDFViewerExecutable)
-  {
-    preferences.put(CUSTOM_PDFVIEWER_EXECUTABLE_KEY, customPDFViewerExecutable);
+  public void setCustomPDFViewerExecutable( final String customPDFViewerExecutable ) {
+    preferences.put( CUSTOM_PDFVIEWER_EXECUTABLE_KEY, customPDFViewerExecutable );
   }
 
-  public String getCustomPDFViewerParameters()
-  {
-    return preferences.get(CUSTOM_PDFVIEWER_PARAMETERS_KEY, "{0}");
+  public String getCustomPDFViewerParameters() {
+    return preferences.get( CUSTOM_PDFVIEWER_PARAMETERS_KEY, "{0}" );
   }
 
-  public void setCustomPDFViewerParameters(final String customPDFViewerParameters)
-  {
-    preferences.put(CUSTOM_PDFVIEWER_PARAMETERS_KEY, customPDFViewerParameters);
+  public void setCustomPDFViewerParameters( final String customPDFViewerParameters ) {
+    preferences.put( CUSTOM_PDFVIEWER_PARAMETERS_KEY, customPDFViewerParameters );
   }
 
-  public boolean isUseDefaultRTFViewer()
-  {
-    return preferences.getBoolean(USE_DEFAULT_RTFVIEWER_KEY, true);
+  public boolean isUseDefaultRTFViewer() {
+    return preferences.getBoolean( USE_DEFAULT_RTFVIEWER_KEY, true );
   }
 
-  public void setUseDefaultRTFViewer(final boolean useDefaultRTFViewer)
-  {
-    preferences.putBoolean(USE_DEFAULT_RTFVIEWER_KEY, useDefaultRTFViewer);
+  public void setUseDefaultRTFViewer( final boolean useDefaultRTFViewer ) {
+    preferences.putBoolean( USE_DEFAULT_RTFVIEWER_KEY, useDefaultRTFViewer );
   }
 
-  public String getCustomRTFViewerExecutable()
-  {
-    return preferences.get(CUSTOM_RTFVIEWER_EXECUTABLE_KEY, null);
+  public String getCustomRTFViewerExecutable() {
+    return preferences.get( CUSTOM_RTFVIEWER_EXECUTABLE_KEY, null );
   }
 
-  public void setCustomRTFViewerExecutable(final String customRTFViewerExecutable)
-  {
-    preferences.put(CUSTOM_RTFVIEWER_EXECUTABLE_KEY, customRTFViewerExecutable);
+  public void setCustomRTFViewerExecutable( final String customRTFViewerExecutable ) {
+    preferences.put( CUSTOM_RTFVIEWER_EXECUTABLE_KEY, customRTFViewerExecutable );
   }
 
-  public String getCustomRTFViewerParameters()
-  {
-    return preferences.get(CUSTOM_RTFVIEWER_PARAMETERS_KEY, "{0}");
+  public String getCustomRTFViewerParameters() {
+    return preferences.get( CUSTOM_RTFVIEWER_PARAMETERS_KEY, "{0}" );
   }
 
-  public void setCustomRTFViewerParameters(final String customRTFViewerParameters)
-  {
-    preferences.put(CUSTOM_RTFVIEWER_PARAMETERS_KEY, customRTFViewerParameters);
+  public void setCustomRTFViewerParameters( final String customRTFViewerParameters ) {
+    preferences.put( CUSTOM_RTFVIEWER_PARAMETERS_KEY, customRTFViewerParameters );
   }
 
-  public boolean isUseDefaultXLSViewer()
-  {
-    return preferences.getBoolean(USE_DEFAULT_XLSVIEWER_KEY, true);
+  public boolean isUseDefaultXLSViewer() {
+    return preferences.getBoolean( USE_DEFAULT_XLSVIEWER_KEY, true );
   }
 
-  public void setUseDefaultXLSViewer(final boolean useDefaultXLSViewer)
-  {
-    preferences.putBoolean(USE_DEFAULT_XLSVIEWER_KEY, useDefaultXLSViewer);
+  public void setUseDefaultXLSViewer( final boolean useDefaultXLSViewer ) {
+    preferences.putBoolean( USE_DEFAULT_XLSVIEWER_KEY, useDefaultXLSViewer );
   }
 
-  public String getCustomXLSViewerExecutable()
-  {
-    return preferences.get(CUSTOM_XLSVIEWER_EXECUTABLE_KEY, null);
+  public String getCustomXLSViewerExecutable() {
+    return preferences.get( CUSTOM_XLSVIEWER_EXECUTABLE_KEY, null );
   }
 
-  public void setCustomXLSViewerExecutable(final String customXLSViewerExecutable)
-  {
-    preferences.put(CUSTOM_XLSVIEWER_EXECUTABLE_KEY, customXLSViewerExecutable);
+  public void setCustomXLSViewerExecutable( final String customXLSViewerExecutable ) {
+    preferences.put( CUSTOM_XLSVIEWER_EXECUTABLE_KEY, customXLSViewerExecutable );
   }
 
-  public String getCustomXLSViewerParameters()
-  {
-    return preferences.get(CUSTOM_XLSVIEWER_PARAMETERS_KEY, "{0}");
+  public String getCustomXLSViewerParameters() {
+    return preferences.get( CUSTOM_XLSVIEWER_PARAMETERS_KEY, "{0}" );
   }
 
-  public void setCustomXLSViewerParameters(final String customXLSViewerParameters)
-  {
-    preferences.put(CUSTOM_XLSVIEWER_PARAMETERS_KEY, customXLSViewerParameters);
+  public void setCustomXLSViewerParameters( final String customXLSViewerParameters ) {
+    preferences.put( CUSTOM_XLSVIEWER_PARAMETERS_KEY, customXLSViewerParameters );
   }
 
-  public boolean isUseDefaultCSVViewer()
-  {
-    return preferences.getBoolean(USE_DEFAULT_CSVVIEWER_KEY, true);
+  public boolean isUseDefaultCSVViewer() {
+    return preferences.getBoolean( USE_DEFAULT_CSVVIEWER_KEY, true );
   }
 
-  public void setUseDefaultCSVViewer(final boolean useDefaultCSVViewer)
-  {
-    preferences.putBoolean(USE_DEFAULT_CSVVIEWER_KEY, useDefaultCSVViewer);
+  public void setUseDefaultCSVViewer( final boolean useDefaultCSVViewer ) {
+    preferences.putBoolean( USE_DEFAULT_CSVVIEWER_KEY, useDefaultCSVViewer );
   }
 
-  public String getCustomCSVViewerExecutable()
-  {
-    return preferences.get(CUSTOM_CSVVIEWER_EXECUTABLE_KEY, null);
+  public String getCustomCSVViewerExecutable() {
+    return preferences.get( CUSTOM_CSVVIEWER_EXECUTABLE_KEY, null );
   }
 
-  public void setCustomCSVViewerExecutable(final String customCSVViewerExecutable)
-  {
-    preferences.put(CUSTOM_CSVVIEWER_EXECUTABLE_KEY, customCSVViewerExecutable);
+  public void setCustomCSVViewerExecutable( final String customCSVViewerExecutable ) {
+    preferences.put( CUSTOM_CSVVIEWER_EXECUTABLE_KEY, customCSVViewerExecutable );
   }
 
-  public String getCustomCSVViewerParameters()
-  {
-    return preferences.get(CUSTOM_CSVVIEWER_PARAMETERS_KEY, "{0}");
+  public String getCustomCSVViewerParameters() {
+    return preferences.get( CUSTOM_CSVVIEWER_PARAMETERS_KEY, "{0}" );
   }
 
-  public void setCustomCSVViewerParameters(final String customCSVViewerParameters)
-  {
-    preferences.put(CUSTOM_CSVVIEWER_PARAMETERS_KEY, customCSVViewerParameters);
+  public void setCustomCSVViewerParameters( final String customCSVViewerParameters ) {
+    preferences.put( CUSTOM_CSVVIEWER_PARAMETERS_KEY, customCSVViewerParameters );
   }
 
-  public void flush()
-  {
-    try
-    {
+  public void flush() {
+    try {
       preferences.flush();
-    }
-    catch (BackingStoreException e)
-    {
+    } catch ( BackingStoreException e ) {
       e.printStackTrace();
     }
   }

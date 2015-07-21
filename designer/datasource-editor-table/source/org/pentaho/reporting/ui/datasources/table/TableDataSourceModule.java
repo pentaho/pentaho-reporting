@@ -21,14 +21,11 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class TableDataSourceModule extends AbstractModule
-{
-  public TableDataSourceModule() throws ModuleInitializeException
-  {
+public class TableDataSourceModule extends AbstractModule {
+  public TableDataSourceModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public void initialize(final SubSystem aSubSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem aSubSystem ) throws ModuleInitializeException {
   }
 }

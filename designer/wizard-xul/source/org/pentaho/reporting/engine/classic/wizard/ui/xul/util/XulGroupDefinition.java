@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.wizard.ui.xul.util;
 
-import java.beans.PropertyChangeListener;
-
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
@@ -30,180 +28,148 @@ import org.pentaho.reporting.engine.classic.wizard.model.Length;
 import org.pentaho.reporting.engine.classic.wizard.model.RootBandDefinition;
 import org.pentaho.ui.xul.XulEventSource;
 
-public class XulGroupDefinition implements XulEventSource
-{
+import java.beans.PropertyChangeListener;
+
+public class XulGroupDefinition implements XulEventSource {
   private DefaultGroupDefinition groupDefinition;
   private String metaDataDisplayName;
   private ElementAlignment metaDataHorizontalAlignment;
 
-  public XulGroupDefinition(final DefaultGroupDefinition groupDefinition,
-                            final DataSchema dataSchema)
-  {
-    if (groupDefinition == null)
-    {
+  public XulGroupDefinition( final DefaultGroupDefinition groupDefinition,
+                             final DataSchema dataSchema ) {
+    if ( groupDefinition == null ) {
       throw new NullPointerException();
     }
     this.groupDefinition = groupDefinition;
 
-    final DataAttributes attributes = dataSchema.getAttributes(this.groupDefinition.getField());
-    if (attributes != null)
-    {
+    final DataAttributes attributes = dataSchema.getAttributes( this.groupDefinition.getField() );
+    if ( attributes != null ) {
       final DefaultDataAttributeContext dataAttributeContext = new DefaultDataAttributeContext();
 
-      if (groupDefinition.getHorizontalAlignment() == null)
-      {
+      if ( groupDefinition.getHorizontalAlignment() == null ) {
         metaDataHorizontalAlignment = (ElementAlignment) attributes.getMetaAttribute
-            (MetaAttributeNames.Style.NAMESPACE, MetaAttributeNames.Style.HORIZONTAL_ALIGNMENT,
-                ElementAlignment.class, dataAttributeContext);
+          ( MetaAttributeNames.Style.NAMESPACE, MetaAttributeNames.Style.HORIZONTAL_ALIGNMENT,
+            ElementAlignment.class, dataAttributeContext );
       }
 
-      if (groupDefinition.getDisplayName() == null)
-      {
+      if ( groupDefinition.getDisplayName() == null ) {
         metaDataDisplayName = (String) attributes.getMetaAttribute
-            (MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL,
-                String.class, dataAttributeContext);
-        setDisplayName(metaDataDisplayName);
+          ( MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL,
+            String.class, dataAttributeContext );
+        setDisplayName( metaDataDisplayName );
       }
     }
   }
 
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
 
   }
 
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
 
   }
 
-  public ElementAlignment getTotalsHorizontalAlignment()
-  {
-    if (metaDataHorizontalAlignment != null  && groupDefinition.getTotalsHorizontalAlignment() == null)
-    {
+  public ElementAlignment getTotalsHorizontalAlignment() {
+    if ( metaDataHorizontalAlignment != null && groupDefinition.getTotalsHorizontalAlignment() == null ) {
       return metaDataHorizontalAlignment;
     }
     return groupDefinition.getTotalsHorizontalAlignment();
   }
 
-  public void setTotalsHorizontalAlignment(final ElementAlignment alignment)
-  {
+  public void setTotalsHorizontalAlignment( final ElementAlignment alignment ) {
     metaDataHorizontalAlignment = null;
-    this.groupDefinition.setTotalsHorizontalAlignment(alignment);
+    this.groupDefinition.setTotalsHorizontalAlignment( alignment );
   }
 
-  public GroupType getGroupType()
-  {
+  public GroupType getGroupType() {
     return groupDefinition.getGroupType();
   }
 
-  public void setGroupType(final GroupType groupType)
-  {
-    groupDefinition.setGroupType(groupType);
+  public void setGroupType( final GroupType groupType ) {
+    groupDefinition.setGroupType( groupType );
   }
 
-  public String getGroupName()
-  {
+  public String getGroupName() {
     return groupDefinition.getGroupName();
   }
 
-  public void setGroupName(final String groupName)
-  {
-    groupDefinition.setGroupName(groupName);
+  public void setGroupName( final String groupName ) {
+    groupDefinition.setGroupName( groupName );
   }
 
-  public RootBandDefinition getHeader()
-  {
+  public RootBandDefinition getHeader() {
     return groupDefinition.getHeader();
   }
 
-  public RootBandDefinition getFooter()
-  {
+  public RootBandDefinition getFooter() {
     return groupDefinition.getFooter();
   }
 
-  public String getGroupTotalsLabel()
-  {
+  public String getGroupTotalsLabel() {
     return groupDefinition.getGroupTotalsLabel();
   }
 
-  public void setGroupTotalsLabel(final String groupTotalsLabel)
-  {
-    groupDefinition.setGroupTotalsLabel(groupTotalsLabel);
+  public void setGroupTotalsLabel( final String groupTotalsLabel ) {
+    groupDefinition.setGroupTotalsLabel( groupTotalsLabel );
   }
 
-  public String getField()
-  {
+  public String getField() {
     return groupDefinition.getField();
   }
 
-  public void setField(final String field)
-  {
-    groupDefinition.setField(field);
+  public void setField( final String field ) {
+    groupDefinition.setField( field );
   }
 
-  public String getNullString()
-  {
+  public String getNullString() {
     return groupDefinition.getNullString();
   }
 
-  public void setNullString(final String nullString)
-  {
-    groupDefinition.setNullString(nullString);
+  public void setNullString( final String nullString ) {
+    groupDefinition.setNullString( nullString );
   }
 
-  public String getDisplayName()
-  {
-    if (metaDataDisplayName != null)
-    {
+  public String getDisplayName() {
+    if ( metaDataDisplayName != null ) {
       return metaDataDisplayName;
     }
     return groupDefinition.getDisplayName();
   }
 
-  public void setDisplayName(final String displayName)
-  {
+  public void setDisplayName( final String displayName ) {
     metaDataDisplayName = null;
-    groupDefinition.setDisplayName(displayName);
+    groupDefinition.setDisplayName( displayName );
   }
 
-  public String getDataFormat()
-  {
+  public String getDataFormat() {
     return groupDefinition.getDataFormat();
   }
 
-  public void setDataFormat(final String dataFormat)
-  {
-    groupDefinition.setDataFormat(dataFormat);
+  public void setDataFormat( final String dataFormat ) {
+    groupDefinition.setDataFormat( dataFormat );
   }
 
-  public Class getAggregationFunction()
-  {
+  public Class getAggregationFunction() {
     return groupDefinition.getAggregationFunction();
   }
 
-  public void setAggregationFunction(final Class aggregationFunction)
-  {
-    groupDefinition.setAggregationFunction(aggregationFunction);
+  public void setAggregationFunction( final Class aggregationFunction ) {
+    groupDefinition.setAggregationFunction( aggregationFunction );
   }
 
-  public Class getFieldTypeHint()
-  {
+  public Class getFieldTypeHint() {
     return groupDefinition.getFieldTypeHint();
   }
 
-  public void setFieldTypeHint(final Class fieldTypeHint)
-  {
-    groupDefinition.setFieldTypeHint(fieldTypeHint);
+  public void setFieldTypeHint( final Class fieldTypeHint ) {
+    groupDefinition.setFieldTypeHint( fieldTypeHint );
   }
 
-  public Length getWidth()
-  {
+  public Length getWidth() {
     return groupDefinition.getWidth();
   }
 
-  public void setWidth(final Length width)
-  {
-    groupDefinition.setWidth(width);
+  public void setWidth( final Length width ) {
+    groupDefinition.setWidth( width );
   }
 }

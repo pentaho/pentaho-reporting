@@ -17,43 +17,37 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
+import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.DataFactoryWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterContext;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterException;
-import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.DataFactoryWriteHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.BandedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Olap4JDataFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+
 public class BandedMDXDataFactoryWriteHandler extends AbstractNamedMDXDataFactoryBundleWriteHandler
-  implements DataFactoryWriteHandler
-{
-  public BandedMDXDataFactoryWriteHandler()
-  {
+  implements DataFactoryWriteHandler {
+  public BandedMDXDataFactoryWriteHandler() {
   }
 
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory dataFactory)
-      throws IOException, ReportWriterException
-  {
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory dataFactory )
+    throws IOException, ReportWriterException {
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", Olap4JDataFactoryModule.NAMESPACE);
+    rootAttrs.addNamespaceDeclaration( "data", Olap4JDataFactoryModule.NAMESPACE );
 
-    xmlWriter.writeTag(Olap4JDataFactoryModule.NAMESPACE, "banded-mdx-datasource", rootAttrs, XmlWriter.OPEN);
+    xmlWriter.writeTag( Olap4JDataFactoryModule.NAMESPACE, "banded-mdx-datasource", rootAttrs, XmlWriter.OPEN );
 
     final BandedMDXDataFactory pmdDataFactory = (BandedMDXDataFactory) dataFactory;
-    try
-    {
-      writeBody(pmdDataFactory, xmlWriter);
-    }
-    catch (BundleWriterException e)
-    {
-      throw new ReportWriterException("Failed", e);
+    try {
+      writeBody( pmdDataFactory, xmlWriter );
+    } catch ( BundleWriterException e ) {
+      throw new ReportWriterException( "Failed", e );
     }
     xmlWriter.writeCloseTag();
   }

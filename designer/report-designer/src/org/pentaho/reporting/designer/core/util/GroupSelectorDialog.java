@@ -17,52 +17,37 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.DefaultListModel;
-import javax.swing.JDialog;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.FixDefaultListCellRenderer;
 
-public class GroupSelectorDialog extends CommonDialog
-{
-  private class MouseHandler extends MouseAdapter
-  {
-    public void mouseClicked(final MouseEvent e)
-    {
-      if (e.getClickCount() > 1 && e.getButton() == MouseEvent.BUTTON1)
-      {
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class GroupSelectorDialog extends CommonDialog {
+  private class MouseHandler extends MouseAdapter {
+    public void mouseClicked( final MouseEvent e ) {
+      if ( e.getClickCount() > 1 && e.getButton() == MouseEvent.BUTTON1 ) {
         final String selectedValue = (String) fieldList.getSelectedValue();
-        setSelectedGroup(selectedValue);
-        if (selectedValue != null)
-        {
-          setConfirmed(true);
+        setSelectedGroup( selectedValue );
+        if ( selectedValue != null ) {
+          setConfirmed( true );
           GroupSelectorDialog.this.dispose();
         }
       }
     }
   }
 
-  private class SelectionUpdateHandler implements ListSelectionListener
-  {
-    private SelectionUpdateHandler()
-    {
+  private class SelectionUpdateHandler implements ListSelectionListener {
+    private SelectionUpdateHandler() {
     }
 
-    public void valueChanged(final ListSelectionEvent e)
-    {
-      setSelectedGroup((String) fieldList.getSelectedValue());
+    public void valueChanged( final ListSelectionEvent e ) {
+      setSelectedGroup( (String) fieldList.getSelectedValue() );
     }
   }
 
@@ -80,89 +65,76 @@ public class GroupSelectorDialog extends CommonDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public GroupSelectorDialog(final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public GroupSelectorDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public GroupSelectorDialog(final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public GroupSelectorDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
   public GroupSelectorDialog()
-      throws HeadlessException
-  {
+    throws HeadlessException {
     init();
   }
 
-  protected void init()
-  {
-    setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+  protected void init() {
+    setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
 
     fieldList = new JList();
-    fieldList.setCellRenderer(new FixDefaultListCellRenderer());
-    fieldList.setVisibleRowCount(5);
-    fieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    fieldList.addMouseListener(new MouseHandler());
-    fieldList.addListSelectionListener(new SelectionUpdateHandler());
+    fieldList.setCellRenderer( new FixDefaultListCellRenderer() );
+    fieldList.setVisibleRowCount( 5 );
+    fieldList.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+    fieldList.addMouseListener( new MouseHandler() );
+    fieldList.addListSelectionListener( new SelectionUpdateHandler() );
 
-    setTitle(UtilMessages.getInstance().getString("GroupSelectorDialog.Title"));
+    setTitle( UtilMessages.getInstance().getString( "GroupSelectorDialog.Title" ) );
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.GroupSelector";
   }
 
-  protected Component createContentPane()
-  {
-    return new JScrollPane(fieldList);
+  protected Component createContentPane() {
+    return new JScrollPane( fieldList );
   }
 
-  public void setGroups(final String[] queries)
-  {
+  public void setGroups( final String[] queries ) {
     final DefaultListModel listModel = new DefaultListModel();
-    for (int i = 0; i < queries.length; i++)
-    {
-      listModel.addElement(queries[i]);
+    for ( int i = 0; i < queries.length; i++ ) {
+      listModel.addElement( queries[ i ] );
     }
-    fieldList.setModel(listModel);
+    fieldList.setModel( listModel );
   }
 
 
-  public String getSelectedGroup()
-  {
+  public String getSelectedGroup() {
     return selectedGroup;
   }
 
-  public void setSelectedGroup(final String selectedQuery)
-  {
+  public void setSelectedGroup( final String selectedQuery ) {
     final String oldQuery = this.selectedGroup;
     this.selectedGroup = selectedQuery;
-    firePropertyChange("selectedGroup", oldQuery, selectedQuery);//NON-NLS
-    getConfirmAction().setEnabled(validateInputs(false));
+    firePropertyChange( "selectedGroup", oldQuery, selectedQuery );//NON-NLS
+    getConfirmAction().setEnabled( validateInputs( false ) );
   }
 
-  public String performEdit(final String[] queries, final String selectedGroup)
-  {
-    setGroups(queries);
-    setSelectedGroup(selectedGroup);
-    if (super.performEdit())
-    {
+  public String performEdit( final String[] queries, final String selectedGroup ) {
+    setGroups( queries );
+    setSelectedGroup( selectedGroup );
+    if ( super.performEdit() ) {
       return getSelectedGroup();
     }
     return selectedGroup;
   }
 
-  protected boolean validateInputs(final boolean onConfirm)
-  {
+  protected boolean validateInputs( final boolean onConfirm ) {
     final String selectedValue = (String) fieldList.getSelectedValue();
-    return (StringUtils.isEmpty(selectedValue) == false);
+    return ( StringUtils.isEmpty( selectedValue ) == false );
   }
 }

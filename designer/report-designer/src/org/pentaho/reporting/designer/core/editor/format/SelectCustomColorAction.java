@@ -17,51 +17,37 @@
 
 package org.pentaho.reporting.designer.core.editor.format;
 
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JComboBox;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.colorchooser.ColorChooserDialog;
 
-public class SelectCustomColorAction extends AbstractAction
-{
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class SelectCustomColorAction extends AbstractAction {
   private JComboBox comboBox;
 
-  public SelectCustomColorAction(final JComboBox comboBox)
-  {
+  public SelectCustomColorAction( final JComboBox comboBox ) {
     this.comboBox = comboBox;
-    putValue(Action.NAME, "..");
+    putValue( Action.NAME, ".." );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final Color initialColor = (Color) comboBox.getSelectedItem();
-    final Window window = LibSwingUtil.getWindowAncestor(comboBox);
+    final Window window = LibSwingUtil.getWindowAncestor( comboBox );
     final ColorChooserDialog dialog;
-    if (window instanceof Dialog)
-    {
-      dialog = new ColorChooserDialog((Dialog) window);
-    }
-    else if (window instanceof Frame)
-    {
-      dialog = new ColorChooserDialog((Frame) window);
-    }
-    else
-    {
+    if ( window instanceof Dialog ) {
+      dialog = new ColorChooserDialog( (Dialog) window );
+    } else if ( window instanceof Frame ) {
+      dialog = new ColorChooserDialog( (Frame) window );
+    } else {
       dialog = new ColorChooserDialog();
     }
-    dialog.setTitle(Messages.getString("SelectCustomColorAction.Text"));
-    final Color color = dialog.performEdit(initialColor, null);
-    if (color != null)
-    {
-      comboBox.setSelectedItem(color);
+    dialog.setTitle( Messages.getString( "SelectCustomColorAction.Text" ) );
+    final Color color = dialog.performEdit( initialColor, null );
+    if ( color != null ) {
+      comboBox.setSelectedItem( color );
     }
   }
 }

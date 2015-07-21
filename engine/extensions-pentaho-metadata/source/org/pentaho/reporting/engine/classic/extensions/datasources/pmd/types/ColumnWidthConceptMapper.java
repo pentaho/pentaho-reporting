@@ -26,10 +26,8 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class ColumnWidthConceptMapper implements ConceptQueryMapper
-{
-  public ColumnWidthConceptMapper()
-  {
+public class ColumnWidthConceptMapper implements ConceptQueryMapper {
+  public ColumnWidthConceptMapper() {
   }
 
   /**
@@ -37,25 +35,20 @@ public class ColumnWidthConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof ColumnWidth == false)
-    {
+    if ( value instanceof ColumnWidth == false ) {
       return null;
     }
 
-    if (type == null || Object.class.equals(type) || ColumnWidth.class.equals(type))
-    {
-      if (value instanceof ColumnWidthWrapper)
-      {
+    if ( type == null || Object.class.equals( type ) || ColumnWidth.class.equals( type ) ) {
+      if ( value instanceof ColumnWidthWrapper ) {
         return value;
       }
-      return new ColumnWidthWrapper((ColumnWidth) value);
+      return new ColumnWidthWrapper( (ColumnWidth) value );
     }
 
     final ColumnWidth width = (ColumnWidth) value;
@@ -63,41 +56,29 @@ public class ColumnWidthConceptMapper implements ConceptQueryMapper
     final WidthType widthType = width.getType();
 
     final float rawWidth;
-    if (widthType == WidthType.CM)
-    {
-      rawWidth = (float) widthValue * (72.0f * 100 / 254.0f);
-    }
-    else if (widthType == WidthType.INCHES)
-    {
+    if ( widthType == WidthType.CM ) {
+      rawWidth = (float) widthValue * ( 72.0f * 100 / 254.0f );
+    } else if ( widthType == WidthType.INCHES ) {
       rawWidth = 72 * widthValue;
-    }
-    else if (widthType == WidthType.PERCENT)
-    {
-      rawWidth = -Math.max(0, widthValue);
-    }
-    else if (widthType == WidthType.PIXELS)
-    {
+    } else if ( widthType == WidthType.PERCENT ) {
+      rawWidth = -Math.max( 0, widthValue );
+    } else if ( widthType == WidthType.PIXELS ) {
       final OutputProcessorMetaData data = context.getOutputProcessorMetaData();
-      final double resolution = data.getNumericFeatureValue(OutputProcessorFeature.DEVICE_RESOLUTION);
-      final double deviceScaleFactor = (72.0 / resolution);
-      rawWidth = (float) (widthValue * deviceScaleFactor);
-    }
-    else // if (widthType == ColumnWidth.POINTS
+      final double resolution = data.getNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION );
+      final double deviceScaleFactor = ( 72.0 / resolution );
+      rawWidth = (float) ( widthValue * deviceScaleFactor );
+    } else // if (widthType == ColumnWidth.POINTS
     {
-      rawWidth = Math.max(0, widthValue);
+      rawWidth = Math.max( 0, widthValue );
     }
 
-    final String valueAsString = String.valueOf(rawWidth);
-    if (String.class.isAssignableFrom(type))
-    {
+    final String valueAsString = String.valueOf( rawWidth );
+    if ( String.class.isAssignableFrom( type ) ) {
       return valueAsString;
     }
-    try
-    {
-      return ConverterRegistry.toPropertyValue(valueAsString, type);
-    }
-    catch (BeanException e)
-    {
+    try {
+      return ConverterRegistry.toPropertyValue( valueAsString, type );
+    } catch ( BeanException e ) {
       // ignore ..
     }
     return null;

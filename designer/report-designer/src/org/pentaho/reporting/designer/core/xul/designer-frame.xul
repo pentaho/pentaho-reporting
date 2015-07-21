@@ -71,7 +71,7 @@
                   pen:action="org.pentaho.reporting.designer.core.actions.report.PageSetupAction"/>
         <menuitem id="file.print-preview"
                   pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewSwingAction"/>
-        <menuseparator/>        
+        <menuseparator/>
         <menuitem id="file.report-properties"
                   pen:action="org.pentaho.reporting.designer.core.actions.report.EditReportPropertiesAction"/>
         <menuitem id="file.report-configuration"
@@ -82,7 +82,8 @@
         <menuitem id="file.validate-report"
                   pen:action="org.pentaho.reporting.designer.core.actions.report.ValidateReportAction"/>
         <menuseparator/>
-        <pen:checkbox-menuitem id="file.work-offline" pen:action="org.pentaho.reporting.designer.core.actions.global.OfflineModeAction"/>
+        <pen:checkbox-menuitem id="file.work-offline"
+                               pen:action="org.pentaho.reporting.designer.core.actions.global.OfflineModeAction"/>
         <menuseparator/>
         <menuitem id="file.quit" pen:action="org.pentaho.reporting.designer.core.actions.global.QuitAction"/>
       </menupopup>
@@ -150,16 +151,16 @@
           </menupopup>
         </menu>
         <pen:checkbox-menuitem id="show.element.alignment.hints"
-                               pen:action="org.pentaho.reporting.designer.core.actions.global.ShowElementAlignmentHintsAction"/>     
+                               pen:action="org.pentaho.reporting.designer.core.actions.global.ShowElementAlignmentHintsAction"/>
         <pen:checkbox-menuitem id="view.snap.to.element"
                                pen:action="org.pentaho.reporting.designer.core.actions.global.SnapToElementsAction"/>
         <pen:checkbox-menuitem id="view.show-overlapping-elements"
                                pen:action="org.pentaho.reporting.designer.core.actions.global.ShowOverlappingElementsAction"/>
         <menuseparator/>
         <pen:radio-menuitem id="view.selection-outline"
-                               pen:action="org.pentaho.reporting.designer.core.actions.global.DrawSelectionTypeOutlineAction"/>
+                            pen:action="org.pentaho.reporting.designer.core.actions.global.DrawSelectionTypeOutlineAction"/>
         <pen:radio-menuitem id="view.selection-clamp"
-                               pen:action="org.pentaho.reporting.designer.core.actions.global.DrawSelectionTypeClampAction"/>
+                            pen:action="org.pentaho.reporting.designer.core.actions.global.DrawSelectionTypeClampAction"/>
         <menuseparator/>
         <menu id="view-units-menu" label="${menu.view.units.Label}" accesskey="${menu.view.units.Mnemonic}">
           <menupopup id="view-units-popup">
@@ -185,7 +186,7 @@
           </menupopup>
         </menu>
         <menuitem id="view.adjust-bandsize"
-            pen:action="org.pentaho.reporting.designer.core.actions.report.AdjustBandSizeAction"/>
+                  pen:action="org.pentaho.reporting.designer.core.actions.report.AdjustBandSizeAction"/>
       </menupopup>
     </menu>
 
@@ -251,7 +252,8 @@
                       pen:action="org.pentaho.reporting.designer.core.actions.elements.align.AlignRightAction"/>
           </menupopup>
         </menu>
-        <menu id="format-distribute-menu" label="${menu.format.distribute.Label}" accesskey="${menu.format.distribute.Mnemonic}">
+        <menu id="format-distribute-menu" label="${menu.format.distribute.Label}"
+              accesskey="${menu.format.distribute.Mnemonic}">
           <menupopup id="format-distribute-popup">
             <menuitem id="format.distribute.left"
                       pen:action="org.pentaho.reporting.designer.core.actions.elements.distribute.DistributeLeftAction"/>
@@ -316,7 +318,7 @@
                   pen:action="org.pentaho.reporting.designer.core.actions.global.ShowExternalStyleDefinitionEditorAction"/>
       </menupopup>
     </menu>
-    
+
     <menu id="window-menu" label="${menu.window.Label}" accesskey="${menu.window.Mnemonic}">
       <!-- This is a internal extension point. Do not remove! -->
       <menupopup id="window-popup">
@@ -368,7 +370,7 @@
   <hbox id="main-toolbar" pen:customclass="-x-SwingXulToolbar">
     <button id="toolbar.new" pen:action="org.pentaho.reporting.designer.core.actions.global.NewReportAction"/>
     <button id="toolbar.open" pen:action="org.pentaho.reporting.designer.core.actions.global.OpenReportAction"/>
-    <button id="toolbar.save" pen:action="org.pentaho.reporting.designer.core.actions.report.SaveReportAction"/>    
+    <button id="toolbar.save" pen:action="org.pentaho.reporting.designer.core.actions.report.SaveReportAction"/>
     <separator/>
     <button id="toolbar.add-datasources"
             pen:action="org.pentaho.reporting.designer.core.actions.report.ShowAddDataSourcePopupAction"/>
@@ -568,9 +570,12 @@
       <menuitem id="popup-RelationalGroup.layer-down"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
       <menuseparator/>
-      <menuitem id="popup-RelationalGroup.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
-      <menuitem id="popup-RelationalGroup.copy" pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
-      <menuitem id="popup-RelationalGroup.paste" pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-RelationalGroup.cut"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
+      <menuitem id="popup-RelationalGroup.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-RelationalGroup.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
       <menuitem id="popup-RelationalGroup.paste-format"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
     </popup>
@@ -591,8 +596,10 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
       <menuseparator/>
       <menuitem id="popup-CrosstabGroup.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
-      <menuitem id="popup-CrosstabGroup.copy" pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
-      <menuitem id="popup-CrosstabGroup.paste" pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-CrosstabGroup.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-CrosstabGroup.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
       <menuitem id="popup-CrosstabGroup.paste-format"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
     </popup>
@@ -610,9 +617,12 @@
       <menuitem id="popup-CrosstabOtherGroup.layer-down"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
       <menuseparator/>
-      <menuitem id="popup-CrosstabOtherGroup.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
-      <menuitem id="popup-CrosstabOtherGroup.copy" pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
-      <menuitem id="popup-CrosstabOtherGroup.paste" pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-CrosstabOtherGroup.cut"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
+      <menuitem id="popup-CrosstabOtherGroup.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-CrosstabOtherGroup.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
       <menuitem id="popup-CrosstabOtherGroup.paste-format"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
     </popup>
@@ -628,9 +638,12 @@
       <menuitem id="popup-CrosstabRowGroup.layer-down"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
       <menuseparator/>
-      <menuitem id="popup-CrosstabRowGroup.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
-      <menuitem id="popup-CrosstabRowGroup.copy" pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
-      <menuitem id="popup-CrosstabRowGroup.paste" pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-CrosstabRowGroup.cut"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
+      <menuitem id="popup-CrosstabRowGroup.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-CrosstabRowGroup.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
       <menuitem id="popup-CrosstabRowGroup.paste-format"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
     </popup>
@@ -644,9 +657,12 @@
       <menuitem id="popup-CrosstabColumnGroup.layer-down"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
       <menuseparator/>
-      <menuitem id="popup-CrosstabColumnGroup.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
-      <menuitem id="popup-CrosstabColumnGroup.copy" pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
-      <menuitem id="popup-CrosstabColumnGroup.paste" pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-CrosstabColumnGroup.cut"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
+      <menuitem id="popup-CrosstabColumnGroup.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-CrosstabColumnGroup.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
       <menuitem id="popup-CrosstabColumnGroup.paste-format"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
     </popup>
@@ -655,47 +671,52 @@
       <menuitem id="popup-CrosstabCellBody.insert-crosstab-cell"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabCellAction"/>
       <menuseparator/>
-      <menuitem id="popup-CrosstabCellBody.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
-      <menuitem id="popup-CrosstabCellBody.copy" pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
-      <menuitem id="popup-CrosstabCellBody.paste" pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-CrosstabCellBody.cut"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
+      <menuitem id="popup-CrosstabCellBody.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-CrosstabCellBody.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
       <menuitem id="popup-CrosstabCellBody.paste-format"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
     </popup>
 
     <popup id="popup-RootLevelBand">
       <pen:checkbox-menuitem id="popup-RootLevelBand.hide"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.HideElementAction"/>
+                             pen:action="org.pentaho.reporting.designer.core.actions.elements.format.HideElementAction"/>
       <menuseparator/>
-      <menu id="popup-RootLevelBand-layout-menu" label="${popup.band.layout.Label}" accesskey="${popup.band.layout.Mnemonic}">
+      <menu id="popup-RootLevelBand-layout-menu" label="${popup.band.layout.Label}"
+            accesskey="${popup.band.layout.Mnemonic}">
         <menupopup id="popup-RootLevelBand-layout-popup">
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.canvas"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutCanvasAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutCanvasAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.block"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutBlockAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutBlockAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.inline"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutInlineAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutInlineAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.row"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutRowAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutRowAction"/>
           <menuseparator/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.auto"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutAutoAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutAutoAction"/>
           <menuseparator/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-body"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableBodyAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableBodyAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-row"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableRowAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableRowAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-cell"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableCellAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableCellAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-header"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableHeaderAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableHeaderAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-footer"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableFooterAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableFooterAction"/>
 
         </menupopup>
       </menu>
-      <menu id="popup-RootLevelBand-align-menu" label="${popup.band.align.Label}" accesskey="${popup.band.align.Mnemonic}">
+      <menu id="popup-RootLevelBand-align-menu" label="${popup.band.align.Label}"
+            accesskey="${popup.band.align.Mnemonic}">
         <menupopup id="popup-RootLevelBand-align-popup">
           <menuitem id="popup-RootLevelBand.align.top"
                     pen:action="org.pentaho.reporting.designer.core.actions.elements.align.AlignTopAction"/>
@@ -712,7 +733,8 @@
                     pen:action="org.pentaho.reporting.designer.core.actions.elements.align.AlignRightAction"/>
         </menupopup>
       </menu>
-      <menu id="popup-RootLevelBand-distribute-menu" label="${popup.band.distribute.Label}" accesskey="${popup.band.distribute.Mnemonic}">
+      <menu id="popup-RootLevelBand-distribute-menu" label="${popup.band.distribute.Label}"
+            accesskey="${popup.band.distribute.Mnemonic}">
         <menupopup id="popup-RootLevelBand-distribute-popup">
           <menuitem id="popup-RootLevelBand.distribute.left"
                     pen:action="org.pentaho.reporting.designer.core.actions.elements.distribute.DistributeLeftAction"/>
@@ -743,41 +765,42 @@
       <menuitem id="popup-RootLevelBand.paste-format"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
       <menuseparator/>
-      <menu id="popup-RootLevelBand.add-element-menu" label="${popup.band.add-element.Label}" accesskey="${popup.band.add-element.Mnemonic}">
+      <menu id="popup-RootLevelBand.add-element-menu" label="${popup.band.add-element.Label}"
+            accesskey="${popup.band.add-element.Mnemonic}">
         <menupopup id="popup-RootLevelBand.add-element-popup"/>
       </menu>
     </popup>
 
     <popup id="popup-Band">
       <pen:checkbox-menuitem id="popup-Band.hide"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.HideElementAction"/>
+                             pen:action="org.pentaho.reporting.designer.core.actions.elements.format.HideElementAction"/>
       <menuseparator/>
       <menu id="popup-Band-layout-menu" label="${popup.band.layout.Label}" accesskey="${popup.band.layout.Mnemonic}">
         <menupopup id="popup-Band-layout-popup">
           <pen:checkbox-menuitem id="popup-Band.layout.canvas"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutCanvasAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutCanvasAction"/>
           <pen:checkbox-menuitem id="popup-Band.layout.block"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutBlockAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutBlockAction"/>
           <pen:checkbox-menuitem id="popup-Band.layout.inline"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutInlineAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutInlineAction"/>
           <pen:checkbox-menuitem id="popup-Band.layout.row"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutRowAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutRowAction"/>
           <menuseparator/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.auto"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutAutoAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutAutoAction"/>
           <menuseparator/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-body"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableBodyAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableBodyAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-row"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableRowAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableRowAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-cell"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableCellAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableCellAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-header"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableHeaderAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableHeaderAction"/>
           <pen:checkbox-menuitem id="popup-RootLevelBand.layout.table-footer"
-                    pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableFooterAction"/>
+                                 pen:action="org.pentaho.reporting.designer.core.actions.elements.layout.LayoutTableFooterAction"/>
         </menupopup>
       </menu>
       <menu id="popup-Band-align-menu" label="${popup.band.align.Label}" accesskey="${popup.band.align.Mnemonic}">
@@ -797,7 +820,8 @@
                     pen:action="org.pentaho.reporting.designer.core.actions.elements.align.AlignRightAction"/>
         </menupopup>
       </menu>
-      <menu id="popup-Band-distribute-menu" label="${popup.band.distribute.Label}" accesskey="${popup.band.distribute.Mnemonic}">
+      <menu id="popup-Band-distribute-menu" label="${popup.band.distribute.Label}"
+            accesskey="${popup.band.distribute.Mnemonic}">
         <menupopup id="popup-Band-distribute-popup">
           <menuitem id="popup-Band.distribute.left"
                     pen:action="org.pentaho.reporting.designer.core.actions.elements.distribute.DistributeLeftAction"/>
@@ -832,7 +856,8 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
       <menuitem id="popup-Band.delete" pen:action="org.pentaho.reporting.designer.core.actions.global.DeleteAction"/>
       <menuseparator/>
-      <menu id="popup-Band.add-element-menu" label="${popup.band.add-element.Label}" accesskey="${popup.band.add-element.Mnemonic}">
+      <menu id="popup-Band.add-element-menu" label="${popup.band.add-element.Label}"
+            accesskey="${popup.band.add-element.Mnemonic}">
         <menupopup id="popup-Band.add-element-popup"/>
       </menu>
     </popup>
@@ -844,9 +869,9 @@
       </menu>
       <menuseparator/>
       <pen:checkbox-menuitem id="popup-Barcode.scale"
-                            pen:action="org.pentaho.reporting.designer.core.actions.elements.format.ScaleAction"/>
+                             pen:action="org.pentaho.reporting.designer.core.actions.elements.format.ScaleAction"/>
       <pen:checkbox-menuitem id="popup-Barcode.keep-aspect-ratio"
-                            pen:action="org.pentaho.reporting.designer.core.actions.elements.format.KeepAspectRatioAction"/>
+                             pen:action="org.pentaho.reporting.designer.core.actions.elements.format.KeepAspectRatioAction"/>
       <menuseparator/>
       <menuitem id="popup-Barcode.layer-up"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerUpAction"/>
@@ -869,9 +894,9 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.EditContentRefAction"/>
       <menuseparator/>
       <pen:checkbox-menuitem id="popup-Content.scale"
-                            pen:action="org.pentaho.reporting.designer.core.actions.elements.format.ScaleAction"/>
+                             pen:action="org.pentaho.reporting.designer.core.actions.elements.format.ScaleAction"/>
       <pen:checkbox-menuitem id="popup-Content.keep-aspect-ratio"
-                            pen:action="org.pentaho.reporting.designer.core.actions.elements.format.KeepAspectRatioAction"/>
+                             pen:action="org.pentaho.reporting.designer.core.actions.elements.format.KeepAspectRatioAction"/>
       <menuseparator/>
       <menu id="popup-Content-align-menu" label="${menu.format.align.Label}" accesskey="a">
         <menupopup id="popup-Content-align-popup">

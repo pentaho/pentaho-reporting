@@ -18,15 +18,13 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
 /**
- * These attribute names are based on the MSDN-Article at
- * http://msdn2.microsoft.com/en-us/library/ms145573.aspx
+ * These attribute names are based on the MSDN-Article at http://msdn2.microsoft.com/en-us/library/ms145573.aspx
  *
  * @author : Thomas Morgner
  */
-public class MDXMetaAttributeNames
-{
+public class MDXMetaAttributeNames {
   public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx";
+    "http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx";
 
   public static final String FONT_FLAGS = "FONT_FLAGS";
   public static final String FONTNAME = "FONT_NAME";
@@ -44,7 +42,6 @@ public class MDXMetaAttributeNames
   public static final String MDX_CAPTION = "MDX::CAPTION";
   public static final String MDX_DESCRIPTION = "MDX::DESCRIPTION";
 
-  private MDXMetaAttributeNames()
-  {
+  private MDXMetaAttributeNames() {
   }
 }

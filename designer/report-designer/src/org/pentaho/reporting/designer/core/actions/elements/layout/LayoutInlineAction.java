@@ -19,10 +19,8 @@ package org.pentaho.reporting.designer.core.actions.elements.layout;
 
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
-public final class LayoutInlineAction extends LayoutAction
-{
-  public LayoutInlineAction()
-  {
-    super("LayoutInlineAction", BandStyleKeys.LAYOUT_INLINE);
+public final class LayoutInlineAction extends LayoutAction {
+  public LayoutInlineAction() {
+    super( "LayoutInlineAction", BandStyleKeys.LAYOUT_INLINE );
   }
 }

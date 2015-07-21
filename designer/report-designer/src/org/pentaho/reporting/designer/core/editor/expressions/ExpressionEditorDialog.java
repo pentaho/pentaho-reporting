@@ -17,27 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.util.HashMap;
-import java.util.Iterator;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.util.ExpressionListCellRenderer;
@@ -53,130 +32,114 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.VerticalLayout;
 
-public class ExpressionEditorDialog extends CommonDialog
-{
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Iterator;
+
+public class ExpressionEditorDialog extends CommonDialog {
   private static final String PREFIX = "org.pentaho.reporting.designer.core.editor.expressions.plugins.";
 
-  private class ExpressionSelectionHandler implements ListDataListener
-  {
-    private ExpressionSelectionHandler()
-    {
+  private class ExpressionSelectionHandler implements ListDataListener {
+    private ExpressionSelectionHandler() {
     }
 
-    public void intervalAdded(final ListDataEvent e)
-    {
+    public void intervalAdded( final ListDataEvent e ) {
 
     }
 
-    public void intervalRemoved(final ListDataEvent e)
-    {
+    public void intervalRemoved( final ListDataEvent e ) {
 
     }
 
-    public void contentsChanged(final ListDataEvent e)
-    {
+    public void contentsChanged( final ListDataEvent e ) {
       final ExpressionMetaData selectedItem = (ExpressionMetaData) expressionEditor.getSelectedItem();
       final Expression expression = getExpression();
 
-      if (selectedItem == null)
-      {
-        if (expression != null)
-        {
-          setExpression(null);
+      if ( selectedItem == null ) {
+        if ( expression != null ) {
+          setExpression( null );
         }
         return;
       }
 
-      if (expression == null ||
-          ObjectUtilities.equal(selectedItem.getExpressionType(), expression.getClass()) == false)
-      {
-        setExpression(selectedItem.create());
+      if ( expression == null ||
+        ObjectUtilities.equal( selectedItem.getExpressionType(), expression.getClass() ) == false ) {
+        setExpression( selectedItem.create() );
       }
     }
   }
 
-  private static class ExpressionEditorWrapper extends JComponent
-  {
+  private static class ExpressionEditorWrapper extends JComponent {
     private JComponent disabledPanel;
     private CardLayout cardLayout;
     private JPanel enabledPanel;
     private ExpressionEditor editor;
 
-    private ExpressionEditorWrapper()
-    {
+    private ExpressionEditorWrapper() {
       disabledPanel = new JPanel();
-      disabledPanel.setLayout(new BorderLayout());
-      disabledPanel.add(new JLabel(EditorExpressionsMessages.getString("ExpressionEditorDialog.NoExtendedEditor")));
+      disabledPanel.setLayout( new BorderLayout() );
+      disabledPanel
+        .add( new JLabel( EditorExpressionsMessages.getString( "ExpressionEditorDialog.NoExtendedEditor" ) ) );
 
       cardLayout = new CardLayout();
 
       enabledPanel = new JPanel();
-      enabledPanel.setLayout(new BorderLayout());
+      enabledPanel.setLayout( new BorderLayout() );
 
-      setLayout(cardLayout);
-      add(disabledPanel, "disabled"); // NON-NLS
-      add(enabledPanel, "enabled"); // NON-NLS
+      setLayout( cardLayout );
+      add( disabledPanel, "disabled" ); // NON-NLS
+      add( enabledPanel, "enabled" ); // NON-NLS
 
-      cardLayout.first(this);
+      cardLayout.first( this );
     }
 
-    public ExpressionEditor getEditor()
-    {
+    public ExpressionEditor getEditor() {
       return editor;
     }
 
-    public void setEditor(final ExpressionEditor editor)
-    {
-      if (this.editor != null)
-      {
+    public void setEditor( final ExpressionEditor editor ) {
+      if ( this.editor != null ) {
         this.editor.stopEditing();
       }
 
       this.editor = editor;
 
-      if (editor == null)
-      {
-        cardLayout.first(this);
-      }
-      else
-      {
+      if ( editor == null ) {
+        cardLayout.first( this );
+      } else {
         final JComponent editorComponent = editor.getEditorComponent();
         enabledPanel.removeAll();
-        enabledPanel.add(editorComponent);
+        enabledPanel.add( editorComponent );
         enabledPanel.revalidate();
 
-        cardLayout.last(this);
+        cardLayout.last( this );
       }
     }
 
-    public void stopEditing()
-    {
-      if (this.editor != null)
-      {
+    public void stopEditing() {
+      if ( this.editor != null ) {
         this.editor.stopEditing();
       }
     }
   }
 
-  private class TabSelectionListener implements ChangeListener
-  {
-    private TabSelectionListener()
-    {
+  private class TabSelectionListener implements ChangeListener {
+    private TabSelectionListener() {
     }
 
-    public void stateChanged(final ChangeEvent e)
-    {
-      if (viewPane.getSelectedIndex() == 0)
-      {
-        if (viewPane.getTabCount() == 2)
-        {
+    public void stateChanged( final ChangeEvent e ) {
+      if ( viewPane.getSelectedIndex() == 0 ) {
+        if ( viewPane.getTabCount() == 2 ) {
           wrapper.getEditor().stopEditing();
         }
-      }
-      else
-      {
+      } else {
         expressionEditorPane.stopEditing();
-        wrapper.getEditor().initialize(expression, designerContext);
+        wrapper.getEditor().initialize( expression, designerContext );
       }
     }
   }
@@ -193,243 +156,198 @@ public class ExpressionEditorDialog extends CommonDialog
   private boolean showStandaloneProperties;
 
 
-  public ExpressionEditorDialog()
-  {
+  public ExpressionEditorDialog() {
     init();
   }
 
-  public ExpressionEditorDialog(final Frame owner) throws HeadlessException
-  {
-    super(owner);
+  public ExpressionEditorDialog( final Frame owner ) throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public ExpressionEditorDialog(final Dialog owner) throws HeadlessException
-  {
-    super(owner);
+  public ExpressionEditorDialog( final Dialog owner ) throws HeadlessException {
+    super( owner );
     init();
   }
 
-  protected void init()
-  {
+  protected void init() {
     editorPlugins = new HashMap<String, Class>();
     loadPlugins();
 
-    setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-    setTitle(EditorExpressionsMessages.getString("ExpressionEditorDialog.Title"));
-    setModal(true);
-    setResizable(true);
+    setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
+    setTitle( EditorExpressionsMessages.getString( "ExpressionEditorDialog.Title" ) );
+    setModal( true );
+    setResizable( true );
 
     expressionEditorPane = new ExpressionPropertiesEditorPanel();
     wrapper = new ExpressionEditorWrapper();
 
     viewPane = new JTabbedPane();
-    viewPane.addTab(EditorExpressionsMessages.getString("ExpressionEditorDialog.Properties"), new JScrollPane(expressionEditorPane));
-    viewPane.setEnabledAt(0, false);
-    viewPane.addChangeListener(new TabSelectionListener());
+    viewPane.addTab( EditorExpressionsMessages.getString( "ExpressionEditorDialog.Properties" ),
+      new JScrollPane( expressionEditorPane ) );
+    viewPane.setEnabledAt( 0, false );
+    viewPane.addChangeListener( new TabSelectionListener() );
 
     final ExpressionMetaData[] knownExpressions = ExpressionUtil.getInstance().getKnownExpressions();
-    model = new DefaultComboBoxModel(knownExpressions);
-    model.addListDataListener(new ExpressionSelectionHandler());
+    model = new DefaultComboBoxModel( knownExpressions );
+    model.addListDataListener( new ExpressionSelectionHandler() );
 
-    expressionEditor = new JComboBox(model);
-    expressionEditor.setEditable(false);
-    expressionEditor.setRenderer(new ExpressionListCellRenderer());
+    expressionEditor = new JComboBox( model );
+    expressionEditor.setEditable( false );
+    expressionEditor.setRenderer( new ExpressionListCellRenderer() );
 
     super.init();
 
-    setExpressionsOnly(true);
-    setExpression(null);
+    setExpressionsOnly( true );
+    setExpression( null );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.ExpressionEditor";
   }
 
-  public Expression getExpression()
-  {
+  public Expression getExpression() {
     return expression;
   }
 
-  public void setExpression(final Expression expression)
-  {
-    if (viewPane.getTabCount() == 2)
-    {
-      viewPane.removeTabAt(1);
+  public void setExpression( final Expression expression ) {
+    if ( viewPane.getTabCount() == 2 ) {
+      viewPane.removeTabAt( 1 );
     }
     this.expression = expression;
-    if (expression == null)
-    {
-      this.expressionEditor.setSelectedItem(null);
-      this.wrapper.setEditor(null);
+    if ( expression == null ) {
+      this.expressionEditor.setSelectedItem( null );
+      this.wrapper.setEditor( null );
 
-      this.expressionEditorPane.setData(new Expression[0]);
+      this.expressionEditorPane.setData( new Expression[ 0 ] );
 
-      viewPane.setEnabledAt(0, false);
-    }
-    else
-    {
-      try
-      {
+      viewPane.setEnabledAt( 0, false );
+    } else {
+      try {
 
-        viewPane.setEnabledAt(0, true);
+        viewPane.setEnabledAt( 0, true );
 
         this.expressionEditor.setSelectedItem
-            (ExpressionRegistry.getInstance().getExpressionMetaData(expression.getClass().getName()));
+          ( ExpressionRegistry.getInstance().getExpressionMetaData( expression.getClass().getName() ) );
 
-        this.expressionEditorPane.setData(new Expression[]{this.expression});
-        final ExpressionEditor plugin = createEditorForClass(expression);
-        if (plugin != null)
-        {
-          wrapper.setEditor(plugin);
+        this.expressionEditorPane.setData( new Expression[] { this.expression } );
+        final ExpressionEditor plugin = createEditorForClass( expression );
+        if ( plugin != null ) {
+          wrapper.setEditor( plugin );
 
-          viewPane.addTab(plugin.getTitle(), wrapper);
-          viewPane.setSelectedIndex(1);
+          viewPane.addTab( plugin.getTitle(), wrapper );
+          viewPane.setSelectedIndex( 1 );
+        } else {
+          wrapper.setEditor( null );
         }
-        else
-        {
-          wrapper.setEditor(null);
-        }
-      }
-      catch (MetaDataLookupException e)
-      {
-        UncaughtExceptionsModel.getInstance().addException(e);
-        this.expressionEditor.setSelectedItem(null);
+      } catch ( MetaDataLookupException e ) {
+        UncaughtExceptionsModel.getInstance().addException( e );
+        this.expressionEditor.setSelectedItem( null );
       }
     }
   }
 
-  private ExpressionEditor createEditorForClass(final Expression expression)
-  {
-    final Class plugin = editorPlugins.get(expression.getClass().getName());
-    if (plugin == null)
-    {
+  private ExpressionEditor createEditorForClass( final Expression expression ) {
+    final Class plugin = editorPlugins.get( expression.getClass().getName() );
+    if ( plugin == null ) {
       return null;
     }
-    try
-    {
+    try {
       final ExpressionEditor ed = (ExpressionEditor) plugin.newInstance();
-      ed.initialize(expression, designerContext);
+      ed.initialize( expression, designerContext );
       return ed;
-    }
-    catch (Throwable e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
+    } catch ( Throwable e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
       return null;
     }
   }
 
-  public boolean isExpressionsOnly()
-  {
+  public boolean isExpressionsOnly() {
     return expressionsOnly;
   }
 
-  public void setExpressionsOnly(final boolean expressionsOnly)
-  {
-    if (this.expressionsOnly == expressionsOnly)
-    {
+  public void setExpressionsOnly( final boolean expressionsOnly ) {
+    if ( this.expressionsOnly == expressionsOnly ) {
       return;
     }
-    
+
     this.expressionsOnly = expressionsOnly;
     this.model.removeAllElements();
-    this.model.addElement(null);
+    this.model.addElement( null );
     final ExpressionMetaData[] knownExpressions;
-    if (expressionsOnly)
-    {
+    if ( expressionsOnly ) {
       knownExpressions = ExpressionUtil.getInstance().getKnownExpressions();
-    }
-    else
-    {
+    } else {
       knownExpressions = ExpressionUtil.getInstance().getKnownFunctions();
     }
-    for (final ExpressionMetaData knownExpression : knownExpressions)
-    {
-      this.model.addElement(knownExpression);
+    for ( final ExpressionMetaData knownExpression : knownExpressions ) {
+      this.model.addElement( knownExpression );
     }
   }
 
-  private void loadPlugins()
-  {
-    final ClassLoader classLoader = ObjectUtilities.getClassLoader(ExpressionEditorDialog.class);
+  private void loadPlugins() {
+    final ClassLoader classLoader = ObjectUtilities.getClassLoader( ExpressionEditorDialog.class );
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
-    final Iterator<String> keys = config.findPropertyKeys(PREFIX);
-    while (keys.hasNext())
-    {
+    final Iterator<String> keys = config.findPropertyKeys( PREFIX );
+    while ( keys.hasNext() ) {
       final String key = keys.next();
-      final String expressionClass = key.substring(PREFIX.length());
-      try
-      {
-        final String editorClass = config.getConfigProperty(key);
-        final Class c = Class.forName(editorClass, false, classLoader);
-        if (c != null)
-        {
-          editorPlugins.put(expressionClass, c);
+      final String expressionClass = key.substring( PREFIX.length() );
+      try {
+        final String editorClass = config.getConfigProperty( key );
+        final Class c = Class.forName( editorClass, false, classLoader );
+        if ( c != null ) {
+          editorPlugins.put( expressionClass, c );
         }
-      }
-      catch (Throwable e)
-      {
+      } catch ( Throwable e ) {
         e.printStackTrace();
       }
     }
   }
 
-  protected Component createContentPane()
-  {
-    final JPanel headerPanel = new JPanel(new VerticalLayout(5, VerticalLayout.LEFT, VerticalLayout.TOP));
-    headerPanel.add(new JLabel(EditorExpressionsMessages.getString("ExpressionEditorDialog.SelectedExpression")));
-    headerPanel.add(expressionEditor);
+  protected Component createContentPane() {
+    final JPanel headerPanel = new JPanel( new VerticalLayout( 5, VerticalLayout.LEFT, VerticalLayout.TOP ) );
+    headerPanel.add( new JLabel( EditorExpressionsMessages.getString( "ExpressionEditorDialog.SelectedExpression" ) ) );
+    headerPanel.add( expressionEditor );
 
     final JPanel panel = new JPanel();
-    panel.setLayout(new BorderLayout());
-    panel.add(viewPane, BorderLayout.CENTER);
-    panel.add(headerPanel, BorderLayout.NORTH);
+    panel.setLayout( new BorderLayout() );
+    panel.add( viewPane, BorderLayout.CENTER );
+    panel.add( headerPanel, BorderLayout.NORTH );
     return panel;
   }
 
-  public Expression performEditExpression(final ReportDesignerContext context, final Expression expression)
-  {
-    if (context == null)
-    {
+  public Expression performEditExpression( final ReportDesignerContext context, final Expression expression ) {
+    if ( context == null ) {
       throw new NullPointerException();
     }
 
-    setShowStandaloneProperties(false);
-    setExpressionsOnly(true);
+    setShowStandaloneProperties( false );
+    setExpressionsOnly( true );
     designerContext = context;
-    if (expression == null)
-    {
-      setExpression(new FormulaExpression());
+    if ( expression == null ) {
+      setExpression( new FormulaExpression() );
+    } else {
+      setExpression( expression.getInstance() );
     }
-    else
-    {
-      setExpression(expression.getInstance());
-    }
-    if (super.performEdit() == false)
-    {
+    if ( super.performEdit() == false ) {
       return null;
     }
 
     this.wrapper.stopEditing();
-    if (this.expression instanceof FormulaExpression)
-    {
+    if ( this.expression instanceof FormulaExpression ) {
       final FormulaExpression formulaExpression = (FormulaExpression) this.expression;
-      if (StringUtils.isEmpty(formulaExpression.getFormula()))
-      {
+      if ( StringUtils.isEmpty( formulaExpression.getFormula() ) ) {
         return null;
       }
     }
     return this.expression;
   }
 
-  public void setShowStandaloneProperties(final boolean showStandaloneProperties)
-  {
+  public void setShowStandaloneProperties( final boolean showStandaloneProperties ) {
     this.showStandaloneProperties = showStandaloneProperties;
   }
 
-  public boolean isShowStandaloneProperties()
-  {
+  public boolean isShowStandaloneProperties() {
     return showStandaloneProperties;
   }
 

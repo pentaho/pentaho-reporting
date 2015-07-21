@@ -17,38 +17,30 @@
 
 package org.pentaho.reporting.designer.core.util.docking;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.SystemColor;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
-public class InternalWindow extends JPanel
-{
-  public InternalWindow(final String titleCategory)
-  {
-    setLayout(new BorderLayout());
+public class InternalWindow extends JPanel {
+  public InternalWindow( final String titleCategory ) {
+    setLayout( new BorderLayout() );
 
-    final DefaultHeaderComponent defaultHeaderComponent = new DefaultHeaderComponent(titleCategory);
-    defaultHeaderComponent.setBorder(new HeaderBorder());
+    final DefaultHeaderComponent defaultHeaderComponent = new DefaultHeaderComponent( titleCategory );
+    defaultHeaderComponent.setBorder( new HeaderBorder() );
 
-    add(defaultHeaderComponent, BorderLayout.NORTH);
-    setBorder(new ShadowBorder());
-    setBorder(BorderFactory.createLineBorder(SystemColor.controlShadow));
+    add( defaultHeaderComponent, BorderLayout.NORTH );
+    setBorder( new ShadowBorder() );
+    setBorder( BorderFactory.createLineBorder( SystemColor.controlShadow ) );
 
   }
 
-  public final void setFocusCycleRoot(final boolean focusCycleRoot)
-  {
+  public final void setFocusCycleRoot( final boolean focusCycleRoot ) {
   }
 
-  public final boolean isFocusCycleRoot()
-  {
+  public final boolean isFocusCycleRoot() {
     return true;
   }
 
-  public final Container getFocusCycleRootAncestor()
-  {
+  public final Container getFocusCycleRootAncestor() {
     return null;
   }
 }

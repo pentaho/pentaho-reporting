@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.designer.core.actions;
 
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
+
+import javax.swing.*;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public interface DesignerContextAction extends Action, DesignerContextComponent
-{
+public interface DesignerContextAction extends Action, DesignerContextComponent {
 }

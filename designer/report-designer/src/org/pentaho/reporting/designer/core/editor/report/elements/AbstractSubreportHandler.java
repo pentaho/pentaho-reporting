@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
@@ -33,8 +28,9 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-abstract class AbstractSubreportHandler<T extends SubReport> implements Runnable
-{
+import java.awt.*;
+
+abstract class AbstractSubreportHandler<T extends SubReport> implements Runnable {
   final Component component;
   final ReportDesignerContext designerContext;
   final ReportDocumentContext renderContext;
@@ -42,14 +38,13 @@ abstract class AbstractSubreportHandler<T extends SubReport> implements Runnable
   final Band parent;
   final boolean rootband;
 
-  AbstractSubreportHandler(T subReport,
-                           Band parent,
-                           ReportElementEditorContext dragContext,
-                           boolean rootband)
-  {
-    ArgumentNullException.validate("subReport", subReport);
-    ArgumentNullException.validate("parent", parent);
-    ArgumentNullException.validate("dragContext", dragContext);
+  AbstractSubreportHandler( T subReport,
+                            Band parent,
+                            ReportElementEditorContext dragContext,
+                            boolean rootband ) {
+    ArgumentNullException.validate( "subReport", subReport );
+    ArgumentNullException.validate( "parent", parent );
+    ArgumentNullException.validate( "dragContext", dragContext );
 
     this.subReport = subReport;
     this.parent = parent;
@@ -59,15 +54,14 @@ abstract class AbstractSubreportHandler<T extends SubReport> implements Runnable
     this.rootband = rootband;
   }
 
-  AbstractSubreportHandler(T subReport,
-                           Band parent,
-                           ReportDesignerContext designerContext,
-                           ReportDocumentContext renderContext)
-  {
-    ArgumentNullException.validate("subReport", subReport);
-    ArgumentNullException.validate("parent", parent);
-    ArgumentNullException.validate("designerContext", designerContext);
-    ArgumentNullException.validate("renderContext", renderContext);
+  AbstractSubreportHandler( T subReport,
+                            Band parent,
+                            ReportDesignerContext designerContext,
+                            ReportDocumentContext renderContext ) {
+    ArgumentNullException.validate( "subReport", subReport );
+    ArgumentNullException.validate( "parent", parent );
+    ArgumentNullException.validate( "designerContext", designerContext );
+    ArgumentNullException.validate( "renderContext", renderContext );
 
     this.subReport = subReport;
     this.parent = parent;
@@ -77,10 +71,8 @@ abstract class AbstractSubreportHandler<T extends SubReport> implements Runnable
     this.rootband = parent instanceof AbstractRootLevelBand;
   }
 
-  public void run()
-  {
-    if (!showConfirmationDialog())
-    {
+  public void run() {
+    if ( !showConfirmationDialog() ) {
       return;
     }
     createSubReportTab();
@@ -90,7 +82,8 @@ abstract class AbstractSubreportHandler<T extends SubReport> implements Runnable
 
   /**
    * Shows a dialog, that asks the user to confirm creating a sub-report.
-   * @return  <tt>true</tt> or <tt>false</tt> depending on the user's decision
+   *
+   * @return <tt>true</tt> or <tt>false</tt> depending on the user's decision
    */
   abstract boolean showConfirmationDialog();
 
@@ -102,52 +95,40 @@ abstract class AbstractSubreportHandler<T extends SubReport> implements Runnable
   /**
    * Shows a dialog asking the user what datasource he wants to include into the sub-report
    */
-  void showDataSourceDialog()
-  {
+  void showDataSourceDialog() {
     SubReportDataSourceDialog dialog = createSubReportDataSourceDialog();
-    final String queryName = dialog.performSelection(designerContext);
-    if (queryName == null)
-    {
-      subReport.setDataFactory(new CompoundDataFactory());
-    }
-    else
-    {
-      subReport.setQuery(queryName);
-      doSetQuery(queryName);
+    final String queryName = dialog.performSelection( designerContext );
+    if ( queryName == null ) {
+      subReport.setDataFactory( new CompoundDataFactory() );
+    } else {
+      subReport.setQuery( queryName );
+      doSetQuery( queryName );
     }
   }
 
   /**
-   * Executes additional actions after <tt>queryName</tt> was obtained from dialog.
-   * Empty by default
+   * Executes additional actions after <tt>queryName</tt> was obtained from dialog. Empty by default
    *
    * @param queryName a query name, strictly not null
    */
-  void doSetQuery(String queryName)
-  {
+  void doSetQuery( String queryName ) {
   }
 
 
   /**
-   * Creates an instance of <code>SubReportDataSourceDialog</code> to ask user what data sources to include
-   * into subreport.
+   * Creates an instance of <code>SubReportDataSourceDialog</code> to ask user what data sources to include into
+   * subreport.
    *
    * @return dialog's instance
    */
-  SubReportDataSourceDialog createSubReportDataSourceDialog()
-  {
-    final Window window = LibSwingUtil.getWindowAncestor(designerContext.getView().getParent());
+  SubReportDataSourceDialog createSubReportDataSourceDialog() {
+    final Window window = LibSwingUtil.getWindowAncestor( designerContext.getView().getParent() );
     // Prompt user to either create or use an existing data-source.
-    if (window instanceof Dialog)
-    {
-      return new SubReportDataSourceDialog((Dialog) window);
-    }
-    else if (window instanceof Frame)
-    {
-      return new SubReportDataSourceDialog((Frame) window);
-    }
-    else
-    {
+    if ( window instanceof Dialog ) {
+      return new SubReportDataSourceDialog( (Dialog) window );
+    } else if ( window instanceof Frame ) {
+      return new SubReportDataSourceDialog( (Frame) window );
+    } else {
       return new SubReportDataSourceDialog();
     }
   }
@@ -156,9 +137,8 @@ abstract class AbstractSubreportHandler<T extends SubReport> implements Runnable
   /**
    * Last actions before the instance will complete execution
    */
-  void completeExecution()
-  {
-    subReport.addInputParameter("*", "*");
-    renderContext.getSelectionModel().setSelectedElements(new Object[]{subReport});
+  void completeExecution() {
+    subReport.addInputParameter( "*", "*" );
+    renderContext.getSelectionModel().setSelectedElements( new Object[] { subReport } );
   }
 }

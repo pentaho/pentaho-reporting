@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.xpath;
 
-import java.io.File;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.LinkedHashMap;
-import javax.swing.table.TableModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
@@ -35,70 +28,63 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class XPathDataFactory extends AbstractDataFactory
-{
-  public static class QueryDefinition implements Serializable
-  {
+import javax.swing.table.TableModel;
+import java.io.File;
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.LinkedHashMap;
+
+public class XPathDataFactory extends AbstractDataFactory {
+  public static class QueryDefinition implements Serializable {
     private boolean legacyQuery;
     private String xpathExpression;
 
-    public QueryDefinition(final String xpathExpression, final boolean legacyQuery)
-    {
+    public QueryDefinition( final String xpathExpression, final boolean legacyQuery ) {
       this.xpathExpression = xpathExpression;
       this.legacyQuery = legacyQuery;
     }
 
-    public boolean isLegacyQuery()
-    {
+    public boolean isLegacyQuery() {
       return legacyQuery;
     }
 
-    public String getXpathExpression()
-    {
+    public String getXpathExpression() {
       return xpathExpression;
     }
   }
 
-  private static final Log logger = LogFactory.getLog(XPathDataFactory.class);
+  private static final Log logger = LogFactory.getLog( XPathDataFactory.class );
 
   private LinkedHashMap<String, QueryDefinition> queries;
   private String xqueryDataFile;
 
-  public XPathDataFactory()
-  {
+  public XPathDataFactory() {
     queries = new LinkedHashMap<String, QueryDefinition>();
   }
 
-  public String getXqueryDataFile()
-  {
+  public String getXqueryDataFile() {
     return xqueryDataFile;
   }
 
-  public void setXqueryDataFile(final String xqueryDataFile)
-  {
+  public void setXqueryDataFile( final String xqueryDataFile ) {
     this.xqueryDataFile = xqueryDataFile;
   }
 
-  public void setQuery(final String name, final String value, final boolean legacyQuery)
-  {
-    if (value == null)
-    {
-      queries.remove(name);
-    }
-    else
-    {
-      queries.put(name, new QueryDefinition(value, legacyQuery));
+  public void setQuery( final String name, final String value, final boolean legacyQuery ) {
+    if ( value == null ) {
+      queries.remove( name );
+    } else {
+      queries.put( name, new QueryDefinition( value, legacyQuery ) );
     }
   }
 
-  public QueryDefinition getQuery(final String name)
-  {
-    return queries.get(name);
+  public QueryDefinition getQuery( final String name ) {
+    return queries.get( name );
   }
 
-  public String[] getQueryNames()
-  {
-    return queries.keySet().toArray(new String[queries.size()]);
+  public String[] getQueryNames() {
+    return queries.keySet().toArray( new String[ queries.size() ] );
   }
 
   /**
@@ -113,93 +99,71 @@ public class XPathDataFactory extends AbstractDataFactory
    * @return the result of the query as table model.
    * @throws ReportDataFactoryException if an error occured while performing the query.
    */
-  public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-  {
-    final QueryDefinition xpath = queries.get(query);
-    if (xpath == null)
-    {
-      throw new ReportDataFactoryException("No such query");
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    final QueryDefinition xpath = queries.get( query );
+    if ( xpath == null ) {
+      throw new ReportDataFactoryException( "No such query" );
     }
 
     final int queryLimitVal;
-    final Object queryLimit = parameters.get(DataFactory.QUERY_LIMIT);
-    if (queryLimit instanceof Number)
-    {
+    final Object queryLimit = parameters.get( DataFactory.QUERY_LIMIT );
+    if ( queryLimit instanceof Number ) {
       final Number i = (Number) queryLimit;
       queryLimitVal = i.intValue();
-    }
-    else
-    {
+    } else {
       queryLimitVal = -1;
     }
 
-    try
-    {
+    try {
       final ResourceManager resourceManager = getResourceManager();
       final ResourceData resource = load();
-      if (xpath.isLegacyQuery())
-      {
-        return new LegacyXPathTableModel(resource, resourceManager, xpath.getXpathExpression(), parameters, queryLimitVal);
+      if ( xpath.isLegacyQuery() ) {
+        return new LegacyXPathTableModel( resource, resourceManager, xpath.getXpathExpression(), parameters,
+          queryLimitVal );
       }
-      return new XPathTableModel(resource, resourceManager, xpath.getXpathExpression(), parameters, queryLimitVal);
-    }
-    catch (ResourceException re)
-    {
-      throw new ReportDataFactoryException("Failed to load XML data", re);
+      return new XPathTableModel( resource, resourceManager, xpath.getXpathExpression(), parameters, queryLimitVal );
+    } catch ( ResourceException re ) {
+      throw new ReportDataFactoryException( "Failed to load XML data", re );
     }
   }
 
-  private ResourceData load() throws ResourceException
-  {
-    try
-    {
+  private ResourceData load() throws ResourceException {
+    try {
       final ResourceKey resourceKey;
       final ResourceKey contextKey = getContextKey();
-      if (contextKey != null)
-      {
+      if ( contextKey != null ) {
         final ResourceManager resourceManager = getResourceManager();
-        resourceKey = resourceManager.deriveKey(contextKey, getXqueryDataFile());
-        return resourceManager.load(resourceKey);
+        resourceKey = resourceManager.deriveKey( contextKey, getXqueryDataFile() );
+        return resourceManager.load( resourceKey );
       }
-    }
-    catch (ResourceException re)
-    {
+    } catch ( ResourceException re ) {
       // failed to load from context
-      logger.debug("Failed to load datasource as derived path: " + re);
+      logger.debug( "Failed to load datasource as derived path: " + re );
     }
 
-    try
-    {
+    try {
       final ResourceManager resourceManager = getResourceManager();
-      final ResourceKey resourceKey = resourceManager.createKey(new URL(getXqueryDataFile()));
-      return resourceManager.load(resourceKey);
-    }
-    catch (ResourceException re)
-    {
-      logger.debug("Failed to load datasource as URL: " + re);
-    }
-    catch (MalformedURLException e)
-    {
+      final ResourceKey resourceKey = resourceManager.createKey( new URL( getXqueryDataFile() ) );
+      return resourceManager.load( resourceKey );
+    } catch ( ResourceException re ) {
+      logger.debug( "Failed to load datasource as URL: " + re );
+    } catch ( MalformedURLException e ) {
       //
     }
 
-    try
-    {
+    try {
       final ResourceManager resourceManager = getResourceManager();
-      final ResourceKey resourceKey = resourceManager.createKey(new File(getXqueryDataFile()));
-      return resourceManager.load(resourceKey);
-    }
-    catch (ResourceException re)
-    {
+      final ResourceKey resourceKey = resourceManager.createKey( new File( getXqueryDataFile() ) );
+      return resourceManager.load( resourceKey );
+    } catch ( ResourceException re ) {
       // failed to load from context
-      logger.debug("Failed to load datasource as file: " + re);
+      logger.debug( "Failed to load datasource as file: " + re );
     }
 
-    throw new ResourceException("Unable to load the resource");
+    throw new ResourceException( "Unable to load the resource" );
   }
 
-  public XPathDataFactory clone()
-  {
+  public XPathDataFactory clone() {
     final XPathDataFactory dataFactory = (XPathDataFactory) super.clone();
     //noinspection unchecked
     dataFactory.queries = (LinkedHashMap<String, QueryDefinition>) queries.clone();
@@ -212,16 +176,14 @@ public class XPathDataFactory extends AbstractDataFactory
    *
    * @return a copy of the data factory.
    */
-  public XPathDataFactory derive()
-  {
+  public XPathDataFactory derive() {
     return clone();
   }
 
   /**
    * Closes the data factory and frees all resources held by this instance.
    */
-  public void close()
-  {
+  public void close() {
 
   }
 
@@ -232,8 +194,7 @@ public class XPathDataFactory extends AbstractDataFactory
    * @param parameters
    * @return
    */
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    return queries.containsKey(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    return queries.containsKey( query );
   }
 }

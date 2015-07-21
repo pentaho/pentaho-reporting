@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterState;
@@ -28,11 +26,11 @@ import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+
 @Deprecated
-public class LineSparklineWriteHandler extends AbstractElementWriteHandler
-{
-  public LineSparklineWriteHandler()
-  {
+public class LineSparklineWriteHandler extends AbstractElementWriteHandler {
+  public LineSparklineWriteHandler() {
   }
 
   /**
@@ -45,19 +43,17 @@ public class LineSparklineWriteHandler extends AbstractElementWriteHandler
    * @throws IOException           if an IO error occured.
    * @throws BundleWriterException if an Bundle writer.
    */
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element)
-      throws IOException, BundleWriterException
-  {
-    final AttributeList attList = createMainAttributes(element, xmlWriter);
-    if (xmlWriter.isNamespaceDefined(SparklineModule.NAMESPACE) == false)
-    {
-      attList.addNamespaceDeclaration("spark", SparklineModule.NAMESPACE);
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element )
+    throws IOException, BundleWriterException {
+    final AttributeList attList = createMainAttributes( element, xmlWriter );
+    if ( xmlWriter.isNamespaceDefined( SparklineModule.NAMESPACE ) == false ) {
+      attList.addNamespaceDeclaration( "spark", SparklineModule.NAMESPACE );
     }
-    xmlWriter.writeTag(SparklineModule.NAMESPACE, "line-spark", attList, XmlWriter.OPEN);
-    writeElementBody(bundle, state, element, xmlWriter);
+    xmlWriter.writeTag( SparklineModule.NAMESPACE, "line-spark", attList, XmlWriter.OPEN );
+    writeElementBody( bundle, state, element, xmlWriter );
     xmlWriter.writeCloseTag();
   }
 

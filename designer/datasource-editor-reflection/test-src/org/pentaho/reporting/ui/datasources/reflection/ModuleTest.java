@@ -25,39 +25,34 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.NamedStaticDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.StaticDataFactory;
 
-public class ModuleTest extends TestCase
-{
-  public ModuleTest()
-  {
+public class ModuleTest extends TestCase {
+  public ModuleTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testModuleExists()
-  {
-    assertTrue(ClassicEngineBoot.getInstance().getPackageManager().isModuleAvailable(ReflectionDataSourceModule.class.getName()));
+  public void testModuleExists() {
+    assertTrue( ClassicEngineBoot.getInstance().getPackageManager()
+      .isModuleAvailable( ReflectionDataSourceModule.class.getName() ) );
   }
 
-  public void testEditorRegistered()
-  {
+  public void testEditorRegistered() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(NamedStaticDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( NamedStaticDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
-    assertTrue(editor.canHandle(new NamedStaticDataFactory()));
+    assertTrue( editor.canHandle( new NamedStaticDataFactory() ) );
   }
 
-  public void testEditorRegistered2()
-  {
+  public void testEditorRegistered2() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(StaticDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( StaticDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
     // this editor only creates, never modifies
-    assertFalse(editor.canHandle(new ExternalDataFactory()));
+    assertFalse( editor.canHandle( new ExternalDataFactory() ) );
   }
 
 }

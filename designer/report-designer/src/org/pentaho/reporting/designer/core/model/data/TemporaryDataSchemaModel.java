@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.model.data;
 
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
@@ -35,58 +32,50 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaUtility;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchema;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class TemporaryDataSchemaModel extends AbstractDesignTimeDataSchemaModel
-{
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+public class TemporaryDataSchemaModel extends AbstractDesignTimeDataSchemaModel {
   private DataSchema dataSchema;
 
-  public TemporaryDataSchemaModel(final MasterReport masterReportElement,
-                                  final AbstractReportDefinition parent)
-  {
-    super(masterReportElement, parent);
+  public TemporaryDataSchemaModel( final MasterReport masterReportElement,
+                                   final AbstractReportDefinition parent ) {
+    super( masterReportElement, parent );
   }
 
-  protected DataSchemaDefinition createDataSchemaDefinition(final MasterReport masterReportElement)
-  {
+  protected DataSchemaDefinition createDataSchemaDefinition( final MasterReport masterReportElement ) {
     DataSchemaDefinition dataSchemaDefinition = masterReportElement.getDataSchemaDefinition();
-    if (dataSchemaDefinition == null)
-    {
-      return DataSchemaUtility.parseDefaults(masterReportElement.getResourceManager());
+    if ( dataSchemaDefinition == null ) {
+      return DataSchemaUtility.parseDefaults( masterReportElement.getResourceManager() );
     }
     return dataSchemaDefinition;
   }
 
-  public Throwable getDataFactoryException()
-  {
+  public Throwable getDataFactoryException() {
     return null;
   }
 
-  public boolean isValid()
-  {
+  public boolean isValid() {
     return false;
   }
 
-  public DataSchema getDataSchema()
-  {
-    if (dataSchema == null)
-    {
+  public DataSchema getDataSchema() {
+    if ( dataSchema == null ) {
       final ParameterDataRow parameterRow = computeParameterData();
       final ParameterDefinitionEntry[] parameterDefinitions = computeParameterDefinitionEntries();
 
       final ResourceManager resourceManager = getMasterReportElement().getResourceManager();
       final DataSchemaCompiler dataSchemaCompiler =
-          new DataSchemaCompiler(getDataSchemaDefinition(), getDataAttributeContext(), resourceManager);
+        new DataSchemaCompiler( getDataSchemaDefinition(), getDataAttributeContext(), resourceManager );
 
-      try
-      {
+      try {
         final TableModel reportData = new DefaultTableModel();
         final Expression[] expressions = getReport().getExpressions().getExpressions();
         final ReportEnvironment reportEnvironment = getMasterReportElement().getReportEnvironment();
         dataSchema = dataSchemaCompiler.compile
-            (reportData, expressions, parameterRow, parameterDefinitions, reportEnvironment);
+          ( reportData, expressions, parameterRow, parameterDefinitions, reportEnvironment );
 
-      }
-      catch (final ReportDataFactoryException e)
-      {
+      } catch ( final ReportDataFactoryException e ) {
         dataSchema = new DefaultDataSchema();
       }
     }

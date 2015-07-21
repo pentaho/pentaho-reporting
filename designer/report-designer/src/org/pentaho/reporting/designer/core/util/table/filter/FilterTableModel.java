@@ -19,8 +19,8 @@ package org.pentaho.reporting.designer.core.util.table.filter;
 
 import javax.swing.table.TableModel;
 
-public interface FilterTableModel extends TableModel
-{
+public interface FilterTableModel extends TableModel {
   public Filter getFilter();
+
   public int getFilterColumn();
 }

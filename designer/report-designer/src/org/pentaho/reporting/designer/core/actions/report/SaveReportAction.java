@@ -17,30 +17,14 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
-import javax.swing.Action;
-
-import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.status.ExceptionDialog;
 import org.pentaho.reporting.designer.core.util.IconLoader;
-import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
-import org.pentaho.reporting.libraries.resourceloader.Resource;
-import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 public class SaveReportAction extends AbstractSaveReportAction {
 

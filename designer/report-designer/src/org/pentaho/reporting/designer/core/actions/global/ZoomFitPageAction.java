@@ -17,34 +17,30 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class ZoomFitPageAction extends AbstractReportContextAction
-{
+public class ZoomFitPageAction extends AbstractReportContextAction {
 
-  public ZoomFitPageAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("ZoomFitPageAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ZoomFitPageAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ZoomFitPageAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ZoomFitPageAction.Accelerator"));
+  public ZoomFitPageAction() {
+    putValue( Action.NAME, ActionMessages.getString( "ZoomFitPageAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "ZoomFitPageAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "ZoomFitPageAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "ZoomFitPageAction.Accelerator" ) );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       return;
     }
 

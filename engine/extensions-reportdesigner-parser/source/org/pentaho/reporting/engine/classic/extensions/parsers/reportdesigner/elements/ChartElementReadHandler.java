@@ -27,17 +27,15 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ChartElementReadHandler extends AbstractReportElementReadHandler
-{
+public class ChartElementReadHandler extends AbstractReportElementReadHandler {
   private Element element;
   private ReportFunctionReadHandler chartFunctionReadHandler;
   private ReportFunctionReadHandler dataCollectorFunction;
   private ReportFunctionReadHandler dataCollectorFunction2;
 
-  public ChartElementReadHandler()
-  {
+  public ChartElementReadHandler() {
     this.element = new Element();
-    this.element.setElementType(new LegacyChartType());
+    this.element.setElementType( new LegacyChartType() );
   }
 
   /**
@@ -49,30 +47,25 @@ public class ChartElementReadHandler extends AbstractReportElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("chartFunction".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "chartFunction".equals( tagName ) ) {
         chartFunctionReadHandler = new ReportFunctionReadHandler();
         return chartFunctionReadHandler;
       }
-      if ("dataCollectorFunction".equals(tagName))
-      {
+      if ( "dataCollectorFunction".equals( tagName ) ) {
         dataCollectorFunction = new ReportFunctionReadHandler();
         return dataCollectorFunction;
       }
-      if ("dataCollectorFunction2".equals(tagName))
-      {
+      if ( "dataCollectorFunction2".equals( tagName ) ) {
         dataCollectorFunction2 = new ReportFunctionReadHandler();
         return dataCollectorFunction2;
       }
 
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -80,38 +73,35 @@ public class ChartElementReadHandler extends AbstractReportElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
 
     //final String chartType = getResult().getProperty("chartType");
     //element.setAttribute(ReportDesignerParserModule.NAMESPACE, "ChartTypeHint", chartType);
     // in fact, the chart type is redundant, as it can be derived from the chart expression itself.
 
-    if (chartFunctionReadHandler != null)
-    {
+    if ( chartFunctionReadHandler != null ) {
       element.setAttributeExpression
-          (AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, chartFunctionReadHandler.getExpression());
+        ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, chartFunctionReadHandler.getExpression() );
     }
 
-    if (dataCollectorFunction != null)
-    {
+    if ( dataCollectorFunction != null ) {
       final Expression ex = dataCollectorFunction.getExpression();
       // redundant, as this can be dereived from the property 'dataSource'
       // element.setAttribute(ReportDesignerParserModule.NAMESPACE, "DataCollectorFunction", ex.getName());
-      element.setAttribute(LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.PRIMARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE, ex);
+      element.setAttribute( LegacyChartElementModule.NAMESPACE,
+        LegacyChartElementModule.PRIMARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE, ex );
     }
-    if (dataCollectorFunction2 != null)
-    {
+    if ( dataCollectorFunction2 != null ) {
       // Only valid on BarLineChartExpression, can be retrieved via 'linesDataSource' property
       final Expression ex = dataCollectorFunction2.getExpression();
       //element.setAttribute(ReportDesignerParserModule.NAMESPACE, "DataCollectorFunction2", ex.getName());
-      element.setAttribute(LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.SECONDARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE, ex);
+      element.setAttribute( LegacyChartElementModule.NAMESPACE,
+        LegacyChartElementModule.SECONDARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE, ex );
     }
   }
 
-  protected Element getElement()
-  {
+  protected Element getElement() {
     return element;
   }
 }

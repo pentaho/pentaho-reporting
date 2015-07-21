@@ -25,43 +25,35 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 /**
  * Todo: Document me!
  * <p/>
- * Date: 10.06.2009
- * Time: 15:01:49
+ * Date: 10.06.2009 Time: 15:01:49
  *
  * @author Thomas Morgner.
  */
-public class ParentDataFactoryNode
-{
+public class ParentDataFactoryNode {
   private AbstractReportDefinition parentReport;
 
-  public ParentDataFactoryNode(final AbstractReportDefinition parentReport)
-  {
+  public ParentDataFactoryNode( final AbstractReportDefinition parentReport ) {
     this.parentReport = parentReport;
   }
 
-  public CompoundDataFactory getDataFactory()
-  {
+  public CompoundDataFactory getDataFactory() {
     return (CompoundDataFactory) parentReport.getDataFactory();
   }
 
-  public boolean isSubReport()
-  {
+  public boolean isSubReport() {
     return parentReport instanceof SubReport;
   }
 
-  public Object getParentNode()
-  {
-    if (isSubReport() == false)
-    {
+  public Object getParentNode() {
+    if ( isSubReport() == false ) {
       return null;
     }
     final Section parentSection = parentReport.getParentSection();
-    if (parentSection == null)
-    {
+    if ( parentSection == null ) {
       return null;
     }
     final AbstractReportDefinition reportDefinition =
-        (AbstractReportDefinition) parentSection.getReportDefinition();
-    return new ParentDataFactoryNode(reportDefinition);
+      (AbstractReportDefinition) parentSection.getReportDefinition();
+    return new ParentDataFactoryNode( reportDefinition );
   }
 }

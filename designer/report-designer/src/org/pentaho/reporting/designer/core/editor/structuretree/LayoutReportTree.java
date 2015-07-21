@@ -17,11 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.structuretree;
 
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreePath;
-
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -32,40 +28,31 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
-public class LayoutReportTree extends AbstractReportTree
-{
-  private class ReportUpdateHandler implements ReportModelListener
-  {
-    private ReportUpdateHandler()
-    {
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
+
+public class LayoutReportTree extends AbstractReportTree {
+  private class ReportUpdateHandler implements ReportModelListener {
+    private ReportUpdateHandler() {
     }
 
-    public void nodeChanged(final ReportModelEvent event)
-    {
+    public void nodeChanged( final ReportModelEvent event ) {
       final ReportStructureTreeModel model = getStructureModel();
-      if (model == null)
-      {
+      if ( model == null ) {
         return;
       }
-      try
-      {
-        if (event.isNodeStructureChanged() || event.isNodeAddedEvent() || event.isNodeDeleteEvent())
-        {
-          model.fireTreeDataChanged(event.getSource());
-        }
-        else if (event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED)
-        {
+      try {
+        if ( event.isNodeStructureChanged() || event.isNodeAddedEvent() || event.isNodeDeleteEvent() ) {
+          model.fireTreeDataChanged( event.getSource() );
+        } else if ( event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED ) {
           final Object eventParameter = event.getParameter();
-          if (eventParameter instanceof AttributeChange)
-          {
+          if ( eventParameter instanceof AttributeChange ) {
             final AttributeChange attributeChange = (AttributeChange) eventParameter;
-            if (AttributeNames.Core.NAMESPACE.equals(attributeChange.getNamespace()))
-            {
-              if (AttributeNames.Core.NAME.equals(attributeChange.getName()) ||
-                  AttributeNames.Core.FIELD.equals(attributeChange.getName()) ||
-                  AttributeNames.Core.VALUE.equals(attributeChange.getName()) ||
-                  AttributeNames.Core.RESOURCE_IDENTIFIER.equals(attributeChange.getName()))
-              {
+            if ( AttributeNames.Core.NAMESPACE.equals( attributeChange.getNamespace() ) ) {
+              if ( AttributeNames.Core.NAME.equals( attributeChange.getName() ) ||
+                AttributeNames.Core.FIELD.equals( attributeChange.getName() ) ||
+                AttributeNames.Core.VALUE.equals( attributeChange.getName() ) ||
+                AttributeNames.Core.RESOURCE_IDENTIFIER.equals( attributeChange.getName() ) ) {
                 invalidateLayoutCache();
               }
             }
@@ -73,28 +60,21 @@ public class LayoutReportTree extends AbstractReportTree
           }
 
           final Object element = event.getElement();
-          if (element instanceof ReportElement)
-          {
-            if (element instanceof Section && eventParameter instanceof StyleChange)
-            {
+          if ( element instanceof ReportElement ) {
+            if ( element instanceof Section && eventParameter instanceof StyleChange ) {
               final StyleChange change = (StyleChange) eventParameter;
-              if (BandStyleKeys.LAYOUT.equals(change.getStyleKey()))
-              {
+              if ( BandStyleKeys.LAYOUT.equals( change.getStyleKey() ) ) {
                 invalidateLayoutCache();
-                model.fireTreeStructureChanged(element);
+                model.fireTreeStructureChanged( element );
                 return;
               }
             }
-            model.fireTreeNodeChanged(event.getElement());
-          }
-          else
-          {
-            model.fireTreeNodeChanged(event.getReport());
+            model.fireTreeNodeChanged( event.getElement() );
+          } else {
+            model.fireTreeNodeChanged( event.getReport() );
           }
         }
-      }
-      finally
-      {
+      } finally {
         restoreState();
       }
     }
@@ -104,73 +84,59 @@ public class LayoutReportTree extends AbstractReportTree
   private ReportDocumentContext renderContext;
   private ReportUpdateHandler updateHandler;
 
-  public LayoutReportTree()
-  {
+  public LayoutReportTree() {
     updateHandler = new ReportUpdateHandler();
 
-    setCellRenderer(new StructureTreeCellRenderer());
-    setDragEnabled(false);
-    setEditable(false);
+    setCellRenderer( new StructureTreeCellRenderer() );
+    setDragEnabled( false );
+    setEditable( false );
   }
 
-  protected TreePath getPathForNode(final Object node)
-  {
-    if (getStructureModel() == null)
-    {
+  protected TreePath getPathForNode( final Object node ) {
+    if ( getStructureModel() == null ) {
       return null;
     }
 
-    return TreeSelectionHelper.getPathForNode(getStructureModel(), node);
+    return TreeSelectionHelper.getPathForNode( getStructureModel(), node );
   }
 
-  public ReportDocumentContext getRenderContext()
-  {
+  public ReportDocumentContext getRenderContext() {
     return renderContext;
   }
 
-  public void setRenderContext(final ReportDocumentContext renderContext)
-  {
-    if (this.renderContext != null)
-    {
-      this.renderContext.getSelectionModel().removeReportSelectionListener(getSelectionHandler());
-      this.renderContext.getReportDefinition().removeReportModelListener(updateHandler);
+  public void setRenderContext( final ReportDocumentContext renderContext ) {
+    if ( this.renderContext != null ) {
+      this.renderContext.getSelectionModel().removeReportSelectionListener( getSelectionHandler() );
+      this.renderContext.getReportDefinition().removeReportModelListener( updateHandler );
     }
     this.renderContext = renderContext;
-    if (this.renderContext != null)
-    {
-      this.renderContext.getSelectionModel().addReportSelectionListener(getSelectionHandler());
-      this.renderContext.getReportDefinition().addReportModelListener(updateHandler);
+    if ( this.renderContext != null ) {
+      this.renderContext.getSelectionModel().addReportSelectionListener( getSelectionHandler() );
+      this.renderContext.getReportDefinition().addReportModelListener( updateHandler );
     }
     updateFromRenderContext();
     restoreState();
   }
 
-  protected void updateFromRenderContext()
-  {
-    try
-    {
-      setUpdateFromExternalSource(true);
+  protected void updateFromRenderContext() {
+    try {
+      setUpdateFromExternalSource( true );
 
-      if (this.renderContext == null)
-      {
-        setModel(EMPTY_MODEL);
+      if ( this.renderContext == null ) {
+        setModel( EMPTY_MODEL );
         return;
       }
 
       final AbstractReportDefinition report = this.renderContext.getReportDefinition();
-      setModel(new ReportStructureTreeModel(report));
-    }
-    finally
-    {
-      setUpdateFromExternalSource(false);
+      setModel( new ReportStructureTreeModel( report ) );
+    } finally {
+      setUpdateFromExternalSource( false );
     }
   }
 
-  private ReportStructureTreeModel getStructureModel()
-  {
+  private ReportStructureTreeModel getStructureModel() {
     final TreeModel model = getModel();
-    if (model instanceof ReportStructureTreeModel)
-    {
+    if ( model instanceof ReportStructureTreeModel ) {
       return (ReportStructureTreeModel) model;
     }
     return null;

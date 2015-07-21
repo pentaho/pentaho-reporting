@@ -65,7 +65,8 @@
     <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true" deprecated="true"/>
+    <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              deprecated="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
@@ -73,15 +74,19 @@
     <property name="shadowPaint" mandatory="false" preferred="false" value-role="Value" expert="false"/>
     <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false"/>
     <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.PieChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.PieChartFormulaExpressionPropertyCore"/>
-    <property name="pieTitleFont"  mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="pieNoDataMessage"  mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="pieTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="pieNoDataMessage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.PieChartExpression"
@@ -164,12 +169,15 @@
     <property name="shadowPaint" mandatory="false" preferred="false" value-role="Value" expert="false"/>
     <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false"/>
     <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.PieChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.PieChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -254,12 +262,15 @@
     <property name="shadowPaint" mandatory="false" preferred="false" value-role="Value" expert="false"/>
     <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false"/>
     <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.PieChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.PieChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -338,12 +349,15 @@
     <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -404,27 +418,40 @@
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
 
     <property name="bulbRadius" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="columnRadius" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="thermometerUnits" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="thermometerUnits" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ThermometerUnitsPropertyEditor"/>
-    <property name="criticalRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="criticalRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="warningRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="warningRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="normalRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="normalRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="normalRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="criticalRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="criticalRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="warningRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="warningRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="normalRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="normalRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="normalRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
-    <property name="warningRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="warningRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
-    <property name="criticalRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="criticalRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
-    <property name="thermometerPaint" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="thermometerPaint" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
     <property name="mercuryPaint" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>

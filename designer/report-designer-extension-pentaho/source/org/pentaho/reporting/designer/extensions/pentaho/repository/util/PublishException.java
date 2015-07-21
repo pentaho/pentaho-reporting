@@ -23,8 +23,7 @@ import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 /**
  * User: Martin Date: 04.08.2006 Time: 21:04:35
  */
-public class PublishException extends Exception
-{
+public class PublishException extends Exception {
   public static final int ERROR_UNKNOWN = 0;
   public static final int ERROR_FILE_EXISTS = 1;
   public static final int ERROR_FAILED = 2;
@@ -35,52 +34,46 @@ public class PublishException extends Exception
   private int errorCode;
   private int httpReason;
 
-  public PublishException(final int errorCode)
-  {
-    super(translateReturnValue(errorCode));
+  public PublishException( final int errorCode ) {
+    super( translateReturnValue( errorCode ) );
     this.errorCode = errorCode;
   }
 
-  public PublishException(final int errorCode, final int httpReason)
-  {
-    super(translateReturnValue(errorCode) + ": " + httpReason);
+  public PublishException( final int errorCode, final int httpReason ) {
+    super( translateReturnValue( errorCode ) + ": " + httpReason );
     this.errorCode = errorCode;
     this.httpReason = httpReason;
   }
-  public PublishException(final int errorCode, final Throwable cause)
-  {
-    super(translateReturnValue(errorCode), cause);
+
+  public PublishException( final int errorCode, final Throwable cause ) {
+    super( translateReturnValue( errorCode ), cause );
     this.errorCode = errorCode;
   }
 
-  public int getHttpReason()
-  {
+  public int getHttpReason() {
     return httpReason;
   }
 
-  public int getErrorCode()
-  {
+  public int getErrorCode() {
     return errorCode;
   }
 
-  private static String translateReturnValue(final int errorCode)
-  {
-    switch (errorCode)
-    {
+  private static String translateReturnValue( final int errorCode ) {
+    switch( errorCode ) {
       case 0:
-        return Messages.getInstance().getString("PublishToServerAction.Successful");
+        return Messages.getInstance().getString( "PublishToServerAction.Successful" );
       case 1:
-        return Messages.getInstance().getString("PublishToServerAction.FileExistsError");
+        return Messages.getInstance().getString( "PublishToServerAction.FileExistsError" );
       case 2:
-        return Messages.getInstance().getString("PublishToServerAction.Failed");
+        return Messages.getInstance().getString( "PublishToServerAction.Failed" );
       case 3:
-        return Messages.getInstance().getString("PublishToServerAction.Successful");
+        return Messages.getInstance().getString( "PublishToServerAction.Successful" );
       case 4:
-        return Messages.getInstance().getString("PublishToServerAction.InvalidPassword");
+        return Messages.getInstance().getString( "PublishToServerAction.InvalidPassword" );
       case 5:
-        return Messages.getInstance().getString("PublishToServerAction.InvalidUsernameOrPassword");
+        return Messages.getInstance().getString( "PublishToServerAction.InvalidUsernameOrPassword" );
       default:
-        return Messages.getInstance().getString("PublishToServerAction.Successful");
+        return Messages.getInstance().getString( "PublishToServerAction.Successful" );
     }
   }
 

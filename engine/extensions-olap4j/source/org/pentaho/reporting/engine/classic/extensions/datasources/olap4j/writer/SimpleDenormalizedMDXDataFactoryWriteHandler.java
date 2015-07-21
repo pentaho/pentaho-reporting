@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.DataFactoryWriteHandler;
@@ -29,31 +27,28 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Simple
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+
 public class SimpleDenormalizedMDXDataFactoryWriteHandler
-    extends AbstractMDXDataFactoryBundleWriteHandler implements DataFactoryWriteHandler
-{
-  public SimpleDenormalizedMDXDataFactoryWriteHandler()
-  {
+  extends AbstractMDXDataFactoryBundleWriteHandler implements DataFactoryWriteHandler {
+  public SimpleDenormalizedMDXDataFactoryWriteHandler() {
   }
 
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory dataFactory)
-      throws IOException, ReportWriterException
-  {
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory dataFactory )
+    throws IOException, ReportWriterException {
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", Olap4JDataFactoryModule.NAMESPACE);
+    rootAttrs.addNamespaceDeclaration( "data", Olap4JDataFactoryModule.NAMESPACE );
 
-    xmlWriter.writeTag(Olap4JDataFactoryModule.NAMESPACE, "simple-denormalized-mdx-datasource", rootAttrs, XmlWriter.OPEN);
+    xmlWriter
+      .writeTag( Olap4JDataFactoryModule.NAMESPACE, "simple-denormalized-mdx-datasource", rootAttrs, XmlWriter.OPEN );
 
     final SimpleDenormalizedMDXDataFactory pmdDataFactory = (SimpleDenormalizedMDXDataFactory) dataFactory;
-    try
-    {
-      writeBody(pmdDataFactory, xmlWriter);
-    }
-    catch (BundleWriterException e)
-    {
-      throw new ReportWriterException("Failed", e);
+    try {
+      writeBody( pmdDataFactory, xmlWriter );
+    } catch ( BundleWriterException e ) {
+      throw new ReportWriterException( "Failed", e );
     }
 
     xmlWriter.writeCloseTag();

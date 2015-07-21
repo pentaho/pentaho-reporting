@@ -17,20 +17,11 @@
 
 package org.pentaho.reporting.designer.core.editor.groups;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Insets;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.util.EventObject;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import org.pentaho.reporting.designer.core.Messages;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
+
+import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentListener;
@@ -44,155 +35,124 @@ import javax.swing.text.Element;
 import javax.swing.text.PlainDocument;
 import javax.swing.text.Position;
 import javax.swing.text.Segment;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.EventObject;
 
-import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-
-public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
-{
+public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor {
   private static final String POPUP_EDITOR = "popupEditor";
 
 
-  private static class NonFilteringPlainDocument implements Document
-  {
+  private static class NonFilteringPlainDocument implements Document {
     private PlainDocument backend;
 
-    private NonFilteringPlainDocument()
-    {
+    private NonFilteringPlainDocument() {
       backend = new PlainDocument();
     }
 
-    public int getLength()
-    {
+    public int getLength() {
       return backend.getLength();
     }
 
-    public void addDocumentListener(final DocumentListener listener)
-    {
-      backend.addDocumentListener(listener);
+    public void addDocumentListener( final DocumentListener listener ) {
+      backend.addDocumentListener( listener );
     }
 
-    public void removeDocumentListener(final DocumentListener listener)
-    {
-      backend.removeDocumentListener(listener);
+    public void removeDocumentListener( final DocumentListener listener ) {
+      backend.removeDocumentListener( listener );
     }
 
-    public void addUndoableEditListener(final UndoableEditListener listener)
-    {
-      backend.addUndoableEditListener(listener);
+    public void addUndoableEditListener( final UndoableEditListener listener ) {
+      backend.addUndoableEditListener( listener );
     }
 
-    public void removeUndoableEditListener(final UndoableEditListener listener)
-    {
-      backend.removeUndoableEditListener(listener);
+    public void removeUndoableEditListener( final UndoableEditListener listener ) {
+      backend.removeUndoableEditListener( listener );
     }
 
-    public Object getProperty(final Object key)
-    {
-      return backend.getProperty(key);
+    public Object getProperty( final Object key ) {
+      return backend.getProperty( key );
     }
 
-    public void putProperty(final Object key, final Object value)
-    {
-      if ("filterNewlines".equals(key)) // NON-NLS
+    public void putProperty( final Object key, final Object value ) {
+      if ( "filterNewlines".equals( key ) ) // NON-NLS
       {
         return;
       }
-      backend.putProperty(key, value);
+      backend.putProperty( key, value );
     }
 
-    public void remove(final int offs, final int len) throws BadLocationException
-    {
-      backend.remove(offs, len);
+    public void remove( final int offs, final int len ) throws BadLocationException {
+      backend.remove( offs, len );
     }
 
-    public void insertString(final int offset, final String str, final AttributeSet a) throws BadLocationException
-    {
-      backend.insertString(offset, str, a);
+    public void insertString( final int offset, final String str, final AttributeSet a ) throws BadLocationException {
+      backend.insertString( offset, str, a );
     }
 
-    public String getText(final int offset, final int length) throws BadLocationException
-    {
-      return backend.getText(offset, length);
+    public String getText( final int offset, final int length ) throws BadLocationException {
+      return backend.getText( offset, length );
     }
 
-    public void getText(final int offset, final int length, final Segment txt) throws BadLocationException
-    {
-      backend.getText(offset, length, txt);
+    public void getText( final int offset, final int length, final Segment txt ) throws BadLocationException {
+      backend.getText( offset, length, txt );
     }
 
-    public Position getStartPosition()
-    {
+    public Position getStartPosition() {
       return backend.getStartPosition();
     }
 
-    public Position getEndPosition()
-    {
+    public Position getEndPosition() {
       return backend.getEndPosition();
     }
 
-    public Position createPosition(final int offs) throws BadLocationException
-    {
-      return backend.createPosition(offs);
+    public Position createPosition( final int offs ) throws BadLocationException {
+      return backend.createPosition( offs );
     }
 
-    public Element[] getRootElements()
-    {
+    public Element[] getRootElements() {
       return backend.getRootElements();
     }
 
-    public Element getDefaultRootElement()
-    {
+    public Element getDefaultRootElement() {
       return backend.getDefaultRootElement();
     }
 
-    public void render(final Runnable r)
-    {
-      backend.render(r);
+    public void render( final Runnable r ) {
+      backend.render( r );
     }
   }
 
-  private class ExtendedEditorAction extends AbstractAction
-  {
+  private class ExtendedEditorAction extends AbstractAction {
     /**
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private ExtendedEditorAction()
-    {
+    private ExtendedEditorAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final GroupDataEntry value = getGroupDataEntry();
-      if (value == null)
-      {
+      if ( value == null ) {
         return;
       }
 
-      final Window window = LibSwingUtil.getWindowAncestor(GroupDataEntryCellEditor.this);
+      final Window window = LibSwingUtil.getWindowAncestor( GroupDataEntryCellEditor.this );
       final EditGroupDetailsDialog editorDialog;
-      if (window instanceof Frame)
-      {
-        editorDialog = new EditGroupDetailsDialog((Frame) window);
-      }
-      else if (window instanceof Dialog)
-      {
-        editorDialog = new EditGroupDetailsDialog((Dialog) window);
-      }
-      else
-      {
+      if ( window instanceof Frame ) {
+        editorDialog = new EditGroupDetailsDialog( (Frame) window );
+      } else if ( window instanceof Dialog ) {
+        editorDialog = new EditGroupDetailsDialog( (Dialog) window );
+      } else {
         editorDialog = new EditGroupDetailsDialog();
       }
 
 
-      if (editorDialog.editGroupData(value.getName(), value.getFields(), getReportContext()))
-      {
+      if ( editorDialog.editGroupData( value.getName(), value.getFields(), getReportContext() ) ) {
         setGroupDataEntry
-            (new GroupDataEntry(value.getInstanceID(), editorDialog.getGroupName(), editorDialog.getFields()));
+          ( new GroupDataEntry( value.getInstanceID(), editorDialog.getGroupName(), editorDialog.getFields() ) );
       }
       stopCellEditing();
     }
@@ -204,50 +164,44 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
   private ReportDocumentContext reportContext;
   private GroupDataEntry groupDataEntry;
 
-  public GroupDataEntryCellEditor()
-  {
-    setLayout(new BorderLayout());
+  public GroupDataEntryCellEditor() {
+    setLayout( new BorderLayout() );
 
     this.eventListenerList = new EventListenerList();
 
-    ellipsisButton = new JButton("...");
-    ellipsisButton.setDefaultCapable(false);
-    ellipsisButton.setMargin(new Insets(0, 0, 0, 0));
-    ellipsisButton.addActionListener(new ExtendedEditorAction());
+    ellipsisButton = new JButton( "..." );
+    ellipsisButton.setDefaultCapable( false );
+    ellipsisButton.setMargin( new Insets( 0, 0, 0, 0 ) );
+    ellipsisButton.addActionListener( new ExtendedEditorAction() );
 
     textField = new JTextField();
-    textField.setDocument(new NonFilteringPlainDocument());
-    textField.getInputMap().put(Messages.getOptionalKeyStroke("AbstractStringValueCellEditor.Popup.Accelerator"), POPUP_EDITOR);
-    textField.getActionMap().put(POPUP_EDITOR, new ExtendedEditorAction());
-    textField.setBorder(BorderFactory.createEmptyBorder());
-    textField.setEditable(false);
+    textField.setDocument( new NonFilteringPlainDocument() );
+    textField.getInputMap()
+      .put( Messages.getOptionalKeyStroke( "AbstractStringValueCellEditor.Popup.Accelerator" ), POPUP_EDITOR );
+    textField.getActionMap().put( POPUP_EDITOR, new ExtendedEditorAction() );
+    textField.setBorder( BorderFactory.createEmptyBorder() );
+    textField.setEditable( false );
 
-    add(textField, BorderLayout.CENTER);
-    add(ellipsisButton, BorderLayout.EAST);
+    add( textField, BorderLayout.CENTER );
+    add( ellipsisButton, BorderLayout.EAST );
   }
 
-  protected GroupDataEntry getGroupDataEntry()
-  {
+  protected GroupDataEntry getGroupDataEntry() {
     return groupDataEntry;
   }
 
-  protected void setGroupDataEntry(final GroupDataEntry groupDataEntry)
-  {
+  protected void setGroupDataEntry( final GroupDataEntry groupDataEntry ) {
     this.groupDataEntry = groupDataEntry;
-    if (groupDataEntry == null)
-    {
-      textField.setText("");
-      ellipsisButton.setEnabled(false);
-    }
-    else
-    {
-      textField.setText(this.groupDataEntry.getFieldsAsText());
-      ellipsisButton.setEnabled(true);
+    if ( groupDataEntry == null ) {
+      textField.setText( "" );
+      ellipsisButton.setEnabled( false );
+    } else {
+      textField.setText( this.groupDataEntry.getFieldsAsText() );
+      ellipsisButton.setEnabled( true );
     }
   }
 
-  public void requestFocus()
-  {
+  public void requestFocus() {
     textField.requestFocus();
   }
 
@@ -256,8 +210,7 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
    *
    * @return the value contained in the editor
    */
-  public Object getCellEditorValue()
-  {
+  public Object getCellEditorValue() {
     return groupDataEntry;
   }
 
@@ -271,8 +224,7 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
    * @param anEvent the event the editor should use to consider whether to begin editing or not
    * @return true if editing can be started
    */
-  public boolean isCellEditable(final EventObject anEvent)
-  {
+  public boolean isCellEditable( final EventObject anEvent ) {
     return true;
   }
 
@@ -287,8 +239,7 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
    * @param anEvent the event the editor should use to start editing
    * @return true if the editor would like the editing cell to be selected; otherwise returns false
    */
-  public boolean shouldSelectCell(final EventObject anEvent)
-  {
+  public boolean shouldSelectCell( final EventObject anEvent ) {
     return true;
   }
 
@@ -299,19 +250,15 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
    *
    * @return true if editing was stopped; false otherwise
    */
-  public boolean stopCellEditing()
-  {
-    try
-    {
+  public boolean stopCellEditing() {
+    try {
       fireEditingStopped();
-      textField.setText(null);
+      textField.setText( null );
       return true;
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // exception ignored
       fireEditingCanceled();
-      textField.setText(null);
+      textField.setText( null );
       return true;
     }
 
@@ -320,32 +267,27 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
   /**
    * Tells the editor to cancel editing and not accept any partially edited value.
    */
-  public void cancelCellEditing()
-  {
-    textField.setText(null);
+  public void cancelCellEditing() {
+    textField.setText( null );
     fireEditingCanceled();
   }
 
-  protected void fireEditingCanceled()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingCanceled(event);
+  protected void fireEditingCanceled() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingCanceled( event );
     }
   }
 
 
-  protected void fireEditingStopped()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingStopped(event);
+  protected void fireEditingStopped() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingStopped( event );
     }
   }
 
@@ -354,9 +296,8 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void addCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.add(CellEditorListener.class, l);
+  public void addCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.add( CellEditorListener.class, l );
   }
 
   /**
@@ -364,9 +305,8 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void removeCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.remove(CellEditorListener.class, l);
+  public void removeCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.remove( CellEditorListener.class, l );
   }
 
   /**
@@ -385,31 +325,25 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
    * @param column     the column of the cell being edited
    * @return the component for editing
    */
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
-    if (value instanceof GroupDataEntry == false)
-    {
-      setGroupDataEntry(null);
-      textField.setText(null);
-    }
-    else
-    {
-      setGroupDataEntry((GroupDataEntry) value);
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
+    if ( value instanceof GroupDataEntry == false ) {
+      setGroupDataEntry( null );
+      textField.setText( null );
+    } else {
+      setGroupDataEntry( (GroupDataEntry) value );
     }
     return this;
   }
 
-  public ReportDocumentContext getReportContext()
-  {
+  public ReportDocumentContext getReportContext() {
     return reportContext;
   }
 
-  public void setReportContext(final ReportDocumentContext reportContext)
-  {
+  public void setReportContext( final ReportDocumentContext reportContext ) {
     this.reportContext = reportContext;
   }
 }

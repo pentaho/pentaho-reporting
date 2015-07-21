@@ -17,13 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Font;
-import java.awt.Color;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
@@ -41,8 +34,13 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
-public class MultiPieChartExpression extends AbstractChartExpression
-{
+import java.awt.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+public class MultiPieChartExpression extends AbstractChartExpression {
   private static final long serialVersionUID = -7796999107015376070L;
   private boolean multipieByRow;
   private String multipieLabelFormat;
@@ -51,251 +49,201 @@ public class MultiPieChartExpression extends AbstractChartExpression
   private Double shadowYOffset;
   private Font pieTitleFont;
   private String pieNoDataMessage;
-  
-  public MultiPieChartExpression()
-  {
+
+  public MultiPieChartExpression() {
     multipieLabelFormat = "{2}";
     multipieByRow = true;
   }
 
-  public String getPieNoDataMessage()
-  {
+  public String getPieNoDataMessage() {
     return pieNoDataMessage;
   }
 
-  public void setPieNoDataMessage(final String pieNoDataMessage)
-  {
+  public void setPieNoDataMessage( final String pieNoDataMessage ) {
     this.pieNoDataMessage = pieNoDataMessage;
   }
 
-  public Font getPieTitleFont()
-  {
+  public Font getPieTitleFont() {
     return pieTitleFont;
   }
 
-  public void setPieTitleFont(final Font pieTitleFont)
-  {
+  public void setPieTitleFont( final Font pieTitleFont ) {
     this.pieTitleFont = pieTitleFont;
   }
 
-  public String getMultipieLabelFormat()
-  {
+  public String getMultipieLabelFormat() {
     return multipieLabelFormat;
   }
 
-  public void setMultipieLabelFormat(final String value)
-  {
+  public void setMultipieLabelFormat( final String value ) {
     multipieLabelFormat = value;
   }
 
-  public boolean isMultipieByRow()
-  {
+  public boolean isMultipieByRow() {
     return multipieByRow;
   }
 
-  public void setMultipieByRow(final boolean value)
-  {
+  public void setMultipieByRow( final boolean value ) {
     multipieByRow = value;
   }
 
-  public Color getShadowPaint()
-  {
+  public Color getShadowPaint() {
     return shadowPaint;
   }
 
-  public void setShadowPaint(final Color shadowPaint)
-  {
+  public void setShadowPaint( final Color shadowPaint ) {
     this.shadowPaint = shadowPaint;
   }
 
-  public Double getShadowXOffset()
-  {
+  public Double getShadowXOffset() {
     return shadowXOffset;
   }
 
-  public void setShadowXOffset(final Double shadowXOffset)
-  {
+  public void setShadowXOffset( final Double shadowXOffset ) {
     this.shadowXOffset = shadowXOffset;
   }
 
-  public Double getShadowYOffset()
-  {
+  public Double getShadowYOffset() {
     return shadowYOffset;
   }
 
-  public void setShadowYOffset(final Double shadowYOffset)
-  {
+  public void setShadowYOffset( final Double shadowYOffset ) {
     this.shadowYOffset = shadowYOffset;
   }
 
-  protected JFreeChart computeChart(final Dataset dataset)
-  {
+  protected JFreeChart computeChart( final Dataset dataset ) {
     final CategoryDataset categoryDataset;
-    if (dataset instanceof CategoryDataset == false)
-    {
+    if ( dataset instanceof CategoryDataset == false ) {
       categoryDataset = null;
-    }
-    else
-    {
+    } else {
       categoryDataset = (CategoryDataset) dataset;
     }
 
     final TableOrder order;
-    if (isMultipieByRow())
-    {
+    if ( isMultipieByRow() ) {
       order = TableOrder.BY_ROW;
-    }
-    else
-    {
+    } else {
       order = TableOrder.BY_COLUMN;
     }
 
-    if (isThreeD())
-    {
-      return ChartFactory.createMultiplePieChart3D(computeTitle(), categoryDataset, order, isShowLegend(), false, false);
-    }
-    else
-    {
-      return ChartFactory.createMultiplePieChart(computeTitle(), categoryDataset, order, isShowLegend(), false, false);
+    if ( isThreeD() ) {
+      return ChartFactory
+        .createMultiplePieChart3D( computeTitle(), categoryDataset, order, isShowLegend(), false, false );
+    } else {
+      return ChartFactory
+        .createMultiplePieChart( computeTitle(), categoryDataset, order, isShowLegend(), false, false );
     }
   }
 
-  protected void configureSubChart(final JFreeChart chart)
-  {
+  protected void configureSubChart( final JFreeChart chart ) {
     final TextTitle chartTitle = chart.getTitle();
-    if (chartTitle != null)
-    {
-      if (getPieTitleFont() != null)
-      {
-        chartTitle.setFont(getPieTitleFont());
-      }
-      else
-      {
-        final Font titleFont = Font.decode(getTitleFont());
-        chartTitle.setFont(titleFont);
+    if ( chartTitle != null ) {
+      if ( getPieTitleFont() != null ) {
+        chartTitle.setFont( getPieTitleFont() );
+      } else {
+        final Font titleFont = Font.decode( getTitleFont() );
+        chartTitle.setFont( titleFont );
       }
     }
 
-    if (isAntiAlias() == false)
-    {
-      chart.setAntiAlias(false);
+    if ( isAntiAlias() == false ) {
+      chart.setAntiAlias( false );
     }
 
     final LegendTitle chLegend = chart.getLegend();
-    if (chLegend != null)
-    {
-      final RectangleEdge loc = translateEdge(getLegendLocation().toLowerCase());
-      if (loc != null)
-      {
-        chLegend.setPosition(loc);
+    if ( chLegend != null ) {
+      final RectangleEdge loc = translateEdge( getLegendLocation().toLowerCase() );
+      if ( loc != null ) {
+        chLegend.setPosition( loc );
       }
-      if (getLegendFont() != null)
-      {
-        chLegend.setItemFont(Font.decode(getLegendFont()));
+      if ( getLegendFont() != null ) {
+        chLegend.setItemFont( Font.decode( getLegendFont() ) );
       }
-      if (!isDrawLegendBorder())
-      {
-        chLegend.setBorder(BlockBorder.NONE);
+      if ( !isDrawLegendBorder() ) {
+        chLegend.setBorder( BlockBorder.NONE );
       }
-      if (getLegendBackgroundColor() != null)
-      {
-        chLegend.setBackgroundPaint(getLegendBackgroundColor());
+      if ( getLegendBackgroundColor() != null ) {
+        chLegend.setBackgroundPaint( getLegendBackgroundColor() );
       }
-      if (getLegendTextColor() != null)
-      {
-        chLegend.setItemPaint(getLegendTextColor());
+      if ( getLegendTextColor() != null ) {
+        chLegend.setItemPaint( getLegendTextColor() );
       }
     }
 
     final Plot plot = chart.getPlot();
-    plot.setNoDataMessageFont(Font.decode(getLabelFont()));
+    plot.setNoDataMessageFont( Font.decode( getLabelFont() ) );
 
     final String pieNoData = getPieNoDataMessage();
-    if (pieNoData != null)
-    {
-      plot.setNoDataMessage(pieNoData);
-    }
-    else
-    {
+    if ( pieNoData != null ) {
+      plot.setNoDataMessage( pieNoData );
+    } else {
       final String message = getNoDataMessage();
-      if (message != null)
-      {
-        plot.setNoDataMessage(message);
+      if ( message != null ) {
+        plot.setNoDataMessage( message );
       }
     }
   }
 
-  protected void configureChart(final JFreeChart chart)
-  {
-    super.configureChart(chart);
+  protected void configureChart( final JFreeChart chart ) {
+    super.configureChart( chart );
 
     final Plot plot = chart.getPlot();
     final MultiplePiePlot mpp = (MultiplePiePlot) plot;
     final JFreeChart pc = mpp.getPieChart();
-    configureSubChart(pc);
+    configureSubChart( pc );
 
     final PiePlot pp = (PiePlot) pc.getPlot();
-    if (StringUtils.isEmpty(getTooltipFormula()) == false)
-    {
-      pp.setToolTipGenerator(new FormulaPieTooltipGenerator(getRuntime(), getTooltipFormula()));
+    if ( StringUtils.isEmpty( getTooltipFormula() ) == false ) {
+      pp.setToolTipGenerator( new FormulaPieTooltipGenerator( getRuntime(), getTooltipFormula() ) );
     }
-    if (StringUtils.isEmpty(getUrlFormula()) == false)
-    {
-      pp.setURLGenerator(new FormulaPieURLGenerator(getRuntime(), getUrlFormula()));
+    if ( StringUtils.isEmpty( getUrlFormula() ) == false ) {
+      pp.setURLGenerator( new FormulaPieURLGenerator( getRuntime(), getUrlFormula() ) );
     }
 
-    if (shadowPaint != null)
-    {
-      pp.setShadowPaint(shadowPaint);
+    if ( shadowPaint != null ) {
+      pp.setShadowPaint( shadowPaint );
     }
-    if (shadowXOffset != null)
-    {
-      pp.setShadowXOffset(shadowXOffset.doubleValue());
+    if ( shadowXOffset != null ) {
+      pp.setShadowXOffset( shadowXOffset.doubleValue() );
     }
-    if (shadowYOffset != null)
-    {
-      pp.setShadowYOffset(shadowYOffset.doubleValue());
+    if ( shadowYOffset != null ) {
+      pp.setShadowYOffset( shadowYOffset.doubleValue() );
     }
 
     final CategoryDataset c = mpp.getDataset();
-    if (c != null)
-    {
+    if ( c != null ) {
       final String[] colors = getSeriesColor();
       final int keysSize = c.getColumnKeys().size();
-      for (int i = 0; i < colors.length; i++)
-      {
-        if (keysSize > i)
-        {
-          pp.setSectionPaint(c.getColumnKey(i), parseColorFromString(colors[i]));
+      for ( int i = 0; i < colors.length; i++ ) {
+        if ( keysSize > i ) {
+          pp.setSectionPaint( c.getColumnKey( i ), parseColorFromString( colors[ i ] ) );
         }
       }
     }
 
-    if (StringUtils.isEmpty(getLabelFont()) == false)
-    {
-      pp.setLabelFont(Font.decode(getLabelFont()));
+    if ( StringUtils.isEmpty( getLabelFont() ) == false ) {
+      pp.setLabelFont( Font.decode( getLabelFont() ) );
     }
 
-    if (Boolean.FALSE.equals(getItemsLabelVisible()))
-    {
-      pp.setLabelGenerator(null);
-    }
-    else 
-    {
+    if ( Boolean.FALSE.equals( getItemsLabelVisible() ) ) {
+      pp.setLabelGenerator( null );
+    } else {
       final ExpressionRuntime runtime = getRuntime();
       final Locale locale = runtime.getResourceBundleFactory().getLocale();
 
-      final FastDecimalFormat fastPercent = new FastDecimalFormat(FastDecimalFormat.TYPE_PERCENT, locale);
-      final FastDecimalFormat fastInteger = new FastDecimalFormat(FastDecimalFormat.TYPE_INTEGER, locale);
+      final FastDecimalFormat fastPercent = new FastDecimalFormat( FastDecimalFormat.TYPE_PERCENT, locale );
+      final FastDecimalFormat fastInteger = new FastDecimalFormat( FastDecimalFormat.TYPE_INTEGER, locale );
 
-      final DecimalFormat numFormat = new DecimalFormat(fastInteger.getPattern(), new DecimalFormatSymbols(locale));
-      numFormat.setRoundingMode(RoundingMode.HALF_UP);
+      final DecimalFormat numFormat = new DecimalFormat( fastInteger.getPattern(), new DecimalFormatSymbols( locale ) );
+      numFormat.setRoundingMode( RoundingMode.HALF_UP );
 
-      final DecimalFormat percentFormat = new DecimalFormat(fastPercent.getPattern(), new DecimalFormatSymbols(locale));
-      percentFormat.setRoundingMode(RoundingMode.HALF_UP);
+      final DecimalFormat percentFormat =
+        new DecimalFormat( fastPercent.getPattern(), new DecimalFormatSymbols( locale ) );
+      percentFormat.setRoundingMode( RoundingMode.HALF_UP );
 
-      final StandardPieSectionLabelGenerator labelGen = new StandardPieSectionLabelGenerator(multipieLabelFormat, numFormat, percentFormat);
-      pp.setLabelGenerator(labelGen);
+      final StandardPieSectionLabelGenerator labelGen =
+        new StandardPieSectionLabelGenerator( multipieLabelFormat, numFormat, percentFormat );
+      pp.setLabelGenerator( labelGen );
     }
   }
 }

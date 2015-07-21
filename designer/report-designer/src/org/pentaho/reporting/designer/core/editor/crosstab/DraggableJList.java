@@ -17,100 +17,80 @@
 
 package org.pentaho.reporting.designer.core.editor.crosstab;
 
+import org.pentaho.reporting.libraries.designtime.swing.bulk.DefaultBulkListModel;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
-import javax.swing.DropMode;
-import javax.swing.JList;
-import javax.swing.TransferHandler;
 
-import org.pentaho.reporting.libraries.designtime.swing.bulk.DefaultBulkListModel;
-
-public class DraggableJList extends JList implements FieldDragSupport
-{
+public class DraggableJList extends JList implements FieldDragSupport {
   private DefaultBulkListModel bulkModel;
   private UUID dragId;
 
-  public DraggableJList(final DefaultBulkListModel dataModel)
-  {
-    super(dataModel);
+  public DraggableJList( final DefaultBulkListModel dataModel ) {
+    super( dataModel );
     bulkModel = dataModel;
     dragId = UUID.randomUUID();
 
-    setTransferHandler(new CrosstabDialogTransferHandler(this));
-    setDragEnabled(true);
-    setDropMode(DropMode.ON);
+    setTransferHandler( new CrosstabDialogTransferHandler( this ) );
+    setDragEnabled( true );
+    setDropMode( DropMode.ON );
   }
 
-  public UUID getDragId()
-  {
+  public UUID getDragId() {
     return dragId;
   }
 
-  public void removeValues(final List<IndexedTransferable.FieldTuple> fields)
-  {
+  public void removeValues( final List<IndexedTransferable.FieldTuple> fields ) {
     final Set<Integer> indexes = new TreeSet<Integer>();
-    for (final IndexedTransferable.FieldTuple field : fields)
-    {
-      indexes.add(field.getIndex());
+    for ( final IndexedTransferable.FieldTuple field : fields ) {
+      indexes.add( field.getIndex() );
     }
-    ArrayList<Integer> l = new ArrayList<Integer>(indexes);
-    Collections.reverse(l);
-    for (final Integer index : indexes)
-    {
-      bulkModel.remove(index);
+    ArrayList<Integer> l = new ArrayList<Integer>( indexes );
+    Collections.reverse( l );
+    for ( final Integer index : indexes ) {
+      bulkModel.remove( index );
     }
   }
 
-  public List<IndexedTransferable.FieldTuple> getSelectedFields()
-  {
+  public List<IndexedTransferable.FieldTuple> getSelectedFields() {
     int[] selectedValues = getSelectedIndices();
     ArrayList<IndexedTransferable.FieldTuple> retval = new ArrayList<IndexedTransferable.FieldTuple>();
-    for (final int idx : selectedValues)
-    {
-      retval.add(new IndexedTransferable.FieldTuple(idx, String.valueOf(bulkModel.get(idx))));
+    for ( final int idx : selectedValues ) {
+      retval.add( new IndexedTransferable.FieldTuple( idx, String.valueOf( bulkModel.get( idx ) ) ) );
     }
     return retval;
   }
 
-  public void insert(final TransferHandler.DropLocation point,
-                     final List<IndexedTransferable.FieldTuple> items,
-                     final boolean preventDuplicates)
-  {
+  public void insert( final TransferHandler.DropLocation point,
+                      final List<IndexedTransferable.FieldTuple> items,
+                      final boolean preventDuplicates ) {
     final int idx = getDropLocation().getIndex();
-    if (idx == -1)
-    {
-      for (int i = 0; i < items.size(); i++)
-      {
-        final IndexedTransferable.FieldTuple tuple = items.get(i);
+    if ( idx == -1 ) {
+      for ( int i = 0; i < items.size(); i++ ) {
+        final IndexedTransferable.FieldTuple tuple = items.get( i );
         String value = tuple.getValue();
-        if (preventDuplicates)
-        {
-          if (bulkModel.contains(value))
-          {
+        if ( preventDuplicates ) {
+          if ( bulkModel.contains( value ) ) {
             continue;
           }
         }
-        bulkModel.addElement(value);
+        bulkModel.addElement( value );
       }
-    }
-    else
-    {
-      for (int i = items.size() - 1; i >= 0; i -= 1)
-      {
-        final IndexedTransferable.FieldTuple tuple = items.get(i);
+    } else {
+      for ( int i = items.size() - 1; i >= 0; i -= 1 ) {
+        final IndexedTransferable.FieldTuple tuple = items.get( i );
         String value = tuple.getValue();
-        if (preventDuplicates)
-        {
-          if (bulkModel.contains(value))
-          {
+        if ( preventDuplicates ) {
+          if ( bulkModel.contains( value ) ) {
             continue;
           }
         }
-        bulkModel.add(idx, value);
+        bulkModel.add( idx, value );
       }
     }
   }

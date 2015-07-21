@@ -4,10 +4,10 @@
     xmlns:pen="http://www.pentaho.org/2008/xul"
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-    <menupopup id="data-menu-popup">
-        <menuseparator/>
-        <menuitem id="data-menu.connection-editor"
-                  pen:action="org.pentaho.reporting.designer.extensions.connectioneditor.ConnectionEditorAction"/>
-    </menupopup>
+  <menupopup id="data-menu-popup">
+    <menuseparator/>
+    <menuitem id="data-menu.connection-editor"
+              pen:action="org.pentaho.reporting.designer.extensions.connectioneditor.ConnectionEditorAction"/>
+  </menupopup>
 
 </overlay>

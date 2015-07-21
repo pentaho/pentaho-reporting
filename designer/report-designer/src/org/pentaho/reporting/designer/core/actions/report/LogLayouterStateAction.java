@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
@@ -28,34 +25,30 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 
-public class LogLayouterStateAction extends AbstractReportContextAction implements SettingsListener
-{
-  public LogLayouterStateAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("LogLayouterStateAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("LogLayouterStateAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("LogLayouterStateAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("LogLayouterStateAction.Accelerator"));
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
-    setVisible(WorkspaceSettings.getInstance().isDebugFeaturesVisible());
-    WorkspaceSettings.getInstance().addSettingsListener(this);
+public class LogLayouterStateAction extends AbstractReportContextAction implements SettingsListener {
+  public LogLayouterStateAction() {
+    putValue( Action.NAME, ActionMessages.getString( "LogLayouterStateAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "LogLayouterStateAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "LogLayouterStateAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "LogLayouterStateAction.Accelerator" ) );
+
+    setVisible( WorkspaceSettings.getInstance().isDebugFeaturesVisible() );
+    WorkspaceSettings.getInstance().addSettingsListener( this );
   }
 
-  public void settingsChanged()
-  {
-    setVisible(WorkspaceSettings.getInstance().isDebugFeaturesVisible());
+  public void settingsChanged() {
+    setVisible( WorkspaceSettings.getInstance().isDebugFeaturesVisible() );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
-    try
-    {
+  public void actionPerformed( final ActionEvent e ) {
+    try {
       final LogicalPageBox layout = getActiveContext().getSharedRenderer().getLayouter().layout();
-      ModelPrinter.INSTANCE.print(layout);
-    }
-    catch (Exception ex)
-    {
-      UncaughtExceptionsModel.getInstance().addException(ex);
+      ModelPrinter.INSTANCE.print( layout );
+    } catch ( Exception ex ) {
+      UncaughtExceptionsModel.getInstance().addException( ex );
     }
   }
 }

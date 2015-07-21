@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory;
@@ -27,14 +25,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
+
 public class KettleDataSourceReadHandler extends AbstractXmlReadHandler
-    implements DataFactoryReadHandler
-{
+  implements DataFactoryReadHandler {
   private ArrayList<KettleTransformationProducerReadHandler> queries;
   private DataFactory dataFactory;
 
-  public KettleDataSourceReadHandler()
-  {
+  public KettleDataSourceReadHandler() {
     queries = new ArrayList<KettleTransformationProducerReadHandler>();
   }
 
@@ -46,29 +44,26 @@ public class KettleDataSourceReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    final KettleTransformationProducerReadHandlerFactory instance = KettleTransformationProducerReadHandlerFactory.getInstance();
-    final KettleTransformationProducerReadHandler queryReadHandler = instance.getHandler(uri, tagName);
-    if (queryReadHandler != null)
-    {
-      queries.add(queryReadHandler);
+    final KettleTransformationProducerReadHandlerFactory instance =
+      KettleTransformationProducerReadHandlerFactory.getInstance();
+    final KettleTransformationProducerReadHandler queryReadHandler = instance.getHandler( uri, tagName );
+    if ( queryReadHandler != null ) {
+      queries.add( queryReadHandler );
       return queryReadHandler;
     }
     return null;
   }
 
-  protected void addQueryHandler(final KettleTransformationProducerReadHandler readHandler)
-  {
-    queries.add(readHandler);
+  protected void addQueryHandler( final KettleTransformationProducerReadHandler readHandler ) {
+    queries.add( readHandler );
   }
 
   /**
@@ -76,31 +71,26 @@ public class KettleDataSourceReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final KettleDataFactory srdf = new KettleDataFactory();
-    for (int i = 0; i < queries.size(); i++)
-    {
-      final KettleTransformationProducerReadHandler handler = queries.get(i);
-      srdf.setQuery(handler.getName(), handler.getTransformationProducer());
+    for ( int i = 0; i < queries.size(); i++ ) {
+      final KettleTransformationProducerReadHandler handler = queries.get( i );
+      srdf.setQuery( handler.getName(), handler.getTransformationProducer() );
     }
 
     dataFactory = srdf;
   }
 
   /**
-   * Returns the object for this element or null, if this element does not
-   * create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

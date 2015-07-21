@@ -19,24 +19,20 @@ package org.pentaho.reporting.designer.core.inspections;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class AttributeLocationInfo extends LocationInfo
-{
+public class AttributeLocationInfo extends LocationInfo {
   private String attributeNamespace;
   private String attributeName;
   private boolean expression;
 
-  public AttributeLocationInfo(final ReportElement reportElement,
-                               final String attributeNamespace,
-                               final String attributeName,
-                               final boolean expression)
-  {
-    super(reportElement);
-    if (attributeName == null)
-    {
+  public AttributeLocationInfo( final ReportElement reportElement,
+                                final String attributeNamespace,
+                                final String attributeName,
+                                final boolean expression ) {
+    super( reportElement );
+    if ( attributeName == null ) {
       throw new NullPointerException();
     }
-    if (attributeNamespace == null)
-    {
+    if ( attributeNamespace == null ) {
       throw new NullPointerException();
     }
 
@@ -45,18 +41,15 @@ public class AttributeLocationInfo extends LocationInfo
     this.attributeName = attributeName;
   }
 
-  public String getAttributeNamespace()
-  {
+  public String getAttributeNamespace() {
     return attributeNamespace;
   }
 
-  public String getAttributeName()
-  {
+  public String getAttributeName() {
     return attributeName;
   }
 
-  public boolean isExpression()
-  {
+  public boolean isExpression() {
     return expression;
   }
 

@@ -17,25 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer;
 
-import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
+import java.util.Properties;
 
-public class DefaultAuthenticator extends Authenticator
-{
+public class DefaultAuthenticator extends Authenticator {
   private Properties properties;
 
-  public DefaultAuthenticator(final Properties properties)
-  {
+  public DefaultAuthenticator( final Properties properties ) {
     this.properties = properties;
   }
 
-  protected PasswordAuthentication getPasswordAuthentication()
-  {
+  protected PasswordAuthentication getPasswordAuthentication() {
     final String protocol = getRequestingProtocol();
 
-    final String userName = properties.getProperty("mail." + protocol + ".user", properties.getProperty("mail.user"));
-    final String password = properties.getProperty("mail." + protocol + ".password", properties.getProperty("mail.password"));
-    return new PasswordAuthentication(userName, password);
+    final String userName =
+      properties.getProperty( "mail." + protocol + ".user", properties.getProperty( "mail.user" ) );
+    final String password =
+      properties.getProperty( "mail." + protocol + ".password", properties.getProperty( "mail.password" ) );
+    return new PasswordAuthentication( userName, password );
   }
 }

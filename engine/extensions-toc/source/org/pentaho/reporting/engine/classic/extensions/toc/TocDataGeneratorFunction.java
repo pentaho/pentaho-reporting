@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.toc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
@@ -36,14 +33,16 @@ import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
- * A data-collector that collects table-of-contents items at group-starts. The function
- * collects these items accross subreport boundaries.
+ * A data-collector that collects table-of-contents items at group-starts. The function collects these items accross
+ * subreport boundaries.
  *
  * @author Thomas Morgner.
  */
-public class TocDataGeneratorFunction extends AbstractFunction implements PageEventListener
-{
+public class TocDataGeneratorFunction extends AbstractFunction implements PageEventListener {
   private PageFunction pageFunction;
   private TypedTableModel model;
   private ArrayList<String> groups;
@@ -64,8 +63,7 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
    * is added to the report's function collection.
    */
-  public TocDataGeneratorFunction()
-  {
+  public TocDataGeneratorFunction() {
     this.groups = new ArrayList<String>();
     this.pageFunction = new PageFunction();
     this.indexSeparator = ".";
@@ -74,8 +72,7 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
     this.dependencyLevel = LayoutProcess.LEVEL_COLLECT;
   }
 
-  public void setDependencyLevel(final int dependencyLevel)
-  {
+  public void setDependencyLevel( final int dependencyLevel ) {
     this.dependencyLevel = dependencyLevel;
   }
 
@@ -84,48 +81,39 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @return the level.
    */
-  public int getDependencyLevel()
-  {
+  public int getDependencyLevel() {
     return dependencyLevel;
   }
 
-  public String getIndexSeparator()
-  {
+  public String getIndexSeparator() {
     return indexSeparator;
   }
 
-  public void setIndexSeparator(final String indexSeparator)
-  {
+  public void setIndexSeparator( final String indexSeparator ) {
     this.indexSeparator = indexSeparator;
   }
 
-  public String getTitleFormula()
-  {
+  public String getTitleFormula() {
     return titleFormula.getFormula();
   }
 
-  public void setTitleFormula(final String titleFormula)
-  {
-    this.titleFormula.setFormula(titleFormula);
+  public void setTitleFormula( final String titleFormula ) {
+    this.titleFormula.setFormula( titleFormula );
   }
 
-  public String getTitleField()
-  {
+  public String getTitleField() {
     return titleField;
   }
 
-  public void setTitleField(final String titleField)
-  {
+  public void setTitleField( final String titleField ) {
     this.titleField = titleField;
   }
 
-  public boolean isCollectDetails()
-  {
+  public boolean isCollectDetails() {
     return collectDetails;
   }
 
-  public void setCollectDetails(final boolean collectDetails)
-  {
+  public void setCollectDetails( final boolean collectDetails ) {
     this.collectDetails = collectDetails;
   }
 
@@ -135,15 +123,11 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    * @param index the position in the list, where the field should be defined.
    * @param field the name of the field.
    */
-  public void setGroup(final int index, final String field)
-  {
-    if (groups.size() == index)
-    {
-      groups.add(field);
-    }
-    else
-    {
-      groups.set(index, field);
+  public void setGroup( final int index, final String field ) {
+    if ( groups.size() == index ) {
+      groups.add( field );
+    } else {
+      groups.set( index, field );
     }
     groupCount = null;
   }
@@ -154,9 +138,8 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    * @param index the position of the field name that should be queried.
    * @return the field name at the given position.
    */
-  public String getGroup(final int index)
-  {
-    return groups.get(index);
+  public String getGroup( final int index ) {
+    return groups.get( index );
   }
 
   /**
@@ -164,8 +147,7 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @return the number of groups.
    */
-  public int getGroupCount()
-  {
+  public int getGroupCount() {
     return groups.size();
   }
 
@@ -174,9 +156,8 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @return all the groups.
    */
-  public String[] getGroup()
-  {
-    return groups.toArray(new String[groups.size()]);
+  public String[] getGroup() {
+    return groups.toArray( new String[ groups.size() ] );
   }
 
   /**
@@ -184,10 +165,9 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param fields the new list of groups.
    */
-  public void setGroup(final String[] fields)
-  {
+  public void setGroup( final String[] fields ) {
     this.groups.clear();
-    this.groups.addAll(Arrays.asList(fields));
+    this.groups.addAll( Arrays.asList( fields ) );
     groupCount = null;
   }
 
@@ -197,49 +177,40 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
-    if (initialized == false)
-    {
+    if ( initialized == false ) {
       initialized = true;
-      model.addColumn("item-title", Object.class);
-      model.addColumn("item-page", Number.class);
-      model.addColumn("item-index", String.class);
-      model.addColumn("item-index-array", Integer[].class);
+      model.addColumn( "item-title", Object.class );
+      model.addColumn( "item-page", Number.class );
+      model.addColumn( "item-index", String.class );
+      model.addColumn( "item-index-array", Integer[].class );
 
-      if (groups.size() == 0)
-      {
+      if ( groups.size() == 0 ) {
         // we cannot alter the structure of the model after the toc subreport report has been started,
         // so we have to reserve a reasonable amount of groupings here. If you have reports with more
         // than 40 groups, please contact me. I will be delighted to hear about your usage scenario.
-        for (int i = 0; i < 40; i++)
-        {
-          model.addColumn("group-value-" + i, Object.class);
+        for ( int i = 0; i < 40; i++ ) {
+          model.addColumn( "group-value-" + i, Object.class );
+        }
+      } else {
+        for ( int i = 0; i < groups.size(); i++ ) {
+          model.addColumn( "group-value-" + i, Object.class );
         }
       }
-      else
-      {
-        for (int i = 0; i < groups.size(); i++)
-        {
-          model.addColumn("group-value-" + i, Object.class);
-        }
-      }
-      groupCount = new ArrayList<Integer>(groups.size());
-      groupValues = new ArrayList<Object>(groups.size());
+      groupCount = new ArrayList<Integer>( groups.size() );
+      groupValues = new ArrayList<Object>( groups.size() );
     }
 
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
-      groupCount = new ArrayList<Integer>(groups.size());
-      groupValues = new ArrayList<Object>(groups.size());
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
+      groupCount = new ArrayList<Integer>( groups.size() );
+      groupValues = new ArrayList<Object>( groups.size() );
     }
 
-    pageFunction.reportInitialized(event);
+    pageFunction.reportInitialized( event );
   }
 
   /**
@@ -247,94 +218,73 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportStarted( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
-    pageFunction.reportStarted(event);
+    pageFunction.reportStarted( event );
     rowAdded = false;
     groupIndex = -1;
     rowCounter = 0;
   }
 
-  public void groupStarted(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void groupStarted( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    final Group group = FunctionUtilities.getCurrentDeepTraverseGroup(event);
-    if (group instanceof RelationalGroup == false)
-    {
+    final Group group = FunctionUtilities.getCurrentDeepTraverseGroup( event );
+    if ( group instanceof RelationalGroup == false ) {
       return;
     }
     final RelationalGroup relationalGroup = (RelationalGroup) group;
 
     groupIndex += 1;
-    if (groupIndex < getGroupCount() ||
-        getGroupCount() == 0)
-    {
+    if ( groupIndex < getGroupCount() ||
+      getGroupCount() == 0 ) {
       rowAdded = false;
 
-      final DataRow dataRow = extractDataRow(event);
+      final DataRow dataRow = extractDataRow( event );
       final Object groupValue;
-      if (groupIndex < getGroupCount())
-      {
-        final String fieldName = getGroup(groupIndex);
-        if (fieldName != null)
-        {
-          groupValue = dataRow.get(fieldName);
+      if ( groupIndex < getGroupCount() ) {
+        final String fieldName = getGroup( groupIndex );
+        if ( fieldName != null ) {
+          groupValue = dataRow.get( fieldName );
+        } else {
+          groupValue = extractFieldFromGroup( relationalGroup, dataRow );
         }
-        else
-        {
-          groupValue = extractFieldFromGroup(relationalGroup, dataRow);
-        }
-      }
-      else // group-count is zero .. means, collect all groups ..
+      } else // group-count is zero .. means, collect all groups ..
       {
-        groupValue = extractFieldFromGroup(relationalGroup, dataRow);
+        groupValue = extractFieldFromGroup( relationalGroup, dataRow );
       }
 
-      addOrUpdateValue(groupValue);
+      addOrUpdateValue( groupValue );
     }
   }
 
-  private DataRow extractDataRow(final ReportEvent event)
-  {
-    if (event.isDeepTraversing() == false)
-    {
+  private DataRow extractDataRow( final ReportEvent event ) {
+    if ( event.isDeepTraversing() == false ) {
       return getDataRow();
     }
 
     return event.getOriginatingState().getDataRow();
   }
 
-  private Object extractFieldFromGroup(final RelationalGroup relationalGroup,
-                                       final DataRow dataRow)
-  {
+  private Object extractFieldFromGroup( final RelationalGroup relationalGroup,
+                                        final DataRow dataRow ) {
     final Object groupValue;
     final String[] fields = relationalGroup.getFieldsArray();
-    if (fields.length == 0)
-    {
+    if ( fields.length == 0 ) {
       groupValue = null;
-    }
-    else if (fields.length == 1)
-    {
-      groupValue = dataRow.get(fields[0]);
-    }
-    else
-    {
-      final Object[] localGroupValues = new Object[fields.length];
-      for (int i = 0; i < localGroupValues.length; i++)
-      {
-        localGroupValues[i] = dataRow.get(fields[i]);
+    } else if ( fields.length == 1 ) {
+      groupValue = dataRow.get( fields[ 0 ] );
+    } else {
+      final Object[] localGroupValues = new Object[ fields.length ];
+      for ( int i = 0; i < localGroupValues.length; i++ ) {
+        localGroupValues[ i ] = dataRow.get( fields[ i ] );
       }
       groupValue = localGroupValues;
     }
@@ -347,18 +297,14 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param event The event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void itemsStarted( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    if (collectDetails)
-    {
+    if ( collectDetails ) {
       groupIndex += 1;
     }
   }
@@ -368,158 +314,120 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    if (collectDetails)
-    {
-      if (groupIndex < getGroupCount() || getGroupCount() == 0)
-      {
+    if ( collectDetails ) {
+      if ( groupIndex < getGroupCount() || getGroupCount() == 0 ) {
         rowAdded = false;
         final Object groupValue;
-        if (groupIndex < getGroupCount())
-        {
-          final String fieldName = getGroup(groupIndex);
-          if (fieldName != null)
-          {
-            final DataRow dataRow = extractDataRow(event);
-            groupValue = dataRow.get(fieldName);
-          }
-          else
-          {
+        if ( groupIndex < getGroupCount() ) {
+          final String fieldName = getGroup( groupIndex );
+          if ( fieldName != null ) {
+            final DataRow dataRow = extractDataRow( event );
+            groupValue = dataRow.get( fieldName );
+          } else {
             groupValue = null;
           }
-        }
-        else
-        {
+        } else {
           groupValue = null;
         }
 
-        addOrUpdateValue(groupValue);
+        addOrUpdateValue( groupValue );
       }
     }
 
-    collectOrUpdate(event);
+    collectOrUpdate( event );
   }
 
-  private void collectOrUpdate(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
-      if (rowAdded == false)
-      {
-        if (isValidGroupValues() == false)
-        {
+  private void collectOrUpdate( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
+      if ( rowAdded == false ) {
+        if ( isValidGroupValues() == false ) {
           return;
         }
 
-        final DataRow dataRow = extractDataRow(event);
-        final Object titleValue = computeTitleValue(dataRow);
+        final DataRow dataRow = extractDataRow( event );
+        final Object titleValue = computeTitleValue( dataRow );
         final StringBuilder indexText = new StringBuilder();
-        final Integer[] indexValues = new Integer[groupCount.size()];
-        for (int i = 0; i < groupCount.size(); i++)
-        {
-          if (i != 0)
-          {
-            indexText.append(this.indexSeparator);
+        final Integer[] indexValues = new Integer[ groupCount.size() ];
+        for ( int i = 0; i < groupCount.size(); i++ ) {
+          if ( i != 0 ) {
+            indexText.append( this.indexSeparator );
           }
-          final Integer o = groupCount.get(i);
-          indexValues[i] = o;
-          indexText.append(o);
+          final Integer o = groupCount.get( i );
+          indexValues[ i ] = o;
+          indexText.append( o );
         }
 
-        model.setValueAt(titleValue, rowCounter, 0);
-        model.setValueAt(new Integer(9999), rowCounter, 1);
-        model.setValueAt(indexText.toString(), rowCounter, 2);
-        model.setValueAt(indexValues, rowCounter, 3);
+        model.setValueAt( titleValue, rowCounter, 0 );
+        model.setValueAt( new Integer( 9999 ), rowCounter, 1 );
+        model.setValueAt( indexText.toString(), rowCounter, 2 );
+        model.setValueAt( indexValues, rowCounter, 3 );
 
-        for (int i = 0; i < groupValues.size(); i++)
-        {
-          final Object groupValue = groupValues.get(i);
-          model.setValueAt(groupValue, rowCounter, 4 + i);
+        for ( int i = 0; i < groupValues.size(); i++ ) {
+          final Object groupValue = groupValues.get( i );
+          model.setValueAt( groupValue, rowCounter, 4 + i );
         }
         rowCounter += 1;
         rowAdded = true;
       }
-    }
-    else if (FunctionUtilities.isLayoutLevel(event))
-    {
-      if (rowAdded == false)
-      {
-        if (isValidGroupValues() == false)
-        {
+    } else if ( FunctionUtilities.isLayoutLevel( event ) ) {
+      if ( rowAdded == false ) {
+        if ( isValidGroupValues() == false ) {
           return;
         }
-        model.setValueAt(pageFunction.getValue(), rowCounter, 1);
+        model.setValueAt( pageFunction.getValue(), rowCounter, 1 );
         rowAdded = true;
         rowCounter += 1;
       }
     }
   }
 
-  private boolean isValidGroupValues()
-  {
-    for (int i = 0; i < groupValues.size(); i++)
-    {
-      final String s = (String) groupValues.get(i);
-      if (StringUtils.isEmpty(s) == false)
-      {
+  private boolean isValidGroupValues() {
+    for ( int i = 0; i < groupValues.size(); i++ ) {
+      final String s = (String) groupValues.get( i );
+      if ( StringUtils.isEmpty( s ) == false ) {
         return true;
       }
     }
     return false;
   }
 
-  private void addOrUpdateValue(final Object groupValue)
-  {
-    if (groupCount.size() == groupIndex)
-    {
+  private void addOrUpdateValue( final Object groupValue ) {
+    if ( groupCount.size() == groupIndex ) {
       // new level entered
-      groupCount.add(IntegerCache.getInteger(1));
-      groupValues.add(groupValue);
-    }
-    else
-    {
+      groupCount.add( IntegerCache.getInteger( 1 ) );
+      groupValues.add( groupValue );
+    } else {
       final int lastIndex = groupCount.size() - 1;
-      if (lastIndex == groupIndex)
-      {
+      if ( lastIndex == groupIndex ) {
         // existing level increased
-        final Integer o = groupCount.get(lastIndex);
-        if (o == null)
-        {
+        final Integer o = groupCount.get( lastIndex );
+        if ( o == null ) {
           throw new IllegalStateException();
         }
-        groupCount.set(lastIndex, IntegerCache.getInteger(o.intValue() + 1));
-        groupValues.set(lastIndex, groupValue);
-      }
-      else
-      {
-        throw new IllegalStateException("Out of index error: " + groupIndex + " " + groupCount.size());
+        groupCount.set( lastIndex, IntegerCache.getInteger( o.intValue() + 1 ) );
+        groupValues.set( lastIndex, groupValue );
+      } else {
+        throw new IllegalStateException( "Out of index error: " + groupIndex + " " + groupCount.size() );
       }
     }
   }
 
-  private Object computeTitleValue(final DataRow dataRow)
-  {
-    if (StringUtils.isEmpty(titleField) == false)
-    {
-      return dataRow.get(titleField);
+  private Object computeTitleValue( final DataRow dataRow ) {
+    if ( StringUtils.isEmpty( titleField ) == false ) {
+      return dataRow.get( titleField );
     }
-    try
-    {
-      this.titleFormula.setRuntime(new WrapperExpressionRuntime(dataRow, getRuntime()));
+    try {
+      this.titleFormula.setRuntime( new WrapperExpressionRuntime( dataRow, getRuntime() ) );
       return titleFormula.getValue();
-    }
-    finally
-    {
-      this.titleFormula.setRuntime(null);
+    } finally {
+      this.titleFormula.setRuntime( null );
     }
   }
 
@@ -529,25 +437,20 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param event The event.
    */
-  public void itemsFinished(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void itemsFinished( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
     // just to make sure that even a empty subreport leaves its mark ..
-    collectOrUpdate(event);
+    collectOrUpdate( event );
 
-    if (collectDetails)
-    {
-      if ((groupIndex + 2) == groupCount.size())
-      {
-        groupCount.remove(groupCount.size() - 1);
-        groupValues.remove(groupValues.size() - 1);
+    if ( collectDetails ) {
+      if ( ( groupIndex + 2 ) == groupCount.size() ) {
+        groupCount.remove( groupCount.size() - 1 );
+        groupValues.remove( groupValues.size() - 1 );
       }
       groupIndex -= 1;
     }
@@ -558,26 +461,21 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("toc".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void groupFinished( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "toc".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    final Group group = FunctionUtilities.getCurrentDeepTraverseGroup(event);
-    if (group instanceof RelationalGroup == false)
-    {
+    final Group group = FunctionUtilities.getCurrentDeepTraverseGroup( event );
+    if ( group instanceof RelationalGroup == false ) {
       return;
     }
 
-    if ((groupIndex + 2) == groupCount.size())
-    {
-      groupCount.remove(groupCount.size() - 1);
-      groupValues.remove(groupValues.size() - 1);
+    if ( ( groupIndex + 2 ) == groupCount.size() ) {
+      groupCount.remove( groupCount.size() - 1 );
+      groupValues.remove( groupValues.size() - 1 );
     }
     groupIndex -= 1;
   }
@@ -587,9 +485,8 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param event The event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    pageFunction.pageStarted(event);
+  public void pageStarted( final ReportEvent event ) {
+    pageFunction.pageStarted( event );
   }
 
   /**
@@ -597,9 +494,8 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @param event The event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
-    pageFunction.pageFinished(event);
+  public void pageFinished( final ReportEvent event ) {
+    pageFunction.pageFinished( event );
   }
 
   /**
@@ -609,13 +505,11 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return model;
   }
 
-  public TypedTableModel getModel()
-  {
+  public TypedTableModel getModel() {
     return model;
   }
 
@@ -625,8 +519,7 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @return false.
    */
-  public boolean isDeepTraversing()
-  {
+  public boolean isDeepTraversing() {
     return true;
   }
 
@@ -638,13 +531,11 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    * @return a clone of this expression.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final TocDataGeneratorFunction o = (TocDataGeneratorFunction) super.clone();
     o.titleFormula = (FormulaExpression) titleFormula.clone();
     o.pageFunction = (PageFunction) pageFunction.clone();
-    if (groupCount != null)
-    {
+    if ( groupCount != null ) {
       o.groupCount = (ArrayList<Integer>) groupCount.clone();
       o.groupValues = (ArrayList<Object>) groupValues.clone();
     }
@@ -657,8 +548,7 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final TocDataGeneratorFunction instance = (TocDataGeneratorFunction) super.getInstance();
     instance.model = new TypedTableModel();
     instance.titleFormula = (FormulaExpression) titleFormula.getInstance();

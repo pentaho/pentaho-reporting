@@ -17,22 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements;
 
-import java.util.Properties;
-
-import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.filter.types.DateFieldType;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.xml.sax.SAXException;
 
-public class NumberFieldReportElementReadHandler extends AbstractTextElementReadHandler
-{
-  public NumberFieldReportElementReadHandler()
-  {
+import java.util.Properties;
+
+public class NumberFieldReportElementReadHandler extends AbstractTextElementReadHandler {
+  public NumberFieldReportElementReadHandler() {
     final Element element = new Element();
-    element.setElementType(new NumberFieldType());
-    setElement(element);
+    element.setElementType( new NumberFieldType() );
+    setElement( element );
   }
 
   /**
@@ -40,20 +37,17 @@ public class NumberFieldReportElementReadHandler extends AbstractTextElementRead
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final Properties result = getResult();
-    final String format = result.getProperty("format");
-    if (format != null)
-    {
-      getElement().setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, format);
+    final String format = result.getProperty( "format" );
+    if ( format != null ) {
+      getElement().setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, format );
     }
 
-    final String excelFormat = result.getProperty("excelNumberFormat");
-    if (excelFormat != null)
-    {
-      getStyle().setStyleProperty(ElementStyleKeys.EXCEL_DATA_FORMAT_STRING, excelFormat);
+    final String excelFormat = result.getProperty( "excelNumberFormat" );
+    if ( excelFormat != null ) {
+      getStyle().setStyleProperty( ElementStyleKeys.EXCEL_DATA_FORMAT_STRING, excelFormat );
     }
   }
 }

@@ -17,19 +17,16 @@
 
 package org.pentaho.reporting.designer.core.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 
-public abstract class AbstractReportContextAction extends AbstractDesignerContextAction
-{
-  private class ActiveContextChangeHandler implements PropertyChangeListener
-  {
-    private ActiveContextChangeHandler()
-    {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public abstract class AbstractReportContextAction extends AbstractDesignerContextAction {
+  private class ActiveContextChangeHandler implements PropertyChangeListener {
+    private ActiveContextChangeHandler() {
     }
 
     /**
@@ -38,65 +35,57 @@ public abstract class AbstractReportContextAction extends AbstractDesignerContex
      * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
+    public void propertyChange( final PropertyChangeEvent evt ) {
       final ReportRenderContext oldContext = (ReportRenderContext) evt.getOldValue();
       final ReportRenderContext activeContext = (ReportRenderContext) evt.getNewValue();
-      updateActiveContext(oldContext, activeContext);
+      updateActiveContext( oldContext, activeContext );
     }
   }
 
   private ActiveContextChangeHandler changeHandler;
 
-  protected AbstractReportContextAction()
-  {
+  protected AbstractReportContextAction() {
     changeHandler = new ActiveContextChangeHandler();
   }
 
-  protected ReportDocumentContext getActiveContext()
-  {
-    if (getReportDesignerContext() == null)
-    {
+  protected ReportDocumentContext getActiveContext() {
+    if ( getReportDesignerContext() == null ) {
       return null;
     }
     return getReportDesignerContext().getActiveContext();
   }
 
-  protected void updateDesignerContext(final ReportDesignerContext oldContext, final ReportDesignerContext newContext)
-  {
-    if (oldContext != null)
-    {
-      oldContext.removePropertyChangeListener(this.changeHandler);
+  protected void updateDesignerContext( final ReportDesignerContext oldContext,
+                                        final ReportDesignerContext newContext ) {
+    if ( oldContext != null ) {
+      oldContext.removePropertyChangeListener( this.changeHandler );
       final ReportDocumentContext oldActiveContext = getActiveContext();
-      updateActiveContext(oldActiveContext, null);
+      updateActiveContext( oldActiveContext, null );
     }
-    super.updateDesignerContext(oldContext, newContext);
-    if (newContext != null)
-    {
-      newContext.addPropertyChangeListener(ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, changeHandler);
-      updateActiveContext(null, newContext.getActiveContext());
+    super.updateDesignerContext( oldContext, newContext );
+    if ( newContext != null ) {
+      newContext.addPropertyChangeListener( ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, changeHandler );
+      updateActiveContext( null, newContext.getActiveContext() );
     }
   }
 
-  protected void updateActiveContext(final ReportDocumentContext oldContext,
-                                     final ReportDocumentContext newContext)
-  {
-    setEnabled(newContext != null);
+  protected void updateActiveContext( final ReportDocumentContext oldContext,
+                                      final ReportDocumentContext newContext ) {
+    setEnabled( newContext != null );
 
     ReportRenderContext oldCtx = null;
     ReportRenderContext newCtx = null;
-    if (oldContext instanceof ReportRenderContext) {
+    if ( oldContext instanceof ReportRenderContext ) {
       oldCtx = (ReportRenderContext) oldContext;
     }
-    if (newContext instanceof ReportRenderContext) {
+    if ( newContext instanceof ReportRenderContext ) {
       newCtx = (ReportRenderContext) newContext;
     }
-    updateActiveContext(oldCtx, newCtx);
+    updateActiveContext( oldCtx, newCtx );
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext,
-                                     final ReportRenderContext newContext)
-  {
-    setEnabled(newContext != null);
+  protected void updateActiveContext( final ReportRenderContext oldContext,
+                                      final ReportRenderContext newContext ) {
+    setEnabled( newContext != null );
   }
 }

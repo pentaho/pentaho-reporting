@@ -33,47 +33,43 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class TocModule extends AbstractModule
-{
-  public TocModule() throws ModuleInitializeException
-  {
+public class TocModule extends AbstractModule {
+  public TocModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
   /**
-   * Initializes the module. Use this method to perform all initial setup operations.
-   * This method is called only once in a modules lifetime. If the initializing cannot
-   * be completed, throw a ModuleInitializeException to indicate the error,. The module
-   * will not be available to the system.
+   * Initializes the module. Use this method to perform all initial setup operations. This method is called only once in
+   * a modules lifetime. If the initializing cannot be completed, throw a ModuleInitializeException to indicate the
+   * error,. The module will not be available to the system.
    *
    * @param subSystem the subSystem.
-   * @throws org.pentaho.reporting.libraries.base.boot.ModuleInitializeException
-   *          if an error ocurred while initializing the module.
+   * @throws org.pentaho.reporting.libraries.base.boot.ModuleInitializeException if an error ocurred while initializing
+   *                                                                             the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/toc/meta-expressions.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/toc/meta-expressions.xml" );
 
     ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/toc/report-preprocessors.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/toc/report-preprocessors.xml" );
 
     ElementMetaDataParser.initializeOptionalElementMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/toc/meta-elements.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/toc/meta-elements.xml" );
 
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/toc/meta-datafactory.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/toc/meta-datafactory.xml" );
 
-    BundleElementRegistry.getInstance().register(TocElementType.INSTANCE, TocElementWriteHandler.class);
-    BundleElementRegistry.getInstance().register(IndexElementType.INSTANCE, IndexElementWriteHandler.class);
-    BundleElementRegistry.getInstance().registerReader(TocElementType.INSTANCE, TocReadHandler.class);
-    BundleElementRegistry.getInstance().registerReader(IndexElementType.INSTANCE, IndexReadHandler.class);
+    BundleElementRegistry.getInstance().register( TocElementType.INSTANCE, TocElementWriteHandler.class );
+    BundleElementRegistry.getInstance().register( IndexElementType.INSTANCE, IndexElementWriteHandler.class );
+    BundleElementRegistry.getInstance().registerReader( TocElementType.INSTANCE, TocReadHandler.class );
+    BundleElementRegistry.getInstance().registerReader( IndexElementType.INSTANCE, IndexReadHandler.class );
 
-    TocXmlResourceFactory.register(BundleTocXmlFactoryModule.class);
-    TocXmlResourceFactory.register(LayoutDefinitionXmlFactoryModule.class);
-    TocXmlResourceFactory.register(StyleDefinitionXmlFactoryModule.class);
-    IndexXmlResourceFactory.register(BundleIndexXmlFactoryModule.class);
-    IndexXmlResourceFactory.register(LayoutDefinitionXmlFactoryModule.class);
-    IndexXmlResourceFactory.register(StyleDefinitionXmlFactoryModule.class);
+    TocXmlResourceFactory.register( BundleTocXmlFactoryModule.class );
+    TocXmlResourceFactory.register( LayoutDefinitionXmlFactoryModule.class );
+    TocXmlResourceFactory.register( StyleDefinitionXmlFactoryModule.class );
+    IndexXmlResourceFactory.register( BundleIndexXmlFactoryModule.class );
+    IndexXmlResourceFactory.register( LayoutDefinitionXmlFactoryModule.class );
+    IndexXmlResourceFactory.register( StyleDefinitionXmlFactoryModule.class );
   }
 }

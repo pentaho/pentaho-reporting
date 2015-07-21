@@ -18,13 +18,12 @@
 package org.pentaho.reporting.engine.classic.extensions.toc;
 
 /**
- * A data-collector that collects table-of-contents items at group-starts. The function
- * collects these items accross subreport boundaries.
+ * A data-collector that collects table-of-contents items at group-starts. The function collects these items accross
+ * subreport boundaries.
  *
  * @author Thomas Morgner.
  */
-public class IndexTextGeneratorFunction extends IndexNumberGeneratorFunction
-{
+public class IndexTextGeneratorFunction extends IndexNumberGeneratorFunction {
   private String indexSeparator;
 
   private boolean condensedStyle;
@@ -33,28 +32,23 @@ public class IndexTextGeneratorFunction extends IndexNumberGeneratorFunction
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
    * is added to the report's function collection.
    */
-  public IndexTextGeneratorFunction()
-  {
+  public IndexTextGeneratorFunction() {
     this.indexSeparator = ".";
   }
 
-  public String getIndexSeparator()
-  {
+  public String getIndexSeparator() {
     return indexSeparator;
   }
 
-  public void setIndexSeparator(final String indexSeparator)
-  {
+  public void setIndexSeparator( final String indexSeparator ) {
     this.indexSeparator = indexSeparator;
   }
 
-  public boolean isCondensedStyle()
-  {
+  public boolean isCondensedStyle() {
     return condensedStyle;
   }
 
-  public void setCondensedStyle(final boolean condensedStyle)
-  {
+  public void setCondensedStyle( final boolean condensedStyle ) {
     this.condensedStyle = condensedStyle;
   }
 
@@ -65,13 +59,11 @@ public class IndexTextGeneratorFunction extends IndexNumberGeneratorFunction
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Integer[] groupCount = (Integer[]) super.getValue();
-    if (condensedStyle)
-    {
-      return IndexUtility.getCondensedIndexText(groupCount, indexSeparator);
+    if ( condensedStyle ) {
+      return IndexUtility.getCondensedIndexText( groupCount, indexSeparator );
     }
-    return IndexUtility.getIndexText(groupCount, indexSeparator);
+    return IndexUtility.getIndexText( groupCount, indexSeparator );
   }
 }

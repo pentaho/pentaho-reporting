@@ -17,17 +17,16 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Color;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.ThermometerPlot;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.ValueDataset;
 
-@SuppressWarnings("UnusedDeclaration")
-public class ThermometerChartExpression extends AbstractChartExpression
-{
+import java.awt.*;
+
+@SuppressWarnings( "UnusedDeclaration" )
+public class ThermometerChartExpression extends AbstractChartExpression {
   private int bulbRadius;
   private int columnRadius;
   private ThermometerUnit thermometerUnits;
@@ -43,8 +42,7 @@ public class ThermometerChartExpression extends AbstractChartExpression
   private Color criticalRangeColor;
   private Color normalRangeColor;
 
-  public ThermometerChartExpression()
-  {
+  public ThermometerChartExpression() {
     this.bulbRadius = ThermometerPlotDefaults.getDefaultBulbRadius();
     this.columnRadius = ThermometerPlotDefaults.getDefaultColumnRadius();
     this.thermometerUnits = null;
@@ -56,215 +54,176 @@ public class ThermometerChartExpression extends AbstractChartExpression
     normalRangeLow = 0;
   }
 
-  public Color getWarningRangeColor()
-  {
+  public Color getWarningRangeColor() {
     return warningRangeColor;
   }
 
-  public void setWarningRangeColor(final Color warningRangeColor)
-  {
+  public void setWarningRangeColor( final Color warningRangeColor ) {
     this.warningRangeColor = warningRangeColor;
   }
 
-  public Color getCriticalRangeColor()
-  {
+  public Color getCriticalRangeColor() {
     return criticalRangeColor;
   }
 
-  public void setCriticalRangeColor(final Color criticalRangeColor)
-  {
+  public void setCriticalRangeColor( final Color criticalRangeColor ) {
     this.criticalRangeColor = criticalRangeColor;
   }
 
-  public Color getNormalRangeColor()
-  {
+  public Color getNormalRangeColor() {
     return normalRangeColor;
   }
 
-  public void setNormalRangeColor(final Color normalRangeColor)
-  {
+  public void setNormalRangeColor( final Color normalRangeColor ) {
     this.normalRangeColor = normalRangeColor;
   }
 
-  public int getBulbRadius()
-  {
+  public int getBulbRadius() {
     return this.bulbRadius;
   }
 
-  public void setBulbRadius(final int bulbRadius)
-  {
+  public void setBulbRadius( final int bulbRadius ) {
     this.bulbRadius = bulbRadius;
   }
 
-  public int getColumnRadius()
-  {
+  public int getColumnRadius() {
     return this.columnRadius;
   }
 
-  public void setColumnRadius(final int columnRadius)
-  {
+  public void setColumnRadius( final int columnRadius ) {
     this.columnRadius = columnRadius;
   }
 
-  public ThermometerUnit getThermometerUnits()
-  {
+  public ThermometerUnit getThermometerUnits() {
     return this.thermometerUnits;
   }
 
-  public void setThermometerUnits(final ThermometerUnit thermometerUnits)
-  {
+  public void setThermometerUnits( final ThermometerUnit thermometerUnits ) {
     this.thermometerUnits = thermometerUnits;
   }
 
-  public int getCriticalRangeHigh()
-  {
+  public int getCriticalRangeHigh() {
     return this.criticalRangeHigh;
   }
 
-  public void setCriticalRangeHigh(final int criticalRangeHigh)
-  {
+  public void setCriticalRangeHigh( final int criticalRangeHigh ) {
     this.criticalRangeHigh = criticalRangeHigh;
   }
 
-  public int getCriticalRangeLow()
-  {
+  public int getCriticalRangeLow() {
     return this.criticalRangeLow;
   }
 
-  public void setCriticalRangeLow(final int criticalRangeLow)
-  {
+  public void setCriticalRangeLow( final int criticalRangeLow ) {
     this.criticalRangeLow = criticalRangeLow;
   }
 
-  public int getWarningRangeHigh()
-  {
+  public int getWarningRangeHigh() {
     return this.warningRangeHigh;
   }
 
-  public void setWarningRangeHigh(final int warningRangeHigh)
-  {
+  public void setWarningRangeHigh( final int warningRangeHigh ) {
     this.warningRangeHigh = warningRangeHigh;
   }
 
-  public int getWarningRangeLow()
-  {
+  public int getWarningRangeLow() {
     return this.warningRangeLow;
   }
 
-  public void setWarningRangeLow(final int warningRangeLow)
-  {
+  public void setWarningRangeLow( final int warningRangeLow ) {
     this.warningRangeLow = warningRangeLow;
   }
 
-  public int getNormalRangeHigh()
-  {
+  public int getNormalRangeHigh() {
     return this.normalRangeHigh;
   }
 
-  public void setNormalRangeHigh(final int normalRangeHigh)
-  {
+  public void setNormalRangeHigh( final int normalRangeHigh ) {
     this.normalRangeHigh = normalRangeHigh;
   }
 
-  public int getNormalRangeLow()
-  {
+  public int getNormalRangeLow() {
     return this.normalRangeLow;
   }
 
-  public void setNormalRangeLow(final int normalRangeLow)
-  {
+  public void setNormalRangeLow( final int normalRangeLow ) {
     this.normalRangeLow = normalRangeLow;
   }
 
-  public Color getMercuryPaint()
-  {
+  public Color getMercuryPaint() {
     return mercuryPaint;
   }
 
-  public void setMercuryPaint(final Color mercuryPaint)
-  {
+  public void setMercuryPaint( final Color mercuryPaint ) {
     this.mercuryPaint = mercuryPaint;
   }
 
-  public Color getThermometerPaint()
-  {
+  public Color getThermometerPaint() {
     return thermometerPaint;
   }
 
-  public void setThermometerPaint(final Color thermometerPaint)
-  {
+  public void setThermometerPaint( final Color thermometerPaint ) {
     this.thermometerPaint = thermometerPaint;
   }
 
 
-  protected JFreeChart computeChart(final Dataset dataset)
-  {
+  protected JFreeChart computeChart( final Dataset dataset ) {
     ValueDataset thermometerDataset = null;
-    if (dataset instanceof ValueDataset)
-    {
+    if ( dataset instanceof ValueDataset ) {
       thermometerDataset = (ValueDataset) dataset;
     }
 
-    final ThermometerPlot plot = new ThermometerPlot(thermometerDataset);
-    return new JFreeChart(computeTitle(), JFreeChart.DEFAULT_TITLE_FONT, plot, true);
+    final ThermometerPlot plot = new ThermometerPlot( thermometerDataset );
+    return new JFreeChart( computeTitle(), JFreeChart.DEFAULT_TITLE_FONT, plot, true );
   }
 
-  protected void configureChart(final JFreeChart chart)
-  {
-    super.configureChart(chart);
+  protected void configureChart( final JFreeChart chart ) {
+    super.configureChart( chart );
 
     final Plot plot = chart.getPlot();
     final ThermometerPlot thermometerPlot = (ThermometerPlot) plot;
 
-    if (isShowBorder() == false || isChartSectionOutline() == false)
-    {
-      chart.setBorderVisible(false);
-      thermometerPlot.setOutlineVisible(false);
+    if ( isShowBorder() == false || isChartSectionOutline() == false ) {
+      chart.setBorderVisible( false );
+      thermometerPlot.setOutlineVisible( false );
     }
 
-    if (getThermometerUnits() != null)
-    {
-      thermometerPlot.setUnits(getThermometerUnits().getUnitConstant());
+    if ( getThermometerUnits() != null ) {
+      thermometerPlot.setUnits( getThermometerUnits().getUnitConstant() );
     }
-    thermometerPlot.setLowerBound(Math.min(getCriticalRangeLow(), Math.min(getNormalRangeLow(), getWarningRangeLow())));
-    thermometerPlot.setUpperBound(Math.max(getCriticalRangeHigh(), Math.max(getNormalRangeHigh(), getWarningRangeHigh())));
-    thermometerPlot.setBulbRadius(getBulbRadius());
-    thermometerPlot.setColumnRadius(getColumnRadius());
-    thermometerPlot.setSubrange(ThermometerPlot.CRITICAL, getCriticalRangeLow(), getCriticalRangeHigh());
-    thermometerPlot.setSubrange(ThermometerPlot.WARNING, getWarningRangeLow(), getWarningRangeHigh());
-    thermometerPlot.setSubrange(ThermometerPlot.NORMAL, getNormalRangeLow(), getNormalRangeHigh());
-    if (getMercuryPaint() != null)
-    {
-      thermometerPlot.setMercuryPaint(getMercuryPaint());
+    thermometerPlot
+      .setLowerBound( Math.min( getCriticalRangeLow(), Math.min( getNormalRangeLow(), getWarningRangeLow() ) ) );
+    thermometerPlot
+      .setUpperBound( Math.max( getCriticalRangeHigh(), Math.max( getNormalRangeHigh(), getWarningRangeHigh() ) ) );
+    thermometerPlot.setBulbRadius( getBulbRadius() );
+    thermometerPlot.setColumnRadius( getColumnRadius() );
+    thermometerPlot.setSubrange( ThermometerPlot.CRITICAL, getCriticalRangeLow(), getCriticalRangeHigh() );
+    thermometerPlot.setSubrange( ThermometerPlot.WARNING, getWarningRangeLow(), getWarningRangeHigh() );
+    thermometerPlot.setSubrange( ThermometerPlot.NORMAL, getNormalRangeLow(), getNormalRangeHigh() );
+    if ( getMercuryPaint() != null ) {
+      thermometerPlot.setMercuryPaint( getMercuryPaint() );
     }
-    if (getThermometerPaint() != null)
-    {
-      thermometerPlot.setThermometerPaint(getThermometerPaint());
+    if ( getThermometerPaint() != null ) {
+      thermometerPlot.setThermometerPaint( getThermometerPaint() );
     }
 
-    if (getCriticalRangeColor() != null)
-    {
-      thermometerPlot.setSubrangePaint(ThermometerPlot.CRITICAL, getCriticalRangeColor());
+    if ( getCriticalRangeColor() != null ) {
+      thermometerPlot.setSubrangePaint( ThermometerPlot.CRITICAL, getCriticalRangeColor() );
     }
-    if (getWarningRangeColor() != null)
-    {
-      thermometerPlot.setSubrangePaint(ThermometerPlot.WARNING, getWarningRangeColor());
+    if ( getWarningRangeColor() != null ) {
+      thermometerPlot.setSubrangePaint( ThermometerPlot.WARNING, getWarningRangeColor() );
     }
-    if (getNormalRangeColor() != null)
-    {
-      thermometerPlot.setSubrangePaint(ThermometerPlot.NORMAL, getNormalRangeColor());
+    if ( getNormalRangeColor() != null ) {
+      thermometerPlot.setSubrangePaint( ThermometerPlot.NORMAL, getNormalRangeColor() );
     }
   }
 
-  private static class ThermometerPlotDefaults extends ThermometerPlot
-  {
-    public static int getDefaultBulbRadius()
-    {
+  private static class ThermometerPlotDefaults extends ThermometerPlot {
+    public static int getDefaultBulbRadius() {
       return ThermometerPlot.DEFAULT_BULB_RADIUS;
     }
 
-    public static int getDefaultColumnRadius()
-    {
+    public static int getDefaultColumnRadius() {
       return ThermometerPlot.DEFAULT_COLUMN_RADIUS;
     }
   }

@@ -22,11 +22,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-public class DrillDownProfileXmlFactoryModule extends AbstractXmlFactoryModule
-{
-  public DrillDownProfileXmlFactoryModule()
-  {
-    super(DrillDownModule.DRILLDOWN_PROFILE_NAMESPACE, "drilldown-profiles");
+public class DrillDownProfileXmlFactoryModule extends AbstractXmlFactoryModule {
+  public DrillDownProfileXmlFactoryModule() {
+    super( DrillDownModule.DRILLDOWN_PROFILE_NAMESPACE, "drilldown-profiles" );
   }
 
   /**
@@ -35,8 +33,7 @@ public class DrillDownProfileXmlFactoryModule extends AbstractXmlFactoryModule
    * @param documentInfo the document information that has been extracted from the parser.
    * @return the root handler or null.
    */
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new DrillDownProfilesReadHandler();
   }
 }

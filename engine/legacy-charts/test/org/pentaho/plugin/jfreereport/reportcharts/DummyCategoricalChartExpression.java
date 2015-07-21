@@ -19,8 +19,8 @@ package org.pentaho.plugin.jfreereport.reportcharts;
 
 /**
  * A dummy implementation for test purposes
+ *
  * @author Andrey Khayrutdinov
  */
-public class DummyCategoricalChartExpression extends CategoricalChartExpression
-{
+public class DummyCategoricalChartExpression extends CategoricalChartExpression {
 }

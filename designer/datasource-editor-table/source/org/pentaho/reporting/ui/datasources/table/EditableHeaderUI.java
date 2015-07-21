@@ -17,86 +17,70 @@
 
 package org.pentaho.reporting.ui.datasources.table;
 
-import java.awt.Component;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.basic.BasicTableHeaderUI;
 import javax.swing.table.TableColumnModel;
+import java.awt.*;
+import java.awt.event.MouseEvent;
 
-public class EditableHeaderUI extends BasicTableHeaderUI
-{
-  public EditableHeaderUI()
-  {
+public class EditableHeaderUI extends BasicTableHeaderUI {
+  public EditableHeaderUI() {
   }
 
-  protected MouseInputListener createMouseInputListener()
-  {
-    return new MouseInputHandler((EditableHeader) header);
+  protected MouseInputListener createMouseInputListener() {
+    return new MouseInputHandler( (EditableHeader) header );
   }
 
-  private class MouseInputHandler extends BasicTableHeaderUI.MouseInputHandler
-  {
+  private class MouseInputHandler extends BasicTableHeaderUI.MouseInputHandler {
     private Component dispatchComponent;
     private EditableHeader header;
 
-    public MouseInputHandler(final EditableHeader header)
-    {
+    public MouseInputHandler( final EditableHeader header ) {
       this.header = header;
     }
 
-    private void setDispatchComponent(final MouseEvent e)
-    {
+    private void setDispatchComponent( final MouseEvent e ) {
       final Component editorComponent = header.getEditorComponent();
       final Point p = e.getPoint();
-      final Point p2 = SwingUtilities.convertPoint(header, p, editorComponent);
-      dispatchComponent = SwingUtilities.getDeepestComponentAt(editorComponent, p2.x, p2.y);
+      final Point p2 = SwingUtilities.convertPoint( header, p, editorComponent );
+      dispatchComponent = SwingUtilities.getDeepestComponentAt( editorComponent, p2.x, p2.y );
     }
 
-    private boolean repostEvent(final MouseEvent e)
-    {
-      if (dispatchComponent == null)
-      {
+    private boolean repostEvent( final MouseEvent e ) {
+      if ( dispatchComponent == null ) {
         return false;
       }
-      final MouseEvent e2 = SwingUtilities.convertMouseEvent(header, e, dispatchComponent);
-      dispatchComponent.dispatchEvent(e2);
+      final MouseEvent e2 = SwingUtilities.convertMouseEvent( header, e, dispatchComponent );
+      dispatchComponent.dispatchEvent( e2 );
       return true;
     }
 
-    public void mousePressed(final MouseEvent e)
-    {
-      super.mousePressed(e);
-      if (!SwingUtilities.isLeftMouseButton(e))
-      {
+    public void mousePressed( final MouseEvent e ) {
+      super.mousePressed( e );
+      if ( !SwingUtilities.isLeftMouseButton( e ) ) {
         return;
       }
 
-      if (header.getResizingColumn() == null)
-      {
+      if ( header.getResizingColumn() == null ) {
         final Point p = e.getPoint();
         final TableColumnModel columnModel = header.getColumnModel();
-        final int index = columnModel.getColumnIndexAtX(p.x);
-        if (index != -1)
-        {
-          if (header.editCellAt(index, e))
-          {
-            setDispatchComponent(e);
-            repostEvent(e);
+        final int index = columnModel.getColumnIndexAtX( p.x );
+        if ( index != -1 ) {
+          if ( header.editCellAt( index, e ) ) {
+            setDispatchComponent( e );
+            repostEvent( e );
           }
         }
       }
     }
 
-    public void mouseReleased(final MouseEvent e)
-    {
-      super.mouseReleased(e);
-      if (!SwingUtilities.isLeftMouseButton(e))
-      {
+    public void mouseReleased( final MouseEvent e ) {
+      super.mouseReleased( e );
+      if ( !SwingUtilities.isLeftMouseButton( e ) ) {
         return;
       }
-      repostEvent(e);
+      repostEvent( e );
       dispatchComponent = null;
     }
   }

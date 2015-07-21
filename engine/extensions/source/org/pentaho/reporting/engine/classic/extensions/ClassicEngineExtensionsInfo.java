@@ -25,31 +25,26 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  *
  * @author Thomas Morgner
  */
-public class ClassicEngineExtensionsInfo extends ProjectInformation
-{
+public class ClassicEngineExtensionsInfo extends ProjectInformation {
   private static ClassicEngineExtensionsInfo info;
 
   /**
    * Constructs an empty project info object.
    */
-  private ClassicEngineExtensionsInfo()
-  {
-    super("pentaho-reporting-engine-classic-ext", "Pentaho Reporting Classic Extensions");
+  private ClassicEngineExtensionsInfo() {
+    super( "pentaho-reporting-engine-classic-ext", "Pentaho Reporting Classic Extensions" );
   }
 
-  private void initialize()
-  {
-    setInfo("http://reporting.pentaho.org/");
-    setCopyright("(C)opyright 2000-2011, by Pentaho Corp. and Contributors");
-    setLicenseName("LGPL");
-    addLibrary(ClassicEngineInfo.getInstance());
+  private void initialize() {
+    setInfo( "http://reporting.pentaho.org/" );
+    setCopyright( "(C)opyright 2000-2011, by Pentaho Corp. and Contributors" );
+    setLicenseName( "LGPL" );
+    addLibrary( ClassicEngineInfo.getInstance() );
   }
 
 
-  public static synchronized ProjectInformation getInstance()
-  {
-    if (info == null)
-    {
+  public static synchronized ProjectInformation getInstance() {
+    if ( info == null ) {
       info = new ClassicEngineExtensionsInfo();
       info.initialize();
     }

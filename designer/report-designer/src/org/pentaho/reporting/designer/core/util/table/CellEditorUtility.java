@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util.table;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -40,160 +35,137 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeCont
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 
-public class CellEditorUtility
-{
-  private CellEditorUtility()
-  {
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+
+public class CellEditorUtility {
+  private CellEditorUtility() {
   }
 
 
-  public static String[] getExcelColorsAsText()
-  {
+  public static String[] getExcelColorsAsText() {
     final Color[] excelColors = ColorUtility.getPredefinedExcelColors();
-    final String[] textColors = new String[excelColors.length];
-    for (int i = 0; i < excelColors.length; i++)
-    {
-      final Color excelColor = excelColors[i];
-      final String color = Integer.toHexString(excelColor.getRGB() & 0x00ffffff);
-      final StringBuffer retval = new StringBuffer(7);
-      retval.append('#');
+    final String[] textColors = new String[ excelColors.length ];
+    for ( int i = 0; i < excelColors.length; i++ ) {
+      final Color excelColor = excelColors[ i ];
+      final String color = Integer.toHexString( excelColor.getRGB() & 0x00ffffff );
+      final StringBuffer retval = new StringBuffer( 7 );
+      retval.append( '#' );
       final int fillUp = 6 - color.length();
-      for (int x = 0; x < fillUp; x++)
-      {
-        retval.append('0');
+      for ( int x = 0; x < fillUp; x++ ) {
+        retval.append( '0' );
       }
-      retval.append(color);
-      textColors[i] = retval.toString();
+      retval.append( color );
+      textColors[ i ] = retval.toString();
     }
     return textColors;
   }
 
-  public static String[] getQueryNames(final ReportDesignerContext designerContext)
-  {
-    if (designerContext == null)
-    {
-      return new String[0];
+  public static String[] getQueryNames( final ReportDesignerContext designerContext ) {
+    if ( designerContext == null ) {
+      return new String[ 0 ];
     }
 
     final ReportDocumentContext reportContext = designerContext.getActiveContext();
-    if (reportContext == null)
-    {
-      return new String[0];
+    if ( reportContext == null ) {
+      return new String[ 0 ];
     }
 
     AbstractReportDefinition definition = reportContext.getReportDefinition();
     final LinkedHashSet<String> names = new LinkedHashSet<String>();
-    while (definition != null)
-    {
+    while ( definition != null ) {
       final CompoundDataFactory dataFactoryElement = (CompoundDataFactory) definition.getDataFactory();
       final int dataFactoryCount = dataFactoryElement.size();
-      for (int i = 0; i < dataFactoryCount; i++)
-      {
-        final DataFactory dataFactory = dataFactoryElement.getReference(i);
+      for ( int i = 0; i < dataFactoryCount; i++ ) {
+        final DataFactory dataFactory = dataFactoryElement.getReference( i );
         final String[] queryNames = dataFactory.getQueryNames();
-        names.addAll(Arrays.asList(queryNames));
+        names.addAll( Arrays.asList( queryNames ) );
       }
-      if (definition instanceof SubReport)
-      {
+      if ( definition instanceof SubReport ) {
         final Section parentSection = definition.getParentSection();
         definition = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-      else
-      {
+      } else {
         definition = null;
       }
     }
-    return names.toArray(new String[names.size()]);
+    return names.toArray( new String[ names.size() ] );
   }
 
 
-  public static FieldDefinition[] getFields(final ReportDesignerContext designerContext,
-                                            final String[] extraFields)
-  {
-    if (designerContext == null)
-    {
-      return new FieldDefinition[0];
+  public static FieldDefinition[] getFields( final ReportDesignerContext designerContext,
+                                             final String[] extraFields ) {
+    if ( designerContext == null ) {
+      return new FieldDefinition[ 0 ];
     }
 
     final ReportDocumentContext reportContext = designerContext.getActiveContext();
-    if (reportContext == null)
-    {
-      return new FieldDefinition[0];
+    if ( reportContext == null ) {
+      return new FieldDefinition[ 0 ];
     }
 
-    return getFields(reportContext, extraFields);
+    return getFields( reportContext, extraFields );
   }
 
-  public static FieldDefinition[] getFields(final ReportDocumentContext reportContext, final String[] extraFields)
-  {
+  public static FieldDefinition[] getFields( final ReportDocumentContext reportContext, final String[] extraFields ) {
     final ContextAwareDataSchemaModel model = reportContext.getReportDataSchemaModel();
     final String[] columnNames = model.getColumnNames();
-    final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>(columnNames.length + extraFields.length);
+    final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>( columnNames.length + extraFields.length );
     final DataSchema dataSchema = model.getDataSchema();
     final DefaultDataAttributeContext dataAttributeContext = new DefaultDataAttributeContext();
 
-    for (int i = 0; i < extraFields.length; i++)
-    {
-      final String extraField = extraFields[i];
-      fields.add(new DataSchemaFieldDefinition(extraField, new EmptyDataAttributes(), dataAttributeContext));
+    for ( int i = 0; i < extraFields.length; i++ ) {
+      final String extraField = extraFields[ i ];
+      fields.add( new DataSchemaFieldDefinition( extraField, new EmptyDataAttributes(), dataAttributeContext ) );
     }
 
-    for (int i = columnNames.length - 1; i >= 0; i -= 1)
-    {
-      final String columnName = columnNames[i];
-      final DataAttributes attributes = dataSchema.getAttributes(columnName);
-      if (attributes == null)
-      {
-        throw new IllegalStateException("No data-schema for field with name '" + columnName + '\'');
+    for ( int i = columnNames.length - 1; i >= 0; i -= 1 ) {
+      final String columnName = columnNames[ i ];
+      final DataAttributes attributes = dataSchema.getAttributes( columnName );
+      if ( attributes == null ) {
+        throw new IllegalStateException( "No data-schema for field with name '" + columnName + '\'' );
       }
-      if (DataSchemaUtility.isFiltered(attributes, dataAttributeContext))
-      {
+      if ( DataSchemaUtility.isFiltered( attributes, dataAttributeContext ) ) {
         continue;
       }
-      fields.add(new DataSchemaFieldDefinition(columnName, attributes, dataAttributeContext));
+      fields.add( new DataSchemaFieldDefinition( columnName, attributes, dataAttributeContext ) );
     }
 
-    return fields.toArray(new FieldDefinition[fields.size()]);
+    return fields.toArray( new FieldDefinition[ fields.size() ] );
   }
 
-  public static String[] getFieldsAsString(final ReportDocumentContext designerContext,
-                                           final String[] extraFields)
-  {
-    final FieldDefinition[] fields = getFields(designerContext, extraFields);
-    return convertToColumnNames(fields);
+  public static String[] getFieldsAsString( final ReportDocumentContext designerContext,
+                                            final String[] extraFields ) {
+    final FieldDefinition[] fields = getFields( designerContext, extraFields );
+    return convertToColumnNames( fields );
   }
 
-  public static String[] convertToColumnNames(final FieldDefinition[] fields)
-  {
-    final String[] fieldsAsString = new String[fields.length];
-    for (int i = 0; i < fields.length; i++)
-    {
-      FieldDefinition field = fields[i];
-      fieldsAsString[i] = field.getName();
+  public static String[] convertToColumnNames( final FieldDefinition[] fields ) {
+    final String[] fieldsAsString = new String[ fields.length ];
+    for ( int i = 0; i < fields.length; i++ ) {
+      FieldDefinition field = fields[ i ];
+      fieldsAsString[ i ] = field.getName();
     }
     return fieldsAsString;
   }
 
-  public static String[] getFieldsAsString(final ReportDesignerContext designerContext,
-                                           final String[] extraFields)
-  {
-    final FieldDefinition[] fields = getFields(designerContext, extraFields);
-    return convertToColumnNames(fields);
+  public static String[] getFieldsAsString( final ReportDesignerContext designerContext,
+                                            final String[] extraFields ) {
+    final FieldDefinition[] fields = getFields( designerContext, extraFields );
+    return convertToColumnNames( fields );
   }
 
-  public static String[] getGroups(final ReportDesignerContext designerContext)
-  {
-    if (designerContext == null)
-    {
-      return new String[0];
+  public static String[] getGroups( final ReportDesignerContext designerContext ) {
+    if ( designerContext == null ) {
+      return new String[ 0 ];
     }
 
     final ReportDocumentContext reportContext = designerContext.getActiveContext();
-    if (reportContext == null)
-    {
-      return new String[0];
+    if ( reportContext == null ) {
+      return new String[ 0 ];
     }
 
-    return ModelUtility.getGroups(reportContext.getReportDefinition());
+    return ModelUtility.getGroups( reportContext.getReportDefinition() );
   }
 }

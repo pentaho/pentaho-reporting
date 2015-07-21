@@ -18,32 +18,6 @@
 package org.pentaho.reporting.ui.datasources.mondrian;
 
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.util.Enumeration;
-import java.util.Properties;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileFilter;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -71,107 +45,98 @@ import org.pentaho.reporting.ui.datasources.jdbc.connection.JndiConnectionDefini
 import org.pentaho.reporting.ui.datasources.jdbc.ui.JdbcConnectionPanel;
 import org.pentaho.reporting.ui.datasources.jdbc.ui.SimpleDataSourceDialogModel;
 
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.Enumeration;
+import java.util.Properties;
+
 /**
  * @author Michael D'Amour
  */
-public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
-{
-  private class BrowseAction extends AbstractAction
-  {
-    protected BrowseAction()
-    {
-      putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.Browse.Name"));
+public abstract class SimpleMondrianDataSourceEditor extends CommonDialog {
+  private class BrowseAction extends AbstractAction {
+    protected BrowseAction() {
+      putValue( Action.NAME, Messages.getString( "MondrianDataSourceEditor.Browse.Name" ) );
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
-      final File reportContextFile = DesignTimeUtil.getContextAsFile(context.getReport());
+    public void actionPerformed( final ActionEvent e ) {
+      final File reportContextFile = DesignTimeUtil.getContextAsFile( context.getReport() );
       final File initiallySelectedFile;
 
-      if (StringUtils.isEmpty(getFileName(), true) == false)
-      {
-        if (reportContextFile == null)
-        {
-          initiallySelectedFile = new File(getFileName());
+      if ( StringUtils.isEmpty( getFileName(), true ) == false ) {
+        if ( reportContextFile == null ) {
+          initiallySelectedFile = new File( getFileName() );
+        } else {
+          initiallySelectedFile = new File( reportContextFile.getParentFile(), getFileName() );
         }
-        else
-        {
-          initiallySelectedFile = new File(reportContextFile.getParentFile(), getFileName());
-        }
-      }
-      else
-      {
+      } else {
         initiallySelectedFile = null;
       }
 
-      final FileFilter[] fileFilters = new FileFilter[]{new FilesystemFilter(new String[]{".xml"},
-          Messages.getString("MondrianDataSourceEditor.FileName") + " (*.xml)", true)};
+      final FileFilter[] fileFilters = new FileFilter[] { new FilesystemFilter( new String[] { ".xml" },
+        Messages.getString( "MondrianDataSourceEditor.FileName" ) + " (*.xml)", true ) };
 
 
-      final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser("mondrian");
-      fileChooser.setSelectedFile(initiallySelectedFile);
-      fileChooser.setFilters(fileFilters);
-      if (fileChooser.showDialog(SimpleMondrianDataSourceEditor.this, JFileChooser.OPEN_DIALOG) == false)
-      {
+      final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser( "mondrian" );
+      fileChooser.setSelectedFile( initiallySelectedFile );
+      fileChooser.setFilters( fileFilters );
+      if ( fileChooser.showDialog( SimpleMondrianDataSourceEditor.this, JFileChooser.OPEN_DIALOG ) == false ) {
         return;
       }
       final File file = fileChooser.getSelectedFile();
-      if (file == null)
-      {
+      if ( file == null ) {
         return;
       }
 
       final String path;
-      if (reportContextFile != null)
-      {
-        path = IOUtils.getInstance().createRelativePath(file.getPath(), reportContextFile.getAbsolutePath());
-      }
-      else
-      {
+      if ( reportContextFile != null ) {
+        path = IOUtils.getInstance().createRelativePath( file.getPath(), reportContextFile.getAbsolutePath() );
+      } else {
         path = file.getPath();
       }
-      setFileName(path);
+      setFileName( path );
       autoRefreshSchemaName();
     }
   }
 
-  private class ConfirmEnableHandler implements PropertyChangeListener, DocumentListener
-  {
-    private ConfirmEnableHandler()
-    {
+  private class ConfirmEnableHandler implements PropertyChangeListener, DocumentListener {
+    private ConfirmEnableHandler() {
     }
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
+    public void propertyChange( final PropertyChangeEvent evt ) {
       revalidate();
     }
 
-    private void revalidate()
-    {
+    private void revalidate() {
       final SimpleDataSourceDialogModel dialogModel = getDialogModel();
-      getConfirmAction().setEnabled(dialogModel.isConnectionSelected() && StringUtils.isEmpty(filenameField.getText(), true) == false);
+      getConfirmAction().setEnabled(
+        dialogModel.isConnectionSelected() && StringUtils.isEmpty( filenameField.getText(), true ) == false );
     }
 
     /**
-     * Gives notification that there was an insert into the document.  The
-     * range given by the DocumentEvent bounds the freshly inserted region.
+     * Gives notification that there was an insert into the document.  The range given by the DocumentEvent bounds the
+     * freshly inserted region.
      *
      * @param e the document event
      */
-    public void insertUpdate(final DocumentEvent e)
-    {
+    public void insertUpdate( final DocumentEvent e ) {
       revalidate();
     }
 
     /**
-     * Gives notification that a portion of the document has been
-     * removed.  The range is given in terms of what the view last
-     * saw (that is, before updating sticky positions).
+     * Gives notification that a portion of the document has been removed.  The range is given in terms of what the view
+     * last saw (that is, before updating sticky positions).
      *
      * @param e the document event
      */
-    public void removeUpdate(final DocumentEvent e)
-    {
+    public void removeUpdate( final DocumentEvent e ) {
       revalidate();
     }
 
@@ -180,37 +145,31 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
      *
      * @param e the document event
      */
-    public void changedUpdate(final DocumentEvent e)
-    {
+    public void changedUpdate( final DocumentEvent e ) {
       revalidate();
     }
   }
 
-  private class EditSecurityAction extends AbstractAction
-  {
+  private class EditSecurityAction extends AbstractAction {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private EditSecurityAction()
-    {
-      putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.EditSecurityAction.Name"));
+    private EditSecurityAction() {
+      putValue( Action.NAME, Messages.getString( "MondrianDataSourceEditor.EditSecurityAction.Name" ) );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      securityDialog.setRoleField(roleField);
-      securityDialog.setRole(roleText);
-      securityDialog.setJdbcPassword(jdbcPasswordText);
-      securityDialog.setJdbcPasswordField(jdbcPasswordField);
-      securityDialog.setJdbcUser(jdbcUserText);
-      securityDialog.setJdbcUserField(jdbcUserField);
+    public void actionPerformed( final ActionEvent e ) {
+      securityDialog.setRoleField( roleField );
+      securityDialog.setRole( roleText );
+      securityDialog.setJdbcPassword( jdbcPasswordText );
+      securityDialog.setJdbcPasswordField( jdbcPasswordField );
+      securityDialog.setJdbcUser( jdbcUserText );
+      securityDialog.setJdbcUserField( jdbcUserField );
 
-      if (securityDialog.performEdit())
-      {
+      if ( securityDialog.performEdit() ) {
         roleText = securityDialog.getRole();
         roleField = securityDialog.getRoleField();
         jdbcUserText = securityDialog.getJdbcUser();
@@ -221,21 +180,18 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
     }
   }
 
-  private class RefreshSchemaNameAction extends AbstractAction
-  {
+  private class RefreshSchemaNameAction extends AbstractAction {
     /**
      * Creates an {@code Action}.
      */
-    private RefreshSchemaNameAction()
-    {
-      putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.UpdateSchema.Name"));
+    private RefreshSchemaNameAction() {
+      putValue( Action.NAME, Messages.getString( "MondrianDataSourceEditor.UpdateSchema.Name" ) );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       refreshSchemaName();
     }
   }
@@ -252,74 +208,67 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
   private String roleText;
   private String roleField;
 
-  public SimpleMondrianDataSourceEditor(final DesignTimeContext context)
-  {
-    init(context);
+  public SimpleMondrianDataSourceEditor( final DesignTimeContext context ) {
+    init( context );
   }
 
-  public SimpleMondrianDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-  {
-    super(owner);
-    init(context);
+  public SimpleMondrianDataSourceEditor( final DesignTimeContext context, final Dialog owner ) {
+    super( owner );
+    init( context );
   }
 
-  public SimpleMondrianDataSourceEditor(final DesignTimeContext context, final Frame owner)
-  {
-    super(owner);
-    init(context);
+  public SimpleMondrianDataSourceEditor( final DesignTimeContext context, final Frame owner ) {
+    super( owner );
+    init( context );
   }
 
-  protected void init(final DesignTimeContext context)
-  {
-    if (context == null)
-    {
+  protected void init( final DesignTimeContext context ) {
+    if ( context == null ) {
       throw new NullPointerException();
     }
 
-    setModal(true);
+    setModal( true );
 
-    securityDialog = new MondrianSecurityDialog(this, context);
+    securityDialog = new MondrianSecurityDialog( this, context );
 
     this.context = context;
 
     dialogModel = new SimpleDataSourceDialogModel();
 
     final ConfirmEnableHandler confirmAction = new ConfirmEnableHandler();
-    dialogModel.addPropertyChangeListener(confirmAction);
+    dialogModel.addPropertyChangeListener( confirmAction );
 
-    cubeConnectionNameField = new JTextField(null, 0);
-    cubeConnectionNameField.setColumns(30);
-    cubeConnectionNameField.getDocument().addDocumentListener(confirmAction);
+    cubeConnectionNameField = new JTextField( null, 0 );
+    cubeConnectionNameField.setColumns( 30 );
+    cubeConnectionNameField.getDocument().addDocumentListener( confirmAction );
 
-    filenameField = new JTextField(null, 0);
-    filenameField.setColumns(30);
-    filenameField.getDocument().addDocumentListener(confirmAction);
+    filenameField = new JTextField( null, 0 );
+    filenameField.setColumns( 30 );
+    filenameField.getDocument().addDocumentListener( confirmAction );
 
     super.init();
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     // Create the content panel
-    final JPanel contentPanel = new JPanel(new BorderLayout());
-    contentPanel.add(BorderLayout.NORTH, createConnectionTopPanel());
-    contentPanel.add(BorderLayout.CENTER, new JdbcConnectionPanel(dialogModel, context));
-    contentPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+    final JPanel contentPanel = new JPanel( new BorderLayout() );
+    contentPanel.add( BorderLayout.NORTH, createConnectionTopPanel() );
+    contentPanel.add( BorderLayout.CENTER, new JdbcConnectionPanel( dialogModel, context ) );
+    contentPanel.setBorder( BorderFactory.createEmptyBorder( 8, 8, 8, 8 ) );
 
     return contentPanel;
   }
 
-  private JPanel createConnectionTopPanel()
-  {
+  private JPanel createConnectionTopPanel() {
     final JPanel masterPanel = new JPanel();
-    masterPanel.setLayout(new GridBagLayout());
+    masterPanel.setLayout( new GridBagLayout() );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.gridwidth = 4;
     gbc.anchor = GridBagConstraints.WEST;
-    masterPanel.add(new JLabel(Messages.getString("MondrianDataSourceEditor.SchemaFileLabel")), gbc);
+    masterPanel.add( new JLabel( Messages.getString( "MondrianDataSourceEditor.SchemaFileLabel" ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -328,35 +277,35 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
     gbc.anchor = GridBagConstraints.WEST;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
-    masterPanel.add(filenameField, gbc);
+    masterPanel.add( filenameField, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
     gbc.gridy = 1;
     gbc.gridwidth = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    masterPanel.add(new JButton(new BrowseAction()), gbc);
+    masterPanel.add( new JButton( new BrowseAction() ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 2;
     gbc.gridy = 1;
     gbc.gridwidth = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    masterPanel.add(Box.createHorizontalStrut(20), gbc);
+    masterPanel.add( Box.createHorizontalStrut( 20 ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 3;
     gbc.gridy = 1;
     gbc.gridwidth = 1;
     gbc.anchor = GridBagConstraints.WEST;
-    masterPanel.add(new JButton(new EditSecurityAction()), gbc);
+    masterPanel.add( new JButton( new EditSecurityAction() ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 2;
     gbc.gridwidth = 4;
     gbc.anchor = GridBagConstraints.WEST;
-    masterPanel.add(new JLabel(Messages.getString("MondrianDataSourceEditor.CubeConnectionName")), gbc);
+    masterPanel.add( new JLabel( Messages.getString( "MondrianDataSourceEditor.CubeConnectionName" ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -365,7 +314,7 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
     gbc.anchor = GridBagConstraints.WEST;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 5;
-    masterPanel.add(cubeConnectionNameField, gbc);
+    masterPanel.add( cubeConnectionNameField, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -373,7 +322,7 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
     gbc.gridwidth = 3;
     gbc.anchor = GridBagConstraints.WEST;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    masterPanel.add(new JButton(new RefreshSchemaNameAction()), gbc);
+    masterPanel.add( new JButton( new RefreshSchemaNameAction() ), gbc );
 
     return masterPanel;
   }
@@ -381,10 +330,9 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
   protected abstract AbstractMDXDataFactory createDataFactory();
 
 
-  public DataFactory performConfiguration(final AbstractMDXDataFactory dataFactory)
-  {
+  public DataFactory performConfiguration( final AbstractMDXDataFactory dataFactory ) {
     // Reset the ok / cancel flag
-    setConfirmed(false);
+    setConfirmed( false );
     getDialogModel().clear();
 
     roleText = null;
@@ -395,8 +343,7 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
     jdbcPasswordField = null;
 
     // Load the current configuration
-    if (dataFactory != null)
-    {
+    if ( dataFactory != null ) {
       roleText = dataFactory.getRole();
       roleField = dataFactory.getRoleField();
       jdbcUserText = dataFactory.getJdbcUser();
@@ -405,209 +352,178 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
       jdbcPasswordField = dataFactory.getJdbcPasswordField();
 
       final CubeFileProvider fileProvider = dataFactory.getCubeFileProvider();
-      if (fileProvider != null)
-      {
-        setSchemaFileName(fileProvider.getDesignTimeFile());
-      }
-      else
-      {
-        setSchemaFileName("");
+      if ( fileProvider != null ) {
+        setSchemaFileName( fileProvider.getDesignTimeFile() );
+      } else {
+        setSchemaFileName( "" );
       }
 
-      final JdbcConnectionDefinition definition = createConnectionDefinition(dataFactory);
-      getDialogModel().addConnection(definition);
-      getDialogModel().getConnections().setSelectedItem(definition);
+      final JdbcConnectionDefinition definition = createConnectionDefinition( dataFactory );
+      getDialogModel().addConnection( definition );
+      getDialogModel().getConnections().setSelectedItem( definition );
     }
 
     // Enable the dialog
     pack();
-    setLocationRelativeTo(getParent());
-    setVisible(true);
+    setLocationRelativeTo( getParent() );
+    setVisible( true );
 
-    if (!isConfirmed())
-    {
+    if ( !isConfirmed() ) {
       return null;
     }
 
     return createDataFactory();
   }
 
-  protected JdbcConnectionDefinition createConnectionDefinition(final AbstractMDXDataFactory dataFactory)
-  {
-    if (dataFactory == null)
-    {
+  protected JdbcConnectionDefinition createConnectionDefinition( final AbstractMDXDataFactory dataFactory ) {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
 
     String customName = dataFactory.getDesignTimeName();
-    if (customName == null)
-    {
-      customName = Messages.getString("MondrianDataSourceEditor.CustomConnection");
+    if ( customName == null ) {
+      customName = Messages.getString( "MondrianDataSourceEditor.CustomConnection" );
     }
 
     final DataSourceProvider provider = dataFactory.getDataSourceProvider();
-    if (provider instanceof DriverDataSourceProvider)
-    {
+    if ( provider instanceof DriverDataSourceProvider ) {
       final DriverDataSourceProvider dcp = (DriverDataSourceProvider) provider;
       final ListModel model = dialogModel.getConnections();
-      for (int i = 0; i < model.getSize(); i++)
-      {
-        final JdbcConnectionDefinition definition = (JdbcConnectionDefinition) model.getElementAt(i);
-        if (definition instanceof DriverConnectionDefinition == false)
-        {
+      for ( int i = 0; i < model.getSize(); i++ ) {
+        final JdbcConnectionDefinition definition = (JdbcConnectionDefinition) model.getElementAt( i );
+        if ( definition instanceof DriverConnectionDefinition == false ) {
           continue;
         }
         final DriverConnectionDefinition dcd = (DriverConnectionDefinition) definition;
-        if (ObjectUtilities.equal(dcd.getDriverClass(), dcp.getDriver()) &&
-            ObjectUtilities.equal(dcd.getUsername(), dcp.getProperty("user")) &&
-            ObjectUtilities.equal(dcd.getPassword(), dcp.getProperty("password")) &&
-            ObjectUtilities.equal(dcd.getConnectionString(), dcp.getUrl()) &&
-            ObjectUtilities.equal(dcd.getName(), dcp.getProperty("::pentaho-reporting::name")))
-        {
+        if ( ObjectUtilities.equal( dcd.getDriverClass(), dcp.getDriver() ) &&
+          ObjectUtilities.equal( dcd.getUsername(), dcp.getProperty( "user" ) ) &&
+          ObjectUtilities.equal( dcd.getPassword(), dcp.getProperty( "password" ) ) &&
+          ObjectUtilities.equal( dcd.getConnectionString(), dcp.getUrl() ) &&
+          ObjectUtilities.equal( dcd.getName(), dcp.getProperty( "::pentaho-reporting::name" ) ) ) {
           return definition;
         }
       }
 
       final String[] strings = dcp.getPropertyNames();
       final Properties p = new Properties();
-      for (int i = 0; i < strings.length; i++)
-      {
-        final String string = strings[i];
-        p.put(string, dcp.getProperty(string));
+      for ( int i = 0; i < strings.length; i++ ) {
+        final String string = strings[ i ];
+        p.put( string, dcp.getProperty( string ) );
       }
 
       return new DriverConnectionDefinition
-          (customName, dcp.getDriver(), dcp.getUrl(),
-              dataFactory.getJdbcUser(), dataFactory.getJdbcPassword(),
-              dcp.getProperty("::pentaho-reporting::hostname"),
-              dcp.getProperty("::pentaho-reporting::database-name"),
-              dcp.getProperty("::pentaho-reporting::database-type"),
-              dcp.getProperty("::pentaho-reporting::port"),
-              p);
-    }
-    else if (provider instanceof JndiDataSourceProvider)
-    {
+        ( customName, dcp.getDriver(), dcp.getUrl(),
+          dataFactory.getJdbcUser(), dataFactory.getJdbcPassword(),
+          dcp.getProperty( "::pentaho-reporting::hostname" ),
+          dcp.getProperty( "::pentaho-reporting::database-name" ),
+          dcp.getProperty( "::pentaho-reporting::database-type" ),
+          dcp.getProperty( "::pentaho-reporting::port" ),
+          p );
+    } else if ( provider instanceof JndiDataSourceProvider ) {
       final JndiDataSourceProvider jcp = (JndiDataSourceProvider) provider;
       final ListModel model = dialogModel.getConnections();
-      for (int i = 0; i < model.getSize(); i++)
-      {
-        final JdbcConnectionDefinition definition = (JdbcConnectionDefinition) model.getElementAt(i);
-        if (definition instanceof JndiConnectionDefinition == false)
-        {
+      for ( int i = 0; i < model.getSize(); i++ ) {
+        final JdbcConnectionDefinition definition = (JdbcConnectionDefinition) model.getElementAt( i );
+        if ( definition instanceof JndiConnectionDefinition == false ) {
           continue;
         }
         final JndiConnectionDefinition dcd = (JndiConnectionDefinition) definition;
 
-        if (ObjectUtilities.equal(dcd.getJndiName(), jcp.getConnectionPath()))
-        {
+        if ( ObjectUtilities.equal( dcd.getJndiName(), jcp.getConnectionPath() ) ) {
           return dcd;
         }
       }
-      return new JndiConnectionDefinition(customName, jcp.getConnectionPath(), null,
-          dataFactory.getJdbcUser(), dataFactory.getJdbcPassword());
+      return new JndiConnectionDefinition( customName, jcp.getConnectionPath(), null,
+        dataFactory.getJdbcUser(), dataFactory.getJdbcPassword() );
     }
 
     return null;
   }
 
-  protected String getFileName()
-  {
+  protected String getFileName() {
     return filenameField.getText();
   }
 
-  public void setFileName(final String fileName)
-  {
-    filenameField.setText(fileName);
+  public void setFileName( final String fileName ) {
+    filenameField.setText( fileName );
   }
 
-  protected SimpleDataSourceDialogModel getDialogModel()
-  {
+  protected SimpleDataSourceDialogModel getDialogModel() {
     return dialogModel;
   }
 
-  protected void setSchemaFileName(final String schema)
-  {
-    this.filenameField.setText(schema);
+  protected void setSchemaFileName( final String schema ) {
+    this.filenameField.setText( schema );
   }
 
-  protected String getSchemaFileName()
-  {
+  protected String getSchemaFileName() {
     return this.filenameField.getText();
   }
 
-  protected void configureConnection(final AbstractMDXDataFactory dataFactory)
-  {
-    final CubeFileProvider cubeFileProvider = ClassicEngineBoot.getInstance().getObjectFactory().get(CubeFileProvider.class);
-    cubeFileProvider.setDesignTimeFile(getSchemaFileName());
-    cubeFileProvider.setCubeConnectionName(cubeConnectionNameField.getText());
+  protected void configureConnection( final AbstractMDXDataFactory dataFactory ) {
+    final CubeFileProvider cubeFileProvider =
+      ClassicEngineBoot.getInstance().getObjectFactory().get( CubeFileProvider.class );
+    cubeFileProvider.setDesignTimeFile( getSchemaFileName() );
+    cubeFileProvider.setCubeConnectionName( cubeConnectionNameField.getText() );
 
-    dataFactory.setCubeFileProvider(cubeFileProvider);
-    dataFactory.setRole(roleText);
-    dataFactory.setRoleField(roleField);
-    dataFactory.setJdbcUser(jdbcUserText);
-    dataFactory.setJdbcUserField(jdbcUserField);
-    dataFactory.setJdbcPassword(jdbcPasswordText);
-    dataFactory.setJdbcPasswordField(jdbcPasswordField);
+    dataFactory.setCubeFileProvider( cubeFileProvider );
+    dataFactory.setRole( roleText );
+    dataFactory.setRoleField( roleField );
+    dataFactory.setJdbcUser( jdbcUserText );
+    dataFactory.setJdbcUserField( jdbcUserField );
+    dataFactory.setJdbcPassword( jdbcPasswordText );
+    dataFactory.setJdbcPasswordField( jdbcPasswordField );
 
     final JdbcConnectionDefinition connectionDefinition =
-        (JdbcConnectionDefinition) getDialogModel().getConnections().getSelectedItem();
-    dataFactory.setDesignTimeName(connectionDefinition.getName());
+      (JdbcConnectionDefinition) getDialogModel().getConnections().getSelectedItem();
+    dataFactory.setDesignTimeName( connectionDefinition.getName() );
 
-    if (connectionDefinition instanceof DriverConnectionDefinition)
-    {
+    if ( connectionDefinition instanceof DriverConnectionDefinition ) {
       final DriverConnectionDefinition dcd = (DriverConnectionDefinition) connectionDefinition;
-      dataFactory.setJdbcUser(dcd.getUsername());
-      dataFactory.setJdbcPassword(dcd.getPassword());
+      dataFactory.setJdbcUser( dcd.getUsername() );
+      dataFactory.setJdbcPassword( dcd.getPassword() );
 
       final DriverDataSourceProvider dataSourceProvider = new DriverDataSourceProvider();
-      dataSourceProvider.setUrl(dcd.getConnectionString());
-      dataSourceProvider.setDriver(dcd.getDriverClass());
+      dataSourceProvider.setUrl( dcd.getConnectionString() );
+      dataSourceProvider.setDriver( dcd.getDriverClass() );
       final Properties properties = dcd.getProperties();
       final Enumeration keys = properties.keys();
-      while (keys.hasMoreElements())
-      {
+      while ( keys.hasMoreElements() ) {
         final String key = (String) keys.nextElement();
-        if ("user".equals(key) || "password".equals(key))
-        {
+        if ( "user".equals( key ) || "password".equals( key ) ) {
           continue;
         }
-        dataSourceProvider.setProperty(key, properties.getProperty(key));
+        dataSourceProvider.setProperty( key, properties.getProperty( key ) );
       }
-      dataFactory.setDataSourceProvider(dataSourceProvider);
-    }
-    else
-    {
+      dataFactory.setDataSourceProvider( dataSourceProvider );
+    } else {
       final JndiConnectionDefinition jcd = (JndiConnectionDefinition) connectionDefinition;
-      dataFactory.setDataSourceProvider(new JndiDataSourceProvider(jcd.getJndiName()));
-      dataFactory.setJdbcUser(jcd.getUsername());
-      dataFactory.setJdbcPassword(jcd.getPassword());
+      dataFactory.setDataSourceProvider( new JndiDataSourceProvider( jcd.getJndiName() ) );
+      dataFactory.setJdbcUser( jcd.getUsername() );
+      dataFactory.setJdbcPassword( jcd.getPassword() );
     }
   }
 
-  protected void autoRefreshSchemaName()
-  {
-    if (StringUtils.isEmpty(cubeConnectionNameField.getText()) == false)
-    {
+  protected void autoRefreshSchemaName() {
+    if ( StringUtils.isEmpty( cubeConnectionNameField.getText() ) == false ) {
       return;
     }
 
-    cubeConnectionNameField.setText(lookupSchemaName());
+    cubeConnectionNameField.setText( lookupSchemaName() );
   }
 
-  private String lookupSchemaName()
-  {
+  private String lookupSchemaName() {
     final AbstractReportDefinition report = context.getReport();
-    final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
+    final MasterReport masterReport = DesignTimeUtil.getMasterReport( report );
 
     final ResourceManager resourceManager = masterReport.getResourceManager();
     final ResourceKey contextKey = masterReport.getContentBase();
     final String designTimeFile = filenameField.getText();
-    return MondrianUtil.parseSchemaName(resourceManager, contextKey, designTimeFile);
+    return MondrianUtil.parseSchemaName( resourceManager, contextKey, designTimeFile );
   }
 
-  protected void refreshSchemaName()
-  {
-    cubeConnectionNameField.setText("");
+  protected void refreshSchemaName() {
+    cubeConnectionNameField.setText( "" );
     autoRefreshSchemaName();
   }
 }

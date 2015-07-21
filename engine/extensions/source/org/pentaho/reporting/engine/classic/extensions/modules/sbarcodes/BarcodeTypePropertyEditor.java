@@ -17,21 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyEditor;
 
-public class BarcodeTypePropertyEditor implements PropertyEditor
-{
+public class BarcodeTypePropertyEditor implements PropertyEditor {
   private String value;
   private PropertyChangeSupport propertyChangeSupport;
 
-  public BarcodeTypePropertyEditor()
-  {
-    propertyChangeSupport = new PropertyChangeSupport(this);
+  public BarcodeTypePropertyEditor() {
+    propertyChangeSupport = new PropertyChangeSupport( this );
   }
 
   /**
@@ -41,110 +37,83 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    * @param value The new target object to be edited.  Note that this object should not be modified by the
    *              PropertyEditor, rather the PropertyEditor should create a new object to hold any modified value.
    */
-  public void setValue(final Object value)
-  {
+  public void setValue( final Object value ) {
     final Object oldValue = this.value;
-    if (isValidBarcode(value))
-    {
+    if ( isValidBarcode( value ) ) {
       this.value = (String) value;
-    }
-    else
-    {
+    } else {
       this.value = null;
     }
 
-    propertyChangeSupport.firePropertyChange(null, oldValue, this.value);
+    propertyChangeSupport.firePropertyChange( null, oldValue, this.value );
   }
 
-  private boolean isValidBarcode(final Object barodeType)
-  {
-    if (SimpleBarcodesUtility.BARCODE_2OF5.equals(barodeType))
-    {
+  private boolean isValidBarcode( final Object barodeType ) {
+    if ( SimpleBarcodesUtility.BARCODE_2OF5.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_2OF5INT.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_2OF5INT.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_CODABAR.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_CODABAR.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_CODE128.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_CODE128.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_CODE128A.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_CODE128A.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_CODE128B.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_CODE128B.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_CODE128C.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_CODE128C.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_CODE39.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_CODE39.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_CODE39EXT.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_CODE39EXT.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_EAN13.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_EAN13.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_ISBN.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_ISBN.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_PDF417.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_PDF417.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_PDF417.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_PDF417.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_POSTNET.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_POSTNET.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_UCCEAN128.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_UCCEAN128.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_UPCA.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_UPCA.equals( barodeType ) ) {
       return true;
     }
 
-    if (SimpleBarcodesUtility.BARCODE_EAN8.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_EAN8.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_UPCE.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_UPCE.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_EAN128.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_EAN128.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_DATAMATRIX.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_DATAMATRIX.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_ROYALMAIL.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_ROYALMAIL.equals( barodeType ) ) {
       return true;
     }
-    if (SimpleBarcodesUtility.BARCODE_USPSINTELLIGENTMAIL.equals(barodeType))
-    {
+    if ( SimpleBarcodesUtility.BARCODE_USPSINTELLIGENTMAIL.equals( barodeType ) ) {
       return true;
     }
     return false;
@@ -154,11 +123,10 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    * Gets the property value.
    *
    * @return The value of the property.  Primitive types such as "int" will be wrapped as the corresponding object type
-   *         such as "java.lang.Integer".
+   * such as "java.lang.Integer".
    */
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
@@ -168,8 +136,7 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    * @return True if the class will honor the paintValue method.
    */
 
-  public boolean isPaintable()
-  {
+  public boolean isPaintable() {
     return false;
   }
 
@@ -185,8 +152,7 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    * @param gfx Graphics object to paint into.
    * @param box Rectangle within graphics object into which we should paint.
    */
-  public void paintValue(final Graphics gfx, final Rectangle box)
-  {
+  public void paintValue( final Graphics gfx, final Rectangle box ) {
 
   }
 
@@ -207,10 +173,9 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    * <code>javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))</code> </ul>
    *
    * @return a fragment of Java code representing an initializer for the current value. It should not contain a
-   *         semi-colon ('<code>;</code>') to end the expression.
+   * semi-colon ('<code>;</code>') to end the expression.
    */
-  public String getJavaInitializationString()
-  {
+  public String getJavaInitializationString() {
     return null;
   }
 
@@ -218,13 +183,11 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    * Gets the property value as text.
    *
    * @return The property value as a human editable string. <p>   Returns null if the value can't be expressed as an
-   *         editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse
-   *         that string back in setAsText().
+   * editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse that
+   * string back in setAsText().
    */
-  public String getAsText()
-  {
-    if (value == null)
-    {
+  public String getAsText() {
+    if ( value == null ) {
       return null;
     }
     return value;
@@ -236,9 +199,8 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    *
    * @param text The string to be parsed.
    */
-  public void setAsText(final String text) throws IllegalArgumentException
-  {
-    setValue(text);
+  public void setAsText( final String text ) throws IllegalArgumentException {
+    setValue( text );
   }
 
   /**
@@ -249,30 +211,29 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    *
    * @return The tag values for this property.  May be null if this property cannot be represented as a tagged value.
    */
-  public String[] getTags()
-  {
-    return new String[]{
-        SimpleBarcodesUtility.BARCODE_2OF5,
-        SimpleBarcodesUtility.BARCODE_2OF5INT,
-        SimpleBarcodesUtility.BARCODE_CODABAR,
-        SimpleBarcodesUtility.BARCODE_CODE128,
-        SimpleBarcodesUtility.BARCODE_CODE128A,
-        SimpleBarcodesUtility.BARCODE_CODE128B,
-        SimpleBarcodesUtility.BARCODE_CODE128C,
-        SimpleBarcodesUtility.BARCODE_CODE39,
-        SimpleBarcodesUtility.BARCODE_CODE39EXT,
-        SimpleBarcodesUtility.BARCODE_EAN13,
-        SimpleBarcodesUtility.BARCODE_ISBN,
-        SimpleBarcodesUtility.BARCODE_PDF417,
-        SimpleBarcodesUtility.BARCODE_POSTNET,
-        SimpleBarcodesUtility.BARCODE_UCCEAN128,
-        SimpleBarcodesUtility.BARCODE_UPCA,
-        SimpleBarcodesUtility.BARCODE_EAN8,
-        SimpleBarcodesUtility.BARCODE_UPCE,
-        SimpleBarcodesUtility.BARCODE_EAN128,
-        SimpleBarcodesUtility.BARCODE_DATAMATRIX,
-        SimpleBarcodesUtility.BARCODE_ROYALMAIL,
-        SimpleBarcodesUtility.BARCODE_USPSINTELLIGENTMAIL
+  public String[] getTags() {
+    return new String[] {
+      SimpleBarcodesUtility.BARCODE_2OF5,
+      SimpleBarcodesUtility.BARCODE_2OF5INT,
+      SimpleBarcodesUtility.BARCODE_CODABAR,
+      SimpleBarcodesUtility.BARCODE_CODE128,
+      SimpleBarcodesUtility.BARCODE_CODE128A,
+      SimpleBarcodesUtility.BARCODE_CODE128B,
+      SimpleBarcodesUtility.BARCODE_CODE128C,
+      SimpleBarcodesUtility.BARCODE_CODE39,
+      SimpleBarcodesUtility.BARCODE_CODE39EXT,
+      SimpleBarcodesUtility.BARCODE_EAN13,
+      SimpleBarcodesUtility.BARCODE_ISBN,
+      SimpleBarcodesUtility.BARCODE_PDF417,
+      SimpleBarcodesUtility.BARCODE_POSTNET,
+      SimpleBarcodesUtility.BARCODE_UCCEAN128,
+      SimpleBarcodesUtility.BARCODE_UPCA,
+      SimpleBarcodesUtility.BARCODE_EAN8,
+      SimpleBarcodesUtility.BARCODE_UPCE,
+      SimpleBarcodesUtility.BARCODE_EAN128,
+      SimpleBarcodesUtility.BARCODE_DATAMATRIX,
+      SimpleBarcodesUtility.BARCODE_ROYALMAIL,
+      SimpleBarcodesUtility.BARCODE_USPSINTELLIGENTMAIL
     };
   }
 
@@ -285,11 +246,10 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    * it may put it in its own individual dialog, or ...
    *
    * @return A java.awt.Component that will allow a human to directly edit the current property value.  May be null if
-   *         this is not supported.
+   * this is not supported.
    */
 
-  public Component getCustomEditor()
-  {
+  public Component getCustomEditor() {
     return null;
   }
 
@@ -298,8 +258,7 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    *
    * @return True if the propertyEditor can provide a custom editor.
    */
-  public boolean supportsCustomEditor()
-  {
+  public boolean supportsCustomEditor() {
     return false;
   }
 
@@ -310,9 +269,8 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    *
    * @param listener An object to be invoked when a PropertyChange event is fired.
    */
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( listener );
   }
 
   /**
@@ -320,8 +278,7 @@ public class BarcodeTypePropertyEditor implements PropertyEditor
    *
    * @param listener The PropertyChange listener to be removed.
    */
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( listener );
   }
 }

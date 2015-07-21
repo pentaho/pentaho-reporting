@@ -17,11 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.wizard.model;
 
-public interface RootBandDefinition extends ElementFormatDefinition
-{
+public interface RootBandDefinition extends ElementFormatDefinition {
   public Boolean getRepeat();
-  public void setRepeat(Boolean b);
+
+  public void setRepeat( Boolean b );
 
   public boolean isVisible();
-  public void setVisible(boolean b);
+
+  public void setVisible( boolean b );
 }

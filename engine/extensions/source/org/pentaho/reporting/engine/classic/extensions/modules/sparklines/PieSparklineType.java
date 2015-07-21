@@ -31,13 +31,11 @@ import org.pentaho.reporting.libraries.libsparklines.PieGraphDrawable;
  *
  * @author Cedric Pronzato
  */
-public class PieSparklineType extends ContentType
-{
+public class PieSparklineType extends ContentType {
   public static final PieSparklineType INSTANCE = new PieSparklineType();
 
-  public PieSparklineType()
-  {
-    super("pie-sparkline");
+  public PieSparklineType() {
+    super( "pie-sparkline" );
   }
 
   /**
@@ -48,63 +46,59 @@ public class PieSparklineType extends ContentType
    * @param element the element for which the data is computed.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    final Object retval = ElementTypeUtils.queryFieldOrValue(runtime, element);
-    if (retval instanceof Number == false)
-    {
-      final Object nullValue = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
-      return filter(runtime, element, nullValue);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    final Object retval = ElementTypeUtils.queryFieldOrValue( runtime, element );
+    if ( retval instanceof Number == false ) {
+      final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return filter( runtime, element, nullValue );
     }
     final Number numbers = (Number) retval;
 
     final int startAngle = ElementTypeUtils.getIntAttribute
-        (element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.START_ANGLE, 0);
-    final Number lowSlice = ElementTypeUtils.getNumberAttribute(element, SparklineAttributeNames.NAMESPACE,
-        SparklineAttributeNames.LOW_SLICE, new Double(0.30));
-    final Number mediumSlice = ElementTypeUtils.getNumberAttribute(element, SparklineAttributeNames.NAMESPACE,
-        SparklineAttributeNames.MEDIUM_SLICE, new Double(0.70));
-    final Number highSlice = ElementTypeUtils.getNumberAttribute(element, SparklineAttributeNames.NAMESPACE,
-        SparklineAttributeNames.HIGH_SLICE, new Double(1));
-    final boolean clockwise = ElementTypeUtils.getBooleanAttribute(element, SparklineAttributeNames.NAMESPACE,
-        SparklineAttributeNames.COUNTER_CLOCKWISE, false);
+      ( element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.START_ANGLE, 0 );
+    final Number lowSlice = ElementTypeUtils.getNumberAttribute( element, SparklineAttributeNames.NAMESPACE,
+      SparklineAttributeNames.LOW_SLICE, new Double( 0.30 ) );
+    final Number mediumSlice = ElementTypeUtils.getNumberAttribute( element, SparklineAttributeNames.NAMESPACE,
+      SparklineAttributeNames.MEDIUM_SLICE, new Double( 0.70 ) );
+    final Number highSlice = ElementTypeUtils.getNumberAttribute( element, SparklineAttributeNames.NAMESPACE,
+      SparklineAttributeNames.HIGH_SLICE, new Double( 1 ) );
+    final boolean clockwise = ElementTypeUtils.getBooleanAttribute( element, SparklineAttributeNames.NAMESPACE,
+      SparklineAttributeNames.COUNTER_CLOCKWISE, false );
 
     final PieGraphDrawable drawable = new PieGraphDrawable();
-    drawable.setValue(numbers);
-    drawable.setStartAngle(startAngle);
-    drawable.setLowSlice(lowSlice);
-    drawable.setMediumSlice(mediumSlice);
-    drawable.setHighSlice(highSlice);
-    drawable.setCounterClockWise(clockwise);
-    return new PieSparklinesWrapper(drawable);
+    drawable.setValue( numbers );
+    drawable.setStartAngle( startAngle );
+    drawable.setLowSlice( lowSlice );
+    drawable.setMediumSlice( mediumSlice );
+    drawable.setHighSlice( highSlice );
+    drawable.setCounterClockWise( clockwise );
+    return new PieSparklinesWrapper( drawable );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    Object retval = ElementTypeUtils.queryStaticValue(element);
-    if (retval instanceof Number == false)
-    {
-      retval = new Double(0.75);
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    Object retval = ElementTypeUtils.queryStaticValue( element );
+    if ( retval instanceof Number == false ) {
+      retval = new Double( 0.75 );
     }
     final Number numbers = (Number) retval;
     final int startAngle = ElementTypeUtils.getIntAttribute
-        (element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.START_ANGLE, 0);
-    final Number lowSlice = ElementTypeUtils.getNumberAttribute(element, SparklineAttributeNames.NAMESPACE,
-        SparklineAttributeNames.LOW_SLICE, new Double(0.30));
-    final Number mediumSlice = ElementTypeUtils.getNumberAttribute(element, SparklineAttributeNames.NAMESPACE,
-        SparklineAttributeNames.MEDIUM_SLICE, new Double(0.70));
-    final Number highSlice = ElementTypeUtils.getNumberAttribute(element, SparklineAttributeNames.NAMESPACE,
-        SparklineAttributeNames.HIGH_SLICE, new Double(1));
-    final boolean clockwise = ElementTypeUtils.getBooleanAttribute(element, SparklineAttributeNames.NAMESPACE,
-        SparklineAttributeNames.COUNTER_CLOCKWISE, false);
+      ( element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.START_ANGLE, 0 );
+    final Number lowSlice = ElementTypeUtils.getNumberAttribute( element, SparklineAttributeNames.NAMESPACE,
+      SparklineAttributeNames.LOW_SLICE, new Double( 0.30 ) );
+    final Number mediumSlice = ElementTypeUtils.getNumberAttribute( element, SparklineAttributeNames.NAMESPACE,
+      SparklineAttributeNames.MEDIUM_SLICE, new Double( 0.70 ) );
+    final Number highSlice = ElementTypeUtils.getNumberAttribute( element, SparklineAttributeNames.NAMESPACE,
+      SparklineAttributeNames.HIGH_SLICE, new Double( 1 ) );
+    final boolean clockwise = ElementTypeUtils.getBooleanAttribute( element, SparklineAttributeNames.NAMESPACE,
+      SparklineAttributeNames.COUNTER_CLOCKWISE, false );
 
     final PieGraphDrawable drawable = new PieGraphDrawable();
-    drawable.setValue(numbers);
-    drawable.setStartAngle(startAngle);
-    drawable.setLowSlice(lowSlice);
-    drawable.setMediumSlice(mediumSlice);
-    drawable.setHighSlice(highSlice);
-    drawable.setCounterClockWise(clockwise);
-    return new PieSparklinesWrapper(drawable);
+    drawable.setValue( numbers );
+    drawable.setStartAngle( startAngle );
+    drawable.setLowSlice( lowSlice );
+    drawable.setMediumSlice( mediumSlice );
+    drawable.setHighSlice( highSlice );
+    drawable.setCounterClockWise( clockwise );
+    return new PieSparklinesWrapper( drawable );
   }
 }

@@ -17,20 +17,17 @@
 
 package org.pentaho.reporting.designer.extensions.legacycharts;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
-public class Messages extends ResourceBundleSupport
-{
+import java.util.Locale;
+
+public class Messages extends ResourceBundleSupport {
   private static Messages instance;
 
-  public static synchronized Messages getInstance()
-  {
-    if (instance == null)
-    {
-      instance = new Messages(Locale.getDefault());
+  public static synchronized Messages getInstance() {
+    if ( instance == null ) {
+      instance = new Messages( Locale.getDefault() );
     }
     return instance;
   }
@@ -38,10 +35,9 @@ public class Messages extends ResourceBundleSupport
   /**
    * Creates a new instance.
    */
-  public Messages(final Locale locale)
-  {
-    super(locale, "org.pentaho.reporting.designer.extensions.legacycharts.messages.messages",  // NON-NLS
-        ObjectUtilities.getClassLoader(Messages.class));
+  public Messages( final Locale locale ) {
+    super( locale, "org.pentaho.reporting.designer.extensions.legacycharts.messages.messages",  // NON-NLS
+      ObjectUtilities.getClassLoader( Messages.class ) );
   }
 
 }

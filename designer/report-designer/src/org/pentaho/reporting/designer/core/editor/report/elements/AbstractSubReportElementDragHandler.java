@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.awt.dnd.DropTargetEvent;
-import java.awt.geom.Point2D;
-
 import org.pentaho.reporting.designer.core.editor.report.AbstractReportElementDragHandler;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+
+import java.awt.dnd.DropTargetEvent;
+import java.awt.geom.Point2D;
 
 
 /**
@@ -32,39 +32,32 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
  *
  * @author Sulaiman Karmali
  */
-public abstract class AbstractSubReportElementDragHandler extends AbstractReportElementDragHandler
-{
-  public AbstractSubReportElementDragHandler()
-  {
+public abstract class AbstractSubReportElementDragHandler extends AbstractReportElementDragHandler {
+  public AbstractSubReportElementDragHandler() {
   }
 
-  protected boolean isFilteredDropZone(final DropTargetEvent event,
-                                       final ReportElementEditorContext dragContext,
-                                       final ElementMetaData elementMetaData,
-                                       final Point2D point)
-  {
-    final Element rootBand = findRootBand(dragContext, point);
+  protected boolean isFilteredDropZone( final DropTargetEvent event,
+                                        final ReportElementEditorContext dragContext,
+                                        final ElementMetaData elementMetaData,
+                                        final Point2D point ) {
+    final Element rootBand = findRootBand( dragContext, point );
     final ElementMetaData metaData = rootBand.getElementType().getMetaData();
     final ElementMetaData.TypeClassification reportElementType = metaData.getReportElementType();
-    if (reportElementType == ElementMetaData.TypeClassification.HEADER ||
-        reportElementType == ElementMetaData.TypeClassification.FOOTER)
-    {
+    if ( reportElementType == ElementMetaData.TypeClassification.HEADER ||
+      reportElementType == ElementMetaData.TypeClassification.FOOTER ) {
       return true;
     }
     return false;
   }
 
-  protected Element findRootBand(final ReportElementEditorContext dragContext,
-                                 final Point2D point)
-  {
-    Element element = dragContext.getElementForLocation(point, false);
-    while (element != null && ((element instanceof RootLevelBand) == false))
-    {
+  protected Element findRootBand( final ReportElementEditorContext dragContext,
+                                  final Point2D point ) {
+    Element element = dragContext.getElementForLocation( point, false );
+    while ( element != null && ( ( element instanceof RootLevelBand ) == false ) ) {
       element = element.getParent();
     }
 
-    if (element != null)
-    {
+    if ( element != null ) {
       return element;
     }
 

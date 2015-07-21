@@ -26,38 +26,31 @@ import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class PentahoPathNormalizerFunction implements Function
-{
-  public PentahoPathNormalizerFunction()
-  {
+public class PentahoPathNormalizerFunction implements Function {
+  public PentahoPathNormalizerFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "PENTAHOPATHNORMALIZER";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount != 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount != 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
-    final Type type1 = parameters.getType(0);
-    final Object value1 = parameters.getValue(0);
-    final String result = context.getTypeRegistry().convertToText(type1, value1);
+    final Type type1 = parameters.getType( 0 );
+    final Object value1 = parameters.getValue( 0 );
+    final String result = context.getTypeRegistry().convertToText( type1, value1 );
 
-    if(result == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    if ( result == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
-    return new TypeValuePair(TextType.TYPE, normalizePath(result));
+    return new TypeValuePair( TextType.TYPE, normalizePath( result ) );
   }
 
-  public static String normalizePath(final String result)
-  {
-    return result.replace("/", ":");
+  public static String normalizePath( final String result ) {
+    return result.replace( "/", ":" );
   }
 }

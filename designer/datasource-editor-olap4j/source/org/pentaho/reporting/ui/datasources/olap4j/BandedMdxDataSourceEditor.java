@@ -17,54 +17,45 @@
 
 package org.pentaho.reporting.ui.datasources.olap4j;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.AbstractNamedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.BandedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.OlapConnectionProvider;
 
+import java.awt.*;
+
 /**
  * @author Michael D'Amour
  */
-public class BandedMdxDataSourceEditor extends Olap4JDataSourceEditor
-{
-  public BandedMdxDataSourceEditor(final DesignTimeContext context)
-  {
-    super(context);
+public class BandedMdxDataSourceEditor extends Olap4JDataSourceEditor {
+  public BandedMdxDataSourceEditor( final DesignTimeContext context ) {
+    super( context );
   }
 
-  public BandedMdxDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-  {
-    super(context, owner);
+  public BandedMdxDataSourceEditor( final DesignTimeContext context, final Dialog owner ) {
+    super( context, owner );
   }
 
-  public BandedMdxDataSourceEditor(final DesignTimeContext context, final Frame owner)
-  {
-    super(context, owner);
+  public BandedMdxDataSourceEditor( final DesignTimeContext context, final Frame owner ) {
+    super( context, owner );
   }
 
-  protected void init(final DesignTimeContext context)
-  {
-    super.init(context);
-    setTitle(Messages.getString("BandedMdxDataSourceEditor.Title"));
+  protected void init( final DesignTimeContext context ) {
+    super.init( context );
+    setTitle( Messages.getString( "BandedMdxDataSourceEditor.Title" ) );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "Olap4JDataSourceEditor.Banded";
   }
 
-  protected AbstractNamedMDXDataFactory createDataFactory()
-  {
+  protected AbstractNamedMDXDataFactory createDataFactory() {
     final OlapConnectionProvider connectionProvider = createConnectionProvider();
-    if (connectionProvider == null)
-    {
+    if ( connectionProvider == null ) {
       return null;
     }
-    final BandedMDXDataFactory returnDataFactory = new BandedMDXDataFactory(connectionProvider);
-    configureQueries(returnDataFactory);
+    final BandedMDXDataFactory returnDataFactory = new BandedMDXDataFactory( connectionProvider );
+    configureQueries( returnDataFactory );
     return returnDataFactory;
   }
 }

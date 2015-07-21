@@ -17,13 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.util;
 
-import java.util.Collection;
-
 import mondrian.olap.Member;
 
-public interface MemberAddingStrategy
-{
-  public void add(Member m);
+import java.util.Collection;
+
+public interface MemberAddingStrategy {
+  public void add( Member m );
 
   public Collection<Member> values();
 

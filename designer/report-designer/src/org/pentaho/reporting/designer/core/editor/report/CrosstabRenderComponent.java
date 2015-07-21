@@ -34,50 +34,41 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
  *
  * @author Sulaiman Karmali
  */
-public class CrosstabRenderComponent extends AbstractRenderComponent
-{
+public class CrosstabRenderComponent extends AbstractRenderComponent {
   private CrosstabRenderer elementRenderer;
 
-  public CrosstabRenderComponent(final ReportDesignerContext designerContext,
-                                 final ReportDocumentContext renderContext)
-  {
-    super(designerContext, renderContext);
+  public CrosstabRenderComponent( final ReportDesignerContext designerContext,
+                                  final ReportDocumentContext renderContext ) {
+    super( designerContext, renderContext );
   }
 
-  public void installRenderer(final CrosstabRenderer rendererRoot,
-                              final LinealModel horizontalLinealModel,
-                              final HorizontalPositionsModel horizontalPositionsModel)
-  {
+  public void installRenderer( final CrosstabRenderer rendererRoot,
+                               final LinealModel horizontalLinealModel,
+                               final HorizontalPositionsModel horizontalPositionsModel ) {
     this.elementRenderer = rendererRoot;
-    super.installLineals(horizontalLinealModel, horizontalPositionsModel);
+    super.installLineals( horizontalLinealModel, horizontalPositionsModel );
   }
 
-  public Element getDefaultElement()
-  {
-    if (elementRenderer == null)
-    {
+  public Element getDefaultElement() {
+    if ( elementRenderer == null ) {
       return null;
     }
     return elementRenderer.getCrosstabGroup();
   }
 
-  public CrosstabRenderer getRendererRoot()
-  {
-    return (CrosstabRenderer)getElementRenderer();
+  public CrosstabRenderer getRendererRoot() {
+    return (CrosstabRenderer) getElementRenderer();
   }
 
-  public Band getRootBand()
-  {
+  public Band getRootBand() {
     return getRendererRoot().getElement().getParent();
   }
 
-  protected boolean isLocalElement(final ReportElement e)
-  {
-    return ModelUtility.isDescendant((CrosstabGroup)getDefaultElement(), e);
+  protected boolean isLocalElement( final ReportElement e ) {
+    return ModelUtility.isDescendant( (CrosstabGroup) getDefaultElement(), e );
   }
 
-  public ElementRenderer getElementRenderer()
-  {
+  public ElementRenderer getElementRenderer() {
     return elementRenderer;
   }
 }

@@ -36,10 +36,6 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.openerp.writ
  * Copyright (c) 2011 - 2012 De Bortoli Wines Pty Limited (Australia). All Rights Reserved.
  */
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleDataFactoryWriterHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
@@ -51,15 +47,17 @@ import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 /**
  * Creation-Date: Jan 19, 2007, 4:44:05 PM
  *
  * @author Thomas Morgner, Pieter van der Merwe
  */
-public class OpenERPDataFactoryBundleWriteHandler implements BundleDataFactoryWriterHandler
-{
-  public OpenERPDataFactoryBundleWriteHandler()
-  {
+public class OpenERPDataFactoryBundleWriteHandler implements BundleDataFactoryWriterHandler {
+  public OpenERPDataFactoryBundleWriteHandler() {
   }
 
   /**
@@ -74,29 +72,28 @@ public class OpenERPDataFactoryBundleWriteHandler implements BundleDataFactoryWr
    * @throws IOException           if any error occured
    * @throws BundleWriterException if a bundle-management error occured.
    */
-  public String writeDataFactory(final WriteableDocumentBundle bundle,
-                                 final DataFactory rawDataFactory,
-                                 final BundleWriterState state)
-      throws IOException, BundleWriterException
-  {
-    final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(), "datasources/openerp-ds{0}.xml");
-    if (fileName == null)
-    {
-      throw new IOException("Unable to generate unique name for Inline-Data-Source");
+  public String writeDataFactory( final WriteableDocumentBundle bundle,
+                                  final DataFactory rawDataFactory,
+                                  final BundleWriterState state )
+    throws IOException, BundleWriterException {
+    final String fileName =
+      BundleUtilities.getUniqueName( bundle, state.getFileName(), "datasources/openerp-ds{0}.xml" );
+    if ( fileName == null ) {
+      throw new IOException( "Unable to generate unique name for Inline-Data-Source" );
     }
 
-    final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
+    final OutputStream outputStream = bundle.createEntry( fileName, "text/xml" );
     final DefaultTagDescription tagDescription = new DefaultTagDescription();
-    tagDescription.setNamespaceHasCData(OpenERPModule.NAMESPACE, false);
-    
+    tagDescription.setNamespaceHasCData( OpenERPModule.NAMESPACE, false );
+
     final XmlWriter xmlWriter = new XmlWriter
-        (new OutputStreamWriter(outputStream, "UTF-8"), tagDescription, "  ","\n");
+      ( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ", "\n" );
 
     final OpenERPDataFactory dataFactory = (OpenERPDataFactory) rawDataFactory;
-    
-    OpenERPDataFactoryHelper.writeXML(dataFactory, xmlWriter);
-    
+
+    OpenERPDataFactoryHelper.writeXML( dataFactory, xmlWriter );
+
     return fileName;
-    
+
   }
 }

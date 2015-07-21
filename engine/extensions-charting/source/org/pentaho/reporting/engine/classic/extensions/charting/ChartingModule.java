@@ -21,17 +21,14 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class ChartingModule extends AbstractModule
-{
+public class ChartingModule extends AbstractModule {
   public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/pentaho-chartbeans";
+    "http://reporting.pentaho.org/namespaces/engine/attributes/pentaho-chartbeans";
 
-  public ChartingModule() throws ModuleInitializeException
-  {
+  public ChartingModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
   }
 }

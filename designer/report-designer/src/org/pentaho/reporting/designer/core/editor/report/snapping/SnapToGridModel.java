@@ -24,21 +24,17 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class SnapToGridModel implements SnapPositionsModel
-{
+public class SnapToGridModel implements SnapPositionsModel {
   private long gridSize;
 
-  public SnapToGridModel()
-  {
+  public SnapToGridModel() {
   }
 
-  public long getGridSize()
-  {
+  public long getGridSize() {
     return gridSize;
   }
 
-  public void setGridSize(final long gridSize)
-  {
+  public void setGridSize( final long gridSize ) {
     this.gridSize = gridSize;
   }
 
@@ -48,28 +44,22 @@ public class SnapToGridModel implements SnapPositionsModel
    * @param position
    * @return
    */
-  public long getNearestSnapPosition(final long position,
-                                     final InstanceID owner)
-  {
-    if (gridSize < 2)
-    {
+  public long getNearestSnapPosition( final long position,
+                                      final InstanceID owner ) {
+    if ( gridSize < 2 ) {
       return position;
     }
-    if (position <= 0)
-    {
+    if ( position <= 0 ) {
       return position;
     }
 
     final long div1 = position / gridSize;
     final long snapPos1 = div1 * gridSize;
-    final long div2 = (position + gridSize) / gridSize;
+    final long div2 = ( position + gridSize ) / gridSize;
     final long snapPos2 = div2 * gridSize;
-    if (Math.abs(snapPos1 - position) > Math.abs(snapPos2 - position))
-    {
+    if ( Math.abs( snapPos1 - position ) > Math.abs( snapPos2 - position ) ) {
       return snapPos2;
-    }
-    else
-    {
+    } else {
       return snapPos1;
     }
   }

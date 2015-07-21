@@ -22,10 +22,8 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class NumberConceptMapper implements ConceptQueryMapper
-{
-  public NumberConceptMapper()
-  {
+public class NumberConceptMapper implements ConceptQueryMapper {
+  public NumberConceptMapper() {
   }
 
   /**
@@ -33,37 +31,28 @@ public class NumberConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof Number == false)
-    {
+    if ( value instanceof Number == false ) {
       return null;
     }
 
-    if (type == null || Number.class.equals(type))
-    {
+    if ( type == null || Number.class.equals( type ) ) {
       return value;
     }
 
-    final String valueAsString = String.valueOf(value);
-    if (Object.class.equals(type) || Number.class.isAssignableFrom(type))
-    {
-      try
-      {
-        return ConverterRegistry.toPropertyValue(valueAsString, type);
-      }
-      catch (BeanException e)
-      {
+    final String valueAsString = String.valueOf( value );
+    if ( Object.class.equals( type ) || Number.class.isAssignableFrom( type ) ) {
+      try {
+        return ConverterRegistry.toPropertyValue( valueAsString, type );
+      } catch ( BeanException e ) {
         // ignore ..
       }
     }
-    if (String.class.isAssignableFrom(type))
-    {
+    if ( String.class.isAssignableFrom( type ) ) {
       return valueAsString;
     }
     return null;

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.io.File;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -27,29 +25,26 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class StyleInheritanceLegacyTest extends TestCase
-{
-  public StyleInheritanceLegacyTest()
-  {
+import java.io.File;
+
+public class StyleInheritanceLegacyTest extends TestCase {
+  public StyleInheritanceLegacyTest() {
   }
 
-  public StyleInheritanceLegacyTest(final String name)
-  {
-    super(name);
+  public StyleInheritanceLegacyTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testSample() throws ResourceException
-  {
+  public void testSample() throws ResourceException {
     final File marker = GoldenSampleGenerator.findMarker();
-    final File report = new File (marker, "reports/stylesheets.xml");
+    final File report = new File( marker, "reports/stylesheets.xml" );
     ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    Resource directly = mgr.createDirectly(report, MasterReport.class);
+    Resource directly = mgr.createDirectly( report, MasterReport.class );
     final MasterReport resource = (MasterReport) directly.getResource();
   }
 }

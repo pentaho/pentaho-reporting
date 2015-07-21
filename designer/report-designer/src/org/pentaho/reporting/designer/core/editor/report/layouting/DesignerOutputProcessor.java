@@ -23,44 +23,36 @@ import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessing
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 
-public class DesignerOutputProcessor extends AbstractOutputProcessor
-{
+public class DesignerOutputProcessor extends AbstractOutputProcessor {
   private OutputProcessorMetaData metadata;
   private LogicalPageBox logicalPage;
 
-  public DesignerOutputProcessor()
-  {
-    this(new DesignerOutputProcessorMetaData());
+  public DesignerOutputProcessor() {
+    this( new DesignerOutputProcessorMetaData() );
   }
 
-  public DesignerOutputProcessor(final DesignerOutputProcessorMetaData metaData)
-  {
-    if (metaData == null)
-    {
+  public DesignerOutputProcessor( final DesignerOutputProcessorMetaData metaData ) {
+    if ( metaData == null ) {
       throw new NullPointerException();
     }
     this.metadata = metaData;
   }
 
-  public boolean isNeedAlignedPage()
-  {
+  public boolean isNeedAlignedPage() {
     // this guarantees that we get a copy of the logical page. 
     return true;
   }
 
-  protected void processPageContent(final LogicalPageKey logicalPageKey,
-                                    final LogicalPageBox logicalPage) throws ContentProcessingException
-  {
+  protected void processPageContent( final LogicalPageKey logicalPageKey,
+                                     final LogicalPageBox logicalPage ) throws ContentProcessingException {
     this.logicalPage = logicalPage;
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metadata;
   }
 
-  public LogicalPageBox getLogicalPage()
-  {
+  public LogicalPageBox getLogicalPage() {
     return logicalPage;
   }
 }

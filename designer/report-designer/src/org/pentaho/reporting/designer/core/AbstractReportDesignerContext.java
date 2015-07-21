@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.designer.core;
 
-import java.awt.Component;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import javax.swing.JComponent;
-import javax.swing.JPopupMenu;
-
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
@@ -36,43 +29,40 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 
-public abstract class AbstractReportDesignerContext implements ReportDesignerContext
-{
-  private static class SubReportsRemovealHandler implements ReportModelListener
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+
+public abstract class AbstractReportDesignerContext implements ReportDesignerContext {
+  private static class SubReportsRemovealHandler implements ReportModelListener {
     private AbstractReportDesignerContext designerContext;
 
-    private SubReportsRemovealHandler(final AbstractReportDesignerContext designerContext)
-    {
+    private SubReportsRemovealHandler( final AbstractReportDesignerContext designerContext ) {
       this.designerContext = designerContext;
     }
 
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      designerContext.setSelectionWaiting(false);
+    public void nodeChanged( final ReportModelEvent event ) {
+      designerContext.setSelectionWaiting( false );
 
-      if (!event.isNodeDeleteEvent())
-      {
+      if ( !event.isNodeDeleteEvent() ) {
         return;
       }
 
       final Object o = event.getParameter();
-      if (o instanceof Section == false)
-      {
+      if ( o instanceof Section == false ) {
         return;
       }
 
-      final SubReport[] subReports = ModelUtility.findSubReports((Section) o);
-      for (int i = 0; i < subReports.length; i++)
-      {
-        final SubReport report = subReports[i];
+      final SubReport[] subReports = ModelUtility.findSubReports( (Section) o );
+      for ( int i = 0; i < subReports.length; i++ ) {
+        final SubReport report = subReports[ i ];
         final int count = designerContext.getReportRenderContextCount();
-        for (int x = 0; x < count; x++)
-        {
-          final ReportRenderContext context = designerContext.getReportRenderContext(x);
-          if (context.getReportDefinition() == report)
-          {
-            designerContext.removeReportRenderContext(x);
+        for ( int x = 0; x < count; x++ ) {
+          final ReportRenderContext context = designerContext.getReportRenderContext( x );
+          if ( context.getReportDefinition() == report ) {
+            designerContext.removeReportRenderContext( x );
             break;
           }
         }
@@ -92,248 +82,203 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
   private int pageTotal;
   private ReportDesignerView view;
 
-  public AbstractReportDesignerContext(final ReportDesignerView view)
-  {
-    if (view == null)
-    {
+  public AbstractReportDesignerContext( final ReportDesignerView view ) {
+    if ( view == null ) {
       throw new NullPointerException();
     }
     this.view = view;
     this.recentFilesModel = new RecentFilesModel();
     this.contexts = new ArrayList<ReportDesignerDocumentContext>();
-    this.propertyChangeSupport = new PropertyChangeSupport(this);
+    this.propertyChangeSupport = new PropertyChangeSupport( this );
     this.authenticationStore = new GlobalAuthenticationStore();
   }
 
-  public RecentFilesModel getRecentFilesModel()
-  {
+  public RecentFilesModel getRecentFilesModel() {
     return recentFilesModel;
   }
 
-  public int addMasterReport(final MasterReport masterReportElement)
-  {
-    setSelectionWaiting(false);
+  public int addMasterReport( final MasterReport masterReportElement ) {
+    setSelectionWaiting( false );
 
-    masterReportElement.setDataFactory(CompoundDataFactory.normalize(masterReportElement.getDataFactory()));
+    masterReportElement.setDataFactory( CompoundDataFactory.normalize( masterReportElement.getDataFactory() ) );
     final ReportRenderContext context =
-        new ReportRenderContext(masterReportElement, masterReportElement, null, getGlobalAuthenticationStore());
-    contexts.add(context);
+      new ReportRenderContext( masterReportElement, masterReportElement, null, getGlobalAuthenticationStore() );
+    contexts.add( context );
     context.resetChangeTracker();
 
-    masterReportElement.addReportModelListener(new SubReportsRemovealHandler(this));
+    masterReportElement.addReportModelListener( new SubReportsRemovealHandler( this ) );
 
     final int index = contexts.size() - 1;
-    propertyChangeSupport.fireIndexedPropertyChange(REPORT_RENDER_CONTEXT_PROPERTY, index, null, context);
+    propertyChangeSupport.fireIndexedPropertyChange( REPORT_RENDER_CONTEXT_PROPERTY, index, null, context );
     return index;
   }
 
-  public int addSubReport(final ReportDocumentContext parentReportContext, final SubReport subReportElement)
-  {
-    setSelectionWaiting(false);
+  public int addSubReport( final ReportDocumentContext parentReportContext, final SubReport subReportElement ) {
+    setSelectionWaiting( false );
 
-    subReportElement.setDataFactory(CompoundDataFactory.normalize(subReportElement.getDataFactory()));
-    final ReportRenderContext context = new ReportRenderContext(parentReportContext.getContextRoot(),
-        subReportElement, parentReportContext,
-        getGlobalAuthenticationStore());
-    contexts.add(context);
+    subReportElement.setDataFactory( CompoundDataFactory.normalize( subReportElement.getDataFactory() ) );
+    final ReportRenderContext context = new ReportRenderContext( parentReportContext.getContextRoot(),
+      subReportElement, parentReportContext,
+      getGlobalAuthenticationStore() );
+    contexts.add( context );
 
-    subReportElement.addReportModelListener(new SubReportsRemovealHandler(this));
+    subReportElement.addReportModelListener( new SubReportsRemovealHandler( this ) );
 
     final int index = contexts.size() - 1;
-    propertyChangeSupport.fireIndexedPropertyChange(REPORT_RENDER_CONTEXT_PROPERTY, index, null, context);
+    propertyChangeSupport.fireIndexedPropertyChange( REPORT_RENDER_CONTEXT_PROPERTY, index, null, context );
     return index;
   }
 
-  public void removeReportRenderContext(final int index)
-  {
+  public void removeReportRenderContext( final int index ) {
     // todo: Also remove all subreports ..
-    setSelectionWaiting(false);
+    setSelectionWaiting( false );
 
-    final ReportDesignerDocumentContext context = contexts.get(index);
-    try
-    {
-      contexts.remove(index);
-      if (context != activeContext)
-      {
-        propertyChangeSupport.fireIndexedPropertyChange(REPORT_RENDER_CONTEXT_PROPERTY, index, context, null);
+    final ReportDesignerDocumentContext context = contexts.get( index );
+    try {
+      contexts.remove( index );
+      if ( context != activeContext ) {
+        propertyChangeSupport.fireIndexedPropertyChange( REPORT_RENDER_CONTEXT_PROPERTY, index, context, null );
         return;
       }
 
-      if (index == 0)
-      {
-        if (contexts.isEmpty() == false)
-        {
-          setActiveDocument(contexts.get(0));
+      if ( index == 0 ) {
+        if ( contexts.isEmpty() == false ) {
+          setActiveDocument( contexts.get( 0 ) );
+        } else {
+          setActiveDocument( null );
         }
-        else
-        {
-          setActiveDocument(null);
-        }
+      } else {
+        setActiveDocument( contexts.get( index - 1 ) );
       }
-      else
-      {
-        setActiveDocument(contexts.get(index - 1));
-      }
-      propertyChangeSupport.fireIndexedPropertyChange(REPORT_RENDER_CONTEXT_PROPERTY, index, context, null);
-    }
-    finally
-    {
+      propertyChangeSupport.fireIndexedPropertyChange( REPORT_RENDER_CONTEXT_PROPERTY, index, context, null );
+    } finally {
       context.dispose();
     }
   }
 
-  public int getReportRenderContextCount()
-  {
+  public int getReportRenderContextCount() {
     return contexts.size();
   }
 
-  public ReportDesignerDocumentContext getDocumentContext(final int index)
-  {
-    return contexts.get(index);
+  public ReportDesignerDocumentContext getDocumentContext( final int index ) {
+    return contexts.get( index );
   }
 
-  public ReportRenderContext getReportRenderContext(final int index)
-  {
-    ReportDesignerDocumentContext documentContext = getDocumentContext(index);
-    if (documentContext instanceof ReportRenderContext)
-    {
+  public ReportRenderContext getReportRenderContext( final int index ) {
+    ReportDesignerDocumentContext documentContext = getDocumentContext( index );
+    if ( documentContext instanceof ReportRenderContext ) {
       return (ReportRenderContext) documentContext;
     }
     return null;
   }
 
-  public ReportDocumentContext getActiveContext()
-  {
-    if (activeContext instanceof ReportDocumentContext)
-    {
+  public ReportDocumentContext getActiveContext() {
+    if ( activeContext instanceof ReportDocumentContext ) {
       return (ReportDocumentContext) activeContext;
     }
     return null;
   }
 
-  public ReportDesignerDocumentContext getActiveDocument()
-  {
+  public ReportDesignerDocumentContext getActiveDocument() {
     return activeContext;
   }
 
-  public void setActiveDocument(final ReportDesignerDocumentContext activeContext)
-  {
-    if (activeContext != null)
-    {
-      if (contexts.contains(activeContext) == false)
-      {
-        throw new IllegalArgumentException("None of my contexts");
+  public void setActiveDocument( final ReportDesignerDocumentContext activeContext ) {
+    if ( activeContext != null ) {
+      if ( contexts.contains( activeContext ) == false ) {
+        throw new IllegalArgumentException( "None of my contexts" );
       }
     }
 
-    setSelectionWaiting(false);
+    setSelectionWaiting( false );
 
     final ReportDesignerDocumentContext context = this.activeContext;
     this.activeContext = activeContext;
-    propertyChangeSupport.firePropertyChange(ACTIVE_CONTEXT_PROPERTY, context, activeContext);
+    propertyChangeSupport.firePropertyChange( ACTIVE_CONTEXT_PROPERTY, context, activeContext );
   }
 
-  public String getStatusText()
-  {
+  public String getStatusText() {
     return statusText;
   }
 
-  public void setStatusText(final String statusText)
-  {
+  public void setStatusText( final String statusText ) {
     final String oldText = this.statusText;
     this.statusText = statusText;
-    propertyChangeSupport.firePropertyChange(STATUS_TEXT_PROPERTY, oldText, statusText);
+    propertyChangeSupport.firePropertyChange( STATUS_TEXT_PROPERTY, oldText, statusText );
   }
 
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( listener );
   }
 
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( listener );
   }
 
-  public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+  public void addPropertyChangeListener( final String propertyName, final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( propertyName, listener );
   }
 
-  public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
+  public void removePropertyChangeListener( final String propertyName, final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( propertyName, listener );
   }
 
-  public ReportDesignerView getView()
-  {
+  public ReportDesignerView getView() {
     return view;
   }
 
-  public int findActiveContextIndex()
-  {
-    for (int i = 0; i < contexts.size(); i++)
-    {
-      final ReportDesignerDocumentContext context = contexts.get(i);
-      if (context == activeContext)
-      {
+  public int findActiveContextIndex() {
+    for ( int i = 0; i < contexts.size(); i++ ) {
+      final ReportDesignerDocumentContext context = contexts.get( i );
+      if ( context == activeContext ) {
         return i;
       }
     }
     return -1;
   }
 
-  public boolean isSelectionWaiting()
-  {
+  public boolean isSelectionWaiting() {
     return selectionWaiting;
   }
 
-  public void setSelectionWaiting(final boolean selectionWaiting)
-  {
+  public void setSelectionWaiting( final boolean selectionWaiting ) {
     final boolean oldSelectionWaiting = this.selectionWaiting;
     this.selectionWaiting = selectionWaiting;
-    propertyChangeSupport.firePropertyChange("selectionWaiting", oldSelectionWaiting, selectionWaiting);//NON-NLS
+    propertyChangeSupport.firePropertyChange( "selectionWaiting", oldSelectionWaiting, selectionWaiting );//NON-NLS
   }
 
-  public GlobalAuthenticationStore getGlobalAuthenticationStore()
-  {
+  public GlobalAuthenticationStore getGlobalAuthenticationStore() {
     return authenticationStore;
   }
 
-  public void setPageNumbers(final int page, final int pageTotal)
-  {
+  public void setPageNumbers( final int page, final int pageTotal ) {
     final int oldPage = this.page;
     final int oldPageTotal = this.pageTotal;
     this.page = page;
     this.pageTotal = pageTotal;
 
-    propertyChangeSupport.firePropertyChange("pageTotal", oldPageTotal, pageTotal);//NON-NLS
-    propertyChangeSupport.firePropertyChange("page", oldPage, page);//NON-NLS
+    propertyChangeSupport.firePropertyChange( "pageTotal", oldPageTotal, pageTotal );//NON-NLS
+    propertyChangeSupport.firePropertyChange( "page", oldPage, page );//NON-NLS
   }
 
-  public int getPage()
-  {
+  public int getPage() {
     return page;
   }
 
-  public int getPageTotal()
-  {
+  public int getPageTotal() {
     return pageTotal;
   }
 
-  public Component getParent()
-  {
+  public Component getParent() {
     return getView().getParent();
   }
 
-  public JPopupMenu getPopupMenu(final String id)
-  {
-    return getView().getPopupMenu(id);
+  public JPopupMenu getPopupMenu( final String id ) {
+    return getView().getPopupMenu( id );
   }
 
-  public JComponent getToolBar(final String id)
-  {
-    return getView().getToolBar(id);
+  public JComponent getToolBar( final String id ) {
+    return getView().getToolBar( id );
   }
 
 }

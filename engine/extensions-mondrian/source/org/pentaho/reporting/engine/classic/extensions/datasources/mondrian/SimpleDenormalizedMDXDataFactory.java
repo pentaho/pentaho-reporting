@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
-import javax.swing.table.TableModel;
-
 import mondrian.olap.Result;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+
+import javax.swing.table.TableModel;
 
 /**
  * Todo: Document me!
  *
  * @author : Thomas Morgner
  */
-public class SimpleDenormalizedMDXDataFactory extends AbstractMDXDataFactory
-{
-  public SimpleDenormalizedMDXDataFactory()
-  {
+public class SimpleDenormalizedMDXDataFactory extends AbstractMDXDataFactory {
+  public SimpleDenormalizedMDXDataFactory() {
   }
 
   /**
@@ -44,11 +42,11 @@ public class SimpleDenormalizedMDXDataFactory extends AbstractMDXDataFactory
    * @param queryName  the query name
    * @param parameters the parameters for the query
    * @return the result of the query as table model.
-   * @throws org.pentaho.reporting.engine.classic.core.ReportDataFactoryException if an error occured while performing the query.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportDataFactoryException if an error occured while performing
+   *                                                                              the query.
    */
-  public TableModel queryData(final String queryName, final DataRow parameters) throws ReportDataFactoryException
-  {
-    final Result cellSet = performQuery(queryName, parameters);
-    return new DenormalizedMDXTableModel(cellSet, extractQueryLimit(parameters), isMembersOnAxisSorted());
+  public TableModel queryData( final String queryName, final DataRow parameters ) throws ReportDataFactoryException {
+    final Result cellSet = performQuery( queryName, parameters );
+    return new DenormalizedMDXTableModel( cellSet, extractQueryLimit( parameters ), isMembersOnAxisSorted() );
   }
 }

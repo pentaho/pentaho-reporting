@@ -19,9 +19,10 @@ package org.pentaho.reporting.designer.core.editor.styles.styleeditor;
 
 import java.util.EventListener;
 
-public interface ElementStyleDefinitionChangeListener extends EventListener
-{
-  public void styleRuleAdded (ElementStyleDefinitionChangeEvent event);
-  public void styleRuleRemoved (ElementStyleDefinitionChangeEvent event);
-  public void styleRulesChanged (ElementStyleDefinitionChangeEvent event);
+public interface ElementStyleDefinitionChangeListener extends EventListener {
+  public void styleRuleAdded( ElementStyleDefinitionChangeEvent event );
+
+  public void styleRuleRemoved( ElementStyleDefinitionChangeEvent event );
+
+  public void styleRulesChanged( ElementStyleDefinitionChangeEvent event );
 }

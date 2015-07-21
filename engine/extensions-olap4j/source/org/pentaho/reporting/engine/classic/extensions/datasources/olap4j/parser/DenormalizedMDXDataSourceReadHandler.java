@@ -21,14 +21,11 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Abstra
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.DenormalizedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.OlapConnectionProvider;
 
-public class DenormalizedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler
-{
-  public DenormalizedMDXDataSourceReadHandler()
-  {
+public class DenormalizedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler {
+  public DenormalizedMDXDataSourceReadHandler() {
   }
 
-  protected AbstractMDXDataFactory createDataFactory(final OlapConnectionProvider connectionProvider)
-  {
-    return new DenormalizedMDXDataFactory(connectionProvider);
+  protected AbstractMDXDataFactory createDataFactory( final OlapConnectionProvider connectionProvider ) {
+    return new DenormalizedMDXDataFactory( connectionProvider );
   }
 }

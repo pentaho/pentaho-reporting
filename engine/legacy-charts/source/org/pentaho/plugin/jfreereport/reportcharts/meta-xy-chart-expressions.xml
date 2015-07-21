@@ -32,7 +32,8 @@
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -76,7 +77,8 @@
               hidden="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
     <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -109,11 +111,13 @@
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
     <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="returnFileNameOnly" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="returnImageReference" mandatory="false" preferred="false" value-role="Value" expert="false"
@@ -135,12 +139,15 @@
               expert="false" hidden="false"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -176,7 +183,8 @@
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -220,7 +228,8 @@
               hidden="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
     <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -250,7 +259,8 @@
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
     <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -277,12 +287,15 @@
               hidden="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
               expert="false" hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -320,7 +333,8 @@
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -411,7 +425,8 @@
     <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="renderPercentages" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="renderPercentages" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
@@ -424,16 +439,22 @@
               expert="false" hidden="false"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
-    <property name="shadowVisible" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="shadowVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.XYAreaChartExpression"
@@ -468,7 +489,8 @@
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -574,12 +596,15 @@
               hidden="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
               expert="false" hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -615,7 +640,8 @@
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -664,7 +690,8 @@
               hidden="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
     <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -694,7 +721,8 @@
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
     <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -721,12 +749,15 @@
               deprecated="true" computed="true"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -762,7 +793,8 @@
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -808,7 +840,8 @@
               hidden="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
     <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -841,7 +874,8 @@
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
     <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -868,12 +902,15 @@
               expert="false" hidden="false"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
   </expression>
 
@@ -915,7 +952,8 @@
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
-    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
@@ -1024,25 +1062,39 @@
     <property name="lineTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
 
-    <property name="secondValueAxisLabel" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="lineSeriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="linesLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="lineTicksLabelFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="secondValueAxisLabel" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="lineSeriesColor" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="linesLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="lineTicksLabelFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="lineTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
 
-    <property name="linePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="lineRangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="lineRangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="lineTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="linesTickLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="secondaryDataSet" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="sharedRangeAxis" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="linePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="lineRangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="lineRangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="lineTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="linesTickLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="secondaryDataSet" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="sharedRangeAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
-    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
+              hidden="false"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
   </expression>
 </meta-data>

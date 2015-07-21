@@ -23,13 +23,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class SessionPropertyReadHandler extends AbstractXmlReadHandler
-{
+public class SessionPropertyReadHandler extends AbstractXmlReadHandler {
   private String name;
   private String value;
 
-  public SessionPropertyReadHandler()
-  {
+  public SessionPropertyReadHandler() {
   }
 
   /**
@@ -38,39 +36,32 @@ public class SessionPropertyReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name");
-    if (StringUtils.isEmpty(name))
-    {
-      throw new ParseException("Required attribute 'name' is missing.", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    name = attrs.getValue( getUri(), "name" );
+    if ( StringUtils.isEmpty( name ) ) {
+      throw new ParseException( "Required attribute 'name' is missing.", getLocator() );
     }
-    value = attrs.getValue(getUri(), "value");
-    if (StringUtils.isEmpty(value))
-    {
-      throw new ParseException("Required attribute 'value' is missing.", getLocator());
+    value = attrs.getValue( getUri(), "value" );
+    if ( StringUtils.isEmpty( value ) ) {
+      throw new ParseException( "Required attribute 'value' is missing.", getLocator() );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getValue()
-  {
+  public String getValue() {
     return value;
   }
 }

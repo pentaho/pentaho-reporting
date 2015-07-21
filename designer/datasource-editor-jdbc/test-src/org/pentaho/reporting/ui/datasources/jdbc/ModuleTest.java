@@ -25,38 +25,33 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.Jn
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SimpleSQLReportDataFactory;
 
-public class ModuleTest extends TestCase
-{
-  public ModuleTest()
-  {
+public class ModuleTest extends TestCase {
+  public ModuleTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testModuleExists()
-  {
-    assertTrue(ClassicEngineBoot.getInstance().getPackageManager().isModuleAvailable(JdbcDataSourceModule.class.getName()));
+  public void testModuleExists() {
+    assertTrue(
+      ClassicEngineBoot.getInstance().getPackageManager().isModuleAvailable( JdbcDataSourceModule.class.getName() ) );
   }
 
-  public void testEditorRegistered()
-  {
+  public void testEditorRegistered() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(SQLReportDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( SQLReportDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
-    assertTrue(editor.canHandle(new SQLReportDataFactory(new JndiConnectionProvider())));
+    assertTrue( editor.canHandle( new SQLReportDataFactory( new JndiConnectionProvider() ) ) );
   }
 
-  public void testEditorRegistered2()
-  {
+  public void testEditorRegistered2() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(SimpleSQLReportDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( SimpleSQLReportDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
-    assertTrue(editor.canHandle(new SimpleSQLReportDataFactory(new JndiConnectionProvider())));
+    assertTrue( editor.canHandle( new SimpleSQLReportDataFactory( new JndiConnectionProvider() ) ) );
   }
 
 }

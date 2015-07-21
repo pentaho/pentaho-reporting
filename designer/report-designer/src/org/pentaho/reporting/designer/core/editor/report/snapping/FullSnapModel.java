@@ -24,8 +24,7 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class FullSnapModel implements SnapPositionsModel
-{
+public class FullSnapModel implements SnapPositionsModel {
   private SnapToGridModel gridModel;
   private SnapToPositionModel elementModel;
   private SnapToPositionModel guidesModel;
@@ -34,56 +33,46 @@ public class FullSnapModel implements SnapPositionsModel
   private boolean enableGuides;
   private boolean enableElements;
 
-  public FullSnapModel()
-  {
+  public FullSnapModel() {
     gridModel = new SnapToGridModel();
 
     elementModel = new SnapToPositionModel();
     guidesModel = new SnapToPositionModel();
   }
 
-  public SnapToGridModel getGridModel()
-  {
+  public SnapToGridModel getGridModel() {
     return gridModel;
   }
 
-  public SnapToPositionModel getElementModel()
-  {
+  public SnapToPositionModel getElementModel() {
     return elementModel;
   }
 
-  public SnapToPositionModel getGuidesModel()
-  {
+  public SnapToPositionModel getGuidesModel() {
     return guidesModel;
   }
 
-  public boolean isEnableGrid()
-  {
+  public boolean isEnableGrid() {
     return enableGrid;
   }
 
-  public void setEnableGrid(final boolean enableGrid)
-  {
+  public void setEnableGrid( final boolean enableGrid ) {
     this.enableGrid = enableGrid;
   }
 
-  public boolean isEnableGuides()
-  {
+  public boolean isEnableGuides() {
     return enableGuides;
   }
 
-  public void setEnableGuides(final boolean enableGuides)
-  {
+  public void setEnableGuides( final boolean enableGuides ) {
     this.enableGuides = enableGuides;
   }
 
-  public boolean isEnableElements()
-  {
+  public boolean isEnableElements() {
     return enableElements;
   }
 
-  public void setEnableElements(final boolean enableElements)
-  {
+  public void setEnableElements( final boolean enableElements ) {
     this.enableElements = enableElements;
   }
 
@@ -93,38 +82,31 @@ public class FullSnapModel implements SnapPositionsModel
    * @param position
    * @return
    */
-  public long getNearestSnapPosition(final long position,
-                                     final InstanceID owner)
-  {
+  public long getNearestSnapPosition( final long position,
+                                      final InstanceID owner ) {
     long retval = position;
     long delta = Long.MAX_VALUE;
 
-    if (isEnableGrid())
-    {
-      final long snapPos = gridModel.getNearestSnapPosition(position, owner);
-      final long newDelta = Math.abs(position - snapPos);
-      if (newDelta != 0 && newDelta < delta)
-      {
+    if ( isEnableGrid() ) {
+      final long snapPos = gridModel.getNearestSnapPosition( position, owner );
+      final long newDelta = Math.abs( position - snapPos );
+      if ( newDelta != 0 && newDelta < delta ) {
         retval = snapPos;
         delta = newDelta;
       }
     }
-    if (isEnableElements())
-    {
-      final long snapPos = elementModel.getNearestSnapPosition(position, owner);
-      final long newDelta = Math.abs(position - snapPos);
-      if (newDelta != 0 && newDelta < delta)
-      {
+    if ( isEnableElements() ) {
+      final long snapPos = elementModel.getNearestSnapPosition( position, owner );
+      final long newDelta = Math.abs( position - snapPos );
+      if ( newDelta != 0 && newDelta < delta ) {
         retval = snapPos;
         delta = newDelta;
       }
     }
-    if (isEnableGuides())
-    {
-      final long snapPos = guidesModel.getNearestSnapPosition(position, owner);
-      final long newDelta = Math.abs(position - snapPos);
-      if (newDelta != 0 && newDelta < delta)
-      {
+    if ( isEnableGuides() ) {
+      final long snapPos = guidesModel.getNearestSnapPosition( position, owner );
+      final long newDelta = Math.abs( position - snapPos );
+      if ( newDelta != 0 && newDelta < delta ) {
         retval = snapPos;
       }
     }

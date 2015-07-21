@@ -3,32 +3,32 @@
 there.is.only.xul">
   <deck id="content_deck">
     <hbox flex="1">
-      <vbox id="select_template" flex="1" >
-      <!--
-        <label value="${INSTRUCTIONS}" />
-        <spacer flex="1" />
-        -->
-        <label value="${SELECT_LOOK_AND_FEEL}" />  
+      <vbox id="select_template" flex="1">
+        <!--
+          <label value="${INSTRUCTIONS}" />
+          <spacer flex="1" />
+          -->
+        <label value="${SELECT_LOOK_AND_FEEL}"/>
         <radiogroup id="starting_point">
-          <radio id="new_wizard_file_rb" label="${TEMPLATE}" selected="true" />
-          <radio id="existing_wizard_file_rb" label="${REPORT_DOCUMENT}" />
+          <radio id="new_wizard_file_rb" label="${TEMPLATE}" selected="true"/>
+          <radio id="existing_wizard_file_rb" label="${REPORT_DOCUMENT}"/>
         </radiogroup>
         <deck id="select_lf_deck" flex="1">
           <vbox>
-            <label value="${FILE}" />
+            <label value="${FILE}"/>
             <hbox>
-              <textbox id="wizard_filename_tb" />
+              <textbox id="wizard_filename_tb"/>
               <button id="select_filename_btn" label="${BROWSE}" onclick="look_and_feel_handler.selectFile()"/>
             </hbox>
           </vbox>
           <hbox>
             <listbox id="avail_template_lb" flex="2" seltype="single"/>
             <groupbox flex="1">
-              <image id="template_image" height="200" width="200" />
+              <image id="template_image" height="200" width="200"/>
             </groupbox>
           </hbox>
         </deck>
-        <spacer flex="1" />
+        <spacer flex="1"/>
       </vbox>
     </hbox>
   </deck>

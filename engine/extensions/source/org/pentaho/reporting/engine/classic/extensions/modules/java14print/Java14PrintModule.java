@@ -26,15 +26,13 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class Java14PrintModule extends AbstractModule
-{
+public class Java14PrintModule extends AbstractModule {
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
-  public Java14PrintModule() throws ModuleInitializeException
-  {
+  public Java14PrintModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -46,10 +44,9 @@ public class Java14PrintModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    performExternalInitialize(Java14PrintModuleInitializer.class.getName(), getClass());
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    performExternalInitialize( Java14PrintModuleInitializer.class.getName(), getClass() );
   }
 
 }

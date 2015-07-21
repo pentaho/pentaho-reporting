@@ -5,25 +5,28 @@ there.is.only.xul" xmlns:pen="http://www.pentaho.org/2008/xul">
     <hbox id="select_datasource" flex="1">
       <vbox flex="1">
         <hbox>
-          <label value="Data Source" />
-          <spacer flex="1" />
-          <button id="edit_datasource_btn" image="images/edit.png" onclick="datasource_and_query_step_handler.doEditDatasource()" disabled="true" />
-          <button id="add_datasource_btn" image="images/add.png" onclick="datasource_and_query_step_handler.doCreateDataFactory()" />
-          <button id="remove_datasource_btn" image="images/Remove_v2.png" onclick="datasource_and_query_step_handler.doDeleteDatasourceItem()" disabled="true"/>
+          <label value="Data Source"/>
+          <spacer flex="1"/>
+          <button id="edit_datasource_btn" image="images/edit.png"
+                  onclick="datasource_and_query_step_handler.doEditDatasource()" disabled="true"/>
+          <button id="add_datasource_btn" image="images/add.png"
+                  onclick="datasource_and_query_step_handler.doCreateDataFactory()"/>
+          <button id="remove_datasource_btn" image="images/Remove_v2.png"
+                  onclick="datasource_and_query_step_handler.doDeleteDatasourceItem()" disabled="true"/>
         </hbox>
         <tree id="datasources_tree" flex="1" pen:expanded="true">
           <treecols>
             <treecol id="rows_col" label="Rows" primary="true" pen:binding="value" pen:childrenbinding="children"/>
           </treecols>
-          <treechildren id="datasources_tree_children" >
+          <treechildren id="datasources_tree_children">
             <treeitem container="true" open="true">
               <treerow>
-                <treecell label="" />
+                <treecell label=""/>
               </treerow>
             </treeitem>
           </treechildren>
         </tree>
-      </vbox>     
+      </vbox>
     </hbox>
   </deck>
 </overlay>

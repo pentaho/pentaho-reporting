@@ -17,21 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
 import java.io.Serializable;
 
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-
-public interface CubeFileProvider extends Serializable
-{
+public interface CubeFileProvider extends Serializable {
   public String getDesignTimeFile();
-  public void setDesignTimeFile(String file);
+
+  public void setDesignTimeFile( String file );
 
   public String getCubeConnectionName();
-  public void setCubeConnectionName(String cubeConnectionName);
-  
-  public String getCubeFile(final ResourceManager resourceManager, final ResourceKey contextKey) throws ReportDataFactoryException;
+
+  public void setCubeConnectionName( String cubeConnectionName );
+
+  public String getCubeFile( final ResourceManager resourceManager, final ResourceKey contextKey )
+    throws ReportDataFactoryException;
 
   public Object getConnectionHash();
 }
