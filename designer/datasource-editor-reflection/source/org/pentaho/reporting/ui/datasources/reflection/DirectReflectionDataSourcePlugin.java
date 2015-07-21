@@ -26,31 +26,25 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.StaticDataFactory;
 
 
-public class DirectReflectionDataSourcePlugin implements DataSourcePlugin
-{
-  public DirectReflectionDataSourcePlugin()
-  {
+public class DirectReflectionDataSourcePlugin implements DataSourcePlugin {
+  public DirectReflectionDataSourcePlugin() {
   }
 
-  public DataFactory performEdit(final DesignTimeContext context,
-                                 final DataFactory input,
-                                 final String queryName,
-                                 final DataFactoryChangeRecorder changeRecorder)
-  {
-    if (input == null)
-    {
+  public DataFactory performEdit( final DesignTimeContext context,
+                                  final DataFactory input,
+                                  final String queryName,
+                                  final DataFactoryChangeRecorder changeRecorder ) {
+    if ( input == null ) {
       return new StaticDataFactory();
     }
     return input;
   }
 
-  public boolean canHandle(final DataFactory dataFactory)
-  {
+  public boolean canHandle( final DataFactory dataFactory ) {
     return false;
   }
 
-  public DataFactoryMetaData getMetaData()
-  {
-    return DataFactoryRegistry.getInstance().getMetaData(StaticDataFactory.class.getName());
+  public DataFactoryMetaData getMetaData() {
+    return DataFactoryRegistry.getInstance().getMetaData( StaticDataFactory.class.getName() );
   }
 }

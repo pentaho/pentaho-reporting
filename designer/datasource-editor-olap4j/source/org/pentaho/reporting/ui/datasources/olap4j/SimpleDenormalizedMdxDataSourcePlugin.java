@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.olap4j;
 
-import java.awt.Window;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChangeRecorder;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
@@ -30,41 +26,34 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.AbstractMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleDenormalizedMDXDataFactory;
 
-public class SimpleDenormalizedMdxDataSourcePlugin implements DataSourcePlugin
-{
-  public SimpleDenormalizedMdxDataSourcePlugin()
-  {
+import javax.swing.*;
+import java.awt.*;
+
+public class SimpleDenormalizedMdxDataSourcePlugin implements DataSourcePlugin {
+  public SimpleDenormalizedMdxDataSourcePlugin() {
   }
 
-  public DataFactory performEdit(final DesignTimeContext context,
-                                 final DataFactory input,
-                                 final String queryName,
-                                 final DataFactoryChangeRecorder changeRecorder)
-  {
+  public DataFactory performEdit( final DesignTimeContext context,
+                                  final DataFactory input,
+                                  final String queryName,
+                                  final DataFactoryChangeRecorder changeRecorder ) {
     final SimpleDenormalizedMdxDataSourceEditor editor;
     final Window window = context.getParentWindow();
-    if (window instanceof JDialog)
-    {
-      editor = new SimpleDenormalizedMdxDataSourceEditor(context, (JDialog) window);
+    if ( window instanceof JDialog ) {
+      editor = new SimpleDenormalizedMdxDataSourceEditor( context, (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      editor = new SimpleDenormalizedMdxDataSourceEditor( context, (JFrame) window );
+    } else {
+      editor = new SimpleDenormalizedMdxDataSourceEditor( context );
     }
-    else if (window instanceof JFrame)
-    {
-      editor = new SimpleDenormalizedMdxDataSourceEditor(context, (JFrame) window);
-    }
-    else
-    {
-      editor = new SimpleDenormalizedMdxDataSourceEditor(context);
-    }
-    return editor.performConfiguration((AbstractMDXDataFactory) input);
+    return editor.performConfiguration( (AbstractMDXDataFactory) input );
   }
 
-  public boolean canHandle(final DataFactory dataFactory)
-  {
+  public boolean canHandle( final DataFactory dataFactory ) {
     return dataFactory instanceof SimpleDenormalizedMDXDataFactory;
   }
 
-  public DataFactoryMetaData getMetaData()
-  {
-    return DataFactoryRegistry.getInstance().getMetaData(SimpleDenormalizedMDXDataFactory.class.getName());
+  public DataFactoryMetaData getMetaData() {
+    return DataFactoryRegistry.getInstance().getMetaData( SimpleDenormalizedMDXDataFactory.class.getName() );
   }
 }

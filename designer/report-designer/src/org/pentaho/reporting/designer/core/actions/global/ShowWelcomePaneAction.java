@@ -17,38 +17,33 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Todo: Document Me
  *
  * @author Michael D'Amour
  */
-public final class ShowWelcomePaneAction extends AbstractViewStateAction
-{
-  public ShowWelcomePaneAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("ShowWelcomePaneAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ShowWelcomePaneAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ShowWelcomePaneAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ShowWelcomePaneAction.Accelerator"));
+public final class ShowWelcomePaneAction extends AbstractViewStateAction {
+  public ShowWelcomePaneAction() {
+    putValue( Action.NAME, ActionMessages.getString( "ShowWelcomePaneAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "ShowWelcomePaneAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "ShowWelcomePaneAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "ShowWelcomePaneAction.Accelerator" ) );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDesignerContext context = getReportDesignerContext();
-    context.getView().setWelcomeVisible(true);
+    context.getView().setWelcomeVisible( true );
   }
 
-  protected boolean recomputeEnabled()
-  {
+  protected boolean recomputeEnabled() {
     final ReportDesignerContext context = getReportDesignerContext();
-    if (context == null)
-    {
+    if ( context == null ) {
       return false;
     }
     return true;

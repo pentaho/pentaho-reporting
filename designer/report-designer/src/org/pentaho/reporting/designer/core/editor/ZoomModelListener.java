@@ -22,7 +22,6 @@ import java.util.EventListener;
 /**
  * User: Martin Date: 03.02.2006 Time: 19:29:54
  */
-public interface ZoomModelListener extends EventListener
-{
+public interface ZoomModelListener extends EventListener {
   public void zoomFactorChanged();
 }

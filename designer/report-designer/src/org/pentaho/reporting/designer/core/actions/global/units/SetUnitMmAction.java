@@ -24,10 +24,8 @@ import org.pentaho.reporting.designer.core.util.Unit;
  *
  * @author Thomas Morgner
  */
-public final class SetUnitMmAction extends SetUnitAction
-{
-  public SetUnitMmAction()
-  {
-    super(Unit.MM);
+public final class SetUnitMmAction extends SetUnitAction {
+  public SetUnitMmAction() {
+    super( Unit.MM );
   }
 }

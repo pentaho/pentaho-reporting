@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.mondrian;
 
-import java.awt.Window;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChangeRecorder;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
@@ -29,41 +25,34 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleBandedMDXDataFactory;
 
-public class SimpleBandedMdxDataSourcePlugin implements DataSourcePlugin
-{
-  public SimpleBandedMdxDataSourcePlugin()
-  {
+import javax.swing.*;
+import java.awt.*;
+
+public class SimpleBandedMdxDataSourcePlugin implements DataSourcePlugin {
+  public SimpleBandedMdxDataSourcePlugin() {
   }
 
-  public DataFactory performEdit(final DesignTimeContext context,
-                                 final DataFactory input,
-                                 final String queryName,
-                                 final DataFactoryChangeRecorder changeRecorder)
-  {
+  public DataFactory performEdit( final DesignTimeContext context,
+                                  final DataFactory input,
+                                  final String queryName,
+                                  final DataFactoryChangeRecorder changeRecorder ) {
     final SimpleBandedMdxDataSourceEditor editor;
     final Window window = context.getParentWindow();
-    if (window instanceof JDialog)
-    {
-      editor = new SimpleBandedMdxDataSourceEditor(context, (JDialog) window);
+    if ( window instanceof JDialog ) {
+      editor = new SimpleBandedMdxDataSourceEditor( context, (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      editor = new SimpleBandedMdxDataSourceEditor( context, (JFrame) window );
+    } else {
+      editor = new SimpleBandedMdxDataSourceEditor( context );
     }
-    else if (window instanceof JFrame)
-    {
-      editor = new SimpleBandedMdxDataSourceEditor(context, (JFrame) window);
-    }
-    else
-    {
-      editor = new SimpleBandedMdxDataSourceEditor(context);
-    }
-    return editor.performConfiguration((SimpleBandedMDXDataFactory) input);
+    return editor.performConfiguration( (SimpleBandedMDXDataFactory) input );
   }
 
-  public boolean canHandle(final DataFactory dataFactory)
-  {
+  public boolean canHandle( final DataFactory dataFactory ) {
     return dataFactory instanceof SimpleBandedMDXDataFactory;
   }
 
-  public DataFactoryMetaData getMetaData()
-  {
-    return DataFactoryRegistry.getInstance().getMetaData(SimpleBandedMDXDataFactory.class.getName());
+  public DataFactoryMetaData getMetaData() {
+    return DataFactoryRegistry.getInstance().getMetaData( SimpleBandedMDXDataFactory.class.getName() );
   }
 }

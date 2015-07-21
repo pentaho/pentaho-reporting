@@ -20,18 +20,17 @@ package org.pentaho.reporting.engine.classic.wizard.ui.xul.steps;
 import org.pentaho.ui.xul.binding.BindingConvertor;
 
 /**
-   * @author wseyler
- *
- * Does binding converstion between Boolean and Boolean (taking into account nulls)
+ * @author wseyler
+ *         <p/>
+ *         Does binding converstion between Boolean and Boolean (taking into account nulls)
  */
-public class BooleanBindingConvertor extends BindingConvertor<Boolean, Boolean>
-{
+public class BooleanBindingConvertor extends BindingConvertor<Boolean, Boolean> {
 
   /* (non-Javadoc)
    * @see org.pentaho.ui.xul.binding.BindingConvertor#sourceToTarget(java.lang.Object)
    */
   @Override
-  public Boolean sourceToTarget(final Boolean value) {
+  public Boolean sourceToTarget( final Boolean value ) {
     return value == null ? false : value;
   }
 
@@ -39,7 +38,7 @@ public class BooleanBindingConvertor extends BindingConvertor<Boolean, Boolean>
    * @see org.pentaho.ui.xul.binding.BindingConvertor#targetToSource(java.lang.Object)
    */
   @Override
-  public Boolean targetToSource(final Boolean value) {
+  public Boolean targetToSource( final Boolean value ) {
     return value == null ? false : value;
   }
 

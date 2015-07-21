@@ -23,42 +23,40 @@ import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTi
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.DriverConnectionProvider;
 
-public class BandedMDXTableModelTest extends DataSourceTestBase
-{
+public class BandedMDXTableModelTest extends DataSourceTestBase {
 
-  private static final String QUERY_BY_HIERARCHY = "SELECT {[Measures].[Quantity]} ON COLUMNS, TOPCOUNT(NONEMPTYCROSSJOIN([Markets].[Country].MEMBERS,[Markets.City].[City].MEMBERS), 5) ON ROWS FROM [SteelWheelsSales]";
-  private static final String[][] QUERIES_AND_RESULTS = new String[][]{
-      {QUERY_BY_HIERARCHY, "steelwheels_hierarchy_result.txt"}
+  private static final String QUERY_BY_HIERARCHY =
+    "SELECT {[Measures].[Quantity]} ON COLUMNS, TOPCOUNT(NONEMPTYCROSSJOIN([Markets].[Country].MEMBERS,[Markets.City]"
+      + ".[City].MEMBERS), 5) ON ROWS FROM [SteelWheelsSales]";
+  private static final String[][] QUERIES_AND_RESULTS = new String[][] {
+    { QUERY_BY_HIERARCHY, "steelwheels_hierarchy_result.txt" }
   };
 
-  protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException
-  {
+  protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
     final DriverConnectionProvider provider = new DriverConnectionProvider();
-    provider.setDriver("mondrian.olap4j.MondrianOlap4jDriver");
-    provider.setProperty("Catalog",
-        "test/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels_hierarchy.mondrian.xml");
-    provider.setProperty("JdbcUser", "sa");
-    provider.setProperty("JdbcPassword", "");
-    provider.setProperty("Jdbc", "jdbc:hsqldb:mem:SampleData");
-    provider.setProperty("JdbcDrivers", "org.hsqldb.jdbcDriver");
-    provider.setUrl("jdbc:mondrian:");
+    provider.setDriver( "mondrian.olap4j.MondrianOlap4jDriver" );
+    provider.setProperty( "Catalog",
+      "test/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels_hierarchy.mondrian.xml" );
+    provider.setProperty( "JdbcUser", "sa" );
+    provider.setProperty( "JdbcPassword", "" );
+    provider.setProperty( "Jdbc", "jdbc:hsqldb:mem:SampleData" );
+    provider.setProperty( "JdbcDrivers", "org.hsqldb.jdbcDriver" );
+    provider.setUrl( "jdbc:mondrian:" );
 
-    final BandedMDXDataFactory dataFactory = new BandedMDXDataFactory(provider);
-    dataFactory.setQuery("default", query, null, null);
-    dataFactory.initialize(new DesignTimeDataFactoryContext());
+    final BandedMDXDataFactory dataFactory = new BandedMDXDataFactory( provider );
+    dataFactory.setQuery( "default", query, null, null );
+    dataFactory.initialize( new DesignTimeDataFactoryContext() );
     return dataFactory;
   }
 
-  public void testQuery() throws Exception
-  {
-    runTest(QUERIES_AND_RESULTS);
+  public void testQuery() throws Exception {
+    runTest( QUERIES_AND_RESULTS );
   }
 
-  public static void _main(String[] args) throws Exception
-  {
+  public static void _main( String[] args ) throws Exception {
     final BandedMDXTableModelTest test = new BandedMDXTableModelTest();
     test.setUp();
-    test.runGenerate(QUERIES_AND_RESULTS);
+    test.runGenerate( QUERIES_AND_RESULTS );
   }
 
 }

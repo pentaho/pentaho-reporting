@@ -20,28 +20,24 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parse
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractReadHandlerFactory;
 
-public class KettleTransformationProducerReadHandlerFactory extends AbstractReadHandlerFactory<KettleTransformationProducerReadHandler>
-{
+public class KettleTransformationProducerReadHandlerFactory
+  extends AbstractReadHandlerFactory<KettleTransformationProducerReadHandler> {
   private static final String PREFIX_SELECTOR =
-      "org.pentaho.reporting.engine.classic.extensions.datasources.kettle.transformation-file-producer-prefix.";
+    "org.pentaho.reporting.engine.classic.extensions.datasources.kettle.transformation-file-producer-prefix.";
 
   private static KettleTransformationProducerReadHandlerFactory readHandlerFactory;
 
-  public KettleTransformationProducerReadHandlerFactory()
-  {
+  public KettleTransformationProducerReadHandlerFactory() {
   }
 
-  protected Class<KettleTransformationProducerReadHandler> getTargetClass()
-  {
+  protected Class<KettleTransformationProducerReadHandler> getTargetClass() {
     return KettleTransformationProducerReadHandler.class;
   }
 
-  public static synchronized KettleTransformationProducerReadHandlerFactory getInstance()
-  {
-    if (readHandlerFactory == null)
-    {
+  public static synchronized KettleTransformationProducerReadHandlerFactory getInstance() {
+    if ( readHandlerFactory == null ) {
       readHandlerFactory = new KettleTransformationProducerReadHandlerFactory();
-      readHandlerFactory.configureGlobal(ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR);
+      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
     }
     return readHandlerFactory;
   }

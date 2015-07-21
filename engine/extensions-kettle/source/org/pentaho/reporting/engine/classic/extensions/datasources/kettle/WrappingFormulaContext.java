@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import java.util.Date;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
@@ -30,59 +28,50 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 
-public class WrappingFormulaContext implements FormulaContext
-{
+import java.util.Date;
+
+public class WrappingFormulaContext implements FormulaContext {
   private DataRow dataRow;
   private FormulaContext parent;
 
-  public WrappingFormulaContext(final FormulaContext parent, final DataRow dataRow)
-  {
+  public WrappingFormulaContext( final FormulaContext parent, final DataRow dataRow ) {
     this.parent = parent;
     this.dataRow = dataRow;
   }
 
-  public boolean isReferenceDirty(final Object name) throws EvaluationException
-  {
-    return dataRow.isChanged(String.valueOf(name));
+  public boolean isReferenceDirty( final Object name ) throws EvaluationException {
+    return dataRow.isChanged( String.valueOf( name ) );
   }
 
-  public Object resolveReference(final Object name) throws EvaluationException
-  {
-    return dataRow.get(String.valueOf(name));
+  public Object resolveReference( final Object name ) throws EvaluationException {
+    return dataRow.get( String.valueOf( name ) );
   }
 
-  public Type resolveReferenceType(final Object name) throws EvaluationException
-  {
+  public Type resolveReferenceType( final Object name ) throws EvaluationException {
     return AnyType.TYPE;
   }
 
-  public LocalizationContext getLocalizationContext()
-  {
+  public LocalizationContext getLocalizationContext() {
     return parent.getLocalizationContext();
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return parent.getConfiguration();
   }
 
-  public FunctionRegistry getFunctionRegistry()
-  {
+  public FunctionRegistry getFunctionRegistry() {
     return parent.getFunctionRegistry();
   }
 
-  public TypeRegistry getTypeRegistry()
-  {
+  public TypeRegistry getTypeRegistry() {
     return parent.getTypeRegistry();
   }
 
-  public OperatorFactory getOperatorFactory()
-  {
+  public OperatorFactory getOperatorFactory() {
     return parent.getOperatorFactory();
   }
 
-  public Date getCurrentDate()
-  {
+  public Date getCurrentDate() {
     return parent.getCurrentDate();
   }
 }

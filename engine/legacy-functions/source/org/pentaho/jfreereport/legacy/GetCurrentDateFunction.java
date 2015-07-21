@@ -17,31 +17,27 @@
 
 package org.pentaho.jfreereport.legacy;
 
-import java.util.Date;
-
 import org.pentaho.reporting.engine.classic.core.function.AbstractFunction;
+
+import java.util.Date;
 
 /**
  * @deprecated These functions are no longer supported.
  */
-public class GetCurrentDateFunction extends AbstractFunction
-{
+public class GetCurrentDateFunction extends AbstractFunction {
 
 
-  public GetCurrentDateFunction()
-  {
+  public GetCurrentDateFunction() {
   }
 
 
-  public GetCurrentDateFunction(final String name)
-  {
+  public GetCurrentDateFunction( final String name ) {
     this();
-    setName(name);
+    setName( name );
   }
 
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return new Date();
   }
 }

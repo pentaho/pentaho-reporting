@@ -17,26 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util.table.expressions;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.util.EventObject;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.EventListenerList;
-import javax.swing.table.TableCellEditor;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
@@ -51,79 +31,68 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.ValuePassThroughCellEditor;
 
-public class ReportPreProcessorCellEditor implements TableCellEditor
-{
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.EventListenerList;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.EventObject;
+
+public class ReportPreProcessorCellEditor implements TableCellEditor {
   private static final String POPUP_EDITOR = "popupEditor";
 
-  private class ExtendedEditorAction extends AbstractAction
-  {
+  private class ExtendedEditorAction extends AbstractAction {
     /**
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private ExtendedEditorAction()
-    {
+    private ExtendedEditorAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      final Window window = LibSwingUtil.getWindowAncestor(carrierPanel);
+    public void actionPerformed( final ActionEvent e ) {
+      final Window window = LibSwingUtil.getWindowAncestor( carrierPanel );
       final Object selectedItem = expressionEditor.getSelectedItem();
-      if (selectedItem instanceof ReportPreProcessor)
-      {
+      if ( selectedItem instanceof ReportPreProcessor ) {
         final ReportPreProcessorPropertiesDialog optionPane;
-        if (window instanceof JFrame)
-        {
-          optionPane = new ReportPreProcessorPropertiesDialog((JFrame) window);
-        }
-        else if (window instanceof JDialog)
-        {
-          optionPane = new ReportPreProcessorPropertiesDialog((JDialog) window);
-        }
-        else
-        {
+        if ( window instanceof JFrame ) {
+          optionPane = new ReportPreProcessorPropertiesDialog( (JFrame) window );
+        } else if ( window instanceof JDialog ) {
+          optionPane = new ReportPreProcessorPropertiesDialog( (JDialog) window );
+        } else {
           optionPane = new ReportPreProcessorPropertiesDialog();
         }
-        final ReportPreProcessor expression = optionPane.editExpression((ReportPreProcessor) selectedItem);
-        if (expression != selectedItem)
-        {
-          expressionEditor.setSelectedItem(expression);
+        final ReportPreProcessor expression = optionPane.editExpression( (ReportPreProcessor) selectedItem );
+        if ( expression != selectedItem ) {
+          expressionEditor.setSelectedItem( expression );
         }
         stopCellEditing();
-      }
-      else if (selectedItem instanceof ReportPreProcessorMetaData)
-      {
-        try
-        {
+      } else if ( selectedItem instanceof ReportPreProcessorMetaData ) {
+        try {
           final ReportPreProcessorMetaData emd = (ReportPreProcessorMetaData) selectedItem;
           final ReportPreProcessor expression = (ReportPreProcessor) emd.getPreProcessorType().newInstance();
 
           final ReportPreProcessorPropertiesDialog optionPane;
-          if (window instanceof JFrame)
-          {
-            optionPane = new ReportPreProcessorPropertiesDialog((JFrame) window);
-          }
-          else if (window instanceof JDialog)
-          {
-            optionPane = new ReportPreProcessorPropertiesDialog((JDialog) window);
-          }
-          else
-          {
+          if ( window instanceof JFrame ) {
+            optionPane = new ReportPreProcessorPropertiesDialog( (JFrame) window );
+          } else if ( window instanceof JDialog ) {
+            optionPane = new ReportPreProcessorPropertiesDialog( (JDialog) window );
+          } else {
             optionPane = new ReportPreProcessorPropertiesDialog();
           }
 
-          final ReportPreProcessor resultexpression = optionPane.editExpression(expression);
-          if (resultexpression != expression)
-          {
-            expressionEditor.setSelectedItem(resultexpression);
+          final ReportPreProcessor resultexpression = optionPane.editExpression( expression );
+          if ( resultexpression != expression ) {
+            expressionEditor.setSelectedItem( resultexpression );
           }
           stopCellEditing();
-        }
-        catch (Throwable e1)
-        {
-          UncaughtExceptionsModel.getInstance().addException(e1);
+        } catch ( Throwable e1 ) {
+          UncaughtExceptionsModel.getInstance().addException( e1 );
         }
       }
 
@@ -131,17 +100,14 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
 
   }
 
-  private class SelectionAction implements ActionListener
-  {
-    private SelectionAction()
-    {
+  private class SelectionAction implements ActionListener {
+    private SelectionAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       stopCellEditing();
     }
   }
@@ -151,56 +117,51 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
   private EventListenerList eventListenerList;
   private ReportDocumentContext renderContext;
 
-  public ReportPreProcessorCellEditor()
-  {
+  public ReportPreProcessorCellEditor() {
     eventListenerList = new EventListenerList();
 
-    final EllipsisButton ellipsisButton = new EllipsisButton("...");
-    ellipsisButton.addActionListener(new ExtendedEditorAction());
+    final EllipsisButton ellipsisButton = new EllipsisButton( "..." );
+    ellipsisButton.addActionListener( new ExtendedEditorAction() );
 
     final DefaultComboBoxModel model = new DefaultComboBoxModel();
-    final ReportPreProcessorMetaData[] datas = ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
-    model.addElement(null);
-    for (int i = 0; i < datas.length; i++)
-    {
-      final ReportPreProcessorMetaData metaData = datas[i];
-      if (metaData.isAutoProcessor())
-      {
+    final ReportPreProcessorMetaData[] datas =
+      ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
+    model.addElement( null );
+    for ( int i = 0; i < datas.length; i++ ) {
+      final ReportPreProcessorMetaData metaData = datas[ i ];
+      if ( metaData.isAutoProcessor() ) {
         continue;
       }
-      if (metaData.isHidden())
-      {
+      if ( metaData.isHidden() ) {
         continue;
       }
-      if (!WorkspaceSettings.getInstance().isVisible(metaData))
-      {
+      if ( !WorkspaceSettings.getInstance().isVisible( metaData ) ) {
         continue;
       }
-      model.addElement(metaData);
+      model.addElement( metaData );
     }
-    expressionEditor = new SmartComboBox<ReportPreProcessorMetaData>(model);
-    expressionEditor.addActionListener(new SelectionAction());
-    expressionEditor.setEditor(new ValuePassThroughCellEditor(expressionEditor, new ReportPreProcessorListCellRenderer()));
-    expressionEditor.setRenderer(new ReportPreProcessorListCellRenderer());
-    expressionEditor.getInputMap().put(UtilMessages.getInstance().getKeyStroke
-        ("PropertyCellEditorWithEllipsis.PopupEditor.Accelerator"), POPUP_EDITOR);
-    expressionEditor.getActionMap().put(POPUP_EDITOR, new ExtendedEditorAction());
-    expressionEditor.setBorder(BorderFactory.createEmptyBorder());
+    expressionEditor = new SmartComboBox<ReportPreProcessorMetaData>( model );
+    expressionEditor.addActionListener( new SelectionAction() );
+    expressionEditor
+      .setEditor( new ValuePassThroughCellEditor( expressionEditor, new ReportPreProcessorListCellRenderer() ) );
+    expressionEditor.setRenderer( new ReportPreProcessorListCellRenderer() );
+    expressionEditor.getInputMap().put( UtilMessages.getInstance().getKeyStroke
+      ( "PropertyCellEditorWithEllipsis.PopupEditor.Accelerator" ), POPUP_EDITOR );
+    expressionEditor.getActionMap().put( POPUP_EDITOR, new ExtendedEditorAction() );
+    expressionEditor.setBorder( BorderFactory.createEmptyBorder() );
 
-    carrierPanel = new JPanel(new BorderLayout());
-    carrierPanel.add(expressionEditor, BorderLayout.CENTER);
-    carrierPanel.add(ellipsisButton, BorderLayout.EAST);
+    carrierPanel = new JPanel( new BorderLayout() );
+    carrierPanel.add( expressionEditor, BorderLayout.CENTER );
+    carrierPanel.add( ellipsisButton, BorderLayout.EAST );
 
   }
 
-  public void setRenderContext(final ReportDocumentContext renderContext)
-  {
+  public void setRenderContext( final ReportDocumentContext renderContext ) {
     this.renderContext = renderContext;
   }
 
-  public FieldDefinition[] getFields()
-  {
-    return CellEditorUtility.getFields(renderContext, new String[0]);
+  public FieldDefinition[] getFields() {
+    return CellEditorUtility.getFields( renderContext, new String[ 0 ] );
   }
 
   /**
@@ -219,23 +180,19 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
    * @param column     the column of the cell being edited
    * @return the component for editing
    */
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
     final ReportPreProcessor value1;
-    if (value instanceof ReportPreProcessor)
-    {
+    if ( value instanceof ReportPreProcessor ) {
       value1 = (ReportPreProcessor) value;
-    }
-    else
-    {
+    } else {
       value1 = null;
     }
 
-    this.expressionEditor.setSelectedItem(value1);
+    this.expressionEditor.setSelectedItem( value1 );
     return carrierPanel;
   }
 
@@ -244,29 +201,20 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
    *
    * @return the value contained in the editor
    */
-  public Object getCellEditorValue()
-  {
+  public Object getCellEditorValue() {
     final Object o = this.expressionEditor.getSelectedItem();
-    if (o instanceof ReportPreProcessorMetaData)
-    {
-      try
-      {
+    if ( o instanceof ReportPreProcessorMetaData ) {
+      try {
         final ReportPreProcessorMetaData emd = (ReportPreProcessorMetaData) o;
         return emd.getPreProcessorType().newInstance();
-      }
-      catch (Throwable t)
-      {
-        UncaughtExceptionsModel.getInstance().addException(t);
+      } catch ( Throwable t ) {
+        UncaughtExceptionsModel.getInstance().addException( t );
         return null;
       }
 
-    }
-    else if (o instanceof ReportPreProcessor)
-    {
+    } else if ( o instanceof ReportPreProcessor ) {
       return o;
-    }
-    else
-    {
+    } else {
       return null;
     }
   }
@@ -281,10 +229,8 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
    * @param anEvent the event the editor should use to consider whether to begin editing or not
    * @return true if editing can be started
    */
-  public boolean isCellEditable(final EventObject anEvent)
-  {
-    if (anEvent instanceof MouseEvent)
-    {
+  public boolean isCellEditable( final EventObject anEvent ) {
+    if ( anEvent instanceof MouseEvent ) {
       final MouseEvent mouseEvent = (MouseEvent) anEvent;
       return mouseEvent.getClickCount() >= 2 && mouseEvent.getButton() == MouseEvent.BUTTON1;
     }
@@ -302,8 +248,7 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
    * @param anEvent the event the editor should use to start editing
    * @return true if the editor would like the editing cell to be selected; otherwise returns false
    */
-  public boolean shouldSelectCell(final EventObject anEvent)
-  {
+  public boolean shouldSelectCell( final EventObject anEvent ) {
     return true;
   }
 
@@ -314,9 +259,8 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
    *
    * @return true if editing was stopped; false otherwise
    */
-  public boolean stopCellEditing()
-  {
-    expressionEditor.actionPerformed(new ActionEvent(this, 0, ""));
+  public boolean stopCellEditing() {
+    expressionEditor.actionPerformed( new ActionEvent( this, 0, "" ) );
     fireEditingStopped();
     return true;
   }
@@ -324,32 +268,27 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
   /**
    * Tells the editor to cancel editing and not accept any partially edited value.
    */
-  public void cancelCellEditing()
-  {
+  public void cancelCellEditing() {
     fireEditingCanceled();
   }
 
 
-  protected void fireEditingCanceled()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingCanceled(event);
+  protected void fireEditingCanceled() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingCanceled( event );
     }
   }
 
 
-  protected void fireEditingStopped()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingStopped(event);
+  protected void fireEditingStopped() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingStopped( event );
     }
   }
 
@@ -358,9 +297,8 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void addCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.add(CellEditorListener.class, l);
+  public void addCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.add( CellEditorListener.class, l );
   }
 
   /**
@@ -368,8 +306,7 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void removeCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.remove(CellEditorListener.class, l);
+  public void removeCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.remove( CellEditorListener.class, l );
   }
 }

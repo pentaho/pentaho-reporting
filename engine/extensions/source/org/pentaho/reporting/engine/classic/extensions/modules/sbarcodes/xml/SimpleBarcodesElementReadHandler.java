@@ -27,11 +27,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
  *
  * @author Cedric Pronzato
  */
-public class SimpleBarcodesElementReadHandler extends AbstractElementReadHandler
-{
+public class SimpleBarcodesElementReadHandler extends AbstractElementReadHandler {
   public SimpleBarcodesElementReadHandler()
-      throws ParseException
-  {
-    super(new SimpleBarcodesType());
+    throws ParseException {
+    super( new SimpleBarcodesType() );
   }
 }               

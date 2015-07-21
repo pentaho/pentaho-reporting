@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,110 +41,99 @@ import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
 import org.pentaho.reporting.libraries.repository.stream.StreamRepository;
 import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
 
-public class Prd5143Test
-{
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+public class Prd5143Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testReportAsHTMLInNormalMode() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Income Statement PRD-5-minimal.prpt");
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    String pageableHTML = createPageableHTML(report, 0);
-    Assert.assertTrue(pageableHTML.contains("From June 1 through June 30, 2005"));
+  public void testReportAsHTMLInNormalMode() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Income Statement PRD-5-minimal.prpt" );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    String pageableHTML = createPageableHTML( report, 0 );
+    Assert.assertTrue( pageableHTML.contains( "From June 1 through June 30, 2005" ) );
   }
 
   @Test
-  public void testReportAsHTMLInComplexMode() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Income Statement PRD-5-minimal.prpt");
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
-    String pageableHTML = createPageableHTML(report, 0);
-    Assert.assertTrue(pageableHTML.contains("From June 1 through June 30, 2005"));
+  public void testReportAsHTMLInComplexMode() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Income Statement PRD-5-minimal.prpt" );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    String pageableHTML = createPageableHTML( report, 0 );
+    Assert.assertTrue( pageableHTML.contains( "From June 1 through June 30, 2005" ) );
   }
 
   @Test
-  public void testFullReportAsHTMLInNormalMode() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Income Statement PRD-5.prpt");
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    String pageableHTML = createPageableHTML(report, 0);
-    Assert.assertTrue(pageableHTML.contains("From June 1 through June 30, 2005"));
+  public void testFullReportAsHTMLInNormalMode() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Income Statement PRD-5.prpt" );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    String pageableHTML = createPageableHTML( report, 0 );
+    Assert.assertTrue( pageableHTML.contains( "From June 1 through June 30, 2005" ) );
   }
 
   @Test
-  public void testFullReportAsHTMLInComplexMode() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Income Statement PRD-5.prpt");
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
-    String pageableHTML = createPageableHTML(report, 0);
-    Assert.assertTrue(pageableHTML.contains("From June 1 through June 30, 2005"));
+  public void testFullReportAsHTMLInComplexMode() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Income Statement PRD-5.prpt" );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    String pageableHTML = createPageableHTML( report, 0 );
+    Assert.assertTrue( pageableHTML.contains( "From June 1 through June 30, 2005" ) );
   }
 
 
-  public static String createPageableHTML(final MasterReport report, int page)
-      throws Exception
-  {
-    try
-    {
-      if (report == null)
-      {
+  public static String createPageableHTML( final MasterReport report, int page )
+    throws Exception {
+    try {
+      if ( report == null ) {
         throw new NullPointerException();
       }
 
-      try
-      {
+      try {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final StreamRepository html = new StreamRepository(out);
+        final StreamRepository html = new StreamRepository( out );
 
-        final ZipRepository zipRepository = new ZipRepository(new NullOutputStream());
+        final ZipRepository zipRepository = new ZipRepository( new NullOutputStream() );
         final ContentLocation data = RepositoryUtilities.createLocation
-            (zipRepository, RepositoryUtilities.splitPath("data", "/"));
+          ( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
         final ContentLocation root = html.getRoot();
 
-        final PageableHtmlOutputProcessor outputProcessor = new PageableHtmlOutputProcessor(report.getConfiguration());
-        outputProcessor.setFlowSelector(new SinglePageFlowSelector(page, true));
+        final PageableHtmlOutputProcessor outputProcessor =
+          new PageableHtmlOutputProcessor( report.getConfiguration() );
+        outputProcessor.setFlowSelector( new SinglePageFlowSelector( page, true ) );
 
-        final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-        printer.setContentWriter(root, new DefaultNameGenerator(root, "report.html"));
-        printer.setDataWriter(data, new DefaultNameGenerator(data, "content"));
-        printer.setUrlRewriter(new NullURLRewriter());
-        outputProcessor.setPrinter(printer);
+        final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
+        printer.setContentWriter( root, new DefaultNameGenerator( root, "report.html" ) );
+        printer.setDataWriter( data, new DefaultNameGenerator( data, "content" ) );
+        printer.setUrlRewriter( new NullURLRewriter() );
+        outputProcessor.setPrinter( printer );
 
-        final PageableReportProcessor sp = new PageableReportProcessor(report, outputProcessor);
+        final PageableReportProcessor sp = new PageableReportProcessor( report, outputProcessor );
         sp.processReport();
         sp.close();
         zipRepository.close();
-        return out.toString("UTF-8");
-      }
-      catch (IOException ioe)
-      {
+        return out.toString( "UTF-8" );
+      } catch ( IOException ioe ) {
         throw ioe;
-      }
-      catch (ReportProcessingException re)
-      {
+      } catch ( ReportProcessingException re ) {
         throw re;
+      } catch ( Exception re ) {
+        throw new ReportProcessingException( "Failed to process the report", re );
       }
-      catch (Exception re)
-      {
-        throw new ReportProcessingException("Failed to process the report", re);
-      }
-    }
-    catch (ReportParameterValidationException e)
-    {
+    } catch ( ReportParameterValidationException e ) {
       Assert.fail();
-      throw new IllegalStateException("This statement is never reached");
+      throw new IllegalStateException( "This statement is never reached" );
     }
   }
 
-  public static class NullURLRewriter implements URLRewriter
-  {
-    public String rewrite(final ContentEntity sourceDocument, final ContentEntity dataEntity) throws URLRewriteException
-    {
+  public static class NullURLRewriter implements URLRewriter {
+    public String rewrite( final ContentEntity sourceDocument, final ContentEntity dataEntity )
+      throws URLRewriteException {
       return null;
     }
   }

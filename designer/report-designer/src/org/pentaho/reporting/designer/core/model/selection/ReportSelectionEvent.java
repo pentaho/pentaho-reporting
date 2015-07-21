@@ -17,15 +17,12 @@
 
 package org.pentaho.reporting.designer.core.model.selection;
 
-public class ReportSelectionEvent extends DocumentSelectionEvent
-{
-  public ReportSelectionEvent(final DocumentContextSelectionModel source, final Object element)
-  {
-    super(source, element);
+public class ReportSelectionEvent extends DocumentSelectionEvent {
+  public ReportSelectionEvent( final DocumentContextSelectionModel source, final Object element ) {
+    super( source, element );
   }
 
-  public DocumentContextSelectionModel  getModel()
-  {
-    return (DocumentContextSelectionModel ) getSource();
+  public DocumentContextSelectionModel getModel() {
+    return (DocumentContextSelectionModel) getSource();
   }
 }

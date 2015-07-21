@@ -29,20 +29,18 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class AttributeExpressionEditUndoEntry implements UndoEntry
-{
+public class AttributeExpressionEditUndoEntry implements UndoEntry {
   private InstanceID target;
   private String attributeNamespace;
   private String attributeName;
   private Expression newValue;
   private Expression oldValue;
 
-  public AttributeExpressionEditUndoEntry(final InstanceID target,
-                                          final String attributeNamespace,
-                                          final String attributeName,
-                                          final Expression oldValue,
-                                          final Expression newValue)
-  {
+  public AttributeExpressionEditUndoEntry( final InstanceID target,
+                                           final String attributeNamespace,
+                                           final String attributeName,
+                                           final Expression oldValue,
+                                           final Expression newValue ) {
     this.target = target;
     this.attributeNamespace = attributeNamespace;
     this.attributeName = attributeName;
@@ -50,31 +48,26 @@ public class AttributeExpressionEditUndoEntry implements UndoEntry
     this.oldValue = oldValue;
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
-    final ReportElement elementById = ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-    elementById.setAttributeExpression(attributeNamespace, attributeName, oldValue);
+  public void undo( final ReportDocumentContext renderContext ) {
+    final ReportElement elementById = ModelUtility.findElementById( renderContext.getReportDefinition(), target );
+    elementById.setAttributeExpression( attributeNamespace, attributeName, oldValue );
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
-    final ReportElement elementById = ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-    elementById.setAttributeExpression(attributeNamespace, attributeName, newValue);
+  public void redo( final ReportDocumentContext renderContext ) {
+    final ReportElement elementById = ModelUtility.findElementById( renderContext.getReportDefinition(), target );
+    elementById.setAttributeExpression( attributeNamespace, attributeName, newValue );
 
   }
 
-  public UndoEntry merge(final UndoEntry newEntry)
-  {
-    if (newEntry instanceof AttributeExpressionEditUndoEntry == false)
-    {
+  public UndoEntry merge( final UndoEntry newEntry ) {
+    if ( newEntry instanceof AttributeExpressionEditUndoEntry == false ) {
       return null;
     }
 
     final AttributeExpressionEditUndoEntry entry = (AttributeExpressionEditUndoEntry) newEntry;
-    if (entry.target == target &&
-        ObjectUtilities.equal(entry.attributeNamespace, attributeNamespace) &&
-        ObjectUtilities.equal(entry.attributeName, attributeName))
-    {
+    if ( entry.target == target &&
+      ObjectUtilities.equal( entry.attributeNamespace, attributeNamespace ) &&
+      ObjectUtilities.equal( entry.attributeName, attributeName ) ) {
       return newEntry;
     }
     return null;

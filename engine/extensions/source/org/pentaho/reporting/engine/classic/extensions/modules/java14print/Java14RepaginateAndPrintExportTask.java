@@ -26,14 +26,11 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListen
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
 
-public class Java14RepaginateAndPrintExportTask implements Runnable
-{
-  private static class OnDemandShowProgressListener implements ReportProgressListener
-  {
+public class Java14RepaginateAndPrintExportTask implements Runnable {
+  private static class OnDemandShowProgressListener implements ReportProgressListener {
     private ReportProgressDialog dialog;
 
-    private OnDemandShowProgressListener(final ReportProgressDialog dialog)
-    {
+    private OnDemandShowProgressListener( final ReportProgressDialog dialog ) {
       this.dialog = dialog;
     }
 
@@ -42,12 +39,10 @@ public class Java14RepaginateAndPrintExportTask implements Runnable
      *
      * @param event the start event.
      */
-    public void reportProcessingStarted(final ReportProgressEvent event)
-    {
-      if (dialog != null)
-      {
-        dialog.setVisibleInEDT(true);
-        dialog.reportProcessingStarted(event);
+    public void reportProcessingStarted( final ReportProgressEvent event ) {
+      if ( dialog != null ) {
+        dialog.setVisibleInEDT( true );
+        dialog.reportProcessingStarted( event );
       }
     }
 
@@ -56,11 +51,9 @@ public class Java14RepaginateAndPrintExportTask implements Runnable
      *
      * @param event the update event.
      */
-    public void reportProcessingUpdate(final ReportProgressEvent event)
-    {
-      if (dialog != null)
-      {
-        dialog.reportProcessingUpdate(event);
+    public void reportProcessingUpdate( final ReportProgressEvent event ) {
+      if ( dialog != null ) {
+        dialog.reportProcessingUpdate( event );
       }
     }
 
@@ -69,26 +62,23 @@ public class Java14RepaginateAndPrintExportTask implements Runnable
      *
      * @param event the finish event.
      */
-    public void reportProcessingFinished(final ReportProgressEvent event)
-    {
-      if (dialog != null)
-      {
-        dialog.reportProcessingFinished(event);
-        dialog.setVisibleInEDT(false);
+    public void reportProcessingFinished( final ReportProgressEvent event ) {
+      if ( dialog != null ) {
+        dialog.reportProcessingFinished( event );
+        dialog.setVisibleInEDT( false );
       }
     }
   }
 
-  private static final Log logger = LogFactory.getLog(Java14RepaginateAndPrintExportTask.class);
+  private static final Log logger = LogFactory.getLog( Java14RepaginateAndPrintExportTask.class );
 
   private MasterReport job;
   private ReportProgressDialog progressListener;
   private StatusListener statusListener;
 
-  public Java14RepaginateAndPrintExportTask(final MasterReport job,
-                                            final ReportProgressDialog progressListener,
-                                            final StatusListener statusListener)
-  {
+  public Java14RepaginateAndPrintExportTask( final MasterReport job,
+                                             final ReportProgressDialog progressListener,
+                                             final StatusListener statusListener ) {
     this.job = job;
     this.progressListener = progressListener;
     this.statusListener = statusListener;
@@ -102,25 +92,17 @@ public class Java14RepaginateAndPrintExportTask implements Runnable
    *
    * @see Thread#run()
    */
-  public void run()
-  {
-    try
-    {
-      Java14PrintUtil.print(job, new OnDemandShowProgressListener(progressListener));
-    }
-    catch (Exception e)
-    {
-      logger.warn("Failed to print the report", e);
-      if (statusListener != null)
-      {
-        statusListener.setStatus(StatusType.ERROR, "Export failed", e);
+  public void run() {
+    try {
+      Java14PrintUtil.print( job, new OnDemandShowProgressListener( progressListener ) );
+    } catch ( Exception e ) {
+      logger.warn( "Failed to print the report", e );
+      if ( statusListener != null ) {
+        statusListener.setStatus( StatusType.ERROR, "Export failed", e );
       }
-    }
-    finally
-    {
-      if (progressListener != null)
-      {
-        progressListener.setVisible(false);
+    } finally {
+      if ( progressListener != null ) {
+        progressListener.setVisible( false );
       }
     }
   }

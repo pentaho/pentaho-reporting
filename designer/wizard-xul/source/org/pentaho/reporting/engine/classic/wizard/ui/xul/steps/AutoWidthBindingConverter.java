@@ -20,12 +20,10 @@ package org.pentaho.reporting.engine.classic.wizard.ui.xul.steps;
 import org.pentaho.reporting.engine.classic.wizard.model.Length;
 import org.pentaho.ui.xul.binding.BindingConvertor;
 
-public class AutoWidthBindingConverter extends BindingConvertor<Length, Boolean>
-{
+public class AutoWidthBindingConverter extends BindingConvertor<Length, Boolean> {
   private Length defaultWidth;
 
-  public AutoWidthBindingConverter(final Length defaultWidth)
-  {
+  public AutoWidthBindingConverter( final Length defaultWidth ) {
     super();
     this.defaultWidth = defaultWidth;
   }
@@ -34,8 +32,7 @@ public class AutoWidthBindingConverter extends BindingConvertor<Length, Boolean>
    * @see org.pentaho.ui.xul.binding.BindingConvertor#sourceToTarget(java.lang.Object)
    */
   @Override
-  public Boolean sourceToTarget(final Length value)
-  {
+  public Boolean sourceToTarget( final Length value ) {
     return value == null;
   }
 
@@ -43,8 +40,7 @@ public class AutoWidthBindingConverter extends BindingConvertor<Length, Boolean>
    * @see org.pentaho.ui.xul.binding.BindingConvertor#targetToSource(java.lang.Object)
    */
   @Override
-  public Length targetToSource(final Boolean value)
-  {
+  public Length targetToSource( final Boolean value ) {
     return value ? null : defaultWidth;
   }
 

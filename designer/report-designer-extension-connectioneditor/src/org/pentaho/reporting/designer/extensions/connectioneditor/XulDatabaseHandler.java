@@ -19,33 +19,27 @@ package org.pentaho.reporting.designer.extensions.connectioneditor;
 
 import org.pentaho.ui.database.event.DataHandler;
 
-public class XulDatabaseHandler extends DataHandler
-{
+public class XulDatabaseHandler extends DataHandler {
   private boolean confirmed;
 
-  public XulDatabaseHandler()
-  {
-    setName("dataHandler");
+  public XulDatabaseHandler() {
+    setName( "dataHandler" );
   }
 
-  public boolean isConfirmed()
-  {
+  public boolean isConfirmed() {
     return confirmed;
   }
 
-  public void setConfirmed(final boolean confirmed)
-  {
+  public void setConfirmed( final boolean confirmed ) {
     this.confirmed = confirmed;
   }
 
-  public void onOK()
-  {
+  public void onOK() {
     super.onOK();
     confirmed = true;
   }
 
-  public void onCancel()
-  {
+  public void onCancel() {
     super.onCancel();
     confirmed = false;
   }

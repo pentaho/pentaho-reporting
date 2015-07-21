@@ -17,20 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.OlapConnectionProvider;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
+
+import java.io.IOException;
 
 /**
  * Creation-Date: Jan 19, 2007, 5:02:46 PM
  *
  * @author Thomas Morgner
  */
-public interface OlapConnectionProviderWriteHandler
-{
-  public String writeReport(final XmlWriter xmlWriter,
-                            final OlapConnectionProvider connectionProvider)
-      throws IOException, BundleWriterException;
+public interface OlapConnectionProviderWriteHandler {
+  public String writeReport( final XmlWriter xmlWriter,
+                             final OlapConnectionProvider connectionProvider )
+    throws IOException, BundleWriterException;
 }

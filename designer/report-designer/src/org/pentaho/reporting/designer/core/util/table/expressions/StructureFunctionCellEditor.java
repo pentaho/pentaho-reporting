@@ -17,25 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util.table.expressions;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.util.EventObject;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.EventListenerList;
-import javax.swing.table.TableCellEditor;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -54,81 +35,69 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.ValuePassThroughCellEditor;
 
-public class StructureFunctionCellEditor implements TableCellEditor
-{
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.EventListenerList;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.util.EventObject;
+
+public class StructureFunctionCellEditor implements TableCellEditor {
   private static final String POPUP_EDITOR = "popupEditor";
 
-  private class ExtendedEditorAction extends AbstractAction
-  {
+  private class ExtendedEditorAction extends AbstractAction {
     /**
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private ExtendedEditorAction()
-    {
+    private ExtendedEditorAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      final Window window = LibSwingUtil.getWindowAncestor(carrierPanel);
+    public void actionPerformed( final ActionEvent e ) {
+      final Window window = LibSwingUtil.getWindowAncestor( carrierPanel );
       final Object selectedItem = expressionEditor.getSelectedItem();
-      if (selectedItem instanceof StructureFunction)
-      {
+      if ( selectedItem instanceof StructureFunction ) {
         final ExpressionPropertiesDialog optionPane;
-        if (window instanceof JFrame)
-        {
-          optionPane = new ExpressionPropertiesDialog((JFrame) window);
-        }
-        else if (window instanceof JDialog)
-        {
-          optionPane = new ExpressionPropertiesDialog((JDialog) window);
-        }
-        else
-        {
+        if ( window instanceof JFrame ) {
+          optionPane = new ExpressionPropertiesDialog( (JFrame) window );
+        } else if ( window instanceof JDialog ) {
+          optionPane = new ExpressionPropertiesDialog( (JDialog) window );
+        } else {
           optionPane = new ExpressionPropertiesDialog();
         }
         final StructureFunction structureFunction = (StructureFunction) selectedItem;
         final StructureFunction expression = (StructureFunction)
-            optionPane.editExpression(structureFunction, designerContext);
-        if (expression != selectedItem)
-        {
-          expressionEditor.setSelectedItem(expression);
+          optionPane.editExpression( structureFunction, designerContext );
+        if ( expression != selectedItem ) {
+          expressionEditor.setSelectedItem( expression );
         }
         fireEditingStopped();
-      }
-      else if (selectedItem instanceof ExpressionMetaData)
-      {
-        try
-        {
+      } else if ( selectedItem instanceof ExpressionMetaData ) {
+        try {
           final ExpressionMetaData emd = (ExpressionMetaData) selectedItem;
           final Expression expression = (Expression) emd.getExpressionType().newInstance();
 
           final ExpressionPropertiesDialog optionPane;
-          if (window instanceof JFrame)
-          {
-            optionPane = new ExpressionPropertiesDialog((JFrame) window);
-          }
-          else if (window instanceof JDialog)
-          {
-            optionPane = new ExpressionPropertiesDialog((JDialog) window);
-          }
-          else
-          {
+          if ( window instanceof JFrame ) {
+            optionPane = new ExpressionPropertiesDialog( (JFrame) window );
+          } else if ( window instanceof JDialog ) {
+            optionPane = new ExpressionPropertiesDialog( (JDialog) window );
+          } else {
             optionPane = new ExpressionPropertiesDialog();
           }
 
-          final Expression resultexpression = optionPane.editExpression(expression, designerContext);
-          if (resultexpression != expression)
-          {
-            expressionEditor.setSelectedItem(resultexpression);
+          final Expression resultexpression = optionPane.editExpression( expression, designerContext );
+          if ( resultexpression != expression ) {
+            expressionEditor.setSelectedItem( resultexpression );
           }
           fireEditingStopped();
-        }
-        catch (Throwable e1)
-        {
-          UncaughtExceptionsModel.getInstance().addException(e1);
+        } catch ( Throwable e1 ) {
+          UncaughtExceptionsModel.getInstance().addException( e1 );
         }
       }
     }
@@ -144,66 +113,57 @@ public class StructureFunctionCellEditor implements TableCellEditor
   private DefaultDataAttributeContext dataAttributeContext;
   private boolean initialized;
 
-  public StructureFunctionCellEditor()
-  {
+  public StructureFunctionCellEditor() {
     eventListenerList = new EventListenerList();
     this.dataAttributeContext = new DefaultDataAttributeContext();
 
-    final EllipsisButton ellipsisButton = new EllipsisButton("...");
-    ellipsisButton.addActionListener(new ExtendedEditorAction());
+    final EllipsisButton ellipsisButton = new EllipsisButton( "..." );
+    ellipsisButton.addActionListener( new ExtendedEditorAction() );
 
     expressionEditor = new SmartComboBox<ExpressionMetaData>();
-    expressionEditor.setEditable(false);
-    expressionEditor.setEditor(new ValuePassThroughCellEditor(expressionEditor, new ExpressionListCellRenderer()));
-    expressionEditor.setRenderer(new ExpressionListCellRenderer());
-    expressionEditor.getInputMap().put(UtilMessages.getInstance().getKeyStroke
-        ("PropertyCellEditorWithEllipsis.PopupEditor.Accelerator"), POPUP_EDITOR);
-    expressionEditor.getActionMap().put(POPUP_EDITOR, new ExtendedEditorAction());
-    expressionEditor.setBorder(BorderFactory.createEmptyBorder());
+    expressionEditor.setEditable( false );
+    expressionEditor.setEditor( new ValuePassThroughCellEditor( expressionEditor, new ExpressionListCellRenderer() ) );
+    expressionEditor.setRenderer( new ExpressionListCellRenderer() );
+    expressionEditor.getInputMap().put( UtilMessages.getInstance().getKeyStroke
+      ( "PropertyCellEditorWithEllipsis.PopupEditor.Accelerator" ), POPUP_EDITOR );
+    expressionEditor.getActionMap().put( POPUP_EDITOR, new ExtendedEditorAction() );
+    expressionEditor.setBorder( BorderFactory.createEmptyBorder() );
 
-    carrierPanel = new JPanel(new BorderLayout());
-    carrierPanel.add(expressionEditor, BorderLayout.CENTER);
-    carrierPanel.add(ellipsisButton, BorderLayout.EAST);
+    carrierPanel = new JPanel( new BorderLayout() );
+    carrierPanel.add( expressionEditor, BorderLayout.CENTER );
+    carrierPanel.add( ellipsisButton, BorderLayout.EAST );
 
   }
 
-  public void init()
-  {
-    if (initialized)
-    {
+  public void init() {
+    if ( initialized ) {
       return;
     }
     initialized = true;
     final DefaultComboBoxModel model = new DefaultComboBoxModel();
-    model.addElement(null);
+    model.addElement( null );
 
-    for (final ExpressionMetaData expressionMetaData : ExpressionRegistry.getInstance().getAllExpressionMetaDatas())
-    {
-      if (expressionMetaData.isHidden())
-      {
+    for ( final ExpressionMetaData expressionMetaData : ExpressionRegistry.getInstance().getAllExpressionMetaDatas() ) {
+      if ( expressionMetaData.isHidden() ) {
         continue;
       }
-      if (!WorkspaceSettings.getInstance().isVisible(expressionMetaData))
-      {
+      if ( !WorkspaceSettings.getInstance().isVisible( expressionMetaData ) ) {
         continue;
       }
 
-      if (StructureFunction.class.isAssignableFrom(expressionMetaData.getExpressionType()))
-      {
-        model.addElement(expressionMetaData);
+      if ( StructureFunction.class.isAssignableFrom( expressionMetaData.getExpressionType() ) ) {
+        model.addElement( expressionMetaData );
       }
     }
-    expressionEditor.setModel(model);
+    expressionEditor.setModel( model );
   }
 
-  public void setRenderContext(final ReportDocumentContext renderContext)
-  {
+  public void setRenderContext( final ReportDocumentContext renderContext ) {
     this.renderContext = renderContext;
   }
 
-  public FieldDefinition[] getFields()
-  {
-    return CellEditorUtility.getFields(renderContext, new String[0]);
+  public FieldDefinition[] getFields() {
+    return CellEditorUtility.getFields( renderContext, new String[ 0 ] );
   }
 
   /**
@@ -222,24 +182,20 @@ public class StructureFunctionCellEditor implements TableCellEditor
    * @param column     the column of the cell being edited
    * @return the component for editing
    */
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
     init();
     final StructureFunction value1;
-    if (value instanceof StructureFunction)
-    {
+    if ( value instanceof StructureFunction ) {
       value1 = (StructureFunction) value;
-    }
-    else
-    {
+    } else {
       value1 = null;
     }
 
-    this.expressionEditor.setSelectedItem(value1);
+    this.expressionEditor.setSelectedItem( value1 );
     return carrierPanel;
   }
 
@@ -248,35 +204,23 @@ public class StructureFunctionCellEditor implements TableCellEditor
    *
    * @return the value contained in the editor
    */
-  public Object getCellEditorValue()
-  {
+  public Object getCellEditorValue() {
     final Object o = this.expressionEditor.getSelectedItem();
-    if (o instanceof ExpressionMetaData)
-    {
-      try
-      {
+    if ( o instanceof ExpressionMetaData ) {
+      try {
         final ExpressionMetaData emd = (ExpressionMetaData) o;
-        if (StructureFunction.class.isAssignableFrom(emd.getExpressionType()))
-        {
+        if ( StructureFunction.class.isAssignableFrom( emd.getExpressionType() ) ) {
           return emd.getExpressionType().newInstance();
-        }
-        else
-        {
+        } else {
           return null;
         }
-      }
-      catch (Throwable t)
-      {
-        UncaughtExceptionsModel.getInstance().addException(t);
+      } catch ( Throwable t ) {
+        UncaughtExceptionsModel.getInstance().addException( t );
         return null;
       }
-    }
-    else if (o instanceof StructureFunction)
-    {
+    } else if ( o instanceof StructureFunction ) {
       return o;
-    }
-    else
-    {
+    } else {
       return null;
     }
   }
@@ -291,10 +235,8 @@ public class StructureFunctionCellEditor implements TableCellEditor
    * @param anEvent the event the editor should use to consider whether to begin editing or not
    * @return true if editing can be started
    */
-  public boolean isCellEditable(final EventObject anEvent)
-  {
-    if (anEvent instanceof MouseEvent)
-    {
+  public boolean isCellEditable( final EventObject anEvent ) {
+    if ( anEvent instanceof MouseEvent ) {
       final MouseEvent mouseEvent = (MouseEvent) anEvent;
       return mouseEvent.getClickCount() >= 2 && mouseEvent.getButton() == MouseEvent.BUTTON1;
     }
@@ -312,8 +254,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
    * @param anEvent the event the editor should use to start editing
    * @return true if the editor would like the editing cell to be selected; otherwise returns false
    */
-  public boolean shouldSelectCell(final EventObject anEvent)
-  {
+  public boolean shouldSelectCell( final EventObject anEvent ) {
     return true;
   }
 
@@ -324,9 +265,8 @@ public class StructureFunctionCellEditor implements TableCellEditor
    *
    * @return true if editing was stopped; false otherwise
    */
-  public boolean stopCellEditing()
-  {
-    expressionEditor.actionPerformed(new ActionEvent(this, 0, ""));
+  public boolean stopCellEditing() {
+    expressionEditor.actionPerformed( new ActionEvent( this, 0, "" ) );
     fireEditingStopped();
     return true;
   }
@@ -334,32 +274,27 @@ public class StructureFunctionCellEditor implements TableCellEditor
   /**
    * Tells the editor to cancel editing and not accept any partially edited value.
    */
-  public void cancelCellEditing()
-  {
+  public void cancelCellEditing() {
     fireEditingCanceled();
   }
 
 
-  protected void fireEditingCanceled()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingCanceled(event);
+  protected void fireEditingCanceled() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingCanceled( event );
     }
   }
 
 
-  protected void fireEditingStopped()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingStopped(event);
+  protected void fireEditingStopped() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingStopped( event );
     }
   }
 
@@ -368,9 +303,8 @@ public class StructureFunctionCellEditor implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void addCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.add(CellEditorListener.class, l);
+  public void addCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.add( CellEditorListener.class, l );
   }
 
   /**
@@ -378,13 +312,11 @@ public class StructureFunctionCellEditor implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void removeCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.remove(CellEditorListener.class, l);
+  public void removeCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.remove( CellEditorListener.class, l );
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext reportDesignerContext)
-  {
+  public void setReportDesignerContext( final ReportDesignerContext reportDesignerContext ) {
     this.designerContext = reportDesignerContext;
   }
 }

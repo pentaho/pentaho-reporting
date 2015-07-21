@@ -17,16 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
-import javax.swing.table.TableModel;
-
 import mondrian.olap.Result;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
-public class DenormalizedMDXDataFactory extends AbstractNamedMDXDataFactory
-{
-  public DenormalizedMDXDataFactory()
-  {
+import javax.swing.table.TableModel;
+
+public class DenormalizedMDXDataFactory extends AbstractNamedMDXDataFactory {
+  public DenormalizedMDXDataFactory() {
   }
 
   /**
@@ -41,10 +39,9 @@ public class DenormalizedMDXDataFactory extends AbstractNamedMDXDataFactory
    * @return the result of the query as table model.
    * @throws ReportDataFactoryException if an error occured while performing the query.
    */
-  public TableModel queryData(final String queryName, final DataRow parameters) throws ReportDataFactoryException
-  {
-    final Result cellSet = performQuery(queryName, parameters);
-    return postProcess(queryName, parameters, new DenormalizedMDXTableModel
-        (cellSet, extractQueryLimit(parameters), isMembersOnAxisSorted()));
+  public TableModel queryData( final String queryName, final DataRow parameters ) throws ReportDataFactoryException {
+    final Result cellSet = performQuery( queryName, parameters );
+    return postProcess( queryName, parameters, new DenormalizedMDXTableModel
+      ( cellSet, extractQueryLimit( parameters ), isMembersOnAxisSorted() ) );
   }
 }

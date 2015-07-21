@@ -1,11 +1,5 @@
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
-import java.awt.Component;
-import java.awt.Cursor;
-
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs.FileObject;
@@ -22,160 +16,146 @@ import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
 import org.pentaho.reporting.libraries.pensol.JCRSolutionFileSystem;
 
-public class PublishToServerTask implements AuthenticatedServerTask
-{
-  private static final Log logger = LogFactory.getLog(PublishToServerTask.class);
+import javax.swing.*;
+import java.awt.*;
+
+public class PublishToServerTask implements AuthenticatedServerTask {
+  private static final Log logger = LogFactory.getLog( PublishToServerTask.class );
 
   private ReportDesignerContext reportDesignerContext;
   private Component uiContext;
   private AuthenticationData loginData;
   private boolean storeUpdates;
 
-  public PublishToServerTask(final ReportDesignerContext reportDesignerContext,
-                             final Component uiContext)
-  {
+  public PublishToServerTask( final ReportDesignerContext reportDesignerContext,
+                              final Component uiContext ) {
 
     this.reportDesignerContext = reportDesignerContext;
     this.uiContext = uiContext;
   }
 
-  public void setLoginData(final AuthenticationData loginData, final boolean storeUpdates)
-  {
+  public void setLoginData( final AuthenticationData loginData, final boolean storeUpdates ) {
     this.loginData = loginData;
     this.storeUpdates = storeUpdates;
   }
 
-  public void run()
-  {
+  public void run() {
     final MasterReport report = reportDesignerContext.getActiveContext().getContextRoot();
     final DocumentMetaData metaData = report.getBundle().getMetaData();
 
-    try
-    {
-      final String oldName = extractLastFileName(report);
+    try {
+      final String oldName = extractLastFileName( report );
 
-      SelectFileForPublishTask selectFileForPublishTask = new SelectFileForPublishTask(uiContext);
-      readBundleMetaData(report, metaData, selectFileForPublishTask);
+      SelectFileForPublishTask selectFileForPublishTask = new SelectFileForPublishTask( uiContext );
+      readBundleMetaData( report, metaData, selectFileForPublishTask );
 
-      final String selectedReport = selectFileForPublishTask.selectFile(loginData, oldName);
-      if (selectedReport == null)
-      {
+      final String selectedReport = selectFileForPublishTask.selectFile( loginData, oldName );
+      if ( selectedReport == null ) {
         return;
       }
 
-      loginData.setOption("lastFilename", selectedReport);
-      storeBundleMetaData(report, selectedReport, selectFileForPublishTask);
+      loginData.setOption( "lastFilename", selectedReport );
+      storeBundleMetaData( report, selectedReport, selectFileForPublishTask );
 
-      reportDesignerContext.getActiveContext().getAuthenticationStore().add(loginData, storeUpdates);
+      reportDesignerContext.getActiveContext().getAuthenticationStore().add( loginData, storeUpdates );
 
-      final byte[] data = PublishUtil.createBundleData(report);
-      int responseCode = PublishUtil.publish(data, selectedReport, loginData);
-      
-      if (responseCode == 200) {
-        final Component glassPane = SwingUtilities.getRootPane(uiContext).getGlassPane();
+      final byte[] data = PublishUtil.createBundleData( report );
+      int responseCode = PublishUtil.publish( data, selectedReport, loginData );
+
+      if ( responseCode == 200 ) {
+        final Component glassPane = SwingUtilities.getRootPane( uiContext ).getGlassPane();
         try {
-          glassPane.setVisible(true);
-          glassPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+          glassPane.setVisible( true );
+          glassPane.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
 
-          FileObject fileSystemRoot = PublishUtil.createVFSConnection(loginData);
+          FileObject fileSystemRoot = PublishUtil.createVFSConnection( loginData );
           final JCRSolutionFileSystem fileSystem = (JCRSolutionFileSystem) fileSystemRoot.getFileSystem();
           fileSystem.getLocalFileModel().refresh();
-        } catch (Exception e1) {
-          UncaughtExceptionsModel.getInstance().addException(e1);
+        } catch ( Exception e1 ) {
+          UncaughtExceptionsModel.getInstance().addException( e1 );
+        } finally {
+          glassPane.setVisible( false );
+          glassPane.setCursor( new Cursor( Cursor.DEFAULT_CURSOR ) );
         }
-        finally {
-          glassPane.setVisible(false);
-          glassPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));          
-        }
-        if (JOptionPane.showConfirmDialog(uiContext,
-            Messages.getInstance().getString("PublishToServerAction.Successful.LaunchNow"),
-            Messages.getInstance().getString("PublishToServerAction.Successful.LaunchTitle"),
-            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-        {
-          PublishUtil.launchReportOnServer(loginData.getUrl(), selectedReport);
+        if ( JOptionPane.showConfirmDialog( uiContext,
+          Messages.getInstance().getString( "PublishToServerAction.Successful.LaunchNow" ),
+          Messages.getInstance().getString( "PublishToServerAction.Successful.LaunchTitle" ),
+          JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION ) {
+          PublishUtil.launchReportOnServer( loginData.getUrl(), selectedReport );
         }
       } else if ( responseCode == 403 ) {
         logger.error( "Publish failed. Server responded with status-code " + responseCode );
-        JOptionPane.showMessageDialog( uiContext, 
-            Messages.getInstance().getString( "PublishToServerAction.FailedAccess" ),
-            Messages.getInstance().getString( "PublishToServerAction.FailedAccessTitle" ),
-            JOptionPane.ERROR_MESSAGE );
+        JOptionPane.showMessageDialog( uiContext,
+          Messages.getInstance().getString( "PublishToServerAction.FailedAccess" ),
+          Messages.getInstance().getString( "PublishToServerAction.FailedAccessTitle" ),
+          JOptionPane.ERROR_MESSAGE );
       } else {
-        logger.error("Publish failed. Server responded with status-code " + responseCode);
+        logger.error( "Publish failed. Server responded with status-code " + responseCode );
         showErrorMessage();
       }
-    }
-    catch (Exception exception)
-    {
-      logger.error("Publish failed. Unexpected error:", exception);
+    } catch ( Exception exception ) {
+      logger.error( "Publish failed. Unexpected error:", exception );
       showErrorMessage();
     }
   }
 
-  private String extractLastFileName(final MasterReport report)
-  {
+  private String extractLastFileName( final MasterReport report ) {
     final Object lastFilenameAttr = report.getAttribute
-        (ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME);
-    final String oldName ;
-    if (lastFilenameAttr != null)
-    {
+      ( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME );
+    final String oldName;
+    if ( lastFilenameAttr != null ) {
       oldName = (String) lastFilenameAttr;
-    }
-    else
-    {
+    } else {
       oldName = null;
     }
     return oldName;
   }
 
-  private void readBundleMetaData(final MasterReport report, final DocumentMetaData metaData,
-                                  final SelectFileForPublishTask selectFileForPublishTask)
-  {
+  private void readBundleMetaData( final MasterReport report, final DocumentMetaData metaData,
+                                   final SelectFileForPublishTask selectFileForPublishTask ) {
     final String oldDescription = (String) metaData.getBundleAttribute
-        (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.DESCRIPTION);
+      ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.DESCRIPTION );
     final String oldTitle = (String) metaData.getBundleAttribute
-        (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE);
+      ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE );
 
     final boolean oldLockOutput = Boolean.TRUE.equals
-        (report.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE));
+      ( report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE ) );
     final String oldExportType = (String) report.getAttribute
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE );
 
-    selectFileForPublishTask.setDescription(oldDescription);
-    selectFileForPublishTask.setReportTitle(oldTitle);
-    selectFileForPublishTask.setLockOutputType(oldLockOutput);
-    selectFileForPublishTask.setExportType(oldExportType);
+    selectFileForPublishTask.setDescription( oldDescription );
+    selectFileForPublishTask.setReportTitle( oldTitle );
+    selectFileForPublishTask.setLockOutputType( oldLockOutput );
+    selectFileForPublishTask.setExportType( oldExportType );
   }
 
-  private void storeBundleMetaData(final MasterReport report,
-                                   final String selectedReport,
-                                   final SelectFileForPublishTask selectFileForPublishTask)
-  {
+  private void storeBundleMetaData( final MasterReport report,
+                                    final String selectedReport,
+                                    final SelectFileForPublishTask selectFileForPublishTask ) {
     final DocumentMetaData metaData = report.getBundle().getMetaData();
     report.setAttribute
-        (ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME, selectedReport);
+      ( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME, selectedReport );
 
-    if (metaData instanceof WriteableDocumentMetaData)
-    {
+    if ( metaData instanceof WriteableDocumentMetaData ) {
       final WriteableDocumentMetaData writeableDocumentMetaData = (WriteableDocumentMetaData) metaData;
       writeableDocumentMetaData.setBundleAttribute
-          (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.DESCRIPTION,
-              selectFileForPublishTask.getDescription());
+        ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.DESCRIPTION,
+          selectFileForPublishTask.getDescription() );
       writeableDocumentMetaData.setBundleAttribute
-          (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE,
-              selectFileForPublishTask.getReportTitle());
+        ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE,
+          selectFileForPublishTask.getReportTitle() );
     }
 
-    report.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE,
-        Boolean.valueOf(selectFileForPublishTask.isLockOutputType()));
-    report.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE,
-        selectFileForPublishTask.getExportType());
+    report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE,
+      Boolean.valueOf( selectFileForPublishTask.isLockOutputType() ) );
+    report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE,
+      selectFileForPublishTask.getExportType() );
   }
 
   private void showErrorMessage() {
-    JOptionPane.showMessageDialog(uiContext, 
-        Messages.getInstance().getString("PublishToServerAction.Failed"),
-        Messages.getInstance().getString("PublishToServerAction.FailedTitle"),
-        JOptionPane.ERROR_MESSAGE);
+    JOptionPane.showMessageDialog( uiContext,
+      Messages.getInstance().getString( "PublishToServerAction.Failed" ),
+      Messages.getInstance().getString( "PublishToServerAction.FailedTitle" ),
+      JOptionPane.ERROR_MESSAGE );
   }
 }

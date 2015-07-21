@@ -17,22 +17,6 @@
 
 package org.pentaho.reporting.designer.core;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.beans.PropertyEditorManager;
-import java.io.File;
-import java.net.ProxySelector;
-import javax.swing.SwingUtilities;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.text.StyleContext;
-
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionUtil;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionsTreeModel;
 import org.pentaho.reporting.designer.core.settings.SettingsUtil;
@@ -59,40 +43,40 @@ import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPro
 import org.pentaho.reporting.libraries.fonts.LibFontBoot;
 import org.pentaho.reporting.libraries.resourceloader.LibLoaderBoot;
 
-public class ReportDesigner
-{
-  private static class SetLookAndFeelTask implements Runnable
-  {
-    public void run()
-    {
+import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyEditorManager;
+import java.io.File;
+import java.net.ProxySelector;
+
+public class ReportDesigner {
+  private static class SetLookAndFeelTask implements Runnable {
+    public void run() {
       int indent = 0;
-      try
-      {
+      try {
         final String lnfName = WorkspaceSettings.getInstance().getLNF();
-        if (!StringUtils.isEmpty(lnfName))
-        {
+        if ( !StringUtils.isEmpty( lnfName ) ) {
           final LookAndFeelInfo[] lnfs = UIManager.getInstalledLookAndFeels();
-          for (final LookAndFeelInfo lnf : lnfs)
-          {
-            if (lnf.getName().equals(lnfName))
-            {
-              UIManager.setLookAndFeel(lnf.getClassName());
+          for ( final LookAndFeelInfo lnf : lnfs ) {
+            if ( lnf.getName().equals( lnfName ) ) {
+              UIManager.setLookAndFeel( lnf.getClassName() );
               return;
             }
           }
         }
 
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
         indent = 5; //PRD-4583
-      }
-      catch (Throwable t)
-      {
-        UncaughtExceptionsModel.getInstance().addException(t);
+      } catch ( Throwable t ) {
+        UncaughtExceptionsModel.getInstance().addException( t );
       }
 
       final UIDefaults uiDefaults = UIManager.getDefaults();
-      uiDefaults.put("Table.gridColor", uiDefaults.get("Panel.background"));// NON-NLS
-      uiDefaults.put("Tree.leftChildIndent", indent);//PRD-4419
+      uiDefaults.put( "Table.gridColor", uiDefaults.get( "Panel.background" ) );// NON-NLS
+      uiDefaults.put( "Tree.leftChildIndent", indent );//PRD-4419
     }
   }
 
@@ -102,98 +86,77 @@ public class ReportDesigner
   /**
    * Shows the splashscreen.
    */
-  private static class InitializeSplashScreenTask implements Runnable
-  {
-    private InitializeSplashScreenTask()
-    {
+  private static class InitializeSplashScreenTask implements Runnable {
+    private InitializeSplashScreenTask() {
     }
 
-    public void run()
-    {
+    public void run() {
       final SplashScreen splashScreen = new SplashScreen();
       ReportDesigner.splashScreen = splashScreen;
 
-      if (WorkspaceSettings.getInstance().isSplashScreenVisible())
-      {
-        splashScreen.setVisible(true);
+      if ( WorkspaceSettings.getInstance().isSplashScreenVisible() ) {
+        splashScreen.setVisible( true );
       }
     }
   }
 
-  private static class UpdateStatusTask implements Runnable
-  {
+  private static class UpdateStatusTask implements Runnable {
     private String status;
 
-    private UpdateStatusTask(final String status)
-    {
+    private UpdateStatusTask( final String status ) {
       this.status = status;
     }
 
-    public void run()
-    {
-      splashScreen.setStatus(status);
+    public void run() {
+      splashScreen.setStatus( status );
     }
   }
 
-  private static class CreateReportDesignerFrame implements Runnable
-  {
+  private static class CreateReportDesignerFrame implements Runnable {
     private File[] files;
 
-    private CreateReportDesignerFrame(final File[] files)
-    {
+    private CreateReportDesignerFrame( final File[] files ) {
       this.files = files;
     }
 
-    public void run()
-    {
-      try
-      {
+    public void run() {
+      try {
         final ReportDesignerFrame frame = new ReportDesignerFrame();
         ReportDesigner.reportDesignerFrame = frame;
         frame.pack();
 
         final Rectangle bounds = WorkspaceSettings.getInstance().getBounds();
-        if (bounds == null || LibSwingUtil.safeRestoreWindow(frame, bounds) == false)
-        {
-          LibSwingUtil.centerFrameOnScreen(frame);
-          frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        if ( bounds == null || LibSwingUtil.safeRestoreWindow( frame, bounds ) == false ) {
+          LibSwingUtil.centerFrameOnScreen( frame );
+          frame.setExtendedState( Frame.MAXIMIZED_BOTH );
         }
-        frame.initWindowLocations(files);
-        frame.setVisible(true);
-      }
-      catch (Exception t)
-      {
-        if (splashScreen != null)
-        {
+        frame.initWindowLocations( files );
+        frame.setVisible( true );
+      } catch ( Exception t ) {
+        if ( splashScreen != null ) {
           splashScreen.dispose();
         }
-        UncaughtExceptionsModel.getInstance().addException(t);
+        UncaughtExceptionsModel.getInstance().addException( t );
         final ExceptionDialog dialog = new ExceptionDialog();
-        dialog.setModal(true);
+        dialog.setModal( true );
         dialog.showDialog();
-        System.exit(-1);
+        System.exit( -1 );
       }
     }
   }
 
-  private static class VersionCheckerTask implements Runnable
-  {
-    private VersionCheckerTask()
-    {
+  private static class VersionCheckerTask implements Runnable {
+    private VersionCheckerTask() {
     }
 
-    public void run()
-    {
+    public void run() {
       splashScreen.dispose();
 
       // perform version checking
-      try
-      {
-        Class.forName("org.pentaho.versionchecker.VersionChecker");// NON-NLS
-        VersionCheckerUtility.handlerVersionCheck(reportDesignerFrame);
-      }
-      catch (Throwable t)
-      {
+      try {
+        Class.forName( "org.pentaho.versionchecker.VersionChecker" );// NON-NLS
+        VersionCheckerUtility.handlerVersionCheck( reportDesignerFrame );
+      } catch ( Throwable t ) {
         // if we do not have the version checker, fail without any user
         // feedback or logging
       }
@@ -202,40 +165,34 @@ public class ReportDesigner
 
   }
 
-  private static class InstallAWTHandlerRunnable implements Runnable
-  {
-    private InstallAWTHandlerRunnable()
-    {
+  private static class InstallAWTHandlerRunnable implements Runnable {
+    private InstallAWTHandlerRunnable() {
     }
 
-    public void run()
-    {
-      Thread.currentThread().setUncaughtExceptionHandler(ThrowableHandler.getInstance());
+    public void run() {
+      Thread.currentThread().setUncaughtExceptionHandler( ThrowableHandler.getInstance() );
     }
   }
 
-  private ReportDesigner()
-  {
+  private ReportDesigner() {
   }
 
   /**
    * @noinspection ThrowableResultOfMethodCallIgnored
    */
-  public static void main(final String[] args)
-  {
+  public static void main( final String[] args ) {
     boolean offlineMode = false;
     boolean offlineModeSecurityManager = false;
 
     int parsePos;
-    for (parsePos = 0; parsePos < args.length; parsePos += 1)
-    {
-      final String arg = args[parsePos];
-      if ("--offline".equals(arg) || "-o".equals(arg)) // NON-NLS
+    for ( parsePos = 0; parsePos < args.length; parsePos += 1 ) {
+      final String arg = args[ parsePos ];
+      if ( "--offline".equals( arg ) || "-o".equals( arg ) ) // NON-NLS
       {
         offlineMode = true;
         continue;
       }
-      if ("--with-offline-mode-security-manager".equals(arg))// NON-NLS
+      if ( "--with-offline-mode-security-manager".equals( arg ) )// NON-NLS
       {
         offlineModeSecurityManager = true;
         continue;
@@ -243,118 +200,104 @@ public class ReportDesigner
       break;
     }
 
-    final File[] files = new File[args.length - parsePos];
-    for (int i = 0; i < args.length; i++)
-    {
-      final String arg = args[i];
-      files[i] = new File(arg);
+    final File[] files = new File[ args.length - parsePos ];
+    for ( int i = 0; i < args.length; i++ ) {
+      final String arg = args[ i ];
+      files[ i ] = new File( arg );
     }
 
-    System.setProperty("sun.awt.exception.handler", ThrowableHandler.class.getName());// NON-NLS
-    Thread.setDefaultUncaughtExceptionHandler(ThrowableHandler.getInstance());
+    System.setProperty( "sun.awt.exception.handler", ThrowableHandler.class.getName() );// NON-NLS
+    Thread.setDefaultUncaughtExceptionHandler( ThrowableHandler.getInstance() );
 
-    System.setProperty("java.util.prefs.PreferencesFactory", BinaryPreferencesFactory.class.getName());// NON-NLS
-    System.setProperty("sun.swing.enableImprovedDragGesture", "true");// NON-NLS
+    System.setProperty( "java.util.prefs.PreferencesFactory", BinaryPreferencesFactory.class.getName() );// NON-NLS
+    System.setProperty( "sun.swing.enableImprovedDragGesture", "true" );// NON-NLS
 
-    ProxySelector.setDefault(new FirewallingProxySelector(ProxySelector.getDefault()));
-    if (offlineModeSecurityManager)
-    {
-      try
-      {
-        System.setSecurityManager(new FirewallingSecurityManager());
-      }
-      catch (SecurityException se)
-      {
-        DebugLog.log("Unable to set security manager. An other security manager prevented us from gaining control.");// NON-NLS
+    ProxySelector.setDefault( new FirewallingProxySelector( ProxySelector.getDefault() ) );
+    if ( offlineModeSecurityManager ) {
+      try {
+        System.setSecurityManager( new FirewallingSecurityManager() );
+      } catch ( SecurityException se ) {
+        DebugLog.log(
+          "Unable to set security manager. An other security manager prevented us from gaining control." );// NON-NLS
       }
     }
-    if (offlineMode)
-    {
-      WorkspaceSettings.getInstance().setOfflineMode(true);
+    if ( offlineMode ) {
+      WorkspaceSettings.getInstance().setOfflineMode( true );
     }
 
-    PropertyEditorManager.registerEditor(Color.class, ColorPropertyEditor.class);
+    PropertyEditorManager.registerEditor( Color.class, ColorPropertyEditor.class );
 
-    try
-    {
-      SwingUtilities.invokeAndWait(new SetLookAndFeelTask());
-      SwingUtilities.invokeAndWait(new InstallAWTHandlerRunnable());
+    try {
+      SwingUtilities.invokeAndWait( new SetLookAndFeelTask() );
+      SwingUtilities.invokeAndWait( new InstallAWTHandlerRunnable() );
 
-      SwingUtilities.invokeAndWait(new InitializeSplashScreenTask());
+      SwingUtilities.invokeAndWait( new InitializeSplashScreenTask() );
       // avoid the big cascading boot so that we can update the splashscreen
       // with some meaning full messages
 
-      SwingUtilities.invokeAndWait(new UpdateStatusTask("Booting Base Libraries .."));// NON-NLS
+      SwingUtilities.invokeAndWait( new UpdateStatusTask( "Booting Base Libraries .." ) );// NON-NLS
       LibLoaderBoot.getInstance().start();
-      if (LibLoaderBoot.getInstance().isBootFailed())
-      {
-        throw new IllegalStateException("Booting failed", LibLoaderBoot.getInstance().getBootFailureReason());
+      if ( LibLoaderBoot.getInstance().isBootFailed() ) {
+        throw new IllegalStateException( "Booting failed", LibLoaderBoot.getInstance().getBootFailureReason() );
       }
-      SwingUtilities.invokeAndWait(new UpdateStatusTask("Booting Font Rendering System .."));// NON-NLS
+      SwingUtilities.invokeAndWait( new UpdateStatusTask( "Booting Font Rendering System .." ) );// NON-NLS
       LibFontBoot.getInstance().start();
-      if (LibFontBoot.getInstance().isBootFailed())
-      {
-        throw new IllegalStateException("Booting failed", LibFontBoot.getInstance().getBootFailureReason());
+      if ( LibFontBoot.getInstance().isBootFailed() ) {
+        throw new IllegalStateException( "Booting failed", LibFontBoot.getInstance().getBootFailureReason() );
       }
-      SwingUtilities.invokeAndWait(new UpdateStatusTask("Booting Reporting-Engine .."));// NON-NLS
+      SwingUtilities.invokeAndWait( new UpdateStatusTask( "Booting Reporting-Engine .." ) );// NON-NLS
       ClassicEngineBoot.getInstance().start();
-      if (ClassicEngineBoot.getInstance().isBootFailed())
-      {
-        throw new IllegalStateException("Booting failed", ClassicEngineBoot.getInstance().getBootFailureReason());
+      if ( ClassicEngineBoot.getInstance().isBootFailed() ) {
+        throw new IllegalStateException( "Booting failed", ClassicEngineBoot.getInstance().getBootFailureReason() );
       }
-      SwingUtilities.invokeAndWait(new UpdateStatusTask("Booting Report-Designer .."));// NON-NLS
+      SwingUtilities.invokeAndWait( new UpdateStatusTask( "Booting Report-Designer .." ) );// NON-NLS
       ReportDesignerBoot.getInstance().start();
-      if (ReportDesignerBoot.getInstance().isBootFailed())
-      {
-        throw new IllegalStateException("Booting failed", ReportDesignerBoot.getInstance().getBootFailureReason());
+      if ( ReportDesignerBoot.getInstance().isBootFailed() ) {
+        throw new IllegalStateException( "Booting failed", ReportDesignerBoot.getInstance().getBootFailureReason() );
       }
 
       // initialize some of the more expensive model components.
-      SwingUtilities.invokeAndWait(new UpdateStatusTask("Preloading classes .."));// NON-NLS
+      SwingUtilities.invokeAndWait( new UpdateStatusTask( "Preloading classes .." ) );// NON-NLS
       ExpressionRegistry.getInstance();
       ExpressionsTreeModel.getTreeModel();
       ExpressionUtil.getInstance();
       preloadFonts();
 
-      SwingUtilities.invokeAndWait(new UpdateStatusTask("Checking initial configuration .."));// NON-NLS
+      SwingUtilities.invokeAndWait( new UpdateStatusTask( "Checking initial configuration .." ) );// NON-NLS
       SettingsUtil.createInitialConfiguration();
 
-      SwingUtilities.invokeAndWait(new UpdateStatusTask("Collecting Sample Reports .."));// NON-NLS
+      SwingUtilities.invokeAndWait( new UpdateStatusTask( "Collecting Sample Reports .." ) );// NON-NLS
       SamplesTreeBuilder.getSampleTreeModel();
 
-      SwingUtilities.invokeAndWait(new UpdateStatusTask("Starting  .."));// NON-NLS
-      SwingUtilities.invokeAndWait(new CreateReportDesignerFrame(files));
-      SwingUtilities.invokeAndWait(new VersionCheckerTask());
+      SwingUtilities.invokeAndWait( new UpdateStatusTask( "Starting  .." ) );// NON-NLS
+      SwingUtilities.invokeAndWait( new CreateReportDesignerFrame( files ) );
+      SwingUtilities.invokeAndWait( new VersionCheckerTask() );
 
-      final ElementMetaData data = ElementTypeRegistry.getInstance().getElementType("page-header");// NON-NLS
+      final ElementMetaData data = ElementTypeRegistry.getInstance().getElementType( "page-header" );// NON-NLS
       final AttributeMetaData[] datas = data.getAttributeDescriptions();
       final int x = datas.length; // ensure that there is some metadata.
-    }
-    catch (Throwable t)
-    {
-      if (splashScreen != null)
-      {
+    } catch ( Throwable t ) {
+      if ( splashScreen != null ) {
         splashScreen.dispose();
       }
-      UncaughtExceptionsModel.getInstance().addException(t);
+      UncaughtExceptionsModel.getInstance().addException( t );
       final ExceptionDialog dialog = new ExceptionDialog();
-      dialog.setModal(true);
+      dialog.setModal( true );
       dialog.showDialog();
-      System.exit(1);
+      System.exit( 1 );
     }
   }
 
-  public static void preloadFonts()
-  {
-    final BufferedImage image = ImageUtils.createTransparentImage(10, 10);
+  public static void preloadFonts() {
+    final BufferedImage image = ImageUtils.createTransparentImage( 10, 10 );
     final Graphics2D d = image.createGraphics();
-    d.setPaint(Color.BLACK);
-    final String[] availableFontFamilyNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-    for (int i = 0; i < availableFontFamilyNames.length; i++)
-    {
-      final String value = availableFontFamilyNames[i];
-      d.setFont(StyleContext.getDefaultStyleContext().getFont(value, Font.PLAIN, 12));
-      d.drawString(value, 0, 10);
+    d.setPaint( Color.BLACK );
+    final String[] availableFontFamilyNames =
+      GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+    for ( int i = 0; i < availableFontFamilyNames.length; i++ ) {
+      final String value = availableFontFamilyNames[ i ];
+      d.setFont( StyleContext.getDefaultStyleContext().getFont( value, Font.PLAIN, 12 ) );
+      d.drawString( value, 0, 10 );
     }
     d.dispose();
   }

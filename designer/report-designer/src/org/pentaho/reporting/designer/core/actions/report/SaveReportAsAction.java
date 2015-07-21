@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import java.awt.Component;
-import java.io.File;
-
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 public final class SaveReportAsAction extends AbstractSaveReportAction {
 

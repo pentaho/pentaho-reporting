@@ -17,10 +17,8 @@
 
 package org.pentaho.reporting.designer.core;
 
-public class DefaultReportDesignerContext extends AbstractReportDesignerContext
-{
-  public DefaultReportDesignerContext(final ReportDesignerView view)
-  {
-    super(view);
+public class DefaultReportDesignerContext extends AbstractReportDesignerContext {
+  public DefaultReportDesignerContext( final ReportDesignerView view ) {
+    super( view );
   }
 }

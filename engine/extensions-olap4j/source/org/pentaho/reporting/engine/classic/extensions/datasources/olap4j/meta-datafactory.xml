@@ -14,20 +14,22 @@
                 bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.DenormalizedMDXDataFactoryBundle"
                 metadata-source="false"
                 impl="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Olap4jDataFactoryCore"/>
-  
+
   <data-factory name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleBandedMDXDataFactory"
                 bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleBandedMDXDataFactoryBundle"
                 metadata-source="false" freeform-query="true" expert="true" deprecated="true"
                 impl="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Olap4jDataFactoryCore"/>
 
-  <data-factory name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleLegacyBandedMDXDataFactory"
-                bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleLegacyBandedMDXDataFactoryBundle"
-                metadata-source="false" freeform-query="true" expert="true" deprecated="true"
-                impl="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Olap4jDataFactoryCore"/>
+  <data-factory
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleLegacyBandedMDXDataFactory"
+      bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleLegacyBandedMDXDataFactoryBundle"
+      metadata-source="false" freeform-query="true" expert="true" deprecated="true"
+      impl="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Olap4jDataFactoryCore"/>
 
-  <data-factory name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleDenormalizedMDXDataFactory"
-                bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleDenormalizedMDXDataFactoryBundle"
-                metadata-source="false" freeform-query="true" expert="true" deprecated="true"
-                impl="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Olap4jDataFactoryCore"/>
+  <data-factory
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleDenormalizedMDXDataFactory"
+      bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.SimpleDenormalizedMDXDataFactoryBundle"
+      metadata-source="false" freeform-query="true" expert="true" deprecated="true"
+      impl="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Olap4jDataFactoryCore"/>
 
 </meta-data>

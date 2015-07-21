@@ -25,68 +25,53 @@ import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 
-public class SubReportDataTreeModel extends AbstractReportDataTreeModel
-{
+public class SubReportDataTreeModel extends AbstractReportDataTreeModel {
   private SubReport reportElement;
   private SubReportParametersNode reportParametersNode;
 
-  public SubReportDataTreeModel(final ReportDocumentContext renderContext)
-  {
-    super(renderContext);
-    if (renderContext.getReportDefinition() instanceof SubReport == false)
-    {
-      throw new IllegalArgumentException("Instantiating a SubReportDataTreeModel on a MasterReport-Context");
+  public SubReportDataTreeModel( final ReportDocumentContext renderContext ) {
+    super( renderContext );
+    if ( renderContext.getReportDefinition() instanceof SubReport == false ) {
+      throw new IllegalArgumentException( "Instantiating a SubReportDataTreeModel on a MasterReport-Context" );
     }
 
     this.reportElement = (SubReport) renderContext.getReportDefinition();
     this.reportParametersNode = new SubReportParametersNode();
   }
 
-  protected SubReportParametersNode getReportParametersNode()
-  {
+  protected SubReportParametersNode getReportParametersNode() {
     return reportParametersNode;
   }
 
-  public Object getRoot()
-  {
+  public Object getRoot() {
     return reportElement;
   }
 
-  public boolean isLeaf(final Object node)
-  {
-    if (node == reportParametersNode)
-    {
+  public boolean isLeaf( final Object node ) {
+    if ( node == reportParametersNode ) {
       return false;
     }
-    if (node == reportParametersNode.getImportParametersNode())
-    {
+    if ( node == reportParametersNode.getImportParametersNode() ) {
       return false;
     }
-    if (node == reportParametersNode.getExportParametersNode())
-    {
+    if ( node == reportParametersNode.getExportParametersNode() ) {
       return false;
     }
-    if (node instanceof ParameterMapping)
-    {
+    if ( node instanceof ParameterMapping ) {
       return true;
     }
-    if (node instanceof ParentDataFactoryNode)
-    {
+    if ( node instanceof ParentDataFactoryNode ) {
       return false;
     }
-    if (node instanceof InheritedDataFactoryWrapper)
-    {
+    if ( node instanceof InheritedDataFactoryWrapper ) {
       return false;
     }
-    return super.isLeaf(node);
+    return super.isLeaf( node );
   }
 
-  public Object getChild(final Object parent, final int index)
-  {
-    if (parent == reportParametersNode)
-    {
-      switch (index)
-      {
+  public Object getChild( final Object parent, final int index ) {
+    if ( parent == reportParametersNode ) {
+      switch( index ) {
         case 0:
           return reportParametersNode.getImportParametersNode();
         case 1:
@@ -94,31 +79,22 @@ public class SubReportDataTreeModel extends AbstractReportDataTreeModel
         default:
           throw new IndexOutOfBoundsException();
       }
-    }
-    else if (parent == reportParametersNode.getImportParametersNode())
-    {
-      return reportElement.getInputMappings()[index];
-    }
-    else if (parent == reportParametersNode.getExportParametersNode())
-    {
-      return reportElement.getExportMappings()[index];
-    }
-    else if (parent == reportElement)
-    {
-      switch (index)
-      {
+    } else if ( parent == reportParametersNode.getImportParametersNode() ) {
+      return reportElement.getInputMappings()[ index ];
+    } else if ( parent == reportParametersNode.getExportParametersNode() ) {
+      return reportElement.getExportMappings()[ index ];
+    } else if ( parent == reportElement ) {
+      switch( index ) {
         case 0:
           return reportElement.getDataFactory();
-        case 1:
-        {
+        case 1: {
           final Section parentSection = reportElement.getParentSection();
-          if (parentSection == null)
-          {
+          if ( parentSection == null ) {
             throw new IllegalStateException();
           }
           final AbstractReportDefinition reportDefinition =
-              (AbstractReportDefinition) parentSection.getReportDefinition();
-          return new ParentDataFactoryNode(reportDefinition);
+            (AbstractReportDefinition) parentSection.getReportDefinition();
+          return new ParentDataFactoryNode( reportDefinition );
         }
         case 2:
           return getReportFunctionNode();
@@ -129,150 +105,116 @@ public class SubReportDataTreeModel extends AbstractReportDataTreeModel
         default:
           throw new IndexOutOfBoundsException();
       }
-    }
-    else if (parent instanceof ParentDataFactoryNode)
-    {
+    } else if ( parent instanceof ParentDataFactoryNode ) {
       final ParentDataFactoryNode pdfn = (ParentDataFactoryNode) parent;
       final CompoundDataFactory compoundDataFactory = pdfn.getDataFactory();
-      if (index == compoundDataFactory.size())
-      {
-        if (pdfn.isSubReport())
-        {
+      if ( index == compoundDataFactory.size() ) {
+        if ( pdfn.isSubReport() ) {
           return pdfn.getParentNode();
         }
         throw new IndexOutOfBoundsException();
       }
-      return new InheritedDataFactoryWrapper(compoundDataFactory.getReference(index));
-    }
-    else if (parent instanceof InheritedDataFactoryWrapper)
-    {
+      return new InheritedDataFactoryWrapper( compoundDataFactory.getReference( index ) );
+    } else if ( parent instanceof InheritedDataFactoryWrapper ) {
       final InheritedDataFactoryWrapper idf = (InheritedDataFactoryWrapper) parent;
       final DataFactory dataFactory = idf.getDataFactory();
       final String[] queryNames = dataFactory.getQueryNames();
-      return new ReportQueryNode(dataFactory, queryNames[index], false);
-    }
-    else
-    {
-      return super.getChild(parent, index);
+      return new ReportQueryNode( dataFactory, queryNames[ index ], false );
+    } else {
+      return super.getChild( parent, index );
     }
   }
 
-  public int getChildCount(final Object parent)
-  {
-    if (parent == reportElement)
-    {
+  public int getChildCount( final Object parent ) {
+    if ( parent == reportElement ) {
       return 5;
     }
-    if (parent == reportParametersNode)
-    {
+    if ( parent == reportParametersNode ) {
       return 2;
     }
-    if (parent == reportParametersNode.getImportParametersNode())
-    {
+    if ( parent == reportParametersNode.getImportParametersNode() ) {
       return reportElement.getInputMappings().length;
     }
-    if (parent == reportParametersNode.getExportParametersNode())
-    {
+    if ( parent == reportParametersNode.getExportParametersNode() ) {
       return reportElement.getExportMappings().length;
     }
-    if (parent instanceof ParentDataFactoryNode)
-    {
+    if ( parent instanceof ParentDataFactoryNode ) {
       final ParentDataFactoryNode pdfn = (ParentDataFactoryNode) parent;
       final CompoundDataFactory compoundDataFactory = pdfn.getDataFactory();
-      if (pdfn.isSubReport())
-      {
+      if ( pdfn.isSubReport() ) {
         return compoundDataFactory.size() + 1;
       }
       return compoundDataFactory.size();
     }
-    if (parent instanceof InheritedDataFactoryWrapper)
-    {
+    if ( parent instanceof InheritedDataFactoryWrapper ) {
       final InheritedDataFactoryWrapper idf = (InheritedDataFactoryWrapper) parent;
       return idf.getDataFactory().getQueryNames().length;
     }
-    return super.getChildCount(parent);
+    return super.getChildCount( parent );
   }
 
-  public int getIndexOfChild(final Object parent, final Object child)
-  {
-    if (parent == reportElement)
-    {
-      if (child == reportElement.getDataFactory())
-      {
+  public int getIndexOfChild( final Object parent, final Object child ) {
+    if ( parent == reportElement ) {
+      if ( child == reportElement.getDataFactory() ) {
         return 0;
       }
-      if (child instanceof ParentDataFactoryNode)
-      {
+      if ( child instanceof ParentDataFactoryNode ) {
         return 1;
       }
-      if (child == getReportFunctionNode())
-      {
+      if ( child == getReportFunctionNode() ) {
         return 2;
       }
-      if (child == getReportEnvironmentDataRow())
-      {
+      if ( child == getReportEnvironmentDataRow() ) {
         return 3;
       }
-      if (child == reportParametersNode)
-      {
+      if ( child == reportParametersNode ) {
         return 4;
       }
       return -1;
     }
-    if (parent instanceof ParentDataFactoryNode)
-    {
+    if ( parent instanceof ParentDataFactoryNode ) {
       final ParentDataFactoryNode pdfn = (ParentDataFactoryNode) parent;
       final CompoundDataFactory compoundDataFactory = pdfn.getDataFactory();
-      if (child instanceof ParentDataFactoryNode)
-      {
+      if ( child instanceof ParentDataFactoryNode ) {
         return compoundDataFactory.size();
       }
-      if (child instanceof InheritedDataFactoryWrapper == false)
-      {
+      if ( child instanceof InheritedDataFactoryWrapper == false ) {
         return -1;
       }
 
       final InheritedDataFactoryWrapper wrapper = (InheritedDataFactoryWrapper) child;
       final CompoundDataFactory dataFactoryElement = getDataFactoryElement();
-      for (int i = 0; i < dataFactoryElement.size(); i++)
-      {
-        final DataFactory dataFactory = dataFactoryElement.getReference(i);
-        if (dataFactory == wrapper.getDataFactory())
-        {
+      for ( int i = 0; i < dataFactoryElement.size(); i++ ) {
+        final DataFactory dataFactory = dataFactoryElement.getReference( i );
+        if ( dataFactory == wrapper.getDataFactory() ) {
           return i;
         }
       }
       return -1;
     }
 
-    if (parent instanceof InheritedDataFactoryWrapper)
-    {
+    if ( parent instanceof InheritedDataFactoryWrapper ) {
       final InheritedDataFactoryWrapper idf = (InheritedDataFactoryWrapper) parent;
-      if (child instanceof ReportQueryNode == false)
-      {
+      if ( child instanceof ReportQueryNode == false ) {
         return -1;
       }
       final ReportQueryNode rfn = (ReportQueryNode) child;
-      if (rfn.getDataFactory() != idf.getDataFactory())
-      {
+      if ( rfn.getDataFactory() != idf.getDataFactory() ) {
         return -1;
       }
       final String[] queryNames = rfn.getDataFactory().getQueryNames();
-      return indexOf(queryNames, rfn.getQueryName());
+      return indexOf( queryNames, rfn.getQueryName() );
     }
-    if (parent == reportParametersNode)
-    {
-      if (child == reportParametersNode.getImportParametersNode())
-      {
+    if ( parent == reportParametersNode ) {
+      if ( child == reportParametersNode.getImportParametersNode() ) {
         return 0;
       }
-      if (child == reportParametersNode.getExportParametersNode())
-      {
+      if ( child == reportParametersNode.getExportParametersNode() ) {
         return 1;
       }
       return -1;
     }
-    return super.getIndexOfChild(parent, child);
+    return super.getIndexOfChild( parent, child );
   }
 
 }

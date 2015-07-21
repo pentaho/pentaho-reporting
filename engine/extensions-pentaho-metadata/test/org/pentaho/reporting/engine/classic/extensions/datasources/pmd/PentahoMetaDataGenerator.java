@@ -17,14 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
 
-public class PentahoMetaDataGenerator
-{
-  public static void main(final String[] args) throws Exception
-  {
+public class PentahoMetaDataGenerator {
+  public static void main( final String[] args ) throws Exception {
     final PentahoMetaDataTest test = new PentahoMetaDataTest();
     test.setUp();
-    test.runGenerate(PentahoMetaDataTest.QUERIES_AND_RESULTS);
-    test.runGenerateDesignTime(PentahoMetaDataTest.QUERIES_AND_RESULTS);
+    test.runGenerate( PentahoMetaDataTest.QUERIES_AND_RESULTS );
+    test.runGenerateDesignTime( PentahoMetaDataTest.QUERIES_AND_RESULTS );
     test.runGenerateMultiAgg();
 
   }

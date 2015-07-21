@@ -17,24 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
-import javax.swing.table.TableModel;
-
 import mondrian.olap.Result;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
+import javax.swing.table.TableModel;
+
 /**
- * This data-factory operates in Legacy-Mode providing a preprocessed view on the mondrian result.
- * It behaves exactly as known from the Pentaho-Platform and the Pentaho-Report-Designer. This mode
- * of operation breaks the structure of the resulting table as soon as new rows are returned by the
- * server.
+ * This data-factory operates in Legacy-Mode providing a preprocessed view on the mondrian result. It behaves exactly as
+ * known from the Pentaho-Platform and the Pentaho-Report-Designer. This mode of operation breaks the structure of the
+ * resulting table as soon as new rows are returned by the server.
  *
  * @author Thomas Morgner
  */
-public class SimpleLegacyBandedMDXDataFactory extends AbstractMDXDataFactory
-{
-  public SimpleLegacyBandedMDXDataFactory()
-  {
+public class SimpleLegacyBandedMDXDataFactory extends AbstractMDXDataFactory {
+  public SimpleLegacyBandedMDXDataFactory() {
   }
 
   /**
@@ -47,11 +44,11 @@ public class SimpleLegacyBandedMDXDataFactory extends AbstractMDXDataFactory
    * @param queryName  the query name
    * @param parameters the parameters for the query
    * @return the result of the query as table model.
-   * @throws org.pentaho.reporting.engine.classic.core.ReportDataFactoryException if an error occured while performing the query.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportDataFactoryException if an error occured while performing
+   *                                                                              the query.
    */
-  public TableModel queryData(final String queryName, final DataRow parameters) throws ReportDataFactoryException
-  {
-    final Result cellSet = performQuery(queryName, parameters);
-    return new LegacyBandedMDXTableModel(cellSet, extractQueryLimit(parameters));
+  public TableModel queryData( final String queryName, final DataRow parameters ) throws ReportDataFactoryException {
+    final Result cellSet = performQuery( queryName, parameters );
+    return new LegacyBandedMDXTableModel( cellSet, extractQueryLimit( parameters ) );
   }
 }

@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.c
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Locator;
 
-public interface ObjectConverter
-{
-  public Object convertFromString (String s, Locator locator) throws ParseException;
+public interface ObjectConverter {
+  public Object convertFromString( String s, Locator locator ) throws ParseException;
 }

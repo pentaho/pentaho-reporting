@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.io.File;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -39,189 +37,179 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-@SuppressWarnings("HardCodedStringLiteral")
-public class Prd3857Test extends TestCase
-{
-  public Prd3857Test()
-  {
+import java.io.File;
+
+@SuppressWarnings( "HardCodedStringLiteral" )
+public class Prd3857Test extends TestCase {
+  public Prd3857Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     FixAllBrokenLogging.fixBrokenLogging();
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testGoldRun2 () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("2sql-subreport.prpt");
+  public void testGoldRun2() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "2sql-subreport.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
 
-    DebugReportRunner.createXmlFlow(report);
+    DebugReportRunner.createXmlFlow( report );
   }
 
-  public void testGoldRun3 () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("trafficlighting.xml");
+  public void testGoldRun3() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "trafficlighting.xml" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
 
-    DebugReportRunner.createXmlFlow(report);
+    DebugReportRunner.createXmlFlow( report );
   }
 
-  public void testGoldRun4 () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("Income Statement.xml");
+  public void testGoldRun4() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Income Statement.xml" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setCompatibilityLevel(null);
+    report.setCompatibilityLevel( null );
 
-    final Band element = (Band) report.getReportHeader().getElement(2);
-    element.setName("Tester");
-    element.getElement(0).setName("m1");
-    report.getReportHeader().getElement(3).setName("image");
+    final Band element = (Band) report.getReportHeader().getElement( 2 );
+    element.setName( "Tester" );
+    element.getElement( 0 ).setName( "m1" );
+    report.getReportHeader().getElement( 3 ).setName( "image" );
 
-    final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);
+    final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
     //ModelPrinter.INSTANCE.print(pageBox);
 
-    final RenderNode m1 = MatchFactory.findElementByName(pageBox, "m1");
-    assertEquals(StrictGeomUtility.toInternalValue(234), m1.getX());
-    final RenderNode img = MatchFactory.findElementByName(pageBox, "image");
-    assertEquals(StrictGeomUtility.toInternalValue(0), img.getX());
-    assertEquals(StrictGeomUtility.toInternalValue(234), img.getWidth());
+    final RenderNode m1 = MatchFactory.findElementByName( pageBox, "m1" );
+    assertEquals( StrictGeomUtility.toInternalValue( 234 ), m1.getX() );
+    final RenderNode img = MatchFactory.findElementByName( pageBox, "image" );
+    assertEquals( StrictGeomUtility.toInternalValue( 0 ), img.getX() );
+    assertEquals( StrictGeomUtility.toInternalValue( 234 ), img.getWidth() );
   }
 
-  public void testGoldRun5 () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("Income Statement.xml");
+  public void testGoldRun5() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Income Statement.xml" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setCompatibilityLevel(null);
+    report.setCompatibilityLevel( null );
 
-    final Band element = (Band) report.getReportHeader().getElement(2);
-    element.setName("Tester");
-    element.getElement(0).setName("m1");
+    final Band element = (Band) report.getReportHeader().getElement( 2 );
+    element.setName( "Tester" );
+    element.getElement( 0 ).setName( "m1" );
 
-    DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
+    DebugReportRunner.layoutSingleBand( report, report.getReportHeader() );
 
-    final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
-    final RenderNode m1 = MatchFactory.findElementByName(pageBox, "m1");
-    assertEquals(StrictGeomUtility.toInternalValue(234), m1.getX());
+    final LogicalPageBox pageBox = DebugReportRunner.layoutPage( report, 0 );
+    final RenderNode m1 = MatchFactory.findElementByName( pageBox, "m1" );
+    assertEquals( StrictGeomUtility.toInternalValue( 234 ), m1.getX() );
   }
 
-  public void testGoldRun5a () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("Income Statement.xml");
+  public void testGoldRun5a() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Income Statement.xml" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setCompatibilityLevel(null);
+    report.setCompatibilityLevel( null );
 
-    final Band element = (Band) report.getReportHeader().getElement(2);
-    element.setName("Tester");
-    element.getElement(0).setName("m1");
+    final Band element = (Band) report.getReportHeader().getElement( 2 );
+    element.setName( "Tester" );
+    element.getElement( 0 ).setName( "m1" );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader() );
     //ModelPrinter.INSTANCE.print(logicalPageBox);
-    final RenderNode m1 = MatchFactory.findElementByName(logicalPageBox, "m1");
-    assertEquals(StrictGeomUtility.toInternalValue(234), m1.getX());
+    final RenderNode m1 = MatchFactory.findElementByName( logicalPageBox, "m1" );
+    assertEquals( StrictGeomUtility.toInternalValue( 234 ), m1.getX() );
   }
 
-  public void testGoldRun6 () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("Prd-3514.prpt");
+  public void testGoldRun6() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Prd-3514.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-//    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    //    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    ModelPrinter.INSTANCE.print( logicalPageBox );
   }
 
 
-  public void testGoldRun7 () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("pre111.xml");
+  public void testGoldRun7() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "pre111.xml" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    report.setCompatibilityLevel(null);
+    report.setCompatibilityLevel( null );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 2);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 2 );
     //ModelPrinter.INSTANCE.print(logicalPageBox);
     final RenderBox autoChild = (RenderBox) logicalPageBox.getHeaderArea().getFirstChild();
     final RenderBox canvasChild = (RenderBox) autoChild.getFirstChild();
     final RenderNode line1 = canvasChild.getFirstChild();
     final RenderNode line2 = line1.getNext();
 
-    assertEquals(0, line1.getX());
-    assertEquals(0, line1.getY());
-    assertEquals(StrictGeomUtility.toInternalValue(504), line1.getWidth());
-    assertEquals(0, line1.getHeight());
+    assertEquals( 0, line1.getX() );
+    assertEquals( 0, line1.getY() );
+    assertEquals( StrictGeomUtility.toInternalValue( 504 ), line1.getWidth() );
+    assertEquals( 0, line1.getHeight() );
 
-    assertEquals(0, line2.getX());
-    assertEquals(StrictGeomUtility.toInternalValue(3), line2.getY());
-    assertEquals(StrictGeomUtility.toInternalValue(504), line2.getWidth());
-    assertEquals(0, line2.getHeight());
+    assertEquals( 0, line2.getX() );
+    assertEquals( StrictGeomUtility.toInternalValue( 3 ), line2.getY() );
+    assertEquals( StrictGeomUtility.toInternalValue( 504 ), line2.getWidth() );
+    assertEquals( 0, line2.getHeight() );
 
-    DebugReportRunner.createXmlFlow(report);
+    DebugReportRunner.createXmlFlow( report );
 
   }
 
 
-  public void testGoldRun8 () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("OrderDetailReport.xml");
+  public void testGoldRun8() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "OrderDetailReport.xml" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL, null);
-    report.getReportHeader().getElement(3).setName("image");
+    report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL, null );
+    report.getReportHeader().getElement( 3 ).setName( "image" );
 
-    final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
+    final LogicalPageBox pageBox = DebugReportRunner.layoutPage( report, 0 );
     //ModelPrinter.INSTANCE.print(pageBox);
-    final RenderNode img = MatchFactory.findElementByName(pageBox, "image");
-    assertEquals(StrictGeomUtility.toInternalValue(0), img.getX());
-    assertEquals(StrictGeomUtility.toInternalValue(270), img.getWidth());
+    final RenderNode img = MatchFactory.findElementByName( pageBox, "image" );
+    assertEquals( StrictGeomUtility.toInternalValue( 0 ), img.getX() );
+    assertEquals( StrictGeomUtility.toInternalValue( 270 ), img.getWidth() );
   }
 
-  public strictfp void testGoldRun9 () throws ResourceException, ReportProcessingException, ContentProcessingException
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("prd-2884-2.prpt");
+  public strictfp void testGoldRun9() throws ResourceException, ReportProcessingException, ContentProcessingException {
+    final File file = GoldTestBase.locateGoldenSampleReport( "prd-2884-2.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
 
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand
-        (report, report.getRelationalGroup(0).getHeader(), false, false);
-   // ModelPrinter.INSTANCE.print(pageBox);
+      ( report, report.getRelationalGroup( 0 ).getHeader(), false, false );
+    // ModelPrinter.INSTANCE.print(pageBox);
 
-    final RenderNode[] activeDaysFields = MatchFactory.findElementsByName(pageBox, "ActiveDays");
-    final RenderBox activeDaysField = (RenderBox) activeDaysFields[0];
+    final RenderNode[] activeDaysFields = MatchFactory.findElementsByName( pageBox, "ActiveDays" );
+    final RenderBox activeDaysField = (RenderBox) activeDaysFields[ 0 ];
     final long borderTop = activeDaysField.getStaticBoxLayoutProperties().getBorderTop();
-    assertEquals(800, borderTop);
+    assertEquals( 800, borderTop );
 
 
   }

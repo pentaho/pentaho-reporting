@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.designer.core.inspections;
 
-import java.awt.BorderLayout;
-
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.SidePanel;
+
+import java.awt.*;
 
 /**
  * This panel contains all inspections for the current report. Once fully implemented, there are at least two tables;
@@ -28,39 +28,31 @@ import org.pentaho.reporting.designer.core.util.SidePanel;
  *
  * @author Thomas Morgner
  */
-public class InspectionSidePanePanel extends SidePanel
-{
+public class InspectionSidePanePanel extends SidePanel {
   private InspectionsMessagePanel autoInspectionPanel;
 
-  public InspectionSidePanePanel()
-  {
+  public InspectionSidePanePanel() {
     autoInspectionPanel = new InspectionsMessagePanel();
-    setLayout(new BorderLayout());
-    add(autoInspectionPanel, BorderLayout.CENTER);
+    setLayout( new BorderLayout() );
+    add( autoInspectionPanel, BorderLayout.CENTER );
   }
 
-  public void setEnabled(final boolean enabled)
-  {
-    super.setEnabled(enabled);
-    autoInspectionPanel.setEnabled(enabled);
+  public void setEnabled( final boolean enabled ) {
+    super.setEnabled( enabled );
+    autoInspectionPanel.setEnabled( enabled );
   }
 
-  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
-  {
-    if (oldContext != null)
-    {
-      oldContext.removeInspectionListener(autoInspectionPanel.getResultHandler());
+  protected void updateActiveContext( final ReportDocumentContext oldContext, final ReportDocumentContext newContext ) {
+    if ( oldContext != null ) {
+      oldContext.removeInspectionListener( autoInspectionPanel.getResultHandler() );
     }
-    if (newContext != null)
-    {
-      newContext.addInspectionListener(autoInspectionPanel.getResultHandler());
-      setEnabled(true);
-    }
-    else
-    {
-      setEnabled(false);
+    if ( newContext != null ) {
+      newContext.addInspectionListener( autoInspectionPanel.getResultHandler() );
+      setEnabled( true );
+    } else {
+      setEnabled( false );
     }
 
-    autoInspectionPanel.setReportRenderContext(newContext);
+    autoInspectionPanel.setReportRenderContext( newContext );
   }
 }

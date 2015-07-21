@@ -25,21 +25,17 @@ import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 
-public class GoldExecuteTest extends GoldTestBase
-{
-  public GoldExecuteTest()
-  {
+public class GoldExecuteTest extends GoldTestBase {
+  public GoldExecuteTest() {
   }
 
   @Test
-  public void testExecuteReports() throws Exception
-  {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
-    {
+  public void testExecuteReports() throws Exception {
+    if ( "false".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" ) ) ) {
       return;
     }
-    Assert.assertTrue(EnvironmentFactory.getEnvironment() instanceof HeadlessEnvironment);
+    Assert.assertTrue( EnvironmentFactory.getEnvironment() instanceof HeadlessEnvironment );
     runAllGoldReports();
   }
 /*

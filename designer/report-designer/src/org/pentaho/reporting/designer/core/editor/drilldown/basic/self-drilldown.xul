@@ -23,7 +23,7 @@
     xmlns:pen="http://www.pentaho.org/2008/xul"
     resizable="true">
   <vbox flex="1" id="root">
-    
+
     <hbox id="tooltip-and-target-panel">
       <vbox flex="1">
         <label value="Target:"/>
@@ -43,10 +43,10 @@
     <pen:parameter-table id="parameter-table" flex="1" pen:title="Parameter:"
                          pen:showRefreshButton="false" pen:allowCustomParameter="true"
                          pen:singleTabMode="true" pen:showHideParameterUiCheckbox="false"/>
-<!--
-    <label value="Preview (debug-setting, will be removed in the final run)"/>
-    <textbox id="preview" disabled="true" />
-  -->
+    <!--
+        <label value="Preview (debug-setting, will be removed in the final run)"/>
+        <textbox id="preview" disabled="true" />
+      -->
   </vbox>
 
 </dialog>

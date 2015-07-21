@@ -23,16 +23,16 @@ package org.pentaho.plugin.jfreereport.reportcharts;
 public interface ICollectorFunction {
 
   /**
-   * @deprecated This methos is never used.
    * @return
+   * @deprecated This methos is never used.
    */
   public Object getValue();
 
   public Object getDatasourceValue();
 
   /**
-   * @deprecated This methos is never used.
    * @return
+   * @deprecated This methos is never used.
    */
   public String getGroup();
 

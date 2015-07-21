@@ -17,35 +17,26 @@
 
 package org.pentaho.reporting.designer.core.widgets;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.report.CloseReportAction;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 
-public class TabRenderer extends JComponent implements ActionListener
-{
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class TabRenderer extends JComponent implements ActionListener {
   private String rawTabName;
   private JLabel label;
   private JButton closeButton;
   private ReportDesignerContext context;
   private JTabbedPane tabbedPane;
 
-  public TabRenderer(final Icon icon, final String tabName,
-                     final ReportDesignerContext context, final JTabbedPane tabbedPane)
-  {
-    if (tabName == null)
-    {
+  public TabRenderer( final Icon icon, final String tabName,
+                      final ReportDesignerContext context, final JTabbedPane tabbedPane ) {
+    if ( tabName == null ) {
       throw new NullPointerException();
     }
     this.tabbedPane = tabbedPane;
@@ -53,41 +44,36 @@ public class TabRenderer extends JComponent implements ActionListener
     this.context = context;
 
     closeButton = new BorderlessButton();
-    closeButton.setBorder(new EmptyBorder(0, 0, 0, 0));
-    closeButton.setPressedIcon(new CloseTabIcon(false, true));
-    closeButton.setIcon(new CloseTabIcon(false, false));
-    closeButton.setRolloverIcon(new CloseTabIcon(true, false));
-    closeButton.setRolloverEnabled(true);
-    closeButton.setContentAreaFilled(false);
-    closeButton.setBorderPainted(false);
-    closeButton.addActionListener(this);
+    closeButton.setBorder( new EmptyBorder( 0, 0, 0, 0 ) );
+    closeButton.setPressedIcon( new CloseTabIcon( false, true ) );
+    closeButton.setIcon( new CloseTabIcon( false, false ) );
+    closeButton.setRolloverIcon( new CloseTabIcon( true, false ) );
+    closeButton.setRolloverEnabled( true );
+    closeButton.setContentAreaFilled( false );
+    closeButton.setBorderPainted( false );
+    closeButton.addActionListener( this );
 
-    label = new JLabel(tabName, icon, SwingConstants.LEFT);
+    label = new JLabel( tabName, icon, SwingConstants.LEFT );
 
-    setLayout(new BorderLayout());
-    add(closeButton, BorderLayout.EAST);
-    add(label, BorderLayout.CENTER);
+    setLayout( new BorderLayout() );
+    add( closeButton, BorderLayout.EAST );
+    add( label, BorderLayout.CENTER );
   }
 
-  private JTabbedPane getReportEditorPane()
-  {
+  private JTabbedPane getReportEditorPane() {
     return tabbedPane;
   }
 
-  private ReportDesignerContext getContext()
-  {
+  private ReportDesignerContext getContext() {
     return context;
   }
 
-  private int findTab()
-  {
+  private int findTab() {
     final JTabbedPane tabbedPane = getReportEditorPane();
     final int count = tabbedPane.getTabCount();
-    for (int i = 0; i < count; i++)
-    {
-      final Component at = tabbedPane.getTabComponentAt(i);
-      if (at == this)
-      {
+    for ( int i = 0; i < count; i++ ) {
+      final Component at = tabbedPane.getTabComponentAt( i );
+      if ( at == this ) {
         return i;
       }
     }
@@ -97,70 +83,52 @@ public class TabRenderer extends JComponent implements ActionListener
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final int tab = findTab();
-    if (tab == -1)
-    {
+    if ( tab == -1 ) {
       return;
     }
 
-    final CloseReportAction cra = new CloseReportAction(tab);
-    cra.setReportDesignerContext(getContext());
-    cra.actionPerformed(e);
+    final CloseReportAction cra = new CloseReportAction( tab );
+    cra.setReportDesignerContext( getContext() );
+    cra.actionPerformed( e );
   }
 
-  public String getTitle()
-  {
+  public String getTitle() {
     return label.getText();
   }
 
-  public void setTitle(final String title)
-  {
-    label.setText(title);
+  public void setTitle( final String title ) {
+    label.setText( title );
   }
 
-  public String getRawTabName()
-  {
+  public String getRawTabName() {
     return rawTabName;
   }
 
-  public void setRawTabName(final String rawTabName)
-  {
+  public void setRawTabName( final String rawTabName ) {
     this.rawTabName = rawTabName;
   }
 
-  public String recomputeTabName()
-  {
+  public String recomputeTabName() {
     final JTabbedPane editorPane = getReportEditorPane();
     final int count = editorPane.getTabCount();
     int found = 0;
-    for (int i = 0; i < count; i++)
-    {
-      final Component at = editorPane.getTabComponentAt(i);
-      if (at == this)
-      {
-        if (found == 0)
-        {
+    for ( int i = 0; i < count; i++ ) {
+      final Component at = editorPane.getTabComponentAt( i );
+      if ( at == this ) {
+        if ( found == 0 ) {
           return rawTabName;
-        }
-        else
-        {
+        } else {
           return rawTabName + "<" + found + ">";
         }
-      }
-      else if (at instanceof TabRenderer)
-      {
+      } else if ( at instanceof TabRenderer ) {
         final TabRenderer otherRenderer = (TabRenderer) at;
-        if (rawTabName.equals(otherRenderer.rawTabName))
-        {
+        if ( rawTabName.equals( otherRenderer.rawTabName ) ) {
           found += 1;
         }
-      }
-      else
-      {
-        if (rawTabName.equals(editorPane.getTitleAt(i)))
-        {
+      } else {
+        if ( rawTabName.equals( editorPane.getTitleAt( i ) ) ) {
           found += 1;
         }
       }

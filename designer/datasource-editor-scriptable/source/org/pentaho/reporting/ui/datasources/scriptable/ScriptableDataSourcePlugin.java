@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.scriptable;
 
-import java.awt.Window;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChangeRecorder;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
@@ -29,45 +25,38 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.ScriptableDataFactory;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * @author David Kincade
  */
-public class ScriptableDataSourcePlugin implements DataSourcePlugin
-{
-  public ScriptableDataSourcePlugin()
-  {
+public class ScriptableDataSourcePlugin implements DataSourcePlugin {
+  public ScriptableDataSourcePlugin() {
   }
 
-  public boolean canHandle(final DataFactory dataFactory)
-  {
+  public boolean canHandle( final DataFactory dataFactory ) {
     return dataFactory instanceof ScriptableDataFactory;
   }
 
-  public DataFactory performEdit(final DesignTimeContext context,
-                                 final DataFactory input,
-                                 final String queryName,
-                                 final DataFactoryChangeRecorder changeRecorder)
-  {
+  public DataFactory performEdit( final DesignTimeContext context,
+                                  final DataFactory input,
+                                  final String queryName,
+                                  final DataFactoryChangeRecorder changeRecorder ) {
     final ScriptableDataSourceEditor editor;
     final Window window = context.getParentWindow();
-    if (window instanceof JDialog)
-    {
-      editor = new ScriptableDataSourceEditor(context, (JDialog) window);
+    if ( window instanceof JDialog ) {
+      editor = new ScriptableDataSourceEditor( context, (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      editor = new ScriptableDataSourceEditor( context, (JFrame) window );
+    } else {
+      editor = new ScriptableDataSourceEditor( context );
     }
-    else if (window instanceof JFrame)
-    {
-      editor = new ScriptableDataSourceEditor(context, (JFrame) window);
-    }
-    else
-    {
-      editor = new ScriptableDataSourceEditor(context);
-    }
-    return editor.performConfiguration((ScriptableDataFactory) input, queryName);
+    return editor.performConfiguration( (ScriptableDataFactory) input, queryName );
   }
 
-  public DataFactoryMetaData getMetaData()
-  {
-    return DataFactoryRegistry.getInstance().getMetaData(ScriptableDataFactory.class.getName());
+  public DataFactoryMetaData getMetaData() {
+    return DataFactoryRegistry.getInstance().getMetaData( ScriptableDataFactory.class.getName() );
   }
 
 }

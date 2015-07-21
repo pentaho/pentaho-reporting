@@ -83,5 +83,5 @@
                             source-name="MDX::CAPTION"
                             concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.LocalizedStringConceptMapper"/>
   </indirect-mapping>
-  
+
 </data-schema>

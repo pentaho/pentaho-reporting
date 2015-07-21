@@ -41,80 +41,68 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
  *
  * @author Thomas Morgner
  */
-public class FontSizeInspection extends AbstractStructureInspection
-{
+public class FontSizeInspection extends AbstractStructureInspection {
   private OutputProcessorMetaData outputProcessorMetaData;
 
-  public FontSizeInspection()
-  {
+  public FontSizeInspection() {
   }
 
-  public void inspect(final ReportDesignerContext designerContext,
-                      final ReportDocumentContext reportRenderContext,
-                      final InspectionResultListener resultHandler) throws ReportDataFactoryException
-  {
+  public void inspect( final ReportDesignerContext designerContext,
+                       final ReportDocumentContext reportRenderContext,
+                       final InspectionResultListener resultHandler ) throws ReportDataFactoryException {
     outputProcessorMetaData = new GenericOutputProcessorMetaData();
-    super.inspect(designerContext, reportRenderContext, resultHandler);
+    super.inspect( designerContext, reportRenderContext, resultHandler );
   }
 
-  public boolean isInlineInspection()
-  {
+  public boolean isInlineInspection() {
     return true;
   }
 
-  protected void inspectElement(final ReportDesignerContext designerContext,
-                                final ReportDocumentContext reportRenderContext,
-                                final InspectionResultListener resultHandler,
-                                final String[] columnNames,
-                                final ReportElement element)
-  {
-    final boolean dynHeight = element.getStyle().getBooleanStyleProperty(ElementStyleKeys.DYNAMIC_HEIGHT);
-    if (dynHeight)
-    {
+  protected void inspectElement( final ReportDesignerContext designerContext,
+                                 final ReportDocumentContext reportRenderContext,
+                                 final InspectionResultListener resultHandler,
+                                 final String[] columnNames,
+                                 final ReportElement element ) {
+    final boolean dynHeight = element.getStyle().getBooleanStyleProperty( ElementStyleKeys.DYNAMIC_HEIGHT );
+    if ( dynHeight ) {
       return;
     }
-    if (element instanceof Section)
-    {
+    if ( element instanceof Section ) {
       return;
     }
     final ElementMetaData metaData = element.getMetaData();
-    if (metaData.isContainerElement())
-    {
+    if ( metaData.isContainerElement() ) {
       return;
     }
 
-    if (isTextElement(metaData) == false)
-    {
+    if ( isTextElement( metaData ) == false ) {
       return;
     }
 
-    final int minHeight = element.getStyle().getIntStyleProperty(ElementStyleKeys.MIN_HEIGHT, 0);
-    final double lineHeight = element.getStyle().getIntStyleProperty(TextStyleKeys.LINEHEIGHT, 0);
-    final int declaredFontSize = element.getStyle().getIntStyleProperty(TextStyleKeys.FONTSIZE, 0);
+    final int minHeight = element.getStyle().getIntStyleProperty( ElementStyleKeys.MIN_HEIGHT, 0 );
+    final double lineHeight = element.getStyle().getIntStyleProperty( TextStyleKeys.LINEHEIGHT, 0 );
+    final int declaredFontSize = element.getStyle().getIntStyleProperty( TextStyleKeys.FONTSIZE, 0 );
 
-    final FontMetrics fontMetrics = outputProcessorMetaData.getFontMetrics(element.getStyle());
-    final double fontHeight = StrictGeomUtility.toExternalValue(RenderableText.convert(fontMetrics.getMaxHeight()));
+    final FontMetrics fontMetrics = outputProcessorMetaData.getFontMetrics( element.getStyle() );
+    final double fontHeight = StrictGeomUtility.toExternalValue( RenderableText.convert( fontMetrics.getMaxHeight() ) );
 
     final long effectiveLineHeight =
-        RenderLength.resolveLength(StrictGeomUtility.toInternalValue(declaredFontSize), lineHeight);
-    if (fontHeight <= Math.max(minHeight, StrictGeomUtility.toExternalValue(effectiveLineHeight)))
-    {
+      RenderLength.resolveLength( StrictGeomUtility.toInternalValue( declaredFontSize ), lineHeight );
+    if ( fontHeight <= Math.max( minHeight, StrictGeomUtility.toExternalValue( effectiveLineHeight ) ) ) {
       return;
     }
 
-    resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
-        Messages.getString("FontSizeInspection.ElementHeightSmallerThanLineSize", element.getName()),
-        new StyleLocationInfo(element, ElementStyleKeys.MIN_HEIGHT, false)));
+    resultHandler.notifyInspectionResult( new InspectionResult( this, InspectionResult.Severity.WARNING,
+      Messages.getString( "FontSizeInspection.ElementHeightSmallerThanLineSize", element.getName() ),
+      new StyleLocationInfo( element, ElementStyleKeys.MIN_HEIGHT, false ) ) );
 
   }
 
-  private boolean isTextElement(final ElementMetaData metaData)
-  {
+  private boolean isTextElement( final ElementMetaData metaData ) {
     final Class aClass = metaData.getContentType();
-    if (String.class == aClass)
-    {
+    if ( String.class == aClass ) {
       return true;
     }
-    return "legacy-element".equals(metaData.getName());//NON-NLS
+    return "legacy-element".equals( metaData.getName() );//NON-NLS
   }
 }

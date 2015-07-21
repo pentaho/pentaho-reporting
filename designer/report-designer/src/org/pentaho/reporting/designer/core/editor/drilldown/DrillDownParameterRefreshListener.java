@@ -24,7 +24,6 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner.
  */
-public interface DrillDownParameterRefreshListener extends EventListener
-{
-  public void requestParameterRefresh(final DrillDownParameterRefreshEvent model);
+public interface DrillDownParameterRefreshListener extends EventListener {
+  public void requestParameterRefresh( final DrillDownParameterRefreshEvent model );
 }

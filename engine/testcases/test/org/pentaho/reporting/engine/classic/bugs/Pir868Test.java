@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -33,35 +31,33 @@ import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFacto
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Pir868Test extends TestCase
-{
-  public Pir868Test()
-  {
+import java.net.URL;
+
+public class Pir868Test extends TestCase {
+  public Pir868Test() {
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   public void testSample()
-      throws ResourceException, ReportProcessingException, ContentProcessingException
-  {
-    final URL reportURL = getClass().getResource("Pir-868.prpt");
+    throws ResourceException, ReportProcessingException, ContentProcessingException {
+    final URL reportURL = getClass().getResource( "Pir-868.prpt" );
     final ResourceManager mgr = new ResourceManager();
-    final MasterReport report = (MasterReport) mgr.createDirectly(reportURL, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( reportURL, MasterReport.class ).getResource();
 
-    final LogicalPageBox pageDH = DebugReportRunner.layoutSingleBand(report, report.getDetailsHeader(), false, false);
-    final LogicalPageBox pageIB = DebugReportRunner.layoutSingleBand(report, report.getItemBand(), false, false);
+    final LogicalPageBox pageDH = DebugReportRunner.layoutSingleBand( report, report.getDetailsHeader(), false, false );
+    final LogicalPageBox pageIB = DebugReportRunner.layoutSingleBand( report, report.getItemBand(), false, false );
 
-    final RenderNode[] dhRow = MatchFactory.findElementsByNodeType(pageDH, LayoutNodeTypes.TYPE_BOX_ROWBOX);
-    final RenderNode[] ibRow = MatchFactory.findElementsByNodeType(pageIB, LayoutNodeTypes.TYPE_BOX_ROWBOX);
-    ModelPrinter.INSTANCE.print(pageDH);
-    ModelPrinter.INSTANCE.print(pageIB);
+    final RenderNode[] dhRow = MatchFactory.findElementsByNodeType( pageDH, LayoutNodeTypes.TYPE_BOX_ROWBOX );
+    final RenderNode[] ibRow = MatchFactory.findElementsByNodeType( pageIB, LayoutNodeTypes.TYPE_BOX_ROWBOX );
+    ModelPrinter.INSTANCE.print( pageDH );
+    ModelPrinter.INSTANCE.print( pageIB );
 
-    assertEquals(1, dhRow.length);
-    assertEquals(1, ibRow.length);
-    assertEquals(dhRow[0].getWidth(), ibRow[0].getWidth());
-    assertEquals(dhRow[0].getX(), ibRow[0].getX());
+    assertEquals( 1, dhRow.length );
+    assertEquals( 1, ibRow.length );
+    assertEquals( dhRow[ 0 ].getWidth(), ibRow[ 0 ].getWidth() );
+    assertEquals( dhRow[ 0 ].getX(), ibRow[ 0 ].getX() );
   }
 }

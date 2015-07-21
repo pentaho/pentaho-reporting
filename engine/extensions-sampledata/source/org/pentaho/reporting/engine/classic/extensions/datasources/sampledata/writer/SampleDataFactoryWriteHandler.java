@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.sampledata.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.DataFactoryWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterContext;
@@ -29,15 +27,15 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 /**
  * Creation-Date: Jan 19, 2007, 4:44:05 PM
  *
  * @author Thomas Morgner
  */
-public class SampleDataFactoryWriteHandler implements DataFactoryWriteHandler
-{
-  public SampleDataFactoryWriteHandler()
-  {
+public class SampleDataFactoryWriteHandler implements DataFactoryWriteHandler {
+  public SampleDataFactoryWriteHandler() {
   }
 
   /**
@@ -49,25 +47,23 @@ public class SampleDataFactoryWriteHandler implements DataFactoryWriteHandler
    * @throws IOException           if any error occured
    * @throws ReportWriterException if the data factory cannot be written.
    */
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory dataFactory)
-      throws IOException, ReportWriterException
-  {
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory dataFactory )
+    throws IOException, ReportWriterException {
     final SampleDataFactory pmdDataFactory = (SampleDataFactory) dataFactory;
 
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", SampleDataModule.NAMESPACE);
+    rootAttrs.addNamespaceDeclaration( "data", SampleDataModule.NAMESPACE );
 
-    xmlWriter.writeTag(SampleDataModule.NAMESPACE, "sample-datasource", rootAttrs, XmlWriter.OPEN);
+    xmlWriter.writeTag( SampleDataModule.NAMESPACE, "sample-datasource", rootAttrs, XmlWriter.OPEN );
 
     final String[] queryNames = pmdDataFactory.getQueryNames();
-    for (int i = 0; i < queryNames.length; i++)
-    {
-      final String queryName = queryNames[i];
-      final String query = pmdDataFactory.getQuery(queryName);
-      xmlWriter.writeTag(SampleDataModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN);
-      xmlWriter.writeTextNormalized(query, false);
+    for ( int i = 0; i < queryNames.length; i++ ) {
+      final String queryName = queryNames[ i ];
+      final String query = pmdDataFactory.getQuery( queryName );
+      xmlWriter.writeTag( SampleDataModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN );
+      xmlWriter.writeTextNormalized( query, false );
       xmlWriter.writeCloseTag();
     }
     xmlWriter.writeCloseTag();

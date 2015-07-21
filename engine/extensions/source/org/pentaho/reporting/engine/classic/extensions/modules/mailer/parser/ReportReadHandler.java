@@ -27,13 +27,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ReportReadHandler extends AbstractXmlReadHandler
-{
+public class ReportReadHandler extends AbstractXmlReadHandler {
   private String targetType;
   private MasterReport report;
 
-  public ReportReadHandler()
-  {
+  public ReportReadHandler() {
   }
 
   /**
@@ -42,51 +40,41 @@ public class ReportReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    targetType = attrs.getValue(getUri(), "target-type");
-    if (targetType == null)
-    {
-      throw new ParseException("Mandatory attribute 'target-type' is missing.", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    targetType = attrs.getValue( getUri(), "target-type" );
+    if ( targetType == null ) {
+      throw new ParseException( "Mandatory attribute 'target-type' is missing.", getLocator() );
     }
-    final String href = attrs.getValue(getUri(), "href");
-    if (href == null)
-    {
-      throw new ParseException("Mandatory attribute 'href' is missing.", getLocator());
+    final String href = attrs.getValue( getUri(), "href" );
+    if ( href == null ) {
+      throw new ParseException( "Mandatory attribute 'href' is missing.", getLocator() );
     }
 
-    try
-    {
+    try {
       final ResourceManager resourceManager = getRootHandler().getResourceManager();
-      final ResourceKey key = resourceManager.deriveKey(getRootHandler().getSource(), href);
-      final Resource resource = resourceManager.create(key, null, MasterReport.class);
+      final ResourceKey key = resourceManager.deriveKey( getRootHandler().getSource(), href );
+      final Resource resource = resourceManager.create( key, null, MasterReport.class );
       report = (MasterReport) resource.getResource();
-    }
-    catch (ResourceException re)
-    {
-      throw new ParseException("Mandatory attribute 'href' is not pointing to a valid report.", re, getLocator());
+    } catch ( ResourceException re ) {
+      throw new ParseException( "Mandatory attribute 'href' is not pointing to a valid report.", re, getLocator() );
     }
   }
 
-  public String getTargetType()
-  {
+  public String getTargetType() {
     return targetType;
   }
 
-  public MasterReport getReport()
-  {
+  public MasterReport getReport() {
     return report;
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

@@ -22,57 +22,48 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.JndiConnectionProvider;
 
-public class BandedOlap4JJndiTest extends DataSourceTestBase
-{
-  private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray("-banded");
+public class BandedOlap4JJndiTest extends DataSourceTestBase {
+  private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray( "-banded" );
 
-  public BandedOlap4JJndiTest()
-  {
+  public BandedOlap4JJndiTest() {
   }
 
-  public BandedOlap4JJndiTest(final String s)
-  {
-    super(s);
+  public BandedOlap4JJndiTest( final String s ) {
+    super( s );
   }
 
 
-  public void testSaveAndLoad() throws Exception
-  {
-    runSaveAndLoad(QUERIES_AND_RESULTS);
+  public void testSaveAndLoad() throws Exception {
+    runSaveAndLoad( QUERIES_AND_RESULTS );
   }
 
-  public void testDerive() throws Exception
-  {
-    runDerive(QUERIES_AND_RESULTS);
+  public void testDerive() throws Exception {
+    runDerive( QUERIES_AND_RESULTS );
   }
 
-  public void testSerialize() throws Exception
-  {
-    runSerialize(QUERIES_AND_RESULTS);
+  public void testSerialize() throws Exception {
+    runSerialize( QUERIES_AND_RESULTS );
   }
 
-  public void testQuery() throws Exception
-  {
-    runTest(QUERIES_AND_RESULTS);
+  public void testQuery() throws Exception {
+    runTest( QUERIES_AND_RESULTS );
   }
 
-  protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException
-  {
+  protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
     final JndiConnectionProvider provider = new JndiConnectionProvider();
-    provider.setConnectionPath("SampleOlap4J");
+    provider.setConnectionPath( "SampleOlap4J" );
 
-    final BandedMDXDataFactory dataFactory = new BandedMDXDataFactory(provider);
-    dataFactory.setQuery("default", query, null, null);
-    initializeDataFactory(dataFactory);
+    final BandedMDXDataFactory dataFactory = new BandedMDXDataFactory( provider );
+    dataFactory.setQuery( "default", query, null, null );
+    initializeDataFactory( dataFactory );
     return dataFactory;
   }
 
 
-  public static void _main(final String[] args) throws Exception
-  {
+  public static void _main( final String[] args ) throws Exception {
     final BandedOlap4JJndiTest test = new BandedOlap4JJndiTest();
     test.setUp();
-    test.runGenerate(QUERIES_AND_RESULTS);
+    test.runGenerate( QUERIES_AND_RESULTS );
   }
 
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.QueryDefinitionReadHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.QueryDefinitionsReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.AbstractNamedMDXDataFactory;
@@ -27,14 +25,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public abstract class AbstractNamedMDXDataSourceReadHandler extends AbstractMDXDataSourceReadHandler
-{
+import java.util.ArrayList;
+
+public abstract class AbstractNamedMDXDataSourceReadHandler extends AbstractMDXDataSourceReadHandler {
   private ArrayList<PropertyReadHandler> queries;
   private QueryDefinitionsReadHandler queryDefinitionsReadHandler;
   private PropertyReadHandler globalScriptReadHandler;
 
-  public AbstractNamedMDXDataSourceReadHandler()
-  {
+  public AbstractNamedMDXDataSourceReadHandler() {
     queries = new ArrayList<PropertyReadHandler>();
   }
 
@@ -47,34 +45,29 @@ public abstract class AbstractNamedMDXDataSourceReadHandler extends AbstractMDXD
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
 
 
-    if (isSameNamespace(uri))
-    {
-      if ("query".equals(tagName))
-      {
+    if ( isSameNamespace( uri ) ) {
+      if ( "query".equals( tagName ) ) {
         final PropertyReadHandler queryReadHandler = new PropertyReadHandler();
-        queries.add(queryReadHandler);
+        queries.add( queryReadHandler );
         return queryReadHandler;
       }
 
-      if ("global-script".equals(tagName))
-      {
-        globalScriptReadHandler = new PropertyReadHandler("language", true);
+      if ( "global-script".equals( tagName ) ) {
+        globalScriptReadHandler = new PropertyReadHandler( "language", true );
         return globalScriptReadHandler;
       }
 
-      if ("query-definitions".equals(tagName))
-      {
+      if ( "query-definitions".equals( tagName ) ) {
         queryDefinitionsReadHandler = new QueryDefinitionsReadHandler();
         return queryDefinitionsReadHandler;
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -82,29 +75,24 @@ public abstract class AbstractNamedMDXDataSourceReadHandler extends AbstractMDXD
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final AbstractNamedMDXDataFactory dataFactory = (AbstractNamedMDXDataFactory) getDataFactory();
-    for (int i = 0; i < queries.size(); i++)
-    {
-      final PropertyReadHandler handler = queries.get(i);
-      dataFactory.setQuery(handler.getName(), handler.getResult(), null, null);
+    for ( int i = 0; i < queries.size(); i++ ) {
+      final PropertyReadHandler handler = queries.get( i );
+      dataFactory.setQuery( handler.getName(), handler.getResult(), null, null );
     }
 
-    if (globalScriptReadHandler != null)
-    {
-      dataFactory.setGlobalScript(globalScriptReadHandler.getResult());
-      dataFactory.setGlobalScriptLanguage(globalScriptReadHandler.getName());
+    if ( globalScriptReadHandler != null ) {
+      dataFactory.setGlobalScript( globalScriptReadHandler.getResult() );
+      dataFactory.setGlobalScriptLanguage( globalScriptReadHandler.getName() );
     }
 
-    if (queryDefinitionsReadHandler != null)
-    {
+    if ( queryDefinitionsReadHandler != null ) {
       final ArrayList<QueryDefinitionReadHandler> scriptedQueries = queryDefinitionsReadHandler.getScriptedQueries();
-      for (final QueryDefinitionReadHandler scriptedQuery : scriptedQueries)
-      {
-        dataFactory.setQuery(scriptedQuery.getName(), scriptedQuery.getQuery(),
-            scriptedQuery.getScriptLanguage(), scriptedQuery.getScript());
+      for ( final QueryDefinitionReadHandler scriptedQuery : scriptedQueries ) {
+        dataFactory.setQuery( scriptedQuery.getName(), scriptedQuery.getQuery(),
+          scriptedQuery.getScriptLanguage(), scriptedQuery.getScript() );
       }
     }
 

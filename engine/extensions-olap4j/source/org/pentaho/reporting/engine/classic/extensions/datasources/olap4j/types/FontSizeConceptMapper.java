@@ -22,32 +22,24 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class FontSizeConceptMapper implements ConceptQueryMapper
-{
-  public FontSizeConceptMapper()
-  {
+public class FontSizeConceptMapper implements ConceptQueryMapper {
+  public FontSizeConceptMapper() {
   }
 
-  public Object getValue(final Object value,
-                         final Class type,
-                         final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value,
+                          final Class type,
+                          final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    final String valueAsString = String.valueOf(value);
-    if (String.class.isAssignableFrom(type))
-    {
+    final String valueAsString = String.valueOf( value );
+    if ( String.class.isAssignableFrom( type ) ) {
       return valueAsString;
     }
-    try
-    {
-      return ConverterRegistry.toPropertyValue(valueAsString, type);
-    }
-    catch (BeanException e)
-    {
+    try {
+      return ConverterRegistry.toPropertyValue( valueAsString, type );
+    } catch ( BeanException e ) {
       // ignore ..
     }
     return null;

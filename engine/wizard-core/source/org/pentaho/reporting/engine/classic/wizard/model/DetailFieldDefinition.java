@@ -18,13 +18,12 @@
 package org.pentaho.reporting.engine.classic.wizard.model;
 
 /**
- * Describes a detail field. Any aggregation defined here is always relative to the innermost
- * group (at runtime).
+ * Describes a detail field. Any aggregation defined here is always relative to the innermost group (at runtime).
  *
  * @author Thomas Morgner
  */
-public interface DetailFieldDefinition extends FieldDefinition, ElementFormatDefinition
-{
+public interface DetailFieldDefinition extends FieldDefinition, ElementFormatDefinition {
   public Boolean getOnlyShowChangingValues();
-  public void setOnlyShowChangingValues(Boolean b);
+
+  public void setOnlyShowChangingValues( Boolean b );
 }

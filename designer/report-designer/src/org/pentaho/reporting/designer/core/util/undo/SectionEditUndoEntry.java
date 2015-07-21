@@ -28,40 +28,35 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class SectionEditUndoEntry implements UndoEntry
-{
+public class SectionEditUndoEntry implements UndoEntry {
   private InstanceID target;
   private int position;
   private Element oldElement;
   private Element newElement;
 
-  public SectionEditUndoEntry(final InstanceID target,
-                              final int position,
-                              final Element oldElement,
-                              final Element newElement)
-  {
+  public SectionEditUndoEntry( final InstanceID target,
+                               final int position,
+                               final Element oldElement,
+                               final Element newElement ) {
     this.target = target;
     this.position = position;
     this.oldElement = oldElement;
     this.newElement = newElement;
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
+  public void undo( final ReportDocumentContext renderContext ) {
     final Section elementById = (Section)
-        ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-    elementById.setElementAt(position, oldElement);
+      ModelUtility.findElementById( renderContext.getReportDefinition(), target );
+    elementById.setElementAt( position, oldElement );
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
+  public void redo( final ReportDocumentContext renderContext ) {
     final Section elementById = (Section)
-        ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-    elementById.setElementAt(position, newElement);
+      ModelUtility.findElementById( renderContext.getReportDefinition(), target );
+    elementById.setElementAt( position, newElement );
   }
 
-  public UndoEntry merge(final UndoEntry newEntry)
-  {
+  public UndoEntry merge( final UndoEntry newEntry ) {
     return null;
   }
 }

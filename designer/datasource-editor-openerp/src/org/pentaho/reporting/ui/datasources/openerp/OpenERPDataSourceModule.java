@@ -40,19 +40,14 @@ import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
 /**
- * 
  * @author Pieter van der Merwe
- *
  */
-public class OpenERPDataSourceModule extends AbstractModule
-{
-  public OpenERPDataSourceModule() throws ModuleInitializeException
-  {
+public class OpenERPDataSourceModule extends AbstractModule {
+  public OpenERPDataSourceModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
 
   }
 }

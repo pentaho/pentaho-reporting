@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.designer.core.actions;
 
-import javax.swing.Action;
+import javax.swing.*;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public interface ToggleStateAction extends Action
-{
+public interface ToggleStateAction extends Action {
   public static final String SELECTED = Action.SELECTED_KEY;
 
   public boolean isSelected();

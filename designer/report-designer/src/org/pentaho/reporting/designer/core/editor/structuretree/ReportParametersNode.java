@@ -22,15 +22,12 @@ package org.pentaho.reporting.designer.core.editor.structuretree;
  *
  * @author Thomas Morgner
  */
-public class ReportParametersNode
-{
-  public ReportParametersNode()
-  {
+public class ReportParametersNode {
+  public ReportParametersNode() {
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return "org.pentaho.reporting.designer.core.editor.structuretree.ReportParametersNode{}";// NON-NLS
   }
 }

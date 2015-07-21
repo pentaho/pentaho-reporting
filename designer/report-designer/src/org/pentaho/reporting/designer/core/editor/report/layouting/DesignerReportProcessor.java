@@ -23,25 +23,22 @@ import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultOutputFunction;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 
-public class DesignerReportProcessor extends StreamReportProcessor
-{
+public class DesignerReportProcessor extends StreamReportProcessor {
   private DesignerOutputProcessor outputProcessor;
   private DesignerRenderComponentFactory componentFactory;
 
-  public DesignerReportProcessor(final MasterReport report,
-                                 final DesignerOutputProcessor outputProcessor,
-                                 final DesignerRenderComponentFactory componentFactory)
-      throws ReportProcessingException
-  {
-    super(report, outputProcessor);
+  public DesignerReportProcessor( final MasterReport report,
+                                  final DesignerOutputProcessor outputProcessor,
+                                  final DesignerRenderComponentFactory componentFactory )
+    throws ReportProcessingException {
+    super( report, outputProcessor );
     this.outputProcessor = outputProcessor;
     this.componentFactory = componentFactory;
   }
 
-  protected OutputFunction createLayoutManager()
-  {
+  protected OutputFunction createLayoutManager() {
     final DefaultOutputFunction outputFunction = new DesignerOutputFunction();
-    outputFunction.setRenderer(new DesignerRenderer(outputProcessor, componentFactory));
+    outputFunction.setRenderer( new DesignerRenderer( outputProcessor, componentFactory ) );
     return outputFunction;
   }
 }

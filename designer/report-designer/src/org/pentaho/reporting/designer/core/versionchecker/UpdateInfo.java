@@ -17,31 +17,26 @@
 
 package org.pentaho.reporting.designer.core.versionchecker;
 
-public class UpdateInfo
-{
+public class UpdateInfo {
   private String version;
   private String type;
   private String url;
 
-  public UpdateInfo(final String version, final String type, final String url)
-  {
+  public UpdateInfo( final String version, final String type, final String url ) {
     this.version = version;
     this.type = type;
     this.url = url;
   }
 
-  public String getVersion()
-  {
+  public String getVersion() {
     return version;
   }
 
-  public String getType()
-  {
+  public String getType() {
     return type;
   }
 
-  public String getUrl()
-  {
+  public String getUrl() {
     return url;
   }
 }

@@ -34,24 +34,6 @@ package org.pentaho.reporting.ui.datasources.openerp;
  * Copyright (c) 2011 - 2012 De Bortoli Wines Pty Limited (Australia). All Rights Reserved.
  */
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.net.URL;
-import java.util.ArrayList;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.table.TableModel;
-
 import com.debortoliwines.openerp.reporting.di.OpenERPConfiguration;
 import com.debortoliwines.openerp.reporting.di.OpenERPFieldInfo;
 import com.debortoliwines.openerp.reporting.ui.OpenERPPanel;
@@ -67,11 +49,17 @@ import org.pentaho.reporting.libraries.designtime.swing.background.CancelEvent;
 import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDialog;
 import org.pentaho.reporting.libraries.designtime.swing.background.PreviewWorker;
 
+import javax.swing.*;
+import javax.swing.table.TableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.net.URL;
+import java.util.ArrayList;
+
 /**
  * @author Pieter van der Merwe
  */
-public class OpenERPDataSourceEditor extends CommonDialog
-{
+public class OpenERPDataSourceEditor extends CommonDialog {
   private static final long serialVersionUID = 6685784298385723490L;
 
   private DesignTimeContext context;
@@ -79,217 +67,182 @@ public class OpenERPDataSourceEditor extends CommonDialog
 
   private JTextField txtQueryName;
 
-  public OpenERPDataSourceEditor(final DesignTimeContext context)
-  {
-    init(context);
+  public OpenERPDataSourceEditor( final DesignTimeContext context ) {
+    init( context );
   }
 
-  public OpenERPDataSourceEditor(final DesignTimeContext context, final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
-    init(context);
+  public OpenERPDataSourceEditor( final DesignTimeContext context, final Frame owner )
+    throws HeadlessException {
+    super( owner );
+    init( context );
   }
 
-  public OpenERPDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
-    init(context);
+  public OpenERPDataSourceEditor( final DesignTimeContext context, final Dialog owner )
+    throws HeadlessException {
+    super( owner );
+    init( context );
   }
 
-  private void init(final DesignTimeContext context)
-  {
+  private void init( final DesignTimeContext context ) {
     this.context = context;
 
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "OpenERPDataSourceEditor";
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     mainPanel = new OpenERPPanel();
-    URL location = OpenERPDataSourceEditor.class.getResource("/org/pentaho/reporting/ui/datasources/openerp/resources/Add.png");
-    if (location != null)
-    {
-      mainPanel.setFilterAddButtonIcon(new ImageIcon(location));
+    URL location =
+      OpenERPDataSourceEditor.class.getResource( "/org/pentaho/reporting/ui/datasources/openerp/resources/Add.png" );
+    if ( location != null ) {
+      mainPanel.setFilterAddButtonIcon( new ImageIcon( location ) );
     }
 
-    location = OpenERPDataSourceEditor.class.getResource("/org/pentaho/reporting/ui/datasources/openerp/resources/Remove.png");
-    if (location != null)
-    {
-      mainPanel.setFilterRemoveButtonIcon(new ImageIcon(location));
+    location =
+      OpenERPDataSourceEditor.class.getResource( "/org/pentaho/reporting/ui/datasources/openerp/resources/Remove.png" );
+    if ( location != null ) {
+      mainPanel.setFilterRemoveButtonIcon( new ImageIcon( location ) );
     }
 
-    txtQueryName = new JTextField(20);
-    txtQueryName.setText("Query1");
+    txtQueryName = new JTextField( 20 );
+    txtQueryName.setText( "Query1" );
 
-    final JPanel queryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    queryPanel.add(new JLabel("Query Name:"));
-    queryPanel.add(txtQueryName);
+    final JPanel queryPanel = new JPanel( new FlowLayout( FlowLayout.LEFT ) );
+    queryPanel.add( new JLabel( "Query Name:" ) );
+    queryPanel.add( txtQueryName );
 
     final JPanel cpanel = new JPanel();
-    cpanel.setLayout(new BorderLayout());
-    cpanel.add(queryPanel, BorderLayout.NORTH);
-    cpanel.add(mainPanel, BorderLayout.CENTER);
-    cpanel.add(new JButton(new PreviewAction()), BorderLayout.SOUTH);
+    cpanel.setLayout( new BorderLayout() );
+    cpanel.add( queryPanel, BorderLayout.NORTH );
+    cpanel.add( mainPanel, BorderLayout.CENTER );
+    cpanel.add( new JButton( new PreviewAction() ), BorderLayout.SOUTH );
 
     return cpanel;
   }
 
   @Override
-  protected boolean validateInputs(final boolean onConfirm)
-  {
-    if (txtQueryName.getText().length() == 0)
-    {
-      ExceptionDialog.showExceptionDialog(this, "Error", "Query Name is mandatory", null);
+  protected boolean validateInputs( final boolean onConfirm ) {
+    if ( txtQueryName.getText().length() == 0 ) {
+      ExceptionDialog.showExceptionDialog( this, "Error", "Query Name is mandatory", null );
       return false;
     }
 
     final ArrayList<OpenERPFieldInfo> selectedFields = mainPanel.getConfiguration().getSelectedFields();
-    if (selectedFields != null)
-    {
+    if ( selectedFields != null ) {
       final ArrayList<String> fieldNames = new ArrayList<String>();
-      for (final OpenERPFieldInfo fld : selectedFields)
-      {
-        if (fieldNames.indexOf(fld.getRenamedFieldName()) >= 0)
-        {
-          ExceptionDialog.showExceptionDialog(this, "Error", "Selected field name '" + fld.getRenamedFieldName() + "' is not unique.", null);
+      for ( final OpenERPFieldInfo fld : selectedFields ) {
+        if ( fieldNames.indexOf( fld.getRenamedFieldName() ) >= 0 ) {
+          ExceptionDialog.showExceptionDialog( this, "Error",
+            "Selected field name '" + fld.getRenamedFieldName() + "' is not unique.", null );
           return false;
         }
-        fieldNames.add(fld.getRenamedFieldName());
+        fieldNames.add( fld.getRenamedFieldName() );
       }
     }
 
     return true;
   }
 
-  public DataFactory performConfiguration(final OpenERPDataFactory input)
-  {
-    if (input != null)
-    {
-      txtQueryName.setText(input.getQueryName());
-      mainPanel.setConfiguration(input.getConfig());
+  public DataFactory performConfiguration( final OpenERPDataFactory input ) {
+    if ( input != null ) {
+      txtQueryName.setText( input.getQueryName() );
+      mainPanel.setConfiguration( input.getConfig() );
     }
 
-    if (performEdit() == false)
-    {
+    if ( performEdit() == false ) {
       return null;
     }
 
     return produceDataFactory();
   }
 
-  private OpenERPDataFactory produceDataFactory()
-  {
+  private OpenERPDataFactory produceDataFactory() {
 
     final OpenERPDataFactory dataFactory = new OpenERPDataFactory();
     final OpenERPConfiguration config = mainPanel.getConfiguration();
-    dataFactory.setQueryName(txtQueryName.getText());
-    dataFactory.setConfig(config);
+    dataFactory.setQueryName( txtQueryName.getText() );
+    dataFactory.setConfig( config );
     return dataFactory;
   }
 
-  private class PreviewAction extends AbstractAction
-  {
+  private class PreviewAction extends AbstractAction {
     private static final long serialVersionUID = 4093248389910254252L;
 
-    private PreviewAction()
-    {
-      putValue(Action.NAME, "Preview");
+    private PreviewAction() {
+      putValue( Action.NAME, "Preview" );
     }
 
-    public void actionPerformed(final ActionEvent aEvt)
-    {
-      try
-      {
+    public void actionPerformed( final ActionEvent aEvt ) {
+      try {
         final OpenERPDataFactory dataFactory = produceDataFactory();
-        DataFactoryEditorSupport.configureDataFactoryForPreview(dataFactory, context);
+        DataFactoryEditorSupport.configureDataFactoryForPreview( dataFactory, context );
 
-        final DataPreviewDialog previewDialog = new DataPreviewDialog(OpenERPDataSourceEditor.this);
+        final DataPreviewDialog previewDialog = new DataPreviewDialog( OpenERPDataSourceEditor.this );
 
-        final OpenERPPreviewWorker worker = new OpenERPPreviewWorker(dataFactory, txtQueryName.getText());
-        previewDialog.showData(worker);
+        final OpenERPPreviewWorker worker = new OpenERPPreviewWorker( dataFactory, txtQueryName.getText() );
+        previewDialog.showData( worker );
 
         final ReportDataFactoryException factoryException = worker.getException();
-        if (factoryException != null)
-        {
-          ExceptionDialog.showExceptionDialog(OpenERPDataSourceEditor.this, "Error",
-              "An Error Occured during preview", factoryException);
+        if ( factoryException != null ) {
+          ExceptionDialog.showExceptionDialog( OpenERPDataSourceEditor.this, "Error",
+            "An Error Occured during preview", factoryException );
         }
-      }
-      catch (Exception e)
-      {
-        ExceptionDialog.showExceptionDialog(OpenERPDataSourceEditor.this, "Error",
-            "An Error Occured during preview", e);
+      } catch ( Exception e ) {
+        ExceptionDialog.showExceptionDialog( OpenERPDataSourceEditor.this, "Error",
+          "An Error Occured during preview", e );
       }
     }
   }
 
 
-  private static class OpenERPPreviewWorker implements PreviewWorker
-  {
+  private static class OpenERPPreviewWorker implements PreviewWorker {
     private OpenERPDataFactory dataFactory;
     private TableModel resultTableModel;
     private ReportDataFactoryException exception;
     private String query;
 
-    private OpenERPPreviewWorker(final OpenERPDataFactory dataFactory, final String query)
-    {
-      if (dataFactory == null)
-      {
+    private OpenERPPreviewWorker( final OpenERPDataFactory dataFactory, final String query ) {
+      if ( dataFactory == null ) {
         throw new NullPointerException();
       }
       this.query = query;
       this.dataFactory = dataFactory;
     }
 
-    public ReportDataFactoryException getException()
-    {
+    public ReportDataFactoryException getException() {
       return exception;
     }
 
-    public TableModel getResultTableModel()
-    {
+    public TableModel getResultTableModel() {
       return resultTableModel;
     }
 
-    public void close()
-    {
+    public void close() {
     }
 
     /**
      * Requests that the thread stop processing as soon as possible.
      */
-    public void cancelProcessing(final CancelEvent event)
-    {
+    public void cancelProcessing( final CancelEvent event ) {
       dataFactory.cancelRunningQuery();
     }
 
     /**
-     * When an object implementing interface <code>Runnable</code> is used
-     * to create a thread, starting the thread causes the object's
-     * <code>run</code> method to be called in that separately executing
-     * thread.
+     * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread
+     * causes the object's <code>run</code> method to be called in that separately executing thread.
      * <p/>
-     * The general contract of the method <code>run</code> is that it may
-     * take any action whatsoever.
+     * The general contract of the method <code>run</code> is that it may take any action whatsoever.
      *
      * @see Thread#run()
      */
-    public void run()
-    {
-      try
-      {
-        resultTableModel = dataFactory.queryData(query, new ReportParameterValues());
+    public void run() {
+      try {
+        resultTableModel = dataFactory.queryData( query, new ReportParameterValues() );
         dataFactory.close();
-      }
-      catch (ReportDataFactoryException e)
-      {
+      } catch ( ReportDataFactoryException e ) {
         exception = e;
       }
     }

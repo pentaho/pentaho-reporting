@@ -114,7 +114,7 @@
     <xsd:annotation>
       <xsd:documentation>
         Contains the datasource definition for a banded MDX query. The MDX result will be normalized
-        into a plain table so that banded reports can work on it. 
+        into a plain table so that banded reports can work on it.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -160,7 +160,7 @@
       <xsd:element name="path" type="xsd:string" minOccurs="1" maxOccurs="1"/>
     </xsd:sequence>
   </xsd:complexType>
-  
+
   <xsd:complexType name="driverConnectionType">
     <xsd:sequence>
       <xsd:element name="driver" type="xsd:string" minOccurs="1" maxOccurs="1"/>

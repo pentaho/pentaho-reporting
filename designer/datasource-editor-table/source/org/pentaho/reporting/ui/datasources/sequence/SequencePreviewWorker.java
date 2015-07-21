@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.sequence;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -29,66 +27,53 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequen
 import org.pentaho.reporting.libraries.designtime.swing.background.CancelEvent;
 import org.pentaho.reporting.libraries.designtime.swing.background.PreviewWorker;
 
-public class SequencePreviewWorker implements PreviewWorker
-{
+import javax.swing.table.TableModel;
+
+public class SequencePreviewWorker implements PreviewWorker {
   private SequenceDataFactory dataFactory;
   private TableModel resultTableModel;
   private ReportDataFactoryException exception;
 
-  public SequencePreviewWorker(final Sequence query,
-                               final DesignTimeContext context) throws ReportProcessingException
-  {
+  public SequencePreviewWorker( final Sequence query,
+                                final DesignTimeContext context ) throws ReportProcessingException {
     this.dataFactory = new SequenceDataFactory();
-    DataFactoryEditorSupport.configureDataFactoryForPreview(dataFactory, context);
-    this.dataFactory.addSequence("preview", query);
+    DataFactoryEditorSupport.configureDataFactoryForPreview( dataFactory, context );
+    this.dataFactory.addSequence( "preview", query );
   }
 
-  public ReportDataFactoryException getException()
-  {
+  public ReportDataFactoryException getException() {
     return exception;
   }
 
-  public TableModel getResultTableModel()
-  {
+  public TableModel getResultTableModel() {
     return resultTableModel;
   }
 
-  public void close()
-  {
+  public void close() {
     dataFactory.close();
   }
 
   /**
    * Requests that the thread stop processing as soon as possible.
    */
-  public void cancelProcessing(final CancelEvent event)
-  {
+  public void cancelProcessing( final CancelEvent event ) {
     dataFactory.cancelRunningQuery();
   }
 
   /**
-   * When an object implementing interface <code>Runnable</code> is used
-   * to create a thread, starting the thread causes the object's
-   * <code>run</code> method to be called in that separately executing
-   * thread.
+   * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
+   * the object's <code>run</code> method to be called in that separately executing thread.
    * <p/>
-   * The general contract of the method <code>run</code> is that it may
-   * take any action whatsoever.
+   * The general contract of the method <code>run</code> is that it may take any action whatsoever.
    *
    * @see Thread#run()
    */
-  public void run()
-  {
-    try
-    {
-      resultTableModel = dataFactory.queryData("preview", new ParameterDataRow());
-    }
-    catch (ReportDataFactoryException e)
-    {
+  public void run() {
+    try {
+      resultTableModel = dataFactory.queryData( "preview", new ParameterDataRow() );
+    } catch ( ReportDataFactoryException e ) {
       exception = e;
-    }
-    finally
-    {
+    } finally {
       dataFactory.close();
     }
   }

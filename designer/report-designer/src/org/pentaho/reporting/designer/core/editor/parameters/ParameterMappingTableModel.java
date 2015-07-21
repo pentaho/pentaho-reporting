@@ -17,99 +17,82 @@
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.table.AbstractTableModel;
-
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class ParameterMappingTableModel extends AbstractTableModel
-{
+import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class ParameterMappingTableModel extends AbstractTableModel {
   private ArrayList<ParameterMapping> backend;
 
-  public ParameterMappingTableModel()
-  {
+  public ParameterMappingTableModel() {
     backend = new ArrayList<ParameterMapping>();
   }
 
-  public ParameterMapping[] getMappings()
-  {
-    final ArrayList<ParameterMapping> list = new ArrayList<ParameterMapping>(backend.size());
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final ParameterMapping mapping = backend.get(i);
+  public ParameterMapping[] getMappings() {
+    final ArrayList<ParameterMapping> list = new ArrayList<ParameterMapping>( backend.size() );
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final ParameterMapping mapping = backend.get( i );
       final String sourceColumn = mapping.getName();
       final String alias = mapping.getAlias();
-      if (StringUtils.isEmpty(sourceColumn) == false)
-      {
-        if (StringUtils.isEmpty(alias))
-        {
-          list.add(new ParameterMapping(sourceColumn, sourceColumn));
-        }
-        else
-        {
-          list.add(new ParameterMapping(sourceColumn, alias));
+      if ( StringUtils.isEmpty( sourceColumn ) == false ) {
+        if ( StringUtils.isEmpty( alias ) ) {
+          list.add( new ParameterMapping( sourceColumn, sourceColumn ) );
+        } else {
+          list.add( new ParameterMapping( sourceColumn, alias ) );
         }
       }
     }
 
-    return list.toArray(new ParameterMapping[list.size()]);
+    return list.toArray( new ParameterMapping[ list.size() ] );
   }
 
-  public void clear()
-  {
+  public void clear() {
     backend.clear();
     fireTableDataChanged();
   }
 
-  public void addMapping(final ParameterMapping mappings)
-  {
-    backend.add(mappings);
+  public void addMapping( final ParameterMapping mappings ) {
+    backend.add( mappings );
     fireTableDataChanged();
   }
 
-  public void addMappings(final ParameterMapping[] mappings)
-  {
-    backend.addAll(Arrays.asList(mappings));
+  public void addMappings( final ParameterMapping[] mappings ) {
+    backend.addAll( Arrays.asList( mappings ) );
     fireTableDataChanged();
   }
 
-  public void setMappings(final ParameterMapping[] mappings)
-  {
+  public void setMappings( final ParameterMapping[] mappings ) {
     backend.clear();
-    backend.addAll(Arrays.asList(mappings));
+    backend.addAll( Arrays.asList( mappings ) );
     fireTableDataChanged();
   }
 
-  public void addRow()
-  {
-    backend.add(new ParameterMapping("", ""));
+  public void addRow() {
+    backend.add( new ParameterMapping( "", "" ) );
     fireTableDataChanged();
   }
 
-  public void removeRow(final int row)
-  {
-    backend.remove(row);
-    fireTableRowsDeleted(row, row);
+  public void removeRow( final int row ) {
+    backend.remove( row );
+    fireTableRowsDeleted( row, row );
   }
 
   /**
-   * Returns a default name for the column using spreadsheet conventions:
-   * A, B, C, ... Z, AA, AB, etc.  If <code>column</code> cannot be found,
-   * returns an empty string.
+   * Returns a default name for the column using spreadsheet conventions: A, B, C, ... Z, AA, AB, etc.  If
+   * <code>column</code> cannot be found, returns an empty string.
    *
    * @param columnIndex the column being queried
    * @return a string containing the default name of <code>column</code>
    */
-  public String getColumnName(final int columnIndex)
-  {
-    switch (columnIndex)
-    {
+  public String getColumnName( final int columnIndex ) {
+    switch( columnIndex ) {
       case 0:
-        return Messages.getString("ParameterMappingTableModel.OuterName");
+        return Messages.getString( "ParameterMappingTableModel.OuterName" );
       case 1:
-        return Messages.getString("ParameterMappingTableModel.InnerName");
+        return Messages.getString( "ParameterMappingTableModel.InnerName" );
       default:
         throw new IndexOutOfBoundsException();
     }
@@ -121,8 +104,7 @@ public class ParameterMappingTableModel extends AbstractTableModel
    * @param columnIndex the column being queried
    * @return the Object.class
    */
-  public Class getColumnClass(final int columnIndex)
-  {
+  public Class getColumnClass( final int columnIndex ) {
     return String.class;
   }
 
@@ -133,51 +115,42 @@ public class ParameterMappingTableModel extends AbstractTableModel
    * @param columnIndex the column being queried
    * @return false
    */
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
     return true;
   }
 
   /**
-   * Returns the number of rows in the model. A
-   * <code>JTable</code> uses this method to determine how many rows it
-   * should display.  This method should be quick, as it
-   * is called frequently during rendering.
+   * Returns the number of rows in the model. A <code>JTable</code> uses this method to determine how many rows it
+   * should display.  This method should be quick, as it is called frequently during rendering.
    *
    * @return the number of rows in the model
    * @see #getColumnCount
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return backend.size();
   }
 
   /**
-   * Returns the number of columns in the model. A
-   * <code>JTable</code> uses this method to determine how many columns it
+   * Returns the number of columns in the model. A <code>JTable</code> uses this method to determine how many columns it
    * should create and display by default.
    *
    * @return the number of columns in the model
    * @see #getRowCount
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return 2;
   }
 
   /**
-   * Returns the value for the cell at <code>columnIndex</code> and
-   * <code>rowIndex</code>.
+   * Returns the value for the cell at <code>columnIndex</code> and <code>rowIndex</code>.
    *
    * @param rowIndex    the row whose value is to be queried
    * @param columnIndex the column whose value is to be queried
    * @return the value Object at the specified cell
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final ParameterMapping mapping = backend.get(rowIndex);
-    switch (columnIndex)
-    {
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final ParameterMapping mapping = backend.get( rowIndex );
+    switch( columnIndex ) {
       case 0:
         return mapping.getName();
       case 1:
@@ -188,48 +161,38 @@ public class ParameterMappingTableModel extends AbstractTableModel
   }
 
   /**
-   * This empty implementation is provided so users don't have to implement
-   * this method if their data model is not editable.
+   * This empty implementation is provided so users don't have to implement this method if their data model is not
+   * editable.
    *
    * @param aValue      value to assign to cell
    * @param rowIndex    row of cell
    * @param columnIndex column of cell
    */
-  public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-  {
-    final ParameterMapping mapping = backend.get(rowIndex);
-    switch (columnIndex)
-    {
-      case 0:
-      {
+  public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+    final ParameterMapping mapping = backend.get( rowIndex );
+    switch( columnIndex ) {
+      case 0: {
         final String name;
-        if (aValue == null)
-        {
+        if ( aValue == null ) {
           name = "";
-        }
-        else
-        {
+        } else {
           name = (String) aValue;
         }
         final String alias = mapping.getAlias();
-        backend.set(rowIndex, new ParameterMapping(name, alias));
-        fireTableCellUpdated(rowIndex, columnIndex);
+        backend.set( rowIndex, new ParameterMapping( name, alias ) );
+        fireTableCellUpdated( rowIndex, columnIndex );
         break;
       }
-      case 1:
-      {
+      case 1: {
         final String name = mapping.getName();
         final String alias;
-        if (aValue == null)
-        {
+        if ( aValue == null ) {
           alias = "";
-        }
-        else
-        {
+        } else {
           alias = (String) aValue;
         }
-        backend.set(rowIndex, new ParameterMapping(name, alias));
-        fireTableCellUpdated(rowIndex, columnIndex);
+        backend.set( rowIndex, new ParameterMapping( name, alias ) );
+        fireTableCellUpdated( rowIndex, columnIndex );
         break;
       }
       default:

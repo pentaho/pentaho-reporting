@@ -24,14 +24,13 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public interface SnapPositionsModel
-{
+public interface SnapPositionsModel {
   /**
    * Computes the nearest snap-point.
    *
    * @param position
    * @return
    */
-  public long getNearestSnapPosition(final long position,
-                                     final InstanceID owner);
+  public long getNearestSnapPosition( final long position,
+                                      final InstanceID owner );
 }

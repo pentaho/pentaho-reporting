@@ -22,9 +22,8 @@ package org.pentaho.reporting.designer.core;
  *
  * @author Thomas Morgner
  */
-public interface DesignerContextComponent
-{
-  public void setReportDesignerContext(final ReportDesignerContext context);
+public interface DesignerContextComponent {
+  public void setReportDesignerContext( final ReportDesignerContext context );
 
   public ReportDesignerContext getReportDesignerContext();
 }

@@ -17,33 +17,27 @@
 
 package org.pentaho.reporting.engine.classic.wizard.model;
 
-public class DefaultRootBandDefinition extends AbstractElementFormatDefinition implements RootBandDefinition
-{
+public class DefaultRootBandDefinition extends AbstractElementFormatDefinition implements RootBandDefinition {
   private Boolean repeat;
   private boolean visible;
 
-  public DefaultRootBandDefinition()
-  {
+  public DefaultRootBandDefinition() {
     visible = true;
   }
 
-  public Boolean getRepeat()
-  {
+  public Boolean getRepeat() {
     return repeat;
   }
 
-  public void setRepeat(final Boolean repeat)
-  {
+  public void setRepeat( final Boolean repeat ) {
     this.repeat = repeat;
   }
 
-  public boolean isVisible()
-  {
+  public boolean isVisible() {
     return visible;
   }
 
-  public void setVisible(final boolean visible)
-  {
+  public void setVisible( final boolean visible ) {
     this.visible = visible;
   }
 }

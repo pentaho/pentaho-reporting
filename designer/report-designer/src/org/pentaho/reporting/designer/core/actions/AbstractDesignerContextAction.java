@@ -17,49 +17,42 @@
 
 package org.pentaho.reporting.designer.core.actions;
 
-import javax.swing.AbstractAction;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 
-public abstract class AbstractDesignerContextAction extends AbstractAction implements DesignerContextAction
-{
+import javax.swing.*;
+
+public abstract class AbstractDesignerContextAction extends AbstractAction implements DesignerContextAction {
   private ReportDesignerContext reportDesignerContext;
 
   /**
    * Defines an <code>Action</code> object with a default description string and default icon.
    */
-  protected AbstractDesignerContextAction()
-  {
-    setEnabled(false);
+  protected AbstractDesignerContextAction() {
+    setEnabled( false );
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext context)
-  {
+  public void setReportDesignerContext( final ReportDesignerContext context ) {
     final ReportDesignerContext old = this.reportDesignerContext;
     this.reportDesignerContext = context;
-    updateDesignerContext(old, reportDesignerContext);
+    updateDesignerContext( old, reportDesignerContext );
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return reportDesignerContext;
   }
 
-  public void setVisible(final boolean visible)
-  {
-    putValue("visible", visible);
+  public void setVisible( final boolean visible ) {
+    putValue( "visible", visible );
   }
 
-  public boolean isVisible()
-  {
-    final Object visibleRaw = getValue("visible");
-    return visibleRaw == null || Boolean.TRUE.equals(visibleRaw);
+  public boolean isVisible() {
+    final Object visibleRaw = getValue( "visible" );
+    return visibleRaw == null || Boolean.TRUE.equals( visibleRaw );
   }
 
-  protected void updateDesignerContext(final ReportDesignerContext oldContext,
-                                       final ReportDesignerContext newContext)
-  {
-    setEnabled(newContext != null);
+  protected void updateDesignerContext( final ReportDesignerContext oldContext,
+                                        final ReportDesignerContext newContext ) {
+    setEnabled( newContext != null );
   }
 
 }

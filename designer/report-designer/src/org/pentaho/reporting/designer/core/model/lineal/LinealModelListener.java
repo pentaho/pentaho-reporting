@@ -22,7 +22,6 @@ import java.util.EventListener;
 /**
  * User: Martin Date: 26.01.2006 Time: 10:47:17
  */
-public interface LinealModelListener extends EventListener
-{
-  public void modelChanged(LinealModelEvent event);
+public interface LinealModelListener extends EventListener {
+  public void modelChanged( LinealModelEvent event );
 }

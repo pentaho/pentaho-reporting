@@ -17,27 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.util;
 
+import org.olap4j.metadata.Member;
+
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
-import org.olap4j.metadata.Member;
-
-public class ResultSetOrderMemberAddingStrategy implements MemberAddingStrategy
-{
+public class ResultSetOrderMemberAddingStrategy implements MemberAddingStrategy {
   private LinkedHashMap<String, Member> backend;
 
-  public ResultSetOrderMemberAddingStrategy()
-  {
+  public ResultSetOrderMemberAddingStrategy() {
     backend = new LinkedHashMap<String, Member>();
   }
 
-  public void add(final Member m)
-  {
-    backend.put(m.getLevel().getUniqueName(), m);
+  public void add( final Member m ) {
+    backend.put( m.getLevel().getUniqueName(), m );
   }
 
-  public Collection<Member> values()
-  {
+  public Collection<Member> values() {
     return backend.values();
   }
 }

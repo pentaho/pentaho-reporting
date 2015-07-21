@@ -21,19 +21,15 @@ import org.pentaho.reporting.designer.core.editor.report.ReportElementDragHandle
 import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEditor;
 import org.pentaho.reporting.designer.core.editor.report.elements.DefaultReportElementEditor;
 
-public class TocReportElementEditor extends DefaultReportElementEditor
-{
-  public TocReportElementEditor()
-  {
+public class TocReportElementEditor extends DefaultReportElementEditor {
+  public TocReportElementEditor() {
   }
 
-  public ReportElementInlineEditor createInlineEditor()
-  {
+  public ReportElementInlineEditor createInlineEditor() {
     return new TocReportElementInlineEditor();
   }
 
-  public ReportElementDragHandler createDragHandler()
-  {
+  public ReportElementDragHandler createDragHandler() {
     return new TocReportElementDragHandler();
   }
 }

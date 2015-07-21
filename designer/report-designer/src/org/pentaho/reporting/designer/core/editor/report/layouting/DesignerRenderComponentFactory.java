@@ -22,22 +22,18 @@ import org.pentaho.reporting.engine.classic.core.layout.TextProducer;
 import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 
-public class DesignerRenderComponentFactory extends DefaultRenderComponentFactory
-{
+public class DesignerRenderComponentFactory extends DefaultRenderComponentFactory {
   private TextProducer textProducer;
 
-  public DesignerRenderComponentFactory(final OutputProcessorMetaData metaData)
-  {
-    this.textProducer = new TextProducer(metaData);
+  public DesignerRenderComponentFactory( final OutputProcessorMetaData metaData ) {
+    this.textProducer = new TextProducer( metaData );
   }
 
-  public LayoutModelBuilder createLayoutModelBuilder(final String name)
-  {
-    return new DesignerLayoutModelBuilder(name, this);
+  public LayoutModelBuilder createLayoutModelBuilder( final String name ) {
+    return new DesignerLayoutModelBuilder( name, this );
   }
 
-  public TextProducer createTextProducer()
-  {
+  public TextProducer createTextProducer() {
     return textProducer;
   }
 }

@@ -44,27 +44,23 @@ import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
 /**
- * 
  * @author Pieter van der Merwe
- *
  */
-public class OpenERPModule extends AbstractModule
-{
+public class OpenERPModule extends AbstractModule {
   public static final String NAMESPACE = "http://jfreereport.sourceforge.net/namespaces/datasources/openerp";
 
-  public OpenERPModule() throws ModuleInitializeException
-  {
+  public OpenERPModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    DataFactoryXmlResourceFactory.register(OpenERPDataSourceXmlFactoryModule.class);
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    DataFactoryXmlResourceFactory.register( OpenERPDataSourceXmlFactoryModule.class );
 
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "openerp-datasource", OpenERPDataSourceReadHandler.class);
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "openerp-datasource", OpenERPDataSourceReadHandler.class );
 
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/datasources/openerp/meta-datafactory.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/datasources/openerp/meta-datafactory.xml" );
 
   }
 }

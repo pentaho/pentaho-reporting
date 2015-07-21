@@ -17,24 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter;
 
-import org.xml.sax.Locator;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
+import org.xml.sax.Locator;
 
-public class LongConverter implements ObjectConverter
-{
-  public LongConverter()
-  {
+public class LongConverter implements ObjectConverter {
+  public LongConverter() {
   }
 
-  public Object convertFromString(final String s, final Locator locator) throws ParseException
-  {
-    try
-    {
-      return Long.valueOf(s.trim());
-    }
-    catch (NumberFormatException nfe)
-    {
-      throw new ParseException(nfe.getMessage(), locator);
+  public Object convertFromString( final String s, final Locator locator ) throws ParseException {
+    try {
+      return Long.valueOf( s.trim() );
+    } catch ( NumberFormatException nfe ) {
+      throw new ParseException( nfe.getMessage(), locator );
     }
   }
 }

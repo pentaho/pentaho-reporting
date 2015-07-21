@@ -34,72 +34,62 @@ import java.util.Locale;
  *
  * @author Thomas Morgner
  */
-public class GroupedMetaDataComparator implements Comparator
-{
+public class GroupedMetaDataComparator implements Comparator {
   /**
    *
    */
   private Locale locale;
 
-  public GroupedMetaDataComparator(final Locale locale)
-  {
+  public GroupedMetaDataComparator( final Locale locale ) {
     this.locale = locale;
   }
 
-  public int compare(final Object o1, final Object o2)
-  {
+  public int compare( final Object o1, final Object o2 ) {
     final EditableMetaData metaData1 = (EditableMetaData) o1;
     final EditableMetaData metaData2 = (EditableMetaData) o2;
 
     // Look to the ordinal to determine the position
-    final int groupOrd1 = metaData1.getGroupingOrdinal(locale);
-    final int groupOrd2 = metaData2.getGroupingOrdinal(locale);
+    final int groupOrd1 = metaData1.getGroupingOrdinal( locale );
+    final int groupOrd2 = metaData2.getGroupingOrdinal( locale );
 
-    if (groupOrd1 != groupOrd2)
-    {
+    if ( groupOrd1 != groupOrd2 ) {
       return groupOrd1 < groupOrd2 ? -1 : 1;
     }
 
     // Picks up the difference in group name if the above was the same
-    final String gr1 = metaData1.getMetaAttribute("grouping", locale);
-    final String gr2 = metaData2.getMetaAttribute("grouping", locale);
-    final int result = compareString(gr1, gr2);
-    if (result != 0)
-    {
+    final String gr1 = metaData1.getMetaAttribute( "grouping", locale );
+    final String gr2 = metaData2.getMetaAttribute( "grouping", locale );
+    final int result = compareString( gr1, gr2 );
+    if ( result != 0 ) {
       return result;
     }
 
     // At this point the groupings are the same so we have to look at the
     // Item ordinals to determine where in the group they go
-    final int itemOrd1 = metaData1.getItemOrdinal(locale);
-    final int itemOrd2 = metaData2.getItemOrdinal(locale);
-    if (itemOrd1 != itemOrd2)
-    {
+    final int itemOrd1 = metaData1.getItemOrdinal( locale );
+    final int itemOrd2 = metaData2.getItemOrdinal( locale );
+    if ( itemOrd1 != itemOrd2 ) {
       return itemOrd1 < itemOrd2 ? -1 : 1;
     }
 
     // if we've gotten this far then we down to doing it alphabetically on
     // the items display name
-    final String dn1 = metaData1.getMetaAttribute("display-name", locale);
-    final String dn2 = metaData2.getMetaAttribute("display-name", locale);
-    return compareString(dn1, dn2);
+    final String dn1 = metaData1.getMetaAttribute( "display-name", locale );
+    final String dn2 = metaData2.getMetaAttribute( "display-name", locale );
+    return compareString( dn1, dn2 );
   }
 
-  private int compareString(final String gr1, final String gr2)
-  {
-    if (gr1 == null && gr2 == null)
-    {
+  private int compareString( final String gr1, final String gr2 ) {
+    if ( gr1 == null && gr2 == null ) {
       return 0;
     }
-    if (gr1 == null)
-    {
+    if ( gr1 == null ) {
       return 1;
     }
-    if (gr2 == null)
-    {
+    if ( gr2 == null ) {
       return -1;
     }
-    return gr1.compareTo(gr2);
+    return gr1.compareTo( gr2 );
   }
 
 }

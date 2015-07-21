@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -37,67 +35,60 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd2887Test extends TestCase
-{
-  private static class TestTableContentProducer extends TableContentProducer
-  {
-    private TestTableContentProducer(final SheetLayout sheetLayout, final OutputProcessorMetaData metaData)
-    {
-      super(sheetLayout, metaData);
+import java.net.URL;
+
+public class Prd2887Test extends TestCase {
+  private static class TestTableContentProducer extends TableContentProducer {
+    private TestTableContentProducer( final SheetLayout sheetLayout, final OutputProcessorMetaData metaData ) {
+      super( sheetLayout, metaData );
     }
 
-    protected void handleContentConflict(final RenderBox box)
-    {
-      fail(box.toString());
+    protected void handleContentConflict( final RenderBox box ) {
+      fail( box.toString() );
     }
   }
 
-  public Prd2887Test()
-  {
+  public Prd2887Test() {
   }
 
-  public Prd2887Test(final String name)
-  {
-    super(name);
+  public Prd2887Test( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testOverlapWarning() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-2887.prpt");
-    assertNotNull(url);
+  public void testOverlapWarning() throws Exception {
+    final URL url = getClass().getResource( "Prd-2887.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    final Band b1 = (Band) report.getPageHeader().getElement(0);
-    b1.getElement(0).setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, "Null Field1");
-    b1.getElement(1).setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, "Null Field2");
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader());
+    final Band b1 = (Band) report.getPageHeader().getElement( 0 );
+    b1.getElement( 0 ).setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, "Null Field1" );
+    b1.getElement( 1 ).setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, "Null Field2" );
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getPageHeader() );
     //ModelPrinter.print(logicalPageBox);
 
     final DebugOutputProcessorMetaData metaData = new DebugOutputProcessorMetaData();
-    metaData.initialize(report.getConfiguration());
-    
-    final TableLayoutProducer tlb = new TableLayoutProducer(metaData);
-    tlb.update(logicalPageBox, false);
-    final TableContentProducer tcp = new TestTableContentProducer(tlb.getLayout(), metaData);
-    tcp.compute(logicalPageBox, false);
-//    final SheetLayout layout = tlb.getLayout();
+    metaData.initialize( report.getConfiguration() );
+
+    final TableLayoutProducer tlb = new TableLayoutProducer( metaData );
+    tlb.update( logicalPageBox, false );
+    final TableContentProducer tcp = new TestTableContentProducer( tlb.getLayout(), metaData );
+    tcp.compute( logicalPageBox, false );
+    //    final SheetLayout layout = tlb.getLayout();
   }
 
-  public void testRun() throws ResourceException, ReportProcessingException
-  {
-    final URL url = getClass().getResource("Prd-2887.prpt");
-    assertNotNull(url);
+  public void testRun() throws ResourceException, ReportProcessingException {
+    final URL url = getClass().getResource( "Prd-2887.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    DebugReportRunner.createPDF(report);
+    DebugReportRunner.createPDF( report );
   }
 }

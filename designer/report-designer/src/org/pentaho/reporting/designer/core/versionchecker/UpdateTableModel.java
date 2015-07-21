@@ -19,49 +19,39 @@ package org.pentaho.reporting.designer.core.versionchecker;
 
 import javax.swing.table.AbstractTableModel;
 
-public class UpdateTableModel extends AbstractTableModel
-{
+public class UpdateTableModel extends AbstractTableModel {
   private UpdateInfo[] updateList;
 
-  public UpdateTableModel(final UpdateInfo[] updateList)
-  {
+  public UpdateTableModel( final UpdateInfo[] updateList ) {
     this.updateList = updateList.clone();
   }
 
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return 2;
   }
 
-  public Class<?> getColumnClass(final int columnIndex)
-  {
+  public Class<?> getColumnClass( final int columnIndex ) {
     return String.class;
   }
 
-  public int getRowCount()
-  {
-    if (updateList == null)
-    {
+  public int getRowCount() {
+    if ( updateList == null ) {
       return 0;
     }
     return updateList.length;
   }
 
-  public Object getValueAt(final int row, final int column)
-  {
-    if (column == 0)
-    {
-      return updateList[row].getType();
+  public Object getValueAt( final int row, final int column ) {
+    if ( column == 0 ) {
+      return updateList[ row ].getType();
     }
-    return updateList[row].getVersion();
+    return updateList[ row ].getVersion();
   }
 
-  public String getColumnName(final int column)
-  {
-    if (column == 0)
-    {
-      return Messages.getInstance().getString("UpdateTableModel.ReleaseType");// NON-NLS
+  public String getColumnName( final int column ) {
+    if ( column == 0 ) {
+      return Messages.getInstance().getString( "UpdateTableModel.ReleaseType" );// NON-NLS
     }
-    return Messages.getInstance().getString("UpdateTableModel.Version");// NON-NLS
+    return Messages.getInstance().getString( "UpdateTableModel.Version" );// NON-NLS
   }
 }

@@ -17,19 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections;
 
+import org.olap4j.OlapConnection;
+
 import java.io.Serializable;
 import java.sql.SQLException;
-
-import org.olap4j.OlapConnection;
 
 /**
  * Creation-Date: Dec 12, 2006, 1:53:44 PM
  *
  * @author Thomas Morgner
  */
-public interface OlapConnectionProvider extends Serializable
-{
-  public OlapConnection createConnection(final String user, final String password) throws SQLException;
+public interface OlapConnectionProvider extends Serializable {
+  public OlapConnection createConnection( final String user, final String password ) throws SQLException;
 
   public Object getConnectionHash();
 }

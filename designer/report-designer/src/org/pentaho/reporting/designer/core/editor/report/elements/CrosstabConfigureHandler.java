@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -37,101 +34,98 @@ import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
 
-public class CrosstabConfigureHandler extends AbstractSubreportHandler<CrosstabElement>
-{
-  public CrosstabConfigureHandler(final CrosstabElement subReport,
-                                  final Band parent,
-                                  final ReportElementEditorContext dragContext, final boolean rootband)
-  {
-    super(subReport, parent, dragContext, rootband);
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public class CrosstabConfigureHandler extends AbstractSubreportHandler<CrosstabElement> {
+  public CrosstabConfigureHandler( final CrosstabElement subReport,
+                                   final Band parent,
+                                   final ReportElementEditorContext dragContext, final boolean rootband ) {
+    super( subReport, parent, dragContext, rootband );
   }
 
-  public CrosstabConfigureHandler(final CrosstabElement subReport,
-                                  final Band parent,
-                                  final ReportDesignerContext designerContext,
-                                  final ReportDocumentContext renderContext)
-  {
-    super(subReport, parent, designerContext, renderContext);
+  public CrosstabConfigureHandler( final CrosstabElement subReport,
+                                   final Band parent,
+                                   final ReportDesignerContext designerContext,
+                                   final ReportDocumentContext renderContext ) {
+    super( subReport, parent, designerContext, renderContext );
   }
 
-  boolean showConfirmationDialog()
-  {
+  boolean showConfirmationDialog() {
     final UndoManager undo = renderContext.getUndo();
-    if (rootband)
-    {
-      final int result = JOptionPane.showOptionDialog(component,
-          Messages.getString("CrosstabReportElementDragHandler.BandedOrInlineSubreportQuestion"),
-          Messages.getString("CrosstabReportElementDragHandler.InsertSubreport"),
-          JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-          new String[]{Messages.getString("CrosstabReportElementDragHandler.Inline"),
-              Messages.getString("CrosstabReportElementDragHandler.Banded"),
-              Messages.getString("CrosstabReportElementDragHandler.Cancel")},
-          Messages.getString("CrosstabReportElementDragHandler.Inline"));
-      if (result == JOptionPane.CLOSED_OPTION || result == 2)
-      {
+    if ( rootband ) {
+      final int result = JOptionPane.showOptionDialog( component,
+        Messages.getString( "CrosstabReportElementDragHandler.BandedOrInlineSubreportQuestion" ),
+        Messages.getString( "CrosstabReportElementDragHandler.InsertSubreport" ),
+        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+        new String[] { Messages.getString( "CrosstabReportElementDragHandler.Inline" ),
+          Messages.getString( "CrosstabReportElementDragHandler.Banded" ),
+          Messages.getString( "CrosstabReportElementDragHandler.Cancel" ) },
+        Messages.getString( "CrosstabReportElementDragHandler.Inline" ) );
+      if ( result == JOptionPane.CLOSED_OPTION || result == 2 ) {
         return false;
       }
 
-      if (result == 0)
-      {
-        undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
-            new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
-        parent.addElement(subReport);
-      }
-      else
-      {
+      if ( result == 0 ) {
+        undo.addChange( Messages.getString( "CrosstabReportElementDragHandler.UndoEntry" ),
+          new ElementEditUndoEntry( parent.getObjectID(), parent.getElementCount(), null, subReport ) );
+        parent.addElement( subReport );
+      } else {
         final AbstractRootLevelBand arb = (AbstractRootLevelBand) parent;
-        undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
-            new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
-        arb.addSubReport(subReport);
+        undo.addChange( Messages.getString( "CrosstabReportElementDragHandler.UndoEntry" ),
+          new BandedSubreportEditUndoEntry( parent.getObjectID(), arb.getSubReportCount(), null, subReport ) );
+        arb.addSubReport( subReport );
       }
-    }
-    else
-    {
-      undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
-          new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
-      parent.addElement(subReport);
+    } else {
+      undo.addChange( Messages.getString( "CrosstabReportElementDragHandler.UndoEntry" ),
+        new ElementEditUndoEntry( parent.getObjectID(), parent.getElementCount(), null, subReport ) );
+      parent.addElement( subReport );
     }
     return true;
   }
 
-  void createSubReportTab()
-  {
+  void createSubReportTab() {
     final AbstractReportDefinition reportDefinition = designerContext.getActiveContext().getReportDefinition();
-    try
-    {
+    try {
       // Create the new subreport tab - this is where the contents of the Crosstab
       // dialog will go.  Zoom the crosstab canvas to 150% as crosstab has a lot of elements to display
-      subReport.setDataFactory(reportDefinition.getDataFactory());
-      subReport.getReportDefinition().setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.ZOOM, 1.5f);
+      subReport.setDataFactory( reportDefinition.getDataFactory() );
+      subReport.getReportDefinition()
+        .setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.ZOOM, 1.5f );
 
-      final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
-      designerContext.setActiveDocument(designerContext.getReportRenderContext(idx));
-    }
-    catch (ReportDataFactoryException e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
+      final int idx = designerContext.addSubReport( designerContext.getActiveContext(), subReport );
+      designerContext.setActiveDocument( designerContext.getReportRenderContext( idx ) );
+    } catch ( ReportDataFactoryException e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
     }
   }
 
-  void doSetQuery(final String queryName)
-  {
+  void doSetQuery( final String queryName ) {
     // Invoke Crosstab dialog
     final InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
-    crosstabAction.setReportDesignerContext(designerContext);
-    crosstabAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+    crosstabAction.setReportDesignerContext( designerContext );
+    crosstabAction.actionPerformed( new ActionEvent( this, ActionEvent.ACTION_PERFORMED, "" ) );
   }
 
 
-  public static void configureDefaults(final CrosstabElement visualElement)
-  {
-    visualElement.setAutoSort(Boolean.TRUE);
+  public static void configureDefaults( final CrosstabElement visualElement ) {
+    visualElement.setAutoSort( Boolean.TRUE );
 
     // Hide all bands except for Details
-    visualElement.getPageHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getReportHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getReportFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getPageFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getWatermark().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getPageHeader()
+      .setAttribute( ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,
+        Boolean.TRUE );
+    visualElement.getReportHeader()
+      .setAttribute( ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,
+        Boolean.TRUE );
+    visualElement.getReportFooter()
+      .setAttribute( ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,
+        Boolean.TRUE );
+    visualElement.getPageFooter()
+      .setAttribute( ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,
+        Boolean.TRUE );
+    visualElement.getWatermark()
+      .setAttribute( ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,
+        Boolean.TRUE );
   }
 }

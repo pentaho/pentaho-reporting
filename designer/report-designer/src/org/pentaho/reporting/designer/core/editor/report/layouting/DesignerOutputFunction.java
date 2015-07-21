@@ -28,85 +28,72 @@ import org.pentaho.reporting.engine.classic.core.layout.output.DefaultOutputFunc
 import org.pentaho.reporting.engine.classic.core.layout.output.LayouterLevel;
 import org.pentaho.reporting.engine.classic.core.states.ReportState;
 
-public class DesignerOutputFunction extends DefaultOutputFunction
-{
-  public DesignerOutputFunction()
-  {
+public class DesignerOutputFunction extends DefaultOutputFunction {
+  public DesignerOutputFunction() {
   }
 
-  protected ExpressionRuntime updateDetailsHeader(final ReportState state,
-                                                  final ProcessingContext processingContext,
-                                                  final ReportDefinition report,
-                                                  final ExpressionRuntime runtime) throws ReportProcessingException
-  {
+  protected ExpressionRuntime updateDetailsHeader( final ReportState state,
+                                                   final ProcessingContext processingContext,
+                                                   final ReportDefinition report,
+                                                   final ExpressionRuntime runtime ) throws ReportProcessingException {
     return runtime;
   }
 
-  protected boolean updateRepeatingFooters(final ReportEvent event,
-                                           final LayouterLevel[] levels) throws ReportProcessingException
-  {
+  protected boolean updateRepeatingFooters( final ReportEvent event,
+                                            final LayouterLevel[] levels ) throws ReportProcessingException {
     return false;
   }
 
-  protected boolean isPageFooterPrintable(final Band b, final boolean testSticky)
-  {
+  protected boolean isPageFooterPrintable( final Band b, final boolean testSticky ) {
     return true;
   }
 
-  protected boolean isNeedPrintRepeatingFooter(final ReportEvent event, final LayouterLevel[] levels)
-  {
+  protected boolean isNeedPrintRepeatingFooter( final ReportEvent event, final LayouterLevel[] levels ) {
     return false;
   }
 
-  protected ExpressionRuntime updateRepeatingGroupHeader(final ReportState state,
-                                                         final ProcessingContext processingContext,
-                                                         final ReportDefinition report,
-                                                         final LayouterLevel[] levels,
-                                                         final ExpressionRuntime runtime) throws ReportProcessingException
-  {
+  protected ExpressionRuntime updateRepeatingGroupHeader( final ReportState state,
+                                                          final ProcessingContext processingContext,
+                                                          final ReportDefinition report,
+                                                          final LayouterLevel[] levels,
+                                                          final ExpressionRuntime runtime )
+    throws ReportProcessingException {
     return runtime;
   }
 
-  protected void printDesigntimeFooter(final ReportEvent event) throws ReportProcessingException
-  {
+  protected void printDesigntimeFooter( final ReportEvent event ) throws ReportProcessingException {
     Renderer renderer = getRenderer();
-    if (isPrintHeaderAndFooter(event)) {
-      renderer.startSection(Renderer.SectionType.NORMALFLOW);
-      print(getRuntime(), event.getReport().getPageFooter());
-      addSubReportMarkers(renderer.endSection());
+    if ( isPrintHeaderAndFooter( event ) ) {
+      renderer.startSection( Renderer.SectionType.NORMALFLOW );
+      print( getRuntime(), event.getReport().getPageFooter() );
+      addSubReportMarkers( renderer.endSection() );
     }
   }
 
-  protected void printDesigntimeHeader(final ReportEvent event) throws ReportProcessingException
-  {
+  protected void printDesigntimeHeader( final ReportEvent event ) throws ReportProcessingException {
     Renderer renderer = getRenderer();
     final ReportDefinition report = event.getState().getReport();
-    if (isPrintHeaderAndFooter(event)) {
-      renderer.startSection(Renderer.SectionType.NORMALFLOW);
-      print(getRuntime(), report.getPageHeader());
-      addSubReportMarkers(renderer.endSection());
+    if ( isPrintHeaderAndFooter( event ) ) {
+      renderer.startSection( Renderer.SectionType.NORMALFLOW );
+      print( getRuntime(), report.getPageHeader() );
+      addSubReportMarkers( renderer.endSection() );
     }
   }
 
-  protected boolean isPrintHeaderAndFooter(final ReportEvent event)
-  {
-    if (event.getState().isSubReportEvent() == false)
-    {
+  protected boolean isPrintHeaderAndFooter( final ReportEvent event ) {
+    if ( event.getState().isSubReportEvent() == false ) {
       return false;
     }
-    if (event.getState().isInlineProcess() == false)
-    {
+    if ( event.getState().isInlineProcess() == false ) {
       return true;
     }
     return false;
   }
 
-  protected boolean isDesignTime()
-  {
+  protected boolean isDesignTime() {
     return true;
   }
 
-  protected void printPerformanceStats()
-  {
+  protected void printPerformanceStats() {
   }
 }

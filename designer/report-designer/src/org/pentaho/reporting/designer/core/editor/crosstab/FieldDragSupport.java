@@ -17,17 +17,18 @@
 
 package org.pentaho.reporting.designer.core.editor.crosstab;
 
-import java.awt.Point;
+import javax.swing.*;
 import java.util.List;
 import java.util.UUID;
-import javax.swing.TransferHandler;
 
-public interface FieldDragSupport
-{
+public interface FieldDragSupport {
   public UUID getDragId();
-  public void removeValues(List<IndexedTransferable.FieldTuple> fields);
+
+  public void removeValues( List<IndexedTransferable.FieldTuple> fields );
+
   public List<IndexedTransferable.FieldTuple> getSelectedFields();
-  public void insert(final TransferHandler.DropLocation point,
-                     final List<IndexedTransferable.FieldTuple> items,
-                     final boolean preventDuplicates);
+
+  public void insert( final TransferHandler.DropLocation point,
+                      final List<IndexedTransferable.FieldTuple> items,
+                      final boolean preventDuplicates );
 }

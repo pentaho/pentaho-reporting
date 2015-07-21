@@ -19,14 +19,11 @@ package org.pentaho.reporting.designer.extensions.wizard;
 
 import org.pentaho.reporting.designer.core.AbstractReportDesignerUiPlugin;
 
-public class WizardUiPlugin extends AbstractReportDesignerUiPlugin
-{
-  public WizardUiPlugin()
-  {
+public class WizardUiPlugin extends AbstractReportDesignerUiPlugin {
+  public WizardUiPlugin() {
   }
 
-  public String[] getOverlaySources()
-  {
-    return new String[]{"org/pentaho/reporting/designer/extensions/wizard/ui-overlay.xul"};
+  public String[] getOverlaySources() {
+    return new String[] { "org/pentaho/reporting/designer/extensions/wizard/ui-overlay.xul" };
   }
 }

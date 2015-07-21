@@ -22,18 +22,15 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.meta.AttributeMetaDataValidationTest;
 
-@SuppressWarnings("HardCodedStringLiteral")
-public class FullAttributeMetaDataValidationTest extends AttributeMetaDataValidationTest
-{
-  private static final Log logger = LogFactory.getLog(FullAttributeMetaDataValidationTest.class);
+@SuppressWarnings( "HardCodedStringLiteral" )
+public class FullAttributeMetaDataValidationTest extends AttributeMetaDataValidationTest {
+  private static final Log logger = LogFactory.getLog( FullAttributeMetaDataValidationTest.class );
 
-  public FullAttributeMetaDataValidationTest()
-  {
+  public FullAttributeMetaDataValidationTest() {
   }
 
   @Test
-  public void testMetaData()
-  {
+  public void testMetaData() {
     super.testMetaData();
   }
 }

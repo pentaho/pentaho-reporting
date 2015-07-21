@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.io.File;
-import javax.swing.Action;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
@@ -30,33 +25,36 @@ import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.util.ExternalToolLauncher;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-public final class LaunchHelpAction extends AbstractDesignerContextAction
-{
-  private static final Log log = LogFactory.getLog(LaunchHelpAction.class);
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 
-  public LaunchHelpAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("LaunchHelpAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("LaunchHelpAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("LaunchHelpAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("LaunchHelpAction.Accelerator"));
+public final class LaunchHelpAction extends AbstractDesignerContextAction {
+  private static final Log log = LogFactory.getLog( LaunchHelpAction.class );
+
+  public LaunchHelpAction() {
+    putValue( Action.NAME, ActionMessages.getString( "LaunchHelpAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "LaunchHelpAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "LaunchHelpAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "LaunchHelpAction.Accelerator" ) );
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
-    final String docFileName = config.getConfigProperty("org.pentaho.reporting.designer.core.documentation.report_designer_user_guide");
+    final String docFileName =
+      config.getConfigProperty( "org.pentaho.reporting.designer.core.documentation.report_designer_user_guide" );
 
     try {
-      final File userGuideFile = new File(docFileName);
-      String url= userGuideFile.getAbsolutePath();
-      url = url.replace(" ", "%20");
-      ExternalToolLauncher.openURL("file:" + url);
-    } catch (IOException ex) {
-      log.warn("Could not find file " + docFileName, ex); // NON-NLS
+      final File userGuideFile = new File( docFileName );
+      String url = userGuideFile.getAbsolutePath();
+      url = url.replace( " ", "%20" );
+      ExternalToolLauncher.openURL( "file:" + url );
+    } catch ( IOException ex ) {
+      log.warn( "Could not find file " + docFileName, ex ); // NON-NLS
     }
   }
 }

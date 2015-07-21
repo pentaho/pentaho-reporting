@@ -18,15 +18,13 @@
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.datasets;
 
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
-import org.xml.sax.SAXException;
+import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
-public class PropertiesDataSetReadHandler extends AbstractXmlReadHandler
-{
-  public PropertiesDataSetReadHandler()
-  {
+public class PropertiesDataSetReadHandler extends AbstractXmlReadHandler {
+  public PropertiesDataSetReadHandler() {
   }
 
   /**
@@ -38,36 +36,30 @@ public class PropertiesDataSetReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("properties".equals(tagName))
-    {
+    if ( "properties".equals( tagName ) ) {
       return new PropertiesDataSetBulkReadHandler();
     }
-    if ("property".equals(tagName))
-    {
+    if ( "property".equals( tagName ) ) {
       return new IgnoreAnyChildReadHandler();
     }
-    if ("padding".equals(tagName))
-    {
+    if ( "padding".equals( tagName ) ) {
       return new IgnoreAnyChildReadHandler();
     }
     return null;
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

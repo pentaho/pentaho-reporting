@@ -31,42 +31,37 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class UpdateVerticalGuidelineUndoEntry implements UndoEntry
-{
+public class UpdateVerticalGuidelineUndoEntry implements UndoEntry {
   private int index;
   private GuideLine guideLine;
   private GuideLine oldGuideLine;
   private InstanceID id;
 
-  public UpdateVerticalGuidelineUndoEntry(final int index,
-                                          final GuideLine guideLine,
-                                          final GuideLine oldGuideLine,
-                                          final InstanceID id)
-  {
+  public UpdateVerticalGuidelineUndoEntry( final int index,
+                                           final GuideLine guideLine,
+                                           final GuideLine oldGuideLine,
+                                           final InstanceID id ) {
     this.index = index;
     this.guideLine = guideLine;
     this.oldGuideLine = oldGuideLine;
     this.id = id;
   }
 
-  public void undo(final ReportDocumentContext context)
-  {
+  public void undo( final ReportDocumentContext context ) {
     final AbstractReportDefinition abstractReportDefinition = context.getReportDefinition();
-    final Band band = (Band) ModelUtility.findElementById(abstractReportDefinition, id);
-    final LinealModel linealModel = ModelUtility.getVerticalLinealModel(band);
-    linealModel.updateGuideLine(index, oldGuideLine);
+    final Band band = (Band) ModelUtility.findElementById( abstractReportDefinition, id );
+    final LinealModel linealModel = ModelUtility.getVerticalLinealModel( band );
+    linealModel.updateGuideLine( index, oldGuideLine );
   }
 
-  public void redo(final ReportDocumentContext context)
-  {
+  public void redo( final ReportDocumentContext context ) {
     final AbstractReportDefinition abstractReportDefinition = context.getReportDefinition();
-    final Band band = (Band) ModelUtility.findElementById(abstractReportDefinition, id);
-    final LinealModel linealModel = ModelUtility.getVerticalLinealModel(band);
-    linealModel.updateGuideLine(index, guideLine);
+    final Band band = (Band) ModelUtility.findElementById( abstractReportDefinition, id );
+    final LinealModel linealModel = ModelUtility.getVerticalLinealModel( band );
+    linealModel.updateGuideLine( index, guideLine );
   }
 
-  public UndoEntry merge(final UndoEntry other)
-  {
+  public UndoEntry merge( final UndoEntry other ) {
     return null;
   }
 }

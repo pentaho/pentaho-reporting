@@ -20,10 +20,8 @@ package org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyed
 import org.pentaho.plugin.jfreereport.reportcharts.ThermometerUnit;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.EnumPropertyEditor;
 
-public class ThermometerUnitsPropertyEditor extends EnumPropertyEditor
-{
-  public ThermometerUnitsPropertyEditor()
-  {
-    super(ThermometerUnit.class, true);
+public class ThermometerUnitsPropertyEditor extends EnumPropertyEditor {
+  public ThermometerUnitsPropertyEditor() {
+    super( ThermometerUnit.class, true );
   }
 }

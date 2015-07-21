@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.loader;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.pentaho.metadata.model.Domain;
 import org.pentaho.metadata.repository.IMetadataDomainRepository;
 import org.pentaho.metadata.repository.InMemoryMetadataDomainRepository;
@@ -34,71 +31,54 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.SimpleResource;
 
-public class MetadataModelResourceFactory implements ResourceFactory
-{
-  public static final FactoryParameterKey DOMAIN_ID = new FactoryParameterKey("domain-id");
+import java.io.IOException;
+import java.io.InputStream;
 
-  public MetadataModelResourceFactory()
-  {
+public class MetadataModelResourceFactory implements ResourceFactory {
+  public static final FactoryParameterKey DOMAIN_ID = new FactoryParameterKey( "domain-id" );
+
+  public MetadataModelResourceFactory() {
   }
 
-  public Resource create(final ResourceManager manager,
-                         final ResourceData data,
-                         final ResourceKey context) throws ResourceCreationException, ResourceLoadingException
-  {
-    final InputStream stream = data.getResourceAsStream(manager);
-    final long version = data.getVersion(manager);
+  public Resource create( final ResourceManager manager,
+                          final ResourceData data,
+                          final ResourceKey context ) throws ResourceCreationException, ResourceLoadingException {
+    final InputStream stream = data.getResourceAsStream( manager );
+    final long version = data.getVersion( manager );
     final ResourceKey key = data.getKey();
-    final Object o = key.getFactoryParameters().get(DOMAIN_ID);
-    if (o == null)
-    {
-      throw new ResourceLoadingException("Your resource-key must have a domain-id factory key defined.");
+    final Object o = key.getFactoryParameters().get( DOMAIN_ID );
+    if ( o == null ) {
+      throw new ResourceLoadingException( "Your resource-key must have a domain-id factory key defined." );
     }
-    try
-    {
+    try {
       final InMemoryMetadataDomainRepository repo = new InMemoryMetadataDomainRepository();
       final XmiParser parser = new XmiParser();
-      final Domain domain = parser.parseXmi(stream);
-      domain.setId(String.valueOf(o));
-      repo.storeDomain(domain, true);
-      return new SimpleResource(key, repo, IMetadataDomainRepository.class, version);
-    }
-    catch (ResourceCreationException e)
-    {
+      final Domain domain = parser.parseXmi( stream );
+      domain.setId( String.valueOf( o ) );
+      repo.storeDomain( domain, true );
+      return new SimpleResource( key, repo, IMetadataDomainRepository.class, version );
+    } catch ( ResourceCreationException e ) {
       throw e;
-    }
-    catch (ResourceLoadingException e)
-    {
+    } catch ( ResourceLoadingException e ) {
       throw e;
-    }
-    catch (IOException ioe)
-    {
-      throw new ResourceLoadingException("IOError", ioe);
-    }
-    catch (Exception e)
-    {
-      throw new ResourceCreationException("Generic Error", e);
-    }
-    finally
-    {
-      try
-      {
+    } catch ( IOException ioe ) {
+      throw new ResourceLoadingException( "IOError", ioe );
+    } catch ( Exception e ) {
+      throw new ResourceCreationException( "Generic Error", e );
+    } finally {
+      try {
         stream.close();
-      }
-      catch (IOException e)
-      {
+      } catch ( IOException e ) {
         // ignore ..
       }
     }
   }
 
-  public Class getFactoryType()
-  {
+  public Class getFactoryType() {
     return IMetadataDomainRepository.class;
   }
 
-  public void initializeDefaults()
-  {
+  public void initializeDefaults() {
 
   }
 }

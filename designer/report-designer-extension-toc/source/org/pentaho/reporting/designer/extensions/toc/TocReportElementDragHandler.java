@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.extensions.toc;
 
-import java.awt.geom.Point2D;
-import java.util.Locale;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.designer.core.editor.report.elements.AbstractSubReportElementDragHandler;
@@ -38,101 +33,91 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.extensions.toc.TocElement;
 
-public class TocReportElementDragHandler extends AbstractSubReportElementDragHandler
-{
-  public TocReportElementDragHandler()
-  {
+import javax.swing.*;
+import java.awt.geom.Point2D;
+import java.util.Locale;
+
+public class TocReportElementDragHandler extends AbstractSubReportElementDragHandler {
+  public TocReportElementDragHandler() {
   }
 
-  protected Element createElement(final ElementMetaData elementMetaData,
-                                  final String fieldName,
-                                  final ReportDocumentContext context) throws InstantiationException
-  {
+  protected Element createElement( final ElementMetaData elementMetaData,
+                                   final String fieldName,
+                                   final ReportDocumentContext context ) throws InstantiationException {
     final ElementType type = elementMetaData.create();
     final TocElement visualElement = new TocElement();
-    SubreportConfigureHandler.configureDefaults(visualElement);
-    type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
+    SubreportConfigureHandler.configureDefaults( visualElement );
+    type.configureDesignTimeDefaults( visualElement, Locale.getDefault() );
 
     final ElementStyleSheet styleSheet = visualElement.getStyle();
-    styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH);
-    styleSheet.setStyleProperty(ElementStyleKeys.MIN_HEIGHT, DEFAULT_HEIGHT);
+    styleSheet.setStyleProperty( ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH );
+    styleSheet.setStyleProperty( ElementStyleKeys.MIN_HEIGHT, DEFAULT_HEIGHT );
     return visualElement;
   }
 
-  protected void postProcessDrop(final Element visualElement,
-                                 final Band target,
-                                 final ReportElementEditorContext dragContext,
-                                 final Point2D point)
-  {
-    final Element rootBand = findRootBand(dragContext, point);
-    SwingUtilities.invokeLater(new TocReportConfigureHandler
-        ((TocElement) visualElement, target, dragContext, rootBand == target));
+  protected void postProcessDrop( final Element visualElement,
+                                  final Band target,
+                                  final ReportElementEditorContext dragContext,
+                                  final Point2D point ) {
+    final Element rootBand = findRootBand( dragContext, point );
+    SwingUtilities.invokeLater( new TocReportConfigureHandler
+      ( (TocElement) visualElement, target, dragContext, rootBand == target ) );
   }
 
-  private static class TocReportConfigureHandler implements Runnable
-  {
+  private static class TocReportConfigureHandler implements Runnable {
     private TocElement subReport;
     private Band parent;
     private ReportElementEditorContext dragContext;
     private boolean rootband;
 
-    private TocReportConfigureHandler(final TocElement subReport,
-                                      final Band parent,
-                                      final ReportElementEditorContext dragContext,
-                                      final boolean rootband)
-    {
+    private TocReportConfigureHandler( final TocElement subReport,
+                                       final Band parent,
+                                       final ReportElementEditorContext dragContext,
+                                       final boolean rootband ) {
       this.subReport = subReport;
       this.parent = parent;
       this.dragContext = dragContext;
       this.rootband = rootband;
     }
 
-    public void run()
-    {
-      if (rootband)
-      {
-        final int result = JOptionPane.showOptionDialog(dragContext.getRepresentationContainer(),
-            Messages.getInstance().getString("TocElementDragHandler.BandedOrInlineSubreportQuestion"),
-            Messages.getInstance().getString("TocElementDragHandler.InsertSubreport"),
-            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-            new String[]{Messages.getInstance().getString("TocElementDragHandler.Inline"),
-                Messages.getInstance().getString("TocElementDragHandler.Banded"),
-                Messages.getInstance().getString("TocElementDragHandler.Cancel")},
-            Messages.getInstance().getString("TocElementDragHandler.Inline"));
-        if (result == JOptionPane.CLOSED_OPTION || result == 2)
-        {
+    public void run() {
+      if ( rootband ) {
+        final int result = JOptionPane.showOptionDialog( dragContext.getRepresentationContainer(),
+          Messages.getInstance().getString( "TocElementDragHandler.BandedOrInlineSubreportQuestion" ),
+          Messages.getInstance().getString( "TocElementDragHandler.InsertSubreport" ),
+          JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+          new String[] { Messages.getInstance().getString( "TocElementDragHandler.Inline" ),
+            Messages.getInstance().getString( "TocElementDragHandler.Banded" ),
+            Messages.getInstance().getString( "TocElementDragHandler.Cancel" ) },
+          Messages.getInstance().getString( "TocElementDragHandler.Inline" ) );
+        if ( result == JOptionPane.CLOSED_OPTION || result == 2 ) {
           return;
         }
 
-        if (result == 0)
-        {
+        if ( result == 0 ) {
           final ReportDocumentContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
-          undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
-              new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
-          parent.addElement(subReport);
-        }
-        else
-        {
+          undo.addChange( Messages.getInstance().getString( "TocElementDragHandler.UndoEntry" ),
+            new ElementEditUndoEntry( parent.getObjectID(), parent.getElementCount(), null, subReport ) );
+          parent.addElement( subReport );
+        } else {
           final AbstractRootLevelBand arb = (AbstractRootLevelBand) parent;
 
           final ReportDocumentContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
-          undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
-              new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
-          arb.addSubReport(subReport);
+          undo.addChange( Messages.getInstance().getString( "TocElementDragHandler.UndoEntry" ),
+            new BandedSubreportEditUndoEntry( parent.getObjectID(), arb.getSubReportCount(), null, subReport ) );
+          arb.addSubReport( subReport );
         }
-      }
-      else
-      {
+      } else {
         final ReportDocumentContext context = dragContext.getRenderContext();
         final UndoManager undo = context.getUndo();
-        undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
-            new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
-        parent.addElement(subReport);
+        undo.addChange( Messages.getInstance().getString( "TocElementDragHandler.UndoEntry" ),
+          new ElementEditUndoEntry( parent.getObjectID(), parent.getElementCount(), null, subReport ) );
+        parent.addElement( subReport );
       }
 
-      dragContext.getRenderContext().getSelectionModel().setSelectedElements(new Object[]{subReport});
+      dragContext.getRenderContext().getSelectionModel().setSelectedElements( new Object[] { subReport } );
 
     }
   }

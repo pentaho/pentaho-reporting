@@ -17,51 +17,42 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.versionchecker.VersionCheckerUtility;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public final class CheckForUpdatesAction extends AbstractDesignerContextAction
-{
-  public CheckForUpdatesAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("CheckForUpdatesAction.Text"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("CheckForUpdatesAction.Mnemonic"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("CheckForUpdatesAction.Description"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("CheckForUpdatesAction.Accelerator"));
+public final class CheckForUpdatesAction extends AbstractDesignerContextAction {
+  public CheckForUpdatesAction() {
+    putValue( Action.NAME, ActionMessages.getString( "CheckForUpdatesAction.Text" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "CheckForUpdatesAction.Mnemonic" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "CheckForUpdatesAction.Description" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "CheckForUpdatesAction.Accelerator" ) );
 
-    try
-    {
-      Class.forName("org.pentaho.versionchecker.VersionChecker");
-      setEnabled(true);
-    }
-    catch (Throwable t)
-    {
+    try {
+      Class.forName( "org.pentaho.versionchecker.VersionChecker" );
+      setEnabled( true );
+    } catch ( Throwable t ) {
       // if we do not have the version checker, fail without any user feedback or logging
-      setEnabled(false);
+      setEnabled( false );
     }
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
-    try
-    {
-      Class.forName("org.pentaho.versionchecker.VersionChecker");
-      VersionCheckerUtility.checkVersion(getReportDesignerContext().getView().getParent(), true, false);
-    }
-    catch (Throwable t)
-    {
+  public void actionPerformed( final ActionEvent e ) {
+    try {
+      Class.forName( "org.pentaho.versionchecker.VersionChecker" );
+      VersionCheckerUtility.checkVersion( getReportDesignerContext().getView().getParent(), true, false );
+    } catch ( Throwable t ) {
       // if we do not have the version checker, fail without any user feedback or logging
     }
 

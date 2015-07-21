@@ -17,19 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.structuretree;
 
-import java.awt.BorderLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.Action;
-import javax.swing.ActionMap;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.TransferHandler;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreePath;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.CopyAction;
 import org.pentaho.reporting.designer.core.actions.global.CutAction;
@@ -39,90 +26,81 @@ import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 /**
  * By listening for update events, we could keep track of the trees and use a separate JTree for each report which
  * enables us to preserve the tree state on context switches.
  *
  * @author Thomas Morgner
  */
-public class StructureTreePanel extends SidePanel
-{
-  private class TreeLeadSelectionListener implements TreeSelectionListener
-  {
+public class StructureTreePanel extends SidePanel {
+  private class TreeLeadSelectionListener implements TreeSelectionListener {
     /**
      * Called whenever the value of the selection changes.
      *
      * @param e the event that characterizes the change.
      */
-    public void valueChanged(final TreeSelectionEvent e)
-    {
+    public void valueChanged( final TreeSelectionEvent e ) {
       final JTree tree = getTree();
       final TreePath selectionPath = tree.getLeadSelectionPath();
-      if (selectionPath == null)
-      {
-        setLeadSelection(null);
+      if ( selectionPath == null ) {
+        setLeadSelection( null );
         return;
       }
 
-      setLeadSelection(selectionPath.getLastPathComponent());
+      setLeadSelection( selectionPath.getLastPathComponent() );
     }
   }
 
-  private class ReportTreeContextMenuHandler extends MouseAdapter
-  {
-    private ReportTreeContextMenuHandler()
-    {
+  private class ReportTreeContextMenuHandler extends MouseAdapter {
+    private ReportTreeContextMenuHandler() {
     }
 
-    private void createPopupMenu(final MouseEvent e)
-    {
+    private void createPopupMenu( final MouseEvent e ) {
       final JTree tree = getTree();
       final ReportDesignerContext context = getReportDesignerContext();
-      if (context.getActiveContext() == null)
-      {
+      if ( context.getActiveContext() == null ) {
         return;
       }
 
-      final TreePath path = tree.getPathForLocation(e.getX(), e.getY());
-      if (path == null)
-      {
+      final TreePath path = tree.getPathForLocation( e.getX(), e.getY() );
+      if ( path == null ) {
         return;
       }
-      if (tree.getSelectionModel().isPathSelected(path) == false)
-      {
-        tree.getSelectionModel().setSelectionPath(path);
+      if ( tree.getSelectionModel().isPathSelected( path ) == false ) {
+        tree.getSelectionModel().setSelectionPath( path );
       }
 
       final Object o = path.getLastPathComponent();
-      final JPopupMenu pop = ContextMenuUtility.getMenu(context, o);
-      if (pop == null)
-      {
+      final JPopupMenu pop = ContextMenuUtility.getMenu( context, o );
+      if ( pop == null ) {
         return;
       }
-      pop.show(tree, e.getX(), e.getY());
+      pop.show( tree, e.getX(), e.getY() );
     }
 
-    public void mouseClicked(final MouseEvent e)
-    {
-      if (e.isPopupTrigger())
-      {
-        createPopupMenu(e);
+    public void mouseClicked( final MouseEvent e ) {
+      if ( e.isPopupTrigger() ) {
+        createPopupMenu( e );
       }
     }
 
-    public void mousePressed(final MouseEvent e)
-    {
-      if (e.isPopupTrigger())
-      {
-        createPopupMenu(e);
+    public void mousePressed( final MouseEvent e ) {
+      if ( e.isPopupTrigger() ) {
+        createPopupMenu( e );
       }
     }
 
-    public void mouseReleased(final MouseEvent e)
-    {
-      if (e.isPopupTrigger())
-      {
-        createPopupMenu(e);
+    public void mouseReleased( final MouseEvent e ) {
+      if ( e.isPopupTrigger() ) {
+        createPopupMenu( e );
       }
     }
   }
@@ -134,51 +112,45 @@ public class StructureTreePanel extends SidePanel
   private PasteAction pasteAction;
   public static final String LEAD_SELECTION_PROPERTY = "leadSelection";
 
-  public StructureTreePanel(final AbstractReportTree.RenderType renderType)
-  {
+  public StructureTreePanel( final AbstractReportTree.RenderType renderType ) {
     cutAction = new CutAction();
     copyAction = new CopyAction();
     pasteAction = new PasteAction();
 
-    if (renderType == AbstractReportTree.RenderType.REPORT)
-    {
+    if ( renderType == AbstractReportTree.RenderType.REPORT ) {
       tree = new LayoutReportTree();
-    }
-    else
-    {
+    } else {
       tree = new DataReportTree();
     }
 
-    tree.getSelectionModel().addTreeSelectionListener(new TreeLeadSelectionListener());
-    tree.addMouseListener(new ReportTreeContextMenuHandler());
+    tree.getSelectionModel().addTreeSelectionListener( new TreeLeadSelectionListener() );
+    tree.addMouseListener( new ReportTreeContextMenuHandler() );
 
     final ActionMap map = tree.getActionMap();
-    map.put(TransferHandler.getCutAction().getValue(Action.NAME), cutAction);
-    map.put(TransferHandler.getCopyAction().getValue(Action.NAME), copyAction);
-    map.put(TransferHandler.getPasteAction().getValue(Action.NAME), pasteAction);
+    map.put( TransferHandler.getCutAction().getValue( Action.NAME ), cutAction );
+    map.put( TransferHandler.getCopyAction().getValue( Action.NAME ), copyAction );
+    map.put( TransferHandler.getPasteAction().getValue( Action.NAME ), pasteAction );
 
-    setLayout(new BorderLayout());
-    add(new JScrollPane(tree), BorderLayout.CENTER);
+    setLayout( new BorderLayout() );
+    add( new JScrollPane( tree ), BorderLayout.CENTER );
   }
 
-  protected void updateDesignerContext(final ReportDesignerContext oldContext, final ReportDesignerContext newContext)
-  {
-    super.updateDesignerContext(oldContext, newContext);
-    cutAction.setReportDesignerContext(newContext);
-    copyAction.setReportDesignerContext(newContext);
-    pasteAction.setReportDesignerContext(newContext);
-    tree.setReportDesignerContext(newContext);
+  protected void updateDesignerContext( final ReportDesignerContext oldContext,
+                                        final ReportDesignerContext newContext ) {
+    super.updateDesignerContext( oldContext, newContext );
+    cutAction.setReportDesignerContext( newContext );
+    copyAction.setReportDesignerContext( newContext );
+    pasteAction.setReportDesignerContext( newContext );
+    tree.setReportDesignerContext( newContext );
   }
 
-  protected void updateSelection(final DocumentContextSelectionModel model)
-  {
+  protected void updateSelection( final DocumentContextSelectionModel model ) {
     // do nothing. We *do* define the selection, we dont really listen to it..
   }
 
-  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
-  {
-    super.updateActiveContext(oldContext, newContext);
-    tree.setRenderContext(newContext);
+  protected void updateActiveContext( final ReportDocumentContext oldContext, final ReportDocumentContext newContext ) {
+    super.updateActiveContext( oldContext, newContext );
+    tree.setRenderContext( newContext );
   }
 
   /**
@@ -191,26 +163,22 @@ public class StructureTreePanel extends SidePanel
    *
    * @param enabled true if this component should be enabled, false otherwise
    */
-  public void setEnabled(final boolean enabled)
-  {
-    super.setEnabled(enabled);
-    tree.setEnabled(enabled);
+  public void setEnabled( final boolean enabled ) {
+    super.setEnabled( enabled );
+    tree.setEnabled( enabled );
   }
 
-  public Object getLeadSelection()
-  {
+  public Object getLeadSelection() {
     return leadSelection;
   }
 
-  protected void setLeadSelection(final Object leadSelection)
-  {
+  protected void setLeadSelection( final Object leadSelection ) {
     final Object oldvalue = this.leadSelection;
     this.leadSelection = leadSelection;
-    firePropertyChange(LEAD_SELECTION_PROPERTY, oldvalue, leadSelection);
+    firePropertyChange( LEAD_SELECTION_PROPERTY, oldvalue, leadSelection );
   }
 
-  protected JTree getTree()
-  {
+  protected JTree getTree() {
     return tree;
   }
 }

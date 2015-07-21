@@ -17,31 +17,28 @@
 
 package org.pentaho.reporting.designer.core.actions.elements.format;
 
-import java.awt.Window;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.format.ElementFormatDialog;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class EditParagraphStyleAction extends ElementFormatAction
-{
-  public EditParagraphStyleAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("EditParagraphStyleAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("EditParagraphStyleAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditParagraphStyleAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditParagraphStyleAction.Accelerator"));
+public class EditParagraphStyleAction extends ElementFormatAction {
+  public EditParagraphStyleAction() {
+    putValue( Action.NAME, ActionMessages.getString( "EditParagraphStyleAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "EditParagraphStyleAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "EditParagraphStyleAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "EditParagraphStyleAction.Accelerator" ) );
   }
 
-  protected ElementFormatDialog createDialog(final Window window)
-  {
-    final ElementFormatDialog elementFormatDialog = super.createDialog(window);
-    elementFormatDialog.setActivePane(ElementFormatDialog.PARAGRAPH_PANE);
+  protected ElementFormatDialog createDialog( final Window window ) {
+    final ElementFormatDialog elementFormatDialog = super.createDialog( window );
+    elementFormatDialog.setActivePane( ElementFormatDialog.PARAGRAPH_PANE );
     return elementFormatDialog;
   }
 }

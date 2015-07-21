@@ -19,14 +19,11 @@ package org.pentaho.reporting.designer.extensions.legacycharts;
 
 import org.pentaho.reporting.designer.core.AbstractReportDesignerUiPlugin;
 
-public class LegacyChartsUiPlugin extends AbstractReportDesignerUiPlugin
-{
-  public LegacyChartsUiPlugin()
-  {
+public class LegacyChartsUiPlugin extends AbstractReportDesignerUiPlugin {
+  public LegacyChartsUiPlugin() {
   }
 
-  public String[] getOverlaySources()
-  {
-    return new String[]{"org/pentaho/reporting/designer/extensions/legacycharts/ui-overlay.xul"}; // NON-NLS
+  public String[] getOverlaySources() {
+    return new String[] { "org/pentaho/reporting/designer/extensions/legacycharts/ui-overlay.xul" }; // NON-NLS
   }
 }

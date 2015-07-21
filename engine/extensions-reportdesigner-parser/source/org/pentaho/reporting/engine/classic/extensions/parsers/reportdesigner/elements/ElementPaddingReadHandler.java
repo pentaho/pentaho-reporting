@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ElementPaddingReadHandler extends AbstractXmlReadHandler
-{
+public class ElementPaddingReadHandler extends AbstractXmlReadHandler {
   private ElementStyleSheet styleSheet;
 
-  public ElementPaddingReadHandler(final ElementStyleSheet styleSheet)
-  {
+  public ElementPaddingReadHandler( final ElementStyleSheet styleSheet ) {
     this.styleSheet = styleSheet;
   }
 
@@ -39,28 +37,25 @@ public class ElementPaddingReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    final float top = ParserUtil.parseFloat(attrs.getValue(getUri(), "top"), "Failed to parse attribute");
-    final float left = ParserUtil.parseFloat(attrs.getValue(getUri(), "left"), "Failed to parse attribute");
-    final float bottom = ParserUtil.parseFloat(attrs.getValue(getUri(), "bottom"), "Failed to parse attribute");
-    final float right = ParserUtil.parseFloat(attrs.getValue(getUri(), "right"), "Failed to parse attribute");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    final float top = ParserUtil.parseFloat( attrs.getValue( getUri(), "top" ), "Failed to parse attribute" );
+    final float left = ParserUtil.parseFloat( attrs.getValue( getUri(), "left" ), "Failed to parse attribute" );
+    final float bottom = ParserUtil.parseFloat( attrs.getValue( getUri(), "bottom" ), "Failed to parse attribute" );
+    final float right = ParserUtil.parseFloat( attrs.getValue( getUri(), "right" ), "Failed to parse attribute" );
 
-    styleSheet.setStyleProperty(ElementStyleKeys.PADDING_TOP, new Float (top));
-    styleSheet.setStyleProperty(ElementStyleKeys.PADDING_LEFT, new Float (left));
-    styleSheet.setStyleProperty(ElementStyleKeys.PADDING_BOTTOM, new Float (bottom));
-    styleSheet.setStyleProperty(ElementStyleKeys.PADDING_RIGHT, new Float (right));
+    styleSheet.setStyleProperty( ElementStyleKeys.PADDING_TOP, new Float( top ) );
+    styleSheet.setStyleProperty( ElementStyleKeys.PADDING_LEFT, new Float( left ) );
+    styleSheet.setStyleProperty( ElementStyleKeys.PADDING_BOTTOM, new Float( bottom ) );
+    styleSheet.setStyleProperty( ElementStyleKeys.PADDING_RIGHT, new Float( right ) );
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

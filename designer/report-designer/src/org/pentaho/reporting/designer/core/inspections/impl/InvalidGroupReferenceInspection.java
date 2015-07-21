@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.designer.core.inspections.impl;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -37,112 +35,96 @@ import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
 
-public class InvalidGroupReferenceInspection extends AbstractStructureInspection
-{
-  public InvalidGroupReferenceInspection()
-  {
+import java.util.Locale;
+
+public class InvalidGroupReferenceInspection extends AbstractStructureInspection {
+  public InvalidGroupReferenceInspection() {
   }
 
-  public boolean isInlineInspection()
-  {
+  public boolean isInlineInspection() {
     return true;
   }
 
-  public void inspect(final ReportDesignerContext designerContext,
-                      final ReportDocumentContext reportRenderContext,
-                      final InspectionResultListener resultHandler) throws ReportDataFactoryException
-  {
+  public void inspect( final ReportDesignerContext designerContext,
+                       final ReportDocumentContext reportRenderContext,
+                       final InspectionResultListener resultHandler ) throws ReportDataFactoryException {
   }
 
-  protected void inspectElement(final ReportDesignerContext designerContext,
-                                final ReportDocumentContext reportRenderContext,
-                                final InspectionResultListener resultHandler,
-                                final String[] columnNames,
-                                final ReportElement element)
-  {
+  protected void inspectElement( final ReportDesignerContext designerContext,
+                                 final ReportDocumentContext reportRenderContext,
+                                 final InspectionResultListener resultHandler,
+                                 final String[] columnNames,
+                                 final ReportElement element ) {
     final AttributeMetaData[] datas = element.getMetaData().getAttributeDescriptions();
-    for (int i = 0; i < datas.length; i++)
-    {
-      final AttributeMetaData metaData = datas[i];
+    for ( int i = 0; i < datas.length; i++ ) {
+      final AttributeMetaData metaData = datas[ i ];
 
-      if (!"Group".equals(metaData.getValueRole()))//NON-NLS
+      if ( !"Group".equals( metaData.getValueRole() ) )//NON-NLS
       {
         continue;
       }
 
-      final Object value = element.getAttribute(metaData.getNameSpace(), metaData.getName());
-      final String[] groups = metaData.getReferencedGroups(element, value);
-      for (int j = 0; j < groups.length; j++)
-      {
-        final String group = groups[j];
+      final Object value = element.getAttribute( metaData.getNameSpace(), metaData.getName() );
+      final String[] groups = metaData.getReferencedGroups( element, value );
+      for ( int j = 0; j < groups.length; j++ ) {
+        final String group = groups[ j ];
         final AbstractReportDefinition reportDefinition = reportRenderContext.getReportDefinition();
-        final ReportElement e = reportDefinition.getGroupByName(group);
-        if (e == null)
-        {
-          resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
-              Messages.getString("InvalidGroupReferenceInspection.AttributeInvalidGroup",
-                  element.getName(), group, metaData.getDisplayName(Locale.getDefault())),
-              new AttributeLocationInfo(element, metaData.getNameSpace(), metaData.getName(), false)));
+        final ReportElement e = reportDefinition.getGroupByName( group );
+        if ( e == null ) {
+          resultHandler.notifyInspectionResult( new InspectionResult( this, InspectionResult.Severity.WARNING,
+            Messages.getString( "InvalidGroupReferenceInspection.AttributeInvalidGroup",
+              element.getName(), group, metaData.getDisplayName( Locale.getDefault() ) ),
+            new AttributeLocationInfo( element, metaData.getNameSpace(), metaData.getName(), false ) ) );
         }
       }
     }
 
   }
 
-  protected void inspectExpression(final ReportDesignerContext designerContext,
-                                   final ReportDocumentContext reportRenderContext,
-                                   final InspectionResultListener resultHandler,
-                                   final String[] columnNames,
-                                   final Expression expression,
-                                   final ExpressionMetaData expressionMetaData)
-  {
-    if (expressionMetaData == null)
-    {
+  protected void inspectExpression( final ReportDesignerContext designerContext,
+                                    final ReportDocumentContext reportRenderContext,
+                                    final InspectionResultListener resultHandler,
+                                    final String[] columnNames,
+                                    final Expression expression,
+                                    final ExpressionMetaData expressionMetaData ) {
+    if ( expressionMetaData == null ) {
       return;
     }
 
-    try
-    {
-      final BeanUtility utility = new BeanUtility(expression);
+    try {
+      final BeanUtility utility = new BeanUtility( expression );
       final ExpressionPropertyMetaData[] datas = expressionMetaData.getPropertyDescriptions();
-      for (int i = 0; i < datas.length; i++)
-      {
-        final ExpressionPropertyMetaData metaData = datas[i];
-        if (metaData.isHidden())
-        {
+      for ( int i = 0; i < datas.length; i++ ) {
+        final ExpressionPropertyMetaData metaData = datas[ i ];
+        if ( metaData.isHidden() ) {
           continue;
         }
-        if (!WorkspaceSettings.getInstance().isVisible(metaData))
+        if ( !WorkspaceSettings.getInstance().isVisible( metaData ) ) {
+          continue;
+        }
+
+        if ( !"Group".equals( metaData.getPropertyRole() ) )//NON-NLS
         {
           continue;
         }
 
-        if (!"Group".equals(metaData.getPropertyRole()))//NON-NLS
-        {
-          continue;
-        }
-
-        final Object o = utility.getProperty(metaData.getName());
-        final String[] elements = metaData.getReferencedGroups(expression, o);
-        for (int j = 0; j < elements.length; j++)
-        {
-          final String element = elements[j];
+        final Object o = utility.getProperty( metaData.getName() );
+        final String[] elements = metaData.getReferencedGroups( expression, o );
+        for ( int j = 0; j < elements.length; j++ ) {
+          final String element = elements[ j ];
           final AbstractReportDefinition reportDefinition = reportRenderContext.getReportDefinition();
-          final ReportElement e = reportDefinition.getGroupByName(element);
-          if (e == null)
-          {
-            resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
-                Messages.getString("InvalidGroupReferenceInspection.ExpressionInvalidGroup",
-                    expression.getName(), element, metaData.getDisplayName(Locale.getDefault())),
-                new PropertyLocationInfo(expression, metaData.getName())));
+          final ReportElement e = reportDefinition.getGroupByName( element );
+          if ( e == null ) {
+            resultHandler.notifyInspectionResult( new InspectionResult( this, InspectionResult.Severity.WARNING,
+              Messages.getString( "InvalidGroupReferenceInspection.ExpressionInvalidGroup",
+                expression.getName(), element, metaData.getDisplayName( Locale.getDefault() ) ),
+              new PropertyLocationInfo( expression, metaData.getName() ) ) );
           }
         }
       }
-    }
-    catch (Exception e)
-    {
-      resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
-          e.getMessage(), new LocationInfo(expression)));
+    } catch ( Exception e ) {
+      resultHandler.notifyInspectionResult( new InspectionResult( this, InspectionResult.Severity.WARNING,
+        e.getMessage(), new LocationInfo( expression ) ) );
     }
 
   }

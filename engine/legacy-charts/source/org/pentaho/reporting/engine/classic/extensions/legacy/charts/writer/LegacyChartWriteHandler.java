@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.legacy.charts.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterState;
@@ -28,11 +26,11 @@ import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+
 @Deprecated
-public class LegacyChartWriteHandler extends AbstractElementWriteHandler
-{
-  public LegacyChartWriteHandler()
-  {
+public class LegacyChartWriteHandler extends AbstractElementWriteHandler {
+  public LegacyChartWriteHandler() {
   }
 
   /**
@@ -45,19 +43,17 @@ public class LegacyChartWriteHandler extends AbstractElementWriteHandler
    * @throws IOException           if an IO error occured.
    * @throws BundleWriterException if an Bundle writer.
    */
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element)
-      throws IOException, BundleWriterException
-  {
-    final AttributeList attList = createMainAttributes(element, xmlWriter);
-    if (xmlWriter.isNamespaceDefined(LegacyChartElementModule.NAMESPACE) == false)
-    {
-      attList.addNamespaceDeclaration("legacy-charts", LegacyChartElementModule.NAMESPACE);
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element )
+    throws IOException, BundleWriterException {
+    final AttributeList attList = createMainAttributes( element, xmlWriter );
+    if ( xmlWriter.isNamespaceDefined( LegacyChartElementModule.NAMESPACE ) == false ) {
+      attList.addNamespaceDeclaration( "legacy-charts", LegacyChartElementModule.NAMESPACE );
     }
-    xmlWriter.writeTag(LegacyChartElementModule.NAMESPACE, "legacy-chart", attList, XmlWriter.OPEN);
-    writeElementBody(bundle, state, element, xmlWriter);
+    xmlWriter.writeTag( LegacyChartElementModule.NAMESPACE, "legacy-chart", attList, XmlWriter.OPEN );
+    writeElementBody( bundle, state, element, xmlWriter );
     xmlWriter.writeCloseTag();
   }
 

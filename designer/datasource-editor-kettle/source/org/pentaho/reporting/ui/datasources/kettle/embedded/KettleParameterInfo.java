@@ -17,31 +17,26 @@
 
 package org.pentaho.reporting.ui.datasources.kettle.embedded;
 
-public class KettleParameterInfo
-{
+public class KettleParameterInfo {
   private String name;
   private String description;
   private String defaultValue;
 
-  public KettleParameterInfo(final String name, final String description, final String defaultValue)
-  {
+  public KettleParameterInfo( final String name, final String description, final String defaultValue ) {
     this.name = name;
     this.description = description;
     this.defaultValue = defaultValue;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getDescription()
-  {
+  public String getDescription() {
     return description;
   }
 
-  public String getDefaultValue()
-  {
+  public String getDefaultValue() {
     return defaultValue;
   }
 }

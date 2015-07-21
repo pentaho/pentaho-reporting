@@ -23,29 +23,25 @@ import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.SequenceDataFactory;
 
-public class ModuleTest extends TestCase
-{
-  public ModuleTest()
-  {
+public class ModuleTest extends TestCase {
+  public ModuleTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testModuleExists()
-  {
-    assertTrue(ClassicEngineBoot.getInstance().getPackageManager().isModuleAvailable(SequenceDataSourceModule.class.getName()));
+  public void testModuleExists() {
+    assertTrue( ClassicEngineBoot.getInstance().getPackageManager()
+      .isModuleAvailable( SequenceDataSourceModule.class.getName() ) );
   }
 
-  public void testEditorRegistered()
-  {
+  public void testEditorRegistered() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(SequenceDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( SequenceDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
-    assertTrue(editor.canHandle(new SequenceDataFactory()));
+    assertTrue( editor.canHandle( new SequenceDataFactory() ) );
   }
 
 }

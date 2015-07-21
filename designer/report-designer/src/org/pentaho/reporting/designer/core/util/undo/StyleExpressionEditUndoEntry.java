@@ -30,47 +30,40 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class StyleExpressionEditUndoEntry implements UndoEntry
-{
+public class StyleExpressionEditUndoEntry implements UndoEntry {
   private InstanceID target;
   private StyleKey styleKey;
   private Expression newValue;
   private Expression oldValue;
 
-  public StyleExpressionEditUndoEntry(final InstanceID target,
-                                      final StyleKey styleKey,
-                                      final Expression oldValue,
-                                      final Expression newValue)
-  {
+  public StyleExpressionEditUndoEntry( final InstanceID target,
+                                       final StyleKey styleKey,
+                                       final Expression oldValue,
+                                       final Expression newValue ) {
     this.target = target;
     this.styleKey = styleKey;
     this.oldValue = oldValue;
     this.newValue = newValue;
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
-    final ReportElement elementById = ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-    elementById.setStyleExpression(styleKey, oldValue);
+  public void undo( final ReportDocumentContext renderContext ) {
+    final ReportElement elementById = ModelUtility.findElementById( renderContext.getReportDefinition(), target );
+    elementById.setStyleExpression( styleKey, oldValue );
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
-    final ReportElement elementById = ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-    elementById.setStyleExpression(styleKey, newValue);
+  public void redo( final ReportDocumentContext renderContext ) {
+    final ReportElement elementById = ModelUtility.findElementById( renderContext.getReportDefinition(), target );
+    elementById.setStyleExpression( styleKey, newValue );
   }
 
-  public UndoEntry merge(final UndoEntry newEntry)
-  {
-    if (newEntry instanceof StyleExpressionEditUndoEntry == false)
-    {
+  public UndoEntry merge( final UndoEntry newEntry ) {
+    if ( newEntry instanceof StyleExpressionEditUndoEntry == false ) {
       return null;
     }
 
     final StyleExpressionEditUndoEntry entry = (StyleExpressionEditUndoEntry) newEntry;
-    if (entry.target == target &&
-        ObjectUtilities.equal(entry.styleKey, styleKey))
-    {
+    if ( entry.target == target &&
+      ObjectUtilities.equal( entry.styleKey, styleKey ) ) {
       return newEntry;
     }
     return null;

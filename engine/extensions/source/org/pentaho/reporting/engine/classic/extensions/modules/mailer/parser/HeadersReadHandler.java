@@ -17,22 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.extensions.modules.mailer.MailHeader;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class HeadersReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class HeadersReadHandler extends AbstractXmlReadHandler {
   private ArrayList headerReadHandlers;
 
   private MailHeader[] headers;
 
-  public HeadersReadHandler()
-  {
+  public HeadersReadHandler() {
     headerReadHandlers = new ArrayList();
   }
 
@@ -45,24 +43,20 @@ public class HeadersReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("formula-header".equals(tagName))
-    {
+    if ( "formula-header".equals( tagName ) ) {
       final FormulaHeaderReadHandler readHandler = new FormulaHeaderReadHandler();
-      headerReadHandlers.add(readHandler);
+      headerReadHandlers.add( readHandler );
       return readHandler;
     }
-    if ("static-header".equals(tagName))
-    {
+    if ( "static-header".equals( tagName ) ) {
       final StaticHeaderReadHandler readHandler = new StaticHeaderReadHandler();
-      headerReadHandlers.add(readHandler);
+      headerReadHandlers.add( readHandler );
       return readHandler;
     }
     return null;
@@ -73,30 +67,25 @@ public class HeadersReadHandler extends AbstractXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    headers = new MailHeader[headerReadHandlers.size()];
-    for (int i = 0; i < headerReadHandlers.size(); i++)
-    {
-      final XmlReadHandler handler = (XmlReadHandler) headerReadHandlers.get(i);
-      headers[i] = (MailHeader) handler.getObject();
+  protected void doneParsing() throws SAXException {
+    headers = new MailHeader[ headerReadHandlers.size() ];
+    for ( int i = 0; i < headerReadHandlers.size(); i++ ) {
+      final XmlReadHandler handler = (XmlReadHandler) headerReadHandlers.get( i );
+      headers[ i ] = (MailHeader) handler.getObject();
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return headers;
   }
 
-  public MailHeader[] getHeaders()
-  {
+  public MailHeader[] getHeaders() {
     return headers;
   }
 }

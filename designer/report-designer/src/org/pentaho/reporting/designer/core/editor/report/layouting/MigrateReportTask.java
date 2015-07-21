@@ -17,25 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.text.html.HTMLEditorKit;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.report.MigrateReportAction;
@@ -46,28 +27,27 @@ import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.MacOSXIntegration;
 
-public class MigrateReportTask implements Runnable
-{
-  private enum UserInput
-  {
+import javax.swing.*;
+import javax.swing.text.html.HTMLEditorKit;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class MigrateReportTask implements Runnable {
+  private enum UserInput {
     Migrate, Clear, Cancel
   }
 
-  private static class MigrateConfirmationDialog extends CommonDialog
-  {
-    private class SelectionAction extends AbstractAction
-    {
+  private static class MigrateConfirmationDialog extends CommonDialog {
+    private class SelectionAction extends AbstractAction {
       private UserInput option;
 
-      private SelectionAction(final String name,
-                              final UserInput option)
-      {
-        super(name);
+      private SelectionAction( final String name,
+                               final UserInput option ) {
+        super( name );
         this.option = option;
       }
 
-      public void actionPerformed(final ActionEvent e)
-      {
+      public void actionPerformed( final ActionEvent e ) {
         input = option;
         dispose();
       }
@@ -75,94 +55,81 @@ public class MigrateReportTask implements Runnable
 
     private UserInput input;
 
-    private MigrateConfirmationDialog()
-    {
+    private MigrateConfirmationDialog() {
       init();
     }
 
-    private MigrateConfirmationDialog(final Frame owner) throws HeadlessException
-    {
-      super(owner);
+    private MigrateConfirmationDialog( final Frame owner ) throws HeadlessException {
+      super( owner );
       init();
     }
 
-    private MigrateConfirmationDialog(final Dialog owner) throws HeadlessException
-    {
-      super(owner);
+    private MigrateConfirmationDialog( final Dialog owner ) throws HeadlessException {
+      super( owner );
       init();
     }
 
-    protected void init()
-    {
-      setTitle(Messages.getString("MigrateReportTask.Title"));
-      setModal(true);
+    protected void init() {
+      setTitle( Messages.getString( "MigrateReportTask.Title" ) );
+      setModal( true );
       super.init();
     }
 
-    protected void performInitialResize()
-    {
-      setSize(500, 200);
-      LibSwingUtil.centerDialogInParent(this);
+    protected void performInitialResize() {
+      setSize( 500, 200 );
+      LibSwingUtil.centerDialogInParent( this );
     }
 
-    protected Action getConfirmAction()
-    {
+    protected Action getConfirmAction() {
       return null;
     }
 
-    protected String getDialogId()
-    {
+    protected String getDialogId() {
       return "MigrateReportTask.MigrateConfirmationDialog"; // NON-NLS
     }
 
-    protected Component createContentPane()
-    {
+    protected Component createContentPane() {
       final JEditorPane textArea = new JEditorPane();
-      textArea.setEditable(false);
-      textArea.setBackground(new Color(0, 0, 0, 0));
-      textArea.setOpaque(false);
-      textArea.setEditorKit(new HTMLEditorKit());
-      textArea.setText(Messages.getString("MigrateReportTask.Message",
-          ClassicEngineBoot.printVersion(ClassicEngineBoot.computeCurrentVersionId())));
+      textArea.setEditable( false );
+      textArea.setBackground( new Color( 0, 0, 0, 0 ) );
+      textArea.setOpaque( false );
+      textArea.setEditorKit( new HTMLEditorKit() );
+      textArea.setText( Messages.getString( "MigrateReportTask.Message",
+        ClassicEngineBoot.printVersion( ClassicEngineBoot.computeCurrentVersionId() ) ) );
 
-      final JPanel panel = new JPanel(new BorderLayout());
-      panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-      panel.add(textArea);
+      final JPanel panel = new JPanel( new BorderLayout() );
+      panel.setBorder( BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) );
+      panel.add( textArea );
       return panel;
     }
 
-    protected JPanel createButtonsPane()
-    {
+    protected JPanel createButtonsPane() {
       final JButton migrateButton =
-          new JButton(new SelectionAction(Messages.getString("MigrateReportTask.Migrate"), UserInput.Migrate));
+        new JButton( new SelectionAction( Messages.getString( "MigrateReportTask.Migrate" ), UserInput.Migrate ) );
       final JButton clearButton =
-          new JButton(new SelectionAction(Messages.getString("MigrateReportTask.Clear"), UserInput.Clear));
+        new JButton( new SelectionAction( Messages.getString( "MigrateReportTask.Clear" ), UserInput.Clear ) );
 
       final JPanel buttonsPanel = new JPanel();
-      buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+      buttonsPanel.setLayout( new FlowLayout( FlowLayout.RIGHT, 5, 5 ) );
 
-      if (!MacOSXIntegration.MAC_OS_X)
-      {
-        buttonsPanel.add(migrateButton);
-        buttonsPanel.add(clearButton);
+      if ( !MacOSXIntegration.MAC_OS_X ) {
+        buttonsPanel.add( migrateButton );
+        buttonsPanel.add( clearButton );
       }
 
-      if (hasCancelButton())
-      {
-        buttonsPanel.add(new JButton(getCancelAction()));
+      if ( hasCancelButton() ) {
+        buttonsPanel.add( new JButton( getCancelAction() ) );
       }
 
-      if (MacOSXIntegration.MAC_OS_X)
-      {
-        buttonsPanel.add(migrateButton);
-        buttonsPanel.add(clearButton);
+      if ( MacOSXIntegration.MAC_OS_X ) {
+        buttonsPanel.add( migrateButton );
+        buttonsPanel.add( clearButton );
       }
 
       return buttonsPanel;
     }
 
-    public UserInput performSelection()
-    {
+    public UserInput performSelection() {
       input = UserInput.Cancel;
       super.performEdit();
       return input;
@@ -173,10 +140,9 @@ public class MigrateReportTask implements Runnable
   private final ReportDocumentContext reportContext;
   private final long minimumVersionNeeded;
 
-  public MigrateReportTask(final ReportDesignerContext designerContext,
-                           final ReportDocumentContext reportContext,
-                           final long minimumVersionNeeded)
-  {
+  public MigrateReportTask( final ReportDesignerContext designerContext,
+                            final ReportDocumentContext reportContext,
+                            final long minimumVersionNeeded ) {
 
 
     this.designerContext = designerContext;
@@ -184,43 +150,32 @@ public class MigrateReportTask implements Runnable
     this.minimumVersionNeeded = minimumVersionNeeded;
   }
 
-  public void run()
-  {
+  public void run() {
     final MasterReport masterReportElement = reportContext.getContextRoot();
     final Integer compatibilityLevel = masterReportElement.getCompatibilityLevel();
-    if (compatibilityLevel == null)
-    {
+    if ( compatibilityLevel == null ) {
       return;
     }
-    if (compatibilityLevel.intValue() > minimumVersionNeeded)
-    {
+    if ( compatibilityLevel.intValue() > minimumVersionNeeded ) {
       // already done.
       return;
     }
 
-    final Window window = LibSwingUtil.getWindowAncestor(designerContext.getView().getParent());
+    final Window window = LibSwingUtil.getWindowAncestor( designerContext.getView().getParent() );
     final MigrateConfirmationDialog dialog;
-    if (window instanceof JDialog)
-    {
-      dialog = new MigrateConfirmationDialog((JDialog) window);
-    }
-    else if (window instanceof JFrame)
-    {
-      dialog = new MigrateConfirmationDialog((JFrame) window);
-    }
-    else
-    {
+    if ( window instanceof JDialog ) {
+      dialog = new MigrateConfirmationDialog( (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      dialog = new MigrateConfirmationDialog( (JFrame) window );
+    } else {
       dialog = new MigrateConfirmationDialog();
     }
 
     final UserInput userInput = dialog.performSelection();
-    if (userInput == UserInput.Clear)
-    {
-      masterReportElement.setCompatibilityLevel(null);
-    }
-    else if (userInput == UserInput.Migrate)
-    {
-      MigrateReportAction.migrateReport(designerContext);
+    if ( userInput == UserInput.Clear ) {
+      masterReportElement.setCompatibilityLevel( null );
+    } else if ( userInput == UserInput.Migrate ) {
+      MigrateReportAction.migrateReport( designerContext );
     }
   }
 }

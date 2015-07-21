@@ -17,27 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter;
 
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import org.xml.sax.Locator;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
+import org.xml.sax.Locator;
 
-public class URLConverter implements ObjectConverter
-{
-  public URLConverter()
-  {
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class URLConverter implements ObjectConverter {
+  public URLConverter() {
   }
 
-  public Object convertFromString(final String s, final Locator locator) throws ParseException
-  {
-    try
-    {
-      return new URL(s);
-    }
-    catch (MalformedURLException e)
-    {
-      throw new ParseException(e.getMessage());
+  public Object convertFromString( final String s, final Locator locator ) throws ParseException {
+    try {
+      return new URL( s );
+    } catch ( MalformedURLException e ) {
+      throw new ParseException( e.getMessage() );
     }
   }
 }

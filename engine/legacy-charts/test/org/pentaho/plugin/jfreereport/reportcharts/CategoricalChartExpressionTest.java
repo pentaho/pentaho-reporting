@@ -17,94 +17,87 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Font;
-
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CategoryPlot;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
 
+import java.awt.*;
+
+import static org.junit.Assert.assertTrue;
+
 /**
  * @author Andrey Khayrutdinov
  */
-public class CategoricalChartExpressionTest
-{
+public class CategoricalChartExpressionTest {
   @BeforeClass
-  public static void ensureBootIsDone()
-  {
+  public static void ensureBootIsDone() {
     ClassicEngineBoot.getInstance().start();
   }
 
   private CategoricalChartExpression expression;
 
   @Before
-  public void setUp()
-  {
+  public void setUp() {
     expression = new DummyCategoricalChartExpression();
-    expression.setRuntime(new DebugExpressionRuntime());
-    expression.setAutoRange(false);
-    expression.setScaleFactor(1.1);
+    expression.setRuntime( new DebugExpressionRuntime() );
+    expression.setAutoRange( false );
+    expression.setScaleFactor( 1.1 );
   }
 
   @Test
-  public void configureRangeAxis_PositiveValues()
-  {
+  public void configureRangeAxis_PositiveValues() {
     final double lower = 10;
     final double upper = 20;
     NumberAxis axis = new NumberAxis();
-    axis.setRange(lower, upper);
+    axis.setRange( lower, upper );
 
-    expression.configureRangeAxis(createCategoryPlotWith(axis), createFont());
+    expression.configureRangeAxis( createCategoryPlotWith( axis ), createFont() );
 
-    assertTrue(axis.getLowerBound() < lower);
-    assertTrue(axis.getLowerBound() > 0);
-    assertTrue(axis.getUpperBound() > upper);
+    assertTrue( axis.getLowerBound() < lower );
+    assertTrue( axis.getLowerBound() > 0 );
+    assertTrue( axis.getUpperBound() > upper );
   }
 
   @Test
-  public void configureRangeAxis_NegativeValues()
-  {
+  public void configureRangeAxis_NegativeValues() {
     final double lower = -20;
     final double upper = -10;
     NumberAxis axis = new NumberAxis();
-    axis.setRange(lower, upper);
+    axis.setRange( lower, upper );
 
-    expression.configureRangeAxis(createCategoryPlotWith(axis), createFont());
+    expression.configureRangeAxis( createCategoryPlotWith( axis ), createFont() );
 
-    assertTrue(axis.getLowerBound() < lower);
-    assertTrue(axis.getUpperBound() > upper);
-    assertTrue(axis.getUpperBound() < 0);
+    assertTrue( axis.getLowerBound() < lower );
+    assertTrue( axis.getUpperBound() > upper );
+    assertTrue( axis.getUpperBound() < 0 );
   }
 
   @Test
-  public void configureRangeAxis_AnyValues()
-  {
+  public void configureRangeAxis_AnyValues() {
     final double lower = -20;
     final double upper = 20;
     NumberAxis axis = new NumberAxis();
-    axis.setRange(lower, upper);
+    axis.setRange( lower, upper );
 
-    expression.configureRangeAxis(createCategoryPlotWith(axis), createFont());
+    expression.configureRangeAxis( createCategoryPlotWith( axis ), createFont() );
 
-    assertTrue(axis.getLowerBound() < lower);
-    assertTrue(axis.getUpperBound() > upper);
+    assertTrue( axis.getLowerBound() < lower );
+    assertTrue( axis.getUpperBound() > upper );
   }
 
 
-  private static CategoryPlot createCategoryPlotWith(ValueAxis rangeAxis)
-  {
+  private static CategoryPlot createCategoryPlotWith( ValueAxis rangeAxis ) {
     CategoryPlot plot = new CategoryPlot();
-    plot.setRangeAxis(rangeAxis);
+    plot.setRangeAxis( rangeAxis );
     return plot;
   }
 
-  private static Font createFont()
-  {
-    return new Font("Arial", Font.PLAIN, 12);
+  private static Font createFont() {
+    return new Font( "Arial", Font.PLAIN, 12 );
   }
 }

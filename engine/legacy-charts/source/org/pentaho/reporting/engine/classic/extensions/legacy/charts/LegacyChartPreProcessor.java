@@ -32,91 +32,79 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowContr
 import org.pentaho.reporting.engine.classic.core.wizard.AutoGeneratorUtility;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 
-public class LegacyChartPreProcessor extends AbstractReportPreProcessor
-{
-  public LegacyChartPreProcessor()
-  {
+public class LegacyChartPreProcessor extends AbstractReportPreProcessor {
+  public LegacyChartPreProcessor() {
   }
 
-  public MasterReport performPreProcessing(final MasterReport definition,
-                                           final DefaultFlowController flowController) throws ReportProcessingException
-  {
-    processSection(definition, flowController.getDataSchema(), definition);
+  public MasterReport performPreProcessing( final MasterReport definition,
+                                            final DefaultFlowController flowController )
+    throws ReportProcessingException {
+    processSection( definition, flowController.getDataSchema(), definition );
     return definition;
   }
 
-  public SubReport performPreProcessing(final SubReport definition,
-                                        final DefaultFlowController flowController) throws ReportProcessingException
-  {
-    processSection(definition, flowController.getDataSchema(), definition);
+  public SubReport performPreProcessing( final SubReport definition,
+                                         final DefaultFlowController flowController ) throws ReportProcessingException {
+    processSection( definition, flowController.getDataSchema(), definition );
     return definition;
   }
 
 
-  private void processSection(final Section section,
-                              final DataSchema dataSchema,
-                              final AbstractReportDefinition reportDefinition) throws ReportProcessingException
-  {
+  private void processSection( final Section section,
+                               final DataSchema dataSchema,
+                               final AbstractReportDefinition reportDefinition ) throws ReportProcessingException {
     final int count = section.getElementCount();
-    for (int i = 0; i < count; i++)
-    {
-      final ReportElement element = section.getElement(i);
-      if (element instanceof SubReport)
-      {
+    for ( int i = 0; i < count; i++ ) {
+      final ReportElement element = section.getElement( i );
+      if ( element instanceof SubReport ) {
         continue;
       }
 
-      if (element instanceof Section)
-      {
-        processSection((Section) element, dataSchema, reportDefinition);
+      if ( element instanceof Section ) {
+        processSection( (Section) element, dataSchema, reportDefinition );
         continue;
       }
 
       final Object attribute =
-          element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE);
-      if (attribute instanceof LegacyChartType == false)
-      {
+        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE );
+      if ( attribute instanceof LegacyChartType == false ) {
         continue;
       }
 
       final Object maybeChartExpression =
-          element.getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE);
-      if (maybeChartExpression instanceof ChartExpression == false)
-      {
+        element.getAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE );
+      if ( maybeChartExpression instanceof ChartExpression == false ) {
         continue;
       }
 
       final ChartExpression chartExpression = (ChartExpression) maybeChartExpression;
       final Object primaryChartExpression = element.getAttribute
-          (LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.PRIMARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE);
-      if (primaryChartExpression instanceof Expression)
-      {
+        ( LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.PRIMARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE );
+      if ( primaryChartExpression instanceof Expression ) {
         final Expression datasetExpression = (Expression) primaryChartExpression;
         final Expression datasetExpressionInstance = datasetExpression.getInstance();
         final String name = AutoGeneratorUtility.generateUniqueExpressionName
-            (dataSchema, "::legacy-charts::primary-dataset::{0}", reportDefinition);
-        datasetExpressionInstance.setName(name);
-        chartExpression.setDataSource(name);
-        reportDefinition.addExpression(datasetExpressionInstance);
+          ( dataSchema, "::legacy-charts::primary-dataset::{0}", reportDefinition );
+        datasetExpressionInstance.setName( name );
+        chartExpression.setDataSource( name );
+        reportDefinition.addExpression( datasetExpressionInstance );
       }
 
-      if (chartExpression instanceof MultiPlotChartExpression == false)
-      {
+      if ( chartExpression instanceof MultiPlotChartExpression == false ) {
         continue;
       }
       final MultiPlotChartExpression multiPlotChartExpression = (MultiPlotChartExpression) chartExpression;
 
       final Object secondaryDataSourceExpression = element.getAttribute
-          (LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.SECONDARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE);
-      if (secondaryDataSourceExpression instanceof Expression)
-      {
+        ( LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.SECONDARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE );
+      if ( secondaryDataSourceExpression instanceof Expression ) {
         final Expression datasetExpression = (Expression) secondaryDataSourceExpression;
         final Expression datasetExpressionInstance = datasetExpression.getInstance();
         final String name = AutoGeneratorUtility.generateUniqueExpressionName
-            (dataSchema, "::legacy-charts::secondary-dataset::{0}", reportDefinition);
-        datasetExpressionInstance.setName(name);
-        multiPlotChartExpression.setSecondaryDataSet(name);
-        reportDefinition.addExpression(datasetExpressionInstance);
+          ( dataSchema, "::legacy-charts::secondary-dataset::{0}", reportDefinition );
+        datasetExpressionInstance.setName( name );
+        multiPlotChartExpression.setSecondaryDataSet( name );
+        reportDefinition.addExpression( datasetExpressionInstance );
       }
     }
   }

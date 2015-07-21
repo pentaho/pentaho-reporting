@@ -17,10 +17,9 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
-public class CanvasImageLoader
-{
+public class CanvasImageLoader {
 
   private static final CanvasImageLoader instance = new CanvasImageLoader();
 
@@ -31,54 +30,46 @@ public class CanvasImageLoader
   private ImageIcon leftCornerShadowImage;
   private ImageIcon rightCornerShadowImage;
 
-  public static CanvasImageLoader getInstance()
-  {
+  public static CanvasImageLoader getInstance() {
     return instance;
   }
 
-  private CanvasImageLoader()
-  {
-    backgroundImage = new ImageIcon(CanvasImageLoader.class.getResource
-        ("/org/pentaho/reporting/designer/core/icons/canvas_background.jpg")); // NON-NLS
-    leftShadowImage = new ImageIcon(CanvasImageLoader.class.getResource
-        ("/org/pentaho/reporting/designer/core/icons/left_shadow.png")); // NON-NLS
-    rightShadowImage = new ImageIcon(CanvasImageLoader.class.getResource
-        ("/org/pentaho/reporting/designer/core/icons/right_shadow.png")); // NON-NLS
-    bottomShadowImage = new ImageIcon(CanvasImageLoader.class.getResource
-        ("/org/pentaho/reporting/designer/core/icons/bottom_shadow.png")); // NON-NLS
-    leftCornerShadowImage = new ImageIcon(CanvasImageLoader.class.getResource
-        ("/org/pentaho/reporting/designer/core/icons/left_corner_shadow.png")); // NON-NLS
-    rightCornerShadowImage = new ImageIcon(CanvasImageLoader.class.getResource
-        ("/org/pentaho/reporting/designer/core/icons/right_corner_shadow.png")); // NON-NLS
+  private CanvasImageLoader() {
+    backgroundImage = new ImageIcon( CanvasImageLoader.class.getResource
+      ( "/org/pentaho/reporting/designer/core/icons/canvas_background.jpg" ) ); // NON-NLS
+    leftShadowImage = new ImageIcon( CanvasImageLoader.class.getResource
+      ( "/org/pentaho/reporting/designer/core/icons/left_shadow.png" ) ); // NON-NLS
+    rightShadowImage = new ImageIcon( CanvasImageLoader.class.getResource
+      ( "/org/pentaho/reporting/designer/core/icons/right_shadow.png" ) ); // NON-NLS
+    bottomShadowImage = new ImageIcon( CanvasImageLoader.class.getResource
+      ( "/org/pentaho/reporting/designer/core/icons/bottom_shadow.png" ) ); // NON-NLS
+    leftCornerShadowImage = new ImageIcon( CanvasImageLoader.class.getResource
+      ( "/org/pentaho/reporting/designer/core/icons/left_corner_shadow.png" ) ); // NON-NLS
+    rightCornerShadowImage = new ImageIcon( CanvasImageLoader.class.getResource
+      ( "/org/pentaho/reporting/designer/core/icons/right_corner_shadow.png" ) ); // NON-NLS
   }
 
-  public ImageIcon getLeftShadowImage()
-  {
+  public ImageIcon getLeftShadowImage() {
     return leftShadowImage;
   }
 
-  public ImageIcon getRightShadowImage()
-  {
+  public ImageIcon getRightShadowImage() {
     return rightShadowImage;
   }
 
-  public ImageIcon getBottomShadowImage()
-  {
+  public ImageIcon getBottomShadowImage() {
     return bottomShadowImage;
   }
 
-  public ImageIcon getLeftCornerShadowImage()
-  {
+  public ImageIcon getLeftCornerShadowImage() {
     return leftCornerShadowImage;
   }
 
-  public ImageIcon getRightCornerShadowImage()
-  {
+  public ImageIcon getRightCornerShadowImage() {
     return rightCornerShadowImage;
   }
 
-  public ImageIcon getBackgroundImage()
-  {
+  public ImageIcon getBackgroundImage() {
     return backgroundImage;
   }
 

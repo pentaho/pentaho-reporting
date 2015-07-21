@@ -24,21 +24,19 @@ import org.pentaho.ui.xul.binding.BindingFactory;
 import org.pentaho.ui.xul.dom.Document;
 
 /**
- * A single step in the wizard. The architecture assumes that the wizard-ui keeps synchronized with
- * the model at all the time, so that other steps can react to changes and update their own availability.
- * Steps *should* preserve the user input even when they temporarily enter a invalid UI state while they
- * are not yet active. 
+ * A single step in the wizard. The architecture assumes that the wizard-ui keeps synchronized with the model at all the
+ * time, so that other steps can react to changes and update their own availability. Steps *should* preserve the user
+ * input even when they temporarily enter a invalid UI state while they are not yet active.
  *
  * @author Thomas Morgner
  */
 public interface WizardStep {
-  
-  
+
+
   /**
    * setBindings()
-   * 
-   * Allows concrete implementations to set their bindings for enclosed properties
-   * and Xul defined elements.
+   * <p/>
+   * Allows concrete implementations to set their bindings for enclosed properties and Xul defined elements.
    */
   public void setBindings();
 
@@ -51,7 +49,7 @@ public interface WizardStep {
 
   /**
    * stepActivating()
-   * 
+   * <p/>
    * Called on each step just before it become active (before it's card is shown).
    */
   public void stepActivating();
@@ -65,28 +63,25 @@ public interface WizardStep {
 
   /**
    * setFinishable()
-   * @param finishable
-   * 
-   * sets the flag that determines if the "Finish" button should be enabled for this
-   * wizard panel.
+   *
+   * @param finishable sets the flag that determines if the "Finish" button should be enabled for this wizard panel.
    */
-  public void setFinishable(boolean finishable);
-  
+  public void setFinishable( boolean finishable );
+
   /**
    * @return a boolean that determines if the "Finish" button should be enabled.
    */
   public boolean isFinishable();
-  
+
   /**
    * setPreviewable()
-   * @param previewable
-   * 
-   * Sets the previewable field to the value of previewable.  Determines if the "Preview"
-   * button should be enabled.
+   *
+   * @param previewable Sets the previewable field to the value of previewable.  Determines if the "Preview" button
+   *                    should be enabled.
    */
-  public void setPreviewable(boolean previewable);
-  
-  
+  public void setPreviewable( boolean previewable );
+
+
   /**
    * @return a boolean the indicates if the report can be previewed at this point
    */
@@ -94,23 +89,21 @@ public interface WizardStep {
 
   /**
    * @param mainWizardContainer
-   * @throws XulException
-   * 
-   * Creates the presentation layer associated with this WizardStep.  This is usually
-   * done by loading an overlay into the main_wzard_panel.xul
+   * @throws XulException Creates the presentation layer associated with this WizardStep.  This is usually done by
+   *                      loading an overlay into the main_wzard_panel.xul
    */
-  public void createPresentationComponent(XulDomContainer mainWizardContainer) throws XulException;
+  public void createPresentationComponent( XulDomContainer mainWizardContainer ) throws XulException;
 
-  
-  public void setBindingFactory(BindingFactory bindingFactory);
-  
-  public void setDocument(Document document);
+
+  public void setBindingFactory( BindingFactory bindingFactory );
+
+  public void setDocument( Document document );
 
   /**
    * @return a string (must be localized) that describes this step
    */
   public String getStepName();
 
-  public void setDesignTimeContext(DesignTimeContext context);
+  public void setDesignTimeContext( DesignTimeContext context );
 
 }

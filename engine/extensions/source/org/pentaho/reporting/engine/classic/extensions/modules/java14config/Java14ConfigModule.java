@@ -29,28 +29,26 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class Java14ConfigModule extends AbstractModule
-{
-  private static final Log logger = LogFactory.getLog(Java14ConfigModule.class);
+public class Java14ConfigModule extends AbstractModule {
+  private static final Log logger = LogFactory.getLog( Java14ConfigModule.class );
 
   /**
    * The class name of the storage module.
    */
   private static final String JAVA14_CONFIG_STORE_CLASS =
-      "org.pentaho.reporting.engine.classic.extensions.modules.java14config.Java14ConfigStorage";
+    "org.pentaho.reporting.engine.classic.extensions.modules.java14config.Java14ConfigStorage";
   /**
    * The class name of the initializer class.
    */
   private static final String JAVA14_CONFIG_STORE_INITIALIZER =
-      "org.pentaho.reporting.engine.classic.extensions.modules.java14config.Java14ConfigModuleInitializer";
+    "org.pentaho.reporting.engine.classic.extensions.modules.java14config.Java14ConfigModuleInitializer";
 
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
-  public Java14ConfigModule() throws ModuleInitializeException
-  {
+  public Java14ConfigModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -62,17 +60,15 @@ public class Java14ConfigModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     final String value = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.ConfigStore", "<not defined>");
-    if (value.equals(JAVA14_CONFIG_STORE_CLASS) == false)
-    {
-      logger.debug("Java 1.4 Config module not active.");
+      ( "org.pentaho.reporting.engine.classic.core.ConfigStore", "<not defined>" );
+    if ( value.equals( JAVA14_CONFIG_STORE_CLASS ) == false ) {
+      logger.debug( "Java 1.4 Config module not active." );
       return;
     }
     // this will result in an caught exception if JDK 1.4 is not available.
-    performExternalInitialize(JAVA14_CONFIG_STORE_INITIALIZER, Java14ConfigModule.class);
+    performExternalInitialize( JAVA14_CONFIG_STORE_INITIALIZER, Java14ConfigModule.class );
   }
 }

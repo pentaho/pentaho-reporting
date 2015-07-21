@@ -25,28 +25,23 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractReadHandlerFactory;
  *
  * @author Thomas Morgner
  */
-public class OlapConnectionReadHandlerFactory extends AbstractReadHandlerFactory<OlapConnectionReadHandler>
-{
+public class OlapConnectionReadHandlerFactory extends AbstractReadHandlerFactory<OlapConnectionReadHandler> {
   private static final String PREFIX_SELECTOR =
-      "org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factory-prefix.";
+    "org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factory-prefix.";
 
   private static OlapConnectionReadHandlerFactory readHandlerFactory;
 
-  public OlapConnectionReadHandlerFactory()
-  {
+  public OlapConnectionReadHandlerFactory() {
   }
 
-  protected Class<OlapConnectionReadHandler> getTargetClass()
-  {
+  protected Class<OlapConnectionReadHandler> getTargetClass() {
     return OlapConnectionReadHandler.class;
   }
 
-  public static synchronized OlapConnectionReadHandlerFactory getInstance()
-  {
-    if (readHandlerFactory == null)
-    {
+  public static synchronized OlapConnectionReadHandlerFactory getInstance() {
+    if ( readHandlerFactory == null ) {
       readHandlerFactory = new OlapConnectionReadHandlerFactory();
-      readHandlerFactory.configureGlobal(ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR);
+      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
     }
     return readHandlerFactory;
   }

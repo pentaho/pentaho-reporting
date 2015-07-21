@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.ScriptableDataFactory;
@@ -30,14 +28,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ScriptableDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler
-{
+import java.util.ArrayList;
+
+public class ScriptableDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler {
   private ConfigReadHandler configReadHandler;
   private ArrayList<PropertyReadHandler> queries;
   private ScriptableDataFactory dataFactory;
 
-  public ScriptableDataSourceReadHandler()
-  {
+  public ScriptableDataSourceReadHandler() {
     queries = new ArrayList<PropertyReadHandler>();
   }
 
@@ -50,24 +48,20 @@ public class ScriptableDataSourceReadHandler extends AbstractXmlReadHandler impl
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("config".equals(tagName))
-    {
+    if ( "config".equals( tagName ) ) {
       configReadHandler = new ConfigReadHandler();
       return configReadHandler;
     }
 
-    if ("query".equals(tagName))
-    {
+    if ( "query".equals( tagName ) ) {
       final PropertyReadHandler queryReadHandler = new PropertyReadHandler();
-      queries.add(queryReadHandler);
+      queries.add( queryReadHandler );
       return queryReadHandler;
     }
 
@@ -79,27 +73,22 @@ public class ScriptableDataSourceReadHandler extends AbstractXmlReadHandler impl
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final ScriptableDataFactory srdf = new ScriptableDataFactory();
-    if (configReadHandler == null)
-    {
-      throw new ParseException("Required element 'config' is missing.", getLocator());
+    if ( configReadHandler == null ) {
+      throw new ParseException( "Required element 'config' is missing.", getLocator() );
     }
 
-    srdf.setLanguage(configReadHandler.getLanguage());
-    if (StringUtils.isEmpty(configReadHandler.getScript()) == false)
-    {
-      srdf.setScript(configReadHandler.getScript());
+    srdf.setLanguage( configReadHandler.getLanguage() );
+    if ( StringUtils.isEmpty( configReadHandler.getScript() ) == false ) {
+      srdf.setScript( configReadHandler.getScript() );
     }
-    if (StringUtils.isEmpty(configReadHandler.getShutdownScript()) == false)
-    {
-      srdf.setShutdownScript(configReadHandler.getShutdownScript());
+    if ( StringUtils.isEmpty( configReadHandler.getShutdownScript() ) == false ) {
+      srdf.setShutdownScript( configReadHandler.getShutdownScript() );
     }
-    for (int i = 0; i < queries.size(); i++)
-    {
-      final PropertyReadHandler handler = queries.get(i);
-      srdf.setQuery(handler.getName(), handler.getResult());
+    for ( int i = 0; i < queries.size(); i++ ) {
+      final PropertyReadHandler handler = queries.get( i );
+      srdf.setQuery( handler.getName(), handler.getResult() );
     }
     dataFactory = srdf;
   }
@@ -110,13 +99,11 @@ public class ScriptableDataSourceReadHandler extends AbstractXmlReadHandler impl
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

@@ -22,32 +22,27 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 
-public class DesignerProcessingContext extends DefaultProcessingContext
-{
+public class DesignerProcessingContext extends DefaultProcessingContext {
   private ResourceKey contentBase;
 
-  public DesignerProcessingContext(final MasterReport masterReport) throws ReportProcessingException
-  {
-    super(masterReport);
-    setOutputProcessorMetaData(new DesignerOutputProcessorMetaData());
+  public DesignerProcessingContext( final MasterReport masterReport ) throws ReportProcessingException {
+    super( masterReport );
+    setOutputProcessorMetaData( new DesignerOutputProcessorMetaData() );
   }
 
   /**
-   * This constructor exists for test-case use only. If you use this to process a real report, most of the settings
-   * of the report will be ignored and your export will not work as expected.
+   * This constructor exists for test-case use only. If you use this to process a real report, most of the settings of
+   * the report will be ignored and your export will not work as expected.
    */
-  public DesignerProcessingContext()
-  {
-    setOutputProcessorMetaData(new DesignerOutputProcessorMetaData());
+  public DesignerProcessingContext() {
+    setOutputProcessorMetaData( new DesignerOutputProcessorMetaData() );
   }
 
-  public ResourceKey getContentBase()
-  {
+  public ResourceKey getContentBase() {
     return contentBase;
   }
 
-  public void setContentBase(final ResourceKey contentBase)
-  {
+  public void setContentBase( final ResourceKey contentBase ) {
     this.contentBase = contentBase;
   }
 }

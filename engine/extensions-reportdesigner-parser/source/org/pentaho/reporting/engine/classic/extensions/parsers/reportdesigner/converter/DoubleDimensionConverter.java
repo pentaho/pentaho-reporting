@@ -17,33 +17,28 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter;
 
-import java.awt.geom.Dimension2D;
-
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Locator;
 
-public class DoubleDimensionConverter implements ObjectConverter
-{
-  public Object convertFromString(final String s, final Locator locator) throws ParseException
-  {
-    if (s == null)
-    {
-      throw new ParseException("s must not be null");
+import java.awt.geom.Dimension2D;
+
+public class DoubleDimensionConverter implements ObjectConverter {
+  public Object convertFromString( final String s, final Locator locator ) throws ParseException {
+    if ( s == null ) {
+      throw new ParseException( "s must not be null" );
     }
 
-    int i = s.indexOf(',');
-    if (i < 0)
-    {
-      throw new ParseException("IllegalFormat");
+    int i = s.indexOf( ',' );
+    if ( i < 0 ) {
+      throw new ParseException( "IllegalFormat" );
     }
-    double d1 = Double.parseDouble(s.substring(0, i).trim());
-    double d2 = Double.parseDouble(s.substring(i + 1).trim());
-    return new FloatDimension((float) d1, (float) d2);
+    double d1 = Double.parseDouble( s.substring( 0, i ).trim() );
+    double d2 = Double.parseDouble( s.substring( i + 1 ).trim() );
+    return new FloatDimension( (float) d1, (float) d2 );
   }
 
-  public static Dimension2D getObject(String s) throws ParseException
-  {
-    return (Dimension2D) new DoubleDimensionConverter().convertFromString(s, null);
+  public static Dimension2D getObject( String s ) throws ParseException {
+    return (Dimension2D) new DoubleDimensionConverter().convertFromString( s, null );
   }
 }

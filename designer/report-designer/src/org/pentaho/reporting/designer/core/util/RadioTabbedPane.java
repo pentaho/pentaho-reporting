@@ -17,17 +17,11 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 /**
  * Todo: Document me!
@@ -35,23 +29,19 @@ import javax.swing.JRadioButton;
  *
  * @author Thomas Morgner.
  */
-public class RadioTabbedPane extends JComponent
-{
-  private class SelectTabAction implements ActionListener
-  {
+public class RadioTabbedPane extends JComponent {
+  private class SelectTabAction implements ActionListener {
     private int cardName;
 
-    private SelectTabAction(final int index)
-    {
+    private SelectTabAction( final int index ) {
       this.cardName = index;
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      setSelectedIndex(cardName);
+    public void actionPerformed( final ActionEvent e ) {
+      setSelectedIndex( cardName );
     }
   }
 
@@ -65,56 +55,51 @@ public class RadioTabbedPane extends JComponent
   private CardLayout cardLayout;
   private int currentIndex;
 
-  public RadioTabbedPane()
-  {
+  public RadioTabbedPane() {
     components = new ArrayList();
     radioButtons = new ArrayList();
     buttonGroup = new ButtonGroup();
 
     cardLayout = new CardLayout();
     contentPanel = new JPanel();
-    contentPanel.setLayout(cardLayout);
+    contentPanel.setLayout( cardLayout );
     selectorPanel = new JPanel();
-    selectorPanel.setLayout(new FlowLayout());
+    selectorPanel.setLayout( new FlowLayout() );
 
-    setLayout(new BorderLayout());
-    add(contentPanel, BorderLayout.CENTER);
-    add(selectorPanel, BorderLayout.NORTH);
+    setLayout( new BorderLayout() );
+    add( contentPanel, BorderLayout.CENTER );
+    add( selectorPanel, BorderLayout.NORTH );
   }
 
-  public void addTab (final String name, final Component tab)
-  {
-    final String cardName = String.valueOf(components.size());
-    final JRadioButton radioButton = new JRadioButton(name);
-    radioButton.addActionListener(new SelectTabAction(components.size()));
+  public void addTab( final String name, final Component tab ) {
+    final String cardName = String.valueOf( components.size() );
+    final JRadioButton radioButton = new JRadioButton( name );
+    radioButton.addActionListener( new SelectTabAction( components.size() ) );
 
-    components.add(tab);
-    buttonGroup.add(radioButton);
-    radioButtons.add(radioButton);
+    components.add( tab );
+    buttonGroup.add( radioButton );
+    radioButtons.add( radioButton );
 
-    selectorPanel.add(radioButton);
-    contentPanel.add(cardName, tab);
+    selectorPanel.add( radioButton );
+    contentPanel.add( cardName, tab );
 
-    cardLayout.show(contentPanel, cardName);
-    radioButton.setSelected(true);
+    cardLayout.show( contentPanel, cardName );
+    radioButton.setSelected( true );
   }
 
-  public void setSelectedIndex(final int index)
-  {
-    if (index < 0 || index >= components.size())
-    {
+  public void setSelectedIndex( final int index ) {
+    if ( index < 0 || index >= components.size() ) {
       throw new IndexOutOfBoundsException();
     }
-    final JRadioButton o = (JRadioButton) radioButtons.get(index);
-    o.setSelected(true);
-    cardLayout.show(contentPanel, String.valueOf(index));
+    final JRadioButton o = (JRadioButton) radioButtons.get( index );
+    o.setSelected( true );
+    cardLayout.show( contentPanel, String.valueOf( index ) );
     final int oldIndex = this.currentIndex;
     currentIndex = index;
-    firePropertyChange(SELECTED_INDEX_PROPERTY, oldIndex, index);
+    firePropertyChange( SELECTED_INDEX_PROPERTY, oldIndex, index );
   }
 
-  public int getSelectedIndex()
-  {
+  public int getSelectedIndex() {
     return currentIndex;
   }
 }

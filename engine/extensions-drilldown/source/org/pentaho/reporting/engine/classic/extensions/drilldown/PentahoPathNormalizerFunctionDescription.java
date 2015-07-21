@@ -23,35 +23,29 @@ import org.pentaho.reporting.libraries.formula.function.userdefined.UserDefinedF
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class PentahoPathNormalizerFunctionDescription extends AbstractFunctionDescription
-{
-  public PentahoPathNormalizerFunctionDescription()
-  {
-    super("PENTAHOPATHNORMALIZER", "org.pentaho.reporting.engine.classic.extensions.drilldown.PentahoPathNormalizer-Function");
+public class PentahoPathNormalizerFunctionDescription extends AbstractFunctionDescription {
+  public PentahoPathNormalizerFunctionDescription() {
+    super( "PENTAHOPATHNORMALIZER",
+      "org.pentaho.reporting.engine.classic.extensions.drilldown.PentahoPathNormalizer-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return UserDefinedFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 }

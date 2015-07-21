@@ -19,9 +19,8 @@ package org.pentaho.reporting.designer.core.util.table;
 
 import javax.swing.table.TableModel;
 
-public interface SortableTableModel extends TableModel
-{
-  public void setTableStyle(final TableStyle tableStyle);
+public interface SortableTableModel extends TableModel {
+  public void setTableStyle( final TableStyle tableStyle );
 
   public TableStyle getTableStyle();
 }

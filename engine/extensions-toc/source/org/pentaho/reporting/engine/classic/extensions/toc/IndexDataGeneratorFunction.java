@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.toc;
 
-import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
@@ -36,49 +30,47 @@ import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 /**
- * A data-collector that collects index information from the report. The information is collected on all group
- * start, group finished and detail band events.
+ * A data-collector that collects index information from the report. The information is collected on all group start,
+ * group finished and detail band events.
  *
  * @author Thomas Morgner.
  */
-public class IndexDataGeneratorFunction extends AbstractFunction implements PageEventListener
-{
-  private static class IndexDataHolder implements Serializable
-  {
+public class IndexDataGeneratorFunction extends AbstractFunction implements PageEventListener {
+  private static class IndexDataHolder implements Serializable {
     private Object data;
     private TreeSet<Integer> pages;
 
-    private IndexDataHolder(final Object data)
-    {
+    private IndexDataHolder( final Object data ) {
       this.data = data;
       this.pages = new TreeSet<Integer>();
     }
 
-    public void addPage(final int page)
-    {
-      this.pages.add(IntegerCache.getInteger(page));
+    public void addPage( final int page ) {
+      this.pages.add( IntegerCache.getInteger( page ) );
     }
 
-    public Object getData()
-    {
+    public Object getData() {
       return data;
     }
 
-    public String getPagesText(final String indexSeparator,
-                               final boolean condensedStyle)
-    {
-      final Integer[] groupCount = pages.toArray(new Integer[pages.size()]);
-      if (condensedStyle)
-      {
-        return IndexUtility.getCondensedIndexText(groupCount, indexSeparator);
+    public String getPagesText( final String indexSeparator,
+                                final boolean condensedStyle ) {
+      final Integer[] groupCount = pages.toArray( new Integer[ pages.size() ] );
+      if ( condensedStyle ) {
+        return IndexUtility.getCondensedIndexText( groupCount, indexSeparator );
       }
-      return IndexUtility.getIndexText(groupCount, indexSeparator);
-     }
+      return IndexUtility.getIndexText( groupCount, indexSeparator );
+    }
 
-    public Integer[] getPages()
-    {
-      return pages.toArray(new Integer[pages.size()]);
+    public Integer[] getPages() {
+      return pages.toArray( new Integer[ pages.size() ] );
     }
   }
 
@@ -90,60 +82,51 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
 
   private String indexSeparator;
   private boolean condensedStyle;
-  
+
   private transient boolean initialized;
-  private TreeMap<String,IndexDataHolder> dataStorage;
+  private TreeMap<String, IndexDataHolder> dataStorage;
 
   /**
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
    * is added to the report's function collection.
    */
-  public IndexDataGeneratorFunction()
-  {
+  public IndexDataGeneratorFunction() {
     this.pageFunction = new PageFunction();
     this.indexSeparator = ".";
     this.model = new TypedTableModel();
     this.dataFormula = new FormulaExpression();
-    this.dataStorage = new TreeMap<String,IndexDataHolder>();
+    this.dataStorage = new TreeMap<String, IndexDataHolder>();
   }
 
-  public boolean isCondensedStyle()
-  {
+  public boolean isCondensedStyle() {
     return condensedStyle;
   }
 
-  public void setCondensedStyle(final boolean condensedStyle)
-  {
+  public void setCondensedStyle( final boolean condensedStyle ) {
     this.condensedStyle = condensedStyle;
   }
 
-  public String getIndexSeparator()
-  {
+  public String getIndexSeparator() {
     return indexSeparator;
   }
 
-  public void setIndexSeparator(final String indexSeparator)
-  {
+  public void setIndexSeparator( final String indexSeparator ) {
     this.indexSeparator = indexSeparator;
   }
 
-  public String getDataFormula()
-  {
+  public String getDataFormula() {
     return dataFormula.getFormula();
   }
 
-  public void setDataFormula(final String titleFormula)
-  {
-    this.dataFormula.setFormula(titleFormula);
+  public void setDataFormula( final String titleFormula ) {
+    this.dataFormula.setFormula( titleFormula );
   }
 
-  public String getDataField()
-  {
+  public String getDataField() {
     return dataField;
   }
 
-  public void setDataField(final String dataField)
-  {
+  public void setDataField( final String dataField ) {
     this.dataField = dataField;
   }
 
@@ -153,23 +136,20 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
-    if (initialized == false)
-    {
+    if ( initialized == false ) {
       initialized = true;
-      model.addColumn("item-data", Object.class);
-      model.addColumn("item-pages", String.class);
-      model.addColumn("item-pages-array", Integer[].class);
-      model.addColumn("item-key", String.class);
+      model.addColumn( "item-data", Object.class );
+      model.addColumn( "item-pages", String.class );
+      model.addColumn( "item-pages-array", Integer[].class );
+      model.addColumn( "item-key", String.class );
     }
 
-    pageFunction.reportInitialized(event);
+    pageFunction.reportInitialized( event );
   }
 
   /**
@@ -177,14 +157,12 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportStarted( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
-    pageFunction.reportStarted(event);
+    pageFunction.reportStarted( event );
   }
 
   /**
@@ -192,63 +170,48 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
-      if ("index".equals(event.getOriginatingState().getReport().getMetaData().getName()))
-      {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
+      if ( "index".equals( event.getOriginatingState().getReport().getMetaData().getName() ) ) {
         return;
       }
     }
 
-    final Object o = computeDataValue(event);
-    if (o == null)
-    {
+    final Object o = computeDataValue( event );
+    if ( o == null ) {
       return;
     }
 
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
-      dataStorage.put(String.valueOf(o), new IndexDataHolder(o));
-    }
-    else if (FunctionUtilities.isLayoutLevel(event))
-    {
-      final IndexDataHolder o1 = dataStorage.get(String.valueOf(o));
-      if (o1 == null)
-      {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
+      dataStorage.put( String.valueOf( o ), new IndexDataHolder( o ) );
+    } else if ( FunctionUtilities.isLayoutLevel( event ) ) {
+      final IndexDataHolder o1 = dataStorage.get( String.valueOf( o ) );
+      if ( o1 == null ) {
         throw new IllegalStateException
-            ("Unable to compute index: Function values changed between prepare and layout run");
+          ( "Unable to compute index: Function values changed between prepare and layout run" );
       }
-      o1.addPage(pageFunction.getPage());
+      o1.addPage( pageFunction.getPage() );
     }
   }
 
-  private DataRow extractDataRow(final ReportEvent event)
-  {
-    if (event.isDeepTraversing() == false)
-    {
+  private DataRow extractDataRow( final ReportEvent event ) {
+    if ( event.isDeepTraversing() == false ) {
       return getDataRow();
     }
 
     return event.getOriginatingState().getDataRow();
   }
 
-  private Object computeDataValue(final ReportEvent event)
-  {
-    final DataRow dataRow = extractDataRow(event);
-    if (StringUtils.isEmpty(dataField) == false)
-    {
-      return dataRow.get(dataField);
+  private Object computeDataValue( final ReportEvent event ) {
+    final DataRow dataRow = extractDataRow( event );
+    if ( StringUtils.isEmpty( dataField ) == false ) {
+      return dataRow.get( dataField );
     }
-    try
-    {
-      this.dataFormula.setRuntime(new WrapperExpressionRuntime(dataRow, getRuntime()));
+    try {
+      this.dataFormula.setRuntime( new WrapperExpressionRuntime( dataRow, getRuntime() ) );
       return dataFormula.getValue();
-    }
-    finally
-    {
-      this.dataFormula.setRuntime(null);
+    } finally {
+      this.dataFormula.setRuntime( null );
     }
   }
 
@@ -257,9 +220,8 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @param event The event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    pageFunction.pageStarted(event);
+  public void pageStarted( final ReportEvent event ) {
+    pageFunction.pageStarted( event );
   }
 
   /**
@@ -267,9 +229,8 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @param event The event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
-    pageFunction.pageFinished(event);
+  public void pageFinished( final ReportEvent event ) {
+    pageFunction.pageFinished( event );
   }
 
   /**
@@ -278,33 +239,27 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @param event The event.
    */
-  public void reportDone(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportDone( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
-    
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
+
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
       final Iterator iterator = dataStorage.entrySet().iterator();
-      while (iterator.hasNext())
-      {
+      while ( iterator.hasNext() ) {
         final Map.Entry entry = (Map.Entry) iterator.next();
         final String key = (String) entry.getKey();
         final IndexDataHolder data = (IndexDataHolder) entry.getValue();
-        model.addRow(new Object[]{data.getData(), data.getPagesText(indexSeparator, condensedStyle), data.getPages(), key});
+        model.addRow(
+          new Object[] { data.getData(), data.getPagesText( indexSeparator, condensedStyle ), data.getPages(), key } );
       }
-    }
-    else if (FunctionUtilities.isLayoutLevel(event))
-    {
+    } else if ( FunctionUtilities.isLayoutLevel( event ) ) {
       final int rowCount = model.getRowCount();
-      for (int i = 0; i < rowCount; i++)
-      {
-        final String key = (String) model.getValueAt(i, 3);
-        final IndexDataHolder dataHolder = dataStorage.get(key);
-        model.setValueAt(dataHolder.getPagesText(indexSeparator, condensedStyle), i, 1);
-        model.setValueAt(dataHolder.getPages(), i, 2);
+      for ( int i = 0; i < rowCount; i++ ) {
+        final String key = (String) model.getValueAt( i, 3 );
+        final IndexDataHolder dataHolder = dataStorage.get( key );
+        model.setValueAt( dataHolder.getPagesText( indexSeparator, condensedStyle ), i, 1 );
+        model.setValueAt( dataHolder.getPages(), i, 2 );
       }
     }
   }
@@ -316,8 +271,7 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return model;
   }
 
@@ -327,8 +281,7 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @return false.
    */
-  public boolean isDeepTraversing()
-  {
+  public boolean isDeepTraversing() {
     return true;
   }
 
@@ -340,8 +293,7 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    * @return a clone of this expression.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final IndexDataGeneratorFunction o = (IndexDataGeneratorFunction) super.clone();
     o.dataFormula = (FormulaExpression) dataFormula.clone();
     o.pageFunction = (PageFunction) pageFunction.clone();
@@ -354,19 +306,17 @@ public class IndexDataGeneratorFunction extends AbstractFunction implements Page
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final IndexDataGeneratorFunction instance = (IndexDataGeneratorFunction) super.getInstance();
     instance.model = new TypedTableModel();
     instance.pageFunction = (PageFunction) pageFunction.getInstance();
     instance.dataFormula = (FormulaExpression) dataFormula.getInstance();
-    instance.dataStorage = new TreeMap<String,IndexDataHolder>();
+    instance.dataStorage = new TreeMap<String, IndexDataHolder>();
     instance.initialized = false;
     return instance;
   }
 
-  public TypedTableModel getModel()
-  {
+  public TypedTableModel getModel() {
     return model;
   }
 }

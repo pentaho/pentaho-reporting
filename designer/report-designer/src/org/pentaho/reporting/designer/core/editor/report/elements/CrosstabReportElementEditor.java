@@ -25,19 +25,15 @@ import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEdit
  *
  * @author Sulaiman Karmali
  */
-public class CrosstabReportElementEditor extends DefaultReportElementEditor
-{
-  public CrosstabReportElementEditor()
-  {
+public class CrosstabReportElementEditor extends DefaultReportElementEditor {
+  public CrosstabReportElementEditor() {
   }
 
-  public ReportElementInlineEditor createInlineEditor()
-  {
+  public ReportElementInlineEditor createInlineEditor() {
     return new SubreportReportElementInlineEditor();
   }
 
-  public ReportElementDragHandler createDragHandler()
-  {
+  public ReportElementDragHandler createDragHandler() {
     return new CrosstabReportElementDragHandler();
   }
 }

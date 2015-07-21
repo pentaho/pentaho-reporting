@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import javax.swing.event.ChangeListener;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
@@ -31,14 +27,17 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public interface ElementRenderer
-{
-  public void setVisualHeight(final double visualHeight);
+public interface ElementRenderer {
+  public void setVisualHeight( final double visualHeight );
 
   public double getVisualHeight();
 
@@ -50,9 +49,9 @@ public interface ElementRenderer
 
   public boolean isHideInLayout();
 
-  public void addChangeListener(ChangeListener changeListener);
+  public void addChangeListener( ChangeListener changeListener );
 
-  public void removeChangeListener(ChangeListener changeListener);
+  public void removeChangeListener( ChangeListener changeListener );
 
   public LinealModel getVerticalLinealModel();
 
@@ -60,19 +59,21 @@ public interface ElementRenderer
 
   public Rectangle2D getBounds();
 
-  public boolean draw(Graphics2D g2);
+  public boolean draw( Graphics2D g2 );
 
-  public void handleError (ReportDesignerContext designerContext,
-                           ReportDocumentContext reportContext);
+  public void handleError( ReportDesignerContext designerContext,
+                           ReportDocumentContext reportContext );
 
   public StrictBounds getRootElementBounds();
 
   Section getElement();
 
-  Element[] getElementsAt (double x, double y, double width, double height);
-  Element[] getElementsAt (double x, double y);
+  Element[] getElementsAt( double x, double y, double width, double height );
+
+  Element[] getElementsAt( double x, double y );
 
   BreakPositionsList getHorizontalEdgePositions();
+
   BreakPositionsList getVerticalEdgePositions();
 
   void invalidateLayout();

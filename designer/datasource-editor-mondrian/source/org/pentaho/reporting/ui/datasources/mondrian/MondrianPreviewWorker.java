@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.mondrian;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
@@ -26,8 +24,9 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.Abst
 import org.pentaho.reporting.libraries.designtime.swing.background.CancelEvent;
 import org.pentaho.reporting.libraries.designtime.swing.background.PreviewWorker;
 
-public class MondrianPreviewWorker implements PreviewWorker
-{
+import javax.swing.table.TableModel;
+
+public class MondrianPreviewWorker implements PreviewWorker {
   private AbstractMDXDataFactory dataFactory;
   private TableModel resultTableModel;
   private ReportDataFactoryException exception;
@@ -35,67 +34,52 @@ public class MondrianPreviewWorker implements PreviewWorker
   private int queryTimeout;
   private int queryLimit;
 
-  public MondrianPreviewWorker(final AbstractMDXDataFactory dataFactory,
-                               final String query,
-                               final int queryTimeout,
-                               final int queryLimit)
-  {
+  public MondrianPreviewWorker( final AbstractMDXDataFactory dataFactory,
+                                final String query,
+                                final int queryTimeout,
+                                final int queryLimit ) {
     this.queryTimeout = queryTimeout;
     this.queryLimit = queryLimit;
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
     this.query = query;
     this.dataFactory = dataFactory;
   }
 
-  public ReportDataFactoryException getException()
-  {
+  public ReportDataFactoryException getException() {
     return exception;
   }
 
-  public TableModel getResultTableModel()
-  {
+  public TableModel getResultTableModel() {
     return resultTableModel;
   }
 
-  public void close()
-  {
+  public void close() {
   }
 
   /**
    * Requests that the thread stop processing as soon as possible.
    */
-  public void cancelProcessing(final CancelEvent event)
-  {
+  public void cancelProcessing( final CancelEvent event ) {
     dataFactory.cancelRunningQuery();
   }
 
   /**
-   * When an object implementing interface <code>Runnable</code> is used
-   * to create a thread, starting the thread causes the object's
-   * <code>run</code> method to be called in that separately executing
-   * thread.
+   * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
+   * the object's <code>run</code> method to be called in that separately executing thread.
    * <p/>
-   * The general contract of the method <code>run</code> is that it may
-   * take any action whatsoever.
+   * The general contract of the method <code>run</code> is that it may take any action whatsoever.
    *
    * @see Thread#run()
    */
-  public void run()
-  {
-    try
-    {
+  public void run() {
+    try {
       resultTableModel = dataFactory.queryData
-          (query, new QueryDataRowWrapper(new ParameterDataRow(), queryLimit, queryTimeout));
-    }
-    catch (ReportDataFactoryException e)
-    {
+        ( query, new QueryDataRowWrapper( new ParameterDataRow(), queryLimit, queryTimeout ) );
+    } catch ( ReportDataFactoryException e ) {
       exception = e;
-    }
-    finally
-    {
+    } finally {
       dataFactory.close();
     }
   }

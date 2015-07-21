@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.elements;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
@@ -36,89 +29,76 @@ import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-public final class EditGroupAction extends AbstractElementSelectionAction
-{
-  public EditGroupAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("EditGroupAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("EditGroupAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditGroupAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditGroupAction.Accelerator"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getGroupIcon());
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public final class EditGroupAction extends AbstractElementSelectionAction {
+  public EditGroupAction() {
+    putValue( Action.NAME, ActionMessages.getString( "EditGroupAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "EditGroupAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "EditGroupAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "EditGroupAction.Accelerator" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getGroupIcon() );
   }
 
-  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
-  {
+  protected void selectedElementPropertiesChanged( final ReportModelEvent event ) {
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final DocumentContextSelectionModel selectionModel = getSelectionModel();
-    if (selectionModel == null)
-    {
+    if ( selectionModel == null ) {
       return;
     }
 
-    if (selectionModel.getSelectionCount() != 1)
-    {
+    if ( selectionModel.getSelectionCount() != 1 ) {
       return;
     }
-    final Object selectedElement = selectionModel.getSelectedElement(0);
-    if (selectedElement instanceof RelationalGroup == false)
-    {
-      setEnabled(false);
+    final Object selectedElement = selectionModel.getSelectedElement( 0 );
+    if ( selectedElement instanceof RelationalGroup == false ) {
+      setEnabled( false );
       return;
     }
 
-    final EditGroupUndoEntry groupUndoEntry = performEditGroup(getReportDesignerContext(), selectedElement, false);
-    if (groupUndoEntry != null)
-    {
+    final EditGroupUndoEntry groupUndoEntry = performEditGroup( getReportDesignerContext(), selectedElement, false );
+    if ( groupUndoEntry != null ) {
       final ReportDocumentContext activeContext = getActiveContext();
-      groupUndoEntry.redo(activeContext);
+      groupUndoEntry.redo( activeContext );
     }
   }
 
-  public static EditGroupUndoEntry performEditGroup(final ReportDesignerContext context,
-                                                    final Object selectedElement,
-                                                    final boolean addGroup)
-  {
+  public static EditGroupUndoEntry performEditGroup( final ReportDesignerContext context,
+                                                     final Object selectedElement,
+                                                     final boolean addGroup ) {
     final Component parent = context.getView().getParent();
-    final Window window = LibSwingUtil.getWindowAncestor(parent);
+    final Window window = LibSwingUtil.getWindowAncestor( parent );
     final EditGroupDetailsDialog dialog;
-    if (window instanceof JDialog)
-    {
-      dialog = new EditGroupDetailsDialog((JDialog) window);
-    }
-    else if (window instanceof JFrame)
-    {
-      dialog = new EditGroupDetailsDialog((JFrame) window);
-    }
-    else
-    {
+    if ( window instanceof JDialog ) {
+      dialog = new EditGroupDetailsDialog( (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      dialog = new EditGroupDetailsDialog( (JFrame) window );
+    } else {
       dialog = new EditGroupDetailsDialog();
     }
 
     final RelationalGroup group = (RelationalGroup) selectedElement;
-    return dialog.editGroup(group, context.getActiveContext(), addGroup);
+    return dialog.editGroup( group, context.getActiveContext(), addGroup );
   }
 
-  protected void updateSelection()
-  {
-    if (isSingleElementSelection() == false)
-    {
-      setEnabled(false);
+  protected void updateSelection() {
+    if ( isSingleElementSelection() == false ) {
+      setEnabled( false );
       return;
     }
 
-    final Object selectedElement = getSelectionModel().getSelectedElement(0);
-    if (selectedElement instanceof RelationalGroup == false)
-    {
-      setEnabled(false);
+    final Object selectedElement = getSelectionModel().getSelectedElement( 0 );
+    if ( selectedElement instanceof RelationalGroup == false ) {
+      setEnabled( false );
       return;
     }
-    setEnabled(true);
+    setEnabled( true );
   }
 }

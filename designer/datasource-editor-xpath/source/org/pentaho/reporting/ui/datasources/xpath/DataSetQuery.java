@@ -20,105 +20,86 @@ package org.pentaho.reporting.ui.datasources.xpath;
 /**
  * A common data-object for representing named queries.
  */
-public class DataSetQuery implements Cloneable
-{
+public class DataSetQuery implements Cloneable {
   private String queryName;
   private String query;
   private boolean legacyQuery;
 
-  public DataSetQuery(final String queryName, final String query, final boolean legacyQuery)
-  {
+  public DataSetQuery( final String queryName, final String query, final boolean legacyQuery ) {
     this.legacyQuery = legacyQuery;
     //noinspection ConstantConditions
-    if (queryName == null)
-    {
-      throw new IllegalArgumentException("queryName must not be null");
+    if ( queryName == null ) {
+      throw new IllegalArgumentException( "queryName must not be null" );
     }
     //noinspection ConstantConditions
-    if (query == null)
-    {
-      throw new IllegalArgumentException("query must not be null");
+    if ( query == null ) {
+      throw new IllegalArgumentException( "query must not be null" );
     }
 
     this.queryName = queryName;
     this.query = query;
   }
 
-  public boolean isLegacyQuery()
-  {
+  public boolean isLegacyQuery() {
     return legacyQuery;
   }
 
-  public void setLegacyQuery(final boolean legacyQuery)
-  {
+  public void setLegacyQuery( final boolean legacyQuery ) {
     this.legacyQuery = legacyQuery;
   }
 
-  public String getQueryName()
-  {
+  public String getQueryName() {
     return queryName;
   }
 
-  public void setQueryName(final String queryName)
-  {
+  public void setQueryName( final String queryName ) {
     //noinspection ConstantConditions
-    if (queryName == null)
-    {
-      throw new IllegalArgumentException("queryName must not be null");
+    if ( queryName == null ) {
+      throw new IllegalArgumentException( "queryName must not be null" );
     }
 
     this.queryName = queryName;
   }
 
-  public String getQuery()
-  {
+  public String getQuery() {
     return query;
   }
 
-  public void setQuery(final String query)
-  {
+  public void setQuery( final String query ) {
     this.query = query;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return queryName.length() > 0 ? queryName : " ";
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final DataSetQuery that = (DataSetQuery) o;
 
-    if (queryName != null ? !queryName.equals(that.queryName) : that.queryName != null)
-    {
+    if ( queryName != null ? !queryName.equals( that.queryName ) : that.queryName != null ) {
       return false;
     }
-    if (legacyQuery != that.legacyQuery)
-    {
+    if ( legacyQuery != that.legacyQuery ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
-    int hashCode = (queryName != null ? queryName.hashCode() : 0);
-    hashCode *= 23 + (legacyQuery? 0 : 1);
+  public int hashCode() {
+    int hashCode = ( queryName != null ? queryName.hashCode() : 0 );
+    hashCode *= 23 + ( legacyQuery ? 0 : 1 );
     return hashCode;
   }
 
-  protected Object clone() throws CloneNotSupportedException
-  {
+  protected Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 }

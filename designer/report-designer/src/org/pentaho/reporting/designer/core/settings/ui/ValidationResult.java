@@ -23,41 +23,33 @@ import java.util.Arrays;
 /**
  * User: Martin Date: 01.03.2006 Time: 18:13:42
  */
-public class ValidationResult
-{
+public class ValidationResult {
   private ArrayList<ValidationMessage> validationMessages;
 
-  public ValidationResult()
-  {
+  public ValidationResult() {
     validationMessages = new ArrayList<ValidationMessage>();
   }
 
-  public void addValidationMessage(final ValidationMessage validationMessage)
-  {
-    if (validationMessage == null)
-    {
+  public void addValidationMessage( final ValidationMessage validationMessage ) {
+    if ( validationMessage == null ) {
       throw new NullPointerException();
     }
-    validationMessages.add(validationMessage);
+    validationMessages.add( validationMessage );
   }
 
-  public ValidationMessage[] getValidationMessages(final ValidationMessage.Severity[] severities)
-  {
+  public ValidationMessage[] getValidationMessages( final ValidationMessage.Severity[] severities ) {
     final ValidationMessage.Severity[] sortedSeverities = severities.clone();
-    Arrays.sort(sortedSeverities);
+    Arrays.sort( sortedSeverities );
 
     final ArrayList<ValidationMessage> filteredValidationMessages = new ArrayList<ValidationMessage>();
-    for (final ValidationMessage.Severity severity : severities)
-    {
-      for (final ValidationMessage validationMessage : validationMessages)
-      {
-        if (validationMessage.getSeverity().equals(severity))
-        {
-          filteredValidationMessages.add(validationMessage);
+    for ( final ValidationMessage.Severity severity : severities ) {
+      for ( final ValidationMessage validationMessage : validationMessages ) {
+        if ( validationMessage.getSeverity().equals( severity ) ) {
+          filteredValidationMessages.add( validationMessage );
         }
       }
     }
 
-    return filteredValidationMessages.toArray(new ValidationMessage[filteredValidationMessages.size()]);
+    return filteredValidationMessages.toArray( new ValidationMessage[ filteredValidationMessages.size() ] );
   }
 }

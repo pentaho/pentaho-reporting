@@ -17,28 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner;
 
-public class ReportDesignerParserUtil
-{
-  private ReportDesignerParserUtil()
-  {
+public class ReportDesignerParserUtil {
+  private ReportDesignerParserUtil() {
   }
 
-  public static String normalizeFormula(String s)
-  {
-    if (s == null) return null;
-    if (s.startsWith("report:"))
-    {
-      s = "=" + s.substring("report:".length()).trim();
+  public static String normalizeFormula( String s ) {
+    if ( s == null ) {
+      return null;
     }
-    else
-    {
+    if ( s.startsWith( "report:" ) ) {
+      s = "=" + s.substring( "report:".length() ).trim();
+    } else {
       s = s.trim();
     }
-    if (s.endsWith(";"))
-    {
-      s = s.substring(0, s.length() - 1);
+    if ( s.endsWith( ";" ) ) {
+      s = s.substring( 0, s.length() - 1 );
     }
     return s;
   }
-  
+
 }

@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.elements.format;
 
-import java.awt.Dimension;
-import java.util.List;
-
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.ElementSelectionComponentSupport;
@@ -29,65 +26,54 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.FontFamilyComboBox;
 
+import java.awt.*;
+import java.util.List;
+
 /**
  * @author Thomas Morgner
  */
-public final class FontFamilySelectorComponent extends FontFamilyComboBox implements DesignerContextComponent
-{
-  private class SelectionUpdateHelper extends ElementSelectionComponentSupport
-  {
+public final class FontFamilySelectorComponent extends FontFamilyComboBox implements DesignerContextComponent {
+  private class SelectionUpdateHelper extends ElementSelectionComponentSupport {
     private Element lastSelection;
 
-    private SelectionUpdateHelper()
-    {
+    private SelectionUpdateHelper() {
     }
 
-    protected void updateSelection()
-    {
-      if (getSelectionModel() == null)
-      {
-        setEnabled(false);
-        setValueFromModel(null);
+    protected void updateSelection() {
+      if ( getSelectionModel() == null ) {
+        setEnabled( false );
+        setValueFromModel( null );
         lastSelection = null;
-      }
-      else
-      {
+      } else {
 
-        final List<Element> visualElements = getSelectionModel().getSelectedElementsOfType(Element.class);
-        if (visualElements.isEmpty())
-        {
-          setValueFromModel(null);
-          setEnabled(false);
+        final List<Element> visualElements = getSelectionModel().getSelectedElementsOfType( Element.class );
+        if ( visualElements.isEmpty() ) {
+          setValueFromModel( null );
+          setEnabled( false );
           lastSelection = null;
-        }
-        else
-        {
-          lastSelection = visualElements.get(0);
-          final Object color = lastSelection.getStyle().getStyleProperty(TextStyleKeys.FONT);
-          for (int i = 1; i < visualElements.size(); i++)
-          {
-            final Element element = visualElements.get(i);
-            final Object otherColor = element.getStyle().getStyleProperty(TextStyleKeys.FONT);
-            if (ObjectUtilities.equal(color, otherColor) == false)
-            {
-              setEnabled(true);
-              setValueFromModel(null);
+        } else {
+          lastSelection = visualElements.get( 0 );
+          final Object color = lastSelection.getStyle().getStyleProperty( TextStyleKeys.FONT );
+          for ( int i = 1; i < visualElements.size(); i++ ) {
+            final Element element = visualElements.get( i );
+            final Object otherColor = element.getStyle().getStyleProperty( TextStyleKeys.FONT );
+            if ( ObjectUtilities.equal( color, otherColor ) == false ) {
+              setEnabled( true );
+              setValueFromModel( null );
               return;
             }
           }
 
-          setEnabled(true);
-          setValueFromModel(color);
+          setEnabled( true );
+          setValueFromModel( color );
         }
       }
     }
 
-    protected void nodeChanged(final ReportModelEvent event)
-    {
-      if (event.getElement() == lastSelection)
-      {
-        final Object color = lastSelection.getStyle().getStyleProperty(TextStyleKeys.FONT);
-        setValueFromModel(color);
+    protected void nodeChanged( final ReportModelEvent event ) {
+      if ( event.getElement() == lastSelection ) {
+        final Object color = lastSelection.getStyle().getStyleProperty( TextStyleKeys.FONT );
+        setValueFromModel( color );
       }
     }
   }
@@ -95,24 +81,21 @@ public final class FontFamilySelectorComponent extends FontFamilyComboBox implem
   private ApplyFontFamilyAction applyFontAction;
   private SelectionUpdateHelper updateHelper;
 
-  public FontFamilySelectorComponent()
-  {
-    applyFontAction = new ApplyFontFamilyAction(this);
+  public FontFamilySelectorComponent() {
+    applyFontAction = new ApplyFontFamilyAction( this );
     updateHelper = new SelectionUpdateHelper();
 
-    setFocusable(false);
-    setMaximumSize(new Dimension(250, getPreferredSize().height));
-    setAction(applyFontAction);
+    setFocusable( false );
+    setMaximumSize( new Dimension( 250, getPreferredSize().height ) );
+    setAction( applyFontAction );
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext context)
-  {
-    applyFontAction.setReportDesignerContext(context);
-    updateHelper.setReportDesignerContext(context);
+  public void setReportDesignerContext( final ReportDesignerContext context ) {
+    applyFontAction.setReportDesignerContext( context );
+    updateHelper.setReportDesignerContext( context );
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return applyFontAction.getReportDesignerContext();
   }
 }

@@ -17,15 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.elements;
 
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.Action;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -49,23 +40,29 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public final class PasteFormatAction extends AbstractElementSelectionAction implements ChangeListener
-{
-  private static class PasteFormatUndoEntry implements UndoEntry
-  {
+
+public final class PasteFormatAction extends AbstractElementSelectionAction implements ChangeListener {
+  private static class PasteFormatUndoEntry implements UndoEntry {
     private InstanceID element;
     private ReportAttributeMap<Object> oldAttributes;
     private ReportAttributeMap<Object> newAttributes;
     private Object[] oldStyleData;
     private Object[] newStyleData;
 
-    private PasteFormatUndoEntry(final InstanceID element,
-                                 final ReportAttributeMap<Object> oldAttributes,
-                                 final ReportAttributeMap<Object> newAttributes,
-                                 final Object[] oldStyleData,
-                                 final Object[] newStyleData)
-    {
+    private PasteFormatUndoEntry( final InstanceID element,
+                                  final ReportAttributeMap<Object> oldAttributes,
+                                  final ReportAttributeMap<Object> newAttributes,
+                                  final Object[] oldStyleData,
+                                  final Object[] newStyleData ) {
       this.element = element;
       this.oldAttributes = oldAttributes.clone();
       this.newAttributes = newAttributes.clone();
@@ -73,74 +70,62 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
       this.newStyleData = newStyleData.clone();
     }
 
-    public void undo(final ReportDocumentContext renderContext)
-    {
-      final Element target = (Element) ModelUtility.findElementById(renderContext.getReportDefinition(), element);
+    public void undo( final ReportDocumentContext renderContext ) {
+      final Element target = (Element) ModelUtility.findElementById( renderContext.getReportDefinition(), element );
 
       final ElementStyleSheet styleSheet = target.getStyle();
       final StyleKey[] keys = StyleKey.getDefinedStyleKeys();
-      for (int i = 0; i < oldStyleData.length; i++)
-      {
-        final Object o = oldStyleData[i];
-        if (o != null)
-        {
-          styleSheet.setStyleProperty(keys[i], o);
+      for ( int i = 0; i < oldStyleData.length; i++ ) {
+        final Object o = oldStyleData[ i ];
+        if ( o != null ) {
+          styleSheet.setStyleProperty( keys[ i ], o );
         }
       }
 
       final String[] namespaces = oldAttributes.getNameSpaces();
-      for (int i = 0; i < namespaces.length; i++)
-      {
-        final String namespace = namespaces[i];
-        final String[] names = oldAttributes.getNames(namespace);
-        for (int j = 0; j < names.length; j++)
-        {
-          final String name = names[j];
-          target.setAttribute(namespace, name, oldAttributes.getAttribute(namespace, name), false);
+      for ( int i = 0; i < namespaces.length; i++ ) {
+        final String namespace = namespaces[ i ];
+        final String[] names = oldAttributes.getNames( namespace );
+        for ( int j = 0; j < names.length; j++ ) {
+          final String name = names[ j ];
+          target.setAttribute( namespace, name, oldAttributes.getAttribute( namespace, name ), false );
         }
       }
 
       target.notifyNodePropertiesChanged();
     }
 
-    public void redo(final ReportDocumentContext renderContext)
-    {
-      final Element target = (Element) ModelUtility.findElementById(renderContext.getReportDefinition(), element);
+    public void redo( final ReportDocumentContext renderContext ) {
+      final Element target = (Element) ModelUtility.findElementById( renderContext.getReportDefinition(), element );
 
       final ElementStyleSheet styleSheet = target.getStyle();
       final StyleKey[] keys = StyleKey.getDefinedStyleKeys();
-      for (int i = 0; i < newStyleData.length; i++)
-      {
-        final Object o = newStyleData[i];
-        if (o != null)
-        {
-          styleSheet.setStyleProperty(keys[i], o);
+      for ( int i = 0; i < newStyleData.length; i++ ) {
+        final Object o = newStyleData[ i ];
+        if ( o != null ) {
+          styleSheet.setStyleProperty( keys[ i ], o );
         }
       }
 
       final String[] namespaces = newAttributes.getNameSpaces();
-      for (int i = 0; i < namespaces.length; i++)
-      {
-        final String namespace = namespaces[i];
-        final String[] names = newAttributes.getNames(namespace);
-        for (int j = 0; j < names.length; j++)
-        {
-          final String name = names[j];
-          target.setAttribute(namespace, name, newAttributes.getAttribute(namespace, name), false);
+      for ( int i = 0; i < namespaces.length; i++ ) {
+        final String namespace = namespaces[ i ];
+        final String[] names = newAttributes.getNames( namespace );
+        for ( int j = 0; j < names.length; j++ ) {
+          final String name = names[ j ];
+          target.setAttribute( namespace, name, newAttributes.getAttribute( namespace, name ), false );
         }
       }
 
       target.notifyNodePropertiesChanged();
     }
 
-    public UndoEntry merge(final UndoEntry newEntry)
-    {
+    public UndoEntry merge( final UndoEntry newEntry ) {
       return null;
     }
   }
 
-  private enum ClipboardStatus
-  {
+  private enum ClipboardStatus {
     EMPTY,           // Nothing valid in the clipboard
     UNKNOWN,         // Not checked, as we have no insertation point
     GENERIC_ELEMENT  // its a generic element, insertation point has been checked to be valid.
@@ -150,234 +135,188 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
 
   private boolean selectionActive;
 
-  public PasteFormatAction()
-  {
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getPasteIcon());
-    putValue(Action.NAME, ActionMessages.getString("PasteFormatAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("PasteFormatAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("PasteFormatAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("PasteFormatAction.Accelerator"));
+  public PasteFormatAction() {
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getPasteIcon() );
+    putValue( Action.NAME, ActionMessages.getString( "PasteFormatAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "PasteFormatAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "PasteFormatAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "PasteFormatAction.Accelerator" ) );
 
-    setEnabled(false);
+    setEnabled( false );
 
-    ClipboardManager.getManager().addChangeListener(this);
+    ClipboardManager.getManager().addChangeListener( this );
 
     // update from system clipboard status
-    stateChanged(null);
+    stateChanged( null );
   }
 
-  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
-  {
+  protected void selectedElementPropertiesChanged( final ReportModelEvent event ) {
   }
 
-  protected void updateSelection()
-  {
+  protected void updateSelection() {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
-      setSelectionActive(false);
+    if ( activeContext == null ) {
+      setSelectionActive( false );
       return;
     }
 
     final Object rawLeadSelection = activeContext.getSelectionModel().getLeadSelection();
-    if (rawLeadSelection == null)
-    {
-      setSelectionActive(false);
+    if ( rawLeadSelection == null ) {
+      setSelectionActive( false );
       return;
     }
-    setSelectionActive(true);
+    setSelectionActive( true );
   }
 
-  public void setSelectionActive(final boolean selectionActive)
-  {
+  public void setSelectionActive( final boolean selectionActive ) {
     this.selectionActive = selectionActive;
-    if (selectionActive)
-    {
-      setEnabled(clipboardStatus == ClipboardStatus.GENERIC_ELEMENT);
-    }
-    else
-    {
-      setEnabled(false);
+    if ( selectionActive ) {
+      setEnabled( clipboardStatus == ClipboardStatus.GENERIC_ELEMENT );
+    } else {
+      setEnabled( false );
     }
   }
 
 
-  public ClipboardStatus getClipboardStatus()
-  {
+  public ClipboardStatus getClipboardStatus() {
     return clipboardStatus;
   }
 
-  public void setClipboardStatus(final ClipboardStatus clipboardStatus)
-  {
+  public void setClipboardStatus( final ClipboardStatus clipboardStatus ) {
     this.clipboardStatus = clipboardStatus;
-    if (clipboardStatus != ClipboardStatus.GENERIC_ELEMENT)
-    {
-      setEnabled(false);
-    }
-    else
-    {
-      setEnabled(selectionActive);
+    if ( clipboardStatus != ClipboardStatus.GENERIC_ELEMENT ) {
+      setEnabled( false );
+    } else {
+      setEnabled( selectionActive );
     }
   }
 
 
-  public void stateChanged(final ChangeEvent e)
-  {
-    if (ClipboardManager.getManager().isDataAvailable())
-    {
-      setClipboardStatus(ClipboardStatus.GENERIC_ELEMENT);
-    }
-    else
-    {
-      setClipboardStatus(ClipboardStatus.EMPTY);
+  public void stateChanged( final ChangeEvent e ) {
+    if ( ClipboardManager.getManager().isDataAvailable() ) {
+      setClipboardStatus( ClipboardStatus.GENERIC_ELEMENT );
+    } else {
+      setClipboardStatus( ClipboardStatus.EMPTY );
     }
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       return;
     }
 
     final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
-    if (selectionModel1 == null)
-    {
+    if ( selectionModel1 == null ) {
       return;
     }
-    final List<Element> visualElements = selectionModel1.getSelectedElementsOfType(Element.class);
-    if (visualElements.isEmpty())
-    {
+    final List<Element> visualElements = selectionModel1.getSelectedElementsOfType( Element.class );
+    if ( visualElements.isEmpty() ) {
       return;
     }
 
-    if (ClipboardManager.getManager().isDataAvailable() == false)
-    {
+    if ( ClipboardManager.getManager().isDataAvailable() == false ) {
       return;
     }
-    try
-    {
+    try {
 
       final Object[] data1 = ClipboardManager.getManager().getContents();
-      if (data1.length == 0 || data1[0] instanceof Element == false)
-      {
+      if ( data1.length == 0 || data1[ 0 ] instanceof Element == false ) {
         return;
       }
 
-      final Element data = (Element) data1[0];
+      final Element data = (Element) data1[ 0 ];
 
       // copy all styles ..
       final ElementStyleSheet styleSheet = data.getStyle();
       final StyleKey[] definedPropertyNamesArray = styleSheet.getDefinedPropertyNamesArray();
 
       final String elementType = data.getElementTypeName();
-      final Object formatString = data.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING);
+      final Object formatString = data.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
 
       final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
-      for (Element element : visualElements)
-      {
+      for ( Element element : visualElements ) {
         final ElementMetaData metaData = element.getMetaData();
         final ElementStyleSheet elementStyleSheet = element.getStyle();
 
-        final Object[] oldStyleData = new Object[StyleKey.getDefinedStyleKeyCount()];
-        final Object[] newStyleData = new Object[StyleKey.getDefinedStyleKeyCount()];
-        for (int j = 0; j < definedPropertyNamesArray.length; j++)
-        {
-          final StyleKey styleKey = definedPropertyNamesArray[j];
-          if (styleKey == null)
-          {
+        final Object[] oldStyleData = new Object[ StyleKey.getDefinedStyleKeyCount() ];
+        final Object[] newStyleData = new Object[ StyleKey.getDefinedStyleKeyCount() ];
+        for ( int j = 0; j < definedPropertyNamesArray.length; j++ ) {
+          final StyleKey styleKey = definedPropertyNamesArray[ j ];
+          if ( styleKey == null ) {
             continue;
           }
-          final StyleMetaData styleDescr = metaData.getStyleDescription(styleKey);
-          if (styleDescr == null)
-          {
+          final StyleMetaData styleDescr = metaData.getStyleDescription( styleKey );
+          if ( styleDescr == null ) {
             // skip if the target element does not have that style ..
             continue;
           }
 
-          if (isFiltered(styleKey, styleDescr))
-          {
+          if ( isFiltered( styleKey, styleDescr ) ) {
             continue;
           }
-          oldStyleData[styleKey.identifier] = elementStyleSheet.getStyleProperty(styleKey, null);
-          final Object newValue = styleSheet.getStyleProperty(styleKey);
-          newStyleData[styleKey.identifier] = newValue;
-          elementStyleSheet.setStyleProperty(styleKey, newValue);
+          oldStyleData[ styleKey.identifier ] = elementStyleSheet.getStyleProperty( styleKey, null );
+          final Object newValue = styleSheet.getStyleProperty( styleKey );
+          newStyleData[ styleKey.identifier ] = newValue;
+          elementStyleSheet.setStyleProperty( styleKey, newValue );
         }
 
         final ReportAttributeMap<Object> oldAttributes = new ReportAttributeMap<Object>();
         final ReportAttributeMap<Object> newAttributes = new ReportAttributeMap<Object>();
-        if (ObjectUtilities.equal(elementType, element.getElementTypeName()))
-        {
+        if ( ObjectUtilities.equal( elementType, element.getElementTypeName() ) ) {
           final Object attribute =
-              element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING);
-          oldAttributes.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, attribute);
-          newAttributes.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, formatString);
+            element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
+          oldAttributes.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, attribute );
+          newAttributes.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, formatString );
 
-          element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, formatString);
+          element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, formatString );
         }
 
         final PasteFormatUndoEntry undoEntry =
-            new PasteFormatUndoEntry(element.getObjectID(), oldAttributes, newAttributes, oldStyleData, newStyleData);
-        undos.add(undoEntry);
+          new PasteFormatUndoEntry( element.getObjectID(), oldAttributes, newAttributes, oldStyleData, newStyleData );
+        undos.add( undoEntry );
       }
-      getActiveContext().getUndo().addChange(ActionMessages.getString("PasteFormatAction.UndoName"),
-          new CompoundUndoEntry(undos.toArray(new UndoEntry[undos.size()])));
-    }
-    catch (final UnsupportedFlavorException e1)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e1);
-    }
-    catch (IOException e1)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e1);
+      getActiveContext().getUndo().addChange( ActionMessages.getString( "PasteFormatAction.UndoName" ),
+        new CompoundUndoEntry( undos.toArray( new UndoEntry[ undos.size() ] ) ) );
+    } catch ( final UnsupportedFlavorException e1 ) {
+      UncaughtExceptionsModel.getInstance().addException( e1 );
+    } catch ( IOException e1 ) {
+      UncaughtExceptionsModel.getInstance().addException( e1 );
     }
   }
 
-  private boolean isFiltered(final StyleKey styleKey, final StyleMetaData styleDescr)
-  {
-    if (styleDescr.isDeprecated())
-    {
+  private boolean isFiltered( final StyleKey styleKey, final StyleMetaData styleDescr ) {
+    if ( styleDescr.isDeprecated() ) {
       return true;
     }
-    if (ElementStyleKeys.POS_X.equals(styleKey))
-    {
+    if ( ElementStyleKeys.POS_X.equals( styleKey ) ) {
       return true;
     }
-    if (ElementStyleKeys.POS_Y.equals(styleKey))
-    {
+    if ( ElementStyleKeys.POS_Y.equals( styleKey ) ) {
       return true;
     }
-    if (ElementStyleKeys.MIN_WIDTH.equals(styleKey))
-    {
+    if ( ElementStyleKeys.MIN_WIDTH.equals( styleKey ) ) {
       return true;
     }
-    if (ElementStyleKeys.MIN_HEIGHT.equals(styleKey))
-    {
+    if ( ElementStyleKeys.MIN_HEIGHT.equals( styleKey ) ) {
       return true;
     }
-    if (ElementStyleKeys.WIDTH.equals(styleKey))
-    {
+    if ( ElementStyleKeys.WIDTH.equals( styleKey ) ) {
       return true;
     }
-    if (ElementStyleKeys.HEIGHT.equals(styleKey))
-    {
+    if ( ElementStyleKeys.HEIGHT.equals( styleKey ) ) {
       return true;
     }
-    if (ElementStyleKeys.MAX_WIDTH.equals(styleKey))
-    {
+    if ( ElementStyleKeys.MAX_WIDTH.equals( styleKey ) ) {
       return true;
     }
-    if (ElementStyleKeys.MAX_HEIGHT.equals(styleKey))
-    {
+    if ( ElementStyleKeys.MAX_HEIGHT.equals( styleKey ) ) {
       return true;
     }
-    if (BandStyleKeys.LAYOUT.equals(styleKey))
-    {
+    if ( BandStyleKeys.LAYOUT.equals( styleKey ) ) {
       return true;
     }
     return false;

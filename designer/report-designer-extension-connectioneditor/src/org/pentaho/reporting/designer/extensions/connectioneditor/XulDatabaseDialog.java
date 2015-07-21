@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.designer.extensions.connectioneditor;
 
-import java.awt.Window;
-import java.util.Map;
-import java.util.Properties;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.database.model.DatabaseAccessType;
@@ -42,6 +38,10 @@ import org.pentaho.ui.xul.containers.XulDialog;
 import org.pentaho.ui.xul.dom.Document;
 import org.pentaho.ui.xul.swing.SwingXulLoader;
 
+import java.awt.*;
+import java.util.Map;
+import java.util.Properties;
+
 
 /**
  * Managing class for instance of Xul Commons Database Dialog. This class handles the translation between DatabaseMeta
@@ -51,55 +51,48 @@ import org.pentaho.ui.xul.swing.SwingXulLoader;
  *
  * @author NBaker
  */
-public class XulDatabaseDialog
-{
-  private static final Log log = LogFactory.getLog(XulDatabaseDialog.class);
+public class XulDatabaseDialog {
+  private static final Log log = LogFactory.getLog( XulDatabaseDialog.class );
   private static final String DIALOG_DEFINITION_FILE = "org/pentaho/ui/database/databasedialog.xul"; //$NON-NLS-1$
-  private static final String OVERLAY_DEFINITION_FILE = "org/pentaho/reporting/ui/datasources/jdbc/ui/databasedialogOverlay.xul";  //$NON-NLS-1$ 
+  private static final String OVERLAY_DEFINITION_FILE =
+    "org/pentaho/reporting/ui/datasources/jdbc/ui/databasedialogOverlay.xul";  //$NON-NLS-1$
   private XulDialog dialog;
   private XulDatabaseHandler handler;
   private DatabaseMeta meta;
   private String id;
   private final DatabaseTypeHelper databaseTypeHelper;
 
-  public XulDatabaseDialog(final Window parent) throws XulException
-  {
+  public XulDatabaseDialog( final Window parent ) throws XulException {
     final SwingXulLoader loader = new SwingXulLoader();
 
-    if (parent != null)
-    {
-      loader.setOuterContext(parent);
+    if ( parent != null ) {
+      loader.setOuterContext( parent );
     }
-    final XulDomContainer container = loader.loadXul(DIALOG_DEFINITION_FILE, Messages.getBundle());
-    container.getDocumentRoot().addOverlay(OVERLAY_DEFINITION_FILE);
+    final XulDomContainer container = loader.loadXul( DIALOG_DEFINITION_FILE, Messages.getBundle() );
+    container.getDocumentRoot().addOverlay( OVERLAY_DEFINITION_FILE );
     container.initialize();
 
     handler = new XulDatabaseHandler();
-    container.addEventHandler(handler);   //$NON-NLS-1$
+    container.addEventHandler( handler );   //$NON-NLS-1$
 
     final Document documentRoot = container.getDocumentRoot();
     final XulComponent root = documentRoot.getRootElement();
 
-    if (root instanceof XulDialog)
-    {
+    if ( root instanceof XulDialog ) {
       dialog = (XulDialog) root;
-      dialog.setResizable(Boolean.TRUE);
-    }
-    else
-    {
-      throw new XulException("Error getting Xul Database Dialog root, element of type: " + root);
+      dialog.setResizable( Boolean.TRUE );
+    } else {
+      throw new XulException( "Error getting Xul Database Dialog root, element of type: " + root );
     }
 
     final ObjectFactory objectFactory = ClassicEngineBoot.getInstance().getObjectFactory();
-    final IDatabaseDialectService dialectService = objectFactory.get(IDatabaseDialectService.class);
-    this.databaseTypeHelper = new DatabaseTypeHelper(dialectService.getDatabaseTypes());
+    final IDatabaseDialectService dialectService = objectFactory.get( IDatabaseDialectService.class );
+    this.databaseTypeHelper = new DatabaseTypeHelper( dialectService.getDatabaseTypes() );
 
   }
 
-  private int convertAccessTypeToKettle(final DatabaseAccessType type)
-  {
-    switch (type)
-    {
+  private int convertAccessTypeToKettle( final DatabaseAccessType type ) {
+    switch( type ) {
       case NATIVE:
         return DatabaseMeta.TYPE_ACCESS_NATIVE;
       case JNDI:
@@ -115,10 +108,8 @@ public class XulDatabaseDialog
     }
   }
 
-  private DatabaseAccessType convertAccessTypeFromKettle(final int type)
-  {
-    switch (type)
-    {
+  private DatabaseAccessType convertAccessTypeFromKettle( final int type ) {
+    switch( type ) {
       case DatabaseMeta.TYPE_ACCESS_NATIVE:
         return DatabaseAccessType.NATIVE;
       case DatabaseMeta.TYPE_ACCESS_JNDI:
@@ -134,122 +125,102 @@ public class XulDatabaseDialog
     }
   }
 
-  private Properties convertToKettle(final Map<String, String> attrs)
-  {
+  private Properties convertToKettle( final Map<String, String> attrs ) {
     final Properties p = new Properties();
-    p.putAll(attrs);
+    p.putAll( attrs );
     return p;
   }
 
-  private void setData(final IDatabaseConnection def)
-  {
-    if (def == null)
-    {
+  private void setData( final IDatabaseConnection def ) {
+    if ( def == null ) {
       this.id = null;
       this.meta = new DatabaseMeta();
-      this.meta.setDatabaseType("GENERIC");
+      this.meta.setDatabaseType( "GENERIC" );
       return;
     }
 
     this.id = def.getId();
     this.meta = new DatabaseMeta();
     final IDatabaseType databaseType = def.getDatabaseType();
-    if (databaseType != null)
-    {
-      this.meta.setDatabaseType(databaseType.getShortName());
-    }
-    else
-    {
-      final String kettleType = def.getAttributes().get("_kettle_native_plugin_id");
-      if (kettleType == null)
-      {
-        this.meta.setDatabaseType("GENERIC");
-      }
-      else
-      {
-        this.meta.setDatabaseType(kettleType);
+    if ( databaseType != null ) {
+      this.meta.setDatabaseType( databaseType.getShortName() );
+    } else {
+      final String kettleType = def.getAttributes().get( "_kettle_native_plugin_id" );
+      if ( kettleType == null ) {
+        this.meta.setDatabaseType( "GENERIC" );
+      } else {
+        this.meta.setDatabaseType( kettleType );
       }
     }
-    this.meta.setAccessType(convertAccessTypeToKettle(def.getAccessType()));
-    this.meta.setAttributes(convertToKettle(def.getAttributes()));
-    this.meta.setUsername(def.getUsername());
-    this.meta.setPassword(def.getPassword());
-    this.meta.setName(def.getName());
-    this.meta.setDataTablespace(def.getDataTablespace());
-    this.meta.setDBName(def.getDatabaseName());
-    this.meta.setDBPort(def.getDatabasePort());
-    this.meta.setHostname(def.getHostname());
-    this.meta.setIndexTablespace(def.getIndexTablespace());
-    this.meta.setServername(def.getInformixServername());
+    this.meta.setAccessType( convertAccessTypeToKettle( def.getAccessType() ) );
+    this.meta.setAttributes( convertToKettle( def.getAttributes() ) );
+    this.meta.setUsername( def.getUsername() );
+    this.meta.setPassword( def.getPassword() );
+    this.meta.setName( def.getName() );
+    this.meta.setDataTablespace( def.getDataTablespace() );
+    this.meta.setDBName( def.getDatabaseName() );
+    this.meta.setDBPort( def.getDatabasePort() );
+    this.meta.setHostname( def.getHostname() );
+    this.meta.setIndexTablespace( def.getIndexTablespace() );
+    this.meta.setServername( def.getInformixServername() );
   }
 
-  private IDatabaseConnection getData()
-  {
-    if (this.meta == null)
-    {
+  private IDatabaseConnection getData() {
+    if ( this.meta == null ) {
       return null;
     }
 
     final DatabaseConnection connection = new DatabaseConnection();
-    connection.setAccessType(convertAccessTypeFromKettle(meta.getAccessType()));
+    connection.setAccessType( convertAccessTypeFromKettle( meta.getAccessType() ) );
     final Properties attributes = meta.getAttributes();
-    for (final Map.Entry e : attributes.entrySet())
-    {
-      connection.getAttributes().put((String) e.getKey(), (String) e.getValue());
+    for ( final Map.Entry e : attributes.entrySet() ) {
+      connection.getAttributes().put( (String) e.getKey(), (String) e.getValue() );
     }
 
-    connection.setUsername(meta.getUsername());
-    connection.setPassword(meta.getPassword());
-    connection.setName(meta.getName());
-    connection.setId(id);
-    connection.setDataTablespace(meta.getDataTablespace());
-    connection.setDatabaseName(meta.getDatabaseName());
-    connection.setDatabasePort(meta.getDatabasePortNumberString());
-    connection.setHostname(meta.getHostname());
-    connection.setIndexTablespace(meta.getIndexTablespace());
-    connection.setInformixServername(meta.getServername());
+    connection.setUsername( meta.getUsername() );
+    connection.setPassword( meta.getPassword() );
+    connection.setName( meta.getName() );
+    connection.setId( id );
+    connection.setDataTablespace( meta.getDataTablespace() );
+    connection.setDatabaseName( meta.getDatabaseName() );
+    connection.setDatabasePort( meta.getDatabasePortNumberString() );
+    connection.setHostname( meta.getHostname() );
+    connection.setIndexTablespace( meta.getIndexTablespace() );
+    connection.setInformixServername( meta.getServername() );
 
     final String shortName = meta.getDatabaseInterface().getPluginId();
-    connection.setDatabaseType(databaseTypeHelper.getDatabaseTypeByShortName(shortName));
-    connection.getAttributes().put("_kettle_native_plugin_id", shortName);
+    connection.setDatabaseType( databaseTypeHelper.getDatabaseTypeByShortName( shortName ) );
+    connection.getAttributes().put( "_kettle_native_plugin_id", shortName );
     return connection;
   }
 
-  public IDatabaseConnection open(final IDatabaseConnection definition)
-  {
-    setData(definition);
-    try
-    {
-      log.debug("showing database dialog");
-      if (meta != null)
-      {
-        handler.setData(meta);
+  public IDatabaseConnection open( final IDatabaseConnection definition ) {
+    setData( definition );
+    try {
+      log.debug( "showing database dialog" );
+      if ( meta != null ) {
+        handler.setData( meta );
       }
       dialog.show(); //Blocks current thread
-      log.debug("dialog closed, getting DabaseMeta");
-      if (handler.isConfirmed() == false)
-      {
+      log.debug( "dialog closed, getting DabaseMeta" );
+      if ( handler.isConfirmed() == false ) {
         return null;
       }
 
       final DatabaseMeta database = (DatabaseMeta) handler.getData(); //$NON-NLS-1$
-      if (database == null)
-      {
-        log.debug("DatabaseMeta is null");
+      if ( database == null ) {
+        log.debug( "DatabaseMeta is null" );
         return null;
       }
       this.meta = database;
       return getData();
-    }
-    catch (Exception e)
-    {
-      log.error(e.getMessage(), e);
+    } catch ( Exception e ) {
+      log.error( e.getMessage(), e );
       return null;
     }
   }
 
-  public static void main(String[] args)
-  {
+  public static void main( String[] args ) {
     ClassicEngineBoot.getInstance().start();
 
     final DatabaseInterface[] databaseInterfaces = DatabaseMeta.getDatabaseInterfaces();

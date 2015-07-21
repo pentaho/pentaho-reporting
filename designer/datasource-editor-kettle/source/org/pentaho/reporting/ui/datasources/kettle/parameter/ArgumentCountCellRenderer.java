@@ -17,24 +17,21 @@
 
 package org.pentaho.reporting.ui.datasources.kettle.parameter;
 
-import java.awt.Component;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 
-public class ArgumentCountCellRenderer extends DefaultTableCellRenderer
-{
-  public ArgumentCountCellRenderer()
-  {
+public class ArgumentCountCellRenderer extends DefaultTableCellRenderer {
+  public ArgumentCountCellRenderer() {
   }
 
-  public Component getTableCellRendererComponent(final JTable table,
-                                                 final Object value,
-                                                 final boolean isSelected,
-                                                 final boolean hasFocus,
-                                                 final int row,
-                                                 final int column)
-  {
-    String valueText = Messages.getInstance().formatMessage("ArgumentCountCellRenderer.DisplayMessage", row + 1);
-    return super.getTableCellRendererComponent(table, valueText, isSelected, hasFocus, row, column);
+  public Component getTableCellRendererComponent( final JTable table,
+                                                  final Object value,
+                                                  final boolean isSelected,
+                                                  final boolean hasFocus,
+                                                  final int row,
+                                                  final int column ) {
+    String valueText = Messages.getInstance().formatMessage( "ArgumentCountCellRenderer.DisplayMessage", row + 1 );
+    return super.getTableCellRendererComponent( table, valueText, isSelected, hasFocus, row, column );
   }
 }

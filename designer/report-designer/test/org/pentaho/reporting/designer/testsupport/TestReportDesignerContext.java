@@ -19,11 +19,9 @@ package org.pentaho.reporting.designer.testsupport;
 
 import org.pentaho.reporting.designer.core.AbstractReportDesignerContext;
 
-public class TestReportDesignerContext extends AbstractReportDesignerContext
-{
-  public TestReportDesignerContext()
-  {
-    super(new TestReportDesignerView());
+public class TestReportDesignerContext extends AbstractReportDesignerContext {
+  public TestReportDesignerContext() {
+    super( new TestReportDesignerView() );
   }
 
 }

@@ -26,7 +26,7 @@ public class TransformationMetadataTest {
   public void testRegisterDatasources() {
     try {
       TransformationDatasourceMetadata.registerDatasources();
-    } catch (ReportDataFactoryException e) {
+    } catch ( ReportDataFactoryException e ) {
     }
   }
 

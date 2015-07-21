@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.webapp.servlet;
 
-import java.io.IOException;
-import java.net.URL;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
@@ -32,55 +24,54 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URL;
+
 /**
  * Generates a ZIP file that contains the report.
  *
  * @author Thomas Morgner
  */
-public class ZipHtmlServlet extends HttpServlet
-{
-  public ZipHtmlServlet()
-  {
+public class ZipHtmlServlet extends HttpServlet {
+  public ZipHtmlServlet() {
   }
 
-  protected void doGet(final HttpServletRequest request,
-                       final HttpServletResponse response) throws ServletException, IOException
-  {
-    final String reportDefinition = request.getParameter("name");
-    final URL reportUrl = getServletContext().getResource(reportDefinition);
-    if (reportUrl == null)
-    {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+  protected void doGet( final HttpServletRequest request,
+                        final HttpServletResponse response ) throws ServletException, IOException {
+    final String reportDefinition = request.getParameter( "name" );
+    final URL reportUrl = getServletContext().getResource( reportDefinition );
+    if ( reportUrl == null ) {
+      response.sendError( HttpServletResponse.SC_BAD_REQUEST );
       return;
     }
 
-    try
-    {
+    try {
       final ResourceManager resourceManager = new ResourceManager();
-      final Resource resource = resourceManager.createDirectly(reportUrl, MasterReport.class);
+      final Resource resource = resourceManager.createDirectly( reportUrl, MasterReport.class );
       final MasterReport report = (MasterReport) resource.getResource();
-      report.setReportEnvironment(new SessionReportEnvironment(report.getReportEnvironment(), request.getSession()));
-      response.setContentType("application/zip");
+      report
+        .setReportEnvironment( new SessionReportEnvironment( report.getReportEnvironment(), request.getSession() ) );
+      response.setContentType( "application/zip" );
 
       final ServletOutputStream stream = response.getOutputStream();
-      HtmlReportUtil.createZIPHTML(report, stream, "report.html");
+      HtmlReportUtil.createZIPHTML( report, stream, "report.html" );
       stream.flush();
-    }
-    catch (ResourceException e)
-    {
-      log("Failed to parse report", e);
-      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-    }
-    catch (ReportProcessingException e)
-    {
-      log("Failed to process the report", e);
-      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    } catch ( ResourceException e ) {
+      log( "Failed to parse report", e );
+      response.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+    } catch ( ReportProcessingException e ) {
+      log( "Failed to process the report", e );
+      response.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
     }
   }
 
-  protected void doPost(final HttpServletRequest httpServletRequest,
-                        final HttpServletResponse httpServletResponse) throws ServletException, IOException
-  {
-    doGet(httpServletRequest, httpServletResponse);
+  protected void doPost( final HttpServletRequest httpServletRequest,
+                         final HttpServletResponse httpServletResponse ) throws ServletException, IOException {
+    doGet( httpServletRequest, httpServletResponse );
   }
 }

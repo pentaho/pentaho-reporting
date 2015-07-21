@@ -22,45 +22,38 @@ package org.pentaho.reporting.designer.core.editor.structuretree;
  *
  * @author Ezequiel Cuellar
  */
-public class SubReportParametersNode
-{
-  public static class ImportParametersNode
-  {
-    public String toString()
-    {
-      return "org.pentaho.reporting.designer.core.editor.structuretree.SubReportParametersNode$ImportParametersNode{}"; // NON-NLS
+public class SubReportParametersNode {
+  public static class ImportParametersNode {
+    public String toString() {
+      return "org.pentaho.reporting.designer.core.editor.structuretree"
+        + ".SubReportParametersNode$ImportParametersNode{}"; // NON-NLS
     }
   }
 
-  public static class ExportParametersNode
-  {
-    public String toString()
-    {
-      return "org.pentaho.reporting.designer.core.editor.structuretree.SubReportParametersNode$ExportParametersNode{}"; // NON-NLS
+  public static class ExportParametersNode {
+    public String toString() {
+      return "org.pentaho.reporting.designer.core.editor.structuretree"
+        + ".SubReportParametersNode$ExportParametersNode{}"; // NON-NLS
     }
   }
 
   private ImportParametersNode importParametersNode;
   private ExportParametersNode exportParametersNode;
 
-  public SubReportParametersNode()
-  {
+  public SubReportParametersNode() {
     importParametersNode = new ImportParametersNode();
     exportParametersNode = new ExportParametersNode();
   }
 
-  public ImportParametersNode getImportParametersNode()
-  {
+  public ImportParametersNode getImportParametersNode() {
     return importParametersNode;
   }
 
-  public ExportParametersNode getExportParametersNode()
-  {
+  public ExportParametersNode getExportParametersNode() {
     return exportParametersNode;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "org.pentaho.reporting.designer.core.editor.structuretree.SubReportParametersNode{}"; // NON-NLS
   }
 }

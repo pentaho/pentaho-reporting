@@ -25,14 +25,11 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.Simp
  *
  * @author Thomas Morgner
  */
-public class SimpleBandedMDXDataSourceReadHandler extends AbstractMDXDataSourceReadHandler
-{
-  public SimpleBandedMDXDataSourceReadHandler()
-  {
+public class SimpleBandedMDXDataSourceReadHandler extends AbstractMDXDataSourceReadHandler {
+  public SimpleBandedMDXDataSourceReadHandler() {
   }
 
-  protected AbstractMDXDataFactory createDataFactory()
-  {
+  protected AbstractMDXDataFactory createDataFactory() {
     return new SimpleBandedMDXDataFactory();
   }
 }

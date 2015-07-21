@@ -17,93 +17,80 @@
 
 package org.pentaho.reporting.designer.core.editor;
 
-import java.awt.Dimension;
-import java.awt.SystemColor;
+import javax.swing.*;
+import javax.swing.plaf.ComponentUI;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.text.DecimalFormat;
-import javax.swing.JLabel;
-import javax.swing.plaf.ComponentUI;
 
 /**
  * Todo: Document me!
  *
  * @author Thomas Morgner
  */
-public class ZoomController extends JLabel
-{
+public class ZoomController extends JLabel {
   private class ZoomHandler extends MouseAdapter implements
-      MouseMotionListener, MouseWheelListener
-  {
+    MouseMotionListener, MouseWheelListener {
     private int dragStartPoint;
 
-    public void mouseWheelMoved(final MouseWheelEvent e)
-    {
+    public void mouseWheelMoved( final MouseWheelEvent e ) {
       // every click is 1%
       final float diff = e.getWheelRotation() * 0.01f;
       final float zoomFactor = zoomModel.getZoomAsPercentage();
-      zoomModel.setZoomAsPercentage(Math.min(5, Math.max(0.1f, zoomFactor - diff)));
+      zoomModel.setZoomAsPercentage( Math.min( 5, Math.max( 0.1f, zoomFactor - diff ) ) );
     }
 
-    public void mouseClicked(final MouseEvent e)
-    {
-      if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1)
-      {
-        zoomModel.setZoomAsPercentage(1);
+    public void mouseClicked( final MouseEvent e ) {
+      if ( e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1 ) {
+        zoomModel.setZoomAsPercentage( 1 );
       }
     }
 
-    public void mousePressed(final MouseEvent e)
-    {
+    public void mousePressed( final MouseEvent e ) {
       dragStartPoint = e.getX();
     }
 
-    public void mouseDragged(final MouseEvent e)
-    {
+    public void mouseDragged( final MouseEvent e ) {
       // every point moved is 1% + or - to the zoom factor
-      final float diff = (dragStartPoint - e.getX()) * 0.01f;
+      final float diff = ( dragStartPoint - e.getX() ) * 0.01f;
       final float zoomFactor = zoomModel.getZoomAsPercentage();
-      zoomModel.setZoomAsPercentage(Math.min(5, Math.max(0.1f, zoomFactor - diff)));
+      zoomModel.setZoomAsPercentage( Math.min( 5, Math.max( 0.1f, zoomFactor - diff ) ) );
       dragStartPoint = e.getX();
     }
 
-    public void mouseMoved(final MouseEvent e)
-    {
+    public void mouseMoved( final MouseEvent e ) {
 
     }
   }
 
-  private class ZoomUpdateHandler implements ZoomModelListener
-  {
-    public void zoomFactorChanged()
-    {
-      setText(format.format(zoomModel.getZoomAsPercentage()));
+  private class ZoomUpdateHandler implements ZoomModelListener {
+    public void zoomFactorChanged() {
+      setText( format.format( zoomModel.getZoomAsPercentage() ) );
     }
   }
 
   private ZoomModel zoomModel;
   private DecimalFormat format;
 
-  public ZoomController(final ZoomModel model)
-  {
-    if (model == null)
-    {
+  public ZoomController( final ZoomModel model ) {
+    if ( model == null ) {
       throw new NullPointerException();
     }
-    this.format = new DecimalFormat("##0%");
+    this.format = new DecimalFormat( "##0%" );
     this.zoomModel = model;
-    this.zoomModel.addZoomModelListener(new ZoomUpdateHandler());
+    this.zoomModel.addZoomModelListener( new ZoomUpdateHandler() );
 
-    setBackground(SystemColor.control);    
-    setHorizontalAlignment(JLabel.CENTER);
-    setText(format.format(zoomModel.getZoomAsPercentage()));
+    setBackground( SystemColor.control );
+    setHorizontalAlignment( JLabel.CENTER );
+    setText( format.format( zoomModel.getZoomAsPercentage() ) );
     final ZoomHandler zoomHandler = new ZoomHandler();
-    addMouseListener(zoomHandler);
-    addMouseMotionListener(zoomHandler);
-    addMouseWheelListener(zoomHandler);
+    addMouseListener( zoomHandler );
+    addMouseMotionListener( zoomHandler );
+    addMouseWheelListener( zoomHandler );
   }
 
   /**
@@ -115,8 +102,7 @@ public class ZoomController extends JLabel
    * @see #setMinimumSize
    * @see ComponentUI
    */
-  public Dimension getMinimumSize()
-  {
+  public Dimension getMinimumSize() {
     return getPreferredSize();
   }
 }

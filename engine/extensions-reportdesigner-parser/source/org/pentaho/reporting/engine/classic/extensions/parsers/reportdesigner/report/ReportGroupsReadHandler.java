@@ -31,12 +31,10 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ReportGroupsReadHandler extends AbstractXmlReadHandler
-{
+public class ReportGroupsReadHandler extends AbstractXmlReadHandler {
   private ReportGroupReadHandler groupReadHandler;
 
-  public ReportGroupsReadHandler()
-  {
+  public ReportGroupsReadHandler() {
   }
 
   /**
@@ -48,25 +46,20 @@ public class ReportGroupsReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("padding".equals(tagName))
-    {
+    if ( "padding".equals( tagName ) ) {
       return new IgnoreAnyChildReadHandler();
     }
-    if ("property".equals(tagName))
-    {
+    if ( "property".equals( tagName ) ) {
       return new IgnoreAnyChildReadHandler();
     }
-    if ("child".equals(tagName))
-    {
-      final String type = atts.getValue(uri, "type");
-      if ("org.pentaho.reportdesigner.crm.report.model.ReportGroup".equals(type))
-      {
+    if ( "child".equals( tagName ) ) {
+      final String type = atts.getValue( uri, "type" );
+      if ( "org.pentaho.reportdesigner.crm.report.model.ReportGroup".equals( type ) ) {
         groupReadHandler = new ReportGroupReadHandler();
         return groupReadHandler;
       }
@@ -79,40 +72,36 @@ public class ReportGroupsReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final AbstractReportDefinition report = (AbstractReportDefinition)
-        getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
+      getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
 
 
-    if (groupReadHandler != null)
-    {
-      final GroupDataBody dataBody = (GroupDataBody) report.getChildElementByType(GroupDataBodyType.INSTANCE);
+    if ( groupReadHandler != null ) {
+      final GroupDataBody dataBody = (GroupDataBody) report.getChildElementByType( GroupDataBodyType.INSTANCE );
       final ItemBand itemBand = dataBody.getItemBand();
       final NoDataBand noDataBand = dataBody.getNoDataBand();
       final DetailsFooter detailsFooter = dataBody.getDetailsFooter();
       final DetailsHeader detailsHeader = dataBody.getDetailsHeader();
 
-      report.setRootGroup(groupReadHandler.getGroup());
+      report.setRootGroup( groupReadHandler.getGroup() );
 
-      final GroupDataBody newDataBody = (GroupDataBody) report.getChildElementByType(GroupDataBodyType.INSTANCE);
-      newDataBody.setItemBand(itemBand);
-      newDataBody.setNoDataBand(noDataBand);
-      newDataBody.setDetailsFooter(detailsFooter);
-      newDataBody.setDetailsHeader(detailsHeader);
+      final GroupDataBody newDataBody = (GroupDataBody) report.getChildElementByType( GroupDataBodyType.INSTANCE );
+      newDataBody.setItemBand( itemBand );
+      newDataBody.setNoDataBand( noDataBand );
+      newDataBody.setDetailsFooter( detailsFooter );
+      newDataBody.setDetailsHeader( detailsHeader );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

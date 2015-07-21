@@ -48,19 +48,18 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts.backport;
 
+import org.jfree.chart.axis.NumberTickUnit;
+import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.jfree.chart.axis.NumberTickUnit;
-import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
-
 /**
  * A numerical tick unit.
  */
-public class FastNumberTickUnit extends NumberTickUnit implements Serializable
-{
+public class FastNumberTickUnit extends NumberTickUnit implements Serializable {
 
   /**
    * For serialization.
@@ -77,24 +76,20 @@ public class FastNumberTickUnit extends NumberTickUnit implements Serializable
    *
    * @param size the size of the tick unit.
    */
-  public FastNumberTickUnit(final double size)
-  {
-    this(size, new FastDecimalFormat(FastDecimalFormat.TYPE_DEFAULT, Locale.getDefault()));
+  public FastNumberTickUnit( final double size ) {
+    this( size, new FastDecimalFormat( FastDecimalFormat.TYPE_DEFAULT, Locale.getDefault() ) );
   }
 
   /**
    * Creates a new number tick unit.
    *
    * @param size      the size of the tick unit.
-   * @param formatter a number formatter for the tick unit (<code>null</code>
-   *                  not permitted).
+   * @param formatter a number formatter for the tick unit (<code>null</code> not permitted).
    */
-  public FastNumberTickUnit(final double size, final FastDecimalFormat formatter)
-  {
-    super(size);
-    if (formatter == null)
-    {
-      throw new IllegalArgumentException("Null 'formatter' argument.");
+  public FastNumberTickUnit( final double size, final FastDecimalFormat formatter ) {
+    super( size );
+    if ( formatter == null ) {
+      throw new IllegalArgumentException( "Null 'formatter' argument." );
     }
     this.formatter = formatter;
   }
@@ -103,18 +98,15 @@ public class FastNumberTickUnit extends NumberTickUnit implements Serializable
    * Creates a new number tick unit.
    *
    * @param size           the size of the tick unit.
-   * @param formatter      a number formatter for the tick unit (<code>null</code>
-   *                       not permitted).
+   * @param formatter      a number formatter for the tick unit (<code>null</code> not permitted).
    * @param minorTickCount the number of minor ticks.
    * @since 1.0.7
    */
-  public FastNumberTickUnit(final double size, final FastDecimalFormat formatter,
-                            final int minorTickCount)
-  {
-    super(size, NumberFormat.getInstance(), minorTickCount);
-    if (formatter == null)
-    {
-      throw new IllegalArgumentException("Null 'formatter' argument.");
+  public FastNumberTickUnit( final double size, final FastDecimalFormat formatter,
+                             final int minorTickCount ) {
+    super( size, NumberFormat.getInstance(), minorTickCount );
+    if ( formatter == null ) {
+      throw new IllegalArgumentException( "Null 'formatter' argument." );
     }
     this.formatter = formatter;
   }
@@ -125,9 +117,8 @@ public class FastNumberTickUnit extends NumberTickUnit implements Serializable
    * @param value the value.
    * @return The formatted string.
    */
-  public String valueToString(final double value)
-  {
-    return this.formatter.format(new BigDecimal(value));
+  public String valueToString( final double value ) {
+    return this.formatter.format( new BigDecimal( value ) );
   }
 
   /**
@@ -136,23 +127,18 @@ public class FastNumberTickUnit extends NumberTickUnit implements Serializable
    * @param obj the object (<code>null</code> permitted).
    * @return A boolean.
    */
-  public boolean equals(final Object obj)
-  {
-    if (obj == this)
-    {
+  public boolean equals( final Object obj ) {
+    if ( obj == this ) {
       return true;
     }
-    if (!(obj instanceof FastNumberTickUnit))
-    {
+    if ( !( obj instanceof FastNumberTickUnit ) ) {
       return false;
     }
-    if (!super.equals(obj))
-    {
+    if ( !super.equals( obj ) ) {
       return false;
     }
     final FastNumberTickUnit that = (FastNumberTickUnit) obj;
-    if (!this.formatter.equals(that.formatter))
-    {
+    if ( !this.formatter.equals( that.formatter ) ) {
       return false;
     }
     return true;
@@ -163,9 +149,8 @@ public class FastNumberTickUnit extends NumberTickUnit implements Serializable
    *
    * @return A string.
    */
-  public String toString()
-  {
-    return "[size=" + this.valueToString(this.getSize()) + "]";
+  public String toString() {
+    return "[size=" + this.valueToString( this.getSize() ) + "]";
   }
 
   /**
@@ -173,11 +158,10 @@ public class FastNumberTickUnit extends NumberTickUnit implements Serializable
    *
    * @return A hash code.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = super.hashCode();
-    result = 29 * result + (this.formatter != null
-        ? this.formatter.hashCode() : 0);
+    result = 29 * result + ( this.formatter != null
+      ? this.formatter.hashCode() : 0 );
     return result;
   }
 

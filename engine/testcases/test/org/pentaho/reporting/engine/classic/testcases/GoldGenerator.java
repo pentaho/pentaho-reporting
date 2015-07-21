@@ -18,31 +18,27 @@
 
 package org.pentaho.reporting.engine.classic.testcases;
 
-import java.awt.GraphicsEnvironment;
-
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldenSampleGenerator;
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 
-public class GoldGenerator extends GoldenSampleGenerator
-{
-  protected FilesystemFilter createReportFilter()
-  {
-    return new FilesystemFilter(new String[]{".prpt", ".report", ".xml"}, "Reports", false);
+import java.awt.*;
+
+public class GoldGenerator extends GoldenSampleGenerator {
+  protected FilesystemFilter createReportFilter() {
+    return new FilesystemFilter( new String[] { ".prpt", ".report", ".xml" }, "Reports", false );
   }
 
-  public static void main(String[] args)
-      throws Exception
-  {
+  public static void main( String[] args )
+    throws Exception {
     FixAllBrokenLogging.fixBrokenLogging();
-    if (GraphicsEnvironment.isHeadless() == false)
-    {
+    if ( GraphicsEnvironment.isHeadless() == false ) {
       throw new IllegalStateException();
     }
     new GoldGenerator().runAllGoldReports();
 
-//    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.current);
-//    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.migration);
-//    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.legacy);
+    //    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.current);
+    //    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.migration);
+    //    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.legacy);
 
   }
 }

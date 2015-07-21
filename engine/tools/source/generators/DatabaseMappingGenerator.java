@@ -17,38 +17,32 @@
 
 package generators;
 
+import org.pentaho.di.core.database.DatabaseInterface;
+import org.pentaho.di.core.database.DatabaseMeta;
+
 import java.util.HashSet;
 
-import org.pentaho.di.core.database.DatabaseMeta;
-import org.pentaho.di.core.database.DatabaseInterface;
+public class DatabaseMappingGenerator {
 
-public class DatabaseMappingGenerator
-{
-
-  public static void main(String[] args)
-  {
+  public static void main( String[] args ) {
     final HashSet knownDrivers = new HashSet();
     final DatabaseInterface[] interfaces = DatabaseMeta.getDatabaseInterfaces();
-    for (int i = 0; i < interfaces.length; i++)
-    {
-      final DatabaseInterface dbi = interfaces[i];
+    for ( int i = 0; i < interfaces.length; i++ ) {
+      final DatabaseInterface dbi = interfaces[ i ];
       final int[] accessTypeList = dbi.getAccessTypeList();
-      for (int j = 0; j < accessTypeList.length; j++)
-      {
-        final int al = accessTypeList[j];
-        if (al != DatabaseMeta.TYPE_ACCESS_ODBC)
-        {
+      for ( int j = 0; j < accessTypeList.length; j++ ) {
+        final int al = accessTypeList[ j ];
+        if ( al != DatabaseMeta.TYPE_ACCESS_ODBC ) {
 
-          dbi.setAccessType(al);
+          dbi.setAccessType( al );
           final String driver = dbi.getDriverClass();
-          if (knownDrivers.contains(driver) == false)
-          {
-            System.out.println (driver + "=" + dbi.getClass().getName());
-            knownDrivers.add (driver);
+          if ( knownDrivers.contains( driver ) == false ) {
+            System.out.println( driver + "=" + dbi.getClass().getName() );
+            knownDrivers.add( driver );
           }
         }
       }
     }
 
-  }  
+  }
 }

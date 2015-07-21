@@ -20,12 +20,10 @@ package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.e
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
 
-public class TextFieldReportElementReadHandler extends AbstractTextElementReadHandler
-{
-  public TextFieldReportElementReadHandler()
-  {
+public class TextFieldReportElementReadHandler extends AbstractTextElementReadHandler {
+  public TextFieldReportElementReadHandler() {
     final Element element = new Element();
-    element.setElementType(new TextFieldType());
-    setElement(element);
+    element.setElementType( new TextFieldType() );
+    setElement( element );
   }
 }

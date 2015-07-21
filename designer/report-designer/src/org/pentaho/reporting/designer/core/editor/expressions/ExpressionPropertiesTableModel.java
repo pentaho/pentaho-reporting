@@ -17,15 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyEditor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import javax.swing.table.AbstractTableModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -53,15 +44,23 @@ import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class ExpressionPropertiesTableModel
-    extends AbstractTableModel implements ElementMetaDataTableModel, GroupingModel
-{
-  private static final Log logger = LogFactory.getLog(ExpressionPropertiesTableModel.class);
+import javax.swing.table.AbstractTableModel;
+import java.beans.IntrospectionException;
+import java.beans.PropertyEditor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
 
-  private static final Expression[] EMPTY_ELEMENTS = new Expression[0];
-  private static final ExpressionPropertyMetaData[] EMPTY_METADATA = new ExpressionPropertyMetaData[0];
-  private static final GroupingHeader[] EMPTY_GROUPINGS = new GroupingHeader[0];
-  private static final BeanUtility[] EMPTY_EDITORS = new BeanUtility[0];
+public class ExpressionPropertiesTableModel
+  extends AbstractTableModel implements ElementMetaDataTableModel, GroupingModel {
+  private static final Log logger = LogFactory.getLog( ExpressionPropertiesTableModel.class );
+
+  private static final Expression[] EMPTY_ELEMENTS = new Expression[ 0 ];
+  private static final ExpressionPropertyMetaData[] EMPTY_METADATA = new ExpressionPropertyMetaData[ 0 ];
+  private static final GroupingHeader[] EMPTY_GROUPINGS = new GroupingHeader[ 0 ];
+  private static final BeanUtility[] EMPTY_EDITORS = new BeanUtility[ 0 ];
 
   private ExpressionPropertyMetaData[] metaData;
   private GroupingHeader[] groupings;
@@ -71,8 +70,7 @@ public class ExpressionPropertiesTableModel
   private ReportDocumentContext activeContext;
   private boolean filterInlineExpressionProperty;
 
-  public ExpressionPropertiesTableModel()
-  {
+  public ExpressionPropertiesTableModel() {
     tableStyle = TableStyle.GROUPED;
     this.elements = EMPTY_ELEMENTS;
     this.metaData = EMPTY_METADATA;
@@ -80,150 +78,119 @@ public class ExpressionPropertiesTableModel
     this.editors = EMPTY_EDITORS;
   }
 
-  public boolean isFilterInlineExpressionProperty()
-  {
+  public boolean isFilterInlineExpressionProperty() {
     return filterInlineExpressionProperty;
   }
 
-  public void setFilterInlineExpressionProperty(final boolean filterInlineExpressionProperty)
-  {
+  public void setFilterInlineExpressionProperty( final boolean filterInlineExpressionProperty ) {
     this.filterInlineExpressionProperty = filterInlineExpressionProperty;
   }
 
-  public ReportDocumentContext getActiveContext()
-  {
+  public ReportDocumentContext getActiveContext() {
     return activeContext;
   }
 
-  public void setActiveContext(final ReportDocumentContext activeContext)
-  {
+  public void setActiveContext( final ReportDocumentContext activeContext ) {
     this.activeContext = activeContext;
   }
 
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return metaData.length;
   }
 
-  protected ExpressionPropertyMetaData getMetaData(final int row)
-  {
-    return metaData[row];
+  protected ExpressionPropertyMetaData getMetaData( final int row ) {
+    return metaData[ row ];
   }
 
-  protected GroupingHeader getGroupings(final int row)
-  {
-    return groupings[row];
+  protected GroupingHeader getGroupings( final int row ) {
+    return groupings[ row ];
   }
 
-  public TableStyle getTableStyle()
-  {
+  public TableStyle getTableStyle() {
     return tableStyle;
   }
 
-  public void setTableStyle(final TableStyle tableStyle)
-  {
-    if (tableStyle == null)
-    {
+  public void setTableStyle( final TableStyle tableStyle ) {
+    if ( tableStyle == null ) {
       throw new NullPointerException();
     }
     this.tableStyle = tableStyle;
-    try
-    {
-      updateData(getData());
-    }
-    catch (IntrospectionException e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
-      try
-      {
-        updateData(EMPTY_ELEMENTS);
-      }
-      catch (IntrospectionException e1)
-      {
+    try {
+      updateData( getData() );
+    } catch ( IntrospectionException e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
+      try {
+        updateData( EMPTY_ELEMENTS );
+      } catch ( IntrospectionException e1 ) {
         // now this cannot happen ..
-        UncaughtExceptionsModel.getInstance().addException(e);
+        UncaughtExceptionsModel.getInstance().addException( e );
       }
     }
   }
 
-  protected void updateData(final Expression[] elements) throws IntrospectionException
-  {
+  protected void updateData( final Expression[] elements ) throws IntrospectionException {
     this.elements = elements.clone();
-    this.editors = new BeanUtility[elements.length];
-    for (int i = 0; i < elements.length; i++)
-    {
-      this.editors[i] = new BeanUtility(elements[i]);
+    this.editors = new BeanUtility[ elements.length ];
+    for ( int i = 0; i < elements.length; i++ ) {
+      this.editors[ i ] = new BeanUtility( elements[ i ] );
     }
 
     final ExpressionPropertyMetaData[] metaData = selectCommonAttributes();
-    if (tableStyle == TableStyle.ASCENDING)
-    {
-      Arrays.sort(metaData, new PlainMetaDataComparator());
-      this.groupings = new GroupingHeader[metaData.length];
+    if ( tableStyle == TableStyle.ASCENDING ) {
+      Arrays.sort( metaData, new PlainMetaDataComparator() );
+      this.groupings = new GroupingHeader[ metaData.length ];
       this.metaData = metaData;
-    }
-    else if (tableStyle == TableStyle.DESCENDING)
-    {
-      Arrays.sort(metaData, Collections.reverseOrder(new PlainMetaDataComparator()));
-      this.groupings = new GroupingHeader[metaData.length];
+    } else if ( tableStyle == TableStyle.DESCENDING ) {
+      Arrays.sort( metaData, Collections.reverseOrder( new PlainMetaDataComparator() ) );
+      this.groupings = new GroupingHeader[ metaData.length ];
       this.metaData = metaData;
-    }
-    else
-    {
-      Arrays.sort(metaData, new GroupedMetaDataComparator());
+    } else {
+      Arrays.sort( metaData, new GroupedMetaDataComparator() );
 
       int groupCount = 0;
       final Locale locale = Locale.getDefault();
-      if (metaData.length > 0)
-      {
+      if ( metaData.length > 0 ) {
         String oldValue = null;
 
-        for (int i = 0; i < metaData.length; i++)
-        {
-          if (groupCount == 0)
-          {
+        for ( int i = 0; i < metaData.length; i++ ) {
+          if ( groupCount == 0 ) {
             groupCount = 1;
-            final ExpressionPropertyMetaData firstdata = metaData[i];
-            oldValue = firstdata.getGrouping(locale);
+            final ExpressionPropertyMetaData firstdata = metaData[ i ];
+            oldValue = firstdata.getGrouping( locale );
             continue;
           }
 
-          final ExpressionPropertyMetaData data = metaData[i];
-          final String grouping = data.getGrouping(locale);
-          if ((ObjectUtilities.equal(oldValue, grouping)) == false)
-          {
+          final ExpressionPropertyMetaData data = metaData[ i ];
+          final String grouping = data.getGrouping( locale );
+          if ( ( ObjectUtilities.equal( oldValue, grouping ) ) == false ) {
             oldValue = grouping;
             groupCount += 1;
           }
         }
       }
 
-      final ExpressionPropertyMetaData[] groupedMetaData = new ExpressionPropertyMetaData[metaData.length + groupCount];
-      this.groupings = new GroupingHeader[groupedMetaData.length];
+      final ExpressionPropertyMetaData[] groupedMetaData =
+        new ExpressionPropertyMetaData[ metaData.length + groupCount ];
+      this.groupings = new GroupingHeader[ groupedMetaData.length ];
       int targetIdx = 0;
       GroupingHeader group = null;
-      for (int sourceIdx = 0; sourceIdx < metaData.length; sourceIdx++)
-      {
-        final ExpressionPropertyMetaData data = metaData[sourceIdx];
-        if (sourceIdx == 0)
-        {
-          group = new GroupingHeader(data.getGrouping(locale));
-          groupings[targetIdx] = group;
+      for ( int sourceIdx = 0; sourceIdx < metaData.length; sourceIdx++ ) {
+        final ExpressionPropertyMetaData data = metaData[ sourceIdx ];
+        if ( sourceIdx == 0 ) {
+          group = new GroupingHeader( data.getGrouping( locale ) );
+          groupings[ targetIdx ] = group;
           targetIdx += 1;
-        }
-        else
-        {
-          final String newgroup = data.getGrouping(locale);
-          if ((ObjectUtilities.equal(newgroup, group.getHeaderText())) == false)
-          {
-            group = new GroupingHeader(newgroup);
-            groupings[targetIdx] = group;
+        } else {
+          final String newgroup = data.getGrouping( locale );
+          if ( ( ObjectUtilities.equal( newgroup, group.getHeaderText() ) ) == false ) {
+            group = new GroupingHeader( newgroup );
+            groupings[ targetIdx ] = group;
             targetIdx += 1;
           }
         }
 
-        groupings[targetIdx] = group;
-        groupedMetaData[targetIdx] = data;
+        groupings[ targetIdx ] = group;
+        groupedMetaData[ targetIdx ] = data;
         targetIdx += 1;
       }
 
@@ -233,157 +200,125 @@ public class ExpressionPropertiesTableModel
     fireTableDataChanged();
   }
 
-  protected boolean isFiltered(final ExpressionPropertyMetaData metaData)
-  {
-    if (metaData.isHidden())
-    {
+  protected boolean isFiltered( final ExpressionPropertyMetaData metaData ) {
+    if ( metaData.isHidden() ) {
       return true;
     }
-    if (!WorkspaceSettings.getInstance().isVisible(metaData))
-    {
+    if ( !WorkspaceSettings.getInstance().isVisible( metaData ) ) {
       return true;
     }
-    if (isFilterInlineExpressionProperty() == false)
-    {
+    if ( isFilterInlineExpressionProperty() == false ) {
       return false;
     }
 
-    if ("name".equals(metaData.getName())) // NON-NLS
+    if ( "name".equals( metaData.getName() ) ) // NON-NLS
     {
       return true;
     }
-    if ("dependencyLevel".equals(metaData.getName())) // NON-NLS
+    if ( "dependencyLevel".equals( metaData.getName() ) ) // NON-NLS
     {
       return true;
     }
     return false;
   }
 
-  protected ExpressionPropertyMetaData[] selectCommonAttributes()
-  {
+  protected ExpressionPropertyMetaData[] selectCommonAttributes() {
     final HashMap<String, Boolean> attributes = new HashMap<String, Boolean>();
     final ArrayList<ExpressionPropertyMetaData> selectedArrays = new ArrayList<ExpressionPropertyMetaData>();
-    for (int elementIdx = 0; elementIdx < elements.length; elementIdx++)
-    {
-      final Expression element = elements[elementIdx];
+    for ( int elementIdx = 0; elementIdx < elements.length; elementIdx++ ) {
+      final Expression element = elements[ elementIdx ];
       final String key = element.getClass().getName();
-      if (ExpressionRegistry.getInstance().isExpressionRegistered(key) == false)
-      {
+      if ( ExpressionRegistry.getInstance().isExpressionRegistered( key ) == false ) {
         // we cannot even attempt to edit such unknown expressions.
-        return new ExpressionPropertyMetaData[0];
+        return new ExpressionPropertyMetaData[ 0 ];
       }
 
       final ExpressionMetaData metaData =
-          ExpressionRegistry.getInstance().getExpressionMetaData(key);
+        ExpressionRegistry.getInstance().getExpressionMetaData( key );
 
       final ExpressionPropertyMetaData[] datas = metaData.getPropertyDescriptions();
-      for (int styleIdx = 0; styleIdx < datas.length; styleIdx++)
-      {
-        final ExpressionPropertyMetaData data = datas[styleIdx];
-        if (isFiltered(data))
-        {
+      for ( int styleIdx = 0; styleIdx < datas.length; styleIdx++ ) {
+        final ExpressionPropertyMetaData data = datas[ styleIdx ];
+        if ( isFiltered( data ) ) {
           continue;
         }
 
         final String name = data.getName();
-        final Object attribute = attributes.get(name);
-        if (Boolean.TRUE.equals(attribute))
-        {
+        final Object attribute = attributes.get( name );
+        if ( Boolean.TRUE.equals( attribute ) ) {
           // fine, we already have a value for it.
-        }
-        else if (attribute == null)
-        {
+        } else if ( attribute == null ) {
           // add it ..
-          if (elementIdx == 0)
-          {
-            selectedArrays.add(data);
-            attributes.put(name, Boolean.TRUE);
-          }
-          else
-          {
-            attributes.put(name, Boolean.FALSE);
+          if ( elementIdx == 0 ) {
+            selectedArrays.add( data );
+            attributes.put( name, Boolean.TRUE );
+          } else {
+            attributes.put( name, Boolean.FALSE );
           }
         }
 
       }
     }
 
-    return selectedArrays.toArray(new ExpressionPropertyMetaData[selectedArrays.size()]);
+    return selectedArrays.toArray( new ExpressionPropertyMetaData[ selectedArrays.size() ] );
   }
 
 
-  public void setData(final Expression[] elements)
-  {
-    try
-    {
-      updateData(elements);
-    }
-    catch (Exception e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
-      try
-      {
-        updateData(EMPTY_ELEMENTS);
-      }
-      catch (IntrospectionException e1)
-      {
+  public void setData( final Expression[] elements ) {
+    try {
+      updateData( elements );
+    } catch ( Exception e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
+      try {
+        updateData( EMPTY_ELEMENTS );
+      } catch ( IntrospectionException e1 ) {
         // this time it will not happen.
       }
     }
   }
 
-  public Expression[] getData()
-  {
+  public Expression[] getData() {
     return elements.clone();
   }
 
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return 2;
   }
 
-  public String getColumnName(final int column)
-  {
-    switch (column)
-    {
+  public String getColumnName( final int column ) {
+    switch( column ) {
       case 0:
-        return EditorExpressionsMessages.getString("ExpressionPropertiesTableModel.NameColumn");
+        return EditorExpressionsMessages.getString( "ExpressionPropertiesTableModel.NameColumn" );
       case 1:
-        return EditorExpressionsMessages.getString("ExpressionPropertiesTableModel.ValueColumn");
+        return EditorExpressionsMessages.getString( "ExpressionPropertiesTableModel.ValueColumn" );
       default:
         throw new IllegalArgumentException();
     }
   }
 
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final ExpressionPropertyMetaData metaData = getMetaData(rowIndex);
-    if (metaData == null)
-    {
-      return getGroupings(rowIndex);
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final ExpressionPropertyMetaData metaData = getMetaData( rowIndex );
+    if ( metaData == null ) {
+      return getGroupings( rowIndex );
     }
 
-    switch (columnIndex)
-    {
+    switch( columnIndex ) {
       case 0:
-        return new GroupedName(metaData);
+        return new GroupedName( metaData );
       case 1:
-        return computeFullValue(metaData);
+        return computeFullValue( metaData );
       default:
         throw new IndexOutOfBoundsException();
     }
   }
 
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
-    final ExpressionPropertyMetaData metaData = getMetaData(rowIndex);
-    if (metaData == null)
-    {
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
+    final ExpressionPropertyMetaData metaData = getMetaData( rowIndex );
+    if ( metaData == null ) {
       return false;
     }
 
-    switch (columnIndex)
-    {
+    switch( columnIndex ) {
       case 0:
         return false;
       case 1:
@@ -394,30 +329,23 @@ public class ExpressionPropertiesTableModel
   }
 
 
-  public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-  {
-    final ExpressionPropertyMetaData metaData = getMetaData(rowIndex);
-    if (metaData == null)
-    {
+  public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+    final ExpressionPropertyMetaData metaData = getMetaData( rowIndex );
+    if ( metaData == null ) {
       return;
     }
 
-    switch (columnIndex)
-    {
+    switch( columnIndex ) {
       case 0:
         return;
-      case 1:
-      {
-        if (defineFullValue(metaData, aValue))
-        {
-          if (activeContext != null)
-          {
+      case 1: {
+        if ( defineFullValue( metaData, aValue ) ) {
+          if ( activeContext != null ) {
             final AbstractReportDefinition abstractReportDefinition = activeContext.getReportDefinition();
-            for (int i = 0; i < elements.length; i++)
-            {
-              final Expression expression = elements[i];
+            for ( int i = 0; i < elements.length; i++ ) {
+              final Expression expression = elements[ i ];
               abstractReportDefinition.fireModelLayoutChanged
-                  (abstractReportDefinition, ReportModelEvent.NODE_PROPERTIES_CHANGED, expression);
+                ( abstractReportDefinition, ReportModelEvent.NODE_PROPERTIES_CHANGED, expression );
             }
           }
           fireTableDataChanged();
@@ -430,83 +358,65 @@ public class ExpressionPropertiesTableModel
 
   }
 
-  private boolean defineFullValue(final ExpressionPropertyMetaData metaData,
-                                  final Object value)
-  {
+  private boolean defineFullValue( final ExpressionPropertyMetaData metaData,
+                                   final Object value ) {
     boolean changed = false;
-    try
-    {
-      for (int i = 0; i < editors.length; i++)
-      {
-        final BeanUtility element = editors[i];
-        final Object attribute = element.getProperty(metaData.getName());
-        if ((ObjectUtilities.equal(attribute, value)) == false)
-        {
+    try {
+      for ( int i = 0; i < editors.length; i++ ) {
+        final BeanUtility element = editors[ i ];
+        final Object attribute = element.getProperty( metaData.getName() );
+        if ( ( ObjectUtilities.equal( attribute, value ) ) == false ) {
           changed = true;
         }
       }
 
-      if (changed)
-      {
+      if ( changed ) {
         final ReportDocumentContext activeContext1 = getActiveContext();
         final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
 
-        for (int i = 0; i < elements.length; i++)
-        {
-          final BeanUtility element = editors[i];
+        for ( int i = 0; i < elements.length; i++ ) {
+          final BeanUtility element = editors[ i ];
           final String name = metaData.getName();
-          if (activeContext1 != null)
-          {
-            final Object oldValue = element.getProperty(name);
-            undos.add(new ExpressionPropertyChangeUndoEntry(elements[i], name, oldValue, value));
+          if ( activeContext1 != null ) {
+            final Object oldValue = element.getProperty( name );
+            undos.add( new ExpressionPropertyChangeUndoEntry( elements[ i ], name, oldValue, value ) );
           }
-          element.setProperty(name, value);
+          element.setProperty( name, value );
         }
-        if (activeContext1 != null)
-        {
+        if ( activeContext1 != null ) {
           final UndoManager undo = activeContext1.getUndo();
-          undo.addChange(EditorExpressionsMessages.getString("ExpressionPropertiesTableModel.UndoName"),
-              new CompoundUndoEntry((UndoEntry[]) undos.toArray(new UndoEntry[undos.size()])));
+          undo.addChange( EditorExpressionsMessages.getString( "ExpressionPropertiesTableModel.UndoName" ),
+            new CompoundUndoEntry( (UndoEntry[]) undos.toArray( new UndoEntry[ undos.size() ] ) ) );
         }
       }
-    }
-    catch (BeanException e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
+    } catch ( BeanException e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
     }
 
     return changed;
   }
 
-  private Object computeFullValue(final ExpressionPropertyMetaData metaData)
-  {
-    try
-    {
+  private Object computeFullValue( final ExpressionPropertyMetaData metaData ) {
+    try {
       Object lastElement = null;
-      if (elements.length > 0)
-      {
-        final BeanUtility element = editors[0];
-        lastElement = element.getProperty(metaData.getName());
+      if ( elements.length > 0 ) {
+        final BeanUtility element = editors[ 0 ];
+        lastElement = element.getProperty( metaData.getName() );
       }
       return lastElement;
-    }
-    catch (BeanException e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
+    } catch ( BeanException e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
       return null;
     }
   }
 
-  public Class getClassForCell(final int rowIndex, final int columnIndex)
-  {
-    final ExpressionPropertyMetaData metaData = getMetaData(rowIndex);
-    if (metaData == null)
-    {
+  public Class getClassForCell( final int rowIndex, final int columnIndex ) {
+    final ExpressionPropertyMetaData metaData = getMetaData( rowIndex );
+    if ( metaData == null ) {
       return GroupingHeader.class;
     }
 
-    switch (columnIndex)
-    {
+    switch( columnIndex ) {
       case 0:
         return GroupedName.class;
       case 1:
@@ -516,89 +426,71 @@ public class ExpressionPropertiesTableModel
     }
   }
 
-  public PropertyEditor getEditorForCell(final int aRowIndex, final int aColumnIndex)
-  {
-    final ExpressionPropertyMetaData metaData = getMetaData(aRowIndex);
-    if (metaData == null)
-    {
+  public PropertyEditor getEditorForCell( final int aRowIndex, final int aColumnIndex ) {
+    final ExpressionPropertyMetaData metaData = getMetaData( aRowIndex );
+    if ( metaData == null ) {
       // a header row
       return null;
     }
 
-    try
-    {
-      switch (aColumnIndex)
-      {
+    try {
+      switch( aColumnIndex ) {
         case 0:
           return null;
         case 1:
           final PropertyEditor editor = metaData.getEditor();
-          if (editor != null)
-          {
+          if ( editor != null ) {
             return editor;
           }
 
           final Class editorClass = metaData.getBeanDescriptor().getPropertyEditorClass();
-          if (editorClass != null)
-          {
+          if ( editorClass != null ) {
             return (PropertyEditor) editorClass.newInstance();
           }
 
-          if (String.class.equals(metaData.getPropertyType()))
-          {
+          if ( String.class.equals( metaData.getPropertyType() ) ) {
             return null;
           }
 
-          return FastPropertyEditorManager.findEditor(metaData.getPropertyType());
+          return FastPropertyEditorManager.findEditor( metaData.getPropertyType() );
         default:
           throw new IndexOutOfBoundsException();
       }
-    }
-    catch (Exception e)
-    {
-      if (logger.isTraceEnabled())
-      {
-        logger.trace("Failed to create property-editor", e); // NON-NLS
+    } catch ( Exception e ) {
+      if ( logger.isTraceEnabled() ) {
+        logger.trace( "Failed to create property-editor", e ); // NON-NLS
       }
       return null;
     }
   }
 
-  public String getValueRole(final int row, final int column)
-  {
-    if (column != 1)
-    {
+  public String getValueRole( final int row, final int column ) {
+    if ( column != 1 ) {
       return null;
     }
-    final ExpressionPropertyMetaData metaData = getMetaData(row);
-    if (metaData == null)
-    {
+    final ExpressionPropertyMetaData metaData = getMetaData( row );
+    if ( metaData == null ) {
       return null;
     }
     return metaData.getPropertyRole();
   }
 
-  public String[] getExtraFields(final int row, final int column)
-  {
-    if (column == 0)
-    {
+  public String[] getExtraFields( final int row, final int column ) {
+    if ( column == 0 ) {
       return null;
     }
-    final ExpressionPropertyMetaData metaData = getMetaData(row);
-    if (metaData == null)
-    {
+    final ExpressionPropertyMetaData metaData = getMetaData( row );
+    if ( metaData == null ) {
       return null;
     }
     return metaData.getExtraCalculationFields();
   }
 
-  public GroupingHeader getGroupHeader(final int index)
-  {
-    return getGroupings(index);
+  public GroupingHeader getGroupHeader( final int index ) {
+    return getGroupings( index );
   }
 
-  public boolean isHeaderRow(final int index)
-  {
-    return metaData[index] == null;
+  public boolean isHeaderRow( final int index ) {
+    return metaData[ index ] == null;
   }
 }

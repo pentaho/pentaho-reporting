@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.bugs;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.plugin.jfreereport.reportcharts.PieChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.collectors.PieDataSetCollector;
@@ -44,58 +42,53 @@ import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFacto
 import org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChartType;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd4625Test extends TestCase
-{
-  public Prd4625Test()
-  {
+import java.net.URL;
+
+public class Prd4625Test extends TestCase {
+  public Prd4625Test() {
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testBugExists() throws Exception
-  {
-    final URL source = getClass().getResource("Prd-4625.prpt");
+  public void testBugExists() throws Exception {
+    final URL source = getClass().getResource( "Prd-4625.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final MasterReport report = (MasterReport) mgr.createDirectly(source, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( source, MasterReport.class ).getResource();
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
     // Wanna see how the model looks like? Uncomment the following line ..
     // ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode[] elementsByNodeType =
-        MatchFactory.findElementsByElementType(logicalPageBox, new LegacyChartType());
-    assertEquals(2, elementsByNodeType.length);
+      MatchFactory.findElementsByElementType( logicalPageBox, new LegacyChartType() );
+    assertEquals( 2, elementsByNodeType.length );
   }
 
-  public void testChartCollectorActive() throws Exception
-  {
-    final URL source = getClass().getResource("Prd-4625.prpt");
+  public void testChartCollectorActive() throws Exception {
+    final URL source = getClass().getResource( "Prd-4625.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final MasterReport report = (MasterReport) mgr.createDirectly(source, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( source, MasterReport.class ).getResource();
 
     final ItemBand itemBand = report.getItemBand();
-    final SubReport subReport = (SubReport) itemBand.getElement(0);
-    subReport.addExpression(new ValidateChartConfigurationFunction());
+    final SubReport subReport = (SubReport) itemBand.getElement( 0 );
+    subReport.addExpression( new ValidateChartConfigurationFunction() );
     // the chart is in the report header. We now validate that there is a chart-dataset collector added to the
     // report.
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 
-  public static class ValidateChartConfigurationFunction extends AbstractFunction
-  {
+  public static class ValidateChartConfigurationFunction extends AbstractFunction {
     /**
      * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
      * is added to the report's function collection.
      */
-    public ValidateChartConfigurationFunction()
-    {
+    public ValidateChartConfigurationFunction() {
     }
 
     /**
@@ -104,31 +97,30 @@ public class Prd4625Test extends TestCase
      *
      * @param event The event.
      */
-    public void reportInitialized(final ReportEvent event)
-    {
+    public void reportInitialized( final ReportEvent event ) {
       // identifies the report we are working with. Useful for debugging!
       ReportStateKey subReportStateKey = event.getState().getProcessKey();
       ReportStateKey parentReportStateKey = event.getState().getParentSubReportState().getProcessKey();
-//      System.out.println ("SubReport: " + subReportStateKey);
-//      System.out.println ("Parent: " + parentReportStateKey);
+      //      System.out.println ("SubReport: " + subReportStateKey);
+      //      System.out.println ("Parent: " + parentReportStateKey);
 
       final ReportHeader reportHeader = event.getState().getReport().getReportHeader();
-      final Element element = reportHeader.getElement(0); // this should be the chart
-      assertEquals("legacy-chart", element.getElementTypeName());
+      final Element element = reportHeader.getElement( 0 ); // this should be the chart
+      assertEquals( "legacy-chart", element.getElementTypeName() );
       final Expression attributeExpression =
-          element.getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE);
-      assertNotNull(attributeExpression);
-      assertTrue(attributeExpression instanceof PieChartExpression);
+        element.getAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE );
+      assertNotNull( attributeExpression );
+      assertTrue( attributeExpression instanceof PieChartExpression );
       final PieChartExpression pe = (PieChartExpression) attributeExpression;
       final String dataSource = pe.getDataSource();
 
       final Expression[] expressions =
-          event.getState().getFlowController().getMasterRow().getExpressionDataRow().getExpressions();
-      assertEquals(expressions.length, 2);
+        event.getState().getFlowController().getMasterRow().getExpressionDataRow().getExpressions();
+      assertEquals( expressions.length, 2 );
       // 2 expressions: One is the validate function, the other is the chart-dataset collector.
       // as the chart-dataset collector is added late (during report processing), our validate function
       // will always occupy spot 0.
-      assertEquals(expressions[1].getName(), dataSource);
+      assertEquals( expressions[ 1 ].getName(), dataSource );
     }
 
     /**
@@ -138,37 +130,32 @@ public class Prd4625Test extends TestCase
      *
      * @return the value of the function.
      */
-    public Object getValue()
-    {
+    public Object getValue() {
       return null;
     }
   }
 
-  public void testChartPreProcessor() throws Exception
-  {
-    final URL source = getClass().getResource("Prd-4625.prpt");
+  public void testChartPreProcessor() throws Exception {
+    final URL source = getClass().getResource( "Prd-4625.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final MasterReport report = (MasterReport) mgr.createDirectly(source, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( source, MasterReport.class ).getResource();
 
     final ItemBand itemBand = report.getItemBand();
-    final SubReport subReport = (SubReport) itemBand.getElement(0);
-    subReport.addPreProcessor(new ValidateChartPreProcessor());
+    final SubReport subReport = (SubReport) itemBand.getElement( 0 );
+    subReport.addPreProcessor( new ValidateChartPreProcessor() );
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 
-  public static class ValidateChartPreProcessor extends AbstractReportPreProcessor
-  {
-    public SubReport performPreProcessing(final SubReport definition,
-                                          final DefaultFlowController flowController) throws ReportProcessingException
-    {
+  public static class ValidateChartPreProcessor extends AbstractReportPreProcessor {
+    public SubReport performPreProcessing( final SubReport definition,
+                                           final DefaultFlowController flowController )
+      throws ReportProcessingException {
       final ExpressionCollection expressions = definition.getExpressions();
-      for (int i = 0; i < expressions.size(); i+= 1)
-      {
-        if (expressions.getExpression(i) instanceof PieDataSetCollector)
-        {
-          fail("Found dataset collector, but we should not have one here");
+      for ( int i = 0; i < expressions.size(); i += 1 ) {
+        if ( expressions.getExpression( i ) instanceof PieDataSetCollector ) {
+          fail( "Found dataset collector, but we should not have one here" );
         }
       }
       return definition;

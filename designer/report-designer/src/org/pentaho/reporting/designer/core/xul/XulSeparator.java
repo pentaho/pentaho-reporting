@@ -25,8 +25,7 @@ import org.pentaho.ui.xul.util.Orient;
  *
  * @author Thomas Morgner
  */
-public interface XulSeparator extends XulComponent
-{
+public interface XulSeparator extends XulComponent {
   /**
    * @return the orientation for this container. Valid values are found in the Orient enum.
    * @see org.pentaho.ui.xul.util.Orient

@@ -25,11 +25,9 @@ import org.pentaho.reporting.engine.classic.core.Band;
  *
  * @author Thomas Morgner
  */
-public class RootBandRenderer extends AbstractElementRenderer
-{
-  public RootBandRenderer(final Band visualReportElement,
-                          final ReportDocumentContext renderContext)
-  {
-    super(visualReportElement, renderContext);
+public class RootBandRenderer extends AbstractElementRenderer {
+  public RootBandRenderer( final Band visualReportElement,
+                           final ReportDocumentContext renderContext ) {
+    super( visualReportElement, renderContext );
   }
 }

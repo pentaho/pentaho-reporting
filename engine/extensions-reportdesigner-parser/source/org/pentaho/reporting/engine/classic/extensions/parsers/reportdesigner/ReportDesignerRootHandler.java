@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner;
 
-import java.awt.print.PageFormat;
-import java.util.HashMap;
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -52,8 +48,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ReportDesignerRootHandler extends PropertiesReadHandler
-{
+import java.awt.print.PageFormat;
+import java.util.HashMap;
+import java.util.Properties;
+
+public class ReportDesignerRootHandler extends PropertiesReadHandler {
   private MasterReport report;
   private PageDefinitionModelReadHandler pageDefinitionReadHandler;
   private LinealModelReadHandler horizontalLinealReadHandler;
@@ -67,8 +66,7 @@ public class ReportDesignerRootHandler extends PropertiesReadHandler
   private BandTopLevelElementReadHandler itemBandHandler;
   private BandTopLevelElementReadHandler noDataBandHandler;
 
-  public ReportDesignerRootHandler()
-  {
+  public ReportDesignerRootHandler() {
   }
 
   /**
@@ -77,10 +75,9 @@ public class ReportDesignerRootHandler extends PropertiesReadHandler
    * @param rootHandler the root handler.
    * @param tagName     the tag name.
    */
-  public void init(final RootXmlReadHandler rootHandler, final String uri, final String tagName) throws SAXException
-  {
-    super.init(rootHandler, uri, tagName);
-    rootHandler.setHelperObject("property-expansion", Boolean.FALSE);
+  public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
+    super.init( rootHandler, uri, tagName );
+    rootHandler.setHelperObject( "property-expansion", Boolean.FALSE );
   }
 
 
@@ -90,25 +87,22 @@ public class ReportDesignerRootHandler extends PropertiesReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
 
-    final Object maybeReport = getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
+    final Object maybeReport = getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
     final MasterReport report;
-    if (maybeReport instanceof MasterReport == false)
-    {
+    if ( maybeReport instanceof MasterReport == false ) {
       // replace it ..
       report = new MasterReport();
-      report.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE, getRootHandler().getSource());
-    }
-    else
-    {
+      report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE, getRootHandler().getSource() );
+    } else {
       report = (MasterReport) maybeReport;
     }
 
-    getRootHandler().setHelperObject(ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String,ElementStyleSheet>());
-    getRootHandler().setHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME, report);
+    getRootHandler()
+      .setHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>() );
+    getRootHandler().setHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME, report );
     this.report = report;
   }
 
@@ -121,95 +115,77 @@ public class ReportDesignerRootHandler extends PropertiesReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("padding".equals(tagName))
-    {
+    if ( "padding".equals( tagName ) ) {
       return new IgnoreAnyChildReadHandler();
     }
-    if ("horizontalLinealModel".equals(tagName))
-    {
+    if ( "horizontalLinealModel".equals( tagName ) ) {
       horizontalLinealReadHandler = new LinealModelReadHandler();
       return horizontalLinealReadHandler;
     }
-    if ("pageDefinition".equals(tagName))
-    {
+    if ( "pageDefinition".equals( tagName ) ) {
       pageDefinitionReadHandler = new PageDefinitionModelReadHandler();
       return pageDefinitionReadHandler;
     }
-    if ("reportConfiguration".equals(tagName))
-    {
-      return new ConfigurationReadHandler(report.getReportConfiguration());
+    if ( "reportConfiguration".equals( tagName ) ) {
+      return new ConfigurationReadHandler( report.getReportConfiguration() );
     }
 
-    if ("child".equals(tagName))
-    {
-      final String type = atts.getValue(uri, "type");
-      if ("org.pentaho.reportdesigner.crm.report.model.dataset.DataSetsReportElement".equals(type))
-      {
+    if ( "child".equals( tagName ) ) {
+      final String type = atts.getValue( uri, "type" );
+      if ( "org.pentaho.reportdesigner.crm.report.model.dataset.DataSetsReportElement".equals( type ) ) {
         dataSetReadHandler = new DataSetsReadHandler();
         return dataSetReadHandler;
       }
-      if ("org.pentaho.reportdesigner.crm.report.model.ReportFunctionsElement".equals(type))
-      {
+      if ( "org.pentaho.reportdesigner.crm.report.model.ReportFunctionsElement".equals( type ) ) {
         return new ReportFunctionsReadHandler();
       }
 
-      if ("org.pentaho.reportdesigner.crm.report.model.BandToplevelPageReportElement".equals(type) ||
-          "org.pentaho.reportdesigner.crm.report.model.BandToplevelReportElement".equals(type) ||
-          "org.pentaho.reportdesigner.crm.report.model.BandToplevelItemReportElement".equals(type))
-      {
-        final String bandtype = atts.getValue(uri, "bandToplevelType");
-        if ("PAGE_HEADER".equals(bandtype))
-        {
-          pageHeaderHandler = new BandTopLevelElementReadHandler(new PageHeader(), bandtype);
+      if ( "org.pentaho.reportdesigner.crm.report.model.BandToplevelPageReportElement".equals( type ) ||
+        "org.pentaho.reportdesigner.crm.report.model.BandToplevelReportElement".equals( type ) ||
+        "org.pentaho.reportdesigner.crm.report.model.BandToplevelItemReportElement".equals( type ) ) {
+        final String bandtype = atts.getValue( uri, "bandToplevelType" );
+        if ( "PAGE_HEADER".equals( bandtype ) ) {
+          pageHeaderHandler = new BandTopLevelElementReadHandler( new PageHeader(), bandtype );
           return pageHeaderHandler;
         }
-        if ("PAGE_FOOTER".equals(bandtype))
-        {
-          pageFooterHandler = new BandTopLevelElementReadHandler(new PageFooter(), bandtype);
+        if ( "PAGE_FOOTER".equals( bandtype ) ) {
+          pageFooterHandler = new BandTopLevelElementReadHandler( new PageFooter(), bandtype );
           return pageFooterHandler;
         }
-        if ("WATERMARK".equals(bandtype))
-        {
-          watermarkHandler = new BandTopLevelElementReadHandler(new Watermark(), bandtype);
+        if ( "WATERMARK".equals( bandtype ) ) {
+          watermarkHandler = new BandTopLevelElementReadHandler( new Watermark(), bandtype );
           return watermarkHandler;
         }
-        if ("NO_DATA_BAND".equals(bandtype))
-        {
-          noDataBandHandler = new BandTopLevelElementReadHandler(new NoDataBand(), bandtype);
+        if ( "NO_DATA_BAND".equals( bandtype ) ) {
+          noDataBandHandler = new BandTopLevelElementReadHandler( new NoDataBand(), bandtype );
           return noDataBandHandler;
         }
-        if ("ITEM_BAND".equals(bandtype))
-        {
-          itemBandHandler = new BandTopLevelElementReadHandler(new ItemBand(), bandtype);
+        if ( "ITEM_BAND".equals( bandtype ) ) {
+          itemBandHandler = new BandTopLevelElementReadHandler( new ItemBand(), bandtype );
           return itemBandHandler;
         }
-        if ("REPORT_FOOTER".equals(bandtype))
-        {
-          reportFooterHandler = new BandTopLevelElementReadHandler(new ReportFooter(), bandtype);
+        if ( "REPORT_FOOTER".equals( bandtype ) ) {
+          reportFooterHandler = new BandTopLevelElementReadHandler( new ReportFooter(), bandtype );
           return reportFooterHandler;
         }
-        if ("REPORT_HEADER".equals(bandtype))
-        {
-          reportHeaderHandler = new BandTopLevelElementReadHandler(new ReportHeader(), bandtype);
+        if ( "REPORT_HEADER".equals( bandtype ) ) {
+          reportHeaderHandler = new BandTopLevelElementReadHandler( new ReportHeader(), bandtype );
           return reportHeaderHandler;
         }
       }
 
-      if ("org.pentaho.reportdesigner.crm.report.model.ReportGroups".equals(type))
-      {
+      if ( "org.pentaho.reportdesigner.crm.report.model.ReportGroups".equals( type ) ) {
         return new ReportGroupsReadHandler();
       }
     }
 
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -217,23 +193,21 @@ public class ReportDesignerRootHandler extends PropertiesReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final Properties p = getResult();
-    final String name = p.getProperty("name");
-    if (name != null)
-    {
-      report.setName(name);
+    final String name = p.getProperty( "name" );
+    if ( name != null ) {
+      report.setName( name );
     }
 
-    final boolean useMaxCharBounds = "true".equals(p.getProperty("useMaxCharBounds"));
+    final boolean useMaxCharBounds = "true".equals( p.getProperty( "useMaxCharBounds" ) );
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds", String.valueOf(useMaxCharBounds));
+      ( "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds",
+        String.valueOf( useMaxCharBounds ) );
 
-    if (pageDefinitionReadHandler != null)
-    {
-      report.setPageDefinition(new SimplePageDefinition((PageFormat) pageDefinitionReadHandler.getObject()));
+    if ( pageDefinitionReadHandler != null ) {
+      report.setPageDefinition( new SimplePageDefinition( (PageFormat) pageDefinitionReadHandler.getObject() ) );
     }
 
     // we do not import the "defaultLocale" property, as this property is provided by the report-environment,
@@ -242,82 +216,68 @@ public class ReportDesignerRootHandler extends PropertiesReadHandler
     // we do not import the resourceBundleClassPath property, as this cannot be safely expressed within
     // the API of the reporting engine.
 
-    if (dataSetReadHandler != null)
-    {
-      report.setDataFactory((DataFactory) dataSetReadHandler.getObject());
+    if ( dataSetReadHandler != null ) {
+      report.setDataFactory( (DataFactory) dataSetReadHandler.getObject() );
     }
 
-    if (horizontalLinealReadHandler != null)
-    {
+    if ( horizontalLinealReadHandler != null ) {
       final Guideline[] guidelines = horizontalLinealReadHandler.getGuidelineValues();
-      if (guidelines != null && guidelines.length > 0)
-      {
-        final StringBuilder b = new StringBuilder(100);
-        for (int i = 0; i < guidelines.length; i++)
-        {
-          final Guideline guideline = guidelines[i];
-          if (i != 0)
-          {
-            b.append(' ');
+      if ( guidelines != null && guidelines.length > 0 ) {
+        final StringBuilder b = new StringBuilder( 100 );
+        for ( int i = 0; i < guidelines.length; i++ ) {
+          final Guideline guideline = guidelines[ i ];
+          if ( i != 0 ) {
+            b.append( ' ' );
           }
-          b.append(guideline.externalize());
+          b.append( guideline.externalize() );
         }
-        report.setAttribute(ReportDesignerParserModule.NAMESPACE,
-            ReportDesignerParserModule.HORIZONTAL_GUIDE_LINES_ATTRIBUTE, b.toString());
+        report.setAttribute( ReportDesignerParserModule.NAMESPACE,
+          ReportDesignerParserModule.HORIZONTAL_GUIDE_LINES_ATTRIBUTE, b.toString() );
       }
     }
 
 
-    if (reportFooterHandler != null)
-    {
-      report.setReportFooter((ReportFooter) reportFooterHandler.getBand());
+    if ( reportFooterHandler != null ) {
+      report.setReportFooter( (ReportFooter) reportFooterHandler.getBand() );
     }
-    if (reportHeaderHandler != null)
-    {
-      report.setReportHeader((ReportHeader) reportHeaderHandler.getBand());
+    if ( reportHeaderHandler != null ) {
+      report.setReportHeader( (ReportHeader) reportHeaderHandler.getBand() );
     }
-    if (itemBandHandler != null)
-    {
-      final GroupDataBody dataBody = (GroupDataBody) report.getChildElementByType(GroupDataBodyType.INSTANCE);
-      dataBody.setItemBand((ItemBand) itemBandHandler.getBand());
+    if ( itemBandHandler != null ) {
+      final GroupDataBody dataBody = (GroupDataBody) report.getChildElementByType( GroupDataBodyType.INSTANCE );
+      dataBody.setItemBand( (ItemBand) itemBandHandler.getBand() );
     }
-    if (noDataBandHandler != null)
-    {
-      final GroupDataBody dataBody = (GroupDataBody) report.getChildElementByType(GroupDataBodyType.INSTANCE);
-      dataBody.setNoDataBand((NoDataBand) noDataBandHandler.getBand());
+    if ( noDataBandHandler != null ) {
+      final GroupDataBody dataBody = (GroupDataBody) report.getChildElementByType( GroupDataBodyType.INSTANCE );
+      dataBody.setNoDataBand( (NoDataBand) noDataBandHandler.getBand() );
     }
-    if (pageFooterHandler != null)
-    {
-      report.setPageFooter((PageFooter) pageFooterHandler.getBand());
+    if ( pageFooterHandler != null ) {
+      report.setPageFooter( (PageFooter) pageFooterHandler.getBand() );
     }
-    if (pageHeaderHandler != null)
-    {
-      report.setPageHeader((PageHeader) pageHeaderHandler.getBand());
+    if ( pageHeaderHandler != null ) {
+      report.setPageHeader( (PageHeader) pageHeaderHandler.getBand() );
     }
-    if (watermarkHandler != null)
-    {
-      report.setWatermark((Watermark) watermarkHandler.getBand());
+    if ( watermarkHandler != null ) {
+      report.setWatermark( (Watermark) watermarkHandler.getBand() );
     }
 
-    report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FILEFORMAT, "legacy-report-designer");
+    report
+      .setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FILEFORMAT, "legacy-report-designer" );
 
-    if (report.getQuery() == null)
-    {
-      report.setQuery("default");
+    if ( report.getQuery() == null ) {
+      report.setQuery( "default" );
     }
 
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return report;
   }
 }

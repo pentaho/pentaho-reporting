@@ -19,8 +19,7 @@ package org.pentaho.reporting.engine.classic.wizard.model;
 
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 
-public class DefaultGroupDefinition extends AbstractFieldDefinition implements GroupDefinition
-{
+public class DefaultGroupDefinition extends AbstractFieldDefinition implements GroupDefinition {
   private String groupName;
   private RootBandDefinition header;
   private RootBandDefinition footer;
@@ -28,93 +27,78 @@ public class DefaultGroupDefinition extends AbstractFieldDefinition implements G
   private GroupType groupType;
   private ElementAlignment totalsHorizontalAlignment;
 
-  public DefaultGroupDefinition()
-  {
+  public DefaultGroupDefinition() {
     header = new DefaultRootBandDefinition();
     footer = new DefaultRootBandDefinition();
     groupType = GroupType.RELATIONAL;
   }
 
-  public DefaultGroupDefinition(final GroupType groupType, final String field)
-  {
+  public DefaultGroupDefinition( final GroupType groupType, final String field ) {
     this();
     this.groupType = groupType;
-    setField(field);
+    setField( field );
   }
 
-  public DefaultGroupDefinition(GroupDefinition src)
-  {
+  public DefaultGroupDefinition( GroupDefinition src ) {
     this();
 
-    this.setAggregationFunction(src.getAggregationFunction());
-    this.setDataFormat(src.getDataFormat());
-    this.setDisplayName(src.getDisplayName());
-    this.setField(src.getField());
-    this.setFieldTypeHint(src.getFieldTypeHint());
-    this.setGroupName(src.getGroupName());
-    this.setGroupTotalsLabel(src.getGroupTotalsLabel());
-    this.setGroupType(src.getGroupType());
-    this.setNullString(src.getNullString());
-    this.setWidth(src.getWidth());
-    this.setTotalsHorizontalAlignment(src.getTotalsHorizontalAlignment());
+    this.setAggregationFunction( src.getAggregationFunction() );
+    this.setDataFormat( src.getDataFormat() );
+    this.setDisplayName( src.getDisplayName() );
+    this.setField( src.getField() );
+    this.setFieldTypeHint( src.getFieldTypeHint() );
+    this.setGroupName( src.getGroupName() );
+    this.setGroupTotalsLabel( src.getGroupTotalsLabel() );
+    this.setGroupType( src.getGroupType() );
+    this.setNullString( src.getNullString() );
+    this.setWidth( src.getWidth() );
+    this.setTotalsHorizontalAlignment( src.getTotalsHorizontalAlignment() );
   }
 
-  public ElementAlignment getTotalsHorizontalAlignment()
-  {
+  public ElementAlignment getTotalsHorizontalAlignment() {
     return totalsHorizontalAlignment;
   }
 
-  public void setTotalsHorizontalAlignment(final ElementAlignment alignment)
-  {
+  public void setTotalsHorizontalAlignment( final ElementAlignment alignment ) {
     this.totalsHorizontalAlignment = alignment;
   }
 
-  public GroupType getGroupType()
-  {
+  public GroupType getGroupType() {
     return groupType;
   }
 
-  public void setGroupType(final GroupType groupType)
-  {
-    if (groupType == null)
-    {
+  public void setGroupType( final GroupType groupType ) {
+    if ( groupType == null ) {
       throw new NullPointerException();
     }
     this.groupType = groupType;
   }
 
-  public String getGroupName()
-  {
+  public String getGroupName() {
     return groupName;
   }
 
-  public void setGroupName(final String groupName)
-  {
+  public void setGroupName( final String groupName ) {
     this.groupName = groupName;
   }
 
-  public RootBandDefinition getHeader()
-  {
+  public RootBandDefinition getHeader() {
     return header;
   }
 
-  public RootBandDefinition getFooter()
-  {
+  public RootBandDefinition getFooter() {
     return footer;
   }
 
-  public String getGroupTotalsLabel()
-  {
+  public String getGroupTotalsLabel() {
     return groupTotalsLabel;
   }
 
-  public void setGroupTotalsLabel(final String groupTotalsLabel)
-  {
+  public void setGroupTotalsLabel( final String groupTotalsLabel ) {
     this.groupTotalsLabel = groupTotalsLabel;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final DefaultGroupDefinition o = (DefaultGroupDefinition) super.clone();
     o.header = (RootBandDefinition) header.clone();
     o.footer = (RootBandDefinition) footer.clone();

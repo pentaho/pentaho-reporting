@@ -21,10 +21,8 @@ package org.pentaho.reporting.designer.core.settings.ui;
 /**
  * User: Martin Date: 01.03.2006 Time: 18:14:22
  */
-public class ValidationMessage
-{
-  public enum Severity
-  {
+public class ValidationMessage {
+  public enum Severity {
     WARN,
     ERROR
   }
@@ -32,14 +30,11 @@ public class ValidationMessage
   private Severity severity;
   private String message;
 
-  public ValidationMessage(final Severity severity, final String message)
-  {
-    if (severity == null)
-    {
+  public ValidationMessage( final Severity severity, final String message ) {
+    if ( severity == null ) {
       throw new NullPointerException();
     }
-    if (message == null)
-    {
+    if ( message == null ) {
       throw new NullPointerException();
     }
     this.severity = severity;
@@ -47,14 +42,12 @@ public class ValidationMessage
   }
 
 
-  public Severity getSeverity()
-  {
+  public Severity getSeverity() {
     return severity;
   }
 
 
-  public String getMessage()
-  {
+  public String getMessage() {
     return message;
   }
 }

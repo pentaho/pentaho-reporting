@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.elements.format;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.util.List;
-
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.ElementSelectionComponentSupport;
@@ -30,62 +26,52 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.ColorComboBox;
 
+import java.awt.*;
+import java.util.List;
+
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public final class FontColorSelectorComponent extends ColorComboBox implements DesignerContextComponent
-{
-  private class SelectionUpdateHelper extends ElementSelectionComponentSupport
-  {
+public final class FontColorSelectorComponent extends ColorComboBox implements DesignerContextComponent {
+  private class SelectionUpdateHelper extends ElementSelectionComponentSupport {
     private Element lastSelection;
 
-    protected void updateSelection()
-    {
-      if (getSelectionModel() == null)
-      {
-        setEnabled(false);
-        setValueFromModel(null);
+    protected void updateSelection() {
+      if ( getSelectionModel() == null ) {
+        setEnabled( false );
+        setValueFromModel( null );
         lastSelection = null;
-      }
-      else
-      {
+      } else {
 
-        final List<Element> visualElements = getSelectionModel().getSelectedElementsOfType(Element.class);
-        if (visualElements.isEmpty())
-        {
-          setEnabled(false);
-          setValueFromModel(null);
+        final List<Element> visualElements = getSelectionModel().getSelectedElementsOfType( Element.class );
+        if ( visualElements.isEmpty() ) {
+          setEnabled( false );
+          setValueFromModel( null );
           lastSelection = null;
-        }
-        else
-        {
-          lastSelection = visualElements.get(0);
-          setEnabled(true);
-          final Color color = (Color) lastSelection.getStyle().getStyleProperty(ElementStyleKeys.PAINT);
-          for (int i = 1; i < visualElements.size(); i++)
-          {
-            final Element element = visualElements.get(i);
-            final Object otherColor = element.getStyle().getStyleProperty(ElementStyleKeys.PAINT);
-            if (ObjectUtilities.equal(color, otherColor) == false)
-            {
-              setValueFromModel(null);
+        } else {
+          lastSelection = visualElements.get( 0 );
+          setEnabled( true );
+          final Color color = (Color) lastSelection.getStyle().getStyleProperty( ElementStyleKeys.PAINT );
+          for ( int i = 1; i < visualElements.size(); i++ ) {
+            final Element element = visualElements.get( i );
+            final Object otherColor = element.getStyle().getStyleProperty( ElementStyleKeys.PAINT );
+            if ( ObjectUtilities.equal( color, otherColor ) == false ) {
+              setValueFromModel( null );
               return;
             }
           }
 
-          setValueFromModel(color);
+          setValueFromModel( color );
         }
       }
     }
 
-    protected void nodeChanged(final ReportModelEvent event)
-    {
-      if (event.getElement() == lastSelection)
-      {
-        final Color color = (Color) lastSelection.getStyle().getStyleProperty(ElementStyleKeys.PAINT);
-        setValueFromModel(color);
+    protected void nodeChanged( final ReportModelEvent event ) {
+      if ( event.getElement() == lastSelection ) {
+        final Color color = (Color) lastSelection.getStyle().getStyleProperty( ElementStyleKeys.PAINT );
+        setValueFromModel( color );
       }
     }
   }
@@ -93,25 +79,22 @@ public final class FontColorSelectorComponent extends ColorComboBox implements D
   private ApplyFontColorAction applyFontColorAction;
   private SelectionUpdateHelper updateHelper;
 
-  public FontColorSelectorComponent()
-  {
-    applyFontColorAction = new ApplyFontColorAction(this);
+  public FontColorSelectorComponent() {
+    applyFontColorAction = new ApplyFontColorAction( this );
     updateHelper = new SelectionUpdateHelper();
 
     final int height1 = getPreferredSize().height;
-    setMaximumSize(new Dimension(height1 * 4, height1));
-    setFocusable(false);
-    setAction(applyFontColorAction);
+    setMaximumSize( new Dimension( height1 * 4, height1 ) );
+    setFocusable( false );
+    setAction( applyFontColorAction );
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext context)
-  {
-    applyFontColorAction.setReportDesignerContext(context);
-    updateHelper.setReportDesignerContext(context);
+  public void setReportDesignerContext( final ReportDesignerContext context ) {
+    applyFontColorAction.setReportDesignerContext( context );
+    updateHelper.setReportDesignerContext( context );
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return applyFontColorAction.getReportDesignerContext();
   }
 }

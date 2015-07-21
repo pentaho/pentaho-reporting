@@ -26,12 +26,10 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class ConfigReadHandler extends AbstractXmlReadHandler
-{
+public class ConfigReadHandler extends AbstractXmlReadHandler {
   private String sourceFile;
 
-  public ConfigReadHandler()
-  {
+  public ConfigReadHandler() {
   }
 
   /**
@@ -40,14 +38,12 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    sourceFile = attrs.getValue(getUri(), "source-file");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    sourceFile = attrs.getValue( getUri(), "source-file" );
   }
 
-  public String getSourceFile()
-  {
+  public String getSourceFile() {
     return sourceFile;
   }
 
@@ -57,8 +53,7 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

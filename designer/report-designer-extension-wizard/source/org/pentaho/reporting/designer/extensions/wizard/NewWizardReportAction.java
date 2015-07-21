@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.designer.extensions.wizard;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.io.OutputStream;
-import javax.swing.Action;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
@@ -37,38 +29,36 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.docbundle.BundleUtilities;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentBundle;
 
-public class NewWizardReportAction extends AbstractDesignerContextAction
-{
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.OutputStream;
+
+public class NewWizardReportAction extends AbstractDesignerContextAction {
 
   private static final String TRANSLATIONS_PROPERTIES = "translations.properties";
 
-  public NewWizardReportAction()
-  {
-    putValue(Action.NAME, Messages.getString("NewWizardReportAction.MenuTitle")); //$NON-NLS-1$
-    putValue("WIZARD.BUTTON.TEXT", Messages.getString("NewWizardReportAction.ButtonTitle")); //$NON-NLS-1$ //$NON-NLS-2$
-    putValue(Action.ACCELERATOR_KEY, Messages.getOptionalKeyStroke("NewWizardReportAction.Accelerator")); //$NON-NLS-1$ //$NON-NLS-2$
+  public NewWizardReportAction() {
+    putValue( Action.NAME, Messages.getString( "NewWizardReportAction.MenuTitle" ) ); //$NON-NLS-1$
+    putValue( "WIZARD.BUTTON.TEXT",
+      Messages.getString( "NewWizardReportAction.ButtonTitle" ) ); //$NON-NLS-1$ //$NON-NLS-2$
+    putValue( Action.ACCELERATOR_KEY,
+      Messages.getOptionalKeyStroke( "NewWizardReportAction.Accelerator" ) ); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDesignerContext designerContext = getReportDesignerContext();
-    if (designerContext == null)
-    {
+    if ( designerContext == null ) {
       return;
     }
     final Component parent = designerContext.getView().getParent();
-    final Window window = LibSwingUtil.getWindowAncestor(parent);
+    final Window window = LibSwingUtil.getWindowAncestor( parent );
     final EmbeddedWizard dialog;
-    if (window instanceof JDialog)
-    {
-      dialog = new EmbeddedWizard((JDialog) window);
-    }
-    else if (window instanceof JFrame)
-    {
-      dialog = new EmbeddedWizard((JFrame) window);
-    }
-    else
-    {
+    if ( window instanceof JDialog ) {
+      dialog = new EmbeddedWizard( (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      dialog = new EmbeddedWizard( (JFrame) window );
+    } else {
       dialog = new EmbeddedWizard();
     }
 
@@ -76,37 +66,30 @@ public class NewWizardReportAction extends AbstractDesignerContextAction
     // report.setDataFactory(new CompoundDataFactory());
     // report.setQuery(null);
 
-    try
-    {
-      final MasterReport def = (MasterReport) dialog.run(null);
-      if (def == null)
-      {
+    try {
+      final MasterReport def = (MasterReport) dialog.run( null );
+      if ( def == null ) {
         return;
       }
 
-      try
-      {
+      try {
         final MemoryDocumentBundle bundle = (MemoryDocumentBundle) def.getBundle();
-        if (bundle.isEntryExists(TRANSLATIONS_PROPERTIES) == false)
-        {
-          final String defaultMessage = ActionMessages.getString("Translations.DefaultContent");
-          final OutputStream outputStream = bundle.createEntry(TRANSLATIONS_PROPERTIES, "text/plain");
-          outputStream.write(defaultMessage.getBytes("ISO-8859-1"));
+        if ( bundle.isEntryExists( TRANSLATIONS_PROPERTIES ) == false ) {
+          final String defaultMessage = ActionMessages.getString( "Translations.DefaultContent" );
+          final OutputStream outputStream = bundle.createEntry( TRANSLATIONS_PROPERTIES, "text/plain" );
+          outputStream.write( defaultMessage.getBytes( "ISO-8859-1" ) );
           outputStream.close();
-          bundle.getWriteableDocumentMetaData().setEntryAttribute(TRANSLATIONS_PROPERTIES, BundleUtilities.STICKY_FLAG, "true");
+          bundle.getWriteableDocumentMetaData()
+            .setEntryAttribute( TRANSLATIONS_PROPERTIES, BundleUtilities.STICKY_FLAG, "true" );
         }
-      }
-      catch (Exception ex)
-      {
+      } catch ( Exception ex ) {
         // ignore, its not that important ..
-        DebugLog.log("Failed to created default translation entry", ex);
+        DebugLog.log( "Failed to created default translation entry", ex );
       }
 
-      designerContext.addMasterReport(def);
-    }
-    catch (ReportProcessingException e1)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e1);
+      designerContext.addMasterReport( def );
+    } catch ( ReportProcessingException e1 ) {
+      UncaughtExceptionsModel.getInstance().addException( e1 );
     }
   }
 }

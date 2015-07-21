@@ -17,113 +17,98 @@
 
 package generators;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.beans.Introspector;
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
-import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
-import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
+import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
+import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-public class ExpressionMetaGenerator
-{
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class ExpressionMetaGenerator {
   private static final String META_NAMESPACE = "http://jfreereport.sourceforge.net/namespaces/engine/classic/metadata";
 
-  public static void main(String[] args) throws IOException, IntrospectionException
-  {
+  public static void main( String[] args ) throws IOException, IntrospectionException {
     ClassicEngineBoot.getInstance().start();
     ExpressionQueryTool eqt = new ExpressionQueryTool();
-    eqt.processDirectory(null);
+    eqt.processDirectory( null );
     final Class[] classes = eqt.getExpressions();
 
     final DefaultTagDescription dtd = new DefaultTagDescription();
-    dtd.setNamespaceHasCData(META_NAMESPACE, false);
+    dtd.setNamespaceHasCData( META_NAMESPACE, false );
 
-    final XmlWriter writer = new XmlWriter(new PrintWriter(System.out), dtd);
+    final XmlWriter writer = new XmlWriter( new PrintWriter( System.out ), dtd );
 
     final AttributeList attrList = new AttributeList();
-    attrList.addNamespaceDeclaration("", META_NAMESPACE);
-    writer.writeTag(META_NAMESPACE, "meta-data", attrList, XmlWriter.OPEN);
+    attrList.addNamespaceDeclaration( "", META_NAMESPACE );
+    writer.writeTag( META_NAMESPACE, "meta-data", attrList, XmlWriter.OPEN );
 
-    for (int i = 0; i < classes.length; i++)
-    {
-      final Class aClass = classes[i];
+    for ( int i = 0; i < classes.length; i++ ) {
+      final Class aClass = classes[ i ];
 
-      if (OutputFunction.class.isAssignableFrom(aClass))
-      {
+      if ( OutputFunction.class.isAssignableFrom( aClass ) ) {
         // Output functions will not be recognized.
         continue;
       }
-      if (aClass.getName().indexOf('$') >= 0)
-      {
+      if ( aClass.getName().indexOf( '$' ) >= 0 ) {
         // Inner-Classes will not be recognized.
         continue;
       }
 
       final AttributeList expressionAttrList = new AttributeList();
-      expressionAttrList.setAttribute(META_NAMESPACE, "class", aClass.getName());
-      expressionAttrList.setAttribute(META_NAMESPACE, "bundle-name", "org.pentaho.reporting.engine.classic.core.metadata.messages");
-      expressionAttrList.setAttribute(META_NAMESPACE, "result", "java.lang.Object");
-      expressionAttrList.setAttribute(META_NAMESPACE, "expert", "false");
-      expressionAttrList.setAttribute(META_NAMESPACE, "hidden", "false");
-      expressionAttrList.setAttribute(META_NAMESPACE, "preferred", "false");
-      writer.writeTag(META_NAMESPACE, "expression", expressionAttrList, XmlWriter.OPEN);
+      expressionAttrList.setAttribute( META_NAMESPACE, "class", aClass.getName() );
+      expressionAttrList
+        .setAttribute( META_NAMESPACE, "bundle-name", "org.pentaho.reporting.engine.classic.core.metadata.messages" );
+      expressionAttrList.setAttribute( META_NAMESPACE, "result", "java.lang.Object" );
+      expressionAttrList.setAttribute( META_NAMESPACE, "expert", "false" );
+      expressionAttrList.setAttribute( META_NAMESPACE, "hidden", "false" );
+      expressionAttrList.setAttribute( META_NAMESPACE, "preferred", "false" );
+      writer.writeTag( META_NAMESPACE, "expression", expressionAttrList, XmlWriter.OPEN );
 
-      final BeanInfo beanInfo = Introspector.getBeanInfo(aClass);
+      final BeanInfo beanInfo = Introspector.getBeanInfo( aClass );
       final PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
-      for (int j = 0; j < descriptors.length; j++)
-      {
-        final PropertyDescriptor descriptor = descriptors[j];
+      for ( int j = 0; j < descriptors.length; j++ ) {
+        final PropertyDescriptor descriptor = descriptors[ j ];
         final String key = descriptor.getName();
 
-        if ("runtime".equals(key))
-        {
+        if ( "runtime".equals( key ) ) {
           continue;
         }
-        if ("active".equals(key))
-        {
+        if ( "active".equals( key ) ) {
           continue;
         }
-        if ("preserve".equals(key))
-        {
+        if ( "preserve".equals( key ) ) {
           continue;
         }
 
-        if (descriptor.getReadMethod() == null || descriptor.getWriteMethod() == null)
-        {
+        if ( descriptor.getReadMethod() == null || descriptor.getWriteMethod() == null ) {
           continue;
         }
 
         final AttributeList propAttrList = new AttributeList();
-        propAttrList.setAttribute(META_NAMESPACE, "name", descriptor.getName());
-        if ("name".equals(key))
-        {
-          propAttrList.setAttribute(META_NAMESPACE, "mandatory", "true");
-          propAttrList.setAttribute(META_NAMESPACE, "preferred", "true");
-          propAttrList.setAttribute(META_NAMESPACE, "value-role", "Name");
-          propAttrList.setAttribute(META_NAMESPACE, "expert", "false");
-        }
-        else
-        {
-          propAttrList.setAttribute(META_NAMESPACE, "mandatory", "false");
-          propAttrList.setAttribute(META_NAMESPACE, "preferred", "false");
-          propAttrList.setAttribute(META_NAMESPACE, "value-role", "Value");
-          if ("dependencyLevel".equals(key))
-          {
-            propAttrList.setAttribute(META_NAMESPACE, "expert", "true");
-          }
-          else
-          {
-            propAttrList.setAttribute(META_NAMESPACE, "expert", "false");
+        propAttrList.setAttribute( META_NAMESPACE, "name", descriptor.getName() );
+        if ( "name".equals( key ) ) {
+          propAttrList.setAttribute( META_NAMESPACE, "mandatory", "true" );
+          propAttrList.setAttribute( META_NAMESPACE, "preferred", "true" );
+          propAttrList.setAttribute( META_NAMESPACE, "value-role", "Name" );
+          propAttrList.setAttribute( META_NAMESPACE, "expert", "false" );
+        } else {
+          propAttrList.setAttribute( META_NAMESPACE, "mandatory", "false" );
+          propAttrList.setAttribute( META_NAMESPACE, "preferred", "false" );
+          propAttrList.setAttribute( META_NAMESPACE, "value-role", "Value" );
+          if ( "dependencyLevel".equals( key ) ) {
+            propAttrList.setAttribute( META_NAMESPACE, "expert", "true" );
+          } else {
+            propAttrList.setAttribute( META_NAMESPACE, "expert", "false" );
           }
         }
-        propAttrList.setAttribute(META_NAMESPACE, "hidden", "false");
-        writer.writeTag(META_NAMESPACE, "property", propAttrList, XmlWriter.CLOSE);
+        propAttrList.setAttribute( META_NAMESPACE, "hidden", "false" );
+        writer.writeTag( META_NAMESPACE, "property", propAttrList, XmlWriter.CLOSE );
 
       }
 

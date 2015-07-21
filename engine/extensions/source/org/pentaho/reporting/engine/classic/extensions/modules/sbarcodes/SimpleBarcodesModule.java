@@ -36,14 +36,12 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Cedric Pronzato
  */
-public class SimpleBarcodesModule extends AbstractModule
-{
+public class SimpleBarcodesModule extends AbstractModule {
   public static final String NAMESPACE = SimpleBarcodesAttributeNames.NAMESPACE;
 
-  private static final Log logger = LogFactory.getLog(SimpleBarcodesModule.class);
+  private static final Log logger = LogFactory.getLog( SimpleBarcodesModule.class );
 
-  public SimpleBarcodesModule() throws ModuleInitializeException
-  {
+  public SimpleBarcodesModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -53,34 +51,30 @@ public class SimpleBarcodesModule extends AbstractModule
    * indicate the error,. The module will not be available to the system.
    *
    * @param subSystem the subSystem.
-   * @throws org.pentaho.reporting.libraries.base.boot.ModuleInitializeException
-   *          if an error occurred while initializing the module.
+   * @throws org.pentaho.reporting.libraries.base.boot.ModuleInitializeException if an error occurred while initializing
+   *                                                                             the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    try
-    {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(getClass());
-      Class.forName("net.sourceforge.barbecue.Barcode", false, loader);
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    try {
+      final ClassLoader loader = ObjectUtilities.getClassLoader( getClass() );
+      Class.forName( "net.sourceforge.barbecue.Barcode", false, loader );
       EnvironmentFactory.setHeadlessMode();
-    }
-    catch (Throwable t)
-    {
-      throw new ModuleInitializeException("Unable to load Barbecue library class.", t);
+    } catch ( Throwable t ) {
+      throw new ModuleInitializeException( "Unable to load Barbecue library class.", t );
     }
 
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(NAMESPACE, "sbarcodes");
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( NAMESPACE, "sbarcodes" );
 
     ElementMetaDataParser.initializeOptionalElementMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/modules/sbarcodes/meta-elements.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/modules/sbarcodes/meta-elements.xml" );
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/reporting/engine/classic/extensions/modules/sbarcodes/meta-expressions.xml");
+      ( "org/pentaho/reporting/engine/classic/extensions/modules/sbarcodes/meta-expressions.xml" );
 
-    BundleElementRegistry.getInstance().registerGenericElement(SimpleBarcodesType.INSTANCE);
+    BundleElementRegistry.getInstance().registerGenericElement( SimpleBarcodesType.INSTANCE );
     // legacy handler for a buggy iteration ..
-    BundleElementRegistry.getInstance().register(NAMESPACE, "simple-barcode", SimpleBarcodesElementReadHandler.class);
+    BundleElementRegistry.getInstance().register( NAMESPACE, "simple-barcode", SimpleBarcodesElementReadHandler.class );
 
-    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
+    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData( NAMESPACE, false );
 
   }
 }

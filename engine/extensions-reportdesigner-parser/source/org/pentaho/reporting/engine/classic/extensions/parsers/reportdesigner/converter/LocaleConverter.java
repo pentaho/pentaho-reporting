@@ -17,31 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Locator;
 
-public class LocaleConverter implements ObjectConverter
-{
-  public Object convertFromString(final String s, final Locator locator) throws ParseException
-  {
-    if (s == null)
-    {
-      throw new IllegalArgumentException("s must not be null");
+import java.util.Locale;
+
+public class LocaleConverter implements ObjectConverter {
+  public Object convertFromString( final String s, final Locator locator ) throws ParseException {
+    if ( s == null ) {
+      throw new IllegalArgumentException( "s must not be null" );
     }
 
-    int i = s.indexOf('_');
-    int i2 = s.indexOf('_', i + 1);
-    if (i < 0 || i2 < 0)
-    {
-      throw new ParseException("Invalid locale string");
+    int i = s.indexOf( '_' );
+    int i2 = s.indexOf( '_', i + 1 );
+    if ( i < 0 || i2 < 0 ) {
+      throw new ParseException( "Invalid locale string" );
     }
-    return new Locale(s.substring(0, i).trim(), s.substring(i + 1, i2).trim(), s.substring(i2 + 1).trim());
+    return new Locale( s.substring( 0, i ).trim(), s.substring( i + 1, i2 ).trim(), s.substring( i2 + 1 ).trim() );
   }
 
-  public static Locale getObject(String s) throws ParseException
-  {
-    return (Locale) new LocaleConverter().convertFromString(s, null);
+  public static Locale getObject( String s ) throws ParseException {
+    return (Locale) new LocaleConverter().convertFromString( s, null );
   }
 }

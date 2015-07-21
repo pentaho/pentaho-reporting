@@ -19,28 +19,23 @@ package org.pentaho.reporting.designer.core.inspections;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class AttributeExpressionPropertyLocationInfo extends LocationInfo
-{
+public class AttributeExpressionPropertyLocationInfo extends LocationInfo {
   private String attributeName;
   private String attributeNamespace;
   private String expressionProperty;
 
-  public AttributeExpressionPropertyLocationInfo(final ReportElement reportElement,
-                                                 final String attributeNamespace,
-                                                 final String attributeName,
-                                                 final String expressionProperty)
-  {
-    super(reportElement);
-    if (attributeName == null)
-    {
+  public AttributeExpressionPropertyLocationInfo( final ReportElement reportElement,
+                                                  final String attributeNamespace,
+                                                  final String attributeName,
+                                                  final String expressionProperty ) {
+    super( reportElement );
+    if ( attributeName == null ) {
       throw new NullPointerException();
     }
-    if (attributeNamespace == null)
-    {
+    if ( attributeNamespace == null ) {
       throw new NullPointerException();
     }
-    if (expressionProperty == null)
-    {
+    if ( expressionProperty == null ) {
       throw new NullPointerException();
     }
 
@@ -49,18 +44,15 @@ public class AttributeExpressionPropertyLocationInfo extends LocationInfo
     this.attributeName = attributeName;
   }
 
-  public String getAttributeNamespace()
-  {
+  public String getAttributeNamespace() {
     return attributeNamespace;
   }
 
-  public String getExpressionProperty()
-  {
+  public String getExpressionProperty() {
     return expressionProperty;
   }
 
-  public String getAttributeName()
-  {
+  public String getAttributeName() {
     return attributeName;
   }
 

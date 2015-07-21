@@ -25,46 +25,35 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListen
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 
-public abstract class AbstractElementSelectionAction extends AbstractReportContextAction
-{
-  private class SelectionUpdateHandler implements ReportSelectionListener
-  {
-    private SelectionUpdateHandler()
-    {
+public abstract class AbstractElementSelectionAction extends AbstractReportContextAction {
+  private class SelectionUpdateHandler implements ReportSelectionListener {
+    private SelectionUpdateHandler() {
     }
 
-    public void selectionAdded(final ReportSelectionEvent event)
-    {
+    public void selectionAdded( final ReportSelectionEvent event ) {
       updateSelection();
     }
 
-    public void selectionRemoved(final ReportSelectionEvent event)
-    {
+    public void selectionRemoved( final ReportSelectionEvent event ) {
       updateSelection();
     }
 
-    public void leadSelectionChanged(final ReportSelectionEvent event)
-    {
+    public void leadSelectionChanged( final ReportSelectionEvent event ) {
       updateSelection();
     }
   }
-  
-  protected class UpdatePropertiesForSelectionHandler implements ReportModelListener
-  {
-    private UpdatePropertiesForSelectionHandler()
-    {
+
+  protected class UpdatePropertiesForSelectionHandler implements ReportModelListener {
+    private UpdatePropertiesForSelectionHandler() {
     }
 
-    public void nodeChanged(final ReportModelEvent event)
-    {
+    public void nodeChanged( final ReportModelEvent event ) {
       final ReportDocumentContext activeContext = getActiveContext();
-      if (activeContext == null)
-      {
-        throw new IllegalStateException("Stale Action reference!");
+      if ( activeContext == null ) {
+        throw new IllegalStateException( "Stale Action reference!" );
       }
-      if (activeContext.getSelectionModel().isSelected(event.getElement()))
-      {
-        selectedElementPropertiesChanged(event);
+      if ( activeContext.getSelectionModel().isSelected( event.getElement() ) ) {
+        selectedElementPropertiesChanged( event );
       }
     }
   }
@@ -73,67 +62,53 @@ public abstract class AbstractElementSelectionAction extends AbstractReportConte
   private DocumentContextSelectionModel selectionModel;
   private SelectionUpdateHandler updateHandler;
   private UpdatePropertiesForSelectionHandler updateSelectionHandler;
-  
-  protected AbstractElementSelectionAction()
-  {
+
+  protected AbstractElementSelectionAction() {
     updateHandler = new SelectionUpdateHandler();
     updateSelectionHandler = new UpdatePropertiesForSelectionHandler();
   }
 
-  protected DocumentContextSelectionModel getSelectionModel()
-  {
+  protected DocumentContextSelectionModel getSelectionModel() {
     return selectionModel;
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext,
-                                     final ReportRenderContext newContext)
-  {
-    if (this.selectionModel != null)
-    {
-      this.selectionModel.removeReportSelectionListener(updateHandler);
+  protected void updateActiveContext( final ReportRenderContext oldContext,
+                                      final ReportRenderContext newContext ) {
+    if ( this.selectionModel != null ) {
+      this.selectionModel.removeReportSelectionListener( updateHandler );
     }
-    if (oldContext != null)
-    {
-      oldContext.getReportDefinition().removeReportModelListener(updateSelectionHandler);
+    if ( oldContext != null ) {
+      oldContext.getReportDefinition().removeReportModelListener( updateSelectionHandler );
     }
-    if (newContext != null)
-    {
+    if ( newContext != null ) {
       this.selectionModel = newContext.getSelectionModel();
-      this.selectionModel.addReportSelectionListener(updateHandler);
+      this.selectionModel.addReportSelectionListener( updateHandler );
       updateSelection();
-    }
-    else
-    {
+    } else {
       this.selectionModel = null;
       updateSelection();
     }
-    if (newContext != null)
-    {
-      newContext.getReportDefinition().addReportModelListener(updateSelectionHandler);
+    if ( newContext != null ) {
+      newContext.getReportDefinition().addReportModelListener( updateSelectionHandler );
     }
   }
 
-  protected abstract void selectedElementPropertiesChanged(final ReportModelEvent event);
+  protected abstract void selectedElementPropertiesChanged( final ReportModelEvent event );
 
-  protected void updateSelection()
-  {
-    if (selectionModel == null)
-    {
-      setEnabled(false);
+  protected void updateSelection() {
+    if ( selectionModel == null ) {
+      setEnabled( false );
       return;
     }
 
-    setEnabled(selectionModel.getSelectionCount() > 0);
+    setEnabled( selectionModel.getSelectionCount() > 0 );
   }
 
-  protected boolean isSingleElementSelection()
-  {
-    if (selectionModel == null)
-    {
+  protected boolean isSingleElementSelection() {
+    if ( selectionModel == null ) {
       return false;
     }
-    if (selectionModel.getSelectionCount() != 1)
-    {
+    if ( selectionModel.getSelectionCount() != 1 ) {
       return false;
     }
     return true;

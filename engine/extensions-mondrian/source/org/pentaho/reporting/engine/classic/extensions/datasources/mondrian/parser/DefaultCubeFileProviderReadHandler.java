@@ -26,13 +26,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler implements CubeFileProviderReadHandler
-{
+public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler implements CubeFileProviderReadHandler {
   private StringReadHandler pathReadHandler;
   private StringReadHandler connectionNameReadHandler;
 
-  public DefaultCubeFileProviderReadHandler()
-  {
+  public DefaultCubeFileProviderReadHandler() {
   }
 
   /**
@@ -43,22 +41,18 @@ public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler i
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("cube-filename".equals(tagName))
-    {
+    if ( "cube-filename".equals( tagName ) ) {
       pathReadHandler = new StringReadHandler();
       return pathReadHandler;
     }
-    if ("cube-connection-name".equals(tagName))
-    {
+    if ( "cube-connection-name".equals( tagName ) ) {
       connectionNameReadHandler = new StringReadHandler();
       return connectionNameReadHandler;
     }
@@ -70,55 +64,44 @@ public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler i
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    if (pathReadHandler == null)
-    {
-      throw new ParseException("Required element 'cube-filename' is not present.", getLocator());
+  protected void doneParsing() throws SAXException {
+    if ( pathReadHandler == null ) {
+      throw new ParseException( "Required element 'cube-filename' is not present.", getLocator() );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return getProvider();
   }
 
-  protected String getPath()
-  {
-    if (pathReadHandler == null)
-    {
+  protected String getPath() {
+    if ( pathReadHandler == null ) {
       return null;
     }
     return pathReadHandler.getResult();
   }
 
-  protected String getCubeConnectionName()
-  {
-    if (connectionNameReadHandler == null)
-    {
+  protected String getCubeConnectionName() {
+    if ( connectionNameReadHandler == null ) {
       return null;
     }
     return connectionNameReadHandler.getResult();
   }
 
-  public CubeFileProvider getProvider()
-  {
+  public CubeFileProvider getProvider() {
     final CubeFileProvider fileProvider =
-        ClassicEngineBoot.getInstance().getObjectFactory().get(CubeFileProvider.class);
-    if (pathReadHandler != null)
-    {
-      fileProvider.setDesignTimeFile(pathReadHandler.getResult());
+      ClassicEngineBoot.getInstance().getObjectFactory().get( CubeFileProvider.class );
+    if ( pathReadHandler != null ) {
+      fileProvider.setDesignTimeFile( pathReadHandler.getResult() );
     }
-    if (connectionNameReadHandler != null)
-    {
-      fileProvider.setCubeConnectionName(connectionNameReadHandler.getResult());
+    if ( connectionNameReadHandler != null ) {
+      fileProvider.setCubeConnectionName( connectionNameReadHandler.getResult() );
     }
     return fileProvider;
   }

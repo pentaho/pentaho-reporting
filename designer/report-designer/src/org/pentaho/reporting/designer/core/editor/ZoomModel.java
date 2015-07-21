@@ -22,52 +22,43 @@ import javax.swing.event.EventListenerList;
 /**
  * User: Martin Date: 03.02.2006 Time: 19:28:50
  */
-public class ZoomModel
-{
+public class ZoomModel {
   private EventListenerList zoomModelListeners;
   private float zoomFactor;
 
-  public ZoomModel()
-  {
+  public ZoomModel() {
     zoomModelListeners = new EventListenerList();
     zoomFactor = 1f;
   }
 
-  public float getZoomAsPercentage()
-  {
+  public float getZoomAsPercentage() {
     return zoomFactor;
   }
 
-  public void setZoomAsPercentage(final float zoomFactor)
-  {
+  public void setZoomAsPercentage( final float zoomFactor ) {
     final float oldZoomFactor = this.zoomFactor;
     this.zoomFactor = zoomFactor;
 
-    if (oldZoomFactor != zoomFactor)
-    {
+    if ( oldZoomFactor != zoomFactor ) {
       notifyListeners();
     }
   }
 
 
-  public void addZoomModelListener(final ZoomModelListener zoomModelListener)
-  {
-    zoomModelListeners.add(ZoomModelListener.class, zoomModelListener);
+  public void addZoomModelListener( final ZoomModelListener zoomModelListener ) {
+    zoomModelListeners.add( ZoomModelListener.class, zoomModelListener );
   }
 
 
-  public void removeZoomModelListener(final ZoomModelListener zoomModelListener)
-  {
-    zoomModelListeners.remove(ZoomModelListener.class, zoomModelListener);
+  public void removeZoomModelListener( final ZoomModelListener zoomModelListener ) {
+    zoomModelListeners.remove( ZoomModelListener.class, zoomModelListener );
   }
 
 
-  private void notifyListeners()
-  {
-    final ZoomModelListener[] listeners = zoomModelListeners.getListeners(ZoomModelListener.class);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final ZoomModelListener listener = listeners[i];
+  private void notifyListeners() {
+    final ZoomModelListener[] listeners = zoomModelListeners.getListeners( ZoomModelListener.class );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final ZoomModelListener listener = listeners[ i ];
       listener.zoomFactorChanged();
     }
   }

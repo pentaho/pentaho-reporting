@@ -21,15 +21,12 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlResourceFactory;
 
-public class DrillDownProfileResourceFactory extends AbstractXmlResourceFactory
-{
-  public DrillDownProfileResourceFactory()
-  {
+public class DrillDownProfileResourceFactory extends AbstractXmlResourceFactory {
+  public DrillDownProfileResourceFactory() {
   }
 
-  public void initializeDefaults()
-  {
-    registerModule(new DrillDownProfileXmlFactoryModule());
+  public void initializeDefaults() {
+    registerModule( new DrillDownProfileXmlFactoryModule() );
   }
 
   /**
@@ -37,8 +34,7 @@ public class DrillDownProfileResourceFactory extends AbstractXmlResourceFactory
    *
    * @return the configuration for initializing the factory.
    */
-  protected Configuration getConfiguration()
-  {
+  protected Configuration getConfiguration() {
     return ClassicEngineBoot.getInstance().getGlobalConfig();
   }
 
@@ -47,8 +43,7 @@ public class DrillDownProfileResourceFactory extends AbstractXmlResourceFactory
    *
    * @return the result type.
    */
-  public Class getFactoryType()
-  {
+  public Class getFactoryType() {
     return DrillDownProfileCollection.class;
   }
 }

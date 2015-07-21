@@ -17,147 +17,117 @@
 
 package org.pentaho.reporting.designer.testsupport;
 
-import java.awt.Component;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.Action;
-import javax.swing.JComponent;
-import javax.swing.JPopupMenu;
-
 import org.pentaho.reporting.designer.core.ReportDesignerView;
 import org.pentaho.reporting.designer.core.xul.ActionSwingMenuitem;
 import org.pentaho.ui.xul.XulComponent;
 import org.pentaho.ui.xul.XulException;
 import org.pentaho.ui.xul.containers.XulMenupopup;
 
-public class TestReportDesignerView implements ReportDesignerView
-{
-  public TestReportDesignerView()
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeListener;
+
+public class TestReportDesignerView implements ReportDesignerView {
+  public TestReportDesignerView() {
   }
 
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-
-  }
-
-  public void addPropertyChangeListener(final String property, final PropertyChangeListener listener)
-  {
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
 
   }
 
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
+  public void addPropertyChangeListener( final String property, final PropertyChangeListener listener ) {
 
   }
 
-  public void removePropertyChangeListener(final String property, final PropertyChangeListener listener)
-  {
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
 
   }
 
-  public boolean isStructureVisible()
-  {
+  public void removePropertyChangeListener( final String property, final PropertyChangeListener listener ) {
+
+  }
+
+  public boolean isStructureVisible() {
     return false;
   }
 
-  public void setStructureVisible(final boolean visible)
-  {
+  public void setStructureVisible( final boolean visible ) {
 
   }
 
-  public boolean isPropertiesEditorVisible()
-  {
+  public boolean isPropertiesEditorVisible() {
     return false;
   }
 
-  public void setPropertiesEditorVisible(final boolean visible)
-  {
+  public void setPropertiesEditorVisible( final boolean visible ) {
 
   }
 
-  public boolean isPreviewVisible()
-  {
+  public boolean isPreviewVisible() {
     return false;
   }
 
-  public void setPreviewVisible(final boolean visible)
-  {
+  public void setPreviewVisible( final boolean visible ) {
 
   }
 
-  public boolean isMessagesVisible()
-  {
+  public boolean isMessagesVisible() {
     return false;
   }
 
-  public void setMessagesVisible(final boolean visible)
-  {
+  public void setMessagesVisible( final boolean visible ) {
 
   }
 
-  public boolean isWelcomeVisible()
-  {
+  public boolean isWelcomeVisible() {
     return false;
   }
 
-  public void setWelcomeVisible(final boolean visible)
-  {
+  public void setWelcomeVisible( final boolean visible ) {
 
   }
 
-  public boolean isFieldSelectorVisible()
-  {
+  public boolean isFieldSelectorVisible() {
     return false;
   }
 
-  public void setFieldSelectorVisible(final boolean visible)
-  {
+  public void setFieldSelectorVisible( final boolean visible ) {
 
   }
 
-  public void redrawAll()
-  {
+  public void redrawAll() {
 
   }
 
-  public void showDataTree()
-  {
+  public void showDataTree() {
 
   }
 
-  public Component getParent()
-  {
+  public Component getParent() {
     return null;
   }
 
-  public JPopupMenu getPopupMenu(final String id)
-  {
+  public JPopupMenu getPopupMenu( final String id ) {
     return null;
   }
 
-  public JComponent getToolBar(final String id)
-  {
+  public JComponent getToolBar( final String id ) {
     return null;
   }
 
-  public <T extends JComponent> T getComponent(final String id, final Class<T> type)
-  {
+  public <T extends JComponent> T getComponent( final String id, final Class<T> type ) {
     return null;
   }
 
-  public <T extends XulComponent> T getXulComponent(final String id, final Class<T> type)
-  {
+  public <T extends XulComponent> T getXulComponent( final String id, final Class<T> type ) {
     return null;
   }
 
-  public ActionSwingMenuitem createMenuItem(final Action action)
-  {
+  public ActionSwingMenuitem createMenuItem( final Action action ) {
     return null;
   }
 
-  public XulMenupopup createPopupMenu(final String label, final XulComponent parent) throws XulException
-  {
+  public XulMenupopup createPopupMenu( final String label, final XulComponent parent ) throws XulException {
     return null;
   }
 }

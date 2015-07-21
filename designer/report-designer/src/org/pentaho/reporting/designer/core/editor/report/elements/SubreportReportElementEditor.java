@@ -25,19 +25,15 @@ import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEdit
  *
  * @author Thomas Morgner
  */
-public class SubreportReportElementEditor extends DefaultReportElementEditor
-{
-  public SubreportReportElementEditor()
-  {
+public class SubreportReportElementEditor extends DefaultReportElementEditor {
+  public SubreportReportElementEditor() {
   }
 
-  public ReportElementInlineEditor createInlineEditor()
-  {
+  public ReportElementInlineEditor createInlineEditor() {
     return new SubreportReportElementInlineEditor();
   }
 
-  public ReportElementDragHandler createDragHandler()
-  {
+  public ReportElementDragHandler createDragHandler() {
     return new SubreportReportElementDragHandler();
   }
 }

@@ -17,47 +17,37 @@
 
 package org.pentaho.reporting.engine.classic.testcases;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportProcessTaskMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportProcessTaskRegistry;
 import org.pentaho.reporting.engine.classic.core.testsupport.base.MetaDataValidationTestBase;
 
-public class ProcessTaskMetaDataValidationTest extends MetaDataValidationTestBase<ReportProcessTaskMetaData>
-{
-  public ProcessTaskMetaDataValidationTest()
-  {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProcessTaskMetaDataValidationTest extends MetaDataValidationTestBase<ReportProcessTaskMetaData> {
+  public ProcessTaskMetaDataValidationTest() {
   }
 
   @Test
-  public void testMetaData()
-  {
+  public void testMetaData() {
     ReportProcessTaskMetaData[] m = ReportProcessTaskRegistry.getInstance().getAll();
-    List list = super.performTest(m);
-    Assert.assertEquals(new ArrayList(), list);
+    List list = super.performTest( m );
+    Assert.assertEquals( new ArrayList(), list );
   }
 
-  protected void performTestOnElement(final ReportProcessTaskMetaData metaData)
-  {
+  protected void performTestOnElement( final ReportProcessTaskMetaData metaData ) {
     final String typeName = metaData.getName();
-    logger.debug("Processing " + typeName);
+    logger.debug( "Processing " + typeName );
 
-    try
-    {
+    try {
       final Object type = metaData.create();
-    }
-    catch (Exception e)
-    {
-      Assert.fail("metadata creation failed");
+    } catch ( Exception e ) {
+      Assert.fail( "metadata creation failed" );
 
     }
 
-    validate(metaData);
+    validate( metaData );
   }
 }

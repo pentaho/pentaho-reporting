@@ -17,45 +17,36 @@
 
 package org.pentaho.reporting.ui.datasources.pmd.util;
 
+import org.pentaho.reporting.ui.datasources.pmd.Messages;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.JSpinner;
 
-import org.pentaho.reporting.ui.datasources.pmd.Messages;
-
-public class LimitRowsCheckBoxActionListener extends AbstractAction implements ItemListener
-{
+public class LimitRowsCheckBoxActionListener extends AbstractAction implements ItemListener {
   private JSpinner maxPreviewRowsSpinner;
 
-  public LimitRowsCheckBoxActionListener(final JSpinner maxPreviewRowsSpinner)
-  {
+  public LimitRowsCheckBoxActionListener( final JSpinner maxPreviewRowsSpinner ) {
     this.maxPreviewRowsSpinner = maxPreviewRowsSpinner;
-    putValue(Action.NAME, Messages.getString("PmdDataSourceEditor.LimitRowsCheckBox"));
-    putValue(Action.MNEMONIC_KEY, Messages.getMnemonic("PmdDataSourceEditor.LimitRowsCheckBox.Mnemonic"));
-    maxPreviewRowsSpinner.setEnabled(false);
+    putValue( Action.NAME, Messages.getString( "PmdDataSourceEditor.LimitRowsCheckBox" ) );
+    putValue( Action.MNEMONIC_KEY, Messages.getMnemonic( "PmdDataSourceEditor.LimitRowsCheckBox.Mnemonic" ) );
+    maxPreviewRowsSpinner.setEnabled( false );
   }
 
-  public void itemStateChanged(final ItemEvent e)
-  {
+  public void itemStateChanged( final ItemEvent e ) {
     final Object source = e.getSource();
-    if (source instanceof AbstractButton)
-    {
+    if ( source instanceof AbstractButton ) {
       final AbstractButton b = (AbstractButton) source;
-      maxPreviewRowsSpinner.setEnabled(b.isSelected());
+      maxPreviewRowsSpinner.setEnabled( b.isSelected() );
     }
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final Object source = e.getSource();
-    if (source instanceof AbstractButton)
-    {
+    if ( source instanceof AbstractButton ) {
       final AbstractButton b = (AbstractButton) source;
-      maxPreviewRowsSpinner.setEnabled(b.isSelected());
+      maxPreviewRowsSpinner.setEnabled( b.isSelected() );
     }
   }
 }

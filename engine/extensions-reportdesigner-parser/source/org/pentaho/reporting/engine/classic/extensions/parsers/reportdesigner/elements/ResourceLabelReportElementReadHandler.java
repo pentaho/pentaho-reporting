@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements;
 
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.ResourceLabelType;
 import org.xml.sax.SAXException;
 
-public class ResourceLabelReportElementReadHandler extends AbstractTextElementReadHandler
-{
-  public ResourceLabelReportElementReadHandler()
-  {
+import java.util.Properties;
+
+public class ResourceLabelReportElementReadHandler extends AbstractTextElementReadHandler {
+  public ResourceLabelReportElementReadHandler() {
     final Element element = new Element();
-    element.setElementType(new ResourceLabelType());
-    setElement(element);
+    element.setElementType( new ResourceLabelType() );
+    setElement( element );
   }
 
   /**
@@ -38,20 +36,17 @@ public class ResourceLabelReportElementReadHandler extends AbstractTextElementRe
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final Properties result = getResult();
-    final String format = result.getProperty("resourceBase");
-    if (format != null)
-    {
-      getElement().setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER, format);
+    final String format = result.getProperty( "resourceBase" );
+    if ( format != null ) {
+      getElement().setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER, format );
     }
 
-    final String value = result.getProperty("resourceKey");
-    if (value != null)
-    {
-      getElement().setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, value);
+    final String value = result.getProperty( "resourceKey" );
+    if ( value != null ) {
+      getElement().setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, value );
     }
   }
 }

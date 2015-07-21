@@ -17,53 +17,44 @@
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
-
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+
+import javax.swing.*;
 
 /**
  * Todo: Document me!
-* <p/>
-* Date: 09.04.2009
-* Time: 18:36:34
-*
-* @author Thomas Morgner.
-*/
-public class StaticTextComboBoxModel extends AbstractListModel implements ComboBoxModel
-{
+ * <p/>
+ * Date: 09.04.2009 Time: 18:36:34
+ *
+ * @author Thomas Morgner.
+ */
+public class StaticTextComboBoxModel extends AbstractListModel implements ComboBoxModel {
   private String[] values;
   private String selectedItem;
 
-  public StaticTextComboBoxModel()
-  {
-    values = new String[0];
+  public StaticTextComboBoxModel() {
+    values = new String[ 0 ];
   }
 
-  public void setValues(final String[] values)
-  {
+  public void setValues( final String[] values ) {
     this.values = values.clone();
-    fireContentsChanged(this, 0, values.length);
+    fireContentsChanged( this, 0, values.length );
   }
 
-  public int getSize()
-  {
+  public int getSize() {
     return values.length;
   }
 
-  public Object getElementAt(final int index)
-  {
-    return values[index];
+  public Object getElementAt( final int index ) {
+    return values[ index ];
   }
 
-  public void setSelectedItem(final Object anItem)
-  {
+  public void setSelectedItem( final Object anItem ) {
     selectedItem = (String) anItem;
-    fireContentsChanged(this, -1, -1);
+    fireContentsChanged( this, -1, -1 );
   }
 
-  public Object getSelectedItem()
-  {
-  	return StringUtils.isEmpty(selectedItem) ? null : selectedItem;
+  public Object getSelectedItem() {
+    return StringUtils.isEmpty( selectedItem ) ? null : selectedItem;
   }
 }

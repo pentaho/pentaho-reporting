@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.elements.move;
 
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.util.List;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.report.drag.MoveDragOperation;
@@ -32,43 +27,43 @@ import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBu
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 
-public final class MoveLeftOneAction extends AbstractElementSelectionAction
-{
-  public MoveLeftOneAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("MoveLeftOneAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("MoveLeftOneAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("MoveLeftOneAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("MoveLeftOneAction.Accelerator"));
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.List;
+
+public final class MoveLeftOneAction extends AbstractElementSelectionAction {
+  public MoveLeftOneAction() {
+    putValue( Action.NAME, ActionMessages.getString( "MoveLeftOneAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "MoveLeftOneAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "MoveLeftOneAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "MoveLeftOneAction.Accelerator" ) );
   }
 
-  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
-  {
+  protected void selectedElementPropertiesChanged( final ReportModelEvent event ) {
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final DocumentContextSelectionModel model = getSelectionModel();
-    if (model == null)
-    {
+    if ( model == null ) {
       return;
     }
-    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
-    if (visualElements.isEmpty())
-    {
+    final List<Element> visualElements = model.getSelectedElementsOfType( Element.class );
+    if ( visualElements.isEmpty() ) {
       return;
     }
 
-    final MassElementStyleUndoEntryBuilder builder = new MassElementStyleUndoEntryBuilder(visualElements);
+    final MassElementStyleUndoEntryBuilder builder = new MassElementStyleUndoEntryBuilder( visualElements );
     final MoveDragOperation mop = new MoveDragOperation
-        (visualElements, new Point(), EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
-    mop.update(new Point(-1, 0), 1);
+      ( visualElements, new Point(), EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE );
+    mop.update( new Point( -1, 0 ), 1 );
     mop.finish();
 
     final MassElementStyleUndoEntry massElementStyleUndoEntry = builder.finish();
-    getActiveContext().getUndo().addChange(ActionMessages.getString("MoveLeftOneAction.UndoName"), massElementStyleUndoEntry);
+    getActiveContext().getUndo()
+      .addChange( ActionMessages.getString( "MoveLeftOneAction.UndoName" ), massElementStyleUndoEntry );
   }
 }

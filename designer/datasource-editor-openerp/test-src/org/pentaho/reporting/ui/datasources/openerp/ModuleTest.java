@@ -23,29 +23,25 @@ import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.openerp.OpenERPDataFactory;
 
-public class ModuleTest extends TestCase
-{
-  public ModuleTest()
-  {
+public class ModuleTest extends TestCase {
+  public ModuleTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testModuleExists()
-  {
-    assertTrue(ClassicEngineBoot.getInstance().getPackageManager().isModuleAvailable(OpenERPDataSourceModule.class.getName()));
+  public void testModuleExists() {
+    assertTrue( ClassicEngineBoot.getInstance().getPackageManager()
+      .isModuleAvailable( OpenERPDataSourceModule.class.getName() ) );
   }
 
-  public void testEditorRegistered()
-  {
+  public void testEditorRegistered() {
     DataSourcePlugin editor =
-        DataFactoryRegistry.getInstance().getMetaData(OpenERPDataFactory.class.getName()).createEditor();
-    assertNotNull(editor);
+      DataFactoryRegistry.getInstance().getMetaData( OpenERPDataFactory.class.getName() ).createEditor();
+    assertNotNull( editor );
 
-    assertTrue(editor.canHandle(new OpenERPDataFactory()));
+    assertTrue( editor.canHandle( new OpenERPDataFactory() ) );
   }
 
 }

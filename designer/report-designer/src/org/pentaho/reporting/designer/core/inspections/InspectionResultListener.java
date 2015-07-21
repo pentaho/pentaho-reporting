@@ -24,9 +24,8 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner
  */
-public interface InspectionResultListener extends EventListener
-{
+public interface InspectionResultListener extends EventListener {
   public void notifyInspectionStarted();
 
-  public void notifyInspectionResult(InspectionResult result);
+  public void notifyInspectionResult( InspectionResult result );
 }

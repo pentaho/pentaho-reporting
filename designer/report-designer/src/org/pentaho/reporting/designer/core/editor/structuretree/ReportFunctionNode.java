@@ -22,15 +22,12 @@ package org.pentaho.reporting.designer.core.editor.structuretree;
  *
  * @author Thomas Morgner
  */
-public class ReportFunctionNode
-{
-  public ReportFunctionNode()
-  {
+public class ReportFunctionNode {
+  public ReportFunctionNode() {
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return "org.pentaho.reporting.designer.core.editor.structuretree.ReportFunctionNode{}";// NON-NLS
   }
 }

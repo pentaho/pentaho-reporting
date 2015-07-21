@@ -19,8 +19,7 @@ package org.pentaho.reporting.designer.extensions.legacycharts;
 
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 
-public class ChartEditingResult
-{
+public class ChartEditingResult {
   private Expression originalChartExpression;
   private Expression originalPrimaryDataSource;
   private Expression originalSecondaryDataSource;
@@ -29,13 +28,12 @@ public class ChartEditingResult
   private Expression primaryDataSource;
   private Expression secondaryDataSource;
 
-  public ChartEditingResult(final Expression originalChartExpression,
-                    final Expression originalPrimaryDataSource,
-                    final Expression originalSecondaryDataSource,
-                    final Expression chartExpression,
-                    final Expression primaryDataSource,
-                    final Expression secondaryDataSource)
-  {
+  public ChartEditingResult( final Expression originalChartExpression,
+                             final Expression originalPrimaryDataSource,
+                             final Expression originalSecondaryDataSource,
+                             final Expression chartExpression,
+                             final Expression primaryDataSource,
+                             final Expression secondaryDataSource ) {
     this.originalChartExpression = originalChartExpression;
     this.originalPrimaryDataSource = originalPrimaryDataSource;
     this.originalSecondaryDataSource = originalSecondaryDataSource;
@@ -44,33 +42,27 @@ public class ChartEditingResult
     this.secondaryDataSource = secondaryDataSource;
   }
 
-  public Expression getOriginalChartExpression()
-  {
+  public Expression getOriginalChartExpression() {
     return originalChartExpression;
   }
 
-  public Expression getOriginalPrimaryDataSource()
-  {
+  public Expression getOriginalPrimaryDataSource() {
     return originalPrimaryDataSource;
   }
 
-  public Expression getOriginalSecondaryDataSource()
-  {
+  public Expression getOriginalSecondaryDataSource() {
     return originalSecondaryDataSource;
   }
 
-  public Expression getChartExpression()
-  {
+  public Expression getChartExpression() {
     return chartExpression;
   }
 
-  public Expression getPrimaryDataSource()
-  {
+  public Expression getPrimaryDataSource() {
     return primaryDataSource;
   }
 
-  public Expression getSecondaryDataSource()
-  {
+  public Expression getSecondaryDataSource() {
     return secondaryDataSource;
   }
 }

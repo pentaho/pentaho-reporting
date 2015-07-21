@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.designer.layout;
 
-import java.awt.geom.Rectangle2D;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
@@ -29,39 +26,38 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.testsupport.graphics.TestGraphics2D;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd4642Test extends TestCase
-{
-  public Prd4642Test()
-  {
+import java.awt.geom.Rectangle2D;
+import java.net.URL;
+
+public class Prd4642Test extends TestCase {
+  public Prd4642Test() {
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testBug () throws Exception
-  {
-    final URL resource = getClass().getResource("Prd-4642.prpt");
-    assertNotNull(resource);
+  public void testBug() throws Exception {
+    final URL resource = getClass().getResource( "Prd-4642.prpt" );
+    assertNotNull( resource );
 
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
 
     final GlobalAuthenticationStore globalAuthenticationStore = new GlobalAuthenticationStore();
     final ReportRenderContext masterContext =
-        new ReportRenderContext(report, report, null, globalAuthenticationStore);
-    final SubReport subReport = (SubReport) report.getReportHeader().getElement(1);
+      new ReportRenderContext( report, report, null, globalAuthenticationStore );
+    final SubReport subReport = (SubReport) report.getReportHeader().getElement( 1 );
     final ReportRenderContext subContext =
-        new ReportRenderContext(report, subReport, masterContext, globalAuthenticationStore);
-    final TestRootBandRenderer r = new TestRootBandRenderer(subReport.getReportHeader(), subContext);
+      new ReportRenderContext( report, subReport, masterContext, globalAuthenticationStore );
+    final TestRootBandRenderer r = new TestRootBandRenderer( subReport.getReportHeader(), subContext );
     final Rectangle2D bounds = r.getBounds();
-    assertEquals(new Rectangle2D.Double(0, 21, 468, 108), bounds);
+    assertEquals( new Rectangle2D.Double( 0, 21, 468, 108 ), bounds );
 
-    final TestGraphics2D graphics2D = new ValidateTextGraphics(468, 108);
-    assertTrue(graphics2D.hitClip(10, 10, 1, 1));
-    r.draw(graphics2D);
+    final TestGraphics2D graphics2D = new ValidateTextGraphics( 468, 108 );
+    assertTrue( graphics2D.hitClip( 10, 10, 1, 1 ) );
+    r.draw( graphics2D );
   }
 
 

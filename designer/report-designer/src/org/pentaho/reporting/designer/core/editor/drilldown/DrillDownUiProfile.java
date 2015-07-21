@@ -23,13 +23,12 @@ package org.pentaho.reporting.designer.core.editor.drilldown;
  *
  * @author Thomas Morgner.
  */
-public interface DrillDownUiProfile
-{
+public interface DrillDownUiProfile {
   public DrillDownUi createUI();
 
   public String getDisplayName();
 
-  public boolean canHandle(String profileName);
+  public boolean canHandle( String profileName );
 
   public int getOrderKey();
 }

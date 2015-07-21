@@ -22,8 +22,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
 
-public class BubbleChartExpression extends XYChartExpression
-{
+public class BubbleChartExpression extends XYChartExpression {
   private static final long serialVersionUID = 7934486966108227105L;
 
   private double maxBubbleSize;
@@ -32,8 +31,7 @@ public class BubbleChartExpression extends XYChartExpression
   private String yFormat; //$NON-NLS-1$
   private String zFormat; //$NON-NLS-1$
 
-  public BubbleChartExpression()
-  {
+  public BubbleChartExpression() {
     bubbleLabelContent = "{0}: ({1}, {2}, {3})";
     zFormat = "";
     yFormat = "";
@@ -41,52 +39,42 @@ public class BubbleChartExpression extends XYChartExpression
     maxBubbleSize = 0;
   }
 
-  protected JFreeChart computeXYChart(final XYDataset dataset)
-  {
+  protected JFreeChart computeXYChart( final XYDataset dataset ) {
 
     // Make sure we have a proper dataset
     final XYZDataset xyzDataset;
     final double maxZValue;
-    if (dataset instanceof ExtendedXYZDataset)
-    {
+    if ( dataset instanceof ExtendedXYZDataset ) {
       final ExtendedXYZDataset exyzDataset = (ExtendedXYZDataset) dataset;
       xyzDataset = exyzDataset;
       maxZValue = exyzDataset.getMaxZValue();
-    }
-    else if (dataset instanceof XYZDataset)
-    {
+    } else if ( dataset instanceof XYZDataset ) {
       xyzDataset = (XYZDataset) dataset;
-      maxZValue = precomputeMaxZ(xyzDataset);
-    }
-    else
-    {
+      maxZValue = precomputeMaxZ( xyzDataset );
+    } else {
       xyzDataset = null;
       maxZValue = 0;
     }
 
     final JFreeChart rtn = ChartFactory.createBubbleChart
-        (computeTitle(), getDomainTitle(), getRangeTitle(), xyzDataset,
-            computePlotOrientation(), isShowLegend(), false, false);
+      ( computeTitle(), getDomainTitle(), getRangeTitle(), xyzDataset,
+        computePlotOrientation(), isShowLegend(), false, false );
 
     final BubbleRenderer renderer = new BubbleRenderer();
-    renderer.setMaxSize(getMaxBubbleSize());
-    renderer.setMaxZ(maxZValue);
-    rtn.getXYPlot().setRenderer(renderer);
-    configureLogarithmicAxis(rtn.getXYPlot());
+    renderer.setMaxSize( getMaxBubbleSize() );
+    renderer.setMaxZ( maxZValue );
+    rtn.getXYPlot().setRenderer( renderer );
+    configureLogarithmicAxis( rtn.getXYPlot() );
     return rtn;
   }
 
-  private double precomputeMaxZ(final XYZDataset dataset)
-  {
+  private double precomputeMaxZ( final XYZDataset dataset ) {
     double retval = Double.MIN_VALUE;
-    for (int series = 0; series < dataset.getSeriesCount(); series++)
-    {
-      final int itemcount = dataset.getItemCount(series);
-      for (int item = 0; item < itemcount; item++)
-      {
-        final double value = dataset.getZValue(series, item);
-        if (retval < value)
-        {
+    for ( int series = 0; series < dataset.getSeriesCount(); series++ ) {
+      final int itemcount = dataset.getItemCount( series );
+      for ( int item = 0; item < itemcount; item++ ) {
+        final double value = dataset.getZValue( series, item );
+        if ( retval < value ) {
           retval = value;
         }
       }
@@ -94,9 +82,8 @@ public class BubbleChartExpression extends XYChartExpression
     return retval;
   }
 
-  protected void configureChart(final JFreeChart chart)
-  {
-    super.configureChart(chart);
+  protected void configureChart( final JFreeChart chart ) {
+    super.configureChart( chart );
     /* 
      * We don't handle these in reports yet ...
      renderer.setToolTipGenerator(new StandardXYZToolTipGenerator(getBubbleLabelContent(),
@@ -108,72 +95,59 @@ public class BubbleChartExpression extends XYChartExpression
      */
   }
 
-  public double getMaxBubbleSize()
-  {
+  public double getMaxBubbleSize() {
     return maxBubbleSize;
   }
 
-  public void setMaxBubbleSize(final double maxBubbleSize)
-  {
+  public void setMaxBubbleSize( final double maxBubbleSize ) {
     this.maxBubbleSize = maxBubbleSize;
   }
 
-  public String getBubbleLabelContent()
-  {
+  public String getBubbleLabelContent() {
     return bubbleLabelContent;
   }
 
   /**
-   * @param bubbleLabelContent Definition of the bubble labels' content. e.g. "{0}: ({1}, {2}, {3})"
-   *                           {0} = series name
-   *                           {1} = x value
-   *                           {2} = y value
-   *                           {3} = z value
+   * @param bubbleLabelContent Definition of the bubble labels' content. e.g. "{0}: ({1}, {2}, {3})" {0} = series name
+   *                           {1} = x value {2} = y value {3} = z value
    */
-  public void setBubbleLabelContent(final String bubbleLabelContent)
-  {
+  public void setBubbleLabelContent( final String bubbleLabelContent ) {
     this.bubbleLabelContent = bubbleLabelContent;
   }
 
-  public String getXFormat()
-  {
+  public String getXFormat() {
     return xFormat;
   }
 
   /**
-   * @param format Definition of the bubble labels' x value number format.
-   *               e.g. "#,##0.0#" or "#,##0.00 EUR" or "##0.00 %"
+   * @param format Definition of the bubble labels' x value number format. e.g. "#,##0.0#" or "#,##0.00 EUR" or "##0.00
+   *               %"
    */
-  public void setXFormat(final String format)
-  {
+  public void setXFormat( final String format ) {
     xFormat = format;
   }
 
-  public String getYFormat()
-  {
+  public String getYFormat() {
     return yFormat;
   }
 
   /**
-   * @param format Definition of the bubble labels' y value number format.
-   *               e.g. "#,##0.0#" or "#,##0.00 EUR" or "##0.00 %"
+   * @param format Definition of the bubble labels' y value number format. e.g. "#,##0.0#" or "#,##0.00 EUR" or "##0.00
+   *               %"
    */
-  public void setYFormat(final String format)
-  {
+  public void setYFormat( final String format ) {
     yFormat = format;
   }
 
-  public String getZFormat()
-  {
+  public String getZFormat() {
     return zFormat;
   }
 
   /**
-   * @param format Definition of the bubble labels' z value number format.
-   *               e.g. "#,##0.0#" or "#,##0.00 EUR" or "##0.00 %"
+   * @param format Definition of the bubble labels' z value number format. e.g. "#,##0.0#" or "#,##0.00 EUR" or "##0.00
+   *               %"
    */
-  public void setZFormat(final String format)
-  {
+  public void setZFormat( final String format ) {
     zFormat = format;
   }
 
@@ -181,8 +155,7 @@ public class BubbleChartExpression extends XYChartExpression
    * @return
    * @deprecated Not used anywhere.
    */
-  public double getMaxZValue()
-  {
+  public double getMaxZValue() {
     return 0;
   }
 

@@ -22,17 +22,14 @@ import org.pentaho.ui.xul.binding.BindingConvertor;
 /**
  * @author wseyler
  */
-public class IntegerToStringBindingConvertor extends BindingConvertor<Integer, String>
-{
+public class IntegerToStringBindingConvertor extends BindingConvertor<Integer, String> {
 
   /* (non-Javadoc)
    * @see org.pentaho.ui.xul.binding.BindingConvertor#sourceToTarget(java.lang.Object)
    */
   @Override
-  public String sourceToTarget(final Integer value)
-  {
-    if (value == null)
-    {
+  public String sourceToTarget( final Integer value ) {
+    if ( value == null ) {
       return ""; //$NON-NLS-1$
     }
     return value.toString();
@@ -42,9 +39,8 @@ public class IntegerToStringBindingConvertor extends BindingConvertor<Integer, S
    * @see org.pentaho.ui.xul.binding.BindingConvertor#targetToSource(java.lang.Object)
    */
   @Override
-  public Integer targetToSource(final String value)
-  {
-    return new Integer(value);
+  public Integer targetToSource( final String value ) {
+    return new Integer( value );
   }
 
 }

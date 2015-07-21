@@ -1,7 +1,7 @@
 <meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
 
   <include-globals src="res://org/pentaho/reporting/engine/classic/core/metadata/global-meta-elements.xml"/>
-  
+
   <element name="bar-sparkline" expert="false" hidden="false" preferred="false"
            bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.metadata"
            implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.BarSparklineType"

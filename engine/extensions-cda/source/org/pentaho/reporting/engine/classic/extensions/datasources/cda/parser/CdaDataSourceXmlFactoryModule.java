@@ -18,45 +18,34 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.cda.parser;
 
 import org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaModule;
-import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
+import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-public class CdaDataSourceXmlFactoryModule implements XmlFactoryModule
-{
-  public CdaDataSourceXmlFactoryModule()
-  {
+public class CdaDataSourceXmlFactoryModule implements XmlFactoryModule {
+  public CdaDataSourceXmlFactoryModule() {
   }
 
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (CdaModule.NAMESPACE.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( CdaModule.NAMESPACE.equals( rootNamespace ) == false ) {
         return NOT_RECOGNIZED;
-      }
-      else if ("cda-datasource".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "cda-datasource".equals( documentInfo.getRootElement() ) ) {
         return RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("cda-datasource".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "cda-datasource".equals( documentInfo.getRootElement() ) ) {
       return RECOGNIZED_BY_TAGNAME;
     }
 
     return NOT_RECOGNIZED;
   }
 
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return CdaModule.NAMESPACE;
   }
 
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new CdaDataSourceReadHandler();
   }
 

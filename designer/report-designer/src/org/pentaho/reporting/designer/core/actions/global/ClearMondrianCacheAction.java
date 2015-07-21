@@ -18,27 +18,24 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import mondrian.olap.CacheControl;
 import mondrian.rolap.agg.AggregationManager;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 
-public class ClearMondrianCacheAction extends AbstractDesignerContextAction
-{
-  public ClearMondrianCacheAction()
-  {
-    putValue(Action.NAME, ActionMessages.getString("ClearMondrianCacheAction.Text"));
-    putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ClearMondrianCacheAction.Description"));
-    putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ClearMondrianCacheAction.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ClearMondrianCacheAction.Accelerator"));
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public class ClearMondrianCacheAction extends AbstractDesignerContextAction {
+  public ClearMondrianCacheAction() {
+    putValue( Action.NAME, ActionMessages.getString( "ClearMondrianCacheAction.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, ActionMessages.getString( "ClearMondrianCacheAction.Description" ) );
+    putValue( Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic( "ClearMondrianCacheAction.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke( "ClearMondrianCacheAction.Accelerator" ) );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
-    final CacheControl cacheControl = AggregationManager.instance().getCacheControl(null, null);
+  public void actionPerformed( final ActionEvent e ) {
+    final CacheControl cacheControl = AggregationManager.instance().getCacheControl( null, null );
     cacheControl.flushSchemaCache();
   }
 }

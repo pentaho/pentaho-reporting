@@ -22,26 +22,20 @@ import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 
-public final class DataSchemaUtility
-{
-  private DataSchemaUtility()
-  {
+public final class DataSchemaUtility {
+  private DataSchemaUtility() {
   }
 
-  public static boolean isFiltered(final DataAttributes attributes, final DataAttributeContext context)
-  {
-    if (attributes == null)
-    {
+  public static boolean isFiltered( final DataAttributes attributes, final DataAttributeContext context ) {
+    if ( attributes == null ) {
       return true;
     }
 
     final Object o =
-        attributes.getMetaAttribute(MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.INDEXED_COLUMN,
-            Boolean.class, context);
-    if (Boolean.TRUE.equals(o))
-    {
-      if (WorkspaceSettings.getInstance().isShowIndexColumns())
-      {
+      attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.INDEXED_COLUMN,
+        Boolean.class, context );
+    if ( Boolean.TRUE.equals( o ) ) {
+      if ( WorkspaceSettings.getInstance().isShowIndexColumns() ) {
         return false;
       }
       return true;

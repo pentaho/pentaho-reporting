@@ -17,34 +17,42 @@
 
 package org.pentaho.reporting.designer.core;
 
-import java.beans.PropertyChangeListener;
-import javax.swing.Icon;
-
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 
-public interface ReportDesignerDocumentContext<T>
-{
+import javax.swing.*;
+import java.beans.PropertyChangeListener;
+
+public interface ReportDesignerDocumentContext<T> {
   UndoManager getUndo();
+
   DocumentContextSelectionModel getSelectionModel();
 
   T getContextRoot();
+
   String getTabName();
+
   Icon getIcon();
+
   void dispose();
+
   String getDocumentFile();
 
-  void addPropertyChangeListener(final PropertyChangeListener listener);
-  void addPropertyChangeListener(final String property, final PropertyChangeListener listener);
-  void removePropertyChangeListener(final PropertyChangeListener listener);
-  void removePropertyChangeListener(final String property, final PropertyChangeListener listener);
+  void addPropertyChangeListener( final PropertyChangeListener listener );
+
+  void addPropertyChangeListener( final String property, final PropertyChangeListener listener );
+
+  void removePropertyChangeListener( final PropertyChangeListener listener );
+
+  void removePropertyChangeListener( final String property, final PropertyChangeListener listener );
 
   void onDocumentActivated();
 
-  void removeInspectionListener(InspectionResultListener listener);
-  void addInspectionListener(InspectionResultListener listener);
+  void removeInspectionListener( InspectionResultListener listener );
+
+  void addInspectionListener( InspectionResultListener listener );
 
   AuthenticationStore getAuthenticationStore();
 

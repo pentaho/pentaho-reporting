@@ -17,25 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import java.awt.BorderLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import javax.swing.AbstractAction;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.EventListenerList;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import javax.swing.table.DefaultTableModel;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FormulaEditorDialog;
@@ -57,182 +38,159 @@ import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHand
 import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.EventListenerList;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+
 /**
  * A text field that acts as a simple input for formulas with a button to invoke the formula editor if needed.
  *
  * @author Thomas Morgner.
  */
-public class FormulaEditorPanel extends JPanel
-{
-  private class OpenFormulaEditorAction extends AbstractAction
-  {
+public class FormulaEditorPanel extends JPanel {
+  private class OpenFormulaEditorAction extends AbstractAction {
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      final FormulaEditorDialog dialog = GUIUtils.createFormulaEditorDialog(getReportDesignerContext(), FormulaEditorPanel.this);
-      final String formula = dialog.editFormula(formulaField.getText(), computeFields());
-      if (formula == null)
-      {
+    public void actionPerformed( final ActionEvent e ) {
+      final FormulaEditorDialog dialog =
+        GUIUtils.createFormulaEditorDialog( getReportDesignerContext(), FormulaEditorPanel.this );
+      final String formula = dialog.editFormula( formulaField.getText(), computeFields() );
+      if ( formula == null ) {
         // cancel pressed ... do nothing ...
         return;
       }
 
-      formulaField.setText(formula);
+      formulaField.setText( formula );
 
     }
   }
 
-  private class KeyEventForwarder implements KeyListener
-  {
-    private KeyEventForwarder()
-    {
+  private class KeyEventForwarder implements KeyListener {
+    private KeyEventForwarder() {
     }
 
     /**
-     * Invoked when a key has been typed.
-     * See the class description for {@link java.awt.event.KeyEvent} for a definition of
-     * a key typed event.
+     * Invoked when a key has been typed. See the class description for {@link java.awt.event.KeyEvent} for a definition
+     * of a key typed event.
      */
-    public void keyTyped(final KeyEvent e)
-    {
-      final KeyListener[] keyListeners = listenerList.getListeners(KeyListener.class);
-      for (int i = 0; i < keyListeners.length; i++)
-      {
-        final KeyListener keyListener = keyListeners[i];
-        keyListener.keyTyped(e);
+    public void keyTyped( final KeyEvent e ) {
+      final KeyListener[] keyListeners = listenerList.getListeners( KeyListener.class );
+      for ( int i = 0; i < keyListeners.length; i++ ) {
+        final KeyListener keyListener = keyListeners[ i ];
+        keyListener.keyTyped( e );
       }
     }
 
     /**
-     * Invoked when a key has been pressed.
-     * See the class description for {@link java.awt.event.KeyEvent} for a definition of
-     * a key pressed event.
+     * Invoked when a key has been pressed. See the class description for {@link java.awt.event.KeyEvent} for a
+     * definition of a key pressed event.
      */
-    public void keyPressed(final KeyEvent e)
-    {
-      final KeyListener[] keyListeners = listenerList.getListeners(KeyListener.class);
-      for (int i = 0; i < keyListeners.length; i++)
-      {
-        final KeyListener keyListener = keyListeners[i];
-        keyListener.keyPressed(e);
+    public void keyPressed( final KeyEvent e ) {
+      final KeyListener[] keyListeners = listenerList.getListeners( KeyListener.class );
+      for ( int i = 0; i < keyListeners.length; i++ ) {
+        final KeyListener keyListener = keyListeners[ i ];
+        keyListener.keyPressed( e );
       }
     }
 
     /**
-     * Invoked when a key has been released.
-     * See the class description for {@link java.awt.event.KeyEvent} for a definition of
-     * a key released event.
+     * Invoked when a key has been released. See the class description for {@link java.awt.event.KeyEvent} for a
+     * definition of a key released event.
      */
-    public void keyReleased(final KeyEvent e)
-    {
-      final KeyListener[] keyListeners = listenerList.getListeners(KeyListener.class);
-      for (int i = 0; i < keyListeners.length; i++)
-      {
-        final KeyListener keyListener = keyListeners[i];
-        keyListener.keyReleased(e);
+    public void keyReleased( final KeyEvent e ) {
+      final KeyListener[] keyListeners = listenerList.getListeners( KeyListener.class );
+      for ( int i = 0; i < keyListeners.length; i++ ) {
+        final KeyListener keyListener = keyListeners[ i ];
+        keyListener.keyReleased( e );
       }
     }
   }
 
-  private class ValueChangeEventGenerator extends DocumentChangeHandler implements ListDataListener, Runnable
-  {
+  private class ValueChangeEventGenerator extends DocumentChangeHandler implements ListDataListener, Runnable {
     private String lastValue;
 
-    private ValueChangeEventGenerator()
-    {
+    private ValueChangeEventGenerator() {
     }
 
-    protected void handleChange(final DocumentEvent e)
-    {
-      SwingUtilities.invokeLater(this);
-    }
-
-    /**
-     * Sent after the indices in the index0,index1
-     * interval have been inserted in the data model.
-     * The new interval includes both index0 and index1.
-     *
-     * @param e a <code>ListDataEvent</code> encapsulating the
-     *          event information
-     */
-    public void intervalAdded(final ListDataEvent e)
-    {
-
+    protected void handleChange( final DocumentEvent e ) {
+      SwingUtilities.invokeLater( this );
     }
 
     /**
-     * Sent after the indices in the index0,index1 interval
-     * have been removed from the data model.  The interval
+     * Sent after the indices in the index0,index1 interval have been inserted in the data model. The new interval
      * includes both index0 and index1.
      *
-     * @param e a <code>ListDataEvent</code> encapsulating the
-     *          event information
+     * @param e a <code>ListDataEvent</code> encapsulating the event information
      */
-    public void intervalRemoved(final ListDataEvent e)
-    {
+    public void intervalAdded( final ListDataEvent e ) {
 
     }
 
     /**
-     * Sent when the contents of the list has changed in a way
-     * that's too complex to characterize with the previous
-     * methods. For example, this is sent when an item has been
-     * replaced. Index0 and index1 bracket the change.
+     * Sent after the indices in the index0,index1 interval have been removed from the data model.  The interval
+     * includes both index0 and index1.
      *
-     * @param e a <code>ListDataEvent</code> encapsulating the
-     *          event information
+     * @param e a <code>ListDataEvent</code> encapsulating the event information
      */
-    public void contentsChanged(final ListDataEvent e)
-    {
+    public void intervalRemoved( final ListDataEvent e ) {
+
+    }
+
+    /**
+     * Sent when the contents of the list has changed in a way that's too complex to characterize with the previous
+     * methods. For example, this is sent when an item has been replaced. Index0 and index1 bracket the change.
+     *
+     * @param e a <code>ListDataEvent</code> encapsulating the event information
+     */
+    public void contentsChanged( final ListDataEvent e ) {
       run();
     }
 
-    public void run()
-    {
+    public void run() {
       final String formula = getFormula();
-      if (ObjectUtilities.equal(lastValue, formula))
-      {
+      if ( ObjectUtilities.equal( lastValue, formula ) ) {
         return;
       }
       final Object oldValue = lastValue;
       lastValue = formula;
-      firePropertyChange("formula", oldValue, lastValue);
+      firePropertyChange( "formula", oldValue, lastValue );
     }
   }
 
-  private static class GenericDataFieldDefinition implements FieldDefinition
-  {
+  private static class GenericDataFieldDefinition implements FieldDefinition {
     private String name;
 
-    private GenericDataFieldDefinition(final String name)
-    {
+    private GenericDataFieldDefinition( final String name ) {
       this.name = name;
     }
 
-    public String getName()
-    {
+    public String getName() {
       return name;
     }
 
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
       return name;
     }
 
-    public Icon getIcon()
-    {
+    public Icon getIcon() {
       return IconLoader.getInstance().getDataSetsIcon();
     }
 
-    public Class getFieldType()
-    {
+    public Class getFieldType() {
       return Object.class;
     }
   }
 
-  private static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
+  private static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[ 0 ];
   private DefaultDataAttributeContext dataAttributeContext;
   private ReportDesignerContext reportDesignerContext;
   private boolean formulaFragment;
@@ -248,303 +206,245 @@ public class FormulaEditorPanel extends JPanel
   private FormulaEditorDataModel editorDataModel;
 
   /**
-   * Creates a new <code>JPanel</code> with a double buffer
-   * and a flow layout.
+   * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
    */
-  public FormulaEditorPanel()
-  {
+  public FormulaEditorPanel() {
     this.listenerList = new EventListenerList();
     this.dataAttributeContext = new DefaultDataAttributeContext();
-    setLayout(new BorderLayout());
+    setLayout( new BorderLayout() );
 
-    ellipsisButton = new EllipsisButton("...");
-    ellipsisButton.setDefaultCapable(false);
-    ellipsisButton.setMargin(new Insets(0, 0, 0, 0));
-    ellipsisButton.addActionListener(new OpenFormulaEditorAction());
+    ellipsisButton = new EllipsisButton( "..." );
+    ellipsisButton.setDefaultCapable( false );
+    ellipsisButton.setMargin( new Insets( 0, 0, 0, 0 ) );
+    ellipsisButton.addActionListener( new OpenFormulaEditorAction() );
 
     changeEventGenerator = new ValueChangeEventGenerator();
 
     tagModel = new DefaultComboBoxModel();
-    tagModel.addListDataListener(changeEventGenerator);
+    tagModel.addListDataListener( changeEventGenerator );
 
-    formulaBox = new JComboBox(tagModel);
-    formulaBox.setEditable(true);
-    formulaBox.addKeyListener(new KeyEventForwarder());
+    formulaBox = new JComboBox( tagModel );
+    formulaBox.setEditable( true );
+    formulaBox.addKeyListener( new KeyEventForwarder() );
 
     formulaField = new JTextField();
-    formulaField.getDocument().addDocumentListener(changeEventGenerator);
-    formulaBox.addKeyListener(new KeyEventForwarder());
+    formulaField.getDocument().addDocumentListener( changeEventGenerator );
+    formulaBox.addKeyListener( new KeyEventForwarder() );
 
-    add(formulaField, BorderLayout.CENTER);
-    add(ellipsisButton, BorderLayout.EAST);
+    add( formulaField, BorderLayout.CENTER );
+    add( ellipsisButton, BorderLayout.EAST );
   }
 
-  private void activateComboBox()
-  {
-    if (comboBoxActive)
-    {
+  private void activateComboBox() {
+    if ( comboBoxActive ) {
       return;
     }
     final String formula = getFormula();
-    remove(formulaField);
-    add(formulaBox, BorderLayout.CENTER);
-    formulaBox.setSelectedItem(formula);
+    remove( formulaField );
+    add( formulaBox, BorderLayout.CENTER );
+    formulaBox.setSelectedItem( formula );
     comboBoxActive = true;
     revalidate();
   }
 
-  private void activateTextField()
-  {
-    if (comboBoxActive == false)
-    {
+  private void activateTextField() {
+    if ( comboBoxActive == false ) {
       return;
     }
 
     final String formula = getFormula();
-    remove(formulaBox);
-    add(formulaField, BorderLayout.CENTER);
-    formulaField.setText(formula);
+    remove( formulaBox );
+    add( formulaField, BorderLayout.CENTER );
+    formulaField.setText( formula );
     comboBoxActive = false;
     revalidate();
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return reportDesignerContext;
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext reportDesignerContext)
-  {
+  public void setReportDesignerContext( final ReportDesignerContext reportDesignerContext ) {
     this.reportDesignerContext = reportDesignerContext;
   }
 
-  protected FieldDefinition[] computeFields()
-  {
-    if (reportDesignerContext == null)
-    {
+  protected FieldDefinition[] computeFields() {
+    if ( reportDesignerContext == null ) {
       return EMPTY_FIELDS;
     }
 
     final ReportDocumentContext renderContext = reportDesignerContext.getActiveContext();
-    if (renderContext == null)
-    {
+    if ( renderContext == null ) {
       return EMPTY_FIELDS;
     }
 
     final ContextAwareDataSchemaModel model = renderContext.getReportDataSchemaModel();
     final String[] columnNames = model.getColumnNames();
-    final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>(columnNames.length);
+    final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>( columnNames.length );
     final DataSchema dataSchema = model.getDataSchema();
     final DefaultDataAttributeContext attributeContext = new DefaultDataAttributeContext();
     final String parameter;
-    if (editorDataModel != null)
-    {
+    if ( editorDataModel != null ) {
       parameter = editorDataModel.getParameter();
-    }
-    else
-    {
+    } else {
       parameter = null;
     }
 
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      final String columnName = columnNames[i];
-      final DataAttributes attributes = dataSchema.getAttributes(columnName);
-      if (attributes == null)
-      {
-        throw new IllegalStateException("No data-schema for expression with name '" + columnName + '\'');
+    for ( int i = 0; i < columnNames.length; i++ ) {
+      final String columnName = columnNames[ i ];
+      final DataAttributes attributes = dataSchema.getAttributes( columnName );
+      if ( attributes == null ) {
+        throw new IllegalStateException( "No data-schema for expression with name '" + columnName + '\'' );
       }
       final Object source = attributes.getMetaAttribute
-          (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.SOURCE, String.class, attributeContext);
-      if (limitFields == false ||
-          MetaAttributeNames.Core.SOURCE_VALUE_PARAMETER.equals(source) ||
-          MetaAttributeNames.Core.SOURCE_VALUE_ENVIRONMENT.equals(source))
-      {
-        if (limitFields && "report.date".equals(columnName))
-        {
+        ( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.SOURCE, String.class, attributeContext );
+      if ( limitFields == false ||
+        MetaAttributeNames.Core.SOURCE_VALUE_PARAMETER.equals( source ) ||
+        MetaAttributeNames.Core.SOURCE_VALUE_ENVIRONMENT.equals( source ) ) {
+        if ( limitFields && "report.date".equals( columnName ) ) {
           // this is a magical field
           continue;
         }
-        fields.add(new DataSchemaFieldDefinition(columnName, attributes, dataAttributeContext));
-        if (ObjectUtils.equals(parameter, columnName))
-        {
+        fields.add( new DataSchemaFieldDefinition( columnName, attributes, dataAttributeContext ) );
+        if ( ObjectUtils.equals( parameter, columnName ) ) {
           break;
         }
       }
     }
 
-    if (editorDataModel != null)
-    {
+    if ( editorDataModel != null ) {
       final String[] dataFields = editorDataModel.getDataFields();
-      for (final String field : dataFields)
-      {
-        fields.add(new GenericDataFieldDefinition(field));
+      for ( final String field : dataFields ) {
+        fields.add( new GenericDataFieldDefinition( field ) );
       }
     }
-    return fields.toArray(new FieldDefinition[fields.size()]);
+    return fields.toArray( new FieldDefinition[ fields.size() ] );
   }
 
-  public boolean isLimitFields()
-  {
+  public boolean isLimitFields() {
     return limitFields;
   }
 
-  public void setLimitFields(final boolean limitFields)
-  {
+  public void setLimitFields( final boolean limitFields ) {
     this.limitFields = limitFields;
   }
 
-  public boolean isFormulaFragment()
-  {
+  public boolean isFormulaFragment() {
     return formulaFragment;
   }
 
-  public void setFormulaFragment(final boolean formulaFragment)
-  {
+  public void setFormulaFragment( final boolean formulaFragment ) {
     this.formulaFragment = formulaFragment;
   }
 
-  public String getFormula()
-  {
+  public String getFormula() {
     final String s;
-    if (comboBoxActive)
-    {
+    if ( comboBoxActive ) {
       s = (String) formulaBox.getSelectedItem();
-    }
-    else
-    {
+    } else {
       s = formulaField.getText();
     }
 
-    if (StringUtils.isEmpty(s, true))
-    {
+    if ( StringUtils.isEmpty( s, true ) ) {
       return null;
     }
-    if (isFormulaFragment())
-    {
-      return FormulaUtil.createFormulaFromUIText(s);
+    if ( isFormulaFragment() ) {
+      return FormulaUtil.createFormulaFromUIText( s );
     }
     return s;
   }
 
-  public void setFormula(final String text)
-  {
-    if (text == null)
-    {
-      formulaField.setText(null);
-      formulaBox.setSelectedItem(null);
+  public void setFormula( final String text ) {
+    if ( text == null ) {
+      formulaField.setText( null );
+      formulaBox.setSelectedItem( null );
       return;
     }
 
-    if (isFormulaFragment())
-    {
+    if ( isFormulaFragment() ) {
       final GenericExpressionRuntime expressionRuntime = new GenericExpressionRuntime
-          (new StaticDataRow(), new DefaultTableModel(), -1, new DefaultProcessingContext());
+        ( new StaticDataRow(), new DefaultTableModel(), -1, new DefaultProcessingContext() );
       final String formulaText = FormulaUtil.createEditorTextFromFormula
-          (text, new ReportFormulaContext(new DefaultFormulaContext(), expressionRuntime));
-      formulaField.setText(formulaText);
-      formulaBox.setSelectedItem(formulaText);
-    }
-    else
-    {
-      formulaField.setText(text);
-      formulaBox.setSelectedItem(text);
+        ( text, new ReportFormulaContext( new DefaultFormulaContext(), expressionRuntime ) );
+      formulaField.setText( formulaText );
+      formulaBox.setSelectedItem( formulaText );
+    } else {
+      formulaField.setText( text );
+      formulaBox.setSelectedItem( text );
     }
   }
 
   /**
-   * Sets whether or not this component is enabled.
-   * A component that is enabled may respond to user input,
-   * while a component that is not enabled cannot respond to
-   * user input.  Some components may alter their visual
-   * representation when they are disabled in order to
-   * provide feedback to the user that they cannot take input.
-   * <p>Note: Disabling a component does not disable its children.
+   * Sets whether or not this component is enabled. A component that is enabled may respond to user input, while a
+   * component that is not enabled cannot respond to user input.  Some components may alter their visual representation
+   * when they are disabled in order to provide feedback to the user that they cannot take input. <p>Note: Disabling a
+   * component does not disable its children.
    * <p/>
-   * <p>Note: Disabling a lightweight component does not prevent it from
-   * receiving MouseEvents.
+   * <p>Note: Disabling a lightweight component does not prevent it from receiving MouseEvents.
    *
    * @param enabled true if this component should be enabled, false otherwise
-   * @beaninfo preferred: true
-   * bound: true
-   * attribute: visualUpdate true
-   * description: The enabled state of the component.
+   * @beaninfo preferred: true bound: true attribute: visualUpdate true description: The enabled state of the
+   * component.
    * @see java.awt.Component#isEnabled
    * @see java.awt.Component#isLightweight
    */
-  public void setEnabled(final boolean enabled)
-  {
-    super.setEnabled(enabled);
-    formulaField.setEnabled(enabled);
-    ellipsisButton.setEnabled(enabled);
+  public void setEnabled( final boolean enabled ) {
+    super.setEnabled( enabled );
+    formulaField.setEnabled( enabled );
+    ellipsisButton.setEnabled( enabled );
   }
 
-  public void selectAll()
-  {
+  public void selectAll() {
     formulaField.selectAll();
   }
 
-  public void setEditable(final boolean editable)
-  {
-    formulaField.setEditable(editable);
-    ellipsisButton.setEnabled(editable);
+  public void setEditable( final boolean editable ) {
+    formulaField.setEditable( editable );
+    ellipsisButton.setEnabled( editable );
   }
 
-  public boolean isEditable()
-  {
+  public boolean isEditable() {
     return formulaField.isEditable();
   }
 
-  public void addFormulaKeyListener(final KeyListener k)
-  {
-    this.listenerList.add(KeyListener.class, k);
+  public void addFormulaKeyListener( final KeyListener k ) {
+    this.listenerList.add( KeyListener.class, k );
   }
 
-  public void removeFormulaKeyListener(final KeyListener k)
-  {
-    this.listenerList.remove(KeyListener.class, k);
+  public void removeFormulaKeyListener( final KeyListener k ) {
+    this.listenerList.remove( KeyListener.class, k );
   }
 
-  public String[] getTags()
-  {
+  public String[] getTags() {
     final int size = tagModel.getSize();
-    final String[] retval = new String[size];
-    for (int i = 0; i < retval.length; i++)
-    {
-      retval[i] = (String) tagModel.getElementAt(i);
+    final String[] retval = new String[ size ];
+    for ( int i = 0; i < retval.length; i++ ) {
+      retval[ i ] = (String) tagModel.getElementAt( i );
     }
     return retval;
   }
 
-  public void setTags(final String[] tags)
-  {
-    if (tags == null)
-    {
+  public void setTags( final String[] tags ) {
+    if ( tags == null ) {
       throw new NullPointerException();
     }
 
     tagModel.removeAllElements();
-    for (int i = 0; i < tags.length; i++)
-    {
-      tagModel.addElement(tags[i]);
+    for ( int i = 0; i < tags.length; i++ ) {
+      tagModel.addElement( tags[ i ] );
     }
-    if (tags.length == 0)
-    {
+    if ( tags.length == 0 ) {
       activateTextField();
-    }
-    else
-    {
+    } else {
       activateComboBox();
     }
   }
 
-  public FormulaEditorDataModel getEditorDataModel()
-  {
+  public FormulaEditorDataModel getEditorDataModel() {
     return editorDataModel;
   }
 
-  public void setEditorDataModel(final FormulaEditorDataModel editorDataModel)
-  {
+  public void setEditorDataModel( final FormulaEditorDataModel editorDataModel ) {
     this.editorDataModel = editorDataModel;
   }
 }

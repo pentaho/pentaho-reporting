@@ -24,8 +24,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ElementBorderReadHandler extends AbstractXmlReadHandler
-{
+public class ElementBorderReadHandler extends AbstractXmlReadHandler {
   private BorderEdgeReadHandler borderTop;
   private BorderEdgeReadHandler borderLeft;
   private BorderEdgeReadHandler borderBottom;
@@ -40,15 +39,13 @@ public class ElementBorderReadHandler extends AbstractXmlReadHandler
 
   private boolean sameBorder;
 
-  public ElementBorderReadHandler(final ElementStyleSheet elementStyleSheet)
-  {
+  public ElementBorderReadHandler( final ElementStyleSheet elementStyleSheet ) {
     this.elementStyleSheet = elementStyleSheet;
   }
 
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    sameBorder = "true".equals (attrs.getValue(getUri(), "sameBorderForAllSides"));
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    sameBorder = "true".equals( attrs.getValue( getUri(), "sameBorderForAllSides" ) );
   }
 
   /**
@@ -60,59 +57,48 @@ public class ElementBorderReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("borderTop".equals(tagName))
-    {
+    if ( "borderTop".equals( tagName ) ) {
       borderTop = new BorderEdgeReadHandler();
       return borderTop;
     }
-    if ("borderLeft".equals(tagName))
-    {
+    if ( "borderLeft".equals( tagName ) ) {
       borderLeft = new BorderEdgeReadHandler();
       return borderLeft;
     }
-    if ("borderBottom".equals(tagName))
-    {
+    if ( "borderBottom".equals( tagName ) ) {
       borderBottom = new BorderEdgeReadHandler();
       return borderBottom;
     }
-    if ("borderRight".equals(tagName))
-    {
+    if ( "borderRight".equals( tagName ) ) {
       borderRight = new BorderEdgeReadHandler();
       return borderRight;
     }
-    if ("borderBreak".equals(tagName))
-    {
+    if ( "borderBreak".equals( tagName ) ) {
       borderBreak = new BorderEdgeReadHandler();
       return borderBreak;
     }
 
-    if ("topLeftEdge".equals(tagName))
-    {
+    if ( "topLeftEdge".equals( tagName ) ) {
       borderTopLeft = new BorderCornerReadHandler();
       return borderTopLeft;
     }
-    if ("topRightEdge".equals(tagName))
-    {
+    if ( "topRightEdge".equals( tagName ) ) {
       borderTopRight = new BorderCornerReadHandler();
       return borderTopRight;
     }
-    if ("bottomLeftEdge".equals(tagName))
-    {
+    if ( "bottomLeftEdge".equals( tagName ) ) {
       borderBottomLeft = new BorderCornerReadHandler();
       return borderBottomLeft;
     }
-    if ("bottomRightEdge".equals(tagName))
-    {
+    if ( "bottomRightEdge".equals( tagName ) ) {
       borderBottomRight = new BorderCornerReadHandler();
       return borderBottomRight;
     }
@@ -124,15 +110,12 @@ public class ElementBorderReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    apply(elementStyleSheet);
+  protected void doneParsing() throws SAXException {
+    apply( elementStyleSheet );
   }
 
-  private void apply(ElementStyleSheet s)
-  {
-    if (sameBorder)
-    {
+  private void apply( ElementStyleSheet s ) {
+    if ( sameBorder ) {
       borderLeft = borderTop;
       borderRight = borderTop;
       borderBottom = borderTop;
@@ -142,69 +125,58 @@ public class ElementBorderReadHandler extends AbstractXmlReadHandler
       borderBottomRight = borderTopLeft;
     }
 
-    if (borderTop != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_TOP_STYLE, borderTop.getBorderType());
-      s.setStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, new Float(borderTop.getWidth()));
-      s.setStyleProperty(ElementStyleKeys.BORDER_TOP_COLOR, borderTop.getColor());
+    if ( borderTop != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_TOP_STYLE, borderTop.getBorderType() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_TOP_WIDTH, new Float( borderTop.getWidth() ) );
+      s.setStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR, borderTop.getColor() );
     }
-    if (borderLeft != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_LEFT_STYLE, borderLeft.getBorderType());
-      s.setStyleProperty(ElementStyleKeys.BORDER_LEFT_WIDTH, new Float(borderLeft.getWidth()));
-      s.setStyleProperty(ElementStyleKeys.BORDER_LEFT_COLOR, borderLeft.getColor());
+    if ( borderLeft != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_LEFT_STYLE, borderLeft.getBorderType() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_LEFT_WIDTH, new Float( borderLeft.getWidth() ) );
+      s.setStyleProperty( ElementStyleKeys.BORDER_LEFT_COLOR, borderLeft.getColor() );
     }
-    if (borderBottom != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_STYLE, borderBottom.getBorderType());
-      s.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_WIDTH, new Float(borderBottom.getWidth()));
-      s.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_COLOR, borderBottom.getColor());
+    if ( borderBottom != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_STYLE, borderBottom.getBorderType() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_WIDTH, new Float( borderBottom.getWidth() ) );
+      s.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_COLOR, borderBottom.getColor() );
     }
-    if (borderRight != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_STYLE, borderRight.getBorderType());
-      s.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_WIDTH, new Float(borderRight.getWidth()));
-      s.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_COLOR, borderRight.getColor());
+    if ( borderRight != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_STYLE, borderRight.getBorderType() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_WIDTH, new Float( borderRight.getWidth() ) );
+      s.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_COLOR, borderRight.getColor() );
     }
-    if (borderBreak != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_BREAK_STYLE, borderBreak.getBorderType());
-      s.setStyleProperty(ElementStyleKeys.BORDER_BREAK_WIDTH, new Float(borderBreak.getWidth()));
-      s.setStyleProperty(ElementStyleKeys.BORDER_BREAK_COLOR, borderBreak.getColor());
+    if ( borderBreak != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_BREAK_STYLE, borderBreak.getBorderType() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_BREAK_WIDTH, new Float( borderBreak.getWidth() ) );
+      s.setStyleProperty( ElementStyleKeys.BORDER_BREAK_COLOR, borderBreak.getColor() );
     }
 
 
-    if (borderBottomLeft != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, borderBottomLeft.getHeight());
-      s.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, borderBottomLeft.getWidth());
+    if ( borderBottomLeft != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, borderBottomLeft.getHeight() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, borderBottomLeft.getWidth() );
     }
-    if (borderBottomRight != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, borderBottomRight.getHeight());
-      s.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, borderBottomRight.getWidth());
+    if ( borderBottomRight != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, borderBottomRight.getHeight() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, borderBottomRight.getWidth() );
     }
-    if (borderTopLeft != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, borderTopLeft.getHeight());
-      s.setStyleProperty(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, borderTopLeft.getWidth());
+    if ( borderTopLeft != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, borderTopLeft.getHeight() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, borderTopLeft.getWidth() );
     }
-    if (borderTopRight != null)
-    {
-      s.setStyleProperty(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, borderTopRight.getHeight());
-      s.setStyleProperty(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, borderTopRight.getWidth());
+    if ( borderTopRight != null ) {
+      s.setStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, borderTopRight.getHeight() );
+      s.setStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, borderTopRight.getWidth() );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

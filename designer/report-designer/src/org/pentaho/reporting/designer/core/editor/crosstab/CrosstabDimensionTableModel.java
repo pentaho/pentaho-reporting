@@ -17,50 +17,42 @@
 
 package org.pentaho.reporting.designer.core.editor.crosstab;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.table.AbstractTableModel;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDimension;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.BulkDataProvider;
 
-public class CrosstabDimensionTableModel extends AbstractTableModel implements BulkDataProvider
-{
+import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class CrosstabDimensionTableModel extends AbstractTableModel implements BulkDataProvider {
   private ArrayList<CrosstabDimension> data;
 
-  public CrosstabDimensionTableModel()
-  {
+  public CrosstabDimensionTableModel() {
     data = new ArrayList<CrosstabDimension>();
   }
 
-  public void setData(final CrosstabDimension[] data)
-  {
-    if (data == null)
-    {
+  public void setData( final CrosstabDimension[] data ) {
+    if ( data == null ) {
       throw new NullPointerException();
     }
     this.data.clear();
-    this.data.addAll(Arrays.asList(data));
+    this.data.addAll( Arrays.asList( data ) );
 
     fireTableDataChanged();
   }
 
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return data.size();
   }
 
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return 4;
   }
 
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final CrosstabDimension crosstabDimension = data.get(rowIndex);
-    switch (columnIndex)
-    {
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final CrosstabDimension crosstabDimension = data.get( rowIndex );
+    switch( columnIndex ) {
       case 0:
         return crosstabDimension.getField();
       case 1:
@@ -74,43 +66,35 @@ public class CrosstabDimensionTableModel extends AbstractTableModel implements B
     }
   }
 
-  public void setValueAt(final Object value, final int rowIndex, final int columnIndex)
-  {
-    final CrosstabDimension crosstabDimension = get(rowIndex);
-    switch (columnIndex)
-    {
+  public void setValueAt( final Object value, final int rowIndex, final int columnIndex ) {
+    final CrosstabDimension crosstabDimension = get( rowIndex );
+    switch( columnIndex ) {
       case 1:
-        crosstabDimension.setTitle((String) value);
+        crosstabDimension.setTitle( (String) value );
         break;
       case 2:
-        if (value != null)
-        {
-          crosstabDimension.setPrintSummary((Boolean) value);
-        }
-        else
-        {
-          crosstabDimension.setPrintSummary(false);
+        if ( value != null ) {
+          crosstabDimension.setPrintSummary( (Boolean) value );
+        } else {
+          crosstabDimension.setPrintSummary( false );
         }
         break;
       case 3:
-        crosstabDimension.setSummaryTitle((String) value);
+        crosstabDimension.setSummaryTitle( (String) value );
         break;
       default:
         throw new IllegalStateException();
     }
-    data.set(rowIndex, crosstabDimension);
-    fireTableCellUpdated(rowIndex, columnIndex);
+    data.set( rowIndex, crosstabDimension );
+    fireTableCellUpdated( rowIndex, columnIndex );
   }
 
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
     return columnIndex != 0;
   }
 
-  public Class getColumnClass(final int columnIndex)
-  {
-    switch (columnIndex)
-    {
+  public Class getColumnClass( final int columnIndex ) {
+    switch( columnIndex ) {
       case 0:
         return String.class;
       case 1:
@@ -124,79 +108,66 @@ public class CrosstabDimensionTableModel extends AbstractTableModel implements B
     }
   }
 
-  public String getColumnName(final int column)
-  {
-    switch (column)
-    {
+  public String getColumnName( final int column ) {
+    switch( column ) {
       case 0:
-        return Messages.getString("CrosstabDimensionTableModel.Field");
+        return Messages.getString( "CrosstabDimensionTableModel.Field" );
       case 1:
-        return Messages.getString("CrosstabDimensionTableModel.TitleHeader");
+        return Messages.getString( "CrosstabDimensionTableModel.TitleHeader" );
       case 2:
-        return Messages.getString("CrosstabDimensionTableModel.PrintSummary");
+        return Messages.getString( "CrosstabDimensionTableModel.PrintSummary" );
       case 3:
-        return Messages.getString("CrosstabDimensionTableModel.SummaryHeader");
+        return Messages.getString( "CrosstabDimensionTableModel.SummaryHeader" );
       default:
         throw new IllegalStateException();
     }
   }
 
-  public void add(final CrosstabDimension o)
-  {
-    data.add(o);
+  public void add( final CrosstabDimension o ) {
+    data.add( o );
     fireTableDataChanged();
   }
 
-  public void add(final int idx, final CrosstabDimension item)
-  {
-    data.add(idx, item);
+  public void add( final int idx, final CrosstabDimension item ) {
+    data.add( idx, item );
     fireTableDataChanged();
   }
 
-  public CrosstabDimension get(final int index)
-  {
-    return data.get(index);
+  public CrosstabDimension get( final int index ) {
+    return data.get( index );
   }
 
-  public void remove(final int index)
-  {
-    data.remove(index);
+  public void remove( final int index ) {
+    data.remove( index );
     fireTableDataChanged();
   }
 
-  public void clear()
-  {
+  public void clear() {
     data.clear();
     fireTableDataChanged();
   }
 
-  public CrosstabDimension[] toArray()
-  {
-    return data.toArray(new CrosstabDimension[data.size()]);
+  public CrosstabDimension[] toArray() {
+    return data.toArray( new CrosstabDimension[ data.size() ] );
   }
 
-  public int size()
-  {
+  public int size() {
     return getRowCount();
   }
 
-  public int getBulkDataSize()
-  {
+  public int getBulkDataSize() {
     return getRowCount();
   }
 
-  public Object[] getBulkData()
-  {
+  public Object[] getBulkData() {
     return toArray();
   }
 
-  public void setBulkData(final Object[] data)
-  {
+  public void setBulkData( final Object[] data ) {
     this.data.clear();
-    for (int i = 0; i < data.length; i++)
-    {
-      final Object o = data[i];
-      this.data.add((CrosstabDimension) o);
+    for ( int i = 0; i < data.length; i++ ) {
+      final Object o = data[ i ];
+      this.data.add( (CrosstabDimension) o );
     }
     fireTableDataChanged();
   }

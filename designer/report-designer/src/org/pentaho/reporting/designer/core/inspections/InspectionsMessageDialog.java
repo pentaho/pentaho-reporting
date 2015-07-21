@@ -17,65 +17,51 @@
 
 package org.pentaho.reporting.designer.core.inspections;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.HeadlessException;
+import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JScrollPane;
 
-import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
-
-public class InspectionsMessageDialog extends CommonDialog
-{
-  private class InspectionSelectionHandler extends MouseAdapter implements KeyListener
-  {
-    private InspectionSelectionHandler()
-    {
+public class InspectionsMessageDialog extends CommonDialog {
+  private class InspectionSelectionHandler extends MouseAdapter implements KeyListener {
+    private InspectionSelectionHandler() {
     }
 
-    public void mouseClicked(final MouseEvent e)
-    {
-      if (e.getClickCount() != 2 || e.getButton() != MouseEvent.BUTTON1)
-      {
+    public void mouseClicked( final MouseEvent e ) {
+      if ( e.getClickCount() != 2 || e.getButton() != MouseEvent.BUTTON1 ) {
         return;
       }
-      final int row = table.rowAtPoint(e.getPoint());
-      if (row != -1)
-      {
-        performSelection(dataModel.getInspectionResult(row));
+      final int row = table.rowAtPoint( e.getPoint() );
+      if ( row != -1 ) {
+        performSelection( dataModel.getInspectionResult( row ) );
       }
     }
 
-    public void keyTyped(final KeyEvent e)
-    {
-      if (e.getKeyCode() != KeyEvent.VK_ENTER)
-      {
+    public void keyTyped( final KeyEvent e ) {
+      if ( e.getKeyCode() != KeyEvent.VK_ENTER ) {
         return;
       }
 
       final int selectedRow = table.getSelectedRow();
 
-      if (selectedRow == -1)
-      {
+      if ( selectedRow == -1 ) {
         return;
       }
 
-      final InspectionResult inspectionResult = dataModel.getInspectionResult(selectedRow);
-      performSelection(inspectionResult);
+      final InspectionResult inspectionResult = dataModel.getInspectionResult( selectedRow );
+      performSelection( inspectionResult );
     }
 
-    public void keyPressed(final KeyEvent e)
-    {
+    public void keyPressed( final KeyEvent e ) {
 
     }
 
-    public void keyReleased(final KeyEvent e)
-    {
+    public void keyReleased( final KeyEvent e ) {
 
     }
   }
@@ -84,70 +70,57 @@ public class InspectionsMessageDialog extends CommonDialog
   private InspectionResultTable table;
   private ReportDesignerContext designerContext;
 
-  public InspectionsMessageDialog()
-  {
+  public InspectionsMessageDialog() {
   }
 
-  public InspectionsMessageDialog(final Frame owner) throws HeadlessException
-  {
-    super(owner);
+  public InspectionsMessageDialog( final Frame owner ) throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public InspectionsMessageDialog(final Dialog owner) throws HeadlessException
-  {
-    super(owner);
+  public InspectionsMessageDialog( final Dialog owner ) throws HeadlessException {
+    super( owner );
     init();
   }
 
-  protected void init()
-  {
+  protected void init() {
     dataModel = new InspectionResultTableModel();
 
     table = new InspectionResultTable();
-    table.setModel(dataModel);
-    table.addKeyListener(new InspectionSelectionHandler());
-    table.addMouseListener(new InspectionSelectionHandler());
+    table.setModel( dataModel );
+    table.addKeyListener( new InspectionSelectionHandler() );
+    table.addMouseListener( new InspectionSelectionHandler() );
 
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.InspectionsMessage";
   }
 
 
-  protected boolean hasCancelButton()
-  {
+  protected boolean hasCancelButton() {
     return false;
   }
 
-  private void performSelection(final InspectionResult inspectionResult)
-  {
+  private void performSelection( final InspectionResult inspectionResult ) {
   }
 
-  public void performShowResult(final ReportDesignerContext context, final InspectionResult[] results)
-  {
+  public void performShowResult( final ReportDesignerContext context, final InspectionResult[] results ) {
     this.designerContext = context;
-    try
-    {
+    try {
       dataModel.clear();
-      for (int i = 0; i < results.length; i++)
-      {
-        final InspectionResult result = results[i];
-        dataModel.add(result);
+      for ( int i = 0; i < results.length; i++ ) {
+        final InspectionResult result = results[ i ];
+        dataModel.add( result );
       }
       performEdit();
-    }
-    finally
-    {
+    } finally {
       designerContext = null;
     }
   }
 
-  protected Component createContentPane()
-  {
-    return new JScrollPane(table);
+  protected Component createContentPane() {
+    return new JScrollPane( table );
   }
 }

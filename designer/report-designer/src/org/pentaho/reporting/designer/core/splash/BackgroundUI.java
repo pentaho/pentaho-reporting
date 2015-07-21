@@ -17,27 +17,22 @@
 
 package org.pentaho.reporting.designer.core.splash;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+import javax.swing.*;
 import javax.swing.plaf.PanelUI;
+import java.awt.*;
 
 /**
  * @author wseyler
  */
-public class BackgroundUI extends PanelUI
-{
+public class BackgroundUI extends PanelUI {
   private Image background;
 
-  public BackgroundUI(ImageIcon imageIcon)
-  {
+  public BackgroundUI( ImageIcon imageIcon ) {
     background = imageIcon.getImage();
   }
 
-  public void paint(Graphics g, JComponent c)
-  {
-    g.drawImage(background, 0, 0, null);
+  public void paint( Graphics g, JComponent c ) {
+    g.drawImage( background, 0, 0, null );
   }
 }
 

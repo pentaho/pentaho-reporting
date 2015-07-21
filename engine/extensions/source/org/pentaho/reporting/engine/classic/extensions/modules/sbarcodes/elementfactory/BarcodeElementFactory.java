@@ -36,8 +36,7 @@ import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleB
  *
  * @author Cedric Pronzato
  */
-public class BarcodeElementFactory extends AbstractContentElementFactory
-{
+public class BarcodeElementFactory extends AbstractContentElementFactory {
   private Object content;
   private String fieldname;
   private String formula;
@@ -54,137 +53,110 @@ public class BarcodeElementFactory extends AbstractContentElementFactory
   private Boolean bold;
   private Boolean italic;
 
-  public BarcodeElementFactory()
-  {
+  public BarcodeElementFactory() {
   }
 
-  public String getFormula()
-  {
+  public String getFormula() {
     return formula;
   }
 
-  public void setFormula(String formula)
-  {
+  public void setFormula( String formula ) {
     this.formula = formula;
   }
 
-  public Object getContent()
-  {
+  public Object getContent() {
     return content;
   }
 
-  public void setContent(Object content)
-  {
+  public void setContent( Object content ) {
     this.content = content;
   }
 
-  public String getFieldname()
-  {
+  public String getFieldname() {
     return fieldname;
   }
 
-  public void setFieldname(String fieldname)
-  {
+  public void setFieldname( String fieldname ) {
     this.fieldname = fieldname;
   }
 
-  public Object getNullValue()
-  {
+  public Object getNullValue() {
     return nullValue;
   }
 
-  public void setNullValue(Object nullValue)
-  {
+  public void setNullValue( Object nullValue ) {
     this.nullValue = nullValue;
   }
 
-  public String getType()
-  {
+  public String getType() {
     return type;
   }
 
-  public void setType(String type)
-  {
+  public void setType( String type ) {
     this.type = type;
   }
 
-  public Integer getBarHeight()
-  {
+  public Integer getBarHeight() {
     return barHeight;
   }
 
-  public void setBarHeight(Integer barHeight)
-  {
+  public void setBarHeight( Integer barHeight ) {
     this.barHeight = barHeight;
   }
 
-  public Integer getBarWidth()
-  {
+  public Integer getBarWidth() {
     return barWidth;
   }
 
-  public void setBarWidth(Integer barWidth)
-  {
+  public void setBarWidth( Integer barWidth ) {
     this.barWidth = barWidth;
   }
 
-  public Boolean getChecksum()
-  {
+  public Boolean getChecksum() {
     return checksum;
   }
 
-  public void setChecksum(Boolean checksum)
-  {
+  public void setChecksum( Boolean checksum ) {
     this.checksum = checksum;
   }
 
-  public Boolean getShowText()
-  {
+  public Boolean getShowText() {
     return showText;
   }
 
-  public void setShowText(Boolean showText)
-  {
+  public void setShowText( Boolean showText ) {
     this.showText = showText;
   }
 
-  public String getFontName()
-  {
+  public String getFontName() {
     return fontName;
   }
 
-  public void setFontName(String fontName)
-  {
+  public void setFontName( String fontName ) {
     this.fontName = fontName;
   }
 
-  public Integer getFontSize()
-  {
+  public Integer getFontSize() {
     return fontSize;
   }
 
-  public void setFontSize(Integer fontSize)
-  {
+  public void setFontSize( Integer fontSize ) {
     this.fontSize = fontSize;
   }
 
-  public Boolean getBold()
-  {
+  public Boolean getBold() {
     return bold;
   }
 
-  public void setBold(Boolean bold)
-  {
+  public void setBold( Boolean bold ) {
     this.bold = bold;
   }
 
-  public Boolean getItalic()
-  {
+  public Boolean getItalic() {
     return italic;
   }
 
-  public void setItalic(Boolean italic)
-  {
+  public void setItalic( Boolean italic ) {
     this.italic = italic;
   }
 
@@ -193,26 +165,21 @@ public class BarcodeElementFactory extends AbstractContentElementFactory
    *
    * @param style the element stylesheet which should receive the style definition.
    */
-  protected void applyStyle(ElementStyleSheet style)
-  {
+  protected void applyStyle( ElementStyleSheet style ) {
     // background color, paint color,
-    super.applyStyle(style);
+    super.applyStyle( style );
     // set text styles
-    if (fontName != null)
-    {
-      style.setStyleProperty(TextStyleKeys.FONT, getFontName());
+    if ( fontName != null ) {
+      style.setStyleProperty( TextStyleKeys.FONT, getFontName() );
     }
-    if (fontSize != null)
-    {
-      style.setStyleProperty(TextStyleKeys.FONTSIZE, getFontSize());
+    if ( fontSize != null ) {
+      style.setStyleProperty( TextStyleKeys.FONTSIZE, getFontSize() );
     }
-    if (bold != null)
-    {
-      style.setStyleProperty(TextStyleKeys.BOLD, getBold());
+    if ( bold != null ) {
+      style.setStyleProperty( TextStyleKeys.BOLD, getBold() );
     }
-    if (italic != null)
-    {
-      style.setStyleProperty(TextStyleKeys.ITALIC, getItalic());
+    if ( italic != null ) {
+      style.setStyleProperty( TextStyleKeys.ITALIC, getItalic() );
     }
   }
 
@@ -221,52 +188,43 @@ public class BarcodeElementFactory extends AbstractContentElementFactory
    *
    * @return the newly generated instance of the element.
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setElementType(new SimpleBarcodesType());
-    if (getContent() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getContent());
+    element.setElementType( new SimpleBarcodesType() );
+    if ( getContent() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getContent() );
     }
-    if (getFieldname() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname());
+    if ( getFieldname() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname() );
     }
-    if (getFormula() != null)
-    {
+    if ( getFormula() != null ) {
       final FormulaExpression formulaExpression = new FormulaExpression();
-      formulaExpression.setFormula(getFormula());
-      element.setAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression);
+      formulaExpression.setFormula( getFormula() );
+      element.setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression );
     }
 
-    if (getType() != null)
-    {
-      element.setAttribute(SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE,
-          getType());
+    if ( getType() != null ) {
+      element.setAttribute( SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE,
+        getType() );
     }
-    if (getChecksum() != null)
-    {
-      element.setAttribute(SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.CHECKSUM_ATTRIBUTE,
-          getChecksum());
+    if ( getChecksum() != null ) {
+      element.setAttribute( SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.CHECKSUM_ATTRIBUTE,
+        getChecksum() );
     }
-    if (barWidth != null)
-    {
-      element.setAttribute(SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.BAR_WIDTH_ATTRIBUTE,
-          barWidth);
+    if ( barWidth != null ) {
+      element.setAttribute( SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.BAR_WIDTH_ATTRIBUTE,
+        barWidth );
     }
-    if (barHeight != null)
-    {
-      element.setAttribute(SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.BAR_HEIGHT_ATTRIBUTE,
-          barHeight);
+    if ( barHeight != null ) {
+      element.setAttribute( SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.BAR_HEIGHT_ATTRIBUTE,
+        barHeight );
     }
-    if (showText != null)
-    {
-      element.setAttribute(SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.SHOW_TEXT_ATTRIBUTE,
-          showText);
+    if ( showText != null ) {
+      element.setAttribute( SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.SHOW_TEXT_ATTRIBUTE,
+        showText );
     }
 
     return element;

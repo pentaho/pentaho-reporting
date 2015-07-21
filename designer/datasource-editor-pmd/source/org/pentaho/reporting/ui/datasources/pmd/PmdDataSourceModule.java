@@ -21,12 +21,10 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class PmdDataSourceModule extends AbstractModule
-{
+public class PmdDataSourceModule extends AbstractModule {
   public static final String BUNDLE = "org.pentaho.reporting.ui.datasources.pmd.messages";
 
-  public PmdDataSourceModule() throws ModuleInitializeException
-  {
+  public PmdDataSourceModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -38,8 +36,7 @@ public class PmdDataSourceModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
 
   }
 }

@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer.parser;
 
+import org.pentaho.reporting.engine.classic.extensions.modules.mailer.FormulaHeader;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.reporting.engine.classic.extensions.modules.mailer.FormulaHeader;
-import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
-public class FormulaHeaderReadHandler extends AbstractXmlReadHandler
-{
+public class FormulaHeaderReadHandler extends AbstractXmlReadHandler {
   private String name;
   private String value;
-  
-  public FormulaHeaderReadHandler()
-  {
+
+  public FormulaHeaderReadHandler() {
 
   }
 
@@ -40,29 +38,24 @@ public class FormulaHeaderReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name");
-    if (StringUtils.isEmpty(name))
-    {
-      throw new ParseException("Required attribute 'name' is missing.", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    name = attrs.getValue( getUri(), "name" );
+    if ( StringUtils.isEmpty( name ) ) {
+      throw new ParseException( "Required attribute 'name' is missing.", getLocator() );
     }
-    value = attrs.getValue(getUri(), "formula");
-    if (StringUtils.isEmpty(value))
-    {
-      throw new ParseException("Required attribute 'formula' is missing.", getLocator());
+    value = attrs.getValue( getUri(), "formula" );
+    if ( StringUtils.isEmpty( value ) ) {
+      throw new ParseException( "Required attribute 'formula' is missing.", getLocator() );
     }
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
-    return new FormulaHeader(name, value);
+  public Object getObject() throws SAXException {
+    return new FormulaHeader( name, value );
   }
 }

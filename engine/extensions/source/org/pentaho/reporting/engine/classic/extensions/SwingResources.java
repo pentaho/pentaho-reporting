@@ -17,25 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.extensions;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import javax.swing.UIManager;
 
 /**
  * Prints a list of all defined Swing-UI properties.
  *
  * @author Thomas Morgner
  */
-public final class SwingResources
-{
+public final class SwingResources {
   /**
    * DefaultConstructor.
    */
-  private SwingResources()
-  {
+  private SwingResources() {
   }
 
   /**
@@ -43,34 +41,30 @@ public final class SwingResources
    *
    * @param args ignored
    */
-  public static void main(final String[] args)
-  {
+  public static void main( final String[] args ) {
     final Hashtable table = UIManager.getDefaults();
     final Enumeration keys = table.keys();
     final ArrayList list = new ArrayList();
 
-    final char[] pad = new char[40];
-    Arrays.fill(pad, ' ');
+    final char[] pad = new char[ 40 ];
+    Arrays.fill( pad, ' ' );
 
-    while (keys.hasMoreElements())
-    {
+    while ( keys.hasMoreElements() ) {
       final Object key = keys.nextElement();
-      final Object value = table.get(key);
-      final StringBuffer b = new StringBuffer(key.toString());
-      if (b.length() < 40)
-      {
-        b.append(pad, 0, 40 - b.length());
+      final Object value = table.get( key );
+      final StringBuffer b = new StringBuffer( key.toString() );
+      if ( b.length() < 40 ) {
+        b.append( pad, 0, 40 - b.length() );
       }
-      b.append(" = ");
-      b.append(value);
-      list.add(b.toString());
+      b.append( " = " );
+      b.append( value );
+      list.add( b.toString() );
     }
 
-    Collections.sort(list);
-    for (int i = 0; i < list.size(); i++)
-    {
-      System.out.println(list.get(i));
+    Collections.sort( list );
+    for ( int i = 0; i < list.size(); i++ ) {
+      System.out.println( list.get( i ) );
     }
-    System.exit(0);
+    System.exit( 0 );
   }
 }

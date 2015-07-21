@@ -19,10 +19,8 @@ package org.pentaho.reporting.designer.core.actions.elements.layout;
 
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
-public final class LayoutTableCellAction extends LayoutAction
-{
-  public LayoutTableCellAction()
-  {
-    super("LayoutTableCellAction", BandStyleKeys.LAYOUT_TABLE_CELL);
+public final class LayoutTableCellAction extends LayoutAction {
+  public LayoutTableCellAction() {
+    super( "LayoutTableCellAction", BandStyleKeys.LAYOUT_TABLE_CELL );
   }
 }

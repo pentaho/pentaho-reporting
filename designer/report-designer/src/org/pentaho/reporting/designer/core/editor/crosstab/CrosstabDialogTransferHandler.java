@@ -17,149 +17,116 @@
 
 package org.pentaho.reporting.designer.core.editor.crosstab;
 
+import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+
+import javax.swing.*;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JComponent;
-import javax.swing.JTable;
-import javax.swing.TransferHandler;
 
-import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
-
-public class CrosstabDialogTransferHandler extends TransferHandler
-{
+public class CrosstabDialogTransferHandler extends TransferHandler {
   private FieldDragSupport targetList;
   private boolean fieldPool;
 
-  public CrosstabDialogTransferHandler(final FieldDragSupport targetList)
-  {
-    this(targetList, false);
+  public CrosstabDialogTransferHandler( final FieldDragSupport targetList ) {
+    this( targetList, false );
   }
 
-  public CrosstabDialogTransferHandler(final FieldDragSupport targetList,
-                                       final boolean fieldPool)
-  {
+  public CrosstabDialogTransferHandler( final FieldDragSupport targetList,
+                                        final boolean fieldPool ) {
     this.targetList = targetList;
     this.fieldPool = fieldPool;
   }
 
-  public boolean importData(final TransferSupport support)
-  {
-    if (support.isDataFlavorSupported(IndexedTransferable.ELEMENT_FLAVOR) == false)
-    {
+  public boolean importData( final TransferSupport support ) {
+    if ( support.isDataFlavorSupported( IndexedTransferable.ELEMENT_FLAVOR ) == false ) {
       return false;
     }
 
-    if (support.isDrop() == false)
-    {
+    if ( support.isDrop() == false ) {
       return false;
     }
 
-    try
-    {
-      final IndexedTransferable.TupleContainer items = extractFields(support.getTransferable());
-      if (IndexedTransferable.EMPTY.equals(items))
-      {
+    try {
+      final IndexedTransferable.TupleContainer items = extractFields( support.getTransferable() );
+      if ( IndexedTransferable.EMPTY.equals( items ) ) {
         return false;
       }
-      if (items.getSourceId().equals(targetList.getDragId()))
-      {
+      if ( items.getSourceId().equals( targetList.getDragId() ) ) {
         return false;
       }
 
       final DropLocation dropLocation = support.getDropLocation();
-      targetList.insert(dropLocation, Arrays.asList(items.getTuples()), fieldPool);
+      targetList.insert( dropLocation, Arrays.asList( items.getTuples() ), fieldPool );
       return true;
-    }
-    catch (final Exception e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
+    } catch ( final Exception e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
       return false;
     }
   }
 
-  private IndexedTransferable.TupleContainer extractFields(final Transferable t) throws IOException, UnsupportedFlavorException
-  {
-    final Object transferData = t.getTransferData(IndexedTransferable.ELEMENT_FLAVOR);
-    if (transferData instanceof IndexedTransferable.TupleContainer == false)
-    {
+  private IndexedTransferable.TupleContainer extractFields( final Transferable t )
+    throws IOException, UnsupportedFlavorException {
+    final Object transferData = t.getTransferData( IndexedTransferable.ELEMENT_FLAVOR );
+    if ( transferData instanceof IndexedTransferable.TupleContainer == false ) {
       return IndexedTransferable.EMPTY;
     }
 
     return (IndexedTransferable.TupleContainer) transferData;
   }
 
-  public boolean canImport(final TransferSupport support)
-  {
-    if (support.isDrop() == false)
-    {
+  public boolean canImport( final TransferSupport support ) {
+    if ( support.isDrop() == false ) {
       return false;
     }
-    if (support.isDataFlavorSupported(IndexedTransferable.ELEMENT_FLAVOR))
-    {
-      try
-      {
-        Object transferData = support.getTransferable().getTransferData(IndexedTransferable.ELEMENT_FLAVOR);
-        if (transferData instanceof IndexedTransferable.TupleContainer)
-        {
+    if ( support.isDataFlavorSupported( IndexedTransferable.ELEMENT_FLAVOR ) ) {
+      try {
+        Object transferData = support.getTransferable().getTransferData( IndexedTransferable.ELEMENT_FLAVOR );
+        if ( transferData instanceof IndexedTransferable.TupleContainer ) {
           IndexedTransferable.TupleContainer tc = (IndexedTransferable.TupleContainer) transferData;
-          if (tc.getSourceId().equals(targetList.getDragId()))
-          {
+          if ( tc.getSourceId().equals( targetList.getDragId() ) ) {
             return false;
           }
         }
         return true;
-      }
-      catch (final Exception e)
-      {
+      } catch ( final Exception e ) {
         return false;
       }
     }
     return false;
   }
 
-  public int getSourceActions(final JComponent c)
-  {
-    if (fieldPool)
-    {
+  public int getSourceActions( final JComponent c ) {
+    if ( fieldPool ) {
       return TransferHandler.COPY;
     }
     return TransferHandler.MOVE;
   }
 
-  protected Transferable createTransferable(final JComponent c)
-  {
-    if (c != targetList)
-    {
+  protected Transferable createTransferable( final JComponent c ) {
+    if ( c != targetList ) {
       throw new IllegalStateException();
     }
 
     final List<IndexedTransferable.FieldTuple> selectedValues = targetList.getSelectedFields();
-    return new IndexedTransferable(targetList.getDragId(), selectedValues);
+    return new IndexedTransferable( targetList.getDragId(), selectedValues );
   }
 
-  protected void exportDone(final JComponent source, final Transferable data, final int action)
-  {
-    if ((action & TransferHandler.MOVE) != TransferHandler.MOVE)
-    {
+  protected void exportDone( final JComponent source, final Transferable data, final int action ) {
+    if ( ( action & TransferHandler.MOVE ) != TransferHandler.MOVE ) {
       return;
     }
 
-    if (source != targetList)
-    {
+    if ( source != targetList ) {
       throw new IllegalStateException();
     }
-    try
-    {
-      final IndexedTransferable.TupleContainer items = extractFields(data);
-      targetList.removeValues(Arrays.asList(items.getTuples()));
-    }
-    catch (final Exception e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
+    try {
+      final IndexedTransferable.TupleContainer items = extractFields( data );
+      targetList.removeValues( Arrays.asList( items.getTuples() ) );
+    } catch ( final Exception e ) {
+      UncaughtExceptionsModel.getInstance().addException( e );
     }
   }
 }

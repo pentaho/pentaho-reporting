@@ -23,12 +23,10 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ColorValueConverter;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class ColorConceptMapper implements ConceptQueryMapper
-{
+public class ColorConceptMapper implements ConceptQueryMapper {
   private ColorValueConverter colorValueConverter;
 
-  public ColorConceptMapper()
-  {
+  public ColorConceptMapper() {
     colorValueConverter = new ColorValueConverter();
   }
 
@@ -37,36 +35,27 @@ public class ColorConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof Color == false)
-    {
+    if ( value instanceof Color == false ) {
       return null;
     }
-    if (type == null || Object.class.equals(type) || Color.class.equals(type))
-    {
+    if ( type == null || Object.class.equals( type ) || Color.class.equals( type ) ) {
       return value;
     }
-    
+
     final Color settings = (Color) value;
-    final java.awt.Color color = new java.awt.Color (settings.getRed(), settings.getGreen(), settings.getBlue());
-    if (java.awt.Color.class.equals(type))
-    {
+    final java.awt.Color color = new java.awt.Color( settings.getRed(), settings.getGreen(), settings.getBlue() );
+    if ( java.awt.Color.class.equals( type ) ) {
       return color;
     }
-    if (String.class.equals(type))
-    {
-      try
-      {
-        return colorValueConverter.toAttributeValue(color);
-      }
-      catch (BeanException e)
-      {
+    if ( String.class.equals( type ) ) {
+      try {
+        return colorValueConverter.toAttributeValue( color );
+      } catch ( BeanException e ) {
         return null;
       }
     }

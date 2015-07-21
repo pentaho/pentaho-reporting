@@ -2,17 +2,19 @@
   <h2>Mondrian DataSource migration from Pentaho Reporting 3.9.1 or older to Pentaho Reporting 5.0.0</h2>
   <hr/>
   <p>
-      With Pentaho Reporting 5.0 we change how we reference Mondrian schema files on the server. In the
-      previous releases schema files were stored along side the normal content in the solution repository.
-      Pentaho BA-Server 5.0 stored schemas in a schema registry and the files are no longer directly accessible.
+    With Pentaho Reporting 5.0 we change how we reference Mondrian schema files on the server. In the
+    previous releases schema files were stored along side the normal content in the solution repository.
+    Pentaho BA-Server 5.0 stored schemas in a schema registry and the files are no longer directly accessible.
   </p>
+
   <p>
-      Inside the registry, each schema can be referenced by its schema name. The names of the schemas must be unique
-      and is defined by the schema author. When you create a new Mondrian datasource in Pentaho Reporting, you now
-      must provide a matching schema name for the schema you reference.
+    Inside the registry, each schema can be referenced by its schema name. The names of the schemas must be unique
+    and is defined by the schema author. When you create a new Mondrian datasource in Pentaho Reporting, you now
+    must provide a matching schema name for the schema you reference.
   </p>
+
   <p>
-      This migration step attempts to load the referenced schema files from your local file system and tries to
-      fill in the schema name into all Mondrian datasources.
+    This migration step attempts to load the referenced schema files from your local file system and tries to
+    fill in the schema name into all Mondrian datasources.
   </p>
 </div>

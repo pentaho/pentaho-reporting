@@ -19,10 +19,8 @@ package org.pentaho.reporting.designer.core.actions.elements.layout;
 
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
-public final class LayoutBlockAction extends LayoutAction
-{
-  public LayoutBlockAction()
-  {
-    super("LayoutBlockAction", BandStyleKeys.LAYOUT_BLOCK);
+public final class LayoutBlockAction extends LayoutAction {
+  public LayoutBlockAction() {
+    super( "LayoutBlockAction", BandStyleKeys.LAYOUT_BLOCK );
   }
 }

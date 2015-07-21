@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.crosstab;
 
-import java.beans.PropertyEditor;
-import java.util.ArrayList;
-import java.util.Locale;
-import javax.swing.table.AbstractTableModel;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.util.FastPropertyEditorManager;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTableModel;
@@ -37,14 +32,17 @@ import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
+import javax.swing.table.AbstractTableModel;
+import java.beans.PropertyEditor;
+import java.util.ArrayList;
+import java.util.Locale;
+
 /**
  * Does not support sorting. Table-style is ignored.
  */
 public class CrosstabOptionsTableModel extends AbstractTableModel
-    implements ElementMetaDataTableModel, GroupingModel
-{
-  private class CrosstabOption
-  {
+  implements ElementMetaDataTableModel, GroupingModel {
+  private class CrosstabOption {
     private GroupingHeader groupingHeader;
     private boolean headerRow;
     private String valueRole;
@@ -54,10 +52,8 @@ public class CrosstabOptionsTableModel extends AbstractTableModel
     private PropertyEditor propertyEditor;
     private ElementType elementType;
 
-    private CrosstabOption(final GroupingHeader groupingHeader)
-    {
-      if (groupingHeader == null)
-      {
+    private CrosstabOption( final GroupingHeader groupingHeader ) {
+      if ( groupingHeader == null ) {
         throw new NullPointerException();
       }
       this.groupingHeader = groupingHeader;
@@ -65,28 +61,23 @@ public class CrosstabOptionsTableModel extends AbstractTableModel
       this.type = GroupingHeader.class;
     }
 
-    private CrosstabOption(final GroupingHeader groupingHeader,
-                           final ElementType elementType,
-                           final GroupedName name,
-                           final Class type,
-                           final String valueRole,
-                           final PropertyEditor propertyEditor,
-                           final Object value)
-    {
-      if (groupingHeader == null)
-      {
+    private CrosstabOption( final GroupingHeader groupingHeader,
+                            final ElementType elementType,
+                            final GroupedName name,
+                            final Class type,
+                            final String valueRole,
+                            final PropertyEditor propertyEditor,
+                            final Object value ) {
+      if ( groupingHeader == null ) {
         throw new NullPointerException();
       }
-      if (name == null)
-      {
+      if ( name == null ) {
         throw new NullPointerException();
       }
-      if (type == null)
-      {
+      if ( type == null ) {
         throw new NullPointerException();
       }
-      if (valueRole == null)
-      {
+      if ( valueRole == null ) {
         throw new NullPointerException();
       }
       this.elementType = elementType;
@@ -99,53 +90,43 @@ public class CrosstabOptionsTableModel extends AbstractTableModel
       this.value = value;
     }
 
-    private ElementType getElementType()
-    {
+    private ElementType getElementType() {
       return elementType;
     }
 
-    public MetaData getMetaData()
-    {
+    public MetaData getMetaData() {
       return name.getMetaData();
     }
 
-    private GroupedName getName()
-    {
+    private GroupedName getName() {
       return name;
     }
 
-    private PropertyEditor getPropertyEditor()
-    {
+    private PropertyEditor getPropertyEditor() {
       return propertyEditor;
     }
 
-    private Object getValue()
-    {
+    private Object getValue() {
       return value;
     }
 
-    private Class getType()
-    {
+    private Class getType() {
       return type;
     }
 
-    private boolean isHeaderRow()
-    {
+    private boolean isHeaderRow() {
       return headerRow;
     }
 
-    private String getValueRole()
-    {
+    private String getValueRole() {
       return valueRole;
     }
 
-    private GroupingHeader getGroupingHeader()
-    {
+    private GroupingHeader getGroupingHeader() {
       return groupingHeader;
     }
 
-    public void setValue(final Object value)
-    {
+    public void setValue( final Object value ) {
       this.value = value;
     }
   }
@@ -153,113 +134,95 @@ public class CrosstabOptionsTableModel extends AbstractTableModel
   private ArrayList<CrosstabOption> backend;
   private TableStyle tableStyle;
 
-  public CrosstabOptionsTableModel()
-  {
+  public CrosstabOptionsTableModel() {
     backend = new ArrayList<CrosstabOption>();
     tableStyle = TableStyle.GROUPED;
   }
 
-  public void addCrosstabOptionGroup(final GroupingHeader header)
-  {
-    backend.add(new CrosstabOption(header));
-    fireTableRowsInserted(backend.size() - 1, backend.size() - 1);
+  public void addCrosstabOptionGroup( final GroupingHeader header ) {
+    backend.add( new CrosstabOption( header ) );
+    fireTableRowsInserted( backend.size() - 1, backend.size() - 1 );
   }
 
-  public void addAttributeOption(final ElementType type,
-                                 final String nameSpace,
-                                 final String name,
-                                 final Object value)
-  {
+  public void addAttributeOption( final ElementType type,
+                                  final String nameSpace,
+                                  final String name,
+                                  final Object value ) {
     final ElementMetaData metaData = type.getMetaData();
-    final AttributeMetaData attributeDescription = metaData.getAttributeDescription(nameSpace, name);
-    if (attributeDescription == null)
-    {
+    final AttributeMetaData attributeDescription = metaData.getAttributeDescription( nameSpace, name );
+    if ( attributeDescription == null ) {
       return;
     }
 
     final String valueRole = attributeDescription.getValueRole();
     final Class valueType = attributeDescription.getTargetType();
     final PropertyEditor propertyEditor = attributeDescription.getEditor();
-    final GroupedName groupedName = new GroupedName(attributeDescription);
-    final GroupingHeader groupingHeader = createGroupingHeader(attributeDescription);
-    backend.add(new CrosstabOption(groupingHeader, type, groupedName, valueType, valueRole, propertyEditor, value));
+    final GroupedName groupedName = new GroupedName( attributeDescription );
+    final GroupingHeader groupingHeader = createGroupingHeader( attributeDescription );
+    backend.add( new CrosstabOption( groupingHeader, type, groupedName, valueType, valueRole, propertyEditor, value ) );
 
-    fireTableRowsInserted(backend.size() - 1, backend.size() - 1);
+    fireTableRowsInserted( backend.size() - 1, backend.size() - 1 );
   }
 
-  public void addStyleOption(final ElementType type,
-                             final StyleKey styleKey,
-                             final Object value)
-  {
+  public void addStyleOption( final ElementType type,
+                              final StyleKey styleKey,
+                              final Object value ) {
     final ElementMetaData metaData = type.getMetaData();
-    final StyleMetaData styleDescription = metaData.getStyleDescription(styleKey);
-    if (styleDescription == null)
-    {
+    final StyleMetaData styleDescription = metaData.getStyleDescription( styleKey );
+    if ( styleDescription == null ) {
       return;
     }
 
     final String valueRole = "Value";
     final Class valueType = styleDescription.getTargetType();
     final PropertyEditor propertyEditor = styleDescription.getEditor();
-    final GroupedName groupedName = new GroupedName(styleDescription);
-    final GroupingHeader groupingHeader = createGroupingHeader(styleDescription);
-    backend.add(new CrosstabOption(groupingHeader, type, groupedName, valueType, valueRole, propertyEditor, value));
+    final GroupedName groupedName = new GroupedName( styleDescription );
+    final GroupingHeader groupingHeader = createGroupingHeader( styleDescription );
+    backend.add( new CrosstabOption( groupingHeader, type, groupedName, valueType, valueRole, propertyEditor, value ) );
 
-    fireTableRowsInserted(backend.size() - 1, backend.size() - 1);
+    fireTableRowsInserted( backend.size() - 1, backend.size() - 1 );
   }
 
-  public void setStyleOption(final ElementType type, final StyleKey key, final Object value)
-  {
+  public void setStyleOption( final ElementType type, final StyleKey key, final Object value ) {
     final String elementTypeName = type.getMetaData().getName();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final CrosstabOption crosstabOption = backend.get(i);
-      if (crosstabOption.isHeaderRow())
-      {
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final CrosstabOption crosstabOption = backend.get( i );
+      if ( crosstabOption.isHeaderRow() ) {
         continue;
       }
 
-      if (elementTypeName.equals(crosstabOption.getElementType().getMetaData().getName()) == false)
-      {
+      if ( elementTypeName.equals( crosstabOption.getElementType().getMetaData().getName() ) == false ) {
         continue;
       }
 
       final MetaData metaData = crosstabOption.getMetaData();
-      if (metaData instanceof StyleMetaData)
-      {
+      if ( metaData instanceof StyleMetaData ) {
         final StyleMetaData attributeMetaData = (StyleMetaData) metaData;
-        if (key.equals(attributeMetaData.getStyleKey()))
-        {
-          crosstabOption.setValue(value);
-          fireTableCellUpdated(i, 1);
+        if ( key.equals( attributeMetaData.getStyleKey() ) ) {
+          crosstabOption.setValue( value );
+          fireTableCellUpdated( i, 1 );
           return;
         }
       }
     }
   }
 
-  public Object getStyleOption(final ElementType type, final StyleKey key)
-  {
+  public Object getStyleOption( final ElementType type, final StyleKey key ) {
     final String elementTypeName = type.getMetaData().getName();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final CrosstabOption crosstabOption = backend.get(i);
-      if (crosstabOption.isHeaderRow())
-      {
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final CrosstabOption crosstabOption = backend.get( i );
+      if ( crosstabOption.isHeaderRow() ) {
         continue;
       }
 
-      if (elementTypeName.equals(crosstabOption.getElementType().getMetaData().getName()) == false)
-      {
+      if ( elementTypeName.equals( crosstabOption.getElementType().getMetaData().getName() ) == false ) {
         continue;
       }
 
       final MetaData metaData = crosstabOption.getMetaData();
-      if (metaData instanceof StyleMetaData)
-      {
+      if ( metaData instanceof StyleMetaData ) {
         final StyleMetaData attributeMetaData = (StyleMetaData) metaData;
-        if (key.equals(attributeMetaData.getStyleKey()))
-        {
+        if ( key.equals( attributeMetaData.getStyleKey() ) ) {
           return crosstabOption.getValue();
         }
       }
@@ -268,60 +231,49 @@ public class CrosstabOptionsTableModel extends AbstractTableModel
   }
 
 
-  public void setAttributeOption(final ElementType type, final String namespace, final String name, final Object value)
-  {
+  public void setAttributeOption( final ElementType type, final String namespace, final String name,
+                                  final Object value ) {
     final String elementTypeName = type.getMetaData().getName();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final CrosstabOption crosstabOption = backend.get(i);
-      if (crosstabOption.isHeaderRow())
-      {
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final CrosstabOption crosstabOption = backend.get( i );
+      if ( crosstabOption.isHeaderRow() ) {
         continue;
       }
 
-      if (elementTypeName.equals(crosstabOption.getElementType().getMetaData().getName()) == false)
-      {
+      if ( elementTypeName.equals( crosstabOption.getElementType().getMetaData().getName() ) == false ) {
         continue;
       }
 
       final MetaData metaData = crosstabOption.getMetaData();
-      if (metaData instanceof AttributeMetaData)
-      {
+      if ( metaData instanceof AttributeMetaData ) {
         final AttributeMetaData attributeMetaData = (AttributeMetaData) metaData;
-        if (namespace.equals(attributeMetaData.getNameSpace()) &&
-            name.equals(attributeMetaData.getName()))
-        {
-          crosstabOption.setValue(value);
-          fireTableCellUpdated(i, 1);
+        if ( namespace.equals( attributeMetaData.getNameSpace() ) &&
+          name.equals( attributeMetaData.getName() ) ) {
+          crosstabOption.setValue( value );
+          fireTableCellUpdated( i, 1 );
           return;
         }
       }
     }
   }
 
-  public Object getAttributeOption(final ElementType type, final String namespace, final String name)
-  {
+  public Object getAttributeOption( final ElementType type, final String namespace, final String name ) {
     final String elementTypeName = type.getMetaData().getName();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final CrosstabOption crosstabOption = backend.get(i);
-      if (crosstabOption.isHeaderRow())
-      {
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final CrosstabOption crosstabOption = backend.get( i );
+      if ( crosstabOption.isHeaderRow() ) {
         continue;
       }
 
-      if (elementTypeName.equals(crosstabOption.getElementType().getMetaData().getName()) == false)
-      {
+      if ( elementTypeName.equals( crosstabOption.getElementType().getMetaData().getName() ) == false ) {
         continue;
       }
 
       final MetaData metaData = crosstabOption.getMetaData();
-      if (metaData instanceof AttributeMetaData)
-      {
+      if ( metaData instanceof AttributeMetaData ) {
         final AttributeMetaData attributeMetaData = (AttributeMetaData) metaData;
-        if (namespace.equals(attributeMetaData.getNameSpace()) &&
-            name.equals(attributeMetaData.getName()))
-        {
+        if ( namespace.equals( attributeMetaData.getNameSpace() ) &&
+          name.equals( attributeMetaData.getName() ) ) {
           return crosstabOption.getValue();
         }
       }
@@ -329,188 +281,148 @@ public class CrosstabOptionsTableModel extends AbstractTableModel
     return null;
   }
 
-  private GroupingHeader createGroupingHeader(final MetaData metaData)
-  {
-    if (backend.isEmpty())
-    {
-      final GroupingHeader grHeader = new GroupingHeader(metaData.getGrouping(Locale.getDefault()));
-      addCrosstabOptionGroup(grHeader);
+  private GroupingHeader createGroupingHeader( final MetaData metaData ) {
+    if ( backend.isEmpty() ) {
+      final GroupingHeader grHeader = new GroupingHeader( metaData.getGrouping( Locale.getDefault() ) );
+      addCrosstabOptionGroup( grHeader );
       return grHeader;
-    }
-    else
-    {
-      final CrosstabOption last = backend.get(backend.size() - 1);
+    } else {
+      final CrosstabOption last = backend.get( backend.size() - 1 );
       final GroupingHeader groupingHeader = last.getGroupingHeader();
-      final String groupingText = metaData.getGrouping(Locale.getDefault());
-      if (groupingHeader.getHeaderText().equals(groupingText) == false)
-      {
-        final GroupingHeader grHeader = new GroupingHeader(metaData.getGrouping(Locale.getDefault()));
-        addCrosstabOptionGroup(grHeader);
+      final String groupingText = metaData.getGrouping( Locale.getDefault() );
+      if ( groupingHeader.getHeaderText().equals( groupingText ) == false ) {
+        final GroupingHeader grHeader = new GroupingHeader( metaData.getGrouping( Locale.getDefault() ) );
+        addCrosstabOptionGroup( grHeader );
         return grHeader;
-      }
-      else
-      {
+      } else {
         return groupingHeader;
       }
     }
   }
 
-  public void copyFrom(final ReportElement e)
-  {
+  public void copyFrom( final ReportElement e ) {
     final String elementTypeName = e.getElementType().getMetaData().getName();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final CrosstabOption crosstabOption = backend.get(i);
-      if (crosstabOption.isHeaderRow())
-      {
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final CrosstabOption crosstabOption = backend.get( i );
+      if ( crosstabOption.isHeaderRow() ) {
         continue;
       }
 
-      if (elementTypeName.equals(crosstabOption.getElementType().getMetaData().getName()) == false)
-      {
+      if ( elementTypeName.equals( crosstabOption.getElementType().getMetaData().getName() ) == false ) {
         continue;
       }
 
       final MetaData metaData = crosstabOption.getMetaData();
-      if (metaData instanceof AttributeMetaData)
-      {
+      if ( metaData instanceof AttributeMetaData ) {
         final AttributeMetaData attributeMetaData = (AttributeMetaData) metaData;
-        final Object value = e.getAttribute(attributeMetaData.getNameSpace(), attributeMetaData.getName());
-        crosstabOption.setValue(value);
+        final Object value = e.getAttribute( attributeMetaData.getNameSpace(), attributeMetaData.getName() );
+        crosstabOption.setValue( value );
       }
     }
     fireTableDataChanged();
   }
 
-  public void copyInto(final ReportElement e)
-  {
+  public void copyInto( final ReportElement e ) {
     final String elementTypeName = e.getElementType().getMetaData().getName();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final CrosstabOption crosstabOption = backend.get(i);
-      if (crosstabOption.isHeaderRow())
-      {
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final CrosstabOption crosstabOption = backend.get( i );
+      if ( crosstabOption.isHeaderRow() ) {
         continue;
       }
 
-      if (elementTypeName.equals(crosstabOption.getElementType().getMetaData().getName()) == false)
-      {
+      if ( elementTypeName.equals( crosstabOption.getElementType().getMetaData().getName() ) == false ) {
         continue;
       }
 
       final MetaData metaData = crosstabOption.getMetaData();
-      if (metaData instanceof AttributeMetaData)
-      {
+      if ( metaData instanceof AttributeMetaData ) {
         final AttributeMetaData attributeMetaData = (AttributeMetaData) metaData;
-        e.setAttribute(attributeMetaData.getNameSpace(), attributeMetaData.getName(), crosstabOption.getValue());
+        e.setAttribute( attributeMetaData.getNameSpace(), attributeMetaData.getName(), crosstabOption.getValue() );
       }
     }
   }
 
 
-  public String getValueRole(final int row, final int column)
-  {
-    final CrosstabOption crosstabOption = backend.get(row);
+  public String getValueRole( final int row, final int column ) {
+    final CrosstabOption crosstabOption = backend.get( row );
     return crosstabOption.getValueRole();
   }
 
-  public String[] getExtraFields(final int row, final int column)
-  {
-    return new String[0];
+  public String[] getExtraFields( final int row, final int column ) {
+    return new String[ 0 ];
   }
 
-  public GroupingHeader getGroupHeader(final int index)
-  {
-    final CrosstabOption crosstabOption = backend.get(index);
+  public GroupingHeader getGroupHeader( final int index ) {
+    final CrosstabOption crosstabOption = backend.get( index );
     return crosstabOption.getGroupingHeader();
   }
 
-  public boolean isHeaderRow(final int index)
-  {
-    final CrosstabOption crosstabOption = backend.get(index);
+  public boolean isHeaderRow( final int index ) {
+    final CrosstabOption crosstabOption = backend.get( index );
     return crosstabOption.isHeaderRow();
   }
 
-  public Class getClassForCell(final int row, final int col)
-  {
-    final CrosstabOption crosstabOption = backend.get(row);
-    if (crosstabOption.isHeaderRow())
-    {
+  public Class getClassForCell( final int row, final int col ) {
+    final CrosstabOption crosstabOption = backend.get( row );
+    if ( crosstabOption.isHeaderRow() ) {
       return crosstabOption.getType();
-    }
-    else if (col == 0)
-    {
+    } else if ( col == 0 ) {
       return GroupedName.class;
-    }
-    else
-    {
+    } else {
       return crosstabOption.getType();
     }
   }
 
-  public PropertyEditor getEditorForCell(final int row, final int column)
-  {
-    if (column == 0)
-    {
+  public PropertyEditor getEditorForCell( final int row, final int column ) {
+    if ( column == 0 ) {
       return null;
     }
-    final CrosstabOption crosstabOption = backend.get(row);
-    if (crosstabOption.isHeaderRow())
-    {
+    final CrosstabOption crosstabOption = backend.get( row );
+    if ( crosstabOption.isHeaderRow() ) {
       return null;
     }
 
     final PropertyEditor propertyEditor = crosstabOption.getPropertyEditor();
-    if (propertyEditor != null)
-    {
+    if ( propertyEditor != null ) {
       return propertyEditor;
     }
-    return getDefaultEditor(crosstabOption.getType());
+    return getDefaultEditor( crosstabOption.getType() );
   }
 
-  public void setTableStyle(final TableStyle tableStyle)
-  {
+  public void setTableStyle( final TableStyle tableStyle ) {
     this.tableStyle = tableStyle;
   }
 
-  public TableStyle getTableStyle()
-  {
+  public TableStyle getTableStyle() {
     return tableStyle;
   }
 
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return backend.size();
   }
 
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return 2;
   }
 
-  public String getColumnName(final int column)
-  {
-    switch (column)
-    {
+  public String getColumnName( final int column ) {
+    switch( column ) {
       case 0:
-        return Messages.getString("CrosstabOptionsTableModel.NameColumn");
+        return Messages.getString( "CrosstabOptionsTableModel.NameColumn" );
       case 1:
-        return Messages.getString("CrosstabOptionsTableModel.ValueColumn");
+        return Messages.getString( "CrosstabOptionsTableModel.ValueColumn" );
       default:
         throw new IllegalArgumentException();
     }
   }
 
-  public Object getValueAt(final int row, final int column)
-  {
-    final CrosstabOption crosstabOption = backend.get(row);
-    if (crosstabOption.isHeaderRow())
-    {
+  public Object getValueAt( final int row, final int column ) {
+    final CrosstabOption crosstabOption = backend.get( row );
+    if ( crosstabOption.isHeaderRow() ) {
       return crosstabOption.getGroupingHeader();
     }
 
-    switch (column)
-    {
+    switch( column ) {
       case 0:
         return crosstabOption.getName();
       case 1:
@@ -520,44 +432,36 @@ public class CrosstabOptionsTableModel extends AbstractTableModel
     }
   }
 
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
-    if (columnIndex != 1)
-    {
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
+    if ( columnIndex != 1 ) {
       return false;
     }
 
-    final CrosstabOption crosstabOption = backend.get(rowIndex);
-    if (crosstabOption.isHeaderRow())
-    {
+    final CrosstabOption crosstabOption = backend.get( rowIndex );
+    if ( crosstabOption.isHeaderRow() ) {
       return false;
     }
     return true;
   }
 
-  public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-  {
-    if (columnIndex != 1)
-    {
+  public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+    if ( columnIndex != 1 ) {
       return;
     }
-    final CrosstabOption crosstabOption = backend.get(rowIndex);
-    if (crosstabOption.isHeaderRow())
-    {
+    final CrosstabOption crosstabOption = backend.get( rowIndex );
+    if ( crosstabOption.isHeaderRow() ) {
       return;
     }
 
-    crosstabOption.setValue(aValue);
-    fireTableCellUpdated(rowIndex, columnIndex);
+    crosstabOption.setValue( aValue );
+    fireTableCellUpdated( rowIndex, columnIndex );
   }
 
-  protected PropertyEditor getDefaultEditor(final Class type)
-  {
-    if (String.class.equals(type))
-    {
+  protected PropertyEditor getDefaultEditor( final Class type ) {
+    if ( String.class.equals( type ) ) {
       return null;
     }
-    return FastPropertyEditorManager.findEditor(type);
+    return FastPropertyEditorManager.findEditor( type );
   }
 
 }

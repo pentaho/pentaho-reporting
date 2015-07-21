@@ -17,19 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.drilldown;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.EventListenerList;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FunctionParameterContext;
 import org.pentaho.openformula.ui.ParameterUpdateEvent;
@@ -38,53 +25,52 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.ReportDesignerFunctionParameterEditor;
 
-public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionParameterEditor
-{
-  private class DrillDownUpdateListener implements PropertyChangeListener
-  {
-    private DrillDownUpdateListener()
-    {
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+
+public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionParameterEditor {
+  private class DrillDownUpdateListener implements PropertyChangeListener {
+    private DrillDownUpdateListener() {
     }
 
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (inSetupUpdate)
-      {
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( inSetupUpdate ) {
         return;
       }
       inParameterUpdate = true;
-      try
-      {
+      try {
         final ParameterUpdateListener[] parameterUpdateListeners =
-            eventListenerList.getListeners(ParameterUpdateListener.class);
+          eventListenerList.getListeners( ParameterUpdateListener.class );
         String formula = editor.getDrillDownFormula();
-        if (formula == null)
-        {
+        if ( formula == null ) {
           formula = "=DRILLDOWN(\"Text\"; \"Text\"; Any)";  // NON-NLS
         }
-        for (int i = 0; i < parameterUpdateListeners.length; i++)
-        {
-          final ParameterUpdateListener listener = parameterUpdateListeners[i];
-          listener.parameterUpdated(new ParameterUpdateEvent(DrillDownFunctionParameterEditor.this, -1, formula, true));
+        for ( int i = 0; i < parameterUpdateListeners.length; i++ ) {
+          final ParameterUpdateListener listener = parameterUpdateListeners[ i ];
+          listener
+            .parameterUpdated( new ParameterUpdateEvent( DrillDownFunctionParameterEditor.this, -1, formula, true ) );
         }
-      }
-      finally
-      {
+      } finally {
         inParameterUpdate = false;
       }
     }
   }
 
-  private class DrillDownItemListener implements ChangeListener
-  {
-    private DrillDownItemListener()
-    {
+  private class DrillDownItemListener implements ChangeListener {
+    private DrillDownItemListener() {
     }
 
     /**
@@ -92,34 +78,28 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
      *
      * @param e a ChangeEvent object
      */
-    public void stateChanged(final ChangeEvent e)
-    {
+    public void stateChanged( final ChangeEvent e ) {
       final DrillDownUiProfile uiProfile = drillDownSelector.getSelectedProfile();
-      editor.setDrillDownUiProfile(uiProfile);
+      editor.setDrillDownUiProfile( uiProfile );
     }
   }
 
 
-  private class DrillDownProfileChangeHandler implements PropertyChangeListener
-  {
-    private DrillDownProfileChangeHandler()
-    {
+  private class DrillDownProfileChangeHandler implements PropertyChangeListener {
+    private DrillDownProfileChangeHandler() {
     }
 
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (DrillDownEditor.DRILL_DOWN_UI_PROFILE_PROPERTY.equals(evt.getPropertyName()) == false)
-      {
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( DrillDownEditor.DRILL_DOWN_UI_PROFILE_PROPERTY.equals( evt.getPropertyName() ) == false ) {
         return;
       }
 
-      drillDownSelector.setSelectedProfile(editor.getDrillDownUiProfile());
+      drillDownSelector.setSelectedProfile( editor.getDrillDownUiProfile() );
 
     }
   }
@@ -133,116 +113,95 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
   private boolean inSetupUpdate;
   private FieldDefinition[] fieldDefinitions;
 
-  public DrillDownFunctionParameterEditor()
-  {
-    drillDownSelector = new ComboBoxSelector(false);
-    drillDownSelector.addChangeListener(new DrillDownItemListener());
+  public DrillDownFunctionParameterEditor() {
+    drillDownSelector = new ComboBoxSelector( false );
+    drillDownSelector.addChangeListener( new DrillDownItemListener() );
 
     editor = new DrillDownEditor();
-    editor.setEditFormulaFragment(true);
-    editor.setLimitedEditor(true);
-    editor.addPropertyChangeListener("drillDownFormula", new DrillDownUpdateListener());
+    editor.setEditFormulaFragment( true );
+    editor.setLimitedEditor( true );
+    editor.addPropertyChangeListener( "drillDownFormula", new DrillDownUpdateListener() );
     editor.addPropertyChangeListener
-        (DrillDownEditor.DRILL_DOWN_UI_PROFILE_PROPERTY, new DrillDownProfileChangeHandler());
+      ( DrillDownEditor.DRILL_DOWN_UI_PROFILE_PROPERTY, new DrillDownProfileChangeHandler() );
 
     eventListenerList = new EventListenerList();
 
     final JPanel selectorPanel = new JPanel();
-    selectorPanel.setLayout(new BorderLayout());
-    selectorPanel.add(new JLabel("Location:"), BorderLayout.NORTH);
-    selectorPanel.add(drillDownSelector.getComponent(), BorderLayout.WEST);
+    selectorPanel.setLayout( new BorderLayout() );
+    selectorPanel.add( new JLabel( "Location:" ), BorderLayout.NORTH );
+    selectorPanel.add( drillDownSelector.getComponent(), BorderLayout.WEST );
 
-    panel = new JPanel(new BorderLayout());
-    panel.add(selectorPanel, BorderLayout.NORTH);
-    panel.add(editor, BorderLayout.CENTER);
+    panel = new JPanel( new BorderLayout() );
+    panel.add( selectorPanel, BorderLayout.NORTH );
+    panel.add( editor, BorderLayout.CENTER );
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
+  public ReportDesignerContext getReportDesignerContext() {
     return designerContext;
   }
 
-  public void setReportDesignerContext(final ReportDesignerContext reportDesignerContext)
-  {
+  public void setReportDesignerContext( final ReportDesignerContext reportDesignerContext ) {
     this.designerContext = reportDesignerContext;
   }
 
-  public void addParameterUpdateListener(final ParameterUpdateListener parameterUpdateListener)
-  {
-    eventListenerList.add(ParameterUpdateListener.class, parameterUpdateListener);
+  public void addParameterUpdateListener( final ParameterUpdateListener parameterUpdateListener ) {
+    eventListenerList.add( ParameterUpdateListener.class, parameterUpdateListener );
   }
 
-  public void removeParameterUpdateListener(final ParameterUpdateListener parameterUpdateListener)
-  {
-    eventListenerList.remove(ParameterUpdateListener.class, parameterUpdateListener);
+  public void removeParameterUpdateListener( final ParameterUpdateListener parameterUpdateListener ) {
+    eventListenerList.remove( ParameterUpdateListener.class, parameterUpdateListener );
   }
 
-  public Component getEditorComponent()
-  {
+  public Component getEditorComponent() {
     return panel;
   }
 
-  public void setFields(final FieldDefinition[] fieldDefinitions)
-  {
+  public void setFields( final FieldDefinition[] fieldDefinitions ) {
     this.fieldDefinitions = fieldDefinitions.clone();
   }
 
-  public void clearSelectedFunction()
-  {
+  public void clearSelectedFunction() {
     // clean-up
   }
 
-  private String[] filterExtraFields()
-  {
-    if (fieldDefinitions == null)
-    {
-      return new String[0];
+  private String[] filterExtraFields() {
+    if ( fieldDefinitions == null ) {
+      return new String[ 0 ];
     }
-    if (designerContext == null)
-    {
+    if ( designerContext == null ) {
       throw new IllegalStateException();
     }
     final ReportDocumentContext activeContext = designerContext.getActiveContext();
-    if (activeContext == null)
-    {
-      return new String[0];
+    if ( activeContext == null ) {
+      return new String[ 0 ];
     }
     final HashSet<String> columnNames = new HashSet<String>
-        (Arrays.asList(activeContext.getReportDataSchemaModel().getColumnNames()));
+      ( Arrays.asList( activeContext.getReportDataSchemaModel().getColumnNames() ) );
     final ArrayList<String> retval = new ArrayList<String>();
-    for (int i = 0; i < fieldDefinitions.length; i++)
-    {
-      final FieldDefinition fieldDefinition = fieldDefinitions[i];
-      if (columnNames.contains(fieldDefinition.getName()) == false)
-      {
-        retval.add(fieldDefinition.getName());
+    for ( int i = 0; i < fieldDefinitions.length; i++ ) {
+      final FieldDefinition fieldDefinition = fieldDefinitions[ i ];
+      if ( columnNames.contains( fieldDefinition.getName() ) == false ) {
+        retval.add( fieldDefinition.getName() );
       }
     }
-    return retval.toArray(new String[retval.size()]);
+    return retval.toArray( new String[ retval.size() ] );
   }
 
-  public void setSelectedFunction(final FunctionParameterContext context)
-  {
-    if (inParameterUpdate)
-    {
+  public void setSelectedFunction( final FunctionParameterContext context ) {
+    if ( inParameterUpdate ) {
       return;
     }
     inSetupUpdate = true;
-    try
-    {
+    try {
       // Editor expects the formula to have a valid prefix, so we provide one ..
-      if (editor.initialize(designerContext, context.getFunctionInformation().getFunctionText(),
-          null, null, filterExtraFields()))
-      {
-        if (editor.getDrillDownUiProfile() == null)
-        {
+      if ( editor.initialize( designerContext, context.getFunctionInformation().getFunctionText(),
+        null, null, filterExtraFields() ) ) {
+        if ( editor.getDrillDownUiProfile() == null ) {
           editor.setDefaultProfile();
         }
       }
 
-    }
-    finally
-    {
+    } finally {
       inSetupUpdate = false;
     }
   }

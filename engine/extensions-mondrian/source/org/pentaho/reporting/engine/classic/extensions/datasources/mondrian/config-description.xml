@@ -1,104 +1,146 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.mondrian-datafactory.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.mondrian-datafactory.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.bundle-writer.cubefile-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.bundle-writer.cubefile-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.bundle-writer.datasource-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.bundle-writer.datasource-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.bundle-writer.datasource-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.JndiDataSourceProvider" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.bundle-writer.datasource-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.JndiDataSourceProvider"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factories.namespace.mondrian" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factories.namespace.mondrian"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factories.tag.mondrian.cube-file" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factories.tag.mondrian.cube-file"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factory-prefix.built-in" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factory-prefix.built-in"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.data-factories.namespace.mondrian" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.data-factories.namespace.mondrian"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.data-factories.tag.mondrian.banded-mdx-datasource" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.data-factories.tag.mondrian.banded-mdx-datasource"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.data-factories.tag.mondrian.denormalized-mdx-datasource" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.data-factories.tag.mondrian.denormalized-mdx-datasource"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.data-factories.tag.mondrian.legacy-banded-mdx-datasource" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.data-factories.tag.mondrian.legacy-banded-mdx-datasource"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factories.namespace.mondrian" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factories.namespace.mondrian"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factories.tag.mondrian.driver" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factories.tag.mondrian.driver"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factories.tag.mondrian.jndi" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factories.tag.mondrian.jndi"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factory-prefix.built-in" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factory-prefix.built-in"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.writer.cubefile-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.writer.cubefile-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.writer.datasource-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.writer.datasource-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.writer.datasource-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.JndiDataSourceProvider" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.writer.datasource-provider.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.JndiDataSourceProvider"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.mondrian-banded" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.mondrian-banded"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.mondrian-denormalized" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.mondrian-denormalized"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.mondrian-legacy-banded" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.mondrian-legacy-banded"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.mondrian" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.mondrian"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.DataSchemaDefinition.built-in.mondrian" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.DataSchemaDefinition.built-in.mondrian" global="true"
+       hidden="true">
     <description>Internal Configuration setting. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MembersOnAxisSorted" global="false" hidden="false">
-    <description>Defines whether members on an axis are sorted by dimension and hierarchy level. If set to 'false' members are
-sorted by access-order, which is determined by walking through the result set and recording the appearance of members on the axis.
-Access-order can return changing column orders depending on how the MDX query is structured.
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MembersOnAxisSorted" global="false"
+       hidden="false">
+    <description>Defines whether members on an axis are sorted by dimension and hierarchy level. If set to 'false'
+      members are
+      sorted by access-order, which is determined by walking through the result set and recording the appearance of
+      members on the axis.
+      Access-order can return changing column orders depending on how the MDX query is structured.
 
-This defaults to 'true' to give reports a well-defined column order that matches the results seen by other OLAP tools.
-Set this setting to 'false' to restore access-order, which was the default in older releases.
+      This defaults to 'true' to give reports a well-defined column order that matches the results seen by other OLAP
+      tools.
+      Set this setting to 'false' to restore access-order, which was the default in older releases.
     </description>
     <enum>
       <text>true</text>

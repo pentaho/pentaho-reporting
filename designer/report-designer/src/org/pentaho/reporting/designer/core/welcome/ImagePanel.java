@@ -17,19 +17,15 @@
 
 package org.pentaho.reporting.designer.core.welcome;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.net.URL;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Todo: Document me!
  *
  * @author Thomas Morgner
  */
-public class ImagePanel extends JPanel
-{
+public class ImagePanel extends JPanel {
   private boolean scaleX;
   private boolean scaleY;
   private Image image;
@@ -37,36 +33,26 @@ public class ImagePanel extends JPanel
   /**
    * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
    */
-  public ImagePanel(final Image image, final boolean scaleX, final boolean scaleY)
-  {
+  public ImagePanel( final Image image, final boolean scaleX, final boolean scaleY ) {
     this.image = image;
     this.scaleX = scaleX;
     this.scaleY = scaleY;
   }
 
-  public void paintComponent(final Graphics g)
-  {
-    super.paintComponent(g);
-    if (image == null)
-    {
+  public void paintComponent( final Graphics g ) {
+    super.paintComponent( g );
+    if ( image == null ) {
       return;
     }
 
-    if (scaleX && scaleY)
-    {
-      g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-    }
-    else if (scaleX)
-    {
-      g.drawImage(image, 0, 0, getWidth(), image.getHeight(this), this);
-    }
-    else if (scaleY)
-    {
-      g.drawImage(image, 0, 0, image.getWidth(this), getHeight(), this);
-    }
-    else
-    {
-      g.drawImage(image, 0, 0, image.getWidth(this), image.getHeight(this), this);
+    if ( scaleX && scaleY ) {
+      g.drawImage( image, 0, 0, getWidth(), getHeight(), this );
+    } else if ( scaleX ) {
+      g.drawImage( image, 0, 0, getWidth(), image.getHeight( this ), this );
+    } else if ( scaleY ) {
+      g.drawImage( image, 0, 0, image.getWidth( this ), getHeight(), this );
+    } else {
+      g.drawImage( image, 0, 0, image.getWidth( this ), image.getHeight( this ), this );
     }
   }
 }

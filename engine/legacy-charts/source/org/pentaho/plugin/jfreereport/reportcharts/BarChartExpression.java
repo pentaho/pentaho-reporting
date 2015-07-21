@@ -17,8 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Color;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
@@ -30,14 +28,15 @@ import org.jfree.data.category.CategoryDataset;
 import org.pentaho.plugin.jfreereport.reportcharts.backport.FormattedCategoryAxis;
 import org.pentaho.plugin.jfreereport.reportcharts.backport.FormattedCategoryAxis3D;
 
+import java.awt.*;
+
 /**
- * This class is for backward compatibility with previous build of the
- * expression. Instead of using this class, use CategoricalChartExpression.
+ * This class is for backward compatibility with previous build of the expression. Instead of using this class, use
+ * CategoricalChartExpression.
  *
  * @author mbatchel
  */
-public class BarChartExpression extends StackedCategoricalChartExpression
-{
+public class BarChartExpression extends StackedCategoricalChartExpression {
   private static final long serialVersionUID = 7082583397390897215L;
   private Double maxBarWidth;
   private boolean stackedBarRenderPercentages;
@@ -47,161 +46,130 @@ public class BarChartExpression extends StackedCategoricalChartExpression
   private int shadowXOffset;
   private int shadowYOffset;
 
-  public BarChartExpression()
-  {
+  public BarChartExpression() {
   }
 
-  public Double getItemMargin()
-  {
+  public Double getItemMargin() {
     return itemMargin;
   }
 
-  public void setItemMargin(final Double itemMargin)
-  {
+  public void setItemMargin( final Double itemMargin ) {
     this.itemMargin = itemMargin;
   }
 
-  public Double getMaxBarWidth()
-  {
+  public Double getMaxBarWidth() {
     return maxBarWidth;
   }
 
-  public void setMaxBarWidth(final Double value)
-  {
+  public void setMaxBarWidth( final Double value ) {
     maxBarWidth = value;
   }
 
-  public boolean isStackedBarRenderPercentages()
-  {
+  public boolean isStackedBarRenderPercentages() {
     return stackedBarRenderPercentages;
   }
 
-  public void setStackedBarRenderPercentages(final boolean value)
-  {
+  public void setStackedBarRenderPercentages( final boolean value ) {
     stackedBarRenderPercentages = value;
   }
 
-  public JFreeChart computeCategoryChart(final CategoryDataset categoryDataset)
-  {
+  public JFreeChart computeCategoryChart( final CategoryDataset categoryDataset ) {
     final PlotOrientation orientation = computePlotOrientation();
 
     final JFreeChart chart;
-    if (isThreeD())
-    {
-      if (isStacked())
-      {
-        chart = ChartFactory.createStackedBarChart3D(computeTitle(),
-            getCategoryAxisLabel(), getValueAxisLabel(),
-            categoryDataset, orientation, isShowLegend(),
-            false, false);
+    if ( isThreeD() ) {
+      if ( isStacked() ) {
+        chart = ChartFactory.createStackedBarChart3D( computeTitle(),
+          getCategoryAxisLabel(), getValueAxisLabel(),
+          categoryDataset, orientation, isShowLegend(),
+          false, false );
+      } else {
+        chart = ChartFactory.createBarChart3D( computeTitle(),
+          getCategoryAxisLabel(), getValueAxisLabel(), categoryDataset,
+          orientation, isShowLegend(), false, false );
       }
-      else
-      {
-        chart = ChartFactory.createBarChart3D(computeTitle(),
-            getCategoryAxisLabel(), getValueAxisLabel(), categoryDataset,
-            orientation, isShowLegend(), false, false);
+      chart.getCategoryPlot().setDomainAxis( new FormattedCategoryAxis3D( getCategoryAxisLabel(),
+        getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale() ) );
+    } else {
+      if ( isStacked() ) {
+        chart = ChartFactory.createStackedBarChart( computeTitle(),
+          getCategoryAxisLabel(), getValueAxisLabel(),
+          categoryDataset, orientation, isShowLegend(),
+          false, false );
+      } else {
+        chart = ChartFactory.createBarChart( computeTitle(),
+          getCategoryAxisLabel(), getValueAxisLabel(), categoryDataset,
+          orientation, isShowLegend(), false, false );
       }
-      chart.getCategoryPlot().setDomainAxis(new FormattedCategoryAxis3D(getCategoryAxisLabel(),
-          getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale()));
-    }
-    else
-    {
-      if (isStacked())
-      {
-        chart = ChartFactory.createStackedBarChart(computeTitle(),
-            getCategoryAxisLabel(), getValueAxisLabel(),
-            categoryDataset, orientation, isShowLegend(),
-            false, false);
-      }
-      else
-      {
-        chart = ChartFactory.createBarChart(computeTitle(),
-            getCategoryAxisLabel(), getValueAxisLabel(), categoryDataset,
-            orientation, isShowLegend(), false, false);
-      }
-      chart.getCategoryPlot().setDomainAxis(new FormattedCategoryAxis(getCategoryAxisLabel(),
-          getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale()));
+      chart.getCategoryPlot().setDomainAxis( new FormattedCategoryAxis( getCategoryAxisLabel(),
+        getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale() ) );
     }
 
     final CategoryPlot plot = (CategoryPlot) chart.getPlot();
-    configureLogarithmicAxis(plot);
+    configureLogarithmicAxis( plot );
 
     return chart;
   }
 
-  protected void configureChart(final JFreeChart chart)
-  {
+  protected void configureChart( final JFreeChart chart ) {
     final CategoryPlot cpl = chart.getCategoryPlot();
     final CategoryItemRenderer renderer = cpl.getRenderer();
     final BarRenderer br = (BarRenderer) renderer;
-    if (isAutoRange())
-    {
-      br.setIncludeBaseInRange(false);
+    if ( isAutoRange() ) {
+      br.setIncludeBaseInRange( false );
     }
-    super.configureChart(chart);
-    br.setDrawBarOutline(isChartSectionOutline());
-    if (maxBarWidth != null)
-    {
-      br.setMaximumBarWidth(maxBarWidth.doubleValue());
+    super.configureChart( chart );
+    br.setDrawBarOutline( isChartSectionOutline() );
+    if ( maxBarWidth != null ) {
+      br.setMaximumBarWidth( maxBarWidth.doubleValue() );
     }
 
-    if (itemMargin != null)
-    {
-      br.setItemMargin(itemMargin.doubleValue());
+    if ( itemMargin != null ) {
+      br.setItemMargin( itemMargin.doubleValue() );
     }
 
-    if ((isStacked()) && stackedBarRenderPercentages && (br instanceof StackedBarRenderer))
-    {
+    if ( ( isStacked() ) && stackedBarRenderPercentages && ( br instanceof StackedBarRenderer ) ) {
       final StackedBarRenderer sbr = (StackedBarRenderer) br;
-      sbr.setRenderAsPercentages(true);
+      sbr.setRenderAsPercentages( true );
     }
 
-    br.setShadowVisible(shadowVisible);
-    if (shadowColor != null)
-    {
-      br.setShadowPaint(shadowColor);
+    br.setShadowVisible( shadowVisible );
+    if ( shadowColor != null ) {
+      br.setShadowPaint( shadowColor );
     }
-    br.setShadowXOffset(shadowXOffset);
-    br.setShadowYOffset(shadowYOffset);
+    br.setShadowXOffset( shadowXOffset );
+    br.setShadowYOffset( shadowYOffset );
   }
 
-  public boolean isShadowVisible()
-  {
+  public boolean isShadowVisible() {
     return shadowVisible;
   }
 
-  public void setShadowVisible(final boolean shadowVisible)
-  {
+  public void setShadowVisible( final boolean shadowVisible ) {
     this.shadowVisible = shadowVisible;
   }
 
-  public Color getShadowColor()
-  {
+  public Color getShadowColor() {
     return shadowColor;
   }
 
-  public void setShadowColor(final Color shadowColor)
-  {
+  public void setShadowColor( final Color shadowColor ) {
     this.shadowColor = shadowColor;
   }
 
-  public int getShadowXOffset()
-  {
+  public int getShadowXOffset() {
     return shadowXOffset;
   }
 
-  public void setShadowXOffset(final int shadowXOffset)
-  {
+  public void setShadowXOffset( final int shadowXOffset ) {
     this.shadowXOffset = shadowXOffset;
   }
 
-  public int getShadowYOffset()
-  {
+  public int getShadowYOffset() {
     return shadowYOffset;
   }
 
-  public void setShadowYOffset(final int shadowYOffset)
-  {
+  public void setShadowYOffset( final int shadowYOffset ) {
     this.shadowYOffset = shadowYOffset;
   }
 
@@ -209,8 +177,7 @@ public class BarChartExpression extends StackedCategoricalChartExpression
    * @return
    * @deprecated Use the property chartSectionOutline instead.
    */
-  public boolean isDrawBarOutline()
-  {
+  public boolean isDrawBarOutline() {
     return isChartSectionOutline();
   }
 
@@ -218,8 +185,7 @@ public class BarChartExpression extends StackedCategoricalChartExpression
    * @param value
    * @deprecated Use the property chartSectionOutline instead.
    */
-  public void setDrawBarOutline(final boolean value)
-  {
-    setChartSectionOutline(value);
+  public void setDrawBarOutline( final boolean value ) {
+    setChartSectionOutline( value );
   }
 }

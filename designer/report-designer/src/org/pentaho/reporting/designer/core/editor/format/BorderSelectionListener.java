@@ -24,9 +24,8 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner
  */
-public interface BorderSelectionListener extends EventListener
-{
-  public void selectionAdded(BorderSelectionEvent event);
+public interface BorderSelectionListener extends EventListener {
+  public void selectionAdded( BorderSelectionEvent event );
 
-  public void selectionRemoved(BorderSelectionEvent event);
+  public void selectionRemoved( BorderSelectionEvent event );
 }

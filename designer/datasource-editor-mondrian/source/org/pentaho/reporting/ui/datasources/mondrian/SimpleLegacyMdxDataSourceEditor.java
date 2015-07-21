@@ -17,49 +17,41 @@
 
 package org.pentaho.reporting.ui.datasources.mondrian;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.AbstractMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleLegacyBandedMDXDataFactory;
 
+import java.awt.*;
+
 /**
  * @author Michael D'Amour
  */
-public class SimpleLegacyMdxDataSourceEditor extends SimpleMondrianDataSourceEditor
-{
+public class SimpleLegacyMdxDataSourceEditor extends SimpleMondrianDataSourceEditor {
 
-  public SimpleLegacyMdxDataSourceEditor(final DesignTimeContext context)
-  {
-    super(context);
+  public SimpleLegacyMdxDataSourceEditor( final DesignTimeContext context ) {
+    super( context );
   }
 
-  public SimpleLegacyMdxDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-  {
-    super(context, owner);
+  public SimpleLegacyMdxDataSourceEditor( final DesignTimeContext context, final Dialog owner ) {
+    super( context, owner );
   }
 
-  public SimpleLegacyMdxDataSourceEditor(final DesignTimeContext context, final Frame owner)
-  {
-    super(context, owner);
+  public SimpleLegacyMdxDataSourceEditor( final DesignTimeContext context, final Frame owner ) {
+    super( context, owner );
   }
 
-  protected void init(final DesignTimeContext context)
-  {
-    super.init(context);
-    setTitle(Messages.getString("SimpleLegacyMdxDataSourceEditor.Title"));
+  protected void init( final DesignTimeContext context ) {
+    super.init( context );
+    setTitle( Messages.getString( "SimpleLegacyMdxDataSourceEditor.Title" ) );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "MondrianDataSourceEditor.SimpleLegacy";
   }
 
-  protected AbstractMDXDataFactory createDataFactory()
-  {
+  protected AbstractMDXDataFactory createDataFactory() {
     final SimpleLegacyBandedMDXDataFactory returnDataFactory = new SimpleLegacyBandedMDXDataFactory();
-    configureConnection(returnDataFactory);
+    configureConnection( returnDataFactory );
     return returnDataFactory;
   }
 }

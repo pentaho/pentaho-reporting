@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.report;
 
-import java.util.ArrayList;
-
+import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.model.Guideline;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
-import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.model.Guideline;
-import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
-public class LinealModelReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class LinealModelReadHandler extends AbstractXmlReadHandler {
   private ArrayList guidelines;
   private Guideline[] guidelineValues;
 
-  public LinealModelReadHandler()
-  {
+  public LinealModelReadHandler() {
     guidelines = new ArrayList();
   }
 
@@ -44,17 +42,15 @@ public class LinealModelReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("guideLine".equals(tagName))
-    {
+    if ( "guideLine".equals( tagName ) ) {
       final GuidelineReadHandler readHandler = new GuidelineReadHandler();
-      guidelines.add(readHandler);
+      guidelines.add( readHandler );
       return readHandler;
     }
     return null;
@@ -65,30 +61,25 @@ public class LinealModelReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    guidelineValues = new Guideline[guidelines.size()];
-    for (int i = 0; i < guidelines.size(); i++)
-    {
-      final GuidelineReadHandler handler = (GuidelineReadHandler) guidelines.get(i);
-      guidelineValues[i] = (Guideline) handler.getObject();
+  protected void doneParsing() throws SAXException {
+    guidelineValues = new Guideline[ guidelines.size() ];
+    for ( int i = 0; i < guidelines.size(); i++ ) {
+      final GuidelineReadHandler handler = (GuidelineReadHandler) guidelines.get( i );
+      guidelineValues[ i ] = (Guideline) handler.getObject();
     }
   }
 
-  public Guideline[] getGuidelineValues()
-  {
+  public Guideline[] getGuidelineValues() {
     return guidelineValues;
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return guidelineValues;
   }
 }

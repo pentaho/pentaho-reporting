@@ -23,57 +23,49 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.pentaho.plugin.jfreereport.reportcharts.backport.XYDotRenderer;
 
-public class ScatterPlotChartExpression extends XYChartExpression
-{
+public class ScatterPlotChartExpression extends XYChartExpression {
   private static final long serialVersionUID = 7822813481960064738L;
   private int dotWidth;
   private int dotHeight;
 
-  public ScatterPlotChartExpression()
-  {
+  public ScatterPlotChartExpression() {
     dotHeight = 5;
     dotWidth = 5;
   }
 
-  protected JFreeChart computeXYChart(final XYDataset xyDataset)
-  {
+  protected JFreeChart computeXYChart( final XYDataset xyDataset ) {
     final JFreeChart chart;
-    if (xyDataset instanceof TimeSeriesCollection)
-    {
+    if ( xyDataset instanceof TimeSeriesCollection ) {
       chart =
-          ChartFactory.createTimeSeriesChart(computeTitle(), getDomainTitle(), getRangeTitle(), xyDataset,
-              isShowLegend(), false, false);
+        ChartFactory.createTimeSeriesChart( computeTitle(), getDomainTitle(), getRangeTitle(), xyDataset,
+          isShowLegend(), false, false );
       final XYPlot xyPlot = chart.getXYPlot();
       final XYLineAndShapeRenderer itemRenderer = (XYLineAndShapeRenderer) xyPlot.getRenderer();
-      final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(false, true);
-      renderer.setBaseToolTipGenerator(itemRenderer.getBaseToolTipGenerator());
-      renderer.setURLGenerator(itemRenderer.getURLGenerator());
-      xyPlot.setRenderer(renderer);
+      final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( false, true );
+      renderer.setBaseToolTipGenerator( itemRenderer.getBaseToolTipGenerator() );
+      renderer.setURLGenerator( itemRenderer.getURLGenerator() );
+      xyPlot.setRenderer( renderer );
 
-    }
-    else
-    {
+    } else {
       final PlotOrientation orientation = computePlotOrientation();
-      chart = ChartFactory.createScatterPlot(computeTitle(), getDomainTitle(), getRangeTitle(),
-          xyDataset, orientation, isShowLegend(), false, false);
+      chart = ChartFactory.createScatterPlot( computeTitle(), getDomainTitle(), getRangeTitle(),
+        xyDataset, orientation, isShowLegend(), false, false );
     }
 
-    chart.getXYPlot().setRenderer(new XYDotRenderer());
-    configureLogarithmicAxis(chart.getXYPlot());
+    chart.getXYPlot().setRenderer( new XYDotRenderer() );
+    configureLogarithmicAxis( chart.getXYPlot() );
     return chart;
   }
 
-  protected void configureChart(final JFreeChart chart)
-  {
-    super.configureChart(chart);
+  protected void configureChart( final JFreeChart chart ) {
+    super.configureChart( chart );
 
     final XYPlot xypl = chart.getXYPlot();
     final XYItemRenderer renderer = xypl.getRenderer();
-    if (renderer instanceof XYDotRenderer)
-    {
+    if ( renderer instanceof XYDotRenderer ) {
       final XYDotRenderer renderer1 = (XYDotRenderer) renderer;
-      renderer1.setDotHeight(getDotHeight());
-      renderer1.setDotWidth(getDotWidth());
+      renderer1.setDotHeight( getDotHeight() );
+      renderer1.setDotWidth( getDotWidth() );
     }
 
   }
@@ -81,32 +73,28 @@ public class ScatterPlotChartExpression extends XYChartExpression
   /**
    * @return Returns the dot height.
    */
-  public int getDotHeight()
-  {
+  public int getDotHeight() {
     return dotHeight;
   }
 
   /**
    * @param height The dot height to set.
    */
-  public void setDotHeight(final int height)
-  {
+  public void setDotHeight( final int height ) {
     this.dotHeight = height;
   }
 
   /**
    * @return Returns the dot width.
    */
-  public int getDotWidth()
-  {
+  public int getDotWidth() {
     return dotWidth;
   }
 
   /**
    * @param width The dot width to set.
    */
-  public void setDotWidth(final int width)
-  {
+  public void setDotWidth( final int width ) {
     this.dotWidth = width;
   }
 

@@ -24,7 +24,6 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner
  */
-public interface SettingsListener extends EventListener
-{
+public interface SettingsListener extends EventListener {
   public void settingsChanged();
 }

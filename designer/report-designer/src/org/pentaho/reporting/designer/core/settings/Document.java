@@ -18,25 +18,21 @@
 package org.pentaho.reporting.designer.core.settings;
 
 
-public class Document
-{
+public class Document {
 
   private String fileName;
   private String reportName;
 
-  public Document(final String file, final String name)
-  {
+  public Document( final String file, final String name ) {
     fileName = file;
     reportName = name;
   }
 
-  public String getFileName()
-  {
+  public String getFileName() {
     return fileName;
   }
 
-  public String getReportName()
-  {
+  public String getReportName() {
     return reportName;
   }
 }

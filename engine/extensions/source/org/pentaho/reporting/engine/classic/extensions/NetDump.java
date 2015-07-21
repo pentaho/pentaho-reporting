@@ -30,20 +30,17 @@ import java.net.URL;
  * @author Thomas Morgner
  * @noinspection UseOfSystemOutOrSystemErr
  */
-public final class NetDump
-{
+public final class NetDump {
   /**
    * Default Constructor.
    */
-  private NetDump()
-  {
+  private NetDump() {
   }
 
   /**
    * THe connection info is used to extract all necessary information from the given URL.
    */
-  private static class ConnectionInfo
-  {
+  private static class ConnectionInfo {
     /**
      * the name of the host, to which to connect.
      */
@@ -62,17 +59,15 @@ public final class NetDump
      *
      * @param url the URL to which to connect to.
      */
-    public ConnectionInfo(final URL url)
-    {
+    public ConnectionInfo( final URL url ) {
       host = url.getHost();
       port = url.getPort();
-      if (port == -1)
-      {
+      if ( port == -1 ) {
         port = 80;
       }
 
       final String file = url.getFile();
-//      String query = url.getQuery();
+      //      String query = url.getQuery();
       final String ref = url.getRef();
 
       uri = file;
@@ -81,8 +76,7 @@ public final class NetDump
         uri += "?";
         uri += query;
       }*/
-      if (ref != null)
-      {
+      if ( ref != null ) {
         uri += "#";
         uri += ref;
       }
@@ -93,8 +87,7 @@ public final class NetDump
      *
      * @return the target host.
      */
-    public String getHost()
-    {
+    public String getHost() {
       return host;
     }
 
@@ -103,8 +96,7 @@ public final class NetDump
      *
      * @return the port on the server.
      */
-    public int getPort()
-    {
+    public int getPort() {
       return port;
     }
 
@@ -113,8 +105,7 @@ public final class NetDump
      *
      * @return the target URI.
      */
-    public String getUri()
-    {
+    public String getUri() {
       return uri;
     }
   }
@@ -124,53 +115,46 @@ public final class NetDump
    *
    * @param args the connection arguments, the method followed by an url.
    */
-  public static void main(final String[] args)
-  {
-    if (args.length != 2)
-    {
-      System.err.println("Need an Method + URL as parameter");
-      System.exit(1);
+  public static void main( final String[] args ) {
+    if ( args.length != 2 ) {
+      System.err.println( "Need an Method + URL as parameter" );
+      System.exit( 1 );
     }
 
-    try
-    {
-      final String method = args[0];
-      final URL url = new URL(args[1]);
-      if ("http".equals(url.getProtocol()) == false)
-      {
-        System.err.println("The given url must be a HTTP url");
-        System.exit(1);
+    try {
+      final String method = args[ 0 ];
+      final URL url = new URL( args[ 1 ] );
+      if ( "http".equals( url.getProtocol() ) == false ) {
+        System.err.println( "The given url must be a HTTP url" );
+        System.exit( 1 );
       }
 
-      final ConnectionInfo ci = new ConnectionInfo(url);
-      System.out.println("Connecting to: " + ci.getHost() + ":" + ci.getPort());
-      final Socket socket = new Socket(ci.getHost(), ci.getPort());
+      final ConnectionInfo ci = new ConnectionInfo( url );
+      System.out.println( "Connecting to: " + ci.getHost() + ":" + ci.getPort() );
+      final Socket socket = new Socket( ci.getHost(), ci.getPort() );
       final OutputStream out = socket.getOutputStream();
       final StringBuffer b = new StringBuffer();
-      b.append(method.toUpperCase());
-      b.append(" ");
-      b.append(ci.getUri());
-      b.append(" HTTP/1.0\n");
-      b.append("\n");
-      System.out.println(b.toString());
-      out.write(b.toString().getBytes());
+      b.append( method.toUpperCase() );
+      b.append( " " );
+      b.append( ci.getUri() );
+      b.append( " HTTP/1.0\n" );
+      b.append( "\n" );
+      System.out.println( b.toString() );
+      out.write( b.toString().getBytes() );
 
       final InputStream in = socket.getInputStream();
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+      final BufferedReader reader = new BufferedReader( new InputStreamReader( in ) );
       String line = reader.readLine();
-      while (line != null)
-      {
-        System.out.println(line);
+      while ( line != null ) {
+        System.out.println( line );
         line = reader.readLine();
       }
       in.close();
-    }
-    catch (Exception e)
-    {
-      System.err.println("Failed to perform request: ");
+    } catch ( Exception e ) {
+      System.err.println( "Failed to perform request: " );
       e.printStackTrace();
-      System.exit(1);
+      System.exit( 1 );
     }
-    System.exit(0);
+    System.exit( 0 );
   }
 }

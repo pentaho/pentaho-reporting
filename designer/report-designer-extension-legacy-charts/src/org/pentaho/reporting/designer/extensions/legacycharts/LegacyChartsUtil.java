@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.designer.extensions.legacycharts;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.util.ArrayList;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import org.pentaho.plugin.jfreereport.reportcharts.AbstractChartExpression;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -38,77 +32,66 @@ import org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChart
 import org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChartType;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-public class LegacyChartsUtil
-{
-  private LegacyChartsUtil()
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class LegacyChartsUtil {
+  private LegacyChartsUtil() {
   }
 
-  public static boolean isLegacyChartElement(final Element element)
-  {
-    if (element.getElementType() instanceof LegacyChartType)
-    {
+  public static boolean isLegacyChartElement( final Element element ) {
+    if ( element.getElementType() instanceof LegacyChartType ) {
       return true;
     }
     final Expression valueExpression =
-        element.getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE);
-    if (valueExpression instanceof AbstractChartExpression)
-    {
+      element.getAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE );
+    if ( valueExpression instanceof AbstractChartExpression ) {
       return true;
     }
 
     return false;
   }
 
-  public static void performEdit(final Element chartElement,
-                                 final ReportDesignerContext context)
-  {
+  public static void performEdit( final Element chartElement,
+                                  final ReportDesignerContext context ) {
     final ReportDocumentContext activeContext = context.getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       return;
     }
 
     final Component parent = context.getView().getParent();
-    final Window window = LibSwingUtil.getWindowAncestor(parent);
+    final Window window = LibSwingUtil.getWindowAncestor( parent );
     final LegacyChartEditorDialog dialog;
-    if (window instanceof JDialog)
-    {
-      dialog = new LegacyChartEditorDialog((JDialog) window);
-    }
-    else if (window instanceof JFrame)
-    {
-      dialog = new LegacyChartEditorDialog((JFrame) window);
-    }
-    else
-    {
+    if ( window instanceof JDialog ) {
+      dialog = new LegacyChartEditorDialog( (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      dialog = new LegacyChartEditorDialog( (JFrame) window );
+    } else {
       dialog = new LegacyChartEditorDialog();
     }
 
-    try
-    {
-      final ChartEditingResult editResult = dialog.performEdit(chartElement, context);
-      if (editResult != null)
-      {
+    try {
+      final ChartEditingResult editResult = dialog.performEdit( chartElement, context );
+      if ( editResult != null ) {
         final ArrayList<UndoEntry> undoEntries = new ArrayList<UndoEntry>();
-        undoEntries.add(new AttributeExpressionEditUndoEntry(chartElement.getObjectID(),
-            AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-            editResult.getOriginalChartExpression(), editResult.getChartExpression()));
-        undoEntries.add(new AttributeEditUndoEntry(chartElement.getObjectID(),
-            LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.PRIMARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE,
-            editResult.getOriginalPrimaryDataSource(), editResult.getPrimaryDataSource()));
-        undoEntries.add(new AttributeEditUndoEntry(chartElement.getObjectID(),
-            LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.SECONDARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE,
-            editResult.getOriginalSecondaryDataSource(), editResult.getSecondaryDataSource()));
+        undoEntries.add( new AttributeExpressionEditUndoEntry( chartElement.getObjectID(),
+          AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
+          editResult.getOriginalChartExpression(), editResult.getChartExpression() ) );
+        undoEntries.add( new AttributeEditUndoEntry( chartElement.getObjectID(),
+          LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.PRIMARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE,
+          editResult.getOriginalPrimaryDataSource(), editResult.getPrimaryDataSource() ) );
+        undoEntries.add( new AttributeEditUndoEntry( chartElement.getObjectID(),
+          LegacyChartElementModule.NAMESPACE, LegacyChartElementModule.SECONDARY_DATA_COLLECTOR_FUNCTION_ATTRIBUTE,
+          editResult.getOriginalSecondaryDataSource(), editResult.getSecondaryDataSource() ) );
 
-        final CompoundUndoEntry ue = new CompoundUndoEntry(undoEntries.toArray(new UndoEntry[undoEntries.size()]));
-        activeContext.getUndo().addChange(Messages.getInstance().getString("EditLegacyChartAction.Undo"), ue);
-        ue.redo(context.getActiveContext());
+        final CompoundUndoEntry ue =
+          new CompoundUndoEntry( undoEntries.toArray( new UndoEntry[ undoEntries.size() ] ) );
+        activeContext.getUndo().addChange( Messages.getInstance().getString( "EditLegacyChartAction.Undo" ), ue );
+        ue.redo( context.getActiveContext() );
       }
-    }
-    catch (CloneNotSupportedException e1)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e1);
+    } catch ( CloneNotSupportedException e1 ) {
+      UncaughtExceptionsModel.getInstance().addException( e1 );
     }
   }
 }

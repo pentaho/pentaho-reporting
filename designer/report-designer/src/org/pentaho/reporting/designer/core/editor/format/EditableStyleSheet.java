@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.format;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
@@ -28,38 +24,35 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class EditableStyleSheet extends ElementStyleSheet
-{
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
+public class EditableStyleSheet extends ElementStyleSheet {
   private HashSet<StyleKey> editedKeys;
   private HashSet<StyleKey> removedKeys;
   private HashMap<StyleKey, Object> parentValues;
 
-  public EditableStyleSheet()
-  {
+  public EditableStyleSheet() {
     editedKeys = new HashSet<StyleKey>();
     removedKeys = new HashSet<StyleKey>();
     parentValues = new HashMap<StyleKey, Object>();
   }
 
-  public void copyParentValues(final ElementStyleSheet parent)
-  {
-    if (parent != null)
-    {
+  public void copyParentValues( final ElementStyleSheet parent ) {
+    if ( parent != null ) {
       final StyleKey[] definedPropertyNamesArray = parent.getDefinedPropertyNamesArray();
-      for (int i = 0; i < definedPropertyNamesArray.length; i++)
-      {
-        final StyleKey styleKey = definedPropertyNamesArray[i];
-        if (styleKey == null)
-        {
+      for ( int i = 0; i < definedPropertyNamesArray.length; i++ ) {
+        final StyleKey styleKey = definedPropertyNamesArray[ i ];
+        if ( styleKey == null ) {
           continue;
         }
-        setStyleProperty(styleKey, parent.getStyleProperty(styleKey));
+        setStyleProperty( styleKey, parent.getStyleProperty( styleKey ) );
       }
       final StyleKey[] propertyKeys = parent.getPropertyKeys();
-      for (int i = 0; i < propertyKeys.length; i++)
-      {
-        final StyleKey propertyKey = propertyKeys[i];
-        parentValues.put(propertyKey, parent.getStyleProperty(propertyKey));
+      for ( int i = 0; i < propertyKeys.length; i++ ) {
+        final StyleKey propertyKey = propertyKeys[ i ];
+        parentValues.put( propertyKey, parent.getStyleProperty( propertyKey ) );
       }
     }
 
@@ -67,54 +60,43 @@ public class EditableStyleSheet extends ElementStyleSheet
     removedKeys.clear();
   }
 
-  public void clearEdits()
-  {
+  public void clearEdits() {
     editedKeys.clear();
     removedKeys.clear();
 
     final StyleKey[] propertyKeys = getPropertyKeys();
-    for (int i = 0; i < propertyKeys.length; i++)
-    {
-      final StyleKey propertyKey = propertyKeys[i];
-      parentValues.put(propertyKey, getStyleProperty(propertyKey));
+    for ( int i = 0; i < propertyKeys.length; i++ ) {
+      final StyleKey propertyKey = propertyKeys[ i ];
+      parentValues.put( propertyKey, getStyleProperty( propertyKey ) );
     }
   }
 
-  public static EditableStyleSheet create(final List<Element> visualElements)
-  {
-    return create(visualElements.toArray(new Element[visualElements.size()]));
+  public static EditableStyleSheet create( final List<Element> visualElements ) {
+    return create( visualElements.toArray( new Element[ visualElements.size() ] ) );
   }
 
-  public static EditableStyleSheet create(final Element... visualElements)
-  {
-    final SimpleStyleResolver styleResolver = new SimpleStyleResolver(true);
+  public static EditableStyleSheet create( final Element... visualElements ) {
+    final SimpleStyleResolver styleResolver = new SimpleStyleResolver( true );
 
     // collect all common values ..
     final StyleKey[] keys = StyleKey.getDefinedStyleKeys();
-    final Object[] values = new Object[keys.length];
-    final ResolverStyleSheet[] styles = new ResolverStyleSheet[visualElements.length];
-    for (int i = 0; i < styles.length; i++)
-    {
+    final Object[] values = new Object[ keys.length ];
+    final ResolverStyleSheet[] styles = new ResolverStyleSheet[ visualElements.length ];
+    for ( int i = 0; i < styles.length; i++ ) {
       final ResolverStyleSheet style = new ResolverStyleSheet();
-      styleResolver.resolve(visualElements[i], style);
-      styles[i] = style;
+      styleResolver.resolve( visualElements[ i ], style );
+      styles[ i ] = style;
     }
-    
-    for (int i = 0; i < keys.length; i++)
-    {
-      final StyleKey styleKey = keys[i];
-      for (int elementIdx = 0; elementIdx < visualElements.length; elementIdx++)
-      {
-        final Object o = styles[elementIdx].getStyleProperty(styleKey);
-        if (values[i] == null)
-        {
-          values[i] = o;
-        }
-        else
-        {
-          if (ObjectUtilities.equal(values[i], o) == false)
-          {
-            values[i] = null;
+
+    for ( int i = 0; i < keys.length; i++ ) {
+      final StyleKey styleKey = keys[ i ];
+      for ( int elementIdx = 0; elementIdx < visualElements.length; elementIdx++ ) {
+        final Object o = styles[ elementIdx ].getStyleProperty( styleKey );
+        if ( values[ i ] == null ) {
+          values[ i ] = o;
+        } else {
+          if ( ObjectUtilities.equal( values[ i ], o ) == false ) {
+            values[ i ] = null;
             break;
           }
         }
@@ -122,10 +104,9 @@ public class EditableStyleSheet extends ElementStyleSheet
     }
 
     final EditableStyleSheet styleSheet = new EditableStyleSheet();
-    for (int i = 0; i < keys.length; i++)
-    {
-      final StyleKey styleKey = keys[i];
-      styleSheet.setStyleProperty(styleKey, values[i]);
+    for ( int i = 0; i < keys.length; i++ ) {
+      final StyleKey styleKey = keys[ i ];
+      styleSheet.setStyleProperty( styleKey, values[ i ] );
     }
     return styleSheet;
   }
@@ -138,23 +119,18 @@ public class EditableStyleSheet extends ElementStyleSheet
    * @throws NullPointerException if the given key is null.
    * @throws ClassCastException   if the value cannot be assigned with the given key.
    */
-  public void setStyleProperty(final StyleKey key, final Object value)
-  {
-    final Object styleProperty = parentValues.get(key);
-    if (styleProperty == value || ObjectUtilities.equal(styleProperty, value))
-    {
+  public void setStyleProperty( final StyleKey key, final Object value ) {
+    final Object styleProperty = parentValues.get( key );
+    if ( styleProperty == value || ObjectUtilities.equal( styleProperty, value ) ) {
       return;
     }
-    editedKeys.add(key);
-    if (value == null)
-    {
-      removedKeys.add(key);
+    editedKeys.add( key );
+    if ( value == null ) {
+      removedKeys.add( key );
+    } else {
+      removedKeys.remove( key );
     }
-    else
-    {
-      removedKeys.remove(key);
-    }
-    super.setStyleProperty(key, value);
+    super.setStyleProperty( key, value );
   }
 
   /**
@@ -166,24 +142,19 @@ public class EditableStyleSheet extends ElementStyleSheet
    * @param defaultValue the default value (<code>null</code> permitted).
    * @return the value.
    */
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (removedKeys.contains(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( removedKeys.contains( key ) ) {
       return defaultValue;
     }
-    return super.getStyleProperty(key, defaultValue);
+    return super.getStyleProperty( key, defaultValue );
   }
 
-  public StyleKey[] getDefinedPropertyNamesArray()
-  {
+  public StyleKey[] getDefinedPropertyNamesArray() {
     final StyleKey[] keys = getPropertyKeys();
-    for (int i = 0; i < keys.length; i++)
-    {
-      final StyleKey key = keys[i];
-      if (editedKeys.contains(key) == false)
-      {
-        keys[i] = null;
+    for ( int i = 0; i < keys.length; i++ ) {
+      final StyleKey key = keys[ i ];
+      if ( editedKeys.contains( key ) == false ) {
+        keys[ i ] = null;
       }
     }
     return keys;

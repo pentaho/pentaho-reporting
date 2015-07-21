@@ -17,64 +17,54 @@
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
+import java.awt.*;
+
 /**
  * This dialog appears when user adds the Crosstab/Subreport element onto the canvas
  *
  * @author Sulaiman Karmali
  */
-public class SubReportDataSourceDialog extends CommonDialog
-{
+public class SubReportDataSourceDialog extends CommonDialog {
   private ProvisionDataSourcePanel provisionDataSourcePanel;
 
-  public SubReportDataSourceDialog(final Dialog owner) throws HeadlessException
-  {
-    super(owner);
+  public SubReportDataSourceDialog( final Dialog owner ) throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public SubReportDataSourceDialog()
-  {
+  public SubReportDataSourceDialog() {
     init();
   }
 
-  public SubReportDataSourceDialog(final Frame aParent)
-  {
-    super(aParent);
+  public SubReportDataSourceDialog( final Frame aParent ) {
+    super( aParent );
     init();
   }
 
-  protected void init()
-  {
-    setTitle(Messages.getString("SubreportDataSourceDialog.Title"));
-    setSize(350, 250);
+  protected void init() {
+    setTitle( Messages.getString( "SubreportDataSourceDialog.Title" ) );
+    setSize( 350, 250 );
 
     provisionDataSourcePanel = new ProvisionDataSourcePanel();
 
     super.init();
   }
 
-  public String performSelection(final ReportDesignerContext context)
-  {
-    provisionDataSourcePanel.setReportDesignerContext(context);
+  public String performSelection( final ReportDesignerContext context ) {
+    provisionDataSourcePanel.setReportDesignerContext( context );
 
     final AbstractReportDefinition reportDefinition = context.getActiveContext().getReportDefinition();
-    provisionDataSourcePanel.importDataSourcesFromMaster((CompoundDataFactory)reportDefinition.getDataFactory());
+    provisionDataSourcePanel.importDataSourcesFromMaster( (CompoundDataFactory) reportDefinition.getDataFactory() );
 
     provisionDataSourcePanel.expandAllNodes();
 
-    if (super.performEdit() == false)
-    {
+    if ( super.performEdit() == false ) {
       return null; // cancel
     }
 
@@ -82,25 +72,21 @@ public class SubReportDataSourceDialog extends CommonDialog
     return provisionDataSourcePanel.getSelectedQueryName();
   }
 
-  public DataFactory getSubReportDataFactory()
-  {
+  public DataFactory getSubReportDataFactory() {
     return provisionDataSourcePanel.getSelectedDataSource();
   }
 
 
-  protected boolean performEdit()
-  {
+  protected boolean performEdit() {
     return super.performEdit();
   }
 
-    protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.CrosstabDataSource";
   }
 
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     return provisionDataSourcePanel;
   }
 }

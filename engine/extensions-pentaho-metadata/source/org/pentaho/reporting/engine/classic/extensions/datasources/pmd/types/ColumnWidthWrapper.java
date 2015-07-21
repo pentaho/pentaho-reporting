@@ -20,54 +20,44 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types;
 
 import org.pentaho.metadata.model.concept.types.ColumnWidth;
 
-public class ColumnWidthWrapper extends ColumnWidth
-{
+public class ColumnWidthWrapper extends ColumnWidth {
   private ColumnWidth backend;
 
-  public ColumnWidthWrapper(final ColumnWidth backend)
-  {
+  public ColumnWidthWrapper( final ColumnWidth backend ) {
     this.backend = backend;
   }
 
   @Override
-  public boolean equals(final Object object)
-  {
-    if (object == null)
-    {
+  public boolean equals( final Object object ) {
+    if ( object == null ) {
       return false;
     }
-    if (object instanceof ColumnWidth == false)
-    {
+    if ( object instanceof ColumnWidth == false ) {
       return false;
     }
-    return backend.equals(object);
+    return backend.equals( object );
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = backend.getType().hashCode();
-    final long bits = Double.doubleToLongBits(backend.getWidth());
-    result *= 23 +  (int)(bits ^ (bits >>> 32));
+    final long bits = Double.doubleToLongBits( backend.getWidth() );
+    result *= 23 + (int) ( bits ^ ( bits >>> 32 ) );
     return result;
   }
 
-  public WidthType getType()
-  {
+  public WidthType getType() {
     return backend.getType();
   }
 
-  public double getWidth()
-  {
+  public double getWidth() {
     return backend.getWidth();
   }
 
-  public void setType(final WidthType type)
-  {
-    backend.setType(type);
+  public void setType( final WidthType type ) {
+    backend.setType( type );
   }
 
-  public void setWidth(final double width)
-  {
-    backend.setWidth(width);
+  public void setWidth( final double width ) {
+    backend.setWidth( width );
   }
 }

@@ -17,80 +17,65 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts.collectors;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 
-public class PivotCategorySetCollector extends AbstractCollectorFunction
-{
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class PivotCategorySetCollector extends AbstractCollectorFunction {
   private ArrayList<String> valueColumns;
   private String categoryColumn;
 
-  public PivotCategorySetCollector()
-  {
+  public PivotCategorySetCollector() {
     valueColumns = new ArrayList<String>();
   }
 
-  public String getCategoryColumn()
-  {
+  public String getCategoryColumn() {
     return categoryColumn;
   }
 
-  public void setCategoryColumn(final String categoryColumn)
-  {
+  public void setCategoryColumn( final String categoryColumn ) {
     this.categoryColumn = categoryColumn;
   }
 
-  public void setValueColumn(final int index, final String field)
-  {
-    if (valueColumns.size() == index)
-    {
-      valueColumns.add(field);
-    }
-    else
-    {
-      valueColumns.set(index, field);
+  public void setValueColumn( final int index, final String field ) {
+    if ( valueColumns.size() == index ) {
+      valueColumns.add( field );
+    } else {
+      valueColumns.set( index, field );
     }
   }
 
-  public String getValueColumn(final int index)
-  {
-    return valueColumns.get(index);
+  public String getValueColumn( final int index ) {
+    return valueColumns.get( index );
   }
 
-  public int getValueColumnCount()
-  {
+  public int getValueColumnCount() {
     return valueColumns.size();
   }
 
-  public String[] getValueColumn()
-  {
-    return valueColumns.toArray(new String[valueColumns.size()]);
+  public String[] getValueColumn() {
+    return valueColumns.toArray( new String[ valueColumns.size() ] );
   }
 
-  public void setValueColumn(final String[] fields)
-  {
+  public void setValueColumn( final String[] fields ) {
     this.valueColumns.clear();
-    this.valueColumns.addAll(Arrays.asList(fields));
+    this.valueColumns.addAll( Arrays.asList( fields ) );
   }
 
 
-  protected Dataset createNewDataset()
-  {
+  protected Dataset createNewDataset() {
     return new DefaultCategoryDataset();
   }
 
 
-  protected void buildDataset()
-  {
+  protected void buildDataset() {
     final DataRow dataRow = getDataRow();
-    final Object categoryObject = dataRow.get(getCategoryColumn());
-    if (categoryObject instanceof Comparable == false)
-    {
+    final Object categoryObject = dataRow.get( getCategoryColumn() );
+    if ( categoryObject instanceof Comparable == false ) {
       return;
     }
 
@@ -100,22 +85,18 @@ public class PivotCategorySetCollector extends AbstractCollectorFunction
     final DefaultCategoryDataset categoryDataset = (DefaultCategoryDataset) getDataSet();
 
     final int maxIndex = this.valueColumns.size();
-    for (int i = 0; i < maxIndex; i++)
-    {
-      final Comparable seriesName = querySeriesValue(i);
-      final Object valueObject = dataRow.get(getValueColumn(i));
-      final Number value = (valueObject instanceof Number) ? (Number) valueObject : null;
-      final Number existingValue = CollectorFunctionUtil.queryExistingValueFromDataSet(categoryDataset, categoryComparable, seriesName);
-      if (existingValue != null)
-      {
-        if (value != null)
-        {
-          categoryDataset.setValue(CollectorFunctionUtil.add(existingValue, value), categoryComparable, seriesName);
+    for ( int i = 0; i < maxIndex; i++ ) {
+      final Comparable seriesName = querySeriesValue( i );
+      final Object valueObject = dataRow.get( getValueColumn( i ) );
+      final Number value = ( valueObject instanceof Number ) ? (Number) valueObject : null;
+      final Number existingValue =
+        CollectorFunctionUtil.queryExistingValueFromDataSet( categoryDataset, categoryComparable, seriesName );
+      if ( existingValue != null ) {
+        if ( value != null ) {
+          categoryDataset.setValue( CollectorFunctionUtil.add( existingValue, value ), categoryComparable, seriesName );
         }
-      }
-      else
-      {
-        categoryDataset.setValue(value, categoryComparable, seriesName);
+      } else {
+        categoryDataset.setValue( value, categoryComparable, seriesName );
       }
     }
   }
@@ -127,8 +108,7 @@ public class PivotCategorySetCollector extends AbstractCollectorFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final PivotCategorySetCollector expression = (PivotCategorySetCollector) super.getInstance();
     expression.valueColumns = (ArrayList) valueColumns.clone();
     return expression;

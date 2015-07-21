@@ -24,10 +24,8 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.rtf.RTFExportPlugin
  *
  * @author Ezequiel Cuellar
  */
-public final class ExportRtfAction extends AbstractExportAction
-{
-  public ExportRtfAction()
-  {
-    super(new RTFExportPlugin());
+public final class ExportRtfAction extends AbstractExportAction {
+  public ExportRtfAction() {
+    super( new RTFExportPlugin() );
   }
 }

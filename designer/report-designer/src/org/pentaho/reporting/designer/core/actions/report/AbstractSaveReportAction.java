@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.designer.core.actions.report;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
-
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
@@ -38,6 +30,11 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class AbstractSaveReportAction extends AbstractReportContextAction {
 
@@ -62,7 +59,7 @@ public abstract class AbstractSaveReportAction extends AbstractReportContextActi
   }
 
   public boolean saveReport( final ReportDesignerContext context, final ReportDocumentContext activeContext,
-      final Component parent ) {
+                             final Component parent ) {
     final MasterReport report = activeContext.getContextRoot();
 
     // Get the current file target
@@ -73,10 +70,12 @@ public abstract class AbstractSaveReportAction extends AbstractReportContextActi
 
     // if no name has been set for the report, default to the name of the file
     try {
-      report.setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", target.getCanonicalPath() ); // NON-NLS
+      report.setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path",
+        target.getCanonicalPath() ); // NON-NLS
     } catch ( IOException ioe ) {
       // then let's not set the save path attribute to the *canonical path*
-      report.setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", target.getAbsolutePath() ); // NON-NLS
+      report
+        .setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", target.getAbsolutePath() ); // NON-NLS
     }
 
     // Write the report to the filename

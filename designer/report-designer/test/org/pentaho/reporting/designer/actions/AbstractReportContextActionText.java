@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.designer.actions;
 
-import java.awt.event.ActionEvent;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,46 +28,40 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 
-public class AbstractReportContextActionText
-{
-  private static class TestAction extends AbstractElementSelectionAction
-  {
-    private TestAction()
-    {
+import java.awt.event.ActionEvent;
+
+public class AbstractReportContextActionText {
+  private static class TestAction extends AbstractElementSelectionAction {
+    private TestAction() {
     }
 
-    protected void selectedElementPropertiesChanged(final ReportModelEvent event)
-    {
+    protected void selectedElementPropertiesChanged( final ReportModelEvent event ) {
 
     }
 
-    public DocumentContextSelectionModel getSelectionModel()
-    {
+    public DocumentContextSelectionModel getSelectionModel() {
       return super.getSelectionModel();
     }
 
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       //
     }
   }
 
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
     ReportDesignerBoot.getInstance().start();
   }
 
   @Test
-  public void testActionInit() throws Exception
-  {
+  public void testActionInit() throws Exception {
     TestReportDesignerContext designerContext = new TestReportDesignerContext();
-    int i = designerContext.addMasterReport(new MasterReport());
-    designerContext.setActiveDocument(designerContext.getDocumentContext(i));
+    int i = designerContext.addMasterReport( new MasterReport() );
+    designerContext.setActiveDocument( designerContext.getDocumentContext( i ) );
 
     final TestAction crosstabAction = new TestAction();
-    crosstabAction.setReportDesignerContext(designerContext);
-    Assert.assertNotNull(crosstabAction.getSelectionModel());
+    crosstabAction.setReportDesignerContext( designerContext );
+    Assert.assertNotNull( crosstabAction.getSelectionModel() );
   }
 }

@@ -19,35 +19,28 @@ package org.pentaho.reporting.designer.core.util.undo;
 
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 
-public class CompoundUndoEntry implements UndoEntry
-{
+public class CompoundUndoEntry implements UndoEntry {
   private UndoEntry[] undoEntries;
 
-  public CompoundUndoEntry(final UndoEntry... undoEntries)
-  {
+  public CompoundUndoEntry( final UndoEntry... undoEntries ) {
     this.undoEntries = undoEntries.clone();
   }
 
-  public void undo(final ReportDocumentContext renderContext)
-  {
-    for (int i = undoEntries.length - 1; i >= 0; i--)
-    {
-      final UndoEntry undoEntry = undoEntries[i];
-      undoEntry.undo(renderContext);
+  public void undo( final ReportDocumentContext renderContext ) {
+    for ( int i = undoEntries.length - 1; i >= 0; i-- ) {
+      final UndoEntry undoEntry = undoEntries[ i ];
+      undoEntry.undo( renderContext );
     }
   }
 
-  public void redo(final ReportDocumentContext renderContext)
-  {
-    for (int i = 0; i < undoEntries.length; i++)
-    {
-      final UndoEntry undoEntry = undoEntries[i];
-      undoEntry.redo(renderContext);
+  public void redo( final ReportDocumentContext renderContext ) {
+    for ( int i = 0; i < undoEntries.length; i++ ) {
+      final UndoEntry undoEntry = undoEntries[ i ];
+      undoEntry.redo( renderContext );
     }
   }
 
-  public UndoEntry merge(final UndoEntry newEntry)
-  {
+  public UndoEntry merge( final UndoEntry newEntry ) {
     return null;
   }
 }

@@ -24,13 +24,11 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.Kettle
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class KettleTransFromFileReadHandler extends AbstractKettleTransformationProducerReadHandler
-{
-  private static final Log logger = LogFactory.getLog(KettleTransFromFileReadHandler.class);
+public class KettleTransFromFileReadHandler extends AbstractKettleTransformationProducerReadHandler {
+  private static final Log logger = LogFactory.getLog( KettleTransFromFileReadHandler.class );
   private String fileName;
 
-  public KettleTransFromFileReadHandler()
-  {
+  public KettleTransFromFileReadHandler() {
   }
 
   /**
@@ -39,33 +37,28 @@ public class KettleTransFromFileReadHandler extends AbstractKettleTransformation
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    fileName = attrs.getValue(getUri(), "filename");
-    if (fileName == null)
-    {
-      logger.warn("Required attribute 'filename' is not defined. This report may not execute correctly.");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    fileName = attrs.getValue( getUri(), "filename" );
+    if ( fileName == null ) {
+      logger.warn( "Required attribute 'filename' is not defined. This report may not execute correctly." );
     }
   }
 
-  public String getFileName()
-  {
+  public String getFileName() {
     return fileName;
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    */
-  public KettleTransformationProducer getObject()
-  {
+  public KettleTransformationProducer getObject() {
     KettleTransFromFileProducer kettleTransFromFileProducer = new KettleTransFromFileProducer
-        (getRepositoryName(), fileName, getStepName(), getUsername(), getPassword(),
-            getDefinedArgumentNames(), getDefinedVariableNames());
-    kettleTransFromFileProducer.setStopOnError(isStopOnError());
+      ( getRepositoryName(), fileName, getStepName(), getUsername(), getPassword(),
+        getDefinedArgumentNames(), getDefinedVariableNames() );
+    kettleTransFromFileProducer.setStopOnError( isStopOnError() );
     return kettleTransFromFileProducer;
   }
 }

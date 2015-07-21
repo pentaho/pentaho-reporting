@@ -17,13 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter;
 
-import org.xml.sax.Locator;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
+import org.xml.sax.Locator;
 
-public class BooleanConverter implements ObjectConverter
-{
-  public Object convertFromString(final String s, final Locator locator) throws ParseException
-  {
-    return Boolean.valueOf(s);
+public class BooleanConverter implements ObjectConverter {
+  public Object convertFromString( final String s, final Locator locator ) throws ParseException {
+    return Boolean.valueOf( s );
   }
 }

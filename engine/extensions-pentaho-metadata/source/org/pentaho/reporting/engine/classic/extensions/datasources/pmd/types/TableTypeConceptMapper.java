@@ -18,13 +18,11 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types;
 
 import org.pentaho.metadata.model.concept.types.TableType;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
+import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
-public class TableTypeConceptMapper implements ConceptQueryMapper
-{
-  public TableTypeConceptMapper()
-  {
+public class TableTypeConceptMapper implements ConceptQueryMapper {
+  public TableTypeConceptMapper() {
   }
 
   /**
@@ -32,35 +30,28 @@ public class TableTypeConceptMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context)
-  {
-    if (value == null)
-    {
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof TableType == false)
-    {
+    if ( value instanceof TableType == false ) {
       return null;
     }
 
-    if (type == null || Object.class.equals(type) || TableType.class.equals(type))
-    {
+    if ( type == null || Object.class.equals( type ) || TableType.class.equals( type ) ) {
       return value;
     }
 
-    if (String.class.equals(type) == false)
-    {
+    if ( String.class.equals( type ) == false ) {
       return null;
     }
 
     final TableType fieldTypeSettings = (TableType) value;
-    if (TableType.FACT.equals(fieldTypeSettings))
-    {
+    if ( TableType.FACT.equals( fieldTypeSettings ) ) {
       return "fact";
     }
-    if (TableType.DIMENSION.equals(fieldTypeSettings))
-    {
+    if ( TableType.DIMENSION.equals( fieldTypeSettings ) ) {
       return "dimension";
     }
     return null;

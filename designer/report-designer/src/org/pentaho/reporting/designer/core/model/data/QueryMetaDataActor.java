@@ -22,7 +22,6 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import scala.concurrent.Future;
 
-public interface QueryMetaDataActor
-{
-  Future<ContextAwareDataSchemaModel> retrieve(MasterReport master, AbstractReportDefinition report);
+public interface QueryMetaDataActor {
+  Future<ContextAwareDataSchemaModel> retrieve( MasterReport master, AbstractReportDefinition report );
 }

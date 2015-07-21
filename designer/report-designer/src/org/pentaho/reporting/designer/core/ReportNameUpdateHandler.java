@@ -17,9 +17,3 @@
 
 package org.pentaho.reporting.designer.core;
 
-import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
-
-import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
-import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
-import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;

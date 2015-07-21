@@ -17,49 +17,41 @@
 
 package org.pentaho.reporting.ui.datasources.mondrian;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.AbstractMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.SimpleDenormalizedMDXDataFactory;
 
+import java.awt.*;
+
 /**
  * @author Michael D'Amour
  */
-public class SimpleDenormalizedMdxDataSourceEditor extends SimpleMondrianDataSourceEditor
-{
+public class SimpleDenormalizedMdxDataSourceEditor extends SimpleMondrianDataSourceEditor {
 
-  public SimpleDenormalizedMdxDataSourceEditor(final DesignTimeContext context)
-  {
-    super(context);
+  public SimpleDenormalizedMdxDataSourceEditor( final DesignTimeContext context ) {
+    super( context );
   }
 
-  public SimpleDenormalizedMdxDataSourceEditor(final DesignTimeContext context, final Dialog owner)
-  {
-    super(context, owner);
+  public SimpleDenormalizedMdxDataSourceEditor( final DesignTimeContext context, final Dialog owner ) {
+    super( context, owner );
   }
 
-  public SimpleDenormalizedMdxDataSourceEditor(final DesignTimeContext context, final Frame owner)
-  {
-    super(context, owner);
+  public SimpleDenormalizedMdxDataSourceEditor( final DesignTimeContext context, final Frame owner ) {
+    super( context, owner );
   }
 
-  protected void init(final DesignTimeContext context)
-  {
-    super.init(context);
-    setTitle(Messages.getString("SimpleDenormalizedMdxDataSourceEditor.Title"));
+  protected void init( final DesignTimeContext context ) {
+    super.init( context );
+    setTitle( Messages.getString( "SimpleDenormalizedMdxDataSourceEditor.Title" ) );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "MondrianDataSourceEditor.SimpleDenormalized";
   }
 
-  protected AbstractMDXDataFactory createDataFactory()
-  {
+  protected AbstractMDXDataFactory createDataFactory() {
     final SimpleDenormalizedMDXDataFactory returnDataFactory = new SimpleDenormalizedMDXDataFactory();
-    configureConnection(returnDataFactory);
+    configureConnection( returnDataFactory );
     return returnDataFactory;
   }
 

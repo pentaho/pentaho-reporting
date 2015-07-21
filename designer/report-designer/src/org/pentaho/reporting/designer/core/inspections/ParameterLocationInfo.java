@@ -19,11 +19,9 @@ package org.pentaho.reporting.designer.core.inspections;
 
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 
-public class ParameterLocationInfo extends LocationInfo
-{
-  public ParameterLocationInfo(final ParameterDefinitionEntry parameterName)
-  {
-    super(parameterName);
+public class ParameterLocationInfo extends LocationInfo {
+  public ParameterLocationInfo( final ParameterDefinitionEntry parameterName ) {
+    super( parameterName );
   }
 
 }

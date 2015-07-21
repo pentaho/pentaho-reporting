@@ -21,14 +21,11 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.Abstra
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.LegacyBandedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.OlapConnectionProvider;
 
-public class LegacyBandedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler
-{
-  public LegacyBandedMDXDataSourceReadHandler()
-  {
+public class LegacyBandedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler {
+  public LegacyBandedMDXDataSourceReadHandler() {
   }
 
-  protected AbstractMDXDataFactory createDataFactory(final OlapConnectionProvider connectionProvider)
-  {
-    return new LegacyBandedMDXDataFactory(connectionProvider);
+  protected AbstractMDXDataFactory createDataFactory( final OlapConnectionProvider connectionProvider ) {
+    return new LegacyBandedMDXDataFactory( connectionProvider );
   }
 }

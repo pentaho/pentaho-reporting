@@ -17,21 +17,17 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-public abstract class StackedCategoricalChartExpression extends CategoricalChartExpression
-{
+public abstract class StackedCategoricalChartExpression extends CategoricalChartExpression {
   private boolean stacked;
 
-  protected StackedCategoricalChartExpression()
-  {
+  protected StackedCategoricalChartExpression() {
   }
 
-  public boolean isStacked()
-  {
+  public boolean isStacked() {
     return stacked;
   }
 
-  public void setStacked(final boolean value)
-  {
+  public void setStacked( final boolean value ) {
     stacked = value;
   }
 

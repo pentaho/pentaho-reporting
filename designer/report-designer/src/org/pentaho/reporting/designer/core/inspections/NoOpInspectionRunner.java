@@ -22,32 +22,26 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 public class NoOpInspectionRunner implements InspectionRunner {
   public static final InspectionRunner INSTANCE = new NoOpInspectionRunner();
 
-  protected NoOpInspectionRunner()
-  {
+  protected NoOpInspectionRunner() {
   }
 
-  public void startTimer()
-  {
-
-  }
-
-  public void dispose()
-  {
+  public void startTimer() {
 
   }
 
-  public void addInspectionListener(final InspectionResultListener listener)
-  {
+  public void dispose() {
 
   }
 
-  public void removeInspectionListener(final InspectionResultListener listener)
-  {
+  public void addInspectionListener( final InspectionResultListener listener ) {
 
   }
 
-  public void nodeChanged(final ReportModelEvent event)
-  {
+  public void removeInspectionListener( final InspectionResultListener listener ) {
+
+  }
+
+  public void nodeChanged( final ReportModelEvent event ) {
 
   }
 }

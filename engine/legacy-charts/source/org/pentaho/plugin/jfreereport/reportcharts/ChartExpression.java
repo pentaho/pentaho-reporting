@@ -19,8 +19,8 @@ package org.pentaho.plugin.jfreereport.reportcharts;
 
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 
-public interface ChartExpression extends Expression
-{
+public interface ChartExpression extends Expression {
   public String getDataSource();
-  public void setDataSource(String dataSource);
+
+  public void setDataSource( String dataSource );
 }

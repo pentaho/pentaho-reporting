@@ -17,104 +17,85 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.cda;
 
+import org.pentaho.reporting.engine.classic.core.ParameterMapping;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
-
-public class CdaQueryEntry implements Serializable
-{
+public class CdaQueryEntry implements Serializable {
   private String id;
   private String name;
   private ParameterMapping[] parameters;
 
-  public CdaQueryEntry(final String logicalQueryName, final String cdaId)
-  {
-    if (logicalQueryName == null)
-    {
+  public CdaQueryEntry( final String logicalQueryName, final String cdaId ) {
+    if ( logicalQueryName == null ) {
       throw new NullPointerException();
     }
-    if (cdaId == null)
-    {
+    if ( cdaId == null ) {
       throw new NullPointerException();
     }
     this.name = logicalQueryName;
     this.id = cdaId;
-    this.parameters = new ParameterMapping[0];
+    this.parameters = new ParameterMapping[ 0 ];
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public void setName(final String name)
-  {
-    if (name == null)
-    {
+  public void setName( final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
     this.name = name;
   }
 
-  public String getId()
-  {
+  public String getId() {
     return id;
   }
 
-  public void setId(final String id)
-  {
-    if (id == null)
-    {
+  public void setId( final String id ) {
+    if ( id == null ) {
       throw new NullPointerException();
     }
     this.id = id;
   }
 
-  public ParameterMapping[] getParameters()
-  {
+  public ParameterMapping[] getParameters() {
     return parameters.clone();
   }
 
-  public void setParameters(final ParameterMapping[] parameters)
-  {
+  public void setParameters( final ParameterMapping[] parameters ) {
     this.parameters = parameters.clone();
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final CdaQueryEntry that = (CdaQueryEntry) o;
 
-    if (!id.equals(that.id))
-    {
+    if ( !id.equals( that.id ) ) {
       return false;
     }
-    if (!name.equals(that.name))
-    {
+    if ( !name.equals( that.name ) ) {
       return false;
     }
-    if (!Arrays.equals(parameters, that.parameters))
-    {
+    if ( !Arrays.equals( parameters, that.parameters ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = id.hashCode();
     result = 31 * result + name.hashCode();
-    result = 31 * result + Arrays.hashCode(parameters);
+    result = 31 * result + Arrays.hashCode( parameters );
     return result;
   }
 }

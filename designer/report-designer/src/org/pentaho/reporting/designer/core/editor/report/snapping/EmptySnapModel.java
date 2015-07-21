@@ -24,12 +24,10 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class EmptySnapModel implements SnapPositionsModel
-{
+public class EmptySnapModel implements SnapPositionsModel {
   public static final EmptySnapModel INSTANCE = new EmptySnapModel();
 
-  protected EmptySnapModel()
-  {
+  protected EmptySnapModel() {
   }
 
   /**
@@ -38,9 +36,8 @@ public class EmptySnapModel implements SnapPositionsModel
    * @param position
    * @return
    */
-  public long getNearestSnapPosition(final long position,
-                                     final InstanceID owner)
-  {
+  public long getNearestSnapPosition( final long position,
+                                      final InstanceID owner ) {
     return position;
   }
 }

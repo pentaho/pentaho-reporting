@@ -4,64 +4,72 @@ there.is.only.xul" xmlns:pen="http://www.pentaho.org/2008/xul">
   <deck id="content_deck">
     <hbox id="format_groups_and_details" flex="1">
       <vbox flex="2">
-        <label value="${GROUPS}" />
-        <listbox id="format_groups_list" seltype="single" flex="1" pen:binding="displayFieldName" />
-        <label value="${DETAILS}" />
-        <listbox id="format_details_list" seltype="single" flex="1" pen:binding="displayFieldName" />
+        <label value="${GROUPS}"/>
+        <listbox id="format_groups_list" seltype="single" flex="1" pen:binding="displayFieldName"/>
+        <label value="${DETAILS}"/>
+        <listbox id="format_details_list" seltype="single" flex="1" pen:binding="displayFieldName"/>
       </vbox>
       <vbox flex="3">
-        <groupbox flex="1" >
-          <caption label="${FORMAT}" />
-          <deck id = "format_options_deck" flex="1" >
-            <vbox id="empty_format_page" />
+        <groupbox flex="1">
+          <caption label="${FORMAT}"/>
+          <deck id="format_options_deck" flex="1">
+            <vbox id="empty_format_page"/>
             <vbox id="format_detail_options" flex="1">
-              <label value="${DISPLAY_NAME}" />
-              <textbox id="format_detail_display_name_tb" />
-              <label value="${ALIGNMENT}" />
-              <hbox id="detail_align_btn_box" >
-                <button type="radio" id="align_detail_left" group="detail_alignment" image="images/align_left.png" selectedimage="images/align_left_selected.png" onclick="format_step_controller.setAlignmentLeft()" />
-                <button type="radio" id="align_detail_center" group="detail_alignment" image="images/align_center.png" selectedimage="images/align_center_selected.png" onclick="format_step_controller.setAlignmentCenter()" />
-                <button type="radio" id="align_detail_right" group="detail_alignment" image="images/align_right.png" selectedimage="images/align_right_selected.png" onclick="format_step_controller.setAlignmentRight()" />
-                <button type="radio" id="align_detail_justify" group="detail_alignment" image="images/align_justify.png" selectedimage="images/align_justify_selected.png" onclick="format_step_controller.setAlignmentJustify()" />
+              <label value="${DISPLAY_NAME}"/>
+              <textbox id="format_detail_display_name_tb"/>
+              <label value="${ALIGNMENT}"/>
+              <hbox id="detail_align_btn_box">
+                <button type="radio" id="align_detail_left" group="detail_alignment" image="images/align_left.png"
+                        selectedimage="images/align_left_selected.png"
+                        onclick="format_step_controller.setAlignmentLeft()"/>
+                <button type="radio" id="align_detail_center" group="detail_alignment" image="images/align_center.png"
+                        selectedimage="images/align_center_selected.png"
+                        onclick="format_step_controller.setAlignmentCenter()"/>
+                <button type="radio" id="align_detail_right" group="detail_alignment" image="images/align_right.png"
+                        selectedimage="images/align_right_selected.png"
+                        onclick="format_step_controller.setAlignmentRight()"/>
+                <button type="radio" id="align_detail_justify" group="detail_alignment" image="images/align_justify.png"
+                        selectedimage="images/align_justify_selected.png"
+                        onclick="format_step_controller.setAlignmentJustify()"/>
               </hbox>
 
-              <label value="${DATA_FORMAT}" />
+              <label value="${DATA_FORMAT}"/>
               <menulist id="format_detail_data_ml" editable="true">
                 <menupopup>
-                  <menuitem label="${NO_FORMAT}" />
-                  <menuitem label="${INTEGER_NUMERIC_FORMAT}" />
-                  <menuitem label="${DECIMAL_NUMERIC_FORMAT}" />
-                  <menuitem label="${CURRENCY_NUMERIC_FORMAT}" />
-                  <menuitem label="${CURRENCY_DECIMAL_FORMAT}" />
-                  <menuitem label="${PERCENT_NUMERIC_FORMAT}" />
-                  <menuitem label="${LONG_DATE_NUMERIC_FORMAT}" />
-                  <menuitem label="${SHORT_DATE_NUMERIC_FORMAT}" />
-                  <menuitem label="${ALT_LONG_DATE_NUMERIC_FORMAT}" />
-                  <menuitem label="${ALT_SHORT_DATE_NUMERIC_FORMAT}" />
+                  <menuitem label="${NO_FORMAT}"/>
+                  <menuitem label="${INTEGER_NUMERIC_FORMAT}"/>
+                  <menuitem label="${DECIMAL_NUMERIC_FORMAT}"/>
+                  <menuitem label="${CURRENCY_NUMERIC_FORMAT}"/>
+                  <menuitem label="${CURRENCY_DECIMAL_FORMAT}"/>
+                  <menuitem label="${PERCENT_NUMERIC_FORMAT}"/>
+                  <menuitem label="${LONG_DATE_NUMERIC_FORMAT}"/>
+                  <menuitem label="${SHORT_DATE_NUMERIC_FORMAT}"/>
+                  <menuitem label="${ALT_LONG_DATE_NUMERIC_FORMAT}"/>
+                  <menuitem label="${ALT_SHORT_DATE_NUMERIC_FORMAT}"/>
                 </menupopup>
               </menulist>
               <hbox>
-                <label value="${WIDTH}" />
+                <label value="${WIDTH}"/>
                 <label id="format_detail_width_label" flex="1"/>
-                <spacer flex="1" />
+                <spacer flex="1"/>
                 <checkbox id="auto_width_cb" label="${AUTO_WIDTH}" flex="1"/>
               </hbox>
               <scale id="format_detail_width_scale" min="0" max="100" inc="1" pageincrement="10"/>
-              <label value="${AGGREGATION}" />
-              <menulist id="format_detail_aggregation_ml" >
-                <menupopup />
+              <label value="${AGGREGATION}"/>
+              <menulist id="format_detail_aggregation_ml">
+                <menupopup/>
               </menulist>
               <hbox>
-                <checkbox id="format_detail_distinct_only_cb" />
-                <label value="${DISTINCT_ONLY}" />
+                <checkbox id="format_detail_distinct_only_cb"/>
+                <label value="${DISTINCT_ONLY}"/>
               </hbox>
             </vbox>
             <vbox id="format_group_options">
-              <label value="${GROUP_HEADER_LABEL}" />
-              <textbox id="format_group_display_name_tb" />
-              <label value="${GROUP_TOTALS}" />
-              <textbox id="format_group_totals_tb" />
-              
+              <label value="${GROUP_HEADER_LABEL}"/>
+              <textbox id="format_group_display_name_tb"/>
+              <label value="${GROUP_TOTALS}"/>
+              <textbox id="format_group_totals_tb"/>
+
               <!-- Uncomment to turn on the group summary alignment buttons.  
                    Uncomment corresponding code in FormatStep.java to turn this feature back on -->
               <!--
@@ -75,13 +83,13 @@ there.is.only.xul" xmlns:pen="http://www.pentaho.org/2008/xul">
               </hbox>
               
              -->
-             
+
             </vbox>
           </deck>
         </groupbox>
         <hbox>
-          <spacer flex="1" />
-          <button label="${PREVIEW}" onclick="wizard_controller.preview()" />
+          <spacer flex="1"/>
+          <button label="${PREVIEW}" onclick="wizard_controller.preview()"/>
         </hbox>
       </vbox>
     </hbox>

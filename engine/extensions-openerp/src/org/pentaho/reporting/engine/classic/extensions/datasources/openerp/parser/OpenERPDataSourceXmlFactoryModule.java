@@ -37,50 +37,37 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.openerp.pars
  */
 
 import org.pentaho.reporting.engine.classic.extensions.datasources.openerp.OpenERPModule;
-import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
+import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
 /**
- * 
  * @author Pieter van der Merwe
- *
  */
-public class OpenERPDataSourceXmlFactoryModule implements XmlFactoryModule
-{
-  public OpenERPDataSourceXmlFactoryModule()
-  {
+public class OpenERPDataSourceXmlFactoryModule implements XmlFactoryModule {
+  public OpenERPDataSourceXmlFactoryModule() {
   }
 
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (OpenERPModule.NAMESPACE.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( OpenERPModule.NAMESPACE.equals( rootNamespace ) == false ) {
         return NOT_RECOGNIZED;
-      }
-      else if ("openerp-datasource".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "openerp-datasource".equals( documentInfo.getRootElement() ) ) {
         return RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("openerp-datasource".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "openerp-datasource".equals( documentInfo.getRootElement() ) ) {
       return RECOGNIZED_BY_TAGNAME;
     }
 
     return NOT_RECOGNIZED;
   }
 
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return OpenERPModule.NAMESPACE;
   }
 
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new OpenERPDataSourceReadHandler();
   }
 

@@ -17,19 +17,17 @@
 
 package org.pentaho.reporting.designer.core.util.table.expressions;
 
-import java.awt.Component;
-import java.util.Locale;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorRegistry;
 
-public class ReportPreProcessorCellRenderer extends DefaultTableCellRenderer
-{
-  public ReportPreProcessorCellRenderer()
-  {
-    putClientProperty("html.disable", Boolean.TRUE); // NON-NLS
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
+import java.util.Locale;
+
+public class ReportPreProcessorCellRenderer extends DefaultTableCellRenderer {
+  public ReportPreProcessorCellRenderer() {
+    putClientProperty( "html.disable", Boolean.TRUE ); // NON-NLS
   }
 
   /**
@@ -43,34 +41,28 @@ public class ReportPreProcessorCellRenderer extends DefaultTableCellRenderer
    * @param column     the column of the cell to render
    * @return the default table cell renderer
    */
-  public Component getTableCellRendererComponent(final JTable table,
-                                                 final Object value,
-                                                 final boolean isSelected,
-                                                 final boolean hasFocus,
-                                                 final int row,
-                                                 final int column)
-  {
+  public Component getTableCellRendererComponent( final JTable table,
+                                                  final Object value,
+                                                  final boolean isSelected,
+                                                  final boolean hasFocus,
+                                                  final int row,
+                                                  final int column ) {
     // just configure it
-    super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    setText(" ");
-    setToolTipText(null);
-    if (value != null)
-    {
+    super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
+    setText( " " );
+    setToolTipText( null );
+    if ( value != null ) {
       final ReportPreProcessorRegistry registry = ReportPreProcessorRegistry.getInstance();
       final String expressionName = value.getClass().getName();
-      if (registry.isReportPreProcessorRegistered(expressionName))
-      {
+      if ( registry.isReportPreProcessorRegistered( expressionName ) ) {
         final ReportPreProcessorMetaData data =
-            registry.getReportPreProcessorMetaData(expressionName);
-        setText(data.getDisplayName(Locale.getDefault()));
-        if (data.isDeprecated())
-        {
-          setToolTipText(data.getDeprecationMessage(Locale.getDefault()));
+          registry.getReportPreProcessorMetaData( expressionName );
+        setText( data.getDisplayName( Locale.getDefault() ) );
+        if ( data.isDeprecated() ) {
+          setToolTipText( data.getDeprecationMessage( Locale.getDefault() ) );
         }
-      }
-      else
-      {
-        setText(expressionName);
+      } else {
+        setText( expressionName );
       }
     }
     return this;

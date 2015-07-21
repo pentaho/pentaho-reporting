@@ -20,24 +20,18 @@ package org.pentaho.reporting.designer.core.util.table.filter;
 import org.pentaho.reporting.designer.core.util.table.GroupedName;
 import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
 
-public class RejectStandaloneExpressionPropertiesFilter implements Filter
-{
-  public RejectStandaloneExpressionPropertiesFilter()
-  {
+public class RejectStandaloneExpressionPropertiesFilter implements Filter {
+  public RejectStandaloneExpressionPropertiesFilter() {
   }
 
-  public Result isMatch(final Object o)
-  {
-    if (o instanceof GroupedName)
-    {
+  public Result isMatch( final Object o ) {
+    if ( o instanceof GroupedName ) {
       final GroupedName name = (GroupedName) o;
       final MetaData metaData = name.getMetaData();
-      if ("name".equals(metaData.getName()))
-      {
+      if ( "name".equals( metaData.getName() ) ) {
         return Result.REJECT;
       }
-      if ("dependencyLevel".equals(metaData.getName()))
-      {
+      if ( "dependencyLevel".equals( metaData.getName() ) ) {
         return Result.REJECT;
       }
     }

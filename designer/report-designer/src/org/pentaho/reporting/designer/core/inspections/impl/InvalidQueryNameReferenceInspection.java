@@ -37,131 +37,103 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 
-public class InvalidQueryNameReferenceInspection extends AbstractStructureInspection
-{
-  public InvalidQueryNameReferenceInspection()
-  {
+public class InvalidQueryNameReferenceInspection extends AbstractStructureInspection {
+  public InvalidQueryNameReferenceInspection() {
   }
 
-  public boolean isInlineInspection()
-  {
+  public boolean isInlineInspection() {
     return true;
   }
 
-  public void inspect(final ReportDesignerContext designerContext,
-                      final ReportDocumentContext reportRenderContext,
-                      final InspectionResultListener resultHandler) throws ReportDataFactoryException
-  {
-    super.inspect(designerContext, reportRenderContext, resultHandler);
+  public void inspect( final ReportDesignerContext designerContext,
+                       final ReportDocumentContext reportRenderContext,
+                       final InspectionResultListener resultHandler ) throws ReportDataFactoryException {
+    super.inspect( designerContext, reportRenderContext, resultHandler );
     final AbstractReportDefinition definition = reportRenderContext.getReportDefinition();
     final String query = definition.getQuery();
-    if (query == null)
-    {
+    if ( query == null ) {
       final AttributeLocationInfo queryLocation = new AttributeLocationInfo
-          (definition, AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY, false);
+        ( definition, AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY, false );
       resultHandler.notifyInspectionResult
-          (new InspectionResult(this, InspectionResult.Severity.HINT,
-              Messages.getString("InvalidQueryNameReferenceInspection.QueryUndefined"),
-              queryLocation));
+        ( new InspectionResult( this, InspectionResult.Severity.HINT,
+          Messages.getString( "InvalidQueryNameReferenceInspection.QueryUndefined" ),
+          queryLocation ) );
 
-    }
-    else
-    {
-      if (isQueryExecutable(definition, query) == false)
-      {
+    } else {
+      if ( isQueryExecutable( definition, query ) == false ) {
         final AttributeLocationInfo queryLocation = new AttributeLocationInfo
-            (definition, AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY, false);
+          ( definition, AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY, false );
         resultHandler.notifyInspectionResult
-            (new InspectionResult(this, InspectionResult.Severity.ERROR,
-                Messages.getString("InvalidQueryNameReferenceInspection.QueryNotRecognized", query),
-                queryLocation));
+          ( new InspectionResult( this, InspectionResult.Severity.ERROR,
+            Messages.getString( "InvalidQueryNameReferenceInspection.QueryNotRecognized", query ),
+            queryLocation ) );
       }
     }
 
     final ContextAwareDataSchemaModel dataSchemaModel = reportRenderContext.getReportDataSchemaModel();
-    if (dataSchemaModel.isValid() == false)
-    {
+    if ( dataSchemaModel.isValid() == false ) {
       final Throwable throwable = dataSchemaModel.getDataFactoryException();
-      if (throwable != null)
-      {
+      if ( throwable != null ) {
         final DataFactory dataFactory = reportRenderContext.getContextRoot().getDataFactory();
         final LocationInfo queryLocation;
-        if (dataFactory instanceof CompoundDataFactory)
-        {
+        if ( dataFactory instanceof CompoundDataFactory ) {
           final CompoundDataFactory cdf = (CompoundDataFactory) dataFactory;
-          final DataFactory element = cdf.getDataFactoryForQuery(query);
-          if (element == null)
-          {
-            queryLocation = new LocationInfo(dataFactory);
+          final DataFactory element = cdf.getDataFactoryForQuery( query );
+          if ( element == null ) {
+            queryLocation = new LocationInfo( dataFactory );
+          } else {
+            queryLocation = new LocationInfo( element );
           }
-          else
-          {
-            queryLocation = new LocationInfo(element);
-          }
-        }
-        else
-        {
-          queryLocation = new LocationInfo(dataFactory);
+        } else {
+          queryLocation = new LocationInfo( dataFactory );
         }
         resultHandler.notifyInspectionResult
-            (new InspectionResult(this, InspectionResult.Severity.ERROR,
-                Messages.getString("InvalidQueryNameReferenceInspection.QueryDidNotExecute", query, throwable.toString()),
-                queryLocation));
+          ( new InspectionResult( this, InspectionResult.Severity.ERROR,
+            Messages.getString( "InvalidQueryNameReferenceInspection.QueryDidNotExecute", query, throwable.toString() ),
+            queryLocation ) );
       }
     }
   }
 
-  protected void inspectParameter(final ReportDesignerContext designerContext,
-                                  final ReportDocumentContext reportRenderContext,
-                                  final InspectionResultListener resultHandler,
-                                  final String[] columnNames,
-                                  final ReportParameterDefinition definition,
-                                  final ParameterDefinitionEntry parameter)
-  {
-    if (parameter instanceof DefaultListParameter)
-    {
+  protected void inspectParameter( final ReportDesignerContext designerContext,
+                                   final ReportDocumentContext reportRenderContext,
+                                   final InspectionResultListener resultHandler,
+                                   final String[] columnNames,
+                                   final ReportParameterDefinition definition,
+                                   final ParameterDefinitionEntry parameter ) {
+    if ( parameter instanceof DefaultListParameter ) {
       final DefaultListParameter listParameter = (DefaultListParameter) parameter;
       final String query = listParameter.getQueryName();
-      if (query == null)
-      {
-        final ParameterLocationInfo queryLocation = new ParameterLocationInfo(parameter);
+      if ( query == null ) {
+        final ParameterLocationInfo queryLocation = new ParameterLocationInfo( parameter );
         resultHandler.notifyInspectionResult
-            (new InspectionResult(this, InspectionResult.Severity.HINT,
-                Messages.getString("InvalidQueryNameReferenceInspection.QueryUndefined"),
-                queryLocation));
+          ( new InspectionResult( this, InspectionResult.Severity.HINT,
+            Messages.getString( "InvalidQueryNameReferenceInspection.QueryUndefined" ),
+            queryLocation ) );
 
-      }
-      else
-      {
-        if (isQueryExecutable(reportRenderContext.getReportDefinition(), query) == false)
-        {
-          final ParameterLocationInfo queryLocation = new ParameterLocationInfo(parameter);
+      } else {
+        if ( isQueryExecutable( reportRenderContext.getReportDefinition(), query ) == false ) {
+          final ParameterLocationInfo queryLocation = new ParameterLocationInfo( parameter );
           resultHandler.notifyInspectionResult
-              (new InspectionResult(this, InspectionResult.Severity.ERROR,
-                  Messages.getString("InvalidQueryNameReferenceInspection.QueryNotRecognized", query),
-                  queryLocation));
+            ( new InspectionResult( this, InspectionResult.Severity.ERROR,
+              Messages.getString( "InvalidQueryNameReferenceInspection.QueryNotRecognized", query ),
+              queryLocation ) );
         }
       }
     }
   }
 
-  private boolean isQueryExecutable(AbstractReportDefinition definition,
-                                    final String query)
-  {
-    while (definition != null)
-    {
-      if (definition.getDataFactory().isQueryExecutable(query, new StaticDataRow()))
-      {
+  private boolean isQueryExecutable( AbstractReportDefinition definition,
+                                     final String query ) {
+    while ( definition != null ) {
+      if ( definition.getDataFactory().isQueryExecutable( query, new StaticDataRow() ) ) {
         return true;
       }
 
       final Section parentSection = definition.getParentSection();
-      if (parentSection == null)
-      {
+      if ( parentSection == null ) {
         definition = null;
-      }
-      else
-      {
+      } else {
         definition = (AbstractReportDefinition) parentSection.getReportDefinition();
       }
     }

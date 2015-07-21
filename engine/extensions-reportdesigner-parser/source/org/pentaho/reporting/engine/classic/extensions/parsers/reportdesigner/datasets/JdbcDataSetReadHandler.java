@@ -17,25 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.datasets;
 
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
-import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
-import org.xml.sax.SAXException;
+import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
+import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
+import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
+import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
-public class JdbcDataSetReadHandler extends AbstractXmlReadHandler
-{
+public class JdbcDataSetReadHandler extends AbstractXmlReadHandler {
   private String userName;
   private String password;
   private String driverClass;
   private String sqlQuery;
   private String connectionString;
   private SQLReportDataFactory dataFactory;
-  
-  public JdbcDataSetReadHandler()
-  {
+
+  public JdbcDataSetReadHandler() {
   }
 
   /**
@@ -44,13 +42,12 @@ public class JdbcDataSetReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    userName = attrs.getValue(getUri(), "userName");
-    password = attrs.getValue(getUri(), "password");
-    driverClass = attrs.getValue(getUri(), "driverClass");
-    sqlQuery = attrs.getValue(getUri(), "sqlQuery");
-    connectionString = attrs.getValue(getUri(), "connectionString");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    userName = attrs.getValue( getUri(), "userName" );
+    password = attrs.getValue( getUri(), "password" );
+    driverClass = attrs.getValue( getUri(), "driverClass" );
+    sqlQuery = attrs.getValue( getUri(), "sqlQuery" );
+    connectionString = attrs.getValue( getUri(), "connectionString" );
   }
 
   /**
@@ -62,8 +59,8 @@ public class JdbcDataSetReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
     return new IgnoreAnyChildReadHandler();
   }
 
@@ -72,26 +69,23 @@ public class JdbcDataSetReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final DriverConnectionProvider connectionProvider = new DriverConnectionProvider();
-    connectionProvider.setDriver(driverClass);
-    connectionProvider.setUrl(connectionString);
-    connectionProvider.setProperty("user", userName);
-    connectionProvider.setProperty("password", password);
-    dataFactory = new SQLReportDataFactory(connectionProvider);
-    dataFactory.setQuery("default", sqlQuery, null, null);
+    connectionProvider.setDriver( driverClass );
+    connectionProvider.setUrl( connectionString );
+    connectionProvider.setProperty( "user", userName );
+    connectionProvider.setProperty( "password", password );
+    dataFactory = new SQLReportDataFactory( connectionProvider );
+    dataFactory.setQuery( "default", sqlQuery, null, null );
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 }

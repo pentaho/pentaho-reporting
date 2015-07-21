@@ -17,29 +17,25 @@
 
 package org.pentaho.reporting.designer.extensions.legacycharts;
 
-import java.awt.Component;
-import javax.swing.AbstractCellEditor;
-
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEditor;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class LegacyChartReportElementInlineEditor extends AbstractCellEditor implements ReportElementInlineEditor
-{
-  public LegacyChartReportElementInlineEditor()
-  {
+import javax.swing.*;
+import java.awt.*;
+
+public class LegacyChartReportElementInlineEditor extends AbstractCellEditor implements ReportElementInlineEditor {
+  public LegacyChartReportElementInlineEditor() {
   }
 
-  public Component getElementCellEditorComponent(final ReportElementEditorContext rootBandRenderComponent,
-                                                 final ReportElement value)
-  {
-    LegacyChartsUtil.performEdit((Element) value, rootBandRenderComponent.getDesignerContext());
+  public Component getElementCellEditorComponent( final ReportElementEditorContext rootBandRenderComponent,
+                                                  final ReportElement value ) {
+    LegacyChartsUtil.performEdit( (Element) value, rootBandRenderComponent.getDesignerContext() );
     return null;
   }
 
-  public Object getCellEditorValue()
-  {
+  public Object getCellEditorValue() {
     return null;
   }
 }

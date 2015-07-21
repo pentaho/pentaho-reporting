@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.base.boot.ModuleInitializer;
  *
  * @author Thomas Morgner
  */
-public class Java14PrintModuleInitializer implements ModuleInitializer
-{
+public class Java14PrintModuleInitializer implements ModuleInitializer {
   /**
    * Default Constructor.
    */
-  public Java14PrintModuleInitializer()
-  {
+  public Java14PrintModuleInitializer() {
   }
 
   /**
@@ -39,7 +37,6 @@ public class Java14PrintModuleInitializer implements ModuleInitializer
    *
    * @throws ModuleInitializeException if an error ocurred.
    */
-  public void performInit() throws ModuleInitializeException
-  {
+  public void performInit() throws ModuleInitializeException {
   }
 }

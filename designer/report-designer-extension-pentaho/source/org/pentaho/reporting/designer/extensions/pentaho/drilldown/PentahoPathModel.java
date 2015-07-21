@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.HashMap;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownParameter;
@@ -31,85 +27,63 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 import org.pentaho.ui.xul.XulEventSource;
 
-public class PentahoPathModel implements XulEventSource
-{
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.HashMap;
 
-  private static class ExtensionMapping
-  {
+public class PentahoPathModel implements XulEventSource {
+
+  private static class ExtensionMapping {
     private String extension;
     private String localMode;
     private String remoteMode;
     private String localNoParamMode;
     private String remoteNoParamMode;
 
-    private ExtensionMapping(final String extension)
-    {
+    private ExtensionMapping( final String extension ) {
       this.extension = extension;
     }
 
-    public String getExtension()
-    {
+    public String getExtension() {
       return extension;
     }
 
-    public void set(final boolean local, final boolean noParameter, final String name)
-    {
-      if (local)
-      {
-        if (noParameter)
-        {
+    public void set( final boolean local, final boolean noParameter, final String name ) {
+      if ( local ) {
+        if ( noParameter ) {
           localNoParamMode = name;
-        }
-        else
-        {
+        } else {
           localMode = name;
         }
-      }
-      else
-      {
-        if (noParameter)
-        {
+      } else {
+        if ( noParameter ) {
           remoteNoParamMode = name;
-        }
-        else
-        {
+        } else {
           remoteMode = name;
         }
       }
 
     }
 
-    public String get(final boolean local, final boolean noParameter)
-    {
-      if (noParameter == true)
-      {
-        if (local)
-        {
-          if (localNoParamMode != null)
-          {
+    public String get( final boolean local, final boolean noParameter ) {
+      if ( noParameter == true ) {
+        if ( local ) {
+          if ( localNoParamMode != null ) {
             return localNoParamMode;
           }
-        }
-        else
-        {
-          if (remoteNoParamMode != null)
-          {
+        } else {
+          if ( remoteNoParamMode != null ) {
             return remoteNoParamMode;
           }
         }
       }
 
-      if (local)
-      {
-        if (localMode != null)
-        {
+      if ( local ) {
+        if ( localMode != null ) {
           return localMode;
         }
-      }
-      else
-      {
-        if (remoteMode != null)
-        {
+      } else {
+        if ( remoteMode != null ) {
           return remoteMode;
         }
       }
@@ -130,267 +104,217 @@ public class PentahoPathModel implements XulEventSource
   public static final String LOGIN_DATA_PROPERTY = "loginData";
   public static final String LOCAL_PATH_PROPERTY = "localPath";
 
-  public PentahoPathModel(final ReportDesignerContext reportDesignerContext)
-  {
+  public PentahoPathModel( final ReportDesignerContext reportDesignerContext ) {
     this.reportDesignerContext = reportDesignerContext;
-    propertyChangeSupport = new PropertyChangeSupport(this);
+    propertyChangeSupport = new PropertyChangeSupport( this );
     extensionMap = new HashMap<String, ExtensionMapping>();
   }
 
-  public void registerExtension(final String extension,
-                                final boolean local,
-                                final boolean noParameter,
-                                final String profileName)
-  {
-    ExtensionMapping mapping = extensionMap.get(extension);
-    if (mapping == null)
-    {
-      mapping = new ExtensionMapping(extension);
-      extensionMap.put(extension, mapping);
+  public void registerExtension( final String extension,
+                                 final boolean local,
+                                 final boolean noParameter,
+                                 final String profileName ) {
+    ExtensionMapping mapping = extensionMap.get( extension );
+    if ( mapping == null ) {
+      mapping = new ExtensionMapping( extension );
+      extensionMap.put( extension, mapping );
     }
-    mapping.set(local, noParameter, profileName);
+    mapping.set( local, noParameter, profileName );
   }
 
-  public AuthenticationData getLoginData()
-  {
+  public AuthenticationData getLoginData() {
     return loginData;
   }
 
-  public void setLoginData(final AuthenticationData loginData)
-  {
+  public void setLoginData( final AuthenticationData loginData ) {
     final String oldServerPath = getServerPath();
     final AuthenticationData oldLoginData = this.loginData;
     this.loginData = loginData;
-    this.propertyChangeSupport.firePropertyChange(LOGIN_DATA_PROPERTY, oldLoginData, loginData);
-    this.propertyChangeSupport.firePropertyChange(SERVER_PATH_PROPERTY, oldServerPath, getServerPath());
+    this.propertyChangeSupport.firePropertyChange( LOGIN_DATA_PROPERTY, oldLoginData, loginData );
+    this.propertyChangeSupport.firePropertyChange( SERVER_PATH_PROPERTY, oldServerPath, getServerPath() );
   }
 
-  public String getServerPath()
-  {
-    if (loginData == null)
-    {
+  public String getServerPath() {
+    if ( loginData == null ) {
       return null;
     }
     return loginData.getUrl();
   }
 
-  public void setServerPath(final String serverPath)
-  {
+  public void setServerPath( final String serverPath ) {
     final String oldServerPath = getServerPath();
-    if (ObjectUtilities.equal(oldServerPath, serverPath))
-    {
+    if ( ObjectUtilities.equal( oldServerPath, serverPath ) ) {
       return;
     }
 
-    if (serverPath == null)
-    {
-      setLoginData(null);
-      propertyChangeSupport.firePropertyChange(SERVER_PATH_PROPERTY, oldServerPath, null);
+    if ( serverPath == null ) {
+      setLoginData( null );
+      propertyChangeSupport.firePropertyChange( SERVER_PATH_PROPERTY, oldServerPath, null );
       return;
     }
 
-    AuthenticationData loginData = RepositoryLoginDialog.getStoredLoginData(serverPath, reportDesignerContext);
-    if (loginData == null)
-    {
-      loginData = new AuthenticationData(serverPath);
+    AuthenticationData loginData = RepositoryLoginDialog.getStoredLoginData( serverPath, reportDesignerContext );
+    if ( loginData == null ) {
+      loginData = new AuthenticationData( serverPath );
     }
-    setLoginData(loginData);
-    propertyChangeSupport.firePropertyChange(SERVER_PATH_PROPERTY, oldServerPath, serverPath);
+    setLoginData( loginData );
+    propertyChangeSupport.firePropertyChange( SERVER_PATH_PROPERTY, oldServerPath, serverPath );
   }
 
-  public boolean isUseRemoteServer()
-  {
+  public boolean isUseRemoteServer() {
     return useRemoteServer;
   }
 
-  public void setUseRemoteServer(final boolean useRemoteServer)
-  {
+  public void setUseRemoteServer( final boolean useRemoteServer ) {
     final boolean oldUseRemoteServer = this.useRemoteServer;
     this.useRemoteServer = useRemoteServer;
-    this.propertyChangeSupport.firePropertyChange(USE_REMOTE_SERVER_PROPERTY, oldUseRemoteServer, useRemoteServer);
+    this.propertyChangeSupport.firePropertyChange( USE_REMOTE_SERVER_PROPERTY, oldUseRemoteServer, useRemoteServer );
   }
 
-  public boolean isHideParameterUi()
-  {
+  public boolean isHideParameterUi() {
     return hideParameterUi;
   }
 
-  public void setHideParameterUi(final boolean hideParameterUi)
-  {
+  public void setHideParameterUi( final boolean hideParameterUi ) {
     final boolean oldHide = this.hideParameterUi;
     this.hideParameterUi = hideParameterUi;
-    this.propertyChangeSupport.firePropertyChange(HIDE_PARAMETER_UI_PROPERTY, oldHide, hideParameterUi);
+    this.propertyChangeSupport.firePropertyChange( HIDE_PARAMETER_UI_PROPERTY, oldHide, hideParameterUi );
   }
 
-  public String getLocalPath()
-  {
+  public String getLocalPath() {
     return localPath;
   }
 
-  public void setLocalPath(final String localPath)
-  {
+  public void setLocalPath( final String localPath ) {
     final String oldValue = this.localPath;
     this.localPath = localPath;
-    this.propertyChangeSupport.firePropertyChange(LOCAL_PATH_PROPERTY, oldValue, localPath);
+    this.propertyChangeSupport.firePropertyChange( LOCAL_PATH_PROPERTY, oldValue, localPath );
   }
 
-  public void setLocalPathFromParameter(final DrillDownParameter[] params)
-  {
+  public void setLocalPathFromParameter( final DrillDownParameter[] params ) {
     String solution = null;
     String path = null;
     String name = null;
     String localPath = null;
 
-    for (int i = 0; i < params.length; i++)
-    {
-      final DrillDownParameter drillDownParameter = params[i];
-      if ("solution".equals(drillDownParameter.getName())) // NON-NLS
+    for ( int i = 0; i < params.length; i++ ) {
+      final DrillDownParameter drillDownParameter = params[ i ];
+      if ( "solution".equals( drillDownParameter.getName() ) ) // NON-NLS
       {
-        solution = FormulaUtil.extractStaticTextFromFormulaFragment(drillDownParameter.getFormulaFragment());
-      }
-      else if ("path".equals(drillDownParameter.getName())) // NON-NLS
+        solution = FormulaUtil.extractStaticTextFromFormulaFragment( drillDownParameter.getFormulaFragment() );
+      } else if ( "path".equals( drillDownParameter.getName() ) ) // NON-NLS
       {
-        path = FormulaUtil.extractStaticTextFromFormulaFragment(drillDownParameter.getFormulaFragment());
-      }
-      else if ("name".equals(drillDownParameter.getName())) // NON-NLS
+        path = FormulaUtil.extractStaticTextFromFormulaFragment( drillDownParameter.getFormulaFragment() );
+      } else if ( "name".equals( drillDownParameter.getName() ) ) // NON-NLS
       {
-        name = FormulaUtil.extractStaticTextFromFormulaFragment(drillDownParameter.getFormulaFragment());
-      }
-      else if ("::pentaho-path".equals(drillDownParameter.getName())) // NON-NLS
+        name = FormulaUtil.extractStaticTextFromFormulaFragment( drillDownParameter.getFormulaFragment() );
+      } else if ( "::pentaho-path".equals( drillDownParameter.getName() ) ) // NON-NLS
       {
-        localPath = FormulaUtil.extractStaticTextFromFormulaFragment(drillDownParameter.getFormulaFragment());
+        localPath = FormulaUtil.extractStaticTextFromFormulaFragment( drillDownParameter.getFormulaFragment() );
       }
     }
 
-    if (StringUtils.isEmpty(localPath) == false)
-    {
-      setLocalPath(localPath);
-    }
-    else
-    {
+    if ( StringUtils.isEmpty( localPath ) == false ) {
+      setLocalPath( localPath );
+    } else {
       final StringBuilder b = new StringBuilder();
-      if (StringUtils.isEmpty(solution) == false)
-      {
-        b.append(solution);
+      if ( StringUtils.isEmpty( solution ) == false ) {
+        b.append( solution );
       }
-      if (StringUtils.isEmpty(path) == false)
-      {
-        b.append("/");
-        b.append(path);
+      if ( StringUtils.isEmpty( path ) == false ) {
+        b.append( "/" );
+        b.append( path );
       }
-      if (StringUtils.isEmpty(name) == false)
-      {
-        b.append("/");
-        b.append(name);
+      if ( StringUtils.isEmpty( name ) == false ) {
+        b.append( "/" );
+        b.append( name );
       }
 
-      if (b.length() == 0)
-      {
-        setLocalPath(null);
-      }
-      else
-      {
-        setLocalPath(b.toString());
+      if ( b.length() == 0 ) {
+        setLocalPath( null );
+      } else {
+        setLocalPath( b.toString() );
       }
     }
   }
 
-  public String getPath()
-  {
-    if (localPath == null)
-    {
+  public String getPath() {
+    if ( localPath == null ) {
       return null;
     }
-    final String normalizedPath = localPath.replace('\\', '/');
-    final String[] path = StringUtils.split(normalizedPath, "/");
+    final String normalizedPath = localPath.replace( '\\', '/' );
+    final String[] path = StringUtils.split( normalizedPath, "/" );
     final StringBuilder b = new StringBuilder();
-    for (int i = 1; i < path.length - 1; i++)
-    {
-      if (i > 1)
-      {
-        b.append('/');
+    for ( int i = 1; i < path.length - 1; i++ ) {
+      if ( i > 1 ) {
+        b.append( '/' );
       }
 
-      final String pathElement = path[i];
-      b.append(pathElement);
+      final String pathElement = path[ i ];
+      b.append( pathElement );
     }
     return b.toString();
   }
 
-  public String getName()
-  {
-    if (localPath == null)
-    {
+  public String getName() {
+    if ( localPath == null ) {
       return null;
     }
-    final String normalizedPath = localPath.replace('\\', '/');
-    final String[] path = StringUtils.split(normalizedPath, "/");
-    if (path.length > 1)
-    {
-      return path[path.length - 1];
+    final String normalizedPath = localPath.replace( '\\', '/' );
+    final String[] path = StringUtils.split( normalizedPath, "/" );
+    if ( path.length > 1 ) {
+      return path[ path.length - 1 ];
     }
     return null;
   }
 
-  public String getSolution()
-  {
-    if (localPath == null)
-    {
+  public String getSolution() {
+    if ( localPath == null ) {
       return null;
     }
-    final String normalizedPath = localPath.replace('\\', '/');
-    final String[] path = StringUtils.split(normalizedPath, "/");
-    if (path.length > 0)
-    {
-      return path[0];
+    final String normalizedPath = localPath.replace( '\\', '/' );
+    final String[] path = StringUtils.split( normalizedPath, "/" );
+    if ( path.length > 0 ) {
+      return path[ 0 ];
     }
     return null;
   }
 
-  public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+  public void addPropertyChangeListener( final String propertyName, final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( propertyName, listener );
   }
 
-  public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
+  public void removePropertyChangeListener( final String propertyName, final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( propertyName, listener );
   }
 
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-    this.propertyChangeSupport.addPropertyChangeListener(listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
+    this.propertyChangeSupport.addPropertyChangeListener( listener );
   }
 
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
-    this.propertyChangeSupport.removePropertyChangeListener(listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
+    this.propertyChangeSupport.removePropertyChangeListener( listener );
   }
 
-  public String getDrillDownProfile()
-  {
+  public String getDrillDownProfile() {
     final String name = getName();
-    if (name == null)
-    {
+    if ( name == null ) {
       return null;
     }
 
-    final String extension = IOUtils.getInstance().getFileExtension(name);
-    ExtensionMapping mapping = extensionMap.get(extension);
-    if (mapping == null)
-    {
-      mapping = extensionMap.get(null);
-      if (mapping == null)
-      {
+    final String extension = IOUtils.getInstance().getFileExtension( name );
+    ExtensionMapping mapping = extensionMap.get( extension );
+    if ( mapping == null ) {
+      mapping = extensionMap.get( null );
+      if ( mapping == null ) {
         return null;
       }
     }
 
-    return mapping.get(isUseRemoteServer() == false, hideParameterUi);
+    return mapping.get( isUseRemoteServer() == false, hideParameterUi );
   }
 
-  public String[] getExtensions()
-  {
-    return extensionMap.keySet().toArray(new String[extensionMap.size()]);
+  public String[] getExtensions() {
+    return extensionMap.keySet().toArray( new String[ extensionMap.size() ] );
   }
 }

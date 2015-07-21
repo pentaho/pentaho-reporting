@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.wizard.ui.xul;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
@@ -39,13 +36,15 @@ import org.pentaho.reporting.engine.classic.wizard.ui.xul.util.SourceFieldDefini
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.ui.xul.XulEventSourceAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A thin wrapper around the report-spec to allow the model to have a state without a file or definition being active.
  *
  * @author Thomas Morgner
  */
-public class WizardEditorModel extends XulEventSourceAdapter
-{
+public class WizardEditorModel extends XulEventSourceAdapter {
   private static final String RELATIONAL_MODEL_PROPERTY_NAME = "relationalModel"; //$NON-NLS-1$
 
   private AbstractReportDefinition reportDefinition;
@@ -66,10 +65,8 @@ public class WizardEditorModel extends XulEventSourceAdapter
 
   private DataFactory dataFactory;
 
-  public WizardEditorModel(final AbstractReportDefinition emptyTemplate)
-  {
-    if (emptyTemplate == null)
-    {
+  public WizardEditorModel( final AbstractReportDefinition emptyTemplate ) {
+    if ( emptyTemplate == null ) {
       throw new NullPointerException();
     }
     this.materialize = true;
@@ -79,166 +76,134 @@ public class WizardEditorModel extends XulEventSourceAdapter
     this.reportDefinition = (AbstractReportDefinition) emptyTemplate.derive();
   }
 
-  public WizardEditorModel()
-  {
-    this(createDefaultReport());
+  public WizardEditorModel() {
+    this( createDefaultReport() );
   }
 
-  private static MasterReport createDefaultReport()
-  {
+  private static MasterReport createDefaultReport() {
     final MasterReport report = new MasterReport();
-    report.setAutoSort(Boolean.TRUE);
-    report.setDataFactory(new CompoundDataFactory());
-    report.setQuery(null);
+    report.setAutoSort( Boolean.TRUE );
+    report.setDataFactory( new CompoundDataFactory() );
+    report.setQuery( null );
     return report;
   }
 
-  public AbstractReportDefinition getReportDefinition()
-  {
+  public AbstractReportDefinition getReportDefinition() {
     return reportDefinition;
   }
 
-  public void setReportDefinition(final AbstractReportDefinition reportDefinition, final boolean isEditing)
-  {
-    if (reportDefinition == null)
-    {
+  public void setReportDefinition( final AbstractReportDefinition reportDefinition, final boolean isEditing ) {
+    if ( reportDefinition == null ) {
       throw new NullPointerException();
     }
     final AbstractReportDefinition oldDefinition = this.reportDefinition;
     this.reportDefinition = reportDefinition;
-    if (oldDefinition != reportDefinition)
-    {
+    if ( oldDefinition != reportDefinition ) {
       dataSchemaModel = null;
       specification = getReportSpec();  // now get the new one if it exists
-      if (dataFactory == null)
-      {
+      if ( dataFactory == null ) {
         final DataFactory theDataFactory = reportDefinition.getDataFactory();
-        if (theDataFactory.getQueryNames().length > 0)
-        {
+        if ( theDataFactory.getQueryNames().length > 0 ) {
           dataFactory = reportDefinition.getDataFactory();
         }
+      } else {
+        reportDefinition.setQuery( oldDefinition.getQuery() );
+        reportDefinition.setDataFactory( dataFactory );
       }
-      else
-      {
-        reportDefinition.setQuery(oldDefinition.getQuery());
-        reportDefinition.setDataFactory(dataFactory);
-      }
-      this.firePropertyChange("reportDefinition", oldDefinition, reportDefinition);
+      this.firePropertyChange( "reportDefinition", oldDefinition, reportDefinition );
     }
     editing = isEditing;
   }
 
-  public void setReportDefinition(final AbstractReportDefinition reportDefinition)
-  {
-    setReportDefinition(reportDefinition, false);
+  public void setReportDefinition( final AbstractReportDefinition reportDefinition ) {
+    setReportDefinition( reportDefinition, false );
   }
 
-  public AbstractReportDefinition getEmptyTemplate()
-  {
+  public AbstractReportDefinition getEmptyTemplate() {
     return (AbstractReportDefinition) emptyTemplate.derive();
   }
 
-  public WizardSpecification getReportSpec()
-  {
-    if (specification == null)
-    {
-      try
-      {
+  public WizardSpecification getReportSpec() {
+    if ( specification == null ) {
+      try {
 
         specification = WizardProcessorUtil.loadWizardSpecification
-            (reportDefinition, DesignTimeUtil.getResourceManager(reportDefinition));
-        if (specification != null)
-        {
+          ( reportDefinition, DesignTimeUtil.getResourceManager( reportDefinition ) );
+        if ( specification != null ) {
           return specification;
         }
-      }
-      catch (ReportProcessingException e)
-      {
+      } catch ( ReportProcessingException e ) {
         // ignore, create a new one
       }
 
       specification = new DefaultWizardSpecification();
-      WizardProcessorUtil.applyWizardSpec(reportDefinition, specification);
+      WizardProcessorUtil.applyWizardSpec( reportDefinition, specification );
     }
 
     return specification;
   }
 
-  public ResourceKey getDefinitionSource()
-  {
+  public ResourceKey getDefinitionSource() {
     return reportDefinition.getDefinitionSource();
   }
 
-  public boolean isRelationalModel()
-  {
+  public boolean isRelationalModel() {
     return relationalModel;
   }
 
-  public void setRelationalModel(final boolean relationalModel)
-  {
+  public void setRelationalModel( final boolean relationalModel ) {
     final boolean oldRelational = this.relationalModel;
     this.relationalModel = relationalModel;
-    if (oldRelational != relationalModel)
-    {
-      this.firePropertyChange(RELATIONAL_MODEL_PROPERTY_NAME, oldRelational, relationalModel);
+    if ( oldRelational != relationalModel ) {
+      this.firePropertyChange( RELATIONAL_MODEL_PROPERTY_NAME, oldRelational, relationalModel );
     }
   }
 
-  public List<SourceFieldDefinition> getSelectableFieldsArray()
-  {
+  public List<SourceFieldDefinition> getSelectableFieldsArray() {
     final List<SourceFieldDefinition> sourceFields = new ArrayList<SourceFieldDefinition>();
     final DataSchemaModel localSchemaModel = getDataSchema();
     final DataSchema dataSchema = localSchemaModel.getDataSchema();
     final String[] names = dataSchema.getNames();
-    for (int i = 0; i < names.length; i++)
-    {
-      final String name = names[i];
+    for ( int i = 0; i < names.length; i++ ) {
+      final String name = names[ i ];
       final SourceFieldDefinition fieldDefinition =
-          new SourceFieldDefinition(name, getDataSchema().getDataSchema());
-      sourceFields.add(fieldDefinition);
+        new SourceFieldDefinition( name, getDataSchema().getDataSchema() );
+      sourceFields.add( fieldDefinition );
     }
     return sourceFields;
   }
 
-  public void updateQuery(final DataFactory factory, final String queryName)
-  {
-    getReportDefinition().setQuery(queryName);
-    getReportDefinition().setDataFactory(factory);
+  public void updateQuery( final DataFactory factory, final String queryName ) {
+    getReportDefinition().setQuery( queryName );
+    getReportDefinition().setDataFactory( factory );
   }
 
-  public static DataSchemaModel compileDataSchemaModel(final AbstractReportDefinition reportDefinition)
-  {
+  public static DataSchemaModel compileDataSchemaModel( final AbstractReportDefinition reportDefinition ) {
     final ContextAwareDataSchemaModelFactory factory =
-        ClassicEngineBoot.getInstance().getObjectFactory().get(ContextAwareDataSchemaModelFactory.class);
-    return factory.create(reportDefinition);
+      ClassicEngineBoot.getInstance().getObjectFactory().get( ContextAwareDataSchemaModelFactory.class );
+    return factory.create( reportDefinition );
   }
 
-  public DataSchemaModel getDataSchema()
-  {
-    if (dataSchemaModel == null)
-    {
-      dataSchemaModel = compileDataSchemaModel(reportDefinition);
+  public DataSchemaModel getDataSchema() {
+    if ( dataSchemaModel == null ) {
+      dataSchemaModel = compileDataSchemaModel( reportDefinition );
     }
     return dataSchemaModel;
   }
 
-  public DataAttributeContext getAttributeContext()
-  {
+  public DataAttributeContext getAttributeContext() {
     return attributeContext;
   }
 
-  public boolean isMaterialize()
-  {
+  public boolean isMaterialize() {
     return materialize;
   }
 
-  public void setMaterialize(final boolean materialize)
-  {
+  public void setMaterialize( final boolean materialize ) {
     this.materialize = materialize;
   }
 
-  public boolean isEditing()
-  {
+  public boolean isEditing() {
     return editing;
   }
 }

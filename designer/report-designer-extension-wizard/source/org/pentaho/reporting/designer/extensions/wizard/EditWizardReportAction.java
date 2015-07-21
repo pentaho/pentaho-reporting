@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.designer.extensions.wizard;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -38,87 +33,73 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.wizard.ui.xul.EmbeddedWizard;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-public class EditWizardReportAction extends AbstractReportContextAction
-{
-  public EditWizardReportAction()
-  {
-    putValue(Action.NAME, Messages.getString("EditWizardReportAction.MenuText")); //$NON-NLS-1$
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class EditWizardReportAction extends AbstractReportContextAction {
+  public EditWizardReportAction() {
+    putValue( Action.NAME, Messages.getString( "EditWizardReportAction.MenuText" ) ); //$NON-NLS-1$
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
+  public void actionPerformed( final ActionEvent e ) {
     final ReportDesignerContext reportDesignerContext1 = getReportDesignerContext();
-    if (reportDesignerContext1 == null)
-    {
+    if ( reportDesignerContext1 == null ) {
       return;
     }
     final ReportDocumentContext activeContext = reportDesignerContext1.getActiveContext();
-    if (activeContext == null)
-    {
+    if ( activeContext == null ) {
       return;
     }
     final Component parent = reportDesignerContext1.getView().getParent();
-    final Window window = LibSwingUtil.getWindowAncestor(parent);
+    final Window window = LibSwingUtil.getWindowAncestor( parent );
     final EmbeddedWizard dialog;
-    dialog = new EmbeddedWizard(window, new ReportDesignerDesignTimeContext(reportDesignerContext1));
+    dialog = new EmbeddedWizard( window, new ReportDesignerDesignTimeContext( reportDesignerContext1 ) );
 
-    try
-    {
+    try {
       final AbstractReportDefinition realOriginal = activeContext.getReportDefinition();
       final AbstractReportDefinition original = (AbstractReportDefinition) realOriginal.derive();
-      final AbstractReportDefinition def = dialog.run(original);
-      if (def == null)
-      {
+      final AbstractReportDefinition def = dialog.run( original );
+      if ( def == null ) {
         return;
       }
 
-      if (def instanceof MasterReport)
-      {
-        reportDesignerContext1.addMasterReport((MasterReport) def);
-      }
-      else if (def instanceof SubReport)
-      {
+      if ( def instanceof MasterReport ) {
+        reportDesignerContext1.addMasterReport( (MasterReport) def );
+      } else if ( def instanceof SubReport ) {
         // todo: Undo entries ...
 
         final Section parentSection = realOriginal.getParentSection();
 
-        if (parentSection instanceof AbstractRootLevelBand)
-        {
+        if ( parentSection instanceof AbstractRootLevelBand ) {
           final AbstractRootLevelBand rlb = (AbstractRootLevelBand) parentSection;
           final SubReport[] reports = rlb.getSubReports();
-          for (int i = 0; i < reports.length; i++)
-          {
-            final SubReport report = reports[i];
-            if (report == realOriginal)
-            {
-              rlb.removeSubreport(report);
-              rlb.addSubReport(i, (SubReport) def);
+          for ( int i = 0; i < reports.length; i++ ) {
+            final SubReport report = reports[ i ];
+            if ( report == realOriginal ) {
+              rlb.removeSubreport( report );
+              rlb.addSubReport( i, (SubReport) def );
               return;
             }
           }
         }
 
-        if (parentSection instanceof Band)
-        {
+        if ( parentSection instanceof Band ) {
           final Band b = (Band) parentSection;
           final Element[] elementArray = b.getElementArray();
-          for (int i = 0; i < elementArray.length; i++)
-          {
-            final Element report = elementArray[i];
-            if (report == realOriginal)
-            {
-              b.removeElement(report);
-              b.addElement(i, def);
+          for ( int i = 0; i < elementArray.length; i++ ) {
+            final Element report = elementArray[ i ];
+            if ( report == realOriginal ) {
+              b.removeElement( report );
+              b.addElement( i, def );
               return;
             }
           }
         }
       }
 
-    }
-    catch (ReportProcessingException e1)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e1);
+    } catch ( ReportProcessingException e1 ) {
+      UncaughtExceptionsModel.getInstance().addException( e1 );
     }
   }
 }

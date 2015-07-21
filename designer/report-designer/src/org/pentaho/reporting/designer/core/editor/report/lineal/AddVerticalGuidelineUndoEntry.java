@@ -31,36 +31,31 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class AddVerticalGuidelineUndoEntry implements UndoEntry
-{
+public class AddVerticalGuidelineUndoEntry implements UndoEntry {
   private final GuideLine guideLine;
   private InstanceID id;
 
-  public AddVerticalGuidelineUndoEntry(final GuideLine guideLine,
-                                       final InstanceID id)
-  {
+  public AddVerticalGuidelineUndoEntry( final GuideLine guideLine,
+                                        final InstanceID id ) {
     this.guideLine = guideLine;
     this.id = id;
   }
 
-  public void undo(final ReportDocumentContext context)
-  {
+  public void undo( final ReportDocumentContext context ) {
     final AbstractReportDefinition abstractReportDefinition = context.getReportDefinition();
-    final Band band = (Band) ModelUtility.findElementById(abstractReportDefinition, id);
-    final LinealModel linealModel = ModelUtility.getVerticalLinealModel(band);
-    linealModel.removeGuideLine(guideLine);
+    final Band band = (Band) ModelUtility.findElementById( abstractReportDefinition, id );
+    final LinealModel linealModel = ModelUtility.getVerticalLinealModel( band );
+    linealModel.removeGuideLine( guideLine );
   }
 
-  public void redo(final ReportDocumentContext context)
-  {
+  public void redo( final ReportDocumentContext context ) {
     final AbstractReportDefinition abstractReportDefinition = context.getReportDefinition();
-    final Band band = (Band) ModelUtility.findElementById(abstractReportDefinition, id);
-    final LinealModel linealModel = ModelUtility.getVerticalLinealModel(band);
-    linealModel.addGuidLine(guideLine);
+    final Band band = (Band) ModelUtility.findElementById( abstractReportDefinition, id );
+    final LinealModel linealModel = ModelUtility.getVerticalLinealModel( band );
+    linealModel.addGuidLine( guideLine );
   }
 
-  public UndoEntry merge(final UndoEntry other)
-  {
+  public UndoEntry merge( final UndoEntry other ) {
     return null;
   }
 }

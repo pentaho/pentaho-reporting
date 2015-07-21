@@ -22,17 +22,15 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.AnchorFieldTem
 import org.pentaho.reporting.engine.classic.core.filter.types.LegacyType;
 import org.xml.sax.SAXException;
 
-public class AnchorFieldElementReadHandler extends AbstractReportElementReadHandler
-{
+public class AnchorFieldElementReadHandler extends AbstractReportElementReadHandler {
   private Element element;
   private AnchorFieldTemplate anchorFieldTemplate;
 
-  public AnchorFieldElementReadHandler()
-  {
+  public AnchorFieldElementReadHandler() {
     this.element = new Element();
-    this.element.setElementType(LegacyType.INSTANCE);
+    this.element.setElementType( LegacyType.INSTANCE );
     this.anchorFieldTemplate = new AnchorFieldTemplate();
-    this.element.setDataSource(anchorFieldTemplate);
+    this.element.setDataSource( anchorFieldTemplate );
   }
 
   /**
@@ -40,15 +38,13 @@ public class AnchorFieldElementReadHandler extends AbstractReportElementReadHand
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    final String fieldName = getResult().getProperty("fieldName");
-    anchorFieldTemplate.setField(fieldName);
+    final String fieldName = getResult().getProperty( "fieldName" );
+    anchorFieldTemplate.setField( fieldName );
   }
 
-  protected Element getElement()
-  {
+  protected Element getElement() {
     return element;
   }
 }

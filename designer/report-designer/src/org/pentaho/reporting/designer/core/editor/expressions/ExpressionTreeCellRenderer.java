@@ -17,35 +17,30 @@
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
-import java.awt.Component;
-import java.util.Locale;
-import javax.swing.JLabel;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeCellRenderer;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 
-public class ExpressionTreeCellRenderer extends DefaultTreeCellRenderer
-{
-  public ExpressionTreeCellRenderer()
-  {
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import java.awt.*;
+import java.util.Locale;
+
+public class ExpressionTreeCellRenderer extends DefaultTreeCellRenderer {
+  public ExpressionTreeCellRenderer() {
   }
 
-  public Component getTreeCellRendererComponent(final JTree tree,
-                                                final Object value,
-                                                final boolean sel,
-                                                final boolean expanded,
-                                                final boolean leaf,
-                                                final int row,
-                                                final boolean hasFocus)
-  {
+  public Component getTreeCellRendererComponent( final JTree tree,
+                                                 final Object value,
+                                                 final boolean sel,
+                                                 final boolean expanded,
+                                                 final boolean leaf,
+                                                 final int row,
+                                                 final boolean hasFocus ) {
     final JLabel rendererComponent = (JLabel)
-        super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-    if (value instanceof ExpressionMetaData)
-    {
+      super.getTreeCellRendererComponent( tree, value, sel, expanded, leaf, row, hasFocus );
+    if ( value instanceof ExpressionMetaData ) {
       final ExpressionMetaData metaData = (ExpressionMetaData) value;
-      rendererComponent.setText(metaData.getDisplayName(Locale.getDefault()));
-      rendererComponent.setToolTipText(metaData.getDeprecationMessage(Locale.getDefault()));
+      rendererComponent.setText( metaData.getDisplayName( Locale.getDefault() ) );
+      rendererComponent.setToolTipText( metaData.getDeprecationMessage( Locale.getDefault() ) );
     }
     return rendererComponent;
   }

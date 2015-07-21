@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import java.net.URL;
-
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
@@ -30,115 +28,107 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class BigDataKettleFactoryTest extends DataSourceTestBase
-{
-  private static final String QUERY = "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/kettle/row-gen.ktr";
+import java.net.URL;
+
+public class BigDataKettleFactoryTest extends DataSourceTestBase {
+  private static final String QUERY =
+    "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/kettle/row-gen.ktr";
   private static final String STEP = "Formula";
 
-  private static final String[][] QUERIES_AND_RESULTS = new String[][]{
-      {QUERY, "query-1.txt"}
+  private static final String[][] QUERIES_AND_RESULTS = new String[][] {
+    { QUERY, "query-1.txt" }
   };
 
-  public BigDataKettleFactoryTest()
-  {
+  public BigDataKettleFactoryTest() {
   }
 
-  public void testSaveAndLoad() throws Exception
-  {
-    runSaveAndLoad(QUERIES_AND_RESULTS);
+  public void testSaveAndLoad() throws Exception {
+    runSaveAndLoad( QUERIES_AND_RESULTS );
   }
 
-  public void testSaveAndLoadForSubReports() throws Exception
-  {
-    runSaveAndLoadForSubReports(QUERIES_AND_RESULTS);
+  public void testSaveAndLoadForSubReports() throws Exception {
+    runSaveAndLoadForSubReports( QUERIES_AND_RESULTS );
   }
 
-  public void testDerive() throws Exception
-  {
-    runDerive(QUERIES_AND_RESULTS);
+  public void testDerive() throws Exception {
+    runDerive( QUERIES_AND_RESULTS );
   }
 
-  public void testSerialize() throws Exception
-  {
-    runSerialize(QUERIES_AND_RESULTS);
+  public void testSerialize() throws Exception {
+    runSerialize( QUERIES_AND_RESULTS );
   }
 
-  public void testQuery() throws Exception
-  {
-    runTest(QUERIES_AND_RESULTS);
+  public void testQuery() throws Exception {
+    runTest( QUERIES_AND_RESULTS );
   }
 
-  protected String getTestDirectory()
-  {
+  protected String getTestDirectory() {
     return "test-src";
   }
 
-  protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException
-  {
-    try
-    {
-      URL res = getClass().getResource("embedded-row-gen.ktr");
-      Assert.assertNotNull(res);
+  protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
+    try {
+      URL res = getClass().getResource( "embedded-row-gen.ktr" );
+      Assert.assertNotNull( res );
 
       ResourceManager mgr = new ResourceManager();
-      ResourceKey key = mgr.createKey(res);
-      final byte[] resource = mgr.load(key).getResource(mgr);
+      ResourceKey key = mgr.createKey( res );
+      final byte[] resource = mgr.load( key ).getResource( mgr );
       final EmbeddedKettleTransformationProducer producer =
-          new EmbeddedKettleTransformationProducer(new FormulaArgument[0], new FormulaParameter[0], "dummy-id", resource);
+        new EmbeddedKettleTransformationProducer( new FormulaArgument[ 0 ], new FormulaParameter[ 0 ], "dummy-id",
+          resource );
 
       final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-      kettleDataFactory.initialize(new DesignTimeDataFactoryContext());
-      kettleDataFactory.setQuery("default", producer);
+      kettleDataFactory.initialize( new DesignTimeDataFactoryContext() );
+      kettleDataFactory.setQuery( "default", producer );
       return kettleDataFactory;
-    }
-    catch (ResourceException re)
-    {
-      throw new ReportDataFactoryException("Failed to load raw-data", re);
+    } catch ( ResourceException re ) {
+      throw new ReportDataFactoryException( "Failed to load raw-data", re );
     }
   }
 
-  public void testMetaData() throws ReportDataFactoryException
-  {
+  public void testMetaData() throws ReportDataFactoryException {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-    kettleDataFactory.initialize(new DesignTimeDataFactoryContext());
-    kettleDataFactory.setQuery("default",
-        new KettleTransFromFileProducer(QUERY, STEP, new FormulaArgument[0], new FormulaParameter[0]));
+    kettleDataFactory.initialize( new DesignTimeDataFactoryContext() );
+    kettleDataFactory.setQuery( "default",
+      new KettleTransFromFileProducer( QUERY, STEP, new FormulaArgument[ 0 ], new FormulaParameter[ 0 ] ) );
 
     final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
-    final Object queryHash = metaData.getQueryHash(kettleDataFactory, "default", new StaticDataRow());
-    assertNotNull(queryHash);
+    final Object queryHash = metaData.getQueryHash( kettleDataFactory, "default", new StaticDataRow() );
+    assertNotNull( queryHash );
 
     final KettleDataFactory kettleDataFactory2 = new KettleDataFactory();
-    kettleDataFactory2.initialize(new DesignTimeDataFactoryContext());
-    kettleDataFactory2.setQuery("default",
-        new KettleTransFromFileProducer(QUERY + "2", STEP, new FormulaArgument[0], new FormulaParameter[0]));
-    kettleDataFactory2.setQuery("default2",
-        new KettleTransFromFileProducer(QUERY, STEP, new FormulaArgument[0], new FormulaParameter[0]));
+    kettleDataFactory2.initialize( new DesignTimeDataFactoryContext() );
+    kettleDataFactory2.setQuery( "default",
+      new KettleTransFromFileProducer( QUERY + "2", STEP, new FormulaArgument[ 0 ], new FormulaParameter[ 0 ] ) );
+    kettleDataFactory2.setQuery( "default2",
+      new KettleTransFromFileProducer( QUERY, STEP, new FormulaArgument[ 0 ], new FormulaParameter[ 0 ] ) );
 
-    assertNotEquals("Physical Query is not the same", queryHash, metaData.getQueryHash(kettleDataFactory2, "default", new StaticDataRow()));
-    assertEquals("Physical Query is the same", queryHash, metaData.getQueryHash(kettleDataFactory2, "default2", new StaticDataRow()));
+    assertNotEquals( "Physical Query is not the same", queryHash,
+      metaData.getQueryHash( kettleDataFactory2, "default", new StaticDataRow() ) );
+    assertEquals( "Physical Query is the same", queryHash,
+      metaData.getQueryHash( kettleDataFactory2, "default2", new StaticDataRow() ) );
   }
 
-  public void testParameter() throws ReportDataFactoryException
-  {
+  public void testParameter() throws ReportDataFactoryException {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-    kettleDataFactory.initialize(new DesignTimeDataFactoryContext());
+    kettleDataFactory.initialize( new DesignTimeDataFactoryContext() );
     final FormulaParameter[] parameterMappings = {
-        FormulaParameter.create("name", "kettle-name"),
-        FormulaParameter.create("name2", "k3"),
-        FormulaParameter.create("name", "k2")
+      FormulaParameter.create( "name", "kettle-name" ),
+      FormulaParameter.create( "name2", "k3" ),
+      FormulaParameter.create( "name", "k2" )
     };
-    final FormulaArgument[] argumentNames = {FormulaArgument.create("arg0")};
-    kettleDataFactory.setQuery("default",
-        new KettleTransFromFileProducer(QUERY, STEP, argumentNames, parameterMappings));
+    final FormulaArgument[] argumentNames = { FormulaArgument.create( "arg0" ) };
+    kettleDataFactory.setQuery( "default",
+      new KettleTransFromFileProducer( QUERY, STEP, argumentNames, parameterMappings ) );
 
     final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
-    final String[] fields = metaData.getReferencedFields(kettleDataFactory, "default", new StaticDataRow());
-    assertNotNull(fields);
-    assertEquals(4, fields.length);
-    assertEquals("arg0", fields[0]);
-    assertEquals("name", fields[1]);
-    assertEquals("name2", fields[2]);
-    assertEquals(DataFactory.QUERY_LIMIT, fields[3]);
+    final String[] fields = metaData.getReferencedFields( kettleDataFactory, "default", new StaticDataRow() );
+    assertNotNull( fields );
+    assertEquals( 4, fields.length );
+    assertEquals( "arg0", fields[ 0 ] );
+    assertEquals( "name", fields[ 1 ] );
+    assertEquals( "name2", fields[ 2 ] );
+    assertEquals( DataFactory.QUERY_LIMIT, fields[ 3 ] );
   }
 }

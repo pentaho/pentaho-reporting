@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements;
 
-import java.util.ArrayList;
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
+import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.PropertiesReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class SubReportParametersReadHandler extends PropertiesReadHandler
-{
+import java.util.ArrayList;
+import java.util.Properties;
+
+public class SubReportParametersReadHandler extends PropertiesReadHandler {
   private ArrayList importParameters;
   private ParameterMapping[] importParameterMappings;
   private ArrayList exportParameters;
@@ -36,8 +35,7 @@ public class SubReportParametersReadHandler extends PropertiesReadHandler
   private boolean globalImport;
   private boolean globalExport;
 
-  public SubReportParametersReadHandler()
-  {
+  public SubReportParametersReadHandler() {
     importParameters = new ArrayList();
     exportParameters = new ArrayList();
   }
@@ -51,28 +49,24 @@ public class SubReportParametersReadHandler extends PropertiesReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("padding".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "padding".equals( tagName ) ) {
         return new IgnoreAnyChildReadHandler();
       }
-      if ("importParameter".equals(tagName))
-      {
+      if ( "importParameter".equals( tagName ) ) {
         final SubReportParameterReadHandler readHandler = new SubReportParameterReadHandler();
-        importParameters.add(readHandler);
+        importParameters.add( readHandler );
         return readHandler;
       }
-      if ("exportParameter".equals(tagName))
-      {
+      if ( "exportParameter".equals( tagName ) ) {
         final SubReportParameterReadHandler readHandler = new SubReportParameterReadHandler();
-        exportParameters.add(readHandler);
+        exportParameters.add( readHandler );
         return readHandler;
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -80,60 +74,51 @@ public class SubReportParametersReadHandler extends PropertiesReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
 
     final Properties result = getResult();
-    globalExport = "true".equals(result.getProperty("globalExport"));
-    globalImport = "true".equals(result.getProperty("globalImport"));
+    globalExport = "true".equals( result.getProperty( "globalExport" ) );
+    globalImport = "true".equals( result.getProperty( "globalImport" ) );
 
-    importParameterMappings = new ParameterMapping[importParameters.size()];
-    for (int i = 0; i < importParameters.size(); i++)
-    {
-      final SubReportParameterReadHandler readHandler = (SubReportParameterReadHandler) importParameters.get(i);
-      ParameterMapping parameter = new ParameterMapping(readHandler.getKey(), readHandler.getValue());
-      importParameterMappings[i] = parameter;
+    importParameterMappings = new ParameterMapping[ importParameters.size() ];
+    for ( int i = 0; i < importParameters.size(); i++ ) {
+      final SubReportParameterReadHandler readHandler = (SubReportParameterReadHandler) importParameters.get( i );
+      ParameterMapping parameter = new ParameterMapping( readHandler.getKey(), readHandler.getValue() );
+      importParameterMappings[ i ] = parameter;
     }
 
-    exportParameterMappings = new ParameterMapping[exportParameters.size()];
-    for (int i = 0; i < exportParameters.size(); i++)
-    {
-      final SubReportParameterReadHandler readHandler = (SubReportParameterReadHandler) exportParameters.get(i);
-      ParameterMapping parameter = new ParameterMapping(readHandler.getKey(), readHandler.getValue());
-      exportParameterMappings[i] = parameter;
+    exportParameterMappings = new ParameterMapping[ exportParameters.size() ];
+    for ( int i = 0; i < exportParameters.size(); i++ ) {
+      final SubReportParameterReadHandler readHandler = (SubReportParameterReadHandler) exportParameters.get( i );
+      ParameterMapping parameter = new ParameterMapping( readHandler.getKey(), readHandler.getValue() );
+      exportParameterMappings[ i ] = parameter;
     }
   }
 
-  public ParameterMapping[] getImportParameterMappings()
-  {
+  public ParameterMapping[] getImportParameterMappings() {
     return importParameterMappings;
   }
 
-  public ParameterMapping[] getExportParameterMappings()
-  {
+  public ParameterMapping[] getExportParameterMappings() {
     return exportParameterMappings;
   }
 
-  public boolean isGlobalImport()
-  {
+  public boolean isGlobalImport() {
     return globalImport;
   }
 
-  public boolean isGlobalExport()
-  {
+  public boolean isGlobalExport() {
     return globalExport;
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

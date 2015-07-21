@@ -25,8 +25,7 @@ import org.pentaho.ui.xul.util.Orient;
  *
  * @author Thomas Morgner
  */
-public interface XulPopup extends XulContainer
-{
+public interface XulPopup extends XulContainer {
 
   /**
    * @return the orientation for this container. Valid values are found in the Orient enum.

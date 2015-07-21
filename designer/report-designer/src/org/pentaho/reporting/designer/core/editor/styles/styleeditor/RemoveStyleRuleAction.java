@@ -17,28 +17,24 @@
 
 package org.pentaho.reporting.designer.core.editor.styles.styleeditor;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-
 import org.pentaho.reporting.engine.classic.core.style.css.ElementStyleRule;
 
-public class RemoveStyleRuleAction extends AbstractAction
-{
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public class RemoveStyleRuleAction extends AbstractAction {
   private StyleDefinitionEditorContext context;
   private ElementStyleRule rule;
 
-  public RemoveStyleRuleAction(final StyleDefinitionEditorContext context,
-                               final ElementStyleRule rule)
-  {
+  public RemoveStyleRuleAction( final StyleDefinitionEditorContext context,
+                                final ElementStyleRule rule ) {
     this.context = context;
     this.rule = rule;
-    putValue(Action.NAME, "Remove Style-Rule");
+    putValue( Action.NAME, "Remove Style-Rule" );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
-    context.removeStyleRule(rule);
+  public void actionPerformed( final ActionEvent e ) {
+    context.removeStyleRule( rule );
   }
 
 }

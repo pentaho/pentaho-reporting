@@ -25,8 +25,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class SparklineStylesReadHandler extends AbstractXmlReadHandler implements StyleReadHandler
-{
+public class SparklineStylesReadHandler extends AbstractXmlReadHandler implements StyleReadHandler {
   private ElementStyleSheet styleSheet;
 
   /**
@@ -35,30 +34,25 @@ public class SparklineStylesReadHandler extends AbstractXmlReadHandler implement
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    final String highColor = attrs.getValue(getUri(), "high-color");
-    if (highColor != null)
-    {
-      styleSheet.setStyleProperty(SparklineStyleKeys.HIGH_COLOR, ReportParserUtil.parseColor(highColor, null));
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    final String highColor = attrs.getValue( getUri(), "high-color" );
+    if ( highColor != null ) {
+      styleSheet.setStyleProperty( SparklineStyleKeys.HIGH_COLOR, ReportParserUtil.parseColor( highColor, null ) );
     }
 
-    final String lastColor = attrs.getValue(getUri(), "last-color");
-    if (lastColor != null)
-    {
-      styleSheet.setStyleProperty(SparklineStyleKeys.LAST_COLOR, ReportParserUtil.parseColor(lastColor, null));
+    final String lastColor = attrs.getValue( getUri(), "last-color" );
+    if ( lastColor != null ) {
+      styleSheet.setStyleProperty( SparklineStyleKeys.LAST_COLOR, ReportParserUtil.parseColor( lastColor, null ) );
     }
 
-    final String lowColor = attrs.getValue(getUri(), "low-color");
-    if (lastColor != null)
-    {
-      styleSheet.setStyleProperty(SparklineStyleKeys.LOW_COLOR, ReportParserUtil.parseColor(lowColor, null));
+    final String lowColor = attrs.getValue( getUri(), "low-color" );
+    if ( lastColor != null ) {
+      styleSheet.setStyleProperty( SparklineStyleKeys.LOW_COLOR, ReportParserUtil.parseColor( lowColor, null ) );
     }
 
-    final String mediumColor = attrs.getValue(getUri(), "medium-color");
-    if (lastColor != null)
-    {
-      styleSheet.setStyleProperty(SparklineStyleKeys.MEDIUM_COLOR, ReportParserUtil.parseColor(mediumColor, null));
+    final String mediumColor = attrs.getValue( getUri(), "medium-color" );
+    if ( lastColor != null ) {
+      styleSheet.setStyleProperty( SparklineStyleKeys.MEDIUM_COLOR, ReportParserUtil.parseColor( mediumColor, null ) );
     }
   }
 
@@ -68,13 +62,11 @@ public class SparklineStylesReadHandler extends AbstractXmlReadHandler implement
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return styleSheet;
   }
 
-  public void setStyleSheet(final ElementStyleSheet styleSheet)
-  {
+  public void setStyleSheet( final ElementStyleSheet styleSheet ) {
     this.styleSheet = styleSheet;
   }
 }

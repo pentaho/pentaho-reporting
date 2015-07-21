@@ -17,19 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j;
 
-import java.sql.SQLException;
-import javax.swing.table.TableModel;
-
-import org.olap4j.CellSet;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.OlapConnectionProvider;
 
-public class SimpleDenormalizedMDXDataFactory extends AbstractMDXDataFactory
-{
-  public SimpleDenormalizedMDXDataFactory(final OlapConnectionProvider connectionProvider)
-  {
-    super(connectionProvider);
+import javax.swing.table.TableModel;
+import java.sql.SQLException;
+
+public class SimpleDenormalizedMDXDataFactory extends AbstractMDXDataFactory {
+  public SimpleDenormalizedMDXDataFactory( final OlapConnectionProvider connectionProvider ) {
+    super( connectionProvider );
   }
 
   /**
@@ -42,18 +39,15 @@ public class SimpleDenormalizedMDXDataFactory extends AbstractMDXDataFactory
    * @param queryName  the query name
    * @param parameters the parameters for the query
    * @return the result of the query as table model.
-   * @throws org.pentaho.reporting.engine.classic.core.ReportDataFactoryException if an error occured while performing the query.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportDataFactoryException if an error occured while performing
+   *                                                                              the query.
    */
-  public TableModel queryData(final String queryName, final DataRow parameters) throws ReportDataFactoryException
-  {
-    try
-    {
-      final QueryResultWrapper cellSet = performQuery(queryName, parameters);
-      return new DenormalizedMDXTableModel(cellSet);
-    }
-    catch (SQLException sqE)
-    {
-      throw new ReportDataFactoryException("Failed to execute query", sqE);
+  public TableModel queryData( final String queryName, final DataRow parameters ) throws ReportDataFactoryException {
+    try {
+      final QueryResultWrapper cellSet = performQuery( queryName, parameters );
+      return new DenormalizedMDXTableModel( cellSet );
+    } catch ( SQLException sqE ) {
+      throw new ReportDataFactoryException( "Failed to execute query", sqE );
     }
   }
 }

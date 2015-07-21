@@ -49,8 +49,7 @@ import org.krysalis.barcode4j.tools.UnitConv;
  *
  * @author Cedric Pronzato
  */
-public class SimpleBarcodesUtility
-{
+public class SimpleBarcodesUtility {
   /**
    * Symbology accepting A-Z 0-9 and 8 special characters '-' '.' ' ' '*' '$' '/' '+' '%'.<br/> Also known as 3of9,
    * usd3, usd-3.<br/> This barcode supports checksum property.
@@ -135,351 +134,261 @@ public class SimpleBarcodesUtility
   public static final String BARCODE_USPSINTELLIGENTMAIL = "uspsintelligentmail";
 
 
-  private static final Log logger = LogFactory.getLog(SimpleBarcodesUtility.class);
+  private static final Log logger = LogFactory.getLog( SimpleBarcodesUtility.class );
 
-  private SimpleBarcodesUtility()
-  {
+  private SimpleBarcodesUtility() {
   }
 
-  public static Barcode createBarcode(final String data, final String type, final boolean checksum)
-  {
-    if (data == null || type == null)
-    {
-      throw new IllegalArgumentException("Barcode type or data must not be null");
+  public static Barcode createBarcode( final String data, final String type, final boolean checksum ) {
+    if ( data == null || type == null ) {
+      throw new IllegalArgumentException( "Barcode type or data must not be null" );
     }
 
-    if (BARCODE_CODE39.equals(type))
-    {
-      try
-      {
-        return new Code39Barcode(data, checksum, false);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong code39(ext) data supplied", e);
+    if ( BARCODE_CODE39.equals( type ) ) {
+      try {
+        return new Code39Barcode( data, checksum, false );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong code39(ext) data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_CODE39EXT.equals(type))
-    {
-      try
-      {
-        return new Code39Barcode(data, checksum, true);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong code39(ext) data supplied", e);
+    if ( BARCODE_CODE39EXT.equals( type ) ) {
+      try {
+        return new Code39Barcode( data, checksum, true );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong code39(ext) data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_CODABAR.equals(type))
-    {
-      try
-      {
-        return new CodabarBarcode(data);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong codabar data supplied", e);
+    if ( BARCODE_CODABAR.equals( type ) ) {
+      try {
+        return new CodabarBarcode( data );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong codabar data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_EAN13.equals(type))
-    {
-      try
-      {
-        return new EAN13Barcode(data);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong ean13 data supplied", e);
+    if ( BARCODE_EAN13.equals( type ) ) {
+      try {
+        return new EAN13Barcode( data );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong ean13 data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_UPCA.equals(type))
-    {
-      try
-      {
-        return new UPCABarcode(data, false);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong upca data supplied", e);
+    if ( BARCODE_UPCA.equals( type ) ) {
+      try {
+        return new UPCABarcode( data, false );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong upca data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_ISBN.equals(type))
-    {
-      try
-      {
-        return new BooklandBarcode(data);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong isbn data supplied", e);
+    if ( BARCODE_ISBN.equals( type ) ) {
+      try {
+        return new BooklandBarcode( data );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong isbn data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_CODE128.equals(type))
-    {
-      try
-      {
-        return new Code128Barcode(data, Code128Barcode.O);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong code128 data supplied", e);
+    if ( BARCODE_CODE128.equals( type ) ) {
+      try {
+        return new Code128Barcode( data, Code128Barcode.O );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong code128 data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_CODE128A.equals(type))
-    {
-      try
-      {
-        return new Code128Barcode(data, Code128Barcode.A);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong code128 data supplied", e);
+    if ( BARCODE_CODE128A.equals( type ) ) {
+      try {
+        return new Code128Barcode( data, Code128Barcode.A );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong code128 data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_CODE128B.equals(type))
-    {
-      try
-      {
-        return new Code128Barcode(data, Code128Barcode.B);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong code128 data supplied", e);
+    if ( BARCODE_CODE128B.equals( type ) ) {
+      try {
+        return new Code128Barcode( data, Code128Barcode.B );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong code128 data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_CODE128C.equals(type))
-    {
-      try
-      {
-        return new Code128Barcode(data, Code128Barcode.C);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong code128 data supplied", e);
+    if ( BARCODE_CODE128C.equals( type ) ) {
+      try {
+        return new Code128Barcode( data, Code128Barcode.C );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong code128 data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_UCCEAN128.equals(type))
-    {
-      try
-      {
-        return new UCCEAN128Barcode(data, checksum);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong uccean128 data supplied", e);
+    if ( BARCODE_UCCEAN128.equals( type ) ) {
+      try {
+        return new UCCEAN128Barcode( data, checksum );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong uccean128 data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_2OF5.equals(type))
-    {
-      try
-      {
-        return new Std2of5Barcode(data, checksum);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong std2of5 data supplied", e);
+    if ( BARCODE_2OF5.equals( type ) ) {
+      try {
+        return new Std2of5Barcode( data, checksum );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong std2of5 data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_2OF5INT.equals(type))
-    {
-      try
-      {
-        return new Int2of5Barcode(data, checksum);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong int2of5 data supplied", e);
+    if ( BARCODE_2OF5INT.equals( type ) ) {
+      try {
+        return new Int2of5Barcode( data, checksum );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong int2of5 data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_POSTNET.equals(type))
-    {
-      try
-      {
-        if (checksum)
-        {
-          logger.info("Checkum property is not usable on barcode " + type);
+    if ( BARCODE_POSTNET.equals( type ) ) {
+      try {
+        if ( checksum ) {
+          logger.info( "Checkum property is not usable on barcode " + type );
         }
-        return new PostNetBarcode(data);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong postnet data supplied", e);
+        return new PostNetBarcode( data );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong postnet data supplied", e );
         return null;
       }
     }
 
-    if (BARCODE_PDF417.equals(type))
-    {
-      try
-      {
-        return new PDF417Barcode(data);
-      }
-      catch (BarcodeException e)
-      {
-        logger.error("Wrong postnet data supplied", e);
+    if ( BARCODE_PDF417.equals( type ) ) {
+      try {
+        return new PDF417Barcode( data );
+      } catch ( BarcodeException e ) {
+        logger.error( "Wrong postnet data supplied", e );
         return null;
       }
     }
 
-    logger.warn("Unknown barcode type '" + type + "'.");
+    logger.warn( "Unknown barcode type '" + type + "'." );
     return null;
   }
 
-  public static BarcodeGenerator createBarcode4J(final String type,
-                                                 final boolean showText,
-                                                 final boolean checksum,
-                                                 final Number barHeight)
-  {
-    if (BARCODE_DATAMATRIX.equals(type))
-    {
+  public static BarcodeGenerator createBarcode4J( final String type,
+                                                  final boolean showText,
+                                                  final boolean checksum,
+                                                  final Number barHeight ) {
+    if ( BARCODE_DATAMATRIX.equals( type ) ) {
       final DataMatrix dataMatrix = new DataMatrix();
       return dataMatrix;
     }
 
-    if (BARCODE_EAN8.equals(type))
-    {
+    if ( BARCODE_EAN8.equals( type ) ) {
       final EAN8 dataMatrix = new EAN8();
-      if (showText == false)
-      {
-        dataMatrix.getUPCEANBean().setMsgPosition(HumanReadablePlacement.HRP_NONE);
+      if ( showText == false ) {
+        dataMatrix.getUPCEANBean().setMsgPosition( HumanReadablePlacement.HRP_NONE );
       }
-      if (barHeight != null)
-      {
-        dataMatrix.getUPCEANBean().setBarHeight(UnitConv.pt2mm(barHeight.doubleValue()));
+      if ( barHeight != null ) {
+        dataMatrix.getUPCEANBean().setBarHeight( UnitConv.pt2mm( barHeight.doubleValue() ) );
       }
-      dataMatrix.getUPCEANBean().setChecksumMode(checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE);
+      dataMatrix.getUPCEANBean().setChecksumMode( checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE );
       return dataMatrix;
     }
 
-    if (BARCODE_EAN128.equals(type))
-    {
+    if ( BARCODE_EAN128.equals( type ) ) {
       final EAN128 dataMatrix = new EAN128();
-      if (showText == false)
-      {
-        dataMatrix.getEAN128Bean().setMsgPosition(HumanReadablePlacement.HRP_NONE);
+      if ( showText == false ) {
+        dataMatrix.getEAN128Bean().setMsgPosition( HumanReadablePlacement.HRP_NONE );
       }
-      if (barHeight != null)
-      {
-        dataMatrix.getEAN128Bean().setBarHeight(UnitConv.pt2mm(barHeight.doubleValue()));
+      if ( barHeight != null ) {
+        dataMatrix.getEAN128Bean().setBarHeight( UnitConv.pt2mm( barHeight.doubleValue() ) );
       }
-      dataMatrix.getEAN128Bean().setChecksumMode(checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE);
+      dataMatrix.getEAN128Bean().setChecksumMode( checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE );
       return dataMatrix;
     }
 
-    if (BARCODE_UPCE.equals(type))
-    {
+    if ( BARCODE_UPCE.equals( type ) ) {
       final UPCE dataMatrix = new UPCE();
-      if (showText == false)
-      {
-        dataMatrix.getUPCEANBean().setMsgPosition(HumanReadablePlacement.HRP_NONE);
+      if ( showText == false ) {
+        dataMatrix.getUPCEANBean().setMsgPosition( HumanReadablePlacement.HRP_NONE );
       }
-      if (barHeight != null)
-      {
-        dataMatrix.getUPCEANBean().setBarHeight(UnitConv.pt2mm(barHeight.doubleValue()));
+      if ( barHeight != null ) {
+        dataMatrix.getUPCEANBean().setBarHeight( UnitConv.pt2mm( barHeight.doubleValue() ) );
       }
-      dataMatrix.getUPCEANBean().setChecksumMode(checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE);
+      dataMatrix.getUPCEANBean().setChecksumMode( checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE );
       return dataMatrix;
     }
 
-    if (BARCODE_ROYALMAIL.equals(type))
-    {
+    if ( BARCODE_ROYALMAIL.equals( type ) ) {
       final RoyalMailCBC dataMatrix = new RoyalMailCBC();
-      if (showText == false)
-      {
-        dataMatrix.getRoyalMailCBCBean().setMsgPosition(HumanReadablePlacement.HRP_NONE);
+      if ( showText == false ) {
+        dataMatrix.getRoyalMailCBCBean().setMsgPosition( HumanReadablePlacement.HRP_NONE );
       }
-      if (barHeight != null)
-      {
-        dataMatrix.getRoyalMailCBCBean().setBarHeight(UnitConv.pt2mm(barHeight.doubleValue()));
+      if ( barHeight != null ) {
+        dataMatrix.getRoyalMailCBCBean().setBarHeight( UnitConv.pt2mm( barHeight.doubleValue() ) );
       }
-      dataMatrix.getRoyalMailCBCBean().setChecksumMode(checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE);
+      dataMatrix.getRoyalMailCBCBean().setChecksumMode( checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE );
       return dataMatrix;
     }
 
-    if (BARCODE_USPSINTELLIGENTMAIL.equals(type))
-    {
+    if ( BARCODE_USPSINTELLIGENTMAIL.equals( type ) ) {
       final USPSIntelligentMail dataMatrix = new USPSIntelligentMail();
-      if (showText == false)
-      {
-        dataMatrix.getUSPSIntelligentMailBean().setMsgPosition(HumanReadablePlacement.HRP_NONE);
+      if ( showText == false ) {
+        dataMatrix.getUSPSIntelligentMailBean().setMsgPosition( HumanReadablePlacement.HRP_NONE );
       }
-      if (barHeight != null)
-      {
-        dataMatrix.getUSPSIntelligentMailBean().setBarHeight(UnitConv.pt2mm(barHeight.doubleValue()));
+      if ( barHeight != null ) {
+        dataMatrix.getUSPSIntelligentMailBean().setBarHeight( UnitConv.pt2mm( barHeight.doubleValue() ) );
       }
-      dataMatrix.getUSPSIntelligentMailBean().setChecksumMode(checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE);
+      dataMatrix.getUSPSIntelligentMailBean()
+        .setChecksumMode( checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE );
       return dataMatrix;
     }
     return null;
   }
 
-  public static String getBarcodeSampleData(final String type)
-  {
-    if (BARCODE_DATAMATRIX.equals(type))
-    {
+  public static String getBarcodeSampleData( final String type ) {
+    if ( BARCODE_DATAMATRIX.equals( type ) ) {
       return "barcode";
     }
 
-    if (BARCODE_EAN8.equals(type))
-    {
+    if ( BARCODE_EAN8.equals( type ) ) {
       return "01234565";
     }
-    if (BARCODE_EAN13.equals(type))
-    {
+    if ( BARCODE_EAN13.equals( type ) ) {
       return "012345678912";
     }
-    if (BARCODE_ISBN.equals(type))
-    {
+    if ( BARCODE_ISBN.equals( type ) ) {
       return "0123456789";
     }
 
-    if (BARCODE_EAN128.equals(type))
-    {
+    if ( BARCODE_EAN128.equals( type ) ) {
       return "barcode";
     }
 
-    if (BARCODE_UPCE.equals(type))
-    {
+    if ( BARCODE_UPCE.equals( type ) ) {
       return "0425261";
     }
-    if (BARCODE_UPCA.equals(type))
-    {
+    if ( BARCODE_UPCA.equals( type ) ) {
       return "4252611234565";
     }
 
-    if (BARCODE_ROYALMAIL.equals(type))
-    {
+    if ( BARCODE_ROYALMAIL.equals( type ) ) {
       return "B31HQ1A";
     }
 
-    if (BARCODE_USPSINTELLIGENTMAIL.equals(type))
-    {
+    if ( BARCODE_USPSINTELLIGENTMAIL.equals( type ) ) {
       return "0123456709498765432101234567891";
     }
 

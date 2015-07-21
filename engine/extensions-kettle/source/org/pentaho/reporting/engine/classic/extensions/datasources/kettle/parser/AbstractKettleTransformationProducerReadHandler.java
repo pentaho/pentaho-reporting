@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
@@ -31,10 +29,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
+
 public abstract class AbstractKettleTransformationProducerReadHandler
-    extends AbstractXmlReadHandler implements KettleTransformationProducerReadHandler
-{
-  private static final Log logger = LogFactory.getLog(AbstractKettleTransformationProducerReadHandler.class);
+  extends AbstractXmlReadHandler implements KettleTransformationProducerReadHandler {
+  private static final Log logger = LogFactory.getLog( AbstractKettleTransformationProducerReadHandler.class );
 
   private boolean stopOnError;
   private String name;
@@ -47,14 +46,12 @@ public abstract class AbstractKettleTransformationProducerReadHandler
   private ArrayList<ArgumentReadHandler> argumentHandlers;
   private ArrayList<VariableReadHandler> variablesHandlers;
 
-  public AbstractKettleTransformationProducerReadHandler()
-  {
+  public AbstractKettleTransformationProducerReadHandler() {
     argumentHandlers = new ArrayList<ArgumentReadHandler>();
     variablesHandlers = new ArrayList<VariableReadHandler>();
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -64,32 +61,29 @@ public abstract class AbstractKettleTransformationProducerReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Required attribute 'name' is not defined");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
+      throw new ParseException( "Required attribute 'name' is not defined" );
     }
 
-    repositoryName = attrs.getValue(getUri(), "repository");
-    if (repositoryName == null)
-    {
-      throw new ParseException("Required attribute 'repository' is not defined");
+    repositoryName = attrs.getValue( getUri(), "repository" );
+    if ( repositoryName == null ) {
+      throw new ParseException( "Required attribute 'repository' is not defined" );
     }
 
-    username = attrs.getValue(getUri(), "username");
-    password = PasswordEncryptionService.getInstance().decrypt(getRootHandler(), attrs.getValue(getUri(), "password"));
+    username = attrs.getValue( getUri(), "username" );
+    password =
+      PasswordEncryptionService.getInstance().decrypt( getRootHandler(), attrs.getValue( getUri(), "password" ) );
 
-    stepName = attrs.getValue(getUri(), "step");
-    if (stepName == null)
-    {
-      logger.warn("Required attribute 'step' is not defined. This query may not work correctly.");
+    stepName = attrs.getValue( getUri(), "step" );
+    if ( stepName == null ) {
+      logger.warn( "Required attribute 'step' is not defined. This query may not work correctly." );
     }
 
     // if undefined or invalid value, default to safe option of continuing, as this was the old behaviour,
     // and we dont want customers to have broken reports even though the KTRs they use are signaling errors.
-    stopOnError = "true".equals(attrs.getValue(getUri(), "stop-on-error"));
+    stopOnError = "true".equals( attrs.getValue( getUri(), "stop-on-error" ) );
   }
 
   /**
@@ -101,24 +95,21 @@ public abstract class AbstractKettleTransformationProducerReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
 
-    if ("argument".equals(tagName))
-    {
+    if ( "argument".equals( tagName ) ) {
       final ArgumentReadHandler readHandler = new ArgumentReadHandler();
-      argumentHandlers.add(readHandler);
+      argumentHandlers.add( readHandler );
       return readHandler;
     }
 
-    if ("variable".equals(tagName))
-    {
+    if ( "variable".equals( tagName ) ) {
       final VariableReadHandler readHandler = new VariableReadHandler();
-      variablesHandlers.add(readHandler);
+      variablesHandlers.add( readHandler );
       return readHandler;
     }
     return null;
@@ -129,60 +120,49 @@ public abstract class AbstractKettleTransformationProducerReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    definedArgumentNames = new FormulaArgument[argumentHandlers.size()];
-    for (int i = 0; i < definedArgumentNames.length; i++)
-    {
-      final ArgumentReadHandler o = argumentHandlers.get(i);
-      definedArgumentNames[i] = o.getFormula();
+  protected void doneParsing() throws SAXException {
+    definedArgumentNames = new FormulaArgument[ argumentHandlers.size() ];
+    for ( int i = 0; i < definedArgumentNames.length; i++ ) {
+      final ArgumentReadHandler o = argumentHandlers.get( i );
+      definedArgumentNames[ i ] = o.getFormula();
     }
 
-    definedVariableNames = new FormulaParameter[variablesHandlers.size()];
-    for (int i = 0; i < definedVariableNames.length; i++)
-    {
-      final VariableReadHandler readHandler = variablesHandlers.get(i);
-      definedVariableNames[i] = readHandler.getObject();
+    definedVariableNames = new FormulaParameter[ variablesHandlers.size() ];
+    for ( int i = 0; i < definedVariableNames.length; i++ ) {
+      final VariableReadHandler readHandler = variablesHandlers.get( i );
+      definedVariableNames[ i ] = readHandler.getObject();
     }
   }
 
-  public String getStepName()
-  {
+  public String getStepName() {
     return stepName;
   }
 
-  public String getUsername()
-  {
+  public String getUsername() {
     return username;
   }
 
-  public String getPassword()
-  {
+  public String getPassword() {
     return password;
   }
 
-  public String getRepositoryName()
-  {
+  public String getRepositoryName() {
     return repositoryName;
   }
 
-  public FormulaArgument[] getDefinedArgumentNames()
-  {
+  public FormulaArgument[] getDefinedArgumentNames() {
     return definedArgumentNames;
   }
 
-  public FormulaParameter[] getDefinedVariableNames()
-  {
+  public FormulaParameter[] getDefinedVariableNames() {
     return definedVariableNames;
   }
 
-  public boolean isStopOnError()
-  {
+  public boolean isStopOnError() {
     return stopOnError;
   }
 
-  public final KettleTransformationProducer getTransformationProducer() throws SAXException
-  {
+  public final KettleTransformationProducer getTransformationProducer() throws SAXException {
     return getObject();
   }
 

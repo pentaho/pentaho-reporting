@@ -17,18 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j;
 
-import java.sql.SQLException;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.OlapConnectionProvider;
 
-public class LegacyBandedMDXDataFactory extends AbstractNamedMDXDataFactory
-{
-  public LegacyBandedMDXDataFactory(final OlapConnectionProvider connectionProvider)
-  {
-    super(connectionProvider);
+import javax.swing.table.TableModel;
+import java.sql.SQLException;
+
+public class LegacyBandedMDXDataFactory extends AbstractNamedMDXDataFactory {
+  public LegacyBandedMDXDataFactory( final OlapConnectionProvider connectionProvider ) {
+    super( connectionProvider );
   }
 
   /**
@@ -43,17 +41,14 @@ public class LegacyBandedMDXDataFactory extends AbstractNamedMDXDataFactory
    * @return the result of the query as table model.
    * @throws ReportDataFactoryException if an error occured while performing the query.
    */
-  public TableModel queryData(final String queryName, final DataRow parameters) throws ReportDataFactoryException
-  {
-    try
-    {
-      final QueryResultWrapper cellSet = performQuery(queryName, parameters);
-      return postProcess(queryName, parameters, new LegacyBandedMDXTableModel(cellSet, extractQueryLimit(parameters)));
-    }
-    catch (SQLException sqE)
-    {
-      throw new ReportDataFactoryException("Failed to execute query", sqE);
+  public TableModel queryData( final String queryName, final DataRow parameters ) throws ReportDataFactoryException {
+    try {
+      final QueryResultWrapper cellSet = performQuery( queryName, parameters );
+      return postProcess( queryName, parameters,
+        new LegacyBandedMDXTableModel( cellSet, extractQueryLimit( parameters ) ) );
+    } catch ( SQLException sqE ) {
+      throw new ReportDataFactoryException( "Failed to execute query", sqE );
     }
   }
-  
+
 }

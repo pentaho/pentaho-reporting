@@ -17,20 +17,19 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jfree.data.general.DefaultPieDataset;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.function.AbstractFunction;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.FunctionUtilities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @deprecated
  */
-public class PieSetCollectorFunction extends AbstractFunction implements ICollectorFunction
-{
+public class PieSetCollectorFunction extends AbstractFunction implements ICollectorFunction {
 
   // This COULD descend from BaseCollectorFunction, EXCEPT that this class
   // has a String seriesColumn field, and BaseCollectorFunction has
@@ -56,124 +55,97 @@ public class PieSetCollectorFunction extends AbstractFunction implements ICollec
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
    * is added to the report's function collection.
    */
-  public PieSetCollectorFunction()
-  {
+  public PieSetCollectorFunction() {
     results = new ArrayList();
   }
 
 
-  public String getSeriesColumn()
-  {
+  public String getSeriesColumn() {
     return seriesColumn;
   }
 
-  public String getValueColumn()
-  {
+  public String getValueColumn() {
     return valueColumn;
   }
 
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
-  public String getResetGroup()
-  {
+  public String getResetGroup() {
     return resetGroup;
   }
 
-  public void setSeriesColumn(final String value)
-  {
+  public void setSeriesColumn( final String value ) {
     seriesColumn = value;
   }
 
-  public void setValueColumn(final String value)
-  {
+  public void setValueColumn( final String value ) {
     valueColumn = value;
   }
 
-  public void setGroup(final String value)
-  {
+  public void setGroup( final String value ) {
     group = value;
   }
 
-  public void setResetGroup(final String value)
-  {
+  public void setResetGroup( final String value ) {
     resetGroup = value;
   }
 
-  public boolean isSummaryOnly()
-  {
+  public boolean isSummaryOnly() {
     return summaryOnly;
   }
 
-  public void setSummaryOnly(final boolean value)
-  {
+  public void setSummaryOnly( final boolean value ) {
     summaryOnly = value;
   }
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return this;
   }
 
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     currentIndex = -1;
 
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
       pieDataset = null;
       results.clear();
-      if (getResetGroup() == null)
-      {
+      if ( getResetGroup() == null ) {
         pieDataset = new DefaultPieDataset();
-        results.add(pieDataset);
+        results.add( pieDataset );
       }
-    }
-    else
-    {
+    } else {
       // Activate the current group, which was filled in the prepare run.
-      if (getResetGroup() == null && results.size() > 0)
-      {
-        pieDataset = (DefaultPieDataset) results.get(0);
+      if ( getResetGroup() == null && results.size() > 0 ) {
+        pieDataset = (DefaultPieDataset) results.get( 0 );
       }
     }
   }
 
-  public void groupStarted(final ReportEvent event)
-  {
+  public void groupStarted( final ReportEvent event ) {
 
     final String localGroup = getGroup();
-    if (localGroup != null)
-    {
-      if (FunctionUtilities.isDefinedGroup(getResetGroup(), event))
-      {
+    if ( localGroup != null ) {
+      if ( FunctionUtilities.isDefinedGroup( getResetGroup(), event ) ) {
         // reset ...
-        if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-        {
+        if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
           pieDataset = new DefaultPieDataset();
-          results.add(pieDataset);
-        }
-        else
-        {
-          if (FunctionUtilities.isLayoutLevel(event))
-          {
+          results.add( pieDataset );
+        } else {
+          if ( FunctionUtilities.isLayoutLevel( event ) ) {
             // Activate the current group, which was filled in the
             // prepare run.
             currentIndex += 1;
-            pieDataset = (DefaultPieDataset) results.get(currentIndex);
+            pieDataset = (DefaultPieDataset) results.get( currentIndex );
           }
         }
       }
     }
   }
 
-  public void itemsAdvanced(final ReportEvent reportEvent)
-  {
+  public void itemsAdvanced( final ReportEvent reportEvent ) {
 
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, reportEvent) == false)
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, reportEvent ) == false ) {
       // we do not modify the created dataset if this is not the function
       // computation run. (FunctionLevel '0')
       return;
@@ -181,48 +153,38 @@ public class PieSetCollectorFunction extends AbstractFunction implements ICollec
 
     final DefaultPieDataset localPieDataset = pieDataset;
 
-    if (!isSummaryOnly())
-    {
-      final Object seriesObject = getDataRow().get(getSeriesColumn());
+    if ( !isSummaryOnly() ) {
+      final Object seriesObject = getDataRow().get( getSeriesColumn() );
       final Comparable seriesComparable;
-      if (seriesObject instanceof Comparable)
-      {
+      if ( seriesObject instanceof Comparable ) {
         seriesComparable = (Comparable) seriesObject;
-      }
-      else
-      {
+      } else {
         // ok, we need some better error management here. Its a
         // prototype :)
         seriesComparable = "PIESETCOLL.USER_ERROR_CATEGORY_NOT_COMPARABLE"; //$NON-NLS-1$
       }
-      final Object valueObject = getDataRow().get(getValueColumn());
+      final Object valueObject = getDataRow().get( getValueColumn() );
 
-      Number value = (valueObject instanceof Number) ? (Number) valueObject : null;
+      Number value = ( valueObject instanceof Number ) ? (Number) valueObject : null;
 
       Object isThere = null;
-      try
-      {
-        isThere = localPieDataset.getValue(seriesComparable);
+      try {
+        isThere = localPieDataset.getValue( seriesComparable );
+      } catch ( Exception ignored ) {
       }
-      catch (Exception ignored)
-      {
-      }
-      if (isThere != null)
-      {
-        final double val = (value != null) ? value.doubleValue() : 0;
-        value = new Double(val + ((Number) isThere).doubleValue());
+      if ( isThere != null ) {
+        final double val = ( value != null ) ? value.doubleValue() : 0;
+        value = new Double( val + ( (Number) isThere ).doubleValue() );
       }
 
-      localPieDataset.setValue(seriesComparable, value);
+      localPieDataset.setValue( seriesComparable, value );
 
     }
   }
 
-  public void groupFinished(final ReportEvent reportEvent)
-  {
+  public void groupFinished( final ReportEvent reportEvent ) {
 
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, reportEvent) == false)
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, reportEvent ) == false ) {
       // we do not modify the created dataset if this is not the function
       // computation run. (FunctionLevel '0')
       return;
@@ -230,43 +192,35 @@ public class PieSetCollectorFunction extends AbstractFunction implements ICollec
 
     final DefaultPieDataset localPieDataset = pieDataset;
 
-    if (isSummaryOnly())
-    {
-      if (FunctionUtilities.isDefinedGroup(getGroup(), reportEvent))
-      {
+    if ( isSummaryOnly() ) {
+      if ( FunctionUtilities.isDefinedGroup( getGroup(), reportEvent ) ) {
         // we can be sure that everything has been computed here. So
         // grab the
         // values and add them to the dataset.
-        final Object seriesObject = getDataRow().get(getSeriesColumn());
+        final Object seriesObject = getDataRow().get( getSeriesColumn() );
         final Comparable seriesComparable;
-        if (seriesObject instanceof Comparable)
-        {
+        if ( seriesObject instanceof Comparable ) {
           seriesComparable = (Comparable) seriesObject;
-        }
-        else
-        {
+        } else {
           // ok, we need some better error management here. Its a
           // prototype :)
-          seriesComparable = ("PIESETCOLL.USER_ERROR_SERIES_NOT_COMPARABLE"); //$NON-NLS-1$
+          seriesComparable = ( "PIESETCOLL.USER_ERROR_SERIES_NOT_COMPARABLE" ); //$NON-NLS-1$
         }
-        final Object valueObject = getDataRow().get(getValueColumn());
+        final Object valueObject = getDataRow().get( getValueColumn() );
 
-        final Number value = (valueObject instanceof Number) ? (Number) valueObject : null;
-        localPieDataset.setValue(seriesComparable, value);
+        final Number value = ( valueObject instanceof Number ) ? (Number) valueObject : null;
+        localPieDataset.setValue( seriesComparable, value );
       }
     }
   }
 
   /**
-   * Return a completly separated copy of this function. The copy no longer
-   * shares any changeable objects with the original function.
-   * Also from Thomas:
-   * Should retain data from the report definition, but clear calculated data.
+   * Return a completly separated copy of this function. The copy no longer shares any changeable objects with the
+   * original function. Also from Thomas: Should retain data from the report definition, but clear calculated data.
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final PieSetCollectorFunction fn = (PieSetCollectorFunction) super.getInstance();
     fn.pieDataset = null;
     fn.results = new ArrayList();
@@ -274,13 +228,11 @@ public class PieSetCollectorFunction extends AbstractFunction implements ICollec
     return fn;
   }
 
-  public Object getCacheKey()
-  {
+  public Object getCacheKey() {
     return this.pieDataset;
   }
 
-  public Object getDatasourceValue()
-  {
+  public Object getDatasourceValue() {
     return this.pieDataset;
   }
 

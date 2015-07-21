@@ -22,21 +22,18 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.CategoryDataset;
 import org.pentaho.plugin.jfreereport.reportcharts.backport.FormattedCategoryAxis;
 
-public class WaterfallChartExpressions extends CategoricalChartExpression
-{
+public class WaterfallChartExpressions extends CategoricalChartExpression {
   private static final long serialVersionUID = 8342198616002055989L;
 
-  public WaterfallChartExpressions()
-  {
+  public WaterfallChartExpressions() {
   }
 
-  protected JFreeChart computeCategoryChart(final CategoryDataset dataset)
-  {
-    final JFreeChart chart = ChartFactory.createWaterfallChart(computeTitle(), getCategoryAxisLabel(),
-        getValueAxisLabel(), dataset,
-        computePlotOrientation(), isShowLegend(), false, false);
-    chart.getCategoryPlot().setDomainAxis(new FormattedCategoryAxis(getCategoryAxisLabel(),
-          getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale()));
+  protected JFreeChart computeCategoryChart( final CategoryDataset dataset ) {
+    final JFreeChart chart = ChartFactory.createWaterfallChart( computeTitle(), getCategoryAxisLabel(),
+      getValueAxisLabel(), dataset,
+      computePlotOrientation(), isShowLegend(), false, false );
+    chart.getCategoryPlot().setDomainAxis( new FormattedCategoryAxis( getCategoryAxisLabel(),
+      getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale() ) );
     return chart;
   }
 

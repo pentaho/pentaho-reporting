@@ -30,10 +30,9 @@ import org.pentaho.reporting.libraries.designtime.swing.MacOSXIntegration;
  *
  * @author : Thomas Morgner
  */
-public class ReportDesignerBoot extends AbstractBoot
-{
+public class ReportDesignerBoot extends AbstractBoot {
   public static final String DESIGNER_NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/report-designer/2.0";
+    "http://reporting.pentaho.org/namespaces/report-designer/2.0";
   public static final String LAST_FILENAME = "report-save-path";
 
   public static final String ZOOM = "zoom";
@@ -53,8 +52,7 @@ public class ReportDesignerBoot extends AbstractBoot
   /**
    * Creates a new instance.
    */
-  private ReportDesignerBoot()
-  {
+  private ReportDesignerBoot() {
     projectInfo = ReportDesignerInfo.getInstance();
   }
 
@@ -63,10 +61,8 @@ public class ReportDesignerBoot extends AbstractBoot
    *
    * @return the boot instance.
    */
-  public static synchronized ReportDesignerBoot getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ReportDesignerBoot getInstance() {
+    if ( instance == null ) {
       instance = new ReportDesignerBoot();
     }
     return instance;
@@ -80,8 +76,7 @@ public class ReportDesignerBoot extends AbstractBoot
    *
    * @return the global config as modifiable configuration.
    */
-  public ModifiableConfiguration getEditableConfig()
-  {
+  public ModifiableConfiguration getEditableConfig() {
     return (ModifiableConfiguration) getGlobalConfig();
   }
 
@@ -90,38 +85,30 @@ public class ReportDesignerBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return projectInfo;
   }
 
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/designer/core/report-designer.properties",// NON-NLS
-            "/report-designer.properties", true, ReportDesignerBoot.class);// NON-NLS
+      ( "/org/pentaho/reporting/designer/core/report-designer.properties",// NON-NLS
+        "/report-designer.properties", true, ReportDesignerBoot.class );// NON-NLS
   }
 
-  protected void performBoot()
-  {
+  protected void performBoot() {
     final PackageManager packageManager = getPackageManager();
-    packageManager.load("org.pentaho.reporting.designer.core.");// NON-NLS
-    packageManager.load("org.pentaho.reporting.designer.modules.");// NON-NLS
+    packageManager.load( "org.pentaho.reporting.designer.core." );// NON-NLS
+    packageManager.load( "org.pentaho.reporting.designer.modules." );// NON-NLS
     packageManager.initializeModules();
 
-    try
-    {
+    try {
       // Fixes browser-launcher on OpenJDK 1.7 for MacOS
-      if (MacOSXIntegration.MAC_OS_X)
-      {
-        if (System.getProperty("mrj.version") == null)
-        {
-          System.setProperty("mrj.version", "999999");
+      if ( MacOSXIntegration.MAC_OS_X ) {
+        if ( System.getProperty( "mrj.version" ) == null ) {
+          System.setProperty( "mrj.version", "999999" );
         }
       }
-    }
-    catch (Error e)
-    {
+    } catch ( Error e ) {
       // ignored.
     }
 

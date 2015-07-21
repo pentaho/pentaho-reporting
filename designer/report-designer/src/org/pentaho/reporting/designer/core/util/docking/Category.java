@@ -17,16 +17,14 @@
 
 package org.pentaho.reporting.designer.core.util.docking;
 
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 
 /**
  * User: Martin Date: 11.03.2005 Time: 10:11:41
  */
-public class Category
-{
+public class Category {
   public static final String MINIMIZED_PROPERTY = "minimized";
 
   private PropertyChangeSupport propertyChangeSupport;
@@ -36,76 +34,64 @@ public class Category
   private JComponent mainComponent;
   private boolean minimized;
 
-  public Category(final ImageIcon iconBig,
-                  final String title,
-                  final JComponent mainComponent)
-  {
-    this(iconBig, iconBig, title, mainComponent, false);
+  public Category( final ImageIcon iconBig,
+                   final String title,
+                   final JComponent mainComponent ) {
+    this( iconBig, iconBig, title, mainComponent, false );
   }
 
-  public Category(final ImageIcon iconBig,
-                  final ImageIcon iconSmall,
-                  final String title,
-                  final JComponent mainComponent,
-                  final boolean minimized)
-  {
+  public Category( final ImageIcon iconBig,
+                   final ImageIcon iconSmall,
+                   final String title,
+                   final JComponent mainComponent,
+                   final boolean minimized ) {
     this.minimized = minimized;
-    this.propertyChangeSupport = new PropertyChangeSupport(this);
+    this.propertyChangeSupport = new PropertyChangeSupport( this );
     this.iconBig = iconBig;
     this.iconSmall = iconSmall;
     this.title = title;
     this.mainComponent = mainComponent;
   }
 
-  public boolean isMinimized()
-  {
+  public boolean isMinimized() {
     return minimized;
   }
 
-  public void setMinimized(final boolean minimized)
-  {
+  public void setMinimized( final boolean minimized ) {
     final boolean oldMinimized = this.minimized;
     this.minimized = minimized;
-    propertyChangeSupport.firePropertyChange(MINIMIZED_PROPERTY, oldMinimized, minimized);
+    propertyChangeSupport.firePropertyChange( MINIMIZED_PROPERTY, oldMinimized, minimized );
   }
 
-  public ImageIcon getIconBig()
-  {
+  public ImageIcon getIconBig() {
     return iconBig;
   }
 
-  public ImageIcon getIconSmall()
-  {
+  public ImageIcon getIconSmall() {
     return iconSmall;
   }
 
-  public String getTitle()
-  {
+  public String getTitle() {
     return title;
   }
 
-  public JComponent getMainComponent()
-  {
+  public JComponent getMainComponent() {
     return mainComponent;
   }
 
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( listener );
   }
 
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( listener );
   }
 
-  public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+  public void addPropertyChangeListener( final String propertyName, final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( propertyName, listener );
   }
 
-  public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
+  public void removePropertyChangeListener( final String propertyName, final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( propertyName, listener );
   }
 }

@@ -17,21 +17,16 @@
 
 package org.pentaho.reporting.designer.core.util.table.expressions;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
-import javax.swing.JComponent;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionPropertiesEditorPanel;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
-public class ExpressionPropertiesDialog extends CommonDialog
-{
+import javax.swing.*;
+import java.awt.*;
+
+public class ExpressionPropertiesDialog extends CommonDialog {
   private ExpressionPropertiesEditorPanel expressionEditorPanel;
 
   /**
@@ -46,8 +41,7 @@ public class ExpressionPropertiesDialog extends CommonDialog
    * @see JComponent#getDefaultLocale
    */
   public ExpressionPropertiesDialog()
-      throws HeadlessException
-  {
+    throws HeadlessException {
     init();
   }
 
@@ -63,10 +57,9 @@ public class ExpressionPropertiesDialog extends CommonDialog
    * @see GraphicsEnvironment#isHeadless
    * @see JComponent#getDefaultLocale
    */
-  public ExpressionPropertiesDialog(final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public ExpressionPropertiesDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
@@ -81,44 +74,36 @@ public class ExpressionPropertiesDialog extends CommonDialog
    * @see GraphicsEnvironment#isHeadless
    * @see JComponent#getDefaultLocale
    */
-  public ExpressionPropertiesDialog(final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public ExpressionPropertiesDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  protected void init()
-  {
+  protected void init() {
     super.init();
-    setTitle(Messages.getString("ExpressionPropertiesDialog.Title"));
+    setTitle( Messages.getString( "ExpressionPropertiesDialog.Title" ) );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.ExpressionProperties";
   }
 
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     expressionEditorPanel = new ExpressionPropertiesEditorPanel();
     return expressionEditorPanel;
   }
 
-  public Expression editExpression(final Expression input, final ReportDesignerContext context)
-  {
-    expressionEditorPanel.setReportDesignerContext(context);
-    expressionEditorPanel.setData(new Expression[]{input.getInstance()});
-    setConfirmed(false);
-    if (performEdit())
-    {
+  public Expression editExpression( final Expression input, final ReportDesignerContext context ) {
+    expressionEditorPanel.setReportDesignerContext( context );
+    expressionEditorPanel.setData( new Expression[] { input.getInstance() } );
+    setConfirmed( false );
+    if ( performEdit() ) {
       expressionEditorPanel.stopEditing();
       final Expression[] data = expressionEditorPanel.getData();
-      return data[0];
-    }
-    else
-    {
+      return data[ 0 ];
+    } else {
       return input;
     }
   }

@@ -20,8 +20,7 @@ package org.pentaho.reporting.designer.core.settings;
 /**
  * User: Martin Date: 03.03.2006 Time: 14:12:44
  */
-public enum ProxyType
-{
+public enum ProxyType {
   NO_PROXY,
   AUTO_DETECT_PROXY,
   USER_PROXY

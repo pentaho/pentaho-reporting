@@ -17,8 +17,8 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-public interface MultiPlotChartExpression extends ChartExpression
-{
+public interface MultiPlotChartExpression extends ChartExpression {
   public String getSecondaryDataSet();
-  public void setSecondaryDataSet (final String dataset);
+
+  public void setSecondaryDataSet( final String dataset );
 }

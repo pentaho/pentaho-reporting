@@ -22,14 +22,11 @@ package org.pentaho.reporting.engine.classic.extensions.charting.runtime;
  *
  * @author pdpi
  */
-public class DatasourceFactory
-{
-  public DatasourceFactory()
-  {
+public class DatasourceFactory {
+  public DatasourceFactory() {
   }
 
-  public Datasource createDatasource(final String type)
-  {
+  public Datasource createDatasource( final String type ) {
     return new DefaultDatasource();
   }
 }

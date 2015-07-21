@@ -19,22 +19,19 @@ package org.pentaho.plugin.jfreereport.reportcharts;
 
 import org.jfree.chart.plot.ThermometerPlot;
 
-public enum ThermometerUnit
-{
-  None(ThermometerPlot.UNITS_NONE),
-  Fahrenheit(ThermometerPlot.UNITS_FAHRENHEIT),
-  Celsius(ThermometerPlot.UNITS_CELCIUS),
-  Kelvin(ThermometerPlot.UNITS_KELVIN);
+public enum ThermometerUnit {
+  None( ThermometerPlot.UNITS_NONE ),
+  Fahrenheit( ThermometerPlot.UNITS_FAHRENHEIT ),
+  Celsius( ThermometerPlot.UNITS_CELCIUS ),
+  Kelvin( ThermometerPlot.UNITS_KELVIN );
 
   private int unitConstant;
 
-  ThermometerUnit(final int unitConstant)
-  {
+  ThermometerUnit( final int unitConstant ) {
     this.unitConstant = unitConstant;
   }
 
-  public int getUnitConstant()
-  {
+  public int getUnitConstant() {
     return unitConstant;
   }
 }

@@ -19,14 +19,13 @@ package org.pentaho.reporting.designer.core.inspections;
 
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 
-public interface InspectionRunner extends ReportModelListener
-{
+public interface InspectionRunner extends ReportModelListener {
   void startTimer();
 
   void dispose();
 
-  void addInspectionListener(InspectionResultListener listener);
+  void addInspectionListener( InspectionResultListener listener );
 
-  void removeInspectionListener(InspectionResultListener listener);
+  void removeInspectionListener( InspectionResultListener listener );
 
 }

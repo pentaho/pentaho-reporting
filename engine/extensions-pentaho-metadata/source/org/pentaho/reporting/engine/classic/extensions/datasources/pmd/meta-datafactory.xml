@@ -7,7 +7,7 @@
 
   <data-factory name="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.SimplePmdDataFactory"
                 bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.SimplePmdDataFactoryBundle"
-                metadata-source="true" freeform-query="true" expert="true"  maturity-level="Production" deprecated="true"
+                metadata-source="true" freeform-query="true" expert="true" maturity-level="Production" deprecated="true"
                 impl="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.PmdDataFactoryCore"/>
 
 </meta-data>

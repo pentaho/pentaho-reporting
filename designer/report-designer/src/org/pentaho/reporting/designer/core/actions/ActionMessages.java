@@ -17,74 +17,62 @@
 
 package org.pentaho.reporting.designer.core.actions;
 
-import java.util.Locale;
-import java.util.MissingResourceException;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
+import javax.swing.*;
+import java.util.Locale;
+import java.util.MissingResourceException;
+
 /**
  * Todo: Document me!
  * <p/>
- * Date: 14.08.2009
- * Time: 13:33:56
+ * Date: 14.08.2009 Time: 13:33:56
  *
  * @author Thomas Morgner.
  */
-public class ActionMessages
-{
-  private static final Log logger = LogFactory.getLog(ActionMessages.class);
+public class ActionMessages {
+  private static final Log logger = LogFactory.getLog( ActionMessages.class );
   private static ResourceBundleSupport bundle =
-      new ResourceBundleSupport(Locale.getDefault(),
-          "org.pentaho.reporting.designer.core.actions.messages.messages",// NON-NLS
-          ObjectUtilities.getClassLoader(ActionMessages.class));
+    new ResourceBundleSupport( Locale.getDefault(),
+      "org.pentaho.reporting.designer.core.actions.messages.messages",// NON-NLS
+      ObjectUtilities.getClassLoader( ActionMessages.class ) );
 
-  private ActionMessages()
-  {
+  private ActionMessages() {
   }
 
-  public static Icon getIcon(final String key, final boolean large)
-  {
-    return bundle.getIcon(key, large);
+  public static Icon getIcon( final String key, final boolean large ) {
+    return bundle.getIcon( key, large );
   }
 
-  public static Icon getIcon(final String key)
-  {
-    return bundle.getIcon(key);
+  public static Icon getIcon( final String key ) {
+    return bundle.getIcon( key );
   }
 
-  public static Integer getMnemonic(final String key)
-  {
-    return bundle.getMnemonic(key);
+  public static Integer getMnemonic( final String key ) {
+    return bundle.getMnemonic( key );
   }
 
-  public static Integer getOptionalMnemonic(final String key)
-  {
-    return bundle.getOptionalMnemonic(key);
+  public static Integer getOptionalMnemonic( final String key ) {
+    return bundle.getOptionalMnemonic( key );
   }
 
-  public static KeyStroke getKeyStroke(final String key)
-  {
-    return bundle.getKeyStroke(key);
+  public static KeyStroke getKeyStroke( final String key ) {
+    return bundle.getKeyStroke( key );
   }
 
-  public static KeyStroke getOptionalKeyStroke(final String key)
-  {
-    return bundle.getOptionalKeyStroke(key);
+  public static KeyStroke getOptionalKeyStroke( final String key ) {
+    return bundle.getOptionalKeyStroke( key );
   }
 
-  public static KeyStroke getKeyStroke(final String key, final int mask)
-  {
-    return bundle.getKeyStroke(key, mask);
+  public static KeyStroke getKeyStroke( final String key, final int mask ) {
+    return bundle.getKeyStroke( key, mask );
   }
 
-  public static KeyStroke getOptionalKeyStroke(final String key, final int mask)
-  {
-    return bundle.getOptionalKeyStroke(key, mask);
+  public static KeyStroke getOptionalKeyStroke( final String key, final int mask ) {
+    return bundle.getOptionalKeyStroke( key, mask );
   }
 
 
@@ -95,15 +83,11 @@ public class ActionMessages
    * @param param1 the parameter for the message
    * @return the formated string
    */
-  public static String getString(final String key, final Object... param1)
-  {
-    try
-    {
-      return bundle.formatMessage(key, param1);
-    }
-    catch (MissingResourceException e)
-    {
-      logger.warn("Missing localization: "+ key, e);//NON-NLS
+  public static String getString( final String key, final Object... param1 ) {
+    try {
+      return bundle.formatMessage( key, param1 );
+    } catch ( MissingResourceException e ) {
+      logger.warn( "Missing localization: " + key, e );//NON-NLS
       return '!' + key + '!';
     }
   }

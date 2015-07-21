@@ -22,13 +22,11 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.xml.sax.SAXException;
 
-public class LabelReportElementReadHandler extends AbstractTextElementReadHandler
-{
-  public LabelReportElementReadHandler()
-  {
+public class LabelReportElementReadHandler extends AbstractTextElementReadHandler {
+  public LabelReportElementReadHandler() {
     final Element element = new Element();
-    element.setElementType(new LabelType());
-    setElement(element);
+    element.setElementType( new LabelType() );
+    setElement( element );
   }
 
   /**
@@ -36,10 +34,9 @@ public class LabelReportElementReadHandler extends AbstractTextElementReadHandle
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    final String value = getResult().getProperty("text");
-    getElement().setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, value);
+    final String value = getResult().getProperty( "text" );
+    getElement().setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, value );
   }
 }

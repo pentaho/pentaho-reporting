@@ -30,13 +30,11 @@ import org.pentaho.reporting.libraries.libsparklines.LineGraphDrawable;
  *
  * @author Thomas Morgner
  */
-public class LineSparklineType extends ContentType
-{
+public class LineSparklineType extends ContentType {
   public static final LineSparklineType INSTANCE = new LineSparklineType();
 
-  public LineSparklineType()
-  {
-    super("line-sparkline");
+  public LineSparklineType() {
+    super( "line-sparkline" );
   }
 
   /**
@@ -47,45 +45,41 @@ public class LineSparklineType extends ContentType
    * @param element the element for which the data is computed.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    final Object value = ElementTypeUtils.queryFieldOrValue(runtime, element);
-    final Number[] numbers = ElementTypeUtils.getData(value);
-    if (numbers == null)
-    {
-      final Object nullValue = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
-      return filter(runtime, element, nullValue);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    final Object value = ElementTypeUtils.queryFieldOrValue( runtime, element );
+    final Number[] numbers = ElementTypeUtils.getData( value );
+    if ( numbers == null ) {
+      final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return filter( runtime, element, nullValue );
     }
 
     final int spacing = ElementTypeUtils.getIntAttribute
-        (element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.SPACING, 2);
+      ( element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.SPACING, 2 );
 
     final LineGraphDrawable drawable = new LineGraphDrawable();
-    drawable.setData(numbers);
-    drawable.setSpacing(spacing);
-    return new LineSparklinesWrapper(drawable);
+    drawable.setData( numbers );
+    drawable.setSpacing( spacing );
+    return new LineSparklinesWrapper( drawable );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    final Object value = ElementTypeUtils.queryStaticValue(element);
-    Number[] numbers = ElementTypeUtils.getData(value);
-    if (numbers == null)
-    {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    final Object value = ElementTypeUtils.queryStaticValue( element );
+    Number[] numbers = ElementTypeUtils.getData( value );
+    if ( numbers == null ) {
       numbers = new Number[]
-          {new Integer(10), new Integer(5),
-              new Integer(6), new Integer(3),
-              new Integer(1), new Integer(2),
-              new Integer(7), new Integer(9)};
+        { new Integer( 10 ), new Integer( 5 ),
+          new Integer( 6 ), new Integer( 3 ),
+          new Integer( 1 ), new Integer( 2 ),
+          new Integer( 7 ), new Integer( 9 ) };
 
     }
 
     final int spacing = ElementTypeUtils.getIntAttribute
-        (element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.SPACING, 2);
+      ( element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.SPACING, 2 );
 
     final LineGraphDrawable drawable = new LineGraphDrawable();
-    drawable.setData(numbers);
-    drawable.setSpacing(spacing);
-    return new LineSparklinesWrapper(drawable);
+    drawable.setData( numbers );
+    drawable.setSpacing( spacing );
+    return new LineSparklinesWrapper( drawable );
   }
 }

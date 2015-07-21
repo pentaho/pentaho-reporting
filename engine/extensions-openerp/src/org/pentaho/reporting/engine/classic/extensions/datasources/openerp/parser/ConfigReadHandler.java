@@ -36,27 +36,24 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.openerp.pars
  * Copyright (c) 2011 - 2012 De Bortoli Wines Pty Limited (Australia). All Rights Reserved.
  */
 
+import com.debortoliwines.openerp.reporting.di.OpenERPConfiguration;
+import com.debortoliwines.openerp.reporting.di.OpenERPConfiguration.DataSource;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
-import com.debortoliwines.openerp.reporting.di.OpenERPConfiguration;
-import com.debortoliwines.openerp.reporting.di.OpenERPConfiguration.DataSource;
 
 /**
  * Creation-Date: 07.04.2006, 18:35:57
  *
  * @author Thomas Morgner, Pieter van der Merwe
  */
-public class ConfigReadHandler extends AbstractXmlReadHandler
-{
-  
+public class ConfigReadHandler extends AbstractXmlReadHandler {
+
   private final OpenERPConfiguration config = new OpenERPConfiguration();
   private String queryName;
 
-  public ConfigReadHandler()
-  {
+  public ConfigReadHandler() {
   }
 
   /**
@@ -65,39 +62,38 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    queryName = attrs.getValue(getUri(), "queryName");
-    
-    config.setHostName(attrs.getValue(getUri(), "hostName"));
-    config.setPortNumber(Integer.parseInt(attrs.getValue(getUri(), "portNumber")));
-    config.setDatabaseName(attrs.getValue(getUri(), "databaseName"));
-    config.setUserName(attrs.getValue(getUri(), "userName"));
-    config.setPassword(PasswordEncryptionService.getInstance().decrypt(getRootHandler(), attrs.getValue(getUri(), "password")));
-    config.setModelName(attrs.getValue(getUri(), "modelName"));
-    
-    String dataSourceStr = attrs.getValue(getUri(), "dataSource");
-    if (dataSourceStr != null){
-      config.setDataSource(DataSource.valueOf(dataSourceStr));
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    queryName = attrs.getValue( getUri(), "queryName" );
+
+    config.setHostName( attrs.getValue( getUri(), "hostName" ) );
+    config.setPortNumber( Integer.parseInt( attrs.getValue( getUri(), "portNumber" ) ) );
+    config.setDatabaseName( attrs.getValue( getUri(), "databaseName" ) );
+    config.setUserName( attrs.getValue( getUri(), "userName" ) );
+    config.setPassword(
+      PasswordEncryptionService.getInstance().decrypt( getRootHandler(), attrs.getValue( getUri(), "password" ) ) );
+    config.setModelName( attrs.getValue( getUri(), "modelName" ) );
+
+    String dataSourceStr = attrs.getValue( getUri(), "dataSource" );
+    if ( dataSourceStr != null ) {
+      config.setDataSource( DataSource.valueOf( dataSourceStr ) );
     }
-    
-    config.setCustomFunctionName(attrs.getValue(getUri(), "customFunctionName"));
-    
+
+    config.setCustomFunctionName( attrs.getValue( getUri(), "customFunctionName" ) );
+
   }
 
-  
+
   /**
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
-  
+
   public String getQueryName() {
     return queryName;
   }

@@ -24,10 +24,8 @@ import org.pentaho.reporting.designer.core.util.Unit;
  *
  * @author Thomas Morgner
  */
-public final class SetUnitPicaAction extends SetUnitAction
-{
-  public SetUnitPicaAction()
-  {
-    super(Unit.PICA);
+public final class SetUnitPicaAction extends SetUnitAction {
+  public SetUnitPicaAction() {
+    super( Unit.PICA );
   }
 }

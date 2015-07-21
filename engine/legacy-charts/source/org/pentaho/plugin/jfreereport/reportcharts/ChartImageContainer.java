@@ -17,12 +17,12 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Image;
-import java.net.URL;
-
 import org.pentaho.reporting.engine.classic.core.LocalImageContainer;
 import org.pentaho.reporting.engine.classic.core.URLImageContainer;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+
+import java.awt.*;
+import java.net.URL;
 
 /**
  * Creation-Date: 01.10.2006, 15:47:03
@@ -36,25 +36,25 @@ public class ChartImageContainer implements URLImageContainer, LocalImageContain
 
     private String expressionName;
 
-    private ChartImageKey(final int row, final String expressionName) {
+    private ChartImageKey( final int row, final String expressionName ) {
       this.row = row;
       this.expressionName = expressionName;
     }
 
-    public boolean equals(final Object o) {
-      if (this == o) {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass()) {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final ChartImageKey that = (ChartImageKey) o;
 
-      if (row != that.row) {
+      if ( row != that.row ) {
         return false;
       }
-      if (!expressionName.equals(that.expressionName)) {
+      if ( !expressionName.equals( that.expressionName ) ) {
         return false;
       }
 
@@ -79,15 +79,15 @@ public class ChartImageContainer implements URLImageContainer, LocalImageContain
 
   private ChartImageKey key;
 
-  public ChartImageContainer(final String target, final Image image, final int width, final int height, final int row,
-      final String keyName) {
-    if (target == null) {
+  public ChartImageContainer( final String target, final Image image, final int width, final int height, final int row,
+                              final String keyName ) {
+    if ( target == null ) {
       throw new NullPointerException();
     }
-    if (image == null) {
+    if ( image == null ) {
       throw new NullPointerException();
     }
-    if (keyName == null) {
+    if ( keyName == null ) {
       throw new NullPointerException();
     }
 
@@ -95,7 +95,7 @@ public class ChartImageContainer implements URLImageContainer, LocalImageContain
     this.image = image;
     this.width = width;
     this.height = height;
-    this.key = new ChartImageKey(row, keyName);
+    this.key = new ChartImageKey( row, keyName );
   }
 
   public Object getIdentity() {
@@ -147,8 +147,7 @@ public class ChartImageContainer implements URLImageContainer, LocalImageContain
     return false;
   }
 
-  public ResourceKey getResourceKey()
-  {
+  public ResourceKey getResourceKey() {
     return null;
   }
 }

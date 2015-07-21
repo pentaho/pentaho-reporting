@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements;
 
-import java.util.ArrayList;
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -36,23 +33,24 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
+import java.util.Properties;
+
 /**
  * This unifies all top-level band types.
  *
  * @author Thomas Morgner
  */
-public class BandTopLevelElementReadHandler extends BandElementReadHandler
-{
+public class BandTopLevelElementReadHandler extends BandElementReadHandler {
   private Band rootLevelBand;
   private LinealModelReadHandler verticalLinealModel;
   private RowBandingDefinitionReadHandler rowBandingDefinitionReadHandler;
   private String bandType;
   private ArrayList subreports;
 
-  public BandTopLevelElementReadHandler(final Band rootLevelBand,
-                                        final String bandType)
-  {
-    super(rootLevelBand);
+  public BandTopLevelElementReadHandler( final Band rootLevelBand,
+                                         final String bandType ) {
+    super( rootLevelBand );
     this.rootLevelBand = rootLevelBand;
     this.bandType = bandType;
     this.subreports = new ArrayList();
@@ -67,34 +65,28 @@ public class BandTopLevelElementReadHandler extends BandElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("verticalLinealModel".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "verticalLinealModel".equals( tagName ) ) {
         verticalLinealModel = new LinealModelReadHandler();
         return verticalLinealModel;
       }
-      if ("ITEM_BAND".equals(bandType) && "rowBandingDefinition".equals(tagName))
-      {
+      if ( "ITEM_BAND".equals( bandType ) && "rowBandingDefinition".equals( tagName ) ) {
         rowBandingDefinitionReadHandler = new RowBandingDefinitionReadHandler();
         return rowBandingDefinitionReadHandler;
       }
-      if ("child".equalsIgnoreCase(tagName))
-      {
-        final String type = atts.getValue(uri, "type");
-        if ("org.pentaho.reportdesigner.crm.report.model.SubReportElement".equals(type))
-        {
+      if ( "child".equalsIgnoreCase( tagName ) ) {
+        final String type = atts.getValue( uri, "type" );
+        if ( "org.pentaho.reportdesigner.crm.report.model.SubReportElement".equals( type ) ) {
           final SubreportElementReadHandler readHandler = new SubreportElementReadHandler();
-          subreports.add(readHandler);
+          subreports.add( readHandler );
           return readHandler;
         }
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -102,137 +94,103 @@ public class BandTopLevelElementReadHandler extends BandElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final Properties result = getResult();
 
-    final String displayOnLastPage = result.getProperty("displayOnLastPage");
-    if (displayOnLastPage != null)
-    {
-      if ("true".equals(displayOnLastPage))
-      {
-        getStyle().setStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE, Boolean.TRUE);
-      }
-      else
-      {
-        getStyle().setStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE, Boolean.FALSE);
+    final String displayOnLastPage = result.getProperty( "displayOnLastPage" );
+    if ( displayOnLastPage != null ) {
+      if ( "true".equals( displayOnLastPage ) ) {
+        getStyle().setStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE, Boolean.TRUE );
+      } else {
+        getStyle().setStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE, Boolean.FALSE );
       }
     }
 
-    final String displayOnFirstPage = result.getProperty("displayOnFirstPage");
-    if (displayOnFirstPage != null)
-    {
-      if ("true".equals(displayOnFirstPage))
-      {
-        getStyle().setStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE, Boolean.TRUE);
-      }
-      else
-      {
-        getStyle().setStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE, Boolean.FALSE);
+    final String displayOnFirstPage = result.getProperty( "displayOnFirstPage" );
+    if ( displayOnFirstPage != null ) {
+      if ( "true".equals( displayOnFirstPage ) ) {
+        getStyle().setStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE, Boolean.TRUE );
+      } else {
+        getStyle().setStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE, Boolean.FALSE );
       }
     }
 
-    final String repeat = result.getProperty("repeat");
-    if (repeat != null)
-    {
-      if ("true".equals(repeat))
-      {
-        getStyle().setStyleProperty(BandStyleKeys.REPEAT_HEADER, Boolean.TRUE);
-      }
-      else
-      {
-        getStyle().setStyleProperty(BandStyleKeys.REPEAT_HEADER, Boolean.FALSE);
+    final String repeat = result.getProperty( "repeat" );
+    if ( repeat != null ) {
+      if ( "true".equals( repeat ) ) {
+        getStyle().setStyleProperty( BandStyleKeys.REPEAT_HEADER, Boolean.TRUE );
+      } else {
+        getStyle().setStyleProperty( BandStyleKeys.REPEAT_HEADER, Boolean.FALSE );
       }
     }
 
-    final String sticky = result.getProperty("sticky");
-    if (sticky != null)
-    {
-      if ("true".equals(sticky))
-      {
-        getStyle().setStyleProperty(BandStyleKeys.STICKY, Boolean.TRUE);
-      }
-      else
-      {
-        getStyle().setStyleProperty(BandStyleKeys.STICKY, Boolean.FALSE);
+    final String sticky = result.getProperty( "sticky" );
+    if ( sticky != null ) {
+      if ( "true".equals( sticky ) ) {
+        getStyle().setStyleProperty( BandStyleKeys.STICKY, Boolean.TRUE );
+      } else {
+        getStyle().setStyleProperty( BandStyleKeys.STICKY, Boolean.FALSE );
       }
     }
 
-    final String pageBreakBefore = result.getProperty("pageBreakBefore");
-    if (pageBreakBefore != null)
-    {
-      if ("true".equals(pageBreakBefore))
-      {
-        getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE, Boolean.TRUE);
-      }
-      else
-      {
-        getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE, Boolean.FALSE);
+    final String pageBreakBefore = result.getProperty( "pageBreakBefore" );
+    if ( pageBreakBefore != null ) {
+      if ( "true".equals( pageBreakBefore ) ) {
+        getStyle().setStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE, Boolean.TRUE );
+      } else {
+        getStyle().setStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE, Boolean.FALSE );
       }
     }
 
-    final String pageBreakAfter = result.getProperty("pageBreakAfter");
-    if (pageBreakAfter != null)
-    {
-      if ("true".equals(pageBreakAfter))
-      {
-        getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_AFTER, Boolean.TRUE);
-      }
-      else
-      {
-        getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_AFTER, Boolean.FALSE);
+    final String pageBreakAfter = result.getProperty( "pageBreakAfter" );
+    if ( pageBreakAfter != null ) {
+      if ( "true".equals( pageBreakAfter ) ) {
+        getStyle().setStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, Boolean.TRUE );
+      } else {
+        getStyle().setStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, Boolean.FALSE );
       }
     }
 
-    final String visualHeight = result.getProperty("visualHeight");
-    final float visualHeightParsed = ParserUtil.parseFloat(visualHeight, 0);
-    if (visualHeightParsed > 0)
-    {
-      rootLevelBand.setAttribute(ReportDesignerParserModule.NAMESPACE,
-          "visual-height", new Double(visualHeightParsed));
+    final String visualHeight = result.getProperty( "visualHeight" );
+    final float visualHeightParsed = ParserUtil.parseFloat( visualHeight, 0 );
+    if ( visualHeightParsed > 0 ) {
+      rootLevelBand.setAttribute( ReportDesignerParserModule.NAMESPACE,
+        "visual-height", new Double( visualHeightParsed ) );
     }
 
     final AbstractReportDefinition report = (AbstractReportDefinition)
-        getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
-    if (rowBandingDefinitionReadHandler != null)
-    {
+      getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+    if ( rowBandingDefinitionReadHandler != null ) {
       final Expression expression = (Expression) rowBandingDefinitionReadHandler.getObject();
-      if (expression != null)
-      {
-        report.addExpression(expression);
+      if ( expression != null ) {
+        report.addExpression( expression );
       }
     }
 
-    if (rootLevelBand instanceof AbstractRootLevelBand)
-    {
+    if ( rootLevelBand instanceof AbstractRootLevelBand ) {
       final AbstractRootLevelBand arb = (AbstractRootLevelBand) rootLevelBand;
 
-      for (int i = 0; i < subreports.size(); i++)
-      {
-        final SubreportElementReadHandler readHandler = (SubreportElementReadHandler) subreports.get(i);
+      for ( int i = 0; i < subreports.size(); i++ ) {
+        final SubreportElementReadHandler readHandler = (SubreportElementReadHandler) subreports.get( i );
         final SubReport subReport = (SubReport) readHandler.getObject();
-        arb.addSubReport(subReport);
+        arb.addSubReport( subReport );
       }
     }
 
-    if (verticalLinealModel != null)
-    {
+    if ( verticalLinealModel != null ) {
       final Guideline[] guidelines = verticalLinealModel.getGuidelineValues();
-      if (guidelines != null && guidelines.length > 0)
-      {
-        final StringBuffer b = new StringBuffer(100);
-        for (int i = 0; i < guidelines.length; i++)
-        {
-          final Guideline guideline = guidelines[i];
-          if (i != 0)
-          {
-            b.append(' ');
+      if ( guidelines != null && guidelines.length > 0 ) {
+        final StringBuffer b = new StringBuffer( 100 );
+        for ( int i = 0; i < guidelines.length; i++ ) {
+          final Guideline guideline = guidelines[ i ];
+          if ( i != 0 ) {
+            b.append( ' ' );
           }
-          b.append(guideline.externalize());
+          b.append( guideline.externalize() );
         }
-        rootLevelBand.setAttribute(ReportDesignerParserModule.NAMESPACE,
-            ReportDesignerParserModule.VERTICAL_GUIDE_LINES_ATTRIBUTE, b.toString());
+        rootLevelBand.setAttribute( ReportDesignerParserModule.NAMESPACE,
+          ReportDesignerParserModule.VERTICAL_GUIDE_LINES_ATTRIBUTE, b.toString() );
       }
     }
 

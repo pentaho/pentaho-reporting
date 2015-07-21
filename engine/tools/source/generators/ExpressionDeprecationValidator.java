@@ -17,10 +17,6 @@
 
 package generators;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Locale;
-
 import org.apache.bcel.classfile.Attribute;
 import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.Deprecated;
@@ -32,41 +28,35 @@ import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class ExpressionDeprecationValidator
-{
-  private static final Log logger = LogFactory.getLog(ExpressionDeprecationValidator.class);
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
 
-  public static void main(final String[] args) throws IOException
-  {
+public class ExpressionDeprecationValidator {
+  private static final Log logger = LogFactory.getLog( ExpressionDeprecationValidator.class );
+
+  public static void main( final String[] args ) throws IOException {
     ClassicEngineBoot.getInstance().start();
 
     final ExpressionRegistry expressionRegistry = ExpressionRegistry.getInstance();
     final ExpressionMetaData[] allExpressions = expressionRegistry.getAllExpressionMetaDatas();
-    for (int i = 0; i < allExpressions.length; i++)
-    {
-      final ExpressionMetaData expression = allExpressions[i];
-      if (expression == null)
-      {
-        logger.warn("Null Expression encountered");
+    for ( int i = 0; i < allExpressions.length; i++ ) {
+      final ExpressionMetaData expression = allExpressions[ i ];
+      if ( expression == null ) {
+        logger.warn( "Null Expression encountered" );
         continue;
       }
-      if (isDeprecated(expression))
-      {
-        if (expression.isDeprecated() == false)
-        {
-          logger.warn("Expression code is deprecated, but metadata is not:" + expression.getExpressionType());
+      if ( isDeprecated( expression ) ) {
+        if ( expression.isDeprecated() == false ) {
+          logger.warn( "Expression code is deprecated, but metadata is not:" + expression.getExpressionType() );
         }
 
-        if ("Deprecated Function".equals(expression.getGrouping(Locale.US)) == false)
-        {
-          logger.warn("Expression metadata is not in deprecated group:" + expression.getExpressionType());
+        if ( "Deprecated Function".equals( expression.getGrouping( Locale.US ) ) == false ) {
+          logger.warn( "Expression metadata is not in deprecated group:" + expression.getExpressionType() );
         }
-      }
-      else
-      {
-        if (expression.isDeprecated() == true)
-        {
-          logger.warn("Expression metadata is deprecated, but code is not:" + expression.getExpressionType());
+      } else {
+        if ( expression.isDeprecated() == true ) {
+          logger.warn( "Expression metadata is deprecated, but code is not:" + expression.getExpressionType() );
         }
       }
 
@@ -74,37 +64,28 @@ public class ExpressionDeprecationValidator
 
   }
 
-  private static boolean isDeprecated(final ExpressionMetaData expression)
-      throws IOException
-  {
-    try
-    {
+  private static boolean isDeprecated( final ExpressionMetaData expression )
+    throws IOException {
+    try {
       final Class type = expression.getExpressionType();
-      final String resourcePath = type.getName().replace('.', '/');
+      final String resourcePath = type.getName().replace( '.', '/' );
       final InputStream classStream = ObjectUtilities.getResourceAsStream
-          (resourcePath + ".class", ExpressionDeprecationValidator.class);
-      try
-      {
-        final ClassParser parser = new ClassParser(classStream, resourcePath);
+        ( resourcePath + ".class", ExpressionDeprecationValidator.class );
+      try {
+        final ClassParser parser = new ClassParser( classStream, resourcePath );
         final JavaClass javaClass = parser.parse();
         final Attribute[] attributes = javaClass.getAttributes();
-        for (int j = 0; j < attributes.length; j++)
-        {
-          if (attributes[j] instanceof Deprecated)
-          {
+        for ( int j = 0; j < attributes.length; j++ ) {
+          if ( attributes[ j ] instanceof Deprecated ) {
             return true;
           }
 
         }
         return false;
-      }
-      finally
-      {
+      } finally {
         classStream.close();
       }
-    }
-    catch (Throwable e)
-    {
+    } catch ( Throwable e ) {
       e.printStackTrace();
       return false;
     }

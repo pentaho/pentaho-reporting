@@ -18,8 +18,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.openerp.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.DataFactoryWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterContext;
@@ -27,34 +25,31 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.Report
 import org.pentaho.reporting.engine.classic.extensions.datasources.openerp.OpenERPDataFactory;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+
 /**
- * 
  * @author Pieter van der Merwe
- *
  */
-public class OpenERPDataFactoryWriteHandler implements DataFactoryWriteHandler
-{
-  public OpenERPDataFactoryWriteHandler()
-  {
+public class OpenERPDataFactoryWriteHandler implements DataFactoryWriteHandler {
+  public OpenERPDataFactoryWriteHandler() {
   }
 
   /**
    * Writes a data-source into a XML-stream.
    *
-   * @param reportWriter the writer context that holds all factories.
-   * @param xmlWriter    the XML writer that will receive the generated XML data.
-   * @param rawDataFactory  the data factory that should be written.
+   * @param reportWriter   the writer context that holds all factories.
+   * @param xmlWriter      the XML writer that will receive the generated XML data.
+   * @param rawDataFactory the data factory that should be written.
    * @throws IOException           if any error occured
    * @throws ReportWriterException if the data factory cannot be written.
    */
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory rawDataFactory)
-      throws IOException, ReportWriterException
-  {
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory rawDataFactory )
+    throws IOException, ReportWriterException {
     final OpenERPDataFactory dataFactory = (OpenERPDataFactory) rawDataFactory;
-    
-    OpenERPDataFactoryHelper.writeXML(dataFactory, xmlWriter);
+
+    OpenERPDataFactoryHelper.writeXML( dataFactory, xmlWriter );
 
   }
 }

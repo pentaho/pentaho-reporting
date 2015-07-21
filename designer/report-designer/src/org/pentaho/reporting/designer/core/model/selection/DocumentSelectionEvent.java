@@ -19,24 +19,20 @@ package org.pentaho.reporting.designer.core.model.selection;
 
 import java.util.EventObject;
 
-public class DocumentSelectionEvent extends EventObject
-{
+public class DocumentSelectionEvent extends EventObject {
   private Object element;
 
-  public DocumentSelectionEvent(final DocumentContextSelectionModel source,
-                                final Object element)
-  {
-    super(source);
+  public DocumentSelectionEvent( final DocumentContextSelectionModel source,
+                                 final Object element ) {
+    super( source );
     this.element = element;
   }
 
-  public DocumentContextSelectionModel getModel()
-  {
-    return (DocumentContextSelectionModel ) getSource();
+  public DocumentContextSelectionModel getModel() {
+    return (DocumentContextSelectionModel) getSource();
   }
 
-  public Object getElement()
-  {
+  public Object getElement() {
     return element;
   }
 

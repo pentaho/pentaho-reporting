@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.AbstractReportElementDragHandler;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
@@ -35,64 +33,60 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 
-public class DefaultReportElementDragHandler extends AbstractReportElementDragHandler
-{
-  public DefaultReportElementDragHandler()
-  {
+import java.util.Locale;
+
+public class DefaultReportElementDragHandler extends AbstractReportElementDragHandler {
+  public DefaultReportElementDragHandler() {
   }
 
-  protected Element createElement(final ElementMetaData elementMetaData,
-                                  final String fieldName,
-                                  final ReportDocumentContext context) throws InstantiationException
-  {
+  protected Element createElement( final ElementMetaData elementMetaData,
+                                   final String fieldName,
+                                   final ReportDocumentContext context ) throws InstantiationException {
     final ElementType type = elementMetaData.create();
     final Element visualElement = (Element) type.create();
 
     final ElementStyleSheet styleSheet = visualElement.getStyle();
-    styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH);
-    styleSheet.setStyleProperty(ElementStyleKeys.MIN_HEIGHT, DEFAULT_HEIGHT);
+    styleSheet.setStyleProperty( ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH );
+    styleSheet.setStyleProperty( ElementStyleKeys.MIN_HEIGHT, DEFAULT_HEIGHT );
 
-    type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
-    if (elementMetaData.getAttributeDescription(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD) != null)
-    {
-      visualElement.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, fieldName);
+    type.configureDesignTimeDefaults( visualElement, Locale.getDefault() );
+    if ( elementMetaData.getAttributeDescription( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD ) != null ) {
+      visualElement.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, fieldName );
     }
 
-    configureWizardProperties(fieldName, context, visualElement);
+    configureWizardProperties( fieldName, context, visualElement );
 
     return visualElement;
   }
 
-  private void configureWizardProperties(final String fieldName,
-                                         final ReportDocumentContext context,
-                                         final Element visualElement)
-  {
+  private void configureWizardProperties( final String fieldName,
+                                          final ReportDocumentContext context,
+                                          final Element visualElement ) {
     final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
-    if (fieldName == null)
-    {
+    if ( fieldName == null ) {
       return;
     }
 
-    final DataAttributes attributes = model.getDataSchema().getAttributes(fieldName);
+    final DataAttributes attributes = model.getDataSchema().getAttributes( fieldName );
     final String source = (String) attributes.getMetaAttribute
-        (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.SOURCE, String.class, model.getDataAttributeContext());
-    if (!MetaAttributeNames.Core.SOURCE_VALUE_TABLE.equals(source))
-    {
+      ( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.SOURCE, String.class,
+        model.getDataAttributeContext() );
+    if ( !MetaAttributeNames.Core.SOURCE_VALUE_TABLE.equals( source ) ) {
       return;
     }
 
     final AbstractReportDefinition report = context.getReportDefinition();
-    final DataFactory dataFactory = ModelUtility.findDataFactoryForQuery(report, report.getQuery());
-    if (dataFactory == null)
-    {
+    final DataFactory dataFactory = ModelUtility.findDataFactoryForQuery( report, report.getQuery() );
+    if ( dataFactory == null ) {
       return;
     }
 
     final DataFactoryMetaData data = dataFactory.getMetaData();
-    if (data.isFormattingMetaDataSource())
-    {
-      visualElement.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, Boolean.TRUE);
-      visualElement.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.TRUE);
+    if ( data.isFormattingMetaDataSource() ) {
+      visualElement
+        .setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, Boolean.TRUE );
+      visualElement
+        .setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.TRUE );
     }
   }
 

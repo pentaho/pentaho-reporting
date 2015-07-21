@@ -17,9 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jfree.data.general.AbstractDataset;
@@ -30,59 +27,53 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.FunctionUtilities;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Creation-Date: 07.06.2007, 18:30:22
  *
  * @author Gretchen Moran
  */
-public abstract class BaseCollectorFunction extends AbstractFunction implements ICollectorFunction
-{
-  private static class CacheKey
-  {
+public abstract class BaseCollectorFunction extends AbstractFunction implements ICollectorFunction {
+  private static class CacheKey {
     private int index;
     private ReportStateKey stateKey;
 
-    private CacheKey(final ReportStateKey stateKey, final int index)
-    {
+    private CacheKey( final ReportStateKey stateKey, final int index ) {
       this.stateKey = stateKey;
       this.index = index;
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final CacheKey cacheKey = (CacheKey) o;
 
-      if (index != cacheKey.index)
-      {
+      if ( index != cacheKey.index ) {
         return false;
       }
-      if (stateKey != null ? !stateKey.equals(cacheKey.stateKey) : cacheKey.stateKey != null)
-      {
+      if ( stateKey != null ? !stateKey.equals( cacheKey.stateKey ) : cacheKey.stateKey != null ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
       int result = index;
-      result = 31 * result + (stateKey != null ? stateKey.hashCode() : 0);
+      result = 31 * result + ( stateKey != null ? stateKey.hashCode() : 0 );
       return result;
     }
   }
 
 
-  protected static final Log logger = LogFactory.getLog(BaseCollectorFunction.class);
+  protected static final Log logger = LogFactory.getLog( BaseCollectorFunction.class );
 
   private Dataset dataset;
   private String group;
@@ -94,89 +85,71 @@ public abstract class BaseCollectorFunction extends AbstractFunction implements 
   private boolean seriesColumn;
   private ReportStateKey processKey;
 
-  protected BaseCollectorFunction()
-  {
+  protected BaseCollectorFunction() {
     this.seriesNames = new ArrayList();
     this.results = new ArrayList();
     seriesColumn = false;
     summaryOnly = false;
   }
 
-  public void setSeriesName(final int index, final String field)
-  {
-    if (seriesNames.size() == index)
-    {
-      seriesNames.add(field);
-    }
-    else
-    {
-      seriesNames.set(index, field);
+  public void setSeriesName( final int index, final String field ) {
+    if ( seriesNames.size() == index ) {
+      seriesNames.add( field );
+    } else {
+      seriesNames.set( index, field );
     }
   }
 
-  public String getSeriesName(final int index)
-  {
-    return (String) seriesNames.get(index);
+  public String getSeriesName( final int index ) {
+    return (String) seriesNames.get( index );
   }
 
-  public int getSeriesNameCount()
-  {
+  public int getSeriesNameCount() {
     return seriesNames.size();
   }
 
-  public String[] getSeriesName()
-  {
-    return (String[]) seriesNames.toArray(new String[seriesNames.size()]);
+  public String[] getSeriesName() {
+    return (String[]) seriesNames.toArray( new String[ seriesNames.size() ] );
   }
 
-  public void setSeriesName(final String[] fields)
-  {
+  public void setSeriesName( final String[] fields ) {
     this.seriesNames.clear();
-    this.seriesNames.addAll(Arrays.asList(fields));
+    this.seriesNames.addAll( Arrays.asList( fields ) );
   }
 
-  protected Dataset createNewDataset()
-  {
+  protected Dataset createNewDataset() {
     return getNewDataset();
   }
 
-  public boolean isSummaryOnly()
-  {
+  public boolean isSummaryOnly() {
     return summaryOnly;
   }
 
-  public void setSummaryOnly(final boolean value)
-  {
+  public void setSummaryOnly( final boolean value ) {
     summaryOnly = value;
   }
 
-  public boolean isSeriesColumn()
-  {
+  public boolean isSeriesColumn() {
     return seriesColumn;
   }
 
-  public void setSeriesColumn(final boolean value)
-  {
+  public void setSeriesColumn( final boolean value ) {
     seriesColumn = value;
   }
 
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
-  public String getResetGroup()
-  {
+  public String getResetGroup() {
     return resetGroup;
   }
 
-  public void setResetGroup(final String resetGroup)
-  {
+  public void setResetGroup( final String resetGroup ) {
     this.resetGroup = resetGroup;
   }
 
@@ -187,81 +160,64 @@ public abstract class BaseCollectorFunction extends AbstractFunction implements 
   /**
    * @return the dataset
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return this;
   }
 
-  public Object getDatasourceValue()
-  {
+  public Object getDatasourceValue() {
     return dataset;
   }
-  
-  public void reportInitialized(final ReportEvent event)
-  {
+
+  public void reportInitialized( final ReportEvent event ) {
     currentIndex = -1;
-    if (processKey == null)
-    {
+    if ( processKey == null ) {
       processKey = event.getState().getProcessKey();
     }
 
 
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
       dataset = null;
       results.clear();
-      if (getResetGroup() == null)
-      {
+      if ( getResetGroup() == null ) {
 
         dataset = createNewDataset();
-        results.add(dataset);
+        results.add( dataset );
 
       }
-    }
-    else
-    {
+    } else {
       // Activate the current group, which was filled in the prepare run.
-      if (getResetGroup() == null && results.isEmpty() == false)
-      {
-        dataset = (AbstractDataset) results.get(0);
+      if ( getResetGroup() == null && results.isEmpty() == false ) {
+        dataset = (AbstractDataset) results.get( 0 );
       }
     }
   }
 
-  public void groupStarted(final ReportEvent event)
-  {
+  public void groupStarted( final ReportEvent event ) {
     final String localGroup = getGroup();
-    if (localGroup == null)
-    {
+    if ( localGroup == null ) {
       return;
     }
-    if (!FunctionUtilities.isDefinedGroup(getResetGroup(), event))
-    {
+    if ( !FunctionUtilities.isDefinedGroup( getResetGroup(), event ) ) {
       return;
     }
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
       dataset = createNewDataset();
-      results.add(dataset);
-    }
-    else if (FunctionUtilities.isLayoutLevel(event))
-    {
+      results.add( dataset );
+    } else if ( FunctionUtilities.isLayoutLevel( event ) ) {
       // Activate the current group, which was filled in the prepare run.
       currentIndex += 1;
-      dataset = (AbstractDataset) results.get(currentIndex);
+      dataset = (AbstractDataset) results.get( currentIndex );
     }
 
   }
 
   /**
-   * Return a completly separated copy of this function. The copy no longer shares any changeable objects with the original function.
-   * Also from Thomas:
-   * Should retain data from the report definition, but clear calculated data.
+   * Return a completly separated copy of this function. The copy no longer shares any changeable objects with the
+   * original function. Also from Thomas: Should retain data from the report definition, but clear calculated data.
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final BaseCollectorFunction fn = (BaseCollectorFunction) super.getInstance();
     fn.dataset = null;
     fn.processKey = null;
@@ -270,17 +226,15 @@ public abstract class BaseCollectorFunction extends AbstractFunction implements 
     return fn;
   }
 
-  public Object getCacheKey()
-  {
-    return new CacheKey(processKey, currentIndex);
+  public Object getCacheKey() {
+    return new CacheKey( processKey, currentIndex );
   }
 
   /**
-   * @deprecated This is not a getter and is an internal function! Protected and should have a different name!
    * @return
+   * @deprecated This is not a getter and is an internal function! Protected and should have a different name!
    */
-  public AbstractDataset getNewDataset()
-  {
+  public AbstractDataset getNewDataset() {
     return null;
   }
 

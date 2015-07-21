@@ -17,17 +17,17 @@
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
-import javax.swing.JComponent;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 
-public interface ExpressionEditor
-{
-  public void initialize(Expression expression,
-                         ReportDesignerContext context);
+import javax.swing.*;
+
+public interface ExpressionEditor {
+  public void initialize( Expression expression,
+                          ReportDesignerContext context );
 
   public JComponent getEditorComponent();
+
   public void stopEditing();
 
   String getTitle();

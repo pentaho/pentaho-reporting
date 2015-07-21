@@ -17,40 +17,35 @@
 
 package org.pentaho.reporting.designer.core;
 
+import org.pentaho.ui.xul.impl.XulEventHandler;
+
 import java.util.Collections;
 import java.util.Map;
-
-import org.pentaho.ui.xul.impl.XulEventHandler;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractReportDesignerUiPlugin implements ReportDesignerUiPlugin
-{
-  @SuppressWarnings({"StaticCollection"})
+public abstract class AbstractReportDesignerUiPlugin implements ReportDesignerUiPlugin {
+  @SuppressWarnings( { "StaticCollection" } )
   private static final Map<String, String> EMPTY = Collections.EMPTY_MAP;
-  private static final String[] EMPTY_SOURCES = new String[0];
-  private static final XulEventHandler[] EMPTY_EVENTHANDLERS = new XulEventHandler[0];
+  private static final String[] EMPTY_SOURCES = new String[ 0 ];
+  private static final XulEventHandler[] EMPTY_EVENTHANDLERS = new XulEventHandler[ 0 ];
 
-  protected AbstractReportDesignerUiPlugin()
-  {
+  protected AbstractReportDesignerUiPlugin() {
   }
 
-  public Map<String, String> getXulAdditionalHandlers()
-  {
+  public Map<String, String> getXulAdditionalHandlers() {
     //noinspection ReturnOfCollectionOrArrayField
     return EMPTY;
   }
 
-  public String[] getOverlaySources()
-  {
+  public String[] getOverlaySources() {
     return EMPTY_SOURCES;
   }
 
-  public XulEventHandler[] createEventHandlers()
-  {
+  public XulEventHandler[] createEventHandlers() {
     return EMPTY_EVENTHANDLERS;
   }
 }

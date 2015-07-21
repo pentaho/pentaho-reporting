@@ -20,14 +20,11 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.par
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.AbstractMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.BandedMDXDataFactory;
 
-public class BandedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler
-{
-  public BandedMDXDataSourceReadHandler()
-  {
+public class BandedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler {
+  public BandedMDXDataSourceReadHandler() {
   }
 
-  protected AbstractMDXDataFactory createDataFactory()
-  {
+  protected AbstractMDXDataFactory createDataFactory() {
     return new BandedMDXDataFactory();
   }
 }

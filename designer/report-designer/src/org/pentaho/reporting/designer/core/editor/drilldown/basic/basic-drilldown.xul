@@ -23,9 +23,10 @@
     xmlns:pen="http://www.pentaho.org/2008/xul"
     resizable="true">
   <vbox flex="1" id="root">
-    <label value="Warning: This is a Generic Editor as no suitable drill-down editor was found. Only manual parameter are available."/>
+    <label
+        value="Warning: This is a Generic Editor as no suitable drill-down editor was found. Only manual parameter are available."/>
     <label value="Path:"/>
-    <textbox id="path" />
+    <textbox id="path"/>
 
     <hbox id="tooltip-and-target-panel">
       <vbox flex="1">
@@ -42,13 +43,13 @@
         <pen:formula-field id="link-tooltip"/>
       </vbox>
     </hbox>
-    
+
     <pen:parameter-table id="parameter-table" flex="1" pen:title="Parameter:"
                          pen:showRefreshButton="false" pen:allowCustomParameter="true"
                          pen:singleTabMode="true" pen:showHideParameterUiCheckbox="false"/>
-<!--
-    <label value="Preview"/>
-    <textbox id="preview" disabled="true" />
-    -->
+    <!--
+        <label value="Preview"/>
+        <textbox id="preview" disabled="true" />
+        -->
   </vbox>
 </dialog>

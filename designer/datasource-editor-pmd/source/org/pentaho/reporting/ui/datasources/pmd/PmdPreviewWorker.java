@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.ui.datasources.pmd;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
@@ -34,15 +31,15 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.pmd.PmdDataFa
 import org.pentaho.reporting.libraries.designtime.swing.background.CancelEvent;
 import org.pentaho.reporting.libraries.designtime.swing.background.PreviewWorker;
 
-public class PmdPreviewWorker implements PreviewWorker
-{
-  private static class PreviewTableModel implements CloseableTableModel, MetaTableModel
-  {
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
+public class PmdPreviewWorker implements PreviewWorker {
+  private static class PreviewTableModel implements CloseableTableModel, MetaTableModel {
     private MetaTableModel metaTableModel;
     private DefaultDataAttributeContext dataAttributeContext;
 
-    private PreviewTableModel(final MetaTableModel metaTableModel)
-    {
+    private PreviewTableModel( final MetaTableModel metaTableModel ) {
       this.metaTableModel = metaTableModel;
       dataAttributeContext = new DefaultDataAttributeContext();
     }
@@ -50,86 +47,70 @@ public class PmdPreviewWorker implements PreviewWorker
     /**
      * If this model has disposeable resources assigned, close them or dispose them.
      */
-    public void close()
-    {
-      if (metaTableModel instanceof CloseableTableModel)
-      {
+    public void close() {
+      if ( metaTableModel instanceof CloseableTableModel ) {
         final CloseableTableModel ctm = (CloseableTableModel) metaTableModel;
         ctm.close();
       }
     }
 
-    public DataAttributes getCellDataAttributes(final int row, final int column)
-    {
-      return metaTableModel.getCellDataAttributes(row, column);
+    public DataAttributes getCellDataAttributes( final int row, final int column ) {
+      return metaTableModel.getCellDataAttributes( row, column );
     }
 
-    public boolean isCellDataAttributesSupported()
-    {
+    public boolean isCellDataAttributesSupported() {
       return metaTableModel.isCellDataAttributesSupported();
     }
 
-    public DataAttributes getColumnAttributes(final int column)
-    {
-      return metaTableModel.getColumnAttributes(column);
+    public DataAttributes getColumnAttributes( final int column ) {
+      return metaTableModel.getColumnAttributes( column );
     }
 
-    public DataAttributes getTableAttributes()
-    {
+    public DataAttributes getTableAttributes() {
       return metaTableModel.getTableAttributes();
     }
 
-    public int getRowCount()
-    {
+    public int getRowCount() {
       return metaTableModel.getRowCount();
     }
 
-    public int getColumnCount()
-    {
+    public int getColumnCount() {
       return metaTableModel.getColumnCount();
     }
 
-    public String getColumnName(final int columnIndex)
-    {
-      final DataAttributes columnAttributes = getColumnAttributes(columnIndex);
+    public String getColumnName( final int columnIndex ) {
+      final DataAttributes columnAttributes = getColumnAttributes( columnIndex );
       final String friendlyName = (String) columnAttributes.getMetaAttribute
-      	  (PmdDataFactoryModule.META_DOMAIN, MetaAttributeNames.Core.NAME,
-              String.class, dataAttributeContext);
-      if (friendlyName != null)
-      {
+        ( PmdDataFactoryModule.META_DOMAIN, MetaAttributeNames.Core.NAME,
+          String.class, dataAttributeContext );
+      if ( friendlyName != null ) {
         return friendlyName;
       }
-      return metaTableModel.getColumnName(columnIndex);
+      return metaTableModel.getColumnName( columnIndex );
     }
 
-    public Class getColumnClass(final int columnIndex)
-    {
-      return metaTableModel.getColumnClass(columnIndex);
+    public Class getColumnClass( final int columnIndex ) {
+      return metaTableModel.getColumnClass( columnIndex );
     }
 
-    public boolean isCellEditable(final int rowIndex, final int columnIndex)
-    {
-      return metaTableModel.isCellEditable(rowIndex, columnIndex);
+    public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
+      return metaTableModel.isCellEditable( rowIndex, columnIndex );
     }
 
-    public Object getValueAt(final int rowIndex, final int columnIndex)
-    {
-      return metaTableModel.getValueAt(rowIndex, columnIndex);
+    public Object getValueAt( final int rowIndex, final int columnIndex ) {
+      return metaTableModel.getValueAt( rowIndex, columnIndex );
     }
 
-    public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-    {
-      metaTableModel.setValueAt(aValue, rowIndex, columnIndex);
+    public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+      metaTableModel.setValueAt( aValue, rowIndex, columnIndex );
     }
 
-    public void addTableModelListener(final TableModelListener l)
-    {
-      metaTableModel.addTableModelListener(l);
+    public void addTableModelListener( final TableModelListener l ) {
+      metaTableModel.addTableModelListener( l );
     }
 
-    public void removeTableModelListener(final TableModelListener l)
-    {
-      metaTableModel.removeTableModelListener(l);
+    public void removeTableModelListener( final TableModelListener l ) {
+      metaTableModel.removeTableModelListener( l );
     }
   }
 
@@ -140,41 +121,34 @@ public class PmdPreviewWorker implements PreviewWorker
   private int queryTimeout;
   private int queryLimit;
 
-  public PmdPreviewWorker(final PmdDataFactory dataFactory,
-                          final String query,
-                          final int queryTimeout,
-                          final int queryLimit)
-  {
+  public PmdPreviewWorker( final PmdDataFactory dataFactory,
+                           final String query,
+                           final int queryTimeout,
+                           final int queryLimit ) {
     this.queryTimeout = queryTimeout;
     this.queryLimit = queryLimit;
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
     this.query = query;
     this.dataFactory = dataFactory;
   }
 
-  public ReportDataFactoryException getException()
-  {
+  public ReportDataFactoryException getException() {
     return exception;
   }
 
-  public TableModel getResultTableModel()
-  {
+  public TableModel getResultTableModel() {
     return resultTableModel;
   }
 
-  public void close()
-  {
-    if (resultTableModel != null)
-    {
+  public void close() {
+    if ( resultTableModel != null ) {
       resultTableModel.close();
       resultTableModel = null;
     }
 
-    if (dataFactory != null)
-    {
+    if ( dataFactory != null ) {
       dataFactory.close();
       dataFactory = null;
     }
@@ -184,39 +158,28 @@ public class PmdPreviewWorker implements PreviewWorker
   /**
    * Requests that the thread stop processing as soon as possible.
    */
-  public void cancelProcessing(final CancelEvent event)
-  {
+  public void cancelProcessing( final CancelEvent event ) {
     dataFactory.cancelRunningQuery();
   }
 
   /**
-   * When an object implementing interface <code>Runnable</code> is used
-   * to create a thread, starting the thread causes the object's
-   * <code>run</code> method to be called in that separately executing
-   * thread.
+   * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
+   * the object's <code>run</code> method to be called in that separately executing thread.
    * <p/>
-   * The general contract of the method <code>run</code> is that it may
-   * take any action whatsoever.
+   * The general contract of the method <code>run</code> is that it may take any action whatsoever.
    *
    * @see Thread#run()
    */
-  public void run()
-  {
-    try
-    {
+  public void run() {
+    try {
       final TableModel tableModel = dataFactory.queryData
-          (query, new QueryDataRowWrapper(new ParameterDataRow(), queryLimit, queryTimeout));
-      if (queryLimit > 0)
-      {
-        resultTableModel = new PreviewTableModel(new LengthLimitingTableModel(tableModel, queryLimit));
+        ( query, new QueryDataRowWrapper( new ParameterDataRow(), queryLimit, queryTimeout ) );
+      if ( queryLimit > 0 ) {
+        resultTableModel = new PreviewTableModel( new LengthLimitingTableModel( tableModel, queryLimit ) );
+      } else {
+        resultTableModel = new PreviewTableModel( (MetaTableModel) tableModel );
       }
-      else
-      {
-        resultTableModel = new PreviewTableModel((MetaTableModel) tableModel);
-      }
-    }
-    catch (ReportDataFactoryException e)
-    {
+    } catch ( ReportDataFactoryException e ) {
       exception = e;
     }
   }

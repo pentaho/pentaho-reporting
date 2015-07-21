@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.designer.layout;
 
-import java.awt.geom.Rectangle2D;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,105 +27,99 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SubReport;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 
-public class Prd4956BandedTest
-{
+import java.awt.geom.Rectangle2D;
+
+public class Prd4956BandedTest {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  private MasterReport createReport()
-  {
+  private MasterReport createReport() {
     SubReport sr = new SubReport();
-    sr.getPageHeader().addElement(create("SR-Page-Header"));
-    sr.getPageFooter().addElement(create("SR-Page-Footer"));
-    sr.getReportHeader().addElement(create("SR-Report-Header"));
+    sr.getPageHeader().addElement( create( "SR-Page-Header" ) );
+    sr.getPageFooter().addElement( create( "SR-Page-Footer" ) );
+    sr.getReportHeader().addElement( create( "SR-Report-Header" ) );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addSubReport(sr);
-    report.getPageHeader().addElement(create("MR-Page-Header"));
-    report.getPageFooter().addElement(create("MR-Page-Footer"));
+    report.getReportHeader().addSubReport( sr );
+    report.getPageHeader().addElement( create( "MR-Page-Header" ) );
+    report.getPageFooter().addElement( create( "MR-Page-Footer" ) );
     return report;
   }
 
-  private Element create(String name)
-  {
-    Element dataItemSR = TableTestUtil.createDataItem(name, 100, 20);
-    dataItemSR.setName(name);
+  private Element create( String name ) {
+    Element dataItemSR = TableTestUtil.createDataItem( name, 100, 20 );
+    dataItemSR.setName( name );
     return dataItemSR;
   }
 
   @Test
-  public void testBandedPageHeader()
-  {
+  public void testBandedPageHeader() {
 
     final MasterReport report = createReport();
 
     final GlobalAuthenticationStore globalAuthenticationStore = new GlobalAuthenticationStore();
     final ReportRenderContext masterContext =
-        new ReportRenderContext(report, report, null, globalAuthenticationStore);
-    final SubReport subReport = report.getReportHeader().getSubReport(0);
+      new ReportRenderContext( report, report, null, globalAuthenticationStore );
+    final SubReport subReport = report.getReportHeader().getSubReport( 0 );
     final ReportRenderContext subContext =
-        new ReportRenderContext(report, subReport, masterContext, globalAuthenticationStore);
-    final TestRootBandRenderer r = new TestRootBandRenderer(subReport.getPageHeader(), subContext);
+      new ReportRenderContext( report, subReport, masterContext, globalAuthenticationStore );
+    final TestRootBandRenderer r = new TestRootBandRenderer( subReport.getPageHeader(), subContext );
     final Rectangle2D bounds = r.getBounds();
 
-    Assert.assertEquals(new Rectangle2D.Double(0, 40, 468, 72), bounds);
+    Assert.assertEquals( new Rectangle2D.Double( 0, 40, 468, 72 ), bounds );
 
-    final ValidateTextGraphics graphics2D = new ValidateTextGraphics(468, 108);
-    graphics2D.expect("SR-Page-Header");
-    r.draw(graphics2D);
-    Assert.assertTrue(graphics2D.isValid());
+    final ValidateTextGraphics graphics2D = new ValidateTextGraphics( 468, 108 );
+    graphics2D.expect( "SR-Page-Header" );
+    r.draw( graphics2D );
+    Assert.assertTrue( graphics2D.isValid() );
   }
 
   @Test
-  public void testBandedPageFooter()
-  {
+  public void testBandedPageFooter() {
 
     final MasterReport report = createReport();
 
     final GlobalAuthenticationStore globalAuthenticationStore = new GlobalAuthenticationStore();
     final ReportRenderContext masterContext =
-        new ReportRenderContext(report, report, null, globalAuthenticationStore);
-    final SubReport subReport = report.getReportHeader().getSubReport(0);
+      new ReportRenderContext( report, report, null, globalAuthenticationStore );
+    final SubReport subReport = report.getReportHeader().getSubReport( 0 );
     final ReportRenderContext subContext =
-        new ReportRenderContext(report, subReport, masterContext, globalAuthenticationStore);
-    final TestRootBandRenderer r = new TestRootBandRenderer(subReport.getPageFooter(), subContext);
+      new ReportRenderContext( report, subReport, masterContext, globalAuthenticationStore );
+    final TestRootBandRenderer r = new TestRootBandRenderer( subReport.getPageFooter(), subContext );
     final Rectangle2D bounds = r.getBounds();
 
-    Assert.assertEquals(new Rectangle2D.Double(0, 60, 468, 72), bounds);
+    Assert.assertEquals( new Rectangle2D.Double( 0, 60, 468, 72 ), bounds );
 
-    final ValidateTextGraphics graphics2D = new ValidateTextGraphics(468, 108);
-    graphics2D.expect("SR-Page-Footer");
-    r.draw(graphics2D);
-    Assert.assertTrue(graphics2D.isValid());
+    final ValidateTextGraphics graphics2D = new ValidateTextGraphics( 468, 108 );
+    graphics2D.expect( "SR-Page-Footer" );
+    r.draw( graphics2D );
+    Assert.assertTrue( graphics2D.isValid() );
   }
 
   @Test
-  public void testBandedReportHeader()
-  {
+  public void testBandedReportHeader() {
 
     final MasterReport report = createReport();
 
     final GlobalAuthenticationStore globalAuthenticationStore = new GlobalAuthenticationStore();
     final ReportRenderContext masterContext =
-        new ReportRenderContext(report, report, null, globalAuthenticationStore);
-    final SubReport subReport = report.getReportHeader().getSubReport(0);
+      new ReportRenderContext( report, report, null, globalAuthenticationStore );
+    final SubReport subReport = report.getReportHeader().getSubReport( 0 );
     final ReportRenderContext subContext =
-        new ReportRenderContext(report, subReport, masterContext, globalAuthenticationStore);
-    final TestRootBandRenderer r = new TestRootBandRenderer(subReport.getReportHeader(), subContext);
+      new ReportRenderContext( report, subReport, masterContext, globalAuthenticationStore );
+    final TestRootBandRenderer r = new TestRootBandRenderer( subReport.getReportHeader(), subContext );
     final Rectangle2D bounds = r.getBounds();
 
     //ModelPrinter.INSTANCE.print(r.getLogicalPageDrawable().getLogicalPageBox());
-    Assert.assertEquals(new Rectangle2D.Double(0, 20, 468, 108), bounds);
+    Assert.assertEquals( new Rectangle2D.Double( 0, 20, 468, 108 ), bounds );
 
-    final ValidateTextGraphics graphics2D = new ValidateTextGraphics(468, 108);
-    graphics2D.expect("SR-Report-Header");
-    r.draw(graphics2D);
-    Assert.assertTrue(graphics2D.isValid());
+    final ValidateTextGraphics graphics2D = new ValidateTextGraphics( 468, 108 );
+    graphics2D.expect( "SR-Report-Header" );
+    r.draw( graphics2D );
+    Assert.assertTrue( graphics2D.isValid() );
 
   }
 }

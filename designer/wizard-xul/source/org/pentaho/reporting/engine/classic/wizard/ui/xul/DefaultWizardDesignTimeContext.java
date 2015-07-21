@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.wizard.ui.xul;
 
-import java.awt.Window;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -31,97 +29,80 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.settings.DefaultLocaleSettings;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 
-public class DefaultWizardDesignTimeContext implements DesignTimeContext
-{
-  private static final Log logger = LogFactory.getLog(DefaultWizardDesignTimeContext.class);
+import java.awt.*;
+
+public class DefaultWizardDesignTimeContext implements DesignTimeContext {
+  private static final Log logger = LogFactory.getLog( DefaultWizardDesignTimeContext.class );
   private WizardEditorModel editorModel;
   private Window parentWindow;
   private DesignTimeContext parentContext;
   private LocaleSettings localeSettings;
 
-  public DefaultWizardDesignTimeContext(final WizardEditorModel editorModel, final Window parentWindow)
-  {
-    this(editorModel, parentWindow, null);
+  public DefaultWizardDesignTimeContext( final WizardEditorModel editorModel, final Window parentWindow ) {
+    this( editorModel, parentWindow, null );
   }
 
-  public DefaultWizardDesignTimeContext(final WizardEditorModel editorModel,
-                                        final Window parentWindow,
-                                        final DesignTimeContext parentContext)
-  {
+  public DefaultWizardDesignTimeContext( final WizardEditorModel editorModel,
+                                         final Window parentWindow,
+                                         final DesignTimeContext parentContext ) {
     this.editorModel = editorModel;
     this.parentWindow = parentWindow;
     this.parentContext = parentContext;
-    if (parentContext != null)
-    {
+    if ( parentContext != null ) {
       this.localeSettings = parentContext.getLocaleSettings();
-    }
-    else
-    {
+    } else {
       this.localeSettings = new DefaultLocaleSettings();
     }
   }
 
-  public LocaleSettings getLocaleSettings()
-  {
+  public LocaleSettings getLocaleSettings() {
     return localeSettings;
   }
 
-  public AbstractReportDefinition getReport()
-  {
+  public AbstractReportDefinition getReport() {
     return editorModel.getReportDefinition();
   }
 
-  public Window getParentWindow()
-  {
+  public Window getParentWindow() {
     return parentWindow;
   }
 
-  public DataSchemaModel getDataSchemaModel()
-  {
+  public DataSchemaModel getDataSchemaModel() {
     return editorModel.getDataSchema();
   }
 
-  public void error(final Exception e)
-  {
-    ExceptionDialog.showExceptionDialog(parentWindow, "Error", e.getMessage(), e);
-    logger.error("Context received fatal error", e);
+  public void error( final Exception e ) {
+    ExceptionDialog.showExceptionDialog( parentWindow, "Error", e.getMessage(), e );
+    logger.error( "Context received fatal error", e );
   }
 
-  public void userError(final Exception e)
-  {
-    ExceptionDialog.showExceptionDialog(parentWindow, "Non-Fatal Error", e.getMessage(), e);
-    logger.info("Context received user error", e);
+  public void userError( final Exception e ) {
+    ExceptionDialog.showExceptionDialog( parentWindow, "Non-Fatal Error", e.getMessage(), e );
+    logger.info( "Context received user error", e );
   }
 
-  public boolean isShowExpertItems()
-  {
-    if (parentContext != null)
-    {
+  public boolean isShowExpertItems() {
+    if ( parentContext != null ) {
       return parentContext.isShowExpertItems();
     }
     return true;
   }
 
-  public boolean isShowDeprecatedItems()
-  {
-    if (parentContext != null)
-    {
+  public boolean isShowDeprecatedItems() {
+    if ( parentContext != null ) {
       return parentContext.isShowDeprecatedItems();
     }
     return true;
   }
 
-  public DataFactoryContext getDataFactoryContext()
-  {
-    if (parentContext != null)
-    {
+  public DataFactoryContext getDataFactoryContext() {
+    if ( parentContext != null ) {
       return parentContext.getDataFactoryContext();
     }
     return new DesignTimeDataFactoryContext();
   }
 
-  public MaturityLevel getMaturityLevel()
-  {
+  public MaturityLevel getMaturityLevel() {
     return parentContext.getMaturityLevel();
   }
 }

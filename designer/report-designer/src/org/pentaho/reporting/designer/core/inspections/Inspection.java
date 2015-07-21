@@ -26,8 +26,7 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
  *
  * @author Thomas Morgner
  */
-public interface Inspection
-{
+public interface Inspection {
   /**
    * The inspection is cheap enough to be run constantly while editing.
    *
@@ -35,7 +34,7 @@ public interface Inspection
    */
   public boolean isInlineInspection();
 
-  public void inspect(final ReportDesignerContext designerContext,
-                      final ReportDocumentContext reportRenderContext,
-                      final InspectionResultListener resultHandler) throws ReportDataFactoryException;
+  public void inspect( final ReportDesignerContext designerContext,
+                       final ReportDocumentContext reportRenderContext,
+                       final InspectionResultListener resultHandler ) throws ReportDataFactoryException;
 }

@@ -24,18 +24,15 @@ import java.util.EventObject;
  *
  * @author Thomas Morgner
  */
-public class BorderSelectionEvent extends EventObject
-{
+public class BorderSelectionEvent extends EventObject {
   private BorderSelection selection;
 
-  public BorderSelectionEvent(final Object source, final BorderSelection selection)
-  {
-    super(source);
+  public BorderSelectionEvent( final Object source, final BorderSelection selection ) {
+    super( source );
     this.selection = selection;
   }
 
-  public BorderSelection getSelection()
-  {
+  public BorderSelection getSelection() {
     return selection;
   }
 }

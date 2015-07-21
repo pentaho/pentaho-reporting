@@ -28,20 +28,17 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHandler
-    implements DataFactoryReadHandler
-{
+  implements DataFactoryReadHandler {
   private AbstractMDXDataFactory dataFactory;
   private OlapConnectionReadHandler connectionProviderReadHandler;
   private StringReadHandler roleField;
   private StringReadHandler jdbcUserField;
   private StringReadHandler jdbcPasswordField;
 
-  public AbstractMDXDataSourceReadHandler()
-  {
+  public AbstractMDXDataSourceReadHandler() {
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
@@ -54,36 +51,30 @@ public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHa
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
 
     final OlapConnectionReadHandlerFactory factory = OlapConnectionReadHandlerFactory.getInstance();
-    final XmlReadHandler handler = factory.getHandler(uri, tagName);
-    if (handler instanceof OlapConnectionReadHandler)
-    {
+    final XmlReadHandler handler = factory.getHandler( uri, tagName );
+    if ( handler instanceof OlapConnectionReadHandler ) {
       connectionProviderReadHandler = (OlapConnectionReadHandler) handler;
       return connectionProviderReadHandler;
     }
 
-    if (isSameNamespace(uri) == false)
-    {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("role-field".equals(tagName))
-    {
+    if ( "role-field".equals( tagName ) ) {
       roleField = new StringReadHandler();
       return roleField;
     }
-    if ("jdbc-user-field".equals(tagName))
-    {
+    if ( "jdbc-user-field".equals( tagName ) ) {
       jdbcUserField = new StringReadHandler();
       return jdbcUserField;
     }
-    if ("jdbc-password-field".equals(tagName))
-    {
+    if ( "jdbc-password-field".equals( tagName ) ) {
       jdbcPasswordField = new StringReadHandler();
       return jdbcPasswordField;
     }
@@ -96,39 +87,32 @@ public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHa
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     OlapConnectionProvider provider = null;
-    if (connectionProviderReadHandler != null)
-    {
+    if ( connectionProviderReadHandler != null ) {
       provider = (OlapConnectionProvider) connectionProviderReadHandler.getObject();
     }
-    if (provider == null)
-    {
-      provider = (OlapConnectionProvider) getRootHandler().getHelperObject("olap-connection-provider");
+    if ( provider == null ) {
+      provider = (OlapConnectionProvider) getRootHandler().getHelperObject( "olap-connection-provider" );
     }
-    if (provider == null)
-    {
+    if ( provider == null ) {
       throw new SAXException(
-          "Unable to create OLAP4J Factory: No connection provider specified or recognized.");
+        "Unable to create OLAP4J Factory: No connection provider specified or recognized." );
     }
 
-    dataFactory = createDataFactory(provider);
-    if (roleField != null)
-    {
-      dataFactory.setRoleField(roleField.getResult());
+    dataFactory = createDataFactory( provider );
+    if ( roleField != null ) {
+      dataFactory.setRoleField( roleField.getResult() );
     }
-    if (jdbcUserField != null)
-    {
-      dataFactory.setJdbcUserField(jdbcUserField.getResult());
+    if ( jdbcUserField != null ) {
+      dataFactory.setJdbcUserField( jdbcUserField.getResult() );
     }
-    if (jdbcPasswordField != null)
-    {
-      dataFactory.setJdbcPasswordField(jdbcPasswordField.getResult());
+    if ( jdbcPasswordField != null ) {
+      dataFactory.setJdbcPasswordField( jdbcPasswordField.getResult() );
     }
   }
 
-  protected abstract AbstractMDXDataFactory createDataFactory(OlapConnectionProvider connectionProvider);
+  protected abstract AbstractMDXDataFactory createDataFactory( OlapConnectionProvider connectionProvider );
 
 
   /**
@@ -137,8 +121,7 @@ public abstract class AbstractMDXDataSourceReadHandler extends AbstractXmlReadHa
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 }

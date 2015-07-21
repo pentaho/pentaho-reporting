@@ -19,9 +19,8 @@ package org.pentaho.reporting.designer.core.util.table;
 
 import org.pentaho.reporting.libraries.designtime.swing.table.PropertyTableModel;
 
-public interface ElementMetaDataTableModel extends SortableTableModel, PropertyTableModel
-{
-  public String getValueRole(final int row, final int column);
+public interface ElementMetaDataTableModel extends SortableTableModel, PropertyTableModel {
+  public String getValueRole( final int row, final int column );
 
-  public String[] getExtraFields(final int row, final int column);
+  public String[] getExtraFields( final int row, final int column );
 }

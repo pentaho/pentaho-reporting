@@ -21,15 +21,12 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.URLRe
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.URLRewriter;
 import org.pentaho.reporting.libraries.repository.ContentEntity;
 
-public class MailURLRewriter implements URLRewriter
-{
-  public MailURLRewriter()
-  {
+public class MailURLRewriter implements URLRewriter {
+  public MailURLRewriter() {
   }
 
-  public String rewrite(final ContentEntity sourceDocument,
-                        final ContentEntity dataEntity) throws URLRewriteException
-  {
+  public String rewrite( final ContentEntity sourceDocument,
+                         final ContentEntity dataEntity ) throws URLRewriteException {
     return "cid:" + dataEntity.getName();
   }
 }

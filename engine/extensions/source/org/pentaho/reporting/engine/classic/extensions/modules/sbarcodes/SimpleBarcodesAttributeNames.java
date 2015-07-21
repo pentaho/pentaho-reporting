@@ -22,9 +22,9 @@ package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes;
  *
  * @author Thomas Morgner
  */
-public class SimpleBarcodesAttributeNames
-{
-  public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0";
+public class SimpleBarcodesAttributeNames {
+  public static final String NAMESPACE =
+    "http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0";
   /**
    * This attribute represents the barcode symbology, it can be one of the following: 3of9, 3of9ext, code39, code39ext,
    * usd3, usd3ext, usd-3, usd-3ext, codabar, code27, usd4, 2of7, monarch, nw7, usd-4, nw-7, ean13, ean-13, upca, upc-a,
@@ -52,7 +52,6 @@ public class SimpleBarcodesAttributeNames
    */
   public static final String SHOW_TEXT_ATTRIBUTE = "show-text";
 
-  private SimpleBarcodesAttributeNames()
-  {
+  private SimpleBarcodesAttributeNames() {
   }
 }

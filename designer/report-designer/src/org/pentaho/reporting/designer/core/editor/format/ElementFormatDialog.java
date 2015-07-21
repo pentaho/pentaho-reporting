@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.format;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JTabbedPane;
-
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.util.undo.ElementFormatUndoEntry;
@@ -33,8 +25,12 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
-public class ElementFormatDialog extends CommonDialog
-{
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ElementFormatDialog extends CommonDialog {
 
   public static final int FONT_PANE = 0;
   public static final int ADVANCED_FONT_PANE = 1;
@@ -50,28 +46,24 @@ public class ElementFormatDialog extends CommonDialog
   private JTabbedPane tabbedPane;
 
   public ElementFormatDialog()
-      throws HeadlessException
-  {
+    throws HeadlessException {
     init();
   }
 
-  public ElementFormatDialog(final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public ElementFormatDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public ElementFormatDialog(final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public ElementFormatDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  protected void init()
-  {
-    setTitle(Messages.getString("ElementFormatDialog.FormatElement"));
+  protected void init() {
+    setTitle( Messages.getString( "ElementFormatDialog.FormatElement" ) );
 
     fontPropertiesPane = new FontPropertiesPane();
     advancedFontPropertiesPane = new AdvancedFontPropertiesPane();
@@ -80,72 +72,64 @@ public class ElementFormatDialog extends CommonDialog
     borderPropertiesPane = new BorderPropertiesPane();
 
     tabbedPane = new JTabbedPane();
-    tabbedPane.add(Messages.getString("ElementFormatDialog.Font"), fontPropertiesPane);
-    tabbedPane.add(Messages.getString("ElementFormatDialog.AdvancedFontSettings"), advancedFontPropertiesPane);
-    tabbedPane.add(Messages.getString("ElementFormatDialog.Paragraph"), paragraphPropertiesPane);
-    tabbedPane.add(Messages.getString("ElementFormatDialog.SizeAndBorders"), borderPropertiesPane);
-    tabbedPane.add(Messages.getString("ElementFormatDialog.ColorAndBackground"), colorPropertiesPane);
+    tabbedPane.add( Messages.getString( "ElementFormatDialog.Font" ), fontPropertiesPane );
+    tabbedPane.add( Messages.getString( "ElementFormatDialog.AdvancedFontSettings" ), advancedFontPropertiesPane );
+    tabbedPane.add( Messages.getString( "ElementFormatDialog.Paragraph" ), paragraphPropertiesPane );
+    tabbedPane.add( Messages.getString( "ElementFormatDialog.SizeAndBorders" ), borderPropertiesPane );
+    tabbedPane.add( Messages.getString( "ElementFormatDialog.ColorAndBackground" ), colorPropertiesPane );
 
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "ReportDesigner.Core.ElementFormat";
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     return tabbedPane;
   }
 
-  public void setActivePane(final int pane)
-  {
-    tabbedPane.setSelectedIndex(pane);
+  public void setActivePane( final int pane ) {
+    tabbedPane.setSelectedIndex( pane );
   }
 
-  public ElementFormatUndoEntry.EditResult performEdit(final ReportDesignerContext designerContext,
-                                                       final ElementStyleSheet element,
-                                                       final Map<StyleKey,Expression> styleExpressions)
-  {
+  public ElementFormatUndoEntry.EditResult performEdit( final ReportDesignerContext designerContext,
+                                                        final ElementStyleSheet element,
+                                                        final Map<StyleKey, Expression> styleExpressions ) {
     final EditableStyleSheet styleSheet = new EditableStyleSheet();
-    styleSheet.copyParentValues(element);
+    styleSheet.copyParentValues( element );
 
-    final Map<StyleKey,Expression> editableStyleExpressions;
-    if (styleExpressions == null)
-    {
+    final Map<StyleKey, Expression> editableStyleExpressions;
+    if ( styleExpressions == null ) {
       editableStyleExpressions = null;
+    } else {
+      editableStyleExpressions = new HashMap<StyleKey, Expression>( styleExpressions );
     }
-    else
-    {
-      editableStyleExpressions = new HashMap<StyleKey,Expression>(styleExpressions);
-    }
-    fontPropertiesPane.initializeFromStyle(styleSheet);
-    advancedFontPropertiesPane.initializeFromStyle(styleSheet);
-    paragraphPropertiesPane.initializeFromStyle(styleSheet);
-    borderPropertiesPane.initializeFromStyle(styleSheet);
-    colorPropertiesPane.initializeFromStyle(styleSheet);
+    fontPropertiesPane.initializeFromStyle( styleSheet );
+    advancedFontPropertiesPane.initializeFromStyle( styleSheet );
+    paragraphPropertiesPane.initializeFromStyle( styleSheet );
+    borderPropertiesPane.initializeFromStyle( styleSheet );
+    colorPropertiesPane.initializeFromStyle( styleSheet );
 
-    fontPropertiesPane.commitValues(styleSheet);
-    advancedFontPropertiesPane.commitValues(styleSheet);
-    paragraphPropertiesPane.commitValues(styleSheet);
-    borderPropertiesPane.commitValues(styleSheet);
-    colorPropertiesPane.commitValues(styleSheet);
+    fontPropertiesPane.commitValues( styleSheet );
+    advancedFontPropertiesPane.commitValues( styleSheet );
+    paragraphPropertiesPane.commitValues( styleSheet );
+    borderPropertiesPane.commitValues( styleSheet );
+    colorPropertiesPane.commitValues( styleSheet );
 
     styleSheet.clearEdits();
 
-    if (performEdit() == false)
-    {
+    if ( performEdit() == false ) {
       return null;
     }
 
-    fontPropertiesPane.commitValues(styleSheet);
-    advancedFontPropertiesPane.commitValues(styleSheet);
-    paragraphPropertiesPane.commitValues(styleSheet);
-    borderPropertiesPane.commitValues(styleSheet);
-    colorPropertiesPane.commitValues(styleSheet);
+    fontPropertiesPane.commitValues( styleSheet );
+    advancedFontPropertiesPane.commitValues( styleSheet );
+    paragraphPropertiesPane.commitValues( styleSheet );
+    borderPropertiesPane.commitValues( styleSheet );
+    colorPropertiesPane.commitValues( styleSheet );
 
     // do something ..
-    return new ElementFormatUndoEntry.EditResult(styleSheet, editableStyleExpressions);
+    return new ElementFormatUndoEntry.EditResult( styleSheet, editableStyleExpressions );
   }
 }

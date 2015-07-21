@@ -19,10 +19,8 @@ package org.pentaho.reporting.designer.core.actions.elements.layout;
 
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
-public final class LayoutTableFooterAction extends LayoutAction
-{
-  public LayoutTableFooterAction()
-  {
-    super("LayoutTableFooterAction", BandStyleKeys.LAYOUT_TABLE_FOOTER);
+public final class LayoutTableFooterAction extends LayoutAction {
+  public LayoutTableFooterAction() {
+    super( "LayoutTableFooterAction", BandStyleKeys.LAYOUT_TABLE_FOOTER );
   }
 }

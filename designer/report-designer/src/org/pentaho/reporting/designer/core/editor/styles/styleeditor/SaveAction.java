@@ -17,32 +17,29 @@
 
 package org.pentaho.reporting.designer.core.editor.styles.styleeditor;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.editor.styles.Messages;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 
-public class SaveAction extends AbstractReportContextAction
-{
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public class SaveAction extends AbstractReportContextAction {
   private StyleDefinitionEditorContext editorContext;
 
-  public SaveAction(final StyleDefinitionEditorContext editorContext)
-  {
+  public SaveAction( final StyleDefinitionEditorContext editorContext ) {
     this.editorContext = editorContext;
-    putValue(Action.NAME, Messages.getString("StyleDefinitionEditorDialog.Save.Text"));
-    putValue(Action.SHORT_DESCRIPTION, Messages.getString("StyleDefinitionEditorDialog.Save.Description"));
-    putValue(Action.MNEMONIC_KEY, Messages.getOptionalMnemonic("StyleDefinitionEditorDialog.Save.Mnemonic"));
-    putValue(Action.ACCELERATOR_KEY, Messages.getOptionalKeyStroke("StyleDefinitionEditorDialog.Save.Accelerator"));
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getSaveIcon());
+    putValue( Action.NAME, Messages.getString( "StyleDefinitionEditorDialog.Save.Text" ) );
+    putValue( Action.SHORT_DESCRIPTION, Messages.getString( "StyleDefinitionEditorDialog.Save.Description" ) );
+    putValue( Action.MNEMONIC_KEY, Messages.getOptionalMnemonic( "StyleDefinitionEditorDialog.Save.Mnemonic" ) );
+    putValue( Action.ACCELERATOR_KEY, Messages.getOptionalKeyStroke( "StyleDefinitionEditorDialog.Save.Accelerator" ) );
+    putValue( Action.SMALL_ICON, IconLoader.getInstance().getSaveIcon() );
 
-    setReportDesignerContext(editorContext.getDesignerContext());
-    setEnabled(true);
+    setReportDesignerContext( editorContext.getDesignerContext() );
+    setEnabled( true );
   }
 
-  public void actionPerformed(final ActionEvent e)
-  {
-    StyleDefinitionUtilities.saveStyleDefinition(editorContext, editorContext.getParent());
+  public void actionPerformed( final ActionEvent e ) {
+    StyleDefinitionUtilities.saveStyleDefinition( editorContext, editorContext.getParent() );
   }
 }

@@ -22,57 +22,48 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.JndiConnectionProvider;
 
-public class DenormalizedOlap4JJndiTest extends DataSourceTestBase
-{
-  private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray("");
+public class DenormalizedOlap4JJndiTest extends DataSourceTestBase {
+  private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray( "" );
 
-  public DenormalizedOlap4JJndiTest()
-  {
+  public DenormalizedOlap4JJndiTest() {
   }
 
-  public DenormalizedOlap4JJndiTest(final String s)
-  {
-    super(s);
+  public DenormalizedOlap4JJndiTest( final String s ) {
+    super( s );
   }
 
 
-  public void testSaveAndLoad() throws Exception
-  {
-    runSaveAndLoad(QUERIES_AND_RESULTS);
+  public void testSaveAndLoad() throws Exception {
+    runSaveAndLoad( QUERIES_AND_RESULTS );
   }
 
-  public void testDerive() throws Exception
-  {
-    runDerive(QUERIES_AND_RESULTS);
+  public void testDerive() throws Exception {
+    runDerive( QUERIES_AND_RESULTS );
   }
 
-  public void testSerialize() throws Exception
-  {
-    runSerialize(QUERIES_AND_RESULTS);
+  public void testSerialize() throws Exception {
+    runSerialize( QUERIES_AND_RESULTS );
   }
 
-  public void testQuery() throws Exception
-  {
-    runTest(QUERIES_AND_RESULTS);
+  public void testQuery() throws Exception {
+    runTest( QUERIES_AND_RESULTS );
   }
 
-  protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException
-  {
+  protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
     final JndiConnectionProvider provider = new JndiConnectionProvider();
-    provider.setConnectionPath("SampleOlap4J");
+    provider.setConnectionPath( "SampleOlap4J" );
 
-    final DenormalizedMDXDataFactory dataFactory = new DenormalizedMDXDataFactory(provider);
-    dataFactory.setQuery("default", query, null, null);
-    initializeDataFactory(dataFactory);
+    final DenormalizedMDXDataFactory dataFactory = new DenormalizedMDXDataFactory( provider );
+    dataFactory.setQuery( "default", query, null, null );
+    initializeDataFactory( dataFactory );
     return dataFactory;
   }
 
 
-  public static void _main(final String[] args) throws Exception
-  {
+  public static void _main( final String[] args ) throws Exception {
     final DenormalizedOlap4JJndiTest test = new DenormalizedOlap4JJndiTest();
     test.setUp();
-    test.runGenerate(QUERIES_AND_RESULTS);
+    test.runGenerate( QUERIES_AND_RESULTS );
   }
 
 }

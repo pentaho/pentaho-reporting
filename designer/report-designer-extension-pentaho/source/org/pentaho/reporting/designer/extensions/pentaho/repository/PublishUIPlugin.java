@@ -19,14 +19,11 @@ package org.pentaho.reporting.designer.extensions.pentaho.repository;
 
 import org.pentaho.reporting.designer.core.AbstractReportDesignerUiPlugin;
 
-public class PublishUIPlugin extends AbstractReportDesignerUiPlugin
-{
-  public PublishUIPlugin()
-  {
+public class PublishUIPlugin extends AbstractReportDesignerUiPlugin {
+  public PublishUIPlugin() {
   }
 
-  public String[] getOverlaySources()
-  {
-    return new String[]{"org/pentaho/reporting/designer/extensions/pentaho/repository/ui-overlay.xul"};
+  public String[] getOverlaySources() {
+    return new String[] { "org/pentaho/reporting/designer/extensions/pentaho/repository/ui-overlay.xul" };
   }
 }

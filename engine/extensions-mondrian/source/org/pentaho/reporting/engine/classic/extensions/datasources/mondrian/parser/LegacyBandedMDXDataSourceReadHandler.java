@@ -25,14 +25,11 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.Lega
  *
  * @author Thomas Morgner
  */
-public class LegacyBandedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler
-{
-  public LegacyBandedMDXDataSourceReadHandler()
-  {
+public class LegacyBandedMDXDataSourceReadHandler extends AbstractNamedMDXDataSourceReadHandler {
+  public LegacyBandedMDXDataSourceReadHandler() {
   }
 
-  protected AbstractMDXDataFactory createDataFactory()
-  {
+  protected AbstractMDXDataFactory createDataFactory() {
     return new LegacyBandedMDXDataFactory();
   }
 }

@@ -4,8 +4,10 @@
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.XYSeriesCollectorFunctionBundle"
               result="org.jfree.data.xy.XYDataset"
               expert="false" hidden="true" preferred="false" deprecated="true">
-    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true" computed="true"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              computed="true"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
@@ -20,11 +22,16 @@
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.CategorySetCollectorFunctionBundle"
               result="org.jfree.data.category.CategoryDataset"
               expert="false" hidden="true" preferred="false" deprecated="true">
-    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true" computed="true"/>
-    <property name="categoryColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="categoryStartColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
-    <property name="generatedReport" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              computed="true"/>
+    <property name="categoryColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="categoryStartColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="generatedReport" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="ignoreColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
@@ -39,8 +46,10 @@
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.XYZSeriesCollectorFunctionBundle"
               result="org.jfree.data.xy.XYZDataset"
               expert="false" hidden="true" preferred="false" deprecated="true">
-    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true" computed="true"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              computed="true"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
@@ -56,9 +65,12 @@
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.TimeSeriesCollectorFunctionBundle"
               result="org.jfree.data.xy.XYDataset"
               expert="false" hidden="true" preferred="false" deprecated="true">
-    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true" computed="true"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
-    <property name="domainPeriodType" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              computed="true"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="domainPeriodType" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.TimePeriodStringPropertyEditor"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
@@ -66,7 +78,8 @@
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="seriesName" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="summaryOnly" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="timeValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="timeValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
     <property name="valueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
   </expression>
 
@@ -74,8 +87,10 @@
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.PieSetCollectorFunctionBundle"
               result="org.jfree.data.general.PieDataset"
               expert="false" hidden="true" preferred="false" deprecated="true">
-    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true" computed="true"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              computed="true"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
@@ -88,18 +103,24 @@
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.PivotCategorySetCollectorFunctionBundle"
               result="org.jfree.data.category.CategoryDataset"
               expert="true" hidden="true" preferred="false" deprecated="true">
-    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true" computed="true"/>
-    <property name="categoryColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="cacheKey" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              computed="true"/>
+    <property name="categoryColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
     <property name="categoryName" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="categoryStartColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
-    <property name="generatedReport" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="categoryStartColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="generatedReport" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="ignoreColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="seriesColumnHeader" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="seriesColumnHeader" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="seriesName" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="summaryOnly" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="valueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
@@ -110,54 +131,66 @@
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.collectors.CategorySetDataCollectorBundle"
               result="org.jfree.data.category.CategoryDataset"
               expert="false" hidden="false" preferred="false" deprecated="false">
-    <property name="categoryColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="categoryColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="seriesName" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="summaryGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="valueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value"
+              expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.collectors.PivotCategorySetCollector"
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.collectors.PivotCategorySetCollectorBundle"
               result="org.jfree.data.category.CategoryDataset"
               expert="false" hidden="false" preferred="false" deprecated="false">
-    <property name="categoryColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="categoryColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="seriesName" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="summaryGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="valueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value"
+              expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.collectors.PieDataSetCollector"
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.collectors.PieDataSetCollectorBundle"
               result="org.jfree.data.general.PieDataset"
               expert="false" hidden="false" preferred="false" deprecated="false">
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="seriesName" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="summaryGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="valueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value"
+              expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.collectors.TimeSeriesCollector"
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.collectors.TimeSeriesCollectorBundle"
               result="org.jfree.data.time.TimeSeriesCollection"
               expert="false" hidden="false" preferred="false" deprecated="false">
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
@@ -165,10 +198,13 @@
     <property name="summaryGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="timePeriod" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.TimePeriodPropertyEditor"/>
-    <property name="timeValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="timeValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
     <property name="valueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value"
+              expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.collectors.XYSeriesCollector"
@@ -177,14 +213,17 @@
               expert="false" hidden="false" preferred="false" deprecated="false">
     <property name="XValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="YValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="seriesName" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="summaryGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value"
+              expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.collectors.XYZSeriesCollector"
@@ -194,39 +233,50 @@
     <property name="XValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="YValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="ZValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="seriesName" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="summaryGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value"
+              expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.collectors.IntervalXYSeriesCollector"
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.collectors.IntervalXYSeriesCollectorBundle"
               result="org.jfree.data.xy.IntervalXYDataset"
               expert="false" hidden="false" preferred="false" deprecated="false">
-    <property name="xMinValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="yMinValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="xMaxValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="yMaxValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="xMinValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="yMinValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="xMaxValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="yMaxValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="seriesColumn" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="seriesName" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="summaryGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="autoGenerateMissingSeriesNames" mandatory="false" preferred="false" value-role="Value"
+              expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.collectors.ValueDataSetCollector"
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.collectors.ValueDataSetCollectorBundle"
               result="org.jfree.data.general.ValueDataset"
               expert="false" hidden="false" preferred="false" deprecated="false">
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="resetGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="summaryGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>

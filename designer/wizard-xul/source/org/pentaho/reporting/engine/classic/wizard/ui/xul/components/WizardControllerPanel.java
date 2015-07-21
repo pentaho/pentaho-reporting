@@ -27,11 +27,12 @@ import org.pentaho.ui.xul.impl.XulEventHandler;
  * @author Thomas Morgner
  */
 public class WizardControllerPanel {
-  private static final String WIZARD_CONTROLLER_OVERLAY = "org/pentaho/reporting/engine/classic/wizard/ui/xul/res/wizard_controller_panel_Overlay.xul"; //$NON-NLS-1$
+  private static final String WIZARD_CONTROLLER_OVERLAY =
+    "org/pentaho/reporting/engine/classic/wizard/ui/xul/res/wizard_controller_panel_Overlay.xul"; //$NON-NLS-1$
   private WizardController controller;
 
-  public WizardControllerPanel(final WizardController controller) {
-    if (controller == null) {
+  public WizardControllerPanel( final WizardController controller ) {
+    if ( controller == null ) {
       throw new NullPointerException();
     }
     this.controller = controller;
@@ -44,8 +45,8 @@ public class WizardControllerPanel {
   /**
    * @param mainWizardContainer
    */
-  public void addContent(final XulDomContainer mainWizardContainer) throws XulException {
-    mainWizardContainer.loadOverlay(WIZARD_CONTROLLER_OVERLAY);
-    mainWizardContainer.addEventHandler((XulEventHandler) controller);
+  public void addContent( final XulDomContainer mainWizardContainer ) throws XulException {
+    mainWizardContainer.loadOverlay( WIZARD_CONTROLLER_OVERLAY );
+    mainWizardContainer.addEventHandler( (XulEventHandler) controller );
   }
 }

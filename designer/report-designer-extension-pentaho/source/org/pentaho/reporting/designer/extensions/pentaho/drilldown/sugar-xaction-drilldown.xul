@@ -58,10 +58,10 @@
 
     <pen:parameter-table id="parameter-table" flex="1"
                          pen:title="Parameter:" pen:showRefreshButton="true" pen:allowCustomParameter="true"/>
-<!--
-    <label value="Preview (debug-setting, will be removed in the final run)"/>
-    <textbox id="preview" disabled="true"/>
-    -->
+    <!--
+        <label value="Preview (debug-setting, will be removed in the final run)"/>
+        <textbox id="preview" disabled="true"/>
+        -->
   </vbox>
 
 </dialog>

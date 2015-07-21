@@ -17,13 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts.collectors;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TimeZone;
-
 import org.jfree.data.general.Dataset;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.RegularTimePeriod;
@@ -35,19 +28,24 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.Sequence;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TimeZone;
+
 /**
- * The number of entries in the series, value, and timeValueColumns properties must be the same. The function
- * will collect from tuples of {series, value (y), timeValue (x)}. 
+ * The number of entries in the series, value, and timeValueColumns properties must be the same. The function will
+ * collect from tuples of {series, value (y), timeValue (x)}.
  *
  * @author Thomas Morgner.
  */
-public class TimeSeriesCollector extends AbstractCollectorFunction
-{
+public class TimeSeriesCollector extends AbstractCollectorFunction {
   /**
    * @noinspection EqualsAndHashcode
    */
-  private static class FastTimeSeriesCollection extends TimeSeriesCollection
-  {
+  private static class FastTimeSeriesCollection extends TimeSeriesCollection {
     private static final long serialVersionUID = 2096209400748561882L;
 
     /**
@@ -55,8 +53,7 @@ public class TimeSeriesCollector extends AbstractCollectorFunction
      *
      * @see TimeSeriesCollection#hashCode()
      */
-    public int hashCode()
-    {
+    public int hashCode() {
       return this.getSeriesCount();
     }
   }
@@ -64,176 +61,143 @@ public class TimeSeriesCollector extends AbstractCollectorFunction
   private Class timePeriod;
   private ArrayList<String> valueColumns;
   private ArrayList<String> timeValueColumns;
-  private HashMap<ReportStateKey,Sequence<HashMap<Comparable,TimeSeries>>> seriesSequenceMap;
+  private HashMap<ReportStateKey, Sequence<HashMap<Comparable, TimeSeries>>> seriesSequenceMap;
 
-  public TimeSeriesCollector()
-  {
+  public TimeSeriesCollector() {
     this.valueColumns = new ArrayList<String>();
     this.timeValueColumns = new ArrayList<String>();
     this.timePeriod = Day.class;
     this.seriesSequenceMap = new HashMap<ReportStateKey, Sequence<HashMap<Comparable, TimeSeries>>>();
   }
 
-  protected Dataset createNewDataset()
-  {
+  protected Dataset createNewDataset() {
     return new FastTimeSeriesCollection();
   }
 
-  public Class getTimePeriod()
-  {
+  public Class getTimePeriod() {
     return timePeriod;
   }
 
-  public void setTimePeriod(final Class timePeriod)
-  {
+  public void setTimePeriod( final Class timePeriod ) {
     this.timePeriod = timePeriod;
   }
 
-  protected HashMap<Comparable,TimeSeries> getSeriesMap ()
-  {
+  protected HashMap<Comparable, TimeSeries> getSeriesMap() {
     final ReportStateKey key = getStateKey();
-    Sequence<HashMap<Comparable,TimeSeries>> sequence = seriesSequenceMap.get(key);
-    if (sequence == null)
-    {
-      sequence = new Sequence<HashMap<Comparable,TimeSeries>>();
-      seriesSequenceMap.put(key, sequence);
+    Sequence<HashMap<Comparable, TimeSeries>> sequence = seriesSequenceMap.get( key );
+    if ( sequence == null ) {
+      sequence = new Sequence<HashMap<Comparable, TimeSeries>>();
+      seriesSequenceMap.put( key, sequence );
     }
 
-    HashMap<Comparable, TimeSeries> map = sequence.get(getLastGroupSequenceNumber());
-    if (map == null)
-    {
+    HashMap<Comparable, TimeSeries> map = sequence.get( getLastGroupSequenceNumber() );
+    if ( map == null ) {
       map = new HashMap<Comparable, TimeSeries>();
-      sequence.set(getLastGroupSequenceNumber(), map);
+      sequence.set( getLastGroupSequenceNumber(), map );
     }
     return map;
   }
 
-  public void setValueColumn(final int index, final String field)
-  {
-    if (valueColumns.size() == index)
-    {
-      valueColumns.add(field);
-    }
-    else
-    {
-      valueColumns.set(index, field);
+  public void setValueColumn( final int index, final String field ) {
+    if ( valueColumns.size() == index ) {
+      valueColumns.add( field );
+    } else {
+      valueColumns.set( index, field );
     }
   }
 
-  public void setTimeValueColumn(final int index, final String field)
-  {
-    if (timeValueColumns.size() == index)
-    {
-      timeValueColumns.add(field);
-    }
-    else
-    {
-      timeValueColumns.set(index, field);
+  public void setTimeValueColumn( final int index, final String field ) {
+    if ( timeValueColumns.size() == index ) {
+      timeValueColumns.add( field );
+    } else {
+      timeValueColumns.set( index, field );
     }
   }
 
-  public String getValueColumn(final int index)
-  {
-    return valueColumns.get(index);
+  public String getValueColumn( final int index ) {
+    return valueColumns.get( index );
   }
 
-  public int getValueColumnCount()
-  {
+  public int getValueColumnCount() {
     return valueColumns.size();
   }
 
-  public String[] getValueColumn()
-  {
-    return valueColumns.toArray(new String[valueColumns.size()]);
+  public String[] getValueColumn() {
+    return valueColumns.toArray( new String[ valueColumns.size() ] );
   }
 
-  public void setValueColumn(final String[] fields)
-  {
+  public void setValueColumn( final String[] fields ) {
     this.valueColumns.clear();
-    this.valueColumns.addAll(Arrays.asList(fields));
+    this.valueColumns.addAll( Arrays.asList( fields ) );
   }
 
-  public String getTimeValueColumn(final int index)
-  {
-    return timeValueColumns.get(index);
+  public String getTimeValueColumn( final int index ) {
+    return timeValueColumns.get( index );
   }
 
-  public int getTimeValueColumnCount()
-  {
+  public int getTimeValueColumnCount() {
     return timeValueColumns.size();
   }
 
-  public String[] getTimeValueColumn()
-  {
-    return timeValueColumns.toArray(new String[timeValueColumns.size()]);
+  public String[] getTimeValueColumn() {
+    return timeValueColumns.toArray( new String[ timeValueColumns.size() ] );
   }
 
-  public void setTimeValueColumn(final String[] fields)
-  {
+  public void setTimeValueColumn( final String[] fields ) {
     this.timeValueColumns.clear();
-    this.timeValueColumns.addAll(Arrays.asList(fields));
+    this.timeValueColumns.addAll( Arrays.asList( fields ) );
   }
 
-  protected void buildDataset()
-  {
+  protected void buildDataset() {
     final Object o = getDataSet();
-    if (o instanceof TimeSeriesCollection == false)
-    {
+    if ( o instanceof TimeSeriesCollection == false ) {
       return;
     }
 
     final TimeSeriesCollection timeSeriesDataset = (TimeSeriesCollection) o;
     final List seriesList = timeSeriesDataset.getSeries();
     final HashMap<Comparable, TimeSeries> seriesMap = getSeriesMap();
-    if (seriesMap.isEmpty())
-    {
-      for (int i = 0; i < seriesList.size(); i++)
-      {
-        final TimeSeries series = (TimeSeries) seriesList.get(i);
-        seriesMap.put(series.getKey(), series);
+    if ( seriesMap.isEmpty() ) {
+      for ( int i = 0; i < seriesList.size(); i++ ) {
+        final TimeSeries series = (TimeSeries) seriesList.get( i );
+        seriesMap.put( series.getKey(), series );
       }
     }
 
     final int maxIndex = this.valueColumns.size();
-    for (int i = 0; i < maxIndex; i++)
-    {
-      final Comparable seriesName = querySeriesValue(i);
-      final Object valueObject = getDataRow().get(valueColumns.get(i));
-      final Object timeValueObject = getDataRow().get(timeValueColumns.get(i));
+    for ( int i = 0; i < maxIndex; i++ ) {
+      final Comparable seriesName = querySeriesValue( i );
+      final Object valueObject = getDataRow().get( valueColumns.get( i ) );
+      final Object timeValueObject = getDataRow().get( timeValueColumns.get( i ) );
 
-      final Number value = (valueObject instanceof Number) ? (Number) valueObject : null;
-      final Date timeValue = convertToDate(timeValueObject);
-      if (timeValue == null)
-      {
+      final Number value = ( valueObject instanceof Number ) ? (Number) valueObject : null;
+      final Date timeValue = convertToDate( timeValueObject );
+      if ( timeValue == null ) {
         continue;
       }
-      
-      TimeSeries series = seriesMap.get(seriesName);
-      if (series == null)
-      {
-        series = new TimeSeries(seriesName);
-        timeSeriesDataset.addSeries(series);
-        seriesMap.put(seriesName, series);
+
+      TimeSeries series = seriesMap.get( seriesName );
+      if ( series == null ) {
+        series = new TimeSeries( seriesName );
+        timeSeriesDataset.addSeries( series );
+        seriesMap.put( seriesName, series );
       }
 
       final RegularTimePeriod regularTimePeriod =
-          RegularTimePeriod.createInstance(getTimePeriod(), timeValue, TimeZone.getDefault());
+        RegularTimePeriod.createInstance( getTimePeriod(), timeValue, TimeZone.getDefault() );
 
-      final TimeSeriesDataItem timeSeriesDataItem = new TimeSeriesDataItem(regularTimePeriod, value);
-      series.add(timeSeriesDataItem);
+      final TimeSeriesDataItem timeSeriesDataItem = new TimeSeriesDataItem( regularTimePeriod, value );
+      series.add( timeSeriesDataItem );
     }
   }
 
-  private Date convertToDate(final Object value)
-  {
-    if (value instanceof Date)
-    {
+  private Date convertToDate( final Object value ) {
+    if ( value instanceof Date ) {
       return (Date) value;
     }
-    if (value instanceof Number)
-    {
+    if ( value instanceof Number ) {
       final Number n = (Number) value;
-      return new Date(n.longValue());
+      return new Date( n.longValue() );
     }
     return null;
 
@@ -245,8 +209,7 @@ public class TimeSeriesCollector extends AbstractCollectorFunction
    *
    * @param event The event.
    */
-  public void reportDone(final ReportEvent event)
-  {
+  public void reportDone( final ReportEvent event ) {
     seriesSequenceMap.clear();
   }
 
@@ -256,8 +219,7 @@ public class TimeSeriesCollector extends AbstractCollectorFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final TimeSeriesCollector expression = (TimeSeriesCollector) super.getInstance();
     expression.valueColumns = (ArrayList<String>) valueColumns.clone();
     expression.timeValueColumns = (ArrayList<String>) timeValueColumns.clone();
