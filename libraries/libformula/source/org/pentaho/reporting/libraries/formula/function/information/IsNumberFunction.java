@@ -50,8 +50,8 @@ public class IsNumberFunction implements Function
       throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
     }
 
-    final Type type1 = parameters.getType(0);
-    if(type1.isFlagSet(Type.NUMERIC_TYPE))
+    final Object value = parameters.getValue(0);
+    if(value instanceof Number)
     {
       return RETURN_TRUE;
     }
