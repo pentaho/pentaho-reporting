@@ -23,7 +23,6 @@ import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 import org.pentaho.reporting.libraries.formula.function.Function;
 import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
-import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
@@ -39,15 +38,17 @@ public class IsNumberFunction implements Function {
   public IsNumberFunction() {
   }
 
-  public TypeValuePair evaluate( final FormulaContext context, final ParameterCallback parameters )
-    throws EvaluationException {
+  public TypeValuePair evaluate(final FormulaContext context, final ParameterCallback parameters) throws EvaluationException
+  {
     final int parameterCount = parameters.getParameterCount();
-    if ( parameterCount < 1 ) {
-      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
+    if (parameterCount < 1)
+    {
+      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
     }
 
-    final Type type1 = parameters.getType( 0 );
-    if ( type1.isFlagSet( Type.NUMERIC_TYPE ) ) {
+    final Object value = parameters.getValue(0);
+    if(value instanceof Number)
+    {
       return RETURN_TRUE;
     }
 
