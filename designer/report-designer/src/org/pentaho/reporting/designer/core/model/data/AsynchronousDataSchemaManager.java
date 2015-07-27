@@ -40,10 +40,10 @@ public class AsynchronousDataSchemaManager implements DataSchemaManager, ReportM
 {
   private final MasterReport masterReport;
   private final AbstractReportDefinition report;
-  private final QueryMetaDataActor actor;
   private final ArrayList<ChangeListener> listeners;
   private final DefaultDesignTimeDataSchemaModelChangeTracker changeTracker;
   private ContextAwareDataSchemaModel model;
+  private QueryMetaDataActor actor;
 
   public AsynchronousDataSchemaManager(final MasterReport masterReport,
                                        final AbstractReportDefinition report)
@@ -52,7 +52,6 @@ public class AsynchronousDataSchemaManager implements DataSchemaManager, ReportM
     ArgumentNullException.validate("report", report);
 
     this.listeners = new ArrayList<ChangeListener>();
-    this.actor = ActorSystemHost.INSTANCE.createActor(QueryMetaDataActor.class, QueryMetaDataActorImpl.class);
     this.masterReport = masterReport;
     this.report = report;
     this.report.addReportModelListener(this);
@@ -95,6 +94,10 @@ public class AsynchronousDataSchemaManager implements DataSchemaManager, ReportM
 
   private synchronized void startQueryModel()
   {
+    if (this.actor == null)
+    {
+      this.actor = ActorSystemHost.INSTANCE.createActor(QueryMetaDataActor.class, QueryMetaDataActorImpl.class);
+    }
     Future<ContextAwareDataSchemaModel> retrieve = this.actor.retrieve(masterReport, report);
     // IntelliJ does not know how to handle this construct, thinks it is not valid.
     retrieve.onSuccess(new SuccessHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher());
@@ -103,7 +106,11 @@ public class AsynchronousDataSchemaManager implements DataSchemaManager, ReportM
 
   public void close()
   {
-    ActorSystemHost.INSTANCE.stopNow(actor);
+    synchronized (this)
+    {
+      ActorSystemHost.INSTANCE.stopNow(actor);
+      actor = null;
+    }
   }
 
   protected void fireChangeEvent()
