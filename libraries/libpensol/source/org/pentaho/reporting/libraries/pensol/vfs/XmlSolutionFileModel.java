@@ -19,8 +19,8 @@ package org.pentaho.reporting.libraries.pensol.vfs;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.vfs.FileName;
-import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs2.FileName;
+import org.apache.commons.vfs2.FileSystemException;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.pensol.SolutionFileModel;
 import org.xml.sax.InputSource;

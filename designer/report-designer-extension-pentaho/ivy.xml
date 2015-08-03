@@ -20,6 +20,7 @@
     <dependency org="${ivy.artifact.group}" name="report-designer" rev="${project.revision}" transitive="true"
                 changing="true"/>
     <dependency org="pentaho-library" name="libpensol" rev="${dependency.reporting-library.revision}" transitive="true" changing="true"/>
+    <dependency org="org.apache.commons" name="commons-vfs2" rev="2.0" transitive="false" changing="false" conf="default_external->default"/>
 
     <!-- Testing Dependencies -->
     <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>

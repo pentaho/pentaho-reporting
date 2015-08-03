@@ -20,18 +20,18 @@ package org.pentaho.reporting.libraries.pensol;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.vfs.Capability;
-import org.apache.commons.vfs.FileName;
-import org.apache.commons.vfs.FileSystem;
-import org.apache.commons.vfs.FileSystemException;
-import org.apache.commons.vfs.FileSystemOptions;
-import org.apache.commons.vfs.UserAuthenticationData;
-import org.apache.commons.vfs.provider.AbstractOriginatingFileProvider;
-import org.apache.commons.vfs.provider.GenericFileName;
-import org.apache.commons.vfs.provider.LayeredFileName;
-import org.apache.commons.vfs.provider.LayeredFileNameParser;
-import org.apache.commons.vfs.provider.http.HttpClientFactory;
-import org.apache.commons.vfs.util.UserAuthenticatorUtils;
+import org.apache.commons.vfs2.Capability;
+import org.apache.commons.vfs2.FileName;
+import org.apache.commons.vfs2.FileSystem;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.FileSystemOptions;
+import org.apache.commons.vfs2.UserAuthenticationData;
+import org.apache.commons.vfs2.provider.AbstractOriginatingFileProvider;
+import org.apache.commons.vfs2.provider.GenericFileName;
+import org.apache.commons.vfs2.provider.LayeredFileName;
+import org.apache.commons.vfs2.provider.LayeredFileNameParser;
+import org.apache.commons.vfs2.provider.http.HttpClientFactory;
+import org.apache.commons.vfs2.util.UserAuthenticatorUtils;
 import org.pentaho.platform.api.engine.IPentahoSession;
 import org.pentaho.platform.engine.core.system.PentahoSessionHolder;
 import org.pentaho.reporting.libraries.pensol.vfs.LocalFileModel;
@@ -78,8 +78,8 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
   }
 
   /**
-   * Creates a {@link org.apache.commons.vfs.FileSystem}.  If the returned FileSystem implements {@link
-   * org.apache.commons.vfs.provider.VfsComponent}, it will be initialised.
+   * Creates a {@link org.apache.commons.vfs2.FileSystem}.  If the returned FileSystem implements {@link
+   * org.apache.commons.vfs2.provider.VfsComponent}, it will be initialised.
    *
    * @param rootName The name of the root file of the file system to create.
    */

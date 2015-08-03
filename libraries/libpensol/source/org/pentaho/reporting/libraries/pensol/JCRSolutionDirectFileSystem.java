@@ -17,11 +17,12 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import org.apache.commons.vfs.FileName;
-import org.apache.commons.vfs.FileObject;
-import org.apache.commons.vfs.FileSystemException;
-import org.apache.commons.vfs.FileSystemOptions;
-import org.apache.commons.vfs.provider.AbstractFileSystem;
+import org.apache.commons.vfs2.FileName;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.FileSystemOptions;
+import org.apache.commons.vfs2.provider.AbstractFileName;
+import org.apache.commons.vfs2.provider.AbstractFileSystem;
 
 import java.util.Collection;
 
@@ -46,7 +47,7 @@ public class JCRSolutionDirectFileSystem extends AbstractFileSystem {
     this.solutionFileModel = solutionFileModel;
   }
 
-  protected FileObject createFile( final FileName name ) throws Exception {
+  protected FileObject createFile( final AbstractFileName name ) throws Exception {
     return new WebSolutionFileObject( name, this, solutionFileModel );
   }
 

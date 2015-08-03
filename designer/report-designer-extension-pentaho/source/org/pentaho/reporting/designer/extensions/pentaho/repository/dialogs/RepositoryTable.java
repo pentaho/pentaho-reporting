@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
-import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs2.FileObject;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.model.RepositoryTableModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.RepositoryEntryCellRenderer;
 import org.pentaho.reporting.libraries.designtime.swing.GenericCellRenderer;
