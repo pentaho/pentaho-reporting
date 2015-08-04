@@ -23,7 +23,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import junit.framework.TestCase;
-import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs2.FileSystemException;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
 
 import javax.ws.rs.core.MediaType;

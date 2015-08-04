@@ -17,16 +17,16 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import org.apache.commons.vfs.FileName;
-import org.apache.commons.vfs.FileSystem;
-import org.apache.commons.vfs.FileSystemException;
-import org.apache.commons.vfs.FileSystemOptions;
+import org.apache.commons.vfs2.FileName;
+import org.apache.commons.vfs2.FileSystem;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.FileSystemOptions;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 
 public class TestWebSolutionFileProvider extends PentahoSolutionFileProvider {
   /**
-   * Creates a {@link org.apache.commons.vfs.FileSystem}.  If the returned FileSystem implements {@link
-   * org.apache.commons.vfs.provider.VfsComponent}, it will be initialised.
+   * Creates a {@link org.apache.commons.vfs2.FileSystem}.  If the returned FileSystem implements
+   * {@link org.apache.commons.vfs2.provider.VfsComponent}, it will be initialised.
    *
    * @param rootName The name of the root file of the file system to create.
    */

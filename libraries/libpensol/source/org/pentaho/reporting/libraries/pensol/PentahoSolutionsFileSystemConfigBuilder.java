@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import org.apache.commons.vfs.FileSystemOptions;
-import org.apache.commons.vfs.impl.DefaultFileSystemConfigBuilder;
+import org.apache.commons.vfs2.FileSystemOptions;
+import org.apache.commons.vfs2.impl.DefaultFileSystemConfigBuilder;
 
 public class PentahoSolutionsFileSystemConfigBuilder extends DefaultFileSystemConfigBuilder {
   private static final String TIMEOUT_KEY = "timeout";

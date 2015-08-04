@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import org.apache.commons.vfs.FileName;
-import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs2.FileName;
+import org.apache.commons.vfs2.FileSystemException;
 import org.pentaho.reporting.libraries.pensol.vfs.FileInfo;
 import org.pentaho.reporting.libraries.pensol.vfs.XmlSolutionFileModel;
 

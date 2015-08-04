@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 import mondrian.spi.CatalogLocator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs2.FileSystemException;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.libraries.base.boot.ObjectFactoryException;

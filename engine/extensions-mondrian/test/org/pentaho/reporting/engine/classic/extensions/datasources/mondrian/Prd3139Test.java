@@ -18,7 +18,7 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
 import junit.framework.TestCase;
-import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs2.FileSystemException;
 
 import java.io.File;
 import java.net.URL;

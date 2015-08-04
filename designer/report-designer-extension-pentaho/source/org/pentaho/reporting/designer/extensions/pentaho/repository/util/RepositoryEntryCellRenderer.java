@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
 
-import org.apache.commons.vfs.FileObject;
-import org.apache.commons.vfs.FileSystemException;
-import org.apache.commons.vfs.FileType;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.FileType;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.model.RepositoryTableModel;
 
 import javax.swing.*;
