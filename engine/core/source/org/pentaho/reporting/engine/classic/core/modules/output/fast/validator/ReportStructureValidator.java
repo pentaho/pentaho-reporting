@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.LayoutProcessorFunction;
 import org.pentaho.reporting.engine.classic.core.function.PageFunction;
 import org.pentaho.reporting.engine.classic.core.function.RowBandingFunction;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 import org.pentaho.reporting.engine.classic.core.wizard.RelationalAutoGeneratorPreProcessor;
 
@@ -96,6 +97,14 @@ public class ReportStructureValidator extends AbstractStructureVisitor
 
     if (element.getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE) != null)
     {
+      valid = false;
+      return;
+    }
+
+    if ( element.getStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE ) ||
+        element.getStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER ) ||
+        element.getStyleExpression( BandStyleKeys.PAGEBREAK_BEFORE ) != null ||
+        element.getStyleExpression( BandStyleKeys.PAGEBREAK_AFTER ) != null) {
       valid = false;
       return;
     }
