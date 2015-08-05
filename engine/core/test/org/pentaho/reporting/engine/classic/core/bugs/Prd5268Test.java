@@ -49,10 +49,10 @@ public class Prd5268Test
 
 
   @Test
-  public void testSheetNamesInFastMode() throws Exception
+  public void testSheetNames() throws Exception
   {
     MasterReport report = createReport();
-    Assert.assertTrue(new ReportStructureValidator().isValidForFastProcessing(report));
+    Assert.assertFalse(new ReportStructureValidator().isValidForFastProcessing(report));
 
     ByteArrayOutputStream boutFast = new ByteArrayOutputStream();
     FastExcelReportUtil.processXlsx(report, boutFast);
@@ -68,7 +68,7 @@ public class Prd5268Test
   public void testSheetContent() throws Exception
   {
     MasterReport report = createReport();
-    Assert.assertTrue(new ReportStructureValidator().isValidForFastProcessing(report));
+    Assert.assertFalse(new ReportStructureValidator().isValidForFastProcessing(report));
 
     ByteArrayOutputStream boutFast = new ByteArrayOutputStream();
     FastExcelReportUtil.processXlsx(report, boutFast);
