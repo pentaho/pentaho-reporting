@@ -24,6 +24,19 @@
         <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/test-lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/test-lib" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
   <component name="copyright">
     <Base>

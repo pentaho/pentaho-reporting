@@ -13,9 +13,7 @@
     processing.
     -->
   <configuration>
-    <property
-        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H
-    </property>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H</property>
     <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts">true</property>
     <property
         name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Darkwing Duck

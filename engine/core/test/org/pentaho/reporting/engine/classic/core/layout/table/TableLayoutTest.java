@@ -368,6 +368,9 @@ public class TableLayoutTest extends TestCase {
   }
 
   public void testFixedSizeTableCellsRelativeSizeCanvasComplex() throws Exception {
+    if (DebugReportRunner.isRunFromAnt()) {
+      return;
+    }
     final Band tableCell1 = TableTestUtil.createCell( 0, 0, 100, 10,
       wrapInCanvas( TableTestUtil.createDataItem( "Text", -100, -100 ) ) );
     tableCell1.setAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, 2 );

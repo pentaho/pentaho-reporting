@@ -739,4 +739,8 @@ public class DebugReportRunner {
     }
     return new File( file, name );
   }
+
+  public static boolean isRunFromAnt() {
+    return !"@@invalid@@".equals(System.getProperty("ant.project.invoked-targets", "@@invalid@@"));
+  }
 }
