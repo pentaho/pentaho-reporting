@@ -215,6 +215,10 @@ public class Prd5321Test {
 
   @Test
   public void testTextRenderingComplex() throws Exception {
+    if (DebugReportRunner.isRunFromAnt()) {
+      return;
+    }
+
     URL resource = getClass().getResource( "Prd-5321.prpt" );
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
