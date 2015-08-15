@@ -726,8 +726,14 @@ public class DebugReportRunner {
   }
 
   public static boolean isSafeToTestComplexText() {
+    // this property is undefined by default. This is safer than testing for existing Ant properties
+    // or other hacks. You will have to explicitly enable this property in the system properties or
+    // system configuration to test complex text code on your machine.
+    //
+    // Note that the results of the layout is machine dependent, so a failure may not be an error, but
+    // the result of a difference in fonts or settings.
     return "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "dont.try.this.at.home.-.testing.complex.text" ) );
+      ( "junit.enable-platform-dependent-tests" ) );
   }
 
   public static File createTestOutputFile( String name ) {
@@ -738,9 +744,5 @@ public class DebugReportRunner {
       return file;
     }
     return new File( file, name );
-  }
-
-  public static boolean isRunFromAnt() {
-    return !"@@invalid@@".equals(System.getProperty("ant.project.invoked-targets", "@@invalid@@"));
   }
 }

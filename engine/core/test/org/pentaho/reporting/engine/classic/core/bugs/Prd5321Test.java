@@ -215,7 +215,7 @@ public class Prd5321Test {
 
   @Test
   public void testTextRenderingComplex() throws Exception {
-    if (DebugReportRunner.isRunFromAnt()) {
+    if (DebugReportRunner.isSafeToTestComplexText()) {
       return;
     }
 

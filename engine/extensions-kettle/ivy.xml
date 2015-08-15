@@ -50,7 +50,8 @@
       <exclude org="xml-apis" module="xml-apis"/>
     </dependency>
     <dependency org="commons-net" name="commons-net" rev="1.4.1" conf="default_external->default"/>
-    <dependency org="commons-vfs" name="commons-vfs" rev="1.0" transitive="false" conf="default_external->default"/>
+    <dependency org="org.apache.commons"  name="commons-vfs2" rev="2.0" transitive="false" conf="default_external->default"/>
+    <dependency org="com.google.guava" name="guava" rev="17.0" transitive="false" conf="default_external->default"/>
     <dependency org="commons-digester" name="commons-digester" rev="1.8" transitive="false" conf="default_external->default"/>
 	  <dependency org="commons-beanutils" name="commons-beanutils" rev="1.7.0" transitive="false" conf="default_external->default"/>
     <dependency org="ognl" name="ognl" rev="2.6.9" transitive="false" conf="default_external->default"/>
