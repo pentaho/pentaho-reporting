@@ -88,7 +88,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="324.224" y="153.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="324.224" y="153.0" width="28.576" height="8.0">$129.26</text>
+                      <text x="324.224" y="153.0" width="28.576" height="8.0">$129.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -119,7 +119,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="328.584" y="165.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="328.584" y="165.0" width="24.216" height="8.0">$50.95</text>
+                      <text x="328.584" y="165.0" width="24.216" height="8.0">$51.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -150,7 +150,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="324.224" y="177.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="324.224" y="177.0" width="28.576" height="8.0">$121.83</text>
+                      <text x="324.224" y="177.0" width="28.576" height="8.0">$122.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -177,7 +177,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="328.584" y="189.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="328.584" y="189.0" width="24.216" height="8.0">$65.31</text>
+                      <text x="328.584" y="189.0" width="24.216" height="8.0">$65.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -288,7 +288,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="324.224" y="153.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="324.224" y="153.0" width="28.576" height="8.0">$158.54</text>
+                      <text x="324.224" y="153.0" width="28.576" height="8.0">$159.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -315,7 +315,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="328.584" y="165.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="328.584" y="165.0" width="24.216" height="8.0">$44.78</text>
+                      <text x="328.584" y="165.0" width="24.216" height="8.0">$45.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -344,7 +344,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="328.584" y="177.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="328.584" y="177.0" width="24.216" height="8.0">$93.34</text>
+                      <text x="328.584" y="177.0" width="24.216" height="8.0">$93.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -373,7 +373,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="324.224" y="189.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="324.224" y="189.0" width="28.576" height="8.0">$235.73</text>
+                      <text x="324.224" y="189.0" width="28.576" height="8.0">$236.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -404,7 +404,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="324.224" y="201.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="324.224" y="201.0" width="28.576" height="8.0">$121.57</text>
+                      <text x="324.224" y="201.0" width="28.576" height="8.0">$122.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -519,7 +519,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="324.224" y="153.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="324.224" y="153.0" width="28.576" height="8.0">$174.29</text>
+                      <text x="324.224" y="153.0" width="28.576" height="8.0">$174.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -544,7 +544,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="328.584" y="165.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="328.584" y="165.0" width="24.216" height="8.0">$69.27</text>
+                      <text x="328.584" y="165.0" width="24.216" height="8.0">$69.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -575,7 +575,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="328.584" y="177.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="328.584" y="177.0" width="24.216" height="8.0">$94.10</text>
+                      <text x="328.584" y="177.0" width="24.216" height="8.0">$94.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -606,7 +606,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="328.584" y="189.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="328.584" y="189.0" width="24.216" height="8.0">$53.30</text>
+                      <text x="328.584" y="189.0" width="24.216" height="8.0">$53.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -635,7 +635,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="324.224" y="201.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="324.224" y="201.0" width="28.576" height="8.0">$135.59</text>
+                      <text x="324.224" y="201.0" width="28.576" height="8.0">$136.00</text>
                     </line>
                   </p>
                 </canvas>
@@ -666,7 +666,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
                     <line type="ParagraphPoolBox" x="324.224" y="213.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="324.224" y="213.0" width="28.576" height="8.0">$110.45</text>
+                      <text x="324.224" y="213.0" width="28.576" height="8.0">$110.00</text>
                     </line>
                   </p>
                 </canvas>

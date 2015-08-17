@@ -215,9 +215,10 @@ public class Prd5321Test {
 
   @Test
   public void testTextRenderingComplex() throws Exception {
-    if (DebugReportRunner.isSafeToTestComplexText()) {
+    if (!DebugReportRunner.isSafeToTestComplexText()) {
       return;
     }
+    Assert.assertTrue(DebugReportRunner.isSafeToTestComplexText());
 
     URL resource = getClass().getResource( "Prd-5321.prpt" );
     ResourceManager mgr = new ResourceManager();

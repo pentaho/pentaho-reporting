@@ -166,7 +166,7 @@ public class TableLayoutTest extends TestCase {
   }
 
   public void testFixedSizeTableCellsRelativeSizeComplex() throws Exception {
-    if (DebugReportRunner.isSafeToTestComplexText()) {
+    if (!DebugReportRunner.isSafeToTestComplexText()) {
       return;
     }
 
@@ -371,7 +371,7 @@ public class TableLayoutTest extends TestCase {
   }
 
   public void testFixedSizeTableCellsRelativeSizeCanvasComplex() throws Exception {
-    if (DebugReportRunner.isSafeToTestComplexText()) {
+    if (!DebugReportRunner.isSafeToTestComplexText()) {
       return;
     }
     final Band tableCell1 = TableTestUtil.createCell( 0, 0, 100, 10,
