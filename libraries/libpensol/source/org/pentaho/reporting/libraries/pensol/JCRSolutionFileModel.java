@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,28 +50,37 @@ import java.util.List;
 public class JCRSolutionFileModel implements SolutionFileModel {
   private static final Log logger = LogFactory.getLog( JCRSolutionFileModel.class );
 
-  private static final String LOAD_REPOSITORY_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
-    ( "org.pentaho.reporting.libraries.pensol.jcr.LoadRepositoryDoc" );
-  private static final String CREATE_FOLDER_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
-    ( "org.pentaho.reporting.libraries.pensol.jcr.CreateNewFolder" );
-  private static final String DOWNLOAD_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
-    ( "org.pentaho.reporting.libraries.pensol.jcr.DownloadService" );
-  private static final String UPLOAD_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
-    ( "org.pentaho.reporting.libraries.pensol.jcr.UploadService" );
-  public static final String RETRIEVE_CONTENT_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
-    ( "org.pentaho.reporting.libraries.pensol.jcr.RetrieveContent" );
+  private static final String LOAD_REPOSITORY_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+    "org.pentaho.reporting.libraries.pensol.jcr.LoadRepositoryDoc" );
+  private static final String PARTIAL_LOADING_ENABLED = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+    "org.pentaho.reporting.libraries.pensol.jcr.PartialLoading", Boolean.TRUE.toString() );
+  private static final String LOAD_REPOSITORY_PARTIALLY_SERVICE =
+    LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+      "org.pentaho.reporting.libraries.pensol.jcr.LoadRepositoryDocPartially" );
+
+  private static final String CREATE_FOLDER_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+    "org.pentaho.reporting.libraries.pensol.jcr.CreateNewFolder" );
+  private static final String DOWNLOAD_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+    "org.pentaho.reporting.libraries.pensol.jcr.DownloadService" );
+  private static final String UPLOAD_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+    "org.pentaho.reporting.libraries.pensol.jcr.UploadService" );
+  public static final String RETRIEVE_CONTENT_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+    "org.pentaho.reporting.libraries.pensol.jcr.RetrieveContent" );
   public static final String RETRIEVE_PARAMETER_URL_SERVICE =
-    LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.libraries.pensol.jcr.RetrieveParameters" );
-  public static final String DELETE_FILE_OR_FOLDER = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
-    ( "org.pentaho.reporting.libraries.pensol.jcr.delete.file.or.folder" );
+    LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+      "org.pentaho.reporting.libraries.pensol.jcr.RetrieveParameters" );
+  public static final String DELETE_FILE_OR_FOLDER = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
+    "org.pentaho.reporting.libraries.pensol.jcr.delete.file.or.folder" );
 
   private static final String BI_SERVER_NULL_OBJECT =
-    "BI-Server returned a RepositoryFileTreeDto without an attached RepositoryFileDto. " +
-      "Please file a bug report at http://jira.pentaho.org/browse/BISERVER !";
+    "BI-Server returned a RepositoryFileTreeDto without an attached RepositoryFileDto. "
+    + "Please file a bug report at http://jira.pentaho.org/browse/BISERVER !";
   private static final String FILE_NOT_FOUND = "The specified file name does not exist: {0}";
   //this is required to retrieve a prpt - if true we get z ZIP file with .locale info
   private static final String SLASH = "/";
+
+  // ":" --> "%3A"
+  private static final String ENCODED_COLON = RepositoryPathEncoder.encodeURIComponent( ":" );
 
   private Client client;
   private String url;
@@ -82,6 +92,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
   private String releaseVersion;
   private String buildVersion;
   private String milestoneVersion;
+  private final boolean loadTreePartially;
 
   public JCRSolutionFileModel( final String url,
                                final String username,
@@ -104,13 +115,45 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     this.releaseVersion = "999";
     this.buildVersion = "999";
     this.milestoneVersion = "999";
+    this.loadTreePartially = Boolean.parseBoolean( PARTIAL_LOADING_ENABLED );
+  }
+
+  // package-local constructor for testing purposes
+  JCRSolutionFileModel( String url, Client client, boolean loadTreePartially ) {
+    this.url = url;
+    this.descriptionEntries = new HashMap<FileName, String>();
+    this.client = client;
+    this.loadTreePartially = loadTreePartially;
   }
 
   public void refresh() throws IOException {
-    final WebResource resource = client.resource( url + LOAD_REPOSITORY_SERVICE );
-    final RepositoryFileTreeDto tree =
-      resource.path( "" ).accept( MediaType.APPLICATION_XML_TYPE ).get( RepositoryFileTreeDto.class );
+    RepositoryFileTreeDto tree;
+    if ( loadTreePartially ) {
+      WebResource resource = client.resource( url + LOAD_REPOSITORY_PARTIALLY_SERVICE );
+      tree = resource.path( "" ).accept( MediaType.APPLICATION_XML_TYPE ).get( RepositoryFileTreeDto.class );
+      tree = proxyRoot( tree );
+    } else {
+      WebResource resource = client.resource( url + LOAD_REPOSITORY_SERVICE );
+      tree = resource.path( "" ).accept( MediaType.APPLICATION_XML_TYPE ).get( RepositoryFileTreeDto.class );
+    }
     setRoot( tree );
+  }
+
+  private RepositoryFileTreeDtoProxy proxyRoot( RepositoryFileTreeDto original ) {
+    // save it, as proxy will replace the list with empty
+    List<RepositoryFileTreeDto> originalChildren = original.getChildren();
+    RepositoryFileTreeDtoProxy proxy = new RepositoryFileTreeDtoProxy( original, client, url );
+    if ( originalChildren == null ) {
+      proxy.setChildren( Collections.<RepositoryFileTreeDto>emptyList() );
+    } else {
+      // pre-populating root's direct children
+      List<RepositoryFileTreeDto> proxiedChildren = new ArrayList<RepositoryFileTreeDto>( originalChildren.size() );
+      for ( RepositoryFileTreeDto child : originalChildren ) {
+        proxiedChildren.add( new RepositoryFileTreeDtoProxy( child, client, url ) );
+      }
+      proxy.setChildren( proxiedChildren );
+    }
+    return proxy;
   }
 
   public void createFolder( final FileName file ) throws FileSystemException {
@@ -138,6 +181,13 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     return RepositoryPathEncoder.encodeRepositoryPath( path );
   }
 
+  static String encodePathForRequest( String path ) {
+    String pathEncoded = RepositoryPathEncoder.encodeRepositoryPath( path );
+    String utf8 = RepositoryPathEncoder.encodeURIComponent( pathEncoded );
+    // replace encoded colons with original
+    return utf8.replaceAll( ENCODED_COLON, ":" );
+  }
+
   public RepositoryFileTreeDto getRoot() throws IOException {
     if ( root == null && refreshTime == 0 ) {
       refresh();
@@ -152,8 +202,8 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     }
 
     this.descriptionEntries.clear();
-    this.root = root;
     this.refreshTime = System.currentTimeMillis();
+    this.root = root;
   }
 
   public boolean isDirectory( final FileName file ) throws FileSystemException {
@@ -343,7 +393,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     try {
       urlPath = URLEncoder.encodeUTF8( path ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" );
     } catch ( Exception ex ) {
-    }//tcb
+    } //tcb
     final String service = MessageFormat.format( DOWNLOAD_SERVICE, urlPath );
 
     return client.resource( url + service ).accept( MediaType.APPLICATION_XML_TYPE ).get( byte[].class );
@@ -367,9 +417,9 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     final int status = response.getStatus();
 
     if ( status != HttpStatus.SC_OK ) {
-      if ( status == HttpStatus.SC_MOVED_TEMPORARILY ||
-        status == HttpStatus.SC_FORBIDDEN ||
-        status == HttpStatus.SC_UNAUTHORIZED ) {
+      if ( status == HttpStatus.SC_MOVED_TEMPORARILY
+        || status == HttpStatus.SC_FORBIDDEN
+        || status == HttpStatus.SC_UNAUTHORIZED ) {
         throw new FileSystemException( "ERROR_INVALID_USERNAME_OR_PASSWORD" );
       } else {
         throw new FileSystemException( "ERROR_FAILED", status );
