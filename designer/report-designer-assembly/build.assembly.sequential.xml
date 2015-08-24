@@ -249,8 +249,18 @@
     </copy>
   </target>
 
+  <target name="stage-mac.copy-pentaho-system">
+    <!-- leverages on existing 'resolve-pentaho-system' target --> 
+    <antcall target="resolve-pentaho-system" inheritall="true" inheritrefs="true" />
+    <!-- place pentaho-system resources on a system folder, at the root of the .app -->
+    <mkdir dir="${report-designer.dir.mac}/system"/>
+    <copy todir="${report-designer.dir.mac}/system" overwrite="true">
+      <fileset dir="${system.dir}"/>
+    </copy>
+  </target>
+
   <target name="stage-mac.finalize-bundle"
-          depends="stage-mac.inject-filetypes, stage-mac.copy-files, stage-plugins-mac"/>
+          depends="stage-mac.inject-filetypes, stage-mac.copy-pentaho-system, stage-mac.copy-files, stage-plugins-mac"/>
 
   <target name="stage-mac" depends="init, install-mac-app-bundler" if="mac.java.runtime.home">
     <echo>Using JDK from ${mac.java.runtime.home}</echo>
@@ -265,6 +275,7 @@
       <runtime dir="${mac.java.runtime.home}"/>
       <classpath file="${runtime-lib.dir}/pentaho-application-launcher-${dependency.launcher.revision}.jar"/>
       <option value="-Dapple.laf.useScreenMenuBar=true"/>
+      <option value="-Dosx.app.root.dir=$APP_ROOT"/>  
       <option value="-Xms256m"/>
       <option value="-Xmx512m"/>
     </bundleapp>
