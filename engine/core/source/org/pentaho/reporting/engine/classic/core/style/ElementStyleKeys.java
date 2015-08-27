@@ -182,6 +182,12 @@ public class ElementStyleKeys {
     false, false );
 
   /**
+   * The StyleKey for the Indention.
+   */
+  public static final StyleKey EXCEL_INDENTION = StyleKey.getStyleKey("Excel.Indention", Short.class,
+      false, false);
+
+  /**
    * A key for the 'fill-shape' style.
    */
   public static final StyleKey FILL_SHAPE = StyleKey.getStyleKey( "fill-shape", Boolean.class );
