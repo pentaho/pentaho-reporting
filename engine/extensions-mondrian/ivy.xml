@@ -19,7 +19,7 @@
     <!-- reporting engine dependencies -->
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core" rev="${project.revision}"
                 transitive="true" changing="true"/>
-    <dependency org="org.apache.commons" name="commons-vfs2" rev="2.0" transitive="false" changing="false" conf="default_external->default"/>
+    <dependency org="org.apache.commons" name="commons-vfs2" rev="2.1-20150824" transitive="false" changing="false" conf="default_external->default"/>
 
     <!-- mondrian dependencies -->
     <dependency org="${mondrian.group}" name="mondrian" rev="${dependency.mondrian.revision}" transitive="true"
