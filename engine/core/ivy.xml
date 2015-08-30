@@ -41,27 +41,13 @@
        Ivy apparently ignores global exclude rules from time to time. I no longer care. Lets put exclude
         statements everywhere and pray, this is ivy for you!
       -->
-      <dependency org="org.apache.poi" name="poi-ooxml-schemas" rev="3.9" conf="default_external->default">
-        <exclude org="log4j" module="log4j"/>
-        <exclude org="commons-logging" module="commons-logging"/>
-        <exclude org="xml-apis" module="xml-apis"/>
-        <exclude org="org.apache.geronimo.specs" module="geronimo-stax-api_1.0_spec"/>
-        <exclude org="stax" module="stax-api"/>
-      </dependency>
-      <dependency org="org.apache.poi" name="poi-ooxml" rev="3.9" conf="default_external->default">
-        <exclude org="log4j" module="log4j"/>
-        <exclude org="commons-logging" module="commons-logging"/>
-        <exclude org="xml-apis" module="xml-apis"/>
-        <exclude org="org.apache.geronimo.specs" module="geronimo-stax-api_1.0_spec"/>
-        <exclude org="stax" module="stax-api"/>
-      </dependency>
-      <dependency org="org.apache.poi" name="poi" rev="3.9" transitive="true" conf="default_external->default">
-        <exclude org="log4j" module="log4j"/>
-        <exclude org="commons-logging" module="commons-logging"/>
-        <exclude org="xml-apis" module="xml-apis"/>
-        <exclude org="org.apache.geronimo.specs" module="geronimo-stax-api_1.0_spec"/>
-        <exclude org="stax" module="stax-api"/>
-      </dependency>
+      <dependency org="org.apache.poi" name="poi-ooxml-schemas" rev="3.12" transitive="false" conf="default_external->default"/>
+      <dependency org="org.apache.poi" name="poi-ooxml" rev="3.12" transitive="false" conf="default_external->default"/>
+      <dependency org="org.apache.poi" name="poi" rev="3.12" transitive="false" conf="default_external->default"/>
+      <dependency org="commons-codec" name="commons-codec" rev="1.9" transitive="false" conf="default_external->default"/>
+      <dependency org="commons-logging" name="commons-logging" rev="1.1.3" transitive="false" conf="default_external->default"/>
+      <dependency org="org.apache.xmlbeans" name="xmlbeans" rev="2.6.0" transitive="false" conf="default_external->default"/>
+
       <dependency org="pentaho" name="pentaho-database-model" rev="${dependency.pentaho-database-model.revision}"
                   changing="true" conf="default_external->default"/>
 

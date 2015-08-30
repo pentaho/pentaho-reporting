@@ -42,7 +42,7 @@
       <exclude org="xerces" module="xerces"/>
       <exclude org="xml-apis" module="xml-apis"/>
     </dependency>
-    <dependency org="commons-codec" name="commons-codec" rev="1.5" conf="default_external->default"/>
+    <dependency org="commons-codec" name="commons-codec" rev="1.9" conf="default_external->default"/>
     <dependency org="commons-httpclient" name="commons-httpclient" rev="3.0.1" conf="default_external->default" transitive="false"/>
     <dependency org="commons-math" name="commons-math" rev="1.1" transitive="false" conf="default_external->default"/>
     <dependency org="commons-dbcp" name="commons-dbcp" rev="1.2.1" conf="default_external->default">
@@ -72,7 +72,6 @@
     <dependency org="javassist"        name="javassist"    rev="3.12.1.GA" transitive="false" conf="default_external->default"/>
     <dependency org="org.scannotation" name="scannotation" rev="1.0.2"  transitive="false" conf="default_external->default"/>
 
-    <dependency org="stax" name="stax-api" rev="1.0.1" transitive="true" conf="default_external->default"/>
     <dependency org="org.codehaus.woodstox" name="wstx-asl" rev="3.2.4" transitive="true" conf="default_external->default"/>
     <dependency org="wsdl4j" name="wsdl4j" rev="1.6.2" transitive="true" conf="default_external->default"/>
     <dependency org="wsdl4j" name="wsdl4j-qname" rev="1.6.1" transitive="true" conf="default_external->default"/>
