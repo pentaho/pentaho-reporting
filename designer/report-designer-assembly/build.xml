@@ -61,12 +61,7 @@
     </sequential>
   </macrodef>
 
-  <target name="resolve-pdf-docs" depends="install-ivy">
-    <delete dir="resource/docs"/>
-    <ivy-resolve conf="pdf-docs" directory="resource/docs"/>
-  </target>
-
   <!-- The dist target is where everything is assembled -->
-  <target name="dist" depends="clean-all, init, resolve, resolve-pdf-docs, dist-winlinux, dist-mac"
+  <target name="dist" depends="clean-all, init, resolve, dist-winlinux, dist-mac"
           description="Creates the distributables for the Report Designer"/>
 </project>

@@ -27,7 +27,6 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
 
 public final class LaunchHelpAction extends AbstractDesignerContextAction {
@@ -45,16 +44,13 @@ public final class LaunchHelpAction extends AbstractDesignerContextAction {
    */
   public void actionPerformed( final ActionEvent e ) {
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
-    final String docFileName =
+    final String docUrl =
       config.getConfigProperty( "org.pentaho.reporting.designer.core.documentation.report_designer_user_guide" );
 
     try {
-      final File userGuideFile = new File( docFileName );
-      String url = userGuideFile.getAbsolutePath();
-      url = url.replace( " ", "%20" );
-      ExternalToolLauncher.openURL( "file:" + url );
+      ExternalToolLauncher.openURL( docUrl );
     } catch ( IOException ex ) {
-      log.warn( "Could not find file " + docFileName, ex ); // NON-NLS
+      log.warn( "Could not load " + docUrl, ex ); // NON-NLS
     }
   }
 }

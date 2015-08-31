@@ -6,7 +6,6 @@
   <property name="driver-lib.dir" value="${lib.dir}/jdbc"/>
   <property name="resource.dir" value="${basedir}/resource"/>
   <property name="kettle-plugins.dir" value="plugins"/>
-  <property name="doc.dir" value="${resource.dir}/docs"/>
   <property name="dist.base-name" value="prd"/>
   <property name="dist.type" value="ce"/>
   <property name="dist.name" value="${dist.base-name}-${dist.type}"/>
@@ -315,16 +314,9 @@
 
   <target name="stage-winlinux.copy-runtime">
     <copy todir="${report-designer.dir.winlinux}" overwrite="true">
-      <fileset dir="${resource.dir}">
-        <exclude name="docs/*"/>
-      </fileset>
+      <fileset dir="${resource.dir}"/>
       <fileset dir="${runtime-lib.dir}">
         <include name="**/*.jar"/>
-      </fileset>
-    </copy>
-    <copy todir="${report-designer.dir.winlinux}/docs" overwrite="true">
-      <fileset dir="${doc.dir}">
-        <include name="**/*"/>
       </fileset>
     </copy>
     <move file="${report-designer.dir.winlinux}/pentaho-application-launcher-${dependency.launcher.revision}.jar"
