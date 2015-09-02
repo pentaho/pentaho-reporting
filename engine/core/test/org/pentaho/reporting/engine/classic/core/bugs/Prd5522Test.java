@@ -41,6 +41,8 @@ public class Prd5522Test
   {
     URL url = getClass().getResource( "Prd-5522.prpt" );
     MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
-    ExcelReportUtil.createXLSX(report, "Prd-5522.xlsx");
+    org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner.createTestOutputFile();
+    ExcelReportUtil.createXLSX(report,"test-output/Prd-5522.xlsx");
+    ;
   }
 }
