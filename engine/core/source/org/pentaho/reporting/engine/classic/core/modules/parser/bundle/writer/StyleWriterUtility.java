@@ -17,6 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
 
+import java.awt.Color;
+import java.awt.Stroke;
+import java.io.IOException;
+import java.util.Locale;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
@@ -39,10 +44,6 @@ import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
-
-import java.awt.*;
-import java.io.IOException;
-import java.util.Locale;
 
 /**
  * @noinspection HardCodedStringLiteral
@@ -472,6 +473,10 @@ public class StyleWriterUtility {
     if ( style.isLocalKey( ElementStyleKeys.EXCEL_WRAP_TEXT ) ) {
       final boolean value = style.getBooleanStyleProperty( ElementStyleKeys.EXCEL_WRAP_TEXT );
       bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "excel-text-wrapping", String.valueOf( value ) );
+    }
+    if ( style.isLocalKey( ElementStyleKeys.EXCEL_INDENTION ) ) {
+      final int value = style.getIntStyleProperty(ElementStyleKeys.EXCEL_INDENTION, 0 );
+      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "excel-text-indention", String.valueOf( value ) );
     }
     if ( style.isLocalKey( TextStyleKeys.TRIM_TEXT_CONTENT ) ) {
       final boolean value = style.getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT );

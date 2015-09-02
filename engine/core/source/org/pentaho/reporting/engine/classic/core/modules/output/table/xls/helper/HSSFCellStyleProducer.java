@@ -128,6 +128,11 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
      */
     private short dataStyle;
 
+    /**
+     * Indention level
+     */
+    private short indention;
+
     private Integer hashCode;
 
     /**
@@ -199,6 +204,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
           this.dataStyle = dataFormat.getFormat( dataStyle );
         }
         this.wrapText = isWrapText( contentStyle );
+        this.indention=getIndention(contentStyle);
       }
     }
 
@@ -208,6 +214,12 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
         return Boolean.TRUE.equals( excelWrap );
       }
       return TextWrap.WRAP.equals( styleSheet.getStyleProperty( TextStyleKeys.TEXT_WRAP, TextWrap.WRAP ) );
+    }
+
+    private Short getIndention(final StyleSheet styleSheet)
+    {
+      Short indention=(Short)styleSheet.getStyleProperty(ElementStyleKeys.EXCEL_INDENTION);
+      return indention==null?0:indention;
     }
 
     protected HSSFCellStyleKey( final XSSFCellStyle style ) {
@@ -377,6 +389,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
         result = 29 * result + (int) verticalAlignment;
         result = 29 * result + (int) font;
         result = 29 * result + (int) dataStyle;
+        result = 29 * result + (int) indention;
         result = 29 * result + ( ( xColor == null ) ? 0 : xColor.hashCode() );
         result = 29 * result + ( ( xColorTop == null ) ? 0 : xColorTop.hashCode() );
         result = 29 * result + ( ( xColorLeft == null ) ? 0 : xColorLeft.hashCode() );
@@ -462,6 +475,8 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
     public short getDataStyle() {
       return dataStyle;
     }
+
+    public short getIndention() {return indention; }
   }
 
   /**
@@ -565,6 +580,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       hssfCellStyle.setVerticalAlignment( styleKey.getVerticalAlignment() );
       hssfCellStyle.setFont( workbook.getFontAt( styleKey.getFont() ) );
       hssfCellStyle.setWrapText( styleKey.isWrapText() );
+      hssfCellStyle.setIndention(styleKey.getIndention());
       if ( styleKey.getDataStyle() >= 0 ) {
         hssfCellStyle.setDataFormat( styleKey.getDataStyle() );
       }
