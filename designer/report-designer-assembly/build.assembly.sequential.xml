@@ -277,6 +277,8 @@
       <option value="-Dosx.app.root.dir=$APP_ROOT"/>  
       <option value="-Xms256m"/>
       <option value="-Xmx512m"/>
+      <option value="-XX:PermSize=128m"/>
+      <option value="-XX:MaxPermSize=256m"/>
     </bundleapp>
 
     <antcall target="stage-mac.finalize-bundle" inheritall="true" inheritrefs="true"/>
