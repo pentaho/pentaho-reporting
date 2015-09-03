@@ -138,6 +138,7 @@
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-big-data-plugin" type="zip"/>
     </dependency>
+    <dependency org="commons-configuration" name="commons-configuration" rev="1.9"          transitive="false"/>
     <dependency org="pentaho" name="pentaho-cassandra-plugin" rev="${dependency.pentaho-cassandra-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-cassandra-plugin" type="zip"/>
