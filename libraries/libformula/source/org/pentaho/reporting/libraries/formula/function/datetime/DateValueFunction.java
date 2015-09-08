@@ -26,6 +26,7 @@ import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.DateTimeType;
+import org.pentaho.reporting.libraries.formula.util.DateUtil;
 
 import java.util.Date;
 
@@ -55,7 +56,8 @@ public class DateValueFunction implements Function {
     final Object value = parameters.getValue( 0 );
 
     final Date date1 = typeRegistry.convertToDate( type, value );
-    return new TypeValuePair( DateTimeType.DATE_TYPE, date1 );
+    final Date date = DateUtil.normalizeDate( date1, DateTimeType.DATE_TYPE );
+    return new TypeValuePair( DateTimeType.DATE_TYPE, date );
 
   }
 }
