@@ -69,7 +69,9 @@ public class MinuteFunction implements Function {
 
     // Multiply the minutes with 60 to get the minutes as ints 
     final BigDecimal minutes = minutesFraction.multiply( MINUTES );
-    final BigDecimal minutesAsInt = minutes.setScale( 0, BigDecimal.ROUND_HALF_UP );
+    // Fix for PRD-5499, contributed by Lionel Elie Mamane
+    // final BigDecimal minutesAsInt = minutes.setScale( 0, BigDecimal.ROUND_HALF_UP );
+    final BigDecimal minutesAsInt = NumberUtil.performIntRounding(minutes);
     return new TypeValuePair( NumberType.GENERIC_NUMBER, minutesAsInt );
   }
 }
