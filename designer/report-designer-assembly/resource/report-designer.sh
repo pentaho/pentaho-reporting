@@ -12,4 +12,4 @@ cd -
 . "$DIR/set-pentaho-env.sh"
 setPentahoEnv
 
-"$_PENTAHO_JAVA" -XX:MaxPermSize=512m -jar "$DIR/launcher.jar" $@
+"$_PENTAHO_JAVA" -Xms1024m -Xmx2048m -XX:MaxPermSize=512m -jar "$DIR/launcher.jar" $@
