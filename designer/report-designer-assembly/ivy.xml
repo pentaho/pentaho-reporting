@@ -151,6 +151,8 @@
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pdi-spark-plugin" type="zip"/>
     </dependency>
+    <dependency org="pentaho" name="pdi-dataservice-client-plugin" rev="${dependency.pdi-dataservice-client-plugin.revision}"
+                conf="plugin->default" changing="true" transitive="false"/>
 
     <!-- JSON dependencies -->
     <dependency org="com.googlecode.json-simple" name="json-simple" rev="${dependency.json.simple.revision}"
