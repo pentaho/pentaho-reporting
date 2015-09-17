@@ -275,8 +275,8 @@
       <classpath file="${runtime-lib.dir}/pentaho-application-launcher-${dependency.launcher.revision}.jar"/>
       <option value="-Dapple.laf.useScreenMenuBar=true"/>
       <option value="-Dosx.app.root.dir=$APP_ROOT"/>  
-      <option value="-Xms256m"/>
-      <option value="-Xmx512m"/>
+      <option value="-Xms1024m"/>
+      <option value="-Xmx2048m"/>
       <option value="-XX:PermSize=128m"/>
       <option value="-XX:MaxPermSize=256m"/>
     </bundleapp>
