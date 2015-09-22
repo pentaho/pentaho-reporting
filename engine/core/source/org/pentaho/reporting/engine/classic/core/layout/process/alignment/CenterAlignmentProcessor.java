@@ -201,8 +201,8 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
     final long[] savedElementPos = (long[]) elementPositions.clone();
 
     // The center-element will be shifted to the right.
-    if ( performShiftLeft( leftShiftEndIndex, centerPageSegment, savedElementPos ) &&
-      performShiftRight( rightShiftStartIndex, endIndex, centerPageSegmentNext, savedElementPos ) ) {
+    if ( performShiftLeft( leftShiftEndIndex, centerPageSegment, savedElementPos )
+      && performShiftRight( rightShiftStartIndex, endIndex, centerPageSegmentNext, savedElementPos ) ) {
       System.arraycopy( savedElementPos, 0, elementPositions, 0, savedElementPos.length );
       return true;
     }

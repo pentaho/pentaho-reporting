@@ -52,7 +52,7 @@ import org.pentaho.reporting.libraries.fonts.itext.ITextFontStorage;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
 
@@ -218,10 +218,10 @@ public class Prd5321Test {
 
   @Test
   public void testTextRenderingComplex() throws Exception {
-    if (!DebugReportRunner.isSafeToTestComplexText()) {
+    if ( !DebugReportRunner.isSafeToTestComplexText() ) {
       return;
     }
-    Assert.assertTrue(DebugReportRunner.isSafeToTestComplexText());
+    Assert.assertTrue( DebugReportRunner.isSafeToTestComplexText() );
 
     URL resource = getClass().getResource( "Prd-5321.prpt" );
     ResourceManager mgr = new ResourceManager();

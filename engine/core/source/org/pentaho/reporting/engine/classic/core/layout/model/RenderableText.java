@@ -136,8 +136,8 @@ public final class RenderableText extends RenderNode implements SplittableRender
         spacerMax += spacing.getMaximum();
         spacerMin += spacing.getMinimum();
         spacerOpt += spacing.getOptimum();
-        if ( normalTextSpacing == true &&
-          Spacing.EMPTY_SPACING.equals( spacing ) == false ) {
+        if ( normalTextSpacing == true
+          && Spacing.EMPTY_SPACING.equals( spacing ) == false ) {
           normalTextSpacing = false;
         }
 
@@ -151,8 +151,8 @@ public final class RenderableText extends RenderNode implements SplittableRender
         // Paranoid sanity checks: The word- and linebreaks should have been
         // replaced by other definitions in the text factory.
         if ( glyph.getBreakWeight() == BreakOpportunityProducer.BREAK_LINE ) {
-          throw new IllegalStateException( "A renderable text cannot and must " +
-            "not contain linebreaks." );
+          throw new IllegalStateException( "A renderable text cannot and must "
+            + "not contain linebreaks." );
         }
       }
     }

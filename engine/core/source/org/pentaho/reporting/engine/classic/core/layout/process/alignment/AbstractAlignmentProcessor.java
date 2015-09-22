@@ -198,14 +198,14 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
 
     int lastElementType = elements[ 0 ].getClassification();
     int startIndex = 0;
-    boolean lastNodeWasSpacer = ( lastElementType == InlineSequenceElement.CONTENT &&
-      nodes[ 0 ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
+    boolean lastNodeWasSpacer = ( lastElementType == InlineSequenceElement.CONTENT
+      && nodes[ 0 ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
     for ( int i = 1; i < maxPos; i++ ) {
       final InlineSequenceElement element = elements[ i ];
       final int elementType = element.getClassification();
-      if ( lastNodeWasSpacer == false &&
-        lastElementType != InlineSequenceElement.START &&
-        elementType != InlineSequenceElement.END ) {
+      if ( lastNodeWasSpacer == false
+        && lastElementType != InlineSequenceElement.START
+        && elementType != InlineSequenceElement.END ) {
         final int newIndex = handleElement( startIndex, i - startIndex );
         if ( newIndex <= startIndex ) {
           return startIndex;
@@ -214,8 +214,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
         startIndex = i;
       }
 
-      lastNodeWasSpacer = ( elementType == InlineSequenceElement.CONTENT &&
-        nodes[ i ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
+      lastNodeWasSpacer = ( elementType == InlineSequenceElement.CONTENT
+        && nodes[ i ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
       lastElementType = elementType;
     }
 
@@ -373,8 +373,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
       }
 
       if ( box == null ) {
-        throw new IllegalStateException( "Invalid sequence: " +
-          "Cannot have elements before we open the box context." );
+        throw new IllegalStateException( "Invalid sequence: "
+          + "Cannot have elements before we open the box context." );
       }
 
       // Content element: Perform a deep-deriveForAdvance, so that we preserve the
@@ -382,8 +382,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
       final RenderNode child = node.derive( true );
       child.setCachedX( elementPositions[ i ] );
       child.setCachedWidth( elementDimensions[ i ] );
-      if ( box.getStaticBoxLayoutProperties().isPreserveSpace() &&
-        box.getStyleSheet().getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
+      if ( box.getStaticBoxLayoutProperties().isPreserveSpace()
+        && box.getStyleSheet().getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
         // Take a shortcut as we know that we will never have any pending elements if preserve is true and
         // trim-content is false.
         box.addGeneratedChild( child );
@@ -404,11 +404,11 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
 
     // Remove all spacers and other non printable content that might
     // look ugly at the beginning of a new line ..
-    for (; lastPosition < sequenceFill; lastPosition++ ) {
+    for ( ; lastPosition < sequenceFill; lastPosition++ ) {
       final RenderNode node = nodes[ lastPosition ];
       final StyleSheet styleSheet = node.getStyleSheet();
-      if ( WhitespaceCollapse.PRESERVE.equals( styleSheet.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE ) ) &&
-        styleSheet.getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
+      if ( WhitespaceCollapse.PRESERVE.equals( styleSheet.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE ) )
+        && styleSheet.getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
         break;
       }
 
@@ -514,8 +514,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     if ( width == 0 ) {
       //ModelPrinter.printParents(box);
 
-      throw new IllegalStateException( "A box without any width? " +
-        Integer.toHexString( System.identityHashCode( box ) ) + ' ' + box.getClass() );
+      throw new IllegalStateException( "A box without any width? "
+        + Integer.toHexString( System.identityHashCode( box ) ) + ' ' + box.getClass() );
     }
     box.setCachedWidth( width );
 

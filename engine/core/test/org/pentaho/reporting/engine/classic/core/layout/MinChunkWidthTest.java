@@ -65,8 +65,8 @@ public class MinChunkWidthTest extends TestCase {
     // need to set WORDBREAK to false to keep the previous behaviour
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, false );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-      ( basereport, report.getReportHeader(), true, false );
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(
+      basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     //ModelPrinter.INSTANCE.print(logicalPageBox);
@@ -89,8 +89,8 @@ public class MinChunkWidthTest extends TestCase {
     // need to set WORDBREAK to false to keep the previous behaviour
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, false );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-      ( basereport, report.getReportHeader(), true, false );
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(
+      basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     //ModelPrinter.INSTANCE.print(logicalPageBox);
@@ -115,8 +115,8 @@ public class MinChunkWidthTest extends TestCase {
     final MasterReport report = (MasterReport) directly.getResource();
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-      ( basereport, report.getReportHeader(), true, false );
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(
+      basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485 or 400
     // and that only two lines exist for each
     ModelPrinter.INSTANCE.print( logicalPageBox );
