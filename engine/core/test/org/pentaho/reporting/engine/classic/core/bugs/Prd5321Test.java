@@ -133,7 +133,10 @@ public class Prd5321Test {
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( r, 0 );
     ModelPrinter.INSTANCE.print( logicalPageBox );
     RenderNode label = MatchFactory.findElementByName( logicalPageBox, "Label" );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 50 ), label.getCachedHeight() );
+    // PRD-2736 note: the label is split into two parts now, since it does not fit the line width anymore:
+    // Lab
+    // el_
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), label.getCachedHeight() );
     RenderNode label2 = MatchFactory.findElementByName( logicalPageBox, "Label2" );
     Assert.assertEquals( StrictGeomUtility.toInternalValue( 10 ), label2.getCachedHeight() );
   }

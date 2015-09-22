@@ -61,6 +61,9 @@ public class MinChunkWidthTest extends TestCase {
     rm.registerDefaults();
     final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
+    // PRD-2736 note: word breaks are implemented now,
+    // need to set WORDBREAK to false to keep the previous behaviour
+    report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, false );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
       ( basereport, report.getReportHeader(), true, false );
@@ -82,6 +85,9 @@ public class MinChunkWidthTest extends TestCase {
     rm.registerDefaults();
     final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
+    // PRD-2736 note: word breaks are implemented now,
+    // need to set WORDBREAK to false to keep the previous behaviour
+    report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, false );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
       ( basereport, report.getReportHeader(), true, false );

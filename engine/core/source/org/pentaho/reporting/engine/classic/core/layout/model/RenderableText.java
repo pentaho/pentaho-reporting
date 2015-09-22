@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.layout.text.Glyph;
 import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
@@ -52,7 +53,7 @@ import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
  *
  * @author Thomas Morgner
  */
-public final class RenderableText extends RenderNode {
+public final class RenderableText extends RenderNode implements SplittableRenderNode {
   private static long conversionFactor;
 
   static {
@@ -222,6 +223,7 @@ public final class RenderableText extends RenderNode {
     return script;
   }
 
+  @Override
   public long getMinimumWidth() {
     return minimumWidth;
   }
@@ -261,5 +263,65 @@ public final class RenderableText extends RenderNode {
       }
     }
     return length;
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p/>
+   * <b>Important!</b> The separation is allowed only if {@linkplain org.pentaho.reporting.engine.classic.core.style
+   * .TextStyleKeys#WORDBREAK TextStyleKeys.WORDBREAK} property is {@code true}
+   *
+   * @throws IllegalArgumentException if {@code widthOfFirst <= 0}
+   * @throws IllegalStateException if {@code widthOfFirst >= getMinimumWidth()}
+   */
+  @Override
+  public RenderableText[] splitBy( long widthOfFirst ) {
+    if ( widthOfFirst <= 0 ) {
+      throw new IllegalArgumentException( String.format(
+        "Illegal width: %d. Only text nodes with non-zero width are not allowed!",
+        widthOfFirst ) );
+    }
+
+    if ( widthOfFirst >= getMinimumWidth() ) {
+      throw new IllegalStateException( String.format(
+        "Split width (%d) should be less than the component's minimum width (%d)!",
+        widthOfFirst, getMinimumWidth() ) );
+    }
+
+    if ( !getStyleSheet().getBooleanStyleProperty( TextStyleKeys.WORDBREAK ) ) {
+      // word-breaking should be allowed
+      return null;
+    }
+
+    // length cannot be 0 - see guard check in initialize()
+    final int last = offset + length;
+    final GlyphList glyphs = getGlyphs();
+    int index = offset;
+    long currentWidth = 0;
+    while ( index < last && currentWidth <= widthOfFirst ) {
+      currentWidth += convert( glyphs.getGlyph( index ).getWidth() );
+      index++;
+    }
+    index--;
+
+    if ( index == offset ) {
+      // the first element's width exceeds widthOfFirst
+      return null;
+    }
+
+    RenderableText first = (RenderableText) derive( true );
+    int firstLength = index - offset;
+    first.initialize( glyphs, offset, firstLength, baselineInfo, script, forceLinebreak );
+
+    RenderableText rest = (RenderableText) derive( true );
+    rest.initialize( glyphs, index, length - firstLength, baselineInfo, script, forceLinebreak );
+
+    RenderableText[] pair = { first, rest };
+    RenderBox parent = getParent();
+    if ( parent != null ) {
+      parent.replaceChilds( this, pair );
+    }
+
+    return pair;
   }
 }

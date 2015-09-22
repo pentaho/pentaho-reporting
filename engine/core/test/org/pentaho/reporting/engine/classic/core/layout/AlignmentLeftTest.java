@@ -74,8 +74,9 @@ public class AlignmentLeftTest extends TestCase {
     final LogicalPageBox logicalPageBox =
       DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
-    // and that only two lines exist for each
-    new ValidateRunner().startValidation( logicalPageBox, false, false );
+
+    // PRD-2736 note: word breaks are implemented now, hence the test's assumptions should be changed
+    new ValidateRunner().startValidation( logicalPageBox, false, true );
   }
 
   public void testComplex() throws ReportProcessingException, ContentProcessingException {
@@ -144,7 +145,11 @@ public class AlignmentLeftTest extends TestCase {
           assertEquals( "Line-Count", 5, count );
         }
       } else {
-        assertEquals( "Line-Count", 1, count );
+        if ( wrapWord ) {
+          assertEquals( "Line-Count", 4, count );
+        } else {
+          assertEquals( "Line-Count", 1, count );
+        }
       }
     }
 
