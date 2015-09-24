@@ -20,11 +20,9 @@ package org.pentaho.reporting.engine.classic.core.layout.process.alignment;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.EndSequenceElement;
+import org.pentaho.reporting.engine.classic.core.layout.model.SplittableRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineBoxSequenceElement;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.StartSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.TextSequenceElement;
 import org.pentaho.reporting.engine.classic.core.util.LongList;
 
 
@@ -112,8 +110,7 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
     for ( int i = start; i < endIndex; i++ ) {
       final InlineSequenceElement element = sequenceElements[ i ];
       final RenderNode node = nodes[ i ];
-      if ( element instanceof StartSequenceElement ||
-        element instanceof EndSequenceElement ) {
+      if ( isBorderMarker( element ) ) {
         width += element.getMaximumWidth( node );
         continue;
       }
@@ -143,11 +140,12 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
 
       // we cross a pagebreak. Stop working on it - we bail out here.
 
-      if ( contentElement instanceof TextSequenceElement ) {
+      if ( nodes[ contentIndex ] instanceof SplittableRenderNode ) {
         // the element may be splittable. Test, and if so, give a hint to the
         // outside world ..
         setSkipIndex( endIndex );
         setBreakableIndex( contentIndex );
+        setBreakableMaxAllowedWidth( nextPosition - lastPageBreak );
         return ( start );
       }
 

@@ -20,11 +20,9 @@ package org.pentaho.reporting.engine.classic.core.layout.process.alignment;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.EndSequenceElement;
+import org.pentaho.reporting.engine.classic.core.layout.model.SplittableRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineBoxSequenceElement;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.StartSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.TextSequenceElement;
 
 /**
  * Right alignment strategy. Not working yet, as this is unimplemented right now.
@@ -56,8 +54,7 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
       if ( i < start ) {
         usedWidthToStart += element.getMaximumWidth( node );
       }
-      if ( element instanceof StartSequenceElement ||
-        element instanceof EndSequenceElement ) {
+      if ( isBorderMarker( element ) ) {
         continue;
       }
       contentElement = element;
@@ -74,11 +71,12 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
 
       // we cross a pagebreak. Stop working on it - we bail out here.
 
-      if ( contentElement instanceof TextSequenceElement ) {
+      if ( nodes[ contentIndex ] instanceof SplittableRenderNode ) {
         // the element may be splittable. Test, and if so, give a hint to the
         // outside world ..
         setSkipIndex( endIndex );
         setBreakableIndex( contentIndex );
+        setBreakableMaxAllowedWidth( nextPosition - lastPageBreak );
         return ( start );
       }
 
@@ -203,8 +201,8 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
     final long[] savedElementPos = (long[]) elementPositions.clone();
 
     // The center-element will be shifted to the right.
-    if ( performShiftLeft( leftShiftEndIndex, centerPageSegment, savedElementPos ) &&
-      performShiftRight( rightShiftStartIndex, endIndex, centerPageSegmentNext, savedElementPos ) ) {
+    if ( performShiftLeft( leftShiftEndIndex, centerPageSegment, savedElementPos )
+      && performShiftRight( rightShiftStartIndex, endIndex, centerPageSegmentNext, savedElementPos ) ) {
       System.arraycopy( savedElementPos, 0, elementPositions, 0, savedElementPos.length );
       return true;
     }

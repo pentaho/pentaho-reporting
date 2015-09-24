@@ -52,7 +52,7 @@ import org.pentaho.reporting.libraries.fonts.itext.ITextFontStorage;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
 
@@ -133,7 +133,10 @@ public class Prd5321Test {
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( r, 0 );
     ModelPrinter.INSTANCE.print( logicalPageBox );
     RenderNode label = MatchFactory.findElementByName( logicalPageBox, "Label" );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 50 ), label.getCachedHeight() );
+    // PRD-2736 note: the label is split into two parts now, since it does not fit the line width anymore:
+    // Lab
+    // el_
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), label.getCachedHeight() );
     RenderNode label2 = MatchFactory.findElementByName( logicalPageBox, "Label2" );
     Assert.assertEquals( StrictGeomUtility.toInternalValue( 10 ), label2.getCachedHeight() );
   }
@@ -215,10 +218,10 @@ public class Prd5321Test {
 
   @Test
   public void testTextRenderingComplex() throws Exception {
-    if (!DebugReportRunner.isSafeToTestComplexText()) {
+    if ( !DebugReportRunner.isSafeToTestComplexText() ) {
       return;
     }
-    Assert.assertTrue(DebugReportRunner.isSafeToTestComplexText());
+    Assert.assertTrue( DebugReportRunner.isSafeToTestComplexText() );
 
     URL resource = getClass().getResource( "Prd-5321.prpt" );
     ResourceManager mgr = new ResourceManager();

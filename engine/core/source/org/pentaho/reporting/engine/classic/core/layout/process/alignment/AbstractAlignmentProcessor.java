@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.SplittableRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
@@ -67,6 +68,11 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
    * A layouter hint, that indicates where to continue on unbreakable elements.
    */
   private int skipIndex;
+  /**
+   * A layouter hint, that shows up the maximum element's width to fit into line's limit. This value should be accessed
+   * only if {@code breakableIndex != -1}, as {@code breakableIndex} refers to the element
+   */
+  private long breakableMaxAllowedWidth;
 
   private long[] elementPositions;
   private long[] elementDimensions;
@@ -154,6 +160,14 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     this.skipIndex = skipIndex;
   }
 
+  protected long getBreakableMaxAllowedWidth() {
+    return breakableMaxAllowedWidth;
+  }
+
+  protected void setBreakableMaxAllowedWidth( long breakableMaxAllowedWidth ) {
+    this.breakableMaxAllowedWidth = breakableMaxAllowedWidth;
+  }
+
   /**
    * Processes the text and calls the layouting methods. This method returns the index of the last element that fits on
    * the current line.
@@ -164,6 +178,7 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
    */
   protected int iterate( final InlineSequenceElement[] elements, final int maxPos ) {
     breakableIndex = -1;
+    breakableMaxAllowedWidth = -1;
     skipIndex = -1;
     // The state transitions are as follows:
     // ......From....START...CONTENT...END
@@ -183,14 +198,14 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
 
     int lastElementType = elements[ 0 ].getClassification();
     int startIndex = 0;
-    boolean lastNodeWasSpacer = ( lastElementType == InlineSequenceElement.CONTENT &&
-      nodes[ 0 ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
+    boolean lastNodeWasSpacer = ( lastElementType == InlineSequenceElement.CONTENT
+      && nodes[ 0 ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
     for ( int i = 1; i < maxPos; i++ ) {
       final InlineSequenceElement element = elements[ i ];
       final int elementType = element.getClassification();
-      if ( lastNodeWasSpacer == false &&
-        lastElementType != InlineSequenceElement.START &&
-        elementType != InlineSequenceElement.END ) {
+      if ( lastNodeWasSpacer == false
+        && lastElementType != InlineSequenceElement.START
+        && elementType != InlineSequenceElement.END ) {
         final int newIndex = handleElement( startIndex, i - startIndex );
         if ( newIndex <= startIndex ) {
           return startIndex;
@@ -199,8 +214,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
         startIndex = i;
       }
 
-      lastNodeWasSpacer = ( elementType == InlineSequenceElement.CONTENT &&
-        nodes[ i ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
+      lastNodeWasSpacer = ( elementType == InlineSequenceElement.CONTENT
+        && nodes[ i ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
       lastElementType = elementType;
     }
 
@@ -310,13 +325,10 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
 
     int lastPosition = iterate( sequenceElements, sequenceFill );
     if ( lastPosition == 0 ) {
-      // This could evolve into an infinite loop. Thats evil.
-      // We have two choices to prevent that:
-      // (1) Try to break the element.
-      //      if (getBreakableIndex() >= 0)
-      //      {
-      //        // Todo: Breaking is not yet implemented ..
-      //      }
+      if ( splitBreakableIfPossible() ) {
+        return next();
+      }
+
       if ( getSkipIndex() >= 0 ) {
         // This causes an overflow ..
         performSkipAlignment( getSkipIndex() );
@@ -361,8 +373,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
       }
 
       if ( box == null ) {
-        throw new IllegalStateException( "Invalid sequence: " +
-          "Cannot have elements before we open the box context." );
+        throw new IllegalStateException( "Invalid sequence: "
+          + "Cannot have elements before we open the box context." );
       }
 
       // Content element: Perform a deep-deriveForAdvance, so that we preserve the
@@ -370,8 +382,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
       final RenderNode child = node.derive( true );
       child.setCachedX( elementPositions[ i ] );
       child.setCachedWidth( elementDimensions[ i ] );
-      if ( box.getStaticBoxLayoutProperties().isPreserveSpace() &&
-        box.getStyleSheet().getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
+      if ( box.getStaticBoxLayoutProperties().isPreserveSpace()
+        && box.getStyleSheet().getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
         // Take a shortcut as we know that we will never have any pending elements if preserve is true and
         // trim-content is false.
         box.addGeneratedChild( child );
@@ -392,11 +404,11 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
 
     // Remove all spacers and other non printable content that might
     // look ugly at the beginning of a new line ..
-    for (; lastPosition < sequenceFill; lastPosition++ ) {
+    for ( ; lastPosition < sequenceFill; lastPosition++ ) {
       final RenderNode node = nodes[ lastPosition ];
       final StyleSheet styleSheet = node.getStyleSheet();
-      if ( WhitespaceCollapse.PRESERVE.equals( styleSheet.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE ) ) &&
-        styleSheet.getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
+      if ( WhitespaceCollapse.PRESERVE.equals( styleSheet.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE ) )
+        && styleSheet.getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
         break;
       }
 
@@ -502,8 +514,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     if ( width == 0 ) {
       //ModelPrinter.printParents(box);
 
-      throw new IllegalStateException( "A box without any width? " +
-        Integer.toHexString( System.identityHashCode( box ) ) + ' ' + box.getClass() );
+      throw new IllegalStateException( "A box without any width? "
+        + Integer.toHexString( System.identityHashCode( box ) ) + ' ' + box.getClass() );
     }
     box.setCachedWidth( width );
 
@@ -644,5 +656,128 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
 
   protected void updateBreaksForLastLineAlignment() {
     updateBreaks();
+  }
+
+  /**
+   * Returns {@code true} if {@code element} represents border type, namely if it is either {@linkplain
+   * StartSequenceElement} or {@linkplain EndSequenceElement}
+   *
+   * @param element element
+   * @return {@code true}, if element represents border type and {@code false} otherwise
+   */
+  protected boolean isBorderMarker( InlineSequenceElement element ) {
+    return ( element == StartSequenceElement.INSTANCE ) || ( element == EndSequenceElement.INSTANCE );
+  }
+
+  /**
+   * Tries to split a breakable component if possible.
+   * <p/>
+   * First, checks whether each of the following conditions is true: <ol> <li>{@code getBreakableIndex() >= 0}</li>
+   * <li>{@code nodes[breakableIndex]} is an instance of {@linkplain SplittableRenderNode}</li> <li>{@code
+   * getBreakableMaxAllowedWidth() > 0}</li> </ol>
+   *
+   * Then asks the node to split limiting the first kid's width so, that it can be put inside the bounds. The node can
+   * be unable to do the separation and return {@code null}.
+   *
+   * If the separation was successful, then the method re-initialises the processors internal fields by invoking
+   * {@linkplain #reInitializeForHandlingComponentSplit(int, RenderNode[])}
+   *
+   * @return {@code true} if the split was done or {@code false} otherwise
+   */
+  protected boolean splitBreakableIfPossible() {
+    int breakableIndex = getBreakableIndex();
+    if ( breakableIndex >= 0 ) {
+      RenderNode breakableNode = nodes[ breakableIndex ];
+      if ( breakableNode instanceof SplittableRenderNode ) {
+        SplittableRenderNode splittableNode = (SplittableRenderNode) breakableNode;
+        long widthExceeding = getBreakableMaxAllowedWidth();
+        if ( widthExceeding > 0 ) {
+          long widthByLayout = getElementDimensions()[ breakableIndex ];
+          long maxAllowedWidth;
+          if ( widthByLayout > 0 ) {
+            maxAllowedWidth = widthByLayout - widthExceeding;
+          } else {
+            // was not computed, use node's self estimation
+            maxAllowedWidth = splittableNode.getMinimumWidth() - widthExceeding;
+          }
+          if ( maxAllowedWidth > 0 ) {
+            RenderNode[] pair = splittableNode.splitBy( maxAllowedWidth );
+            if ( pair != null ) {
+              reInitializeForHandlingComponentSplit( breakableIndex, pair );
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * A utility method for shifting {@code array}'s part that starts at {@code startIndex} and contains {@code amount}
+   * elements by {@code offset}
+   * <p/>
+   * Note:<br/> org.apache.commons.lang.ArrayUtils.shift() solves the problem, but the version used now is too old and
+   * it does not contain this method
+   *
+   * @param array      array
+   * @param startIndex start index of the block to be shifted (included)
+   * @param amount     length of the block to be shifted
+   * @param offset     indexes delta
+   */
+  // package local visibility for testing purposes
+  static void shiftArray( Object[] array, int startIndex, int amount, int offset ) {
+    int endIndex = startIndex + amount - 1;
+    int destEndIndex = endIndex + offset;
+    for ( int i = endIndex, j = destEndIndex; i >= startIndex; i--, j-- ) {
+      array[ j ] = array[ i ];
+    }
+  }
+
+  /**
+   * For tests only!
+   */
+  @Deprecated
+  void setNodes( RenderNode[] nodes ) {
+    this.nodes = nodes;
+  }
+
+  /**
+   * For tests only!
+   */
+  @Deprecated
+  void setElementDimensions( long[] elementDimensions ) {
+    this.elementDimensions = elementDimensions;
+  }
+
+  protected void reInitializeForHandlingComponentSplit( int breakableIndex, RenderNode[] replacement ) {
+    // shift by (replacement.length - 1), because split component should be replaced
+    final int replacementAmountMinus1 = replacement.length - 1;
+    final int newSize = sequenceFill + replacementAmountMinus1;
+
+    if ( newSize > sequenceElements.length ) {
+      // need to create larger arrays
+      sequenceElements = Arrays.copyOf( sequenceElements, newSize );
+      nodes = Arrays.copyOf( nodes, newSize );
+      elementPositions = Arrays.copyOf( elementPositions, newSize );
+      elementDimensions = Arrays.copyOf( elementDimensions, newSize );
+    }
+
+    int shiftedPartStartIndex = breakableIndex + 1;
+    int shiftedPartLength = sequenceFill - shiftedPartStartIndex;
+
+    shiftArray( sequenceElements, shiftedPartStartIndex, shiftedPartLength, replacementAmountMinus1 );
+    // split elements derive their demiurge's type
+    InlineSequenceElement breakableNodeType = sequenceElements[ breakableIndex ];
+    Arrays.fill( sequenceElements, breakableIndex + 1, breakableIndex + replacement.length,
+      breakableNodeType );
+
+    shiftArray( nodes, shiftedPartStartIndex, shiftedPartLength, replacementAmountMinus1 );
+    System.arraycopy( replacement, 0, nodes, breakableIndex, replacement.length );
+
+    // deliberately ignore elementPositions and elementDimensions,
+    // as they are reinitialised on each iterate() call
+
+    sequenceFill = newSize;
   }
 }
