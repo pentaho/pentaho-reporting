@@ -15,13 +15,30 @@
 * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
 
-package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
+package org.pentaho.reporting.engine.classic.core;
 
-public class SqlDataFactoryDriverTestGenerator {
-  public static void main( String[] args ) throws Exception {
-    final SqlDataFactoryDriverIT test = new SqlDataFactoryDriverIT();
-    test.setUp();
-    test.runGenerate( SqlDataFactoryDriverIT.QUERIES_AND_RESULTS );
+import junit.framework.TestCase;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+
+import javax.swing.table.DefaultTableModel;
+
+public class EmptyReportProcessingIT extends TestCase {
+  public EmptyReportProcessingIT() {
+  }
+
+  public EmptyReportProcessingIT( final String s ) {
+    super( s );
+  }
+
+  protected void setUp() throws Exception {
+    ClassicEngineBoot.getInstance().start();
+  }
+
+  public void testFailure() throws Exception {
+    final MasterReport report = new MasterReport();
+    report.setDataFactory( new TableDataFactory( "default", new DefaultTableModel( 1, 1 ) ) );
+    DebugReportRunner.executeAll( report );
+
   }
 
 }

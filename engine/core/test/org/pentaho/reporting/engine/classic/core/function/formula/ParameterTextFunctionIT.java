@@ -15,13 +15,31 @@
 * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
 
-package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
+package org.pentaho.reporting.engine.classic.core.function.formula;
 
-public class SqlDataFactoryDriverTestGenerator {
-  public static void main( String[] args ) throws Exception {
-    final SqlDataFactoryDriverIT test = new SqlDataFactoryDriverIT();
-    test.setUp();
-    test.runGenerate( SqlDataFactoryDriverIT.QUERIES_AND_RESULTS );
+import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+public class ParameterTextFunctionIT extends FormulaTestBase {
+  public ParameterTextFunctionIT() {
   }
 
+  public ParameterTextFunctionIT( final String s ) {
+    super( s );
+  }
+
+  protected Object[][] createDataTest() {
+    return new Object[][] {
+      { "PARAMETERTEXT(DATE(2009;10;10))", "2009-10-10T00%3A00%3A00.000%2B0000" },
+      { "PARAMETERTEXT(100000)", "100000" },
+      { "PARAMETERTEXT(1000.001)", "1000.001" },
+      { "PARAMETERTEXT(\"AAAA\"; TRUE())", "AAAA" },
+      { "PARAMETERTEXT(\"&:;\"; FALSE())", "&:;" },
+      { "PARAMETERTEXT(\"&:;\"; TRUE())", "%26%3A%3B" },
+
+    };
+  }
+
+  public void testDefault() throws Exception {
+    runDefaultTest();
+  }
 }

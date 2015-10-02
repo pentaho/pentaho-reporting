@@ -12,22 +12,18 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
+package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.util.Locale;
-import java.util.TimeZone;
+import org.junit.Assert;
+import org.junit.Test;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui.Messages;
 
-public class SequenceDataFactoryTestGenerator {
-  public static void main( String[] args ) throws Exception {
-    Locale.setDefault( Locale.US );
-    TimeZone.setDefault( TimeZone.getTimeZone( "UTC" ) );
-
-    final SequenceDataFactoryIT test = new SequenceDataFactoryIT();
-    test.setUp();
-    test.runGenerate( SequenceDataFactoryIT.QUERIES_AND_RESULTS );
+public class Prd5121IT {
+  @Test
+  public void testMessages() {
+    Assert.assertEquals( "Add", Messages.getString( "QueryAddAction.Name" ) );
   }
-
 }

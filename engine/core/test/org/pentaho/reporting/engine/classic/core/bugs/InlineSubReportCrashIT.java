@@ -15,13 +15,27 @@
 * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
 
-package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
+package org.pentaho.reporting.engine.classic.core.bugs;
 
-public class SqlDataFactoryDriverTestGenerator {
-  public static void main( String[] args ) throws Exception {
-    final SqlDataFactoryDriverIT test = new SqlDataFactoryDriverIT();
-    test.setUp();
-    test.runGenerate( SqlDataFactoryDriverIT.QUERIES_AND_RESULTS );
+import junit.framework.TestCase;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+
+public class InlineSubReportCrashIT extends TestCase {
+  public InlineSubReportCrashIT() {
   }
 
+  protected void setUp() throws Exception {
+    ClassicEngineBoot.getInstance().start();
+  }
+
+  public void testReport() throws Exception {
+    MasterReport report = new MasterReport();
+    report.getReportHeader().addElement( new SubReport() );
+
+    // if the bug is there, it will fail with an StackOverflowError ..
+    DebugReportRunner.layoutPage( report, 0 );
+  }
 }

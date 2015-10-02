@@ -15,19 +15,25 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
+package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.util.Locale;
-import java.util.TimeZone;
+import org.junit.Before;
+import org.junit.Test;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class SequenceDataFactoryTestGenerator {
-  public static void main( String[] args ) throws Exception {
-    Locale.setDefault( Locale.US );
-    TimeZone.setDefault( TimeZone.getTimeZone( "UTC" ) );
-
-    final SequenceDataFactoryIT test = new SequenceDataFactoryIT();
-    test.setUp();
-    test.runGenerate( SequenceDataFactoryIT.QUERIES_AND_RESULTS );
+public class Prd4841IT {
+  @Before
+  public void setUp() throws Exception {
+    ClassicEngineBoot.getInstance().start();
   }
 
+  @Test
+  public void testGoldenSample() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4841.prpt" );
+    LogicalPageBox page = DebugReportRunner.layoutPage( report, 0 );
+    // This test should not throw an exception
+  }
 }
