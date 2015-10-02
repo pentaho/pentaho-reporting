@@ -48,7 +48,7 @@ public class DefaultObjectFactory implements ObjectFactory {
       final Class clazz = (Class) Class.forName( value, false, classLoader );
       final Annotation annotation = clazz.getAnnotation( SingletonHint.class );
       if ( annotation == null ) {
-        final T retval = ObjectUtilities.loadAndInstantiate( value, interfaceClass, interfaceClass );
+        final T retval = ObjectUtilities.instantiateSafe( clazz, interfaceClass );
         if ( retval == null ) {
           throw new ObjectFactoryException( interfaceClass.getName(), value );
         }
@@ -60,7 +60,7 @@ public class DefaultObjectFactory implements ObjectFactory {
         return (T) o;
       }
 
-      final T retval = ObjectUtilities.loadAndInstantiate( value, interfaceClass, interfaceClass );
+      final T retval = ObjectUtilities.instantiateSafe( clazz, interfaceClass );
       if ( retval == null ) {
         throw new ObjectFactoryException( interfaceClass.getName(), value );
       }

@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.libraries.base.config;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
-import java.util.TreeSet;
 
 /**
  * Default configuration.
@@ -74,17 +74,26 @@ public class DefaultConfiguration extends Properties
    * @return the properties as iterator.
    */
   public Iterator<String> findPropertyKeys( final String prefix ) {
-    final TreeSet<String> collector = new TreeSet<String>();
-    final Enumeration enum1 = keys();
+    String[] array = new String[ size() ];
+    int found = 0;
+    Enumeration enum1 = keys();
     while ( enum1.hasMoreElements() ) {
-      final String key = (String) enum1.nextElement();
+      String key = (String) enum1.nextElement();
       if ( key.startsWith( prefix ) ) {
-        if ( collector.contains( key ) == false ) {
-          collector.add( key );
-        }
+        array[ found ] = key;
+        found++;
       }
     }
-    return Collections.unmodifiableSet( collector ).iterator();
+    if ( found == 0 ) {
+      return Collections.emptyIterator();
+    } else if ( found == 1 ) {
+      return Collections.singleton( array[ 0 ] ).iterator();
+    } else {
+      String[] returned = new String[ found ];
+      System.arraycopy( array, 0, returned, 0, found );
+      Arrays.sort( returned );
+      return Arrays.asList( returned ).iterator();
+    }
   }
 
   public Enumeration<String> getConfigProperties() {

@@ -361,13 +361,7 @@ public final class ObjectUtilities {
     try {
       final ClassLoader loader = getClassLoader( source );
       final Class c = Class.forName( className, false, loader );
-      if ( type != null && type.isAssignableFrom( c ) == false ) {
-        // this is unacceptable and means someone messed up the configuration
-        LOGGER.warn( "Specified class " + className + " is not of expected type " + type );
-        return null;
-      }
-      //noinspection unchecked
-      return (T) c.newInstance();
+      return instantiateSafe( c, type );
     } catch ( ClassNotFoundException e ) {
       if ( LOGGER.isDebugEnabled() ) {
         LOGGER.debug( "Specified class " + className + " does not exist.", e );
@@ -375,17 +369,39 @@ public final class ObjectUtilities {
       // sometimes, this one is expected.
     } catch ( NoClassDefFoundError e ) {
       if ( LOGGER.isDebugEnabled() ) {
-        LOGGER.debug( "Specified class " + className + " cannot be loaded [NOCLASSDEFERROR].", e );
+        LOGGER.debug( noClassDefFoundErrorMessage( className ), e );
+      }
+    }
+    return null;
+  }
+
+  public static <T> T instantiateSafe( final Class clazz,
+                                       final Class<T> type ) {
+    try {
+      if ( type != null && type.isAssignableFrom( clazz ) == false ) {
+        // this is unacceptable and means someone messed up the configuration
+        LOGGER.warn( "Specified class " + clazz.getName() + " is not of expected type " + type );
+        return null;
+      }
+      //noinspection unchecked
+      return (T) clazz.newInstance();
+    } catch ( NoClassDefFoundError e ) {
+      if ( LOGGER.isDebugEnabled() ) {
+        LOGGER.debug( noClassDefFoundErrorMessage( clazz.getName() ), e );
       }
     } catch ( Throwable e ) {
       // this is more severe than a class not being found at all
       if ( LOGGER.isDebugEnabled() ) {
-        LOGGER.info( "Specified class " + className + " failed to instantiate correctly.", e );
+        LOGGER.debug( "Specified class " + clazz.getName() + " failed to instantiate correctly.", e );
       } else {
-        LOGGER.info( "Specified class " + className + " failed to instantiate correctly." );
+        LOGGER.info( "Specified class " + clazz.getName() + " failed to instantiate correctly." );
       }
     }
     return null;
+  }
+
+  private static String noClassDefFoundErrorMessage( String clazz ) {
+    return "Specified class " + clazz + " cannot be loaded [NOCLASSDEFERROR].";
   }
 
   public static <T> Class<? extends T> loadAndValidate( final String className,
@@ -411,7 +427,7 @@ public final class ObjectUtilities {
       // sometimes, this one is expected.
     } catch ( NoClassDefFoundError e ) {
       if ( LOGGER.isDebugEnabled() ) {
-        LOGGER.debug( "Specified class " + className + " cannot be loaded [NOCLASSDEFERROR].", e );
+        LOGGER.debug( noClassDefFoundErrorMessage( className ), e );
       }
     } catch ( Throwable e ) {
       // this is more severe than a class not being found at all
