@@ -727,11 +727,7 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
    */
   // package local visibility for testing purposes
   static void shiftArray( Object[] array, int startIndex, int amount, int offset ) {
-    int endIndex = startIndex + amount - 1;
-    int destEndIndex = endIndex + offset;
-    for ( int i = endIndex, j = destEndIndex; i >= startIndex; i--, j-- ) {
-      array[ j ] = array[ i ];
-    }
+    System.arraycopy( array, startIndex, array, startIndex + offset, amount );
   }
 
   /**
