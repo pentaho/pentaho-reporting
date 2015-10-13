@@ -24,7 +24,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 
 import java.util.ArrayList;
 
-public class DefaultTableMetaData {
+public class DefaultTableMetaData implements TableMetaData {
   private DefaultDataAttributes tableAttributes;
   private ArrayList<DefaultDataAttributes> columnAttributes;
 

@@ -29,20 +29,26 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.HashNMap;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
   private HashNMap<InstanceID, StyleKey> dynamicTemplateInfo;
   private HashNMap<String, StyleKey> styleByElementName;
-  private HashNMap<InstanceID, StyleKey> styleById;
 
   public DynamicStyleRootBandAnalyzer( final HashNMap<String, StyleKey> styleByElementName,
       final HashNMap<InstanceID, StyleKey> styleById ) {
     this.styleByElementName = styleByElementName;
-    this.styleById = styleById;
     this.dynamicTemplateInfo = new HashNMap<InstanceID, StyleKey>();
+
+    for (final InstanceID id: styleById.keySet()) {
+      Iterator<StyleKey> it = styleById.getAll( id );
+      while (it.hasNext()) {
+        this.dynamicTemplateInfo.put( id, it.next() );
+      }
+    }
   }
 
-  public void compute( Section rootLevelBand ) {
+  public void compute( final Section rootLevelBand ) {
     this.dynamicTemplateInfo.clear();
     inspectElement( rootLevelBand );
     traverseSection( rootLevelBand );
@@ -55,7 +61,7 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
   private HashMap<InstanceID, StyleKey[]> buildStash() {
     HashMap<InstanceID, StyleKey[]> stash = new HashMap<InstanceID, StyleKey[]>();
 
-    for ( InstanceID id : this.dynamicTemplateInfo.keySet() ) {
+    for ( final InstanceID id : this.dynamicTemplateInfo.keySet() ) {
       int valueCount = this.dynamicTemplateInfo.getValueCount( id );
       StyleKey[] styleKeys = this.dynamicTemplateInfo.toArray( id, new StyleKey[valueCount] );
       stash.put( id, styleKeys );
@@ -69,6 +75,13 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
 
   protected void inspectElement( final ReportElement element ) {
     dynamicTemplateInfo.add( element.getObjectID(), ElementStyleKeys.VISIBLE );
+    String name = element.getName();
+    if ( styleByElementName.containsKey( name ) ) {
+      Iterator<StyleKey> it = styleByElementName.getAll( name );
+      while (it.hasNext()) {
+        this.dynamicTemplateInfo.put( element.getObjectID(), it.next() );
+      }
+    }
     traverseStyleExpressions( element );
   }
 

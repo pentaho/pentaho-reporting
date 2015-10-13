@@ -21,6 +21,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
 public class StringConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new StringConceptMapper();
   public StringConceptMapper() {
   }
 

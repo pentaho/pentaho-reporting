@@ -18,9 +18,12 @@
 package org.pentaho.reporting.libraries.xmlns.common;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A attribute map holding &lt;namspace;name&gt;-value pairs.
@@ -28,12 +31,50 @@ import java.util.Map;
  * @author Thomas Morgner
  */
 public class AttributeMap<T> implements Serializable, Cloneable {
-  private static final String[] EMPTY_NAMESPACES = new String[ 0 ];
+  public static class DualKey implements Serializable {
+    public final String namespace;
+    public final String name;
+
+    private DualKey( final String namespace, final String name ) {
+      this.namespace = namespace;
+      this.name = name;
+    }
+
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
+        return true;
+      }
+      if ( o == null || getClass() != o.getClass() ) {
+        return false;
+      }
+
+      final DualKey dualKey = (DualKey) o;
+
+      if ( !name.equals( dualKey.name ) ) {
+        return false;
+      }
+      if ( !namespace.equals( dualKey.namespace ) ) {
+        return false;
+      }
+
+      return true;
+    }
+
+    public int hashCode() {
+      int result = name.hashCode();
+      result = 31 * result + namespace.hashCode();
+      return result;
+    }
+
+    public String toString() {
+      return String.format( "DualKey(%s, %s)", namespace, name );
+    }
+  }
+
+  private static final String[] EMPTY_NAMESPACES = new String[0];
 
   private static final long serialVersionUID = -7442871030874215436L;
-  private LinkedHashMap<String, LinkedHashMap<String, T>> namespaces;
-  private String singletonNamespace;
-  private LinkedHashMap<String, T> singletonContent;
+  private LinkedHashMap<DualKey, T> content;
 
   /**
    * Default constructor.
@@ -52,19 +93,8 @@ public class AttributeMap<T> implements Serializable, Cloneable {
       return;
     }
 
-    if ( copy.singletonNamespace != null ) {
-      singletonNamespace = copy.singletonNamespace;
-      singletonContent = (LinkedHashMap<String, T>) copy.singletonContent.clone();
-    }
-
-    if ( copy.namespaces == null ) {
-      return;
-    }
-
-    namespaces = (LinkedHashMap<String, LinkedHashMap<String, T>>) copy.namespaces.clone();
-    for ( final Map.Entry<String, LinkedHashMap<String, T>> entry : namespaces.entrySet() ) {
-      final LinkedHashMap<String, T> value = entry.getValue();
-      entry.setValue( (LinkedHashMap<String, T>) value.clone() );
+    if ( copy.content != null ) {
+      this.content = (LinkedHashMap<DualKey, T>) copy.content.clone();
     }
   }
 
@@ -77,18 +107,12 @@ public class AttributeMap<T> implements Serializable, Cloneable {
   public AttributeMap<T> clone() {
     try {
       final AttributeMap<T> map = (AttributeMap<T>) super.clone();
-      if ( singletonNamespace != null ) {
-        map.singletonContent = (LinkedHashMap<String, T>) singletonContent.clone();
-      }
-      if ( namespaces != null ) {
-        map.namespaces = (LinkedHashMap<String, LinkedHashMap<String, T>>) namespaces.clone();
-        for ( final Map.Entry<String, LinkedHashMap<String, T>> entry : map.namespaces.entrySet() ) {
-          final LinkedHashMap value = entry.getValue();
-          entry.setValue( (LinkedHashMap<String, T>) value.clone() );
-        }
+      if ( content != null ) {
+        map.content = (LinkedHashMap<DualKey, T>) content.clone();
       }
       return map;
-    } catch ( final CloneNotSupportedException cne ) {
+    }
+    catch ( final CloneNotSupportedException cne ) {
       // ignored
       throw new IllegalStateException( "Cannot happen: Clone not supported exception" );
     }
@@ -112,51 +136,14 @@ public class AttributeMap<T> implements Serializable, Cloneable {
       throw new NullPointerException( "Attribute name must not be null" );
     }
 
-    if ( singletonNamespace == null ) {
+    if ( content == null ) {
       if ( value != null ) {
-        singletonNamespace = namespace;
-        singletonContent = new LinkedHashMap<String, T>();
-        singletonContent.put( attribute, value );
+        content = new LinkedHashMap<DualKey, T>();
+        content.put( new DualKey( namespace, attribute ), value );
       }
       return null;
     }
-    if ( namespace.equals( singletonNamespace ) ) {
-      if ( value == null ) {
-        return singletonContent.remove( attribute );
-      } else {
-        return singletonContent.put( attribute, value );
-      }
-    }
-
-    if ( namespaces == null ) {
-      if ( value == null ) {
-        return null;
-      }
-
-      namespaces = new LinkedHashMap<String, LinkedHashMap<String, T>>();
-    }
-
-    final LinkedHashMap<String, T> attrs = namespaces.get( namespace );
-    if ( attrs == null ) {
-      if ( value == null ) {
-        return null;
-      }
-
-      final LinkedHashMap<String, T> newAtts = new LinkedHashMap<String, T>();
-      newAtts.put( attribute, value );
-      namespaces.put( namespace, newAtts );
-      return null;
-    } else {
-      if ( value == null ) {
-        final T retval = attrs.remove( attribute );
-        if ( attrs.isEmpty() ) {
-          namespaces.remove( namespace );
-        }
-        return retval;
-      } else {
-        return attrs.put( attribute, value );
-      }
-    }
+    return content.put( new DualKey( namespace, attribute ), value );
   }
 
   /**
@@ -174,23 +161,10 @@ public class AttributeMap<T> implements Serializable, Cloneable {
     if ( attribute == null ) {
       throw new NullPointerException( "Attribute name must not be null" );
     }
-    if ( singletonNamespace == null ) {
+    if ( content == null ) {
       return null;
     }
-    if ( namespace.equals( singletonNamespace ) ) {
-      return singletonContent.get( attribute );
-    }
-
-    if ( namespaces == null ) {
-      return null;
-    }
-
-    final LinkedHashMap<String, T> attrs = namespaces.get( namespace );
-    if ( attrs == null ) {
-      return null;
-    } else {
-      return attrs.get( attribute );
-    }
+    return content.get( new DualKey( namespace, attribute ) );
   }
 
   /**
@@ -207,24 +181,14 @@ public class AttributeMap<T> implements Serializable, Cloneable {
       throw new NullPointerException( "Attribute name must not be null" );
     }
 
-    if ( singletonContent != null ) {
-      final T val = singletonContent.get( attribute );
-      if ( val != null ) {
-        return val;
+    if ( content != null ) {
+      for ( final Map.Entry<DualKey, T> entry : content.entrySet() ) {
+        if ( attribute.equals( entry.getKey().name ) ) {
+          return entry.getValue();
+        }
       }
     }
 
-    if ( namespaces == null ) {
-      return null;
-    }
-
-    for ( final Map.Entry<String, LinkedHashMap<String, T>> entry : namespaces.entrySet() ) {
-      final LinkedHashMap<String, T> value = entry.getValue();
-      final T val = value.get( attribute );
-      if ( val != null ) {
-        return val;
-      }
-    }
     return null;
   }
 
@@ -239,20 +203,16 @@ public class AttributeMap<T> implements Serializable, Cloneable {
       throw new NullPointerException( "Attribute namespace must not be null" );
     }
 
-    if ( namespace.equals( singletonNamespace ) ) {
-      return Collections.unmodifiableMap( singletonContent );
+    if ( content == null ) {
+      return null;
     }
-
-    if ( namespaces == null ) {
-      return Collections.emptyMap();
+    LinkedHashMap<String, T> entries = new LinkedHashMap<String, T>();
+    for ( final Map.Entry<DualKey, T> entry : content.entrySet() ) {
+      if ( namespace.equals( entry.getKey().namespace ) ) {
+        entries.put( entry.getKey().name, entry.getValue() );
+      }
     }
-
-    final LinkedHashMap<String, T> attrs = namespaces.get( namespace );
-    if ( attrs == null ) {
-      return Collections.emptyMap();
-    } else {
-      return Collections.unmodifiableMap( attrs );
-    }
+    return Collections.unmodifiableMap( entries );
   }
 
   /**
@@ -266,20 +226,25 @@ public class AttributeMap<T> implements Serializable, Cloneable {
       throw new NullPointerException( "Attribute namespace must not be null" );
     }
 
-    if ( namespace.equals( singletonNamespace ) ) {
-      return singletonContent.keySet().toArray( new String[ singletonContent.size() ] );
-    }
-
-    if ( namespaces == null ) {
+    if ( content == null ) {
       return AttributeMap.EMPTY_NAMESPACES;
     }
 
-    final LinkedHashMap<String, T> attrs = namespaces.get( namespace );
-    if ( attrs == null ) {
-      return AttributeMap.EMPTY_NAMESPACES;
-    } else {
-      return attrs.keySet().toArray( new String[ attrs.size() ] );
+    LinkedHashSet<String> entries = new LinkedHashSet<String>();
+    for ( final Map.Entry<DualKey, T> entry : content.entrySet() ) {
+      if ( namespace.equals( entry.getKey().namespace ) ) {
+        entries.add( entry.getKey().name );
+      }
     }
+
+    return entries.toArray( new String[entries.size()] );
+  }
+
+  public Set<DualKey> keySet() {
+    if (content == null) {
+      return Collections.emptySet();
+    }
+    return content.keySet();
   }
 
   /**
@@ -288,55 +253,27 @@ public class AttributeMap<T> implements Serializable, Cloneable {
    * @return the namespaces stored in this map.
    */
   public String[] getNameSpaces() {
-    if ( namespaces == null ) {
-      if ( singletonContent != null ) {
-        return new String[] { singletonNamespace };
-      }
+    if ( content == null ) {
       return AttributeMap.EMPTY_NAMESPACES;
     }
-    final String[] strings = namespaces.keySet().toArray( new String[ namespaces.size() + 1 ] );
-    System.arraycopy( strings, 0, strings, 1, namespaces.size() );
-    strings[ 0 ] = singletonNamespace;
-    return strings;
+
+    LinkedHashSet<String> entries = new LinkedHashSet<String>();
+    for ( final Map.Entry<DualKey, T> entry : content.entrySet() ) {
+      entries.add( entry.getKey().namespace );
+    }
+
+    return entries.toArray( new String[entries.size()] );
   }
 
   public void putAll( final AttributeMap<T> attributeMap ) {
-    final String[] namespaces = attributeMap.getNameSpaces();
-    if ( namespaces.length == 0 ) {
+    if ( attributeMap.content == null ) {
       return;
     }
 
-    final boolean dontCopySingleton;
-    if ( this.singletonNamespace == null ) {
-      dontCopySingleton = true;
-      this.singletonNamespace = attributeMap.singletonNamespace;
-      //noinspection unchecked
-      this.singletonContent = (LinkedHashMap<String, T>) attributeMap.singletonContent.clone();
+    if ( content == null ) {
+      content = (LinkedHashMap<DualKey, T>) attributeMap.content.clone();
     } else {
-      if ( this.singletonNamespace.equals( attributeMap.singletonNamespace ) ) {
-        dontCopySingleton = true;
-        this.singletonContent.putAll( attributeMap.singletonContent );
-      } else {
-        dontCopySingleton = false;
-      }
-    }
-
-    for ( int i = 0; i < namespaces.length; i++ ) {
-      final String namespace = namespaces[ i ];
-      final Map<String, T> sourceMap = attributeMap.getAttributes( namespace );
-      if ( dontCopySingleton && singletonNamespace.equals( namespace ) ) {
-        continue;
-      }
-
-      if ( this.namespaces == null ) {
-        this.namespaces = new LinkedHashMap<String, LinkedHashMap<String, T>>();
-      }
-      final LinkedHashMap<String, T> targetMap = this.namespaces.get( namespace );
-      if ( targetMap == null ) {
-        this.namespaces.put( namespace, new LinkedHashMap<String, T>( sourceMap ) );
-      } else {
-        targetMap.putAll( sourceMap );
-      }
+      content.putAll( attributeMap.content );
     }
   }
 
@@ -349,15 +286,7 @@ public class AttributeMap<T> implements Serializable, Cloneable {
     }
 
     final AttributeMap that = (AttributeMap) o;
-    if ( singletonNamespace != null ? !singletonNamespace.equals( that.singletonNamespace ) :
-      that.singletonNamespace != null ) {
-      return false;
-    }
-    if ( singletonContent != null ? !singletonContent.equals( that.singletonContent ) :
-      that.singletonContent != null ) {
-      return false;
-    }
-    if ( namespaces != null ? !namespaces.equals( that.namespaces ) : that.namespaces != null ) {
+    if ( content != null ? !content.equals( that.content ) : that.content != null ) {
       return false;
     }
 
@@ -365,25 +294,23 @@ public class AttributeMap<T> implements Serializable, Cloneable {
   }
 
   public int hashCode() {
-    int result = namespaces != null ? namespaces.hashCode() : 0;
-    result = 31 * result + ( singletonNamespace != null ? singletonNamespace.hashCode() : 0 );
-    result = 31 * result + ( singletonContent != null ? singletonContent.hashCode() : 0 );
-    return result;
+    if ( content != null ) {
+      return content.hashCode();
+    }
+    return 0;
   }
 
   public String toString() {
     final StringBuilder sb = new StringBuilder();
     sb.append( "AttributeMap" );
-    sb.append( "{namespaces=" ).append( namespaces );
-    sb.append( ", singletonNamespace='" ).append( singletonNamespace ).append( '\'' );
-    sb.append( ", singletonContent=" ).append( singletonContent );
+    sb.append( "{content=" ).append( content );
     sb.append( '}' );
     return sb.toString();
   }
 
   public void clear() {
-    namespaces.clear();
-    singletonContent = null;
-    singletonNamespace = null;
+    if ( content != null ) {
+      content.clear();
+    }
   }
 }

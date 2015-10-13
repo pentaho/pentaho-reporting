@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
 public class NumberConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new NumberConceptMapper();
   public NumberConceptMapper() {
   }
 

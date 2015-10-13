@@ -1,18 +1,18 @@
 /*
  * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
+ *  terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ *  Foundation.
  *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  You should have received a copy of the GNU Lesser General Public License along with this
+ *  program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ *  or from the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *  See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.wizard;
@@ -21,7 +21,9 @@ import java.io.Serializable;
 
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 
-public class DefaultDataAttributes implements DataAttributes {
+public final class ImmutableDataAttributes implements DataAttributes {
+  public static final ImmutableDataAttributes EMPTY = new ImmutableDataAttributes();
+
   private static class Entry implements Serializable {
     public final ConceptQueryMapper mapper;
     public final Object value;
@@ -30,25 +32,60 @@ public class DefaultDataAttributes implements DataAttributes {
       this.mapper = mapper;
       this.value = value;
     }
+
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
+        return true;
+      }
+      if ( o == null || getClass() != o.getClass() ) {
+        return false;
+      }
+
+      final Entry entry = (Entry) o;
+
+      if ( mapper != null ? !mapper.equals( entry.mapper ) : entry.mapper != null ) {
+        return false;
+      }
+      if ( value != null ? !value.equals( entry.value ) : entry.value != null ) {
+        return false;
+      }
+
+      return true;
+    }
+
+    public int hashCode() {
+      int result = mapper != null ? mapper.hashCode() : 0;
+      result = 31 * result + ( value != null ? value.hashCode() : 0 );
+      return result;
+    }
   }
 
   private AttributeMap<Entry> backend;
 
-  public DefaultDataAttributes() {
+  private ImmutableDataAttributes() {
     this.backend = new AttributeMap<Entry>();
   }
 
-  public void setMetaAttribute( final String domain,
-                                final String name,
-                                final ConceptQueryMapper conceptMapper,
-                                final Object value ) {
-    if ( name == null ) {
-      throw new NullPointerException();
+  private ImmutableDataAttributes(DataAttributes source, DataAttributeContext context) {
+    this.backend = new AttributeMap<Entry>();
+    merge( source, context );
+  }
+
+  public ImmutableDataAttributes(AttributeMap<Object> data) {
+    this.backend = new AttributeMap<Entry>();
+    for (AttributeMap.DualKey k: data.keySet()) {
+      final Object value = data.getAttribute( k.namespace, k.name );
+      this.backend.setAttribute( k.namespace, k.name, new Entry( DefaultConceptQueryMapper.INSTANCE, value ) );
     }
-    if ( domain == null ) {
-      throw new NullPointerException();
+  }
+
+  public static ImmutableDataAttributes create(DataAttributes source, DataAttributeContext context) {
+    if (source instanceof ImmutableDataAttributes) {
+      return (ImmutableDataAttributes) source;
     }
-    backend.setAttribute( domain, name, new Entry(conceptMapper, value));
+    else {
+      return new ImmutableDataAttributes( source, context );
+    }
   }
 
   public String[] getMetaAttributeDomains() {
@@ -120,7 +157,7 @@ public class DefaultDataAttributes implements DataAttributes {
     return attribute.mapper;
   }
 
-  public void merge( final DataAttributes attributes,
+  private void merge( final DataAttributes attributes,
                      final DataAttributeContext context ) {
     if ( attributes == null ) {
       throw new NullPointerException();
@@ -144,39 +181,35 @@ public class DefaultDataAttributes implements DataAttributes {
     }
   }
 
-  public void mergeReferences( final DataAttributeReferences references,
-                               final DataAttributeContext context ) {
-    if ( references == null ) {
-      throw new NullPointerException();
-    }
-    if ( context == null ) {
-      throw new NullPointerException();
-    }
-    final String[] domains = references.getMetaAttributeDomains();
-    for ( int i = 0; i < domains.length; i++ ) {
-      final String domain = domains[ i ];
-      final String[] names = references.getMetaAttributeNames( domain );
-      for ( int j = 0; j < names.length; j++ ) {
-        final String name = names[ j ];
-        final DataAttributeReference ref = references.getReference( domain, name );
-        final Object value = ref.resolve( this, context );
-        if ( value != null ) {
-          ConceptQueryMapper conceptQueryMapper = ref.resolveMapper( this );
-          backend.setAttribute( domain, name, new Entry(conceptQueryMapper, value ));
-        }
-      }
-    }
-  }
-
-  public Object clone() throws CloneNotSupportedException {
-    final DefaultDataAttributes o = (DefaultDataAttributes) super.clone();
+  public ImmutableDataAttributes clone() throws CloneNotSupportedException {
+    final ImmutableDataAttributes o = (ImmutableDataAttributes) super.clone();
     o.backend = backend.clone();
     return o;
   }
-
 
   public boolean isEmpty() {
     return backend.getNameSpaces().length == 0;
   }
 
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
+      return true;
+    }
+    if ( o == null || getClass() != o.getClass() ) {
+      return false;
+    }
+
+    final ImmutableDataAttributes that = (ImmutableDataAttributes) o;
+
+    if ( !backend.equals( that.backend ) ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  public int hashCode() {
+    return backend.hashCode();
+  }
 }
+

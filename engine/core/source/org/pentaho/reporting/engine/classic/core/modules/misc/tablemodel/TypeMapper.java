@@ -123,41 +123,44 @@ public class TypeMapper {
   public static Class[] mapTypes( final ResultSetMetaData rsmd ) {
     final Class[] types;
     try {
-      types = new Class[rsmd.getColumnCount()];
+      types = new Class[ rsmd.getColumnCount() ];
     } catch ( SQLException sqle ) {
       // indicate that we do not have knowledge about any types ..
       return null;
     }
 
-    final ClassLoader cl = ObjectUtilities.getClassLoader( TypeMapper.class );
     final int typeLength = types.length;
     for ( int i = 0; i < typeLength; i++ ) {
-      try {
-        try {
-          final String tn = rsmd.getColumnClassName( i + 1 );
-          if ( tn == null ) {
-            final int colType = rsmd.getColumnType( i + 1 );
-            types[i] = mapSQLType( colType );
-          } else {
-            types[i] = Class.forName( tn, false, cl );
-          }
-        } catch ( final Exception oops ) {
-          // ignore exception
-          final int colType = rsmd.getColumnType( i + 1 );
-          types[i] = mapSQLType( colType );
-        }
-      } catch ( Exception e ) {
-        // still ignore the exception
-        types[i] = Object.class;
-      }
-
-      if ( types[i] == null ) {
+      types[ i ] = mapForColumn( rsmd, i );
+      if ( types[ i ] == null ) {
         logger.error( "JDBC Driver returned <null> as column type. This driver violates the JDBC specifications." );
-        types[i] = Object.class;
+        types[ i ] = Object.class;
       }
     }
 
     return types;
+  }
+
+  public static Class<?> mapForColumn(ResultSetMetaData rsmd, int i) {
+    try {
+      final ClassLoader cl = ObjectUtilities.getClassLoader( TypeMapper.class );
+      try {
+        final String tn = rsmd.getColumnClassName( i + 1 );
+        if ( tn == null ) {
+          final int colType = rsmd.getColumnType( i + 1 );
+          return mapSQLType( colType );
+        } else {
+          return Class.forName( tn, false, cl );
+        }
+      } catch ( final Exception oops ) {
+        // ignore exception
+        final int colType = rsmd.getColumnType( i + 1 );
+        return mapSQLType( colType );
+      }
+    } catch ( Exception e ) {
+      // still ignore the exception
+      return Object.class;
+    }
   }
 
   private TypeMapper() {

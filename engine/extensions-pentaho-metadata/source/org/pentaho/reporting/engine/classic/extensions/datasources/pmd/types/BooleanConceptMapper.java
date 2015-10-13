@@ -21,6 +21,8 @@ import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
 public class BooleanConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new BooleanConceptMapper();
+
   public BooleanConceptMapper() {
   }
 

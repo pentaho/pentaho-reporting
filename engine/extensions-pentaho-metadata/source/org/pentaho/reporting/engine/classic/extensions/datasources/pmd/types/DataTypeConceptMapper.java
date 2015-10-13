@@ -24,6 +24,8 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import java.util.Date;
 
 public class DataTypeConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new DataTypeConceptMapper();
+
   public DataTypeConceptMapper() {
   }
 

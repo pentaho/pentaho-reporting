@@ -26,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import java.util.Locale;
 
 public class LocalizedStringConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new LocalizedStringConceptMapper();
   private static final Log logger = LogFactory.getLog( LocalizedStringConceptMapper.class );
 
   public LocalizedStringConceptMapper() {

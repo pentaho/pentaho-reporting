@@ -22,6 +22,8 @@ import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
 public class AggregationConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new AggregationConceptMapper();
+
   public AggregationConceptMapper() {
   }
 
@@ -43,7 +45,7 @@ public class AggregationConceptMapper implements ConceptQueryMapper {
       return value;
     }
 
-    if ( type == null || Object.class.equals( type ) || AggregationType.class.equals( type ) ) {
+    if ( type == null || Object.class.equals( type ) ) {
       return value;
     }
 

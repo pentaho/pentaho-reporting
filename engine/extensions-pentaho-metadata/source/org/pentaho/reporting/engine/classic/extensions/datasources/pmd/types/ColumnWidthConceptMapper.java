@@ -27,6 +27,8 @@ import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
 public class ColumnWidthConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new ColumnWidthConceptMapper();
+
   public ColumnWidthConceptMapper() {
   }
 

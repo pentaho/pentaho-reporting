@@ -23,6 +23,8 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import java.net.URL;
 
 public class URLConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new URLConceptMapper();
+
   public URLConceptMapper() {
   }
 

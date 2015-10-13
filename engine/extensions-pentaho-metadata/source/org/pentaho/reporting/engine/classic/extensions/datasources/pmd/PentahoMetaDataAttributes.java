@@ -44,8 +44,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class PentahoMetaDataAttributes implements DataAttributes {
-  private static final String[] NAMESPACES = new String[]
-    { PmdDataFactoryModule.META_DOMAIN };
+  private static final String[] NAMESPACES = new String[] { PmdDataFactoryModule.META_DOMAIN };
 
   private DataAttributes backend;
   private IConcept concept;
@@ -65,21 +64,21 @@ public class PentahoMetaDataAttributes implements DataAttributes {
 
     this.backend = backend;
     this.conceptMappers = new ArrayList<ConceptQueryMapper>();
-    this.conceptMappers.add( new AggregationConceptMapper() );
-    this.conceptMappers.add( new AlignmentConceptMapper() );
-    this.conceptMappers.add( new BooleanConceptMapper() );
-    this.conceptMappers.add( new ColorConceptMapper() );
-    this.conceptMappers.add( new ColumnWidthConceptMapper() );
-    this.conceptMappers.add( new DataTypeConceptMapper() );
-    this.conceptMappers.add( new DateConceptMapper() );
-    this.conceptMappers.add( new FieldTypeConceptMapper() );
-    this.conceptMappers.add( new FontSettingsConceptMapper() );
-    this.conceptMappers.add( new NumberConceptMapper() );
-    this.conceptMappers.add( new LocalizedStringConceptMapper() );
-    this.conceptMappers.add( new TableTypeConceptMapper() );
-    this.conceptMappers.add( new URLConceptMapper() );
-    this.conceptMappers.add( new StringConceptMapper() );
-    this.conceptMappers.add( new SecurityConceptMapper() );
+    this.conceptMappers.add( AggregationConceptMapper.INSTANCE );
+    this.conceptMappers.add( AlignmentConceptMapper.INSTANCE );
+    this.conceptMappers.add( BooleanConceptMapper.INSTANCE );
+    this.conceptMappers.add( ColorConceptMapper.INSTANCE );
+    this.conceptMappers.add( ColumnWidthConceptMapper.INSTANCE );
+    this.conceptMappers.add( DataTypeConceptMapper.INSTANCE );
+    this.conceptMappers.add( DateConceptMapper.INSTANCE );
+    this.conceptMappers.add( FieldTypeConceptMapper.INSTANCE );
+    this.conceptMappers.add( FontSettingsConceptMapper.INSTANCE );
+    this.conceptMappers.add( NumberConceptMapper.INSTANCE );
+    this.conceptMappers.add( LocalizedStringConceptMapper.INSTANCE );
+    this.conceptMappers.add( TableTypeConceptMapper.INSTANCE );
+    this.conceptMappers.add( URLConceptMapper.INSTANCE );
+    this.conceptMappers.add( StringConceptMapper.INSTANCE );
+    this.conceptMappers.add( SecurityConceptMapper.INSTANCE );
   }
 
   public String[] getMetaAttributeDomains() {
