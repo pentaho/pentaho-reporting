@@ -1,21 +1,25 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.scriptable;
+
+import java.util.LinkedHashMap;
+
+import javax.swing.table.TableModel;
 
 import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;
@@ -30,9 +34,6 @@ import org.pentaho.reporting.engine.classic.core.states.LegacyDataRowWrapper;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-
-import javax.swing.table.TableModel;
-import java.util.LinkedHashMap;
 
 /**
  * A datafactory that uses a bean-scripting framework script to produce a tablemodel.
@@ -89,9 +90,8 @@ public class ScriptableDataFactory extends AbstractDataFactory {
   }
 
   public String[] getQueryNames() {
-    return queries.keySet().toArray( new String[ queries.size() ] );
+    return queries.keySet().toArray( new String[queries.size()] );
   }
-
 
   /**
    * Creates a new interpreter instance.
@@ -107,18 +107,18 @@ public class ScriptableDataFactory extends AbstractDataFactory {
   /**
    * Initializes the Bean-Scripting Framework manager.
    *
-   * @param interpreter the BSF-Manager that should be initialized.
-   * @throws BSFException if an error occured.
+   * @param interpreter
+   *          the BSF-Manager that should be initialized.
+   * @throws BSFException
+   *           if an error occurred.
    */
-  protected void initializeInterpreter( final BSFManager interpreter )
-    throws BSFException {
+  protected void initializeInterpreter( final BSFManager interpreter ) throws BSFException {
     dataRowWrapper = new LegacyDataRowWrapper();
     interpreter.declareBean( "dataRow", dataRowWrapper, DataRow.class ); //$NON-NLS-1$
     interpreter.declareBean( "configuration", getConfiguration(), Configuration.class ); //$NON-NLS-1$
     interpreter.declareBean( "contextKey", getContextKey(), ResourceKey.class ); //$NON-NLS-1$
     interpreter.declareBean( "resourceManager", getResourceManager(), ResourceManager.class ); //$NON-NLS-1$
-    interpreter
-      .declareBean( "resourceBundleFactory", getResourceBundleFactory(), ResourceBundleFactory.class ); //$NON-NLS-1$
+    interpreter.declareBean( "resourceBundleFactory", getResourceBundleFactory(), ResourceBundleFactory.class ); //$NON-NLS-1$
     interpreter.declareBean( "dataFactoryContext", getDataFactoryContext(), ResourceBundleFactory.class ); //$NON-NLS-1$
     if ( script != null ) {
       interpreter.exec( getLanguage(), "startup-script", 1, 1, getScript() ); //$NON-NLS-1$
@@ -132,10 +132,13 @@ public class ScriptableDataFactory extends AbstractDataFactory {
    * The parameter-dataset may change between two calls, do not assume anything, and do not hold references to the
    * parameter-dataset or the position of the columns in the dataset.
    *
-   * @param query      the query string
-   * @param parameters the parameters for the query
+   * @param query
+   *          the query string
+   * @param parameters
+   *          the parameters for the query
    * @return the result of the query as table model.
-   * @throws ReportDataFactoryException if an error occured while performing the query.
+   * @throws ReportDataFactoryException
+   *           if an error occurred while performing the query.
    */
   public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
     final String queryScript = queries.get( query );
@@ -163,7 +166,6 @@ public class ScriptableDataFactory extends AbstractDataFactory {
     } catch ( Exception e ) {
       throw new ReportDataFactoryException( "Evaluation error", e );
     }
-
   }
 
   public ScriptableDataFactory clone() {
@@ -175,7 +177,7 @@ public class ScriptableDataFactory extends AbstractDataFactory {
   }
 
   /**
-   * Returns a copy of the data factory that is not affected by its anchestor and holds no connection to the anchestor
+   * Returns a copy of the data factory that is not affected by its ancestor and holds no connection to the ancestor
    * anymore. A data-factory will be derived at the beginning of the report processing.
    *
    * @return a copy of the data factory.
