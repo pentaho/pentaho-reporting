@@ -30,25 +30,27 @@ import com.sun.jersey.multipart.impl.MultiPartWriter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+
+import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 
 public class PublishRestUtil {
 
   private static final Log logger = LogFactory.getLog( PublishRestUtil.class );
 
-  public static final String REPO_FILES_IMPORT = "api/repo/publish/publishfile";
+  public static final String REPO_FILES_IMPORT = "api/repo/publish/file";
 
-  private String baseUrl;
-  private String username;
-  private String password;
+  private final String baseUrl;
+  private final String username;
+  private final String password;
 
   private Client client = null;
 
   public PublishRestUtil( String baseUrl, String username, String password ) {
-    this.baseUrl = baseUrl;
+    this.baseUrl = baseUrl.endsWith( "/" ) ? baseUrl : baseUrl + '/';
     this.username = username;
     this.password = password;
 
@@ -67,7 +69,7 @@ public class PublishRestUtil {
   }
 
   /**
-   * Uses /repos/files/import service
+   * Uses /repos/publish/file service
    *
    * @param filePath
    * @param data
@@ -97,32 +99,41 @@ public class PublishRestUtil {
   }
 
   /**
-   * Uses /repos/files/import service
+   * Uses {@code /repos/publish/file} service. Possible response codes are:
+   * <ul>
+   *   <li>{@code 200} - upload was performed successfully</li>
+   *   <li>{@code 401} - upload failed due to insufficient privileges</li>
+   *   <li>{@code 422} - upload failed due to invalid {@code fileName} (most likely it contains prohibited symbols, e.g. '\n')</li>
+   *   <li>{@code 500} - upload failed due to some internal server error</li>
+   * </ul>
    *
-   * @param repositoryPath
-   * @param fileName
-   * @param fileInputStream
-   * @param overwriteIfExists
-   * @param fileNameOverride
+   * @param repositoryPath    repository folder where to upload the file; must be separated with /
+   * @param fileName          uploaded file's name; must not contain prohibited symbols
+   * @param fileInputStream   file's data stream
+   * @param overwriteIfExists flag indicating an existing file should be overwritten
    * @return http response code
+   * @see org.pentaho.platform.web.http.api.resources.RepositoryPublishResource
    */
   public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream,
                           boolean overwriteIfExists ) throws IOException {
 
-    String url = baseUrl.endsWith( "/" ) ? ( baseUrl + REPO_FILES_IMPORT ) : ( baseUrl + "/" + REPO_FILES_IMPORT );
+    String url = baseUrl + REPO_FILES_IMPORT;
 
     WebResource resource = client.resource( url );
     int responseCode = 504;
     try {
       FormDataMultiPart part = new FormDataMultiPart();
 
-      part.field( "importPath", repositoryPath + "/" + fileName, MediaType.MULTIPART_FORM_DATA_TYPE );
-      part.field( "fileUpload", fileInputStream, MediaType.MULTIPART_FORM_DATA_TYPE );
-      part.field( "overwriteFile", Boolean.toString( overwriteIfExists ), MediaType.MULTIPART_FORM_DATA_TYPE );
-      part.getField( "fileUpload" )
-        .setContentDisposition( FormDataContentDisposition.name( "fileUpload" ).fileName( fileName ).build() );
+      String pathEncoded = URLEncoder.encode( repositoryPath + "/" + fileName, "UTF-8" );
+      String nameEncoded = URLEncoder.encode( fileName, "UTF-8" );
 
-      WebResource.Builder builder = resource.type( MediaType.MULTIPART_FORM_DATA );
+      part.field( "importPath", pathEncoded, MULTIPART_FORM_DATA_TYPE );
+      part.field( "fileUpload", fileInputStream, MULTIPART_FORM_DATA_TYPE );
+      part.field( "overwriteFile", Boolean.toString( overwriteIfExists ), MULTIPART_FORM_DATA_TYPE );
+      part.getField( "fileUpload" )
+        .setContentDisposition( FormDataContentDisposition.name( "fileUpload" ).fileName( nameEncoded ).build() );
+
+      WebResource.Builder builder = resource.type( MULTIPART_FORM_DATA_TYPE );
       ClientResponse response = builder.post( ClientResponse.class, part );
 
       if ( response != null ) {
