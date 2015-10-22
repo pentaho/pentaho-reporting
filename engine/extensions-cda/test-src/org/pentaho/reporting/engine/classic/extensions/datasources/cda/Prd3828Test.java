@@ -18,14 +18,22 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.cda;
 
 import junit.framework.TestCase;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.DefaultResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TimeZone;
 
 public class Prd3828Test extends TestCase {
   private class SimpleBackend extends CdaQueryBackend {
@@ -82,17 +90,14 @@ public class Prd3828Test extends TestCase {
     dataFactory.setPassword( "password" );
     dataFactory.setQueryEntry( "testQuery", new CdaQueryEntry( "myQuery", "cdaId" ) );
 
-    dataFactory.initialize( new DesignTimeDataFactoryContext() );
+    dataFactory.initialize( createDataFactoryContext() );
     dataFactory.queryData( "testQuery", new StaticDataRow() );
 
-    assertEquals(
-      "http://localhost:12345/testcase/content/cda/listParameters?outputType=xml&solution=testsolution&path=testpath"
-        + "&file=testcase.cda&dataAccessId=cdaId",
-      simpleBackend.getParamUrl() );
-    assertEquals(
-      "http://localhost:12345/testcase/content/cda/doQuery?outputType=xml&solution=testsolution&path=testpath&file"
-        + "=testcase.cda&paramP4=A%3BB%3BC&dataAccessId=cdaId&paramP3=2010-12-30&paramP1=DefaultString&paramP2=10",
-      simpleBackend.getUrl() );
+    assertUrl( simpleBackend.getParamUrl(), "http://localhost:12345/testcase/content/cda/listParameters",
+      "outputType=xml", "solution=testsolution", "path=testpath", "file=testcase.cda", "dataAccessId=cdaId" );
+    assertUrl( simpleBackend.getUrl(), "http://localhost:12345/testcase/content/cda/doQuery",
+      "outputType=xml", "solution=testsolution", "path=testpath", "file=testcase.cda", "paramP4=A%3BB%3BC",
+      "dataAccessId=cdaId", "paramP3=2010-12-30", "paramP1=DefaultString", "paramP2=10" );
   }
 
   public void testFilledUrl() throws ReportDataFactoryException {
@@ -108,18 +113,37 @@ public class Prd3828Test extends TestCase {
     dataFactory.setPassword( "password" );
     dataFactory.setQueryEntry( "testQuery", new CdaQueryEntry( "myQuery", "cdaId" ) );
 
-    dataFactory.initialize( new DesignTimeDataFactoryContext() );
+    dataFactory.initialize( createDataFactoryContext() );
     dataFactory.queryData( "testQuery", new StaticDataRow
       ( new String[] { "P1", "P2", "P3", "P4" },
         new Object[] { "x", 10, new Date( 1000000000000l ), new String[] { "x", "y", "z" } } ) );
 
-    assertEquals(
-      "http://localhost:12345/testcase/content/cda/listParameters?outputType=xml&solution=testsolution&path=testpath"
-        + "&file=testcase.cda&dataAccessId=cdaId",
-      simpleBackend.getParamUrl() );
-    assertEquals(
-      "http://localhost:12345/testcase/content/cda/doQuery?outputType=xml&solution=testsolution&path=testpath&file"
-        + "=testcase.cda&paramP4=x%3By%3Bz&dataAccessId=cdaId&paramP3=2001-09-09&paramP1=x&paramP2=10",
-      simpleBackend.getUrl() );
+    assertUrl( simpleBackend.getParamUrl(), "http://localhost:12345/testcase/content/cda/listParameters",
+      "outputType=xml", "solution=testsolution", "path=testpath", "file=testcase.cda", "dataAccessId=cdaId" );
+    assertUrl( simpleBackend.getUrl(), "http://localhost:12345/testcase/content/cda/doQuery",
+      "outputType=xml", "solution=testsolution", "path=testpath", "file=testcase.cda", "paramP4=x%3By%3Bz",
+      "dataAccessId=cdaId", "paramP3=2001-09-09", "paramP1=x", "paramP2=10" );
+  }
+
+  private DesignTimeDataFactoryContext createDataFactoryContext() {
+    return new DesignTimeDataFactoryContext(
+        ClassicEngineBoot.getInstance().getGlobalConfig(),
+        new ResourceManager(), null,
+        new DefaultResourceBundleFactory( Locale.getDefault(), TimeZone.getTimeZone( "UTC" ))
+      );
+  }
+
+  private void assertUrl( String actual, String url, String... params ) {
+    String[] baseAndParams = actual.split( "\\?" );
+    assertEquals( url, baseAndParams[ 0 ] );
+
+    Set<String> expectedParameters = new HashSet<String>( Arrays.asList( params ) );
+    String[] pairs = baseAndParams[1].split( "&" );
+
+    for ( String pair : pairs ) {
+      assertTrue( pair, expectedParameters.remove( pair ) );
+    }
+
+    assertTrue( expectedParameters.toString(), expectedParameters.isEmpty() );
   }
 }
