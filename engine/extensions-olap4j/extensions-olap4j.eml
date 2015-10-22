@@ -3,7 +3,7 @@
 	<output-test url="file://$MODULE_DIR$/../../../out/test/extensions-olap4j"/>
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$">
-		<testFolder url="file://$MODULE_DIR$/test"/>
+		<testFolder url="file://$MODULE_DIR$/test-src"/>
 	</contentEntry>
 	<lib name="test-lib" scope="TEST">
 		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/engine/extensions-olap4j/test-lib"/>

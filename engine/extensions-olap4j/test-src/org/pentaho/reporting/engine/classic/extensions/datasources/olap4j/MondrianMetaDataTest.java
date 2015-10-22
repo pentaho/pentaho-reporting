@@ -59,7 +59,7 @@ public class MondrianMetaDataTest extends TestCase {
     final DriverConnectionProvider dcp = new DriverConnectionProvider();
     dcp.setDriver( "mondrian.olap4j.MondrianOlap4jDriver" );
     dcp.setProperty( "Catalog",
-      "test/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels.mondrian.xml" );
+      "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels.mondrian.xml" );
     dcp.setProperty( "JdbcUser", "sa" );
     dcp.setProperty( "JdbcPassword", "" );
     dcp.setProperty( "Jdbc", "jdbc:hsqldb:mem:SampleData" );
@@ -90,7 +90,7 @@ public class MondrianMetaDataTest extends TestCase {
 
     final DriverConnectionProvider connectionProvider = createProvider();
     connectionProvider.setProperty( "Catalog",
-      "test/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels2.mondrian.xml" );
+      "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels2.mondrian.xml" );
     final BandedMDXDataFactory mdxDataFactory2 = new BandedMDXDataFactory( connectionProvider );
     mdxDataFactory2.initialize( new DesignTimeDataFactoryContext() );
     mdxDataFactory2.setQuery( "default", QUERY, null, null );

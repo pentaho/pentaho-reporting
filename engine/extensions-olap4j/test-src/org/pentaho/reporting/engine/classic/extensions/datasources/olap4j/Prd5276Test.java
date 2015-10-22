@@ -106,7 +106,7 @@ public class Prd5276Test {
     final DriverConnectionProvider provider = new DriverConnectionProvider();
     provider.setDriver( "mondrian.olap4j.MondrianOlap4jDriver" );
     provider.setProperty( "Catalog",
-      "test/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels.mondrian.xml" );
+      "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels.mondrian.xml" );
     provider.setProperty( "JdbcUser", "sa" );
     provider.setProperty( "JdbcPassword", "" );
     provider.setProperty( "Jdbc", "jdbc:hsqldb:mem:SampleData" );
