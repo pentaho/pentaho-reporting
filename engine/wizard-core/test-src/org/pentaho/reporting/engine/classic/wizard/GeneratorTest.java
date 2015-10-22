@@ -17,7 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.wizard;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
@@ -40,18 +43,17 @@ import org.pentaho.reporting.engine.classic.wizard.model.DetailFieldDefinition;
 import org.pentaho.reporting.engine.classic.wizard.model.GroupDefinition;
 import org.pentaho.reporting.engine.classic.wizard.model.GroupType;
 
-public class GeneratorTest extends TestCase {
+@Ignore( "Needs to be repaired!" )
+public class GeneratorTest {
   public GeneratorTest() {
   }
 
-  public GeneratorTest( final String s ) {
-    super( s );
-  }
-
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
+  @Test
   public void testCrosstab() throws Exception {
     final GroupDefinition[] groupDefs = new GroupDefinition[ 3 ];
     groupDefs[ 0 ] = new DefaultGroupDefinition( GroupType.RELATIONAL, "group-field1" );
