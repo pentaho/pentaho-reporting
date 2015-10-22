@@ -33,7 +33,7 @@ public class BandedMDXTableModelTest extends DataSourceTestBase {
   protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
     final BandedMDXDataFactory mdxDataFactory = new BandedMDXDataFactory();
     mdxDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels_hierarchy.mondrian"
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels_hierarchy.mondrian"
         + ".xml" ) );
     mdxDataFactory.setDataSourceProvider( new JndiDataSourceProvider( "SampleData" ) );
     mdxDataFactory.setQuery( "default", query, null, null );

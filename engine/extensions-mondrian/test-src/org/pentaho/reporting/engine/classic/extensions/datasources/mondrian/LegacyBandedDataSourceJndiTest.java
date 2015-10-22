@@ -52,7 +52,7 @@ public class LegacyBandedDataSourceJndiTest extends DataSourceTestBase {
     final LegacyBandedMDXDataFactory mondrianDataFactory = new LegacyBandedMDXDataFactory();
     final JndiDataSourceProvider provider = new JndiDataSourceProvider( "SampleData" );
     mondrianDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
     mondrianDataFactory.setDataSourceProvider( provider );
     mondrianDataFactory.setQuery( "default", query, null, null );
     initializeDataFactory( mondrianDataFactory );

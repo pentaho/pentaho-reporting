@@ -53,7 +53,7 @@ public class DenormalizedDataSourceJndiTest extends DataSourceTestBase {
 
     final DenormalizedMDXDataFactory mondrianDataFactory = new DenormalizedMDXDataFactory();
     mondrianDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
     mondrianDataFactory.setDataSourceProvider( provider );
     mondrianDataFactory.setQuery( "default", query, null, null );
     initializeDataFactory( mondrianDataFactory );

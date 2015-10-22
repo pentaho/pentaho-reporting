@@ -61,7 +61,7 @@ public class MondrianMetaDataTest extends TestCase {
 
     final BandedMDXDataFactory mondrianDataFactory = new BandedMDXDataFactory();
     mondrianDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
     mondrianDataFactory.setDataSourceProvider( provider );
     mondrianDataFactory.setJdbcUser( "sa" );
     mondrianDataFactory.setJdbcPassword( "" );
@@ -76,7 +76,7 @@ public class MondrianMetaDataTest extends TestCase {
 
     final BandedMDXDataFactory mdxDataFactory = new BandedMDXDataFactory();
     mdxDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
     mdxDataFactory.setDataSourceProvider( provider );
     mdxDataFactory.setJdbcUser( "sa" );
     mdxDataFactory.setJdbcPassword( "" );
@@ -91,7 +91,7 @@ public class MondrianMetaDataTest extends TestCase {
 
     final BandedMDXDataFactory mdxDataFactory2 = new BandedMDXDataFactory();
     mdxDataFactory2.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels2.mondrian.xml" ) );
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels2.mondrian.xml" ) );
     mdxDataFactory2.setDataSourceProvider( provider );
     mdxDataFactory2.setJdbcUser( "sa" );
     mdxDataFactory2.setJdbcPassword( "" );
@@ -112,7 +112,7 @@ public class MondrianMetaDataTest extends TestCase {
 
     final BandedMDXDataFactory mondrianDataFactory = new BandedMDXDataFactory();
     mondrianDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
     mondrianDataFactory.setDataSourceProvider( provider );
     mondrianDataFactory.setJdbcUser( "sa" );
     mondrianDataFactory.setJdbcPassword( "" );

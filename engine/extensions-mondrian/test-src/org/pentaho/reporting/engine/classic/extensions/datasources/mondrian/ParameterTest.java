@@ -62,7 +62,7 @@ public class ParameterTest extends TestCase {
     provider.setDriver( "org.hsqldb.jdbcDriver" );
     provider.setUrl( "jdbc:hsqldb:mem:SampleData" );
     mondrianDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
     mondrianDataFactory.setDataSourceProvider( provider );
     mondrianDataFactory.setJdbcUser( "sa" );
     mondrianDataFactory.setJdbcPassword( "" );

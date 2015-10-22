@@ -109,7 +109,7 @@ public class Prd5276Test {
 
     final BandedMDXDataFactory mondrianDataFactory = new BandedMDXDataFactory();
     mondrianDataFactory.setCubeFileProvider( new DefaultCubeFileProvider
-      ( "test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
+      ( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml" ) );
     mondrianDataFactory.setDataSourceProvider( provider );
     mondrianDataFactory.setJdbcUser( "sa" );
     mondrianDataFactory.setJdbcPassword( "" );
