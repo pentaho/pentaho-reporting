@@ -17,7 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import org.junit.Assert;
+import java.net.URL;
+
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
@@ -28,8 +29,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.net.URL;
-
 public class BigDataKettleFactoryTest extends DataSourceTestBase {
   private static final String QUERY =
     "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/kettle/row-gen.ktr";
@@ -38,6 +37,10 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase {
   private static final String[][] QUERIES_AND_RESULTS = new String[][] {
     { QUERY, "query-1.txt" }
   };
+
+  private static final String DEFAULT = "default";
+
+  private static final String DEFAULT_2 = "default2";
 
   public BigDataKettleFactoryTest() {
   }
@@ -69,7 +72,7 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase {
   protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
     try {
       URL res = getClass().getResource( "embedded-row-gen.ktr" );
-      Assert.assertNotNull( res );
+      assertNotNull( res );
 
       ResourceManager mgr = new ResourceManager();
       ResourceKey key = mgr.createKey( res );
@@ -80,7 +83,7 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase {
 
       final KettleDataFactory kettleDataFactory = new KettleDataFactory();
       kettleDataFactory.initialize( new DesignTimeDataFactoryContext() );
-      kettleDataFactory.setQuery( "default", producer );
+      kettleDataFactory.setQuery( DEFAULT, producer );
       return kettleDataFactory;
     } catch ( ResourceException re ) {
       throw new ReportDataFactoryException( "Failed to load raw-data", re );
@@ -90,7 +93,7 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase {
   public void testMetaData() throws ReportDataFactoryException {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
     kettleDataFactory.initialize( new DesignTimeDataFactoryContext() );
-    kettleDataFactory.setQuery( "default",
+    kettleDataFactory.setQuery( DEFAULT,
       new KettleTransFromFileProducer( QUERY, STEP, new FormulaArgument[ 0 ], new FormulaParameter[ 0 ] ) );
 
     final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
@@ -99,15 +102,15 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase {
 
     final KettleDataFactory kettleDataFactory2 = new KettleDataFactory();
     kettleDataFactory2.initialize( new DesignTimeDataFactoryContext() );
-    kettleDataFactory2.setQuery( "default",
+    kettleDataFactory2.setQuery( DEFAULT,
       new KettleTransFromFileProducer( QUERY + "2", STEP, new FormulaArgument[ 0 ], new FormulaParameter[ 0 ] ) );
-    kettleDataFactory2.setQuery( "default2",
+    kettleDataFactory2.setQuery(DEFAULT_2,
       new KettleTransFromFileProducer( QUERY, STEP, new FormulaArgument[ 0 ], new FormulaParameter[ 0 ] ) );
 
     assertNotEquals( "Physical Query is not the same", queryHash,
-      metaData.getQueryHash( kettleDataFactory2, "default", new StaticDataRow() ) );
+      metaData.getQueryHash( kettleDataFactory2, DEFAULT, new StaticDataRow() ) );
     assertEquals( "Physical Query is the same", queryHash,
-      metaData.getQueryHash( kettleDataFactory2, "default2", new StaticDataRow() ) );
+      metaData.getQueryHash( kettleDataFactory2, DEFAULT_2, new StaticDataRow() ) );
   }
 
   public void testParameter() throws ReportDataFactoryException {
@@ -131,4 +134,40 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase {
     assertEquals( "name2", fields[ 2 ] );
     assertEquals( DataFactory.QUERY_LIMIT, fields[ 3 ] );
   }
+
+  public void testEmptyQueriesAreHomogeneous() {
+    KettleDataFactory kettleDataFactory = new KettleDataFactory();
+    assertTrue(kettleDataFactory.queriesAreHomogeneous());
+  }
+
+  public void testEmptyQueriesAreHomogeneousWhereProducerIsKettleTransFromFileProducer() {
+    KettleDataFactory kettleDataFactory = new KettleDataFactory();
+
+    kettleDataFactory.setQuery( "default",
+        new KettleTransFromFileProducer( QUERY, STEP, new FormulaArgument[ 0 ], new FormulaParameter[ 0 ] ) );
+    assertFalse(kettleDataFactory.queriesAreHomogeneous());
+  }
+
+  public void testEmptyQueriesAreHomogeneousWhereProducersAreEmbeddedKettleTransformationProducer() throws Exception
+  {
+    KettleDataFactory kettleDataFactory = new KettleDataFactory();
+
+    URL res = getClass().getResource( "embedded-row-gen.ktr" );
+    assertNotNull( res );
+
+    ResourceManager mgr = new ResourceManager();
+    ResourceKey key = mgr.createKey( res );
+    final byte[] resource = mgr.load( key ).getResource( mgr );
+
+    EmbeddedKettleTransformationProducer producer =
+        new EmbeddedKettleTransformationProducer( new FormulaArgument[ 0 ], new FormulaParameter[ 0 ], "dummy-id",
+            resource );
+    kettleDataFactory.setQuery(DEFAULT, producer);
+    kettleDataFactory.setQuery(DEFAULT_2, producer);
+
+
+
+    assertTrue(kettleDataFactory.queriesAreHomogeneous());
+  }
+
 }

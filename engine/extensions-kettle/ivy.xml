@@ -85,5 +85,6 @@
     <dependency org="pentaho" name="simple-jndi" rev="${dependency.pentaho-simple-jndi.revision}" transitive="false" conf="test->default"/>
     <dependency org="org.apache.commons" name="commons-lang3" rev="3.0" transitive="false" conf="test->default"/>
     <dependency org="com.google.guava" name="guava" rev="17.0" transitive="false" conf="test->default"/>
+    <dependency org="org.mockito" name="mockito-all" rev="1.9.5" conf="test->default" transitive="false" />
   </dependencies>
 </ivy-module>
