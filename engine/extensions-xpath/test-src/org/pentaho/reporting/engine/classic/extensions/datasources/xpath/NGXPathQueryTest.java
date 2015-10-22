@@ -39,7 +39,7 @@ public class NGXPathQueryTest extends DataSourceTestBase {
   protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
     final XPathDataFactory dataFactory = new XPathDataFactory();
     dataFactory
-      .setXqueryDataFile( "test/org/pentaho/reporting/engine/classic/extensions/datasources/xpath/customer.xml" );
+      .setXqueryDataFile( "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/xpath/customer.xml" );
     initializeDataFactory( dataFactory );
     dataFactory.setQuery( "default", query, false );
     return dataFactory;
