@@ -69,8 +69,8 @@ public class CsvArrayFunction implements Function {
     }
 
     if ( parameterCount > 3 ) {
-      final Type indexType = parameters.getType( 1 );
-      final Object indexValue = parameters.getValue( 1 );
+      final Type indexType = parameters.getType( 3 );
+      final Object indexValue = parameters.getValue( 3 );
       quote = context.getTypeRegistry().convertToText( indexType, indexValue );
     }
 
