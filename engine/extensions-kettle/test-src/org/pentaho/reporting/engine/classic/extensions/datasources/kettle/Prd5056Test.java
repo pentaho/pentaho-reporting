@@ -28,12 +28,13 @@ import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTi
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 
-import javax.swing.table.TableModel;
-
 public class Prd5056Test {
+  
   private static final Log logger = LogFactory.getLog( Prd5056Test.class );
+  
   private static final String QUERY =
     "test-src/org/pentaho/reporting/engine/classic/extensions/datasources/kettle/Prd-5056.ktr";
+  
   private static final String STEP = "Abort";
 
   @Before
@@ -41,17 +42,12 @@ public class Prd5056Test {
     ClassicEngineBoot.getInstance().start();
   }
 
-  @Test
+  @Test(expected = ReportDataFactoryException.class)
   public void testFailWithError() throws Exception {
-    try {
       final KettleDataFactory kettleDataFactory = new KettleDataFactory();
       kettleDataFactory.setQuery( "test", new KettleTransFromFileProducer( QUERY, STEP ) );
       kettleDataFactory.initialize( new DesignTimeDataFactoryContext() );
-      TableModel test = kettleDataFactory.queryData( "test", new ReportParameterValues() );
-      Assert.fail();
-    } catch ( ReportDataFactoryException rde ) {
-      logger.debug( "Successfully caught exception", rde );
-    }
+      kettleDataFactory.queryData( "test", new ReportParameterValues() );
   }
 
   @Test

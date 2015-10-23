@@ -12,10 +12,18 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
  */
-
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.writer;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+
+import org.junit.Test;
+
+import static org.mockito.Mockito.*;
 
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.AbstractKettleTransformationProducer;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
@@ -24,28 +32,24 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.Kettle
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-import java.io.IOException;
+public class TransformationProducerWriteHandlerLibTest {
 
-public class TransformationProducerWriteHandlerLib {
-  private TransformationProducerWriteHandlerLib() {
-  }
+  @Test
+  public void writeParameterAndArguments() throws IOException {
+    XmlWriter xmlWriter = mock( XmlWriter.class );
 
-  public static void writeParameterAndArguments( final XmlWriter xmlWriter,
-      final AbstractKettleTransformationProducer fileProducer ) throws IOException {
-    final FormulaArgument[] definedArgumentNames = fileProducer.getArguments();
-    final FormulaParameter[] parameterMappings = fileProducer.getParameter();
-    for ( int i = 0; i < definedArgumentNames.length; i++ ) {
-      final FormulaArgument arg = definedArgumentNames[i];
-      xmlWriter.writeTag( KettleDataFactoryModule.NAMESPACE, "argument", "formula", arg.getFormula(), XmlWriter.CLOSE );
-    }
+    AbstractKettleTransformationProducer fileProducer = mock( AbstractKettleTransformationProducer.class );
+    when( fileProducer.getArguments() ).thenReturn(
+        new FormulaArgument[] { FormulaArgument.create( "TEST_REPORT_FIELD" ) } );
+    when( fileProducer.getParameter() ).thenReturn(
+        new FormulaParameter[] { FormulaParameter.create( "TEST_REPORT_FIELD", "TEST_TRANS_PARAMETER_NAME" ) } );
+    TransformationProducerWriteHandlerLib.writeParameterAndArguments( xmlWriter, fileProducer );
 
-    for ( int i = 0; i < parameterMappings.length; i++ ) {
-      final FormulaParameter parameterMapping = parameterMappings[i];
-      final AttributeList paramAttr = new AttributeList();
-      paramAttr.setAttribute( KettleDataFactoryModule.NAMESPACE, "variable-name", parameterMapping.getName() );
-      paramAttr.setAttribute( KettleDataFactoryModule.NAMESPACE, "formula", parameterMapping.getFormula() );
-      xmlWriter.writeTag( KettleDataFactoryModule.NAMESPACE, "variable", paramAttr, XmlWriter.CLOSE );
-    }
+    verify( xmlWriter ).writeTag( KettleDataFactoryModule.NAMESPACE, "argument", "formula", "=[TEST_REPORT_FIELD]",
+        XmlWriter.CLOSE );
+
+    verify( xmlWriter ).writeTag( eq( KettleDataFactoryModule.NAMESPACE ), eq( "variable" ),
+        any( AttributeList.class ), eq( XmlWriter.CLOSE ) );
   }
 
 }
