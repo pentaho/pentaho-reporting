@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.java14print;
 
@@ -76,16 +76,14 @@ public class Java14PrintUtil {
    * @param report
    * @return
    */
-  public static int isValidConfiguration( final PrintRequestAttributeSet attributes,
-                                          final MasterReport report ) {
-    final PrintRequestAttributeSet reportAttributes =
-      copyConfiguration( null, report );
+  public static int isValidConfiguration( final PrintRequestAttributeSet attributes, final MasterReport report ) {
+    final PrintRequestAttributeSet reportAttributes = copyConfiguration( null, report );
     // now, compare that minimal set with the given attribute collection.
 
     final Attribute[] printAttribs = reportAttributes.toArray();
     boolean invalidConfig = false;
     for ( int i = 0; i < printAttribs.length; i++ ) {
-      final Attribute attrib = printAttribs[ i ];
+      final Attribute attrib = printAttribs[i];
       if ( attributes.containsValue( attrib ) == false ) {
         invalidConfig = true;
         break;
@@ -110,9 +108,8 @@ public class Java14PrintUtil {
    * @param report
    * @return
    */
-  public static PrintRequestAttributeSet copyConfiguration
-  ( PrintRequestAttributeSet attributes,
-    final MasterReport report ) {
+  public static PrintRequestAttributeSet copyConfiguration( PrintRequestAttributeSet attributes,
+      final MasterReport report ) {
     if ( attributes == null ) {
       attributes = new HashPrintRequestAttributeSet();
     }
@@ -122,16 +119,16 @@ public class Java14PrintUtil {
     final PageFormat format = pdef.getPageFormat( 0 );
     final Paper paper = format.getPaper();
 
-    final Media media = MediaSize.findMedia( (float) ( paper.getWidth() / POINTS_PER_INCH ),
-      (float) ( paper.getHeight() / POINTS_PER_INCH ), Size2DSyntax.INCH );
+    final Media media =
+        MediaSize.findMedia( (float) ( paper.getWidth() / POINTS_PER_INCH ),
+            (float) ( paper.getHeight() / POINTS_PER_INCH ), Size2DSyntax.INCH );
     attributes.add( media );
 
-    final MediaPrintableArea printableArea = new MediaPrintableArea
-      ( (float) ( paper.getImageableX() / POINTS_PER_INCH ),
-        (float) ( paper.getImageableY() / POINTS_PER_INCH ),
-        (float) ( paper.getImageableWidth() / POINTS_PER_INCH ),
-        (float) ( paper.getImageableHeight() / POINTS_PER_INCH ),
-        Size2DSyntax.INCH );
+    final MediaPrintableArea printableArea =
+        new MediaPrintableArea( (float) ( paper.getImageableX() / POINTS_PER_INCH ),
+            (float) ( paper.getImageableY() / POINTS_PER_INCH ),
+            (float) ( paper.getImageableWidth() / POINTS_PER_INCH ),
+            (float) ( paper.getImageableHeight() / POINTS_PER_INCH ), Size2DSyntax.INCH );
 
     attributes.add( printableArea );
     attributes.add( mapOrientation( format.getOrientation() ) );
@@ -139,23 +136,21 @@ public class Java14PrintUtil {
     return attributes;
   }
 
-  public static PrintRequestAttributeSet copyAuxillaryAttributes
-    ( PrintRequestAttributeSet attributes,
+  public static PrintRequestAttributeSet copyAuxillaryAttributes( PrintRequestAttributeSet attributes,
       final MasterReport report ) {
     if ( attributes == null ) {
       attributes = new HashPrintRequestAttributeSet();
     }
 
     if ( attributes.containsKey( JobName.class ) == false ) {
-      final String jobName = report.getReportConfiguration().getConfigProperty
-        ( PrintUtil.PRINTER_JOB_NAME_KEY, report.getTitle() );
+      final String jobName =
+          report.getReportConfiguration().getConfigProperty( PrintUtil.PRINTER_JOB_NAME_KEY, report.getTitle() );
       if ( jobName != null ) {
         attributes.add( new JobName( jobName, null ) );
       }
     }
     if ( attributes.containsKey( Copies.class ) == false ) {
-      final int numberOfCopies =
-        PrintUtil.getNumberOfCopies( report.getReportConfiguration() );
+      final int numberOfCopies = PrintUtil.getNumberOfCopies( report.getReportConfiguration() );
       attributes.add( new Copies( numberOfCopies ) );
     }
 
@@ -164,10 +159,9 @@ public class Java14PrintUtil {
 
   public static PageFormat extractPageFormat( final PrintRequestAttributeSet attributeSet ) {
     final Media media = (Media) attributeSet.get( Media.class );
-    final MediaPrintableArea printableArea =
-      (MediaPrintableArea) attributeSet.get( MediaPrintableArea.class );
+    final MediaPrintableArea printableArea = (MediaPrintableArea) attributeSet.get( MediaPrintableArea.class );
     final OrientationRequested orientationRequested =
-      (OrientationRequested) attributeSet.get( OrientationRequested.class );
+        (OrientationRequested) attributeSet.get( OrientationRequested.class );
 
     final MediaSize mediaSize = lookupMediaSize( media );
     if ( mediaSize == null ) {
@@ -180,8 +174,7 @@ public class Java14PrintUtil {
       pageFormat.setOrientation( PageFormat.PORTRAIT );
     } else if ( OrientationRequested.LANDSCAPE.equals( orientationRequested ) ) {
       pageFormat.setOrientation( PageFormat.LANDSCAPE );
-    } else if ( OrientationRequested.REVERSE_LANDSCAPE.equals
-      ( orientationRequested ) ) {
+    } else if ( OrientationRequested.REVERSE_LANDSCAPE.equals( orientationRequested ) ) {
       pageFormat.setOrientation( PageFormat.REVERSE_LANDSCAPE );
     } else if ( OrientationRequested.REVERSE_PORTRAIT.equals( orientationRequested ) ) {
       pageFormat.setOrientation( PageFormat.PORTRAIT );
@@ -189,19 +182,18 @@ public class Java14PrintUtil {
     return pageFormat;
   }
 
-  private static Paper createPaper( final MediaSize mediaSize,
-                                    final MediaPrintableArea printableArea ) {
+  private static Paper createPaper( final MediaSize mediaSize, final MediaPrintableArea printableArea ) {
     final Paper paper = new Paper();
     if ( mediaSize != null ) {
-      paper.setSize( mediaSize.getX( Size2DSyntax.INCH ) * POINTS_PER_INCH,
-        mediaSize.getY( Size2DSyntax.INCH ) * POINTS_PER_INCH );
+      paper.setSize( mediaSize.getX( Size2DSyntax.INCH ) * POINTS_PER_INCH, mediaSize.getY( Size2DSyntax.INCH )
+          * POINTS_PER_INCH );
     }
     if ( printableArea != null ) {
-      paper.setImageableArea
-        ( printableArea.getX( Size2DSyntax.INCH ) * POINTS_PER_INCH,
-          printableArea.getY( Size2DSyntax.INCH ) * POINTS_PER_INCH,
-          printableArea.getWidth( Size2DSyntax.INCH ) * POINTS_PER_INCH,
-          printableArea.getHeight( Size2DSyntax.INCH ) * POINTS_PER_INCH );
+      paper.setImageableArea( printableArea.getX( Size2DSyntax.INCH ) * POINTS_PER_INCH, printableArea
+          .getY( Size2DSyntax.INCH )
+          * POINTS_PER_INCH, printableArea.getWidth( Size2DSyntax.INCH ) * POINTS_PER_INCH, printableArea
+          .getHeight( Size2DSyntax.INCH )
+          * POINTS_PER_INCH );
     }
     return paper;
   }
@@ -211,11 +203,9 @@ public class Java14PrintUtil {
     if ( media instanceof MediaSizeName ) {
       return MediaSize.getMediaSizeForName( (MediaSizeName) media );
     } else if ( media instanceof MediaName ) {
-      if ( media.equals( MediaName.ISO_A4_TRANSPARENT ) ||
-        media.equals( MediaName.ISO_A4_WHITE ) ) {
+      if ( media.equals( MediaName.ISO_A4_TRANSPARENT ) || media.equals( MediaName.ISO_A4_WHITE ) ) {
         return MediaSize.getMediaSizeForName( MediaSizeName.ISO_A4 );
-      } else if ( media.equals( MediaName.NA_LETTER_TRANSPARENT ) ||
-        media.equals( MediaName.NA_LETTER_WHITE ) ) {
+      } else if ( media.equals( MediaName.NA_LETTER_TRANSPARENT ) || media.equals( MediaName.NA_LETTER_WHITE ) ) {
         return MediaSize.getMediaSizeForName( MediaSizeName.NA_LETTER );
       }
     }
@@ -223,7 +213,7 @@ public class Java14PrintUtil {
   }
 
   private static OrientationRequested mapOrientation( final int orientation ) {
-    switch( orientation ) {
+    switch ( orientation ) {
       case PageFormat.LANDSCAPE:
         return OrientationRequested.LANDSCAPE;
       case PageFormat.REVERSE_LANDSCAPE:
@@ -231,14 +221,12 @@ public class Java14PrintUtil {
       case PageFormat.PORTRAIT:
         return OrientationRequested.PORTRAIT;
       default:
-        throw new IllegalArgumentException
-          ( "The given value is no valid PageFormat orientation." );
+        throw new IllegalArgumentException( "The given value is no valid PageFormat orientation." );
     }
   }
 
-  public static void printDirectly( final MasterReport report,
-                                    PrintService printService )
-    throws PrintException, ReportProcessingException {
+  public static void printDirectly( final MasterReport report, PrintService printService ) throws PrintException,
+    ReportProcessingException {
     // with that method we do not use the PrintService UI ..
     // it is up to the user to supply a valid print service that
     // supports the Pageable printing.
@@ -246,19 +234,16 @@ public class Java14PrintUtil {
       printService = lookupPrintService();
     } else {
       if ( printService.isDocFlavorSupported( DocFlavor.SERVICE_FORMATTED.PAGEABLE ) == false ) {
-        throw new PrintException
-          ( "The print service implementation does not support the Pageable Flavor." );
+        throw new PrintException( "The print service implementation does not support the Pageable Flavor." );
       }
     }
 
-    PrintRequestAttributeSet attributes =
-      Java14PrintUtil.copyConfiguration( null, report );
+    PrintRequestAttributeSet attributes = Java14PrintUtil.copyConfiguration( null, report );
     attributes = Java14PrintUtil.copyAuxillaryAttributes( attributes, report );
 
     final PrintReportProcessor reportPane = new PrintReportProcessor( report );
     final DocPrintJob job = printService.createPrintJob();
-    final SimpleDoc document = new SimpleDoc
-      ( reportPane, DocFlavor.SERVICE_FORMATTED.PAGEABLE, null );
+    final SimpleDoc document = new SimpleDoc( reportPane, DocFlavor.SERVICE_FORMATTED.PAGEABLE, null );
 
     try {
       job.print( document, attributes );
@@ -268,45 +253,37 @@ public class Java14PrintUtil {
 
   }
 
-  private static PrintService lookupPrintService()
-    throws PrintException {
+  private static PrintService lookupPrintService() throws PrintException {
     final PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
-    if ( defaultService != null &&
-      defaultService.isDocFlavorSupported( DocFlavor.SERVICE_FORMATTED.PAGEABLE ) ) {
+    if ( defaultService != null && defaultService.isDocFlavorSupported( DocFlavor.SERVICE_FORMATTED.PAGEABLE ) ) {
       return defaultService;
     }
 
     final PrintService printService;
-    final PrintService[] services = PrintServiceLookup.lookupPrintServices(
-      DocFlavor.SERVICE_FORMATTED.PAGEABLE, null );
+    final PrintService[] services = PrintServiceLookup.lookupPrintServices( DocFlavor.SERVICE_FORMATTED.PAGEABLE, null );
     if ( services.length == 0 ) {
-      throw new PrintException
-        ( "Unable to find a matching print service implementation." );
+      throw new PrintException( "Unable to find a matching print service implementation." );
     }
-    printService = services[ 0 ];
+    printService = services[0];
     return printService;
   }
 
-  public static boolean print( final MasterReport report )
-    throws PrintException, ReportProcessingException {
+  public static boolean print( final MasterReport report ) throws PrintException, ReportProcessingException {
     return print( report, null );
   }
 
   public static boolean print( final MasterReport report, final ReportProgressListener progressListener )
     throws PrintException, ReportProcessingException {
-    final PrintService[] services = PrintServiceLookup.lookupPrintServices(
-      DocFlavor.SERVICE_FORMATTED.PAGEABLE, null );
+    final PrintService[] services = PrintServiceLookup.lookupPrintServices( DocFlavor.SERVICE_FORMATTED.PAGEABLE, null );
     if ( services.length == 0 ) {
-      throw new PrintException
-        ( "Unable to find a matching print service implementation." );
+      throw new PrintException( "Unable to find a matching print service implementation." );
     }
-    PrintRequestAttributeSet attributes =
-      Java14PrintUtil.copyConfiguration( null, report );
+    PrintRequestAttributeSet attributes = Java14PrintUtil.copyConfiguration( null, report );
     attributes = Java14PrintUtil.copyAuxillaryAttributes( attributes, report );
 
-    final PrintService service = ServiceUI.printDialog
-      ( null, 50, 50, services, lookupPrintService(),
-        DocFlavor.SERVICE_FORMATTED.PAGEABLE, attributes );
+    final PrintService service =
+        ServiceUI.printDialog( null, 50, 50, services, lookupPrintService(), DocFlavor.SERVICE_FORMATTED.PAGEABLE,
+            attributes );
     if ( service == null ) {
       return false;
     }
@@ -320,8 +297,7 @@ public class Java14PrintUtil {
       reportPane.fireProcessingStarted();
 
       final DocPrintJob job = service.createPrintJob();
-      final SimpleDoc document = new SimpleDoc
-        ( reportPane, DocFlavor.SERVICE_FORMATTED.PAGEABLE, null );
+      final SimpleDoc document = new SimpleDoc( reportPane, DocFlavor.SERVICE_FORMATTED.PAGEABLE, null );
 
       job.print( document, attributes );
     } finally {

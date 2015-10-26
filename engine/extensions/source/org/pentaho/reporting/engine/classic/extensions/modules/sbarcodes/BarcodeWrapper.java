@@ -1,24 +1,31 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.output.OutputException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
@@ -29,13 +36,10 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.ReportDrawable;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-
 /**
- * This class is used to wrap a <i>barbecue</i> barcode element in order to offer the method {@link
- * BarcodeWrapper#draw(java.awt.Graphics2D, java.awt.geom.Rectangle2D)} which is requested by the reporting engine for
- * automatic support using <i>drawable-field</i>s.
+ * This class is used to wrap a <i>barbecue</i> barcode element in order to offer the method
+ * {@link BarcodeWrapper#draw(java.awt.Graphics2D, java.awt.geom.Rectangle2D)} which is requested by the reporting
+ * engine for automatic support using <i>drawable-field</i>s.
  */
 public class BarcodeWrapper implements ReportDrawable {
   private static final Log logger = LogFactory.getLog( BarcodeWrapper.class );
@@ -95,7 +99,8 @@ public class BarcodeWrapper implements ReportDrawable {
    * Provides the current report configuration of the current report process to the drawable. The report configuration
    * can be used to configure the drawing process through the report.
    *
-   * @param config the report configuration.
+   * @param config
+   *          the report configuration.
    */
   public void setConfiguration( final Configuration config ) {
 
@@ -104,7 +109,8 @@ public class BarcodeWrapper implements ReportDrawable {
   /**
    * Provides the computed stylesheet of the report element that contained this drawable. The stylesheet is immutable.
    *
-   * @param style the stylesheet.
+   * @param style
+   *          the stylesheet.
    */
   public void setStyleSheet( final StyleSheet style ) {
     if ( style != null ) {
@@ -144,7 +150,8 @@ public class BarcodeWrapper implements ReportDrawable {
   /**
    * Defines the resource-bundle factory that can be used to localize the drawing process.
    *
-   * @param bundleFactory the resource-bundle factory.
+   * @param bundleFactory
+   *          the resource-bundle factory.
    */
   public void setResourceBundleFactory( final ResourceBundleFactory bundleFactory ) {
 
@@ -153,7 +160,8 @@ public class BarcodeWrapper implements ReportDrawable {
   /**
    * Returns an optional image-map for the entry.
    *
-   * @param bounds the bounds for which the image map is computed.
+   * @param bounds
+   *          the bounds for which the image map is computed.
    * @return the computed image-map or null if there is no image-map available.
    */
   public ImageMap getImageMap( final Rectangle2D bounds ) {

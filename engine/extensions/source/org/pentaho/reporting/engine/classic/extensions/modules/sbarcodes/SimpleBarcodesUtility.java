@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes;
 
@@ -51,23 +51,25 @@ import org.krysalis.barcode4j.tools.UnitConv;
  */
 public class SimpleBarcodesUtility {
   /**
-   * Symbology accepting A-Z 0-9 and 8 special characters '-' '.' ' ' '*' '$' '/' '+' '%'.<br/> Also known as 3of9,
-   * usd3, usd-3.<br/> This barcode supports checksum property.
+   * Symbology accepting A-Z 0-9 and 8 special characters '-' '.' ' ' '*' '$' '/' '+' '%'.<br/>
+   * Also known as 3of9, usd3, usd-3.<br/>
+   * This barcode supports checksum property.
    */
   public static final String BARCODE_CODE39 = "code39";
   /**
-   * Symbology accepting ASCII (128 characters).<br/> Also known as 3of9ext, usd3ext, usd-3ext. <br/> This barcode
-   * supports checksum property.
+   * Symbology accepting ASCII (128 characters).<br/>
+   * Also known as 3of9ext, usd3ext, usd-3ext. <br/>
+   * This barcode supports checksum property.
    */
   public static final String BARCODE_CODE39EXT = "code39ext";
   /**
-   * Symbology accepting O-9 plus 6 additional characters '-' '$' '.' ':' '/' '+'.<br/> Also known as code27, 2of7,
-   * usd4, nw7, monarch.
+   * Symbology accepting O-9 plus 6 additional characters '-' '$' '.' ':' '/' '+'.<br/>
+   * Also known as code27, 2of7, usd4, nw7, monarch.
    */
   public static final String BARCODE_CODABAR = "codabar";
   /**
-   * Symbology accepting ASCII (128 characters) in a reduced space.<br/> It automaticaly switch between the diffrent
-   * code sets.
+   * Symbology accepting ASCII (128 characters) in a reduced space.<br/>
+   * It automaticaly switch between the diffrent code sets.
    *
    * @see {BARCODE_CODE128A} for code set A.
    * @see {BARCODE_CODE128B} for code set B.
@@ -103,16 +105,20 @@ public class SimpleBarcodesUtility {
    */
   public static final String BARCODE_ISBN = "isbn";
   /**
-   * Symbology accepting numbers.<br/> This barcode supports checksum property.
+   * Symbology accepting numbers.<br/>
+   * This barcode supports checksum property.
    */
   public static final String BARCODE_UCCEAN128 = "uccean128";
   /**
-   * Symbology accepting 0-9.<br/> This barcode supports checksum property.<br/> Also known as 2of5std.
+   * Symbology accepting 0-9.<br/>
+   * This barcode supports checksum property.<br/>
+   * Also known as 2of5std.
    */
   public static final String BARCODE_2OF5 = "2of5";
   /**
-   * Symbology accepting 0-9 in a reduced space in comparison of standard 2of5.<br/> This barcode supports checksum
-   * property.<br/> Also known as 2of5std.
+   * Symbology accepting 0-9 in a reduced space in comparison of standard 2of5.<br/>
+   * This barcode supports checksum property.<br/>
+   * Also known as 2of5std.
    */
   public static final String BARCODE_2OF5INT = "2of5int";
   /**
@@ -120,11 +126,12 @@ public class SimpleBarcodesUtility {
    */
   public static final String BARCODE_POSTNET = "postnet";
   /**
-   * 2 dimensional symbology accepting 2700 characters long.<br/> This barcode does not support any of the conventional
-   * barcode properties (barWidth, barHeight, checksum, showText, ...).<br/> Also known as pdf-417.
+   * 2 dimensional symbology accepting 2700 characters long.<br/>
+   * This barcode does not support any of the conventional barcode properties (barWidth, barHeight, checksum, showText,
+   * ...).<br/>
+   * Also known as pdf-417.
    */
   public static final String BARCODE_PDF417 = "pdf417";
-
 
   public static final String BARCODE_EAN8 = "ean8";
   public static final String BARCODE_EAN128 = "ean128";
@@ -132,7 +139,6 @@ public class SimpleBarcodesUtility {
   public static final String BARCODE_DATAMATRIX = "datamatrix";
   public static final String BARCODE_ROYALMAIL = "royalmail";
   public static final String BARCODE_USPSINTELLIGENTMAIL = "uspsintelligentmail";
-
 
   private static final Log logger = LogFactory.getLog( SimpleBarcodesUtility.class );
 
@@ -286,10 +292,8 @@ public class SimpleBarcodesUtility {
     return null;
   }
 
-  public static BarcodeGenerator createBarcode4J( final String type,
-                                                  final boolean showText,
-                                                  final boolean checksum,
-                                                  final Number barHeight ) {
+  public static BarcodeGenerator createBarcode4J( final String type, final boolean showText, final boolean checksum,
+      final Number barHeight ) {
     if ( BARCODE_DATAMATRIX.equals( type ) ) {
       final DataMatrix dataMatrix = new DataMatrix();
       return dataMatrix;
@@ -352,7 +356,7 @@ public class SimpleBarcodesUtility {
         dataMatrix.getUSPSIntelligentMailBean().setBarHeight( UnitConv.pt2mm( barHeight.doubleValue() ) );
       }
       dataMatrix.getUSPSIntelligentMailBean()
-        .setChecksumMode( checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE );
+          .setChecksumMode( checksum ? ChecksumMode.CP_AUTO : ChecksumMode.CP_IGNORE );
       return dataMatrix;
     }
     return null;

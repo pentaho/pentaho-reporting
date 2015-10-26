@@ -1,21 +1,27 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
 
 import org.krysalis.barcode4j.BarcodeDimension;
 import org.krysalis.barcode4j.BarcodeGenerator;
@@ -28,9 +34,6 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.ReportDrawable;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-
 public class BarcodeDrawable implements ReportDrawable {
   private BarcodeGenerator generator;
   private String message;
@@ -39,8 +42,7 @@ public class BarcodeDrawable implements ReportDrawable {
   private Color backgroundColor;
   private Color foregroundColor;
 
-  public BarcodeDrawable( final BarcodeGenerator generator,
-                          final String message ) throws IllegalArgumentException {
+  public BarcodeDrawable( final BarcodeGenerator generator, final String message ) throws IllegalArgumentException {
     this.generator = generator;
     this.message = message;
     this.barcodeDimension = this.generator.calcDimensions( message );
@@ -67,12 +69,10 @@ public class BarcodeDrawable implements ReportDrawable {
       scale = vertScale;
       dx = ( ( bounds.getWidth() / scale ) - getBarcodeDimension().getWidthPlusQuiet() ) / 2;
     }
-    g2d.scale( scale, scale ); //scale for mm to screen pixels
-    g2d.translate( dx, dy ); //center
-    g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
-      RenderingHints.VALUE_ANTIALIAS_ON );
-    g2d.setRenderingHint( RenderingHints.KEY_FRACTIONALMETRICS,
-      RenderingHints.VALUE_FRACTIONALMETRICS_ON );
+    g2d.scale( scale, scale ); // scale for mm to screen pixels
+    g2d.translate( dx, dy ); // center
+    g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+    g2d.setRenderingHint( RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON );
 
     if ( font != null ) {
       g2d.setFont( font );
@@ -88,7 +88,7 @@ public class BarcodeDrawable implements ReportDrawable {
 
     final Java2DCanvasProvider canvas = new Java2DCanvasProvider( g2d, 0 );
 
-    //now paint the barcode
+    // now paint the barcode
     generator.generateBarcode( canvas, message );
   }
 

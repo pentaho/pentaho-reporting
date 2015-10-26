@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2009 Pentaho Corporation, Simba Management Limited and Contributors.  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2009 Pentaho Corporation, Simba Management Limited and Contributors.  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions;
 
@@ -57,7 +57,8 @@ public final class NetDump {
     /**
      * Creates a new ConnectionInfo object for the given URL.
      *
-     * @param url the URL to which to connect to.
+     * @param url
+     *          the URL to which to connect to.
      */
     public ConnectionInfo( final URL url ) {
       host = url.getHost();
@@ -67,15 +68,13 @@ public final class NetDump {
       }
 
       final String file = url.getFile();
-      //      String query = url.getQuery();
+      // String query = url.getQuery();
       final String ref = url.getRef();
 
       uri = file;
-/*      if (query != null)
-      {
-        uri += "?";
-        uri += query;
-      }*/
+      /*
+       * if (query != null) { uri += "?"; uri += query; }
+       */
       if ( ref != null ) {
         uri += "#";
         uri += ref;
@@ -113,7 +112,8 @@ public final class NetDump {
   /**
    * Connects to the given URL using the specified HTTP method, something like GET or POST.
    *
-   * @param args the connection arguments, the method followed by an url.
+   * @param args
+   *          the connection arguments, the method followed by an url.
    */
   public static void main( final String[] args ) {
     if ( args.length != 2 ) {
@@ -122,8 +122,8 @@ public final class NetDump {
     }
 
     try {
-      final String method = args[ 0 ];
-      final URL url = new URL( args[ 1 ] );
+      final String method = args[0];
+      final URL url = new URL( args[1] );
       if ( "http".equals( url.getProtocol() ) == false ) {
         System.err.println( "The given url must be a HTTP url" );
         System.exit( 1 );

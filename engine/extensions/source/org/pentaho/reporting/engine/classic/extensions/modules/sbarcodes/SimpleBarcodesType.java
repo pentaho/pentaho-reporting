@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes;
 
@@ -47,8 +47,9 @@ public class SimpleBarcodesType extends ContentType {
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     Object value = ElementTypeUtils.queryStaticValue( element );
     if ( value == null ) {
-      final String type = (String) element.getAttribute
-        ( SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE );
+      final String type =
+          (String) element.getAttribute( SimpleBarcodesAttributeNames.NAMESPACE,
+              SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE );
 
       value = SimpleBarcodesUtility.getBarcodeSampleData( type );
     }
@@ -59,9 +60,11 @@ public class SimpleBarcodesType extends ContentType {
   /**
    * Returns the current value for the data source.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
-   * @param element the element for which the data is computed.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
+   * @param element
+   *          the element for which the data is computed.
    * @return the value.
    */
   public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
@@ -73,26 +76,29 @@ public class SimpleBarcodesType extends ContentType {
     return createBarcode( runtime, element, value );
   }
 
-  private Object createBarcode( final ExpressionRuntime runtime,
-                                final ReportElement element,
-                                final Object value ) {
+  private Object createBarcode( final ExpressionRuntime runtime, final ReportElement element, final Object value ) {
     // retrieve custom barcode attributes
-    final String type = (String) element.getAttribute
-      ( SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE );
+    final String type =
+        (String) element.getAttribute( SimpleBarcodesAttributeNames.NAMESPACE,
+            SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE );
     if ( type == null ) {
       final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
       return filter( runtime, element, nullValue );
     }
 
     // retrieve custom barcode styles
-    final Number barHeight = ElementTypeUtils.getNumberAttribute( element, SimpleBarcodesAttributeNames.NAMESPACE,
-      SimpleBarcodesAttributeNames.BAR_HEIGHT_ATTRIBUTE, null );
-    final Number barWidth = ElementTypeUtils.getNumberAttribute( element, SimpleBarcodesAttributeNames.NAMESPACE,
-      SimpleBarcodesAttributeNames.BAR_WIDTH_ATTRIBUTE, null );
-    final boolean showText = ElementTypeUtils.getBooleanAttribute
-      ( element, SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.SHOW_TEXT_ATTRIBUTE, true );
-    final boolean checksum = ElementTypeUtils.getBooleanAttribute
-      ( element, SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.CHECKSUM_ATTRIBUTE, true );
+    final Number barHeight =
+        ElementTypeUtils.getNumberAttribute( element, SimpleBarcodesAttributeNames.NAMESPACE,
+            SimpleBarcodesAttributeNames.BAR_HEIGHT_ATTRIBUTE, null );
+    final Number barWidth =
+        ElementTypeUtils.getNumberAttribute( element, SimpleBarcodesAttributeNames.NAMESPACE,
+            SimpleBarcodesAttributeNames.BAR_WIDTH_ATTRIBUTE, null );
+    final boolean showText =
+        ElementTypeUtils.getBooleanAttribute( element, SimpleBarcodesAttributeNames.NAMESPACE,
+            SimpleBarcodesAttributeNames.SHOW_TEXT_ATTRIBUTE, true );
+    final boolean checksum =
+        ElementTypeUtils.getBooleanAttribute( element, SimpleBarcodesAttributeNames.NAMESPACE,
+            SimpleBarcodesAttributeNames.CHECKSUM_ATTRIBUTE, true );
 
     try {
       final BarcodeGenerator generator = SimpleBarcodesUtility.createBarcode4J( type, showText, checksum, barHeight );
@@ -130,6 +136,6 @@ public class SimpleBarcodesType extends ContentType {
 
   public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {
     element.setAttribute( SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE,
-      SimpleBarcodesUtility.BARCODE_CODE128 );
+        SimpleBarcodesUtility.BARCODE_CODE128 );
   }
 }
