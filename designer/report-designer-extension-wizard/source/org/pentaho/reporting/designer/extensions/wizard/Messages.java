@@ -22,7 +22,9 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.KeyStroke;
+
 import java.util.Locale;
 import java.util.MissingResourceException;
 
