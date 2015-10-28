@@ -258,7 +258,7 @@ public class SparklineExpression extends ColumnAggregationExpression {
   }
 
   /**
-   * Sets the angle from which the graph should start drawing (for pie graphys). 0 means 12 o'clock.
+   * Sets the angle from which the graph should start drawing (for pie graphs). 0 means 12 o'clock.
    *
    * @param startAngle
    *          The new angle in degrees.

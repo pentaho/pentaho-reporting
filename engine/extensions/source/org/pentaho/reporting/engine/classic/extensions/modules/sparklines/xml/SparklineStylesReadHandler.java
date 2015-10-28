@@ -63,7 +63,7 @@ public class SparklineStylesReadHandler extends AbstractXmlReadHandler implement
    *
    * @return the object.
    * @throws SAXException
-   *           if an parser error occured.
+   *           if an parser error occurred.
    */
   public Object getObject() throws SAXException {
     return styleSheet;

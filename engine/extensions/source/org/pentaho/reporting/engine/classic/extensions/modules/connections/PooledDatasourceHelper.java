@@ -19,6 +19,12 @@
  */
 package org.pentaho.reporting.engine.classic.extensions.modules.connections;
 
+import java.sql.Driver;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverConnectionFactory;
@@ -38,11 +44,6 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.connections.Dataso
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-
-import javax.sql.DataSource;
-import java.sql.Driver;
-import java.util.Map;
-import java.util.Properties;
 
 public class PooledDatasourceHelper {
   private static final Log logger = LogFactory.getLog( PooledDatasourceHelper.class );
@@ -75,7 +76,7 @@ public class PooledDatasourceHelper {
         url = null;
       }
 
-      // Read default connecion pooling parameter
+      // Read default connection pooling parameter
       final String maxdleConn = getSystemSetting( "dbcp-defaults.max-idle-conn" ); //$NON-NLS-1$
       final String minIdleConn = getSystemSetting( "dbcp-defaults.min-idle-conn" ); //$NON-NLS-1$
       final String maxActConn = getSystemSetting( "dbcp-defaults.max-act-conn" ); //$NON-NLS-1$

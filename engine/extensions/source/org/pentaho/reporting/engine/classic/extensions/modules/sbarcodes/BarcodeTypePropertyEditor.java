@@ -88,9 +88,6 @@ public class BarcodeTypePropertyEditor implements PropertyEditor {
     if ( SimpleBarcodesUtility.BARCODE_PDF417.equals( barodeType ) ) {
       return true;
     }
-    if ( SimpleBarcodesUtility.BARCODE_PDF417.equals( barodeType ) ) {
-      return true;
-    }
     if ( SimpleBarcodesUtility.BARCODE_POSTNET.equals( barodeType ) ) {
       return true;
     }
@@ -175,7 +172,7 @@ public class BarcodeTypePropertyEditor implements PropertyEditor {
    * <p/>
    * Example results are:
    * <ul>
-   * <li>Primitive expresssion: <code>2</code>
+   * <li>Primitive expression: <code>2</code>
    * <li>Class constructor: <code>new
    * java.awt.Color(127,127,34)</code>
    * <li>Static field: <code>java.awt.Color.orange</code>

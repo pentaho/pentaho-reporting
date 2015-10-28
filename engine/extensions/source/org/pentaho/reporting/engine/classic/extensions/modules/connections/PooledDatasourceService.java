@@ -1,4 +1,23 @@
+/*!
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2005-2015 Pentaho Corporation..  All rights reserved.
+ */
+
 package org.pentaho.reporting.engine.classic.extensions.modules.connections;
+
+import javax.sql.DataSource;
 
 import org.pentaho.database.model.IDatabaseConnection;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -8,8 +27,6 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.connections.Dataso
 import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DatasourceServiceException;
 import org.pentaho.reporting.libraries.base.boot.ObjectFactory;
 import org.pentaho.reporting.libraries.base.boot.SingletonHint;
-
-import javax.sql.DataSource;
 
 @SingletonHint
 public class PooledDatasourceService implements DataSourceService {
@@ -22,18 +39,13 @@ public class PooledDatasourceService implements DataSourceService {
   }
 
   protected DataSource retrieve( final String datasource ) throws DatasourceServiceException {
+    final DataSourceMgmtService datasourceMgmtSvc =
+        ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceMgmtService.class );
     try {
-      final DataSourceMgmtService datasourceMgmtSvc =
-          ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceMgmtService.class );
-      try {
-        final IDatabaseConnection databaseConnection = datasourceMgmtSvc.getDatasourceByName( datasource );
-        return PooledDatasourceHelper.setupPooledDataSource( databaseConnection );
-      } catch ( DatasourceMgmtServiceException daoe ) {
-        return queryFallback( datasource );
-      }
+      final IDatabaseConnection databaseConnection = datasourceMgmtSvc.getDatasourceByName( datasource );
+      return PooledDatasourceHelper.setupPooledDataSource( databaseConnection );
     } catch ( DatasourceMgmtServiceException daoe ) {
-      throw new DatasourceServiceException( Messages.getInstance().getString(
-          "PooledDataSourceService.ERROR_0002_UNABLE_TO_GET_DATASOURCE", datasource ), daoe ); //$NON-NLS-1$
+      return queryFallback( datasource );
     }
   }
 

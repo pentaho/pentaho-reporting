@@ -17,18 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.java14config;
 
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
 import org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigStorage;
 import org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigStoreException;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
-
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 
 /**
  * A configuration storage provider which stores the entries using the JDK 1.4 configuration API.
@@ -59,7 +59,7 @@ public class Java14ConfigStorage implements ConfigStorage {
    * @param config
    *          the properties which should be stored.
    * @throws ConfigStoreException
-   *           if an error occured.
+   *           if an error occurred.
    */
   public void store( final String configPath, final Configuration config ) throws ConfigStoreException {
     if ( ConfigFactory.isValidPath( configPath ) == false ) {
@@ -92,7 +92,7 @@ public class Java14ConfigStorage implements ConfigStorage {
    *          the property set that acts as fallback to provide default values.
    * @return the loaded properties
    * @throws ConfigStoreException
-   *           if an error occured.
+   *           if an error occurred.
    */
   public Configuration load( final String configPath, final Configuration defaults ) throws ConfigStoreException {
     if ( ConfigFactory.isValidPath( configPath ) == false ) {

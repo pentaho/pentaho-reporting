@@ -36,7 +36,7 @@ public class Java14PrintModuleInitializer implements ModuleInitializer {
    * Initializes the module and defines the storage implementation.
    *
    * @throws ModuleInitializeException
-   *           if an error ocurred.
+   *           if an error occurred.
    */
   public void performInit() throws ModuleInitializeException {
   }

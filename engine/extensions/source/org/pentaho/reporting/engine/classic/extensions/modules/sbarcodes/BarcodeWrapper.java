@@ -43,7 +43,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  */
 public class BarcodeWrapper implements ReportDrawable {
   private static final Log logger = LogFactory.getLog( BarcodeWrapper.class );
-  private static final Color ALPHA = new Color( 255, 255, 255, 0 );
+  static final Color ALPHA = new Color( 255, 255, 255, 0 );
   private Barcode barcode;
   private Dimension preferredSize;
   private boolean scale;

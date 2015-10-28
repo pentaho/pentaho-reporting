@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.java14config;
 
+import java.util.prefs.Preferences;
+
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigFactory;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializer;
-
-import java.util.prefs.Preferences;
 
 /**
  * An initializer for the Java 1.4 configuration provider.
@@ -40,7 +40,7 @@ public class Java14ConfigModuleInitializer implements ModuleInitializer {
    * Initializes the module and defines the storage implementation.
    *
    * @throws ModuleInitializeException
-   *           if an error ocurred.
+   *           if an error occurred.
    */
   public void performInit() throws ModuleInitializeException {
     final ConfigFactory factory = ConfigFactory.getInstance();

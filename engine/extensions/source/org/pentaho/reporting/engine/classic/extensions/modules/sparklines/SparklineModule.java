@@ -60,7 +60,7 @@ public class SparklineModule extends AbstractModule {
    * @param subSystem
    *          the subSystem.
    * @throws ModuleInitializeException
-   *           if an error ocurred while initializing the module.
+   *           if an error occurred while initializing the module.
    */
   public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     try {

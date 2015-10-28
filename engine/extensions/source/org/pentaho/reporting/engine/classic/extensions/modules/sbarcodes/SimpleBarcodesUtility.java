@@ -30,6 +30,7 @@ import net.sourceforge.barbecue.linear.twoOfFive.Int2of5Barcode;
 import net.sourceforge.barbecue.linear.twoOfFive.Std2of5Barcode;
 import net.sourceforge.barbecue.linear.upc.UPCABarcode;
 import net.sourceforge.barbecue.twod.pdf417.PDF417Barcode;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.krysalis.barcode4j.BarcodeGenerator;
@@ -385,7 +386,7 @@ public class SimpleBarcodesUtility {
       return "0425261";
     }
     if ( BARCODE_UPCA.equals( type ) ) {
-      return "4252611234565";
+      return "42526112345";
     }
 
     if ( BARCODE_ROYALMAIL.equals( type ) ) {

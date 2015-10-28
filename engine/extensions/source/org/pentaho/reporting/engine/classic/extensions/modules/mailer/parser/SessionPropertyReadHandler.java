@@ -54,7 +54,7 @@ public class SessionPropertyReadHandler extends AbstractXmlReadHandler {
    *
    * @return the object.
    * @throws org.xml.sax.SAXException
-   *           if an parser error occured.
+   *           if an parser error occurred.
    */
   public Object getObject() throws SAXException {
     return null;

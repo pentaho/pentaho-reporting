@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer.parser;
 
+import java.util.ArrayList;
+
 import org.pentaho.reporting.engine.classic.extensions.modules.mailer.MailHeader;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
-import java.util.ArrayList;
 
 public class HeadersReadHandler extends AbstractXmlReadHandler {
   private ArrayList headerReadHandlers;
@@ -84,7 +84,7 @@ public class HeadersReadHandler extends AbstractXmlReadHandler {
    *
    * @return the object.
    * @throws org.xml.sax.SAXException
-   *           if an parser error occured.
+   *           if an parser error occurred.
    */
   public Object getObject() throws SAXException {
     return headers;

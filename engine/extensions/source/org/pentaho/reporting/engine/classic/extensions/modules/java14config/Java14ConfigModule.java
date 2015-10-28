@@ -47,7 +47,7 @@ public class Java14ConfigModule extends AbstractModule {
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException
-   *           if an error occured.
+   *           if an error occurred.
    */
   public Java14ConfigModule() throws ModuleInitializeException {
     loadModuleInfo();
@@ -61,7 +61,7 @@ public class Java14ConfigModule extends AbstractModule {
    * @param subSystem
    *          the subSystem.
    * @throws ModuleInitializeException
-   *           if an error ocurred while initializing the module.
+   *           if an error occurred while initializing the module.
    */
   public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     final String value =

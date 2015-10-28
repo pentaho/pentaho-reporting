@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer.parser;
 
+import java.util.ArrayList;
+import java.util.Properties;
+
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
-import java.util.ArrayList;
-import java.util.Properties;
 
 public class SessionPropertiesReadHandler extends AbstractXmlReadHandler {
   private Properties sessionProperties;
@@ -78,7 +78,7 @@ public class SessionPropertiesReadHandler extends AbstractXmlReadHandler {
    *
    * @return the object.
    * @throws org.xml.sax.SAXException
-   *           if an parser error occured.
+   *           if an parser error occurred.
    */
   public Object getObject() throws SAXException {
     return sessionProperties;

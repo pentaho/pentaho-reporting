@@ -58,7 +58,7 @@ public class Java14PrintingPlugin extends PrintingPlugin {
    *
    * @param report
    *          the report.
-   * @return true, if the export was successfull, false otherwise.
+   * @return true, if the export was successful, false otherwise.
    */
   public boolean performExport( final MasterReport report ) {
 
