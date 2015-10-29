@@ -35,47 +35,39 @@ import org.pentaho.reporting.ui.datasources.jdbc.ui.SimpleJdbcDataSourceDialog;
 /**
  * @author David Kincade
  */
-public class SimpleJdbcDataSourcePlugin implements DataSourcePlugin
-{
-  public SimpleJdbcDataSourcePlugin()
-  {
+public class SimpleJdbcDataSourcePlugin implements DataSourcePlugin {
+  public SimpleJdbcDataSourcePlugin() {
   }
 
-  public DataFactoryMetaData getMetaData()
-  {
-    return DataFactoryRegistry.getInstance().getMetaData(SimpleSQLReportDataFactory.class.getName());
+  public DataFactoryMetaData getMetaData() {
+    return DataFactoryRegistry.getInstance().getMetaData( SimpleSQLReportDataFactory.class.getName() );
   }
 
-  public boolean canHandle(final DataFactory dataFactory)
-  {
-    return dataFactory instanceof SimpleSQLReportDataFactory &&
-        dataFactory instanceof SQLReportDataFactory == false;
+  public boolean canHandle( final DataFactory dataFactory ) {
+    return dataFactory instanceof SimpleSQLReportDataFactory && dataFactory instanceof SQLReportDataFactory == false;
   }
 
-  public DataFactory performEdit(final DesignTimeContext context,
-                                 final DataFactory input,
-                                 final String queryName,
-                                 final DataFactoryChangeRecorder changeRecorder)
-  {
-    final SimpleJdbcDataSourceDialog editor;
+  public DataFactory performEdit( final DesignTimeContext context, final DataFactory input, final String queryName,
+      final DataFactoryChangeRecorder changeRecorder ) {
+    final SimpleJdbcDataSourceDialog editor = createEditor( context );
+    return editor.performConfiguration( (SimpleSQLReportDataFactory) input );
+  }
+
+  /**
+   * package-local visibility for testing purposes
+   */
+  SimpleJdbcDataSourceDialog createEditor( DesignTimeContext context ) {
     final Window window = context.getParentWindow();
-    if (window instanceof JDialog)
-    {
-      editor = new SimpleJdbcDataSourceDialog(context, (JDialog) window);
+    if ( window instanceof JDialog ) {
+      return new SimpleJdbcDataSourceDialog( context, (JDialog) window );
+    } else if ( window instanceof JFrame ) {
+      return new SimpleJdbcDataSourceDialog( context, (JFrame) window );
+    } else {
+      return new SimpleJdbcDataSourceDialog( context );
     }
-    else if (window instanceof JFrame)
-    {
-      editor = new SimpleJdbcDataSourceDialog(context, (JFrame) window);
-    }
-    else
-    {
-      editor = new SimpleJdbcDataSourceDialog(context);
-    }
-    return editor.performConfiguration((SimpleSQLReportDataFactory) input);
   }
 
-  public JComponent getPropertyPanel(final DataFactory dataFactory, final DesignTimeContext context)
-  {
+  public JComponent getPropertyPanel( final DataFactory dataFactory, final DesignTimeContext context ) {
     return null;
   }
 }
