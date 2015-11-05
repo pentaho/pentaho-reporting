@@ -60,7 +60,6 @@
       <module fileurl="file://$PROJECT_DIR$/designer/report-designer-extension-wizard/report-designer-extension-wizard.iml" filepath="$PROJECT_DIR$/designer/report-designer-extension-wizard/report-designer-extension-wizard.iml" group="designer" />
       <module fileurl="file://$PROJECT_DIR$/engine/samples/samples.iml" filepath="$PROJECT_DIR$/engine/samples/samples.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/sdk/sdk.iml" filepath="$PROJECT_DIR$/engine/sdk/sdk.iml" group="engine" />
-      <module fileurl="file://$PROJECT_DIR$/engine/server/server.iml" filepath="$PROJECT_DIR$/engine/server/server.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/testcases/testcases.iml" filepath="$PROJECT_DIR$/engine/testcases/testcases.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/tools/tools.iml" filepath="$PROJECT_DIR$/engine/tools/tools.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/wizard-core/wizard-core.iml" filepath="$PROJECT_DIR$/engine/wizard-core/wizard-core.iml" group="engine" />
