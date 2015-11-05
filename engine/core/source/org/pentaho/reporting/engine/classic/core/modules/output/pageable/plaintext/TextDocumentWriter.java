@@ -1,21 +1,25 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext;
+
+import java.awt.font.TextLayout;
+import java.awt.print.Paper;
+import java.io.IOException;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
@@ -47,10 +51,6 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 
-import java.awt.font.TextLayout;
-import java.awt.print.Paper;
-import java.io.IOException;
-
 /**
  * Creation-Date: 13.05.2007, 15:49:13
  *
@@ -72,9 +72,7 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
   private boolean clipOnWordBoundary;
   private boolean watermarkOnTop;
 
-  public TextDocumentWriter( final OutputProcessorMetaData metaData,
-                             final PrinterDriver driver,
-                             final String encoding ) {
+  public TextDocumentWriter( final OutputProcessorMetaData metaData, final PrinterDriver driver, final String encoding ) {
     if ( encoding == null ) {
       throw new NullPointerException();
     }
@@ -88,21 +86,20 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
     this.codePointBuffer = new CodePointBuffer( 400 );
     this.driver = driver;
     this.encoding = encoding;
-    characterHeightInMicroPoint = StrictGeomUtility.toInternalValue( metaData.getNumericFeatureValue(
-      TextOutputProcessorMetaData.CHAR_HEIGHT ) );
-    characterWidthInMicroPoint = StrictGeomUtility.toInternalValue( metaData.getNumericFeatureValue(
-      TextOutputProcessorMetaData.CHAR_WIDTH ) );
+    characterHeightInMicroPoint =
+        StrictGeomUtility.toInternalValue( metaData.getNumericFeatureValue( TextOutputProcessorMetaData.CHAR_HEIGHT ) );
+    characterWidthInMicroPoint =
+        StrictGeomUtility.toInternalValue( metaData.getNumericFeatureValue( TextOutputProcessorMetaData.CHAR_WIDTH ) );
 
     if ( characterHeightInMicroPoint <= 0 || characterWidthInMicroPoint <= 0 ) {
       throw new IllegalStateException( "Invalid character box size. Cannot continue." );
     }
     revalidateTextEllipseProcessStep = new RevalidateTextEllipseProcessStep( metaData );
-    this.clipOnWordBoundary = "true".equals
-      ( metaData.getConfiguration().getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary" ) );
+    this.clipOnWordBoundary =
+        "true".equals( metaData.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary" ) );
     this.watermarkOnTop = metaData.isFeatureSupported( OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP );
   }
-
 
   @Deprecated
   public void close() {
@@ -113,22 +110,16 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
 
   }
 
-  public void processPhysicalPage( final PageGrid pageGrid,
-                                   final LogicalPageBox logicalPage,
-                                   final int row,
-                                   final int col,
-                                   final PhysicalPageKey pageKey ) throws IOException {
+  public void processPhysicalPage( final PageGrid pageGrid, final LogicalPageBox logicalPage, final int row,
+      final int col, final PhysicalPageKey pageKey ) throws IOException {
     final PhysicalPageBox page = pageGrid.getPage( row, col );
     final Paper paper = new Paper();
-    paper.setSize( StrictGeomUtility.toExternalValue( page.getWidth() ),
-      StrictGeomUtility.toExternalValue( page.getHeight() ) );
-    paper.setImageableArea
-      ( StrictGeomUtility.toExternalValue( page.getImageableX() ),
-        StrictGeomUtility.toExternalValue( page.getImageableY() ),
-        StrictGeomUtility.toExternalValue( page.getImageableWidth() ),
+    paper.setSize( StrictGeomUtility.toExternalValue( page.getWidth() ), StrictGeomUtility.toExternalValue( page
+        .getHeight() ) );
+    paper.setImageableArea( StrictGeomUtility.toExternalValue( page.getImageableX() ), StrictGeomUtility
+        .toExternalValue( page.getImageableY() ), StrictGeomUtility.toExternalValue( page.getImageableWidth() ),
         StrictGeomUtility.toExternalValue( page.getImageableHeight() ) );
-    drawArea = new StrictBounds( page.getGlobalX(), page.getGlobalY(),
-      page.getWidth(), page.getHeight() );
+    drawArea = new StrictBounds( page.getGlobalX(), page.getGlobalY(), page.getWidth(), page.getHeight() );
     plainTextPage = new PlainTextPage( paper, driver, encoding );
     processPageBox( logicalPage );
     plainTextPage.writePage();
@@ -136,11 +127,10 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
 
   public void processLogicalPage( final LogicalPageKey key, final LogicalPageBox logicalPage ) throws IOException {
     final Paper paper = new Paper();
-    paper.setSize( StrictGeomUtility.toExternalValue( logicalPage.getPageWidth() ),
-      StrictGeomUtility.toExternalValue( logicalPage.getPageHeight() ) );
-    paper.setImageableArea( 0, 0,
-      StrictGeomUtility.toExternalValue( logicalPage.getPageWidth() ),
-      StrictGeomUtility.toExternalValue( logicalPage.getPageHeight() ) );
+    paper.setSize( StrictGeomUtility.toExternalValue( logicalPage.getPageWidth() ), StrictGeomUtility
+        .toExternalValue( logicalPage.getPageHeight() ) );
+    paper.setImageableArea( 0, 0, StrictGeomUtility.toExternalValue( logicalPage.getPageWidth() ), StrictGeomUtility
+        .toExternalValue( logicalPage.getPageHeight() ) );
     paper.setSize( logicalPage.getPageWidth(), logicalPage.getPageHeight() );
     paper.setImageableArea( 0, 0, logicalPage.getPageWidth(), logicalPage.getPageHeight() );
 
@@ -240,12 +230,9 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
     final int maxLength = text.computeMaximumTextSize( contentX2 );
     final String rawText = gs.getText( text.getOffset(), maxLength, codePointBuffer );
 
-    final int x = PlainTextPage.correctedDivisionFloor( ( text.getX() - drawArea.getX() ),
-      characterWidthInMicroPoint );
-    final int y = PlainTextPage.correctedDivisionFloor( ( text.getY() - drawArea.getY() ),
-      characterHeightInMicroPoint );
-    int w = Math.min( maxLength, PlainTextPage.correctedDivisionFloor( text.getWidth(),
-      characterWidthInMicroPoint ) );
+    final int x = PlainTextPage.correctedDivisionFloor( ( text.getX() - drawArea.getX() ), characterWidthInMicroPoint );
+    final int y = PlainTextPage.correctedDivisionFloor( ( text.getY() - drawArea.getY() ), characterHeightInMicroPoint );
+    int w = Math.min( maxLength, PlainTextPage.correctedDivisionFloor( text.getWidth(), characterWidthInMicroPoint ) );
 
     // filter out results that do not belong to the current physical page
     if ( x + w > plainTextPage.getWidth() ) {
@@ -279,7 +266,7 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
     TextLayout textLayout = renderableComplexText.getTextLayout();
     String debugInfo = textLayout.toString();
     String startPos =
-      debugInfo.substring( debugInfo.indexOf( "[start:" ), debugInfo.indexOf( ", len:" ) ).replace( "[start:", "" );
+        debugInfo.substring( debugInfo.indexOf( "[start:" ), debugInfo.indexOf( ", len:" ) ).replace( "[start:", "" );
     int startPosIntValue = -1;
 
     try {
@@ -291,16 +278,19 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
     // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
     // in order to avoid duplicates of same source raw text on multiple lines
     if ( ( renderableComplexText.getRawText().length() > textLayout.getCharacterCount() ) && startPosIntValue >= 0 ) {
-      text = renderableComplexText.getRawText()
-        .substring( startPosIntValue, textLayout.getCharacterCount() + startPosIntValue );
+      text =
+          renderableComplexText.getRawText().substring( startPosIntValue,
+              textLayout.getCharacterCount() + startPosIntValue );
     } else {
       text = renderableComplexText.getRawText();
     }
 
-    final int x = PlainTextPage.correctedDivisionFloor( ( renderableComplexText.getX() - drawArea.getX() ),
-      characterWidthInMicroPoint );
-    final int y = PlainTextPage.correctedDivisionFloor( ( renderableComplexText.getY() - drawArea.getY() ),
-      characterHeightInMicroPoint );
+    final int x =
+        PlainTextPage.correctedDivisionFloor( ( renderableComplexText.getX() - drawArea.getX() ),
+            characterWidthInMicroPoint );
+    final int y =
+        PlainTextPage.correctedDivisionFloor( ( renderableComplexText.getY() - drawArea.getY() ),
+            characterHeightInMicroPoint );
     int w = text.length();
 
     // filter out results that do not belong to the current physical page
@@ -321,8 +311,8 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
   }
 
   protected void processOtherNode( final RenderNode node ) {
-    if ( ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT ) == false &&
-      ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) == false ) {
+    if ( ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT ) == false
+        && ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) == false ) {
       return;
     }
 
@@ -385,9 +375,7 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
         } else if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
           drawComplexText( node );
         }
-      } else if ( x1 >= contentAreaX2 ) {
-        // Skip, the node will not be visible.
-      } else {
+      } else if ( x1 < contentAreaX2 ) {
         // The text node that is printed will overlap with the ellipse we need to print.
         if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT ) {
           drawText( (RenderableText) node, effectiveAreaX2 );
@@ -439,12 +427,9 @@ public class TextDocumentWriter extends IterateStructuralProcessStep {
     }
   }
 
-  protected void processTextLine( final RenderBox lineBox,
-                                  final long contentAreaX1,
-                                  final long contentAreaX2 ) {
+  protected void processTextLine( final RenderBox lineBox, final long contentAreaX1, final long contentAreaX2 ) {
     final boolean overflowProperty = lineBox.getParent().getStaticBoxLayoutProperties().isOverflowX();
-    this.textLineOverflow =
-      ( ( lineBox.getX() + lineBox.getWidth() ) > contentAreaX2 ) && overflowProperty == false;
+    this.textLineOverflow = ( ( lineBox.getX() + lineBox.getWidth() ) > contentAreaX2 ) && overflowProperty == false;
 
     this.ellipseDrawn = false;
     if ( textLineOverflow ) {

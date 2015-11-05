@@ -32,10 +32,7 @@ public class CleanTableRowsPreparationStep extends IterateStructuralProcessStep 
     private int rowSpan;
     private long y;
 
-    public Cell( final int rowIndex,
-                 final int colIndex,
-                 final int rowSpan,
-                 final long y ) {
+    public Cell( final int rowIndex, final int colIndex, final int rowSpan, final long y ) {
       this.rowIndex = rowIndex;
       this.colIndex = colIndex;
       this.rowSpan = rowSpan;
@@ -138,8 +135,8 @@ public class CleanTableRowsPreparationStep extends IterateStructuralProcessStep 
     return false;
   }
 
-  public static int computeSafeCut( final long pageOffset, final GenericObjectTable<Cell> cells,
-                                    final int trueRowCount ) {
+  public static int
+    computeSafeCut( final long pageOffset, final GenericObjectTable<Cell> cells, final int trueRowCount ) {
     int rowForPageOffset = findRowForPageOffset( pageOffset, cells, trueRowCount );
     if ( rowForPageOffset == 0 ) {
       // none of the rows can be cut, the whole table must be preserved.
@@ -179,9 +176,8 @@ public class CleanTableRowsPreparationStep extends IterateStructuralProcessStep 
     return rowIdx;
   }
 
-  private static int findRowForPageOffset( final long pageOffset,
-                                           final GenericObjectTable<Cell> cells,
-                                           final int trueRowCount ) {
+  private static int findRowForPageOffset( final long pageOffset, final GenericObjectTable<Cell> cells,
+      final int trueRowCount ) {
     int selectedRow = 0;
     for ( int row = 0; row < trueRowCount; row += 1 ) {
       long pos = -1;

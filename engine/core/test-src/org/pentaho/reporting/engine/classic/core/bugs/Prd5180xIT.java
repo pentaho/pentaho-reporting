@@ -39,7 +39,7 @@ public class Prd5180xIT {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-5180-simple.prpt" );
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 2 );
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_FINISHEDNODE );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_FINISHEDNODE );
 
     // Buggy report bleeds finished render nodes due to illegal shifting of content.
     Assert.assertEquals( 0, elementsByNodeType.length );

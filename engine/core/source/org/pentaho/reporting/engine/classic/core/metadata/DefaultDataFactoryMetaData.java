@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
@@ -39,39 +39,21 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
   private DataFactoryCore dataFactoryCore;
 
   @Deprecated
-  public DefaultDataFactoryMetaData( final String dataFactory,
-                                     final String bundleLocation,
-                                     final String keyPrefix,
-                                     final boolean expert,
-                                     final boolean preferred,
-                                     final boolean hidden,
-                                     final boolean deprecated,
-                                     final boolean editable,
-                                     final boolean freeformQuery,
-                                     final boolean formattingMetadataSource,
-                                     final boolean experimental,
-                                     final DataFactoryCore dataFactoryCore,
-                                     final int compatibilityLevel ) {
-    this( dataFactory, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, editable,
-      freeformQuery, formattingMetadataSource,
-      experimental ? MaturityLevel.Development : MaturityLevel.Production, dataFactoryCore, compatibilityLevel );
+  public DefaultDataFactoryMetaData( final String dataFactory, final String bundleLocation, final String keyPrefix,
+      final boolean expert, final boolean preferred, final boolean hidden, final boolean deprecated,
+      final boolean editable, final boolean freeformQuery, final boolean formattingMetadataSource,
+      final boolean experimental, final DataFactoryCore dataFactoryCore, final int compatibilityLevel ) {
+    this( dataFactory, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, editable, freeformQuery,
+        formattingMetadataSource, experimental ? MaturityLevel.Development : MaturityLevel.Production, dataFactoryCore,
+        compatibilityLevel );
   }
 
-  public DefaultDataFactoryMetaData( final String dataFactory,
-                                     final String bundleLocation,
-                                     final String keyPrefix,
-                                     final boolean expert,
-                                     final boolean preferred,
-                                     final boolean hidden,
-                                     final boolean deprecated,
-                                     final boolean editable,
-                                     final boolean freeformQuery,
-                                     final boolean formattingMetadataSource,
-                                     final MaturityLevel maturityLevel,
-                                     final DataFactoryCore dataFactoryCore,
-                                     final int compatibilityLevel ) {
-    super( dataFactory, bundleLocation, keyPrefix, expert,
-      preferred, hidden, deprecated, maturityLevel, compatibilityLevel );
+  public DefaultDataFactoryMetaData( final String dataFactory, final String bundleLocation, final String keyPrefix,
+      final boolean expert, final boolean preferred, final boolean hidden, final boolean deprecated,
+      final boolean editable, final boolean freeformQuery, final boolean formattingMetadataSource,
+      final MaturityLevel maturityLevel, final DataFactoryCore dataFactoryCore, final int compatibilityLevel ) {
+    super( dataFactory, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel,
+        compatibilityLevel );
     if ( dataFactoryCore == null ) {
       throw new NullPointerException();
     }
@@ -106,10 +88,8 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
     return dataFactoryCore.getReferencedFields( this, element, queryName, parameter );
   }
 
-  public ResourceReference[] getReferencedResources( final DataFactory element,
-                                                     final ResourceManager resourceManager,
-                                                     final String queryName,
-                                                     final DataRow parameter ) {
+  public ResourceReference[] getReferencedResources( final DataFactory element, final ResourceManager resourceManager,
+      final String queryName, final DataRow parameter ) {
     return dataFactoryCore.getReferencedResources( this, element, resourceManager, queryName, parameter );
   }
 
@@ -188,4 +168,3 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
     return dataFactoryCore.getQueryHash( this, dataFactory, queryName, parameter );
   }
 }
-

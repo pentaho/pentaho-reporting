@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -44,7 +44,7 @@ public class AverageExpression extends AbstractExpression {
   private static final BigDecimal ZERO = new BigDecimal( "0" );
 
   /**
-   * Creates a new expression.  The fields used by the expression are defined using properties named '0', '1', ... 'N'.
+   * Creates a new expression. The fields used by the expression are defined using properties named '0', '1', ... 'N'.
    * These fields should contain {@link Number} instances.
    */
   public AverageExpression() {
@@ -66,7 +66,8 @@ public class AverageExpression extends AbstractExpression {
   /**
    * Defines the rounding mode. This influences the precision of the divide-operation.
    *
-   * @param roundingMode the rounding mode.
+   * @param roundingMode
+   *          the rounding mode.
    * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
   public void setRoundingMode( final int roundingMode ) {
@@ -85,12 +86,12 @@ public class AverageExpression extends AbstractExpression {
   /**
    * Defines the scale for the divide-operation. The scale influences the precision of the division.
    *
-   * @param scale the scale.
+   * @param scale
+   *          the scale.
    */
   public void setScale( final int scale ) {
     this.scale = scale;
   }
-
 
   /**
    * Returns the average of the values.
@@ -102,7 +103,7 @@ public class AverageExpression extends AbstractExpression {
     BigDecimal total = ZERO;
     int count = 0;
     for ( int i = 0; i < values.length; i++ ) {
-      final Number n = values[ i ];
+      final Number n = values[i];
       if ( n != null ) {
         total = total.add( new BigDecimal( n.toString() ) );
         count++;
@@ -120,12 +121,12 @@ public class AverageExpression extends AbstractExpression {
    * @return an Objectarray containing all defined values from the datarow
    */
   private Number[] collectValues() {
-    final Number[] retval = new Number[ this.fieldList.size() ];
+    final Number[] retval = new Number[this.fieldList.size()];
     for ( int i = 0; i < this.fieldList.size(); i++ ) {
       final String field = (String) this.fieldList.get( i );
       final Object o = getDataRow().get( field );
       if ( o instanceof Number ) {
-        retval[ i ] = (Number) o;
+        retval[i] = (Number) o;
       }
     }
     return retval;
@@ -148,13 +149,14 @@ public class AverageExpression extends AbstractExpression {
    * @return the fields
    */
   public String[] getField() {
-    return (String[]) fieldList.toArray( new String[ fieldList.size() ] );
+    return (String[]) fieldList.toArray( new String[fieldList.size()] );
   }
 
   /**
    * Defines all fields as array. This completely replaces any previously defined fields.
    *
-   * @param fields the new list of fields.
+   * @param fields
+   *          the new list of fields.
    */
   public void setField( final String[] fields ) {
     this.fieldList.clear();
@@ -164,7 +166,8 @@ public class AverageExpression extends AbstractExpression {
   /**
    * Returns the defined field at the given index-position.
    *
-   * @param index the position of the field name that should be queried.
+   * @param index
+   *          the position of the field name that should be queried.
    * @return the field name at the given position.
    */
   public String getField( final int index ) {
@@ -174,8 +177,10 @@ public class AverageExpression extends AbstractExpression {
   /**
    * Defines the field in the field-list at the given index.
    *
-   * @param index the position in the list, where the field should be defined.
-   * @param field the name of the field.
+   * @param index
+   *          the position in the list, where the field should be defined.
+   * @param field
+   *          the name of the field.
    */
   public void setField( final int index, final String field ) {
     if ( this.fieldList.size() == index ) {

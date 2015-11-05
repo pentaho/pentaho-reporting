@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.simple.readhandlers;
 
@@ -47,8 +47,7 @@ import org.xml.sax.SAXException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler
-  implements SubReportReadHandler {
+public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler implements SubReportReadHandler {
   private static final Log logger = LogFactory.getLog( SimpleSubReportReadHandler.class );
   /**
    * Literal text for an XML report element.
@@ -140,8 +139,10 @@ public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler
   /**
    * Initialises the handler.
    *
-   * @param rootHandler the root handler.
-   * @param tagName     the tag name.
+   * @param rootHandler
+   *          the root handler.
+   * @param tagName
+   *          the tag name.
    */
   public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
     super.init( rootHandler, uri, tagName );
@@ -152,7 +153,6 @@ public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler
     disableRootTagWarning = disableWarning;
   }
 
-
   public boolean isDisableRootTagWarning() {
     return disableRootTagWarning;
   }
@@ -160,21 +160,21 @@ public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void startParsing( final PropertyAttributes attrs )
-    throws SAXException {
+  protected void startParsing( final PropertyAttributes attrs ) throws SAXException {
     if ( "sub-report".equals( getTagName() ) && disableRootTagWarning == false ) {
-      SimpleSubReportReadHandler.logger.info(
-        "Encountered a subreport with an <sub-report> root-element. As of version 0.8.9-rc1, " +
-          "this tag has been deprecated and the common <report> tag should be used for both " +
-          "standalone and sub-reports." );
+      SimpleSubReportReadHandler.logger
+          .info( "Encountered a subreport with an <sub-report> root-element. As of version 0.8.9-rc1, "
+              + "this tag has been deprecated and the common <report> tag should be used for both "
+              + "standalone and sub-reports." );
     }
 
     RootXmlReadHandler rootHandler = getRootHandler();
-    final Object maybeReport = rootHandler.getHelperObject
-      ( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+    final Object maybeReport = rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
     if ( maybeReport instanceof SubReport ) {
       report = (SubReport) maybeReport;
     } else {
@@ -188,8 +188,8 @@ public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler
       if ( g instanceof RelationalGroup ) {
         groupList.add( (RelationalGroup) g );
       } else {
-        throw new ParseException( "The existing report contains non-default groups. " +
-          "This parser cannot handle such a construct." );
+        throw new ParseException( "The existing report contains non-default groups. "
+            + "This parser cannot handle such a construct." );
       }
     }
 
@@ -202,13 +202,12 @@ public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler
 
     final String useMinChunkWidth = attrs.getValue( getUri(), "use-min-chunkwidth" );
     if ( useMinChunkWidth != null ) {
-      report.getStyle().setStyleProperty
-        ( ElementStyleKeys.USE_MIN_CHUNKWIDTH, ReportParserUtil.parseBoolean( useMinChunkWidth, getLocator() ) );
+      report.getStyle().setStyleProperty( ElementStyleKeys.USE_MIN_CHUNKWIDTH,
+          ReportParserUtil.parseBoolean( useMinChunkWidth, getLocator() ) );
     }
 
     if ( rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES ) instanceof HashMap == false ) {
-      rootHandler
-        .setHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>() );
+      rootHandler.setHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>() );
     }
     rootHandler.setHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME, report );
   }
@@ -216,14 +215,15 @@ public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler
   /**
    * Returns the handler for a child element.
    *
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final PropertyAttributes atts )
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final PropertyAttributes atts )
     throws SAXException {
     if ( getUri().equals( uri ) == false ) {
       return null;
@@ -275,7 +275,8 @@ public class SimpleSubReportReadHandler extends AbstractPropertyXmlReadHandler
   /**
    * Done parsing.
    *
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void doneParsing() throws SAXException {
     super.doneParsing();

@@ -1,21 +1,54 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.IllegalComponentStateException;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.print.PageFormat;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
+import javax.swing.Scrollable;
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -61,20 +94,6 @@ import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.xmlns.LibXmlInfo;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.print.PageFormat;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * Creation-Date: 11.11.2006, 19:36:13
@@ -208,7 +227,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       this.processor.addReportProgressListener( this );
       try {
         final UpdatePaginatingPropertyHandler startPaginationNotify =
-          new UpdatePaginatingPropertyHandler( processor, true, false, 0 );
+            new UpdatePaginatingPropertyHandler( processor, true, false, 0 );
         if ( SwingUtilities.isEventDispatchThread() ) {
           startPaginationNotify.run();
         } else {
@@ -218,7 +237,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
         // Perform the pagination ..
         final int pageCount = processor.getNumberOfPages();
         final UpdatePaginatingPropertyHandler endPaginationNotify =
-          new UpdatePaginatingPropertyHandler( processor, false, true, pageCount );
+            new UpdatePaginatingPropertyHandler( processor, false, true, pageCount );
         if ( SwingUtilities.isEventDispatchThread() ) {
           endPaginationNotify.run();
         } else {
@@ -226,7 +245,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
         }
       } catch ( Exception e ) {
         final UpdatePaginatingPropertyHandler endPaginationNotify =
-          new UpdatePaginatingPropertyHandler( processor, false, false, 0 );
+            new UpdatePaginatingPropertyHandler( processor, false, false, 0 );
         if ( SwingUtilities.isEventDispatchThread() ) {
           endPaginationNotify.run();
         } else {
@@ -245,10 +264,8 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     private int pageCount;
     private PrintReportProcessor processor;
 
-    protected UpdatePaginatingPropertyHandler( final PrintReportProcessor processor,
-                                               final boolean paginating,
-                                               final boolean paginated,
-                                               final int pageCount ) {
+    protected UpdatePaginatingPropertyHandler( final PrintReportProcessor processor, final boolean paginating,
+        final boolean paginated, final int pageCount ) {
       this.processor = processor;
       this.paginating = paginating;
       this.paginated = paginated;
@@ -262,7 +279,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       }
 
       PreviewPane.logger.debug( messages.getString( "PreviewPane.DEBUG_PAGINATION", String.valueOf( paginating ),
-        String.valueOf( pageCount ) ) ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          String.valueOf( pageCount ) ) ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       if ( paginating == false ) {
         setNumberOfPages( pageCount );
         if ( getPageNumber() < 1 ) {
@@ -316,12 +333,12 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param evt
+     *          A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
     public void propertyChange( final PropertyChangeEvent evt ) {
-      if ( "zoom".equals( evt.getPropertyName() ) == false ) //$NON-NLS-1$
-      {
+      if ( "zoom".equals( evt.getPropertyName() ) == false ) { //$NON-NLS-1$
         return;
       }
 
@@ -355,12 +372,11 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       final String window = (String) renderNode.getStyleSheet().getStyleProperty( ElementStyleKeys.HREF_WINDOW );
       final String title = (String) renderNode.getStyleSheet().getStyleProperty( ElementStyleKeys.HREF_TITLE );
       final ReportHyperlinkEvent hyEvent =
-        new ReportHyperlinkEvent( PreviewPane.this, renderNode, target, window, title );
+          new ReportHyperlinkEvent( PreviewPane.this, renderNode, target, window, title );
       fireReportHyperlinkEvent( hyEvent );
     }
 
-    private String extractLink( final RenderNode node,
-                                final ReportMouseEvent event ) {
+    private String extractLink( final RenderNode node, final ReportMouseEvent event ) {
       if ( node instanceof RenderableReplacedContentBox ) {
         // process image map
         final ImageMap imageMap = RenderUtility.extractImageMap( (RenderableReplacedContentBox) node );
@@ -369,13 +385,11 @@ public class PreviewPane extends JPanel implements ReportEventSource {
           final PageFormat pf = physicalPageDrawable.getPageFormat();
           final float x1 = (float) ( event.getSourceEvent().getX() / zoom );
           final float y1 = (float) ( event.getSourceEvent().getY() / zoom );
-          final float imageMapX =
-            (float) ( x1 - pf.getImageableX() - StrictGeomUtility.toExternalValue( node.getX() ) );
-          final float imageMapY =
-            (float) ( y1 - pf.getImageableY() - StrictGeomUtility.toExternalValue( node.getY() ) );
+          final float imageMapX = (float) ( x1 - pf.getImageableX() - StrictGeomUtility.toExternalValue( node.getX() ) );
+          final float imageMapY = (float) ( y1 - pf.getImageableY() - StrictGeomUtility.toExternalValue( node.getY() ) );
           final ImageMapEntry[] imageMapEntries = imageMap.getEntriesForPoint( imageMapX, imageMapY );
           for ( int i = 0; i < imageMapEntries.length; i++ ) {
-            final ImageMapEntry entry = imageMapEntries[ i ];
+            final ImageMapEntry entry = imageMapEntries[i];
             final Object imageMapTarget = entry.getAttribute( LibXmlInfo.XHTML_NAMESPACE, "href" );
             if ( imageMapTarget != null ) {
               return String.valueOf( imageMapTarget );
@@ -440,7 +454,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
      * <code>getPreferredSize</code> here.
      *
      * @return the preferredSize of a <code>JViewport</code> whose view is this <code>Scrollable</code>
-     * @see JViewport#getPreferredSize
+     * @see javax.swing.JViewport#getPreferredSize
      */
     public Dimension getPreferredScrollableViewportSize() {
       return getPreferredSize();
@@ -448,19 +462,20 @@ public class PreviewPane extends JPanel implements ReportEventSource {
 
     /**
      * Components that display logical rows or columns should compute the scroll increment that will completely expose
-     * one new row or column, depending on the value of orientation.  Ideally, components should handle a partially
+     * one new row or column, depending on the value of orientation. Ideally, components should handle a partially
      * exposed row or column by returning the distance required to completely expose the item.
      * <p/>
      * Scrolling containers, like JScrollPane, will use this method each time the user requests a unit scroll.
      *
-     * @param visibleRect The view area visible within the viewport
-     * @param orientation Either SwingConstants.VERTICAL or SwingConstants.HORIZONTAL.
-     * @param direction   Less than zero to scroll up/left, greater than zero for down/right.
+     * @param visibleRect
+     *          The view area visible within the viewport
+     * @param orientation
+     *          Either SwingConstants.VERTICAL or SwingConstants.HORIZONTAL.
+     * @param direction
+     *          Less than zero to scroll up/left, greater than zero for down/right.
      * @return The "unit" increment for scrolling in the specified direction. This value should always be positive.
      */
-    public int getScrollableUnitIncrement( final Rectangle visibleRect,
-                                           final int orientation,
-                                           final int direction ) {
+    public int getScrollableUnitIncrement( final Rectangle visibleRect, final int orientation, final int direction ) {
       return 20;
     }
 
@@ -470,21 +485,22 @@ public class PreviewPane extends JPanel implements ReportEventSource {
      * <p/>
      * Scrolling containers, like JScrollPane, will use this method each time the user requests a block scroll.
      *
-     * @param visibleRect The view area visible within the viewport
-     * @param orientation Either SwingConstants.VERTICAL or SwingConstants.HORIZONTAL.
-     * @param direction   Less than zero to scroll up/left, greater than zero for down/right.
+     * @param visibleRect
+     *          The view area visible within the viewport
+     * @param orientation
+     *          Either SwingConstants.VERTICAL or SwingConstants.HORIZONTAL.
+     * @param direction
+     *          Less than zero to scroll up/left, greater than zero for down/right.
      * @return The "block" increment for scrolling in the specified direction. This value should always be positive.
      */
-    public int getScrollableBlockIncrement( final Rectangle visibleRect,
-                                            final int orientation,
-                                            final int direction ) {
+    public int getScrollableBlockIncrement( final Rectangle visibleRect, final int orientation, final int direction ) {
       return 100;
     }
 
     /**
      * Return true if a viewport should always force the width of this <code>Scrollable</code> to match the width of the
      * viewport. For example a normal text view that supported line wrapping would return true here, since it would be
-     * undesirable for wrapped lines to disappear beyond the right edge of the viewport.  Note that returning true for a
+     * undesirable for wrapped lines to disappear beyond the right edge of the viewport. Note that returning true for a
      * Scrollable whose ancestor is a JScrollPane effectively disables horizontal scrolling.
      * <p/>
      * Scrolling containers, like JViewport, will use this method each time they are validated.
@@ -519,8 +535,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     /**
      * Creates a new action.
      */
-    protected ZoomSelectAction( final KeyedComboBoxModel source,
-                                final PreviewPane pane ) {
+    protected ZoomSelectAction( final KeyedComboBoxModel source, final PreviewPane pane ) {
       this.source = source;
       this.pane = pane;
     }
@@ -528,7 +543,8 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     /**
      * Invoked when an action occurs.
      *
-     * @param e the event.
+     * @param e
+     *          the event.
      */
     public void actionPerformed( final ActionEvent e ) {
       final Double selected = (Double) source.getSelectedKey();
@@ -538,10 +554,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     }
   }
 
-  private static final double[] ZOOM_FACTORS = {
-    0.5, 0.75, 1, 1.25, 1.50, 2.00
-  };
-
+  private static final double[] ZOOM_FACTORS = { 0.5, 0.75, 1, 1.25, 1.50, 2.00 };
 
   private static final int DEFAULT_ZOOM_INDEX = 2;
   public static final String STATUS_TEXT_PROPERTY = "statusText"; //$NON-NLS-1$
@@ -564,38 +577,38 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   /**
    * The preferred width key.
    */
-  public static final String PREVIEW_PREFERRED_WIDTH
-    = "org.pentaho.reporting.engine.classic.core.modules.gui.base.PreferredWidth"; //$NON-NLS-1$
+  public static final String PREVIEW_PREFERRED_WIDTH =
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.PreferredWidth"; //$NON-NLS-1$
 
   /**
    * The preferred height key.
    */
-  public static final String PREVIEW_PREFERRED_HEIGHT
-    = "org.pentaho.reporting.engine.classic.core.modules.gui.base.PreferredHeight"; //$NON-NLS-1$
+  public static final String PREVIEW_PREFERRED_HEIGHT =
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.PreferredHeight"; //$NON-NLS-1$
 
   /**
    * The maximum width key.
    */
-  public static final String PREVIEW_MAXIMUM_WIDTH
-    = "org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumWidth"; //$NON-NLS-1$
+  public static final String PREVIEW_MAXIMUM_WIDTH =
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumWidth"; //$NON-NLS-1$
 
   /**
    * The maximum height key.
    */
-  public static final String PREVIEW_MAXIMUM_HEIGHT
-    = "org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumHeight"; //$NON-NLS-1$
+  public static final String PREVIEW_MAXIMUM_HEIGHT =
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumHeight"; //$NON-NLS-1$
 
   /**
    * The maximum zoom key.
    */
-  public static final String ZOOM_MAXIMUM_KEY
-    = "org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumZoom"; //$NON-NLS-1$
+  public static final String ZOOM_MAXIMUM_KEY =
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumZoom"; //$NON-NLS-1$
 
   /**
    * The minimum zoom key.
    */
-  public static final String ZOOM_MINIMUM_KEY
-    = "org.pentaho.reporting.engine.classic.core.modules.gui.base.MinimumZoom"; //$NON-NLS-1$
+  public static final String ZOOM_MINIMUM_KEY =
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.MinimumZoom"; //$NON-NLS-1$
 
   /**
    * The default maximum zoom.
@@ -608,11 +621,11 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   private static final float ZOOM_MINIMUM_DEFAULT = 0.01f; // 1%
 
   private static final String MENUBAR_AVAILABLE_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.base.MenuBarAvailable"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.MenuBarAvailable"; //$NON-NLS-1$
   private static final String TOOLBAR_AVAILABLE_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.base.ToolbarAvailable"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.ToolbarAvailable"; //$NON-NLS-1$
   private static final String TOOLBAR_FLOATABLE_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.base.ToolbarFloatable"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.ToolbarFloatable"; //$NON-NLS-1$
 
   private Object paginatingDrawable;
   private Object noReportDrawable;
@@ -647,7 +660,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   private JComponent reportControllerComponent;
   private KeyedComboBoxModel<Double, String> zoomModel;
   private PreviewPane.PreviewPaneStatusListener statusListener;
-  private static final JMenu[] EMPTY_MENU = new JMenu[ 0 ];
+  private static final JMenu[] EMPTY_MENU = new JMenu[0];
   private boolean toolbarFloatable;
   private ArrayList reportProgressListener;
 
@@ -676,8 +689,9 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   }
 
   public PreviewPane( final boolean init ) {
-    messages = new Messages( getLocale(), SwingPreviewModule.BUNDLE_NAME,
-      ObjectUtilities.getClassLoader( SwingPreviewModule.class ) );
+    messages =
+        new Messages( getLocale(), SwingPreviewModule.BUNDLE_NAME, ObjectUtilities
+            .getClassLoader( SwingPreviewModule.class ) );
     sizeLimiter = new WindowSizeLimiter();
     zoomActions = new HashMap<ActionCategory, ZoomAction[]>();
 
@@ -686,7 +700,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
 
     zoomModel = new KeyedComboBoxModel();
     zoomModel.setAllowOtherValue( true );
-    zoom = PreviewPane.ZOOM_FACTORS[ PreviewPane.DEFAULT_ZOOM_INDEX ];
+    zoom = PreviewPane.ZOOM_FACTORS[PreviewPane.DEFAULT_ZOOM_INDEX];
 
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
     minZoom = getMinimumZoom( configuration );
@@ -744,7 +758,6 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     zoomSelect.setAlignmentX( Component.RIGHT_ALIGNMENT );
     return zoomSelect;
   }
-
 
   public PreviewDrawablePanel getReportPreviewArea() {
     return drawablePanel;
@@ -864,9 +877,8 @@ public class PreviewPane extends JPanel implements ReportEventSource {
           reportControllerInner = false;
           reportControllerLocation = null;
         }
-      } else if ( reportControllerComponent != rcp ||
-        reportControllerInner != newReportController.isInnerComponent() ||
-        ObjectUtilities.equal( reportControllerLocation, newReportController.getControllerLocation() ) == false ) {
+      } else if ( reportControllerComponent != rcp || reportControllerInner != newReportController.isInnerComponent()
+          || ObjectUtilities.equal( reportControllerLocation, newReportController.getControllerLocation() ) == false ) {
         // if either the controller component or its position (inner vs outer)
         // and border-position has changed, then refresh ..
         this.reportControllerLocation = newReportController.getControllerLocation();
@@ -889,8 +901,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
             innerHolder.setOrientation( JSplitPane.HORIZONTAL_SPLIT );
             innerHolder.setRightComponent( reportPaneScrollPane );
             innerHolder.setLeftComponent( reportControllerComponent );
-          } else // if (BorderLayout.NORTH.equals(reportControllerLocation))
-          {
+          } else {
             innerHolder.setOrientation( JSplitPane.VERTICAL_SPLIT );
             innerHolder.setBottomComponent( reportPaneScrollPane );
             innerHolder.setTopComponent( reportControllerComponent );
@@ -921,8 +932,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
             innerHolder.setOrientation( JSplitPane.HORIZONTAL_SPLIT );
             innerHolder.setRightComponent( reportPaneHolder );
             innerHolder.setLeftComponent( reportControllerComponent );
-          } else // if (BorderLayout.NORTH.equals(reportControllerLocation))
-          {
+          } else {
             innerHolder.setOrientation( JSplitPane.VERTICAL_SPLIT );
             innerHolder.setBottomComponent( reportPaneHolder );
             innerHolder.setTopComponent( reportControllerComponent );
@@ -1002,10 +1012,10 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   }
 
   private void prepareShutdown() {
-    synchronized( this ) {
+    synchronized ( this ) {
       if ( paginationWorker != null ) {
-        //noinspection SynchronizeOnNonFinalField
-        synchronized( paginationWorker ) {
+        // noinspection SynchronizeOnNonFinalField
+        synchronized ( paginationWorker ) {
           paginationWorker.finish();
         }
         paginationWorker = null;
@@ -1019,12 +1029,9 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   }
 
   private int getUserDefinedCategoryPosition() {
-    return ParserUtil.parseInt
-      ( swingGuiContext.getConfiguration().getConfigProperty
-          ( "org.pentaho.reporting.engine.classic.core.modules.gui.swing.user-defined-category.position" ),
-        15000 ); //$NON-NLS-1$
+    return ParserUtil.parseInt( swingGuiContext.getConfiguration().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.gui.swing.user-defined-category.position" ), 15000 ); //$NON-NLS-1$
   }
-
 
   public Locale getLocale() {
     if ( getParent() == null ) {
@@ -1054,7 +1061,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   public void setPageNumber( final int pageNumber ) {
     final int oldPageNumber = this.pageNumber;
     this.pageNumber = pageNumber;
-    //Log.debug("Setting PageNumber: " + pageNumber);
+    // Log.debug("Setting PageNumber: " + pageNumber);
     firePropertyChange( PreviewPane.PAGE_NUMBER_PROPERTY, oldPageNumber, pageNumber );
   }
 
@@ -1116,7 +1123,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       final Double key = zoomModel.getSelectedKey();
       zoomModel.clear();
       for ( int i = 0; i < PreviewPane.ZOOM_FACTORS.length; i++ ) {
-        zoomModel.add( new Double( PreviewPane.ZOOM_FACTORS[ i ] ), formatZoomText( PreviewPane.ZOOM_FACTORS[ i ] ) );
+        zoomModel.add( new Double( PreviewPane.ZOOM_FACTORS[i] ), formatZoomText( PreviewPane.ZOOM_FACTORS[i] ) );
       }
       if ( key == null ) {
         updateZoomModel( zoom );
@@ -1127,9 +1134,9 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       if ( this.actionPlugins != null ) {
         for ( final ActionPlugin[] plugins : this.actionPlugins.values() ) {
           for ( int i = 0; i < plugins.length; i++ ) {
-            final ActionPlugin plugin = plugins[ i ];
+            final ActionPlugin plugin = plugins[i];
             plugin.deinitialize( swingGuiContext );
-            plugins[ i ] = null;
+            plugins[i] = null;
           }
         }
         this.actionPlugins = null;
@@ -1137,8 +1144,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
 
       this.actionPlugins = PreviewPaneUtilities.loadActions( swingGuiContext );
 
-      if ( "true".equals( configuration.getConfigProperty( PreviewPane.MENUBAR_AVAILABLE_KEY ) ) ) //$NON-NLS-1$
-      {
+      if ( "true".equals( configuration.getConfigProperty( PreviewPane.MENUBAR_AVAILABLE_KEY ) ) ) { //$NON-NLS-1$
         buildMenu();
       } else {
         setMenu( PreviewPane.EMPTY_MENU );
@@ -1147,10 +1153,10 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       if ( toolBar != null ) {
         toolbarHolder.remove( toolBar );
       }
-      if ( "true".equals( configuration.getConfigProperty( PreviewPane.TOOLBAR_AVAILABLE_KEY ) ) ) //$NON-NLS-1$
-      {
-        final boolean floatable = isToolbarFloatable() ||
-          "true".equals( configuration.getConfigProperty( PreviewPane.TOOLBAR_FLOATABLE_KEY ) ); //$NON-NLS-1$
+      if ( "true".equals( configuration.getConfigProperty( PreviewPane.TOOLBAR_AVAILABLE_KEY ) ) ) { //$NON-NLS-1$
+        final boolean floatable =
+            isToolbarFloatable()
+                || "true".equals( configuration.getConfigProperty( PreviewPane.TOOLBAR_FLOATABLE_KEY ) ); //$NON-NLS-1$
         toolBar = buildToolbar( floatable );
       } else {
         toolBar = null;
@@ -1167,7 +1173,8 @@ public class PreviewPane extends JPanel implements ReportEventSource {
    * Read the defined dimensions from the report's configuration and set them to the Dialog. If a maximum size is
    * defined, add a WindowSizeLimiter to check the maximum size
    *
-   * @param configuration the report-configuration of this dialog.
+   * @param configuration
+   *          the report-configuration of this dialog.
    */
   private void applyDefinedDimension( final Configuration configuration ) {
     String width = configuration.getConfigProperty( PreviewPane.PREVIEW_PREFERRED_WIDTH );
@@ -1176,12 +1183,10 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     // only apply if both values are set.
     if ( width != null && height != null ) {
       try {
-        final Dimension pref = createCorrectedDimensions
-          ( Integer.parseInt( width ), Integer.parseInt( height ) );
+        final Dimension pref = createCorrectedDimensions( Integer.parseInt( width ), Integer.parseInt( height ) );
         setPreferredSize( pref );
       } catch ( Exception nfe ) {
-        PreviewPane.logger.warn(
-          "Preferred viewport size is defined, but the specified values are invalid." ); //$NON-NLS-1$
+        PreviewPane.logger.warn( "Preferred viewport size is defined, but the specified values are invalid." ); //$NON-NLS-1$
       }
     }
 
@@ -1199,8 +1204,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
         setMaximumSize( pref );
         addComponentListener( sizeLimiter );
       } catch ( Exception nfe ) {
-        PreviewPane.logger.warn(
-          "Maximum viewport size is defined, but the specified values are invalid." ); //$NON-NLS-1$
+        PreviewPane.logger.warn( "Maximum viewport size is defined, but the specified values are invalid." ); //$NON-NLS-1$
       }
     }
   }
@@ -1210,8 +1214,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       throw new NumberFormatException();
     }
     final String tvalue = value.trim();
-    if ( tvalue.length() > 0 && tvalue.charAt( tvalue.length() - 1 ) == '%' ) //$NON-NLS-1$
-    {
+    if ( tvalue.length() > 0 && tvalue.charAt( tvalue.length() - 1 ) == '%' ) { //$NON-NLS-1$
       final String number = tvalue.substring( 0, tvalue.length() - 1 ); //$NON-NLS-1$
       return Float.parseFloat( number ) * -1.0f;
     } else {
@@ -1224,8 +1227,10 @@ public class PreviewPane extends JPanel implements ReportEventSource {
    * value where -100 corresponds to 100%. The proportional attributes are given is relation to the screen width and
    * height.
    *
-   * @param w the to be corrected width
-   * @param h the height that should be corrected
+   * @param w
+   *          the to be corrected width
+   * @param h
+   *          the height that should be corrected
    * @return the dimension of width and height, where all relative values are normalized.
    */
   private Dimension createCorrectedDimensions( int w, int h ) {
@@ -1240,7 +1245,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   }
 
   /**
-   * Gets a list of Actions to add to the toolbar ahead of all other toolbar actions.  Left protected for subclasses to
+   * Gets a list of Actions to add to the toolbar ahead of all other toolbar actions. Left protected for subclasses to
    * override.
    *
    * @return Action[] an array of javax.swing.Action objects
@@ -1256,7 +1261,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     final Action[] preActions = getToolbarPreActions();
     if ( preActions != null && preActions.length > 0 ) {
       for ( int i = 0; i < preActions.length; i++ ) {
-        toolBar.add( preActions[ i ] );
+        toolBar.add( preActions[i] );
       }
       toolBar.addSeparator();
     }
@@ -1265,7 +1270,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     for ( final ActionPlugin[] plugins : actionPlugins.values() ) {
       list.addAll( Arrays.asList( plugins ) );
     }
-    final ActionPlugin[] plugins = list.toArray( new ActionPlugin[ list.size() ] );
+    final ActionPlugin[] plugins = list.toArray( new ActionPlugin[list.size()] );
     Arrays.sort( plugins, new ActionPluginComparator() );
     PreviewPaneUtilities.addActionsToToolBar( toolBar, plugins, zoomSelectorBox, this );
     return toolBar;
@@ -1304,15 +1309,14 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   }
 
   protected final String formatZoomText( final double zoom ) {
-    final NumberFormat numberFormat =
-      NumberFormat.getPercentInstance( swingGuiContext.getLocale() );
+    final NumberFormat numberFormat = NumberFormat.getPercentInstance( swingGuiContext.getLocale() );
     return ( numberFormat.format( zoom ) );
   }
 
   private void buildMenu() {
     for ( final ZoomAction[] zoomActions : this.zoomActions.values() ) {
       for ( int i = 0; i < zoomActions.length; i++ ) {
-        final ZoomAction zoomAction = zoomActions[ i ];
+        final ZoomAction zoomAction = zoomActions[i];
         zoomAction.deinitialize();
       }
     }
@@ -1329,7 +1333,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
 
       final ActionPlugin[] plugins = entry.getValue();
       if ( plugins.length > 0 ) {
-        if ( plugins[ 0 ] == null ) {
+        if ( plugins[0] == null ) {
           throw new NullPointerException();
         }
       }
@@ -1344,7 +1348,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
             userCategory.setName( "X-User-Category-" + i ); //$NON-NLS-1$
             userCategory.setPosition( userPos + i );
             userCategory.setUserDefined( true );
-            menus.put( userCategory, controlerMenus[ i ] );
+            menus.put( userCategory, controlerMenus[i] );
             collectedCategories.add( userCategory );
           }
         }
@@ -1357,19 +1361,18 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       menus.put( cat, menu );
     }
 
-    final ActionCategory[] categories = collectedCategories.toArray( new ActionCategory[ collectedCategories.size() ] );
-    final CategoryTreeItem[] categoryTreeItems =
-      PreviewPaneUtilities.buildMenuTree( categories );
+    final ActionCategory[] categories = collectedCategories.toArray( new ActionCategory[collectedCategories.size()] );
+    final CategoryTreeItem[] categoryTreeItems = PreviewPaneUtilities.buildMenuTree( categories );
 
     final ArrayList<CategoryTreeItem> menuList = new ArrayList<CategoryTreeItem>();
     for ( int i = 0; i < categoryTreeItems.length; i++ ) {
-      final CategoryTreeItem item = categoryTreeItems[ i ];
+      final CategoryTreeItem item = categoryTreeItems[i];
       final JMenu menu = menus.get( item.getCategory() );
       // now connect all menus ..
       final CategoryTreeItem[] childs = item.getChilds();
       Arrays.sort( childs );
       for ( int j = 0; j < childs.length; j++ ) {
-        final CategoryTreeItem child = childs[ j ];
+        final CategoryTreeItem child = childs[j];
         final JMenu childMenu = menus.get( child.getCategory() );
         if ( childMenu != null ) {
           menu.add( childMenu );
@@ -1391,7 +1394,7 @@ public class PreviewPane extends JPanel implements ReportEventSource {
       }
     }
 
-    setMenu( retval.toArray( new JMenu[ retval.size() ] ) );
+    setMenu( retval.toArray( new JMenu[retval.size()] ) );
   }
 
   public String getTitle() {
@@ -1439,7 +1442,6 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     // pagination again in a safe manor.
     deferredRepagination = false;
 
-
     try {
       final MasterReport reportJob = getReportJob();
       printReportProcessor = new PrintReportProcessor( reportJob );
@@ -1458,14 +1460,13 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     if ( paginationWorker != null ) {
       // make sure that old pagination handler does not run longer than
       // necessary..
-      //noinspection SynchronizeOnNonFinalField
+      // noinspection SynchronizeOnNonFinalField
       final Worker paginationWorker = this.paginationWorker;
       paginationWorker.finish();
 
-      while ( paginationWorker.isAvailable() == false &&
-        paginationWorker.isFinish() == false ) {
+      while ( paginationWorker.isAvailable() == false && paginationWorker.isFinish() == false ) {
         try {
-          synchronized( paginationWorker ) {
+          synchronized ( paginationWorker ) {
             paginationWorker.wait( 500 );
           }
         } catch ( InterruptedException e ) {
@@ -1611,12 +1612,13 @@ public class PreviewPane extends JPanel implements ReportEventSource {
     }
 
     if ( cachedHyperlinkListeners == null ) {
-      cachedHyperlinkListeners = (ReportHyperlinkListener[])
-        hyperlinkListeners.toArray( new ReportHyperlinkListener[ hyperlinkListeners.size() ] );
+      cachedHyperlinkListeners =
+          (ReportHyperlinkListener[]) hyperlinkListeners
+              .toArray( new ReportHyperlinkListener[hyperlinkListeners.size()] );
     }
     final ReportHyperlinkListener[] myListeners = cachedHyperlinkListeners;
     for ( int i = 0; i < myListeners.length; i++ ) {
-      final ReportHyperlinkListener listener = myListeners[ i ];
+      final ReportHyperlinkListener listener = myListeners[i];
       listener.hyperlinkActivated( event );
     }
   }

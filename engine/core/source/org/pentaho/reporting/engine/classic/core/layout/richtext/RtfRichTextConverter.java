@@ -1,21 +1,29 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.richtext;
+
+import java.awt.Color;
+
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.rtf.RTFEditorKit;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -27,14 +35,6 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
-
-import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.rtf.RTFEditorKit;
-import java.awt.*;
 
 /**
  * This converter converts the content into a generic rich-text document. It can also be used to convert generic
@@ -122,10 +122,10 @@ public class RtfRichTextConverter implements RichTextConverter {
       element.getStyle().setStyleProperty( ElementStyleKeys.PAINT, foreground );
     }
 
-    final Object iconAttribute = attributes.getAttribute( StyleConstants.IconAttribute );
-    if ( iconAttribute instanceof Icon ) {
-      // not handled yet
-    }
+    // final Object iconAttribute = attributes.getAttribute( StyleConstants.IconAttribute );
+    // if ( iconAttribute instanceof Icon ) {
+    // not handled yet
+    // }
 
     final Object italic = attributes.getAttribute( StyleConstants.Italic );
     if ( italic instanceof Boolean ) {
@@ -142,30 +142,30 @@ public class RtfRichTextConverter implements RichTextConverter {
       element.getStyle().setStyleProperty( TextStyleKeys.LINEHEIGHT, lineSpacing );
     }
 
-    final Object modelAttribute = attributes.getAttribute( StyleConstants.ModelAttribute );
-    if ( modelAttribute instanceof Float ) {
-      // not handled yet
-    }
+    // final Object modelAttribute = attributes.getAttribute( StyleConstants.ModelAttribute );
+    // if ( modelAttribute instanceof Float ) {
+    // not handled yet
+    // }
 
-    final Object nameAttribute = attributes.getAttribute( StyleConstants.NameAttribute );
-    if ( nameAttribute instanceof Float ) {
-      // not handled yet
-    }
+    // final Object nameAttribute = attributes.getAttribute( StyleConstants.NameAttribute );
+    // if ( nameAttribute instanceof Float ) {
+    // not handled yet
+    // }
 
-    final Object orientation = attributes.getAttribute( StyleConstants.Orientation );
-    if ( orientation instanceof Float ) {
-      // not used, also seems to be unused by Swing itself
-    }
+    // final Object orientation = attributes.getAttribute( StyleConstants.Orientation );
+    // if ( orientation instanceof Float ) {
+    // not used, also seems to be unused by Swing itself
+    // }
 
-    final Object resolveAttribute = attributes.getAttribute( StyleConstants.ResolveAttribute );
-    if ( resolveAttribute instanceof Float ) {
-      // not handled yet, maybe never needed to be handled at all.
-    }
+    // final Object resolveAttribute = attributes.getAttribute( StyleConstants.ResolveAttribute );
+    // if ( resolveAttribute instanceof Float ) {
+    // not handled yet, maybe never needed to be handled at all.
+    // }
 
-    final Object rightIndent = attributes.getAttribute( StyleConstants.RightIndent );
-    if ( rightIndent instanceof Float ) {
-      // not handled yet
-    }
+    // final Object rightIndent = attributes.getAttribute( StyleConstants.RightIndent );
+    // if ( rightIndent instanceof Float ) {
+    // not handled yet
+    // }
 
     final Object spaceAbove = attributes.getAttribute( StyleConstants.SpaceAbove );
     if ( spaceAbove instanceof Float ) {
@@ -182,20 +182,20 @@ public class RtfRichTextConverter implements RichTextConverter {
       element.getStyle().setStyleProperty( TextStyleKeys.STRIKETHROUGH, strikeThrough );
     }
 
-    final Object subscript = attributes.getAttribute( StyleConstants.Subscript );
-    if ( subscript instanceof Boolean ) {
-      // not handled yet
-    }
+    // final Object subscript = attributes.getAttribute( StyleConstants.Subscript );
+    // if ( subscript instanceof Boolean ) {
+    // not handled yet
+    // }
 
-    final Object superScript = attributes.getAttribute( StyleConstants.Superscript );
-    if ( superScript instanceof Boolean ) {
-      // not handled yet
-    }
+    // final Object superScript = attributes.getAttribute( StyleConstants.Superscript );
+    // if ( superScript instanceof Boolean ) {
+    // not handled yet
+    // }
 
-    final Object tabSet = attributes.getAttribute( StyleConstants.TabSet );
-    if ( tabSet instanceof Float ) {
-      // not handled yet
-    }
+    // final Object tabSet = attributes.getAttribute( StyleConstants.TabSet );
+    // if ( tabSet instanceof Float ) {
+    // not handled yet
+    // }
 
     final Object underline = attributes.getAttribute( StyleConstants.Underline );
     if ( underline instanceof Boolean ) {
@@ -229,8 +229,7 @@ public class RtfRichTextConverter implements RichTextConverter {
   }
 
   private void configureBand( final javax.swing.text.Element textElement, final Band band ) {
-    if ( "paragraph".equals( textElement.getName() ) ||
-      "section".equals( textElement.getName() ) ) {
+    if ( "paragraph".equals( textElement.getName() ) || "section".equals( textElement.getName() ) ) {
       band.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "block" );
       band.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, new Float( -100 ) );
     } else {

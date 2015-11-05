@@ -1,27 +1,26 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style;
 
-import org.pentaho.reporting.libraries.base.util.StringUtils;
-
-import java.awt.*;
+import java.awt.Font;
 import java.io.Serializable;
 
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 /**
  * The FontDefinition encapsulates all Font-Style information. The java.awt.Font class does not support extended Styles
@@ -112,19 +111,25 @@ public class FontDefinition implements Serializable, Cloneable {
   /**
    * Creates a font definition using the given name and size and with the given styles defined.
    *
-   * @param fontName      the font name used in this font definition.
-   * @param fontSize      the font size for the defined font.
-   * @param bold          true, if the font should be bold, false otherwise
-   * @param italic        true, if the font should be italic, false otherwise
-   * @param underline     true, if the font should be drawn with underline style, false otherwise
-   * @param strikeThrough true, if the font should be drawn with strikethrough style, false otherwise
-   * @param encoding      the default text encoding that should be used with this font.
-   * @param embedded      whether this font should be embedded in the target document.
+   * @param fontName
+   *          the font name used in this font definition.
+   * @param fontSize
+   *          the font size for the defined font.
+   * @param bold
+   *          true, if the font should be bold, false otherwise
+   * @param italic
+   *          true, if the font should be italic, false otherwise
+   * @param underline
+   *          true, if the font should be drawn with underline style, false otherwise
+   * @param strikeThrough
+   *          true, if the font should be drawn with strikethrough style, false otherwise
+   * @param encoding
+   *          the default text encoding that should be used with this font.
+   * @param embedded
+   *          whether this font should be embedded in the target document.
    */
-  public FontDefinition( final String fontName, final int fontSize,
-                         final boolean bold, final boolean italic,
-                         final boolean underline, final boolean strikeThrough,
-                         final String encoding, final boolean embedded ) {
+  public FontDefinition( final String fontName, final int fontSize, final boolean bold, final boolean italic,
+      final boolean underline, final boolean strikeThrough, final String encoding, final boolean embedded ) {
     if ( fontName == null ) {
       throw new NullPointerException( "FontName must not be null" );
     }
@@ -144,24 +149,31 @@ public class FontDefinition implements Serializable, Cloneable {
   /**
    * Creates a font definition using the given name and size and with the given styles defined.
    *
-   * @param fontName      the font name used in this font definition.
-   * @param fontSize      the font size for the defined font.
-   * @param bold          true, if the font should be bold, false otherwise
-   * @param italic        true, if the font should be italic, false otherwise
-   * @param underline     true, if the font should be drawn with underline style, false otherwise
-   * @param strikeThrough true, if the font should be drawn with strikethrough style, false otherwise
+   * @param fontName
+   *          the font name used in this font definition.
+   * @param fontSize
+   *          the font size for the defined font.
+   * @param bold
+   *          true, if the font should be bold, false otherwise
+   * @param italic
+   *          true, if the font should be italic, false otherwise
+   * @param underline
+   *          true, if the font should be drawn with underline style, false otherwise
+   * @param strikeThrough
+   *          true, if the font should be drawn with strikethrough style, false otherwise
    */
-  public FontDefinition( final String fontName, final int fontSize, final boolean bold,
-                         final boolean italic, final boolean underline,
-                         final boolean strikeThrough ) {
+  public FontDefinition( final String fontName, final int fontSize, final boolean bold, final boolean italic,
+      final boolean underline, final boolean strikeThrough ) {
     this( fontName, fontSize, bold, italic, underline, strikeThrough, null, false );
   }
 
   /**
    * Creates a font definition using the given name and size and with no additional style enabled.
    *
-   * @param fontName the font name used in this font definition.
-   * @param fontSize the font size for the defined font.
+   * @param fontName
+   *          the font name used in this font definition.
+   * @param fontSize
+   *          the font size for the defined font.
    */
   public FontDefinition( final String fontName, final int fontSize ) {
     this( fontName, fontSize, false, false, false, false, null, false );
@@ -170,11 +182,11 @@ public class FontDefinition implements Serializable, Cloneable {
   /**
    * Creates a font definition base on the given AWT font.
    *
-   * @param font the awt font that should be used as definition source.
+   * @param font
+   *          the awt font that should be used as definition source.
    */
   public FontDefinition( final Font font ) {
-    this( font.getName(), font.getSize(), font.isBold(), font.isItalic(), false, false, null,
-      false );
+    this( font.getName(), font.getSize(), font.isBold(), font.isItalic(), false, false, null, false );
   }
 
   /**
@@ -244,11 +256,11 @@ public class FontDefinition implements Serializable, Cloneable {
    * Creates and returns a copy of this object.
    *
    * @return a clone of this instance.
-   * @throws CloneNotSupportedException if a error occured during cloning .
+   * @throws CloneNotSupportedException
+   *           if a error occured during cloning .
    * @see java.lang.Cloneable
    */
-  public Object clone()
-    throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
@@ -275,7 +287,7 @@ public class FontDefinition implements Serializable, Cloneable {
    */
   public Font getFont() {
     if ( font == null ) {
-      //noinspection MagicConstant
+      // noinspection MagicConstant
       font = new Font( getFontName(), getFontStyle(), getFontSize() );
     }
     return font;
@@ -285,7 +297,8 @@ public class FontDefinition implements Serializable, Cloneable {
    * Returns this fonts string encoding. If the font does not define an encoding, the given default encoding is
    * returned.
    *
-   * @param defaultEncoding the font encoding to be used if this font definition does not define an own encoding.
+   * @param defaultEncoding
+   *          the font encoding to be used if this font definition does not define an own encoding.
    * @return the font encoding or the default encoding.
    */
   public String getFontEncoding( final String defaultEncoding ) {
@@ -324,7 +337,8 @@ public class FontDefinition implements Serializable, Cloneable {
   /**
    * Indicates whether some other object is "equal to" this one.
    *
-   * @param o the reference object with which to compare.
+   * @param o
+   *          the reference object with which to compare.
    * @return <code>true</code> if this object is the same as the obj argument; <code>false</code> otherwise.
    * @see #hashCode()
    * @see java.util.Hashtable
@@ -360,8 +374,7 @@ public class FontDefinition implements Serializable, Cloneable {
     if ( !fontName.equals( definition.fontName ) ) {
       return false;
     }
-    if ( fontEncoding != null ? !fontEncoding.equals( definition.fontEncoding )
-      : definition.fontEncoding != null ) {
+    if ( fontEncoding != null ? !fontEncoding.equals( definition.fontEncoding ) : definition.fontEncoding != null ) {
       return false;
     }
 
@@ -397,8 +410,8 @@ public class FontDefinition implements Serializable, Cloneable {
    */
   public boolean isSansSerif() {
     return StringUtils.startsWithIgnoreCase( fontName, "SansSerif" ) // NON-NLS
-      || StringUtils.startsWithIgnoreCase( fontName, "Dialog" ) // NON-NLS
-      || StringUtils.startsWithIgnoreCase( fontName, "SanSerif" ); // NON-NLS
+        || StringUtils.startsWithIgnoreCase( fontName, "Dialog" ) // NON-NLS
+        || StringUtils.startsWithIgnoreCase( fontName, "SanSerif" ); // NON-NLS
     // is it a bug? Somewhere in the JDK this name is used (typo, but heck, we accept it anyway).
   }
 
@@ -408,8 +421,8 @@ public class FontDefinition implements Serializable, Cloneable {
    * @return true or false.
    */
   public boolean isCourier() {
-    return ( StringUtils.startsWithIgnoreCase( fontName, "dialoginput" )// NON-NLS
-      || StringUtils.startsWithIgnoreCase( fontName, "monospaced" ) );// NON-NLS
+    return ( StringUtils.startsWithIgnoreCase( fontName, "dialoginput" ) // NON-NLS
+      || StringUtils.startsWithIgnoreCase( fontName, "monospaced" ) ); // NON-NLS
   }
 
   /**
@@ -418,8 +431,7 @@ public class FontDefinition implements Serializable, Cloneable {
    * @return true or false.
    */
   public boolean isSerif() {
-    return ( StringUtils.startsWithIgnoreCase( fontName, "serif" ) );// NON-NLS
+    return ( StringUtils.startsWithIgnoreCase( fontName, "serif" ) ); // NON-NLS
   }
-
 
 }

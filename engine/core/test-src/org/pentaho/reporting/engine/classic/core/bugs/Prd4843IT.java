@@ -38,8 +38,8 @@ public class Prd4843IT {
   @Test
   public void testSampleReport() throws Exception {
     URL resource = getClass().getResource( "Prd-4843.prpt" );
-    MasterReport report = (MasterReport)
-      new ResourceManager().createDirectly( resource, MasterReport.class ).getResource();
+    MasterReport report =
+        (MasterReport) new ResourceManager().createDirectly( resource, MasterReport.class ).getResource();
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
     SQLReportDataFactory dataFactory1 = (SQLReportDataFactory) dataFactory.get( 0 );
     DriverConnectionProvider conProv1 = (DriverConnectionProvider) dataFactory1.getConnectionProvider();

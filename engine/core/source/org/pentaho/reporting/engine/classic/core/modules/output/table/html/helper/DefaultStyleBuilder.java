@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
@@ -38,7 +38,6 @@ import java.util.Locale;
 
 public final class DefaultStyleBuilder implements StyleBuilder {
 
-
   public static final String INDENT = "    ";
 
   private LFUMap<BorderEdge, String> cachedBorderStyle;
@@ -56,9 +55,9 @@ public final class DefaultStyleBuilder implements StyleBuilder {
     this.cachedBorderStyle = new LFUMap<BorderEdge, String>( 30 );
     this.cachedCornerStyle = new LFUMap<BorderCorner, String>( 30 );
     this.buffer = new StringBuffer( 100 );
-    this.usedStyles = new StyleCarrier[ CSSKeys.values().length ];
-    if ( "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.SafariLengthHack" ) ) ) {
+    this.usedStyles = new StyleCarrier[CSSKeys.values().length];
+    if ( "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.output.table.html.SafariLengthHack" ) ) ) {
       pointConverter = new DecimalFormat( "0", new DecimalFormatSymbols( Locale.US ) );
     } else {
       pointConverter = new DecimalFormat( "0.####", new DecimalFormatSymbols( Locale.US ) );
@@ -71,17 +70,17 @@ public final class DefaultStyleBuilder implements StyleBuilder {
 
   public void append( final CSSKeys key, final String value ) {
     final StyleCarrier newCarrier = new StyleCarrier( key, HtmlEncoderUtil.encodeCSS( value, prepareBuffer() ), null );
-    usedStyles[ key.ordinal() ] = newCarrier;
+    usedStyles[key.ordinal()] = newCarrier;
   }
 
   public void appendRaw( final CSSKeys key, final String value ) {
     final StyleCarrier newCarrier = new StyleCarrier( key, value, null );
-    usedStyles[ key.ordinal() ] = newCarrier;
+    usedStyles[key.ordinal()] = newCarrier;
   }
 
   public void append( final CSSKeys key, final String value, final String unit ) {
     final StyleCarrier newCarrier = new StyleCarrier( key, HtmlEncoderUtil.encodeCSS( value, prepareBuffer() ), unit );
-    usedStyles[ key.ordinal() ] = newCarrier;
+    usedStyles[key.ordinal()] = newCarrier;
   }
 
   /**
@@ -90,14 +89,14 @@ public final class DefaultStyleBuilder implements StyleBuilder {
    */
   public void append( final CSSKeys key, final String value, final boolean replace ) {
     if ( replace == false ) {
-      final Object stylePos = usedStyles[ key.ordinal() ];
+      final Object stylePos = usedStyles[key.ordinal()];
       if ( stylePos != null ) {
         return;
       }
     }
 
     final StyleCarrier newCarrier = new StyleCarrier( key, HtmlEncoderUtil.encodeCSS( value, prepareBuffer() ), null );
-    usedStyles[ key.ordinal() ] = newCarrier;
+    usedStyles[key.ordinal()] = newCarrier;
   }
 
   /**
@@ -106,14 +105,14 @@ public final class DefaultStyleBuilder implements StyleBuilder {
    */
   public void append( final CSSKeys key, final String value, final String unit, final boolean replace ) {
     if ( replace == false ) {
-      final Object stylePos = usedStyles[ key.ordinal() ];
+      final Object stylePos = usedStyles[key.ordinal()];
       if ( stylePos != null ) {
         return;
       }
     }
 
     final StyleCarrier newCarrier = new StyleCarrier( key, HtmlEncoderUtil.encodeCSS( value, prepareBuffer() ), unit );
-    usedStyles[ key.ordinal() ] = newCarrier;
+    usedStyles[key.ordinal()] = newCarrier;
   }
 
   private StringBuffer prepareBuffer() {
@@ -178,13 +177,12 @@ public final class DefaultStyleBuilder implements StyleBuilder {
       return cached;
     }
 
-    final String value = pointConverter.format( factory.fixLengthForSafari
-      ( StrictGeomUtility.toExternalValue( width ) ) ) +
-      "pt " + borderStyle.toString() + ' ' + HtmlColors.getColorString( edge.getColor() );
+    final String value =
+        pointConverter.format( factory.fixLengthForSafari( StrictGeomUtility.toExternalValue( width ) ) ) + "pt "
+            + borderStyle.toString() + ' ' + HtmlColors.getColorString( edge.getColor() );
     cachedBorderStyle.put( edge, value );
     return value;
   }
-
 
   public String printCornerAsCSS( final BorderCorner edge ) {
     final String cached = cachedCornerStyle.get( edge );
@@ -192,12 +190,11 @@ public final class DefaultStyleBuilder implements StyleBuilder {
       return cached;
     }
 
-    final String value = ( pointConverter.format
-      ( factory.fixLengthForSafari
-        ( StrictGeomUtility.toExternalValue( edge.getWidth() ) ) ) + "pt " +
-      pointConverter.format
-        ( factory.fixLengthForSafari
-          ( StrictGeomUtility.toExternalValue( edge.getHeight() ) ) ) + "pt " );
+    final String value =
+        ( pointConverter.format( factory.fixLengthForSafari( StrictGeomUtility.toExternalValue( edge.getWidth() ) ) )
+            + "pt "
+            + pointConverter
+                .format( factory.fixLengthForSafari( StrictGeomUtility.toExternalValue( edge.getHeight() ) ) ) + "pt " );
     cachedCornerStyle.put( edge, value );
     return value;
   }

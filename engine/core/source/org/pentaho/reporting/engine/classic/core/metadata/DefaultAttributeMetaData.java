@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
@@ -65,16 +65,11 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
    * @param designTimeValue
    * @param compatibilityLevel
    */
-  public DefaultAttributeMetaData( final String namespace,
-                                   final String name,
-                                   final String bundleLocation,
-                                   final String keyPrefix,
-                                   final Class<?> targetClass,
-                                   final boolean designTimeValue,
-                                   final int compatibilityLevel ) {
+  public DefaultAttributeMetaData( final String namespace, final String name, final String bundleLocation,
+      final String keyPrefix, final Class<?> targetClass, final boolean designTimeValue, final int compatibilityLevel ) {
     this( namespace, name, bundleLocation, keyPrefix, null, targetClass, true, false, true, false, false, false, false,
-      VALUEROLE_VALUE, false, designTimeValue, new DefaultAttributeCore(), MaturityLevel.Production,
-      compatibilityLevel );
+        VALUEROLE_VALUE, false, designTimeValue, new DefaultAttributeCore(), MaturityLevel.Production,
+        compatibilityLevel );
   }
 
   public DefaultAttributeMetaData( final AttributeMetaDataBuilder builder ) {
@@ -102,25 +97,12 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     }
   }
 
-  public DefaultAttributeMetaData( final String namespace,
-                                   final String name,
-                                   final String bundleLocation,
-                                   final String keyPrefix,
-                                   final String propertyEditorClass,
-                                   final Class<?> targetClass,
-                                   final boolean expert,
-                                   final boolean preferred,
-                                   final boolean hidden,
-                                   final boolean deprecated,
-                                   final boolean mandatory,
-                                   final boolean computed,
-                                   final boolean transientFlag,
-                                   final String valueRole,
-                                   final boolean bulk,
-                                   final boolean designTimeValue,
-                                   final AttributeCore attributeCore,
-                                   final MaturityLevel maturityLevel,
-                                   final int compatibilityLevel ) {
+  public DefaultAttributeMetaData( final String namespace, final String name, final String bundleLocation,
+      final String keyPrefix, final String propertyEditorClass, final Class<?> targetClass, final boolean expert,
+      final boolean preferred, final boolean hidden, final boolean deprecated, final boolean mandatory,
+      final boolean computed, final boolean transientFlag, final String valueRole, final boolean bulk,
+      final boolean designTimeValue, final AttributeCore attributeCore, final MaturityLevel maturityLevel,
+      final int compatibilityLevel ) {
     super( name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel );
     if ( namespace == null ) {
       throw new NullPointerException();
@@ -198,7 +180,6 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     }
   }
 
-
   public String[] getReferencedFields( final ReportElement element, final Object attributeValue ) {
     return attributeCore.getReferencedFields( this, element, attributeValue );
   }
@@ -208,22 +189,15 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
   }
 
   public ResourceReference[] getReferencedResources( final ReportElement element,
-                                                     final ResourceManager resourceManager,
-                                                     final Object attributeValue ) {
+      final ResourceManager resourceManager, final Object attributeValue ) {
     return attributeCore.getReferencedResources( this, element, resourceManager, attributeValue );
   }
 
   public String toString() {
-    return "org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData{" +
-      "valueRole='" + valueRole + '\'' +
-      ", namespace='" + namespace + '\'' +
-      ", name='" + getName() + '\'' +
-      ", targetType=" + targetClass +
-      ", mandatory=" + mandatory +
-      ", computed=" + computed +
-      ", transient=" + transientFlag +
-      ", editor=" + getEditor() +
-      '}';
+    return "org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData{" + "valueRole='" + valueRole
+        + '\'' + ", namespace='" + namespace + '\'' + ", name='" + getName() + '\'' + ", targetType=" + targetClass
+        + ", mandatory=" + mandatory + ", computed=" + computed + ", transient=" + transientFlag + ", editor="
+        + getEditor() + '}';
   }
 
   public String[] getExtraCalculationFields() {

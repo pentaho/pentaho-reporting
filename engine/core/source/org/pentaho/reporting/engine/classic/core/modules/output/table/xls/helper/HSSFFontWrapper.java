@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
@@ -75,8 +75,7 @@ public final class HSSFFontWrapper {
    */
   private int hashCode;
 
-  public HSSFFontWrapper( final StyleSheet contentStyle,
-                          final short colorIndex ) {
+  public HSSFFontWrapper( final StyleSheet contentStyle, final short colorIndex ) {
     if ( colorIndex < 0 ) {
       throw new IllegalArgumentException( "Negative color index is not allowed" );
     }
@@ -93,21 +92,23 @@ public final class HSSFFontWrapper {
   /**
    * Creates a new HSSFFontWrapper for the given font and color.
    *
-   * @param fontName      the name of the wrapped font.
-   * @param fontSize      the name of the wrapped font.
-   * @param bold          a font style flag.
-   * @param italic        a font style flag.
-   * @param underline     a font style flag.
-   * @param strikethrough a font style flag.
-   * @param colorIndex    the foreground color.
+   * @param fontName
+   *          the name of the wrapped font.
+   * @param fontSize
+   *          the name of the wrapped font.
+   * @param bold
+   *          a font style flag.
+   * @param italic
+   *          a font style flag.
+   * @param underline
+   *          a font style flag.
+   * @param strikethrough
+   *          a font style flag.
+   * @param colorIndex
+   *          the foreground color.
    */
-  public HSSFFontWrapper( final String fontName,
-                          final short fontSize,
-                          final boolean bold,
-                          final boolean italic,
-                          final boolean underline,
-                          final boolean strikethrough,
-                          final short colorIndex ) {
+  public HSSFFontWrapper( final String fontName, final short fontSize, final boolean bold, final boolean italic,
+      final boolean underline, final boolean strikethrough, final short colorIndex ) {
     if ( fontName == null ) {
       throw new NullPointerException( "FontDefinition is null" );
     }
@@ -125,8 +126,7 @@ public final class HSSFFontWrapper {
   }
 
   private String normalizeFontName( final String fontName ) {
-    if ( "SansSerif".equalsIgnoreCase( fontName ) ||
-      "Dialog".equalsIgnoreCase( fontName ) ) {
+    if ( "SansSerif".equalsIgnoreCase( fontName ) || "Dialog".equalsIgnoreCase( fontName ) ) {
       return "Arial";
     } else if ( "Monospace".equalsIgnoreCase( fontName ) ) {
       return "Courier New";
@@ -140,7 +140,8 @@ public final class HSSFFontWrapper {
   /**
    * Creates a HSSFFontWrapper for the excel font.
    *
-   * @param font the font.
+   * @param font
+   *          the font.
    */
   public HSSFFontWrapper( final Font font ) {
     if ( font == null ) {
@@ -162,7 +163,8 @@ public final class HSSFFontWrapper {
   /**
    * Indicates whether some other object is "equal to" this one.
    *
-   * @param o the compared object.
+   * @param o
+   *          the compared object.
    * @return true, if the font wrapper contains the same font definition, false otherwise.
    */
   public boolean equals( final Object o ) {
@@ -222,16 +224,9 @@ public final class HSSFFontWrapper {
 
   @Override
   public String toString() {
-    return "HSSFFontWrapper{" +
-      "fontName='" + fontName + '\'' +
-      ", colorIndex=" + colorIndex +
-      ", fontHeight=" + fontHeight +
-      ", bold=" + bold +
-      ", italic=" + italic +
-      ", underline=" + underline +
-      ", strikethrough=" + strikethrough +
-      ", hashCode=" + hashCode +
-      '}';
+    return "HSSFFontWrapper{" + "fontName='" + fontName + '\'' + ", colorIndex=" + colorIndex + ", fontHeight="
+        + fontHeight + ", bold=" + bold + ", italic=" + italic + ", underline=" + underline + ", strikethrough="
+        + strikethrough + ", hashCode=" + hashCode + '}';
   }
 
   public boolean isBold() {

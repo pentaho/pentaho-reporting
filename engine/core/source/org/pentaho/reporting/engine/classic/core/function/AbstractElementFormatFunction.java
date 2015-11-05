@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -53,13 +53,13 @@ import java.io.Serializable;
  * The AbstractElementFormatFunction provides a common base implementation for all functions that need to modify the
  * report definition or the style of an report element or band during the report processing.
  * <p/>
- * The Expression retrieves the next root-level band that will be printed and uses this band as parameter for the {@link
- * AbstractElementFormatFunction#processRootBand(org.pentaho.reporting.engine.classic.core.Section)} method.
+ * The Expression retrieves the next root-level band that will be printed and uses this band as parameter for the
+ * {@link AbstractElementFormatFunction#processRootBand(org.pentaho.reporting.engine.classic.core.Section)} method.
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractElementFormatFunction extends AbstractFunction
-  implements PageEventListener, LayoutProcessorFunction {
+public abstract class AbstractElementFormatFunction extends AbstractFunction implements PageEventListener,
+    LayoutProcessorFunction {
   private static class NeedEvalResult {
     private boolean needToRun;
     private long changeTracker;
@@ -78,10 +78,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     }
 
     public String toString() {
-      return "NeedEvalResult{" +
-        "needToRun=" + needToRun +
-        ", changeTracker=" + changeTracker +
-        '}';
+      return "NeedEvalResult{" + "needToRun=" + needToRun + ", changeTracker=" + changeTracker + '}';
     }
   }
 
@@ -111,10 +108,10 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    * Sets the element name. The name denotes an element or band within the root-band or the root-band itself. It is
    * possible to define multiple elements with the same name to apply the modification to all of these elements.
    *
-   * @param name The element name.
+   * @param name
+   *          The element name.
    * @see org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(org.pentaho.reporting
-   * .engine.classic.core.Band,
-   * String)
+   *      .engine.classic.core.Band, String)
    */
   public void setElement( final String name ) {
     this.element = name;
@@ -130,12 +127,13 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     return element;
   }
 
-
   /**
-   * Receives notification that report generation initializes the current run. <P> The event carries a
-   * ReportState.Started state.  Use this to initialize the report.
+   * Receives notification that report generation initializes the current run.
+   * <P>
+   * The event carries a ReportState.Started state. Use this to initialize the report.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void reportInitialized( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -159,7 +157,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Processes the Report-Header.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -179,7 +178,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Processes the group header of the current group.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -201,7 +201,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Processes the No-Data-Band.
    *
-   * @param event the report event.
+   * @param event
+   *          the report event.
    */
   public void itemsStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -228,7 +229,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Processes the ItemBand.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -250,10 +252,12 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   }
 
   /**
-   * Receives notification that a group of item bands has been completed. <P> The itemBand is finished, the report
-   * starts to close open groups.
+   * Receives notification that a group of item bands has been completed.
+   * <P>
+   * The itemBand is finished, the report starts to close open groups.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void itemsFinished( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -276,7 +280,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Processes the group footer of the current group.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupFinished( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -286,7 +291,6 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     if ( isExecutable() == false ) {
       return;
     }
-
 
     final Group group = FunctionUtilities.getCurrentGroup( event );
     if ( group instanceof CrosstabColumnGroup ) {
@@ -318,7 +322,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Processes the Report-Footer.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportFinished( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -341,7 +346,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     }
 
     final OutputProcessorMetaData outputProcessorMetaData =
-      getRuntime().getProcessingContext().getOutputProcessorMetaData();
+        getRuntime().getProcessingContext().getOutputProcessorMetaData();
     if ( outputProcessorMetaData.isFeatureSupported( OutputProcessorFeature.DESIGNTIME ) == false ) {
       reportCachePerformance();
     }
@@ -349,13 +354,11 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
 
   protected void reportCachePerformance() {
     if ( performanceLogger.isInfoEnabled() ) {
-      performanceLogger
-        .info( String.format( "Performance: %s => total=%d, evaluated=%d (%f%%), avoided=%d (%f%%)", getClass(),
-          performanceCollector.totalEvaluations,
-          performanceCollector.evaluations,
-          100f * performanceCollector.evaluations / Math.max( 1.0f, performanceCollector.totalEvaluations ),
-          performanceCollector.skippedEvaluations,
-          100f * performanceCollector.skippedEvaluations / Math.max( 1.0f, performanceCollector.totalEvaluations ) ) );
+      performanceLogger.info( String.format( "Performance: %s => total=%d, evaluated=%d (%f%%), avoided=%d (%f%%)",
+          getClass(), performanceCollector.totalEvaluations, performanceCollector.evaluations, 100f
+              * performanceCollector.evaluations / Math.max( 1.0f, performanceCollector.totalEvaluations ),
+          performanceCollector.skippedEvaluations, 100f * performanceCollector.skippedEvaluations
+              / Math.max( 1.0f, performanceCollector.totalEvaluations ) ) );
     }
   }
 
@@ -364,8 +367,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     for ( int i = 0; i < elementCount; i += 1 ) {
       final Element e = group.getElement( i );
       final ElementMetaData.TypeClassification reportElementType = e.getMetaData().getReportElementType();
-      if ( ( reportElementType != ElementMetaData.TypeClassification.RELATIONAL_HEADER ) &&
-        ( reportElementType != ElementMetaData.TypeClassification.HEADER ) ) {
+      if ( ( reportElementType != ElementMetaData.TypeClassification.RELATIONAL_HEADER )
+          && ( reportElementType != ElementMetaData.TypeClassification.HEADER ) ) {
         continue;
       }
 
@@ -374,14 +377,13 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     }
   }
 
-
   private void processAllGroupFooterBands( final Group group ) {
     final int elementCount = group.getElementCount();
     for ( int i = 0; i < elementCount; i += 1 ) {
       final Element e = group.getElement( i );
       final ElementMetaData.TypeClassification reportElementType = e.getMetaData().getReportElementType();
-      if ( ( reportElementType != ElementMetaData.TypeClassification.RELATIONAL_FOOTER ) &&
-        ( reportElementType != ElementMetaData.TypeClassification.FOOTER ) ) {
+      if ( ( reportElementType != ElementMetaData.TypeClassification.RELATIONAL_FOOTER )
+          && ( reportElementType != ElementMetaData.TypeClassification.FOOTER ) ) {
         continue;
       }
 
@@ -393,7 +395,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Processes the page footer.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void pageFinished( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -411,7 +414,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Processes the page header.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void pageStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
@@ -514,7 +518,8 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
   /**
    * Evaluates all style expressions from all elements and updates the style-sheet if needed.
    *
-   * @param b the band.
+   * @param b
+   *          the band.
    */
   protected final void processRootBand( final Section b ) {
     if ( b == null ) {
@@ -535,7 +540,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
 
     final boolean needToRunVal = processBand( b );
     b.setAttribute( AttributeNames.Internal.NAMESPACE, attrName,
-      new NeedEvalResult( needToRunVal, b.getChangeTracker() ), false );
+        new NeedEvalResult( needToRunVal, b.getChangeTracker() ), false );
   }
 
   protected void recordCacheHit( final ReportElement e ) {
@@ -558,10 +563,9 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
       final Element element = b.getElement( i );
 
       final ElementMetaData.TypeClassification reportElementType = element.getMetaData().getReportElementType();
-      if ( reportElementType == ElementMetaData.TypeClassification.DATA ||
-        reportElementType == ElementMetaData.TypeClassification.CONTROL ||
-        reportElementType == ElementMetaData.TypeClassification.SUBREPORT ||
-        element instanceof Section == false ) {
+      if ( reportElementType == ElementMetaData.TypeClassification.DATA
+          || reportElementType == ElementMetaData.TypeClassification.CONTROL
+          || reportElementType == ElementMetaData.TypeClassification.SUBREPORT || element instanceof Section == false ) {
         if ( evaluateElement( element ) ) {
           hasAttrExpressions = true;
         }
@@ -577,7 +581,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
       final RootLevelBand rlb = (RootLevelBand) b;
       final SubReport[] reports = rlb.getSubReports();
       for ( int i = 0; i < reports.length; i++ ) {
-        final SubReport subReport = reports[ i ];
+        final SubReport subReport = reports[i];
         if ( evaluateElement( subReport ) ) {
           hasAttrExpressions = true;
         }
@@ -590,16 +594,17 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     return LayoutProcess.LEVEL_PAGINATE;
   }
 
-
   /**
    * Helper method for serialization.
    *
-   * @param in the input stream from where to read the serialized object.
-   * @throws java.io.IOException    when reading the stream fails.
-   * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
+   * @param in
+   *          the input stream from where to read the serialized object.
+   * @throws java.io.IOException
+   *           when reading the stream fails.
+   * @throws ClassNotFoundException
+   *           if a class definition for a serialized object could not be found.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     attrName = computeUniqueIdentifier();
   }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -34,17 +34,9 @@ import java.net.URL;
 public class TotalGroupSumIT extends TestCase {
   private static final Log logger = LogFactory.getLog( TotalGroupSumIT.class );
 
-  private static final int[] SUMS = {
-    69698070,
-    1340100000,
-    18751000,
-    343344776,
-    304357300,
-    165715400
-  };
+  private static final int[] SUMS = { 69698070, 1340100000, 18751000, 343344776, 304357300, 165715400 };
 
-  private static class TotalGroupCountVerifyFunction
-    extends AbstractFunction {
+  private static class TotalGroupCountVerifyFunction extends AbstractFunction {
     private int index;
 
     /**
@@ -58,9 +50,10 @@ public class TotalGroupSumIT extends TestCase {
     /**
      * Receives notification that report generation initializes the current run.
      * <p/>
-     * The event carries a ReportState.Started state.  Use this to initialize the report.
+     * The event carries a ReportState.Started state. Use this to initialize the report.
      *
-     * @param event The event.
+     * @param event
+     *          The event.
      */
     public void reportInitialized( final ReportEvent event ) {
       index = 0;
@@ -69,7 +62,8 @@ public class TotalGroupSumIT extends TestCase {
     /**
      * Receives notification that a group has finished.
      *
-     * @param event the event.
+     * @param event
+     *          the event.
      */
     public void groupFinished( final ReportEvent event ) {
       if ( event.getLevel() >= 0 ) {
@@ -82,7 +76,8 @@ public class TotalGroupSumIT extends TestCase {
     /**
      * Receives notification that a group has started.
      *
-     * @param event the event.
+     * @param event
+     *          the event.
      */
     public void groupStarted( final ReportEvent event ) {
       if ( event.getLevel() >= 0 ) {
@@ -95,11 +90,11 @@ public class TotalGroupSumIT extends TestCase {
       // the number of continents in the report1
       if ( "Continent Group".equals( FunctionUtilities.getCurrentGroup( event ).getName() ) ) {
         final Number n = (Number) event.getDataRow().get( "continent-total-gc" );
-        assertEquals( "continent-total-gc", SUMS[ index ], n.intValue() );
+        assertEquals( "continent-total-gc", SUMS[index], n.intValue() );
       }
-      //      // the number of continents in the report1 + default group start
-      //      Number n2 = (Number) event.getDataRow().get("total-gc");
-      //      assertEquals("total-gc", 7, n2.intValue());
+      // // the number of continents in the report1 + default group start
+      // Number n2 = (Number) event.getDataRow().get("total-gc");
+      // assertEquals("total-gc", 7, n2.intValue());
     }
 
     public Object getValue() {
@@ -148,7 +143,6 @@ public class TotalGroupSumIT extends TestCase {
     report.addExpression( f2 );
 
     DebugReportRunner.execGraphics2D( report );
-
 
   }
 }

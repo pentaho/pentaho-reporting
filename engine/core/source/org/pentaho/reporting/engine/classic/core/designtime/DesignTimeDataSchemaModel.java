@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
@@ -66,8 +66,7 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
     this( (MasterReport) report.getMasterReport(), report );
   }
 
-  public DesignTimeDataSchemaModel( final MasterReport masterReportElement,
-                                    final AbstractReportDefinition report ) {
+  public DesignTimeDataSchemaModel( final MasterReport masterReportElement, final AbstractReportDefinition report ) {
     super( masterReportElement, report );
     this.changeTracker = createChangeTracker();
   }
@@ -122,23 +121,24 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
 
     final Expression[] expressions = parent.getExpressions().getExpressions();
     final DataSchemaCompiler dataSchemaCompiler =
-      new DataSchemaCompiler( getDataSchemaDefinition(), getDataAttributeContext(),
-        getMasterReportElement().getResourceManager() );
+        new DataSchemaCompiler( getDataSchemaDefinition(), getDataAttributeContext(), getMasterReportElement()
+            .getResourceManager() );
 
     try {
       final CachingDataFactory dataFactory =
-        new CachingDataFactory(
-          new SortingDataFactory( createDataFactory( parent ), new NoOpPerformanceMonitorContext() ), true );
+          new CachingDataFactory( new SortingDataFactory( createDataFactory( parent ),
+              new NoOpPerformanceMonitorContext() ), true );
       final MasterReport masterReport = getMasterReportElement();
 
       dataFactory.initialize( new DesignTimeDataFactoryContext( masterReport ) );
 
       try {
         List<SortConstraint> sortConstraints = new SortOrderReportPreProcessor().computeSortConstraints( parent );
-        final TableModel reportData = queryReportData
-          ( parent.getQuery(), parent.getQueryTimeout(), dataFactory, sortConstraints );
-        final DataSchema dataSchema = dataSchemaCompiler.compile
-          ( reportData, expressions, parameterRow, parameterDefinitions, masterReport.getReportEnvironment() );
+        final TableModel reportData =
+            queryReportData( parent.getQuery(), parent.getQueryTimeout(), dataFactory, sortConstraints );
+        final DataSchema dataSchema =
+            dataSchemaCompiler.compile( reportData, expressions, parameterRow, parameterDefinitions, masterReport
+                .getReportEnvironment() );
         // this.columnNames = collectColumnNames(reportData, parameterRow, expressions);
         if ( reportData instanceof CloseableTableModel ) {
           final CloseableTableModel ctm = (CloseableTableModel) reportData;
@@ -150,9 +150,9 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
       }
     } catch ( final ReportProcessingException e ) {
       final TableModel reportData = new DefaultTableModel();
-      final DataSchema dataSchema = dataSchemaCompiler.compile
-        ( reportData, expressions, parameterRow, parameterDefinitions,
-          getMasterReportElement().getReportEnvironment() );
+      final DataSchema dataSchema =
+          dataSchemaCompiler.compile( reportData, expressions, parameterRow, parameterDefinitions,
+              getMasterReportElement().getReportEnvironment() );
       this.dataFactoryException = e;
       return dataSchema;
     }
@@ -177,11 +177,8 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
     return CompoundDataFactory.normalize( cdf );
   }
 
-  private TableModel queryReportData( final String query,
-                                      final int queryTimeout,
-                                      final DataFactory dataFactory,
-                                      final List<SortConstraint> sortConstraints )
-    throws ReportDataFactoryException {
+  private TableModel queryReportData( final String query, final int queryTimeout, final DataFactory dataFactory,
+      final List<SortConstraint> sortConstraints ) throws ReportDataFactoryException {
     if ( offlineTableModel == null || changeTracker.isReportQueryChanged() ) {
       TableModel reportData = null;
       try {
@@ -189,11 +186,13 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
           reportData = new EmptyTableModel();
         } else if ( dataFactory instanceof DataFactoryDesignTimeSupport ) {
           final DataFactoryDesignTimeSupport dts = (DataFactoryDesignTimeSupport) dataFactory;
-          reportData = dts.queryDesignTimeStructure
-            ( query, new QueryDataRowWrapper( new StaticDataRow(), queryTimeout, 1, sortConstraints ) );
+          reportData =
+              dts.queryDesignTimeStructure( query, new QueryDataRowWrapper( new StaticDataRow(), queryTimeout, 1,
+                  sortConstraints ) );
         } else {
-          reportData = dataFactory.queryData
-            ( query, new QueryDataRowWrapper( new StaticDataRow(), queryTimeout, 1, sortConstraints ) );
+          reportData =
+              dataFactory.queryData( query, new QueryDataRowWrapper( new StaticDataRow(), queryTimeout, 1,
+                  sortConstraints ) );
         }
 
         offlineTableModel = new OfflineTableModel( reportData, new DefaultDataAttributeContext() );
@@ -211,8 +210,7 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
   }
 
   @Deprecated
-  public boolean isSelectedDataSource( final DataFactory dataFactory,
-                                       final String queryName ) {
+  public boolean isSelectedDataSource( final DataFactory dataFactory, final String queryName ) {
     return DesignTimeUtil.isSelectedDataSource( getReport(), dataFactory, queryName );
   }
 
@@ -224,7 +222,7 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
     final ReportParameterValues reportParameterValues = report.getParameterValues();
     final ParameterDefinitionEntry[] columnNames = report.getParameterDefinition().getParameterDefinitions();
     for ( int i = 0; i < columnNames.length; i++ ) {
-      final ParameterDefinitionEntry parameter = columnNames[ i ];
+      final ParameterDefinitionEntry parameter = columnNames[i];
       final String columnName = parameter.getName();
       if ( columnName == null ) {
         continue;

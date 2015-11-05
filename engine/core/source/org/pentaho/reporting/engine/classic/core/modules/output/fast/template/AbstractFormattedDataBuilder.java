@@ -55,10 +55,9 @@ public abstract class AbstractFormattedDataBuilder extends AbstractStructureVisi
     return runtime;
   }
 
-  public static Object filterRichText( final ReportElement element,
-                                       final Object initialValue ) {
+  public static Object filterRichText( final ReportElement element, final Object initialValue ) {
     final Object richTextType =
-      element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE );
+        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE );
     if ( richTextType != null ) {
       final RichTextConverterRegistry registry = RichTextConverterRegistry.getRegistry();
       final RichTextConverter converter = registry.getConverter( String.valueOf( richTextType ) );

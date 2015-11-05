@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -24,7 +24,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.BoxShifter;
-
 
 /**
  * This Step copies all content from the logical page into the page-grid. When done, it clears the content and replaces
@@ -91,9 +90,7 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep {
   public FillPhysicalPagesStep() {
   }
 
-  public LogicalPageBox compute( final LogicalPageBox pagebox,
-                                 final long pageStart,
-                                 final long pageEnd ) {
+  public LogicalPageBox compute( final LogicalPageBox pagebox, final long pageStart, final long pageEnd ) {
 
     getEventWatch().start();
     getSummaryWatch().start();
@@ -129,8 +126,7 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep {
       final RenderBox footerArea = derived.getFooterArea();
 
       final RenderBox repeatFooterArea = derived.getRepeatFooterArea();
-      final long repeatFooterPosition = pagebox.getPageHeight() -
-        repeatFooterArea.getHeight() - footerArea.getHeight();
+      final long repeatFooterPosition = pagebox.getPageHeight() - repeatFooterArea.getHeight() - footerArea.getHeight();
       BoxShifter.shiftBoxUnchecked( repeatFooterArea, repeatFooterPosition );
 
       final long footerPosition = pagebox.getPageHeight() - footerArea.getHeight();
@@ -160,8 +156,8 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep {
 
     RenderNode node = box.getFirstChild();
     while ( node != null ) {
-      if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) != LayoutNodeTypes.MASK_BOX &&
-        node.isIgnorableForRendering() ) {
+      if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) != LayoutNodeTypes.MASK_BOX
+          && node.isIgnorableForRendering() ) {
         node = node.getNext();
         continue;
       }
@@ -173,8 +169,7 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep {
 
       final long y = node.getY();
       final long height = node.getOverflowAreaHeight();
-      if ( node.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK ||
-        pageContext.isFiltered( y, height ) ) {
+      if ( node.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK || pageContext.isFiltered( y, height ) ) {
         final RenderNode next = node.getNext();
         box.remove( node );
         node = next;

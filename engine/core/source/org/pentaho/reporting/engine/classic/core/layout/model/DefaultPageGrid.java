@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -45,7 +45,7 @@ public class DefaultPageGrid implements PageGrid {
 
     final int pagePosCount = pagePositions.length;
     for ( int i = 0; i < pagePosCount; i++ ) {
-      final Rectangle2D pagePosition = pagePositions[ i ];
+      final Rectangle2D pagePosition = pagePositions[i];
 
       final double minX = pagePosition.getMinX();
       final double maxX = pagePosition.getMaxX();
@@ -61,51 +61,51 @@ public class DefaultPageGrid implements PageGrid {
       verticalPositions.add( new Double( maxY ) );
     }
 
-    horizontalBreaksFull = new long[ horizontalPositions.size() ];
+    horizontalBreaksFull = new long[horizontalPositions.size()];
     int pos = 0;
     for ( Iterator iterator = horizontalPositions.iterator(); iterator.hasNext(); ) {
       final Double value = (Double) iterator.next();
-      horizontalBreaksFull[ pos ] = StrictGeomUtility.toInternalValue( value.doubleValue() );
+      horizontalBreaksFull[pos] = StrictGeomUtility.toInternalValue( value.doubleValue() );
       pos += 1;
     }
 
-    verticalBreaksFull = new long[ verticalPositions.size() ];
+    verticalBreaksFull = new long[verticalPositions.size()];
     pos = 0;
     for ( Iterator iterator = verticalPositions.iterator(); iterator.hasNext(); ) {
       final Double value = (Double) iterator.next();
-      verticalBreaksFull[ pos ] = StrictGeomUtility.toInternalValue( value.doubleValue() );
+      verticalBreaksFull[pos] = StrictGeomUtility.toInternalValue( value.doubleValue() );
       pos += 1;
     }
 
     horizontalPositions.remove( new Double( 0 ) );
     verticalPositions.remove( new Double( 0 ) );
 
-    horizontalBreaks = new long[ horizontalPositions.size() ];
+    horizontalBreaks = new long[horizontalPositions.size()];
     pos = 0;
     for ( Iterator iterator = horizontalPositions.iterator(); iterator.hasNext(); ) {
       final Double value = (Double) iterator.next();
-      horizontalBreaks[ pos ] = StrictGeomUtility.toInternalValue( value.doubleValue() );
+      horizontalBreaks[pos] = StrictGeomUtility.toInternalValue( value.doubleValue() );
       pos += 1;
     }
 
-    verticalBreaks = new long[ verticalPositions.size() ];
+    verticalBreaks = new long[verticalPositions.size()];
     pos = 0;
     for ( Iterator iterator = verticalPositions.iterator(); iterator.hasNext(); ) {
       final Double value = (Double) iterator.next();
-      verticalBreaks[ pos ] = StrictGeomUtility.toInternalValue( value.doubleValue() );
+      verticalBreaks[pos] = StrictGeomUtility.toInternalValue( value.doubleValue() );
       pos += 1;
     }
 
     final int hbreakLength = horizontalBreaksFull.length;
     final int vbreakLength = verticalBreaksFull.length;
-    pageMapping = new PageFormat[ vbreakLength - 1 ][ hbreakLength - 1 ];
+    pageMapping = new PageFormat[vbreakLength - 1][hbreakLength - 1];
     for ( int col = 0; col < hbreakLength; col++ ) {
-      final long xPosition = horizontalBreaksFull[ col ];
+      final long xPosition = horizontalBreaksFull[col];
       for ( int row = 0; row < vbreakLength; row++ ) {
-        final long yPosition = verticalBreaksFull[ row ];
+        final long yPosition = verticalBreaksFull[row];
         final int idx = findPageFormat( pagePositions, xPosition, yPosition );
         if ( idx >= 0 ) {
-          pageMapping[ row ][ col ] = pageDefinition.getPageFormat( idx );
+          pageMapping[row][col] = pageDefinition.getPageFormat( idx );
         }
       }
     }
@@ -114,9 +114,9 @@ public class DefaultPageGrid implements PageGrid {
   private int findPageFormat( final Rectangle2D[] positions, final long xPosition, final long yPosition ) {
     final int posCount = positions.length;
     for ( int i = 0; i < posCount; i++ ) {
-      final Rectangle2D rect = positions[ i ];
-      if ( StrictGeomUtility.toInternalValue( rect.getMinY() ) == yPosition &&
-        StrictGeomUtility.toInternalValue( rect.getMinX() ) == xPosition ) {
+      final Rectangle2D rect = positions[i];
+      if ( StrictGeomUtility.toInternalValue( rect.getMinY() ) == yPosition
+          && StrictGeomUtility.toInternalValue( rect.getMinX() ) == xPosition ) {
         return i;
       }
     }
@@ -131,10 +131,10 @@ public class DefaultPageGrid implements PageGrid {
    * @return
    */
   public PhysicalPageBox getPage( final int row, final int col ) {
-    final long offsetX = horizontalBreaksFull[ col ];
-    final long offsetY = verticalBreaksFull[ row ];
+    final long offsetX = horizontalBreaksFull[col];
+    final long offsetY = verticalBreaksFull[row];
 
-    final PageFormat format = pageMapping[ row ][ col ];
+    final PageFormat format = pageMapping[row][col];
     return new PhysicalPageBox( format, offsetX, offsetY );
   }
 
@@ -159,10 +159,10 @@ public class DefaultPageGrid implements PageGrid {
   }
 
   public long getMaximumPageWidth() {
-    return horizontalBreaks[ horizontalBreaks.length - 1 ];
+    return horizontalBreaks[horizontalBreaks.length - 1];
   }
 
   public long getMaximumPageHeight() {
-    return verticalBreaks[ verticalBreaks.length - 1 ];
+    return verticalBreaks[verticalBreaks.length - 1];
   }
 }

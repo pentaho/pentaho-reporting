@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.simple.readhandlers;
 
@@ -51,36 +51,37 @@ public abstract class AbstractTextElementReadHandler extends AbstractElementRead
   /**
    * Starts parsing.
    *
-   * @param atts the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param atts
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void startParsing( final PropertyAttributes atts )
-    throws SAXException {
+  protected void startParsing( final PropertyAttributes atts ) throws SAXException {
     super.startParsing( atts );
     final TextElementFactory factory = getTextElementFactory();
-    factory.setVerticalTextAlignment( ReportParserUtil.parseVerticalTextElementAlignment
-      ( atts.getValue( getUri(), "vertical-text-alignment" ), getLocator() ) );
-    factory.setBold( ParserUtil.parseBoolean
-      ( atts.getValue( getUri(), AbstractElementReadHandler.FS_BOLD ), getLocator() ) );
-    factory.setEmbedFont( ParserUtil.parseBoolean
-      ( atts.getValue( getUri(), AbstractElementReadHandler.FS_EMBEDDED ), getLocator() ) );
-    factory.setWrapText( ParserUtil.parseBoolean
-      ( atts.getValue( getUri(), AbstractTextElementReadHandler.EXCEL_WRAP_TEXT ), getLocator() ) );
+    factory.setVerticalTextAlignment( ReportParserUtil.parseVerticalTextElementAlignment( atts.getValue( getUri(),
+        "vertical-text-alignment" ), getLocator() ) );
+    factory.setBold( ParserUtil.parseBoolean( atts.getValue( getUri(), AbstractElementReadHandler.FS_BOLD ),
+        getLocator() ) );
+    factory.setEmbedFont( ParserUtil.parseBoolean( atts.getValue( getUri(), AbstractElementReadHandler.FS_EMBEDDED ),
+        getLocator() ) );
+    factory.setWrapText( ParserUtil.parseBoolean( atts.getValue( getUri(),
+        AbstractTextElementReadHandler.EXCEL_WRAP_TEXT ), getLocator() ) );
     factory.setEncoding( atts.getValue( getUri(), AbstractElementReadHandler.FS_ENCODING ) );
     factory.setFontName( atts.getValue( getUri(), AbstractElementReadHandler.FONT_NAME_ATT ) );
-    factory.setFontSize( ReportParserUtil.parseInteger
-      ( atts.getValue( getUri(), AbstractElementReadHandler.FONT_SIZE_ATT ), getLocator() ) );
-    factory.setItalic( ParserUtil.parseBoolean
-      ( atts.getValue( getUri(), AbstractElementReadHandler.FS_ITALIC ), getLocator() ) );
-    factory.setLineHeight( ReportParserUtil.parseFloat
-      ( atts.getValue( getUri(), AbstractElementReadHandler.LINEHEIGHT ), getLocator() ) );
-    factory.setStrikethrough( ParserUtil.parseBoolean
-      ( atts.getValue( getUri(), AbstractElementReadHandler.FS_STRIKETHR ), getLocator() ) );
-    factory.setUnderline( ParserUtil.parseBoolean
-      ( atts.getValue( getUri(), AbstractElementReadHandler.FS_UNDERLINE ), getLocator() ) );
+    factory.setFontSize( ReportParserUtil.parseInteger( atts.getValue( getUri(),
+        AbstractElementReadHandler.FONT_SIZE_ATT ), getLocator() ) );
+    factory.setItalic( ParserUtil.parseBoolean( atts.getValue( getUri(), AbstractElementReadHandler.FS_ITALIC ),
+        getLocator() ) );
+    factory.setLineHeight( ReportParserUtil.parseFloat(
+        atts.getValue( getUri(), AbstractElementReadHandler.LINEHEIGHT ), getLocator() ) );
+    factory.setStrikethrough( ParserUtil.parseBoolean( atts
+        .getValue( getUri(), AbstractElementReadHandler.FS_STRIKETHR ), getLocator() ) );
+    factory.setUnderline( ParserUtil.parseBoolean( atts.getValue( getUri(), AbstractElementReadHandler.FS_UNDERLINE ),
+        getLocator() ) );
     factory.setReservedLiteral( atts.getValue( getUri(), AbstractTextElementReadHandler.RESERVED_LITERAL_ATT ) );
-    factory.setTrimTextContent( ParserUtil.parseBoolean
-      ( atts.getValue( getUri(), AbstractTextElementReadHandler.TRIM_TEXT_CONTENT_ATT ), getLocator() ) );
+    factory.setTrimTextContent( ParserUtil.parseBoolean( atts.getValue( getUri(),
+        AbstractTextElementReadHandler.TRIM_TEXT_CONTENT_ATT ), getLocator() ) );
     parseSimpleFontStyle( atts.getValue( getUri(), AbstractElementReadHandler.FONT_STYLE_ATT ), factory );
 
     factory.setWhitespaceCollapse( parseWhitespaceCollapse( atts.getValue( getUri(), "whitespace-collapse" ) ) );
@@ -183,11 +184,12 @@ public abstract class AbstractTextElementReadHandler extends AbstractElementRead
    * constants are included for compatibility with older releases and should no longer be used. Use the boolean flags
    * instead.
    *
-   * @param fontStyle the font style string.
-   * @param target    the text element factory that should receive the parsed values.
+   * @param fontStyle
+   *          the font style string.
+   * @param target
+   *          the text element factory that should receive the parsed values.
    */
-  private void parseSimpleFontStyle
-  ( final String fontStyle, final TextElementFactory target ) {
+  private void parseSimpleFontStyle( final String fontStyle, final TextElementFactory target ) {
     if ( fontStyle != null ) {
       if ( "bold".equals( fontStyle ) ) {
         target.setBold( Boolean.TRUE );

@@ -1,28 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.action;
 
+import java.awt.Component;
+import java.io.File;
+
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 
 /**
  * A base class for all file operations. This implementation provides all methods to let the user select a file.
@@ -42,7 +44,8 @@ public abstract class AbstractFileSelectionAction extends AbstractAction {
   /**
    * Creates a new FileSelectionAction with the given optional parent component as parent for the file chooser dialog.
    *
-   * @param parent the parent
+   * @param parent
+   *          the parent
    */
   protected AbstractFileSelectionAction( final Component parent ) {
     this.parent = parent;
@@ -74,15 +77,15 @@ public abstract class AbstractFileSelectionAction extends AbstractAction {
   /**
    * Selects a file to use as target for the operation.
    *
-   * @param selectedFile    the selected file.
-   * @param dialogType      the dialog type.
-   * @param appendExtension true, if the file extension should be added if necessary, false if the unmodified filename
-   *                        should be used.
+   * @param selectedFile
+   *          the selected file.
+   * @param dialogType
+   *          the dialog type.
+   * @param appendExtension
+   *          true, if the file extension should be added if necessary, false if the unmodified filename should be used.
    * @return the selected and approved file or null, if the user canceled the operation
    */
-  protected File performSelectFile( final File selectedFile,
-                                    final int dialogType,
-                                    final boolean appendExtension ) {
+  protected File performSelectFile( final File selectedFile, final int dialogType, final boolean appendExtension ) {
     if ( this.fileChooser == null ) {
       this.fileChooser = createFileChooser();
     }

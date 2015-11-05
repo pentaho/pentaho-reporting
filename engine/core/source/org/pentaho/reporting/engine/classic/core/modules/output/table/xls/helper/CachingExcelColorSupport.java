@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import org.pentaho.reporting.libraries.base.util.LFUMap;
+import java.awt.Color;
 
-import java.awt.*;
+import org.pentaho.reporting.libraries.base.util.LFUMap;
 
 public class CachingExcelColorSupport implements ExcelColorProducer {
   private ExcelColorProducer base;

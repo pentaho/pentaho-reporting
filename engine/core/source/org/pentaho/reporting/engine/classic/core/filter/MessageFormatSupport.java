@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
@@ -46,7 +46,7 @@ import java.util.TimeZone;
  */
 public class MessageFormatSupport implements Serializable, Cloneable {
   private static final Log logger = LogFactory.getLog( MessageFormatSupport.class );
-  private static final String[] EMPTY_FIELDS = new String[ 0 ];
+  private static final String[] EMPTY_FIELDS = new String[0];
 
   /**
    * The message compiler maps all named references into numeric references.
@@ -70,7 +70,8 @@ public class MessageFormatSupport implements Serializable, Cloneable {
     /**
      * Looks up the property with the given name. This replaces the name with the current index position.
      *
-     * @param name the name of the property to look up.
+     * @param name
+     *          the name of the property to look up.
      * @return the translated value.
      */
     protected String lookupVariable( final String name ) {
@@ -100,7 +101,7 @@ public class MessageFormatSupport implements Serializable, Cloneable {
      * @return the fields as array.
      */
     public String[] getFields() {
-      return fields.toArray( new String[ fields.size() ] );
+      return fields.toArray( new String[fields.size()] );
     }
   }
 
@@ -153,8 +154,7 @@ public class MessageFormatSupport implements Serializable, Cloneable {
   }
 
   /**
-   * Returns the original format string that is used to format the fields. This format string contains named
-   * references.
+   * Returns the original format string that is used to format the fields. This format string contains named references.
    *
    * @return the format string.
    */
@@ -165,7 +165,8 @@ public class MessageFormatSupport implements Serializable, Cloneable {
   /**
    * Updates the named format string and compiles a new field list and message-format string.
    *
-   * @param formatString the format string.
+   * @param formatString
+   *          the format string.
    */
   public void setFormatString( final String formatString ) {
     if ( formatString == null ) {
@@ -187,7 +188,8 @@ public class MessageFormatSupport implements Serializable, Cloneable {
   /**
    * Formats the message using the fields from the given data-row as values for the parameters.
    *
-   * @param dataRow the data row.
+   * @param dataRow
+   *          the data row.
    * @return the formated message.
    */
   public String performFormat( final DataRow dataRow ) {
@@ -214,24 +216,24 @@ public class MessageFormatSupport implements Serializable, Cloneable {
     }
 
     if ( parameters == null ) {
-      parameters = new Object[ fields.length ];
+      parameters = new Object[fields.length];
     }
     final int parameterCount = parameters.length;
     if ( oldParameters == null ) {
-      oldParameters = new Object[ fields.length ];
+      oldParameters = new Object[fields.length];
     } else {
       System.arraycopy( parameters, 0, oldParameters, 0, parameterCount );
     }
 
     for ( int i = 0; i < fields.length; i++ ) {
-      final String field = fields[ i ];
+      final String field = fields[i];
       final Object o = dataRow.get( field );
       if ( o instanceof Number ) {
-        parameters[ i ] = o;
+        parameters[i] = o;
       } else if ( o instanceof Date ) {
-        parameters[ i ] = o;
+        parameters[i] = o;
       } else {
-        parameters[ i ] = ElementTypeUtils.toString( o );
+        parameters[i] = ElementTypeUtils.toString( o );
       }
     }
 
@@ -264,7 +266,8 @@ public class MessageFormatSupport implements Serializable, Cloneable {
   /**
    * Updates the locale that is used to format the messages.
    *
-   * @param locale the locale in the message format.
+   * @param locale
+   *          the locale in the message format.
    */
   public void setLocale( final Locale locale ) {
     if ( ObjectUtilities.equal( locale, this.locale ) ) {
@@ -306,7 +309,8 @@ public class MessageFormatSupport implements Serializable, Cloneable {
   /**
    * Defines the replacement text that is used if one of the referenced message parameters is null.
    *
-   * @param nullString the replacement text for null-values.
+   * @param nullString
+   *          the replacement text for null-values.
    */
   public void setNullString( final String nullString ) {
     if ( ObjectUtilities.equal( nullString, this.nullString ) == false ) {
@@ -331,10 +335,10 @@ public class MessageFormatSupport implements Serializable, Cloneable {
    * Creates a copy of this message format support object.
    *
    * @return the copy.
-   * @throws CloneNotSupportedException if an error occured.
+   * @throws CloneNotSupportedException
+   *           if an error occured.
    */
-  public Object clone()
-    throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     final MessageFormatSupport support = (MessageFormatSupport) super.clone();
     if ( format != null ) {
       support.format = (FastMessageFormat) format.clone();

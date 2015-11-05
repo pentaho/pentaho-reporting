@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -56,9 +56,12 @@ public class GroupCountFunction extends AbstractFunction {
   /**
    * Constructs a report function for counting groups.
    *
-   * @param name  The function name.
-   * @param group The group name.
-   * @throws NullPointerException if the given name is null
+   * @param name
+   *          The function name.
+   * @param group
+   *          The group name.
+   * @throws NullPointerException
+   *           if the given name is null
    */
   public GroupCountFunction( final String name, final String group ) {
     setName( name );
@@ -77,7 +80,8 @@ public class GroupCountFunction extends AbstractFunction {
   /**
    * defines the name of the group on which to reset the counter. If the name is null, all groups are counted.
    *
-   * @param group the name of the group to be counted.
+   * @param group
+   *          the name of the group to be counted.
    */
   public void setParentGroup( final String group ) {
     this.parentGroup = group;
@@ -95,7 +99,8 @@ public class GroupCountFunction extends AbstractFunction {
   /**
    * defines the name of the group to be counted. If the name is null, all groups are counted.
    *
-   * @param group the name of the group to be counted.
+   * @param group
+   *          the name of the group to be counted.
    */
   public void setGroup( final String group ) {
     this.group = group;
@@ -104,7 +109,8 @@ public class GroupCountFunction extends AbstractFunction {
   /**
    * Receives notification that a new report is about to start. Resets the count.
    *
-   * @param event the current report event received.
+   * @param event
+   *          the current report event received.
    */
   public void reportInitialized( final ReportEvent event ) {
     setCount( 0 );
@@ -114,7 +120,8 @@ public class GroupCountFunction extends AbstractFunction {
    * Receives notification that a new group is about to start. Increases the count if all groups are counted or the name
    * defines the current group.
    *
-   * @param event the current report event received.
+   * @param event
+   *          the current report event received.
    */
   public void groupStarted( final ReportEvent event ) {
     final Group group = FunctionUtilities.getCurrentGroup( event );
@@ -143,7 +150,8 @@ public class GroupCountFunction extends AbstractFunction {
   /**
    * Defines the current group count value.
    *
-   * @param count the curernt group count.
+   * @param count
+   *          the curernt group count.
    */
   protected void setCount( final int count ) {
     this.count = count;

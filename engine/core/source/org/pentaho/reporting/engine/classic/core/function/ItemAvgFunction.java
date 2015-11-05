@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -26,10 +26,13 @@ import java.math.BigDecimal;
 
 /**
  * A report function that calculates the average of one field (column) from the TableModel. This function produces a
- * running total, no global total. The function can be used in two ways: <ul> <li>to calculate an average value for the
- * entire report;</li> <li>to calculate an average value within a particular group;</li> </ul> This function expects its
- * input values to be either java.lang.Number instances or Strings that can be parsed to java.lang.Number instances
- * using a java.text.DecimalFormat.
+ * running total, no global total. The function can be used in two ways:
+ * <ul>
+ * <li>to calculate an average value for the entire report;</li>
+ * <li>to calculate an average value within a particular group;</li>
+ * </ul>
+ * This function expects its input values to be either java.lang.Number instances or Strings that can be parsed to
+ * java.lang.Number instances using a java.text.DecimalFormat.
  * <p/>
  * The function understands two parameters, the <code>field</code> parameter is required and denotes the name of an
  * ItemBand-field which gets summed up.
@@ -88,9 +91,12 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   }
 
   /**
-   * Constructs a named function. <P> The field must be defined before using the function.
+   * Constructs a named function.
+   * <P>
+   * The field must be defined before using the function.
    *
-   * @param name The function name.
+   * @param name
+   *          The function name.
    */
   public ItemAvgFunction( final String name ) {
     this();
@@ -98,9 +104,12 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   }
 
   /**
-   * Receives notification that a new report is about to start. <P> Does nothing.
+   * Receives notification that a new report is about to start.
+   * <P>
+   * Does nothing.
    *
-   * @param event Information about the event.
+   * @param event
+   *          Information about the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     clear();
@@ -113,10 +122,11 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   }
 
   /**
-   * Receives notification that a new group is about to start.  If this is the group defined for the function, then the
+   * Receives notification that a new group is about to start. If this is the group defined for the function, then the
    * running total is reset to zero.
    *
-   * @param event Information about the event.
+   * @param event
+   *          Information about the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
@@ -139,10 +149,12 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   }
 
   /**
-   * Sets the group name. <P> If a group is defined, the functions value is reset to zero at the start of every instance
-   * of this group.
+   * Sets the group name.
+   * <P>
+   * If a group is defined, the functions value is reset to zero at the start of every instance of this group.
    *
-   * @param name The group name (null permitted).
+   * @param name
+   *          The group name (null permitted).
    */
   public void setGroup( final String name ) {
     this.group = name;
@@ -160,7 +172,8 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -179,7 +192,8 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   /**
    * Defines the rounding mode. This influences the precision of the divide-operation.
    *
-   * @param roundingMode the rounding mode.
+   * @param roundingMode
+   *          the rounding mode.
    * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
   public void setRoundingMode( final int roundingMode ) {
@@ -198,17 +212,18 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   /**
    * Defines the scale for the divide-operation. The scale influences the precision of the division.
    *
-   * @param scale the scale.
+   * @param scale
+   *          the scale.
    */
   public void setScale( final int scale ) {
     this.scale = scale;
   }
 
-
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event Information about the event.
+   * @param event
+   *          Information about the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     final Object fieldValue = event.getDataRow().get( getField() );
@@ -244,8 +259,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   }
 
   /**
-   * Returns the function value, in this case the average of all values of a specific column in the report's
-   * TableModel.
+   * Returns the function value, in this case the average of all values of a specific column in the report's TableModel.
    *
    * @return The function value.
    */

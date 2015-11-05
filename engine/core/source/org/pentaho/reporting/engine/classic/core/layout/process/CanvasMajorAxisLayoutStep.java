@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -68,8 +68,9 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
   public CanvasMajorAxisLayoutStep() {
     super( true );
     revalidateAllAxisLayoutStep = new RevalidateAllAxisLayoutStep();
-    paranoidChecks = "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.process.ParanoidChecks" ) );
+    paranoidChecks =
+        "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.layout.process.ParanoidChecks" ) );
   }
 
   public void compute( final LogicalPageBox pageBox ) {
@@ -211,6 +212,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
         box.setCachedHeight( blockHeight );
       } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
         // do nothing ..
+        return;
       } else {
         box.setCachedHeight( computeCanvasHeight( box, parentHeightForResolve == 0 ) );
       }
@@ -221,11 +223,9 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
     return InfiniteMajorAxisLayoutStep.computeVerticalBlockPosition( node );
   }
 
-  private long computeBlockHeightAndAlign( final RenderBox box,
-                                           final long resolveSize,
-                                           final boolean alignChilds ) {
-    return InfiniteMajorAxisLayoutStep.computeBlockHeightAndAlign
-      ( box, box.getBoxDefinition(), resolveSize, alignChilds );
+  private long computeBlockHeightAndAlign( final RenderBox box, final long resolveSize, final boolean alignChilds ) {
+    return InfiniteMajorAxisLayoutStep.computeBlockHeightAndAlign( box, box.getBoxDefinition(), resolveSize,
+        alignChilds );
   }
 
   private long computeRowHeightAndAlign( final RenderBox box, final long resolveSize, final boolean align ) {
@@ -258,8 +258,8 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
     long maxChildY2 = box.getCachedY() + box.getCachedHeight();
     if ( child != null ) {
       while ( child != null ) {
-        maxChildY2 = Math.max( child.getCachedY() + child.getCachedHeight() + child.getEffectiveMarginBottom(),
-          maxChildY2 );
+        maxChildY2 =
+            Math.max( child.getCachedY() + child.getCachedHeight() + child.getEffectiveMarginBottom(), maxChildY2 );
 
         child = child.getNext();
       }
@@ -396,6 +396,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
       box.setCachedHeight( blockHeight );
     } else if ( type == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
       // do nothing ..
+      return;
     } else {
       box.setCachedHeight( computeCanvasHeight( box, false ) );
     }
@@ -458,14 +459,13 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
         if ( RenderLength.AUTO.equals( maxHeight ) ) {
           final long childConsumedHeight = parentAvailableHeight - node.getCachedHeight();
           if ( childConsumedHeight < 0 ) {
-            if ( parent.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ||
-              parent.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
+            if ( parent.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL
+                || parent.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
               // row-spanned cells consistently exceed the parent height ..
               return 0;
             }
-            logger.warn
-              ( "A child cannot exceed the area of the parent: " + node.getName() +
-                " Parent: " + parentAvailableHeight + " Child: " + childConsumedHeight );
+            logger.warn( "A child cannot exceed the area of the parent: " + node.getName() + " Parent: "
+                + parentAvailableHeight + " Child: " + childConsumedHeight );
           }
         }
       }
@@ -496,8 +496,8 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
       usableParentHeight = resolveUseableParentHeight( box );
     }
     // find the maximum of the used height (for all childs) and the specified min-height.
-    long consumedHeight = Math.max( box.getCachedHeight(),
-      Math.min( minHeight.resolve( parentHeight ), usableParentHeight ) );
+    long consumedHeight =
+        Math.max( box.getCachedHeight(), Math.min( minHeight.resolve( parentHeight ), usableParentHeight ) );
 
     // The consumed height computed above specifies the size at the border-edge.
     // However, depending on the box-sizing property, we may have to resolve them against the
@@ -600,6 +600,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
       box.setCachedHeight( blockHeight );
     } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
       // do nothing ..
+      return;
     } else {
       box.setCachedHeight( computeCanvasHeight( box, false ) );
     }
@@ -628,7 +629,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
       return ( 0 );
     }
   }
-
 
   protected boolean startTableCellLevelBox( final RenderBox box ) {
     return startBlockLevelBox( box );

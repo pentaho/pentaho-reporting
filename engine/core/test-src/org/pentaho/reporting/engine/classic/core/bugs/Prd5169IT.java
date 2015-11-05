@@ -59,7 +59,6 @@ public class Prd5169IT {
     DebugReportRunner.execGraphics2D( report );
   }
 
-
   private TypedTableModel createTestData() {
     final TypedTableModel model = new TypedTableModel( new String[] { "Rows", "Data" } );
     model.addRow( "A1", 100 );
@@ -69,21 +68,13 @@ public class Prd5169IT {
     return model;
   }
 
-
   private static class ValidateExpression extends AbstractExpression {
     private String[] validateData;
 
     private ValidateExpression() {
       setName( "Validate" );
-      validateData = new String[]
-        {
-          "A1",
-          "A2",
-          "A3",
-          "A2"
-        };
+      validateData = new String[] { "A1", "A2", "A3", "A2" };
     }
-
 
     public Object getValue() {
       if ( getRuntime().getProcessingContext().getProcessingLevel() == LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING ) {
@@ -93,7 +84,7 @@ public class Prd5169IT {
       final int currentRow = getRuntime().getCurrentRow();
 
       final Object row = getDataRow().get( "Rows" );
-      Assert.assertEquals( validateData[ currentRow ], row );
+      Assert.assertEquals( validateData[currentRow], row );
       return currentRow;
     }
   }

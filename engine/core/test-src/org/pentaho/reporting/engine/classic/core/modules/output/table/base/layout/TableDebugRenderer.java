@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout;
 
@@ -77,11 +77,10 @@ public class TableDebugRenderer extends AbstractRenderer {
     clearDirty();
 
     final OutputProcessor outputProcessor = getOutputProcessor();
-    if ( outputProcessor instanceof IterativeOutputProcessor == false ||
-      outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) == false ) {
+    if ( outputProcessor instanceof IterativeOutputProcessor == false
+        || outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) == false ) {
       return;
     }
-
 
     final LogicalPageBox pageBox = getPageBox();
     pageBox.setPageEnd( pageBox.getHeight() );
@@ -94,9 +93,9 @@ public class TableDebugRenderer extends AbstractRenderer {
     }
   }
 
-  protected boolean performPagination( final LayoutPagebreakHandler layoutPagebreakHandler,
-                                       final boolean performOutput )
-    throws ContentProcessingException {
+  protected boolean
+    performPagination( final LayoutPagebreakHandler layoutPagebreakHandler, final boolean performOutput )
+      throws ContentProcessingException {
     final OutputProcessor outputProcessor = getOutputProcessor();
     // next: perform pagination.
     final LogicalPageBox pageBox = getPageBox();
@@ -156,8 +155,8 @@ public class TableDebugRenderer extends AbstractRenderer {
         pageBox.setPageOffset( nextOffset );
         return false;
       }
-    } else if ( outputProcessor instanceof IterativeOutputProcessor &&
-      outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) ) {
+    } else if ( outputProcessor instanceof IterativeOutputProcessor
+        && outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) ) {
       processIncrementalUpdate( performOutput );
     }
     return false;

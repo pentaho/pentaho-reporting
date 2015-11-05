@@ -1,21 +1,33 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
@@ -27,16 +39,6 @@ import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.StagingMode;
-
-import java.awt.*;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public final class ConverterRegistry {
   private static ConverterRegistry instance;
@@ -114,16 +116,17 @@ public final class ConverterRegistry {
   /**
    * Converts an object to an attribute value.
    *
-   * @param o the object.
+   * @param o
+   *          the object.
    * @return the attribute value.
-   * @throws BeanException if there was an error during the conversion.
+   * @throws BeanException
+   *           if there was an error during the conversion.
    */
   public static String toAttributeValue( final Object o ) throws BeanException {
     if ( o == null ) {
       return null;
     }
-    final ValueConverter vc =
-      ConverterRegistry.getInstance().getValueConverter( o.getClass() );
+    final ValueConverter vc = ConverterRegistry.getInstance().getValueConverter( o.getClass() );
     if ( vc == null ) {
       return null;
     }
@@ -133,10 +136,13 @@ public final class ConverterRegistry {
   /**
    * Converts a string to a property value.
    *
-   * @param s the string.
-   * @param c the target class.
+   * @param s
+   *          the string.
+   * @param c
+   *          the target class.
    * @return the object converted from the given string into a object of the target class.
-   * @throws BeanException if there was an error during the conversion.
+   * @throws BeanException
+   *           if there was an error during the conversion.
    */
   public static Object toPropertyValue( final String s, final Class c ) throws BeanException {
     if ( s == null ) {

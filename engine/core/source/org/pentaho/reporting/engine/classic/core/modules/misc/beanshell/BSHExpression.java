@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.beanshell;
 
@@ -42,13 +42,23 @@ import java.io.Reader;
  * <code>getValue()</code> to begin and to end your expression, but you are free to add your own functions to the
  * script.
  * <p/>
- * By default, base Java core and extension packages are imported for you. They are: <ul> <li><code>java.lang<code>
- * <li><code>java.io</code> <li><code>java.util</code> <li><code>java.net</code> <li><code>java.awt</code>
- * <li><code>java.awt.event</code> <li><code>javax.swing</code> <li><code>javax.swing.event</code> </ul>
+ * By default, base Java core and extension packages are imported for you. They are:
+ * <ul>
+ * <li><code>java.lang<code>
+ * <li><code>java.io</code>
+ * <li><code>java.util</code>
+ * <li><code>java.net</code>
+ * <li><code>java.awt</code>
+ * <li><code>java.awt.event</code>
+ * <li><code>javax.swing</code>
+ * <li><code>javax.swing.event</code>
+ * </ul>
  * <p/>
  * An example in the XML format: (from report1.xml)
  * <p/>
- * <pre><expression name="expression" class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell
+ * 
+ * <pre>
+ * <expression name="expression" class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell
  * .BSHExpression">
  * <properties>
  * <property name="expression">
@@ -72,7 +82,8 @@ import java.io.Reader;
  * }
  * </property>
  * </properties>
- * </expression></pre>
+ * </expression>
+ * </pre>
  *
  * @author Thomas Morgner
  */
@@ -82,7 +93,7 @@ public class BSHExpression extends AbstractExpression {
    * The headerfile with the default initialisations.
    */
   public static final String BSHHEADERFILE =
-    "org/pentaho/reporting/engine/classic/core/modules/misc/beanshell/BSHExpressionHeader.txt"; //$NON-NLS-1$
+      "org/pentaho/reporting/engine/classic/core/modules/misc/beanshell/BSHExpressionHeader.txt"; //$NON-NLS-1$
 
   /**
    * The beanshell-interpreter used to evaluate the expression.
@@ -117,14 +128,15 @@ public class BSHExpression extends AbstractExpression {
   /**
    * Initializes the bean-shell interpreter by executing the code in the BSHExpressionHeader.txt file.
    *
-   * @param interpreter the interpreter that should be initialized.
-   * @throws EvalError   if an BeanShell-Error occured.
-   * @throws IOException if the beanshell file could not be read.
+   * @param interpreter
+   *          the interpreter that should be initialized.
+   * @throws EvalError
+   *           if an BeanShell-Error occured.
+   * @throws IOException
+   *           if the beanshell file could not be read.
    */
-  protected void initializeInterpreter( final Interpreter interpreter )
-    throws EvalError, IOException {
-    final InputStream in = ObjectUtilities.getResourceRelativeAsStream
-      ( "BSHExpressionHeader.txt", BSHExpression.class ); //$NON-NLS-1$
+  protected void initializeInterpreter( final Interpreter interpreter ) throws EvalError, IOException {
+    final InputStream in = ObjectUtilities.getResourceRelativeAsStream( "BSHExpressionHeader.txt", BSHExpression.class ); //$NON-NLS-1$
     // read the header, creates a skeleton
     final Reader r = new InputStreamReader( new BufferedInputStream( in ) );
     try {
@@ -171,10 +183,10 @@ public class BSHExpression extends AbstractExpression {
     } catch ( Exception e ) {
       if ( logger.isWarnEnabled() ) {
         logger.warn( "Evaluation error: " + //$NON-NLS-1$
-          e.getClass() + " - " + e.getMessage() ); //$NON-NLS-1$
+            e.getClass() + " - " + e.getMessage() ); //$NON-NLS-1$
       } else if ( logger.isDebugEnabled() ) {
         logger.debug( "Evaluation error: " + //$NON-NLS-1$
-          e.getClass() + " - " + e.getMessage(), e ); //$NON-NLS-1$
+            e.getClass() + " - " + e.getMessage(), e ); //$NON-NLS-1$
       }
 
       return null;
@@ -203,12 +215,14 @@ public class BSHExpression extends AbstractExpression {
   /**
    * Serialisation support. The transient child elements were not saved.
    *
-   * @param in the input stream.
-   * @throws IOException            if there is an I/O error.
-   * @throws ClassNotFoundException if a serialized class is not defined on this system.
+   * @param in
+   *          the input stream.
+   * @throws IOException
+   *           if there is an I/O error.
+   * @throws ClassNotFoundException
+   *           if a serialized class is not defined on this system.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
   }
 
@@ -225,7 +239,8 @@ public class BSHExpression extends AbstractExpression {
    * Sets the beanshell script that should be executed. The script should define a getValue() method which returns a
    * single object.
    *
-   * @param expression the script.
+   * @param expression
+   *          the script.
    */
   public void setExpression( final String expression ) {
     this.expression = expression;

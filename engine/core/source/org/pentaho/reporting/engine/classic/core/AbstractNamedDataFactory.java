@@ -39,15 +39,15 @@ public abstract class AbstractNamedDataFactory<T> extends AbstractDataFactory {
     return queryDataInternal( mapQuery( query ), parameters );
   }
 
-  protected abstract TableModel queryDataInternal( final T query,
-                                                   final DataRow parameters ) throws ReportDataFactoryException;
+  protected abstract TableModel queryDataInternal( final T query, final DataRow parameters )
+    throws ReportDataFactoryException;
 
   public boolean isQueryExecutable( final String query, final DataRow parameters ) {
     return queries.containsKey( query );
   }
 
   public String[] getQueryNames() {
-    return queries.keySet().toArray( new String[ queries.size() ] );
+    return queries.keySet().toArray( new String[queries.size()] );
   }
 
   public final String[] getReferencedFields( final String query, final DataRow dataRow )
@@ -56,8 +56,7 @@ public abstract class AbstractNamedDataFactory<T> extends AbstractDataFactory {
     return getReferencedFieldsInternal( queryObject, dataRow );
   }
 
-  protected abstract String[] getReferencedFieldsInternal( T query, DataRow dataRow )
-    throws ReportDataFactoryException;
+  protected abstract String[] getReferencedFieldsInternal( T query, DataRow dataRow ) throws ReportDataFactoryException;
 
   public final Object getQueryHash( final String query, final DataRow dataRow ) throws ReportDataFactoryException {
     final T queryObject = mapQuery( query );

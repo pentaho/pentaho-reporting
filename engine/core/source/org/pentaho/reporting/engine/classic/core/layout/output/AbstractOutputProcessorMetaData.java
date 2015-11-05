@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
@@ -198,7 +198,6 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     private boolean embedded;
     private String encoding;
 
-
     protected ReusableFontContext() {
     }
 
@@ -255,7 +254,6 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
       return fontSize;
     }
   }
-
 
   private static class CacheKey {
     private InstanceID instanceId;
@@ -321,10 +319,7 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     }
 
     public String toString() {
-      return "CacheKey{" +
-        "instanceId=" + instanceId +
-        ", styleClass='" + styleClass + '\'' +
-        '}';
+      return "CacheKey{" + "instanceId=" + instanceId + ", styleClass='" + styleClass + '\'' + '}';
     }
   }
 
@@ -369,7 +364,6 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     this( new DefaultFontStorage( new AWTFontRegistry() ) );
   }
 
-
   protected AbstractOutputProcessorMetaData( final FontStorage fontStorage ) {
     if ( fontStorage == null ) {
       throw new NullPointerException();
@@ -398,27 +392,27 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
 
     final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper( configuration );
 
-    final double defaultFontSize = extendedConfig.getIntProperty(
-      "org.pentaho.reporting.engine.classic.core.layout.defaults.FontSize", 12 );
+    final double defaultFontSize =
+        extendedConfig.getIntProperty( "org.pentaho.reporting.engine.classic.core.layout.defaults.FontSize", 12 );
     setNumericFeatureValue( OutputProcessorFeature.DEFAULT_FONT_SIZE, defaultFontSize );
 
-    final double fontSmoothThreshold = extendedConfig.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.defaults.FontSmoothThreshold", 8 );
+    final double fontSmoothThreshold =
+        extendedConfig.getIntProperty( "org.pentaho.reporting.engine.classic.core.layout.defaults.FontSmoothThreshold",
+            8 );
     setNumericFeatureValue( OutputProcessorFeature.FONT_SMOOTH_THRESHOLD, fontSmoothThreshold );
 
-    if ( extendedConfig.getBoolProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds", true ) == false ) {
+    if ( extendedConfig.getBoolProperty(
+        "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds", true ) == false ) {
       addFeature( OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC );
     }
-    if ( extendedConfig.getBoolProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.AlwaysPrintFirstLineOfText", true ) ) {
+    if ( extendedConfig.getBoolProperty( "org.pentaho.reporting.engine.classic.core.layout.AlwaysPrintFirstLineOfText",
+        true ) ) {
       addFeature( OutputProcessorFeature.ALWAYS_PRINT_FIRST_LINE_OF_TEXT );
     }
     if ( extendedConfig.getBoolProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, false ) == true ) {
       addFeature( OutputProcessorFeature.COMPLEX_TEXT );
     }
-    if ( extendedConfig
-      .getBoolProperty( "org.pentaho.reporting.engine.classic.core.FixImageResolutionMapping", true ) ) {
+    if ( extendedConfig.getBoolProperty( "org.pentaho.reporting.engine.classic.core.FixImageResolutionMapping", true ) ) {
       addFeature( OutputProcessorFeature.IMAGE_RESOLUTION_MAPPING );
     }
     if ( extendedConfig.getBoolProperty( "org.pentaho.reporting.engine.classic.core.UseNativeScaling", true ) ) {
@@ -427,21 +421,20 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     if ( extendedConfig.getBoolProperty( "org.pentaho.reporting.engine.classic.core.DetectExtraContent", true ) ) {
       addFeature( OutputProcessorFeature.DETECT_EXTRA_CONTENT );
     }
-    if ( extendedConfig.getBoolProperty
-      ( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", false ) ) {
+    if ( extendedConfig.getBoolProperty( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", false ) ) {
       addFeature( OutputProcessorFeature.STRICT_COMPATIBILITY );
       addFeature( OutputProcessorFeature.PRD_3750 );
     }
 
-    final double deviceResolution = extendedConfig.getIntProperty(
-      "org.pentaho.reporting.engine.classic.core.layout.DeviceResolution", 72 );
+    final double deviceResolution =
+        extendedConfig.getIntProperty( "org.pentaho.reporting.engine.classic.core.layout.DeviceResolution", 72 );
     if ( deviceResolution > 0 ) {
       setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution );
     } else {
       setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, 72 );
     }
-    if ( "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent" ) ) ) {
       addFeature( OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP );
     }
 
@@ -483,7 +476,7 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
   }
 
   protected void setNumericFeatureValue( final OutputProcessorFeature.NumericOutputProcessorFeature feature,
-                                         final double value ) {
+      final double value ) {
     if ( feature == null ) {
       throw new NullPointerException();
     }
@@ -534,7 +527,8 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
   }
 
   /**
-   * @param name the raw name, maybe null.
+   * @param name
+   *          the raw name, maybe null.
    * @return the normalized name, but never null.
    */
   public String getNormalizedFontFamilyName( final String name ) {
@@ -554,23 +548,27 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
    * This method is a implementation detail. Use it in an output target, but be aware that it may change between
    * releases.
    *
-   * @param fontFamily   the font family.
-   * @param fontSize     the font size.
-   * @param bold         a flag indicating whether the font should be displayed in bold.
-   * @param italics      a flag indicating whether the font should be displayed in italics.
-   * @param encoding     a valid font encoding, can be null to use the default.
-   * @param embedded     a flag indicating whether the font is intended for embedded use.
-   * @param antiAliasing a flag indicating whether the font should be rendered in aliased mode.
+   * @param fontFamily
+   *          the font family.
+   * @param fontSize
+   *          the font size.
+   * @param bold
+   *          a flag indicating whether the font should be displayed in bold.
+   * @param italics
+   *          a flag indicating whether the font should be displayed in italics.
+   * @param encoding
+   *          a valid font encoding, can be null to use the default.
+   * @param embedded
+   *          a flag indicating whether the font is intended for embedded use.
+   * @param antiAliasing
+   *          a flag indicating whether the font should be rendered in aliased mode.
    * @return the font metrics, never null.
-   * @throws IllegalArgumentException if the font family was invalid and no default family could be located.
+   * @throws IllegalArgumentException
+   *           if the font family was invalid and no default family could be located.
    */
-  public FontMetrics getFontMetrics( final String fontFamily,
-                                     final double fontSize,
-                                     final boolean bold,
-                                     final boolean italics,
-                                     final String encoding,
-                                     final boolean embedded,
-                                     final boolean antiAliasing ) throws IllegalArgumentException {
+  public FontMetrics getFontMetrics( final String fontFamily, final double fontSize, final boolean bold,
+      final boolean italics, final String encoding, final boolean embedded, final boolean antiAliasing )
+    throws IllegalArgumentException {
     if ( fontFamily == null ) {
       throw new NullPointerException();
     }
@@ -611,7 +609,6 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
       }
     }
 
-
     reusableFontContext.setAntiAliased( antiAliasing );
     reusableFontContext.setFontSize( fontSize );
     reusableFontContext.setEncoding( encoding );
@@ -641,7 +638,7 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     final FontMetrics fontMetrics = getFontMetrics( styleSheet );
     if ( fontMetrics.isUniformFontMetrics() ) {
       final String fontFamily =
-        getNormalizedFontFamilyName( (String) styleSheet.getStyleProperty( TextStyleKeys.FONT ) );
+          getNormalizedFontFamilyName( (String) styleSheet.getStyleProperty( TextStyleKeys.FONT ) );
       if ( fontFamily == null ) {
         // If this case happens, the stylesheet is not implemented correctly. At that point,
         // we have to assume that the whole engine is no longer behaving valid and therefore we
@@ -649,14 +646,13 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
         throw new IllegalArgumentException( "No valid font family specified." );
       }
 
-      final double fontSize = styleSheet.getDoubleStyleProperty
-        ( TextStyleKeys.FONTSIZE, defaultFontSize );
+      final double fontSize = styleSheet.getDoubleStyleProperty( TextStyleKeys.FONTSIZE, defaultFontSize );
 
       final boolean antiAliasing = RenderUtility.isFontSmooth( styleSheet, this );
       final String encoding = (String) styleSheet.getStyleProperty( TextStyleKeys.FONTENCODING );
       final boolean embedded =
-        isFeatureSupported( OutputProcessorFeature.EMBED_ALL_FONTS ) ||
-          styleSheet.getBooleanStyleProperty( TextStyleKeys.EMBEDDED_FONT );
+          isFeatureSupported( OutputProcessorFeature.EMBED_ALL_FONTS )
+              || styleSheet.getBooleanStyleProperty( TextStyleKeys.EMBEDDED_FONT );
       final boolean bold = styleSheet.getBooleanStyleProperty( TextStyleKeys.BOLD, false );
       final boolean italics = styleSheet.getBooleanStyleProperty( TextStyleKeys.ITALIC, false );
 
@@ -686,11 +682,13 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
    * <B>NOTE: This method will throw an <code>IllegalArgumentException</code> if the specified font family can not be
    * found and the default font family can not be found</B>
    *
-   * @param styleSheet ths style sheet from which the font information will be extracted
+   * @param styleSheet
+   *          ths style sheet from which the font information will be extracted
    * @return FontMetrics for the specified font. If the font family can not be found, the FontMetrics for the default
-   * font family will be returned
-   * @throws IllegalArgumentException indicated the font metrics could not be determined (this is thrown since methods
-   *                                  depending upon this method can not handle a <code>null</code> return).
+   *         font family will be returned
+   * @throws IllegalArgumentException
+   *           indicated the font metrics could not be determined (this is thrown since methods depending upon this
+   *           method can not handle a <code>null</code> return).
    */
   public FontMetrics getFontMetrics( final StyleSheet styleSheet ) throws IllegalArgumentException {
     lookupCacheKey.reuse( styleSheet.getId(), styleSheet.getClass().getName() );
@@ -709,14 +707,13 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
       throw new IllegalArgumentException( "No valid font family specified." );
     }
 
-    final double fontSize = styleSheet.getDoubleStyleProperty
-      ( TextStyleKeys.FONTSIZE, defaultFontSize );
+    final double fontSize = styleSheet.getDoubleStyleProperty( TextStyleKeys.FONTSIZE, defaultFontSize );
 
     final boolean antiAliasing = RenderUtility.isFontSmooth( styleSheet, this );
     final String encoding = (String) styleSheet.getStyleProperty( TextStyleKeys.FONTENCODING );
     final boolean embedded =
-      isFeatureSupported( OutputProcessorFeature.EMBED_ALL_FONTS ) ||
-        styleSheet.getBooleanStyleProperty( TextStyleKeys.EMBEDDED_FONT );
+        isFeatureSupported( OutputProcessorFeature.EMBED_ALL_FONTS )
+            || styleSheet.getBooleanStyleProperty( TextStyleKeys.EMBEDDED_FONT );
     final boolean bold = styleSheet.getBooleanStyleProperty( TextStyleKeys.BOLD, false );
     final boolean italics = styleSheet.getBooleanStyleProperty( TextStyleKeys.ITALIC, false );
 
@@ -730,7 +727,6 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     fontStorage.commit();
     fontMetricsByStyleCache.clear();
   }
-
 
   /**
    * Checks whether this element provides some extra content that is not part of the visible layout structure. This can

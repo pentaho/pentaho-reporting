@@ -114,12 +114,12 @@ public class Prd5316IT {
   @Test
   public void testParameterCache() throws ResourceException, ReportProcessingException {
     Assert.assertEquals( EhCacheDataCache.class.getName(), cache );
-    Assert.assertEquals( TestCacheBackend.class.getName(),
-      ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty( DataCache.class.getName() ) );
+    Assert.assertEquals( TestCacheBackend.class.getName(), ClassicEngineBoot.getInstance().getGlobalConfig()
+        .getConfigProperty( DataCache.class.getName() ) );
 
-    MasterReport resource = (MasterReport)
-      new ResourceManager().createDirectly( getClass().getResource( "Prd-5316.prpt" ), MasterReport.class )
-        .getResource();
+    MasterReport resource =
+        (MasterReport) new ResourceManager().createDirectly( getClass().getResource( "Prd-5316.prpt" ),
+            MasterReport.class ).getResource();
 
     DefaultReportParameterValidator v = new DefaultReportParameterValidator();
     v.validate( new ValidationResult(), resource.getParameterDefinition(), new DefaultParameterContext( resource ) );
@@ -135,12 +135,12 @@ public class Prd5316IT {
   @Test
   public void testReportRunCache() throws Exception {
     Assert.assertEquals( EhCacheDataCache.class.getName(), cache );
-    Assert.assertEquals( TestCacheBackend.class.getName(),
-      ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty( DataCache.class.getName() ) );
+    Assert.assertEquals( TestCacheBackend.class.getName(), ClassicEngineBoot.getInstance().getGlobalConfig()
+        .getConfigProperty( DataCache.class.getName() ) );
 
-    MasterReport resource = (MasterReport)
-      new ResourceManager().createDirectly( getClass().getResource( "Prd-5316.prpt" ), MasterReport.class )
-        .getResource();
+    MasterReport resource =
+        (MasterReport) new ResourceManager().createDirectly( getClass().getResource( "Prd-5316.prpt" ),
+            MasterReport.class ).getResource();
     DebugReportRunner.execGraphics2D( resource );
     DebugReportRunner.execGraphics2D( resource );
     DebugReportRunner.execGraphics2D( resource );

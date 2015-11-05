@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
+import java.awt.Color;
+
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
@@ -33,8 +35,6 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 
-import java.awt.*;
-
 @SuppressWarnings( "HardCodedStringLiteral" )
 public class HtmlTagHelper {
   public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
@@ -44,8 +44,7 @@ public class HtmlTagHelper {
   private StyleBuilder styleBuilder;
   private StyleManager styleManager;
 
-  public HtmlTagHelper( final Configuration configuration,
-                        final StyleBuilderFactory styleBuilderFactory ) {
+  public HtmlTagHelper( final Configuration configuration, final StyleBuilderFactory styleBuilderFactory ) {
     this.configuration = configuration;
     this.styleBuilderFactory = styleBuilderFactory;
     this.styleBuilder = new DefaultStyleBuilder( styleBuilderFactory );
@@ -71,12 +70,9 @@ public class HtmlTagHelper {
     return configuration;
   }
 
-  public AttributeList createCellAttributes( final int colSpan,
-                                             final int rowSpan,
-                                             final ReportAttributeMap<Object> content,
-                                             final StyleSheet styleSheet,
-                                             final CellBackground background,
-                                             final StyleBuilder styleBuilder ) {
+  public AttributeList createCellAttributes( final int colSpan, final int rowSpan,
+      final ReportAttributeMap<Object> content, final StyleSheet styleSheet, final CellBackground background,
+      final StyleBuilder styleBuilder ) {
 
     final AttributeList attrList = new AttributeList();
     if ( content != null ) {
@@ -89,7 +85,7 @@ public class HtmlTagHelper {
       }
 
       final ElementAlignment verticalAlignment =
-        (ElementAlignment) styleSheet.getStyleProperty( ElementStyleKeys.VALIGNMENT );
+          (ElementAlignment) styleSheet.getStyleProperty( ElementStyleKeys.VALIGNMENT );
       attrList.setAttribute( HtmlPrinter.XHTML_NAMESPACE, "valign", translateVerticalAlignment( verticalAlignment ) );
     }
 
@@ -107,11 +103,11 @@ public class HtmlTagHelper {
     return attrList;
   }
 
-
   /**
    * Translates the JFreeReport horizontal element alignment into a HTML alignment constant.
    *
-   * @param ea the element alignment
+   * @param ea
+   *          the element alignment
    * @return the translated alignment name.
    */
   private String translateVerticalAlignment( final ElementAlignment ea ) {
@@ -124,9 +120,7 @@ public class HtmlTagHelper {
     return "top";
   }
 
-
-  public AttributeList createRowAttributes( final double rowHeight,
-                                            final HtmlRowBackgroundStruct struct ) {
+  public AttributeList createRowAttributes( final double rowHeight, final HtmlRowBackgroundStruct struct ) {
     final AttributeList attrList = new AttributeList();
     StyleBuilder styleBuilder = getStyleBuilder();
     StyleBuilderFactory styleBuilderFactory = getStyleBuilderFactory();
@@ -139,8 +133,8 @@ public class HtmlTagHelper {
         final BorderEdge top = struct.getTopEdge();
         final BorderEdge bottom = struct.getBottomEdge();
         if ( commonBackgroundColor != null ) {
-          styleBuilder
-            .append( DefaultStyleBuilder.CSSKeys.BACKGROUND_COLOR, HtmlColors.getColorString( commonBackgroundColor ) );
+          styleBuilder.append( DefaultStyleBuilder.CSSKeys.BACKGROUND_COLOR, HtmlColors
+              .getColorString( commonBackgroundColor ) );
         }
         if ( BorderEdge.EMPTY.equals( top ) == false ) {
           styleBuilder.appendRaw( DefaultStyleBuilder.CSSKeys.BORDER_TOP, styleBuilder.printEdgeAsCSS( top ) );
@@ -149,15 +143,13 @@ public class HtmlTagHelper {
           styleBuilder.appendRaw( DefaultStyleBuilder.CSSKeys.BORDER_BOTTOM, styleBuilder.printEdgeAsCSS( bottom ) );
         }
       }
-      styleBuilder.append( DefaultStyleBuilder.CSSKeys.HEIGHT,
-        styleBuilder.getPointConverter().format( styleBuilderFactory.fixLengthForSafari( rowHeight ) ), "pt" );
+      styleBuilder.append( DefaultStyleBuilder.CSSKeys.HEIGHT, styleBuilder.getPointConverter().format(
+          styleBuilderFactory.fixLengthForSafari( rowHeight ) ), "pt" );
       styleManager.updateStyle( styleBuilder, attrList );
     } else {
       // equally expensive and makes text more readable (helps with debugging)
-      attrList.setAttribute( HtmlPrinter.XHTML_NAMESPACE,
-        "style",
-        "height: " + styleBuilder.getPointConverter().format( styleBuilderFactory.fixLengthForSafari( rowHeight ) )
-          + "pt" );
+      attrList.setAttribute( HtmlPrinter.XHTML_NAMESPACE, "style", "height: "
+          + styleBuilder.getPointConverter().format( styleBuilderFactory.fixLengthForSafari( rowHeight ) ) + "pt" );
     }
     return attrList;
   }
@@ -165,8 +157,9 @@ public class HtmlTagHelper {
   public AttributeList createSheetNameAttributes() {
     final AttributeList tableAttrList = new AttributeList();
 
-    final String additionalStyleClass = getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.SheetNameClass" );
+    final String additionalStyleClass =
+        getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.html.SheetNameClass" );
     if ( additionalStyleClass != null ) {
       tableAttrList.setAttribute( HtmlPrinter.XHTML_NAMESPACE, "class", additionalStyleClass );
     }
@@ -182,8 +175,7 @@ public class HtmlTagHelper {
     return "true".equals( getConfiguration().getConfigProperty( HtmlTableModule.EMPTY_CELLS_USE_CSS, "false" ) );
   }
 
-  public AttributeList createTableAttributes( final SlimSheetLayout sheetLayout,
-                                              final ReportAttributeMap attr ) {
+  public AttributeList createTableAttributes( final SlimSheetLayout sheetLayout, final ReportAttributeMap attr ) {
     StyleBuilder styleBuilder = getStyleBuilder();
     final int noc = sheetLayout.getColumnCount();
     styleBuilder.clear();
@@ -206,8 +198,9 @@ public class HtmlTagHelper {
       styleBuilder.append( DefaultStyleBuilder.CSSKeys.TABLE_LAYOUT, "fixed" );
     }
 
-    final String additionalStyleClass = getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.StyleClass" );
+    final String additionalStyleClass =
+        getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.html.StyleClass" );
 
     final AttributeList tableAttrList = new AttributeList();
     if ( additionalStyleClass != null ) {
@@ -259,8 +252,8 @@ public class HtmlTagHelper {
     if ( onKeyDown != null ) {
       attrList.setAttribute( XHTML_NAMESPACE, "onkeydown", String.valueOf( onKeyDown ) );
     }
-    final Object onKeyPressed = attributes.getAttribute( AttributeNames.Html.NAMESPACE,
-      AttributeNames.Html.ONKEYPRESSED );
+    final Object onKeyPressed =
+        attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONKEYPRESSED );
     if ( onKeyPressed != null ) {
       attrList.setAttribute( XHTML_NAMESPACE, "onkeypressed", String.valueOf( onKeyPressed ) );
     }
@@ -268,18 +261,15 @@ public class HtmlTagHelper {
     if ( onKeyUp != null ) {
       attrList.setAttribute( XHTML_NAMESPACE, "onkeyup", String.valueOf( onKeyUp ) );
     }
-    final Object onMouseDown =
-      attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONMOUSEDOWN );
+    final Object onMouseDown = attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONMOUSEDOWN );
     if ( onMouseDown != null ) {
       attrList.setAttribute( XHTML_NAMESPACE, "onmousedown", String.valueOf( onMouseDown ) );
     }
-    final Object onMouseMove =
-      attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONMOUSEMOVE );
+    final Object onMouseMove = attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONMOUSEMOVE );
     if ( onMouseMove != null ) {
       attrList.setAttribute( XHTML_NAMESPACE, "onmousemove", String.valueOf( onMouseMove ) );
     }
-    final Object onMouseOver =
-      attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONMOUSEOVER );
+    final Object onMouseOver = attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONMOUSEOVER );
     if ( onMouseOver != null ) {
       attrList.setAttribute( XHTML_NAMESPACE, "onmouseover", String.valueOf( onMouseOver ) );
     }
@@ -292,7 +282,7 @@ public class HtmlTagHelper {
       attrList.setAttribute( XHTML_NAMESPACE, "onmouseout", String.valueOf( onMouseOut ) );
     }
     final Object onMouseEnter =
-      attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONMOUSEENTER );
+        attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.ONMOUSEENTER );
     if ( onMouseEnter != null ) {
       attrList.setAttribute( XHTML_NAMESPACE, "onmouseenter", String.valueOf( onMouseEnter ) );
     }
@@ -307,8 +297,7 @@ public class HtmlTagHelper {
   }
 
   private boolean isTableRowBorderDefinition() {
-    return "true"
-      .equals( getConfiguration().getConfigProperty( HtmlTableModule.TABLE_ROW_BORDER_DEFINITION, "false" ) );
+    return "true".equals( getConfiguration().getConfigProperty( HtmlTableModule.TABLE_ROW_BORDER_DEFINITION, "false" ) );
   }
 
 }

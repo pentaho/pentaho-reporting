@@ -1,26 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
+import java.awt.Color;
+import java.awt.Stroke;
+
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-
-import java.awt.*;
 
 /**
  * The drawable field element factory can be used to create elements that display <code>Drawable</code> elements.
@@ -77,7 +78,8 @@ public abstract class AbstractContentElementFactory extends ElementFactory {
   /**
    * Defines, whether the image content should be scaled to fit the complete image element bounds.
    *
-   * @param scale the scale flag of the image element.
+   * @param scale
+   *          the scale flag of the image element.
    */
   public void setScale( final Boolean scale ) {
     this.scale = scale;
@@ -97,12 +99,12 @@ public abstract class AbstractContentElementFactory extends ElementFactory {
    * Defines whether the generated image element should preserve the original aspect ratio of the image content during
    * scaling. This property has no effect if the image content is not scaled.
    *
-   * @param keepAspectRatio whether to keep the aspect ratio of the image content during the scaling.
+   * @param keepAspectRatio
+   *          whether to keep the aspect ratio of the image content during the scaling.
    */
   public void setKeepAspectRatio( final Boolean keepAspectRatio ) {
     this.keepAspectRatio = keepAspectRatio;
   }
-
 
   /**
    * Returns the shapes stroke. The stroke is used to draw the outline of the shape.
@@ -116,7 +118,8 @@ public abstract class AbstractContentElementFactory extends ElementFactory {
   /**
    * Defines the shapes stroke. The stroke is used to draw the outline of the shape.
    *
-   * @param stroke the stoke.
+   * @param stroke
+   *          the stoke.
    */
   public void setStroke( final Stroke stroke ) {
     this.stroke = stroke;
@@ -134,7 +137,8 @@ public abstract class AbstractContentElementFactory extends ElementFactory {
   /**
    * Defines wether to fill the shape on report generation.
    *
-   * @param shouldFill the fill flag.
+   * @param shouldFill
+   *          the fill flag.
    */
   public void setShouldFill( final Boolean shouldFill ) {
     this.shouldFill = shouldFill;
@@ -152,7 +156,8 @@ public abstract class AbstractContentElementFactory extends ElementFactory {
   /**
    * Defines whether to draw the shape outline on report generation.
    *
-   * @param shouldDraw the draw shape flag.
+   * @param shouldDraw
+   *          the draw shape flag.
    */
   public void setShouldDraw( final Boolean shouldDraw ) {
     this.shouldDraw = shouldDraw;
@@ -169,7 +174,8 @@ public abstract class AbstractContentElementFactory extends ElementFactory {
   /**
    * Applies the style definition to the elements stylesheet.
    *
-   * @param style the element stylesheet which should receive the style definition.
+   * @param style
+   *          the element stylesheet which should receive the style definition.
    */
   protected void applyStyle( final ElementStyleSheet style ) {
     super.applyStyle( style );

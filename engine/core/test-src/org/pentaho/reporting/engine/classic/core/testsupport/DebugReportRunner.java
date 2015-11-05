@@ -1,24 +1,41 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
+import java.awt.GraphicsEnvironment;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.swing.table.DefaultTableModel;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -89,21 +106,6 @@ import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * @noinspection HardCodedStringLiteral
  */
@@ -146,8 +148,7 @@ public class DebugReportRunner {
     }
   }
 
-  public static void createRTF( final MasterReport report )
-    throws Exception {
+  public static void createRTF( final MasterReport report ) throws Exception {
     try {
       RTFReportUtil.createRTF( report, new NullOutputStream() );
     } catch ( IndexOutOfBoundsException ibe ) {
@@ -158,15 +159,15 @@ public class DebugReportRunner {
     }
   }
 
-  public static byte[] createXmlTablePageable( final MasterReport report )
-    throws IOException, ReportProcessingException {
+  public static byte[] createXmlTablePageable( final MasterReport report ) throws IOException,
+    ReportProcessingException {
     final MemoryByteArrayOutputStream outputStream = new MemoryByteArrayOutputStream();
     try {
       final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
       localFontRegistry.initialize();
       final XmlTableOutputProcessor outputProcessor =
-        new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
-          XmlTableOutputProcessorMetaData.PAGINATION_FULL, localFontRegistry ) );
+          new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
+              XmlTableOutputProcessorMetaData.PAGINATION_FULL, localFontRegistry ) );
       final ReportProcessor streamReportProcessor = new PageableReportProcessor( report, outputProcessor );
       try {
         streamReportProcessor.processReport();
@@ -179,23 +180,19 @@ public class DebugReportRunner {
     return ( outputStream.toByteArray() );
   }
 
-  public static void createXmlPageable( final MasterReport report )
-    throws Exception {
+  public static void createXmlPageable( final MasterReport report ) throws Exception {
     XmlPageReportUtil.createXml( report, new NullOutputStream() );
   }
 
-  public static void createXmlFlow( final MasterReport report )
-    throws Exception {
+  public static void createXmlFlow( final MasterReport report ) throws Exception {
     XmlTableReportUtil.createFlowXML( report, new NullOutputStream() );
   }
 
-  public static void createXmlStream( final MasterReport report )
-    throws Exception {
+  public static void createXmlStream( final MasterReport report ) throws Exception {
     XmlTableReportUtil.createStreamXML( report, new NullOutputStream() );
   }
 
-  public static void createCSV( final MasterReport report )
-    throws Exception {
+  public static void createCSV( final MasterReport report ) throws Exception {
     try {
       CSVReportUtil.createCSV( report, new NullOutputStream(), null );
     } catch ( ReportParameterValidationException e ) {
@@ -203,8 +200,7 @@ public class DebugReportRunner {
     }
   }
 
-  public static void createDataCSV( final MasterReport report )
-    throws Exception {
+  public static void createDataCSV( final MasterReport report ) throws Exception {
     try {
       CSVDataReportUtil.createCSV( report, new NullOutputStream(), "UTF-8" );
     } catch ( ReportParameterValidationException e ) {
@@ -212,8 +208,7 @@ public class DebugReportRunner {
     }
   }
 
-  public static void createDataXML( final MasterReport report )
-    throws Exception {
+  public static void createDataXML( final MasterReport report ) throws Exception {
     try {
       final XMLProcessor pr = new XMLProcessor( report );
       final Writer fout = new BufferedWriter( new OutputStreamWriter( new NullOutputStream(), "UTF-8" ) );
@@ -225,8 +220,7 @@ public class DebugReportRunner {
     }
   }
 
-  public static void createXLS( final MasterReport report )
-    throws Exception {
+  public static void createXLS( final MasterReport report ) throws Exception {
     try {
       ExcelReportUtil.createXLS( report, new NullOutputStream() );
     } catch ( ReportParameterValidationException e ) {
@@ -234,8 +228,7 @@ public class DebugReportRunner {
     }
   }
 
-  public static void createStreamHTML( final MasterReport report )
-    throws Exception {
+  public static void createStreamHTML( final MasterReport report ) throws Exception {
     try {
       HtmlReportUtil.createStreamHTML( report, new NullOutputStream() );
     } catch ( ReportParameterValidationException e ) {
@@ -243,8 +236,7 @@ public class DebugReportRunner {
     }
   }
 
-  public static void createZIPHTML( final MasterReport report )
-    throws Exception {
+  public static void createZIPHTML( final MasterReport report ) throws Exception {
     try {
       HtmlReportUtil.createZIPHTML( report, new NullOutputStream(), "report.html" );
     } catch ( ReportParameterValidationException e ) {
@@ -252,8 +244,7 @@ public class DebugReportRunner {
     }
   }
 
-  public static void createPageableHTML( final MasterReport report )
-    throws Exception {
+  public static void createPageableHTML( final MasterReport report ) throws Exception {
     try {
       if ( report == null ) {
         throw new NullPointerException();
@@ -262,11 +253,10 @@ public class DebugReportRunner {
       try {
         final ZipRepository zipRepository = new ZipRepository( new NullOutputStream() );
         final ContentLocation root = zipRepository.getRoot();
-        final ContentLocation data = RepositoryUtilities.createLocation
-          ( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
+        final ContentLocation data =
+            RepositoryUtilities.createLocation( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
 
-        final PageableHtmlOutputProcessor outputProcessor =
-          new PageableHtmlOutputProcessor( report.getConfiguration() );
+        final PageableHtmlOutputProcessor outputProcessor = new PageableHtmlOutputProcessor( report.getConfiguration() );
 
         final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
         printer.setContentWriter( root, new DefaultNameGenerator( root, "report.html" ) );
@@ -327,22 +317,18 @@ public class DebugReportRunner {
   public static class InterceptingXmlPageOutputProcessor extends XmlPageOutputProcessor {
     private List<LogicalPageBox> logicalPageBox;
 
-    public InterceptingXmlPageOutputProcessor( final OutputStream outputStream,
-                                               final OutputProcessorMetaData metaData ) {
+    public InterceptingXmlPageOutputProcessor( final OutputStream outputStream, final OutputProcessorMetaData metaData ) {
       super( outputStream, metaData );
       this.logicalPageBox = new ArrayList<LogicalPageBox>();
     }
 
-    protected void processPhysicalPage( final PageGrid pageGrid,
-                                        final LogicalPageBox logicalPage,
-                                        final int row,
-                                        final int col,
-                                        final PhysicalPageKey pageKey ) throws ContentProcessingException {
+    protected void processPhysicalPage( final PageGrid pageGrid, final LogicalPageBox logicalPage, final int row,
+        final int col, final PhysicalPageKey pageKey ) throws ContentProcessingException {
       logicalPageBox.add( logicalPage.derive( true ) );
     }
 
-    protected void processLogicalPage( final LogicalPageKey key,
-                                       final LogicalPageBox logicalPage ) throws ContentProcessingException {
+    protected void processLogicalPage( final LogicalPageKey key, final LogicalPageBox logicalPage )
+      throws ContentProcessingException {
       logicalPageBox.add( logicalPage.derive( true ) );
     }
 
@@ -363,8 +349,7 @@ public class DebugReportRunner {
     private LogicalPageBox logicalPageBox;
     private FlowSelector flowSelector;
 
-    private InterceptingXmlTableOutputProcessor( final OutputStream outputStream,
-                                                 final OutputProcessorMetaData metaData ) {
+    private InterceptingXmlTableOutputProcessor( final OutputStream outputStream, final OutputProcessorMetaData metaData ) {
       super( outputStream, metaData );
     }
 
@@ -376,9 +361,8 @@ public class DebugReportRunner {
       return flowSelector;
     }
 
-    protected void processTableContent( final LogicalPageKey logicalPageKey,
-                                        final LogicalPageBox logicalPage,
-                                        final TableContentProducer contentProducer ) throws ContentProcessingException {
+    protected void processTableContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+        final TableContentProducer contentProducer ) throws ContentProcessingException {
       logicalPageBox = logicalPage.derive( true );
     }
 
@@ -391,8 +375,9 @@ public class DebugReportRunner {
     final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
     localFontRegistry.initialize();
 
-    final InterceptingXmlPageOutputProcessor outputProcessor = new InterceptingXmlPageOutputProcessor
-      ( new NullOutputStream(), new XmlPageOutputProcessorMetaData( localFontRegistry ) );
+    final InterceptingXmlPageOutputProcessor outputProcessor =
+        new InterceptingXmlPageOutputProcessor( new NullOutputStream(), new XmlPageOutputProcessorMetaData(
+            localFontRegistry ) );
     outputProcessor.setFlowSelector( new SinglePageFlowSelector( page, false ) );
     final PageableReportProcessor proc = new PageableReportProcessor( report, outputProcessor );
     proc.processReport();
@@ -409,8 +394,9 @@ public class DebugReportRunner {
     final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
     localFontRegistry.initialize();
 
-    final InterceptingXmlPageOutputProcessor outputProcessor = new InterceptingXmlPageOutputProcessor
-      ( new NullOutputStream(), new XmlPageOutputProcessorMetaData( localFontRegistry ) );
+    final InterceptingXmlPageOutputProcessor outputProcessor =
+        new InterceptingXmlPageOutputProcessor( new NullOutputStream(), new XmlPageOutputProcessorMetaData(
+            localFontRegistry ) );
     outputProcessor.setFlowSelector( new StrictMultiPageFlowSelector( false, maxPage, page ) );
     final PageableReportProcessor proc = new PageableReportProcessor( report, outputProcessor );
     proc.processReport();
@@ -426,25 +412,26 @@ public class DebugReportRunner {
     final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
     localFontRegistry.initialize();
 
-    final InterceptingXmlPageOutputProcessor outputProcessor = new InterceptingXmlPageOutputProcessor
-      ( new NullOutputStream(), new XmlPageOutputProcessorMetaData( localFontRegistry ) );
+    final InterceptingXmlPageOutputProcessor outputProcessor =
+        new InterceptingXmlPageOutputProcessor( new NullOutputStream(), new XmlPageOutputProcessorMetaData(
+            localFontRegistry ) );
     outputProcessor.setFlowSelector( new MultiPageFlowSelector( false, page ) );
     final PageableReportProcessor proc = new PageableReportProcessor( report, outputProcessor );
     proc.processReport();
-
 
     List<LogicalPageBox> pages = outputProcessor.getPages();
     Assert.assertEquals( "Pages have been generated", page.length, pages.size() );
     return pages;
   }
 
-  public static List<LogicalPageBox> layoutPagesStrict( final MasterReport report,
-                                                        final int maxPage, final int... page ) throws Exception {
+  public static List<LogicalPageBox>
+    layoutPagesStrict( final MasterReport report, final int maxPage, final int... page ) throws Exception {
     final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
     localFontRegistry.initialize();
 
-    final InterceptingXmlPageOutputProcessor outputProcessor = new InterceptingXmlPageOutputProcessor
-      ( new NullOutputStream(), new XmlPageOutputProcessorMetaData( localFontRegistry ) );
+    final InterceptingXmlPageOutputProcessor outputProcessor =
+        new InterceptingXmlPageOutputProcessor( new NullOutputStream(), new XmlPageOutputProcessorMetaData(
+            localFontRegistry ) );
     outputProcessor.setFlowSelector( new StrictMultiPageFlowSelector( false, maxPage, page ) );
     final PageableReportProcessor proc = new PageableReportProcessor( report, outputProcessor );
     proc.processReport();
@@ -458,9 +445,9 @@ public class DebugReportRunner {
     final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
     localFontRegistry.initialize();
 
-    final InterceptingXmlTableOutputProcessor outputProcessor = new InterceptingXmlTableOutputProcessor
-      ( new NullOutputStream(), new XmlTableOutputProcessorMetaData
-        ( XmlTableOutputProcessorMetaData.PAGINATION_MANUAL, localFontRegistry ) );
+    final InterceptingXmlTableOutputProcessor outputProcessor =
+        new InterceptingXmlTableOutputProcessor( new NullOutputStream(), new XmlTableOutputProcessorMetaData(
+            XmlTableOutputProcessorMetaData.PAGINATION_MANUAL, localFontRegistry ) );
     outputProcessor.setFlowSelector( new SinglePageFlowSelector( page, true ) );
     final ReportProcessor proc = new FlowReportProcessor( report, outputProcessor );
     proc.processReport();
@@ -475,14 +462,15 @@ public class DebugReportRunner {
   /**
    * Saves a report to PDF format.
    *
-   * @param report the report.
+   * @param report
+   *          the report.
    * @return true or false.
    */
   public static boolean createPDF( final MasterReport report ) throws ReportProcessingException {
     final OutputStream out = new NullOutputStream();
     try {
-      final PdfOutputProcessor outputProcessor = new PdfOutputProcessor( report.getConfiguration(), out,
-        report.getResourceManager() );
+      final PdfOutputProcessor outputProcessor =
+          new PdfOutputProcessor( report.getConfiguration(), out, report.getResourceManager() );
       final PageableReportProcessor proc = new PageableReportProcessor( report, outputProcessor );
       proc.processReport();
       return true;
@@ -513,31 +501,24 @@ public class DebugReportRunner {
     DebugReportRunner.createZIPHTML( report );
   }
 
-  public static LogicalPageBox layoutSingleBand( final MasterReport report,
-                                                 final Band reportHeader )
+  public static LogicalPageBox layoutSingleBand( final MasterReport report, final Band reportHeader )
     throws ReportProcessingException, ContentProcessingException {
     return layoutSingleBand( report, reportHeader, true, false );
   }
 
-  public static LogicalPageBox layoutSingleBandInDesignTime( final MasterReport report,
-                                                             final Band reportHeader )
+  public static LogicalPageBox layoutSingleBandInDesignTime( final MasterReport report, final Band reportHeader )
     throws ReportProcessingException, ContentProcessingException {
     return layoutSingleBand( report, reportHeader, true, false, true );
   }
 
-  public static LogicalPageBox layoutSingleBand( final MasterReport originalReport,
-                                                 final Band reportHeader,
-                                                 final boolean monospaced,
-                                                 final boolean expectPageBreak )
-    throws ReportProcessingException, ContentProcessingException {
+  public static LogicalPageBox layoutSingleBand( final MasterReport originalReport, final Band reportHeader,
+      final boolean monospaced, final boolean expectPageBreak ) throws ReportProcessingException,
+    ContentProcessingException {
     return layoutSingleBand( originalReport, reportHeader, monospaced, expectPageBreak, false );
   }
 
-  public static LogicalPageBox layoutSingleBand( final MasterReport originalReport,
-                                                 final Band reportHeader,
-                                                 final boolean monospaced,
-                                                 final boolean expectPageBreak,
-                                                 final boolean designTime )
+  public static LogicalPageBox layoutSingleBand( final MasterReport originalReport, final Band reportHeader,
+      final boolean monospaced, final boolean expectPageBreak, final boolean designTime )
     throws ReportProcessingException, ContentProcessingException {
     final FontStorage fontRegistry;
     if ( monospaced ) {
@@ -548,19 +529,14 @@ public class DebugReportRunner {
     return layoutSingleBand( originalReport, reportHeader, fontRegistry, expectPageBreak, designTime );
   }
 
-  public static LogicalPageBox layoutSingleBand( final MasterReport originalReport,
-                                                 final Band reportHeader,
-                                                 final FontStorage fontRegistry,
-                                                 final boolean expectPageBreak )
-    throws ReportProcessingException, ContentProcessingException {
+  public static LogicalPageBox layoutSingleBand( final MasterReport originalReport, final Band reportHeader,
+      final FontStorage fontRegistry, final boolean expectPageBreak ) throws ReportProcessingException,
+    ContentProcessingException {
     return layoutSingleBand( originalReport, reportHeader, fontRegistry, expectPageBreak, false );
   }
 
-  public static LogicalPageBox layoutSingleBand( final MasterReport originalReport,
-                                                 final Band reportHeader,
-                                                 final FontStorage fontRegistry,
-                                                 final boolean expectPageBreak,
-                                                 final boolean designTime )
+  public static LogicalPageBox layoutSingleBand( final MasterReport originalReport, final Band reportHeader,
+      final FontStorage fontRegistry, final boolean expectPageBreak, final boolean designTime )
     throws ReportProcessingException, ContentProcessingException {
     final ReportStateKey stateKey = new ReportStateKey();
 
@@ -574,8 +550,7 @@ public class DebugReportRunner {
     metaData.initialize( wrapForCompatibility( report ) );
 
     final ProcessingContext processingContext = new DefaultProcessingContext( report, metaData );
-    final DebugExpressionRuntime runtime = new DebugExpressionRuntime
-      ( new DefaultTableModel(), 0, processingContext );
+    final DebugExpressionRuntime runtime = new DebugExpressionRuntime( new DefaultTableModel(), 0, processingContext );
 
     final DebugRenderer debugLayoutSystem = new DebugRenderer( metaData );
     debugLayoutSystem.setStateKey( stateKey );
@@ -602,8 +577,7 @@ public class DebugReportRunner {
     if ( compatibilityLevel < ClassicEngineBoot.computeVersionId( 3, 999, 999 ) ) {
       // enable strict compatibility mode for reports older than 4.0.
       final HierarchicalConfiguration config = new HierarchicalConfiguration( processingContext.getConfiguration() );
-      config
-        .setConfigProperty( "org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection", "true" );
+      config.setConfigProperty( "org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection", "true" );
       config.setConfigProperty( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", "true" );
       return config;
     }
@@ -652,8 +626,8 @@ public class DebugReportRunner {
   }
 
   public static boolean isSkipLongRunTest() {
-    if ( "false".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" ) ) ) {
+    if ( "false".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" ) ) ) {
       return true;
     }
     return false;
@@ -732,13 +706,13 @@ public class DebugReportRunner {
     //
     // Note that the results of the layout is machine dependent, so a failure may not be an error, but
     // the result of a difference in fonts or settings.
-    return "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "junit.enable-platform-dependent-tests" ) );
+    return "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+        "junit.enable-platform-dependent-tests" ) );
   }
 
   public static File createTestOutputFile( String name ) {
     final File file = new File( "test-output" );
-    //noinspection ResultOfMethodCallIgnored
+    // noinspection ResultOfMethodCallIgnored
     file.mkdir();
     if ( StringUtils.isEmpty( name, true ) ) {
       return file;

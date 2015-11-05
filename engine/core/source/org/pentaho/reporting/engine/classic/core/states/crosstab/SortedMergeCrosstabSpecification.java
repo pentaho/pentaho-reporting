@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.crosstab;
 
@@ -50,9 +50,8 @@ public class SortedMergeCrosstabSpecification implements CrosstabSpecification {
   private ReportStateKey key;
   private int rowCount;
 
-  public SortedMergeCrosstabSpecification( final ReportStateKey key,
-                                           final String[] dimensionColumnSet,
-                                           final String[] rowColumnSet ) {
+  public SortedMergeCrosstabSpecification( final ReportStateKey key, final String[] dimensionColumnSet,
+      final String[] rowColumnSet ) {
     if ( key == null ) {
       throw new NullPointerException();
     }
@@ -68,7 +67,7 @@ public class SortedMergeCrosstabSpecification implements CrosstabSpecification {
 
     this.currentRow = new ArrayList<DimensionNode>();
     this.existingNodes = new HashMap<DimensionNode, DimensionNode>();
-    this.rootNode = new DimensionNode( new Object[ 0 ], -1 );
+    this.rootNode = new DimensionNode( new Object[0], -1 );
     this.rowCount = -1;
   }
 
@@ -129,12 +128,12 @@ public class SortedMergeCrosstabSpecification implements CrosstabSpecification {
   }
 
   public void endCrosstab() {
-    final DimensionNode[] dimensionNodes = existingNodes.keySet().toArray( new DimensionNode[ existingNodes.size() ] );
+    final DimensionNode[] dimensionNodes = existingNodes.keySet().toArray( new DimensionNode[existingNodes.size()] );
     Arrays.sort( dimensionNodes );
 
     this.entries.clear();
     for ( int i = 0; i < dimensionNodes.length; i++ ) {
-      final DimensionNode node = dimensionNodes[ i ];
+      final DimensionNode node = dimensionNodes[i];
       this.entries.add( node.getData() );
     }
   }
@@ -144,10 +143,10 @@ public class SortedMergeCrosstabSpecification implements CrosstabSpecification {
       return;
     }
 
-    final Object[] newKey = new Object[ columnSet.length ];
+    final Object[] newKey = new Object[columnSet.length];
     for ( int i = 0; i < columnSet.length; i++ ) {
-      final String columnName = columnSet[ i ];
-      newKey[ i ] = dataRow.get( columnName );
+      final String columnName = columnSet[i];
+      newKey[i] = dataRow.get( columnName );
     }
 
     if ( currentRow.isEmpty() == false ) {

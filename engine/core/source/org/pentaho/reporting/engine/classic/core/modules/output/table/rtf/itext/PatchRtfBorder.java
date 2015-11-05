@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.itext;
 
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import com.lowagie.text.DocWriter;
 import com.lowagie.text.rtf.RtfElement;
 import com.lowagie.text.rtf.document.RtfDocument;
 import com.lowagie.text.rtf.style.RtfColor;
-
-import java.awt.*;
-import java.io.IOException;
-import java.io.OutputStream;
-
 
 /**
  * The PatchRtfBorder handle one row or cell border. INTERNAL USE ONLY
@@ -349,9 +348,12 @@ public class PatchRtfBorder extends RtfElement {
   /**
    * Makes a copy of the given PatchRtfBorder
    *
-   * @param doc        The RtfDocument this PatchRtfBorder belongs to
-   * @param borderType The border type of this PatchRtfBorder
-   * @param border     The PatchRtfBorder to copy
+   * @param doc
+   *          The RtfDocument this PatchRtfBorder belongs to
+   * @param borderType
+   *          The border type of this PatchRtfBorder
+   * @param border
+   *          The PatchRtfBorder to copy
    */
   protected PatchRtfBorder( RtfDocument doc, int borderType, PatchRtfBorder border ) {
     super( doc );
@@ -365,19 +367,21 @@ public class PatchRtfBorder extends RtfElement {
   /**
    * Constructs a PatchRtfBorder
    *
-   * @param doc            The RtfDocument this PatchRtfBorder belongs to
-   * @param borderType     The type of border this PatchRtfBorder is
-   * @param borderPosition The position of this PatchRtfBorder
-   * @param borderStyle    The style of this PatchRtfBorder
-   * @param borderWidth    The width of this PatchRtfBorder
-   * @param borderColor    The color of this PatchRtfBorder
+   * @param doc
+   *          The RtfDocument this PatchRtfBorder belongs to
+   * @param borderType
+   *          The type of border this PatchRtfBorder is
+   * @param borderPosition
+   *          The position of this PatchRtfBorder
+   * @param borderStyle
+   *          The style of this PatchRtfBorder
+   * @param borderWidth
+   *          The width of this PatchRtfBorder
+   * @param borderColor
+   *          The color of this PatchRtfBorder
    */
-  protected PatchRtfBorder( RtfDocument doc,
-                            int borderType,
-                            int borderPosition,
-                            int borderStyle,
-                            float borderWidth,
-                            Color borderColor ) {
+  protected PatchRtfBorder( RtfDocument doc, int borderType, int borderPosition, int borderStyle, float borderWidth,
+      Color borderColor ) {
     super( doc );
     this.borderType = borderType;
     this.borderPosition = borderPosition;
@@ -402,7 +406,7 @@ public class PatchRtfBorder extends RtfElement {
     }
 
     if ( this.borderType == ROW_BORDER ) {
-      switch( this.borderPosition ) {
+      switch ( this.borderPosition ) {
         case LEFT_BORDER:
           result.write( ROW_BORDER_LEFT );
           break;
@@ -431,7 +435,7 @@ public class PatchRtfBorder extends RtfElement {
       result.write( intToByteArray( this.borderColor.getColorNumber() ) );
       this.document.outputDebugLinebreak( result );
     } else if ( this.borderType == CELL_BORDER ) {
-      switch( this.borderPosition ) {
+      switch ( this.borderPosition ) {
         case LEFT_BORDER:
           result.write( CELL_BORDER_LEFT );
           break;
@@ -462,9 +466,9 @@ public class PatchRtfBorder extends RtfElement {
    * @return A byte array containing the style of this PatchRtfBorder
    */
   private byte[] writeBorderStyle() {
-    switch( this.borderStyle ) {
+    switch ( this.borderStyle ) {
       case BORDER_NONE:
-        return new byte[ 0 ];
+        return new byte[0];
       case BORDER_SINGLE:
         return BORDER_STYLE_SINGLE;
       case BORDER_DOUBLE_THICK:

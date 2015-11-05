@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xml;
 
@@ -48,8 +48,7 @@ public class XmlTableOutputProcessor extends AbstractTableOutputProcessor implem
     this( outputStream, new XmlTableOutputProcessorMetaData() );
   }
 
-  public XmlTableOutputProcessor( final OutputStream outputStream,
-                                  final OutputProcessorMetaData metaData ) {
+  public XmlTableOutputProcessor( final OutputStream outputStream, final OutputProcessorMetaData metaData ) {
     if ( metaData == null ) {
       throw new NullPointerException( "MetaData must not be null" );
     }
@@ -81,8 +80,7 @@ public class XmlTableOutputProcessor extends AbstractTableOutputProcessor implem
     return physicalPages.get( page );
   }
 
-  protected LogicalPageKey createLogicalPage( final int width,
-                                              final int height ) {
+  protected LogicalPageKey createLogicalPage( final int width, final int height ) {
     final LogicalPageKey key = super.createLogicalPage( width, height );
     for ( int h = 0; h < key.getHeight(); h++ ) {
       for ( int w = 0; w < key.getWidth(); w++ ) {
@@ -107,9 +105,8 @@ public class XmlTableOutputProcessor extends AbstractTableOutputProcessor implem
     }
   }
 
-  protected void processTableContent( final LogicalPageKey logicalPageKey,
-                                      final LogicalPageBox logicalPage,
-                                      final TableContentProducer contentProducer ) throws ContentProcessingException {
+  protected void processTableContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+      final TableContentProducer contentProducer ) throws ContentProcessingException {
     try {
       if ( writer == null ) {
         writer = new XmlDocumentWriter( outputStream, metaData );
@@ -121,10 +118,8 @@ public class XmlTableOutputProcessor extends AbstractTableOutputProcessor implem
     }
   }
 
-  protected void updateTableContent( final LogicalPageKey logicalPageKey,
-                                     final LogicalPageBox logicalPage,
-                                     final TableContentProducer contentProducer,
-                                     final boolean performOutput ) throws ContentProcessingException {
+  protected void updateTableContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+      final TableContentProducer contentProducer, final boolean performOutput ) throws ContentProcessingException {
     try {
       if ( writer == null ) {
         writer = new XmlDocumentWriter( outputStream, metaData );

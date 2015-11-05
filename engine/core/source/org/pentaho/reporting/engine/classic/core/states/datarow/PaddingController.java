@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
@@ -27,16 +27,32 @@ import java.util.HashSet;
 
 /**
  * A datarow that acts as padding source. It overrides the columns from either report-data or expressions datarow with
- * values collected by the crosstab-specification. It also provides padding for the advance calls. <p/> There are three
- * padding scenarios that must be covered by this data-row: <ul> <li>Leading columns are missing <p> The
- * crosstab-specification's current cursor position is not at the computed position for the current column key (the
+ * values collected by the crosstab-specification. It also provides padding for the advance calls.
+ * <p/>
+ * There are three padding scenarios that must be covered by this data-row:
+ * <ul>
+ * <li>Leading columns are missing
+ * <p>
+ * The crosstab-specification's current cursor position is not at the computed position for the current column key (the
  * column values read from the actual data-row). Therefore the system has to insert fake columns until the cursor has
  * advanced to the current position. As we are effectively duplicating rows, this may lead to corrupted data if we
- * duplicate non-group-columns. </p></li> <li>Inner columns are missing <p> After an advance, the computed column-key
- * position is greater than the current cursor position. Therefore the system has to insert fake data until the
- * positions match again. </p></li> <li>Trailing columns are missing <p> If the advance would trigger a group-break,
- * check whether the current cursor position is already at the end of the columns list. If not, stay on the current row
- * and insert as many fake rows as needed. </p></li> </ul> The last two cases may be consolidated into one case.
+ * duplicate non-group-columns.
+ * </p>
+ * </li>
+ * <li>Inner columns are missing
+ * <p>
+ * After an advance, the computed column-key position is greater than the current cursor position. Therefore the system
+ * has to insert fake data until the positions match again.
+ * </p>
+ * </li>
+ * <li>Trailing columns are missing
+ * <p>
+ * If the advance would trigger a group-break, check whether the current cursor position is already at the end of the
+ * columns list. If not, stay on the current row and insert as many fake rows as needed.
+ * </p>
+ * </li>
+ * </ul>
+ * The last two cases may be consolidated into one case.
  *
  * @author Thomas Morgner
  */
@@ -70,8 +86,8 @@ public class PaddingController implements Cloneable {
     this.crosstabSpecification = crosstabSpecification;
     this.columnNames = this.crosstabSpecification.getColumnDimensionNames();
     this.rowNames = this.crosstabSpecification.getRowDimensionNames();
-    this.key = new Object[ columnNames.length ];
-    this.rowKey = new Object[ rowNames.length ];
+    this.key = new Object[columnNames.length];
+    this.rowKey = new Object[rowNames.length];
     this.currentCursorPosition = 0;
 
     this.knownNames = new HashSet<String>();
@@ -94,7 +110,7 @@ public class PaddingController implements Cloneable {
     }
 
     for ( int i = 0; i < key.length; i++ ) {
-      key[ i ] = globalView.get( columnNames[ i ] );
+      key[i] = globalView.get( columnNames[i] );
     }
 
     final int computedPosition = crosstabSpecification.indexOf( currentCursorPosition, key );
@@ -104,8 +120,8 @@ public class PaddingController implements Cloneable {
       // (key));
       return 0;
     }
-    //logger.debug("Pre:  F " + computedPosition + " CurrentPos: " + currentCursorPosition + " Key: " + printKey(key));
-    //logger.debug("Pre: 2F " + (computedPosition - currentCursorPosition));
+    // logger.debug("Pre:  F " + computedPosition + " CurrentPos: " + currentCursorPosition + " Key: " + printKey(key));
+    // logger.debug("Pre: 2F " + (computedPosition - currentCursorPosition));
     return computedPosition - currentCursorPosition;
   }
 
@@ -123,7 +139,7 @@ public class PaddingController implements Cloneable {
       if ( i > 0 ) {
         s.append( ',' );
       }
-      s.append( data[ i ] );
+      s.append( data[i] );
     }
     return s + "}";
   }
@@ -147,19 +163,18 @@ public class PaddingController implements Cloneable {
     final MasterDataRowChangeEvent event = dataRow.getReusableEvent();
     event.reuse( MasterDataRowChangeEvent.COLUMN_UPDATED, "", "" );
     for ( int i = 0; i < columnNames.length; i++ ) {
-      event.setColumnName( columnNames[ i ] );
-      event.setColumnValue( currentColumn[ i ] );
+      event.setColumnName( columnNames[i] );
+      event.setColumnValue( currentColumn[i] );
       event.setOptional( true );
       if ( logger.isDebugEnabled() ) {
-        logger.debug( "Replacing Column-dimension value: " + columnNames[ i ] + " = " + currentColumn[ i ] );
+        logger.debug( "Replacing Column-dimension value: " + columnNames[i] + " = " + currentColumn[i] );
       }
       dataRow.dataRowChanged( event );
     }
 
   }
 
-  public void refreshPaddedRow( final MasterDataRowChangeHandler dataRow,
-                                final ReportDataRow reportDataRow ) {
+  public void refreshPaddedRow( final MasterDataRowChangeHandler dataRow, final ReportDataRow reportDataRow ) {
     if ( reportDataRow == null ) {
       return;
     }
@@ -186,8 +201,7 @@ public class PaddingController implements Cloneable {
     }
   }
 
-  public void refreshRow( final MasterDataRowChangeHandler dataRow,
-                          final ReportDataRow reportDataRow ) {
+  public void refreshRow( final MasterDataRowChangeHandler dataRow, final ReportDataRow reportDataRow ) {
     if ( reportDataRow == null ) {
       return;
     }
@@ -220,17 +234,17 @@ public class PaddingController implements Cloneable {
   }
 
   public Object[] createRowKey( final FastGlobalView globalView ) {
-    final Object[] rowKey = new Object[ rowNames.length ];
+    final Object[] rowKey = new Object[rowNames.length];
     for ( int i = 0; i < rowKey.length; i++ ) {
-      rowKey[ i ] = globalView.get( rowNames[ i ] );
+      rowKey[i] = globalView.get( rowNames[i] );
     }
     return rowKey;
   }
 
   public Object[] createColumnKey( final FastGlobalView globalView ) {
-    final Object[] colKey = new Object[ columnNames.length ];
+    final Object[] colKey = new Object[columnNames.length];
     for ( int i = 0; i < colKey.length; i++ ) {
-      colKey[ i ] = globalView.get( columnNames[ i ] );
+      colKey[i] = globalView.get( columnNames[i] );
     }
     return colKey;
   }

@@ -1,23 +1,28 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
+import java.awt.geom.Point2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+
 import junit.framework.TestCase;
+
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -42,10 +47,6 @@ import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
 
-import java.awt.geom.Point2D;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-
 public class AlignmentLeftIT extends TestCase {
   public AlignmentLeftIT() {
   }
@@ -57,10 +58,10 @@ public class AlignmentLeftIT extends TestCase {
   public void testLegacy() throws ReportProcessingException, ContentProcessingException {
     final MasterReport report = createReport( false );
 
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     final LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
+        DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox, false, false );
@@ -69,10 +70,10 @@ public class AlignmentLeftIT extends TestCase {
   public void testLegacyNoEffectOfWrap() throws ReportProcessingException, ContentProcessingException {
     final MasterReport report = createReport( true );
 
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     final LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
+        DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
 
     // PRD-2736 note: word breaks are implemented now, hence the test's assumptions should be changed
@@ -83,9 +84,9 @@ public class AlignmentLeftIT extends TestCase {
     final MasterReport report = createReport( false );
 
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     final LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
+        DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox, true, false );
@@ -95,9 +96,9 @@ public class AlignmentLeftIT extends TestCase {
     final MasterReport report = createReport( true );
 
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     final LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
+        DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox, true, true );
@@ -137,7 +138,7 @@ public class AlignmentLeftIT extends TestCase {
     protected void processParagraphChilds( final ParagraphRenderBox box ) {
       count = 0;
       processBoxChilds( box );
-      //ModelPrinter.INSTANCE.print(box);
+      // ModelPrinter.INSTANCE.print(box);
       if ( complexText ) {
         if ( wrapWord ) {
           assertEquals( "Line-Count", 2, count );
@@ -162,15 +163,14 @@ public class AlignmentLeftIT extends TestCase {
         }
         if ( complexText && wrapWord == false ) {
           Assert.assertTrue( "Box width of '" + box.getWidth() + "' is less than 40pt",
-            box.getWidth() <= StrictGeomUtility.toInternalValue( 40 ) );
+              box.getWidth() <= StrictGeomUtility.toInternalValue( 40 ) );
         }
       }
       return super.startInlineBox( box );
     }
 
-    public void startValidation( final LogicalPageBox logicalPageBox,
-                                 final boolean complexText,
-                                 final boolean wrapWord ) {
+    public void
+      startValidation( final LogicalPageBox logicalPageBox, final boolean complexText, final boolean wrapWord ) {
       this.complexText = complexText;
       this.wrapWord = wrapWord;
       startProcessing( logicalPageBox );

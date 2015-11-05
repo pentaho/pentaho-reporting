@@ -1,21 +1,46 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.richtext;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.io.IOException;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.html.CSS;
+import javax.swing.text.html.HTML;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -34,29 +59,6 @@ import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
-
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.MutableAttributeSet;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.html.CSS;
-import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
-import java.awt.*;
-import java.io.IOException;
-import java.io.StreamTokenizer;
-import java.io.StringReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * This handles HTML 3.2 with some CSS support. It uses the Swing HTML parser to process the document.
@@ -200,25 +202,24 @@ public class HtmlRichTextConverter implements RichTextConverter {
         result.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, convertURL( src ) );
         result.setAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.TITLE, alt );
         result.setAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Swing.TOOLTIP, alt );
-        if ( attributes.isDefined( HTML.Attribute.WIDTH ) &&
-          attributes.isDefined( HTML.Attribute.HEIGHT ) ) {
+        if ( attributes.isDefined( HTML.Attribute.WIDTH ) && attributes.isDefined( HTML.Attribute.HEIGHT ) ) {
           result.getStyle().setStyleProperty( ElementStyleKeys.SCALE, Boolean.TRUE );
           result.getStyle().setStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO, Boolean.FALSE );
           result.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH,
-            parseLength( String.valueOf( attributes.getAttribute( HTML.Attribute.WIDTH ) ) ) );
+              parseLength( String.valueOf( attributes.getAttribute( HTML.Attribute.WIDTH ) ) ) );
           result.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT,
-            parseLength( String.valueOf( attributes.getAttribute( HTML.Attribute.HEIGHT ) ) ) );
+              parseLength( String.valueOf( attributes.getAttribute( HTML.Attribute.HEIGHT ) ) ) );
         } else if ( attributes.isDefined( HTML.Attribute.WIDTH ) ) {
           result.getStyle().setStyleProperty( ElementStyleKeys.SCALE, Boolean.TRUE );
           result.getStyle().setStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO, Boolean.TRUE );
           result.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH,
-            parseLength( String.valueOf( attributes.getAttribute( HTML.Attribute.WIDTH ) ) ) );
+              parseLength( String.valueOf( attributes.getAttribute( HTML.Attribute.WIDTH ) ) ) );
           result.getStyle().setStyleProperty( ElementStyleKeys.DYNAMIC_HEIGHT, Boolean.TRUE );
         } else if ( attributes.isDefined( HTML.Attribute.HEIGHT ) ) {
           result.getStyle().setStyleProperty( ElementStyleKeys.SCALE, Boolean.TRUE );
           result.getStyle().setStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO, Boolean.TRUE );
           result.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT,
-            parseLength( String.valueOf( attributes.getAttribute( HTML.Attribute.HEIGHT ) ) ) );
+              parseLength( String.valueOf( attributes.getAttribute( HTML.Attribute.HEIGHT ) ) ) );
           result.getStyle().setStyleProperty( ElementStyleKeys.DYNAMIC_HEIGHT, Boolean.TRUE );
         } else {
           result.getStyle().setStyleProperty( ElementStyleKeys.SCALE, Boolean.FALSE );
@@ -236,9 +237,8 @@ public class HtmlRichTextConverter implements RichTextConverter {
       if ( parent != null ) {
         final HTML.Tag tag = findTag( parent.getAttributes() );
         if ( "\n".equals( text ) ) {
-          if ( BLOCK_ELEMENTS.contains( tag ) ||
-            "paragraph".equals( textElement.getName() ) ||
-            "section".equals( textElement.getName() ) ) {
+          if ( BLOCK_ELEMENTS.contains( tag ) || "paragraph".equals( textElement.getName() )
+              || "section".equals( textElement.getName() ) ) {
             if ( parent.getElementCount() > 0 && parent.getElement( parent.getElementCount() - 1 ) == textElement ) {
               // Skipping an artificial \n at the end of paragraph element. This is generated by the swing
               // parser and really messes things up here.
@@ -290,7 +290,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
       final Element maybeInlineContainer = (Element) band.getElement( band.getElementCount() - 1 );
       if ( maybeInlineContainer == inlineContainer ) {
         // InlineContainer cannot be null at this point, as band.getElement never returns null.
-        //noinspection ConstantConditions
+        // noinspection ConstantConditions
         inlineContainer.addElement( element );
         continue;
       }
@@ -352,26 +352,24 @@ public class HtmlRichTextConverter implements RichTextConverter {
 
     final Object letterSpacing = attr.getAttribute( CSS.Attribute.LETTER_SPACING );
     if ( letterSpacing != null ) {
-      result.getStyle().setStyleProperty
-        ( TextStyleKeys.X_OPTIMUM_LETTER_SPACING, parseLength( String.valueOf( letterSpacing ) ) );
+      result.getStyle().setStyleProperty( TextStyleKeys.X_OPTIMUM_LETTER_SPACING,
+          parseLength( String.valueOf( letterSpacing ) ) );
     }
 
     final Object wordSpacing = attr.getAttribute( CSS.Attribute.WORD_SPACING );
     if ( wordSpacing != null ) {
-      result.getStyle().setStyleProperty
-        ( TextStyleKeys.WORD_SPACING, parseLength( String.valueOf( wordSpacing ) ) );
+      result.getStyle().setStyleProperty( TextStyleKeys.WORD_SPACING, parseLength( String.valueOf( wordSpacing ) ) );
     }
 
     final Object lineHeight = attr.getAttribute( CSS.Attribute.LINE_HEIGHT );
     if ( lineHeight != null ) {
-      result.getStyle().setStyleProperty
-        ( TextStyleKeys.LINEHEIGHT, parseLength( String.valueOf( lineHeight ) ) );
+      result.getStyle().setStyleProperty( TextStyleKeys.LINEHEIGHT, parseLength( String.valueOf( lineHeight ) ) );
     }
     final Object textAlign = attr.getAttribute( CSS.Attribute.TEXT_ALIGN );
     if ( textAlign != null ) {
       try {
         result.getStyle().setStyleProperty( ElementStyleKeys.ALIGNMENT,
-          ReportParserUtil.parseHorizontalElementAlignment( String.valueOf( textAlign ), null ) );
+            ReportParserUtil.parseHorizontalElementAlignment( String.valueOf( textAlign ), null ) );
       } catch ( ParseException e ) {
         // ignore ..
       }
@@ -384,7 +382,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
       result.getStyle().setStyleProperty( TextStyleKeys.UNDERLINED, Boolean.FALSE );
 
       for ( int i = 0; i < strings.length; i++ ) {
-        final String value = strings[ i ];
+        final String value = strings[i];
         if ( "line-through".equals( value ) ) {
           result.getStyle().setStyleProperty( TextStyleKeys.STRIKETHROUGH, Boolean.TRUE );
         }
@@ -394,14 +392,13 @@ public class HtmlRichTextConverter implements RichTextConverter {
       }
     }
 
-
     final Object valign = attr.getAttribute( CSS.Attribute.VERTICAL_ALIGN );
     if ( valign != null ) {
       final VerticalTextAlign valignValue = VerticalTextAlign.valueOf( String.valueOf( valign ) );
       result.getStyle().setStyleProperty( TextStyleKeys.VERTICAL_TEXT_ALIGNMENT, valignValue );
       try {
         result.getStyle().setStyleProperty( ElementStyleKeys.VALIGNMENT,
-          ReportParserUtil.parseVerticalElementAlignment( String.valueOf( valign ), null ) );
+            ReportParserUtil.parseVerticalElementAlignment( String.valueOf( valign ), null ) );
       } catch ( ParseException e ) {
         // ignore ..
       }
@@ -429,7 +426,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
     if ( alignAttribute != null ) {
       try {
         result.getStyle().setStyleProperty( ElementStyleKeys.ALIGNMENT,
-          ReportParserUtil.parseHorizontalElementAlignment( String.valueOf( alignAttribute ), null ) );
+            ReportParserUtil.parseHorizontalElementAlignment( String.valueOf( alignAttribute ), null ) );
       } catch ( ParseException e ) {
         // ignore ..
       }
@@ -437,19 +434,18 @@ public class HtmlRichTextConverter implements RichTextConverter {
 
     final Object titleAttribute = attr.getAttribute( HTML.Attribute.TITLE );
     if ( titleAttribute != null ) {
-      result.setAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.TITLE,
-        String.valueOf( titleAttribute ) );
+      result.setAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.TITLE, String.valueOf( titleAttribute ) );
     }
 
     final Object textIndentStyle = attr.getAttribute( CSS.Attribute.TEXT_INDENT );
     if ( textIndentStyle != null ) {
-      result.getStyle().setStyleProperty
-        ( TextStyleKeys.FIRST_LINE_INDENT, parseLength( String.valueOf( textIndentStyle ) ) );
+      result.getStyle().setStyleProperty( TextStyleKeys.FIRST_LINE_INDENT,
+          parseLength( String.valueOf( textIndentStyle ) ) );
     }
 
-    //    attr.getAttribute(CSS.Attribute.LIST_STYLE_TYPE);
-    //    attr.getAttribute(CSS.Attribute.LIST_STYLE_TYPE);
-    //    attr.getAttribute(CSS.Attribute.LIST_STYLE_POSITION);
+    // attr.getAttribute(CSS.Attribute.LIST_STYLE_TYPE);
+    // attr.getAttribute(CSS.Attribute.LIST_STYLE_TYPE);
+    // attr.getAttribute(CSS.Attribute.LIST_STYLE_POSITION);
   }
 
   private HTML.Tag findTag( final AttributeSet attr ) {
@@ -514,90 +510,69 @@ public class HtmlRichTextConverter implements RichTextConverter {
   private void parseBorderAndBackgroundStyle( final Element result, final StyleSheet sheet, final AttributeSet attr ) {
     final Object backgroundColor = attr.getAttribute( CSS.Attribute.BACKGROUND_COLOR );
     if ( backgroundColor != null ) {
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BACKGROUND_COLOR, sheet.stringToColor( String.valueOf( backgroundColor ) ) );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR,
+          sheet.stringToColor( String.valueOf( backgroundColor ) ) );
     }
     final Object borderStyleText = attr.getAttribute( CSS.Attribute.BORDER_STYLE );
     if ( borderStyleText != null ) {
       final BorderStyle borderStyle = BorderStyle.getBorderStyle( String.valueOf( borderStyleText ) );
       if ( borderStyle != null ) {
-        result.getStyle().setStyleProperty
-          ( ElementStyleKeys.BORDER_BOTTOM_STYLE, borderStyle );
-        result.getStyle().setStyleProperty
-          ( ElementStyleKeys.BORDER_TOP_STYLE, borderStyle );
-        result.getStyle().setStyleProperty
-          ( ElementStyleKeys.BORDER_LEFT_STYLE, borderStyle );
-        result.getStyle().setStyleProperty
-          ( ElementStyleKeys.BORDER_RIGHT_STYLE, borderStyle );
+        result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_STYLE, borderStyle );
+        result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_TOP_STYLE, borderStyle );
+        result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_LEFT_STYLE, borderStyle );
+        result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_RIGHT_STYLE, borderStyle );
       }
     }
     final Object borderWidthText = attr.getAttribute( CSS.Attribute.BORDER_WIDTH );
     if ( borderWidthText != null ) {
       final Float borderWidth = parseLength( String.valueOf( borderWidthText ) );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_BOTTOM_WIDTH, borderWidth );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_TOP_WIDTH, borderWidth );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_LEFT_WIDTH, borderWidth );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_RIGHT_WIDTH, borderWidth );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_WIDTH, borderWidth );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_TOP_WIDTH, borderWidth );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_LEFT_WIDTH, borderWidth );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_RIGHT_WIDTH, borderWidth );
     }
 
     final Object borderBottomWidthText = attr.getAttribute( CSS.Attribute.BORDER_BOTTOM_WIDTH );
     if ( borderBottomWidthText != null ) {
       final Float borderWidth = parseLength( String.valueOf( borderBottomWidthText ) );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_BOTTOM_WIDTH, borderWidth );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_WIDTH, borderWidth );
     }
 
     final Object borderRightWidthText = attr.getAttribute( CSS.Attribute.BORDER_RIGHT_WIDTH );
     if ( borderRightWidthText != null ) {
       final Float borderWidth = parseLength( String.valueOf( borderRightWidthText ) );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_RIGHT_WIDTH, borderWidth );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_RIGHT_WIDTH, borderWidth );
     }
 
     final Object borderTopWidthText = attr.getAttribute( CSS.Attribute.BORDER_TOP_WIDTH );
     if ( borderTopWidthText != null ) {
       final Float borderWidth = parseLength( String.valueOf( borderTopWidthText ) );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_TOP_WIDTH, borderWidth );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_TOP_WIDTH, borderWidth );
     }
 
     final Object borderLeftWidth = attr.getAttribute( CSS.Attribute.BORDER_LEFT_WIDTH );
     if ( borderLeftWidth != null ) {
       final Float borderWidth = parseLength( String.valueOf( borderLeftWidth ) );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_LEFT_WIDTH, borderWidth );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_LEFT_WIDTH, borderWidth );
     }
 
     final Object colorText = attr.getAttribute( CSS.Attribute.COLOR );
     if ( colorText != null ) {
       final Color color = sheet.stringToColor( String.valueOf( colorText ) );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_BOTTOM_COLOR, color );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_TOP_COLOR, color );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_LEFT_COLOR, color );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_RIGHT_COLOR, color );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.PAINT, color );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_COLOR, color );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR, color );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_LEFT_COLOR, color );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_RIGHT_COLOR, color );
+      result.getStyle().setStyleProperty( ElementStyleKeys.PAINT, color );
     }
 
     final Object borderColorText = attr.getAttribute( CSS.Attribute.BORDER_COLOR );
     if ( borderColorText != null ) {
       final Color borderColor = sheet.stringToColor( String.valueOf( borderColorText ) );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_BOTTOM_COLOR, borderColor );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_TOP_COLOR, borderColor );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_LEFT_COLOR, borderColor );
-      result.getStyle().setStyleProperty
-        ( ElementStyleKeys.BORDER_RIGHT_COLOR, borderColor );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_COLOR, borderColor );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR, borderColor );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_LEFT_COLOR, borderColor );
+      result.getStyle().setStyleProperty( ElementStyleKeys.BORDER_RIGHT_COLOR, borderColor );
     }
   }
 
@@ -617,7 +592,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
       final int nextToken = strtok.nextToken();
       if ( nextToken != StreamTokenizer.TT_WORD ) {
         // yeah, this is against the standard, but we are dealing with deadly ugly non-standard documents here
-        // maybe we will be able to integrate a real HTML processor at some point. 
+        // maybe we will be able to integrate a real HTML processor at some point.
         return new Float( nval );
       }
 
@@ -650,12 +625,10 @@ public class HtmlRichTextConverter implements RichTextConverter {
     }
   }
 
-
   private void configureBand( final javax.swing.text.Element textElement, final Band band ) {
     final HTML.Tag tag = findTag( textElement.getAttributes() );
     if ( tag == null ) {
-      if ( "paragraph".equals( textElement.getName() ) ||
-        "section".equals( textElement.getName() ) ) {
+      if ( "paragraph".equals( textElement.getName() ) || "section".equals( textElement.getName() ) ) {
         band.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "block" );
         band.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, new Float( -100 ) );
         band.setName( textElement.getName() );

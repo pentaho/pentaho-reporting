@@ -11,8 +11,7 @@ import java.io.ObjectOutputStream;
 public class SerializedConnection {
   private byte[] connection;
 
-  public SerializedConnection( final IDatabaseConnection connection )
-    throws DatasourceMgmtServiceException {
+  public SerializedConnection( final IDatabaseConnection connection ) throws DatasourceMgmtServiceException {
     try {
       final ByteArrayOutputStream bout = new ByteArrayOutputStream();
       final ObjectOutputStream out = new ObjectOutputStream( bout );

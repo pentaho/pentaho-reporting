@@ -42,8 +42,10 @@ public class FileDataSourceMgmtService implements DataSourceMgmtService {
   protected File createTargetFile() {
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
     final ConfigurationPropertyLookupParser parser = new ConfigurationPropertyLookupParser( globalConfig );
-    final String fileName = parser.translateAndLookup( globalConfig.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.misc.connections.file-data.targetLocation" ) );
+    final String fileName =
+        parser
+            .translateAndLookup( globalConfig
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.misc.connections.file-data.targetLocation" ) );
     final File file = new File( fileName );
     file.getParentFile().mkdirs();
     return file;
@@ -86,8 +88,8 @@ public class FileDataSourceMgmtService implements DataSourceMgmtService {
     return UUID.randomUUID().toString();
   }
 
-  public synchronized void deleteDatasourceById( final String id )
-    throws NonExistingDatasourceException, DatasourceMgmtServiceException {
+  public synchronized void deleteDatasourceById( final String id ) throws NonExistingDatasourceException,
+    DatasourceMgmtServiceException {
     load();
 
     final SerializedConnection connection = connectionsById.get( id );
@@ -143,8 +145,7 @@ public class FileDataSourceMgmtService implements DataSourceMgmtService {
     return connections;
   }
 
-  public String updateDatasourceById( final String id,
-                                      final IDatabaseConnection databaseConnection )
+  public String updateDatasourceById( final String id, final IDatabaseConnection databaseConnection )
     throws NonExistingDatasourceException, DatasourceMgmtServiceException {
     load();
 
@@ -180,7 +181,7 @@ public class FileDataSourceMgmtService implements DataSourceMgmtService {
       return;
     }
 
-    synchronized( this ) {
+    synchronized ( this ) {
       try {
         final ResourceManager mgr = new ResourceManager();
         mgr.registerDefaults();
@@ -222,9 +223,9 @@ public class FileDataSourceMgmtService implements DataSourceMgmtService {
 
   protected void writeChanges() {
     final List<IDatabaseConnection> datasources = getDatasources();
-    final IDatabaseConnection[] connections = datasources.toArray( new IDatabaseConnection[ datasources.size() ] );
+    final IDatabaseConnection[] connections = datasources.toArray( new IDatabaseConnection[datasources.size()] );
     final DataSourceMgmtWriter writer =
-      ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceMgmtWriter.class );
+        ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceMgmtWriter.class );
 
     try {
       final ByteArrayOutputStream bout = new ByteArrayOutputStream();

@@ -1,21 +1,23 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
+
+import java.beans.PropertyEditor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,8 +31,6 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
-import java.beans.PropertyEditor;
 
 public class AttributeReadHandler extends AbstractMetaDataReadHandler {
   private static final Log logger = LogFactory.getLog( AttributeReadHandler.class );
@@ -50,8 +50,10 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler {
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void startParsing( final Attributes attrs ) throws SAXException {
     super.startParsing( attrs );
@@ -64,8 +66,9 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler {
     getBuilder().designTime( "true".equals( attrs.getValue( getUri(), "design-time-value" ) ) ); // NON-NLS
     getBuilder().targetClass( parseValueType( attrs ) );
     getBuilder().valueRole( parseValueRole( attrs ) );
-    getBuilder().propertyEditor( ObjectUtilities.loadAndValidate
-      ( attrs.getValue( getUri(), "propertyEditor" ), AttributeReadHandler.class, PropertyEditor.class ) ); // NON-NLS
+    getBuilder().propertyEditor(
+        ObjectUtilities.loadAndValidate( attrs.getValue( getUri(), "propertyEditor" ), AttributeReadHandler.class,
+            PropertyEditor.class ) ); // NON-NLS
     getBuilder().core( parseAttributeCore( attrs ) );
     getBuilder().bundle( getBundle(), computePrefix() );
   }
@@ -79,15 +82,15 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler {
       return null;
     }
 
-    return prefix + "attribute." + namespacePrefix + '.';// NON-NLS
+    return prefix + "attribute." + namespacePrefix + '.'; // NON-NLS
   }
 
   private AttributeCore parseAttributeCore( final Attributes attrs ) throws ParseException {
     final AttributeCore attributeCore;
     final String metaDataCoreClass = attrs.getValue( getUri(), "impl" ); // NON-NLS
     if ( metaDataCoreClass != null ) {
-      attributeCore = ObjectUtilities.loadAndInstantiate
-        ( metaDataCoreClass, AttributeReadHandler.class, AttributeCore.class );
+      attributeCore =
+          ObjectUtilities.loadAndInstantiate( metaDataCoreClass, AttributeReadHandler.class, AttributeCore.class );
       if ( attributeCore == null ) {
         throw new ParseException( "Attribute 'impl' references a invalid AttributeCore implementation.", getLocator() );
       }
@@ -174,7 +177,8 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler {
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if an parser error occured.
+   * @throws SAXException
+   *           if an parser error occured.
    */
   public AttributeDefinition getObject() throws SAXException {
     return new AttributeDefinition( getBuilder() );

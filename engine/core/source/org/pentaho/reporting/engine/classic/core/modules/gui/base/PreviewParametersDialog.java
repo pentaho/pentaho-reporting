@@ -1,21 +1,41 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Locale;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.BorderFactory;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,12 +50,6 @@ import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Locale;
 
 /**
  * @author Ezequiel Cuellar
@@ -54,7 +68,7 @@ public class PreviewParametersDialog extends JDialog {
         final ReportParameterValues reportParameters = masterReport.getParameterValues();
         final String[] strings = properties.getColumnNames();
         for ( int i = 0; i < strings.length; i++ ) {
-          final String propertyName = strings[ i ];
+          final String propertyName = strings[i];
           reportParameters.put( propertyName, properties.get( propertyName ) );
         }
       }
@@ -96,16 +110,15 @@ public class PreviewParametersDialog extends JDialog {
     initialize( report );
   }
 
-
   private void initialize( final MasterReport report ) {
     if ( report == null ) {
       throw new NullPointerException();
     }
 
     masterReport = report;
-    messages = new ResourceBundleSupport
-      ( Locale.getDefault(), SwingPreviewModule.BUNDLE_NAME,
-        ObjectUtilities.getClassLoader( PreviewParametersDialog.class ) );
+    messages =
+        new ResourceBundleSupport( Locale.getDefault(), SwingPreviewModule.BUNDLE_NAME, ObjectUtilities
+            .getClassLoader( PreviewParametersDialog.class ) );
     confirmAction = new OkAction();
 
     setTitle( messages.getString( "PreviewParametersDialog.Title" ) );
@@ -163,17 +176,16 @@ public class PreviewParametersDialog extends JDialog {
   }
 
   private static boolean isAllParametersHidden( final MasterReport report,
-                                                final ReportParameterDefinition parameterDefinition ) {
+      final ReportParameterDefinition parameterDefinition ) {
     try {
       final DefaultParameterContext parameterContext = new DefaultParameterContext( report );
 
       try {
         final ParameterDefinitionEntry[] entries = parameterDefinition.getParameterDefinitions();
         for ( int i = 0; i < entries.length; i++ ) {
-          final ParameterDefinitionEntry entry = entries[ i ];
-          if ( "true".equals( entry.getParameterAttribute
-            ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN, parameterContext ) )
-            == false ) {
+          final ParameterDefinitionEntry entry = entries[i];
+          if ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+              ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) == false ) {
             return false;
           }
         }

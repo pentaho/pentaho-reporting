@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.devtools;
 
@@ -52,7 +52,7 @@ public class MissingExpressionMetaGenerator {
     writer.writeTag( META_NAMESPACE, "meta-data", attrList, XmlWriter.OPEN );
 
     for ( int i = 0; i < classes.length; i++ ) {
-      final Class aClass = classes[ i ];
+      final Class aClass = classes[i];
 
       if ( OutputFunction.class.isAssignableFrom( aClass ) ) {
         // Output functions will not be recognized.
@@ -65,8 +65,8 @@ public class MissingExpressionMetaGenerator {
 
       final AttributeList expressionAttrList = new AttributeList();
       expressionAttrList.setAttribute( META_NAMESPACE, "class", aClass.getName() );
-      expressionAttrList
-        .setAttribute( META_NAMESPACE, "bundle-name", "org.pentaho.reporting.engine.classic.core.metadata.messages" );
+      expressionAttrList.setAttribute( META_NAMESPACE, "bundle-name",
+          "org.pentaho.reporting.engine.classic.core.metadata.messages" );
       expressionAttrList.setAttribute( META_NAMESPACE, "result", "java.lang.Object" );
       expressionAttrList.setAttribute( META_NAMESPACE, "expert", "false" );
       expressionAttrList.setAttribute( META_NAMESPACE, "hidden", "false" );
@@ -83,7 +83,7 @@ public class MissingExpressionMetaGenerator {
       final BeanInfo beanInfo = Introspector.getBeanInfo( aClass );
       final PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
       for ( int j = 0; j < descriptors.length; j++ ) {
-        final PropertyDescriptor descriptor = descriptors[ j ];
+        final PropertyDescriptor descriptor = descriptors[j];
         final String key = descriptor.getName();
 
         if ( "runtime".equals( key ) ) {

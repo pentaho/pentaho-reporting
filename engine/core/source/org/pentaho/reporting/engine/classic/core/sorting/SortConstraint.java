@@ -41,10 +41,7 @@ public class SortConstraint implements Serializable {
   }
 
   public String toString() {
-    return "SortConstraint{" +
-      "field='" + field + '\'' +
-      ", ascending=" + ascending +
-      '}';
+    return "SortConstraint{" + "field='" + field + '\'' + ", ascending=" + ascending + '}';
   }
 
   public boolean equals( final Object o ) {

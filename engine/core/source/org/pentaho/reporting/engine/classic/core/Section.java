@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -80,9 +80,11 @@ public abstract class Section extends Element implements Iterable<Element> {
   /**
    * Returns the element stored add the given index.
    *
-   * @param index the element position within this section
+   * @param index
+   *          the element position within this section
    * @return the element
-   * @throws IndexOutOfBoundsException if the index is invalid.
+   * @throws IndexOutOfBoundsException
+   *           if the index is invalid.
    */
   public abstract Element getElement( int index );
 
@@ -99,7 +101,8 @@ public abstract class Section extends Element implements Iterable<Element> {
    * <p/>
    * This is a helper function and not meant to be used by the grand public.
    *
-   * @param element the element to be unregistered from its current parent.
+   * @param element
+   *          the element to be unregistered from its current parent.
    * @return true, if the element is a child of this section, false otherwise.
    */
   protected boolean unregisterParent( final Element element ) {
@@ -121,7 +124,8 @@ public abstract class Section extends Element implements Iterable<Element> {
    * Checks whether the element given is a parent of this section. Adding that element to the section would cause
    * infinite loops later, so we prevent it early in the game.
    *
-   * @param element the element to be checked for loops.
+   * @param element
+   *          the element to be checked for loops.
    */
   protected void validateLooping( final Element element ) {
     // check for component loops ...
@@ -141,8 +145,10 @@ public abstract class Section extends Element implements Iterable<Element> {
   /**
    * Removes an element from the section.
    *
-   * @param element the element to be section.
-   * @throws NullPointerException if the given element is null.
+   * @param element
+   *          the element to be section.
+   * @throws NullPointerException
+   *           if the given element is null.
    */
   protected abstract void removeElement( final Element element );
 

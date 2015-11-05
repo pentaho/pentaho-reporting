@@ -69,8 +69,7 @@ public class DatabaseMetaReadHandler extends AbstractXmlReadHandler {
     databaseConnection.setId( attrs.getValue( ConnectionModule.NAMESPACE, "id" ) );
 
     final String accessType = attrs.getValue( ConnectionModule.NAMESPACE, PROP_CONTYPE );
-    databaseConnection
-      .setAccessType( accessType != null ? DatabaseAccessType.getAccessTypeByName( accessType ) : null );
+    databaseConnection.setAccessType( accessType != null ? DatabaseAccessType.getAccessTypeByName( accessType ) : null );
     databaseConnection.setHostname( attrs.getValue( ConnectionModule.NAMESPACE, PROP_HOST_NAME ) );
     databaseConnection.setDatabaseName( attrs.getValue( ConnectionModule.NAMESPACE, PROP_DATABASE_NAME ) );
     databaseConnection.setDatabasePort( attrs.getValue( ConnectionModule.NAMESPACE, PROP_PORT ) );
@@ -81,9 +80,8 @@ public class DatabaseMetaReadHandler extends AbstractXmlReadHandler {
     databaseConnection.setIndexTablespace( attrs.getValue( ConnectionModule.NAMESPACE, PROP_INDEX_TBS ) );
   }
 
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final Attributes atts ) throws SAXException {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
     if ( isSameNamespace( uri ) ) {
       if ( NODE_ATTRIBUTES.equals( tagName ) ) {
         propertiesReadHandler = new PropertiesReadHandler( NODE_ATTRIBUTE );
@@ -102,10 +100,8 @@ public class DatabaseMetaReadHandler extends AbstractXmlReadHandler {
     for ( final Map.Entry<Object, Object> entry : result.entrySet() ) {
       final String code = (String) entry.getKey();
       final String attribute = (String) entry.getValue();
-      databaseConnection.getAttributes()
-        .put( code, ( attribute == null || attribute.length() == 0 ) ? "" : attribute ); //$NON-NLS-1$
+      databaseConnection.getAttributes().put( code, ( attribute == null || attribute.length() == 0 ) ? "" : attribute ); //$NON-NLS-1$
     }
   }
-
 
 }

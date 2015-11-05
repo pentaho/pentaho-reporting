@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -67,9 +67,8 @@ public class StreamingRenderer extends AbstractRenderer {
     return true;
   }
 
-  public void startReport( final ReportDefinition report,
-                           final ProcessingContext processingContext,
-                           final PerformanceMonitorContext performanceMonitorContext ) {
+  public void startReport( final ReportDefinition report, final ProcessingContext processingContext,
+      final PerformanceMonitorContext performanceMonitorContext ) {
     pageCount = 0;
     super.startReport( report, processingContext, performanceMonitorContext );
   }
@@ -77,26 +76,25 @@ public class StreamingRenderer extends AbstractRenderer {
   public void processIncrementalUpdate( final boolean performOutput ) throws ContentProcessingException {
 
     if ( isDirty() == false ) {
-      //      Log.debug ("Not dirty, no update needed.");
+      // Log.debug ("Not dirty, no update needed.");
       return;
     }
     clearDirty();
 
     floodPrevention += 1;
-    if ( floodPrevention < 50 ) // this is a magic number ..
-    {
+    if ( floodPrevention < 50 ) { // this is a magic number ..
       return;
     }
     floodPrevention = 0;
 
     final OutputProcessor outputProcessor = getOutputProcessor();
-    if ( outputProcessor instanceof IterativeOutputProcessor == false ||
-      outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) == false ) {
-      //      logger.debug ("No incremental system.");
+    if ( outputProcessor instanceof IterativeOutputProcessor == false
+        || outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) == false ) {
+      // logger.debug ("No incremental system.");
       return;
     }
 
-    //    logger.debug("Computing Incremental update.");
+    // logger.debug("Computing Incremental update.");
 
     final LogicalPageBox pageBox = getPageBox();
     pageBox.setPageOffset( 0 );
@@ -106,7 +104,7 @@ public class StreamingRenderer extends AbstractRenderer {
     if ( pageBox.isOpen() ) {
       final IterativeOutputProcessor io = (IterativeOutputProcessor) outputProcessor;
       if ( applyAutoCommitPageHeaderStep.compute( pageBox ) ) {
-        //        logger.debug("Applying Incremental update.");
+        // logger.debug("Applying Incremental update.");
         io.processIterativeContent( pageBox, performOutput );
         countBoxesStep.process( pageBox );
         cleanBoxesStep.compute( pageBox );
@@ -114,8 +112,8 @@ public class StreamingRenderer extends AbstractRenderer {
     }
   }
 
-  protected boolean performPagination( final LayoutPagebreakHandler handler,
-                                       final boolean performOutput ) throws ContentProcessingException {
+  protected boolean performPagination( final LayoutPagebreakHandler handler, final boolean performOutput )
+    throws ContentProcessingException {
     if ( performOutput == false ) {
       return false;
     }
@@ -165,19 +163,18 @@ public class StreamingRenderer extends AbstractRenderer {
   }
 
   protected void debugPrint( final LogicalPageBox pageBox ) {
-    //    Log.debug("**** Start Printing Page: " + 1);
-    //    ModelPrinter.print(pageBox);
-    //    Log.debug("**** Done  Printing Page: " + 1);
+    // Log.debug("**** Start Printing Page: " + 1);
+    // ModelPrinter.print(pageBox);
+    // Log.debug("**** Done  Printing Page: " + 1);
   }
 
   public void createRollbackInformation() {
     throw new UnsupportedOperationException(
-      "Streaming-Renderer do not implement the createRollbackInformation-method." );
+        "Streaming-Renderer do not implement the createRollbackInformation-method." );
   }
 
   public void applyRollbackInformation() {
-    throw new UnsupportedOperationException(
-      "Streaming-Renderer do not implement the applyRollbackInformation method." );
+    throw new UnsupportedOperationException( "Streaming-Renderer do not implement the applyRollbackInformation method." );
   }
 
   public void rollback() {

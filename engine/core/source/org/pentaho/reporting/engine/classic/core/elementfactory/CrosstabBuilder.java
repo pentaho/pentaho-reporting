@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
@@ -264,9 +264,8 @@ public class CrosstabBuilder implements Cloneable {
     return body;
   }
 
-  protected CrosstabRowGroup createRowGroup( final CrosstabCellBody cellBody,
-                                             final GroupBody innerBody,
-                                             final CrosstabDimension rowDimension ) {
+  protected CrosstabRowGroup createRowGroup( final CrosstabCellBody cellBody, final GroupBody innerBody,
+      final CrosstabDimension rowDimension ) {
     final CrosstabRowGroup rowGroup = new CrosstabRowGroup( innerBody );
     rowGroup.setName( computeGroupName( rowDimension ) );
     rowGroup.setField( rowDimension.getField() );
@@ -282,16 +281,15 @@ public class CrosstabBuilder implements Cloneable {
     return rowGroup;
   }
 
-  protected void createSummaryCells( final CrosstabCellBody cellBody,
-                                     final CrosstabDimension rowDimension ) {
+  protected void createSummaryCells( final CrosstabCellBody cellBody, final CrosstabDimension rowDimension ) {
     if ( rowDimension.isPrintSummary() ) {
       cellBody.addElement( createDetailsCell( rowDimension.getField(), rowDimension.getField(), null ) );
 
       for ( int col = columns.size() - 1; col >= 0; col -= 1 ) {
         final CrosstabDimension column = columns.get( col );
         if ( column.isPrintSummary() ) {
-          cellBody.addElement( createDetailsCell
-            ( column.getField() + "," + rowDimension.getField(), rowDimension.getField(), column.getField() ) );
+          cellBody.addElement( createDetailsCell( column.getField() + "," + rowDimension.getField(), rowDimension
+              .getField(), column.getField() ) );
         }
       }
     }
@@ -317,9 +315,8 @@ public class CrosstabBuilder implements Cloneable {
     return body;
   }
 
-  protected CrosstabColumnGroup createColumnGroup( final CrosstabCellBody cellBody,
-                                                   final GroupBody body,
-                                                   final CrosstabDimension column ) {
+  protected CrosstabColumnGroup createColumnGroup( final CrosstabCellBody cellBody, final GroupBody body,
+      final CrosstabDimension column ) {
     final CrosstabColumnGroup columnGroup = new CrosstabColumnGroup( body );
     columnGroup.setName( computeGroupName( column ) );
     columnGroup.setField( column.getField() );
@@ -375,8 +372,7 @@ public class CrosstabBuilder implements Cloneable {
   }
 
   protected Element createFieldItem( final String fieldName,
-                                     final Class<? extends AggregationFunction> aggregationType,
-                                     final boolean split ) {
+      final Class<? extends AggregationFunction> aggregationType, final boolean split ) {
     final ElementType targetType;
     if ( dataSchemaModel != null ) {
       final DataAttributeContext context = dataSchemaModel.getDataAttributeContext();
@@ -403,7 +399,7 @@ public class CrosstabBuilder implements Cloneable {
     element.getStyle().setStyleProperty( ElementStyleKeys.MAX_HEIGHT, maximumHeight );
     element.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE, aggregationType );
     element.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING,
-      allowMetaDataStyling );
+        allowMetaDataStyling );
     return element;
   }
 
@@ -422,10 +418,10 @@ public class CrosstabBuilder implements Cloneable {
     element.getStyle().setStyleProperty( ElementStyleKeys.MAX_WIDTH, split( splitArea, maximumWidth ) );
     element.getStyle().setStyleProperty( ElementStyleKeys.MAX_HEIGHT, maximumHeight );
     element.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING,
-      allowMetaDataStyling );
+        allowMetaDataStyling );
     if ( StringUtils.isEmpty( labelFor ) ) {
       element.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES,
-        allowMetaDataAttributes );
+          allowMetaDataAttributes );
     } else {
       element.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, true );
     }

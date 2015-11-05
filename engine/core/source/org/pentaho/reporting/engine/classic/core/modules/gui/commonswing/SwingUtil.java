@@ -1,23 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.Window;
 
 /**
  * Creation-Date: 20.11.2006, 22:42:21
@@ -49,7 +56,8 @@ public class SwingUtil {
   /**
    * Positions the specified frame in the middle of the screen.
    *
-   * @param frame the frame to be centered on the screen.
+   * @param frame
+   *          the frame to be centered on the screen.
    */
   public static void centerFrameOnScreen( final Window frame ) {
     positionFrameOnScreen( frame, 0.5, 0.5 );
@@ -59,15 +67,15 @@ public class SwingUtil {
    * Positions the specified frame at a relative position in the screen, where 50% is considered to be the center of the
    * screen.
    *
-   * @param frame             the frame.
-   * @param horizontalPercent the relative horizontal position of the frame (0.0 to 1.0, where 0.5 is the center of the
-   *                          screen).
-   * @param verticalPercent   the relative vertical position of the frame (0.0 to 1.0, where 0.5 is the center of the
-   *                          screen).
+   * @param frame
+   *          the frame.
+   * @param horizontalPercent
+   *          the relative horizontal position of the frame (0.0 to 1.0, where 0.5 is the center of the screen).
+   * @param verticalPercent
+   *          the relative vertical position of the frame (0.0 to 1.0, where 0.5 is the center of the screen).
    */
-  public static void positionFrameOnScreen( final Window frame,
-                                            final double horizontalPercent,
-                                            final double verticalPercent ) {
+  public static void positionFrameOnScreen( final Window frame, final double horizontalPercent,
+      final double verticalPercent ) {
 
     final Rectangle s = frame.getGraphicsConfiguration().getBounds();
     final Dimension f = frame.getSize();
@@ -84,7 +92,8 @@ public class SwingUtil {
    * Positions the specified frame at a random location on the screen while ensuring that the entire frame is visible
    * (provided that the frame is smaller than the screen).
    *
-   * @param frame the frame.
+   * @param frame
+   *          the frame.
    */
   public static void positionFrameRandomly( final Window frame ) {
     positionFrameOnScreen( frame, Math.random(), Math.random() );
@@ -93,7 +102,8 @@ public class SwingUtil {
   /**
    * Positions the specified dialog within its parent.
    *
-   * @param dialog the dialog to be positioned on the screen.
+   * @param dialog
+   *          the dialog to be positioned on the screen.
    */
   public static void centerDialogInParent( final Dialog dialog ) {
     positionDialogRelativeToParent( dialog, 0.5, 0.5 );
@@ -102,13 +112,15 @@ public class SwingUtil {
   /**
    * Positions the specified dialog at a position relative to its parent.
    *
-   * @param dialog            the dialog to be positioned.
-   * @param horizontalPercent the relative location.
-   * @param verticalPercent   the relative location.
+   * @param dialog
+   *          the dialog to be positioned.
+   * @param horizontalPercent
+   *          the relative location.
+   * @param verticalPercent
+   *          the relative location.
    */
-  public static void positionDialogRelativeToParent( final Dialog dialog,
-                                                     final double horizontalPercent,
-                                                     final double verticalPercent ) {
+  public static void positionDialogRelativeToParent( final Dialog dialog, final double horizontalPercent,
+      final double verticalPercent ) {
     final Container parent = dialog.getParent();
     if ( parent == null || ( parent.isVisible() == false ) ) {
       positionFrameOnScreen( dialog, horizontalPercent, verticalPercent );

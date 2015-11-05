@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.testsupport.font;
 
@@ -77,7 +77,7 @@ public class LocalFontMetricsBase implements Serializable {
   private boolean uniformFontMetrics;
 
   public LocalFontMetricsBase() {
-    charWidth = new int[ 65535 ];
+    charWidth = new int[65535];
     kerningMap = new HashMap<KerningKey, Integer>();
   }
 
@@ -187,10 +187,10 @@ public class LocalFontMetricsBase implements Serializable {
 
   public long getCharWidth( final int codePoint ) {
     if ( codePoint < 0 || codePoint >= charWidth.length ) {
-      throw new IndexOutOfBoundsException(
-        "Code-point '" + codePoint + "' is greater than maximum of " + charWidth.length );
+      throw new IndexOutOfBoundsException( "Code-point '" + codePoint + "' is greater than maximum of "
+          + charWidth.length );
     }
-    return charWidth[ codePoint ];
+    return charWidth[codePoint];
   }
 
   public long getKerning( final int previous, final int codePoint ) {
@@ -222,7 +222,7 @@ public class LocalFontMetricsBase implements Serializable {
   }
 
   public void setCharWidth( final int codepoint, final int value ) {
-    charWidth[ codepoint ] = value;
+    charWidth[codepoint] = value;
   }
 
   public void setKerning( final int codepoint, final int prev, final int value ) {

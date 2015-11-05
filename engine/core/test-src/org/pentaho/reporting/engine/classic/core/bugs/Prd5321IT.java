@@ -62,9 +62,8 @@ public class Prd5321IT {
     private final Graphics2D g;
     private int textRendering;
 
-    private TestPdfLogicalPageDrawable( final PdfWriter writer,
-                                        final LFUMap<ResourceKey, Image> imageCache, final char version,
-                                        final Graphics2D g ) {
+    private TestPdfLogicalPageDrawable( final PdfWriter writer, final LFUMap<ResourceKey, Image> imageCache,
+        final char version, final Graphics2D g ) {
       super( writer, imageCache, version );
       this.g = g;
     }
@@ -76,7 +75,6 @@ public class Prd5321IT {
     public void draw() {
       draw( g, new Rectangle2D.Double( 0, 0, 700, 500 ) );
     }
-
 
     protected void drawText( final RenderableText renderableText, final long contentX2 ) {
       textRendering += 1;
@@ -152,8 +150,8 @@ public class Prd5321IT {
     URL resource = getClass().getResource( "Prd-5321-2.prpt" );
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 5, 0, 0 ) );
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
@@ -180,8 +178,8 @@ public class Prd5321IT {
     URL resource = getClass().getResource( "Prd-5321-2.prpt" );
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     report.setCompatibilityLevel( ClassicEngineBoot.VERSION_3_8 );
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
@@ -200,16 +198,16 @@ public class Prd5321IT {
     URL resource = getClass().getResource( "Prd-5321.prpt" );
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     ModelPrinter.INSTANCE.print( logicalPageBox );
 
     Assert.assertEquals( 6,
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH ).length );
-    Assert
-      .assertEquals( 13, MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT ).length );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH ).length );
+    Assert.assertEquals( 13,
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT ).length );
 
     TestPdfLogicalPageDrawable pdf = createDrawableForTest( report, logicalPageBox );
     pdf.draw();
@@ -227,15 +225,14 @@ public class Prd5321IT {
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
     Assert.assertEquals( 6,
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH ).length );
-    Assert.assertEquals( 8,
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ).length );
-
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH ).length );
+    Assert.assertEquals( 8, MatchFactory
+        .findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ).length );
 
     TestPdfLogicalPageDrawable pdf = createDrawableForTest( report, logicalPageBox );
     pdf.draw();
@@ -243,8 +240,7 @@ public class Prd5321IT {
   }
 
   protected TestPdfLogicalPageDrawable createDrawableForTest( final MasterReport report,
-                                                              final LogicalPageBox logicalPageBox )
-    throws DocumentException {
+      final LogicalPageBox logicalPageBox ) throws DocumentException {
     Document document = new Document();
     PdfWriter writer = PdfWriter.getInstance( document, new NullOutputStream() );
     writer.setLinearPageMode();
@@ -254,15 +250,13 @@ public class Prd5321IT {
     document.setMargins( 10, 10, 10, 10 );
     document.open();
 
-
     PdfOutputProcessorMetaData metaData =
-      new PdfOutputProcessorMetaData( new ITextFontStorage( BaseFontModule.getFontRegistry() ) );
+        new PdfOutputProcessorMetaData( new ITextFontStorage( BaseFontModule.getFontRegistry() ) );
     metaData.initialize( report.getConfiguration() );
     final Graphics2D graphics = new PdfGraphics2D( writer.getDirectContent(), 700, 500, metaData );
 
-
     TestPdfLogicalPageDrawable pdf =
-      new TestPdfLogicalPageDrawable( writer, new LFUMap<ResourceKey, Image>( 10 ), '5', graphics );
+        new TestPdfLogicalPageDrawable( writer, new LFUMap<ResourceKey, Image>( 10 ), '5', graphics );
     pdf.init( logicalPageBox, metaData, report.getResourceManager(), logicalPageBox.getPageGrid().getPage( 0, 0 ) );
     return pdf;
   }

@@ -1,25 +1,26 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style;
 
-import org.pentaho.reporting.engine.classic.core.ElementAlignment;
+import java.awt.Color;
+import java.awt.Stroke;
 
-import java.awt.*;
+import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 
 /**
  * Creation-Date: 05.04.2007, 15:18:00
@@ -30,56 +31,53 @@ import java.awt.*;
 public class ElementStyleKeys {
   public static final StyleKey BORDER_TOP_WIDTH = StyleKey.getStyleKey( "border-top-width", Float.class, false, false );
   public static final StyleKey BORDER_TOP_STYLE = StyleKey.getStyleKey( "border-top-style", BorderStyle.class, false,
-    false );
+      false );
   public static final StyleKey BORDER_TOP_COLOR = StyleKey.getStyleKey( "border-top-color", Color.class, false, false );
 
-  public static final StyleKey BORDER_LEFT_WIDTH =
-    StyleKey.getStyleKey( "border-left-width", Float.class, false, false );
+  public static final StyleKey BORDER_LEFT_WIDTH = StyleKey
+      .getStyleKey( "border-left-width", Float.class, false, false );
   public static final StyleKey BORDER_LEFT_STYLE = StyleKey.getStyleKey( "border-left-style", BorderStyle.class, false,
-    false );
-  public static final StyleKey BORDER_LEFT_COLOR =
-    StyleKey.getStyleKey( "border-left-color", Color.class, false, false );
+      false );
+  public static final StyleKey BORDER_LEFT_COLOR = StyleKey
+      .getStyleKey( "border-left-color", Color.class, false, false );
 
   public static final StyleKey BORDER_BOTTOM_WIDTH = StyleKey.getStyleKey( "border-bottom-width", Float.class, false,
-    false );
+      false );
   public static final StyleKey BORDER_BOTTOM_STYLE = StyleKey.getStyleKey( "border-bottom-style", BorderStyle.class,
-    false, false );
+      false, false );
   public static final StyleKey BORDER_BOTTOM_COLOR = StyleKey.getStyleKey( "border-bottom-color", Color.class, false,
-    false );
+      false );
 
   public static final StyleKey BORDER_RIGHT_WIDTH = StyleKey.getStyleKey( "border-right-width", Float.class, false,
-    false );
-  public static final StyleKey BORDER_RIGHT_STYLE =
-    StyleKey.getStyleKey( "border-right-style", BorderStyle.class, false,
       false );
+  public static final StyleKey BORDER_RIGHT_STYLE = StyleKey.getStyleKey( "border-right-style", BorderStyle.class,
+      false, false );
   public static final StyleKey BORDER_RIGHT_COLOR = StyleKey.getStyleKey( "border-right-color", Color.class, false,
-    false );
+      false );
 
   public static final StyleKey BORDER_BREAK_WIDTH = StyleKey.getStyleKey( "border-break-width", Float.class, false,
-    false );
-  public static final StyleKey BORDER_BREAK_STYLE =
-    StyleKey.getStyleKey( "border-break-style", BorderStyle.class, false,
       false );
+  public static final StyleKey BORDER_BREAK_STYLE = StyleKey.getStyleKey( "border-break-style", BorderStyle.class,
+      false, false );
   public static final StyleKey BORDER_BREAK_COLOR = StyleKey.getStyleKey( "border-break-color", Color.class, false,
-    false );
+      false );
 
   public static final StyleKey BORDER_TOP_RIGHT_RADIUS_WIDTH = StyleKey.getStyleKey( "border-top-right-radius-width",
-    Float.class, false, false );
-  public static final StyleKey BORDER_TOP_LEFT_RADIUS_WIDTH = StyleKey.getStyleKey( "border-top-left-radius-width",
-    Float.class, false, false );
-  public static final StyleKey BORDER_BOTTOM_RIGHT_RADIUS_WIDTH = StyleKey.getStyleKey(
-    "border-bottom-right-radius-width", Float.class, false, false );
-  public static final StyleKey BORDER_BOTTOM_LEFT_RADIUS_WIDTH =
-    StyleKey.getStyleKey( "border-bottom-left-radius-width",
       Float.class, false, false );
+  public static final StyleKey BORDER_TOP_LEFT_RADIUS_WIDTH = StyleKey.getStyleKey( "border-top-left-radius-width",
+      Float.class, false, false );
+  public static final StyleKey BORDER_BOTTOM_RIGHT_RADIUS_WIDTH = StyleKey.getStyleKey(
+      "border-bottom-right-radius-width", Float.class, false, false );
+  public static final StyleKey BORDER_BOTTOM_LEFT_RADIUS_WIDTH = StyleKey.getStyleKey(
+      "border-bottom-left-radius-width", Float.class, false, false );
   public static final StyleKey BORDER_TOP_RIGHT_RADIUS_HEIGHT = StyleKey.getStyleKey( "border-top-right-radius-height",
-    Float.class, false, false );
+      Float.class, false, false );
   public static final StyleKey BORDER_TOP_LEFT_RADIUS_HEIGHT = StyleKey.getStyleKey( "border-top-left-radius-height",
-    Float.class, false, false );
+      Float.class, false, false );
   public static final StyleKey BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT = StyleKey.getStyleKey(
-    "border-bottom-right-radius-height", Float.class, false, false );
+      "border-bottom-right-radius-height", Float.class, false, false );
   public static final StyleKey BORDER_BOTTOM_LEFT_RADIUS_HEIGHT = StyleKey.getStyleKey(
-    "border-bottom-left-radius-height", Float.class, false, false );
+      "border-bottom-left-radius-height", Float.class, false, false );
 
   public static final StyleKey PADDING_LEFT = StyleKey.getStyleKey( "padding-left", Float.class, false, false );
   public static final StyleKey PADDING_TOP = StyleKey.getStyleKey( "padding-top", Float.class, false, false );
@@ -98,8 +96,8 @@ public class ElementStyleKeys {
    * If this flag is set to true, the engine will try to avoid pagebreaks in this box. However, if after one break the
    * box still doesnot fit into the page, we will start breaking the box.
    */
-  public static final StyleKey AVOID_PAGEBREAK_INSIDE =
-    StyleKey.getStyleKey( "avoid-page-break", Boolean.class, false, false );
+  public static final StyleKey AVOID_PAGEBREAK_INSIDE = StyleKey.getStyleKey( "avoid-page-break", Boolean.class, false,
+      false );
 
   public static final StyleKey MIN_WIDTH = StyleKey.getStyleKey( "min-width", Float.class, false, false );
   public static final StyleKey MIN_HEIGHT = StyleKey.getStyleKey( "min-height", Float.class, false, false );
@@ -136,8 +134,7 @@ public class ElementStyleKeys {
   /**
    * A key for the horizontal alignment of an element.
    */
-  public static final StyleKey ALIGNMENT = StyleKey.getStyleKey( "alignment",
-    ElementAlignment.class );
+  public static final StyleKey ALIGNMENT = StyleKey.getStyleKey( "alignment", ElementAlignment.class );
 
   /**
    * A key for the vertical alignment of an element. This is the content alignment for all elements. However, if a
@@ -179,13 +176,12 @@ public class ElementStyleKeys {
    * The StyleKey for the user defined cell data format.
    */
   public static final StyleKey EXCEL_DATA_FORMAT_STRING = StyleKey.getStyleKey( "Excel.CellDataFormat", String.class,
-    false, false );
+      false, false );
 
   /**
    * The StyleKey for the Indention.
    */
-  public static final StyleKey EXCEL_INDENTION = StyleKey.getStyleKey("Excel.Indention", Short.class,
-      false, false);
+  public static final StyleKey EXCEL_INDENTION = StyleKey.getStyleKey( "Excel.Indention", Short.class, false, false );
 
   /**
    * A key for the 'fill-shape' style.
@@ -199,18 +195,17 @@ public class ElementStyleKeys {
 
   public static final StyleKey ORPHANS = StyleKey.getStyleKey( "orphans", Integer.class, false, false );
   public static final StyleKey WIDOWS = StyleKey.getStyleKey( "widows", Integer.class, false, false );
-  public static final StyleKey WIDOW_ORPHAN_OPT_OUT =
-    StyleKey.getStyleKey( "widow-orphan-opt-out", Boolean.class, false, false );
+  public static final StyleKey WIDOW_ORPHAN_OPT_OUT = StyleKey.getStyleKey( "widow-orphan-opt-out", Boolean.class,
+      false, false );
 
   public static final StyleKey ANTI_ALIASING = StyleKey.getStyleKey( "anti-aliasing", Boolean.class );
 
   public static final StyleKey USE_MIN_CHUNKWIDTH = StyleKey.getStyleKey( "use-min-chunkwidth", Boolean.class );
-  public static final StyleKey INVISIBLE_CONSUMES_SPACE =
-    StyleKey.getStyleKey( "invisible-consumes-space", Boolean.class, false, false );
+  public static final StyleKey INVISIBLE_CONSUMES_SPACE = StyleKey.getStyleKey( "invisible-consumes-space",
+      Boolean.class, false, false );
 
   private ElementStyleKeys() {
   }
-
 
   public static boolean isLegacyKey( final String name ) {
     if ( "bounds".equals( name ) ) {

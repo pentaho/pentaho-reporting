@@ -1,21 +1,33 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.print;
+
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.Window;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterJob;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Locale;
+
+import javax.swing.Icon;
+import javax.swing.KeyStroke;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -30,14 +42,6 @@ import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterJob;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Locale;
 
 /**
  * An export control plugin that handles the setup of page format objects for the report.
@@ -54,7 +58,6 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
     }
   }
 
-
   /**
    * Localised resources.
    */
@@ -66,8 +69,9 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
    * Default Constructor.
    */
   public PageSetupPlugin() {
-    resources = new ResourceBundleSupport( Locale.getDefault(), PrintingPlugin.BASE_RESOURCE_CLASS,
-      ObjectUtilities.getClassLoader( PrintingPlugin.class ) );
+    resources =
+        new ResourceBundleSupport( Locale.getDefault(), PrintingPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
+            .getClassLoader( PrintingPlugin.class ) );
     reportJobListener = new ReportJobListener();
   }
 
@@ -87,8 +91,8 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
 
   public void deinitialize( final SwingGuiContext swingGuiContext ) {
     super.deinitialize( swingGuiContext );
-    swingGuiContext.getEventSource()
-      .removePropertyChangeListener( ReportEventSource.REPORT_JOB_PROPERTY, reportJobListener );
+    swingGuiContext.getEventSource().removePropertyChangeListener( ReportEventSource.REPORT_JOB_PROPERTY,
+        reportJobListener );
   }
 
   /**
@@ -147,7 +151,6 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
     return resources.getOptionalMnemonic( "action.page-setup.mnemonic" ); //$NON-NLS-1$
   }
 
-
   /**
    * Returns the resourcebundle to be used to translate strings into localized content.
    *
@@ -164,8 +167,8 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
   public boolean configure( final PreviewPane pane ) {
     final MasterReport report = pane.getReportJob();
 
-    if ( "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.print.UseAlternatePageSetupDialog" ) ) ) {
+    if ( "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.gui.print.UseAlternatePageSetupDialog" ) ) ) {
       final PageSetupDialog dialog;
       final Window proxy = getContext().getWindow();
       if ( proxy instanceof Frame ) {
@@ -196,8 +199,8 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
       final PageDefinition pageDefinition = report.getPageDefinition();
       if ( pageDefinition instanceof SimplePageDefinition ) {
         final SimplePageDefinition spd = (SimplePageDefinition) pageDefinition;
-        report.setPageDefinition( new SimplePageDefinition
-          ( pf, spd.getPageCountHorizontal(), spd.getPageCountVertical() ) );
+        report.setPageDefinition( new SimplePageDefinition( pf, spd.getPageCountHorizontal(), spd
+            .getPageCountVertical() ) );
       } else {
         report.setPageDefinition( new SimplePageDefinition( pf ) );
       }

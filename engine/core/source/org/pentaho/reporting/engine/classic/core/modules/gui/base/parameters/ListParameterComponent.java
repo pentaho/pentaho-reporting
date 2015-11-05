@@ -1,21 +1,41 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
+
+import java.awt.Component;
+import java.awt.Dimension;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComponent;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.internal.MinimalScrollPane;
@@ -24,20 +44,6 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNa
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 
 //import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 
@@ -157,10 +163,10 @@ public class ListParameterComponent extends MinimalScrollPane implements Paramet
         selectionModel.setValueIsAdjusting( false );
 
         final int[] indices = list.getSelectedIndices();
-        final Object[] keys = new Object[ indices.length ];
+        final Object[] keys = new Object[indices.length];
         for ( int i = 0; i < keys.length; i++ ) {
-          final int index = indices[ i ];
-          keys[ i ] = listModel.getKeyAt( index );
+          final int index = indices[i];
+          keys[i] = listModel.getKeyAt( index );
         }
         updateContext.setParameterValue( key, keys );
       } finally {
@@ -173,13 +179,10 @@ public class ListParameterComponent extends MinimalScrollPane implements Paramet
     private FixedTheJDKListCellRenderer() {
     }
 
-    public Component getListCellRendererComponent( final JList list,
-                                                   final Object value,
-                                                   final int index,
-                                                   final boolean isSelected,
-                                                   final boolean cellHasFocus ) {
+    public Component getListCellRendererComponent( final JList list, final Object value, final int index,
+        final boolean isSelected, final boolean cellHasFocus ) {
       if ( value == null ) {
-        return super.getListCellRendererComponent( list, "<null>", index, isSelected, cellHasFocus );//$NON-NLS-1$
+        return super.getListCellRendererComponent( list, "<null>", index, isSelected, cellHasFocus ); //$NON-NLS-1$
       }
       if ( "".equals( value ) ) {
         return super.getListCellRendererComponent( list, " ", index, isSelected, cellHasFocus );
@@ -197,13 +200,11 @@ public class ListParameterComponent extends MinimalScrollPane implements Paramet
   private ArrayList<Integer> selectionCache;
   private ListUpdateHandler changeListener;
 
-
   /**
    * Constructs a <code>JList</code> with an empty model.
    */
-  public ListParameterComponent( final ListParameter listParameter,
-                                 final ParameterUpdateContext updateContext,
-                                 final ParameterContext parameterContext ) {
+  public ListParameterComponent( final ListParameter listParameter, final ParameterUpdateContext updateContext,
+      final ParameterContext parameterContext ) {
     this.listParameter = listParameter;
     this.updateContext = updateContext;
     this.parameterContext = parameterContext;
@@ -220,16 +221,17 @@ public class ListParameterComponent extends MinimalScrollPane implements Paramet
       list.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
     }
 
-    final String layout = listParameter.getParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LAYOUT, parameterContext );
-    if ( "horizontal".equals( layout ) )//$NON-NLS-1$
-    {
+    final String layout =
+        listParameter.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+            ParameterAttributeNames.Core.LAYOUT, parameterContext );
+    if ( "horizontal".equals( layout ) ) { //$NON-NLS-1$
       list.setLayoutOrientation( JList.HORIZONTAL_WRAP );
       list.setVisibleRowCount( 1 );
       list.setPreferredSize( new Dimension( (int) list.getMinimumSize().getWidth(), 25 ) );
     } else {
-      final String visibleItemsText = listParameter.getParameterAttribute
-        ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.VISIBLE_ITEMS, parameterContext );
+      final String visibleItemsText =
+          listParameter.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+              ParameterAttributeNames.Core.VISIBLE_ITEMS, parameterContext );
       final int visibleItems = ParserUtil.parseInt( visibleItemsText, 0 );
       if ( visibleItems > 0 ) {
         list.setVisibleRowCount( visibleItems );
@@ -245,7 +247,6 @@ public class ListParameterComponent extends MinimalScrollPane implements Paramet
     updateContext.addChangeListener( changeListener );
   }
 
-
   public JComponent getUIComponent() {
     return this;
   }
@@ -254,7 +255,7 @@ public class ListParameterComponent extends MinimalScrollPane implements Paramet
     adjustingToExternalInput = true;
     try {
       final KeyedComboBoxModel keyedComboBoxModel =
-        DefaultParameterComponentFactory.createModel( listParameter, parameterContext );
+          DefaultParameterComponentFactory.createModel( listParameter, parameterContext );
       list.setModel( keyedComboBoxModel );
 
       final ListSelectionModel selectionModel = list.getSelectionModel();
@@ -309,7 +310,8 @@ public class ListParameterComponent extends MinimalScrollPane implements Paramet
   /**
    * Creates a selection set out of the value given. If the value is null, a set with a null-member is returned.
    *
-   * @param o the value for which a selection set should be returned.
+   * @param o
+   *          the value for which a selection set should be returned.
    * @return the selection set.
    * @noinspection unchecked
    */

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.date;
 
@@ -112,7 +112,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the timezone. If none is defined here, the locale's default timezone is used instead.
    *
-   * @param timeZone the time-zone.
+   * @param timeZone
+   *          the time-zone.
    */
   public void setTimeZone( final TimeZone timeZone ) {
     this.timeZone = timeZone;
@@ -130,7 +131,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the month property.
    *
-   * @param month the month property.
+   * @param month
+   *          the month property.
    */
   public void setMonth( final Integer month ) {
     this.month = month;
@@ -148,7 +150,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the day property. This defines the day within the current month.
    *
-   * @param day the day of the month property.
+   * @param day
+   *          the day of the month property.
    */
   public void setDay( final Integer day ) {
     this.dayOfMonth = day;
@@ -166,7 +169,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the year property.
    *
-   * @param year the year property.
+   * @param year
+   *          the year property.
    */
   public void setYear( final Integer year ) {
     this.year = year;
@@ -184,7 +188,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the hour property. This uses the 24-hour system
    *
-   * @param hour the hour property.
+   * @param hour
+   *          the hour property.
    */
   public void setHour( final Integer hour ) {
     this.hour = hour;
@@ -202,7 +207,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the minute property.
    *
-   * @param minute the minute property.
+   * @param minute
+   *          the minute property.
    */
   public void setMinute( final Integer minute ) {
     this.minute = minute;
@@ -220,7 +226,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the second property.
    *
-   * @param second the second property.
+   * @param second
+   *          the second property.
    */
   public void setSecond( final Integer second ) {
     this.second = second;
@@ -238,7 +245,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the year property.
    *
-   * @param milliSecond the milli-seconds property.
+   * @param milliSecond
+   *          the milli-seconds property.
    */
   public void setMilliSecond( final Integer milliSecond ) {
     this.milliSecond = milliSecond;
@@ -256,7 +264,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the time in milli-seconds since 01-Jan-1970.
    *
-   * @param time the time in milli-seconds since 01-Jan-1970.
+   * @param time
+   *          the time in milli-seconds since 01-Jan-1970.
    */
   public void setTime( final Long time ) {
     this.time = time;
@@ -274,7 +283,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the time in seconds since 01-Jan-1970.
    *
-   * @param epochTime the time in seconds since 01-Jan-1970.
+   * @param epochTime
+   *          the time in seconds since 01-Jan-1970.
    */
   public void setEpochTime( final Long epochTime ) {
     this.epochTime = epochTime;
@@ -292,7 +302,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the day of the week property.
    *
-   * @param dayOfWeek the day-of-the-week property.
+   * @param dayOfWeek
+   *          the day-of-the-week property.
    */
   public void setDayOfWeek( final Integer dayOfWeek ) {
     this.dayOfWeek = dayOfWeek;
@@ -310,7 +321,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the day of the year property.
    *
-   * @param dayOfYear the day-of-the-year property.
+   * @param dayOfYear
+   *          the day-of-the-year property.
    */
   public void setDayOfYear( final Integer dayOfYear ) {
     this.dayOfYear = dayOfYear;
@@ -328,7 +340,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the day of the month property.
    *
-   * @param dayOfMonth the day-of-the-month property.
+   * @param dayOfMonth
+   *          the day-of-the-month property.
    */
   public void setDayOfMonth( final Integer dayOfMonth ) {
     this.dayOfMonth = dayOfMonth;
@@ -346,7 +359,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the day of the week in the month property.
    *
-   * @param dayOfWeekInMonth the day of the week in the month property.
+   * @param dayOfWeekInMonth
+   *          the day of the week in the month property.
    */
   public void setDayOfWeekInMonth( final Integer dayOfWeekInMonth ) {
     this.dayOfWeekInMonth = dayOfWeekInMonth;
@@ -364,7 +378,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Defines the week of the year property.
    *
-   * @param weekOfYear the week of the year property.
+   * @param weekOfYear
+   *          the week of the year property.
    */
   public void setWeekOfYear( final Integer weekOfYear ) {
     this.weekOfYear = weekOfYear;
@@ -379,7 +394,9 @@ public class DateExpression extends AbstractExpression {
   }
 
   /**
-   * Return the current expression value. <P> The value depends (obviously) on the expression implementation.
+   * Return the current expression value.
+   * <P>
+   * The value depends (obviously) on the expression implementation.
    *
    * @return the value of the function.
    */
@@ -392,7 +409,8 @@ public class DateExpression extends AbstractExpression {
   /**
    * Configures the given Calendar instance by applying all defined fields to it.
    *
-   * @param calendar the week of the year property.
+   * @param calendar
+   *          the week of the year property.
    */
   protected void configureCalendar( final Calendar calendar ) {
     if ( time != null ) {

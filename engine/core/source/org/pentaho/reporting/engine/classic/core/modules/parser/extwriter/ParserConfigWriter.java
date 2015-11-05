@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
@@ -68,34 +68,34 @@ public class ParserConfigWriter extends AbstractXMLDefinitionWriter {
   /**
    * Creates a new writer.
    *
-   * @param reportWriter the report writer.
+   * @param reportWriter
+   *          the report writer.
    */
-  public ParserConfigWriter( final ReportWriterContext reportWriter,
-                             final XmlWriter xmlWriter ) {
+  public ParserConfigWriter( final ReportWriterContext reportWriter, final XmlWriter xmlWriter ) {
     super( reportWriter, xmlWriter );
   }
 
   /**
    * Writes the XML.
    *
-   * @throws java.io.IOException if there is an I/O problem.
+   * @throws java.io.IOException
+   *           if there is an I/O problem.
    */
-  public void write()
-    throws IOException {
+  public void write() throws IOException {
     final XmlWriter xmlWriter = getXmlWriter();
     xmlWriter
-      .writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.PARSER_CONFIG_TAG, XmlWriterSupport.OPEN );
+        .writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.PARSER_CONFIG_TAG, XmlWriterSupport.OPEN );
 
-    writeFactory( ParserConfigWriter.OBJECT_FACTORY_TAG,
-      filterFactories( getReportWriter().getClassFactoryCollector().getFactories() ) );
-    writeFactory( ParserConfigWriter.ELEMENT_FACTORY_TAG,
-      filterFactories( getReportWriter().getElementFactoryCollector().getFactories() ) );
-    writeFactory( ParserConfigWriter.STYLEKEY_FACTORY_TAG,
-      filterFactories( getReportWriter().getStyleKeyFactoryCollector().getFactories() ) );
-    writeFactory( ParserConfigWriter.TEMPLATE_FACTORY_TAG,
-      filterFactories( getReportWriter().getTemplateCollector().getFactories() ) );
-    writeFactory( ParserConfigWriter.DATASOURCE_FACTORY_TAG,
-      filterFactories( getReportWriter().getDataSourceCollector().getFactories() ) );
+    writeFactory( ParserConfigWriter.OBJECT_FACTORY_TAG, filterFactories( getReportWriter().getClassFactoryCollector()
+        .getFactories() ) );
+    writeFactory( ParserConfigWriter.ELEMENT_FACTORY_TAG, filterFactories( getReportWriter()
+        .getElementFactoryCollector().getFactories() ) );
+    writeFactory( ParserConfigWriter.STYLEKEY_FACTORY_TAG, filterFactories( getReportWriter()
+        .getStyleKeyFactoryCollector().getFactories() ) );
+    writeFactory( ParserConfigWriter.TEMPLATE_FACTORY_TAG, filterFactories( getReportWriter().getTemplateCollector()
+        .getFactories() ) );
+    writeFactory( ParserConfigWriter.DATASOURCE_FACTORY_TAG, filterFactories( getReportWriter()
+        .getDataSourceCollector().getFactories() ) );
 
     xmlWriter.writeCloseTag();
   }
@@ -103,7 +103,8 @@ public class ParserConfigWriter extends AbstractXMLDefinitionWriter {
   /**
    * Filters the given factories iterator and removes all duplicate entries.
    *
-   * @param it the unfiltered factories iterator.
+   * @param it
+   *          the unfiltered factories iterator.
    * @return a cleaned version of the iterator.
    */
   private Iterator filterFactories( final Iterator it ) {
@@ -137,12 +138,14 @@ public class ParserConfigWriter extends AbstractXMLDefinitionWriter {
   /**
    * Writes a factory element.
    *
-   * @param tagName the tag name.
-   * @param it      an iterator over a collection of factories, which should be defined for the target report.
-   * @throws java.io.IOException if there is an I/O problem.
+   * @param tagName
+   *          the tag name.
+   * @param it
+   *          an iterator over a collection of factories, which should be defined for the target report.
+   * @throws java.io.IOException
+   *           if there is an I/O problem.
    */
-  public void writeFactory( final String tagName, final Iterator it )
-    throws IOException {
+  public void writeFactory( final String tagName, final Iterator it ) throws IOException {
     while ( it.hasNext() ) {
       final Object itObject = it.next();
       final Class itClass = itObject.getClass();
@@ -156,8 +159,8 @@ public class ParserConfigWriter extends AbstractXMLDefinitionWriter {
       }
 
       final String className = itObject.getClass().getName();
-      getXmlWriter().writeTag( ExtParserModule.NAMESPACE, tagName,
-        AbstractXMLDefinitionWriter.CLASS_ATTRIBUTE, className, XmlWriterSupport.CLOSE );
+      getXmlWriter().writeTag( ExtParserModule.NAMESPACE, tagName, AbstractXMLDefinitionWriter.CLASS_ATTRIBUTE,
+          className, XmlWriterSupport.CLOSE );
     }
   }
 

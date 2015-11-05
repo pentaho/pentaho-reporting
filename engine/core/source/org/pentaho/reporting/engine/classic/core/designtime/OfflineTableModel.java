@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
@@ -34,31 +34,30 @@ public class OfflineTableModel implements MetaTableModel {
   private DefaultDataAttributes tableAttributes;
   private DefaultDataAttributes[] columnAttributes;
 
-  public OfflineTableModel( final TableModel model,
-                            final DataAttributeContext dataAttributeContext ) {
+  public OfflineTableModel( final TableModel model, final DataAttributeContext dataAttributeContext ) {
     columnCount = model.getColumnCount();
-    columnTypes = new Class[ columnCount ];
-    columnNames = new String[ columnCount ];
-    columnAttributes = new DefaultDataAttributes[ columnCount ];
-    values = new Object[ columnCount ];
+    columnTypes = new Class[columnCount];
+    columnNames = new String[columnCount];
+    columnAttributes = new DefaultDataAttributes[columnCount];
+    values = new Object[columnCount];
     tableAttributes = new DefaultDataAttributes();
 
     for ( int i = 0; i < columnCount; i++ ) {
-      columnTypes[ i ] = model.getColumnClass( i );
-      columnNames[ i ] = model.getColumnName( i );
-      columnAttributes[ i ] = new DefaultDataAttributes();
+      columnTypes[i] = model.getColumnClass( i );
+      columnNames[i] = model.getColumnName( i );
+      columnAttributes[i] = new DefaultDataAttributes();
     }
     if ( model instanceof MetaTableModel ) {
       final MetaTableModel metaTableModel = (MetaTableModel) model;
       tableAttributes.merge( metaTableModel.getTableAttributes(), dataAttributeContext );
 
       for ( int i = 0; i < columnCount; i++ ) {
-        columnAttributes[ i ].merge( metaTableModel.getColumnAttributes( i ), dataAttributeContext );
+        columnAttributes[i].merge( metaTableModel.getColumnAttributes( i ), dataAttributeContext );
       }
     }
     if ( model.getRowCount() > 0 ) {
       for ( int i = 0; i < columnCount; i++ ) {
-        values[ i ] = model.getValueAt( 0, i );
+        values[i] = model.getValueAt( 0, i );
       }
     }
   }
@@ -71,8 +70,10 @@ public class OfflineTableModel implements MetaTableModel {
    * Be aware that cell-level attributes do not make it into the designtime dataschema, as this dataschema only looks at
    * the structural metadata available and does not contain any data references.
    *
-   * @param row    the row of the cell for which the meta-data is queried.
-   * @param column the index of the column for which the meta-data is queried.
+   * @param row
+   *          the row of the cell for which the meta-data is queried.
+   * @param column
+   *          the index of the column for which the meta-data is queried.
    * @return the meta-data object.
    */
   public DataAttributes getCellDataAttributes( final int row, final int column ) {
@@ -91,11 +92,12 @@ public class OfflineTableModel implements MetaTableModel {
   /**
    * Returns the column-level attributes for the given column.
    *
-   * @param column the column.
+   * @param column
+   *          the column.
    * @return data-attributes, never null.
    */
   public DataAttributes getColumnAttributes( final int column ) {
-    return columnAttributes[ column ];
+    return columnAttributes[column];
   }
 
   /**
@@ -110,7 +112,7 @@ public class OfflineTableModel implements MetaTableModel {
 
   /**
    * Returns the number of rows in the model. A <code>JTable</code> uses this method to determine how many rows it
-   * should display.  This method should be quick, as it is called frequently during rendering.
+   * should display. This method should be quick, as it is called frequently during rendering.
    *
    * @return the number of rows in the model
    * @see #getColumnCount
@@ -131,33 +133,37 @@ public class OfflineTableModel implements MetaTableModel {
   }
 
   /**
-   * Returns the name of the column at <code>columnIndex</code>.  This is used to initialize the table's column header
-   * name.  Note: this name does not need to be unique; two columns in a table can have the same name.
+   * Returns the name of the column at <code>columnIndex</code>. This is used to initialize the table's column header
+   * name. Note: this name does not need to be unique; two columns in a table can have the same name.
    *
-   * @param columnIndex the index of the column
+   * @param columnIndex
+   *          the index of the column
    * @return the name of the column
    */
   public String getColumnName( final int columnIndex ) {
-    return columnNames[ columnIndex ];
+    return columnNames[columnIndex];
   }
 
   /**
-   * Returns the most specific superclass for all the cell values in the column.  This is used by the
-   * <code>JTable</code> to set up a default renderer and editor for the column.
+   * Returns the most specific superclass for all the cell values in the column. This is used by the <code>JTable</code>
+   * to set up a default renderer and editor for the column.
    *
-   * @param columnIndex the index of the column
+   * @param columnIndex
+   *          the index of the column
    * @return the common ancestor class of the object values in the model.
    */
   public Class getColumnClass( final int columnIndex ) {
-    return columnTypes[ columnIndex ];
+    return columnTypes[columnIndex];
   }
 
   /**
-   * Returns true if the cell at <code>rowIndex</code> and <code>columnIndex</code> is editable.  Otherwise,
+   * Returns true if the cell at <code>rowIndex</code> and <code>columnIndex</code> is editable. Otherwise,
    * <code>setValueAt</code> on the cell will not change the value of that cell.
    *
-   * @param rowIndex    the row whose value to be queried
-   * @param columnIndex the column whose value to be queried
+   * @param rowIndex
+   *          the row whose value to be queried
+   * @param columnIndex
+   *          the column whose value to be queried
    * @return true if the cell is editable
    * @see #setValueAt
    */
@@ -168,13 +174,15 @@ public class OfflineTableModel implements MetaTableModel {
   /**
    * Returns the value for the cell at <code>columnIndex</code> and <code>rowIndex</code>.
    *
-   * @param rowIndex    the row whose value is to be queried
-   * @param columnIndex the column whose value is to be queried
+   * @param rowIndex
+   *          the row whose value is to be queried
+   * @param columnIndex
+   *          the column whose value is to be queried
    * @return the value Object at the specified cell
    */
   public Object getValueAt( final int rowIndex, final int columnIndex ) {
     if ( rowIndex == 0 ) {
-      return values[ columnIndex ];
+      return values[columnIndex];
     }
     return null;
   }
@@ -182,9 +190,12 @@ public class OfflineTableModel implements MetaTableModel {
   /**
    * Sets the value in the cell at <code>columnIndex</code> and <code>rowIndex</code> to <code>aValue</code>.
    *
-   * @param aValue      the new value
-   * @param rowIndex    the row whose value is to be changed
-   * @param columnIndex the column whose value is to be changed
+   * @param aValue
+   *          the new value
+   * @param rowIndex
+   *          the row whose value is to be changed
+   * @param columnIndex
+   *          the column whose value is to be changed
    * @see #getValueAt
    * @see #isCellEditable
    */
@@ -195,7 +206,8 @@ public class OfflineTableModel implements MetaTableModel {
   /**
    * Adds a listener to the list that is notified each time a change to the data model occurs.
    *
-   * @param l the TableModelListener
+   * @param l
+   *          the TableModelListener
    */
   public void addTableModelListener( final TableModelListener l ) {
     // ignored
@@ -204,7 +216,8 @@ public class OfflineTableModel implements MetaTableModel {
   /**
    * Removes a listener from the list that is notified each time a change to the data model occurs.
    *
-   * @param l the TableModelListener
+   * @param l
+   *          the TableModelListener
    */
   public void removeTableModelListener( final TableModelListener l ) {
     // ignored

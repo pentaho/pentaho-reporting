@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver;
 
@@ -41,29 +41,23 @@ public class TextFilePrinterDriver implements PrinterDriver {
 
   private int borderLeft;
 
-  public TextFilePrinterDriver( final OutputStream out,
-                                final float charsPerInch,
-                                final float linesPerInch ) {
+  public TextFilePrinterDriver( final OutputStream out, final float charsPerInch, final float linesPerInch ) {
     this( out, charsPerInch, linesPerInch, false );
   }
 
-  public TextFilePrinterDriver( final OutputStream out,
-                                final float charsPerInch,
-                                final float linesPerInch,
-                                final boolean unixEndOfLine ) {
+  public TextFilePrinterDriver( final OutputStream out, final float charsPerInch, final float linesPerInch,
+      final boolean unixEndOfLine ) {
     this.out = out;
     this.charsPerInch = charsPerInch;
     this.linesPerInch = linesPerInch;
     if ( unixEndOfLine == false ) {
-      this.endOfLine = new char[] { PrinterDriverCommands.CARRIAGE_RETURN,
-        PrinterDriverCommands.LINE_FEED };
-      this.endOfPage = new char[] { PrinterDriverCommands.CARRIAGE_RETURN,
-        PrinterDriverCommands.LINE_FEED,
-        PrinterDriverCommands.FORM_FEED };
+      this.endOfLine = new char[] { PrinterDriverCommands.CARRIAGE_RETURN, PrinterDriverCommands.LINE_FEED };
+      this.endOfPage =
+          new char[] { PrinterDriverCommands.CARRIAGE_RETURN, PrinterDriverCommands.LINE_FEED,
+            PrinterDriverCommands.FORM_FEED };
     } else {
       this.endOfLine = new char[] { PrinterDriverCommands.LINE_FEED };
-      this.endOfPage = new char[] { PrinterDriverCommands.LINE_FEED,
-        PrinterDriverCommands.FORM_FEED };
+      this.endOfPage = new char[] { PrinterDriverCommands.LINE_FEED, PrinterDriverCommands.FORM_FEED };
     }
     this.firstPage = true;
   }
@@ -72,10 +66,10 @@ public class TextFilePrinterDriver implements PrinterDriver {
    * Ends a new line.
    *
    * @param overflow
-   * @throws java.io.IOException if an IOError occures.
+   * @throws java.io.IOException
+   *           if an IOError occures.
    */
-  public void endLine( final boolean overflow )
-    throws IOException {
+  public void endLine( final boolean overflow ) throws IOException {
     getEncodingUtilities( defaultEncoding ).writeEncodedText( endOfLine, out );
   }
 
@@ -83,20 +77,20 @@ public class TextFilePrinterDriver implements PrinterDriver {
    * Ends the current page. Should print empty lines or an FORM_FEED command.
    *
    * @param overflow
-   * @throws java.io.IOException if there was an IOError while writing the command
+   * @throws java.io.IOException
+   *           if there was an IOError while writing the command
    */
-  public void endPage( final boolean overflow )
-    throws IOException {
+  public void endPage( final boolean overflow ) throws IOException {
     getEncodingUtilities( defaultEncoding ).writeEncodedText( endOfPage, out );
   }
 
   /**
    * Flushes the output stream.
    *
-   * @throws java.io.IOException if an IOError occured.
+   * @throws java.io.IOException
+   *           if an IOError occured.
    */
-  public void flush()
-    throws IOException {
+  public void flush() throws IOException {
     out.flush();
   }
 
@@ -122,11 +116,12 @@ public class TextFilePrinterDriver implements PrinterDriver {
    * Prints a single text chunk at the given position on the current line. The chunk should not be printed, if an
    * previous chunk overlays this chunk.
    *
-   * @param chunk the chunk that should be written
-   * @throws java.io.IOException if an IO error occured.
+   * @param chunk
+   *          the chunk that should be written
+   * @throws java.io.IOException
+   *           if an IO error occured.
    */
-  public void printChunk( final PlaintextDataChunk chunk )
-    throws IOException {
+  public void printChunk( final PlaintextDataChunk chunk ) throws IOException {
     final String text = chunk.getText().substring( 0, chunk.getWidth() );
     getEncodingUtilities( defaultEncoding ).writeEncodedText( text, out );
   }
@@ -134,10 +129,10 @@ public class TextFilePrinterDriver implements PrinterDriver {
   /**
    * Prints an empty chunk. This is called for all undefined chunk-cells.
    *
-   * @throws java.io.IOException if an IOError occured.
+   * @throws java.io.IOException
+   *           if an IOError occured.
    */
-  public void printEmptyChunk( final int count )
-    throws IOException {
+  public void printEmptyChunk( final int count ) throws IOException {
     final EncodingUtilities encodingUtilities = getEncodingUtilities( defaultEncoding );
     for ( int i = 0; i < count; i++ ) {
       out.write( encodingUtilities.getSpace() );
@@ -147,30 +142,30 @@ public class TextFilePrinterDriver implements PrinterDriver {
   /**
    * Prints some raw content. This content is not processed in any way, so be very carefull.
    *
-   * @param raw the content that should be printed.
+   * @param raw
+   *          the content that should be printed.
    */
-  public void printRaw( final byte[] raw )
-    throws IOException {
+  public void printRaw( final byte[] raw ) throws IOException {
     out.write( raw );
   }
 
   /**
    * Starts a new line.
    *
-   * @throws java.io.IOException if an IOError occures.
+   * @throws java.io.IOException
+   *           if an IOError occures.
    */
-  public void startLine()
-    throws IOException {
+  public void startLine() throws IOException {
     printEmptyChunk( borderLeft );
   }
 
   /**
    * Resets the printer and starts a new page. Prints the top border lines (if necessary).
    *
-   * @throws java.io.IOException if there was an IOError while writing the command
+   * @throws java.io.IOException
+   *           if there was an IOError while writing the command
    */
-  public void startPage( final Paper paper, final String encoding )
-    throws IOException {
+  public void startPage( final Paper paper, final String encoding ) throws IOException {
     this.defaultEncoding = encoding;
 
     if ( firstPage ) {
@@ -192,10 +187,8 @@ public class TextFilePrinterDriver implements PrinterDriver {
     }
   }
 
-  protected EncodingUtilities getEncodingUtilities( final String encoding )
-    throws UnsupportedEncodingException {
-    if ( encodingUtilities != null &&
-      encodingUtilities.getEncoding().equals( encoding ) ) {
+  protected EncodingUtilities getEncodingUtilities( final String encoding ) throws UnsupportedEncodingException {
+    if ( encodingUtilities != null && encodingUtilities.getEncoding().equals( encoding ) ) {
       return encodingUtilities;
     }
 

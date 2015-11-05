@@ -17,6 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -48,11 +54,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-
 /**
  * A specialized class containing all image handling functionality for Excel exports.
  */
@@ -62,8 +63,8 @@ public class ExcelImageHandler {
   private ExcelPrinterBase printerBase;
 
   public ExcelImageHandler( final ResourceManager resourceManager, final ExcelPrinterBase printerBase ) {
-    ArgumentNullException.validate( "resourceManager", resourceManager );  // NON-NLS
-    ArgumentNullException.validate( "printerBase", printerBase );  // NON-NLS
+    ArgumentNullException.validate( "resourceManager", resourceManager ); // NON-NLS
+    ArgumentNullException.validate( "printerBase", printerBase ); // NON-NLS
 
     this.resourceManager = resourceManager;
     this.printerBase = printerBase;
@@ -73,17 +74,19 @@ public class ExcelImageHandler {
    * Produces the content for image or drawable cells. Excel does not support image-content in cells. Images are
    * rendered to an embedded OLE canvas instead, which is then positioned over the cell that would contain the image.
    *
-   * @param layoutContext the stylesheet of the render node that produced the image.
-   * @param image         the image object
-   * @param currentLayout the current sheet layout containing all row and column breaks
-   * @param rectangle     the current cell in grid-coordinates
-   * @param cellBounds    the bounds of the cell.
+   * @param layoutContext
+   *          the stylesheet of the render node that produced the image.
+   * @param image
+   *          the image object
+   * @param currentLayout
+   *          the current sheet layout containing all row and column breaks
+   * @param rectangle
+   *          the current cell in grid-coordinates
+   * @param cellBounds
+   *          the bounds of the cell.
    */
-  public void createImageCell( final StyleSheet layoutContext,
-                               final ImageContainer image,
-                               final SlimSheetLayout currentLayout,
-                               TableRectangle rectangle,
-                               final StrictBounds cellBounds ) {
+  public void createImageCell( final StyleSheet layoutContext, final ImageContainer image,
+      final SlimSheetLayout currentLayout, TableRectangle rectangle, final StrictBounds cellBounds ) {
     try {
       if ( rectangle == null ) {
         // there was an error while computing the grid-position for this
@@ -103,9 +106,9 @@ public class ExcelImageHandler {
       final double scaleFactor = computeImageScaleFactor();
 
       final ElementAlignment horizontalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
       final ElementAlignment verticalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
 
       final long internalImageWidth = StrictGeomUtility.toInternalValue( scaleFactor * imageWidth );
       final long internalImageHeight = StrictGeomUtility.toInternalValue( scaleFactor * imageHeight );
@@ -122,8 +125,8 @@ public class ExcelImageHandler {
 
           final boolean keepAspectRatio = layoutContext.getBooleanStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO );
           if ( keepAspectRatio ) {
-            final double imgScaleFactor = Math.min( cellWidth / (double) internalImageWidth,
-              cellHeight / (double) internalImageHeight );
+            final double imgScaleFactor =
+                Math.min( cellWidth / (double) internalImageWidth, cellHeight / (double) internalImageHeight );
             scaleX = imgScaleFactor;
             scaleY = imgScaleFactor;
           } else {
@@ -137,10 +140,9 @@ public class ExcelImageHandler {
           final long alignmentX = RenderUtility.computeHorizontalAlignment( horizontalAlignment, cellWidth, clipWidth );
           final long alignmentY = RenderUtility.computeVerticalAlignment( verticalAlignment, cellHeight, clipHeight );
 
-          cb = new StrictBounds( cellBounds.getX() + alignmentX,
-            cellBounds.getY() + alignmentY,
-            Math.min( clipWidth, cellWidth ),
-            Math.min( clipHeight, cellHeight ) );
+          cb =
+              new StrictBounds( cellBounds.getX() + alignmentX, cellBounds.getY() + alignmentY, Math.min( clipWidth,
+                  cellWidth ), Math.min( clipHeight, cellHeight ) );
 
           // Recompute the cells that this image will cover (now that it has been resized)
           rectangle = currentLayout.getTableBounds( cb, rectangle );
@@ -155,18 +157,17 @@ public class ExcelImageHandler {
           }
         } else {
           // unscaled ..
-          if ( internalImageWidth <= cellWidth &&
-            internalImageHeight <= cellHeight ) {
+          if ( internalImageWidth <= cellWidth && internalImageHeight <= cellHeight ) {
             // No clipping needed.
-            final long alignmentX = RenderUtility.computeHorizontalAlignment
-              ( horizontalAlignment, cellBounds.getWidth(), internalImageWidth );
-            final long alignmentY = RenderUtility.computeVerticalAlignment
-              ( verticalAlignment, cellBounds.getHeight(), internalImageHeight );
+            final long alignmentX =
+                RenderUtility.computeHorizontalAlignment( horizontalAlignment, cellBounds.getWidth(),
+                    internalImageWidth );
+            final long alignmentY =
+                RenderUtility.computeVerticalAlignment( verticalAlignment, cellBounds.getHeight(), internalImageHeight );
 
-            cb = new StrictBounds( cellBounds.getX() + alignmentX,
-              cellBounds.getY() + alignmentY,
-              internalImageWidth,
-              internalImageHeight );
+            cb =
+                new StrictBounds( cellBounds.getX() + alignmentX, cellBounds.getY() + alignmentY, internalImageWidth,
+                    internalImageHeight );
 
             // Recompute the cells that this image will cover (now that it has been resized)
             rectangle = currentLayout.getTableBounds( cb, rectangle );
@@ -183,18 +184,15 @@ public class ExcelImageHandler {
             // at least somewhere there is clipping needed.
             final long clipWidth = Math.min( cellWidth, internalImageWidth );
             final long clipHeight = Math.min( cellHeight, internalImageHeight );
-            final long alignmentX = RenderUtility.computeHorizontalAlignment
-              ( horizontalAlignment, cellBounds.getWidth(), clipWidth );
-            final long alignmentY = RenderUtility.computeVerticalAlignment
-              ( verticalAlignment, cellBounds.getHeight(), clipHeight );
-            cb = new StrictBounds( cellBounds.getX() + alignmentX,
-              cellBounds.getY() + alignmentY,
-              clipWidth,
-              clipHeight );
+            final long alignmentX =
+                RenderUtility.computeHorizontalAlignment( horizontalAlignment, cellBounds.getWidth(), clipWidth );
+            final long alignmentY =
+                RenderUtility.computeVerticalAlignment( verticalAlignment, cellBounds.getHeight(), clipHeight );
+            cb =
+                new StrictBounds( cellBounds.getX() + alignmentX, cellBounds.getY() + alignmentY, clipWidth, clipHeight );
 
             // Recompute the cells that this image will cover (now that it has been resized)
             rectangle = currentLayout.getTableBounds( cb, rectangle );
-
 
             pictureId = loadImageWithClipping( image, clipWidth, clipHeight, scaleFactor );
             if ( printerBase.isUseXlsxFormat() ) {
@@ -208,7 +206,7 @@ public class ExcelImageHandler {
         }
       } catch ( final UnsupportedEncoderException uee ) {
         // should not happen, as PNG is always supported.
-        logger.warn( "Assertation-Failure: PNG encoding failed.", uee );  // NON-NLS
+        logger.warn( "Assertation-Failure: PNG encoding failed.", uee ); // NON-NLS
         return;
       }
 
@@ -217,9 +215,9 @@ public class ExcelImageHandler {
       Drawing patriarch = printerBase.getDrawingPatriarch();
 
       final Picture picture = patriarch.createPicture( anchor, pictureId );
-      logger.info( String.format( "Created image: %d => %s", pictureId, picture ) );  // NON-NLS
+      logger.info( String.format( "Created image: %d => %s", pictureId, picture ) ); // NON-NLS
     } catch ( final IOException e ) {
-      logger.warn( "Failed to add image. Ignoring.", e );  // NON-NLS
+      logger.warn( "Failed to add image. Ignoring.", e ); // NON-NLS
     }
   }
 
@@ -241,9 +239,8 @@ public class ExcelImageHandler {
     return scaleFactor;
   }
 
-  protected ClientAnchor computeClientAnchor( final SlimSheetLayout currentLayout,
-                                              final TableRectangle rectangle,
-                                              final StrictBounds cb ) {
+  protected ClientAnchor computeClientAnchor( final SlimSheetLayout currentLayout, final TableRectangle rectangle,
+      final StrictBounds cb ) {
     if ( printerBase.isUseXlsxFormat() ) {
       return computeExcel2003ClientAnchor( currentLayout, rectangle, cb );
     } else {
@@ -252,8 +249,7 @@ public class ExcelImageHandler {
   }
 
   protected ClientAnchor computeExcel97ClientAnchor( final SlimSheetLayout currentLayout,
-                                                     final TableRectangle rectangle,
-                                                     final StrictBounds cb ) {
+      final TableRectangle rectangle, final StrictBounds cb ) {
     final int cell1x = rectangle.getX1();
     final int cell1y = rectangle.getY1();
     final int cell2x = Math.max( cell1x, rectangle.getX2() - 1 );
@@ -288,8 +284,7 @@ public class ExcelImageHandler {
   }
 
   protected ClientAnchor computeExcel2003ClientAnchor( final SlimSheetLayout currentLayout,
-                                                       final TableRectangle rectangle,
-                                                       final StrictBounds cb ) {
+      final TableRectangle rectangle, final StrictBounds cb ) {
     final int cell1x = rectangle.getX1();
     final int cell1y = rectangle.getY1();
     final int cell2x = Math.max( cell1x, rectangle.getX2() - 1 );
@@ -302,10 +297,12 @@ public class ExcelImageHandler {
 
     final int dx1 = (int) StrictGeomUtility.toExternalValue( ( cb.getX() - cell1xPos ) * XSSFShape.EMU_PER_POINT );
     final int dy1 = (int) StrictGeomUtility.toExternalValue( ( cb.getY() - cell1yPos ) * XSSFShape.EMU_PER_POINT );
-    final int dx2 = (int) Math.max( 0,
-      StrictGeomUtility.toExternalValue( ( cb.getX() + cb.getWidth() - cell2xPos ) * XSSFShape.EMU_PER_POINT ) );
-    final int dy2 = (int) Math.max( 0,
-      StrictGeomUtility.toExternalValue( ( cb.getY() + cb.getHeight() - cell2yPos ) * XSSFShape.EMU_PER_POINT ) );
+    final int dx2 =
+        (int) Math.max( 0, StrictGeomUtility.toExternalValue( ( cb.getX() + cb.getWidth() - cell2xPos )
+            * XSSFShape.EMU_PER_POINT ) );
+    final int dy2 =
+        (int) Math.max( 0, StrictGeomUtility.toExternalValue( ( cb.getY() + cb.getHeight() - cell2yPos )
+            * XSSFShape.EMU_PER_POINT ) );
 
     final ClientAnchor anchor = printerBase.getWorkbook().getCreationHelper().createClientAnchor();
     anchor.setDx1( dx1 );
@@ -327,28 +324,22 @@ public class ExcelImageHandler {
     }
 
     final String file = url.getFile();
-    if ( StringUtils.endsWithIgnoreCase( file, ".png" ) ) // NON-NLS
-    {
+    if ( StringUtils.endsWithIgnoreCase( file, ".png" ) ) { // NON-NLS
       return Workbook.PICTURE_TYPE_PNG;
     }
     if ( StringUtils.endsWithIgnoreCase( file, ".jpg" ) || // NON-NLS
-      StringUtils.endsWithIgnoreCase( file, ".jpeg" ) ) // NON-NLS
-    {
+        StringUtils.endsWithIgnoreCase( file, ".jpeg" ) ) { // NON-NLS
       return Workbook.PICTURE_TYPE_JPEG;
     }
     if ( StringUtils.endsWithIgnoreCase( file, ".bmp" ) || // NON-NLS
-      StringUtils.endsWithIgnoreCase( file, ".ico" ) ) // NON-NLS
-    {
+        StringUtils.endsWithIgnoreCase( file, ".ico" ) ) { // NON-NLS
       return Workbook.PICTURE_TYPE_DIB;
     }
     return -1;
   }
 
-  private int loadImageWithClipping( final ImageContainer reference,
-                                     final long clipWidth,
-                                     final long clipHeight,
-                                     final double deviceScaleFactor )
-    throws IOException, UnsupportedEncoderException {
+  private int loadImageWithClipping( final ImageContainer reference, final long clipWidth, final long clipHeight,
+      final double deviceScaleFactor ) throws IOException, UnsupportedEncoderException {
 
     Image image = null;
     // The image has an assigned URL ...
@@ -390,10 +381,9 @@ public class ExcelImageHandler {
     return -1;
   }
 
-  private int clipAndEncodeImage( final Image image,
-                                  final long width,
-                                  final long height,
-                                  final double deviceScaleFactor ) throws UnsupportedEncoderException, IOException {
+  private int
+    clipAndEncodeImage( final Image image, final long width, final long height, final double deviceScaleFactor )
+      throws UnsupportedEncoderException, IOException {
     final int imageWidth = (int) StrictGeomUtility.toExternalValue( width );
     final int imageHeight = (int) StrictGeomUtility.toExternalValue( height );
     // first clip.
@@ -403,7 +393,7 @@ public class ExcelImageHandler {
 
     if ( image instanceof BufferedImage ) {
       if ( graphics.drawImage( image, null, null ) == false ) {
-        logger.debug( "Failed to render the image. This should not happen for BufferedImages" );  // NON-NLS
+        logger.debug( "Failed to render the image. This should not happen for BufferedImages" ); // NON-NLS
       }
     } else {
       final WaitingImageObserver obs = new WaitingImageObserver( image );
@@ -412,7 +402,7 @@ public class ExcelImageHandler {
       while ( graphics.drawImage( image, null, obs ) == false ) {
         obs.waitImageLoaded();
         if ( obs.isError() ) {
-          logger.warn( "Error while loading the image during the rendering." );  // NON-NLS
+          logger.warn( "Error while loading the image during the rendering." ); // NON-NLS
           break;
         }
       }
@@ -423,8 +413,7 @@ public class ExcelImageHandler {
     return printerBase.getWorkbook().addPicture( data, Workbook.PICTURE_TYPE_PNG );
   }
 
-  private int loadImage( final ImageContainer reference )
-    throws IOException, UnsupportedEncoderException {
+  private int loadImage( final ImageContainer reference ) throws IOException, UnsupportedEncoderException {
     final Workbook workbook = printerBase.getWorkbook();
     Image image = null;
     // The image has an assigned URL ...
@@ -447,7 +436,7 @@ public class ExcelImageHandler {
               final Resource resource = resourceManager.create( url, null, Image.class );
               image = (Image) resource.getResource();
             } catch ( final ResourceException re ) {
-              logger.info( "Failed to load image from URL " + url, re );  // NON-NLS
+              logger.info( "Failed to load image from URL " + url, re ); // NON-NLS
             }
           }
         } else {
@@ -456,7 +445,7 @@ public class ExcelImageHandler {
             // create the image
             return workbook.addPicture( data.getResource( resourceManager ), format );
           } catch ( final ResourceException re ) {
-            logger.info( "Failed to load image from URL " + url, re );  // NON-NLS
+            logger.info( "Failed to load image from URL " + url, re ); // NON-NLS
           }
 
         }

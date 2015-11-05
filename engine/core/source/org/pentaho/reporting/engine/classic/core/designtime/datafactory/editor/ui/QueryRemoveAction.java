@@ -17,15 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
+import java.awt.event.ActionEvent;
+import java.net.URL;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.Query;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.QueryDialogModel;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.QueryDialogModelEvent;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.QueryDialogModelListener;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.net.URL;
-
 
 public class QueryRemoveAction<T> extends AbstractAction implements QueryDialogModelListener<T> {
   private QueryDialogModel<T> queries;
@@ -34,8 +36,9 @@ public class QueryRemoveAction<T> extends AbstractAction implements QueryDialogM
     this.queries = queries;
     this.queries.addQueryDialogModelListener( this );
 
-    final URL location = QueryRemoveAction.class.getResource
-      ( "/org/pentaho/reporting/engine/classic/core/designtime/datafactory/resources/Remove.png" ); // NON-NLS
+    final URL location =
+        QueryRemoveAction.class
+            .getResource( "/org/pentaho/reporting/engine/classic/core/designtime/datafactory/resources/Remove.png" ); // NON-NLS
     if ( location != null ) {
       putValue( Action.SMALL_ICON, new ImageIcon( location ) );
     } else {

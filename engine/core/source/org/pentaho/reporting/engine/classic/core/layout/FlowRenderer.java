@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -70,8 +70,8 @@ public class FlowRenderer extends AbstractRenderer {
 
   protected boolean isPageFinished() {
     final LogicalPageBox pageBox = getPageBox();
-    //    final long sizeBeforePagination = pageBox.getHeight();
-    //final LogicalPageBox clone = (LogicalPageBox) pageBox.deriveForAdvance(true);
+    // final long sizeBeforePagination = pageBox.getHeight();
+    // final LogicalPageBox clone = (LogicalPageBox) pageBox.deriveForAdvance(true);
     final PaginationResult pageBreak = paginationStep.performPagebreak( pageBox );
     if ( pageBreak.isOverflow() || pageBox.isOpen() == false ) {
       setLastStateKey( pageBreak.getLastVisibleState() );
@@ -80,16 +80,14 @@ public class FlowRenderer extends AbstractRenderer {
     return false;
   }
 
-  public void startReport( final ReportDefinition report,
-                           final ProcessingContext processingContext,
-                           final PerformanceMonitorContext performanceMonitorContext ) {
+  public void startReport( final ReportDefinition report, final ProcessingContext processingContext,
+      final PerformanceMonitorContext performanceMonitorContext ) {
     flowCount = 0;
     super.startReport( report, processingContext, performanceMonitorContext );
   }
 
   protected void debugPrint( final LogicalPageBox pageBox ) {
   }
-
 
   public void processIncrementalUpdate( final boolean performOutput ) throws ContentProcessingException {
     if ( isDirty() == false ) {
@@ -99,15 +97,14 @@ public class FlowRenderer extends AbstractRenderer {
     clearDirty();
 
     floodPrevention += 1;
-    if ( floodPrevention < 5 ) // this is a magic number ..
-    {
+    if ( floodPrevention < 5 ) { // this is a magic number ..
       return;
     }
     floodPrevention = 0;
 
     final OutputProcessor outputProcessor = getOutputProcessor();
-    if ( outputProcessor instanceof IterativeOutputProcessor == false ||
-      outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) == false ) {
+    if ( outputProcessor instanceof IterativeOutputProcessor == false
+        || outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) == false ) {
       logger.debug( "No incremental system." );
       return;
     }
@@ -122,30 +119,30 @@ public class FlowRenderer extends AbstractRenderer {
         countBoxesStep.process( pageBox );
         cleanFlowBoxesStep.compute( pageBox );
 
-        //     ModelPrinter.INSTANCE.print(pageBox);
+        // ModelPrinter.INSTANCE.print(pageBox);
 
-        logger.debug( "Computing Incremental update: offset=" + pageBox.getPageOffset() +
-          ", horizon=" + pageBox.getProcessedTableOffset() + ", pageEnd=" + pageBox.getPageEnd() );
+        logger.debug( "Computing Incremental update: offset=" + pageBox.getPageOffset() + ", horizon="
+            + pageBox.getProcessedTableOffset() + ", pageEnd=" + pageBox.getPageEnd() );
 
       }
     }
   }
 
-  protected boolean performPagination( final LayoutPagebreakHandler layoutPagebreakHandler,
-                                       final boolean performOutput )
-    throws ContentProcessingException {
+  protected boolean
+    performPagination( final LayoutPagebreakHandler layoutPagebreakHandler, final boolean performOutput )
+      throws ContentProcessingException {
     final OutputProcessor outputProcessor = getOutputProcessor();
     // next: perform pagination.
     final LogicalPageBox pageBox = getPageBox();
-    //    final long sizeBeforePagination = pageBox.getHeight();
-    //final LogicalPageBox clone = (LogicalPageBox) pageBox.deriveForAdvance(true);
+    // final long sizeBeforePagination = pageBox.getHeight();
+    // final LogicalPageBox clone = (LogicalPageBox) pageBox.deriveForAdvance(true);
     final PaginationResult pageBreak = paginationStep.performPagebreak( pageBox );
     if ( pageBreak.isOverflow() == false && pageBox.isOpen() ) {
       return false;
     }
 
     setLastStateKey( pageBreak.getLastVisibleState() );
-    //      final long sizeAfterPagination = pageBox.getHeight();
+    // final long sizeAfterPagination = pageBox.getHeight();
     setPagebreaks( getPagebreaks() + 1 );
     pageBox.setAllVerticalBreaks( pageBreak.getAllBreaks() );
 
@@ -163,17 +160,16 @@ public class FlowRenderer extends AbstractRenderer {
       if ( outputProcessor.isNeedAlignedPage() ) {
         final LogicalPageBox box = fillPhysicalPagesStep.compute( pageBox, pageOffset, nextOffset );
         logger
-          .debug( "Processing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset );
+            .debug( "Processing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset );
 
         outputProcessor.processContent( box );
       } else {
-        logger.debug(
-          "Processing fast contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset );
+        logger.debug( "Processing fast contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> "
+            + nextOffset );
         outputProcessor.processContent( pageBox );
       }
     } else {
-      logger
-        .debug( "Recomputing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset );
+      logger.debug( "Recomputing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset );
       outputProcessor.processRecomputedContent( pageBox );
     }
 
@@ -182,7 +178,7 @@ public class FlowRenderer extends AbstractRenderer {
     // new page has been set. It does not save the state or perform other
     // expensive operations. However, it updates the 'isPagebreakEncountered'
     // flag, which will be active until the input-feed received a new event.
-    //      Log.debug("PageTime " + (currentPageAge - lastPageAge));
+    // Log.debug("PageTime " + (currentPageAge - lastPageAge));
 
     final boolean repeat = pageBox.isOpen() || pageBreak.isOverflow();
     if ( repeat ) {
@@ -192,7 +188,7 @@ public class FlowRenderer extends AbstractRenderer {
       countBoxesStep.process( pageBox );
       cleanFlowBoxesStep.compute( pageBox );
 
-      //cleanPaginatedBoxesStep.compute(pageBox);
+      // cleanPaginatedBoxesStep.compute(pageBox);
       pageBox.setPageOffset( nextOffset );
       // todo PRD-4606
       pageBox.resetCacheState( true );
@@ -211,7 +207,7 @@ public class FlowRenderer extends AbstractRenderer {
       outputProcessor.processingFinished();
       pageBox.setPageOffset( nextOffset );
       // todo PRD-4606
-      //      pageBox.resetCacheState(true);
+      // pageBox.resetCacheState(true);
       return false;
     }
   }

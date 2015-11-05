@@ -1,20 +1,20 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
-* All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
+ * All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
@@ -50,27 +50,25 @@ public class TestSetupModule extends AbstractModule {
     final String bundleLocation = "org.pentaho.reporting.engine.classic.core.testsupport.metadata";
     final String keyPrefix = "attribute.test-run.";
     final DefaultAttributeMetaData metaData =
-      new DefaultAttributeMetaData( "test-run", "test-value", bundleLocation, keyPrefix, Object.class, false, 0 );
+        new DefaultAttributeMetaData( "test-run", "test-value", bundleLocation, keyPrefix, Object.class, false, 0 );
 
     final ElementMetaData[] types = ElementTypeRegistry.getInstance().getAllElementTypes();
     for ( int i = 0; i < types.length; i++ ) {
-      final ElementMetaData type = types[ i ];
+      final ElementMetaData type = types[i];
       final AttributeRegistry attributeRegistry =
-        ElementTypeRegistry.getInstance().getAttributeRegistry( type.getName() );
+          ElementTypeRegistry.getInstance().getAttributeRegistry( type.getName() );
       attributeRegistry.putAttributeDescription( metaData );
     }
 
     try {
-      Driver driver = ObjectUtilities.loadAndInstantiate
-        ( "org.hsqldb.jdbcDriver", TestSetupModule.class, Driver.class );
+      Driver driver = ObjectUtilities.loadAndInstantiate( "org.hsqldb.jdbcDriver", TestSetupModule.class, Driver.class );
       populateDatabase( driver );
     } catch ( Exception e ) {
       throw new ModuleInitializeException( "Failed to load the HSQL-DB driver", e );
     }
   }
 
-  private void populateDatabase( Driver driver )
-    throws SQLException, IOException {
+  private void populateDatabase( Driver driver ) throws SQLException, IOException {
     Properties p = new Properties();
     p.setProperty( "user", "sa" );
     p.setProperty( "password", "" );
@@ -90,9 +88,8 @@ public class TestSetupModule extends AbstractModule {
         try {
           String line;
           while ( ( line = bin.readLine() ) != null ) {
-            if ( line.startsWith( "CREATE SCHEMA " ) ||
-              line.startsWith( "CREATE USER SA " ) ||
-              line.startsWith( "GRANT DBA TO SA" ) ) {
+            if ( line.startsWith( "CREATE SCHEMA " ) || line.startsWith( "CREATE USER SA " )
+                || line.startsWith( "GRANT DBA TO SA" ) ) {
               // ignore the error, HSQL sucks
             } else {
               statement.addBatch( StringEscapeUtils.unescapeJava( line ) );

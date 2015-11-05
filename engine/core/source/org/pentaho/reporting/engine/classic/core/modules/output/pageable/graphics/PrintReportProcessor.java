@@ -1,25 +1,28 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics;
 
+import java.awt.print.PageFormat;
+import java.awt.print.Pageable;
+import java.awt.print.Printable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.EmptyReportException;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportParameterValidationException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -31,10 +34,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphic
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.GraphicsOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.QueryPhysicalPageInterceptor;
 
-import java.awt.print.PageFormat;
-import java.awt.print.Pageable;
-import java.awt.print.Printable;
-
 /**
  * Creation-Date: 09.04.2007, 13:28:33
  *
@@ -44,8 +43,7 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
   private static final Log logger = LogFactory.getLog( PrintReportProcessor.class );
   private Throwable error;
 
-  public PrintReportProcessor( final MasterReport report )
-    throws ReportProcessingException {
+  public PrintReportProcessor( final MasterReport report ) throws ReportProcessingException {
     super( report, new GraphicsOutputProcessor( report.getConfiguration(), report.getResourceManager() ) );
     setFullStreamingProcessor( false );
   }
@@ -69,8 +67,8 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
     if ( isPaginated() == false ) {
       try {
         prepareReportProcessing();
-        PrintReportProcessor.logger.debug(
-          "After pagination, we have " + getGraphicsProcessor().getPhysicalPageCount() + " physical pages." );// NON-NLS
+        PrintReportProcessor.logger.debug( "After pagination, we have " + getGraphicsProcessor().getPhysicalPageCount()
+            + " physical pages." ); // NON-NLS
       } catch ( ReportParameterValidationException e ) {
         error = e;
         return 0;
@@ -85,9 +83,9 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
 
   /**
    * Manually triggers the pagination. This method will block until the pagination is finished and will do nothing if an
-   * error occured.
+   * error occurred.
    *
-   * @return true, if the pagination was successfull, false otherwise.
+   * @return true, if the pagination was successful, false otherwise.
    */
   public synchronized boolean paginate() {
     if ( isError() ) {
@@ -106,16 +104,16 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
     return true;
   }
 
-
   /**
    * Returns the <code>PageFormat</code> of the page specified by <code>pageIndex</code>.
    *
-   * @param pageIndex the zero based index of the page whose <code>PageFormat</code> is being requested
+   * @param pageIndex
+   *          the zero based index of the page whose <code>PageFormat</code> is being requested
    * @return the <code>PageFormat</code> describing the size and orientation.
-   * @throws IndexOutOfBoundsException if the <code>Pageable</code> does not contain the requested page.
+   * @throws IndexOutOfBoundsException
+   *           if the <code>Pageable</code> does not contain the requested page.
    */
-  public synchronized PageFormat getPageFormat( final int pageIndex )
-    throws IndexOutOfBoundsException {
+  public synchronized PageFormat getPageFormat( final int pageIndex ) throws IndexOutOfBoundsException {
     if ( isError() ) {
       return null;
     }
@@ -133,21 +131,21 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
       final PageDrawable pageDrawable = processPage( pageIndex );
       return pageDrawable.getPageFormat();
     } catch ( Exception e ) {
-      PrintReportProcessor.logger.error( "Failed to return a valid pageformat: ", e );// NON-NLS
+      PrintReportProcessor.logger.error( "Failed to return a valid pageformat: ", e ); // NON-NLS
       throw new IllegalStateException( "Unable to return a valid pageformat." );
     }
   }
 
   /**
-   * Returns the <code>Printable</code> instance responsible for rendering the page specified by
-   * <code>pageIndex</code>.
+   * Returns the <code>Printable</code> instance responsible for rendering the page specified by <code>pageIndex</code>.
    *
-   * @param pageIndex the zero based index of the page whose <code>Printable</code> is being requested
+   * @param pageIndex
+   *          the zero based index of the page whose <code>Printable</code> is being requested
    * @return the <code>Printable</code> that renders the page.
-   * @throws IndexOutOfBoundsException if the <code>Pageable</code> does not contain the requested page.
+   * @throws IndexOutOfBoundsException
+   *           if the <code>Pageable</code> does not contain the requested page.
    */
-  public synchronized Printable getPrintable( final int pageIndex )
-    throws IndexOutOfBoundsException {
+  public synchronized Printable getPrintable( final int pageIndex ) throws IndexOutOfBoundsException {
     if ( isError() ) {
       return null;
     }
@@ -165,7 +163,7 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
       final PageDrawable pageDrawable = processPage( pageIndex );
       return new DrawablePrintable( pageDrawable );
     } catch ( Exception e ) {
-      PrintReportProcessor.logger.error( "Failed to return a valid pageable object: ", e );// NON-NLS
+      PrintReportProcessor.logger.error( "Failed to return a valid pageable object: ", e ); // NON-NLS
       throw new IllegalStateException( "Unable to return a valid pageformat." );
     }
   }
@@ -174,9 +172,11 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
    * Returns the <code>PageDrawable</code> instance responsible for rendering the page specified by
    * <code>pageIndex</code>.
    *
-   * @param pageIndex the zero based index of the page whose <code>Printable</code> is being requested
+   * @param pageIndex
+   *          the zero based index of the page whose <code>Printable</code> is being requested
    * @return the <code>PageDrawable</code> that renders the page.
-   * @throws IndexOutOfBoundsException if the <code>Pageable</code> does not contain the requested page.
+   * @throws IndexOutOfBoundsException
+   *           if the <code>Pageable</code> does not contain the requested page.
    */
   public synchronized PageDrawable getPageDrawable( final int pageIndex ) {
     if ( isError() ) {
@@ -188,7 +188,7 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
         prepareReportProcessing();
       } catch ( Exception e ) {
         error = e;
-        PrintReportProcessor.logger.error( "Failed to paginate", e );// NON-NLS
+        PrintReportProcessor.logger.error( "Failed to paginate", e ); // NON-NLS
         return null;
       }
     }
@@ -197,7 +197,7 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
       return processPage( pageIndex );
     } catch ( Exception e ) {
       error = e;
-      PrintReportProcessor.logger.error( "Failed to process the page", e );// NON-NLS
+      PrintReportProcessor.logger.error( "Failed to process the page", e ); // NON-NLS
       throw new IllegalStateException( "Unable to return a valid pageformat." );
     }
   }
@@ -205,18 +205,19 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
   /**
    * An internal method that returns the page-drawable for the given page.
    *
-   * @param page the page number.
+   * @param page
+   *          the page number.
    * @return the pagedrawable for the given page.
-   * @throws ReportProcessingException if a report processing error occured.
+   * @throws ReportProcessingException
+   *           if a report processing error occurred.
    */
-  protected PageDrawable processPage( final int page )
-    throws ReportProcessingException {
+  protected PageDrawable processPage( final int page ) throws ReportProcessingException {
     final GraphicsOutputProcessor outputProcessor = getGraphicsProcessor();
     try {
       // set up the scene. We can assume that the report has been paginated by now ..
       PageState state = getPhysicalPageState( page );
       final QueryPhysicalPageInterceptor interceptor =
-        new QueryPhysicalPageInterceptor( outputProcessor.getPhysicalPage( page ) );
+          new QueryPhysicalPageInterceptor( outputProcessor.getPhysicalPage( page ) );
       outputProcessor.setInterceptor( interceptor );
       while ( interceptor.isMoreContentNeeded() ) {
         state = processPage( state, true );
@@ -228,9 +229,9 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
   }
 
   /**
-   * Checks whether an error occured. The Exception itself can be queried using 'getErrorReason()'.
+   * Checks whether an error occurred. The Exception itself can be queried using 'getErrorReason()'.
    *
-   * @return true, if an error occured, false otherwise.
+   * @return true, if an error occurred, false otherwise.
    */
   public boolean isError() {
     return error != null;
@@ -241,7 +242,6 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
    * print the whole report, use this Pageable implementation and pass it to one of the JDKs printing sub-systems.
    *
    * @throws ReportProcessingException
-   * @throws EmptyReportException
    */
   public void processReport() throws ReportProcessingException {
     throw new UnsupportedOperationException( "Printing is a passive process." );
@@ -258,7 +258,8 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
   /**
    * Sends a repagination update to all registered listeners.
    *
-   * @param state the state.
+   * @param state
+   *          the state.
    */
   protected synchronized void fireStateUpdate( final ReportProgressEvent state ) {
     super.fireStateUpdate( state );
@@ -267,7 +268,8 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
   /**
    * Sends a repagination update to all registered listeners.
    *
-   * @param state the state.
+   * @param state
+   *          the state.
    */
   protected synchronized void fireProcessingStarted( final ReportProgressEvent state ) {
     super.fireProcessingStarted( state );
@@ -276,7 +278,8 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
   /**
    * Sends a repagination update to all registered listeners.
    *
-   * @param state the state.
+   * @param state
+   *          the state.
    */
   protected synchronized void fireProcessingFinished( final ReportProgressEvent state ) {
     super.fireProcessingFinished( state );
@@ -285,7 +288,8 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
   /**
    * Adds a repagination listener. This listener will be informed of pagination events.
    *
-   * @param l the listener.
+   * @param l
+   *          the listener.
    */
   public synchronized void addReportProgressListener( final ReportProgressListener l ) {
     super.addReportProgressListener( l );
@@ -294,7 +298,8 @@ public class PrintReportProcessor extends PageableReportProcessor implements Pag
   /**
    * Removes a repagination listener.
    *
-   * @param l the listener.
+   * @param l
+   *          the listener.
    */
   public synchronized void removeReportProgressListener( final ReportProgressListener l ) {
     super.removeReportProgressListener( l );

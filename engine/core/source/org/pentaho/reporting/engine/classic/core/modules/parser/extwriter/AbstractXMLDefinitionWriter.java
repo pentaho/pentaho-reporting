@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
@@ -55,7 +55,6 @@ public abstract class AbstractXMLDefinitionWriter {
    */
   public static final String TEMPLATES_TAG = "templates";
 
-
   /**
    * The functions tag name.
    */
@@ -80,7 +79,6 @@ public abstract class AbstractXMLDefinitionWriter {
    * The properties tag name.
    */
   public static final String PROPERTIES_TAG = "properties";
-
 
   /**
    * The class attribute name.
@@ -142,22 +140,21 @@ public abstract class AbstractXMLDefinitionWriter {
    */
   public static final String NAME_ATTR = "name";
 
-
   /**
    * A report writer.
    */
   private final ReportWriterContext reportWriter;
   private final XmlWriter xmlWriter;
-  private static final Class[] EMPTY_PARAMETER = new Class[ 0 ];
+  private static final Class[] EMPTY_PARAMETER = new Class[0];
 
   /**
    * Creates a new writer.
    *
-   * @param reportWriter the report writer.
+   * @param reportWriter
+   *          the report writer.
    * @param xmlWriter
    */
-  protected AbstractXMLDefinitionWriter( final ReportWriterContext reportWriter,
-                                         final XmlWriter xmlWriter ) {
+  protected AbstractXMLDefinitionWriter( final ReportWriterContext reportWriter, final XmlWriter xmlWriter ) {
     this.xmlWriter = xmlWriter;
     this.reportWriter = reportWriter;
   }
@@ -189,12 +186,12 @@ public abstract class AbstractXMLDefinitionWriter {
    * tree, DefinitionWriter traverse the object tree and write the known objects or forward objects to other definition
    * writers.
    *
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if the report serialisation failed.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if the report serialisation failed.
    */
-  public abstract void write()
-    throws IOException, ReportWriterException;
-
+  public abstract void write() throws IOException, ReportWriterException;
 
   protected static boolean hasPublicDefaultConstructor( final Class c ) {
     try {

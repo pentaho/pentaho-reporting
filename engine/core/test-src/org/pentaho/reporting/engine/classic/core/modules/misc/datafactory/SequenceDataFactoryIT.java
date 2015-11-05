@@ -30,12 +30,9 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import java.math.BigDecimal;
 
 public class SequenceDataFactoryIT extends DataSourceTestBase {
-  public static final String[][] QUERIES_AND_RESULTS =
-    new String[][] {
-      { "number_sequence", "sequence-datafactory-number_sequence" + "-results.txt" },
-      { "perf_sequence", "sequence-datafactory-perf_sequence" + "-results.txt" }
-    };
-
+  public static final String[][] QUERIES_AND_RESULTS = new String[][] {
+    { "number_sequence", "sequence-datafactory-number_sequence" + "-results.txt" },
+    { "perf_sequence", "sequence-datafactory-perf_sequence" + "-results.txt" } };
 
   public SequenceDataFactoryIT() {
   }

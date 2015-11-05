@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
@@ -69,7 +69,8 @@ public class DateObjectDescription extends AbstractObjectDescription {
   /**
    * Returns a parameter value as an <code>int</code>.
    *
-   * @param param the parameter name.
+   * @param param
+   *          the parameter name.
    * @return The parameter value.
    */
   private int getIntParameter( final String param ) {
@@ -83,20 +84,22 @@ public class DateObjectDescription extends AbstractObjectDescription {
   /**
    * Sets the parameters of this description object to match the supplied object.
    *
-   * @param o the object (should be an instance of <code>Date</code>).
-   * @throws ObjectFactoryException if the object is not an instance of <code>Date</code>.
+   * @param o
+   *          the object (should be an instance of <code>Date</code>).
+   * @throws ObjectFactoryException
+   *           if the object is not an instance of <code>Date</code>.
    */
   public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
     if ( o instanceof Date ) {
-      //      final GregorianCalendar gc = new GregorianCalendar();
-      //      gc.setTime((Date) o);
-      //      final int year = gc.get(Calendar.YEAR);
-      //      final int month = gc.get(Calendar.MONTH);
-      //      final int day = gc.get(Calendar.DAY_OF_MONTH);
+      // final GregorianCalendar gc = new GregorianCalendar();
+      // gc.setTime((Date) o);
+      // final int year = gc.get(Calendar.YEAR);
+      // final int month = gc.get(Calendar.MONTH);
+      // final int day = gc.get(Calendar.DAY_OF_MONTH);
       //
-      //      setParameter("year", new Integer(year));
-      //      setParameter("month", new Integer(month));
-      //      setParameter("day", new Integer(day));
+      // setParameter("year", new Integer(year));
+      // setParameter("month", new Integer(month));
+      // setParameter("day", new Integer(day));
       setParameter( "value", dateFormat.format( (Date) o ) );
     } else {
       throw new ObjectFactoryException( "Is no instance of java.util.Date" );

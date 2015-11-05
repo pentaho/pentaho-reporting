@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -42,7 +42,7 @@ public class Band extends Section {
   /**
    * An empty array to prevent object creation.
    */
-  private static final Element[] EMPTY_ARRAY = new Element[ 0 ];
+  private static final Element[] EMPTY_ARRAY = new Element[0];
 
   /**
    * All the elements for this band.
@@ -74,8 +74,10 @@ public class Band extends Section {
   /**
    * Constructs a new band with the given pagebreak attributes. Pagebreak attributes have no effect on subbands.
    *
-   * @param pagebreakAfter  defines, whether a pagebreak should be done after that band was printed.
-   * @param pagebreakBefore defines, whether a pagebreak should be done before that band gets printed.
+   * @param pagebreakAfter
+   *          defines, whether a pagebreak should be done after that band was printed.
+   * @param pagebreakBefore
+   *          defines, whether a pagebreak should be done before that band gets printed.
    */
   public Band( final boolean pagebreakBefore, final boolean pagebreakAfter ) {
     this();
@@ -100,10 +102,13 @@ public class Band extends Section {
   /**
    * Adds a report element to the band.
    *
-   * @param element the element that should be added
-   * @throws NullPointerException     if the given element is null
-   * @throws IllegalArgumentException if the position is invalid, either negative or greater than the number of elements
-   *                                  in this band or if the given element is a parent of this element.
+   * @param element
+   *          the element that should be added
+   * @throws NullPointerException
+   *           if the given element is null
+   * @throws IllegalArgumentException
+   *           if the position is invalid, either negative or greater than the number of elements in this band or if the
+   *           given element is a parent of this element.
    */
   public void addElement( final Element element ) {
     addElement( getElementCount(), element );
@@ -112,11 +117,15 @@ public class Band extends Section {
   /**
    * Adds a report element to the band. The element will be inserted at the specified position.
    *
-   * @param position the position where to insert the element
-   * @param element  the element that should be added
-   * @throws NullPointerException     if the given element is null
-   * @throws IllegalArgumentException if the position is invalid, either negative or greater than the number of elements
-   *                                  in this band or if the given element is a parent of this element.
+   * @param position
+   *          the position where to insert the element
+   * @param element
+   *          the element that should be added
+   * @throws NullPointerException
+   *           if the given element is null
+   * @throws IllegalArgumentException
+   *           if the position is invalid, either negative or greater than the number of elements in this band or if the
+   *           given element is a parent of this element.
    */
   public void addElement( final int position, final Element element ) {
     if ( position < 0 ) {
@@ -149,9 +158,12 @@ public class Band extends Section {
   /**
    * Adds a collection of elements to the band.
    *
-   * @param elements the element collection.
-   * @throws NullPointerException     if one of the given elements is null
-   * @throws IllegalArgumentException if one of the given element is a parent of this element.
+   * @param elements
+   *          the element collection.
+   * @throws NullPointerException
+   *           if one of the given elements is null
+   * @throws IllegalArgumentException
+   *           if one of the given element is a parent of this element.
    */
   public void addElements( final Collection elements ) {
     if ( elements == null ) {
@@ -166,13 +178,15 @@ public class Band extends Section {
   }
 
   /**
-   * Returns the first element in the list that is known by the given name. Functions should use {@link
-   * org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(Band, String)} or {@link
-   * org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findElement(Band, String)} instead.
+   * Returns the first element in the list that is known by the given name. Functions should use
+   * {@link org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(Band, String)} or
+   * {@link org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findElement(Band, String)} instead.
    *
-   * @param name the element name.
+   * @param name
+   *          the element name.
    * @return the first element with the specified name, or <code>null</code> if there is no such element.
-   * @throws NullPointerException if the given name is null.
+   * @throws NullPointerException
+   *           if the given name is null.
    */
   public Element getElement( final String name ) {
     if ( name == null ) {
@@ -182,7 +196,7 @@ public class Band extends Section {
     final Element[] elements = internalGetElementArray();
     final int elementsSize = elements.length;
     for ( int i = 0; i < elementsSize; i++ ) {
-      final Element e = elements[ i ];
+      final Element e = elements[i];
       final String elementName = e.getName();
       if ( elementName != null ) {
         if ( elementName.equals( name ) ) {
@@ -193,12 +207,13 @@ public class Band extends Section {
     return null;
   }
 
-
   /**
    * Removes an element from the band.
    *
-   * @param e the element to be removed.
-   * @throws NullPointerException if the given element is null.
+   * @param e
+   *          the element to be removed.
+   * @throws NullPointerException
+   *           if the given element is null.
    */
   public void removeElement( final Element e ) {
     if ( e == null ) {
@@ -251,13 +266,12 @@ public class Band extends Section {
     notifyNodeChildRemoved( o );
     notifyNodeChildAdded( element );
 
-
   }
 
   public void clear() {
     final Element[] elements = internalGetElementArray();
     for ( int i = 0; i < elements.length; i++ ) {
-      final Element element = elements[ i ];
+      final Element element = elements[i];
       removeElement( element );
     }
   }
@@ -297,7 +311,7 @@ public class Band extends Section {
       if ( allElements == null || allElements.isEmpty() ) {
         allElementsCached = Band.EMPTY_ARRAY;
       } else {
-        Element[] elements = new Element[ allElements.size() ];
+        Element[] elements = new Element[allElements.size()];
         elements = allElements.toArray( elements );
         allElementsCached = elements;
       }
@@ -312,9 +326,11 @@ public class Band extends Section {
   /**
    * Returns the element stored add the given index.
    *
-   * @param index the element position within this band
+   * @param index
+   *          the element position within this band
    * @return the element
-   * @throws IndexOutOfBoundsException if the index is invalid.
+   * @throws IndexOutOfBoundsException
+   *           if the index is invalid.
    */
   public Element getElement( final int index ) {
     if ( allElements == null ) {
@@ -353,13 +369,13 @@ public class Band extends Section {
       final int elementSize = allElements.size();
       b.allElements = (ArrayList<Element>) allElements.clone();
       b.allElements.clear();
-      b.allElementsCached = new Element[ elementSize ];
+      b.allElementsCached = new Element[elementSize];
 
       if ( allElementsCached != null ) {
         for ( int i = 0; i < elementSize; i++ ) {
-          final Element eC = (Element) allElementsCached[ i ].clone();
+          final Element eC = (Element) allElementsCached[i].clone();
           b.allElements.add( eC );
-          b.allElementsCached[ i ] = eC;
+          b.allElementsCached[i] = eC;
           eC.setParent( b );
         }
       } else {
@@ -367,7 +383,7 @@ public class Band extends Section {
           final Element e = allElements.get( i );
           final Element eC = (Element) e.clone();
           b.allElements.add( eC );
-          b.allElementsCached[ i ] = eC;
+          b.allElementsCached[i] = eC;
           eC.setParent( b );
         }
       }
@@ -386,13 +402,13 @@ public class Band extends Section {
       final int elementSize = allElements.size();
       b.allElements = (ArrayList<Element>) allElements.clone();
       b.allElements.clear();
-      b.allElementsCached = new Element[ elementSize ];
+      b.allElementsCached = new Element[elementSize];
 
       if ( allElementsCached != null ) {
         for ( int i = 0; i < elementSize; i++ ) {
-          final Element eC = allElementsCached[ i ].derive( preserveElementInstanceIds );
+          final Element eC = allElementsCached[i].derive( preserveElementInstanceIds );
           b.allElements.add( eC );
-          b.allElementsCached[ i ] = eC;
+          b.allElementsCached[i] = eC;
           eC.setParent( b );
         }
       } else {
@@ -400,7 +416,7 @@ public class Band extends Section {
           final Element e = allElements.get( i );
           final Element eC = e.derive( preserveElementInstanceIds );
           b.allElements.add( eC );
-          b.allElementsCached[ i ] = eC;
+          b.allElementsCached[i] = eC;
           eC.setParent( b );
         }
       }
@@ -422,7 +438,8 @@ public class Band extends Section {
    * Defines, whether the page layout manager should perform a pagebreak before this page is printed. This will have no
    * effect on empty pages or if the band is no root-level band.
    *
-   * @param pagebreakBeforePrint set to true, if to force a pagebreak before this band is printed, false otherwise
+   * @param pagebreakBeforePrint
+   *          set to true, if to force a pagebreak before this band is printed, false otherwise
    */
   public void setPagebreakBeforePrint( final boolean pagebreakBeforePrint ) {
     getStyle().setBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE, pagebreakBeforePrint );
@@ -443,7 +460,8 @@ public class Band extends Section {
    * Defines, whether the page layout manager should perform a pagebreak before this page is printed. This will have no
    * effect on empty pages or if the band is no root-level band.
    *
-   * @param pagebreakAfterPrint set to true, if to force a pagebreak before this band is printed, false otherwise
+   * @param pagebreakAfterPrint
+   *          set to true, if to force a pagebreak before this band is printed, false otherwise
    */
   public void setPagebreakAfterPrint( final boolean pagebreakAfterPrint ) {
     getStyle().setBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, pagebreakAfterPrint );

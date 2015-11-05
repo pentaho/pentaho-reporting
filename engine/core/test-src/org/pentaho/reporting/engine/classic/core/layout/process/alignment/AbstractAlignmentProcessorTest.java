@@ -46,7 +46,7 @@ public class AbstractAlignmentProcessorTest {
   }
 
   private static String[] createArray( String... array ) {
-    String[] result = new String[ SAMPLE_ARRAY_SIZE ];
+    String[] result = new String[SAMPLE_ARRAY_SIZE];
     System.arraycopy( array, 0, result, 0, array.length );
     return result;
   }
@@ -86,7 +86,6 @@ public class AbstractAlignmentProcessorTest {
     assertArrayEquals( createArray( "a", "b", "c" ), array );
   }
 
-
   @Test
   public void splitBreakableIfPossible_BreakableIndexIsLessThanNil() throws Exception {
     AbstractAlignmentProcessor processor = mockProcessorForSplitTrying();
@@ -99,7 +98,7 @@ public class AbstractAlignmentProcessorTest {
     AbstractAlignmentProcessor processor = mockProcessorForSplitTrying();
     processor.setBreakableIndex( 0 );
     // (SpacerRenderNode instanceof SplittableNode) == false
-    //noinspection deprecation
+    // noinspection deprecation
     processor.setNodes( new RenderNode[] { new SpacerRenderNode() } );
 
     assertFalse( processor.splitBreakableIfPossible() );
@@ -109,7 +108,7 @@ public class AbstractAlignmentProcessorTest {
   public void splitBreakableIfPossible_BreakableMaxAllowedWidthIsNil() throws Exception {
     AbstractAlignmentProcessor processor = mockProcessorForSplitTrying();
     processor.setBreakableIndex( 0 );
-    //noinspection deprecation
+    // noinspection deprecation
     processor.setNodes( new RenderNode[] { RenderableTextTest.createText( "txt" ) } );
     processor.setBreakableMaxAllowedWidth( 0 );
 

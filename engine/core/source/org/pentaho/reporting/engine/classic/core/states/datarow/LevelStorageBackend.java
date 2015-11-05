@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
@@ -28,14 +28,13 @@ import org.pentaho.reporting.engine.classic.core.util.LevelList;
 import java.util.Iterator;
 
 public class LevelStorageBackend {
-  private static final Integer[] EMPTY_INTEGERARRAY = new Integer[ 0 ];
+  private static final Integer[] EMPTY_INTEGERARRAY = new Integer[0];
 
   private static class LevelStorageImpl implements LevelStorage {
     private LevelStorageBackend levelData;
     private Expression[] expressions;
 
-    private LevelStorageImpl( final LevelStorageBackend levelData,
-                              final Expression[] expressions ) {
+    private LevelStorageImpl( final LevelStorageBackend levelData, final Expression[] expressions ) {
       this.levelData = levelData;
       this.expressions = expressions;
     }
@@ -62,10 +61,8 @@ public class LevelStorageBackend {
   private int[] functions;
   private int[] pageEventListeners;
 
-  public LevelStorageBackend( final int levelNumber,
-                              final int[] activeExpressions,
-                              final int[] functions,
-                              final int[] pageEventListeners ) {
+  public LevelStorageBackend( final int levelNumber, final int[] activeExpressions, final int[] functions,
+      final int[] pageEventListeners ) {
     if ( pageEventListeners == null ) {
       throw new NullPointerException();
     }
@@ -108,14 +105,13 @@ public class LevelStorageBackend {
     return pageEventListeners != null && pageEventListeners.length > 0;
   }
 
-  public static LevelStorageBackend[] revalidate( final Expression[] expressions,
-                                                  final int length,
-                                                  final boolean includeStructuralProcessing ) {
+  public static LevelStorageBackend[] revalidate( final Expression[] expressions, final int length,
+      final boolean includeStructuralProcessing ) {
     // recompute the level storage ..
     final LevelList levelList = new LevelList();
     int minLevel = Integer.MIN_VALUE;
     for ( int i = 0; i < length; i++ ) {
-      final Expression expression = expressions[ i ];
+      final Expression expression = expressions[i];
 
       // The list maps the current position to the level ..
       final int dependencyLevel = expression.getDependencyLevel();
@@ -128,7 +124,7 @@ public class LevelStorageBackend {
     if ( includeStructuralProcessing ) {
       if ( minLevel > Integer.MIN_VALUE ) {
         for ( int i = 0; i < length; i++ ) {
-          final Expression expression = expressions[ i ];
+          final Expression expression = expressions[i];
 
           // The list maps the current position to the level ..
           final int dependencyLevel = expression.getDependencyLevel();
@@ -142,7 +138,7 @@ public class LevelStorageBackend {
     }
 
     final Integer[] levels = levelList.getLevelsDescendingArray();
-    final LevelStorageBackend[] levelData = new LevelStorageBackend[ levels.length ];
+    final LevelStorageBackend[] levelData = new LevelStorageBackend[levels.length];
     final int expressionsCount = levelList.size();
 
     final int capacity = Math.min( 20, expressionsCount );
@@ -151,12 +147,11 @@ public class LevelStorageBackend {
     final IntList pageEventListeners = new IntList( capacity );
 
     for ( int i = 0; i < levels.length; i++ ) {
-      final int currentLevel = levels[ i ].intValue();
-      final Integer[] data = (Integer[])
-        levelList.getElementArrayForLevel( currentLevel, EMPTY_INTEGERARRAY );
+      final int currentLevel = levels[i].intValue();
+      final Integer[] data = (Integer[]) levelList.getElementArrayForLevel( currentLevel, EMPTY_INTEGERARRAY );
       for ( int x = 0; x < data.length; x++ ) {
-        final Integer position = data[ x ];
-        final Expression ex = expressions[ position.intValue() ];
+        final Integer position = data[x];
+        final Expression ex = expressions[position.intValue()];
         final int globalPosition = position.intValue();
 
         if ( ex instanceof Function == false ) {
@@ -173,9 +168,9 @@ public class LevelStorageBackend {
         }
       }
 
-      levelData[ i ] = new LevelStorageBackend( currentLevel,
-        activeExpressions.toArray(),
-        functions.toArray(), pageEventListeners.toArray() );
+      levelData[i] =
+          new LevelStorageBackend( currentLevel, activeExpressions.toArray(), functions.toArray(), pageEventListeners
+              .toArray() );
 
       activeExpressions.clear();
       functions.clear();
@@ -186,7 +181,7 @@ public class LevelStorageBackend {
   }
 
   public static LevelStorage getLevelStorage( final LevelStorageBackend levelStorageBackend,
-                                              final Expression[] expressions ) {
+      final Expression[] expressions ) {
     return new LevelStorageImpl( levelStorageBackend, expressions );
   }
 }

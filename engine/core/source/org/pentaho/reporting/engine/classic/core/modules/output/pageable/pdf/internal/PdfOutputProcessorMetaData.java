@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal;
 
@@ -50,27 +50,28 @@ public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
     addFeature( OutputProcessorFeature.SPACING_SUPPORTED );
     addFeature( OutputProcessorFeature.PAGEBREAKS );
 
-    if ( "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.WatermarkPrinted" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.WatermarkPrinted" ) ) ) {
       addFeature( OutputProcessorFeature.WATERMARK_SECTION );
     }
-    if ( "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts" ) ) ) {
       addFeature( OutputProcessorFeature.EMBED_ALL_FONTS );
     }
 
     final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper( configuration );
-    final double deviceResolution = extendedConfig.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.DeviceResolution", 0 );
+    final double deviceResolution =
+        extendedConfig.getIntProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.DeviceResolution", 0 );
     if ( deviceResolution > 0 ) {
       setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AssumeOverflowX" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AssumeOverflowX" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_X );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AssumeOverflowY" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AssumeOverflowY" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
     }
 
@@ -78,8 +79,9 @@ public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
       addFeature( OutputProcessorFeature.STRICT_TEXT_PROCESSING );
     }
 
-    String defaultEncoding = configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding" );
+    String defaultEncoding =
+        configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding" );
     if ( !StringUtils.isEmpty( defaultEncoding ) ) {
       getITextFontStorage().setDefaultEncoding( defaultEncoding );
     }
@@ -118,24 +120,19 @@ public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
     return (ITextFontStorage) getFontStorage();
   }
 
-  public BaseFontFontMetrics getBaseFontFontMetrics( final String fontFamily,
-                                                     final double fontSize,
-                                                     final boolean bold,
-                                                     final boolean italics,
-                                                     final String encoding,
-                                                     final boolean embedded,
-                                                     final boolean antiAliasing ) throws IllegalArgumentException {
+  public BaseFontFontMetrics getBaseFontFontMetrics( final String fontFamily, final double fontSize,
+      final boolean bold, final boolean italics, final String encoding, final boolean embedded,
+      final boolean antiAliasing ) throws IllegalArgumentException {
     try {
-      final FontMetrics metrics = super.getFontMetrics( fontFamily, fontSize, bold, italics, encoding, embedded,
-        antiAliasing );
+      final FontMetrics metrics =
+          super.getFontMetrics( fontFamily, fontSize, bold, italics, encoding, embedded, antiAliasing );
       if ( metrics instanceof LegacyFontMetrics ) {
         final LegacyFontMetrics lm = (LegacyFontMetrics) metrics;
         return (BaseFontFontMetrics) lm.getParent();
       }
       return (BaseFontFontMetrics) metrics;
     } catch ( ClassCastException ce ) {
-      throw new IllegalArgumentException
-        ( "Ups, I did it again! ClassCastException in PdfOutputProcessorMetaData" );
+      throw new IllegalArgumentException( "Ups, I did it again! ClassCastException in PdfOutputProcessorMetaData" );
     }
   }
 
@@ -161,8 +158,8 @@ public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
       return true;
     }
 
-    if ( StringUtils.isEmpty( (String)
-      attributes.getAttribute( AttributeNames.Pdf.NAMESPACE, AttributeNames.Pdf.SCRIPT_ACTION ) ) == false ) {
+    if ( StringUtils.isEmpty( (String) attributes.getAttribute( AttributeNames.Pdf.NAMESPACE,
+        AttributeNames.Pdf.SCRIPT_ACTION ) ) == false ) {
       return true;
     }
     return false;

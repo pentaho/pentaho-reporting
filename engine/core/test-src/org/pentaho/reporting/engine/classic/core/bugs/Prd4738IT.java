@@ -23,16 +23,16 @@ public class Prd4738IT extends TestCase {
     report.getReportHeader().setLayout( "row" );
     report.getReportHeader().addElement( TableTestUtil.createDataItem( "Test1" ) );
     report.getReportHeader().addElement( TableTestUtil.createDataItem( "Test2" ) );
-    report.getReportConfiguration().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.AssumeOverflowX", "true" );
-    report.getReportConfiguration().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowX", "true" );
+    report.getReportConfiguration().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.AssumeOverflowX", "true" );
+    report.getReportConfiguration().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowX", "true" );
     final LogicalPageBox box = DebugReportRunner.layoutTablePage( report, 0 );
 
     final RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( box, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+        MatchFactory.findElementsByNodeType( box, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
     for ( int i = 0; i < elementsByNodeType.length; i++ ) {
-      RenderNode renderNode = elementsByNodeType[ i ];
+      RenderNode renderNode = elementsByNodeType[i];
       assertEquals( 10000000, renderNode.getWidth() );
     }
   }

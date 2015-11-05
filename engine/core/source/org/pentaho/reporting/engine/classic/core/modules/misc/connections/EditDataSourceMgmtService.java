@@ -34,8 +34,8 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService {
     editedMembers = new HashMap<String, SerializedConnection>();
   }
 
-  public String createDatasource( final IDatabaseConnection databaseConnection )
-    throws DuplicateDatasourceException, DatasourceMgmtServiceException {
+  public String createDatasource( final IDatabaseConnection databaseConnection ) throws DuplicateDatasourceException,
+    DatasourceMgmtServiceException {
     final String name = databaseConnection.getName();
     if ( StringUtils.isEmpty( name ) ) {
       throw new IllegalArgumentException();
@@ -54,8 +54,8 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService {
     return id;
   }
 
-  public void deleteDatasourceById( final String id )
-    throws NonExistingDatasourceException, DatasourceMgmtServiceException {
+  public void deleteDatasourceById( final String id ) throws NonExistingDatasourceException,
+    DatasourceMgmtServiceException {
     if ( StringUtils.isEmpty( id ) ) {
       throw new IllegalArgumentException();
     }
@@ -106,8 +106,7 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService {
     return list;
   }
 
-  public String updateDatasourceById( final String id,
-                                      final IDatabaseConnection databaseConnection )
+  public String updateDatasourceById( final String id, final IDatabaseConnection databaseConnection )
     throws NonExistingDatasourceException, DatasourceMgmtServiceException {
     if ( StringUtils.isEmpty( id ) ) {
       throw new IllegalArgumentException();

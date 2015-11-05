@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -55,8 +55,8 @@ public class Prd3688IT extends TestCase {
   public void testPrd3688() throws Exception {
     final MasterReport report = new MasterReport();
     report.setCompatibilityLevel( null );
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
     final Element e1 = createDataItem( "Header" );
     e1.setName( "E1" );
@@ -85,7 +85,7 @@ public class Prd3688IT extends TestCase {
     report.getReportHeader().addElement( e3 );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader() );
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode e1Box = MatchFactory.findElementByName( logicalPageBox, "E1" );
     final RenderNode e2Box = MatchFactory.findElementByName( logicalPageBox, "E2" );
@@ -145,7 +145,7 @@ public class Prd3688IT extends TestCase {
     report.getReportHeader().addElement( e3 );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader() );
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode e1Box = MatchFactory.findElementByName( logicalPageBox, "E1" );
     final RenderNode e2Box = MatchFactory.findElementByName( logicalPageBox, "E2" );

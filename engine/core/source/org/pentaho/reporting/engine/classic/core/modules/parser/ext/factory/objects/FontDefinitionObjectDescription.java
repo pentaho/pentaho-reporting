@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects;
 
@@ -88,7 +88,8 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription {
   /**
    * Returns a parameter value as a boolean.
    *
-   * @param name the parameter name.
+   * @param name
+   *          the parameter name.
    * @return A boolean.
    */
   private boolean getBooleanParameter( final String name ) {
@@ -102,12 +103,13 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription {
   /**
    * Returns a parameter as an int.
    *
-   * @param name the parameter name.
+   * @param name
+   *          the parameter name.
    * @return The parameter value.
-   * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
+   * @throws ObjectFactoryException
+   *           if there is a problem while reading the properties of the given object.
    */
-  private int getIntegerParameter( final String name )
-    throws ObjectFactoryException {
+  private int getIntegerParameter( final String name ) throws ObjectFactoryException {
     final Integer i = (Integer) getParameter( name );
     if ( i == null ) {
       throw new ObjectFactoryException( "Parameter " + name + " is not set" );
@@ -130,8 +132,7 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription {
       final boolean italic = getBooleanParameter( FontDefinitionObjectDescription.ITALIC );
       final boolean strike = getBooleanParameter( FontDefinitionObjectDescription.STRIKETHROUGH );
       final boolean underline = getBooleanParameter( FontDefinitionObjectDescription.UNDERLINE );
-      return new FontDefinition( fontName, fontSize, bold, italic, underline, strike,
-        fontEncoding, embedded );
+      return new FontDefinition( fontName, fontSize, bold, italic, underline, strike, fontEncoding, embedded );
     } catch ( Exception e ) {
       FontDefinitionObjectDescription.logger.info( "Failed to create FontDefinition: ", e );
       return null;
@@ -141,11 +142,12 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription {
   /**
    * Sets the parameters of this description object to match the supplied object.
    *
-   * @param o the object (should be an instance of <code>FontDefinition</code>).
-   * @throws ObjectFactoryException if the object is not an instance of <code>Float</code>.
+   * @param o
+   *          the object (should be an instance of <code>FontDefinition</code>).
+   * @throws ObjectFactoryException
+   *           if the object is not an instance of <code>Float</code>.
    */
-  public void setParameterFromObject( final Object o )
-    throws ObjectFactoryException {
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
     if ( ( o instanceof FontDefinition ) == false ) {
       throw new ObjectFactoryException( "The given object is no FontDefinition." );
     }
@@ -164,7 +166,8 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription {
   /**
    * Returns the correct Boolean object for the given primitive boolean variable.
    *
-   * @param bool the primitive boolean.
+   * @param bool
+   *          the primitive boolean.
    * @return the Boolean object.
    */
   private Boolean getBoolean( final boolean bool ) {

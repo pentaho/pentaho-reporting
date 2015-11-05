@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -23,10 +23,9 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
  * @author Thomas Morgner
  */
 public final class Border implements Cloneable {
-  public static final Border EMPTY_BORDER =
-    new Border( BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY,
-      BorderCorner.EMPTY, BorderCorner.EMPTY, BorderCorner.EMPTY, BorderCorner.EMPTY );
-
+  public static final Border EMPTY_BORDER = new Border( BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY,
+      BorderEdge.EMPTY, BorderEdge.EMPTY, BorderCorner.EMPTY, BorderCorner.EMPTY, BorderCorner.EMPTY,
+      BorderCorner.EMPTY );
 
   private BorderEdge top;
   private BorderEdge left;
@@ -41,15 +40,9 @@ public final class Border implements Cloneable {
   private Boolean empty;
   private Boolean sameForAllSides;
 
-  public Border( final BorderEdge top,
-                 final BorderEdge left,
-                 final BorderEdge bottom,
-                 final BorderEdge right,
-                 final BorderEdge splittingEdge,
-                 final BorderCorner topLeft,
-                 final BorderCorner topRight,
-                 final BorderCorner bottomLeft,
-                 final BorderCorner bottomRight ) {
+  public Border( final BorderEdge top, final BorderEdge left, final BorderEdge bottom, final BorderEdge right,
+      final BorderEdge splittingEdge, final BorderCorner topLeft, final BorderCorner topRight,
+      final BorderCorner bottomLeft, final BorderCorner bottomRight ) {
     this.top = top;
     this.left = left;
     this.bottom = bottom;
@@ -99,7 +92,7 @@ public final class Border implements Cloneable {
 
   public Border[] splitVertically( Border[] borders ) {
     if ( borders == null || borders.length < 2 ) {
-      borders = new Border[ 2 ];
+      borders = new Border[2];
     }
     final Boolean empty;
     if ( this.empty != null && Boolean.TRUE.equals( this.empty ) ) {
@@ -112,23 +105,23 @@ public final class Border implements Cloneable {
       empty = null;
     }
 
-    borders[ 0 ] = (Border) clone();
-    borders[ 0 ].empty = empty;
-    borders[ 0 ].right = borders[ 0 ].splittingEdge;
-    borders[ 0 ].topRight = BorderCorner.EMPTY;
-    borders[ 0 ].bottomRight = BorderCorner.EMPTY;
+    borders[0] = (Border) clone();
+    borders[0].empty = empty;
+    borders[0].right = borders[0].splittingEdge;
+    borders[0].topRight = BorderCorner.EMPTY;
+    borders[0].bottomRight = BorderCorner.EMPTY;
 
-    borders[ 1 ] = (Border) clone();
-    borders[ 1 ].empty = empty;
-    borders[ 1 ].left = borders[ 1 ].splittingEdge;
-    borders[ 1 ].topLeft = BorderCorner.EMPTY;
-    borders[ 1 ].bottomLeft = BorderCorner.EMPTY;
+    borders[1] = (Border) clone();
+    borders[1].empty = empty;
+    borders[1].left = borders[1].splittingEdge;
+    borders[1].topLeft = BorderCorner.EMPTY;
+    borders[1].bottomLeft = BorderCorner.EMPTY;
     return borders;
   }
 
   public Border[] splitHorizontally( Border[] borders ) {
     if ( borders == null || borders.length < 2 ) {
-      borders = new Border[ 2 ];
+      borders = new Border[2];
     }
     final Boolean empty;
     if ( this.empty != null && Boolean.TRUE.equals( this.empty ) ) {
@@ -141,18 +134,18 @@ public final class Border implements Cloneable {
       empty = null;
     }
 
-    borders[ 0 ] = (Border) clone();
-    borders[ 0 ].empty = empty;
-    borders[ 0 ].sameForAllSides = null;
-    borders[ 0 ].bottom = borders[ 0 ].splittingEdge;
-    borders[ 0 ].bottomLeft = BorderCorner.EMPTY;
-    borders[ 0 ].bottomRight = BorderCorner.EMPTY;
+    borders[0] = (Border) clone();
+    borders[0].empty = empty;
+    borders[0].sameForAllSides = null;
+    borders[0].bottom = borders[0].splittingEdge;
+    borders[0].bottomLeft = BorderCorner.EMPTY;
+    borders[0].bottomRight = BorderCorner.EMPTY;
 
-    borders[ 1 ] = (Border) clone();
-    borders[ 1 ].empty = empty;
-    borders[ 1 ].top = borders[ 1 ].splittingEdge;
-    borders[ 1 ].topLeft = BorderCorner.EMPTY;
-    borders[ 1 ].topRight = BorderCorner.EMPTY;
+    borders[1] = (Border) clone();
+    borders[1].empty = empty;
+    borders[1].top = borders[1].splittingEdge;
+    borders[1].topLeft = BorderCorner.EMPTY;
+    borders[1].topRight = BorderCorner.EMPTY;
     return borders;
   }
 
@@ -224,19 +217,9 @@ public final class Border implements Cloneable {
     return true;
   }
 
-
   public String toString() {
-    return "Border{" +
-      "top=" + top +
-      ", left=" + left +
-      ", bottom=" + bottom +
-      ", right=" + right +
-      ", splittingEdge=" + splittingEdge +
-      ", topLeft=" + topLeft +
-      ", topRight=" + topRight +
-      ", bottomLeft=" + bottomLeft +
-      ", bottomRight=" + bottomRight +
-      ", empty=" + empty +
-      '}';
+    return "Border{" + "top=" + top + ", left=" + left + ", bottom=" + bottom + ", right=" + right + ", splittingEdge="
+        + splittingEdge + ", topLeft=" + topLeft + ", topRight=" + topRight + ", bottomLeft=" + bottomLeft
+        + ", bottomRight=" + bottomRight + ", empty=" + empty + '}';
   }
 }

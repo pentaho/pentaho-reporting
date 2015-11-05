@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
@@ -39,8 +39,8 @@ public class CrosstabTestSequence extends AbstractSequence {
     return new CrosstabTestSequenceDescription();
   }
 
-  public TableModel produce( final DataRow parameters,
-                             final DataFactoryContext dataFactoryContext ) throws ReportDataFactoryException {
+  public TableModel produce( final DataRow parameters, final DataFactoryContext dataFactoryContext )
+    throws ReportDataFactoryException {
 
     final Integer colDimsRaw = getTypedParameter( "column-dimensions", Integer.class, Integer.valueOf( 3 ) );
     if ( colDimsRaw == null ) {
@@ -64,7 +64,6 @@ public class CrosstabTestSequence extends AbstractSequence {
     final Integer[] rowCardsRaw = getTypedParameter( "row-cardinality", Integer[].class, null );
     final String[] rowPatternRaw = getTypedParameter( "row-pattern", String[].class, null );
 
-
     final int[] rowCards = populateCardinality( rowCardsRaw, rowDims );
     final int[] colCards = populateCardinality( colCardsRaw, colDims );
     final int rowCount = computeRowCount( rowCards, colCards );
@@ -84,25 +83,25 @@ public class CrosstabTestSequence extends AbstractSequence {
     final Long seed = getTypedParameter( "random-seed", Long.class, System.currentTimeMillis() );
 
     final Random r = new Random( seed );
-    final Object[] values = new Object[ rowDims + colDims + 1 ];
-    final int[] cards = new int[ rowDims + colDims ];
+    final Object[] values = new Object[rowDims + colDims + 1];
+    final int[] cards = new int[rowDims + colDims];
     Arrays.fill( cards, -1 );
     int pos = 0;
     while ( pos >= 0 ) {
       if ( pos == cards.length ) {
-        values[ pos ] = r.nextDouble();
+        values[pos] = r.nextDouble();
         model.addRow( values );
 
         pos -= 1;
         continue;
       }
 
-      cards[ pos ] += 1;
-      values[ pos ] = MessageFormat.format( queryPattern( rowPattern, colPattern, pos ), cards[ pos ] );
+      cards[pos] += 1;
+      values[pos] = MessageFormat.format( queryPattern( rowPattern, colPattern, pos ), cards[pos] );
 
       final int maxCard = queryCardinality( rowCards, colCards, pos );
-      if ( cards[ pos ] >= maxCard ) {
-        cards[ pos ] = -1;
+      if ( cards[pos] >= maxCard ) {
+        cards[pos] = -1;
         pos -= 1;
         continue;
       }
@@ -116,11 +115,11 @@ public class CrosstabTestSequence extends AbstractSequence {
   private int computeRowCount( final int[] rowCards, final int[] colCards ) {
     int rowCount = 1;
     for ( int i = 0; i < rowCards.length; i++ ) {
-      int rowCard = rowCards[ i ];
+      int rowCard = rowCards[i];
       rowCount *= rowCard;
     }
     for ( int i = 0; i < colCards.length; i++ ) {
-      int rowCard = colCards[ i ];
+      int rowCard = colCards[i];
       rowCount *= rowCard;
     }
     return rowCount;
@@ -128,28 +127,28 @@ public class CrosstabTestSequence extends AbstractSequence {
 
   private int queryCardinality( final int[] rows, final int[] cols, int pos ) {
     if ( pos < rows.length ) {
-      return rows[ pos ];
+      return rows[pos];
     }
     pos -= rows.length;
     if ( pos < cols.length ) {
-      return cols[ pos ];
+      return cols[pos];
     }
     return -1;
   }
 
   private String queryPattern( final String[] rows, final String[] cols, int pos ) {
     if ( pos < rows.length ) {
-      return rows[ pos ];
+      return rows[pos];
     }
     pos -= rows.length;
     if ( pos < cols.length ) {
-      return cols[ pos ];
+      return cols[pos];
     }
     return null;
   }
 
   private int[] populateCardinality( final Integer[] array, final int size ) {
-    final int[] retval = new int[ size ];
+    final int[] retval = new int[size];
     Arrays.fill( retval, 1 );
 
     if ( array == null ) {
@@ -157,9 +156,9 @@ public class CrosstabTestSequence extends AbstractSequence {
     }
 
     for ( int i = 0; i < Math.min( array.length, size ); i++ ) {
-      final Integer integer = array[ i ];
+      final Integer integer = array[i];
       if ( integer != null ) {
-        retval[ i ] = Math.max( integer.intValue(), 1 );
+        retval[i] = Math.max( integer.intValue(), 1 );
       }
     }
     return retval;
@@ -174,10 +173,10 @@ public class CrosstabTestSequence extends AbstractSequence {
   }
 
   private String[] populatePatterns( final String prefix, final String[] array, final int size ) {
-    final String[] retval = new String[ size ];
+    final String[] retval = new String[size];
     for ( int i = 0; i < retval.length; i++ ) {
 
-      retval[ i ] = prefix + toSequenceChar( i ) + "-{0}";
+      retval[i] = prefix + toSequenceChar( i ) + "-{0}";
     }
 
     if ( array == null ) {
@@ -185,9 +184,9 @@ public class CrosstabTestSequence extends AbstractSequence {
     }
 
     for ( int i = 0; i < Math.min( array.length, size ); i++ ) {
-      final String pattern = array[ i ];
+      final String pattern = array[i];
       if ( StringUtils.isEmpty( pattern ) == false ) {
-        retval[ i ] = pattern;
+        retval[i] = pattern;
       }
     }
     return retval;

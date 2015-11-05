@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.formula;
 
@@ -37,16 +37,15 @@ public class QuoteTextFunction implements Function {
     return "QUOTETEXT";
   }
 
-  public TypeValuePair evaluate( final FormulaContext context,
-                                 final ParameterCallback parameters ) throws EvaluationException {
+  public TypeValuePair evaluate( final FormulaContext context, final ParameterCallback parameters )
+    throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
     if ( parameterCount < 1 ) {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     final Type textType = parameters.getType( 0 );
     final Object textValue = parameters.getValue( 0 );
-    final String textResult =
-      context.getTypeRegistry().convertToText( textType, textValue );
+    final String textResult = context.getTypeRegistry().convertToText( textType, textValue );
 
     if ( textResult == null ) {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
@@ -65,16 +64,15 @@ public class QuoteTextFunction implements Function {
     }
 
     if ( encodingResult.equals( "xml" ) ) {
-      return new TypeValuePair( TextType.TYPE,
-        CharacterEntityParser.createXMLEntityParser().encodeEntities( textResult ) );
+      return new TypeValuePair( TextType.TYPE, CharacterEntityParser.createXMLEntityParser()
+          .encodeEntities( textResult ) );
     } else if ( encodingResult.equals( "html" ) ) {
       return new TypeValuePair( TextType.TYPE, HtmlCharacterEntities.getEntityParser().encodeEntities( textResult ) );
     } else if ( encodingResult.equals( "formula-string" ) ) {
       return new TypeValuePair( TextType.TYPE, FormulaUtil.quoteString( textResult ) );
     } else if ( encodingResult.equals( "formula-reference" ) ) {
       return new TypeValuePair( TextType.TYPE, FormulaUtil.quoteReference( textResult ) );
-    } else // javascript
-    {
+    } else { // javascript
       return new TypeValuePair( TextType.TYPE, saveConvert( textResult ) );
     }
   }
@@ -82,7 +80,8 @@ public class QuoteTextFunction implements Function {
   /**
    * Performs the necessary conversion of an java string into a property escaped string.
    *
-   * @param text the text to be escaped
+   * @param text
+   *          the text to be escaped
    */
   public static String saveConvert( final String text ) {
     if ( text == null ) {
@@ -93,8 +92,8 @@ public class QuoteTextFunction implements Function {
     final char[] string = text.toCharArray();
 
     for ( int x = 0; x < string.length; x++ ) {
-      final char aChar = string[ x ];
-      switch( aChar ) {
+      final char aChar = string[x];
+      switch ( aChar ) {
         case '\\': {
           buffer.append( '\\' );
           buffer.append( '\\' );

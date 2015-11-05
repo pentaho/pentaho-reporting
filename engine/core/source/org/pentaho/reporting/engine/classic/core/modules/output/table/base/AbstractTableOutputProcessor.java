@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
@@ -38,16 +38,15 @@ import java.util.ArrayList;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractTableOutputProcessor extends AbstractOutputProcessor
-  implements IterativeOutputProcessor {
+public abstract class AbstractTableOutputProcessor extends AbstractOutputProcessor implements IterativeOutputProcessor {
   private static final Log logger = LogFactory.getLog( AbstractTableOutputProcessor.class );
 
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature STRICT_LAYOUT =
-    new OutputProcessorFeature.BooleanOutputProcessorFeature( "strict-layout" );
+      new OutputProcessorFeature.BooleanOutputProcessorFeature( "strict-layout" );
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature TREAT_ELLIPSE_AS_RECTANGLE =
-    new OutputProcessorFeature.BooleanOutputProcessorFeature( "treat-ellipse-as-rectangle" );
+      new OutputProcessorFeature.BooleanOutputProcessorFeature( "treat-ellipse-as-rectangle" );
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature SHAPES_CONTENT =
-    new OutputProcessorFeature.BooleanOutputProcessorFeature( "shape-content" );
+      new OutputProcessorFeature.BooleanOutputProcessorFeature( "shape-content" );
 
   private ArrayList<TableLayoutProducer> sheetLayouts;
   private TableLayoutProducer currentLayout;
@@ -67,15 +66,14 @@ public abstract class AbstractTableOutputProcessor extends AbstractOutputProcess
     return getMetaData().isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) == false;
   }
 
-  protected final void processPaginationContent( final LogicalPageKey logicalPageKey,
-                                                 final LogicalPageBox logicalPage ) {
+  protected final void processPaginationContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage ) {
     if ( currentLayout == null ) {
       currentLayout = new TableLayoutProducer( getMetaData() );
     }
     currentLayout.update( logicalPage, false );
     currentLayout.pageCompleted();
 
-    //ModelPrinter.print(logicalPage);
+    // ModelPrinter.print(logicalPage);
     final long rowCount = currentLayout.getLayout().getRowCount();
     logPerformance( "Pagination done: ", rowCount, true );
 
@@ -102,10 +100,9 @@ public abstract class AbstractTableOutputProcessor extends AbstractOutputProcess
     }
 
     currentContent.compute( logicalPage, false );
-    //    ModelPrinter.print(logicalPage);
+    // ModelPrinter.print(logicalPage);
     processTableContent( logicalPageKey, logicalPage, currentContent );
     currentContent.clearFinishedBoxes();
-
 
     final long rowCount = currentContent.getContentRowCount();
     logPerformance( "Content done: ", rowCount, true );
@@ -113,14 +110,11 @@ public abstract class AbstractTableOutputProcessor extends AbstractOutputProcess
     currentContent = null;
   }
 
-  protected abstract void processTableContent( final LogicalPageKey logicalPageKey,
-                                               final LogicalPageBox logicalPage,
-                                               final TableContentProducer contentProducer )
-    throws ContentProcessingException;
+  protected abstract void processTableContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+      final TableContentProducer contentProducer ) throws ContentProcessingException;
 
-
-  public final void processIterativeContent( final LogicalPageBox logicalPageBox,
-                                             final boolean performOutput ) throws ContentProcessingException {
+  public final void processIterativeContent( final LogicalPageBox logicalPageBox, final boolean performOutput )
+    throws ContentProcessingException {
     if ( isContentGeneratable() == false ) {
       // In pagination mode.
       if ( currentLayout == null ) {
@@ -166,10 +160,10 @@ public abstract class AbstractTableOutputProcessor extends AbstractOutputProcess
         final double rowsPerSec = ( rowCount * 1000.0 / deltaTime );
 
         final FastMessageFormat messageFormat =
-          new FastMessageFormat(
-            "{0} - Rows: {1} - Time: {2,number,0.000}sec - Throughput: ({3,number,0.000} rows/sec) " );
-        logger.debug( new MemoryUsageMessage( messageFormat.format(
-          new Object[] { message, rowCount, deltaTime / 1000.0, rowsPerSec } ) ) );
+            new FastMessageFormat(
+                "{0} - Rows: {1} - Time: {2,number,0.000}sec - Throughput: ({3,number,0.000} rows/sec) " );
+        logger.debug( new MemoryUsageMessage( messageFormat.format( new Object[] { message, rowCount,
+          deltaTime / 1000.0, rowsPerSec } ) ) );
       }
     }
   }
@@ -178,12 +172,10 @@ public abstract class AbstractTableOutputProcessor extends AbstractOutputProcess
     return new TableContentProducer( layout, getMetaData() );
   }
 
-  protected void updateTableContent( final LogicalPageKey logicalPageKey,
-                                     final LogicalPageBox logicalPageBox,
-                                     final TableContentProducer tableContentProducer,
-                                     final boolean performOutput ) throws ContentProcessingException {
-    throw new UnsupportedOperationException
-      ( "This output processor does not implement the iterative content processing protocol." );
+  protected void updateTableContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPageBox,
+      final TableContentProducer tableContentProducer, final boolean performOutput ) throws ContentProcessingException {
+    throw new UnsupportedOperationException(
+        "This output processor does not implement the iterative content processing protocol." );
   }
 
   protected abstract FlowSelector getFlowSelector();

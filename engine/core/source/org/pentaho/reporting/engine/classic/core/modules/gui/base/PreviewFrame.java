@@ -1,21 +1,35 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
+
+import java.awt.BorderLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -29,13 +43,6 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Creation-Date: 11.11.2006, 19:35:09
@@ -51,7 +58,8 @@ public class PreviewFrame extends JFrame {
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param evt
+     *          A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
     public void propertyChange( final PropertyChangeEvent evt ) {
@@ -62,7 +70,7 @@ public class PreviewFrame extends JFrame {
         if ( menus != null && menus.length > 0 ) {
           final JMenuBar menuBar = new JMenuBar();
           for ( int i = 0; i < menus.length; i++ ) {
-            final JMenu menu = menus[ i ];
+            final JMenu menu = menus[i];
             menuBar.add( menu );
           }
           setJMenuBar( menuBar );
@@ -78,7 +86,7 @@ public class PreviewFrame extends JFrame {
       }
 
       if ( PreviewPane.STATUS_TEXT_PROPERTY.equals( propertyName )
-        || PreviewPane.STATUS_TYPE_PROPERTY.equals( propertyName ) ) {
+          || PreviewPane.STATUS_TYPE_PROPERTY.equals( propertyName ) ) {
         statusBar.setStatus( previewPane.getStatusType(), previewPane.getStatusText() );
         return;
       }
@@ -91,8 +99,7 @@ public class PreviewFrame extends JFrame {
       if ( PreviewPane.PAGINATING_PROPERTY.equals( propertyName ) ) {
         if ( Boolean.TRUE.equals( evt.getNewValue() ) ) {
           pageLabel.setVisible( false );
-          statusBar
-            .setStatus( StatusType.INFORMATION, messages.getString( "PreviewFrame.USER_PAGINATING" ) ); //$NON-NLS-1$
+          statusBar.setStatus( StatusType.INFORMATION, messages.getString( "PreviewFrame.USER_PAGINATING" ) ); //$NON-NLS-1$
           if ( progressBar != null ) {
             previewPane.addReportProgressListener( progressBar );
             progressBar.setOnlyPagination( true );
@@ -124,7 +131,7 @@ public class PreviewFrame extends JFrame {
       }
 
       if ( PreviewPane.PAGE_NUMBER_PROPERTY.equals( propertyName )
-        || PreviewPane.NUMBER_OF_PAGES_PROPERTY.equals( propertyName ) ) {
+          || PreviewPane.NUMBER_OF_PAGES_PROPERTY.equals( propertyName ) ) {
         pageLabel.setText( previewPane.getPageNumber() + "/" + previewPane.getNumberOfPages() ); //$NON-NLS-1$
         return;
       }
@@ -165,13 +172,14 @@ public class PreviewFrame extends JFrame {
   private Messages messages;
 
   /**
-   * Creates a non-modal dialog without a title and without a specified <code>Frame</code> owner.  A shared, hidden
-   * frame will be set as the owner of the dialog.
+   * Creates a non-modal dialog without a title and without a specified <code>Frame</code> owner. A shared, hidden frame
+   * will be set as the owner of the dialog.
    * <p/>
    * This constructor sets the component's locale property to the value returned by
    * <code>JComponent.getDefaultLocale</code>.
    *
-   * @throws java.awt.HeadlessException if GraphicsEnvironment.isHeadless() returns true.
+   * @throws java.awt.HeadlessException
+   *           if GraphicsEnvironment.isHeadless() returns true.
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
@@ -198,8 +206,9 @@ public class PreviewFrame extends JFrame {
   protected void init() {
     addComponentListener( new RequestFocusHandler() );
 
-    messages = new Messages( getLocale(), SwingPreviewModule.BUNDLE_NAME,
-      ObjectUtilities.getClassLoader( SwingPreviewModule.class ) );
+    messages =
+        new Messages( getLocale(), SwingPreviewModule.BUNDLE_NAME, ObjectUtilities
+            .getClassLoader( SwingPreviewModule.class ) );
     previewPane = new PreviewPane();
     previewPane.setDeferredRepagination( true );
     addComponentListener( new TriggerPaginationListener( previewPane ) );
@@ -210,11 +219,9 @@ public class PreviewFrame extends JFrame {
 
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
     final boolean progressBarEnabled = "true".equals( configuration //$NON-NLS-1$
-      .getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressBarEnabled" ) ); //$NON-NLS-1$
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressBarEnabled" ) ); //$NON-NLS-1$
     final boolean progressDialogEnabled = "true".equals( configuration //$NON-NLS-1$
-      .getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressDialogEnabled" ) ); //$NON-NLS-1$
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressDialogEnabled" ) ); //$NON-NLS-1$
 
     if ( progressBarEnabled ) {
       progressBar = new ReportProgressBar();
@@ -263,7 +270,7 @@ public class PreviewFrame extends JFrame {
     if ( menus != null && menus.length > 0 ) {
       final JMenuBar menuBar = new JMenuBar();
       for ( int i = 0; i < menus.length; i++ ) {
-        final JMenu menu = menus[ i ];
+        final JMenu menu = menus[i];
         menuBar.add( menu );
       }
       setJMenuBar( menuBar );

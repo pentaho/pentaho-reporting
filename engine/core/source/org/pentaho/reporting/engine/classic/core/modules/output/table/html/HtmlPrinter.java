@@ -1,21 +1,24 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
+
+import java.awt.Color;
+import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,9 +54,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
-
-import java.awt.*;
-import java.io.IOException;
 
 /**
  * This class is the actual HTML-emitter.
@@ -132,12 +132,10 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
     return this;
   }
 
-  public void setContentWriter( final ContentLocation contentLocation,
-                                final NameGenerator contentNameGenerator ) {
+  public void setContentWriter( final ContentLocation contentLocation, final NameGenerator contentNameGenerator ) {
     this.contentNameGenerator = contentNameGenerator;
     this.contentLocation = contentLocation;
   }
-
 
   public URLRewriter getUrlRewriter() {
     return urlRewriter;
@@ -158,11 +156,8 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
     this.documentContentItem = documentContentItem;
   }
 
-
   private HtmlRowBackgroundStruct getCommonBackground( final LogicalPageBox logicalPageBox,
-                                                       final SheetLayout sheetLayout,
-                                                       final int row,
-                                                       final TableContentProducer tableContentProducer ) {
+      final SheetLayout sheetLayout, final int row, final TableContentProducer tableContentProducer ) {
     Color color = null;
     BorderEdge topEdge = BorderEdge.EMPTY;
     BorderEdge bottomEdge = BorderEdge.EMPTY;
@@ -175,18 +170,20 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
       if ( content == null ) {
         final RenderBox background = tableContentProducer.getBackground( row, col );
         if ( background != null ) {
-          backgroundAt = cellBackgroundProducer.getBackgroundForBox
-            ( logicalPageBox, sheetLayout, col, row, 1, 1, false, sectionType, background );
+          backgroundAt =
+              cellBackgroundProducer.getBackgroundForBox( logicalPageBox, sheetLayout, col, row, 1, 1, false,
+                  sectionType, background );
         } else {
           backgroundAt =
-            cellBackgroundProducer.getBackgroundAt( logicalPageBox, sheetLayout, col, row, false, sectionType );
+              cellBackgroundProducer.getBackgroundAt( logicalPageBox, sheetLayout, col, row, false, sectionType );
         }
       } else {
         final long contentOffset = tableContentProducer.getContentOffset( row, col );
         final int colSpan = sheetLayout.getColSpan( col, content.getX() + content.getWidth() );
         final int rowSpan = sheetLayout.getRowSpan( row, content.getY() + content.getHeight() + contentOffset );
-        backgroundAt = cellBackgroundProducer.getBackgroundForBox
-          ( logicalPageBox, sheetLayout, col, row, colSpan, rowSpan, false, sectionType, content );
+        backgroundAt =
+            cellBackgroundProducer.getBackgroundForBox( logicalPageBox, sheetLayout, col, row, colSpan, rowSpan, false,
+                sectionType, content );
       }
       if ( backgroundAt == null ) {
         HtmlRowBackgroundStruct struct = new HtmlRowBackgroundStruct();
@@ -234,11 +231,8 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
     return struct;
   }
 
-  public void print( final LogicalPageKey logicalPageKey,
-                     final LogicalPageBox logicalPage,
-                     final TableContentProducer contentProducer,
-                     final OutputProcessorMetaData metaData,
-                     final boolean incremental )
+  public void print( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+      final TableContentProducer contentProducer, final OutputProcessorMetaData metaData, final boolean incremental )
     throws ContentProcessingException {
     try {
       final SheetLayout sheetLayout = contentProducer.getSheetLayout();
@@ -252,9 +246,10 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
       XmlWriter xmlWriter;
 
       if ( documentContentItem == null ) {
-        this.cellBackgroundProducer = new CellBackgroundProducer
-          ( metaData.isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ),
-            metaData.isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
+        this.cellBackgroundProducer =
+            new CellBackgroundProducer( metaData
+                .isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ), metaData
+                .isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
         initialize( metaData.getConfiguration() );
 
         documentContentItem = contentLocation.createItem( contentNameGenerator.generateName( null, "text/html" ) );
@@ -279,8 +274,8 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
       for ( int row = startRow; row < finishRow; row++ ) {
         final int rowHeight = (int) StrictGeomUtility.toExternalValue( sheetLayout.getRowHeight( row ) );
         final HtmlRowBackgroundStruct struct = getCommonBackground( logicalPage, sheetLayout, row, contentProducer );
-        xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "tr",
-          getTagHelper().createRowAttributes( rowHeight, struct ), XmlWriterSupport.OPEN );
+        xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "tr", getTagHelper().createRowAttributes( rowHeight, struct ),
+            XmlWriterSupport.OPEN );
 
         for ( int col = 0; col < colCount; col++ ) {
           final RenderBox content = contentProducer.getContent( row, col );
@@ -289,19 +284,20 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
             final RenderBox backgroundBox = contentProducer.getBackground( row, col );
             final CellBackground background;
             if ( backgroundBox != null ) {
-              background = cellBackgroundProducer.getBackgroundForBox
-                ( logicalPage, sheetLayout, col, row, 1, 1, true, sectionType, backgroundBox );
+              background =
+                  cellBackgroundProducer.getBackgroundForBox( logicalPage, sheetLayout, col, row, 1, 1, true,
+                      sectionType, backgroundBox );
             } else {
               background =
-                cellBackgroundProducer.getBackgroundAt( logicalPage, sheetLayout, col, row, true, sectionType );
+                  cellBackgroundProducer.getBackgroundAt( logicalPage, sheetLayout, col, row, true, sectionType );
             }
             writeBackgroundCell( background, xmlWriter );
             continue;
           }
 
           if ( content.isCommited() == false ) {
-            throw new InvalidReportStateException(
-              "Uncommited content encountered: " + row + ", " + col + ' ' + content );
+            throw new InvalidReportStateException( "Uncommited content encountered: " + row + ", " + col + ' '
+                + content );
           }
 
           final long contentOffset = contentProducer.getContentOffset( row, col );
@@ -318,17 +314,21 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
           final int colSpan = sheetLayout.getColSpan( col, content.getX() + content.getWidth() );
           final int rowSpan = sheetLayout.getRowSpan( row, content.getY() + content.getHeight() + contentOffset );
 
-          final CellBackground realBackground = cellBackgroundProducer.getBackgroundForBox
-            ( logicalPage, sheetLayout, col, row, colSpan, rowSpan, true, sectionType, content );
+          final CellBackground realBackground =
+              cellBackgroundProducer.getBackgroundForBox( logicalPage, sheetLayout, col, row, colSpan, rowSpan, true,
+                  sectionType, content );
 
-          final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle( styleBuilder,
-            content.getStyleSheet(), content.getBoxDefinition(), realBackground, null, null );
-          final AttributeList cellAttributes = getTagHelper().createCellAttributes
-            ( colSpan, rowSpan, content.getAttributes(), content.getStyleSheet(), realBackground, cellStyle );
+          final StyleBuilder cellStyle =
+              styleBuilderFactory.createCellStyle( styleBuilder, content.getStyleSheet(), content.getBoxDefinition(),
+                  realBackground, null, null );
+          final AttributeList cellAttributes =
+              getTagHelper().createCellAttributes( colSpan, rowSpan, content.getAttributes(), content.getStyleSheet(),
+                  realBackground, cellStyle );
           xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.OPEN );
 
-          final Object rawContent = content.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE,
-            AttributeNames.Html.EXTRA_RAW_CONTENT );
+          final Object rawContent =
+              content.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE,
+                  AttributeNames.Html.EXTRA_RAW_CONTENT );
           if ( rawContent != null ) {
             xmlWriter.writeText( String.valueOf( rawContent ) );
           }
@@ -336,13 +336,13 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
           if ( realBackground != null ) {
             final String[] anchors = realBackground.getAnchors();
             for ( int i = 0; i < anchors.length; i++ ) {
-              final String anchor = anchors[ i ];
+              final String anchor = anchors[i];
               xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "a", "name", anchor, XmlWriterSupport.CLOSE );
             }
           }
 
           if ( Boolean.TRUE.equals( content.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE,
-            AttributeNames.Html.SUPPRESS_CONTENT ) ) == false ) {
+              AttributeNames.Html.SUPPRESS_CONTENT ) ) == false ) {
             // the style of the content-box itself is already contained in the <td> tag. So there is no need
             // to duplicate the style here
             if ( textExtractor.performOutput( content, cellStyle.toArray() ) == false ) {
@@ -352,8 +352,9 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
             }
           }
 
-          final Object rawFooterContent = content.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE,
-            AttributeNames.Html.EXTRA_RAW_FOOTER_CONTENT );
+          final Object rawFooterContent =
+              content.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE,
+                  AttributeNames.Html.EXTRA_RAW_FOOTER_CONTENT );
           if ( rawFooterContent != null ) {
             xmlWriter.writeText( String.valueOf( rawFooterContent ) );
           }
@@ -363,7 +364,6 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
         }
         xmlWriter.writeCloseTag();
       }
-
 
       if ( incremental == false ) {
         performCloseFile( contentProducer.getSheetName(), logicalPage.getAttributes(), writer );
@@ -420,6 +420,5 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
       throw new ContentProcessingException( "Cannot create URL for external stylesheet", e );
     }
   }
-
 
 }

@@ -49,7 +49,6 @@ public class MetaDataValidationTestBase<M extends MetaData> {
     missingProperties.clear();
   }
 
-
   public List<M> performTest( final M[] testData ) {
     final ArrayList<M> retval = new ArrayList<M>();
 
@@ -93,7 +92,6 @@ public class MetaDataValidationTestBase<M extends MetaData> {
   protected void performTestOnElement( final M metaData ) {
   }
 
-
   protected void validate( final MetaData metaData ) {
     final String typeName = metaData.getName();
 
@@ -105,20 +103,19 @@ public class MetaDataValidationTestBase<M extends MetaData> {
     if ( metaData.isDeprecated() ) {
       final String deprecateMessage = metaData.getDeprecationMessage( locale );
       if ( isValid( deprecateMessage ) == false ) {
-        logger
-          .warn( "MetaData '" + metaData.getClass().getSimpleName() + ":" + typeName + ": No valid deprecate message" );
+        logger.warn( "MetaData '" + metaData.getClass().getSimpleName() + ":" + typeName
+            + ": No valid deprecate message" );
       }
     }
     final String grouping = metaData.getGrouping( locale );
     if ( isValid( grouping ) == false ) {
-      logger
-        .warn( "MetaData '" + metaData.getClass().getSimpleName() + ":" + typeName + ": No valid grouping message" );
+      logger.warn( "MetaData '" + metaData.getClass().getSimpleName() + ":" + typeName + ": No valid grouping message" );
     }
 
     final String desc = metaData.getDescription( locale );
     if ( isValid( desc ) == false ) {
-      logger
-        .warn( "MetaData '" + metaData.getClass().getSimpleName() + ":" + typeName + ": No valid description message" );
+      logger.warn( "MetaData '" + metaData.getClass().getSimpleName() + ":" + typeName
+          + ": No valid description message" );
     }
 
     final String ordinal = metaData.getMetaAttribute( "ordinal", locale );
@@ -128,8 +125,8 @@ public class MetaDataValidationTestBase<M extends MetaData> {
 
     final String groupingOrdinal = metaData.getMetaAttribute( "grouping.ordinal", locale );
     if ( isValid( groupingOrdinal ) == false ) {
-      logger.warn(
-        "MetaData '" + metaData.getClass().getSimpleName() + ":" + typeName + ": No valid grouping-ordinal message" );
+      logger.warn( "MetaData '" + metaData.getClass().getSimpleName() + ":" + typeName
+          + ": No valid grouping-ordinal message" );
     }
   }
 
@@ -137,9 +134,8 @@ public class MetaDataValidationTestBase<M extends MetaData> {
     if ( translation == null ) {
       return false;
     }
-    if ( translation.length() > 2 &&
-      translation.charAt( 0 ) == '!' &&
-      translation.charAt( translation.length() - 1 ) == '!' ) {
+    if ( translation.length() > 2 && translation.charAt( 0 ) == '!'
+        && translation.charAt( translation.length() - 1 ) == '!' ) {
       final String retval = translation.substring( 1, translation.length() - 1 );
       missingProperties.add( retval );
       return false;

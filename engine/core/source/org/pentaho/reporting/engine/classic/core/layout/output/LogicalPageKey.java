@@ -1,24 +1,23 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
 import java.io.Serializable;
-
 
 /**
  * Creation-Date: 10.11.2006, 13:04:36
@@ -31,17 +30,15 @@ public final class LogicalPageKey implements Serializable {
   private int height;
   private PhysicalPageKey[] physicalPageKeys;
 
-  public LogicalPageKey( final int position,
-                         final int width,
-                         final int height ) {
+  public LogicalPageKey( final int position, final int width, final int height ) {
     this.position = position;
     this.width = width;
     this.height = height;
-    this.physicalPageKeys = new PhysicalPageKey[ width * height ];
+    this.physicalPageKeys = new PhysicalPageKey[width * height];
 
     final int pageKeyCount = physicalPageKeys.length;
     for ( int i = 0; i < pageKeyCount; i++ ) {
-      physicalPageKeys[ i ] = new PhysicalPageKey( this, i % width, i / width );
+      physicalPageKeys[i] = new PhysicalPageKey( this, i % width, i / width );
     }
   }
 
@@ -58,7 +55,7 @@ public final class LogicalPageKey implements Serializable {
   }
 
   public PhysicalPageKey getPage( final int x, final int y ) {
-    return physicalPageKeys[ x + y * width ];
+    return physicalPageKeys[x + y * width];
   }
 
   public boolean equals( final Object o ) {

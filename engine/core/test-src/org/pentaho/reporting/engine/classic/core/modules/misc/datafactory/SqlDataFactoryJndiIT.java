@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
@@ -25,9 +25,7 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQ
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 
 public class SqlDataFactoryJndiIT extends DataSourceTestBase {
-  private static final String[][] QUERIES_AND_RESULTS = new String[][] {
-    { "SELECT * FROM Customers", "query-1.txt" }
-  };
+  private static final String[][] QUERIES_AND_RESULTS = new String[][] { { "SELECT * FROM Customers", "query-1.txt" } };
 
   public SqlDataFactoryJndiIT() {
   }
@@ -42,20 +40,18 @@ public class SqlDataFactoryJndiIT extends DataSourceTestBase {
 
     final SQLReportDataFactory sqlReportDataFactory = new SQLReportDataFactory( drc );
     final DataFactoryMetaData metaData = sqlReportDataFactory.getMetaData();
-    assertEquals( "Name property set, so display name must be test",
-      "sampledata", metaData.getDisplayConnectionName( sqlReportDataFactory ) );
+    assertEquals( "Name property set, so display name must be test", "sampledata", metaData
+        .getDisplayConnectionName( sqlReportDataFactory ) );
     sqlReportDataFactory.setQuery( "test", "SELECT * FROM TABLE" );
 
-    assertNotNull( "QueryHash must exist",
-      metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() ) );
+    assertNotNull( "QueryHash must exist", metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() ) );
 
     final SQLReportDataFactory sqlReportDataFactory2 = new SQLReportDataFactory( drc );
     sqlReportDataFactory2.setQuery( "test", "SELECT * FROM TABLE2" );
 
-    assertNotEquals( "Physical Queries do not match, so query hash must be different",
-      metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() ),
-      ( metaData.getQueryHash( sqlReportDataFactory2, "test", new StaticDataRow() ) ) );
-
+    assertNotEquals( "Physical Queries do not match, so query hash must be different", metaData.getQueryHash(
+        sqlReportDataFactory, "test", new StaticDataRow() ), ( metaData.getQueryHash( sqlReportDataFactory2, "test",
+        new StaticDataRow() ) ) );
 
     sqlReportDataFactory2.setQuery( "test2", "SELECT * FROM TABLE" );
     final Object qh1 = metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() );
@@ -66,14 +62,14 @@ public class SqlDataFactoryJndiIT extends DataSourceTestBase {
     drc.setConnectionPath( "sampledata2" );
     final SQLReportDataFactory sqlReportDataFactory3 = new SQLReportDataFactory( drc2 );
     sqlReportDataFactory3.setQuery( "test", "SELECT * FROM TABLE2" );
-    assertNotEquals( "Connections do not match, so query hash must be different",
-      metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() ),
-      ( metaData.getQueryHash( sqlReportDataFactory3, "test", new StaticDataRow() ) ) );
+    assertNotEquals( "Connections do not match, so query hash must be different", metaData.getQueryHash(
+        sqlReportDataFactory, "test", new StaticDataRow() ), ( metaData.getQueryHash( sqlReportDataFactory3, "test",
+        new StaticDataRow() ) ) );
 
     sqlReportDataFactory3.setQuery( "test2", "SELECT * FROM TABLE" );
-    assertNotEquals( "Connections do not match, so queries are considered the same",
-      metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() ),
-      metaData.getQueryHash( sqlReportDataFactory3, "test2", new StaticDataRow() ) );
+    assertNotEquals( "Connections do not match, so queries are considered the same", metaData.getQueryHash(
+        sqlReportDataFactory, "test", new StaticDataRow() ), metaData.getQueryHash( sqlReportDataFactory3, "test2",
+        new StaticDataRow() ) );
   }
 
   public void testSaveAndLoad() throws Exception {

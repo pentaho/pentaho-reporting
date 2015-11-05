@@ -17,6 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
 
+import java.awt.Image;
+import java.awt.Shape;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Cell;
@@ -53,12 +60,6 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-import java.awt.*;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Date;
-
 @SuppressWarnings( "HardCodedStringLiteral" )
 public class FastExcelPrinter extends ExcelPrinterBase {
   private static final Log logger = LogFactory.getLog( FastExcelPrinter.class );
@@ -76,15 +77,15 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     this.sheetLayout = new FastSheetLayout( sheetLayout );
   }
 
-  public void init( final OutputProcessorMetaData metaData,
-                    final ResourceManager resourceManager,
-                    final ReportDefinition report ) {
+  public void init( final OutputProcessorMetaData metaData, final ResourceManager resourceManager,
+      final ReportDefinition report ) {
     this.pageDefinition = report.getPageDefinition();
     super.init( metaData, resourceManager );
     workbook = createWorkbook();
     initializeStyleProducers( workbook );
-    textExtractor = new FastExcelTextExtractor
-      ( getColorProducer(), getCellStyleProducer().getFontFactory(), workbook.getCreationHelper() );
+    textExtractor =
+        new FastExcelTextExtractor( getColorProducer(), getCellStyleProducer().getFontFactory(), workbook
+            .getCreationHelper() );
   }
 
   protected Sheet getSheet() {
@@ -95,8 +96,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     return workbook;
   }
 
-  public void startSection( final Band band,
-                            final long[] cellHeights ) {
+  public void startSection( final Band band, final long[] cellHeights ) {
     this.cellHeights = cellHeights;
     this.sheetLayout.reinit( rowHeightOffset, cellHeights );
 
@@ -115,7 +115,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     }
 
     for ( int r = 0; r < cellHeights.length; r += 1 ) {
-      getRowAt( r + rowOffset ).setHeightInPoints( (float) StrictGeomUtility.toExternalValue( cellHeights[ r ] ) );
+      getRowAt( r + rowOffset ).setHeightInPoints( (float) StrictGeomUtility.toExternalValue( cellHeights[r] ) );
     }
   }
 
@@ -137,7 +137,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
 
     this.rowOffset += cellHeights.length;
     for ( int i = 0; i < cellHeights.length; i++ ) {
-      this.rowHeightOffset += cellHeights[ i ];
+      this.rowHeightOffset += cellHeights[i];
     }
   }
 
@@ -149,17 +149,17 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     sheet = null;
   }
 
-  public void print( final CellLayoutInfo tableRectangle,
-                     final ReportElement element,
-                     final ExpressionRuntime runtime ) throws ContentProcessingException {
+  public void print( final CellLayoutInfo tableRectangle, final ReportElement element, final ExpressionRuntime runtime )
+    throws ContentProcessingException {
     TableRectangle rect = new TableRectangle();
-    rect.setRect( tableRectangle.getX1(), tableRectangle.getY1() + rowOffset,
-      tableRectangle.getX2(), tableRectangle.getY2() + rowOffset );
+    rect.setRect( tableRectangle.getX1(), tableRectangle.getY1() + rowOffset, tableRectangle.getX2(), tableRectangle
+        .getY2()
+        + rowOffset );
 
     Cell cellAt = getCellAt( rect.getX1(), rect.getY1() );
     CellBackground bg = tableRectangle.getBackground();
     CellStyle cellStyle =
-      getCellStyleProducer().createCellStyle( element.getObjectID(), element.getComputedStyle(), bg );
+        getCellStyleProducer().createCellStyle( element.getObjectID(), element.getComputedStyle(), bg );
     if ( cellStyle != null ) {
       cellAt.setCellStyle( cellStyle );
     }
@@ -168,9 +168,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     }
   }
 
-
-  private void mergeCellRegion( final TableRectangle rectangle,
-                                final CellStyle spannedStyle ) {
+  private void mergeCellRegion( final TableRectangle rectangle, final CellStyle spannedStyle ) {
     final int rowSpan = rectangle.getRowSpan();
     final int columnSpan = rectangle.getColumnSpan();
     if ( rowSpan <= 1 && columnSpan <= 1 ) {
@@ -192,7 +190,6 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     }
   }
 
-
   /**
    * Applies the cell value and determines whether the cell should be merged. Merging will only take place if the cell
    * has a row or colspan greater than one. Images will never be merged, as image content is rendered into an anchored
@@ -200,10 +197,8 @@ public class FastExcelPrinter extends ExcelPrinterBase {
    *
    * @return true, if the cell may to be put into a merged region, false otherwise.
    */
-  private boolean applyCellValue( final ReportElement content,
-                                  final Cell cell,
-                                  final TableRectangle rectangle,
-                                  final ExpressionRuntime runtime ) throws ContentProcessingException {
+  private boolean applyCellValue( final ReportElement content, final Cell cell, final TableRectangle rectangle,
+      final ExpressionRuntime runtime ) throws ContentProcessingException {
     final Object value = textExtractor.compute( content, runtime );
 
     if ( handleImageValues( content, rectangle, value ) ) {
@@ -213,19 +208,20 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     final String linkTarget = (String) content.getComputedStyle().getStyleProperty( ElementStyleKeys.HREF_TARGET );
     if ( linkTarget != null ) {
       // this may be wrong if we have quotes inside. We should escape them ..
-      final String formula = "HYPERLINK(" + splitAndQuoteExcelFormula( linkTarget ) +
-        "," + splitAndQuoteExcelFormula( textExtractor.getText() ) + ")";
+      final String formula =
+          "HYPERLINK(" + splitAndQuoteExcelFormula( linkTarget ) + ","
+              + splitAndQuoteExcelFormula( textExtractor.getText() ) + ")";
       if ( formula.length() < 1024 ) {
         cell.setCellFormula( formula );
         return true;
       }
 
-      logger.warn(
-        "Excel-Cells cannot contain formulas longer than 1023 characters. Converting hyperlink into plain text" );
+      logger
+          .warn( "Excel-Cells cannot contain formulas longer than 1023 characters. Converting hyperlink into plain text" );
     }
 
-    final Object attr1 = content.getAttributes().getAttribute( AttributeNames.Excel.NAMESPACE,
-      AttributeNames.Excel.FIELD_FORMULA );
+    final Object attr1 =
+        content.getAttributes().getAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FIELD_FORMULA );
     if ( attr1 != null ) {
       final String formula = String.valueOf( attr1 );
       if ( formula.length() < 1024 ) {
@@ -233,8 +229,8 @@ public class FastExcelPrinter extends ExcelPrinterBase {
         return true;
       }
 
-      logger.warn(
-        "Excel-Cells cannot contain formulas longer than 1023 characters. Converting excel formula into plain text" );
+      logger
+          .warn( "Excel-Cells cannot contain formulas longer than 1023 characters. Converting excel formula into plain text" );
     }
 
     if ( value instanceof RichTextString ) {
@@ -246,8 +242,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
       cell.setCellValue( number.doubleValue() );
     } else if ( value instanceof Boolean ) {
       cell.setCellValue( Boolean.TRUE.equals( value ) );
-    } else // Something we can't handle.
-    {
+    } else { // Something we can't handle.
       if ( value == null ) {
         cell.setCellType( Cell.CELL_TYPE_BLANK );
       } else {
@@ -257,9 +252,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     return true;
   }
 
-  private boolean handleImageValues( final ReportElement content,
-                                     final TableRectangle rectangle,
-                                     final Object value ) {
+  private boolean handleImageValues( final ReportElement content, final TableRectangle rectangle, final Object value ) {
     final StyleSheet rawSource = content.getComputedStyle();
 
     if ( value instanceof Image ) {
@@ -281,7 +274,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
       final DrawableWrapper drawable = (DrawableWrapper) value;
       final StrictBounds contentBounds = sheetLayout.getBounds( rectangle );
       final ImageContainer imageFromDrawable =
-        RenderUtility.createImageFromDrawable( drawable, contentBounds, content.getComputedStyle(), getMetaData() );
+          RenderUtility.createImageFromDrawable( drawable, contentBounds, content.getComputedStyle(), getMetaData() );
       createImageCell( rawSource, imageFromDrawable, sheetLayout, rectangle, contentBounds );
       return true;
     } else if ( value instanceof Shape ) {

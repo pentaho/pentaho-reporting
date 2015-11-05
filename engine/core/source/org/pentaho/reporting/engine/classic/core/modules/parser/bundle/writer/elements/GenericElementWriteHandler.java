@@ -20,20 +20,21 @@ public class GenericElementWriteHandler extends AbstractElementWriteHandler {
   /**
    * Writes a single element as XML structure.
    *
-   * @param bundle    the bundle to which to write to.
-   * @param state     the current write-state.
-   * @param xmlWriter the xml writer.
-   * @param element   the element.
-   * @throws java.io.IOException                                                                          if an IO error
-   *                                                                                                      occured.
-   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException if an Bundle
-   *                                                                                                      writer.
+   * @param bundle
+   *          the bundle to which to write to.
+   * @param state
+   *          the current write-state.
+   * @param xmlWriter
+   *          the xml writer.
+   * @param element
+   *          the element.
+   * @throws java.io.IOException
+   *           if an IO error occured.
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException
+   *           if an Bundle writer.
    */
-  public void writeElement( final WriteableDocumentBundle bundle,
-                            final BundleWriterState state,
-                            final XmlWriter xmlWriter,
-                            final Element element )
-    throws IOException, BundleWriterException {
+  public void writeElement( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final XmlWriter xmlWriter, final Element element ) throws IOException, BundleWriterException {
     if ( bundle == null ) {
       throw new NullPointerException();
     }

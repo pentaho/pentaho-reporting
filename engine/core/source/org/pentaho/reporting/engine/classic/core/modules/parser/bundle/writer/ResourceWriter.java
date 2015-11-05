@@ -1,21 +1,25 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,10 +41,6 @@ import org.pentaho.reporting.libraries.repository.MimeRegistry;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.loader.raw.RawResourceLoader;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A handler that writes resources into the document bundle based on the resource keys found inside the report
@@ -71,14 +71,18 @@ public class ResourceWriter implements BundleWriterHandler {
    * returned is always absolute and can be made relative by using the IOUtils of LibBase. If the writer-handler did not
    * generate a file on its own, it should return null.
    *
-   * @param bundle the bundle where to write to.
-   * @param state  the writer state to hold the current processing information.
+   * @param bundle
+   *          the bundle where to write to.
+   * @param state
+   *          the writer state to hold the current processing information.
    * @return the name of the newly generated file or null if no file was created.
-   * @throws IOException           if any error occured
-   * @throws BundleWriterException if a bundle-management error occured.
+   * @throws IOException
+   *           if any error occured
+   * @throws BundleWriterException
+   *           if a bundle-management error occured.
    */
-  public String writeReport( final WriteableDocumentBundle bundle,
-                             final BundleWriterState state ) throws IOException, BundleWriterException {
+  public String writeReport( final WriteableDocumentBundle bundle, final BundleWriterState state ) throws IOException,
+    BundleWriterException {
     BundleUtilities.copyStickyInto( bundle, state.getGlobalBundle() );
 
     // Process all nodes starting at the top
@@ -88,9 +92,8 @@ public class ResourceWriter implements BundleWriterHandler {
     return null;
   }
 
-  private void processSection( final WriteableDocumentBundle documentBundle,
-                               final MasterReport report,
-                               final Section section ) throws BundleWriterException {
+  private void processSection( final WriteableDocumentBundle documentBundle, final MasterReport report,
+      final Section section ) throws BundleWriterException {
     final int count = section.getElementCount();
     for ( int i = 0; i < count; i++ ) {
       final ReportElement element = section.getElement( i );
@@ -102,7 +105,7 @@ public class ResourceWriter implements BundleWriterHandler {
         final RootLevelBand rl = (RootLevelBand) element;
         final SubReport[] reports = rl.getSubReports();
         for ( int j = 0; j < reports.length; j++ ) {
-          final SubReport subReport = reports[ j ];
+          final SubReport subReport = reports[j];
           processSection( documentBundle, report, subReport );
         }
       }
@@ -111,13 +114,13 @@ public class ResourceWriter implements BundleWriterHandler {
       final ElementMetaData metaData = element.getMetaData();
       final AttributeMetaData[] attributeDescriptions = metaData.getAttributeDescriptions();
       for ( int j = 0; j < attributeDescriptions.length; j++ ) {
-        final AttributeMetaData attributeDescription = attributeDescriptions[ j ];
+        final AttributeMetaData attributeDescription = attributeDescriptions[j];
         if ( "Resource".equals( attributeDescription.getValueRole() ) == false ) {
           continue;
         }
 
         final Object attribute =
-          element.getAttribute( attributeDescription.getNameSpace(), attributeDescription.getName() );
+            element.getAttribute( attributeDescription.getNameSpace(), attributeDescription.getName() );
         if ( attribute instanceof ResourceKey == false ) {
           continue;
         }
@@ -135,14 +138,16 @@ public class ResourceWriter implements BundleWriterHandler {
    * Processes the resource key to see if it refers to a resource which should be embedded. If it should be embedded,
    * the data will be embedded and a replacement resource key will be generated.
    *
-   * @param documentBundle the document budle in which the resources will be embedded
-   * @param resourceKey    the resource key which may refer to a resource which should be embedded
+   * @param documentBundle
+   *          the document bundle in which the resources will be embedded
+   * @param resourceKey
+   *          the resource key which may refer to a resource which should be embedded
    * @return a resource key which should replace the key passed in
-   * @throws BundleWriterException indicates an error trying to embed the resource into the document bundle
+   * @throws BundleWriterException
+   *           indicates an error trying to embed the resource into the document bundle
    */
   private static ResourceKey processResourceKeyAttribute( final WriteableDocumentBundle documentBundle,
-                                                          final MasterReport report,
-                                                          final ResourceKey resourceKey ) throws BundleWriterException {
+      final MasterReport report, final ResourceKey resourceKey ) throws BundleWriterException {
     // See if this key is already embedded
     if ( documentBundle.isEmbeddedKey( resourceKey ) ) {
       return null;
@@ -153,9 +158,8 @@ public class ResourceWriter implements BundleWriterHandler {
 
     // Determine if this key should be embedded
     final Map factoryParameters = resourceKey.getFactoryParameters();
-    if ( embedded == false &&
-      "true".equals( factoryParameters.get( ClassicEngineFactoryParameters.EMBED ) ) == false &&
-      RawResourceLoader.SCHEMA_NAME.equals( resourceKey.getSchema() ) == false ) {
+    if ( embedded == false && "true".equals( factoryParameters.get( ClassicEngineFactoryParameters.EMBED ) ) == false
+        && RawResourceLoader.SCHEMA_NAME.equals( resourceKey.getSchema() ) == false ) {
       return null;
     }
 
@@ -178,9 +182,8 @@ public class ResourceWriter implements BundleWriterHandler {
         pattern = derivePatternFromPath( mimeRegistry, mimeType, resourceKey.getIdentifierAsString() );
       }
 
-      log.debug(
-        "Embedding resource : originalValue=[" + originalValue + "] pattern=[" + pattern + "] mimeType=[" + mimeType
-          + "]" );
+      log.debug( "Embedding resource : originalValue=[" + originalValue + "] pattern=[" + pattern + "] mimeType=["
+          + mimeType + "]" );
 
       // Clean up the factory parameters - we are only keeping the Original Value parameter
       Map newFactoryParameters = null;
@@ -190,8 +193,9 @@ public class ResourceWriter implements BundleWriterHandler {
       }
 
       // Embed the resource
-      final ResourceKey newResourceKey = WriteableDocumentBundleUtils.embedResource
-        ( documentBundle, report.getResourceManager(), resourceKey, pattern, mimeType, newFactoryParameters );
+      final ResourceKey newResourceKey =
+          WriteableDocumentBundleUtils.embedResource( documentBundle, report.getResourceManager(), resourceKey,
+              pattern, mimeType, newFactoryParameters );
       if ( log.isDebugEnabled() ) {
         log.debug( "Resouce Embedded: [" + newResourceKey.getIdentifierAsString() + "]" );
       }
@@ -218,8 +222,8 @@ public class ResourceWriter implements BundleWriterHandler {
     return false;
   }
 
-  public static String derivePatternFromPath( final MimeRegistry mimeRegistry,
-                                              final String mimeType, final String path ) {
+  public static String
+    derivePatternFromPath( final MimeRegistry mimeRegistry, final String mimeType, final String path ) {
     if ( mimeType == null ) {
       throw new NullPointerException();
     }

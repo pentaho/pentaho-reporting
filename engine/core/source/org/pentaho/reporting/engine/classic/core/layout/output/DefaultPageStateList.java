@@ -1,30 +1,29 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
+
+import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.util.WeakReferenceList;
 import org.pentaho.reporting.libraries.base.config.ExtendedConfigurationWrapper;
-
-import java.util.ArrayList;
-
 
 /**
  * The ReportState list stores a report states for the beginning of every page. The list is filled on repagination and
@@ -44,9 +43,8 @@ import java.util.ArrayList;
 public class DefaultPageStateList implements PageStateList {
   private static final Log logger = LogFactory.getLog( DefaultPageStateList.class );
   /**
-   * The position of the master element in the list. A greater value will reduce the
-   * not-freeable memory used by the list, but restoring a single page will require more
-   * time.
+   * The position of the master element in the list. A greater value will reduce the not-freeable memory used by the
+   * list, but restoring a single page will require more time.
    */
 
   /**
@@ -82,8 +80,10 @@ public class DefaultPageStateList implements PageStateList {
     /**
      * Creates a new master list.
      *
-     * @param list          the list.
-     * @param maxChildCount the maximum number of elements in this list.
+     * @param list
+     *          the list.
+     * @param maxChildCount
+     *          the maximum number of elements in this list.
      */
     private MasterList( final DefaultPageStateList list, final int maxChildCount ) {
       super( maxChildCount );
@@ -97,7 +97,8 @@ public class DefaultPageStateList implements PageStateList {
     /**
      * Function to restore the state of a child after the child was garbage collected.
      *
-     * @param index the index.
+     * @param index
+     *          the index.
      * @return the restored ReportState of the given index, or null, if the state could not be restored.
      */
     protected InternalStorageState restoreChild( final int index ) {
@@ -111,8 +112,9 @@ public class DefaultPageStateList implements PageStateList {
 
         if ( master.isValidRestorePoint() == false ) {
           // not a safe point, so restore the master first ..
-          final InternalStorageState state = DefaultPageStateList.this.restoreState
-            ( master.getStorePosition(), master.getLastSavePosition(), getInternal( master.getLastSavePosition() ) );
+          final InternalStorageState state =
+              DefaultPageStateList.this.restoreState( master.getStorePosition(), master.getLastSavePosition(),
+                  getInternal( master.getLastSavePosition() ) );
           setMaster( state );
           master = state;
         }
@@ -128,11 +130,13 @@ public class DefaultPageStateList implements PageStateList {
      * Internal handler function restore a state. Count denotes the number of pages required to be processed to restore
      * the page, when the reportstate master is used as source element.
      *
-     * @param count     the count.
-     * @param rootstate the root state.
+     * @param count
+     *          the count.
+     * @param rootstate
+     *          the root state.
      * @return the report state.
-     * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException if there was a problem processing the
-     *                                                                             report.
+     * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
+     *           if there was a problem processing the report.
      */
     private InternalStorageState restoreState( final int count, final InternalStorageState rootstate )
       throws ReportProcessingException {
@@ -147,8 +151,7 @@ public class DefaultPageStateList implements PageStateList {
         if ( pageState == null ) {
           throw new IllegalStateException( "State returned is null: Report processing reached premature end-point." );
         }
-        state = new InternalStorageState
-          ( pageState, rootstate.getStorePosition() + i, rootstate.getLastSavePosition() );
+        state = new InternalStorageState( pageState, rootstate.getStorePosition() + i, rootstate.getLastSavePosition() );
         if ( state.isValidRestorePoint() ) {
           set( state, i + 1 );
         }
@@ -162,9 +165,7 @@ public class DefaultPageStateList implements PageStateList {
     private int storePosition;
     private int lastSavePosition;
 
-    private InternalStorageState( final PageState pageState,
-                                  final int storePosition,
-                                  final int lastSavePosition ) {
+    private InternalStorageState( final PageState pageState, final int storePosition, final int lastSavePosition ) {
       this.pageState = pageState;
       this.storePosition = storePosition;
       this.lastSavePosition = lastSavePosition;
@@ -226,8 +227,10 @@ public class DefaultPageStateList implements PageStateList {
    * Creates a new reportstatelist. The list will be filled using the specified report and output target. Filling of the
    * list is done elsewhere.
    *
-   * @param proc the reportprocessor used to restore lost states (null not permitted).
-   * @throws NullPointerException if the report processor is <code>null</code>.
+   * @param proc
+   *          the reportprocessor used to restore lost states (null not permitted).
+   * @throws NullPointerException
+   *           if the report processor is <code>null</code>.
    */
   public DefaultPageStateList( final ReportProcessor proc ) {
     if ( proc == null ) {
@@ -238,16 +241,21 @@ public class DefaultPageStateList implements PageStateList {
 
     final ExtendedConfigurationWrapper config = new ExtendedConfigurationWrapper( proc.getConfiguration() );
 
-    this.primaryPoolSize = config.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.performance.pagestates.PrimaryPoolSize", PRIMARY_MAX );
-    this.secondaryPoolFrequency = config.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolFrequency",
-        MASTERPOSITIONS_MED );
-    this.secondaryPoolSize = config.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolSize", MASTER4_MAX )
-      + primaryPoolSize;
-    this.tertiaryPoolFrequency = config.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.performance.pagestates.TertiaryPoolFrequency", MASTERPOSITIONS_MAX );
+    this.primaryPoolSize =
+        config.getIntProperty( "org.pentaho.reporting.engine.classic.core.performance.pagestates.PrimaryPoolSize",
+            PRIMARY_MAX );
+    this.secondaryPoolFrequency =
+        config.getIntProperty(
+            "org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolFrequency",
+            MASTERPOSITIONS_MED );
+    this.secondaryPoolSize =
+        config.getIntProperty( "org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolSize",
+            MASTER4_MAX )
+            + primaryPoolSize;
+    this.tertiaryPoolFrequency =
+        config.getIntProperty(
+            "org.pentaho.reporting.engine.classic.core.performance.pagestates.TertiaryPoolFrequency",
+            MASTERPOSITIONS_MAX );
 
     if ( primaryPoolSize < 1 ) {
       throw new IllegalStateException( "Invalid configuration: Primary pool must be >= 1" );
@@ -270,12 +278,14 @@ public class DefaultPageStateList implements PageStateList {
   /**
    * Returns the index of the WeakReferenceList in the master list.
    *
-   * @param pos         the position.
-   * @param maxListSize the maximum list size.
+   * @param pos
+   *          the position.
+   * @param maxListSize
+   *          the maximum list size.
    * @return the position within the masterStateList.
    */
   private int getMasterPos( final int pos, final int maxListSize ) {
-    //return (int) Math.floor(pos / maxListSize);
+    // return (int) Math.floor(pos / maxListSize);
     return ( pos / maxListSize );
   }
 
@@ -295,7 +305,8 @@ public class DefaultPageStateList implements PageStateList {
   /**
    * Adds this report state to the end of the list.
    *
-   * @param pageState the report state.
+   * @param pageState
+   *          the report state.
    */
   public void add( final PageState pageState ) {
     if ( pageState == null ) {
@@ -316,10 +327,9 @@ public class DefaultPageStateList implements PageStateList {
     if ( size < primaryPoolSize ) {
       primaryStates.add( state );
       this.size++;
-    }
-    // the next 100 Elements are stored into a list of 4-element weakReference
-    //list. So if an Element gets lost (GCd), only 4 states need to be replayed.
-    else if ( size < secondaryPoolSize ) {
+    } else if ( size < secondaryPoolSize ) {
+      // the next 100 Elements are stored into a list of 4-element weakReference
+      // list. So if an Element gets lost (GCd), only 4 states need to be replayed.
       final int secPos = size - primaryPoolSize;
       final int masterPos = getMasterPos( secPos, secondaryPoolFrequency );
       if ( masterPos >= masterStates4.size() ) {
@@ -331,10 +341,9 @@ public class DefaultPageStateList implements PageStateList {
         master.add( state );
       }
       this.size++;
-    }
-    // all other Elements are stored into a list of 10-element weakReference
-    //list. So if an Element gets lost (GCd), 10 states need to be replayed.
-    else {
+    } else {
+      // all other Elements are stored into a list of 10-element weakReference
+      // list. So if an Element gets lost (GCd), 10 states need to be replayed.
       final int thirdPos = size - secondaryPoolSize;
       final int masterPos = getMasterPos( thirdPos, tertiaryPoolFrequency );
       if ( masterPos >= masterStates10.size() ) {
@@ -366,10 +375,9 @@ public class DefaultPageStateList implements PageStateList {
       }
 
       primaryStates.set( index, state );
-    }
-    // the next 100 Elements are stored into a list of 4-element weakReference
-    //list. So if an Element gets lost (GCd), only 4 states need to be replayed.
-    else if ( index < secondaryPoolSize ) {
+    } else if ( index < secondaryPoolSize ) {
+      // the next 100 Elements are stored into a list of 4-element weakReference
+      // list. So if an Element gets lost (GCd), only 4 states need to be replayed.
       final int secPos = index - primaryPoolSize;
       final int masterPos = getMasterPos( secPos, secondaryPoolFrequency );
       if ( masterPos >= masterStates4.size() ) {
@@ -383,10 +391,9 @@ public class DefaultPageStateList implements PageStateList {
       }
 
       master.set( state, secPos );
-    }
-    // all other Elements are stored into a list of 10-element weakReference
-    //list. So if an Element gets lost (GCd), 10 states need to be replayed.
-    else {
+    } else {
+      // all other Elements are stored into a list of 10-element weakReference
+      // list. So if an Element gets lost (GCd), 10 states need to be replayed.
       final int thirdPos = index - secondaryPoolSize;
       final int masterPos = getMasterPos( thirdPos, tertiaryPoolFrequency );
       if ( masterPos >= masterStates10.size() ) {
@@ -416,13 +423,13 @@ public class DefaultPageStateList implements PageStateList {
   /**
    * Retrieves the element on position <code>index</code> in this list.
    *
-   * @param index the index.
+   * @param index
+   *          the index.
    * @return the report state.
    */
   public PageState get( final int index ) {
     if ( index >= size() || index < 0 ) {
-      throw new IndexOutOfBoundsException
-        ( "Index is invalid. Index was " + index + "; size was " + size() );
+      throw new IndexOutOfBoundsException( "Index is invalid. Index was " + index + "; size was " + size() );
     }
     final InternalStorageState internal = getInternal( index );
     if ( internal.isValidRestorePoint() == false ) {
@@ -453,17 +460,18 @@ public class DefaultPageStateList implements PageStateList {
    * Internal handler function restore a state. Count denotes the number of pages required to be processed to restore
    * the page, when the reportstate master is used as source element.
    *
-   * @param pageCursor    the page cursor for the end state of the restore sequence.
-   * @param lastSaveState the page cursor for the start state of the restore sequence.
-   * @param rootstate     the root state.
+   * @param pageCursor
+   *          the page cursor for the end state of the restore sequence.
+   * @param lastSaveState
+   *          the page cursor for the start state of the restore sequence.
+   * @param rootstate
+   *          the root state.
    * @return the report state.
-   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException if there was a problem processing the
-   *                                                                             report.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
+   *           if there was a problem processing the report.
    */
-  private InternalStorageState restoreState( final int pageCursor,
-                                             final int lastSaveState,
-                                             final InternalStorageState rootstate )
-    throws ReportProcessingException {
+  private InternalStorageState restoreState( final int pageCursor, final int lastSaveState,
+      final InternalStorageState rootstate ) throws ReportProcessingException {
     logger.info( "Restoring global state " + pageCursor + " from " + lastSaveState );
     if ( rootstate == null ) {
       throw new NullPointerException( "Master is null" );

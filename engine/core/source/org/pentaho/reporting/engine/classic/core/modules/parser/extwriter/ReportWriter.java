@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
@@ -42,7 +42,6 @@ import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.URL;
-
 
 /**
  * A report writer.
@@ -90,40 +89,39 @@ public class ReportWriter extends ReportWriterContext {
    * <p/>
    * This will only create a valid definition, if the report has a valid content base object set.
    *
-   * @param report the report for which to create the writer configuration.
+   * @param report
+   *          the report for which to create the writer configuration.
    * @return the generated configuration.
    */
   public static Configuration createDefaultConfiguration( final MasterReport report ) {
-    final ModifiableConfiguration repConf =
-      new HierarchicalConfiguration( report.getReportConfiguration() );
+    final ModifiableConfiguration repConf = new HierarchicalConfiguration( report.getReportConfiguration() );
     final ResourceKey contentBase = report.getContentBase();
     if ( contentBase != null ) {
       final ResourceManager resourceManager = report.getResourceManager();
       final URL value = resourceManager.toURL( contentBase );
       if ( value != null ) {
-        repConf.setConfigProperty
-          ( AbstractXmlResourceFactory.CONTENTBASE_KEY, value.toExternalForm() );
+        repConf.setConfigProperty( AbstractXmlResourceFactory.CONTENTBASE_KEY, value.toExternalForm() );
       }
     }
 
     return repConf;
   }
 
-  public ReportWriter( final MasterReport reportDefinition,
-                       final String encoding ) {
+  public ReportWriter( final MasterReport reportDefinition, final String encoding ) {
     this( reportDefinition, encoding, ReportWriter.createDefaultConfiguration( reportDefinition ) );
   }
 
   /**
    * Creates a new report writer for a report.
    *
-   * @param report   the report.
-   * @param encoding the encoding.
-   * @param config   the write configuration.
+   * @param report
+   *          the report.
+   * @param encoding
+   *          the encoding.
+   * @param config
+   *          the write configuration.
    */
-  public ReportWriter( final MasterReport report,
-                       final String encoding,
-                       final Configuration config ) {
+  public ReportWriter( final MasterReport report, final String encoding, final Configuration config ) {
     super( report );
     if ( encoding == null ) {
       throw new NullPointerException( "Encoding is null." );
@@ -131,11 +129,11 @@ public class ReportWriter extends ReportWriterContext {
     if ( config == null ) {
       throw new NullPointerException( "Configuration is null." );
     }
-    //    if (config.getConfigProperty(AbstractXmlResourceFactory.CONTENTBASE_KEY) == null)
-    //    {
-    //      throw new IllegalStateException
-    //          ("This report writer configuration does not define a content base.");
-    //    }
+    // if (config.getConfigProperty(AbstractXmlResourceFactory.CONTENTBASE_KEY) == null)
+    // {
+    // throw new IllegalStateException
+    // ("This report writer configuration does not define a content base.");
+    // }
 
     this.encoding = encoding;
     this.configuration = config;
@@ -165,7 +163,8 @@ public class ReportWriter extends ReportWriterContext {
   /**
    * Adds a data-source factory.
    *
-   * @param dsf the data-source factory.
+   * @param dsf
+   *          the data-source factory.
    */
   public void addDataSourceFactory( final DataSourceFactory dsf ) {
     dataSourceCollector.addFactory( dsf );
@@ -183,7 +182,8 @@ public class ReportWriter extends ReportWriterContext {
   /**
    * Adds an element factory.
    *
-   * @param ef the element factory.
+   * @param ef
+   *          the element factory.
    */
   public void addElementFactory( final ElementFactory ef ) {
     elementFactoryCollector.addFactory( ef );
@@ -201,7 +201,8 @@ public class ReportWriter extends ReportWriterContext {
   /**
    * Adds a class factory.
    *
-   * @param cf the class factory.
+   * @param cf
+   *          the class factory.
    */
   public void addClassFactoryFactory( final ClassFactory cf ) {
     classFactoryCollector.addFactory( cf );
@@ -219,7 +220,8 @@ public class ReportWriter extends ReportWriterContext {
   /**
    * Adds a style-key factory.
    *
-   * @param skf the style-key factory.
+   * @param skf
+   *          the style-key factory.
    */
   public void addStyleKeyFactory( final StyleKeyFactory skf ) {
     styleKeyFactoryCollector.addFactory( skf );
@@ -237,7 +239,8 @@ public class ReportWriter extends ReportWriterContext {
   /**
    * Adds a template collection.
    *
-   * @param collection the template collection.
+   * @param collection
+   *          the template collection.
    */
   public void addTemplateCollection( final TemplateCollection collection ) {
     templateCollector.addTemplateCollection( collection );
@@ -255,12 +258,14 @@ public class ReportWriter extends ReportWriterContext {
   /**
    * Writes a report to a character stream writer.
    *
-   * @param w the character stream writer.
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if there is a problem writing the report.
+   * @param w
+   *          the character stream writer.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if there is a problem writing the report.
    */
-  public void write( final Writer w )
-    throws IOException, ReportWriterException {
+  public void write( final Writer w ) throws IOException, ReportWriterException {
     final XmlWriter xmlWriter = new XmlWriter( w, createTagDescription() );
 
     xmlWriter.writeXmlDeclaration( getEncoding() );
@@ -270,8 +275,7 @@ public class ReportWriter extends ReportWriterContext {
 
   private TagDescription createTagDescription() {
     final DefaultTagDescription defaultTagDescription = new DefaultTagDescription();
-    defaultTagDescription.configure
-      ( ClassicEngineBoot.getInstance().getGlobalConfig(),
+    defaultTagDescription.configure( ClassicEngineBoot.getInstance().getGlobalConfig(),
         "org.pentaho.reporting.engine.classic.core.modules.parser.extwriter." );
     return defaultTagDescription;
   }

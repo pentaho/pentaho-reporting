@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
@@ -24,7 +24,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import java.text.Format;
 
 /**
- * The base class for filters that format data.  Data is received from a DataSource and formatted. The data source might
+ * The base class for filters that format data. Data is received from a DataSource and formatted. The data source might
  * be a field in the TableModel or a report function, or even another format filter (since filters implement the
  * DataSource interface).
  * <p/>
@@ -85,8 +85,10 @@ public class FormatFilter implements DataFilter, RawDataSource {
   /**
    * Sets the format for the filter.
    *
-   * @param format The format.
-   * @throws NullPointerException if the given format is null
+   * @param format
+   *          The format.
+   * @throws NullPointerException
+   *           if the given format is null
    */
   public void setFormatter( final Format format ) {
     if ( format == null ) {
@@ -111,8 +113,9 @@ public class FormatFilter implements DataFilter, RawDataSource {
    * <p/>
    * If format, datasource or object are null, the NullValue is returned.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return The formatted value.
    */
@@ -132,8 +135,7 @@ public class FormatFilter implements DataFilter, RawDataSource {
       return getNullValue();
     }
 
-    if ( cachedResult != null && ( cachedFormat != f ) &&
-      ObjectUtilities.equal( cachedValue, o ) ) {
+    if ( cachedResult != null && ( cachedFormat != f ) && ObjectUtilities.equal( cachedValue, o ) ) {
       return cachedResult;
     }
 
@@ -151,7 +153,8 @@ public class FormatFilter implements DataFilter, RawDataSource {
   /**
    * Sets the value that will be displayed if the data source supplies a null value.
    *
-   * @param nullvalue The string.
+   * @param nullvalue
+   *          The string.
    */
   public void setNullValue( final String nullvalue ) {
     if ( nullvalue == null ) {
@@ -181,7 +184,8 @@ public class FormatFilter implements DataFilter, RawDataSource {
   /**
    * Sets the data source.
    *
-   * @param ds The data source.
+   * @param ds
+   *          The data source.
    */
   public void setDataSource( final DataSource ds ) {
     if ( ds == null ) {
@@ -194,10 +198,10 @@ public class FormatFilter implements DataFilter, RawDataSource {
    * Clones the filter.
    *
    * @return a clone.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public FormatFilter clone()
-    throws CloneNotSupportedException {
+  public FormatFilter clone() throws CloneNotSupportedException {
     final FormatFilter f = (FormatFilter) super.clone();
     if ( datasource != null ) {
       f.datasource = datasource.clone();
@@ -215,10 +219,8 @@ public class FormatFilter implements DataFilter, RawDataSource {
     return datasource.getValue( runtime, element );
   }
 
-
-  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
-                                              final ReportElement element,
-                                              FormatSpecification formatSpecification ) {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime, final ReportElement element,
+      FormatSpecification formatSpecification ) {
     if ( datasource instanceof RawDataSource ) {
       final RawDataSource rds = (RawDataSource) datasource;
       return rds.getFormatString( runtime, element, formatSpecification );
@@ -231,4 +233,3 @@ public class FormatFilter implements DataFilter, RawDataSource {
   }
 
 }
-

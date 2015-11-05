@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.event;
 
@@ -83,7 +83,8 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
   /**
    * Creates a new even without any properties defined. Use this to create a reusable event object.
    *
-   * @param source the report processor that generated this event.
+   * @param source
+   *          the report processor that generated this event.
    */
   public ReportProgressEvent( final Object source ) {
     super( source );
@@ -98,7 +99,8 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
   /**
    * Creates a new even without any properties defined. Use this to create a reusable event object.
    *
-   * @param source the report processor that generated this event.
+   * @param source
+   *          the report processor that generated this event.
    */
   public ReportProgressEvent( final Object source, final int page ) {
     super( source );
@@ -110,25 +112,26 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
     this.row = -1;
   }
 
-
   /**
    * Creates a new report-progress event.
    *
-   * @param source       the report processor that generated this event.
-   * @param activity     the current activity.
-   * @param row          the currently processed row.
-   * @param maximumRow   the number of rows in this local report.
-   * @param page         the current page that is being processed.
-   * @param level        the current processing level.
-   * @param maximumLevel the maximum processing level.
+   * @param source
+   *          the report processor that generated this event.
+   * @param activity
+   *          the current activity.
+   * @param row
+   *          the currently processed row.
+   * @param maximumRow
+   *          the number of rows in this local report.
+   * @param page
+   *          the current page that is being processed.
+   * @param level
+   *          the current processing level.
+   * @param maximumLevel
+   *          the maximum processing level.
    */
-  public ReportProgressEvent( final Object source,
-                              final int activity,
-                              final int row,
-                              final int maximumRow,
-                              final int page,
-                              final int level,
-                              final int maximumLevel ) {
+  public ReportProgressEvent( final Object source, final int activity, final int row, final int maximumRow,
+      final int page, final int level, final int maximumLevel ) {
     super( source );
     this.maximumLevel = maximumLevel;
     this.level = level;
@@ -145,11 +148,11 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
    */
   public String toString() {
     return "ReportProgressEvent[activity=" + activity //$NON-NLS-1$
-      + ", row=" + row //$NON-NLS-1$
-      + ", maximumRow=" + maximumRow //$NON-NLS-1$
-      + ", page=" + page //$NON-NLS-1$
-      + ", level=" + level //$NON-NLS-1$
-      + ", maximumLevel=" + maximumLevel + ']'; //$NON-NLS-1$ //$NON-NLS-2$
+        + ", row=" + row //$NON-NLS-1$
+        + ", maximumRow=" + maximumRow //$NON-NLS-1$
+        + ", page=" + page //$NON-NLS-1$
+        + ", level=" + level //$NON-NLS-1$
+        + ", maximumLevel=" + maximumLevel + ']'; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**
@@ -216,27 +219,29 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
     while ( state.getParentState() != null ) {
       state = state.getParentState();
     }
-    reuse( activity, state.getCurrentRow(), state.getNumberOfRows(), pageCount,
-      state.getProgressLevel(), state.getProgressLevelCount() );
+    reuse( activity, state.getCurrentRow(), state.getNumberOfRows(), pageCount, state.getProgressLevel(), state
+        .getProgressLevelCount() );
   }
 
   /**
    * Reuses the report event by updating the internal properties. This is used as simple mean to reduce the number of
    * objects generated in the system and should not be used elsewhere.
    *
-   * @param activity     the activity as constant.
-   * @param row          the current row.
-   * @param maximumRow   the total rows in the datasource.
-   * @param page         the current page.
-   * @param level        the current processing level.
-   * @param maximumLevel the maximum processing level.
+   * @param activity
+   *          the activity as constant.
+   * @param row
+   *          the current row.
+   * @param maximumRow
+   *          the total rows in the datasource.
+   * @param page
+   *          the current page.
+   * @param level
+   *          the current processing level.
+   * @param maximumLevel
+   *          the maximum processing level.
    */
-  public void reuse( final int activity,
-                     final int row,
-                     final int maximumRow,
-                     final int page,
-                     final int level,
-                     final int maximumLevel ) {
+  public void reuse( final int activity, final int row, final int maximumRow, final int page, final int level,
+      final int maximumLevel ) {
     this.maximumRow = maximumRow;
     this.page = page;
     this.activity = activity;
@@ -258,13 +263,14 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
     }
   }
 
-
   /**
    * Computes the percentage complete (on a scale from 0.0 to 100.0) based on the information found in the report
    * progress event.
    *
-   * @param event          the data used to calculate the percentage complete
-   * @param onlyPagination true, if the processing stops after pagination, or false, if a full export is done.
+   * @param event
+   *          the data used to calculate the percentage complete
+   * @param onlyPagination
+   *          true, if the processing stops after pagination, or false, if a full export is done.
    * @return the calculated percentage complete
    */
   public static double computePercentageComplete( final ReportProgressEvent event, final boolean onlyPagination ) {

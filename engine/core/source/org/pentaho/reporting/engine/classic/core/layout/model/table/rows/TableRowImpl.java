@@ -1,22 +1,21 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table.rows;
-
 
 import org.pentaho.reporting.engine.classic.core.layout.model.Border;
 import org.pentaho.reporting.engine.classic.core.util.LongList;
@@ -63,15 +62,13 @@ public class TableRowImpl implements TableRow {
     return preferredSizes.get( index );
   }
 
-  public void updateDefinedSize( final int rowSpan,
-                                 final long preferredHeight ) {
+  public void updateDefinedSize( final int rowSpan, final long preferredHeight ) {
     if ( rowSpan < 1 ) {
       throw new IllegalArgumentException();
     }
     final int idx = rowSpan - 1;
 
-    if ( ( idx >= preferredSizes.size() ) ||
-      ( preferredSizes.get( idx ) < preferredHeight ) ) {
+    if ( ( idx >= preferredSizes.size() ) || ( preferredSizes.get( idx ) < preferredHeight ) ) {
       preferredSizes.set( idx, preferredHeight );
     }
   }
@@ -91,16 +88,13 @@ public class TableRowImpl implements TableRow {
     return this.validatedTrailingSize.size();
   }
 
-  public void updateValidatedSize( final int rowSpan,
-                                   final long leading,
-                                   final long trailing ) {
+  public void updateValidatedSize( final int rowSpan, final long leading, final long trailing ) {
     final int idx = rowSpan - 1;
     if ( validatedLeadingSize < leading ) {
       validatedLeadingSize = leading;
     }
 
-    if ( ( idx >= validatedTrailingSize.size() ) ||
-      ( validatedTrailingSize.get( idx ) < trailing ) ) {
+    if ( ( idx >= validatedTrailingSize.size() ) || ( validatedTrailingSize.get( idx ) < trailing ) ) {
       validatedTrailingSize.set( idx, trailing );
     }
   }
@@ -127,13 +121,8 @@ public class TableRowImpl implements TableRow {
   }
 
   public String toString() {
-    return "TableRowImpl{" +
-      "preferredSize=" + preferredSize +
-      ", validateSize=" + validateSize +
-      ", preferredSizes=" + preferredSizes +
-      ", validatedLeadingSize=" + validatedLeadingSize +
-      ", validatedTrailingSize=" + validatedTrailingSize +
-      ", border=" + border +
-      '}';
+    return "TableRowImpl{" + "preferredSize=" + preferredSize + ", validateSize=" + validateSize + ", preferredSizes="
+        + preferredSizes + ", validatedLeadingSize=" + validatedLeadingSize + ", validatedTrailingSize="
+        + validatedTrailingSize + ", border=" + border + '}';
   }
 }

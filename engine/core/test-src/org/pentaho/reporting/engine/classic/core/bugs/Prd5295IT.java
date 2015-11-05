@@ -72,10 +72,10 @@ public class Prd5295IT {
 
     ExtractLogicalPageTemplateListener tlp = new ExtractLogicalPageTemplateListener();
     GenericExpressionRuntime runtime = new GenericExpressionRuntime();
-    runtime.getProcessingContext().getOutputProcessorMetaData()
-      .initialize( ClassicEngineBoot.getInstance().getGlobalConfig() );
-    final OutputProcessor op = new TemplatingOutputProcessor
-      ( runtime.getProcessingContext().getOutputProcessorMetaData(), tlp );
+    runtime.getProcessingContext().getOutputProcessorMetaData().initialize(
+        ClassicEngineBoot.getInstance().getGlobalConfig() );
+    final OutputProcessor op =
+        new TemplatingOutputProcessor( runtime.getProcessingContext().getOutputProcessorMetaData(), tlp );
 
     GroupHeader band = report.getRelationalGroup( 0 ).getHeader();
     SubReport sr = band.getSubReport( 0 );

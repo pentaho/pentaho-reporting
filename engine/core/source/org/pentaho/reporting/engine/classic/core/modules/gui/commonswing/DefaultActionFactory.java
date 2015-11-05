@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
@@ -34,12 +34,11 @@ import java.util.Locale;
  */
 public class DefaultActionFactory implements ActionFactory {
   private static final Log logger = LogFactory.getLog( DefaultActionFactory.class );
-  private static final ActionPlugin[] EMPTY_ACTIONS = new ActionPlugin[ 0 ];
-  private static final String PREFIX =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions."; //$NON-NLS-1$
+  private static final ActionPlugin[] EMPTY_ACTIONS = new ActionPlugin[0];
+  private static final String PREFIX = "org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions."; //$NON-NLS-1$
 
   private static final Messages MESSAGES = new Messages( Locale.getDefault(), SwingCommonModule.BUNDLE_NAME,
-    ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
+      ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
 
   public DefaultActionFactory() {
   }
@@ -56,9 +55,8 @@ public class DefaultActionFactory implements ActionFactory {
     final String prefix = DefaultActionFactory.PREFIX + category;
     final Iterator keys = configuration.findPropertyKeys( prefix );
     if ( keys.hasNext() == false ) {
-      DefaultActionFactory.logger
-        .debug( DefaultActionFactory.MESSAGES.getString( "DefaultActionFactory.DEBUG_NO_ACTIONS",
-          category ) ); //$NON-NLS-1$
+      DefaultActionFactory.logger.debug( DefaultActionFactory.MESSAGES.getString(
+          "DefaultActionFactory.DEBUG_NO_ACTIONS", category ) ); //$NON-NLS-1$
       return DefaultActionFactory.EMPTY_ACTIONS;
     }
 
@@ -72,11 +70,11 @@ public class DefaultActionFactory implements ActionFactory {
       }
 
       final String clazz = configuration.getConfigProperty( key );
-      final Object maybeActionPlugin = ObjectUtilities.loadAndInstantiate
-        ( clazz, DefaultActionFactory.class, ActionPlugin.class );
+      final Object maybeActionPlugin =
+          ObjectUtilities.loadAndInstantiate( clazz, DefaultActionFactory.class, ActionPlugin.class );
       if ( maybeActionPlugin == null ) {
         DefaultActionFactory.logger.debug( DefaultActionFactory.MESSAGES.getString(
-          "DefaultActionFactory.DEBUG_NOT_ACTION_PLUGIN", category, clazz ) ); //$NON-NLS-1$
+            "DefaultActionFactory.DEBUG_NOT_ACTION_PLUGIN", category, clazz ) ); //$NON-NLS-1$
         continue;
       }
 
@@ -97,8 +95,7 @@ public class DefaultActionFactory implements ActionFactory {
             otherPlugin.deinitialize( context );
           } else {
             DefaultActionFactory.logger.debug( DefaultActionFactory.MESSAGES.getString(
-              "DefaultActionFactory.DEBUG_PLUGIN_OVERRIDE", category, clazz,
-              otherPlugin.getClass().getName() ) ); //$NON-NLS-1$
+                "DefaultActionFactory.DEBUG_PLUGIN_OVERRIDE", category, clazz, otherPlugin.getClass().getName() ) ); //$NON-NLS-1$
           }
         } else {
           plugins.put( role, plugin );
@@ -107,11 +104,9 @@ public class DefaultActionFactory implements ActionFactory {
     }
 
     DefaultActionFactory.logger.debug( DefaultActionFactory.MESSAGES.getString(
-      "DefaultActionFactory.DEBUG_RETURNING_PLUGINS", String.valueOf( plugins.size() ),
-      category ) ); //$NON-NLS-1$ //$NON-NLS-2$
+        "DefaultActionFactory.DEBUG_RETURNING_PLUGINS", String.valueOf( plugins.size() ), category ) ); //$NON-NLS-1$ //$NON-NLS-2$
 
-    return (ActionPlugin[]) plugins.values().toArray
-      ( new ActionPlugin[ plugins.size() ] );
+    return (ActionPlugin[]) plugins.values().toArray( new ActionPlugin[plugins.size()] );
   }
 
   private boolean isPluginKey( final String base ) {

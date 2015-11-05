@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
@@ -43,8 +43,7 @@ public class HtmlOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     this( HtmlOutputProcessorMetaData.createFontStorage(), paginationMode );
   }
 
-  public HtmlOutputProcessorMetaData( final FontStorage fontStorage,
-                                      final int paginationMode ) {
+  public HtmlOutputProcessorMetaData( final FontStorage fontStorage, final int paginationMode ) {
     super( fontStorage );
     this.paginationMode = paginationMode;
   }
@@ -57,39 +56,44 @@ public class HtmlOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     super.initialize( configuration );
     addFeature( OutputProcessorFeature.SPACING_SUPPORTED );
 
-    final String localStrict = configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.html.StrictLayout" );
+    final String localStrict =
+        configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.StrictLayout" );
     if ( localStrict != null ) {
       if ( "true".equals( localStrict ) ) {
         addFeature( AbstractTableOutputProcessor.STRICT_LAYOUT );
       }
     } else {
-      final String globalStrict = configuration.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout" );
+      final String globalStrict =
+          configuration
+              .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout" );
       if ( "true".equals( globalStrict ) ) {
         addFeature( AbstractTableOutputProcessor.STRICT_LAYOUT );
       }
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.UsePageBands" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.UsePageBands" ) ) ) {
       addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.html.UsePageBands" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.UsePageBands" ) ) ) {
       addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.TreatEllipseAsRectangle" ) ) ) {
+    if ( "true"
+        .equals( configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.TreatEllipseAsRectangle" ) ) ) {
       addFeature( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.html.TreatEllipseAsRectangle" ) ) ) {
+    if ( "true"
+        .equals( configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.TreatEllipseAsRectangle" ) ) ) {
       addFeature( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE );
     }
 
     final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper( configuration );
-    final double deviceResolution = extendedConfig.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.DeviceResolution", 0 );
+    final double deviceResolution =
+        extendedConfig.getIntProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.html.DeviceResolution", 0 );
     if ( deviceResolution > 0 ) {
       setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution );
     }
@@ -105,16 +109,16 @@ public class HtmlOutputProcessorMetaData extends AbstractOutputProcessorMetaData
       addFeature( OutputProcessorFeature.UNALIGNED_PAGEBANDS );
     }
 
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.html.AssumeOverflowX" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.AssumeOverflowX" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_X );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.html.AssumeOverflowY" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.AssumeOverflowY" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
     }
-    if ( "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ShapeAsContent" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ShapeAsContent" ) ) ) {
       addFeature( AbstractTableOutputProcessor.SHAPES_CONTENT );
     }
   }
@@ -124,7 +128,7 @@ public class HtmlOutputProcessorMetaData extends AbstractOutputProcessorMetaData
   }
 
   public String getExportDescriptor() {
-    switch( paginationMode ) {
+    switch ( paginationMode ) {
       case HtmlOutputProcessorMetaData.PAGINATION_FULL:
         return "table/html+pagination";
       case HtmlOutputProcessorMetaData.PAGINATION_MANUAL:
@@ -153,13 +157,12 @@ public class HtmlOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     if ( super.isExtraContentElement( style, attributes ) ) {
       return true;
     }
-    if ( StringUtils.isEmpty( (String)
-      attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.EXTRA_RAW_CONTENT ) ) == false ) {
+    if ( StringUtils.isEmpty( (String) attributes.getAttribute( AttributeNames.Html.NAMESPACE,
+        AttributeNames.Html.EXTRA_RAW_CONTENT ) ) == false ) {
       return true;
     }
-    if ( StringUtils.isEmpty( (String)
-      attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.EXTRA_RAW_FOOTER_CONTENT ) )
-      == false ) {
+    if ( StringUtils.isEmpty( (String) attributes.getAttribute( AttributeNames.Html.NAMESPACE,
+        AttributeNames.Html.EXTRA_RAW_FOOTER_CONTENT ) ) == false ) {
       return true;
     }
     return false;

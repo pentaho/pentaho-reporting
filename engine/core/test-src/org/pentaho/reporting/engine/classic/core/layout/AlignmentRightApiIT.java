@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -82,73 +82,73 @@ public class AlignmentRightApiIT extends TestCase {
      */
     public SurveyScaleDemoTableModel() {
 
-      this.categories = new String[ 3 ];
-      this.categories[ 0 ] = "EVALUATION";
-      this.categories[ 1 ] = "USAGE";
-      this.categories[ 2 ] = "CONTRIBUTION";
+      this.categories = new String[3];
+      this.categories[0] = "EVALUATION";
+      this.categories[1] = "USAGE";
+      this.categories[2] = "CONTRIBUTION";
 
-      this.categoryDescriptions = new String[ 3 ];
-      this.categoryDescriptions[ 0 ] =
-        "When evaluating free / open source software libraries for the Java(tm) platform, how important are the "
-          + "following items to you:";
-      this.categoryDescriptions[ 1 ] =
-        "In day to day usage of a free / open source software library, how important are the following items to you:";
-      this.categoryDescriptions[ 2 ] =
-        "How important are the following items in influencing your decision to contribute code to a free / open "
-          + "source software project:";
+      this.categoryDescriptions = new String[3];
+      this.categoryDescriptions[0] =
+          "When evaluating free / open source software libraries for the Java(tm) platform, how important are the "
+              + "following items to you:";
+      this.categoryDescriptions[1] =
+          "In day to day usage of a free / open source software library, how important are the following items to you:";
+      this.categoryDescriptions[2] =
+          "How important are the following items in influencing your decision to contribute code to a free / open "
+              + "source software project:";
 
-      this.items = new String[ 15 ];
-      this.items[ 0 ] = "An informative and well designed web site.";
-      this.items[ 1 ] = "An active user community (indicated by high traffic in the user mailing list or forum).";
-      this.items[ 2 ] = "An easy-to-run demo application.";
-      this.items[ 3 ] = "Screen shots on the project web-page.";
-      this.items[ 4 ] =
-        "The license under which the source code is distributed (GNU GPL, GNU LGPL, Apache-style, BSD-style etc.)";
-      this.items[ 5 ] = "Comprehensive Javadoc HTML pages.";
-      this.items[ 6 ] = "Developer documentation providing an overview of the library framework.";
-      this.items[ 7 ] = "Demo code that illustrates how to use the library.";
-      this.items[ 8 ] = "A search facility for the mailing list archives or online support forum.";
-      this.items[ 9 ] = "A list of frequently-asked-questions.";
-      this.items[ 10 ] =
-        "Willingness of the project's main developers to engage in discussion about proposed modifications.";
-      this.items[ 11 ] = "Turnaround time for getting patches accepted.";
-      this.items[ 12 ] = "The project's coding standards.";
-      this.items[ 13 ] = "Desire to avoid maintaining a separate branch of modifications to the main project.";
-      this.items[ 14 ] = "Internal policies at your company.";
+      this.items = new String[15];
+      this.items[0] = "An informative and well designed web site.";
+      this.items[1] = "An active user community (indicated by high traffic in the user mailing list or forum).";
+      this.items[2] = "An easy-to-run demo application.";
+      this.items[3] = "Screen shots on the project web-page.";
+      this.items[4] =
+          "The license under which the source code is distributed (GNU GPL, GNU LGPL, Apache-style, BSD-style etc.)";
+      this.items[5] = "Comprehensive Javadoc HTML pages.";
+      this.items[6] = "Developer documentation providing an overview of the library framework.";
+      this.items[7] = "Demo code that illustrates how to use the library.";
+      this.items[8] = "A search facility for the mailing list archives or online support forum.";
+      this.items[9] = "A list of frequently-asked-questions.";
+      this.items[10] =
+          "Willingness of the project's main developers to engage in discussion about proposed modifications.";
+      this.items[11] = "Turnaround time for getting patches accepted.";
+      this.items[12] = "The project's coding standards.";
+      this.items[13] = "Desire to avoid maintaining a separate branch of modifications to the main project.";
+      this.items[14] = "Internal policies at your company.";
 
-      this.responses = new Number[ 15 ];
-      this.responses[ 0 ] = new Integer( 4 );
-      this.responses[ 1 ] = new Integer( 5 );
-      this.responses[ 2 ] = new Integer( 4 );
-      this.responses[ 3 ] = new Integer( 3 );
-      this.responses[ 4 ] = new Integer( 3 );
-      this.responses[ 5 ] = new Integer( 4 );
-      this.responses[ 6 ] = new Integer( 4 );
-      this.responses[ 7 ] = new Integer( 3 );
-      this.responses[ 8 ] = new Integer( 2 );
-      this.responses[ 9 ] = new Integer( 4 );
-      this.responses[ 10 ] = new Integer( 4 );
-      this.responses[ 11 ] = new Integer( 4 );
-      this.responses[ 12 ] = new Integer( 1 );
-      this.responses[ 13 ] = new Integer( 3 );
-      this.responses[ 14 ] = new Integer( 3 );
+      this.responses = new Number[15];
+      this.responses[0] = new Integer( 4 );
+      this.responses[1] = new Integer( 5 );
+      this.responses[2] = new Integer( 4 );
+      this.responses[3] = new Integer( 3 );
+      this.responses[4] = new Integer( 3 );
+      this.responses[5] = new Integer( 4 );
+      this.responses[6] = new Integer( 4 );
+      this.responses[7] = new Integer( 3 );
+      this.responses[8] = new Integer( 2 );
+      this.responses[9] = new Integer( 4 );
+      this.responses[10] = new Integer( 4 );
+      this.responses[11] = new Integer( 4 );
+      this.responses[12] = new Integer( 1 );
+      this.responses[13] = new Integer( 3 );
+      this.responses[14] = new Integer( 3 );
 
-      this.averages = new Number[ 15 ];
-      this.averages[ 0 ] = new Double( 3.85 );
-      this.averages[ 1 ] = new Double( 4.25 );
-      this.averages[ 2 ] = new Double( 4.00 );
-      this.averages[ 3 ] = new Double( 4.40 );
-      this.averages[ 4 ] = new Double( 3.55 );
-      this.averages[ 5 ] = new Double( 3.70 );
-      this.averages[ 6 ] = new Double( 4.60 );
-      this.averages[ 7 ] = new Double( 3.50 );
-      this.averages[ 8 ] = new Double( 4.50 );
-      this.averages[ 9 ] = new Double( 4.15 );
-      this.averages[ 10 ] = new Double( 4.25 );
-      this.averages[ 11 ] = new Double( 3.85 );
-      this.averages[ 12 ] = new Double( 3.95 );
-      this.averages[ 13 ] = new Double( 3.85 );
-      this.averages[ 14 ] = new Double( 4.70 );
+      this.averages = new Number[15];
+      this.averages[0] = new Double( 3.85 );
+      this.averages[1] = new Double( 4.25 );
+      this.averages[2] = new Double( 4.00 );
+      this.averages[3] = new Double( 4.40 );
+      this.averages[4] = new Double( 3.55 );
+      this.averages[5] = new Double( 3.70 );
+      this.averages[6] = new Double( 4.60 );
+      this.averages[7] = new Double( 3.50 );
+      this.averages[8] = new Double( 4.50 );
+      this.averages[9] = new Double( 4.15 );
+      this.averages[10] = new Double( 4.25 );
+      this.averages[11] = new Double( 3.85 );
+      this.averages[12] = new Double( 3.95 );
+      this.averages[13] = new Double( 3.85 );
+      this.averages[14] = new Double( 4.70 );
 
     }
 
@@ -164,7 +164,8 @@ public class AlignmentRightApiIT extends TestCase {
     /**
      * Returns the name of a column.
      *
-     * @param index the column index.
+     * @param index
+     *          the column index.
      * @return The column name.
      */
     public String getColumnName( final int index ) {
@@ -195,21 +196,23 @@ public class AlignmentRightApiIT extends TestCase {
     /**
      * Returns an item for the table.
      *
-     * @param row    the row index (zero-based).
-     * @param column the column index (zero-based).
+     * @param row
+     *          the row index (zero-based).
+     * @param column
+     *          the column index (zero-based).
      * @return The item.
      */
     public Object getValueAt( final int row, final int column ) {
       if ( column == 0 ) {
-        return this.categories[ row / 5 ];
+        return this.categories[row / 5];
       } else if ( column == 1 ) {
-        return this.categoryDescriptions[ row / 5 ];
+        return this.categoryDescriptions[row / 5];
       } else if ( column == 2 ) {
-        return this.items[ row ];
+        return this.items[row];
       } else if ( column == 3 ) {
-        return this.responses[ row ];
+        return this.responses[row];
       } else if ( column == 4 ) {
-        return this.averages[ row ];
+        return this.averages[row];
       } else {
         return null;
       }
@@ -285,8 +288,7 @@ public class AlignmentRightApiIT extends TestCase {
     /**
      * The width of the third column.
      */
-    private static final float C3_WIDTH =
-      ( PRINT_WIDTH - LEFT_GAP - C1_WIDTH - C2_WIDTH - RIGHT_GAP ) / 2.0f;
+    private static final float C3_WIDTH = ( PRINT_WIDTH - LEFT_GAP - C1_WIDTH - C2_WIDTH - RIGHT_GAP ) / 2.0f;
 
     private static final float X4 = X3 + C3_WIDTH;
 
@@ -321,16 +323,15 @@ public class AlignmentRightApiIT extends TestCase {
 
       setupWatermark( report );
       setupPageHeader( report );
-      //// REPORT GROUP /////////////////////////////////////////////////////////////////////////
+      // // REPORT GROUP /////////////////////////////////////////////////////////////////////////
       setupGroup( report );
-      //// ITEM BAND ////////////////////////////////////////////////////////////////////////////
+      // // ITEM BAND ////////////////////////////////////////////////////////////////////////////
       setupItemBand( report );
-      //// PAGE FOOTER //////////////////////////////////////////////////////////////////////////
+      // // PAGE FOOTER //////////////////////////////////////////////////////////////////////////
       setupPageFooter( report );
 
       report.getParameterValues().put( "RESPONDENT_NAME", "Dave" );
-      report.setDataFactory( new TableDataFactory
-        ( "default", new SurveyScaleDemoTableModel() ) );
+      report.setDataFactory( new TableDataFactory( "default", new SurveyScaleDemoTableModel() ) );
       return report;
     }
 
@@ -477,7 +478,7 @@ public class AlignmentRightApiIT extends TestCase {
       pageHeader.addElement( labelFactory.createElement() );
 
       // the following expression is used to format the manager name into a message string
-      // that says 'Respondent:  <name>'.  The whole string can be centered on the page that way.
+      // that says 'Respondent: <name>'. The whole string can be centered on the page that way.
       // This expression expects to find a marked report property called 'MANAGER_NAME', look
       // in the attemptPreview() method to see how this is set up.
 
@@ -493,9 +494,9 @@ public class AlignmentRightApiIT extends TestCase {
       pageHeader.addElement( tfef.createElement() );
 
       labelFactory.setAbsolutePosition( new Point2D.Double( X1, 58.0 ) );
-      labelFactory.setText(
-        "Please note that the questions AND responses presented below were INVENTED for the the purpose of this demo "
-          + "report.  They are NOT real." );
+      labelFactory
+          .setText( "Please note that the questions AND responses presented below were INVENTED for the the purpose of this demo "
+              + "report.  They are NOT real." );
       labelFactory.setFontName( "Serif" );
       labelFactory.setFontSize( new Integer( 11 ) );
       labelFactory.setBold( Boolean.FALSE );
@@ -520,10 +521,10 @@ public class AlignmentRightApiIT extends TestCase {
       labelFactory.setMinimumSize( new FloatDimension( delta, 30.0f ) );
       pageHeader.addElement( labelFactory.createElement() );
 
-      addBoxedLabelToBand( pageHeader, null, X1, BOX_TOP, C1_WIDTH, COLUMN_HEADER_BOX_HEIGHT,
-        "SansSerif", 10, true, Color.black, new Color( 220, 255, 220 ) );
-      addBoxedLabelToBand( pageHeader, null, X2, BOX_TOP, C2_WIDTH, COLUMN_HEADER_BOX_HEIGHT,
-        "SansSerif", 10, true, Color.black, new Color( 220, 255, 220 ) );
+      addBoxedLabelToBand( pageHeader, null, X1, BOX_TOP, C1_WIDTH, COLUMN_HEADER_BOX_HEIGHT, "SansSerif", 10, true,
+          Color.black, new Color( 220, 255, 220 ) );
+      addBoxedLabelToBand( pageHeader, null, X2, BOX_TOP, C2_WIDTH, COLUMN_HEADER_BOX_HEIGHT, "SansSerif", 10, true,
+          Color.black, new Color( 220, 255, 220 ) );
 
       final SurveyScale scaleHeader = new SurveyScale( 1, 5, null );
       scaleHeader.setDrawScaleValues( true );
@@ -538,11 +539,11 @@ public class AlignmentRightApiIT extends TestCase {
       dfef.setMinimumSize( new FloatDimension( C2_WIDTH, COLUMN_HEADER_BOX_HEIGHT ) );
       pageHeader.addElement( dfef.createElement() );
 
-      addBoxedLabelToBand( pageHeader, "Your Response", X3, BOX_TOP, C3_WIDTH, COLUMN_HEADER_BOX_HEIGHT,
-        "SansSerif", 8, false, Color.black, new Color( 220, 255, 220 ) );
+      addBoxedLabelToBand( pageHeader, "Your Response", X3, BOX_TOP, C3_WIDTH, COLUMN_HEADER_BOX_HEIGHT, "SansSerif",
+          8, false, Color.black, new Color( 220, 255, 220 ) );
 
       addBoxedLabelToBand( pageHeader, "Average Response", X3 + C3_WIDTH, BOX_TOP, C3_WIDTH, COLUMN_HEADER_BOX_HEIGHT,
-        "SansSerif", 8, false, Color.black, new Color( 220, 255, 220 ) );
+          "SansSerif", 8, false, Color.black, new Color( 220, 255, 220 ) );
     }
 
     private void setupWatermark( final MasterReport report ) {
@@ -561,23 +562,32 @@ public class AlignmentRightApiIT extends TestCase {
     /**
      * A utility method that creates a boxed label and adds it to a band.
      *
-     * @param band            the band.
-     * @param label           the field name.
-     * @param x               the x-coordinate within the band.
-     * @param y               the y-coordinate within the band.
-     * @param w               the width.
-     * @param h               the height.
-     * @param fontName        the font name.
-     * @param fontSize        the font size.
-     * @param bold            bold?
-     * @param outlineColor    the outline color.
-     * @param backgroundColor the background color.
+     * @param band
+     *          the band.
+     * @param label
+     *          the field name.
+     * @param x
+     *          the x-coordinate within the band.
+     * @param y
+     *          the y-coordinate within the band.
+     * @param w
+     *          the width.
+     * @param h
+     *          the height.
+     * @param fontName
+     *          the font name.
+     * @param fontSize
+     *          the font size.
+     * @param bold
+     *          bold?
+     * @param outlineColor
+     *          the outline color.
+     * @param backgroundColor
+     *          the background color.
      */
-    private static void addBoxedLabelToBand( final Band band, final String label,
-                                             final float x, final float y, final float w, final float h,
-                                             final String fontName, final int fontSize, final boolean bold,
-                                             final Color outlineColor,
-                                             final Color backgroundColor ) {
+    private static void addBoxedLabelToBand( final Band band, final String label, final float x, final float y,
+        final float w, final float h, final String fontName, final int fontSize, final boolean bold,
+        final Color outlineColor, final Color backgroundColor ) {
       // field text
       final LabelElementFactory f2 = new LabelElementFactory();
       f2.setAbsolutePosition( new Point2D.Double( x, y ) );
@@ -630,12 +640,11 @@ public class AlignmentRightApiIT extends TestCase {
     pageHeader.addElement( labelFactory.createElement() );
 
     final LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
+        DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox );
   }
-
 
   public void testAlignmentRightFooterCase() throws Exception {
     final SurveyScaleAPIDemoHandler handler = new SurveyScaleAPIDemoHandler();
@@ -645,7 +654,7 @@ public class AlignmentRightApiIT extends TestCase {
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox );
-    //    ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
   }
 
   private static class ValidateRunner extends IterateStructuralProcessStep {

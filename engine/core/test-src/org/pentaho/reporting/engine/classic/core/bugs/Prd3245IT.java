@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -108,10 +108,9 @@ public class Prd3245IT extends TestCase {
   public void testGoldenSampleSubReportHeightLegacy() throws Exception {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-3245.prpt" );
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    RenderNode elementByName = MatchFactory.findElementByName
-      ( logicalPageBox, "Subreport 1.1.1" );
-    assertTrue( "SubReport height of " + StrictGeomUtility.toExternalValue( elementByName.getHeight() ) +
-      " is greater than 600pt", elementByName.getHeight() > StrictGeomUtility.toInternalValue( 600 ) );
+    RenderNode elementByName = MatchFactory.findElementByName( logicalPageBox, "Subreport 1.1.1" );
+    assertTrue( "SubReport height of " + StrictGeomUtility.toExternalValue( elementByName.getHeight() )
+        + " is greater than 600pt", elementByName.getHeight() > StrictGeomUtility.toInternalValue( 600 ) );
   }
 
   public void testGoldenSampleSubReportHeightMigrated() throws Exception {
@@ -123,10 +122,9 @@ public class Prd3245IT extends TestCase {
     report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL, null );
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    RenderNode elementByName = MatchFactory.findElementByName
-      ( logicalPageBox, "Subreport 1.1.1" );
-    assertTrue( "SubReport height of " + StrictGeomUtility.toExternalValue( elementByName.getHeight() ) +
-      " is greater than 600pt", elementByName.getHeight() > StrictGeomUtility.toInternalValue( 600 ) );
+    RenderNode elementByName = MatchFactory.findElementByName( logicalPageBox, "Subreport 1.1.1" );
+    assertTrue( "SubReport height of " + StrictGeomUtility.toExternalValue( elementByName.getHeight() )
+        + " is greater than 600pt", elementByName.getHeight() > StrictGeomUtility.toInternalValue( 600 ) );
   }
 
   public void testBandedPageSubreport() throws Exception {

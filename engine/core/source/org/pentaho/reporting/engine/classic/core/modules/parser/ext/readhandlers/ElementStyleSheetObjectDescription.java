@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
@@ -52,15 +52,14 @@ public class ElementStyleSheetObjectDescription implements ObjectDescription {
    * <p/>
    * The configuration contents may change during the reporting.
    *
-   * @param config the configuration, never null
+   * @param config
+   *          the configuration, never null
    */
   public void configure( final Configuration config ) {
   }
 
-  public void init( final RootXmlReadHandler rootHandler,
-                    final ElementStyleSheet styleSheet ) {
-    this.keyfactory = (StyleKeyFactory)
-      rootHandler.getHelperObject( ReportDefinitionReadHandler.STYLE_FACTORY_KEY );
+  public void init( final RootXmlReadHandler rootHandler, final ElementStyleSheet styleSheet ) {
+    this.keyfactory = (StyleKeyFactory) rootHandler.getHelperObject( ReportDefinitionReadHandler.STYLE_FACTORY_KEY );
     this.styleSheet = styleSheet;
 
   }
@@ -98,7 +97,8 @@ public class ElementStyleSheetObjectDescription implements ObjectDescription {
   /**
    * Returns the value of a parameter.
    *
-   * @param name the parameter name.
+   * @param name
+   *          the parameter name.
    * @return The value.
    */
   public Object getParameter( final String name ) {
@@ -112,7 +112,8 @@ public class ElementStyleSheetObjectDescription implements ObjectDescription {
   /**
    * Returns a parameter definition. If the parameter is invalid, this function returns null.
    *
-   * @param name the definition name.
+   * @param name
+   *          the definition name.
    * @return The parameter class or null, if the parameter is not defined.
    */
   public Class getParameterDefinition( final String name ) {
@@ -122,13 +123,9 @@ public class ElementStyleSheetObjectDescription implements ObjectDescription {
     if ( "absolute_pos".equals( name ) ) {
       return Point2D.class;
     }
-    if ( "border-top-left-radius".equals( name ) ||
-      "border-top-right-radius".equals( name ) ||
-      "border-bottom-left-radius".equals( name ) ||
-      "border-bottom-right-radius".equals( name ) ||
-      "min-size".equals( name ) ||
-      "max-size".equals( name ) ||
-      "preferred-size".equals( name ) ) {
+    if ( "border-top-left-radius".equals( name ) || "border-top-right-radius".equals( name )
+        || "border-bottom-left-radius".equals( name ) || "border-bottom-right-radius".equals( name )
+        || "min-size".equals( name ) || "max-size".equals( name ) || "preferred-size".equals( name ) ) {
       return Dimension2D.class;
     }
 
@@ -168,8 +165,10 @@ public class ElementStyleSheetObjectDescription implements ObjectDescription {
   /**
    * Sets the value of a parameter.
    *
-   * @param name  the parameter name.
-   * @param value the parameter value.
+   * @param name
+   *          the parameter name.
+   * @param value
+   *          the parameter value.
    */
   public void setParameter( final String name, final Object value ) {
     if ( "layoutmanager".equals( name ) ) {
@@ -263,11 +262,12 @@ public class ElementStyleSheetObjectDescription implements ObjectDescription {
   /**
    * Sets the parameters of this description object to match the supplied object.
    *
-   * @param o the object.
-   * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
+   * @param o
+   *          the object.
+   * @throws ObjectFactoryException
+   *           if there is a problem while reading the properties of the given object.
    */
-  public void setParameterFromObject( final Object o )
-    throws ObjectFactoryException {
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
     throw new UnsupportedOperationException( "This is a private factory, go away." );
   }
 }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.survey;
 
@@ -27,10 +27,9 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
 import java.beans.PropertyEditorManager;
 
-
 public class SurveyModule extends AbstractModule {
   public static final String NAMESPACE =
-    "http://reporting.pentaho.org/namespaces/engine/classic/extensions/survey-scale/1.0";
+      "http://reporting.pentaho.org/namespaces/engine/classic/extensions/survey-scale/1.0";
 
   public static final String LOWEST = "lowest";
   public static final String HIGHEST = "highest";
@@ -42,8 +41,7 @@ public class SurveyModule extends AbstractModule {
   public static final String DEFAULT_SHAPE = "default-shape";
   public static final String OUTLINE_STROKE = "outline-stroke";
 
-  public SurveyModule()
-    throws ModuleInitializeException {
+  public SurveyModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -52,17 +50,17 @@ public class SurveyModule extends AbstractModule {
    * a modules lifetime. If the initializing cannot be completed, throw a ModuleInitializeException to indicate the
    * error,. The module will not be available to the system.
    *
-   * @throws ModuleInitializeException if an error ocurred while initializing the module.
+   * @throws ModuleInitializeException
+   *           if an error ocurred while initializing the module.
    */
-  public void initialize( final SubSystem subSystem )
-    throws ModuleInitializeException {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     ElementTypeRegistry.getInstance().registerNamespacePrefix( NAMESPACE, "surveyscale" );
     BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData( NAMESPACE, false );
 
-    ElementMetaDataParser.initializeOptionalExpressionsMetaData
-      ( "org/pentaho/reporting/engine/classic/core/modules/misc/survey/meta-expressions.xml" );
-    ElementMetaDataParser.initializeOptionalElementMetaData
-      ( "org/pentaho/reporting/engine/classic/core/modules/misc/survey/meta-elements.xml" );
+    ElementMetaDataParser
+        .initializeOptionalExpressionsMetaData( "org/pentaho/reporting/engine/classic/core/modules/misc/survey/meta-expressions.xml" );
+    ElementMetaDataParser
+        .initializeOptionalElementMetaData( "org/pentaho/reporting/engine/classic/core/modules/misc/survey/meta-elements.xml" );
 
     BundleElementRegistry.getInstance().registerGenericWriter( SurveyScaleType.INSTANCE );
     BundleElementRegistry.getInstance().registerGenericReader( SurveyScaleType.INSTANCE );

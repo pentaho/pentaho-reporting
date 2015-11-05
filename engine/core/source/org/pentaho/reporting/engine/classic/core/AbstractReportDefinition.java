@@ -1,21 +1,25 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
+
+import java.util.ArrayList;
+
+import javax.swing.event.EventListenerList;
 
 import org.pentaho.reporting.engine.classic.core.designtime.Change;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
@@ -35,9 +39,6 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchemaDefinit
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import javax.swing.event.EventListenerList;
-import java.util.ArrayList;
-
 /**
  * The AbstractReportDefinition serves as base-implementation for both the SubReport and the global JFreeReport
  * instance. There's no point to subclass this class any further.
@@ -48,8 +49,7 @@ import java.util.ArrayList;
  * @author Thomas Morgner
  * @noinspection UnusedDeclaration
  */
-public abstract class AbstractReportDefinition extends Section
-  implements ReportDefinition {
+public abstract class AbstractReportDefinition extends Section implements ReportDefinition {
   /**
    * Storage for the expressions in the report.
    */
@@ -116,7 +116,6 @@ public abstract class AbstractReportDefinition extends Section
     registerAsChild( watermark );
   }
 
-
   /**
    * Returns the resource bundle factory for this report definition. The {@link ResourceBundleFactory} is used in
    * internationalized reports to create the resourcebundles holding the localized resources.
@@ -131,8 +130,10 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Redefines the resource bundle factory for the report.
    *
-   * @param resourceBundleFactory the new resource bundle factory, never null.
-   * @throws NullPointerException if the given ResourceBundleFactory is null.
+   * @param resourceBundleFactory
+   *          the new resource bundle factory, never null.
+   * @throws NullPointerException
+   *           if the given ResourceBundleFactory is null.
    */
   @Deprecated
   public void setResourceBundleFactory( final ResourceBundleFactory resourceBundleFactory ) {
@@ -153,14 +154,14 @@ public abstract class AbstractReportDefinition extends Section
       final ReportPreProcessor[] preprocessors = (ReportPreProcessor[]) maybeArray;
       return preprocessors.clone();
     }
-    return new ReportPreProcessor[ 0 ];
+    return new ReportPreProcessor[0];
   }
 
   public ReportPreProcessor getPreProcessor( final int index ) {
     final Object maybeArray = getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS );
     if ( maybeArray instanceof ReportPreProcessor[] ) {
       final ReportPreProcessor[] preprocessors = (ReportPreProcessor[]) maybeArray;
-      return preprocessors[ index ];
+      return preprocessors[index];
     }
     throw new IndexOutOfBoundsException();
   }
@@ -172,14 +173,14 @@ public abstract class AbstractReportDefinition extends Section
 
     final ReportPreProcessor[] preprocessors = getPreProcessors();
     final ArrayList<ReportPreProcessor> newProcessors =
-      new ArrayList<ReportPreProcessor>( Math.max( 10, preprocessors.length ) );
+        new ArrayList<ReportPreProcessor>( Math.max( 10, preprocessors.length ) );
     for ( int i = 0; i < preprocessors.length; i++ ) {
-      final ReportPreProcessor preprocessor = preprocessors[ i ];
+      final ReportPreProcessor preprocessor = preprocessors[i];
       newProcessors.add( preprocessor );
     }
     newProcessors.add( preProcessor );
 
-    final ReportPreProcessor[] newArray = newProcessors.toArray( new ReportPreProcessor[ newProcessors.size() ] );
+    final ReportPreProcessor[] newArray = newProcessors.toArray( new ReportPreProcessor[newProcessors.size()] );
     setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS, newArray );
   }
 
@@ -190,17 +191,17 @@ public abstract class AbstractReportDefinition extends Section
 
     final ReportPreProcessor[] preprocessors = getPreProcessors();
     final ArrayList<ReportPreProcessor> newProcessors =
-      new ArrayList<ReportPreProcessor>( Math.max( 10, preprocessors.length ) );
+        new ArrayList<ReportPreProcessor>( Math.max( 10, preprocessors.length ) );
     boolean found = false;
     for ( int i = 0; i < preprocessors.length; i++ ) {
-      final ReportPreProcessor preprocessor = preprocessors[ i ];
+      final ReportPreProcessor preprocessor = preprocessors[i];
       if ( found || preprocessor != preProcessor ) {
         newProcessors.add( preprocessor );
         found = true;
       }
     }
     if ( found ) {
-      final ReportPreProcessor[] newArray = newProcessors.toArray( new ReportPreProcessor[ newProcessors.size() ] );
+      final ReportPreProcessor[] newArray = newProcessors.toArray( new ReportPreProcessor[newProcessors.size()] );
       setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS, newArray );
     }
   }
@@ -213,8 +214,7 @@ public abstract class AbstractReportDefinition extends Section
     if ( rootGroup == null ) {
       throw new NullPointerException();
     }
-    if ( rootGroup instanceof CrosstabGroup == false &&
-      rootGroup instanceof RelationalGroup == false ) {
+    if ( rootGroup instanceof CrosstabGroup == false && rootGroup instanceof RelationalGroup == false ) {
       throw new IllegalArgumentException( "Only Crosstabs or relational-groups are permitted at the root" );
     }
     validateLooping( rootGroup );
@@ -230,11 +230,11 @@ public abstract class AbstractReportDefinition extends Section
     notifyNodeChildAdded( rootGroup );
   }
 
-
   /**
    * Sets the report header.
    *
-   * @param header the report header (<code>null</code> not permitted).
+   * @param header
+   *          the report header (<code>null</code> not permitted).
    */
   public void setReportHeader( final ReportHeader header ) {
     if ( header == null ) {
@@ -265,7 +265,8 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Sets the report footer.
    *
-   * @param footer the report footer (<code>null</code> not permitted).
+   * @param footer
+   *          the report footer (<code>null</code> not permitted).
    */
   public void setReportFooter( final ReportFooter footer ) {
     if ( footer == null ) {
@@ -295,7 +296,8 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Sets the page header.
    *
-   * @param header the page header (<code>null</code> not permitted).
+   * @param header
+   *          the page header (<code>null</code> not permitted).
    */
   public void setPageHeader( final PageHeader header ) {
     if ( header == null ) {
@@ -326,7 +328,8 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Sets the page footer.
    *
-   * @param footer the page footer (<code>null</code> not permitted).
+   * @param footer
+   *          the page footer (<code>null</code> not permitted).
    */
   public void setPageFooter( final PageFooter footer ) {
     if ( footer == null ) {
@@ -356,7 +359,8 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Sets the watermark band for the report.
    *
-   * @param band the new watermark band (<code>null</code> not permitted).
+   * @param band
+   *          the new watermark band (<code>null</code> not permitted).
    */
   public void setWatermark( final Watermark band ) {
     if ( band == null ) {
@@ -429,9 +433,9 @@ public abstract class AbstractReportDefinition extends Section
   }
 
   /**
-   * Returns the details header  band.
+   * Returns the details header band.
    *
-   * @return The details header  band.
+   * @return The details header band.
    */
   public DetailsFooter getDetailsFooter() {
     return (DetailsFooter) getInnerMostGroup().getChildElementByType( DetailsFooterType.INSTANCE );
@@ -475,7 +479,8 @@ public abstract class AbstractReportDefinition extends Section
    * Adds a group to the report. This replaces the group body on the group with a new data-group-body composed of the
    * existing itemband and no-databand.
    *
-   * @param group the group.
+   * @param group
+   *          the group.
    */
   public void addGroup( final RelationalGroup group ) {
     if ( group == null ) {
@@ -502,7 +507,6 @@ public abstract class AbstractReportDefinition extends Section
     existingGroup.setBody( new SubGroupBody( group ) );
   }
 
-
   public void removeGroup( final CrosstabGroup group ) {
     if ( group == null ) {
       throw new NullPointerException( "AbstractReporDefinition.addGroup(..) : Null not permitted" );
@@ -512,7 +516,6 @@ public abstract class AbstractReportDefinition extends Section
       removeRootGroup();
       return;
     }
-
 
     final Group existingGroup = getInnerMostRelationalGroup();
     final GroupBody gb = existingGroup.getBody();
@@ -531,9 +534,8 @@ public abstract class AbstractReportDefinition extends Section
     }
 
     // Special case check to see if we're removing the root group.
-    if ( rootGroup == deleteGroup ) // If we're at root then
-    {
-      removeRootGroup();  // Remove it an exit
+    if ( rootGroup == deleteGroup ) { // If we're at root then
+      removeRootGroup(); // Remove it an exit
       return;
     }
 
@@ -548,8 +550,7 @@ public abstract class AbstractReportDefinition extends Section
       currentGroupBody = currentGroup.getBody();
     }
 
-    if ( currentGroup == deleteGroup ) // if this is true then we found the group we need to remove
-    {
+    if ( currentGroup == deleteGroup ) { // if this is true then we found the group we need to remove
       parentGroup.setBody( currentGroupBody );
       final SubGroupBody subGroupBody = (SubGroupBody) currentGroup.getParentSection();
       subGroupBody.setParent( parentGroup );
@@ -580,7 +581,9 @@ public abstract class AbstractReportDefinition extends Section
   }
 
   /**
-   * Returns the number of groups in this report. <P> Every report has at least one group defined.
+   * Returns the number of groups in this report.
+   * <P>
+   * Every report has at least one group defined.
    *
    * @return the group count.
    */
@@ -621,10 +624,13 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Returns the group at the specified index or null, if there is no such group.
    *
-   * @param groupIndex the group index.
+   * @param groupIndex
+   *          the group index.
    * @return the requested group.
-   * @throws IllegalArgumentException  if the count is negative.
-   * @throws IndexOutOfBoundsException if the count is greater than the number of defined groups.
+   * @throws IllegalArgumentException
+   *           if the count is negative.
+   * @throws IndexOutOfBoundsException
+   *           if the count is greater than the number of defined groups.
    */
   public Group getGroup( final int groupIndex ) {
     if ( groupIndex < 0 ) {
@@ -664,7 +670,8 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Searches a group by its defined name. This method returns null, if the group was not found.
    *
-   * @param name the name of the group.
+   * @param name
+   *          the name of the group.
    * @return the group or null if not found.
    */
   public RelationalGroup getGroupByName( final String name ) {
@@ -697,7 +704,8 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Adds a function to the report's collection of expressions.
    *
-   * @param function the function.
+   * @param function
+   *          the function.
    */
   public void addExpression( final Expression function ) {
     if ( function == null ) {
@@ -710,7 +718,7 @@ public abstract class AbstractReportDefinition extends Section
 
   public int getQueryTimeout() {
     final Object queryTimeoutText =
-      getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_TIMEOUT );
+        getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_TIMEOUT );
     if ( queryTimeoutText instanceof Number ) {
       final Number n = (Number) queryTimeoutText;
       return n.intValue();
@@ -719,13 +727,12 @@ public abstract class AbstractReportDefinition extends Section
   }
 
   public void setQueryTimeout( final int queryTimeout ) {
-    setAttribute( AttributeNames.Internal.NAMESPACE,
-      AttributeNames.Internal.QUERY_TIMEOUT, IntegerCache.getInteger( queryTimeout ) );
+    setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_TIMEOUT, IntegerCache
+        .getInteger( queryTimeout ) );
   }
 
   public int getQueryLimit() {
-    final Object queryLimitText =
-      getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT );
+    final Object queryLimitText = getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT );
     if ( queryLimitText instanceof Number ) {
       final Number n = (Number) queryLimitText;
       return n.intValue();
@@ -734,13 +741,13 @@ public abstract class AbstractReportDefinition extends Section
   }
 
   public void setQueryLimit( final int queryLimit ) {
-    setAttribute( AttributeNames.Internal.NAMESPACE,
-      AttributeNames.Internal.QUERY_LIMIT, IntegerCache.getInteger( queryLimit ) );
+    setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT, IntegerCache
+        .getInteger( queryLimit ) );
   }
 
   public int getUserQueryLimit() {
     final Object queryLimitText =
-      getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT_USER );
+        getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT_USER );
     if ( queryLimitText instanceof Number ) {
       final Number n = (Number) queryLimitText;
       return n.intValue();
@@ -749,8 +756,8 @@ public abstract class AbstractReportDefinition extends Section
   }
 
   public void setUserQueryLimit( final int queryLimit ) {
-    setAttribute( AttributeNames.Internal.NAMESPACE,
-      AttributeNames.Internal.QUERY_LIMIT_USER, IntegerCache.getInteger( queryLimit ) );
+    setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT_USER, IntegerCache
+        .getInteger( queryLimit ) );
   }
 
   /**
@@ -765,7 +772,8 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Defines a new query or query-name that is used when retrieving the data from the data-factory.
    *
-   * @param query the query-string.
+   * @param query
+   *          the query-string.
    * @see DataFactory#queryData(String, DataRow)
    */
   public void setQuery( final String query ) {
@@ -785,7 +793,8 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Sets the expressions for the report.
    *
-   * @param expressions the expressions (<code>null</code> not permitted).
+   * @param expressions
+   *          the expressions (<code>null</code> not permitted).
    */
   public void setExpressions( final ExpressionCollection expressions ) {
     if ( expressions == null ) {
@@ -821,17 +830,17 @@ public abstract class AbstractReportDefinition extends Section
 
       final ReportPreProcessor[] reportPreProcessors = report.getPreProcessors();
       for ( int i = 0; i < reportPreProcessors.length; i++ ) {
-        reportPreProcessors[ i ] = reportPreProcessors[ i ].clone();
+        reportPreProcessors[i] = reportPreProcessors[i].clone();
       }
-      report
-        .setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS, reportPreProcessors );
+      report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS,
+          reportPreProcessors );
 
       final StructureFunction[] structureFunctions = report.getStructureFunctions();
       for ( int i = 0; i < structureFunctions.length; i++ ) {
-        structureFunctions[ i ] = (StructureFunction) structureFunctions[ i ].clone();
+        structureFunctions[i] = (StructureFunction) structureFunctions[i].clone();
       }
       report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS,
-        structureFunctions );
+          structureFunctions );
       return report;
     } catch ( CloneNotSupportedException cne ) {
       throw new IllegalStateException( cne );
@@ -858,22 +867,21 @@ public abstract class AbstractReportDefinition extends Section
 
     final ReportPreProcessor[] reportPreProcessors = report.getPreProcessors();
     for ( int i = 0; i < reportPreProcessors.length; i++ ) {
-      reportPreProcessors[ i ] = reportPreProcessors[ i ].clone();
+      reportPreProcessors[i] = reportPreProcessors[i].clone();
     }
-    report
-      .setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS, reportPreProcessors );
+    report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS, reportPreProcessors );
 
     final StructureFunction[] structureFunctions = report.getStructureFunctions();
     for ( int i = 0; i < structureFunctions.length; i++ ) {
-      structureFunctions[ i ] = (StructureFunction) structureFunctions[ i ].getInstance();
+      structureFunctions[i] = (StructureFunction) structureFunctions[i].getInstance();
     }
     report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS,
-      structureFunctions );
+        structureFunctions );
     return report;
   }
 
   public void setElementAt( final int position, final Element element ) {
-    switch( position ) {
+    switch ( position ) {
       case 0:
         setPageHeader( (PageHeader) element );
         break;
@@ -948,7 +956,7 @@ public abstract class AbstractReportDefinition extends Section
   }
 
   public Element getElement( final int index ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         return pageHeader;
       case 1:
@@ -972,7 +980,8 @@ public abstract class AbstractReportDefinition extends Section
    * generation and resource loading. If there is no content base defined, it will be impossible to resolve relative
    * paths.
    *
-   * @param key the content base or null.
+   * @param key
+   *          the content base or null.
    */
   public void setContentBase( final ResourceKey key ) {
     setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE, key );
@@ -1024,10 +1033,10 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Sets the data factory for the report.
    *
-   * @param dataFactory the data factory for the report, never null.
+   * @param dataFactory
+   *          the data factory for the report, never null.
    */
   public abstract void setDataFactory( final DataFactory dataFactory );
-
 
   public void addReportModelListener( final ReportModelListener listener ) {
     if ( eventListeners == null ) {
@@ -1059,7 +1068,7 @@ public abstract class AbstractReportDefinition extends Section
       final ReportModelEvent event = new ReportModelEvent( this, node, type, parameter );
       final ReportModelListener[] listeners = eventListeners.getListeners( ReportModelListener.class );
       for ( int i = 0; i < listeners.length; i++ ) {
-        final ReportModelListener listener = listeners[ i ];
+        final ReportModelListener listener = listeners[i];
         listener.nodeChanged( event );
       }
     }
@@ -1077,7 +1086,6 @@ public abstract class AbstractReportDefinition extends Section
     expressions.removeExpression( expression );
     notifyNodeChildRemoved( expression );
   }
-
 
   public DataSchemaDefinition getDataSchemaDefinition() {
     return dataSchemaDefinition;
@@ -1099,7 +1107,6 @@ public abstract class AbstractReportDefinition extends Section
   @Deprecated
   public abstract ResourceManager getResourceManager();
 
-
   /**
    * Adds a structural function to the report. Structural functions perform content preparation and maintainance
    * operations before elements are layouted or printed.
@@ -1107,7 +1114,8 @@ public abstract class AbstractReportDefinition extends Section
    * Structural function can live on their own processing level and are evaluated after the user expressions but before
    * the layout expressions have been evaluated.
    *
-   * @param function the structure function.
+   * @param function
+   *          the structure function.
    */
   public void addStructureFunction( final StructureFunction function ) {
     if ( function == null ) {
@@ -1116,14 +1124,14 @@ public abstract class AbstractReportDefinition extends Section
 
     final StructureFunction[] structureFunctions = getStructureFunctions();
     final ArrayList<StructureFunction> newProcessors =
-      new ArrayList<StructureFunction>( Math.max( 10, structureFunctions.length ) );
+        new ArrayList<StructureFunction>( Math.max( 10, structureFunctions.length ) );
     for ( int i = 0; i < structureFunctions.length; i++ ) {
-      final StructureFunction structureFunction = structureFunctions[ i ];
+      final StructureFunction structureFunction = structureFunctions[i];
       newProcessors.add( structureFunction );
     }
     newProcessors.add( function );
 
-    final StructureFunction[] newArray = newProcessors.toArray( new StructureFunction[ newProcessors.size() ] );
+    final StructureFunction[] newArray = newProcessors.toArray( new StructureFunction[newProcessors.size()] );
     setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS, newArray );
   }
 
@@ -1134,7 +1142,7 @@ public abstract class AbstractReportDefinition extends Section
    */
   public int getStructureFunctionCount() {
     final Object maybeArray =
-      getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS );
+        getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS );
     if ( maybeArray instanceof StructureFunction[] ) {
       final StructureFunction[] structureFunctions = (StructureFunction[]) maybeArray;
       return structureFunctions.length;
@@ -1145,16 +1153,18 @@ public abstract class AbstractReportDefinition extends Section
   /**
    * Returns the structure function at the given position.
    *
-   * @param index the position of the function in the list.
+   * @param index
+   *          the position of the function in the list.
    * @return the function, never null.
-   * @throws IndexOutOfBoundsException if the index is invalid.
+   * @throws IndexOutOfBoundsException
+   *           if the index is invalid.
    */
   public StructureFunction getStructureFunction( final int index ) {
     final Object maybeArray =
-      getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS );
+        getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS );
     if ( maybeArray instanceof StructureFunction[] ) {
       final StructureFunction[] structureFunctions = (StructureFunction[]) maybeArray;
-      return structureFunctions[ index ];
+      return structureFunctions[index];
     }
     throw new IndexOutOfBoundsException();
   }
@@ -1163,7 +1173,8 @@ public abstract class AbstractReportDefinition extends Section
    * Removes the given function from the collection of structure functions. This removes only the first occurence of the
    * function, in case a function has been added twice.
    *
-   * @param f the function to be removed.
+   * @param f
+   *          the function to be removed.
    */
   public void removeStructureFunction( final StructureFunction f ) {
     if ( f == null ) {
@@ -1172,17 +1183,17 @@ public abstract class AbstractReportDefinition extends Section
 
     final StructureFunction[] structureFunctions = getStructureFunctions();
     final ArrayList<StructureFunction> newProcessors =
-      new ArrayList<StructureFunction>( Math.max( 10, structureFunctions.length ) );
+        new ArrayList<StructureFunction>( Math.max( 10, structureFunctions.length ) );
     boolean found = false;
     for ( int i = 0; i < structureFunctions.length; i++ ) {
-      final StructureFunction structureFunction = structureFunctions[ i ];
+      final StructureFunction structureFunction = structureFunctions[i];
       if ( found || structureFunction != f ) {
         newProcessors.add( structureFunction );
         found = true;
       }
     }
     if ( found ) {
-      final StructureFunction[] newArray = newProcessors.toArray( new StructureFunction[ newProcessors.size() ] );
+      final StructureFunction[] newArray = newProcessors.toArray( new StructureFunction[newProcessors.size()] );
       setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS, newArray );
     }
   }
@@ -1195,12 +1206,12 @@ public abstract class AbstractReportDefinition extends Section
    */
   public StructureFunction[] getStructureFunctions() {
     final Object maybeArray =
-      getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS );
+        getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS );
     if ( maybeArray instanceof StructureFunction[] ) {
       final StructureFunction[] structureFunctions = (StructureFunction[]) maybeArray;
       return structureFunctions.clone();
     }
-    return new StructureFunction[ 0 ];
+    return new StructureFunction[0];
   }
 
   public ElementStyleSheet getDefaultStyleSheet() {

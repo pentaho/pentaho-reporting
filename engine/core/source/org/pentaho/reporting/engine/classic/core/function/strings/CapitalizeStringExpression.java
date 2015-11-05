@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
@@ -53,7 +53,8 @@ public class CapitalizeStringExpression extends AbstractExpression {
   /**
    * Defines, whether only the first word should be capitalized.
    *
-   * @param firstWordOnly true, if the first word should be capitalized, false if all words should be capitalized.
+   * @param firstWordOnly
+   *          true, if the first word should be capitalized, false if all words should be capitalized.
    */
   public void setFirstWordOnly( final boolean firstWordOnly ) {
     this.firstWordOnly = firstWordOnly;
@@ -71,7 +72,8 @@ public class CapitalizeStringExpression extends AbstractExpression {
   /**
    * Defines the name of the datarow-column from where to read the string value.
    *
-   * @param field the field.
+   * @param field
+   *          the field.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -94,14 +96,14 @@ public class CapitalizeStringExpression extends AbstractExpression {
 
     final int textLength = textArray.length;
     for ( int i = 0; i < textLength; i++ ) {
-      final char c = textArray[ i ];
+      final char c = textArray[i];
       // we ignore the punctutation chars or any other possible extra chars
       // for now. Words start at whitespaces ...
       if ( Character.isWhitespace( c ) ) {
         startOfWord = true;
       } else {
         if ( startOfWord == true ) {
-          textArray[ i ] = Character.toTitleCase( c );
+          textArray[i] = Character.toTitleCase( c );
         }
         if ( firstWordOnly ) {
           break;

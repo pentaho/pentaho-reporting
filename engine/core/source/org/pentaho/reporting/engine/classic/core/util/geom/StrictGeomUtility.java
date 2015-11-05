@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util.geom;
 
@@ -44,71 +44,76 @@ public strictfp class StrictGeomUtility {
   /**
    * Creates a StrictDimension from the given AWT sizes.
    *
-   * @param w the width in points (1/72th inch).
-   * @param h the height in points (1/72th inch).
+   * @param w
+   *          the width in points (1/72th inch).
+   * @param h
+   *          the height in points (1/72th inch).
    * @return the created dimension object.
    */
   public static StrictDimension createDimension( final double w, final double h ) {
-    return new StrictDimension( toInternalValue( w ),
-      toInternalValue( h ) );
+    return new StrictDimension( toInternalValue( w ), toInternalValue( h ) );
   }
 
   /**
    * Creates a StrictPoint from the given AWT coordinates.
    *
-   * @param x the x coordinate in points (1/72th inch).
-   * @param y the y coordinate in points (1/72th inch).
+   * @param x
+   *          the x coordinate in points (1/72th inch).
+   * @param y
+   *          the y coordinate in points (1/72th inch).
    * @return the created point object.
    */
   public static StrictPoint createPoint( final double x, final double y ) {
-    return new StrictPoint( toInternalValue( x ),
-      toInternalValue( y ) );
+    return new StrictPoint( toInternalValue( x ), toInternalValue( y ) );
   }
 
   /**
    * Creates a StrictBounds object from the given AWT sizes.
    *
-   * @param x      the x coordinate in points (1/72th inch).
-   * @param y      the y coordinate in points (1/72th inch).
-   * @param width  the width in points (1/72th inch).
-   * @param height the height in points (1/72th inch).
+   * @param x
+   *          the x coordinate in points (1/72th inch).
+   * @param y
+   *          the y coordinate in points (1/72th inch).
+   * @param width
+   *          the width in points (1/72th inch).
+   * @param height
+   *          the height in points (1/72th inch).
    * @return the created dimension object.
    */
-  public static StrictBounds createBounds( final double x, final double y,
-                                           final double width, final double height ) {
-    return new StrictBounds( toInternalValue( x ),
-      toInternalValue( y ),
-      toInternalValue( width ),
-      toInternalValue( height ) );
+  public static StrictBounds createBounds( final double x, final double y, final double width, final double height ) {
+    return new StrictBounds( toInternalValue( x ), toInternalValue( y ), toInternalValue( width ),
+        toInternalValue( height ) );
   }
 
   /**
    * Creates an AWT-Dimension2D object from the given strict sizes.
    *
-   * @param width  the width in micro points.
-   * @param height the height in micro points.
+   * @param width
+   *          the width in micro points.
+   * @param height
+   *          the height in micro points.
    * @return the created dimension object.
    */
-  public static Dimension2D createAWTDimension
-  ( final long width, final long height ) {
-    return new FloatDimension
-      ( (float) ( width / CORRECTION_FACTOR ), (float) ( height / CORRECTION_FACTOR ) );
+  public static Dimension2D createAWTDimension( final long width, final long height ) {
+    return new FloatDimension( (float) ( width / CORRECTION_FACTOR ), (float) ( height / CORRECTION_FACTOR ) );
   }
 
   /**
    * Creates an AWT rectangle object from the given strict sizes.
    *
-   * @param x      the x coordinate in micro points.
-   * @param y      the y coordinate in micro points.
-   * @param width  the width in micro points.
-   * @param height the height in micro points.
+   * @param x
+   *          the x coordinate in micro points.
+   * @param y
+   *          the y coordinate in micro points.
+   * @param width
+   *          the width in micro points.
+   * @param height
+   *          the height in micro points.
    * @return the created dimension object.
    */
-  public static Rectangle2D createAWTRectangle
-  ( final long x, final long y, final long width, final long height ) {
-    return new Rectangle2D.Double
-      ( x / CORRECTION_FACTOR, y / CORRECTION_FACTOR,
-        width / CORRECTION_FACTOR, height / CORRECTION_FACTOR );
+  public static Rectangle2D createAWTRectangle( final long x, final long y, final long width, final long height ) {
+    return new Rectangle2D.Double( x / CORRECTION_FACTOR, y / CORRECTION_FACTOR, width / CORRECTION_FACTOR, height
+        / CORRECTION_FACTOR );
   }
 
   public static Rectangle2D createAWTRectangle( final StrictBounds bounds ) {
@@ -118,7 +123,8 @@ public strictfp class StrictGeomUtility {
   /**
    * Converts the given AWT value into a strict value.
    *
-   * @param value the AWT point value.
+   * @param value
+   *          the AWT point value.
    * @return the internal micro point value.
    */
   public static long toInternalValue( final double value ) {
@@ -129,7 +135,8 @@ public strictfp class StrictGeomUtility {
   /**
    * Converts the given micro point value into an AWT value.
    *
-   * @param value the micro point point value.
+   * @param value
+   *          the micro point point value.
    * @return the AWT point value.
    */
   public static double toExternalValue( final long value ) {

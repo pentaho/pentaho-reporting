@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -23,10 +23,9 @@ import javax.swing.table.TableModel;
 import java.io.Serializable;
 
 /**
- * Creates a tablemodel on request. If the returned tablemodel is a {@link org.pentaho.reporting.engine.classic.core
- * .util.CloseableTableModel}
- * the tablemodel must remain open until the DataFactory remains open. The TableModel should not be disposed until the
- * data-factory has been closed.
+ * Creates a tablemodel on request. If the returned tablemodel is a
+ * {@link org.pentaho.reporting.engine.classic.core .util.CloseableTableModel} the tablemodel must remain open until the
+ * DataFactory remains open. The TableModel should not be disposed until the data-factory has been closed.
  *
  * @author Thomas Morgner
  */
@@ -49,13 +48,15 @@ public interface DataFactory extends Serializable, Cloneable {
    * The parameter-dataset may change between two calls, do not assume anything, and do not hold references to the
    * parameter-dataset or the position of the columns in the dataset.
    *
-   * @param query      the query string, never null.
-   * @param parameters the parameters for the query, never null.
+   * @param query
+   *          the query string, never null.
+   * @param parameters
+   *          the parameters for the query, never null.
    * @return the result of the query as table model.
-   * @throws ReportDataFactoryException if an error occured while performing the query.
+   * @throws ReportDataFactoryException
+   *           if an error occured while performing the query.
    */
-  public TableModel queryData( final String query, final DataRow parameters )
-    throws ReportDataFactoryException;
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException;
 
   /**
    * Returns a copy of the data factory that is not affected by its anchestor and holds no connection to the anchestor
@@ -73,8 +74,10 @@ public interface DataFactory extends Serializable, Cloneable {
   /**
    * Checks whether the query would be executable by this datafactory. This performs a rough check, not a full query.
    *
-   * @param query      the query, never null.
-   * @param parameters the parameters, never null.
+   * @param query
+   *          the query, never null.
+   * @param parameters
+   *          the parameters, never null.
    * @return true, if the query would be executable, false if the query is not recognized.
    */
   public boolean isQueryExecutable( final String query, final DataRow parameters );
@@ -96,11 +99,11 @@ public interface DataFactory extends Serializable, Cloneable {
    * Initializes the data factory and provides new context information. Initialize is always called before the
    * datafactory has been opened by calling DataFactory#open.
    *
-   * @param dataFactoryContext the current data-factory context, holding the configuration, resource-manager,
-   *                           context-key and resource-bundle-factory.
+   * @param dataFactoryContext
+   *          the current data-factory context, holding the configuration, resource-manager, context-key and
+   *          resource-bundle-factory.
    */
-  public void initialize( DataFactoryContext dataFactoryContext )
-    throws ReportDataFactoryException;
+  public void initialize( DataFactoryContext dataFactoryContext ) throws ReportDataFactoryException;
 
   public Object clone();
 

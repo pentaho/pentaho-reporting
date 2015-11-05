@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
@@ -55,13 +55,17 @@ public final class HtmlReportUtil {
   /**
    * Saves a report into a single HTML format.
    *
-   * @param report   the report.
-   * @param filename target file name.
-   * @throws ReportProcessingException if the report processing failed.
-   * @throws java.io.IOException       if there was an IOerror while processing the report.
+   * @param report
+   *          the report.
+   * @param filename
+   *          target file name.
+   * @throws ReportProcessingException
+   *           if the report processing failed.
+   * @throws java.io.IOException
+   *           if there was an IOerror while processing the report.
    */
-  public static void createStreamHTML( final MasterReport report, final String filename )
-    throws IOException, ReportProcessingException {
+  public static void createStreamHTML( final MasterReport report, final String filename ) throws IOException,
+    ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -77,8 +81,7 @@ public final class HtmlReportUtil {
     }
   }
 
-  public static void createStreamHTML( final MasterReport report,
-                                       final OutputStream outputStream )
+  public static void createStreamHTML( final MasterReport report, final OutputStream outputStream )
     throws ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
@@ -109,14 +112,17 @@ public final class HtmlReportUtil {
    * When exporting a report with manual pagebreaks, the directory of the target-filename will contain more than one
    * result-HTML files after the export is complete.
    *
-   * @param report         the report.
-   * @param targetFileName target file name.
-   * @throws ReportProcessingException if the report processing failed.
-   * @throws IOException               if there was an IOerror while processing the report.
+   * @param report
+   *          the report.
+   * @param targetFileName
+   *          target file name.
+   * @throws ReportProcessingException
+   *           if the report processing failed.
+   * @throws IOException
+   *           if there was an IOerror while processing the report.
    */
-  public static void createDirectoryHTML( final MasterReport report,
-                                          final String targetFileName )
-    throws IOException, ReportProcessingException {
+  public static void createDirectoryHTML( final MasterReport report, final String targetFileName ) throws IOException,
+    ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -169,15 +175,17 @@ public final class HtmlReportUtil {
    * When exporting a report with manual pagebreaks, the directory of the target-filename will contain more than one
    * result-HTML files after the export is complete.
    *
-   * @param report         the report.
-   * @param targetFileName target file name.
-   * @throws ReportProcessingException if the report processing failed.
-   * @throws IOException               if there was an IOerror while processing the report.
+   * @param report
+   *          the report.
+   * @param targetFileName
+   *          target file name.
+   * @throws ReportProcessingException
+   *           if the report processing failed.
+   * @throws IOException
+   *           if there was an IOerror while processing the report.
    */
-  public static void createDirectoryHTML( final MasterReport report,
-                                          final String targetFileName,
-                                          final String dataDirectoryName )
-    throws IOException, ReportProcessingException {
+  public static void createDirectoryHTML( final MasterReport report, final String targetFileName,
+      final String dataDirectoryName ) throws IOException, ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -258,13 +266,17 @@ public final class HtmlReportUtil {
    * Saves a report in a ZIP file. The zip file contains a HTML document. The directory that contains the specified
    * filename must be created before this method is called.
    *
-   * @param report   the report.
-   * @param filename target file name.
-   * @throws ReportProcessingException if the report processing failed.
-   * @throws IOException               if there was an IOerror while processing the report.
+   * @param report
+   *          the report.
+   * @param filename
+   *          target file name.
+   * @throws ReportProcessingException
+   *           if the report processing failed.
+   * @throws IOException
+   *           if there was an IOerror while processing the report.
    */
-  public static void createZIPHTML( final MasterReport report, final String filename )
-    throws IOException, ReportProcessingException {
+  public static void createZIPHTML( final MasterReport report, final String filename ) throws IOException,
+    ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -295,15 +307,18 @@ public final class HtmlReportUtil {
     }
   }
 
-
   /**
    * Saves a report in a ZIP file. The zip file contains a HTML document. The directory that contains the specified
    * filename must be created before this method is called.
    *
-   * @param report   the report.
-   * @param filename target file name.
-   * @throws ReportProcessingException if the report processing failed.
-   * @throws IOException               if there was an IOerror while processing the report.
+   * @param report
+   *          the report.
+   * @param filename
+   *          target file name.
+   * @throws ReportProcessingException
+   *           if the report processing failed.
+   * @throws IOException
+   *           if there was an IOerror while processing the report.
    */
   public static void createZIPHTML( final MasterReport report, final OutputStream out, final String filename )
     throws IOException, ReportProcessingException {
@@ -320,8 +335,8 @@ public final class HtmlReportUtil {
     try {
       final ZipRepository zipRepository = new ZipRepository( out );
       final ContentLocation root = zipRepository.getRoot();
-      final ContentLocation data = RepositoryUtilities.createLocation
-        ( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
+      final ContentLocation data =
+          RepositoryUtilities.createLocation( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
 
       final FlowHtmlOutputProcessor outputProcessor = new FlowHtmlOutputProcessor();
 

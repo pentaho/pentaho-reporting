@@ -17,8 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal;
 
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Image;
+import java.awt.Color;
+import java.io.IOException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DefaultImageReference;
@@ -35,8 +36,8 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-import java.awt.*;
-import java.io.IOException;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Image;
 
 public class PdfImageHandler {
   private static final Log logger = LogFactory.getLog( PdfImageHandler.class );
@@ -44,9 +45,8 @@ public class PdfImageHandler {
   private ResourceManager resourceManager;
   private OutputProcessorMetaData metaData;
 
-  public PdfImageHandler( final OutputProcessorMetaData metaData,
-                          final ResourceManager resourceManager,
-                          final LFUMap<ResourceKey, Image> imageCache ) {
+  public PdfImageHandler( final OutputProcessorMetaData metaData, final ResourceManager resourceManager,
+      final LFUMap<ResourceKey, Image> imageCache ) {
     this.metaData = metaData;
     this.resourceManager = resourceManager;
     this.imageCache = imageCache;
@@ -66,9 +66,9 @@ public class PdfImageHandler {
       if ( o instanceof DrawableWrapper ) {
         final DrawableWrapper drawableWrapper = (DrawableWrapper) o;
         final StrictBounds bounds =
-          new StrictBounds( content.getX(), content.getY(), content.getWidth(), content.getHeight() );
+            new StrictBounds( content.getX(), content.getY(), content.getWidth(), content.getHeight() );
         DefaultImageReference imageContainer =
-          RenderUtility.createImageFromDrawable( drawableWrapper, bounds, content.getStyleSheet(), metaData );
+            RenderUtility.createImageFromDrawable( drawableWrapper, bounds, content.getStyleSheet(), metaData );
         return Image.getInstance( imageContainer.getImage(), Color.WHITE );
       }
       if ( o instanceof java.awt.Image ) {
@@ -100,8 +100,8 @@ public class PdfImageHandler {
 
   public Image createImage( URLImageContainer imageContainer ) {
     if ( !imageContainer.isLoadable() ) {
-      logger.info( "URL-image cannot be rendered, as it was declared to be not loadable: " +
-        imageContainer.getSourceURLString() );
+      logger.info( "URL-image cannot be rendered, as it was declared to be not loadable: "
+          + imageContainer.getSourceURLString() );
       return null;
     }
 

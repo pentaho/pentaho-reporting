@@ -77,8 +77,7 @@ public abstract class ExcelPrinterBase {
     return metaData != null;
   }
 
-  protected void init( final OutputProcessorMetaData metaData,
-                       final ResourceManager resourceManager ) {
+  protected void init( final OutputProcessorMetaData metaData, final ResourceManager resourceManager ) {
     if ( metaData == null ) {
       throw new NullPointerException();
     }
@@ -88,8 +87,9 @@ public abstract class ExcelPrinterBase {
     this.imageHandler = new ExcelImageHandler( resourceManager, this );
 
     try {
-      final String scaleFactorText = config.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.CellWidthScaleFactor" );
+      final String scaleFactorText =
+          config
+              .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.CellWidthScaleFactor" );
       if ( scaleFactorText == null ) {
         scaleFactor = 50;
       } else {
@@ -108,7 +108,6 @@ public abstract class ExcelPrinterBase {
     this.templateInputStream = templateInputStream;
   }
 
-
   protected String makeUnique( final String name ) {
     if ( name == null ) {
       throw new NullPointerException();
@@ -126,13 +125,9 @@ public abstract class ExcelPrinterBase {
   }
 
   protected boolean isValidSheetName( final String sheetname ) {
-    if ( ( sheetname.indexOf( '/' ) > -1 )
-      || ( sheetname.indexOf( '\\' ) > -1 )
-      || ( sheetname.indexOf( '?' ) > -1 )
-      || ( sheetname.indexOf( '*' ) > -1 )
-      || ( sheetname.indexOf( ']' ) > -1 )
-      || ( sheetname.indexOf( '[' ) > -1 )
-      || ( sheetname.indexOf( ':' ) > -1 ) ) {
+    if ( ( sheetname.indexOf( '/' ) > -1 ) || ( sheetname.indexOf( '\\' ) > -1 ) || ( sheetname.indexOf( '?' ) > -1 )
+        || ( sheetname.indexOf( '*' ) > -1 ) || ( sheetname.indexOf( ']' ) > -1 ) || ( sheetname.indexOf( '[' ) > -1 )
+        || ( sheetname.indexOf( ':' ) > -1 ) ) {
       return false;
     }
 
@@ -212,9 +207,9 @@ public abstract class ExcelPrinterBase {
 
   protected void initializeStyleProducers( final Workbook workbook ) {
     if ( workbook instanceof HSSFWorkbook ) {
-      final boolean dynamicColors = "true".equals
-        ( config.getConfigProperty(
-          "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.DynamicColors" ) );
+      final boolean dynamicColors =
+          "true".equals( config
+              .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.DynamicColors" ) );
       if ( dynamicColors ) {
         final HSSFWorkbook hssfWorkbook = (HSSFWorkbook) workbook;
         colorProducer = new CachingExcelColorSupport( new DynamicExcelColorProducer( hssfWorkbook ) );
@@ -231,8 +226,9 @@ public abstract class ExcelPrinterBase {
   }
 
   protected CellStyleProducer createCellStyleProducer( final Workbook workbook ) {
-    final boolean hardLimit = "true".equals( getConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.HardStyleCountLimit" ) );
+    final boolean hardLimit =
+        "true".equals( getConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.HardStyleCountLimit" ) );
     return new HSSFCellStyleProducer( workbook, hardLimit, colorProducer, fontColorProducer );
   }
 
@@ -277,8 +273,8 @@ public abstract class ExcelPrinterBase {
         sheet.getHeader().setRight( pageHeaderRight );
       }
     } else {
-      logger.warn(
-        "Page-Header exceeds the maximum length of 255 characters. No page-header will be added to the sheet." );
+      logger
+          .warn( "Page-Header exceeds the maximum length of 255 characters. No page-header will be added to the sheet." );
     }
     if ( isHeaderFooterValid( pageFooterLeft, pageFooterCenter, pageFooterRight ) ) {
       if ( pageFooterCenter != null ) {
@@ -291,8 +287,8 @@ public abstract class ExcelPrinterBase {
         sheet.getFooter().setRight( pageFooterRight );
       }
     } else {
-      logger.warn(
-        "Page-Footer exceeds the maximum length of 255 characters. No page-footer will be added to the sheet." );
+      logger
+          .warn( "Page-Footer exceeds the maximum length of 255 characters. No page-footer will be added to the sheet." );
     }
 
     int sheetFreezeTop = excelTableContentProducer.getFreezeTop();
@@ -304,28 +300,41 @@ public abstract class ExcelPrinterBase {
 
   protected void configureSheetPaperSize( final Sheet sheet, final PhysicalPageBox page ) {
     Configuration config = getConfig();
-    final String paper = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.Paper" );
-    final String orientation = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PaperOrientation" );
-    final short scale = (short) ParserUtil.parseInt
-      ( config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintScaleFactor" ), 100 );
-    final short hres = (short) ParserUtil.parseInt
-      ( config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintHorizontalResolution" ), -1 );
-    final short vres = (short) ParserUtil.parseInt
-      ( config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintVerticalResolution" ), -1 );
-    final boolean noColors = "true".equals
-      ( config
-        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintNoColors" ) );
-    final boolean notes = "true".equals
-      ( config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintNotes" ) );
-    final boolean usePage = "true".equals
-      ( config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintUsePage" ) );
-    final boolean draft = "true".equals
-      ( config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintDraft" ) );
+    final String paper =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.Paper" );
+    final String orientation =
+        config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PaperOrientation" );
+    final short scale =
+        (short) ParserUtil
+            .parseInt(
+                config
+                    .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintScaleFactor" ),
+                100 );
+    final short hres =
+        (short) ParserUtil
+            .parseInt(
+                config
+                    .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintHorizontalResolution" ),
+                -1 );
+    final short vres =
+        (short) ParserUtil
+            .parseInt(
+                config
+                    .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintVerticalResolution" ),
+                -1 );
+    final boolean noColors =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintNoColors" ) );
+    final boolean notes =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintNotes" ) );
+    final boolean usePage =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintUsePage" ) );
+    final boolean draft =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.PrintDraft" ) );
 
     final PrintSetup printSetup = sheet.getPrintSetup();
     ExcelPrintSetupFactory.performPageSetup( printSetup, page, paper, orientation );
@@ -341,10 +350,14 @@ public abstract class ExcelPrinterBase {
     }
     printSetup.setDraft( draft );
 
-    final boolean displayGridLines = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.GridLinesDisplayed" ) );
-    final boolean printGridLines = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.GridLinesPrinted" ) );
+    final boolean displayGridLines =
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.GridLinesDisplayed" ) );
+    final boolean printGridLines =
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.GridLinesPrinted" ) );
     sheet.setDisplayGridlines( displayGridLines );
     sheet.setPrintGridlines( printGridLines );
   }
@@ -382,7 +395,7 @@ public abstract class ExcelPrinterBase {
     final char[] chars = s.toCharArray();
     int count = 0;
     for ( int i = 0; i < chars.length; i++ ) {
-      final char c = chars[ i ];
+      final char c = chars[i];
       if ( c == '"' ) {
         b.append( '"' );
         b.append( '"' );
@@ -407,11 +420,8 @@ public abstract class ExcelPrinterBase {
     return patriarch;
   }
 
-  protected void createImageCell( final StyleSheet rawSource,
-                                  final ImageContainer imageContainer,
-                                  final SlimSheetLayout sheetLayout,
-                                  final TableRectangle rectangle,
-                                  final StrictBounds contentBounds ) {
+  protected void createImageCell( final StyleSheet rawSource, final ImageContainer imageContainer,
+      final SlimSheetLayout sheetLayout, final TableRectangle rectangle, final StrictBounds contentBounds ) {
     imageHandler.createImageCell( rawSource, imageContainer, sheetLayout, rectangle, contentBounds );
   }
 

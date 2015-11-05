@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
@@ -77,7 +77,7 @@ public class Prd3930IT extends TestCase {
     for ( final LogicalPageBox logicalPageBox : pages ) {
       final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( TableRowRenderBox.class ) );
       for ( int i = 0; i < all.length; i += 1 ) {
-        final RenderNode node = all[ i ];
+        final RenderNode node = all[i];
         // temporary workaround:
         final RenderBox parent = node.getParent();
         if ( parent instanceof TableSectionRenderBox ) {
@@ -90,8 +90,8 @@ public class Prd3930IT extends TestCase {
         assertFalse( ( node.getY() + node.getHeight() ) <= logicalPageBox.getPageOffset() );
         assertFalse( node.getY() >= logicalPageBox.getPageEnd() );
 
-        if ( node.getY() < logicalPageBox.getPageEnd() &&
-          ( node.getY() + node.getHeight() ) > logicalPageBox.getPageEnd() ) {
+        if ( node.getY() < logicalPageBox.getPageEnd()
+            && ( node.getY() + node.getHeight() ) > logicalPageBox.getPageEnd() ) {
           fail( " y=" + node.getY() + " height=" + node.getHeight() );
         }
       }
@@ -111,7 +111,7 @@ public class Prd3930IT extends TestCase {
     for ( final LogicalPageBox logicalPageBox : pages ) {
       final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( TableRowRenderBox.class ) );
       for ( int i = 0; i < all.length; i += 1 ) {
-        final RenderNode node = all[ i ];
+        final RenderNode node = all[i];
         // temporary workaround:
         final RenderBox parent = node.getParent();
         if ( parent instanceof TableSectionRenderBox ) {
@@ -124,8 +124,8 @@ public class Prd3930IT extends TestCase {
         assertFalse( ( node.getY() + node.getHeight() ) <= logicalPageBox.getPageOffset() );
         assertFalse( node.getY() >= logicalPageBox.getPageEnd() );
 
-        if ( node.getY() < logicalPageBox.getPageEnd() &&
-          ( node.getY() + node.getHeight() ) > logicalPageBox.getPageEnd() ) {
+        if ( node.getY() < logicalPageBox.getPageEnd()
+            && ( node.getY() + node.getHeight() ) > logicalPageBox.getPageEnd() ) {
           fail( " y=" + node.getY() + " height=" + node.getHeight() );
         }
       }
@@ -141,7 +141,7 @@ public class Prd3930IT extends TestCase {
     final MasterReport report = (MasterReport) directly.getResource();
     final ReportElement crosstab = report.getChildElementByType( CrosstabGroupType.INSTANCE );
     crosstab
-      .setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE, CrosstabDetailMode.first );
+        .setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE, CrosstabDetailMode.first );
 
     // Test whether the final page has out-of-bounds boxes. The FillPhysicalPages step should have removed them
     final PrintReportProcessor rp = new PrintReportProcessor( report );
@@ -149,11 +149,11 @@ public class Prd3930IT extends TestCase {
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable( page );
       final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
 
-      //ModelPrinter.print(logicalPageBox);
-      //if (true) return;
+      // ModelPrinter.print(logicalPageBox);
+      // if (true) return;
       final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( TableRowRenderBox.class ) );
       for ( int i = 0; i < all.length; i += 1 ) {
-        final RenderNode node = all[ i ];
+        final RenderNode node = all[i];
         // temporary workaround:
         final RenderBox parent = node.getParent();
         if ( parent instanceof TableSectionRenderBox ) {
@@ -166,8 +166,8 @@ public class Prd3930IT extends TestCase {
         assertFalse( ( node.getY() + node.getHeight() ) <= logicalPageBox.getPageOffset() );
         assertFalse( node.getY() >= logicalPageBox.getPageEnd() );
 
-        if ( node.getY() < logicalPageBox.getPageEnd() &&
-          ( node.getY() + node.getHeight() ) > logicalPageBox.getPageEnd() ) {
+        if ( node.getY() < logicalPageBox.getPageEnd()
+            && ( node.getY() + node.getHeight() ) > logicalPageBox.getPageEnd() ) {
           fail( " y=" + node.getY() + " height=" + node.getHeight() );
         }
       }
@@ -208,13 +208,12 @@ public class Prd3930IT extends TestCase {
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable( page );
       final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
 
-
-      //      new FileModelPrinter("Prd-3930-page-" + page + "-", DebugReportRunner.createTestOutputFile()).print
+      // new FileModelPrinter("Prd-3930-page-" + page + "-", DebugReportRunner.createTestOutputFile()).print
       // (logicalPageBox);
 
       final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( TableRowRenderBox.class ) );
       for ( int i = 0; i < all.length; i += 1 ) {
-        final RenderNode node = all[ i ];
+        final RenderNode node = all[i];
         // temporary workaround:
         final RenderBox parent = node.getParent();
         if ( parent instanceof TableSectionRenderBox ) {
@@ -228,8 +227,8 @@ public class Prd3930IT extends TestCase {
           assertFalse( ( node.getY() + node.getHeight() ) <= logicalPageBox.getPageOffset() );
           assertFalse( node.getY() >= logicalPageBox.getPageEnd() );
 
-          if ( node.getY() < logicalPageBox.getPageEnd() &&
-            ( node.getY() + node.getHeight() ) > logicalPageBox.getPageEnd() ) {
+          if ( node.getY() < logicalPageBox.getPageEnd()
+              && ( node.getY() + node.getHeight() ) > logicalPageBox.getPageEnd() ) {
             fail( " y=" + node.getY() + " height=" + node.getHeight() );
           }
         } catch ( AssertionFailedError afe ) {
@@ -324,7 +323,7 @@ public class Prd3930IT extends TestCase {
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     XmlPageReportUtil.createXml( report, bout );
     final String text = bout.toString( "UTF-8" );
-    //  DebugLog.log(text);
+    // DebugLog.log(text);
     for ( int i = 0; i < 100; i += 1 ) {
       assertTrue( text.contains( "value=\"Data-" + i + "-0" ) );
       assertTrue( text.contains( "value=\"Data-" + i + "-1" ) );
@@ -353,7 +352,7 @@ public class Prd3930IT extends TestCase {
     final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
     final ReportElement crosstabCell = report.getChildElementByType( CrosstabCellType.INSTANCE );
-    //    crosstabCell.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.CROSSTAB_DETAIL_MODE,
+    // crosstabCell.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.CROSSTAB_DETAIL_MODE,
     // CrosstabDetailMode.first);
 
     // Test whether the final page has out-of-bounds boxes. The FillPhysicalPages step should have removed them
@@ -363,11 +362,11 @@ public class Prd3930IT extends TestCase {
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable( page );
       final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
 
-      //ModelPrinter.print(logicalPageBox);
-      //if (true) return;
+      // ModelPrinter.print(logicalPageBox);
+      // if (true) return;
       final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( TableRowRenderBox.class ) );
       for ( int i = 0; i < all.length; i += 1 ) {
-        final RenderNode node = all[ i ];
+        final RenderNode node = all[i];
         // temporary workaround:
         final RenderBox parent = node.getParent();
         if ( parent instanceof TableSectionRenderBox ) {

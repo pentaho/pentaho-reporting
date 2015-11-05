@@ -36,13 +36,11 @@ public class SortOrderReportPreProcessor extends AbstractReportPreProcessor {
   }
 
   public MasterReport performPreDataProcessing( final MasterReport definition,
-                                                final DefaultFlowController flowController )
-    throws ReportProcessingException {
+      final DefaultFlowController flowController ) throws ReportProcessingException {
     return performInternalPreDataProcessing( definition );
   }
 
-  public SubReport performPreDataProcessing( final SubReport definition,
-                                             final DefaultFlowController flowController )
+  public SubReport performPreDataProcessing( final SubReport definition, final DefaultFlowController flowController )
     throws ReportProcessingException {
     return performInternalPreDataProcessing( definition );
   }
@@ -54,8 +52,8 @@ public class SortOrderReportPreProcessor extends AbstractReportPreProcessor {
     }
 
     final List<SortConstraint> sort = computeSortConstraints( report );
-    report.setAttribute( AttributeNames.Internal.NAMESPACE,
-      AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS, Collections.unmodifiableList( sort ) );
+    report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS,
+        Collections.unmodifiableList( sort ) );
     return report;
   }
 
@@ -63,8 +61,7 @@ public class SortOrderReportPreProcessor extends AbstractReportPreProcessor {
     return collectSortData( report.getRootGroup(), new ArrayList<SortConstraint>() );
   }
 
-  private List<SortConstraint> collectSortData( final Group rootGroup,
-                                                final ArrayList<SortConstraint> sorts ) {
+  private List<SortConstraint> collectSortData( final Group rootGroup, final ArrayList<SortConstraint> sorts ) {
     sorts.addAll( rootGroup.getSortingConstraint() );
     GroupBody body = rootGroup.getBody();
     Group group = body.getGroup();

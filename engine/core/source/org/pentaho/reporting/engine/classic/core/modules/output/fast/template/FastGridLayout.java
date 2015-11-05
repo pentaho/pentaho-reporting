@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.template;
 
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.engine.classic.core.util.LongList;
-import org.pentaho.reporting.libraries.base.util.GenericObjectTable;
-
-import java.awt.*;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.engine.classic.core.util.LongList;
+import org.pentaho.reporting.libraries.base.util.GenericObjectTable;
 
 public class FastGridLayout {
   public static class GridCell {

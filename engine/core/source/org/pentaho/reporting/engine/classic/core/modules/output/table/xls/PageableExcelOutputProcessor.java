@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls;
 
@@ -40,16 +40,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
-  implements PageableOutputProcessor {
+public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor implements PageableOutputProcessor {
   private List<PhysicalPageKey> physicalPages;
   private OutputProcessorMetaData metaData;
   private ExcelPrinter printer;
   private FlowSelector flowSelector;
 
-  public PageableExcelOutputProcessor( final Configuration configuration,
-                                       final OutputStream outputStream,
-                                       final ResourceManager resourceManager ) {
+  public PageableExcelOutputProcessor( final Configuration configuration, final OutputStream outputStream,
+      final ResourceManager resourceManager ) {
     if ( configuration == null ) {
       throw new NullPointerException();
     }
@@ -83,7 +81,6 @@ public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
     printer.setTemplateInputStream( templateInputStream );
   }
 
-
   protected void processingPagesFinished() {
     super.processingPagesFinished();
     physicalPages = Collections.unmodifiableList( physicalPages );
@@ -101,8 +98,7 @@ public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
     return (PhysicalPageKey) physicalPages.get( page );
   }
 
-  protected LogicalPageKey createLogicalPage( final int width,
-                                              final int height ) {
+  protected LogicalPageKey createLogicalPage( final int width, final int height ) {
     final LogicalPageKey key = super.createLogicalPage( width, height );
     for ( int h = 0; h < key.getHeight(); h++ ) {
       for ( int w = 0; w < key.getWidth(); w++ ) {
@@ -124,10 +120,8 @@ public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
     this.flowSelector = flowSelector;
   }
 
-  protected void processTableContent( final LogicalPageKey logicalPageKey,
-                                      final LogicalPageBox logicalPage,
-                                      final TableContentProducer contentProducer )
-    throws ContentProcessingException {
+  protected void processTableContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+      final TableContentProducer contentProducer ) throws ContentProcessingException {
     if ( !this.printer.isInitialized() ) {
       this.printer.init( metaData );
     }

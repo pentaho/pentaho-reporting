@@ -71,7 +71,7 @@ public class Prd3278IT {
     sheetLayout.ensureYMapping( StrictGeomUtility.toInternalValue( 600 ), Boolean.FALSE );
 
     ExcelOutputProcessorMetaData metaData =
-      new ExcelOutputProcessorMetaData( ExcelOutputProcessorMetaData.PAGINATION_MANUAL );
+        new ExcelOutputProcessorMetaData( ExcelOutputProcessorMetaData.PAGINATION_MANUAL );
     metaData.initialize( ClassicEngineBoot.getInstance().getGlobalConfig() );
     ResourceManager resourceManager = new ResourceManager();
 
@@ -88,14 +88,12 @@ public class Prd3278IT {
   }
 
   private class TestExcelImageHandler extends ExcelImageHandler {
-    private TestExcelImageHandler( final ResourceManager resourceManager,
-                                   final ExcelPrinterBase printerBase ) {
+    private TestExcelImageHandler( final ResourceManager resourceManager, final ExcelPrinterBase printerBase ) {
       super( resourceManager, printerBase );
     }
 
-    public ClientAnchor computeClientAnchor( final SlimSheetLayout currentLayout,
-                                             final TableRectangle rectangle,
-                                             final StrictBounds cb ) {
+    public ClientAnchor computeClientAnchor( final SlimSheetLayout currentLayout, final TableRectangle rectangle,
+        final StrictBounds cb ) {
       return super.computeClientAnchor( currentLayout, rectangle, cb );
     }
   }
@@ -105,8 +103,8 @@ public class Prd3278IT {
     TableRectangle rect = new TableRectangle();
     rect.setRect( 1, 1, 2, 2 );
     StrictBounds b =
-      new StrictBounds( StrictGeomUtility.toInternalValue( 100 ), StrictGeomUtility.toInternalValue( 100 ),
-        StrictGeomUtility.toInternalValue( 400 ), StrictGeomUtility.toInternalValue( 400 ) );
+        new StrictBounds( StrictGeomUtility.toInternalValue( 100 ), StrictGeomUtility.toInternalValue( 100 ),
+            StrictGeomUtility.toInternalValue( 400 ), StrictGeomUtility.toInternalValue( 400 ) );
     ClientAnchor clientAnchor = imageHandler.computeClientAnchor( sheetLayout, rect, b );
     Assert.assertEquals( 1, clientAnchor.getCol1() );
     Assert.assertEquals( 1, clientAnchor.getCol2() );
@@ -124,8 +122,8 @@ public class Prd3278IT {
     TableRectangle rect = new TableRectangle();
     rect.setRect( 1, 1, 2, 2 );
     StrictBounds b =
-      new StrictBounds( StrictGeomUtility.toInternalValue( 100 ), StrictGeomUtility.toInternalValue( 100 ),
-        StrictGeomUtility.toInternalValue( 300 ), StrictGeomUtility.toInternalValue( 300 ) );
+        new StrictBounds( StrictGeomUtility.toInternalValue( 100 ), StrictGeomUtility.toInternalValue( 100 ),
+            StrictGeomUtility.toInternalValue( 300 ), StrictGeomUtility.toInternalValue( 300 ) );
 
     ClientAnchor clientAnchor = imageHandler.computeClientAnchor( sheetLayout, rect, b );
     Assert.assertEquals( 1, clientAnchor.getCol1() );
@@ -144,8 +142,8 @@ public class Prd3278IT {
     TableRectangle rect = new TableRectangle();
     rect.setRect( 1, 1, 2, 2 );
     StrictBounds b =
-      new StrictBounds( StrictGeomUtility.toInternalValue( 200 ), StrictGeomUtility.toInternalValue( 200 ),
-        StrictGeomUtility.toInternalValue( 200 ), StrictGeomUtility.toInternalValue( 200 ) );
+        new StrictBounds( StrictGeomUtility.toInternalValue( 200 ), StrictGeomUtility.toInternalValue( 200 ),
+            StrictGeomUtility.toInternalValue( 200 ), StrictGeomUtility.toInternalValue( 200 ) );
 
     ClientAnchor clientAnchor = imageHandler.computeClientAnchor( sheetLayout, rect, b );
     Assert.assertEquals( 1, clientAnchor.getCol1() );
@@ -164,8 +162,8 @@ public class Prd3278IT {
     TableRectangle rect = new TableRectangle();
     rect.setRect( 1, 1, 2, 2 );
     StrictBounds b =
-      new StrictBounds( StrictGeomUtility.toInternalValue( 100 ), StrictGeomUtility.toInternalValue( 100 ),
-        StrictGeomUtility.toInternalValue( 400 ), StrictGeomUtility.toInternalValue( 400 ) );
+        new StrictBounds( StrictGeomUtility.toInternalValue( 100 ), StrictGeomUtility.toInternalValue( 100 ),
+            StrictGeomUtility.toInternalValue( 400 ), StrictGeomUtility.toInternalValue( 400 ) );
     ClientAnchor clientAnchor = xlsxImageHandler.computeClientAnchor( sheetLayout, rect, b );
     Assert.assertEquals( 1, clientAnchor.getCol1() );
     Assert.assertEquals( 1, clientAnchor.getCol2() );
@@ -183,8 +181,8 @@ public class Prd3278IT {
     TableRectangle rect = new TableRectangle();
     rect.setRect( 1, 1, 2, 2 );
     StrictBounds b =
-      new StrictBounds( StrictGeomUtility.toInternalValue( 100 ), StrictGeomUtility.toInternalValue( 100 ),
-        StrictGeomUtility.toInternalValue( 300 ), StrictGeomUtility.toInternalValue( 300 ) );
+        new StrictBounds( StrictGeomUtility.toInternalValue( 100 ), StrictGeomUtility.toInternalValue( 100 ),
+            StrictGeomUtility.toInternalValue( 300 ), StrictGeomUtility.toInternalValue( 300 ) );
 
     ClientAnchor clientAnchor = xlsxImageHandler.computeClientAnchor( sheetLayout, rect, b );
     Assert.assertEquals( 1, clientAnchor.getCol1() );
@@ -203,8 +201,8 @@ public class Prd3278IT {
     TableRectangle rect = new TableRectangle();
     rect.setRect( 1, 1, 2, 2 );
     StrictBounds b =
-      new StrictBounds( StrictGeomUtility.toInternalValue( 200 ), StrictGeomUtility.toInternalValue( 200 ),
-        StrictGeomUtility.toInternalValue( 200 ), StrictGeomUtility.toInternalValue( 200 ) );
+        new StrictBounds( StrictGeomUtility.toInternalValue( 200 ), StrictGeomUtility.toInternalValue( 200 ),
+            StrictGeomUtility.toInternalValue( 200 ), StrictGeomUtility.toInternalValue( 200 ) );
 
     ClientAnchor clientAnchor = xlsxImageHandler.computeClientAnchor( sheetLayout, rect, b );
     Assert.assertEquals( 1, clientAnchor.getCol1() );

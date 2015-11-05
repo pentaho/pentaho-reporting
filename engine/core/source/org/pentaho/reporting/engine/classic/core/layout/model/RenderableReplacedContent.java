@@ -1,21 +1,23 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
+
+import java.awt.Dimension;
 
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
@@ -25,8 +27,6 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
-
-import java.awt.*;
 
 public final class RenderableReplacedContent {
   private static final long PHYSICAL_LIMIT = (long) StrictMath.pow( 2, 52 );
@@ -45,20 +45,18 @@ public final class RenderableReplacedContent {
   private RenderLength maximumWidth;
   private RenderLength maximumHeight;
 
-  public RenderableReplacedContent( final StyleSheet styleSheet,
-                                    final Object content,
-                                    final ResourceKey source,
-                                    final OutputProcessorMetaData metaData ) {
+  public RenderableReplacedContent( final StyleSheet styleSheet, final Object content, final ResourceKey source,
+      final OutputProcessorMetaData metaData ) {
     this.content = content;
     this.source = source;
     this.keepAspectRatio = styleSheet.getBooleanStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO );
 
     minimumWidth = RenderLength.createFromRaw( styleSheet.getDoubleStyleProperty( ElementStyleKeys.MIN_WIDTH, 0 ) );
     minimumHeight = RenderLength.createFromRaw( styleSheet.getDoubleStyleProperty( ElementStyleKeys.MIN_HEIGHT, 0 ) );
-    maximumWidth = RenderLength.createFromRaw
-      ( styleSheet.getDoubleStyleProperty( ElementStyleKeys.MAX_WIDTH, PHYSICAL_LIMIT ) );
-    maximumHeight = RenderLength.createFromRaw
-      ( styleSheet.getDoubleStyleProperty( ElementStyleKeys.MAX_HEIGHT, PHYSICAL_LIMIT ) );
+    maximumWidth =
+        RenderLength.createFromRaw( styleSheet.getDoubleStyleProperty( ElementStyleKeys.MAX_WIDTH, PHYSICAL_LIMIT ) );
+    maximumHeight =
+        RenderLength.createFromRaw( styleSheet.getDoubleStyleProperty( ElementStyleKeys.MAX_HEIGHT, PHYSICAL_LIMIT ) );
 
     final Float prefWidth = (Float) styleSheet.getStyleProperty( ElementStyleKeys.WIDTH, null );
     if ( prefWidth != null ) {
@@ -76,7 +74,7 @@ public final class RenderableReplacedContent {
 
     if ( content instanceof ImageContainer ) {
       final boolean imageResolutionMapping =
-        metaData.isFeatureSupported( OutputProcessorFeature.IMAGE_RESOLUTION_MAPPING );
+          metaData.isFeatureSupported( OutputProcessorFeature.IMAGE_RESOLUTION_MAPPING );
       final double displayResolution = metaData.getNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION );
       final double correctionFactorPxToPoint = 72.0 / displayResolution;
 
@@ -160,16 +158,9 @@ public final class RenderableReplacedContent {
   }
 
   public String toString() {
-    return "RenderableReplacedContent{" +
-      ", source=" + source +
-      ", contentWidth=" + contentWidth +
-      ", contentHeight=" + contentHeight +
-      ", requestedWidth=" + requestedWidth +
-      ", requestedHeight=" + requestedHeight +
-      ", minimumWidth=" + minimumWidth +
-      ", minimumHeight=" + minimumHeight +
-      ", maximumWidth=" + maximumWidth +
-      ", maximumHeight=" + maximumHeight +
-      '}';
+    return "RenderableReplacedContent{" + ", source=" + source + ", contentWidth=" + contentWidth + ", contentHeight="
+        + contentHeight + ", requestedWidth=" + requestedWidth + ", requestedHeight=" + requestedHeight
+        + ", minimumWidth=" + minimumWidth + ", minimumHeight=" + minimumHeight + ", maximumWidth=" + maximumWidth
+        + ", maximumHeight=" + maximumHeight + '}';
   }
 }

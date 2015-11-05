@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
@@ -36,7 +36,9 @@ import java.text.NumberFormat;
  */
 public class NumberFormatFilter extends FormatFilter {
   /**
-   * Default constructor. <P> Uses a general number format for the current locale.
+   * Default constructor.
+   * <P>
+   * Uses a general number format for the current locale.
    */
   public NumberFormatFilter() {
     setNumberFormat( NumberFormat.getInstance() );
@@ -45,7 +47,8 @@ public class NumberFormatFilter extends FormatFilter {
   /**
    * Sets the number format.
    *
-   * @param nf The number format.
+   * @param nf
+   *          The number format.
    */
   public void setNumberFormat( final NumberFormat nf ) {
     setFormatter( nf );
@@ -63,7 +66,8 @@ public class NumberFormatFilter extends FormatFilter {
   /**
    * Sets the formatter.
    *
-   * @param f The format.
+   * @param f
+   *          The format.
    */
   public void setFormatter( final Format f ) {
     final NumberFormat fm = (NumberFormat) f;
@@ -73,7 +77,8 @@ public class NumberFormatFilter extends FormatFilter {
   /**
    * Turns grouping on or off for the current number format.
    *
-   * @param newValue The new value of the grouping flag.
+   * @param newValue
+   *          The new value of the grouping flag.
    */
   public void setGroupingUsed( final boolean newValue ) {
     getNumberFormat().setGroupingUsed( newValue );
@@ -92,7 +97,8 @@ public class NumberFormatFilter extends FormatFilter {
   /**
    * Sets the maximum number of fraction digits for the current number format.
    *
-   * @param newValue The number of digits.
+   * @param newValue
+   *          The number of digits.
    */
   public void setMaximumFractionDigits( final int newValue ) {
     getNumberFormat().setMaximumFractionDigits( newValue );
@@ -111,7 +117,8 @@ public class NumberFormatFilter extends FormatFilter {
   /**
    * Sets the maximum number of digits in the integer part of the current number format.
    *
-   * @param newValue The number of digits.
+   * @param newValue
+   *          The number of digits.
    */
   public void setMaximumIntegerDigits( final int newValue ) {
     getNumberFormat().setMaximumFractionDigits( newValue );
@@ -130,7 +137,8 @@ public class NumberFormatFilter extends FormatFilter {
   /**
    * Sets the minimum number of fraction digits for the current number format.
    *
-   * @param newValue The number of digits.
+   * @param newValue
+   *          The number of digits.
    */
   public void setMinimumFractionDigits( final int newValue ) {
     getNumberFormat().setMaximumFractionDigits( newValue );
@@ -149,7 +157,8 @@ public class NumberFormatFilter extends FormatFilter {
   /**
    * Sets the minimum number of digits in the integer part of the current number format.
    *
-   * @param newValue The number of digits.
+   * @param newValue
+   *          The number of digits.
    */
   public void setMinimumIntegerDigits( final int newValue ) {
     getNumberFormat().setMaximumFractionDigits( newValue );
@@ -165,10 +174,8 @@ public class NumberFormatFilter extends FormatFilter {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
-
-  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
-                                              final ReportElement element,
-                                              FormatSpecification formatSpecification ) {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime, final ReportElement element,
+      FormatSpecification formatSpecification ) {
     final DataSource source = getDataSource();
     if ( source instanceof RawDataSource ) {
       final RawDataSource rds = (RawDataSource) source;

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -33,7 +33,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-
 
 /**
  * This step must not remove boxes that have a manual break attached.
@@ -60,7 +59,6 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep {
     }
   }
 
-
   private long pageOffset;
   private long shiftOffset;
   private InstanceID shiftNode;
@@ -85,7 +83,7 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep {
       processBoxChilds( pageBox );
     }
     finishBlockBox( pageBox );
-    //Log.debug ("ShiftOffset after clean: " + shiftOffset);
+    // Log.debug ("ShiftOffset after clean: " + shiftOffset);
     return shiftOffset;
   }
 
@@ -208,8 +206,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep {
         final RenderNode nodeForRemoval = currentNode;
         currentNode = currentNode.getNext();
         if ( isSafeForRemoval( nodeForRemoval ) ) {
-          removeFinishedNodes( box, nodeForRemoval, nodeForRemoval,
-            nodeForRemoval.getOrphanLeafCount(), nodeForRemoval.getWidowLeafCount() );
+          removeFinishedNodes( box, nodeForRemoval, nodeForRemoval, nodeForRemoval.getOrphanLeafCount(), nodeForRemoval
+              .getWidowLeafCount() );
         }
       }
 
@@ -275,8 +273,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep {
         final RenderNode nodeForRemoval = currentNode;
         currentNode = currentNode.getNext();
         if ( isSafeForRemoval( nodeForRemoval ) ) {
-          removeFinishedNodes( box, nodeForRemoval, nodeForRemoval,
-            nodeForRemoval.getOrphanLeafCount(), nodeForRemoval.getWidowLeafCount() );
+          removeFinishedNodes( box, nodeForRemoval, nodeForRemoval, nodeForRemoval.getOrphanLeafCount(), nodeForRemoval
+              .getWidowLeafCount() );
         }
       }
 
@@ -311,11 +309,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep {
     return false;
   }
 
-  private void removeFinishedNodes( final RenderBox box,
-                                    final RenderNode firstNode,
-                                    final RenderNode last,
-                                    final int orphanLeafCount,
-                                    final int widowLeafCount ) {
+  private void removeFinishedNodes( final RenderBox box, final RenderNode firstNode, final RenderNode last,
+      final int orphanLeafCount, final int widowLeafCount ) {
     if ( last.isOpen() ) {
       throw new IllegalStateException( "The last node is still open. We should not have come that far." );
     }
@@ -368,13 +363,13 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep {
       removeNode = next;
     }
 
-    final FinishedRenderNode replacement = new FinishedRenderNode
-      ( box.getContentAreaX1(), startOfBox, width, height, marginsTop, marginsBottom,
-        breakAfter, orphanLeafCount, widowLeafCount );
+    final FinishedRenderNode replacement =
+        new FinishedRenderNode( box.getContentAreaX1(), startOfBox, width, height, marginsTop, marginsBottom,
+            breakAfter, orphanLeafCount, widowLeafCount );
 
     box.replaceChild( last, replacement );
     if ( replacement.getParent() != box ) {
-      //      return true;
+      // return true;
       throw new IllegalStateException( "The replacement did not work." );
     }
 

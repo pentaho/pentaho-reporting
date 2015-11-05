@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
@@ -32,10 +32,10 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
   public static final NumberFieldType INSTANCE = new NumberFieldType();
 
   private static final String DECIMALFORMAT_DEFAULT_PATTERN =
-    "#,###.###################################################" +
-      "#########################################################" +
-      "#########################################################" +
-      "#########################################################";
+      "#,###.###################################################"
+          + "#########################################################"
+          + "#########################################################"
+          + "#########################################################";
 
   public static class NumberFieldTypeContext {
     public ElementMetaData elementType;
@@ -51,8 +51,7 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object staticValue = ElementTypeUtils.queryStaticValue( element );
     if ( staticValue instanceof Number ) {
-      Object formatStringRaw =
-        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
+      Object formatStringRaw = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
       if ( formatStringRaw == null || "".equals( formatStringRaw ) ) {
         // return the default behavior of BigDecimal.toString() but localized.
         formatStringRaw = NumberFieldType.DECIMALFORMAT_DEFAULT_PATTERN;
@@ -60,8 +59,7 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
 
       try {
         final Locale locale = runtime.getResourceBundleFactory().getLocale();
-        final FastDecimalFormat decimalFormat = new FastDecimalFormat
-          ( String.valueOf( formatStringRaw ), locale );
+        final FastDecimalFormat decimalFormat = new FastDecimalFormat( String.valueOf( formatStringRaw ), locale );
 
         return decimalFormat.format( staticValue );
       } catch ( Exception e ) {
@@ -71,13 +69,13 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
     return ElementTypeUtils.queryFieldName( element );
   }
 
-
   /**
    * Returns the unformated raw value. Whether that raw value is useable for the export is beyond the scope of this API
    * definition, but providing access to {@link Number} or {@link java.util.Date} objects is a good idea.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return the raw data.
    */
@@ -98,24 +96,25 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
 
   /**
    * Returns information about the formatstring that was used to transform a raw-value into a formatted text. Not all
-   * elements will make use of a format-string. These elements will return {@link org.pentaho.reporting.engine
-   * .classic.core.filter.FormatSpecification#TYPE_UNDEFINED}
-   * in that case.
+   * elements will make use of a format-string. These elements will return
+   * {@link org.pentaho.reporting.engine .classic.core.filter.FormatSpecification#TYPE_UNDEFINED} in that case.
    *
-   * @param runtime             the Expression runtime used to possibly compute the raw-value.
-   * @param element             the element to which this datasource is added.
-   * @param formatSpecification the format specification (can be null). @return a filled format specififcation. If the
-   *                            <code>formatSpecification</code> parameter was not null, this given instance is reused.
+   * @param runtime
+   *          the Expression runtime used to possibly compute the raw-value.
+   * @param element
+   *          the element to which this datasource is added.
+   * @param formatSpecification
+   *          the format specification (can be null). @return a filled format specififcation. If the
+   *          <code>formatSpecification</code> parameter was not null, this given instance is reused.
    */
-  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
-                                              final ReportElement element,
-                                              FormatSpecification formatSpecification ) {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime, final ReportElement element,
+      FormatSpecification formatSpecification ) {
     if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }
 
     final Object formatStringRaw =
-      element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
+        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
     if ( formatStringRaw == null ) {
       formatSpecification.redefine( FormatSpecification.TYPE_UNDEFINED, null );
 
@@ -135,9 +134,11 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
   /**
    * Returns the current value for the data source.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
-   * @param element the element from which to read attribute.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
+   * @param element
+   *          the element from which to read attribute.
    * @return the value.
    */
   public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
@@ -153,8 +154,7 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
       return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     }
 
-    Object formatStringRaw =
-      element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
+    Object formatStringRaw = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
     if ( formatStringRaw == null || "".equals( formatStringRaw ) ) {
       // return the default behavior of BigDecimal.toString() but localized.
       formatStringRaw = NumberFieldType.DECIMALFORMAT_DEFAULT_PATTERN;
@@ -168,8 +168,8 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
         context.locale = locale;
         context.decimalFormat = new FastDecimalFormat( context.formatString, locale );
       } else {
-        if ( ObjectUtilities.equal( context.formatString, formatStringRaw ) == false ||
-          ObjectUtilities.equal( context.locale, locale ) == false ) {
+        if ( ObjectUtilities.equal( context.formatString, formatStringRaw ) == false
+            || ObjectUtilities.equal( context.locale, locale ) == false ) {
           context.formatString = String.valueOf( formatStringRaw );
           context.locale = locale;
           context.decimalFormat = new FastDecimalFormat( context.formatString, locale );

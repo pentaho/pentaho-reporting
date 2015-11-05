@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -69,10 +69,11 @@ public final class ElementAlignment implements Serializable {
   private final int hashCode;
 
   /**
-   * Creates a new alignment object.  Since this constructor is private, you cannot create new alignment objects, you
-   * can only use the predefined constants.
+   * Creates a new alignment object. Since this constructor is private, you cannot create new alignment objects, you can
+   * only use the predefined constants.
    *
-   * @param name the alignment name.
+   * @param name
+   *          the alignment name.
    */
   private ElementAlignment( final String name ) {
     myName = name;
@@ -112,10 +113,10 @@ public final class ElementAlignment implements Serializable {
    * Replaces the automatically generated instance with one of the enumeration instances.
    *
    * @return the resolved element
-   * @throws ObjectStreamException if the element could not be resolved.
+   * @throws ObjectStreamException
+   *           if the element could not be resolved.
    */
-  private Object readResolve()
-    throws ObjectStreamException {
+  private Object readResolve() throws ObjectStreamException {
     if ( this.myName.equals( ElementAlignment.LEFT.myName ) ) {
       return ElementAlignment.LEFT;
     }

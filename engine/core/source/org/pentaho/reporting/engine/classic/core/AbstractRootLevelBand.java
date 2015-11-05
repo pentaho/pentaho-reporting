@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -32,7 +32,7 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
   /**
    * A empty array. (For performance reasons.)
    */
-  private static final SubReport[] EMPTY_SUBREPORTS = new SubReport[ 0 ];
+  private static final SubReport[] EMPTY_SUBREPORTS = new SubReport[0];
   /**
    * The list of follow-up root-level sub-reports.
    */
@@ -47,11 +47,12 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
   /**
    * Constructs a new band with the given pagebreak attributes. Pagebreak attributes have no effect on subbands.
    *
-   * @param pagebreakAfter  defines, whether a pagebreak should be done after that band was printed.
-   * @param pagebreakBefore defines, whether a pagebreak should be done before that band gets printed.
+   * @param pagebreakAfter
+   *          defines, whether a pagebreak should be done after that band was printed.
+   * @param pagebreakBefore
+   *          defines, whether a pagebreak should be done before that band gets printed.
    */
-  protected AbstractRootLevelBand( final boolean pagebreakBefore,
-                                   final boolean pagebreakAfter ) {
+  protected AbstractRootLevelBand( final boolean pagebreakBefore, final boolean pagebreakAfter ) {
     super( pagebreakBefore, pagebreakAfter );
   }
 
@@ -111,9 +112,11 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
   /**
    * Returns the subreport at the given index-position.
    *
-   * @param index the index
+   * @param index
+   *          the index
    * @return the subreport stored at the given index.
-   * @throws IndexOutOfBoundsException if there is no such subreport.
+   * @throws IndexOutOfBoundsException
+   *           if there is no such subreport.
    */
   public SubReport getSubReport( final int index ) {
     if ( subReports == null ) {
@@ -126,7 +129,8 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    * Attaches a new subreport at the end of the list.
    *
    * @param index
-   * @param element the subreport, never null.
+   * @param element
+   *          the subreport, never null.
    */
   public void addSubReport( final int index, final SubReport element ) {
     if ( element == null ) {
@@ -150,7 +154,8 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
   /**
    * Attaches a new subreport at the end of the list.
    *
-   * @param element the subreport, never null.
+   * @param element
+   *          the subreport, never null.
    */
   public void addSubReport( final SubReport element ) {
     if ( element == null ) {
@@ -174,7 +179,8 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
   /**
    * Removes the given subreport from the list of attached sub-reports.
    *
-   * @param e the subreport to be removed.
+   * @param e
+   *          the subreport to be removed.
    */
   public void removeSubreport( final SubReport e ) {
     if ( e == null ) {
@@ -205,7 +211,7 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
     if ( subReports == null ) {
       return AbstractRootLevelBand.EMPTY_SUBREPORTS;
     }
-    return subReports.toArray( new SubReport[ subReports.size() ] );
+    return subReports.toArray( new SubReport[subReports.size()] );
   }
 
   public ElementStyleSheet getDefaultStyleSheet() {

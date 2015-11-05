@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 
@@ -43,15 +43,17 @@ public class DataFactoryXmlResourceFactory extends AbstractXmlResourceFactory {
     super.initializeDefaults();
     final XmlFactoryModule[] registeredHandlers = registry.getRegisteredHandlers();
     for ( int i = 0; i < registeredHandlers.length; i++ ) {
-      registerModule( registeredHandlers[ i ] );
+      registerModule( registeredHandlers[i] );
     }
   }
 
   /**
    * Configures the xml reader. Use this to set features or properties before the documents get parsed.
    *
-   * @param handler the parser implementation that will handle the SAX-Callbacks.
-   * @param reader  the xml reader that should be configured.
+   * @param handler
+   *          the parser implementation that will handle the SAX-Callbacks.
+   * @param reader
+   *          the xml reader that should be configured.
    */
   protected void configureReader( final XMLReader reader, final MultiplexRootElementHandler handler ) {
     super.configureReader( reader, handler );
@@ -66,12 +68,9 @@ public class DataFactoryXmlResourceFactory extends AbstractXmlResourceFactory {
     return DataFactory.class;
   }
 
-  protected Resource createResource( final ResourceKey targetKey,
-                                     final RootXmlReadHandler handler,
-                                     final Object createdProduct,
-                                     final Class createdType ) {
+  protected Resource createResource( final ResourceKey targetKey, final RootXmlReadHandler handler,
+      final Object createdProduct, final Class createdType ) {
     return new ReportResource( targetKey, handler.getDependencyCollector(), createdProduct, createdType, true );
   }
-
 
 }

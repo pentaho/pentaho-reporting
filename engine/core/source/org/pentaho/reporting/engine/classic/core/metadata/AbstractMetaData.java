@@ -1,21 +1,29 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
+
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.beans.BeanInfo;
+import java.io.Serializable;
+import java.net.URL;
+import java.util.Locale;
+import java.util.MissingResourceException;
 
 import org.pentaho.reporting.engine.classic.core.metadata.builder.MetaDataBuilder;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
@@ -23,13 +31,6 @@ import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
-
-import java.awt.*;
-import java.beans.BeanInfo;
-import java.io.Serializable;
-import java.net.URL;
-import java.util.Locale;
-import java.util.MissingResourceException;
 
 public abstract class AbstractMetaData implements Serializable, MetaData {
   private transient Image[] icons;
@@ -70,20 +71,14 @@ public abstract class AbstractMetaData implements Serializable, MetaData {
   }
 
   protected AbstractMetaData( final MetaDataBuilder builder ) {
-    this( builder.getName(), builder.getBundleLocation(), builder.getKeyPrefix(), builder.isExpert(),
-      builder.isPreferred(), builder.isHidden(), builder.isDeprecated(), builder.getMaturityLevel(),
-      builder.getCompatibilityLevel() );
+    this( builder.getName(), builder.getBundleLocation(), builder.getKeyPrefix(), builder.isExpert(), builder
+        .isPreferred(), builder.isHidden(), builder.isDeprecated(), builder.getMaturityLevel(), builder
+        .getCompatibilityLevel() );
   }
 
-  protected AbstractMetaData( final String name,
-                              final String bundleLocation,
-                              final String keyPrefix,
-                              final boolean expert,
-                              final boolean preferred,
-                              final boolean hidden,
-                              final boolean deprecated,
-                              final MaturityLevel maturityLevel,
-                              final int compatibilityLevel ) {
+  protected AbstractMetaData( final String name, final String bundleLocation, final String keyPrefix,
+      final boolean expert, final boolean preferred, final boolean hidden, final boolean deprecated,
+      final MaturityLevel maturityLevel, final int compatibilityLevel ) {
     ArgumentNullException.validate( "name", name );
     ArgumentNullException.validate( "bundleLocation", bundleLocation );
     ArgumentNullException.validate( "keyPrefix", keyPrefix );
@@ -146,8 +141,7 @@ public abstract class AbstractMetaData implements Serializable, MetaData {
     }
 
     if ( lastMessages == null || ObjectUtilities.equal( locale, lastLocale ) == false ) {
-      lastMessages = new Messages( locale, bundleLocation,
-        ObjectUtilities.getClassLoader( AbstractMetaData.class ) );
+      lastMessages = new Messages( locale, bundleLocation, ObjectUtilities.getClassLoader( AbstractMetaData.class ) );
       lastLocale = locale;
     }
     return lastMessages;
@@ -229,7 +223,7 @@ public abstract class AbstractMetaData implements Serializable, MetaData {
     }
 
     if ( icons != null ) {
-      final Image cachedIcon = icons[ iconKind - 1 ];
+      final Image cachedIcon = icons[iconKind - 1];
       if ( cachedIcon != null ) {
         return cachedIcon;
       }
@@ -237,7 +231,7 @@ public abstract class AbstractMetaData implements Serializable, MetaData {
 
     final String iconKey;
     if ( StringUtils.isEmpty( keyPrefixAndName ) == false ) {
-      switch( iconKind ) {
+      switch ( iconKind ) {
         case BeanInfo.ICON_COLOR_16x16:
           iconKey = ( keyPrefixAndName + ".icon-color-16" );
           break;
@@ -254,7 +248,7 @@ public abstract class AbstractMetaData implements Serializable, MetaData {
           throw new IllegalArgumentException();
       }
     } else {
-      switch( iconKind ) {
+      switch ( iconKind ) {
         case BeanInfo.ICON_COLOR_16x16:
           iconKey = ( "icon-color-16" );
           break;
@@ -288,10 +282,10 @@ public abstract class AbstractMetaData implements Serializable, MetaData {
       }
     }
     if ( icons == null ) {
-      icons = new Image[ 4 ];
+      icons = new Image[4];
     }
     final Image retval = Toolkit.getDefaultToolkit().createImage( url );
-    icons[ iconKind - 1 ] = retval;
+    icons[iconKind - 1] = retval;
     return retval;
   }
 

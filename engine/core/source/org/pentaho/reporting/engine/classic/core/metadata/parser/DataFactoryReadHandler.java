@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
@@ -40,8 +40,10 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler {
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void startParsing( final Attributes attrs ) throws SAXException {
     super.startParsing( attrs );
@@ -64,11 +66,11 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler {
   private DataFactoryCore parseDataFactoryCore( final Attributes attrs ) throws ParseException {
     final String metaDataCoreClass = attrs.getValue( getUri(), "impl" ); // NON-NLS
     if ( metaDataCoreClass != null ) {
-      DataFactoryCore dataFactoryCore = ObjectUtilities.loadAndInstantiate
-        ( metaDataCoreClass, DataFactoryReadHandler.class, DataFactoryCore.class );
+      DataFactoryCore dataFactoryCore =
+          ObjectUtilities.loadAndInstantiate( metaDataCoreClass, DataFactoryReadHandler.class, DataFactoryCore.class );
       if ( dataFactoryCore == null ) {
         throw new ParseException( "Attribute 'impl' references a invalid DataFactoryPropertyCore implementation.",
-          getLocator() );
+            getLocator() );
       }
       return dataFactoryCore;
     } else {
@@ -79,7 +81,8 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler {
   /**
    * Done parsing.
    *
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void doneParsing() throws SAXException {
   }
@@ -88,7 +91,8 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler {
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if an parser error occured.
+   * @throws SAXException
+   *           if an parser error occured.
    */
   public Object getObject() throws SAXException {
     return new DefaultDataFactoryMetaData( getBuilder() );

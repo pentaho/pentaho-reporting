@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -52,10 +52,13 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
    * The parameter-dataset may change between two calls, do not assume anything, and do not hold references to the
    * parameter-dataset or the position of the columns in the dataset.
    *
-   * @param query      the query string
-   * @param parameters the parameters for the query
+   * @param query
+   *          the query string
+   * @param parameters
+   *          the parameters for the query
    * @return the result of the query as table model.
-   * @throws ReportDataFactoryException if an error occured while performing the query.
+   * @throws ReportDataFactoryException
+   *           if an error occured while performing the query.
    */
   public final TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
     ArgumentNullException.validate( "query", query );
@@ -72,14 +75,12 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     return handleFallThrough( query );
   }
 
-
-  public TableModel queryDesignTimeStructureFreeForm( final String query,
-                                                      final DataRow parameters ) throws ReportDataFactoryException {
+  public TableModel queryDesignTimeStructureFreeForm( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
     return postProcess( query, parameters, queryDesignTimeStructFreeFormInternal( query, parameters ) );
   }
 
-  private TableModel queryDesignTimeStructFreeFormInternal( final String query,
-                                                            final DataRow parameters )
+  private TableModel queryDesignTimeStructFreeFormInternal( final String query, final DataRow parameters )
     throws ReportDataFactoryException {
     for ( int i = 0; i < dataFactories.size(); i++ ) {
       final DataFactory dataFactory = dataFactories.get( i );
@@ -105,8 +106,8 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     return postProcess( query, parameters, queryFreeFormInternal( query, parameters ) );
   }
 
-  private TableModel queryFreeFormInternal( final String query,
-                                            final DataRow parameters ) throws ReportDataFactoryException {
+  private TableModel queryFreeFormInternal( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
     for ( int i = 0; i < dataFactories.size(); i++ ) {
       final DataFactory dataFactory = dataFactories.get( i );
 
@@ -122,13 +123,13 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     return null;
   }
 
-  public TableModel queryDesignTimeStructureStatic( final String query,
-                                                    final DataRow parameters ) throws ReportDataFactoryException {
+  public TableModel queryDesignTimeStructureStatic( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
     return postProcess( query, parameters, queryDesignTimeStructStaticInternal( query, parameters ) );
   }
 
-  private TableModel queryDesignTimeStructStaticInternal( final String query,
-                                                          final DataRow parameters ) throws ReportDataFactoryException {
+  private TableModel queryDesignTimeStructStaticInternal( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
     for ( int i = 0; i < dataFactories.size(); i++ ) {
       final DataFactory dataFactory = dataFactories.get( i );
       if ( dataFactory instanceof CompoundDataFactorySupport ) {
@@ -136,8 +137,8 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
         if ( support.isStaticQueryExecutable( query, parameters ) ) {
           return support.queryDesignTimeStructureStatic( query, parameters );
         }
-      } else if ( ( isFreeFormQueryDataFactory( dataFactory ) == false ) && dataFactory
-        .isQueryExecutable( query, parameters ) ) {
+      } else if ( ( isFreeFormQueryDataFactory( dataFactory ) == false )
+          && dataFactory.isQueryExecutable( query, parameters ) ) {
         if ( dataFactory instanceof DataFactoryDesignTimeSupport ) {
           DataFactoryDesignTimeSupport dts = (DataFactoryDesignTimeSupport) dataFactory;
           return dts.queryDesignTimeStructure( query, parameters );
@@ -166,16 +167,16 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
         if ( support.isStaticQueryExecutable( query, parameters ) ) {
           return support.queryStatic( query, parameters );
         }
-      } else if ( ( isFreeFormQueryDataFactory( dataFactory ) == false ) && dataFactory
-        .isQueryExecutable( query, parameters ) ) {
+      } else if ( ( isFreeFormQueryDataFactory( dataFactory ) == false )
+          && dataFactory.isQueryExecutable( query, parameters ) ) {
         return dataFactory.queryData( query, parameters );
       }
     }
     return null;
   }
 
-  public TableModel queryDesignTimeStructure( final String query,
-                                              final DataRow parameters ) throws ReportDataFactoryException {
+  public TableModel queryDesignTimeStructure( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
     ArgumentNullException.validate( "query", query );
     ArgumentNullException.validate( "parameters", parameters );
 
@@ -190,9 +191,7 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     return handleFallThrough( query );
   }
 
-
-  protected TableModel handleFallThrough( final String query )
-    throws ReportDataFactoryException {
+  protected TableModel handleFallThrough( final String query ) throws ReportDataFactoryException {
     throw new ReportDataFactoryException( "None of the data-factories was able to handle this query." );
   }
 
@@ -241,16 +240,17 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
   /**
    * Checks whether the query would be executable by this datafactory. This performs a rough check, not a full query.
    *
-   * @param query      query name.
-   * @param parameters the parameters for the query.
+   * @param query
+   *          query name.
+   * @param parameters
+   *          the parameters for the query.
    * @return true, if the query may be executable, false, if no datasource claims the query.
    */
   public final boolean isQueryExecutable( final String query, final DataRow parameters ) {
     return isStaticQueryExecutable( query, parameters ) || isFreeFormQueryExecutable( query, parameters );
   }
 
-  public boolean isFreeFormQueryExecutable( final String query,
-                                            final DataRow parameters ) {
+  public boolean isFreeFormQueryExecutable( final String query, final DataRow parameters ) {
     for ( int i = 0; i < dataFactories.size(); i++ ) {
       final DataFactory dataFactory = dataFactories.get( i );
       if ( dataFactory instanceof CompoundDataFactorySupport ) {
@@ -258,8 +258,7 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
         if ( support.isFreeFormQueryExecutable( query, parameters ) ) {
           return true;
         }
-      } else if ( ( isFreeFormQueryDataFactory( dataFactory ) ) && dataFactory
-        .isQueryExecutable( query, parameters ) ) {
+      } else if ( ( isFreeFormQueryDataFactory( dataFactory ) ) && dataFactory.isQueryExecutable( query, parameters ) ) {
         return true;
       }
     }
@@ -274,8 +273,8 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
         if ( support.isStaticQueryExecutable( query, parameters ) ) {
           return true;
         }
-      } else if ( ( isFreeFormQueryDataFactory( dataFactory ) == false ) && dataFactory
-        .isQueryExecutable( query, parameters ) ) {
+      } else if ( ( isFreeFormQueryDataFactory( dataFactory ) == false )
+          && dataFactory.isQueryExecutable( query, parameters ) ) {
         return true;
       }
     }
@@ -306,8 +305,8 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     }
     final DataFactory derived = factory.derive();
     if ( derived == null ) {
-      throw new InvalidReportStateException(
-        "Deriving failed silently. Fix your implementation of " + factory.getClass() );
+      throw new InvalidReportStateException( "Deriving failed silently. Fix your implementation of "
+          + factory.getClass() );
     }
     dataFactories.add( index, derived );
   }
@@ -318,8 +317,8 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     }
     final DataFactory derived = factory.derive();
     if ( derived == null ) {
-      throw new InvalidReportStateException(
-        "Deriving failed silently. Fix your implementation of " + factory.getClass() );
+      throw new InvalidReportStateException( "Deriving failed silently. Fix your implementation of "
+          + factory.getClass() );
     }
     dataFactories.set( index, derived );
   }
@@ -396,8 +395,7 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     return retval;
   }
 
-  public static CompoundDataFactory normalize( final DataFactory dataFactory,
-                                               final boolean derive ) {
+  public static CompoundDataFactory normalize( final DataFactory dataFactory, final boolean derive ) {
     if ( dataFactory == null ) {
       return new CompoundDataFactory();
     }
@@ -429,11 +427,11 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
       final DataFactory dataFactory = dataFactories.get( i );
       final String[] queryNames = dataFactory.getQueryNames();
       for ( int j = 0; j < queryNames.length; j++ ) {
-        final String queryName = queryNames[ j ];
+        final String queryName = queryNames[j];
         nameSet.put( queryName, queryName );
       }
     }
-    return (String[]) nameSet.keys( new String[ nameSet.size() ] );
+    return (String[]) nameSet.keys( new String[nameSet.size()] );
   }
 
   public DataFactory getDataFactoryForQuery( final String queryName, final boolean freeform ) {

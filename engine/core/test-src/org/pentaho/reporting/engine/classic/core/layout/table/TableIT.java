@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
@@ -80,7 +80,7 @@ public class TableIT extends TestCase {
     band.addElement( table );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher( new ElementMatcher( "TableCellRenderBox" ) );
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
@@ -93,7 +93,6 @@ public class TableIT extends TestCase {
       assertEquals( 0l, renderNode.getY() );
     }
   }
-
 
   public void testSimpleTableWithXOffset() throws ReportProcessingException, ContentProcessingException {
     final Element label = TableTestUtil.createDataItem( "Cell" );
@@ -126,7 +125,7 @@ public class TableIT extends TestCase {
     band.addElement( table );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher( new ElementMatcher( "TableCellRenderBox" ) );
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
@@ -163,7 +162,7 @@ public class TableIT extends TestCase {
     band.addElement( tableRow );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher( new ElementMatcher( "TableCellRenderBox" ) );
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
@@ -206,7 +205,7 @@ public class TableIT extends TestCase {
     band.addElement( tableBody );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher( new ElementMatcher( "TableCellRenderBox" ) );
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
@@ -219,7 +218,6 @@ public class TableIT extends TestCase {
       assertEquals( 0l, renderNode.getY() );
     }
   }
-
 
   /**
    * This test should create auto-table elements to have a fully functional table.
@@ -250,7 +248,7 @@ public class TableIT extends TestCase {
     band.addElement( tableBody );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher( new ElementMatcher( "TableCellRenderBox" ) );
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
@@ -279,13 +277,12 @@ public class TableIT extends TestCase {
     tableCell.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
     tableCell.addElement( label );
 
-
     final MasterReport report = new MasterReport();
     final ReportHeader band = report.getReportHeader();
     band.addElement( tableCell );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher( new ElementMatcher( "TableCellRenderBox" ) );
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
@@ -330,13 +327,13 @@ public class TableIT extends TestCase {
     band.addElement( table );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher( new ElementMatcher( "TableCellRenderBox" ) );
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
 
     final NodeMatcher childMatcher =
-      new AndMatcher( new ElementMatcher( "ParagraphRenderBox" ), new AttributeMatcher( "value" ) );
+        new AndMatcher( new ElementMatcher( "ParagraphRenderBox" ), new AttributeMatcher( "value" ) );
     assertEquals( 6, all.length );
     for ( final RenderNode renderNode : all ) {
       final RenderNode node = MatchFactory.match( renderNode, childMatcher );
@@ -363,6 +360,5 @@ public class TableIT extends TestCase {
     }
 
   }
-
 
 }

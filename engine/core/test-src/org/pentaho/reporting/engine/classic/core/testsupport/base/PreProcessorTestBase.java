@@ -49,7 +49,6 @@ public abstract class PreProcessorTestBase {
 
   protected abstract ReportPreProcessor create();
 
-
   /**
    * Helper method to invoke a pre-processor outside of the report processing. This is strictly for unit-testing only.
    *
@@ -58,21 +57,21 @@ public abstract class PreProcessorTestBase {
    * @return
    * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
    */
-  protected MasterReport materialize( final MasterReport report,
-                                      final ReportPreProcessor processor ) throws ReportProcessingException {
+  protected MasterReport materialize( final MasterReport report, final ReportPreProcessor processor )
+    throws ReportProcessingException {
     final PerformanceMonitorContext pmc = new NoOpPerformanceMonitorContext();
     final DefaultProcessingContext processingContext = new DefaultProcessingContext( report );
     final DataSchemaDefinition definition = report.getDataSchemaDefinition();
-    final DefaultFlowController flowController = new DefaultFlowController( processingContext,
-      definition, StateUtilities.computeParameterValueSet( report ), pmc );
+    final DefaultFlowController flowController =
+        new DefaultFlowController( processingContext, definition, StateUtilities.computeParameterValueSet( report ),
+            pmc );
     final CachingDataFactory dataFactory = new CachingDataFactory( report.getDataFactory(), false );
     dataFactory.initialize( new ProcessingDataFactoryContext( processingContext, dataFactory ) );
 
     try {
-      final DefaultFlowController postQueryFlowController = flowController.performQuery
-        ( dataFactory, report.getQuery(), report.getQueryLimit(),
-          report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory(),
-          Collections.<SortConstraint>emptyList() );
+      final DefaultFlowController postQueryFlowController =
+          flowController.performQuery( dataFactory, report.getQuery(), report.getQueryLimit(),
+              report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory(), Collections.<SortConstraint>emptyList() );
 
       return processor.performPreProcessing( report, postQueryFlowController );
     } finally {
@@ -85,8 +84,9 @@ public abstract class PreProcessorTestBase {
     final PerformanceMonitorContext pmc = new NoOpPerformanceMonitorContext();
     final DefaultProcessingContext processingContext = new DefaultProcessingContext( report );
     final DataSchemaDefinition definition = report.getDataSchemaDefinition();
-    final DefaultFlowController flowController = new DefaultFlowController( processingContext,
-      definition, StateUtilities.computeParameterValueSet( report ), pmc );
+    final DefaultFlowController flowController =
+        new DefaultFlowController( processingContext, definition, StateUtilities.computeParameterValueSet( report ),
+            pmc );
     return reportPreProcessor.performPreDataProcessing( report, flowController );
   }
 }

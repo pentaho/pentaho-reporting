@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.text;
 
@@ -25,7 +25,7 @@ import org.pentaho.reporting.libraries.fonts.text.Spacing;
  * @author Thomas Morgner
  */
 public final class DefaultGlyph implements Glyph {
-  private static final int[] EMPTY_EXTRA_CHARS = new int[ 0 ];
+  private static final int[] EMPTY_EXTRA_CHARS = new int[0];
 
   private int codepoint;
   private int breakWeight;
@@ -37,17 +37,10 @@ public final class DefaultGlyph implements Glyph {
   private int kerning;
   private int[] extraChars;
 
-  public DefaultGlyph( final int codepoint,
-                       final int breakWeight,
-                       final int classification,
-                       final Spacing spacing,
-                       final int width,
-                       final int height,
-                       final int baseLine,
-                       final int kerning,
-                       final int[] extraChars ) {
+  public DefaultGlyph( final int codepoint, final int breakWeight, final int classification, final Spacing spacing,
+      final int width, final int height, final int baseLine, final int kerning, final int[] extraChars ) {
 
-    //  Log.debug ("Glyph: -" + ((char) (0xffff & codepoint)) + "- [" + baseLine + ", " + height + "]");
+    // Log.debug ("Glyph: -" + ((char) (0xffff & codepoint)) + "- [" + baseLine + ", " + height + "]");
     if ( spacing == null ) {
       this.spacing = Spacing.EMPTY_SPACING;
     } else {
@@ -153,6 +146,6 @@ public final class DefaultGlyph implements Glyph {
 
   public String toString() {
     return getClass().getName() + "={codepoint='" + ( (char) ( codepoint & 0xffff ) ) + ", extra-chars="
-      + extraChars.length + '}';
+        + extraChars.length + '}';
   }
 }

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.devtools;
 
@@ -58,10 +58,8 @@ public class ElementMetaGenerator {
     return metaAttribute;
   }
 
-  private static void printMetadata( final MetaData metaData,
-                                     final String prefix,
-                                     final String name,
-                                     final String defaultValue ) {
+  private static void printMetadata( final MetaData metaData, final String prefix, final String name,
+      final String defaultValue ) {
     System.out.println( prefix + name + "=" + readMetadataAttribute( metaData, name, defaultValue ) );
   }
 
@@ -74,7 +72,7 @@ public class ElementMetaGenerator {
 
     System.out.println( "# Element definitions" );
     for ( int i = 0; i < allTypes.length; i++ ) {
-      final ElementMetaData type = allTypes[ i ];
+      final ElementMetaData type = allTypes[i];
       final String prefix;
       if ( type instanceof AbstractMetaData ) {
         final AbstractMetaData metaData = (AbstractMetaData) type;
@@ -99,7 +97,7 @@ public class ElementMetaGenerator {
 
       final AttributeMetaData[] attributeDescriptions = type.getAttributeDescriptions();
       for ( int j = 0; j < attributeDescriptions.length; j++ ) {
-        final AttributeMetaData attribute = attributeDescriptions[ j ];
+        final AttributeMetaData attribute = attributeDescriptions[j];
         final String attrNs = ElementTypeRegistry.getInstance().getNamespacePrefix( attribute.getNameSpace() );
         final String attrPrefix;
         if ( attribute instanceof AbstractMetaData ) {
@@ -118,11 +116,10 @@ public class ElementMetaGenerator {
     }
 
     System.out.println( "# Attribute definitions" );
-    final AttributeCarrier[] attributeMetadata =
-      attributes.values().toArray( new AttributeCarrier[ attributes.size() ] );
+    final AttributeCarrier[] attributeMetadata = attributes.values().toArray( new AttributeCarrier[attributes.size()] );
     Arrays.sort( attributeMetadata );
     for ( int i = 0; i < attributeMetadata.length; i++ ) {
-      final AttributeCarrier carrier = attributeMetadata[ i ];
+      final AttributeCarrier carrier = attributeMetadata[i];
       final AttributeMetaData attribute = carrier.metaData;
       final String attrNs = ElementTypeRegistry.getInstance().getNamespacePrefix( attribute.getNameSpace() );
       final String attrPrefix = carrier.prefix;

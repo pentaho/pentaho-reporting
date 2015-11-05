@@ -68,7 +68,7 @@ public class PatchRtfDocument extends RtfDocument {
         rtfElement.setRtfDocument( rtfDoc );
         return new RtfBasicElement[] { rtfElement };
       }
-      switch( element.type() ) {
+      switch ( element.type() ) {
         case Element.CHUNK:
           Chunk chunk = (Chunk) element;
           if ( chunk.hasAttributes() ) {
@@ -77,7 +77,7 @@ public class PatchRtfDocument extends RtfDocument {
             } else if ( chunk.getAttributes().containsKey( Chunk.NEWPAGE ) ) {
               rtfElements.add( new RtfNewPage( rtfDoc ) );
             } else if ( chunk.getAttributes().containsKey( Chunk.TAB ) ) {
-              Float tabPos = (Float) ( (Object[]) chunk.getAttributes().get( Chunk.TAB ) )[ 1 ];
+              Float tabPos = (Float) ( (Object[]) chunk.getAttributes().get( Chunk.TAB ) )[1];
               RtfTab tab = new RtfTab( tabPos.floatValue(), RtfTab.TAB_LEFT_ALIGN );
               tab.setRtfDocument( rtfDoc );
               rtfElements.add( tab );
@@ -115,10 +115,10 @@ public class PatchRtfDocument extends RtfDocument {
           rtfElements.add( new RtfInfoElement( rtfDoc, (Meta) element ) );
           break;
         case Element.LIST:
-          rtfElements.add( new RtfList( rtfDoc, (List) element ) );  // TODO: Testing
+          rtfElements.add( new RtfList( rtfDoc, (List) element ) ); // TODO: Testing
           break;
         case Element.LISTITEM:
-          rtfElements.add( new RtfListItem( rtfDoc, (ListItem) element ) );  // TODO: Testing
+          rtfElements.add( new RtfListItem( rtfDoc, (ListItem) element ) ); // TODO: Testing
           break;
         case Element.SECTION:
           rtfElements.add( new RtfSection( rtfDoc, (Section) element ) );
@@ -142,10 +142,9 @@ public class PatchRtfDocument extends RtfDocument {
           break;
       }
 
-      return rtfElements.toArray( new RtfBasicElement[ rtfElements.size() ] );
+      return rtfElements.toArray( new RtfBasicElement[rtfElements.size()] );
     }
   }
-
 
   private RtfMapper mapper;
 

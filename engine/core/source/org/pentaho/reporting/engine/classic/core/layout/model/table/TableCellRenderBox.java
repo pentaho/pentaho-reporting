@@ -1,22 +1,21 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table;
-
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
@@ -43,19 +42,15 @@ public class TableCellRenderBox extends BlockRenderBox {
   private int columnIndex;
   private boolean bodySection;
 
-  public TableCellRenderBox( final StyleSheet styleSheet,
-                             final InstanceID instanceID,
-                             final BoxDefinition boxDefinition,
-                             final ElementType elementType,
-                             final ReportAttributeMap attributes,
-                             final ReportStateKey stateKey ) {
-    super( styleSheet, instanceID, boxDefinition, elementType,
-      attributes, stateKey );
+  public TableCellRenderBox( final StyleSheet styleSheet, final InstanceID instanceID,
+      final BoxDefinition boxDefinition, final ElementType elementType, final ReportAttributeMap attributes,
+      final ReportStateKey stateKey ) {
+    super( styleSheet, instanceID, boxDefinition, elementType, attributes, stateKey );
 
     this.rowSpan = 1;
     this.columnIndex = -1;
     final Integer colspan =
-      (Integer) attributes.getAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.COLSPAN );
+        (Integer) attributes.getAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.COLSPAN );
     if ( colspan == null ) {
       this.colSpan = 1;
     } else {
@@ -63,7 +58,7 @@ public class TableCellRenderBox extends BlockRenderBox {
     }
 
     final Integer rowSpan =
-      (Integer) attributes.getAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN );
+        (Integer) attributes.getAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN );
     if ( rowSpan == null ) {
       this.rowSpan = 1;
     } else {
@@ -71,10 +66,8 @@ public class TableCellRenderBox extends BlockRenderBox {
     }
   }
 
-  protected void reinit( final StyleSheet styleSheet,
-                         final ElementType elementType,
-                         final ReportAttributeMap attributes,
-                         final InstanceID instanceId ) {
+  protected void reinit( final StyleSheet styleSheet, final ElementType elementType,
+      final ReportAttributeMap attributes, final InstanceID instanceId ) {
     super.reinit( styleSheet, elementType, attributes, instanceId );
     this.colSpan = 1;
     this.rowSpan = 1;

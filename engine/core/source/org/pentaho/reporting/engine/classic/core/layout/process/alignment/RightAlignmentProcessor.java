@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process.alignment;
 
@@ -37,8 +37,10 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor {
   /**
    * Handle the next input chunk.
    *
-   * @param start the start index
-   * @param count the number of elements in the sequence
+   * @param start
+   *          the start index
+   * @param count
+   *          the number of elements in the sequence
    * @return the index of the last element that will fit on the current line.
    */
   protected int handleElement( final int start, final int count ) {
@@ -55,8 +57,8 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor {
     int contentIndex = start;
     InlineSequenceElement contentElement = null;
     for ( int i = 0; i < endIndex; i++ ) {
-      final InlineSequenceElement element = sequenceElements[ i ];
-      final RenderNode node = nodes[ i ];
+      final InlineSequenceElement element = sequenceElements[i];
+      final RenderNode node = nodes[i];
       usedWidth += element.getMaximumWidth( node );
       if ( isBorderMarker( element ) ) {
         continue;
@@ -76,7 +78,7 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor {
 
       // we cross a pagebreak. Stop working on it - we bail out here.
 
-      if ( nodes[ contentIndex ] instanceof SplittableRenderNode ) {
+      if ( nodes[contentIndex] instanceof SplittableRenderNode ) {
         // the element may be splittable. Test, and if so, give a hint to the
         // outside world ..
         setSkipIndex( endIndex );
@@ -88,16 +90,16 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor {
       // This is the first element and it still does not fit. How evil.
       if ( start == 0 ) {
         if ( contentElement instanceof InlineBoxSequenceElement ) {
-          final RenderNode node = nodes[ contentIndex ];
+          final RenderNode node = nodes[contentIndex];
           if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
             // OK, limit the size of the box to the maximum line width and
             // revalidate it.
-            final long contentPosition = elementPositions[ contentIndex ];
+            final long contentPosition = elementPositions[contentIndex];
             final RenderBox box = (RenderBox) node;
             final long maxWidth = ( getEndOfLine() - contentPosition );
             computeInlineBlock( box, contentPosition, maxWidth );
 
-            elementDimensions[ endIndex - 1 ] = node.getCachedWidth();
+            elementDimensions[endIndex - 1] = node.getCachedWidth();
           }
         }
         setSkipIndex( endIndex );
@@ -114,10 +116,8 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor {
     return start;
   }
 
-  private boolean rightAlign( final int endIndex,
-                              final InlineSequenceElement[] sequenceElements,
-                              final RenderNode[] nodes,
-                              final long[] elementPositions, final long[] elementDimensions ) {
+  private boolean rightAlign( final int endIndex, final InlineSequenceElement[] sequenceElements,
+      final RenderNode[] nodes, final long[] elementPositions, final long[] elementDimensions ) {
     // iterate backwards ..
     // The left-edge. This one is fixed; crossing this edge will be punished ..
     final long startOfLine = getStartOfLine();
@@ -127,8 +127,8 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor {
     long segmentStart = getStartOfSegment( segment );
 
     for ( int i = endIndex - 1; i >= 0; i-- ) {
-      final InlineSequenceElement element = sequenceElements[ i ];
-      final long elementWidth = element.getMaximumWidth( nodes[ i ] );
+      final InlineSequenceElement element = sequenceElements[i];
+      final long elementWidth = element.getMaximumWidth( nodes[i] );
       long elementStart = endPosition - elementWidth;
       if ( elementStart < startOfLine ) {
         // this element will not fit. Skip it.
@@ -147,8 +147,8 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor {
         return false;
       }
 
-      elementPositions[ i ] = elementStart;
-      elementDimensions[ i ] = elementWidth;
+      elementPositions[i] = elementStart;
+      elementDimensions[i] = elementWidth;
       endPosition = elementStart;
     }
 

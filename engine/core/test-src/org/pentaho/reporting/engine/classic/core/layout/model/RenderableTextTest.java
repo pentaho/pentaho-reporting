@@ -47,7 +47,6 @@ public class RenderableTextTest {
     ClassicEngineBoot.getInstance().start();
   }
 
-
   @Test( expected = IllegalArgumentException.class )
   public void splitBy_ThrowsException_WhenParameterIsNonPositive() throws Exception {
     RenderableText text = createText( "1" );
@@ -82,7 +81,6 @@ public class RenderableTextTest {
     assertEquals( 2, pair.length );
   }
 
-
   @Test
   public void splitBy_MakesAllReplacementsInParent() throws Exception {
     RenderBox parentBox = new InlineRenderBox();
@@ -95,11 +93,10 @@ public class RenderableTextTest {
     assertEquals( 2, pair.length );
 
     assertEquals( 2, parentBox.getChildCount() );
-    assertEquals( pair[ 0 ], parentBox.getFirstChild() );
-    assertEquals( pair[ 1 ], parentBox.getLastChild() );
+    assertEquals( pair[0], parentBox.getFirstChild() );
+    assertEquals( pair[1], parentBox.getLastChild() );
     assertNull( text.getParent() );
   }
-
 
   public static RenderableText createText( String content ) {
     return createText( content, true );
@@ -110,7 +107,7 @@ public class RenderableTextTest {
     content += " ";
 
     CodePointBuffer buffer =
-      new Ascii().decode( new ByteBuffer( content.getBytes() ), new CodePointBuffer( content.length() ) );
+        new Ascii().decode( new ByteBuffer( content.getBytes() ), new CodePointBuffer( content.length() ) );
     int[] textCodepoints = buffer.getBuffer();
 
     ElementStyleSheet styleSheet = new ElementStyleSheet();
@@ -119,10 +116,10 @@ public class RenderableTextTest {
 
     DefaultRenderableTextFactory factory = new DefaultRenderableTextFactory( new GenericOutputProcessorMetaData() );
     RenderNode[] nodes =
-      factory.createText( textCodepoints, 0, textCodepoints.length, new SimpleStyleSheet( styleSheet ),
-        LabelType.INSTANCE, new InstanceID(), new ReportAttributeMap<Object>() );
+        factory.createText( textCodepoints, 0, textCodepoints.length, new SimpleStyleSheet( styleSheet ),
+            LabelType.INSTANCE, new InstanceID(), new ReportAttributeMap<Object>() );
 
-    RenderableText text = (RenderableText) nodes[ 0 ];
+    RenderableText text = (RenderableText) nodes[0];
     assertTrue( text.getMinimumWidth() > 0 );
     return text;
   }

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
@@ -103,41 +103,35 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory {
     if ( strictCompatibilityMode ) {
       final BoxDefinition boxDefinition = BoxDefinition.EMPTY;
       return new SectionRenderBox( bandWithoutKeepTogetherStyle, new InstanceID(), boxDefinition,
-        AutoLayoutBoxType.INSTANCE,
-        ReportAttributeMap.emptyMap(), stateKey );
+          AutoLayoutBoxType.INSTANCE, ReportAttributeMap.emptyMap(), stateKey );
     }
 
-    final RenderBox renderBox = createBox( layoutType, stateKey,
-      SECTION_DEFAULT_STYLE, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.emptyMap(), new InstanceID() );
+    final RenderBox renderBox =
+        createBox( layoutType, stateKey, SECTION_DEFAULT_STYLE, AutoLayoutBoxType.INSTANCE, ReportAttributeMap
+            .emptyMap(), new InstanceID() );
     renderBox.getStaticBoxLayoutProperties().setPlaceholderBox( StaticBoxLayoutProperties.PlaceholderType.SECTION );
     renderBox.getStaticBoxLayoutProperties().setSectionContext( true );
     return renderBox;
   }
 
-  public RenderBox produceRenderBox( final ReportElement band,
-                                     final StyleSheet style,
-                                     final String layoutType,
-                                     final ReportStateKey stateKey ) {
+  public RenderBox produceRenderBox( final ReportElement band, final StyleSheet style, final String layoutType,
+      final ReportStateKey stateKey ) {
     final ElementType elementType = band.getElementType();
 
-    final RenderBox box = createBox
-      ( layoutType, stateKey, style, elementType, band.getAttributes(), band.getObjectID() );
+    final RenderBox box =
+        createBox( layoutType, stateKey, style, elementType, band.getAttributes(), band.getObjectID() );
 
     // for the sake of debugging ..
     final String name = band.getName();
-    if ( name != null &&
-      name.length() != 0 && name.startsWith( Band.ANONYMOUS_BAND_PREFIX ) == false ) {
+    if ( name != null && name.length() != 0 && name.startsWith( Band.ANONYMOUS_BAND_PREFIX ) == false ) {
       box.setName( name );
     }
     return box;
   }
 
-  private RenderBox createBox( final String layoutType,
-                               final ReportStateKey stateKey,
-                               final StyleSheet elementStyleSheet,
-                               final ElementType elementType,
-                               final ReportAttributeMap attributes,
-                               final InstanceID objectID ) {
+  private RenderBox createBox( final String layoutType, final ReportStateKey stateKey,
+      final StyleSheet elementStyleSheet, final ElementType elementType, final ReportAttributeMap attributes,
+      final InstanceID objectID ) {
     if ( BandStyleKeys.LAYOUT_AUTO.equals( layoutType ) ) {
       final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
       return new AutoRenderBox( objectID, stateKey, styleSheet, attributes, elementType );
@@ -150,8 +144,7 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory {
     if ( LAYOUT_PARAGRAPH_LINEBOX.equals( layoutType ) ) {
       // The non-inheritable styles will be applied to the auto-generated paragraph box. The inlinebox itself
       // only receives the inheritable styles so that it can inherit it to its next child ..
-      final SimpleStyleSheet styleSheet =
-        bandCache.getStyleSheet( new ParagraphPoolboxStyleSheet( elementStyleSheet ) );
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( new ParagraphPoolboxStyleSheet( elementStyleSheet ) );
       final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
       return new InlineRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     } else if ( BandStyleKeys.LAYOUT_INLINE.equals( layoutType ) ) {
@@ -166,17 +159,15 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory {
     }
     if ( BandStyleKeys.LAYOUT_TABLE.equals( layoutType ) ) {
       if ( strictCompatibilityMode ) {
-        throw new IncompatibleFeatureException( "A report with a legacy mode of pre-4.0 cannot handle table layouts. " +
-          "Migrate your report to version 4.0 or higher.",
-          ClassicEngineBoot.computeVersionId( 4, 0, 0 ) );
+        throw new IncompatibleFeatureException( "A report with a legacy mode of pre-4.0 cannot handle table layouts. "
+            + "Migrate your report to version 4.0 or higher.", ClassicEngineBoot.computeVersionId( 4, 0, 0 ) );
       }
       final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
       final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
       return new TableRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    if ( BandStyleKeys.LAYOUT_TABLE_BODY.equals( layoutType ) ||
-      BandStyleKeys.LAYOUT_TABLE_HEADER.equals( layoutType ) ||
-      BandStyleKeys.LAYOUT_TABLE_FOOTER.equals( layoutType ) ) {
+    if ( BandStyleKeys.LAYOUT_TABLE_BODY.equals( layoutType ) || BandStyleKeys.LAYOUT_TABLE_HEADER.equals( layoutType )
+        || BandStyleKeys.LAYOUT_TABLE_FOOTER.equals( layoutType ) ) {
       final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
       final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
       return new TableSectionRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
@@ -204,31 +195,29 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory {
     // assume 'Canvas' by default ..
     final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
     final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
-    return new CanvasRenderBox( styleSheet, objectID, boxDefinition, elementType,
-      attributes, stateKey );
+    return new CanvasRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
   }
 
   @Deprecated
   public RenderBox createAutoParagraph( final ReportStateKey stateKey ) {
-    return new ParagraphRenderBox( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(),
-      BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, stateKey );
+    return new ParagraphRenderBox( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
+        AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, stateKey );
   }
 
-  public RenderBox createAutoParagraph( final ReportElement band,
-                                        final StyleSheet bandStyle,
-                                        final ReportStateKey stateKey ) {
+  public RenderBox createAutoParagraph( final ReportElement band, final StyleSheet bandStyle,
+      final ReportStateKey stateKey ) {
     final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( bandStyle );
     final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
 
-    final ParagraphRenderBox paragraphBox = new ParagraphRenderBox
-      ( styleSheet, band.getObjectID(), boxDefinition, band.getElementType(), band.getAttributes(), stateKey );
+    final ParagraphRenderBox paragraphBox =
+        new ParagraphRenderBox( styleSheet, band.getObjectID(), boxDefinition, band.getElementType(), band
+            .getAttributes(), stateKey );
     paragraphBox.setName( band.getName() );
     return paragraphBox;
   }
 
-  public RenderBox produceSubReportPlaceholder( final ReportElement report,
-                                                final StyleSheet style,
-                                                final ReportStateKey stateKey ) {
+  public RenderBox produceSubReportPlaceholder( final ReportElement report, final StyleSheet style,
+      final ReportStateKey stateKey ) {
     String layout;
     if ( metaData.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY ) ) {
       layout = BandStyleKeys.LAYOUT_BLOCK;
@@ -241,7 +230,7 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory {
     }
 
     final RenderBox box =
-      createBox( layout, stateKey, style, report.getElementType(), report.getAttributes(), report.getObjectID() );
+        createBox( layout, stateKey, style, report.getElementType(), report.getAttributes(), report.getObjectID() );
     box.getStaticBoxLayoutProperties().setPlaceholderBox( StaticBoxLayoutProperties.PlaceholderType.COMPLEX );
     box.markAsContentRefHolder();
     // for the sake of debugging ..
@@ -268,16 +257,15 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory {
     return bandWithoutKeepTogetherStyle;
   }
 
-  public RenderBox createPageBreakIndicatorBox( final ReportStateKey stateKey,
-                                                final long range ) {
+  public RenderBox createPageBreakIndicatorBox( final ReportStateKey stateKey, final long range ) {
     if ( this.manualBreakBoxStyle == null ) {
       final ManualBreakIndicatorStyleSheet mbis = new ManualBreakIndicatorStyleSheet();
       this.manualBreakBoxStyle = new SimpleStyleSheet( mbis );
     }
 
-    final RenderBox sectionBox = new BreakMarkerRenderBox
-      ( manualBreakBoxStyle, new InstanceID(), BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
-        ReportAttributeMap.EMPTY_MAP, stateKey, range );
+    final RenderBox sectionBox =
+        new BreakMarkerRenderBox( manualBreakBoxStyle, new InstanceID(), BoxDefinition.EMPTY,
+            AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, stateKey, range );
     sectionBox.setName( "pagebreak" );
     sectionBox.close();
     return sectionBox;
@@ -291,11 +279,8 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory {
     bandCache.printPerformanceStats();
   }
 
-  public RenderableReplacedContentBox createReplacedContent( final ReportElement element,
-                                                             final StyleSheet style,
-                                                             final Object value,
-                                                             final Object rawValue,
-                                                             final ReportStateKey stateKey ) {
+  public RenderableReplacedContentBox createReplacedContent( final ReportElement element, final StyleSheet style,
+      final Object value, final Object rawValue, final ReportStateKey stateKey ) {
     final ResourceKey rawKey;
     if ( rawValue instanceof ResourceKey ) {
       rawKey = (ResourceKey) rawValue;
@@ -307,8 +292,8 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory {
     final RenderableReplacedContent content = new RenderableReplacedContent( elementStyle, value, rawKey, metaData );
     final BoxDefinition boxDefinition = getBoxDefinition( elementStyle );
     final RenderableReplacedContentBox child =
-      new RenderableReplacedContentBox( elementStyle, element.getObjectID(), boxDefinition,
-        element.getElementType(), element.getAttributes(), stateKey, content );
+        new RenderableReplacedContentBox( elementStyle, element.getObjectID(), boxDefinition, element.getElementType(),
+            element.getAttributes(), stateKey, content );
     child.setName( element.getName() );
     return child;
   }

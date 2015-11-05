@@ -1,29 +1,36 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Window;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.RepaintManager;
+import javax.swing.SwingUtilities;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * A Drawable that renders a AWT-component. This only works if the AWT is not in headless mode.
@@ -64,7 +71,8 @@ public class ComponentDrawable {
     /**
      * Defines the Graphics2D to which the drawable should be rendered.
      *
-     * @param graphics the graphics.
+     * @param graphics
+     *          the graphics.
      */
     public void setGraphics( final Graphics2D graphics ) {
       this.graphics = graphics;
@@ -82,7 +90,8 @@ public class ComponentDrawable {
     /**
      * Defines the draw-area to which the drawable should be rendered.
      *
-     * @param area the graphics.
+     * @param area
+     *          the graphics.
      */
     public void setArea( final Rectangle2D area ) {
       this.area = area;
@@ -107,9 +116,7 @@ public class ComponentDrawable {
           contentPane.add( component );
         }
 
-        component.setBounds
-          ( (int) area.getX(), (int) area.getY(),
-            (int) area.getWidth(), (int) area.getHeight() );
+        component.setBounds( (int) area.getX(), (int) area.getY(), (int) area.getWidth(), (int) area.getHeight() );
         component.validate();
         component.paint( graphics );
       } finally {
@@ -258,7 +265,8 @@ public class ComponentDrawable {
   /**
    * Creates a new ComponentDrawable with the given Frame as peer-supply.
    *
-   * @param peerSupply the frame that should be used as peer-source.
+   * @param peerSupply
+   *          the frame that should be used as peer-source.
    */
   public ComponentDrawable( final JFrame peerSupply ) {
     if ( peerSupply == null ) {
@@ -285,7 +293,8 @@ public class ComponentDrawable {
   /**
    * Defines, whether components are allowed to provide their own AWT-Window.
    *
-   * @param allowOwnPeer true, if components can provide their own peers, false otherwise.
+   * @param allowOwnPeer
+   *          true, if components can provide their own peers, false otherwise.
    */
   public void setAllowOwnPeer( final boolean allowOwnPeer ) {
     this.allowOwnPeer = allowOwnPeer;
@@ -296,7 +305,7 @@ public class ComponentDrawable {
    * weird things can happen if AWT functionality is executed on user threads.
    *
    * @return true, if all operations will be done on the AWT-EventDispatcher thread, false if they should be done in the
-   * local thread.
+   *         local thread.
    */
   public boolean isPaintSynchronized() {
     return paintSynchronized;
@@ -306,8 +315,9 @@ public class ComponentDrawable {
    * Defines, whether component operations will happen on the Event-Dispatcher threads. As the AWT is not synchronized,
    * weird things can happen if AWT functionality is executed on user threads.
    *
-   * @param paintSynchronized true, if all operations will be done on the AWT-EventDispatcher thread, false if they
-   *                          should be done in the local thread.
+   * @param paintSynchronized
+   *          true, if all operations will be done on the AWT-EventDispatcher thread, false if they should be done in
+   *          the local thread.
    */
   public void setPaintSynchronized( final boolean paintSynchronized ) {
     this.paintSynchronized = paintSynchronized;
@@ -341,7 +351,8 @@ public class ComponentDrawable {
   /**
    * Defines the component that should be drawn.
    *
-   * @param component the component.
+   * @param component
+   *          the component.
    */
   public void setComponent( final Component component ) {
     this.component = component;
@@ -416,7 +427,8 @@ public class ComponentDrawable {
   /**
    * A private helper method that locates the Window to which the component is currently added.
    *
-   * @param component the component for which the Window should be returned.
+   * @param component
+   *          the component for which the Window should be returned.
    * @return the AWT-Window that is the (possibly indirect) parent of this component.
    */
   protected static Window getWindowAncestor( final Component component ) {
@@ -433,7 +445,8 @@ public class ComponentDrawable {
   /**
    * Defines whether the layouter should preserve the aspect ratio of the component's preferred size.
    *
-   * @param preserveAspectRatio true, if the aspect ratio should be preserved, false otherwise.
+   * @param preserveAspectRatio
+   *          true, if the aspect ratio should be preserved, false otherwise.
    */
   public void setPreserveAspectRatio( final boolean preserveAspectRatio ) {
     this.preserveAspectRatio = preserveAspectRatio;
@@ -451,8 +464,10 @@ public class ComponentDrawable {
   /**
    * Draws the component.
    *
-   * @param g2   the graphics device.
-   * @param area the area inside which the object should be drawn.
+   * @param g2
+   *          the graphics device.
+   * @param area
+   *          the area inside which the object should be drawn.
    */
   public void draw( final Graphics2D g2, final Rectangle2D area ) {
     if ( component == null ) {
@@ -477,7 +492,8 @@ public class ComponentDrawable {
    * Prepares the component for drawing. This recursively disables the double-buffering as this would interfere with the
    * drawing.
    *
-   * @param c the component that should be prepared.
+   * @param c
+   *          the component that should be prepared.
    */
   private void prepareComponent( final Component c ) {
     if ( c instanceof JComponent ) {
@@ -485,7 +501,7 @@ public class ComponentDrawable {
       jc.setDoubleBuffered( false );
       final Component[] childs = jc.getComponents();
       for ( int i = 0; i < childs.length; i++ ) {
-        final Component child = childs[ i ];
+        final Component child = childs[i];
         prepareComponent( child );
       }
     }

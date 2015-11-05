@@ -56,7 +56,7 @@ public class FileDataSourceMgmtWriter implements DataSourceMgmtWriter {
 
     writer.writeTag( ConnectionModule.NAMESPACE, "connections", rootList, XmlWriter.OPEN );
     for ( int i = 0; i < connections.length; i++ ) {
-      final IDatabaseConnection connection = connections[ i ];
+      final IDatabaseConnection connection = connections[i];
       write( connection, writer );
     }
     writer.writeCloseTag();
@@ -66,31 +66,34 @@ public class FileDataSourceMgmtWriter implements DataSourceMgmtWriter {
   private void write( final IDatabaseConnection databaseConnection, final XmlWriter writer ) throws IOException {
     final AttributeList rootAttrs = new AttributeList();
     if ( databaseConnection.getDatabaseType() != null ) {
-      rootAttrs
-        .setAttribute( ConnectionModule.NAMESPACE, PROP_TYPE, databaseConnection.getDatabaseType().getShortName() );
+      rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_TYPE, databaseConnection.getDatabaseType()
+          .getShortName() );
     }
     final String port =
-      StringUtils.isEmpty( databaseConnection.getDatabasePort() ) ? "0" : databaseConnection.getDatabasePort();
-
+        StringUtils.isEmpty( databaseConnection.getDatabasePort() ) ? "0" : databaseConnection.getDatabasePort();
 
     // Then the basic db information
     rootAttrs.setAttribute( ConnectionModule.NAMESPACE, "name", databaseConnection.getName() );
     rootAttrs.setAttribute( ConnectionModule.NAMESPACE, "id", databaseConnection.getId() );
-    rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_CONTYPE,
-      setNull( databaseConnection.getAccessType().getName() ) );
+    rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_CONTYPE, setNull( databaseConnection.getAccessType()
+        .getName() ) );
     rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_HOST_NAME, setNull( databaseConnection.getHostname() ) );
-    rootAttrs
-      .setAttribute( ConnectionModule.NAMESPACE, PROP_DATABASE_NAME, setNull( databaseConnection.getDatabaseName() ) );
-    rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_PORT,
-      String.valueOf( new Long( port ) ) ); // implicit validate, as the interface allows text here.
+    rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_DATABASE_NAME, setNull( databaseConnection
+        .getDatabaseName() ) );
+    rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_PORT, String.valueOf( new Long( port ) ) ); // implicit
+                                                                                                         // validate, as
+                                                                                                         // the
+                                                                                                         // interface
+                                                                                                         // allows text
+                                                                                                         // here.
     rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_USERNAME, setNull( databaseConnection.getUsername() ) );
     rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_PASSWORD, setNull( databaseConnection.getPassword() ) );
-    rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_SERVERNAME,
-      setNull( databaseConnection.getInformixServername() ) );
+    rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_SERVERNAME, setNull( databaseConnection
+        .getInformixServername() ) );
     rootAttrs
-      .setAttribute( ConnectionModule.NAMESPACE, PROP_DATA_TBS, setNull( databaseConnection.getDataTablespace() ) );
-    rootAttrs
-      .setAttribute( ConnectionModule.NAMESPACE, PROP_INDEX_TBS, setNull( databaseConnection.getIndexTablespace() ) );
+        .setAttribute( ConnectionModule.NAMESPACE, PROP_DATA_TBS, setNull( databaseConnection.getDataTablespace() ) );
+    rootAttrs.setAttribute( ConnectionModule.NAMESPACE, PROP_INDEX_TBS, setNull( databaseConnection
+        .getIndexTablespace() ) );
     writer.writeTag( ConnectionModule.NAMESPACE, NODE_ROOT, rootAttrs, XmlWriter.OPEN );
 
     // Now store all the attributes set on the database connection...

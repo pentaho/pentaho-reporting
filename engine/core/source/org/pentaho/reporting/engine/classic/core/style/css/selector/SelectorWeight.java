@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector;
 
@@ -28,27 +28,21 @@ public final class SelectorWeight implements Comparable, Serializable {
   private int styleAttribute;
   private int idCount;
   private int attributeCount; // and pseudo-formats!
-  private int elementCount;  // and pseudeo-elements
+  private int elementCount; // and pseudeo-elements
 
-  public SelectorWeight( final int styleAttribute,
-                         final int idCount,
-                         final int attributeCount, final int elementCount ) {
+  public SelectorWeight( final int styleAttribute, final int idCount, final int attributeCount, final int elementCount ) {
     this( null, styleAttribute, idCount, attributeCount, elementCount );
   }
 
-  public SelectorWeight( final SelectorWeight first,
-                         final SelectorWeight second ) {
+  public SelectorWeight( final SelectorWeight first, final SelectorWeight second ) {
     this.styleAttribute = first.styleAttribute + second.styleAttribute;
     this.idCount = first.idCount + second.idCount;
     this.attributeCount = first.attributeCount + second.attributeCount;
     this.elementCount = first.elementCount + second.attributeCount;
   }
 
-  public SelectorWeight( final SelectorWeight parent,
-                         final int styleAttribute,
-                         final int idCount,
-                         final int attributeCount,
-                         final int elementCount ) {
+  public SelectorWeight( final SelectorWeight parent, final int styleAttribute, final int idCount,
+      final int attributeCount, final int elementCount ) {
     if ( parent == null ) {
       this.styleAttribute = styleAttribute;
       this.idCount = idCount;
@@ -126,13 +120,8 @@ public final class SelectorWeight implements Comparable, Serializable {
     return 0;
   }
 
-
   public String toString() {
-    return "SelectorWeight{" +
-      "styleAttribute=" + styleAttribute +
-      ", idCount=" + idCount +
-      ", attributeCount=" + attributeCount +
-      ", elementCount=" + elementCount +
-      '}';
+    return "SelectorWeight{" + "styleAttribute=" + styleAttribute + ", idCount=" + idCount + ", attributeCount="
+        + attributeCount + ", elementCount=" + elementCount + '}';
   }
 }

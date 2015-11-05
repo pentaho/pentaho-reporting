@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -41,13 +41,12 @@ public class AbstractStructureVisitorTest extends TestCase {
     }
 
     protected void inspectDataSource( final AbstractReportDefinition report, final DataFactory dataFactory ) {
-      callCount[ 0 ] += 1;
+      callCount[0] += 1;
       assertTrue( dataFactory instanceof TableDataFactory );
       TableDataFactory tdf = (TableDataFactory) dataFactory;
       String[] queryNames = tdf.getQueryNames();
       assertEquals( 1, queryNames.length );
-      if ( "query1".equals( queryNames[ 0 ] ) == false &&
-        "query2".equals( queryNames[ 0 ] ) == false ) {
+      if ( "query1".equals( queryNames[0] ) == false && "query2".equals( queryNames[0] ) == false ) {
         fail();
       }
     }
@@ -71,9 +70,9 @@ public class AbstractStructureVisitorTest extends TestCase {
     MasterReport report = new MasterReport();
     report.setDataFactory( cdf );
 
-    final int[] callCount = new int[ 1 ];
+    final int[] callCount = new int[1];
     final TestStructureVisitor v = new TestStructureVisitor( callCount );
     v.inspect( report );
-    assertEquals( 2, callCount[ 0 ] );
+    assertEquals( 2, callCount[0] );
   }
 }

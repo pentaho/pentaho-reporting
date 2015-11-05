@@ -79,7 +79,7 @@ public class DefaultQueryDialogModel<T> implements QueryDialogModel<T> {
     selectedIndex = newIndex;
 
     final QueryDialogModelEvent<T> event =
-      new QueryDialogModelEvent<T>( this, selectedIndex, query, oldIndex, oldValue );
+        new QueryDialogModelEvent<T>( this, selectedIndex, query, oldIndex, oldValue );
     fireEvent( new Func<QueryDialogModelListener<T>>() {
       public void run( final QueryDialogModelListener<T> value ) {
         value.selectionChanged( event );
@@ -88,9 +88,8 @@ public class DefaultQueryDialogModel<T> implements QueryDialogModel<T> {
   }
 
   private void fireEvent( Func<QueryDialogModelListener<T>> delegate ) {
-    //noinspection unchecked
-    for ( QueryDialogModelListener<T> listener : listeners
-      .toArray( new QueryDialogModelListener[ listeners.size() ] ) ) {
+    // noinspection unchecked
+    for ( QueryDialogModelListener<T> listener : listeners.toArray( new QueryDialogModelListener[listeners.size()] ) ) {
       delegate.run( listener );
     }
   }
@@ -170,8 +169,7 @@ public class DefaultQueryDialogModel<T> implements QueryDialogModel<T> {
   }
 
   public void setGlobalScripting( final String lang, final String script ) {
-    if ( ObjectUtilities.equal( lang, globalScriptLanguage ) &&
-      ObjectUtilities.equal( script, globalScript ) ) {
+    if ( ObjectUtilities.equal( lang, globalScriptLanguage ) && ObjectUtilities.equal( script, globalScript ) ) {
       return;
     }
 

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.simple.readhandlers;
 
@@ -128,12 +128,10 @@ public class BandReadHandler extends AbstractTextElementReadHandler {
    */
   public static final String ANCHOR_FIELD_TAG = "anchor-field";
 
-
   /**
    * Literal text for an XML attribute value.
    */
   private static final String LAYOUT_ATT = "layout";
-
 
   private BandElementFactory bandFactory;
   private Band band;
@@ -161,11 +159,12 @@ public class BandReadHandler extends AbstractTextElementReadHandler {
   /**
    * Starts parsing.
    *
-   * @param attr the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param attr
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void startParsing( final PropertyAttributes attr )
-    throws SAXException {
+  protected void startParsing( final PropertyAttributes attr ) throws SAXException {
     super.startParsing( attr );
     handleLayout( attr );
   }
@@ -184,8 +183,7 @@ public class BandReadHandler extends AbstractTextElementReadHandler {
       }
       if ( "org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager".equals( layoutManagerName ) ) {
         getBand().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "canvas" );
-      } else if ( "org.pentaho.reporting.engine.classic.core.layout.StackedLayoutManager"
-        .equals( layoutManagerName ) ) {
+      } else if ( "org.pentaho.reporting.engine.classic.core.layout.StackedLayoutManager".equals( layoutManagerName ) ) {
         getBand().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "block" );
       } else {
         getBand().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, layoutManagerName );
@@ -196,14 +194,15 @@ public class BandReadHandler extends AbstractTextElementReadHandler {
   /**
    * Returns the handler for a child element.
    *
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler or null, if the tagname is invalid.
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final PropertyAttributes atts )
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final PropertyAttributes atts )
     throws SAXException {
     final ReportElementReadHandlerFactory factory = ReportElementReadHandlerFactory.getInstance();
     final ReportElementReadHandler handler = factory.getHandler( uri, tagName );
@@ -211,7 +210,6 @@ public class BandReadHandler extends AbstractTextElementReadHandler {
       elementHandlers.add( handler );
       return handler;
     }
-
 
     if ( isSameNamespace( uri ) == false ) {
       return null;
@@ -225,14 +223,13 @@ public class BandReadHandler extends AbstractTextElementReadHandler {
     return null;
   }
 
-
   /**
    * Done parsing.
    *
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
-  protected void doneParsing()
-    throws SAXException {
+  protected void doneParsing() throws SAXException {
     for ( int i = 0; i < elementHandlers.size(); i++ ) {
       final XmlReadHandler readHandler = elementHandlers.get( i );
       final Element e = (Element) readHandler.getObject();

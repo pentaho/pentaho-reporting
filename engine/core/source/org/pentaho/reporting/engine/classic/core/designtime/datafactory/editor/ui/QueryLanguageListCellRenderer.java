@@ -17,9 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
+import java.awt.Component;
+
 import javax.script.ScriptEngineFactory;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
 
 public class QueryLanguageListCellRenderer extends DefaultListCellRenderer {
   private ScriptEngineFactory defaultValue;
@@ -35,17 +38,13 @@ public class QueryLanguageListCellRenderer extends DefaultListCellRenderer {
     this.defaultValue = defaultValue;
   }
 
-  public Component getListCellRendererComponent( final JList list,
-                                                 final Object value,
-                                                 final int index,
-                                                 final boolean isSelected,
-                                                 final boolean cellHasFocus ) {
-    final JLabel component = (JLabel)
-      super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+  public Component getListCellRendererComponent( final JList list, final Object value, final int index,
+      final boolean isSelected, final boolean cellHasFocus ) {
+    final JLabel component = (JLabel) super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
     if ( value == null ) {
       if ( defaultValue != null ) {
-        component.setText
-          ( Messages.getString( "QueryLanguageListCellRenderer.UseDefault", defaultValue.getLanguageName() ) );
+        component.setText( Messages.getString( "QueryLanguageListCellRenderer.UseDefault", defaultValue
+            .getLanguageName() ) );
       } else {
         component.setText( " " );
       }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates;
 
@@ -50,7 +50,8 @@ public class TemplateCollection implements Serializable {
   /**
    * Adds a template.
    *
-   * @param template the template.
+   * @param template
+   *          the template.
    */
   public void addTemplate( final TemplateDescription template ) {
     if ( template == null ) {
@@ -65,7 +66,8 @@ public class TemplateCollection implements Serializable {
   /**
    * Returns a template.
    *
-   * @param name the template name.
+   * @param name
+   *          the template name.
    * @return The template description.
    */
   public TemplateDescription getTemplate( final String name ) {
@@ -79,7 +81,8 @@ public class TemplateCollection implements Serializable {
   /**
    * Returns a template description.
    *
-   * @param template the template.
+   * @param template
+   *          the template.
    * @return The description.
    */
   public TemplateDescription getDescription( final Template template ) {
@@ -96,14 +99,14 @@ public class TemplateCollection implements Serializable {
     return null;
   }
 
-
   /**
    * Configures this factory. The configuration contains several keys and their defined values. The given reference to
    * the configuration object will remain valid until the report parsing or writing ends.
    * <p/>
    * The configuration contents may change during the reporting.
    *
-   * @param config the configuration, never null
+   * @param config
+   *          the configuration, never null
    */
   public void configure( final Configuration config ) {
     if ( config == null ) {
@@ -135,7 +138,8 @@ public class TemplateCollection implements Serializable {
   /**
    * Indicated whether an other object is equal to this one.
    *
-   * @param o the other object.
+   * @param o
+   *          the other object.
    * @return true, if the object is equal, false otherwise.
    * @see java.lang.Object#equals(java.lang.Object)
    */
@@ -172,6 +176,6 @@ public class TemplateCollection implements Serializable {
    * @return the template names.
    */
   public String[] getNames() {
-    return (String[]) templates.keySet().toArray( new String[ templates.size() ] );
+    return (String[]) templates.keySet().toArray( new String[templates.size()] );
   }
 }

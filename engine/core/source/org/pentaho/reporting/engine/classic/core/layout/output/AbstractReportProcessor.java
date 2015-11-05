@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
@@ -102,8 +102,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
    */
   private boolean pagebreaksSupported;
 
-  protected AbstractReportProcessor( final MasterReport report,
-                                     final OutputProcessor outputProcessor )
+  protected AbstractReportProcessor( final MasterReport report, final OutputProcessor outputProcessor )
     throws ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException( "Report cannot be null." );
@@ -123,23 +122,27 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     this.outputProcessor = outputProcessor;
 
     final Configuration configuration = report.getReportConfiguration();
-    this.paranoidChecks = "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" ) );
+    this.paranoidChecks =
+        "true".equals( configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" ) );
     final String yieldRateText =
-      configuration.getConfigProperty( "org.pentaho.reporting.engine.classic.core.YieldRate" );
+        configuration.getConfigProperty( "org.pentaho.reporting.engine.classic.core.YieldRate" );
     final int yieldRate = ParserUtil.parseInt( yieldRateText, 0 );
     if ( yieldRate > 0 ) {
       addReportProgressListener( new YieldReportListener( yieldRate ) );
     }
-    final String profile = configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.ProfileReportProcessing" );
+    final String profile =
+        configuration.getConfigProperty( "org.pentaho.reporting.engine.classic.core.ProfileReportProcessing" );
     if ( "true".equals( profile ) ) {
-      final boolean logLevelProgress = "true".equals
-        ( configuration.getConfigProperty( "org.pentaho.reporting.engine.classic.core.performance.LogLevelProgress" ) );
-      final boolean logPageProgress = "true".equals
-        ( configuration.getConfigProperty( "org.pentaho.reporting.engine.classic.core.performance.LogPageProgress" ) );
-      final boolean logRowProgress = "true".equals
-        ( configuration.getConfigProperty( "org.pentaho.reporting.engine.classic.core.performance.LogRowProgress" ) );
+      final boolean logLevelProgress =
+          "true".equals( configuration
+              .getConfigProperty( "org.pentaho.reporting.engine.classic.core.performance.LogLevelProgress" ) );
+      final boolean logPageProgress =
+          "true".equals( configuration
+              .getConfigProperty( "org.pentaho.reporting.engine.classic.core.performance.LogPageProgress" ) );
+      final boolean logRowProgress =
+          "true".equals( configuration
+              .getConfigProperty( "org.pentaho.reporting.engine.classic.core.performance.LogRowProgress" ) );
       addReportProgressListener( new PerformanceProgressLogger( logLevelProgress, logPageProgress, logRowProgress ) );
     }
 
@@ -166,7 +169,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   private PerformanceMonitorContext getPerformanceMonitorContext() {
     if ( this.performanceMonitorContext == null ) {
       this.performanceMonitorContext =
-        ClassicEngineBoot.getInstance().getObjectFactory().get( PerformanceMonitorContext.class );
+          ClassicEngineBoot.getInstance().getObjectFactory().get( PerformanceMonitorContext.class );
     }
     return performanceMonitorContext;
   }
@@ -174,7 +177,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   /**
    * Adds a repagination listener. This listener will be informed of pagination events.
    *
-   * @param l the listener.
+   * @param l
+   *          the listener.
    */
   public void addReportProgressListener( final ReportProgressListener l ) {
     if ( l == null ) {
@@ -190,7 +194,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   /**
    * Removes a repagination listener.
    *
-   * @param l the listener.
+   * @param l
+   *          the listener.
    */
   public void removeReportProgressListener( final ReportProgressListener l ) {
     if ( l == null ) {
@@ -206,7 +211,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   /**
    * Sends a repagination update to all registered listeners.
    *
-   * @param state the state.
+   * @param state
+   *          the state.
    */
   protected void fireStateUpdate( final ReportProgressEvent state ) {
     if ( listeners == null ) {
@@ -217,7 +223,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     }
     final int length = listenersCache.length;
     for ( int i = 0; i < length; i++ ) {
-      final ReportProgressListener l = (ReportProgressListener) listenersCache[ i ];
+      final ReportProgressListener l = (ReportProgressListener) listenersCache[i];
       l.reportProcessingUpdate( state );
     }
   }
@@ -225,7 +231,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   /**
    * Sends a repagination update to all registered listeners.
    *
-   * @param state the state.
+   * @param state
+   *          the state.
    */
   protected void fireProcessingStarted( final ReportProgressEvent state ) {
     if ( listeners == null ) {
@@ -236,7 +243,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     }
     final int length = listenersCache.length;
     for ( int i = 0; i < length; i++ ) {
-      final ReportProgressListener l = (ReportProgressListener) listenersCache[ i ];
+      final ReportProgressListener l = (ReportProgressListener) listenersCache[i];
       l.reportProcessingStarted( state );
     }
   }
@@ -244,7 +251,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   /**
    * Sends a repagination update to all registered listeners.
    *
-   * @param state the state.
+   * @param state
+   *          the state.
    */
   protected void fireProcessingFinished( final ReportProgressEvent state ) {
     if ( listeners == null ) {
@@ -255,7 +263,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     }
     final int length = listenersCache.length;
     for ( int i = 0; i < length; i++ ) {
-      final ReportProgressListener l = (ReportProgressListener) listenersCache[ i ];
+      final ReportProgressListener l = (ReportProgressListener) listenersCache[i];
       l.reportProcessingFinished( state );
     }
   }
@@ -274,7 +282,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
    * Defines, whether the processor should check the threads interrupted state. If this is set to true and the thread
    * was interrupted, then the report processing is aborted.
    *
-   * @param handleInterruptedState true, if the processor should check the current thread state, false otherwise.
+   * @param handleInterruptedState
+   *          true, if the processor should check the current thread state, false otherwise.
    */
   public void setHandleInterruptedState( final boolean handleInterruptedState ) {
     this.handleInterruptedState = handleInterruptedState;
@@ -283,15 +292,14 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   /**
    * Checks whether the current thread is interrupted.
    *
-   * @throws org.pentaho.reporting.engine.classic.core.ReportInterruptedException if the thread is interrupted to abort
-   *                                                                              the report processing.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportInterruptedException
+   *           if the thread is interrupted to abort the report processing.
    */
-  protected final void checkInterrupted()
-    throws ReportInterruptedException {
+  protected final void checkInterrupted() throws ReportInterruptedException {
     if ( isHandleInterruptedState() ) {
       if ( Thread.currentThread().isInterrupted() ) {
-        throw new ReportInterruptedException(
-          "Current thread [" + Thread.currentThread().getName() + "]is interrupted. Returning." );
+        throw new ReportInterruptedException( "Current thread [" + Thread.currentThread().getName()
+            + "]is interrupted. Returning." );
       }
     }
   }
@@ -327,22 +335,22 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     } else {
       cLevel = compatibilityLevel;
     }
-    return new DefaultProcessingContext
-      ( metaData, report.getResourceBundleFactory(), report.getConfiguration(),
-        report.getResourceManager(), report.getContentBase(), documentMetaData,
-        report.getReportEnvironment(), cLevel );
+    return new DefaultProcessingContext( metaData, report.getResourceBundleFactory(), report.getConfiguration(), report
+        .getResourceManager(), report.getContentBase(), documentMetaData, report.getReportEnvironment(), cLevel );
   }
 
   /**
    * Processes all prepare levels to compute the function values.
    *
-   * @param state   the state state with which we beginn the processing.
-   * @param maxRows the number of rows in the table model.
+   * @param state
+   *          the state state with which we beginn the processing.
+   * @param maxRows
+   *          the number of rows in the table model.
    * @return the finish state for the current level.
-   * @throws ReportProcessingException if processing failed or if there are exceptions during the function execution.
+   * @throws ReportProcessingException
+   *           if processing failed or if there are exceptions during the function execution.
    */
-  protected ProcessState processPrepareLevels( ProcessState state, final int maxRows )
-    throws ReportProcessingException {
+  protected ProcessState processPrepareLevels( ProcessState state, final int maxRows ) throws ReportProcessingException {
     final boolean failOnError = isStrictErrorHandling( getReport().getReportConfiguration() );
     final ReportProcessingErrorHandler errorHandler = new CollectingReportErrorHandler();
     state.setErrorHandler( errorHandler );
@@ -376,7 +384,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
         }
       }
 
-      //progress = state.createStateProgress(progress);
+      // progress = state.createStateProgress(progress);
       final ProcessState nextState = state.advance();
       state.setErrorHandler( IgnoreEverythingReportErrorHandler.INSTANCE );
       state = nextState.commit();
@@ -388,7 +396,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           throw new ReportEventException( "Failed to dispatch an event.", childExceptions );
         } else {
           final ReportEventException exception =
-            new ReportEventException( "Failed to dispatch an event.", childExceptions );
+              new ReportEventException( "Failed to dispatch an event.", childExceptions );
           AbstractReportProcessor.logger.error( "Failed to dispatch an event.", exception );
         }
       }
@@ -397,7 +405,6 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   }
 
   protected abstract OutputFunction createLayoutManager();
-
 
   protected void prepareReportProcessing() throws ReportProcessingException {
     if ( stateList != null ) {
@@ -415,8 +422,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
 
       final ProcessState startState = new ProcessState();
       try {
-        startState.initializeForMasterReport
-          ( report, processingContext, (OutputFunction) lm.getInstance() );
+        startState.initializeForMasterReport( report, processingContext, (OutputFunction) lm.getInstance() );
       } finally {
         activeDataFactory = startState.getProcessHandle();
       }
@@ -452,12 +458,12 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
         throw new IllegalStateException( "Assertation Failed: No functions defined, invalid implementation." );
       }
       final PerformanceLoggingStopWatch preDataSw =
-        getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PREPARE_DATA );
+          getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PREPARE_DATA );
       try {
         preDataSw.start();
 
         processingContext.setProgressLevelCount( levels.length );
-        int level = levels[ index ];
+        int level = levels[index];
         // outer loop: process all function levels
         boolean hasNext;
         do {
@@ -488,18 +494,16 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           hasNext = ( index < ( levels.length - 1 ) );
           if ( hasNext ) {
             index += 1;
-            level = levels[ index ];
+            level = levels[index];
             processingContext.setProcessingLevel( level );
             processingContext.setProgressLevel( index );
             if ( state.isFinish() ) {
               state = state.restart();
             } else {
-              throw new IllegalStateException(
-                "Repaginate did not produce an finish state" );
+              throw new IllegalStateException( "Repaginate did not produce an finish state" );
             }
           }
-        }
-        while ( hasNext == true );
+        } while ( hasNext == true );
       } finally {
         preDataSw.close();
       }
@@ -519,10 +523,9 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   }
 
   private ProcessState performStructuralPreprocessing( final ProcessState startState,
-                                                       final DefaultProcessingContext processingContext )
-    throws ReportProcessingException {
+      final DefaultProcessingContext processingContext ) throws ReportProcessingException {
     PerformanceLoggingStopWatch sw =
-      getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PREPARE_CROSSTAB );
+        getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PREPARE_CROSSTAB );
     try {
       sw.start();
       processingContext.setProcessingLevel( LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING );
@@ -541,21 +544,22 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     }
   }
 
-
   /**
    * Processes the print level for the current report. This function will fill the report state list while performing
    * the repagination.
    *
-   * @param startState the start state for the print level.
-   * @param pageStates the list of report states that should receive the created page states.
-   * @param maxRows    the number of rows in the report (used to estaminate the current progress).
+   * @param startState
+   *          the start state for the print level.
+   * @param pageStates
+   *          the list of report states that should receive the created page states.
+   * @param maxRows
+   *          the number of rows in the report (used to estaminate the current progress).
    * @return the finish state for the report.
-   * @throws ReportProcessingException if there was a problem processing the report.
+   * @throws ReportProcessingException
+   *           if there was a problem processing the report.
    */
-  private ProcessState processPaginationLevel( final ProcessState startState,
-                                               final PageStateList pageStates,
-                                               final int maxRows )
-    throws ReportProcessingException {
+  private ProcessState processPaginationLevel( final ProcessState startState, final PageStateList pageStates,
+      final int maxRows ) throws ReportProcessingException {
     PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PAGINATE );
     try {
       sw.start();
@@ -584,7 +588,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
       validate( state );
 
       final OutputProcessorMetaData metaData =
-        state.getFlowController().getReportContext().getOutputProcessorMetaData();
+          state.getFlowController().getReportContext().getOutputProcessorMetaData();
       pagebreaksSupported = metaData.isFeatureSupported( OutputProcessorFeature.PAGEBREAKS );
 
       int pageEventCount = 0;
@@ -607,8 +611,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           lastRow = state.getCurrentRow();
           if ( eventCount == 0 ) {
             if ( isPagebreaksSupported() && fallBackState != null ) {
-              repaginationState
-                .reuse( ReportProgressEvent.PAGINATING, fallBackState, calculatePageCount( fallBackState ) );
+              repaginationState.reuse( ReportProgressEvent.PAGINATING, fallBackState,
+                  calculatePageCount( fallBackState ) );
             } else {
               repaginationState.reuse( ReportProgressEvent.PAGINATING, state, calculatePageCount( state ) );
             }
@@ -635,8 +639,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
               if ( outputFunction.createRollbackInformation() ) {
                 realFallbackState = state.deriveForPagebreak();
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                  logger.debug( "Paginate: Try to generate new fallback state after commit count reached: " + state
-                    .getProcessKey() );
+                  logger.debug( "Paginate: Try to generate new fallback state after commit count reached: "
+                      + state.getProcessKey() );
                 }
                 validate( state );
               } else {
@@ -659,7 +663,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           final List childExceptions = Arrays.asList( errorHandler.getErrors() );
           errorHandler.clearErrors();
           final ReportEventException exception =
-            new ReportEventException( "Failed to dispatch an event.", childExceptions );
+              new ReportEventException( "Failed to dispatch an event.", childExceptions );
           if ( failOnError ) {
             throw exception;
           } else {
@@ -699,14 +703,13 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
             // reached the border case. We have to insert a manual pagebreak here or at least
             // we have to force the renderer to end the page right now.
             if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-              AbstractReportProcessor.logger.debug(
-                "Paginate: Found real pagebreak position. This might be the last state we process: "
-                  + rollbackPageState );
-              AbstractReportProcessor.logger.debug(
-                "Paginate:   (Current state process key)           : " + state.getProcessKey() );
-              AbstractReportProcessor.logger.debug(
-                "Paginate:   (Handler)                             : " + state.getAdvanceHandler().getClass()
-                  .getName() );
+              AbstractReportProcessor.logger
+                  .debug( "Paginate: Found real pagebreak position. This might be the last state we process: "
+                      + rollbackPageState );
+              AbstractReportProcessor.logger.debug( "Paginate:   (Current state process key)           : "
+                  + state.getProcessKey() );
+              AbstractReportProcessor.logger.debug( "Paginate:   (Handler)                             : "
+                  + state.getAdvanceHandler().getClass().getName() );
             }
             assertExpectPagebreak = true;
             renderer.addPagebreak();
@@ -726,8 +729,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
             if ( isInRollBackMode == false ) {
               if ( pageEventCount >= AbstractReportProcessor.COMMIT_RATE ) {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                  logger.debug(
-                    "Paginate: Try to apply new fallback state after commit count reached: " + state.getProcessKey() );
+                  logger.debug( "Paginate: Try to apply new fallback state after commit count reached: "
+                      + state.getProcessKey() );
                   logger.debug( "Paginate:        : " + renderer.getLastStateKey() );
                 }
 
@@ -752,14 +755,11 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
         if ( pagebreakEncountered == Renderer.LayoutResult.LAYOUT_PAGEBREAK ) {
           final boolean onGoingPageBreak;
 
-          //          renderer.print();
+          // renderer.print();
           final ReportStateKey lastVisibleStateKey = renderer.getLastStateKey();
-          if ( isPagebreaksSupported() &&
-            isInRollBackMode == false &&
-            lastVisibleStateKey != null &&
-            renderer.isOpen() ) {
-            if ( lastVisibleStateKey.equals( nextStateKey ) == false &&
-              lastVisibleStateKey.getSequenceCounter() > globalState.getProcessKey().getSequenceCounter() ) {
+          if ( isPagebreaksSupported() && isInRollBackMode == false && lastVisibleStateKey != null && renderer.isOpen() ) {
+            if ( lastVisibleStateKey.equals( nextStateKey ) == false
+                && lastVisibleStateKey.getSequenceCounter() > globalState.getProcessKey().getSequenceCounter() ) {
               // Roll back to the last known to be good position and process the states up to, but not
               // including the current state. This way, we can fire the page-events *before* this band
               // gets printed.
@@ -767,35 +767,35 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
 
               final ReportStateKey restoreStateProcessKey = restoreState.getProcessKey();
               if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                AbstractReportProcessor.logger.debug(
-                  "Paginate: Encountered bad break, need to roll-back: " + rollbackPageState );
-                AbstractReportProcessor.logger.debug(
-                  "Paginate:    Next StateKey                        : " + state.getProcessKey() );
-                AbstractReportProcessor.logger.debug(
-                  "Paginate:    Restored Key                         : " + restoreStateProcessKey );
-                AbstractReportProcessor.logger.debug(
-                  "Paginate:    Position in event chain              : " + restoreState.getSequenceCounter() );
+                AbstractReportProcessor.logger.debug( "Paginate: Encountered bad break, need to roll-back: "
+                    + rollbackPageState );
+                AbstractReportProcessor.logger.debug( "Paginate:    Next StateKey                        : "
+                    + state.getProcessKey() );
+                AbstractReportProcessor.logger.debug( "Paginate:    Restored Key                         : "
+                    + restoreStateProcessKey );
+                AbstractReportProcessor.logger.debug( "Paginate:    Position in event chain              : "
+                    + restoreState.getSequenceCounter() );
               }
               if ( lastVisibleStateKey.getSequenceCounter() < restoreStateProcessKey.getSequenceCounter() ) {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                  AbstractReportProcessor.logger.debug(
-                    "Paginate: Fall back to start of page              : " + globalState.getProcessKey() );
+                  AbstractReportProcessor.logger.debug( "Paginate: Fall back to start of page              : "
+                      + globalState.getProcessKey() );
                 }
                 if ( lastVisibleStateKey.getSequenceCounter() <= globalState.getProcessKey().getSequenceCounter() ) {
                   throw new ReportProcessingException(
-                    "Paginate: Error, fallback position is after last visible state." );
+                      "Paginate: Error, fallback position is after last visible state." );
                 }
                 state = globalState.deriveForStorage();
               } else {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                  AbstractReportProcessor.logger.debug(
-                    "Paginate: Fall back to save-state                 : " + restoreStateProcessKey );
+                  AbstractReportProcessor.logger.debug( "Paginate: Fall back to save-state                 : "
+                      + restoreStateProcessKey );
                 }
                 state = restoreState.deriveForPagebreak();
               }
 
               final DefaultOutputFunction rollbackOutputFunction =
-                (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
+                  (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
               final Renderer rollbackRenderer = rollbackOutputFunction.getRenderer();
               rollbackRenderer.rollback();
 
@@ -830,8 +830,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
               } else {
                 AbstractReportProcessor.logger.debug( "Paginate: Encountered a good break: " + isInRollBackMode );
               }
-              AbstractReportProcessor.logger.debug
-                ( "Paginate:                                              : " + state.getProcessKey() );
+              AbstractReportProcessor.logger.debug( "Paginate:                                              : "
+                  + state.getProcessKey() );
             }
             isInRollBackMode = false;
             rollbackPageState = null;
@@ -846,30 +846,29 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           }
 
           if ( renderer.processPage( pagebreakHandler, state.getProcessKey(), true ) == false ) {
-            throw new IllegalStateException
-              ( "This cannot be. If the validation said we get a new page, how can we now get lost here" );
+            throw new IllegalStateException(
+                "This cannot be. If the validation said we get a new page, how can we now get lost here" );
           }
 
           if ( isPagebreaksSupported() ) {
             if ( renderer.isPendingPageHack() && renderer.isCurrentPageEmpty() == false
-              && renderer.isPageStartPending() == false ) {
+                && renderer.isPageStartPending() == false ) {
               if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                logger.debug(
-                  "Paginate: Delaying next event to allow pending pages to be processed: " + state.getProcessKey() );
+                logger.debug( "Paginate: Delaying next event to allow pending pages to be processed: "
+                    + state.getProcessKey() );
               }
               state = PendingPagesHandler.create( state );
             } else {
               if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
                 logger
-                  .debug( "Paginate: Adding RestartOnNewPageHandler to open Page in time: " + state.getProcessKey() );
+                    .debug( "Paginate: Adding RestartOnNewPageHandler to open Page in time: " + state.getProcessKey() );
               }
               state = RestartOnNewPageHandler.create( state.commit() );
             }
           } else {
             if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-              logger.debug(
-                "Paginate: Commit on page-break: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass()
-                  .getName() );
+              logger.debug( "Paginate: Commit on page-break: " + state.getProcessKey() + " "
+                  + state.getAdvanceHandler().getClass().getName() );
             }
             state = state.commit();
           }
@@ -880,8 +879,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           }
 
           if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-            logger.debug( "Paginate: Post Commit: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass()
-              .getName() );
+            logger.debug( "Paginate: Post Commit: " + state.getProcessKey() + " "
+                + state.getAdvanceHandler().getClass().getName() );
           }
 
           // can continue safely ..
@@ -889,11 +888,11 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           final int newPhysPageCount = outputProcessor.getPhysicalPageCount();
 
           final int result = pageStates.size() - 1;
-          for (; physPageCount < newPhysPageCount; physPageCount++ ) {
+          for ( ; physPageCount < newPhysPageCount; physPageCount++ ) {
             physicalMapping.add( result );
           }
 
-          for (; logPageCount < newLogPageCount; logPageCount++ ) {
+          for ( ; logPageCount < newLogPageCount; logPageCount++ ) {
             logicalMapping.add( result );
           }
 
@@ -919,28 +918,28 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           }
 
           // PageEventCount is zero on streaming exports and zero after a new rollback event is created.
-          if ( pageEventCount == 0 && isInRollBackMode == false &&
-            pagebreakEncountered == Renderer.LayoutResult.LAYOUT_NO_PAGEBREAK ) {
+          if ( pageEventCount == 0 && isInRollBackMode == false
+              && pagebreakEncountered == Renderer.LayoutResult.LAYOUT_NO_PAGEBREAK ) {
             if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
               logger.debug( "Paginate: Perform incremental update: " + state.getProcessKey() );
             }
             renderer.processIncrementalUpdate( false );
           }
           if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-            logger.debug(
-              "Paginate: Commit: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass().getName() );
+            logger.debug( "Paginate: Commit: " + state.getProcessKey() + " "
+                + state.getAdvanceHandler().getClass().getName() );
           }
           state = state.commit();
           if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-            logger.debug( "Paginate: Post Commit: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass()
-              .getName() );
+            logger.debug( "Paginate: Post Commit: " + state.getProcessKey() + " "
+                + state.getAdvanceHandler().getClass().getName() );
           }
 
-          //          printLayoutStateToFile(state, false, isInRollBackMode);
+          // printLayoutStateToFile(state, false, isInRollBackMode);
 
           if ( pagebreaksSupported && fallBackState != restoreState ) {
             final DefaultOutputFunction commitableOutputFunction =
-              (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
+                (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
             final Renderer commitableRenderer = commitableOutputFunction.getRenderer();
             commitableRenderer.applyRollbackInformation();
           }
@@ -956,15 +955,11 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
   }
 
   @SuppressWarnings( "UnusedDeclaration" )
-  private void printLayoutStateToFile( final ProcessState state,
-                                       final boolean print,
-                                       final boolean inRollBackMode ) {
-    final DefaultOutputFunction of =
-      (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
+  private void printLayoutStateToFile( final ProcessState state, final boolean print, final boolean inRollBackMode ) {
+    final DefaultOutputFunction of = (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
     final AbstractRenderer ar = (AbstractRenderer) of.getRenderer();
     ar.printLayoutStateToFile( state, print, inRollBackMode );
   }
-
 
   protected int calculatePageCount( final ProcessState state ) {
     final OutputFunction outputFunction = state.getLayoutProcess().getOutputFunction();
@@ -1002,8 +997,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     final int index = logicalMapping.get( page );
     final PageState pageState = stateList.get( index );
     if ( pageState == null ) {
-      throw new IndexOutOfBoundsException(
-        "The logical mapping between page " + page + " and index " + index + " is invalid." );
+      throw new IndexOutOfBoundsException( "The logical mapping between page " + page + " and index " + index
+          + " is invalid." );
     }
     return pageState;
   }
@@ -1012,17 +1007,17 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     final int index = physicalMapping.get( page );
     final PageState pageState = stateList.get( index );
     if ( pageState == null ) {
-      throw new IndexOutOfBoundsException(
-        "The physical mapping between page " + page + " and index " + index + " is invalid." );
+      throw new IndexOutOfBoundsException( "The physical mapping between page " + page + " and index " + index
+          + " is invalid." );
     }
     return pageState;
   }
 
-
   /**
    * Checks whether report processing should be aborted when an exception occurs.
    *
-   * @param config the configuration.
+   * @param config
+   *          the configuration.
    * @return if strict error handling is enabled.
    */
   protected static boolean isStrictErrorHandling( final Configuration config ) {
@@ -1030,8 +1025,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     return "true".equals( strictError );
   }
 
-  public PageState processPage( final PageState pageState,
-                                final boolean performOutput )
+  public PageState processPage( final PageState pageState, final boolean performOutput )
     throws ReportProcessingException {
     if ( pageState == null ) {
       throw new NullPointerException( "PageState must not be null." );
@@ -1039,8 +1033,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     final boolean failOnError = isStrictErrorHandling( getReport().getReportConfiguration() );
     final ReportProcessingErrorHandler errorHandler = new CollectingReportErrorHandler();
     if ( SHOW_ROLLBACKS ) {
-      AbstractReportProcessor.logger.debug(
-        "Process Page: Starting with : " + pageState.getReportState().getProcessKey() );
+      AbstractReportProcessor.logger.debug( "Process Page: Starting with : "
+          + pageState.getReportState().getProcessKey() );
     }
 
     try {
@@ -1098,8 +1092,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
               final OutputFunction outputFunction = state.getLayoutProcess().getOutputFunction();
               if ( outputFunction.createRollbackInformation() ) {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                  logger.debug(
-                    "Print: Try to generate new fallback state after commit count reached: " + state.getProcessKey() );
+                  logger.debug( "Print: Try to generate new fallback state after commit count reached: "
+                      + state.getProcessKey() );
                 }
                 realFallbackState = state.deriveForPagebreak();
               } else {
@@ -1124,7 +1118,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
             throw new ReportEventException( "Failed to dispatch an event.", childExceptions );
           } else {
             final ReportEventException exception =
-              new ReportEventException( "Failed to dispatch an event.", childExceptions );
+                new ReportEventException( "Failed to dispatch an event.", childExceptions );
             AbstractReportProcessor.logger.error( "Failed to dispatch an event.", exception );
           }
         }
@@ -1160,12 +1154,13 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
             // reached the border case. We have to insert a manual pagebreak here or at least
             // we have to force the renderer to end the page right now.
             if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-              AbstractReportProcessor.logger.debug(
-                "Print: Found real pagebreak position. This might be the last state we process: " + rollbackPageState );
-              AbstractReportProcessor.logger.debug(
-                "Print:   (Current state process key)           : " + state.getProcessKey() );
-              AbstractReportProcessor.logger.debug(
-                "Print:   (Handler)                             : " + state.getAdvanceHandler().getClass().getName() );
+              AbstractReportProcessor.logger
+                  .debug( "Print: Found real pagebreak position. This might be the last state we process: "
+                      + rollbackPageState );
+              AbstractReportProcessor.logger.debug( "Print:   (Current state process key)           : "
+                  + state.getProcessKey() );
+              AbstractReportProcessor.logger.debug( "Print:   (Handler)                             : "
+                  + state.getAdvanceHandler().getClass().getName() );
             }
             assertExpectPagebreak = true;
             renderer.addPagebreak();
@@ -1185,8 +1180,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
             if ( isInRollBackMode == false ) {
               if ( pageEventCount >= AbstractReportProcessor.COMMIT_RATE ) {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                  logger.debug(
-                    "Print: Try to apply new fallback state after commit count reached: " + state.getProcessKey() );
+                  logger.debug( "Print: Try to apply new fallback state after commit count reached: "
+                      + state.getProcessKey() );
                   logger.debug( "Print:        : " + renderer.getLastStateKey() );
                 }
                 fallBackState = realFallbackState;
@@ -1211,12 +1206,9 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           final boolean onGoingPageBreak;
 
           final ReportStateKey lastVisibleStateKey = renderer.getLastStateKey();
-          if ( pagebreaksSupported &&
-            isInRollBackMode == false &&
-            renderer.isOpen() &&
-            lastVisibleStateKey != null ) {
-            if ( lastVisibleStateKey.equals( nextStateKey ) == false &&
-              lastVisibleStateKey.getSequenceCounter() > globalState.getProcessKey().getSequenceCounter() ) {
+          if ( pagebreaksSupported && isInRollBackMode == false && renderer.isOpen() && lastVisibleStateKey != null ) {
+            if ( lastVisibleStateKey.equals( nextStateKey ) == false
+                && lastVisibleStateKey.getSequenceCounter() > globalState.getProcessKey().getSequenceCounter() ) {
               // Roll back to the last known to be good position and process the states up to, but not
               // including the current state. This way, we can fire the page-events *before* this band
               // gets printed.
@@ -1224,20 +1216,20 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
 
               final ReportStateKey restoreStateProcessKey = restoreState.getProcessKey();
               if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                AbstractReportProcessor.logger.debug(
-                  "Print: Encountered bad break, need to roll-back: " + rollbackPageState );
-                AbstractReportProcessor.logger.debug(
-                  "Print:    Next StateKey                        : " + state.getProcessKey() );
-                AbstractReportProcessor.logger.debug(
-                  "Print:    Restored Key                         : " + restoreStateProcessKey );
-                AbstractReportProcessor.logger.debug(
-                  "Print:    Position in event chain              : " + restoreState.getSequenceCounter() );
+                AbstractReportProcessor.logger.debug( "Print: Encountered bad break, need to roll-back: "
+                    + rollbackPageState );
+                AbstractReportProcessor.logger.debug( "Print:    Next StateKey                        : "
+                    + state.getProcessKey() );
+                AbstractReportProcessor.logger.debug( "Print:    Restored Key                         : "
+                    + restoreStateProcessKey );
+                AbstractReportProcessor.logger.debug( "Print:    Position in event chain              : "
+                    + restoreState.getSequenceCounter() );
               }
 
               if ( lastVisibleStateKey.getSequenceCounter() < restoreStateProcessKey.getSequenceCounter() ) {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                  AbstractReportProcessor.logger.debug(
-                    "Print: Fall back to start of page              : " + globalState.getProcessKey() );
+                  AbstractReportProcessor.logger.debug( "Print: Fall back to start of page              : "
+                      + globalState.getProcessKey() );
                 }
                 if ( lastVisibleStateKey.getSequenceCounter() <= globalState.getProcessKey().getSequenceCounter() ) {
                   throw new ReportProcessingException( "Print: Error, fallback position is after last visible state." );
@@ -1245,14 +1237,14 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
                 state = globalState.deriveForStorage();
               } else {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                  AbstractReportProcessor.logger.debug(
-                    "Print: Fall back to save-state                 : " + restoreStateProcessKey );
+                  AbstractReportProcessor.logger.debug( "Print: Fall back to save-state                 : "
+                      + restoreStateProcessKey );
                 }
                 state = restoreState.deriveForPagebreak();
               }
 
               final DefaultOutputFunction rollbackOutputFunction =
-                (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
+                  (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
               final Renderer rollbackRenderer = rollbackOutputFunction.getRenderer();
               rollbackRenderer.rollback();
 
@@ -1286,8 +1278,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
               } else {
                 AbstractReportProcessor.logger.debug( "Print: Encountered a good break: " + isInRollBackMode );
               }
-              AbstractReportProcessor.logger.debug
-                ( "Print:                                              : " + state.getProcessKey() );
+              AbstractReportProcessor.logger.debug( "Print:                                              : "
+                  + state.getProcessKey() );
             }
             onGoingPageBreak = false;
           }
@@ -1303,11 +1295,11 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           }
 
           if ( isPagebreaksSupported() ) {
-            if ( renderer.isPendingPageHack() &&
-              renderer.isCurrentPageEmpty() == false && renderer.isPageStartPending() == false ) {
+            if ( renderer.isPendingPageHack() && renderer.isCurrentPageEmpty() == false
+                && renderer.isPageStartPending() == false ) {
               if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-                logger.debug(
-                  "Print: Delaying next event to allow pending pages to be processed: " + state.getProcessKey() );
+                logger.debug( "Print: Delaying next event to allow pending pages to be processed: "
+                    + state.getProcessKey() );
               }
               state = PendingPagesHandler.create( state );
             } else {
@@ -1318,9 +1310,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
             }
           } else {
             if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-              logger.debug(
-                "Print: Commit on page-break: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass()
-                  .getName() );
+              logger.debug( "Print: Commit on page-break: " + state.getProcessKey() + " "
+                  + state.getAdvanceHandler().getClass().getName() );
             }
             state = state.commit();
           }
@@ -1331,8 +1322,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           }
 
           if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-            logger.debug(
-              "Print: Post Commit: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass().getName() );
+            logger.debug( "Print: Post Commit: " + state.getProcessKey() + " "
+                + state.getAdvanceHandler().getClass().getName() );
           }
 
           if ( isPagebreaksSupported() ) {
@@ -1355,28 +1346,28 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
             renderer.applyAutoCommit();
           }
 
-          if ( pageEventCount == 0 && isInRollBackMode == false &&
-            pagebreakEncountered == Renderer.LayoutResult.LAYOUT_NO_PAGEBREAK ) {
+          if ( pageEventCount == 0 && isInRollBackMode == false
+              && pagebreakEncountered == Renderer.LayoutResult.LAYOUT_NO_PAGEBREAK ) {
             if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
               logger.debug( "Print: Perform incremental update: " + state.getProcessKey() );
             }
             renderer.processIncrementalUpdate( performOutput );
           }
           if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-            logger.debug(
-              "Print: Commit: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass().getName() );
+            logger.debug( "Print: Commit: " + state.getProcessKey() + " "
+                + state.getAdvanceHandler().getClass().getName() );
           }
           state = state.commit();
           if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
-            logger.debug(
-              "Print: Post Commit: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass().getName() );
+            logger.debug( "Print: Post Commit: " + state.getProcessKey() + " "
+                + state.getAdvanceHandler().getClass().getName() );
           }
 
           // printLayoutStateToFile(state, true, isInRollBackMode);
 
           if ( pagebreaksSupported && fallBackState != restoreState ) {
             final DefaultOutputFunction commitableOutputFunction =
-              (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
+                (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
             final Renderer commitableRenderer = commitableOutputFunction.getRenderer();
             commitableRenderer.applyRollbackInformation();
           }
@@ -1384,7 +1375,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
       }
 
       // We should never reach this point, if this function has been called by the PageStateList.
-      //throw new ReportProcessingException("Content processing failed with an illegal state");
+      // throw new ReportProcessingException("Content processing failed with an illegal state");
       return null;
     } catch ( ContentProcessingException e ) {
       throw new ReportProcessingException( "Content-Processing failed.", e );
@@ -1407,12 +1398,12 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
 
   public void processReport() throws ReportProcessingException {
     PerformanceLoggingStopWatch swGlobal =
-      getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PROCESSING );
+        getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PROCESSING );
     try {
       swGlobal.start();
       if ( AbstractReportProcessor.logger.isDebugEnabled() ) {
-        AbstractReportProcessor.logger.debug( new MemoryUsageMessage( System.identityHashCode(
-          Thread.currentThread() ) + ": Report processing time: Starting: " ) );
+        AbstractReportProcessor.logger.debug( new MemoryUsageMessage( System.identityHashCode( Thread.currentThread() )
+            + ": Report processing time: Starting: " ) );
       }
       try {
         final long startTime = System.currentTimeMillis();
@@ -1424,14 +1415,14 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           prepareReportProcessing();
         }
         PerformanceLoggingStopWatch sw =
-          getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_GENERATE );
+            getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_GENERATE );
         try {
           sw.start();
           final long paginateTime = System.currentTimeMillis();
           if ( AbstractReportProcessor.logger.isDebugEnabled() ) {
-            AbstractReportProcessor.logger.debug( new MemoryUsageMessage
-              ( System.identityHashCode( Thread.currentThread() ) +
-                ": Report processing time: Pagination time: " + ( ( paginateTime - startTime ) / 1000.0 ) ) );
+            AbstractReportProcessor.logger.debug( new MemoryUsageMessage( System.identityHashCode( Thread
+                .currentThread() )
+                + ": Report processing time: Pagination time: " + ( ( paginateTime - startTime ) / 1000.0 ) ) );
           }
           if ( getLogicalPageCount() == 0 ) {
             throw new EmptyReportException( "Report did not generate any content." );
@@ -1444,9 +1435,9 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
           }
           final long endTime = System.currentTimeMillis();
           if ( AbstractReportProcessor.logger.isDebugEnabled() ) {
-            AbstractReportProcessor.logger.debug( new MemoryUsageMessage
-              ( System.identityHashCode( Thread.currentThread() ) +
-                ": Report processing time: " + ( ( endTime - startTime ) / 1000.0 ) ) );
+            AbstractReportProcessor.logger.debug( new MemoryUsageMessage( System.identityHashCode( Thread
+                .currentThread() )
+                + ": Report processing time: " + ( ( endTime - startTime ) / 1000.0 ) ) );
           }
         } finally {
           sw.close();
@@ -1454,18 +1445,18 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
       } catch ( EmptyReportException re ) {
         throw re;
       } catch ( ReportProcessingException re ) {
-        AbstractReportProcessor.logger.error( System.identityHashCode(
-          Thread.currentThread() ) + ": Report processing failed.", re );
+        AbstractReportProcessor.logger.error( System.identityHashCode( Thread.currentThread() )
+            + ": Report processing failed.", re );
         throw re;
       } catch ( Exception e ) {
-        AbstractReportProcessor.logger.error( System.identityHashCode(
-          Thread.currentThread() ) + ": Report processing failed.", e );
+        AbstractReportProcessor.logger.error( System.identityHashCode( Thread.currentThread() )
+            + ": Report processing failed.", e );
         throw new ReportProcessingException( "Failed to process the report", e );
       }
       fireProcessingFinished( new ReportProgressEvent( this, getPhysicalPageCount() ) );
       if ( AbstractReportProcessor.logger.isDebugEnabled() ) {
-        AbstractReportProcessor.logger.debug( System.identityHashCode(
-          Thread.currentThread() ) + ": Report processing finished." );
+        AbstractReportProcessor.logger.debug( System.identityHashCode( Thread.currentThread() )
+            + ": Report processing finished." );
       }
     } finally {
       swGlobal.close();

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -32,7 +32,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.Tabl
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContextPool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTableContext;
-
 
 /**
  * This process-step computes the effective layout, but it does not take horizontal pagebreaks into account. (It has to
@@ -107,8 +106,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
       box.setContentAreaX1( nodeContext.getX1() );
       box.setContentAreaX2( nodeContext.getX2() );
       if ( finishTableContext( box ) == false ) {
-        box
-          .setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
+        box.setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
       }
       if ( box.isVisible() ) {
         nodeContext.updateParentX2( box.getCachedX2() );
@@ -176,8 +174,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
       box.setContentAreaX1( nodeContext.getX1() );
       box.setContentAreaX2( nodeContext.getX2() );
       if ( finishTableContext( box ) == false ) {
-        box
-          .setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
+        box.setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
       }
       if ( box.isVisible() ) {
         nodeContext.updateParentX2( box.getCachedX2() );
@@ -255,8 +252,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
       box.setContentAreaX1( nodeContext.getX1() );
       box.setContentAreaX2( nodeContext.getX2() );
       if ( finishTableContext( box ) == false ) {
-        box
-          .setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
+        box.setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
       }
       if ( box.isVisible() ) {
         nodeContext.updateParentX2( box.getCachedX2() );
@@ -419,15 +415,14 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
           nodeContext.updateParentX2( box.getCachedX2() );
         }
       } else {
-        box
-          .setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
+        box.setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
 
         final TableCellRenderBox cell = (TableCellRenderBox) box;
         final MinorAxisTableContext tableContext = getTableContext();
         final TableRenderBox table = tableContext.getTable();
         if ( tableContext.isStructureValidated() == false ) {
-          table.getColumnModel()
-            .updateCellSize( cell.getColumnIndex(), cell.getColSpan(), box.getCachedWidth() - box.getInsets() );
+          table.getColumnModel().updateCellSize( cell.getColumnIndex(), cell.getColSpan(),
+              box.getCachedWidth() - box.getInsets() );
         }
         if ( box.isVisible() ) {
           nodeContext.updateParentX2( box.getCachedX2() );

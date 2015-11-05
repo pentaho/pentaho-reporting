@@ -27,9 +27,9 @@ public class Prd4497IT extends TestCase {
     Assert.assertEquals( StrictGeomUtility.toInternalValue( 784 ), pageBox.getPageEnd() );
     RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
     Assert.assertEquals( 1, elementsByNodeType.length );
-    RenderBox box = (RenderBox) elementsByNodeType[ 0 ];
+    RenderBox box = (RenderBox) elementsByNodeType[0];
 
-    //    ModelPrinter.INSTANCE.print(box);
+    // ModelPrinter.INSTANCE.print(box);
     RenderNode lastChild = box.getLastChild();
 
     Assert.assertEquals( StrictGeomUtility.toInternalValue( 804 ), lastChild.getY2() );

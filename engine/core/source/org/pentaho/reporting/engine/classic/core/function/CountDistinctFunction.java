@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -73,10 +73,12 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
   }
 
   /**
-   * Sets the group name. <P> If a group is defined, the running total is reset to zero at the start of every instance
-   * of this group.
+   * Sets the group name.
+   * <P>
+   * If a group is defined, the running total is reset to zero at the start of every instance of this group.
    *
-   * @param name the group name (null permitted).
+   * @param name
+   *          the group name (null permitted).
    */
   public void setGroup( final String name ) {
     this.group = name;
@@ -94,17 +96,20 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
   }
 
   /**
-   * Receives notification that report generation initializes the current run. <P> The event carries a
-   * ReportState.Started state.  Use this to initialize the report.
+   * Receives notification that report generation initializes the current run.
+   * <P>
+   * The event carries a ReportState.Started state. Use this to initialize the report.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void reportInitialized( final ReportEvent event ) {
     clear();
@@ -118,7 +123,8 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
   /**
    * Receives notification that a group has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
@@ -134,7 +140,8 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( getField() == null ) {
@@ -188,12 +195,14 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
   }
 
   /**
-   * Clones the expression.  The expression should be reinitialized after the cloning. <P> Expressions maintain no
-   * state, cloning is done at the beginning of the report processing to disconnect the expression from any other object
-   * space.
+   * Clones the expression. The expression should be reinitialized after the cloning.
+   * <P>
+   * Expressions maintain no state, cloning is done at the beginning of the report processing to disconnect the
+   * expression from any other object space.
    *
    * @return a clone of this expression.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
   public Object clone() throws CloneNotSupportedException {
     final CountDistinctFunction o = (CountDistinctFunction) super.clone();

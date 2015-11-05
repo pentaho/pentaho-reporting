@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -336,7 +336,7 @@ public final class PageSize {
   /**
    * A standard paper size.
    */
-  public static final PageSize DOUBLEPOSTCARD = new PageSize( 567, 419 );  // should be 419.5, but I ignore that..
+  public static final PageSize DOUBLEPOSTCARD = new PageSize( 567, 419 ); // should be 419.5, but I ignore that..
 
   /**
    * A standard paper size.
@@ -835,8 +835,10 @@ public final class PageSize {
   /**
    * Creates a new page-size object with the given width and height.
    *
-   * @param width  the width in point.
-   * @param height the height in point.
+   * @param width
+   *          the width in point.
+   * @param height
+   *          the height in point.
    */
   public PageSize( final double width, final double height ) {
     this.width = width;
@@ -864,7 +866,8 @@ public final class PageSize {
   /**
    * Compares this page size with the given object.
    *
-   * @param o the other object.
+   * @param o
+   *          the other object.
    * @return true, if the given object is also a PageSize object and has the same width and height, false otherwise.
    */
   public boolean equals( final Object o ) {
@@ -876,7 +879,6 @@ public final class PageSize {
     }
 
     final PageSize pageSize = (PageSize) o;
-
 
     if ( equal( pageSize.height, height ) == false ) {
       return false;
@@ -891,8 +893,10 @@ public final class PageSize {
   /**
    * An internal helper method that compares two doubles for equality.
    *
-   * @param d1 the one double.
-   * @param d2 the other double.
+   * @param d1
+   *          the one double.
+   * @param d2
+   *          the other double.
    * @return true, if both doubles are binary equal, false otherwise.
    */
   private boolean equal( final double d1, final double d2 ) {

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
@@ -74,7 +74,7 @@ public class TableCellIT extends TestCase {
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( ParagraphRenderBox.class ) );
     long positionY = 0;
     for ( int i = 0; i < all.length; i += 1 ) {
-      final RenderNode node = all[ i ];
+      final RenderNode node = all[i];
 
       assertEquals( positionY, node.getY() );
       positionY += node.getHeight();
@@ -105,8 +105,8 @@ public class TableCellIT extends TestCase {
     report.getReportHeader().addElement( table );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader() );
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
     final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( ParagraphRenderBox.class ) );
-    assertEquals( StrictGeomUtility.toInternalValue( 20 ), all[ 0 ].getHeight() );
+    assertEquals( StrictGeomUtility.toInternalValue( 20 ), all[0].getHeight() );
   }
 }

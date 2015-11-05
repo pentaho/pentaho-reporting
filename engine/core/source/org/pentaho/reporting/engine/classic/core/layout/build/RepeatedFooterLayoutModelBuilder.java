@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
@@ -40,9 +40,8 @@ public class RepeatedFooterLayoutModelBuilder extends LayoutModelBuilderWrapper 
     backend.setLimitedSubReports( true );
   }
 
-  public void initialize( final ProcessingContext metaData,
-                          final RenderBox parentBox,
-                          final RenderNodeFactory renderNodeFactory ) {
+  public void initialize( final ProcessingContext metaData, final RenderBox parentBox,
+      final RenderNodeFactory renderNodeFactory ) {
     this.parentBox = parentBox;
     getParent().initialize( metaData, parentBox, renderNodeFactory );
     this.metaData = metaData.getOutputProcessorMetaData();
@@ -51,7 +50,6 @@ public class RepeatedFooterLayoutModelBuilder extends LayoutModelBuilderWrapper 
   public void setLimitedSubReports( final boolean limitedSubReports ) {
 
   }
-
 
   public InstanceID startBox( final ReportElement element ) {
     InstanceID instanceID = getParent().startBox( element );
@@ -89,7 +87,7 @@ public class RepeatedFooterLayoutModelBuilder extends LayoutModelBuilderWrapper 
 
   public LayoutModelBuilder deriveForStorage( final RenderBox clonedContent ) {
     final RepeatedFooterLayoutModelBuilder clone =
-      (RepeatedFooterLayoutModelBuilder) super.deriveForStorage( clonedContent );
+        (RepeatedFooterLayoutModelBuilder) super.deriveForStorage( clonedContent );
     clone.parentBox = clonedContent;
     return clone;
   }

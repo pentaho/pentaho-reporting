@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.formula;
 
@@ -44,8 +44,8 @@ public class MParameterTextFunction implements Function {
     return "MPARAMETERTEXT";
   }
 
-  public TypeValuePair evaluate( final FormulaContext context,
-                                 final ParameterCallback parameters ) throws EvaluationException {
+  public TypeValuePair evaluate( final FormulaContext context, final ParameterCallback parameters )
+    throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
     if ( parameterCount < 2 || parameterCount > 4 ) {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
@@ -55,14 +55,15 @@ public class MParameterTextFunction implements Function {
     if ( rawValue instanceof Object[] == false ) {
       rawValue = TypeUtil.normalize( context.getTypeRegistry().convertToSequence( parameters.getType( 0 ), rawValue ) );
     }
-    final String parameterName = context.getTypeRegistry().convertToText
-      ( parameters.getType( 1 ), parameters.getValue( 1 ) );
+    final String parameterName =
+        context.getTypeRegistry().convertToText( parameters.getType( 1 ), parameters.getValue( 1 ) );
 
     final String encodingResult;
     final boolean urlEncode;
     if ( parameterCount > 2 ) {
-      urlEncode = !( Boolean.FALSE.equals
-        ( context.getTypeRegistry().convertToLogical( parameters.getType( 2 ), parameters.getValue( 2 ) ) ) );
+      urlEncode =
+          !( Boolean.FALSE.equals( context.getTypeRegistry().convertToLogical( parameters.getType( 2 ),
+              parameters.getValue( 2 ) ) ) );
 
       if ( parameterCount == 4 ) {
         final Type encodingType = parameters.getType( 3 );
@@ -72,13 +73,14 @@ public class MParameterTextFunction implements Function {
           throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
         }
       } else {
-        encodingResult = context.getConfiguration().getConfigProperty
-          ( "org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8" );
+        encodingResult =
+            context.getConfiguration().getConfigProperty( "org.pentaho.reporting.libraries.formula.URLEncoding",
+                "UTF-8" );
       }
     } else {
       urlEncode = true;
-      encodingResult = context.getConfiguration().getConfigProperty
-        ( "org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8" );
+      encodingResult =
+          context.getConfiguration().getConfigProperty( "org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8" );
     }
 
     try {
@@ -93,7 +95,7 @@ public class MParameterTextFunction implements Function {
 
         final String s;
         try {
-          final Object o = value[ i ];
+          final Object o = value[i];
           s = ConverterRegistry.toAttributeValue( o );
         } catch ( BeanException e ) {
           // ok, so what. Log and return error

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -35,8 +35,7 @@ import java.util.TimeZone;
 
 public class LibLoaderResourceBundleFactory implements ExtendedResourceBundleFactory {
   private static class LibLoaderResourceBundle extends PropertyResourceBundle {
-    private LibLoaderResourceBundle( final InputStream stream )
-      throws IOException {
+    private LibLoaderResourceBundle( final InputStream stream ) throws IOException {
       super( stream );
       setParent( parent );
     }
@@ -45,7 +44,8 @@ public class LibLoaderResourceBundleFactory implements ExtendedResourceBundleFac
      * Sets the parent bundle of this bundle. The parent bundle is searched by {@link #getObject getObject} when this
      * bundle does not contain a particular resource.
      *
-     * @param parent this bundle's parent bundle.
+     * @param parent
+     *          this bundle's parent bundle.
      */
     public void setParent( final ResourceBundle parent ) {
       super.setParent( parent );
@@ -64,10 +64,8 @@ public class LibLoaderResourceBundleFactory implements ExtendedResourceBundleFac
     this.successfulLoads = new LFUMap<String, LibLoaderResourceBundle>( 30 );
   }
 
-  public LibLoaderResourceBundleFactory( final ResourceManager manager,
-                                         final ResourceKey baseKey,
-                                         final Locale locale,
-                                         final TimeZone timeZone ) {
+  public LibLoaderResourceBundleFactory( final ResourceManager manager, final ResourceKey baseKey, final Locale locale,
+      final TimeZone timeZone ) {
     this();
     this.manager = manager;
     this.baseKey = baseKey;
@@ -79,9 +77,11 @@ public class LibLoaderResourceBundleFactory implements ExtendedResourceBundleFac
    * Creates a resource bundle for the given key. How that key is interpreted depends on the used concrete
    * implementation of this interface.
    *
-   * @param key the key that identifies the resource bundle
+   * @param key
+   *          the key that identifies the resource bundle
    * @return the created resource bundle
-   * @throws MissingResourceException if no resource bundle for the specified base name can be found
+   * @throws MissingResourceException
+   *           if no resource bundle for the specified base name can be found
    * @noinspection MagicCharacter
    */
   public ResourceBundle getResourceBundle( final String key ) {
@@ -147,7 +147,6 @@ public class LibLoaderResourceBundleFactory implements ExtendedResourceBundleFac
       }
     }
 
-
     if ( cntryProperties != null ) {
       if ( langProperties != null ) {
         cntryProperties.setParent( langProperties );
@@ -161,7 +160,6 @@ public class LibLoaderResourceBundleFactory implements ExtendedResourceBundleFac
         langProperties.setParent( defaultProperties );
       }
     }
-
 
     if ( fullProperties != null ) {
       return fullProperties;
@@ -269,8 +267,7 @@ public class LibLoaderResourceBundleFactory implements ExtendedResourceBundleFac
     return o;
   }
 
-  private void readObject( final ObjectInputStream stream )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream stream ) throws IOException, ClassNotFoundException {
     stream.defaultReadObject();
     failedLoads = new HashSet<String>();
     successfulLoads = new LFUMap<String, LibLoaderResourceBundle>( 30 );

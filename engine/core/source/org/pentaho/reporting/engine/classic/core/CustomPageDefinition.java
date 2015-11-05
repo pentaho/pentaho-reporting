@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -64,9 +64,12 @@ public class CustomPageDefinition implements PageDefinition {
   /**
    * Adds a new page format to the page definition.
    *
-   * @param format the page format
-   * @param x      the x-position to where the imageable-x of the pageformat is mapped.
-   * @param y      the y-position to where the imageable-y of the pageformat is mapped.
+   * @param format
+   *          the page format
+   * @param x
+   *          the x-position to where the imageable-x of the pageformat is mapped.
+   * @param y
+   *          the y-position to where the imageable-y of the pageformat is mapped.
    */
   public void addPageFormat( final PageFormat format, final float x, final float y ) {
     if ( format == null ) {
@@ -74,8 +77,7 @@ public class CustomPageDefinition implements PageDefinition {
     }
     width = Math.max( width, (float) ( format.getImageableWidth() + x ) );
     height = Math.max( height, (float) ( format.getImageableHeight() + y ) );
-    final Rectangle2D bounds = new Rectangle2D.Double
-      ( x, y, format.getImageableWidth(), format.getImageableHeight() );
+    final Rectangle2D bounds = new Rectangle2D.Double( x, y, format.getImageableWidth(), format.getImageableHeight() );
     pageBoundsList.add( bounds );
     pageFormatList.add( format.clone() );
   }
@@ -93,7 +95,8 @@ public class CustomPageDefinition implements PageDefinition {
    * Returns the page format for the given page number. The page format contains local coordinates - that means that the
    * point (0,0) denotes the upper left corner of this returned page format and not global coordinates.
    *
-   * @param pos the position of the pageformat within the page
+   * @param pos
+   *          the position of the pageformat within the page
    * @return the given pageformat.
    */
   public PageFormat getPageFormat( final int pos ) {
@@ -105,7 +108,8 @@ public class CustomPageDefinition implements PageDefinition {
    * Describes the internal position of the given page within the logical page. The logical page does not include any
    * page margins, the printable area for a page starts at (0,0).
    *
-   * @param index the index of the page.
+   * @param index
+   *          the index of the page.
    * @return the position of the page (within the global page).
    */
   public Rectangle2D getPagePosition( final int index ) {
@@ -120,10 +124,10 @@ public class CustomPageDefinition implements PageDefinition {
    * @see PageDefinition#getPagePosition(int)
    */
   public Rectangle2D[] getPagePositions() {
-    final Rectangle2D[] rects = new Rectangle2D[ pageBoundsList.size() ];
+    final Rectangle2D[] rects = new Rectangle2D[pageBoundsList.size()];
     for ( int i = 0; i < pageBoundsList.size(); i++ ) {
       final Rectangle2D rec = (Rectangle2D) pageBoundsList.get( i );
-      rects[ i ] = rec.getBounds2D();
+      rects[i] = rec.getBounds2D();
     }
     return rects;
   }
@@ -150,25 +154,25 @@ public class CustomPageDefinition implements PageDefinition {
    * Clones the given page definition object.
    *
    * @return a clone of this page definition.
-   * @throws CloneNotSupportedException if an error occured.
+   * @throws CloneNotSupportedException
+   *           if an error occured.
    */
-  public Object clone()
-    throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     final CustomPageDefinition def = (CustomPageDefinition) super.clone();
     def.pageBoundsList = (ArrayList) pageBoundsList.clone();
     def.pageFormatList = (ArrayList) pageFormatList.clone();
     return def;
   }
 
-
   /**
    * Deserizalize the report and restore the pageformat.
    *
-   * @param out the objectoutput stream
-   * @throws java.io.IOException if errors occur
+   * @param out
+   *          the objectoutput stream
+   * @throws java.io.IOException
+   *           if errors occur
    */
-  private void writeObject( final ObjectOutputStream out )
-    throws IOException {
+  private void writeObject( final ObjectOutputStream out ) throws IOException {
     out.defaultWriteObject();
     final SerializerHelper instance = SerializerHelper.getInstance();
     final Iterator pageBoundsIterator = pageBoundsList.iterator();
@@ -186,12 +190,14 @@ public class CustomPageDefinition implements PageDefinition {
   /**
    * Resolve the pageformat, as PageFormat is not serializable.
    *
-   * @param in the input stream.
-   * @throws java.io.IOException    if there is an IO problem.
-   * @throws ClassNotFoundException if there is a class problem.
+   * @param in
+   *          the input stream.
+   * @throws java.io.IOException
+   *           if there is an IO problem.
+   * @throws ClassNotFoundException
+   *           if there is a class problem.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     final SerializerHelper instance = SerializerHelper.getInstance();
     pageBoundsList = new ArrayList();
@@ -215,7 +221,8 @@ public class CustomPageDefinition implements PageDefinition {
   /**
    * Checks whether the given object is equal to this one.
    *
-   * @param obj the other object.
+   * @param obj
+   *          the other object.
    * @return true, if the other object is equal, false otherwise.
    */
   public boolean equals( final Object obj ) {

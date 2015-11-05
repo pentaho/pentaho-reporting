@@ -1,21 +1,25 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
+
+import java.awt.Color;
+import java.awt.Stroke;
+import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,9 +33,6 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.xml.sax.Locator;
-
-import java.awt.*;
-import java.util.StringTokenizer;
 
 /**
  * A helper class to make parsing the xml files a lot easier.
@@ -48,8 +49,9 @@ public final class ReportParserUtil {
   private static boolean strictParsing;
 
   static {
-    strictParsing = "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.parser.base.StrictParseMode" ) );
+    strictParsing =
+        "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.parser.base.StrictParseMode" ) );
   }
 
   /**
@@ -58,25 +60,27 @@ public final class ReportParserUtil {
   private ReportParserUtil() {
   }
 
-
   /**
    * Checks whether this report is a included report and not the main report definition.
    *
-   * @param rootXmlReadHandler the root handler that provides access to the properties.
+   * @param rootXmlReadHandler
+   *          the root handler that provides access to the properties.
    * @return true, if the report is included, false otherwise.
    */
   public static boolean isIncluded( final RootXmlReadHandler rootXmlReadHandler ) {
-    return INCLUDE_PARSING_VALUE.equals
-      ( rootXmlReadHandler.getHelperObject( INCLUDE_PARSING_KEY ) );
+    return INCLUDE_PARSING_VALUE.equals( rootXmlReadHandler.getHelperObject( INCLUDE_PARSING_KEY ) );
   }
 
   /**
    * Parses a vertical alignment value.
    *
-   * @param value   the text to parse.
-   * @param locator the locator provides the current parse position for meaningful error messages.
+   * @param value
+   *          the text to parse.
+   * @param locator
+   *          the locator provides the current parse position for meaningful error messages.
    * @return the element alignment.
-   * @throws ParseException if the alignment value is not recognised.
+   * @throws ParseException
+   *           if the alignment value is not recognised.
    */
   public static ElementAlignment parseVerticalElementAlignment( String value, final Locator locator )
     throws ParseException {
@@ -101,8 +105,8 @@ public final class ReportParserUtil {
     if ( locator == null ) {
       logger.warn( "Invalid value encountered for vertical alignment attribute." );
     } else {
-      logger.warn( "Invalid value encountered for vertical alignment attribute. [Line: " +
-        locator.getLineNumber() + " Column: " + locator.getColumnNumber() + "]" );
+      logger.warn( "Invalid value encountered for vertical alignment attribute. [Line: " + locator.getLineNumber()
+          + " Column: " + locator.getColumnNumber() + "]" );
     }
     return ElementAlignment.TOP;
   }
@@ -110,14 +114,15 @@ public final class ReportParserUtil {
   /**
    * Parses a horizontal alignment value.
    *
-   * @param value   the text to parse.
-   * @param locator the locator provides the current parse position for meaningful error messages.
+   * @param value
+   *          the text to parse.
+   * @param locator
+   *          the locator provides the current parse position for meaningful error messages.
    * @return the element alignment.
-   * @throws ParseException if a parse error occured.
+   * @throws ParseException
+   *           if a parse error occured.
    */
-  public static ElementAlignment parseHorizontalElementAlignment
-  ( String value,
-    final Locator locator )
+  public static ElementAlignment parseHorizontalElementAlignment( String value, final Locator locator )
     throws ParseException {
     if ( value == null ) {
       return null;
@@ -143,8 +148,8 @@ public final class ReportParserUtil {
     if ( locator == null ) {
       logger.warn( "Invalid value encountered for horizontal alignment attribute." );
     } else {
-      logger.warn( "Invalid value encountered for horizontal alignment attribute. [Line: " +
-        locator.getLineNumber() + " Column: " + locator.getColumnNumber() + "]" );
+      logger.warn( "Invalid value encountered for horizontal alignment attribute. [Line: " + locator.getLineNumber()
+          + " Column: " + locator.getColumnNumber() + "]" );
     }
     return ElementAlignment.LEFT;
   }
@@ -152,13 +157,15 @@ public final class ReportParserUtil {
   /**
    * Reads an attribute as float and returns <code>def</code> if that fails.
    *
-   * @param value   the attribute value.
-   * @param locator the locator provides the current parse position for meaningful error messages.
+   * @param value
+   *          the attribute value.
+   * @param locator
+   *          the locator provides the current parse position for meaningful error messages.
    * @return the float value.
-   * @throws ParseException if an parse error occured.
+   * @throws ParseException
+   *           if an parse error occured.
    */
-  public static Float parseFloat( final String value, final Locator locator )
-    throws ParseException {
+  public static Float parseFloat( final String value, final Locator locator ) throws ParseException {
     if ( value == null ) {
       return null;
     }
@@ -185,25 +192,25 @@ public final class ReportParserUtil {
       if ( locator == null ) {
         logger.warn( "Invalid value encountered for boolean attribute." );
       } else {
-        logger.warn( "Invalid value encountered for boolean attribute. [Line: " +
-          locator.getLineNumber() + " Column: " + locator.getColumnNumber() + "]" );
+        logger.warn( "Invalid value encountered for boolean attribute. [Line: " + locator.getLineNumber() + " Column: "
+            + locator.getColumnNumber() + "]" );
       }
       return Boolean.FALSE;
     }
   }
 
-
   /**
    * Reads an attribute as float and returns <code>def</code> if that fails.
    *
-   * @param value   the attribute value.
-   * @param locator the locator provides the current parse position for meaningful error messages.
+   * @param value
+   *          the attribute value.
+   * @param locator
+   *          the locator provides the current parse position for meaningful error messages.
    * @return the float value.
-   * @throws ParseException if an parse error occured.
+   * @throws ParseException
+   *           if an parse error occured.
    */
-  public static Integer parseInteger( final String value,
-                                      final Locator locator )
-    throws ParseException {
+  public static Integer parseInteger( final String value, final Locator locator ) throws ParseException {
     if ( value == null ) {
       return null;
     }
@@ -221,7 +228,8 @@ public final class ReportParserUtil {
    * <p/>
    * As fallback the color black is returned if no color can be parsed.
    *
-   * @param color the color (as a string).
+   * @param color
+   *          the color (as a string).
    * @return the paint.
    */
   public static Color parseColor( final String color ) {
@@ -235,8 +243,10 @@ public final class ReportParserUtil {
    * <p/>
    * As fallback the supplied default value is returned if no color can be parsed.
    *
-   * @param color        the color (as a string).
-   * @param defaultValue the default value (returned if no color can be parsed).
+   * @param color
+   *          the color (as a string).
+   * @param defaultValue
+   *          the default value (returned if no color can be parsed).
    * @return the paint.
    */
   public static Color parseColor( final String color, final Color defaultValue ) {
@@ -251,20 +261,21 @@ public final class ReportParserUtil {
     }
   }
 
-
   /**
    * Parses a position of an element. If a relative postion is given, the returnvalue is a negative number between 0 and
    * -100.
    *
-   * @param value            the value.
-   * @param exceptionMessage the exception message.
-   * @param locator          the locator provides the current parse position for meaningful error messages.
+   * @param value
+   *          the value.
+   * @param exceptionMessage
+   *          the exception message.
+   * @param locator
+   *          the locator provides the current parse position for meaningful error messages.
    * @return the float value.
-   * @throws ParseException if there is a problem parsing the string.
+   * @throws ParseException
+   *           if there is a problem parsing the string.
    */
-  public static float parseRelativeFloat( final String value,
-                                          final String exceptionMessage,
-                                          final Locator locator )
+  public static float parseRelativeFloat( final String value, final String exceptionMessage, final Locator locator )
     throws ParseException {
     if ( value == null ) {
       throw new ParseException( exceptionMessage, locator );
@@ -280,7 +291,6 @@ public final class ReportParserUtil {
       return ParserUtil.parseFloat( tvalue, exceptionMessage, locator );
     }
   }
-
 
   public static Stroke parseStroke( final String strokeStyle, final float weight ) {
     // "dashed | solid | dotted | dot-dot-dash | dot-dash"

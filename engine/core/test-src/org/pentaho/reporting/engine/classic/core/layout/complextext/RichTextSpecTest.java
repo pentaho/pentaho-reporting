@@ -116,19 +116,19 @@ public class RichTextSpecTest {
 
   private RichTextSpec createText() {
     Map<AttributedCharacterIterator.Attribute, Object> attrs =
-      new HashMap<AttributedCharacterIterator.Attribute, Object>();
+        new HashMap<AttributedCharacterIterator.Attribute, Object>();
     List<RichTextSpec.StyledChunk> chunks = new ArrayList<RichTextSpec.StyledChunk>();
     InstanceID id = new InstanceID();
-    chunks.add( new RichTextSpec.StyledChunk( 0, 3, new SpacerRenderNode(), attrs,
-      new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "ABC" ) );
-    chunks.add( new RichTextSpec.StyledChunk( 3, 6, new SpacerRenderNode(), attrs,
-      new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "def" ) );
-    chunks.add( new RichTextSpec.StyledChunk( 6, 9, new SpacerRenderNode(), attrs,
-      new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "GHI" ) );
-    chunks.add( new RichTextSpec.StyledChunk( 9, 12, new SpacerRenderNode(), attrs,
-      new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "jkl" ) );
-    chunks.add( new RichTextSpec.StyledChunk( 12, 15, new SpacerRenderNode(), attrs,
-      new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "MNO" ) );
+    chunks.add( new RichTextSpec.StyledChunk( 0, 3, new SpacerRenderNode(), attrs, new ReportAttributeMap<Object>(),
+        ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "ABC" ) );
+    chunks.add( new RichTextSpec.StyledChunk( 3, 6, new SpacerRenderNode(), attrs, new ReportAttributeMap<Object>(),
+        ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "def" ) );
+    chunks.add( new RichTextSpec.StyledChunk( 6, 9, new SpacerRenderNode(), attrs, new ReportAttributeMap<Object>(),
+        ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "GHI" ) );
+    chunks.add( new RichTextSpec.StyledChunk( 9, 12, new SpacerRenderNode(), attrs, new ReportAttributeMap<Object>(),
+        ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "jkl" ) );
+    chunks.add( new RichTextSpec.StyledChunk( 12, 15, new SpacerRenderNode(), attrs, new ReportAttributeMap<Object>(),
+        ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "MNO" ) );
     return new RichTextSpec( "ABCdefGHIjklMNO", TextDirection.LTR, chunks );
   }
 }

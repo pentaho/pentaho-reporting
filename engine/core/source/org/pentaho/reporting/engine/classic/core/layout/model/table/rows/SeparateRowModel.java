@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table.rows;
 
@@ -28,8 +28,7 @@ public class SeparateRowModel extends AbstractRowModel {
     private int rejectedRow;
     private int acceptedRow;
 
-    private ProcessedRowVoter( final int rowCount,
-                               final int previouslyProcessedRows ) {
+    private ProcessedRowVoter( final int rowCount, final int previouslyProcessedRows ) {
       this.rejectedRow = rowCount;
       this.acceptedRow = previouslyProcessedRows;
     }
@@ -71,9 +70,8 @@ public class SeparateRowModel extends AbstractRowModel {
     public long run( TableRow r, int rowSpan );
   }
 
-  private ProcessedRowVoter compute( final long[] preferredSizes,
-                                     final int validatedRowCount,
-                                     RowProcessingDelegate delegate ) {
+  private ProcessedRowVoter compute( final long[] preferredSizes, final int validatedRowCount,
+      RowProcessingDelegate delegate ) {
     int rowCount = getRowCount();
     final ProcessedRowVoter voter = new ProcessedRowVoter( rowCount, validatedRowCount );
     if ( preferredSizes.length == 0 ) {
@@ -150,13 +148,12 @@ public class SeparateRowModel extends AbstractRowModel {
     this.validatedActualSizes = voter.getProcessedRows();
   }
 
-  private void distribute( final long usedSpace, final long[] allSpaces,
-                           final int colIdx, final int colspanX ) {
+  private void distribute( final long usedSpace, final long[] allSpaces, final int colIdx, final int colspanX ) {
     final int maxColspan = Math.min( colIdx + colspanX, allSpaces.length ) - colIdx;
     long usedPrev = 0;
     final int maxSize = Math.min( allSpaces.length, colIdx + maxColspan );
     for ( int i = colIdx; i < maxSize; i++ ) {
-      usedPrev += allSpaces[ i ];
+      usedPrev += allSpaces[i];
     }
 
     if ( usedSpace <= usedPrev ) {
@@ -167,10 +164,10 @@ public class SeparateRowModel extends AbstractRowModel {
     final long distSpace = ( usedSpace - usedPrev );
     final long delta = distSpace / maxColspan;
     for ( int i = 0; i < maxColspan - 1; i++ ) {
-      allSpaces[ colIdx + i ] += delta;
+      allSpaces[colIdx + i] += delta;
     }
     // any uneven remainder gets added to the last column
-    allSpaces[ colIdx + maxColspan - 1 ] += distSpace - ( ( maxColspan - 1 ) * delta );
+    allSpaces[colIdx + maxColspan - 1] += distSpace - ( ( maxColspan - 1 ) * delta );
   }
 
   public void clear() {
@@ -180,7 +177,7 @@ public class SeparateRowModel extends AbstractRowModel {
     final TableRowImpl[] rows = getRows();
     final int rowCount = rows.length;
     for ( int i = 0; i < rowCount; i++ ) {
-      final TableRowImpl row = rows[ i ];
+      final TableRowImpl row = rows[i];
       row.clear();
     }
   }
@@ -215,11 +212,7 @@ public class SeparateRowModel extends AbstractRowModel {
       b.append( "\n" );
     }
 
-    return "SeparateRowModel{" +
-      "rows=\n" + b +
-      ", rowSpacing=" + rowSpacing +
-      ", validatedActualSizes=" + validatedActualSizes +
-      ", validatedRowCount=" + validatedRowCount +
-      '}';
+    return "SeparateRowModel{" + "rows=\n" + b + ", rowSpacing=" + rowSpacing + ", validatedActualSizes="
+        + validatedActualSizes + ", validatedRowCount=" + validatedRowCount + '}';
   }
 }

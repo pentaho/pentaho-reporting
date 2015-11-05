@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xml;
 
@@ -44,14 +44,17 @@ public final class XmlTableReportUtil {
   /**
    * Saves a report into a single XML file.
    *
-   * @param report   the report.
-   * @param filename target file name.
-   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException if the report processing failed.
-   * @throws java.io.IOException                                                 if there was an IOerror while
-   *                                                                             processing the report.
+   * @param report
+   *          the report.
+   * @param filename
+   *          target file name.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
+   *           if the report processing failed.
+   * @throws java.io.IOException
+   *           if there was an IOerror while processing the report.
    */
-  public static void createStreamXML( final MasterReport report, final String filename )
-    throws IOException, ReportProcessingException {
+  public static void createStreamXML( final MasterReport report, final String filename ) throws IOException,
+    ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -68,8 +71,7 @@ public final class XmlTableReportUtil {
     }
   }
 
-  public static void createStreamXML( final MasterReport report,
-                                      final OutputStream outputStream )
+  public static void createStreamXML( final MasterReport report, final OutputStream outputStream )
     throws ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
@@ -78,15 +80,15 @@ public final class XmlTableReportUtil {
       throw new NullPointerException();
     }
 
-    final XmlTableOutputProcessor outputProcessor = new XmlTableOutputProcessor( outputStream,
-      new XmlTableOutputProcessorMetaData( XmlTableOutputProcessorMetaData.PAGINATION_NONE ) );
+    final XmlTableOutputProcessor outputProcessor =
+        new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
+            XmlTableOutputProcessorMetaData.PAGINATION_NONE ) );
     final StreamReportProcessor sp = new StreamReportProcessor( report, outputProcessor );
     sp.processReport();
     sp.close();
   }
 
-  public static void createFlowXML( final MasterReport report,
-                                    final OutputStream outputStream )
+  public static void createFlowXML( final MasterReport report, final OutputStream outputStream )
     throws ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
@@ -95,8 +97,9 @@ public final class XmlTableReportUtil {
       throw new NullPointerException();
     }
 
-    final XmlTableOutputProcessor outputProcessor = new XmlTableOutputProcessor( outputStream,
-      new XmlTableOutputProcessorMetaData( XmlTableOutputProcessorMetaData.PAGINATION_MANUAL ) );
+    final XmlTableOutputProcessor outputProcessor =
+        new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
+            XmlTableOutputProcessorMetaData.PAGINATION_MANUAL ) );
     final FlowReportProcessor sp = new FlowReportProcessor( report, outputProcessor );
     sp.processReport();
     sp.close();

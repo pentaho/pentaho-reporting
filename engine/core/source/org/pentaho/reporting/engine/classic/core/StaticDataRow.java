@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -33,7 +33,7 @@ import java.util.Map;
  * @author Thomas Morgner
  */
 public class StaticDataRow implements DataRow {
-  private static final String[] EMPTY_NAMES = new String[ 0 ];
+  private static final String[] EMPTY_NAMES = new String[0];
   private String[] names;
   private Map<String, Object> values;
 
@@ -56,13 +56,13 @@ public class StaticDataRow implements DataRow {
       throw new NullPointerException();
     }
 
-    synchronized( dataRow ) {
+    synchronized ( dataRow ) {
       final String[] columnNames = dataRow.getColumnNames();
       final int columnCount = columnNames.length;
       this.names = columnNames.clone();
       final HashMap<String, Object> values = new HashMap<String, Object>();
       for ( int i = 0; i < columnCount; i++ ) {
-        final String name = columnNames[ i ];
+        final String name = columnNames[i];
         values.put( name, dataRow.get( name ) );
       }
       this.values = Collections.unmodifiableMap( values );
@@ -74,7 +74,7 @@ public class StaticDataRow implements DataRow {
   }
 
   public StaticDataRow( final Map<String, Object> parameterValues ) {
-    final String[] names = parameterValues.keySet().toArray( new String[ parameterValues.size() ] );
+    final String[] names = parameterValues.keySet().toArray( new String[parameterValues.size()] );
     setData( names, parameterValues.values().toArray() );
   }
 
@@ -97,18 +97,18 @@ public class StaticDataRow implements DataRow {
       final int length = names.length;
       final HashMap<String, Object> valueMap = new HashMap<String, Object>();
       for ( int i = 0; i < length; i++ ) {
-        final String name = names[ i ];
-        valueMap.put( name, values[ i ] );
+        final String name = names[i];
+        valueMap.put( name, values[i] );
       }
       this.values = Collections.unmodifiableMap( valueMap );
     } else {
       final int length = Math.min( names.length, values.length );
-      this.names = new String[ length ];
+      this.names = new String[length];
       System.arraycopy( names, 0, this.names, 0, length );
       final HashMap<String, Object> valueMap = new HashMap<String, Object>();
       for ( int i = 0; i < length; i++ ) {
-        final String name = names[ i ];
-        valueMap.put( name, values[ i ] );
+        final String name = names[i];
+        valueMap.put( name, values[i] );
       }
       this.values = Collections.unmodifiableMap( valueMap );
 
@@ -123,8 +123,8 @@ public class StaticDataRow implements DataRow {
     final HashMap<String, Object> valueMap = new HashMap<String, Object>();
     final int length = Math.min( names.length, values.length );
     for ( int i = 0; i < length; i++ ) {
-      final String name = names[ i ];
-      valueMap.put( name, values[ i ] );
+      final String name = names[i];
+      valueMap.put( name, values[i] );
     }
     this.values = Collections.unmodifiableMap( valueMap );
   }
@@ -135,9 +135,11 @@ public class StaticDataRow implements DataRow {
    * method is called and for columns from the tablemodel the tablemodel method <code>getValueAt(row, column)</code>
    * gets called.
    *
-   * @param col the item index.
+   * @param col
+   *          the item index.
    * @return the value.
-   * @throws IllegalStateException if the datarow detected a deadlock.
+   * @throws IllegalStateException
+   *           if the datarow detected a deadlock.
    */
   public Object get( final String col ) {
     return values.get( col );
@@ -170,7 +172,7 @@ public class StaticDataRow implements DataRow {
   public int hashCode() {
     int result = hashCodeMap();
     for ( int i = 0; i < names.length; i++ ) {
-      final String name = names[ i ];
+      final String name = names[i];
       if ( name != null ) {
         result = 31 * result + name.hashCode();
       } else {
@@ -185,7 +187,7 @@ public class StaticDataRow implements DataRow {
       return false;
     }
     for ( int i = 0; i < names.length; i++ ) {
-      final String key = names[ i ];
+      final String key = names[i];
       final Object value = values.get( key );
       final Object otherValue = otherValues.get( key );
 
@@ -208,7 +210,7 @@ public class StaticDataRow implements DataRow {
     int hashCode = values.size();
 
     for ( int i = 0; i < names.length; i++ ) {
-      final String key = names[ i ];
+      final String key = names[i];
       final Object value = values.get( key );
 
       hashCode = 31 * hashCode + ( key != null ? key.hashCode() : 0 );

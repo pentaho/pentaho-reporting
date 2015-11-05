@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
@@ -23,11 +23,11 @@ import java.util.Locale;
 /**
  * This Comparator implements the standard java.util.Comparator interface. The intended use is to group MetaData
  * elements based on either: (1) The ordinal value in the groupsorting.properties file (see documentation in that file
- * for how this is accomplished.  Any group(s) not represented in that file will be displayed last if more than one
- * group they will all be displayed last in alpha order. (2) If the groupsorting.properties doesn't exist or can't be
- * loaded, the value of the *.grouping key (using the standard string compare).
+ * for how this is accomplished. Any group(s) not represented in that file will be displayed last if more than one group
+ * they will all be displayed last in alpha order. (2) If the groupsorting.properties doesn't exist or can't be loaded,
+ * the value of the *.grouping key (using the standard string compare).
  * <p/>
- * This effectively sorts the attribute and style elements into groups for display by a GUI.  Fine grain ordering of the
+ * This effectively sorts the attribute and style elements into groups for display by a GUI. Fine grain ordering of the
  * groups can be accomplished using the groupsorting.properties file.
  * <p/>
  * Documented by William Seyler

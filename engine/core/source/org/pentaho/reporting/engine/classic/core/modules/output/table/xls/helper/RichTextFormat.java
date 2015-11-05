@@ -37,5 +37,4 @@ public class RichTextFormat {
     return font;
   }
 
-
 }

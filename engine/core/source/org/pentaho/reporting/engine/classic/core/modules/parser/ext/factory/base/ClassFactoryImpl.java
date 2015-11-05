@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
@@ -48,7 +48,8 @@ public abstract class ClassFactoryImpl implements ClassFactory {
   /**
    * Returns an object-description for a class.
    *
-   * @param c the class.
+   * @param c
+   *          the class.
    * @return An object description.
    */
   public ObjectDescription getDescriptionForClass( final Class c ) {
@@ -62,12 +63,13 @@ public abstract class ClassFactoryImpl implements ClassFactory {
   /**
    * Returns the most concrete object-description for the super class of a class.
    *
-   * @param d               the class.
-   * @param knownSuperClass a known supported superclass or null, if no superclass is known yet.
+   * @param d
+   *          the class.
+   * @param knownSuperClass
+   *          a known supported superclass or null, if no superclass is known yet.
    * @return The object description.
    */
-  public ObjectDescription getSuperClassObjectDescription
-  ( final Class d, ObjectDescription knownSuperClass ) {
+  public ObjectDescription getSuperClassObjectDescription( final Class d, ObjectDescription knownSuperClass ) {
 
     if ( d == null ) {
       throw new NullPointerException( "Description class must not be null." );
@@ -95,8 +97,10 @@ public abstract class ClassFactoryImpl implements ClassFactory {
   /**
    * Registers an object description with the factory.
    *
-   * @param key the key.
-   * @param od  the object description.
+   * @param key
+   *          the key.
+   * @param od
+   *          the object description.
    */
   protected void registerClass( final Class key, final ObjectDescription od ) {
     this.classes.put( key, od );
@@ -114,14 +118,14 @@ public abstract class ClassFactoryImpl implements ClassFactory {
     return this.classes.keySet().iterator();
   }
 
-
   /**
    * Configures this factory. The configuration contains several keys and their defined values. The given reference to
    * the configuration object will remain valid until the report parsing or writing ends.
    * <p/>
    * The configuration contents may change during the reporting.
    *
-   * @param config the configuration, never null
+   * @param config
+   *          the configuration, never null
    */
   public void configure( final Configuration config ) {
     if ( config == null ) {
@@ -152,7 +156,8 @@ public abstract class ClassFactoryImpl implements ClassFactory {
   /**
    * Tests for equality.
    *
-   * @param o the object to test.
+   * @param o
+   *          the object to test.
    * @return A boolean.
    */
   public boolean equals( final Object o ) {

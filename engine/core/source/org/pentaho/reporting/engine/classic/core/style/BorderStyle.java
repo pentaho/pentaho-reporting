@@ -1,28 +1,28 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style;
 
-import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
-import org.pentaho.reporting.engine.classic.core.util.StrokeUtility;
-
-import java.awt.*;
+import java.awt.Stroke;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
+
+import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
+import org.pentaho.reporting.engine.classic.core.util.StrokeUtility;
 
 /**
  * Creation-Date: 30.10.2005, 19:37:35
@@ -137,11 +137,11 @@ public class BorderStyle implements Serializable {
    * Replaces the automatically generated instance with one of the enumeration instances.
    *
    * @return the resolved element
-   * @throws java.io.ObjectStreamException if the element could not be resolved.
+   * @throws java.io.ObjectStreamException
+   *           if the element could not be resolved.
    * @noinspection UNUSED_SYMBOL
    */
-  protected Object readResolve()
-    throws ObjectStreamException {
+  protected Object readResolve() throws ObjectStreamException {
     final BorderStyle style = getBorderStyle( this.type );
     if ( style != null ) {
       return style;

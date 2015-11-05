@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
@@ -58,7 +58,7 @@ public class TableCellSizingIT extends TestCase {
       final Element label = new Element();
       label.setElementType( LabelType.INSTANCE );
       label.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-        "asajsdlkasjdalksdjalskdjalsdjalsdkjalsdajlsdjasldkajld" );
+          "asajsdlkasjdalksdjalskdjalsdjalsdkjalsdajlsdjasldkajld" );
       label.getStyle().setStyleProperty( ElementStyleKeys.HEIGHT, 20f );
       return label;
     }
@@ -86,16 +86,15 @@ public class TableCellSizingIT extends TestCase {
     public Element createDataItem( final String text, final int row, final int column ) {
       final Element label = new Element();
       label.setElementType( LabelType.INSTANCE );
-      label.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-        "Test" );
+      label.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Test" );
       label.getStyle().setStyleProperty( ElementStyleKeys.WIDTH, 100f );
       label.getStyle().setStyleProperty( ElementStyleKeys.HEIGHT, 20f );
       return label;
     }
   }
 
-  //42546400
-  //30000000
+  // 42546400
+  // 30000000
   protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
@@ -115,10 +114,10 @@ public class TableCellSizingIT extends TestCase {
 
     final LogicalPageBox pageBox = DebugReportRunner.layoutPage( report, 0 );
     final RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_CELL );
+        MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_CELL );
     assertEquals( 4, elementsByNodeType.length );
     for ( int i = 0; i < elementsByNodeType.length; i++ ) {
-      final RenderNode renderNode = elementsByNodeType[ i ];
+      final RenderNode renderNode = elementsByNodeType[i];
       final RenderNode prev = renderNode.getPrev();
       if ( prev != null ) {
         assertEquals( renderNode.getX(), prev.getX() + prev.getWidth() );
@@ -144,11 +143,11 @@ public class TableCellSizingIT extends TestCase {
 
     final LogicalPageBox pageBox = DebugReportRunner.layoutPage( report, 0 );
     final RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_CELL );
+        MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_CELL );
     assertEquals( 5, elementsByNodeType.length );
 
     for ( int i = 0; i < elementsByNodeType.length; i++ ) {
-      final RenderNode renderNode = elementsByNodeType[ i ];
+      final RenderNode renderNode = elementsByNodeType[i];
       final RenderNode prev = renderNode.getPrev();
       if ( prev != null ) {
         assertEquals( renderNode.getX(), prev.getX() + prev.getWidth() );

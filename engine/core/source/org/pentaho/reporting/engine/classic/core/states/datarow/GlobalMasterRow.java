@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
@@ -67,8 +67,7 @@ public final class GlobalMasterRow implements MasterDataRow {
    * @return
    */
   public static GlobalMasterRow createReportRow( final ProcessingContext reportContext,
-                                                 final DataSchemaDefinition schemaDefinition,
-                                                 final ParameterDataRow parameterDataRow ) {
+      final DataSchemaDefinition schemaDefinition, final ParameterDataRow parameterDataRow ) {
     if ( reportContext == null ) {
       throw new NullPointerException();
     }
@@ -87,10 +86,10 @@ public final class GlobalMasterRow implements MasterDataRow {
     gmr.dataFactory = new EmptyDataFactory();
     gmr.resourceBundleFactory = reportContext.getResourceBundleFactory();
     gmr.outputProcessorMetaData = reportContext.getOutputProcessorMetaData();
-    final DefaultDataAttributeContext dac = new DefaultDataAttributeContext
-      ( gmr.outputProcessorMetaData, gmr.getResourceBundleFactory().getLocale() );
+    final DefaultDataAttributeContext dac =
+        new DefaultDataAttributeContext( gmr.outputProcessorMetaData, gmr.getResourceBundleFactory().getLocale() );
     gmr.schemaCompiler =
-      new ProcessingDataSchemaCompiler( schemaDefinition, dac, reportContext.getResourceManager(), null );
+        new ProcessingDataSchemaCompiler( schemaDefinition, dac, reportContext.getResourceManager(), null );
     gmr.dataSchema = null;
     gmr.setEnvironmentDataRow( new ReportEnvironmentDataRow( reportContext.getEnvironment() ) );
     gmr.setParameterDataRow( parameterDataRow );
@@ -101,10 +100,8 @@ public final class GlobalMasterRow implements MasterDataRow {
     expressionDataRow.setIncludeStructuralProcessing( true );
   }
 
-  public MasterDataRow deriveSubDataRow( final ProcessingContext reportContext,
-                                         final DataFactory reportFactory,
-                                         final ParameterDataRow parameterDataRow,
-                                         final ResourceBundleFactory resourceBundleFactory ) {
+  public MasterDataRow deriveSubDataRow( final ProcessingContext reportContext, final DataFactory reportFactory,
+      final ParameterDataRow parameterDataRow, final ResourceBundleFactory resourceBundleFactory ) {
     if ( reportContext == null ) {
       throw new NullPointerException();
     }
@@ -276,8 +273,7 @@ public final class GlobalMasterRow implements MasterDataRow {
    * @param subReportRow
    * @return
    */
-  public GlobalMasterRow advanceRecursively( final boolean deepTraversingOnly,
-                                             final MasterDataRow subReportRow ) {
+  public GlobalMasterRow advanceRecursively( final boolean deepTraversingOnly, final MasterDataRow subReportRow ) {
     final GlobalMasterRow dataRow = new GlobalMasterRow();
     dataRow.storedPaddingData = storedPaddingData;
     dataRow.storedGlobalView = storedGlobalView;
@@ -343,8 +339,8 @@ public final class GlobalMasterRow implements MasterDataRow {
       if ( parentState == null ) {
         deepEvent = event;
       } else {
-        deepEvent = new ReportEvent
-          ( parentState, event.getState(), event.getType() | ReportEvent.DEEP_TRAVERSING_EVENT );
+        deepEvent =
+            new ReportEvent( parentState, event.getState(), event.getType() | ReportEvent.DEEP_TRAVERSING_EVENT );
       }
       parentRow.fireReportEvent( deepEvent );
       if ( parentRow.importedDataRow != null ) {
@@ -397,12 +393,12 @@ public final class GlobalMasterRow implements MasterDataRow {
     }
 
     if ( parentRow != null ) {
-      throw new IllegalStateException
-        ( "This should be at the beginning of the master-report processing. No parent allowed." );
+      throw new IllegalStateException(
+          "This should be at the beginning of the master-report processing. No parent allowed." );
     }
     if ( paddingData.getReportDataRow() != null ) {
-      throw new IllegalStateException
-        ( "This should be at the beginning of the master-report processing. No report-data allowed." );
+      throw new IllegalStateException(
+          "This should be at the beginning of the master-report processing. No report-data allowed." );
     }
 
     final GlobalMasterRow gmr = derive();
@@ -418,12 +414,13 @@ public final class GlobalMasterRow implements MasterDataRow {
       throw new NullPointerException();
     }
 
-    final DefaultDataAttributeContext dac = new DefaultDataAttributeContext
-      ( outputProcessorMetaData, resourceBundleFactory.getLocale() );
+    final DefaultDataAttributeContext dac =
+        new DefaultDataAttributeContext( outputProcessorMetaData, resourceBundleFactory.getLocale() );
     final GlobalMasterRow gmr = derive();
     gmr.schemaDefinition = dataSchemaDefinition;
-    gmr.schemaCompiler = new ProcessingDataSchemaCompiler
-      ( dataSchemaDefinition, dac, schemaCompiler.getResourceManager(), schemaCompiler.getGlobalDefaults() );
+    gmr.schemaCompiler =
+        new ProcessingDataSchemaCompiler( dataSchemaDefinition, dac, schemaCompiler.getResourceManager(),
+            schemaCompiler.getGlobalDefaults() );
     gmr.dataSchema = null;
     return gmr;
   }

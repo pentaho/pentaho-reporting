@@ -24,13 +24,12 @@ import java.util.List;
 public class SortingTableModel extends IndexedMetaTableModel {
   private int[] index;
 
-  public SortingTableModel( final MetaTableModel backend,
-                            final List<SortConstraint> sortConstraints ) {
+  public SortingTableModel( final MetaTableModel backend, final List<SortConstraint> sortConstraints ) {
     super( backend );
-    index = TableSorter.sort( backend, sortConstraints.toArray( new SortConstraint[ sortConstraints.size() ] ) );
+    index = TableSorter.sort( backend, sortConstraints.toArray( new SortConstraint[sortConstraints.size()] ) );
   }
 
   protected int mapRow( final int row ) {
-    return index[ row ];
+    return index[row];
   }
 }

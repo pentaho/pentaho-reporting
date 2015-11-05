@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -34,8 +34,7 @@ import java.net.URL;
 public class TotalGroupCountIT extends TestCase {
   private static final Log logger = LogFactory.getLog( TotalGroupCountIT.class );
 
-  private static class TotalGroupCountVerifyFunction
-    extends AbstractFunction {
+  private static class TotalGroupCountVerifyFunction extends AbstractFunction {
     /**
      * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
      * is added to the report's function collection.
@@ -47,7 +46,8 @@ public class TotalGroupCountIT extends TestCase {
     /**
      * Receives notification that a group has finished.
      *
-     * @param event the event.
+     * @param event
+     *          the event.
      */
     public void groupFinished( final ReportEvent event ) {
       if ( event.getLevel() >= 0 ) {
@@ -59,7 +59,8 @@ public class TotalGroupCountIT extends TestCase {
     /**
      * Receives notification that a group has started.
      *
-     * @param event the event.
+     * @param event
+     *          the event.
      */
     public void groupStarted( final ReportEvent event ) {
       if ( event.getLevel() >= 0 ) {
@@ -122,9 +123,7 @@ public class TotalGroupCountIT extends TestCase {
 
     DebugReportRunner.execGraphics2D( report );
 
-
   }
-
 
   public void testGroupCount2() throws Exception {
     final URL url = getClass().getResource( "aggregate-function-test.xml" );
@@ -155,7 +154,6 @@ public class TotalGroupCountIT extends TestCase {
     DebugReportRunner.execGraphics2D( report );
   }
 
-
   public void testGroupCount3() throws Exception {
     final URL url = getClass().getResource( "aggregate-function-test.xml" );
     assertNotNull( url );
@@ -181,7 +179,6 @@ public class TotalGroupCountIT extends TestCase {
     f2.setName( "total-gc" );
     f2.setDependencyLevel( 1 );
     report.addExpression( f2 );
-
 
     DebugReportRunner.execGraphics2D( report );
   }

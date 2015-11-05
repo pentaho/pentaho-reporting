@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
@@ -50,13 +50,15 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
   /**
    * Creates a new writer.
    *
-   * @param reportWriter      the report writer.
-   * @param elementStyleSheet the element style sheet (never null).
-   * @param writer            the current indention level.
+   * @param reportWriter
+   *          the report writer.
+   * @param elementStyleSheet
+   *          the element style sheet (never null).
+   * @param writer
+   *          the current indention level.
    */
-  public StyleWriter( final ReportWriterContext reportWriter,
-                      final ElementStyleSheet elementStyleSheet,
-                      final XmlWriter writer ) {
+  public StyleWriter( final ReportWriterContext reportWriter, final ElementStyleSheet elementStyleSheet,
+      final XmlWriter writer ) {
     super( reportWriter, writer );
     if ( elementStyleSheet == null ) {
       throw new NullPointerException();
@@ -67,11 +69,12 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
   /**
    * Writes the style sheet.
    *
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if there is a problem writing the report.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if there is a problem writing the report.
    */
-  public void write()
-    throws IOException, ReportWriterException {
+  public void write() throws IOException, ReportWriterException {
     // now write all defined properties of the stylesheet ...
     // this will not write ihnerited values, only the ones defined in this instance.
     final StyleKey[] namesArray = elementStyleSheet.getDefinedPropertyNamesArray();
@@ -94,12 +97,13 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
    * which matches the given object, if that fails, it tries to find a description for the key types. If this also
    * fails, the method starts to search for super class descriptions for the key and the object.
    *
-   * @param key the stylekey.
-   * @param o   the stylekey value.
+   * @param key
+   *          the stylekey.
+   * @param o
+   *          the stylekey value.
    * @return the found object description or null, if none was found.
    */
-  private ObjectDescription findObjectDescription( final StyleKey key,
-                                                   final Object o ) {
+  private ObjectDescription findObjectDescription( final StyleKey key, final Object o ) {
     final ClassFactoryCollector cc = getReportWriter().getClassFactoryCollector();
     // search an direct definition for the given object class ...
     ObjectDescription od = cc.getDescriptionForClass( o.getClass() );
@@ -130,12 +134,13 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
    * Checks whether this key object would use the default object description for this key type. If this method returns
    * true, the object class can be omitted in the xml definition.
    *
-   * @param key the style key that should be used as base
-   * @param o   the value object for this key type.
+   * @param key
+   *          the style key that should be used as base
+   * @param o
+   *          the value object for this key type.
    * @return true, of the object can be described using the default object description, false otherwise.
    */
-  private boolean isUseKeyObjectDescription
-  ( final StyleKey key, final Object o ) {
+  private boolean isUseKeyObjectDescription( final StyleKey key, final Object o ) {
     final ClassFactoryCollector cc = getReportWriter().getClassFactoryCollector();
     ObjectDescription odObject = cc.getDescriptionForClass( o.getClass() );
     ObjectDescription odKey = cc.getDescriptionForClass( key.getValueType() );
@@ -153,17 +158,19 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
   /**
    * Writes a stylekey.
    *
-   * @param key the style key that should be written.
-   * @param o   the object that was stored at that key.
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if there is a problem writing the report.
+   * @param key
+   *          the style key that should be written.
+   * @param o
+   *          the object that was stored at that key.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if there is a problem writing the report.
    */
-  private void writeKeyValue( final StyleKey key, final Object o )
-    throws IOException, ReportWriterException {
+  private void writeKeyValue( final StyleKey key, final Object o ) throws IOException, ReportWriterException {
     final ObjectDescription od = findObjectDescription( key, o );
     if ( od == null ) {
-      throw new ReportWriterException( "Unable to find object description for key: "
-        + key.getName() );
+      throw new ReportWriterException( "Unable to find object description for key: " + key.getName() );
     }
 
     try {
@@ -171,14 +178,10 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
     } catch ( ObjectFactoryException e ) {
       throw new ReportWriterException( "Unable to fill the parameters for key: " + key.getName(), e );
     }
-    final StyleKey keyFromFactory = getReportWriter().getStyleKeyFactoryCollector()
-      .getStyleKey( key.getName() );
+    final StyleKey keyFromFactory = getReportWriter().getStyleKeyFactoryCollector().getStyleKey( key.getName() );
     if ( keyFromFactory == null ) {
-      throw new ReportWriterException
-        ( "The stylekey " + key.getName() +
-          " has no corresponding key description." );
+      throw new ReportWriterException( "The stylekey " + key.getName() + " has no corresponding key description." );
     }
-
 
     final AttributeList p = new AttributeList();
     p.setAttribute( ExtParserModule.NAMESPACE, "name", key.getName() );
@@ -194,9 +197,8 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
       writer.writeCloseTag();
     } else {
       writer.writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.COMPOUND_KEY_TAG, p,
-        XmlWriterSupport.OPEN );
-      final ObjectWriter objWriter = new ObjectWriter
-        ( getReportWriter(), o, od, writer );
+          XmlWriterSupport.OPEN );
+      final ObjectWriter objWriter = new ObjectWriter( getReportWriter(), o, od, writer );
       objWriter.write();
       writer.writeCloseTag();
     }
@@ -205,8 +207,10 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
   /**
    * Returns <code>true</code> if this is a basic key, and <code>false</code> otherwise.
    *
-   * @param parameters the parameters.
-   * @param od         the object description.
+   * @param parameters
+   *          the parameters.
+   * @param od
+   *          the object description.
    * @return A boolean.
    */
   private boolean isBasicKey( final List parameters, final ObjectDescription od ) {
@@ -224,7 +228,8 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
   /**
    * Returns a list of parameter names.
    *
-   * @param d the object description.
+   * @param d
+   *          the object description.
    * @return The list.
    */
   private ArrayList getParameterNames( final ObjectDescription d ) {
@@ -240,7 +245,8 @@ public class StyleWriter extends AbstractXMLDefinitionWriter {
   /**
    * Returns <code>true</code> if the style sheet is the default, and <code>false</code> otherwise.
    *
-   * @param es the style sheet.
+   * @param es
+   *          the style sheet.
    * @return A boolean.
    */
   private boolean isDefaultStyleSheet( final ElementStyleSheet es ) {

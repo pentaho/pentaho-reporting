@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
@@ -36,7 +36,6 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory {
     scriptingSupport = new DataFactoryScriptingSupport();
   }
 
-
   public SQLReportDataFactory( final ConnectionProvider connectionProvider ) {
     super( connectionProvider );
     scriptingSupport = new DataFactoryScriptingSupport();
@@ -45,8 +44,10 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory {
   /**
    * Checks whether the query would be executable by this datafactory. This performs a rough check, not a full query.
    *
-   * @param query      the query.
-   * @param parameters the parameters.
+   * @param query
+   *          the query.
+   * @param parameters
+   *          the parameters.
    * @return true, if the query would be executable, false if the query is not recognized.
    */
   public boolean isQueryExecutable( final String query, final DataRow parameters ) {
@@ -56,8 +57,10 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory {
   /**
    * Sets a query that uses no scripting for customization.
    *
-   * @param name        the logical name
-   * @param queryString the SQL string that will be executed.
+   * @param name
+   *          the logical name
+   * @param queryString
+   *          the SQL string that will be executed.
    */
   public void setQuery( final String name, final String queryString ) {
     if ( queryString == null ) {
@@ -67,8 +70,8 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory {
     }
   }
 
-  public void setQuery( final String name, final String queryString,
-                        final String queryScriptLanguage, final String queryScript ) {
+  public void setQuery( final String name, final String queryString, final String queryScriptLanguage,
+      final String queryScript ) {
     if ( name == null ) {
       throw new NullPointerException();
     }
@@ -148,9 +151,9 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory {
     }
 
     final LinkedHashSet<String> fields =
-      new LinkedHashSet<String>( Arrays.asList( super.getReferencedFields( query, parameter ) ) );
+        new LinkedHashSet<String>( Arrays.asList( super.getReferencedFields( query, parameter ) ) );
     fields.addAll( Arrays.asList( additionalFields ) );
-    return fields.toArray( new String[ fields.size() ] );
+    return fields.toArray( new String[fields.size()] );
   }
 
   public ArrayList<Object> getQueryHash( final String queryName, final DataRow parameter ) {

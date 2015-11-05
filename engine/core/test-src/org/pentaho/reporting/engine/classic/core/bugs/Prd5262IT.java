@@ -44,7 +44,6 @@ import java.util.TimeZone;
 public class Prd5262IT {
   private ExpressionRuntime runtime;
 
-
   @Before
   public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
@@ -55,9 +54,7 @@ public class Prd5262IT {
   protected ExpressionRuntime createRuntime() throws ReportProcessingException {
     ResourceBundle b = new ListResourceBundle() {
       protected Object[][] getContents() {
-        return new Object[][] {
-          { "format", "$(date,date,yyyy-MM-dd'T'HH:mm:ss,SSSZZZ)" }
-        };
+        return new Object[][] { { "format", "$(date,date,yyyy-MM-dd'T'HH:mm:ss,SSSZZZ)" } };
       }
     };
 
@@ -76,12 +73,11 @@ public class Prd5262IT {
     return new DebugExpressionRuntime( r, new DefaultTableModel(), 0, pc );
   }
 
-
   @Test
   public void testMessageFieldsAcceptLocaleAndTimeZone() throws Exception {
     Element element = new Element();
     element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-      "$(date,date,yyyy-MM-dd'T'HH:mm:ss,SSSZZZ)" );
+        "$(date,date,yyyy-MM-dd'T'HH:mm:ss,SSSZZZ)" );
 
     MessageType t = new MessageType();
     Assert.assertEquals( "2009-02-13T15:31:30,123-0800", t.getValue( runtime, element ) );
@@ -91,13 +87,12 @@ public class Prd5262IT {
   public void testDateFieldsAcceptLocaleAndTimeZone() throws Exception {
     Element element = new Element();
     element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, "date" );
-    element
-      .setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, "yyyy-MM-dd'T'HH:mm:ss,SSSZZZ" );
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING,
+        "yyyy-MM-dd'T'HH:mm:ss,SSSZZZ" );
 
     DateFieldType t = new DateFieldType();
     Assert.assertEquals( "2009-02-13T15:31:30,123-0800", t.getValue( runtime, element ) );
   }
-
 
   @Test
   public void testResourceMessageFormatFilterAcceptLocaleAndTimeZone() throws Exception {
@@ -107,6 +102,5 @@ public class Prd5262IT {
 
     Assert.assertEquals( "2009-02-13T15:31:30,123-0800", t.getValue( runtime, new Element() ) );
   }
-
 
 }

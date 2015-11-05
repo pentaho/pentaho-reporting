@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
@@ -44,7 +44,8 @@ public class ClassFactoryCollector extends ClassFactoryImpl {
   /**
    * Adds a class factory to the collection.
    *
-   * @param factory the factory.
+   * @param factory
+   *          the factory.
    */
   public void addFactory( final ClassFactory factory ) {
     if ( factory == null ) {
@@ -68,7 +69,8 @@ public class ClassFactoryCollector extends ClassFactoryImpl {
   /**
    * Returns an object description for a class.
    *
-   * @param c the class.
+   * @param c
+   *          the class.
    * @return The object description.
    */
   public ObjectDescription getDescriptionForClass( final Class c ) {
@@ -85,12 +87,13 @@ public class ClassFactoryCollector extends ClassFactoryImpl {
   /**
    * Returns an object-description for the super class of a class.
    *
-   * @param d               the class.
-   * @param knownSuperClass the last known super class or null.
+   * @param d
+   *          the class.
+   * @param knownSuperClass
+   *          the last known super class or null.
    * @return The object description.
    */
-  public ObjectDescription getSuperClassObjectDescription
-  ( final Class d, ObjectDescription knownSuperClass ) {
+  public ObjectDescription getSuperClassObjectDescription( final Class d, ObjectDescription knownSuperClass ) {
     for ( int i = 0; i < this.factories.size(); i++ ) {
       final ClassFactory f = this.factories.get( i );
       final ObjectDescription od = f.getSuperClassObjectDescription( d, knownSuperClass );
@@ -130,7 +133,8 @@ public class ClassFactoryCollector extends ClassFactoryImpl {
    * <p/>
    * The configuration contents may change during the reporting.
    *
-   * @param config the configuration, never null
+   * @param config
+   *          the configuration, never null
    */
   public void configure( final Configuration config ) {
     if ( getConfig() != null ) {
@@ -149,7 +153,8 @@ public class ClassFactoryCollector extends ClassFactoryImpl {
   /**
    * Tests for equality.
    *
-   * @param o the object to test.
+   * @param o
+   *          the object to test.
    * @return A boolean.
    */
   public boolean equals( final Object o ) {

@@ -47,17 +47,17 @@ public class FastExcelTemplateProducer implements FastExportTemplateProducer {
   private final ArrayList<CellLayoutInfo> backgroundCells;
   private long[] cellHeights;
 
-  public FastExcelTemplateProducer( final OutputProcessorMetaData metaData,
-                                    final SheetLayout sheetLayout,
-                                    final FastExcelPrinter excelPrinter ) {
+  public FastExcelTemplateProducer( final OutputProcessorMetaData metaData, final SheetLayout sheetLayout,
+      final FastExcelPrinter excelPrinter ) {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
     this.excelPrinter = excelPrinter;
     this.layout = new HashMap<InstanceID, CellLayoutInfo>();
     this.backgroundCells = new ArrayList<CellLayoutInfo>();
-    this.cellBackgroundProducer = new CellBackgroundProducer
-      ( metaData.isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ),
-        metaData.isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
+    this.cellBackgroundProducer =
+        new CellBackgroundProducer( metaData
+            .isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ), metaData
+            .isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
   }
 
   public FormattedDataBuilder createDataBuilder() {
@@ -66,17 +66,17 @@ public class FastExcelTemplateProducer implements FastExportTemplateProducer {
 
   public void produceTemplate( final LogicalPageBox pageBox ) {
     TableContentProducer contentProducer =
-      TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData );
+        TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData );
     final SheetLayout sheetLayout = contentProducer.getSheetLayout();
     final int columnCount = contentProducer.getColumnCount();
     final int startRow = contentProducer.getFinishedRows();
 
     final int finishRow = contentProducer.getFilledRows();
 
-    cellHeights = new long[ finishRow - startRow ];
+    cellHeights = new long[finishRow - startRow];
 
     for ( int row = startRow; row < finishRow; row++ ) {
-      cellHeights[ row - startRow ] = sheetLayout.getRowHeight( row );
+      cellHeights[row - startRow] = sheetLayout.getRowHeight( row );
 
       for ( short col = 0; col < columnCount; col++ ) {
         final CellMarker.SectionType sectionType = contentProducer.getSectionType( row, col );
@@ -85,8 +85,9 @@ public class FastExcelTemplateProducer implements FastExportTemplateProducer {
           final RenderBox backgroundBox = contentProducer.getBackground( row, col );
           final CellBackground background;
           if ( backgroundBox != null ) {
-            background = cellBackgroundProducer.getBackgroundForBox
-              ( pageBox, sheetLayout, col, row, 1, 1, true, sectionType, backgroundBox );
+            background =
+                cellBackgroundProducer.getBackgroundForBox( pageBox, sheetLayout, col, row, 1, 1, true, sectionType,
+                    backgroundBox );
           } else {
             background = cellBackgroundProducer.getBackgroundAt( pageBox, sheetLayout, col, row, true, sectionType );
           }
@@ -101,16 +102,17 @@ public class FastExcelTemplateProducer implements FastExportTemplateProducer {
         }
 
         final long contentOffset = contentProducer.getContentOffset( row, col );
-        final TableRectangle rect = sheetLayout.getTableBounds
-          ( content.getX(), content.getY() + contentOffset,
-            content.getWidth(), content.getHeight(), null );
+        final TableRectangle rect =
+            sheetLayout.getTableBounds( content.getX(), content.getY() + contentOffset, content.getWidth(), content
+                .getHeight(), null );
         if ( rect.isOrigin( col, row ) == false ) {
           // A spanned cell ..
           continue;
         }
 
-        final CellBackground bg = cellBackgroundProducer.getBackgroundForBox( pageBox, sheetLayout,
-          rect.getX1(), rect.getY1(), rect.getColumnSpan(), rect.getRowSpan(), false, sectionType, content );
+        final CellBackground bg =
+            cellBackgroundProducer.getBackgroundForBox( pageBox, sheetLayout, rect.getX1(), rect.getY1(), rect
+                .getColumnSpan(), rect.getRowSpan(), false, sectionType, content );
         layout.put( content.getInstanceId(), new CellLayoutInfo( rect, bg ) );
         content.setFinishedTable( true );
       }

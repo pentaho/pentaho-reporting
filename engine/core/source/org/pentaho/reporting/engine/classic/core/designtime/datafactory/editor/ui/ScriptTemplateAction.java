@@ -17,26 +17,29 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DataFactoryEditorSupport;
-import org.pentaho.reporting.libraries.base.util.IOUtils;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
-
-import javax.script.ScriptEngineFactory;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
 
+import javax.script.ScriptEngineFactory;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JOptionPane;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DataFactoryEditorSupport;
+import org.pentaho.reporting.libraries.base.util.IOUtils;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
+
 public abstract class ScriptTemplateAction extends AbstractAction {
   private static final Log logger = LogFactory.getLog( ScriptTemplateAction.class );
 
   private static final String TEMPLATE_LOCATION_PATTERN =
-    "/org/pentaho/reporting/engine/classic/core/designtime/datafactory/scripts/%s-template-%s.txt";
+      "/org/pentaho/reporting/engine/classic/core/designtime/datafactory/scripts/%s-template-%s.txt";
   private URL resource;
   private boolean global;
 
@@ -77,9 +80,8 @@ public abstract class ScriptTemplateAction extends AbstractAction {
   private boolean checkOverwriteText() {
     if ( StringUtils.isEmpty( getText(), true ) == false ) {
       if ( JOptionPane.showConfirmDialog( getParentComponent(),
-        Messages.getString( "QueryEditorPanel.OverwriteScript" ),
-        Messages.getString( "QueryEditorPanel.OverwriteScriptTitle" ),
-        JOptionPane.YES_NO_OPTION ) != JOptionPane.YES_OPTION ) {
+          Messages.getString( "QueryEditorPanel.OverwriteScript" ), Messages
+              .getString( "QueryEditorPanel.OverwriteScriptTitle" ), JOptionPane.YES_NO_OPTION ) != JOptionPane.YES_OPTION ) {
         return true;
       }
     }
@@ -100,8 +102,7 @@ public abstract class ScriptTemplateAction extends AbstractAction {
     }
 
     String key = DataFactoryEditorSupport.mapLanguageToSyntaxHighlighting( engine );
-    if ( key.startsWith( "text/" ) ) // NON-NLS
-    {
+    if ( key.startsWith( "text/" ) ) { // NON-NLS
       key = key.substring( 5 );
     }
 

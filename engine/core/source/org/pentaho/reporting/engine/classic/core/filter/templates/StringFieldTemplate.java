@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
@@ -29,8 +29,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class StringFieldTemplate extends AbstractTemplate
-  implements RawDataSource {
+public class StringFieldTemplate extends AbstractTemplate implements RawDataSource {
   /**
    * The data-row data source.
    */
@@ -62,7 +61,8 @@ public class StringFieldTemplate extends AbstractTemplate
   /**
    * Sets the field name.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     dataRowDataSource.setDataSourceColumnName( field );
@@ -80,7 +80,8 @@ public class StringFieldTemplate extends AbstractTemplate
   /**
    * Defines the formula used to compute the value of this data source.
    *
-   * @param formula the formula for the data source.
+   * @param formula
+   *          the formula for the data source.
    */
   public void setFormula( final String formula ) {
     dataRowDataSource.setFormula( formula );
@@ -98,7 +99,8 @@ public class StringFieldTemplate extends AbstractTemplate
   /**
    * Sets the value displayed by the field when the data source value is <code>null</code>.
    *
-   * @param nullValue the value that represents <code>null</code>.
+   * @param nullValue
+   *          the value that represents <code>null</code>.
    */
   public void setNullValue( final String nullValue ) {
     stringFilter.setNullValue( nullValue );
@@ -107,8 +109,9 @@ public class StringFieldTemplate extends AbstractTemplate
   /**
    * Returns the current value for the data source.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return the value.
    */
@@ -120,10 +123,10 @@ public class StringFieldTemplate extends AbstractTemplate
    * Clones the template.
    *
    * @return the clone.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public StringFieldTemplate clone()
-    throws CloneNotSupportedException {
+  public StringFieldTemplate clone() throws CloneNotSupportedException {
     final StringFieldTemplate template = (StringFieldTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.dataRowDataSource = (DataRowDataSource) template.stringFilter.getDataSource();
@@ -143,9 +146,8 @@ public class StringFieldTemplate extends AbstractTemplate
     return stringFilter.getRawValue( runtime, element );
   }
 
-  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
-                                              final ReportElement element,
-                                              FormatSpecification formatSpecification ) {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime, final ReportElement element,
+      FormatSpecification formatSpecification ) {
     if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }

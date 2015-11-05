@@ -1,21 +1,28 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
+
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
@@ -45,12 +52,6 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-
 public class CellBackgroundProducer extends IterateStructuralProcessStep {
   private static final int BACKGROUND_NONE = 0;
   private static final int BACKGROUND_AREA = 1;
@@ -75,34 +76,23 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
   private FastStack<RenderBox> parents;
   private boolean fastCellBackgroundProducerMode;
 
-  public CellBackgroundProducer( final boolean ellipseAsRectangle,
-                                 final boolean unalignedPagebands ) {
+  public CellBackgroundProducer( final boolean ellipseAsRectangle, final boolean unalignedPagebands ) {
     this.ellipseAsRectangle = ellipseAsRectangle;
     this.unalignedPagebands = unalignedPagebands;
     this.lookupRectangle = new TableRectangle();
     this.fastCellBackgroundProducerMode =
-      "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.FastCellBackgroundProducer" ) );
+        "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.base.FastCellBackgroundProducer" ) );
   }
 
-  public CellBackground getBackgroundAt( final LogicalPageBox pageBox,
-                                         final SheetLayout sheetLayout,
-                                         final int gridX,
-                                         final int gridY,
-                                         final boolean computeAttributes,
-                                         final CellMarker.SectionType sectionType ) {
+  public CellBackground getBackgroundAt( final LogicalPageBox pageBox, final SheetLayout sheetLayout, final int gridX,
+      final int gridY, final boolean computeAttributes, final CellMarker.SectionType sectionType ) {
     return computeBackground( pageBox, sheetLayout, gridX, gridY, 1, 1, computeAttributes, sectionType );
   }
 
-
-  private CellBackground computeBackground( final LogicalPageBox logicalPageBox,
-                                            final SheetLayout sheetLayout,
-                                            final int gridX,
-                                            final int gridY,
-                                            final int gridWidth,
-                                            final int gridHeight,
-                                            final boolean collectAttributes,
-                                            final CellMarker.SectionType sectionType ) {
+  private CellBackground computeBackground( final LogicalPageBox logicalPageBox, final SheetLayout sheetLayout,
+      final int gridX, final int gridY, final int gridWidth, final int gridHeight, final boolean collectAttributes,
+      final CellMarker.SectionType sectionType ) {
     if ( logicalPageBox == null ) {
       throw new NullPointerException();
     }
@@ -113,7 +103,6 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
     this.sheetLayout = sheetLayout;
     this.collectAttributes = collectAttributes;
     this.retval = null;
-
 
     initFromPosition( gridX, gridY, gridWidth, gridHeight );
     final BlockRenderBox headerArea = logicalPageBox.getHeaderArea();
@@ -126,7 +115,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
       return retval;
     }
 
-    switch( sectionType ) {
+    switch ( sectionType ) {
       case TYPE_HEADER: {
         contentShift = 0;
         startProcessing( headerArea );
@@ -164,18 +153,12 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
     }
   }
 
-  public CellBackground getBackgroundForBox( final LogicalPageBox logicalPageBox,
-                                             final SheetLayout sheetLayout,
-                                             final int gridX,
-                                             final int gridY,
-                                             final int gridWidth,
-                                             final int gridHeight,
-                                             final boolean collectAttributes,
-                                             final CellMarker.SectionType sectionType,
-                                             final RenderBox contentBox ) {
+  public CellBackground getBackgroundForBox( final LogicalPageBox logicalPageBox, final SheetLayout sheetLayout,
+      final int gridX, final int gridY, final int gridWidth, final int gridHeight, final boolean collectAttributes,
+      final CellMarker.SectionType sectionType, final RenderBox contentBox ) {
     if ( fastCellBackgroundProducerMode == false ) {
-      return computeBackground
-        ( logicalPageBox, sheetLayout, gridX, gridY, gridWidth, gridHeight, collectAttributes, sectionType );
+      return computeBackground( logicalPageBox, sheetLayout, gridX, gridY, gridWidth, gridHeight, collectAttributes,
+          sectionType );
     }
     if ( logicalPageBox == null ) {
       throw new NullPointerException();
@@ -188,13 +171,12 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
     this.collectAttributes = collectAttributes;
     this.retval = null;
 
-
     initFromPosition( gridX, gridY, gridWidth, gridHeight );
     final BlockRenderBox headerArea = logicalPageBox.getHeaderArea();
     if ( unalignedPagebands == false ) {
       contentShift = 0;
     } else {
-      switch( sectionType ) {
+      switch ( sectionType ) {
         case TYPE_HEADER: {
           contentShift = 0;
           break;
@@ -283,13 +265,14 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
     }
     TableRectangle hint = renderBoxState.getCellBackgroundHint();
     if ( hint == null ) {
-      hint = sheetLayout.getTableBoundsWithCache
-        ( node.getX(), node.getY() + contentShift, node.getWidth(), node.getHeight(),
-          new TableRectangle( -1, -1, -1, -1 ) );
+      hint =
+          sheetLayout.getTableBoundsWithCache( node.getX(), node.getY() + contentShift, node.getWidth(), node
+              .getHeight(), new TableRectangle( -1, -1, -1, -1 ) );
     } else {
       if ( renderBoxState.getBackgroundDefinitionAge() != node.getCachedAge() ) {
-        hint = sheetLayout.getTableBoundsWithCache
-          ( node.getX(), node.getY() + contentShift, node.getWidth(), node.getHeight(), hint );
+        hint =
+            sheetLayout.getTableBoundsWithCache( node.getX(), node.getY() + contentShift, node.getWidth(), node
+                .getHeight(), hint );
       }
     }
 
@@ -443,14 +426,12 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
       return;
     }
 
-
     final boolean fill = styleSheet.getBooleanStyleProperty( ElementStyleKeys.FILL_SHAPE );
     if ( draw == false && fill == false ) {
       return;
     }
 
-    if ( shape instanceof Rectangle2D ||
-      ( ellipseAsRectangle && shape instanceof Ellipse2D ) ) {
+    if ( shape instanceof Rectangle2D || ( ellipseAsRectangle && shape instanceof Ellipse2D ) ) {
       if ( retval == null ) {
         retval = new CellBackground();
       }
@@ -609,12 +590,8 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
     // no need for that. Paragraph contents cannot form a cell-background.
   }
 
-
-  private static CellBackground applyAnchor( final RenderBox content,
-                                             final long contentShift,
-                                             final long x,
-                                             final long y,
-                                             CellBackground retval ) {
+  private static CellBackground applyAnchor( final RenderBox content, final long contentShift, final long x,
+      final long y, CellBackground retval ) {
     if ( content.getY() + contentShift != y || content.getX() != x ) {
       return retval;
     }
@@ -629,11 +606,8 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
     return retval;
   }
 
-  private static CellBackground applyElementType( final RenderBox content,
-                                                  final long contentShift,
-                                                  final long x,
-                                                  final long y,
-                                                  CellBackground retval ) {
+  private static CellBackground applyElementType( final RenderBox content, final long contentShift, final long x,
+      final long y, CellBackground retval ) {
     if ( content.getY() + contentShift != y || content.getX() != x ) {
       return retval;
     }
@@ -648,11 +622,8 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
     return retval;
   }
 
-  private static CellBackground applyAttributes( final RenderBox content,
-                                                 final long contentShift,
-                                                 final long x,
-                                                 final long y,
-                                                 CellBackground retval ) {
+  private static CellBackground applyAttributes( final RenderBox content, final long contentShift, final long x,
+      final long y, CellBackground retval ) {
     if ( content.getY() + contentShift != y || content.getX() != x ) {
       return retval;
     }
@@ -664,9 +635,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep {
     return retval;
   }
 
-  private static CellBackground applyBorder( final RenderBox content,
-                                             CellBackground retval,
-                                             final int backgroundHint ) {
+  private static CellBackground applyBorder( final RenderBox content, CellBackground retval, final int backgroundHint ) {
     final Border border = content.getBoxDefinition().getBorder();
     if ( border.isEmpty() ) {
       return retval;

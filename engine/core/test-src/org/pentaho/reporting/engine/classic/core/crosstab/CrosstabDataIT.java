@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.crosstab;
 
@@ -67,26 +67,10 @@ public class CrosstabDataIT extends TestCase {
     model.addRow( "R2", "C2", 3 );
     model.addRow( "R3", "C3", 4 );
 
-
-    final String[][] validateData = new String[][]
-      {
-        { "R0", "C0" },
-        { "R0", "C1" },
-        { "R0", "C2" },
-        { "R0", "C3" },
-        { "R1", "C0" },
-        { "R1", "C1" },
-        { "R1", "C2" },
-        { "R1", "C3" },
-        { "R2", "C0" },
-        { "R2", "C1" },
-        { "R2", "C2" },
-        { "R2", "C3" },
-        { "R3", "C0" },
-        { "R3", "C1" },
-        { "R3", "C2" },
-        { "R3", "C3" },
-      };
+    final String[][] validateData =
+        new String[][] { { "R0", "C0" }, { "R0", "C1" }, { "R0", "C2" }, { "R0", "C3" }, { "R1", "C0" },
+          { "R1", "C1" }, { "R1", "C2" }, { "R1", "C3" }, { "R2", "C0" }, { "R2", "C1" }, { "R2", "C2" },
+          { "R2", "C3" }, { "R3", "C0" }, { "R3", "C1" }, { "R3", "C2" }, { "R3", "C3" }, };
 
     final CrosstabSpecification crosstabSpecification = CrosstabTestUtil.fillSortedCrosstabSpec( model );
     final int itCount = CrosstabTestUtil.advanceCrosstab( crosstabSpecification, model, validateData );
@@ -140,25 +124,10 @@ public class CrosstabDataIT extends TestCase {
     model.addRow( "R2", "C1", 3 );
     model.addRow( "R3", "C0", 4 );
 
-    final String[][] validateData = new String[][]
-      {
-        { "R0", "C3" },
-        { "R0", "C2" },
-        { "R0", "C1" },
-        { "R0", "C0" },
-        { "R1", "C3" },
-        { "R1", "C2" },
-        { "R1", "C1" },
-        { "R1", "C0" },
-        { "R2", "C3" },
-        { "R2", "C2" },
-        { "R2", "C1" },
-        { "R2", "C0" },
-        { "R3", "C3" },
-        { "R3", "C2" },
-        { "R3", "C1" },
-        { "R3", "C0" },
-      };
+    final String[][] validateData =
+        new String[][] { { "R0", "C3" }, { "R0", "C2" }, { "R0", "C1" }, { "R0", "C0" }, { "R1", "C3" },
+          { "R1", "C2" }, { "R1", "C1" }, { "R1", "C0" }, { "R2", "C3" }, { "R2", "C2" }, { "R2", "C1" },
+          { "R2", "C0" }, { "R3", "C3" }, { "R3", "C2" }, { "R3", "C1" }, { "R3", "C0" }, };
 
     final CrosstabSpecification crosstabSpecification = CrosstabTestUtil.fillOrderedCrosstabSpec( model );
     final int itCount = CrosstabTestUtil.advanceCrosstab( crosstabSpecification, model, validateData );
@@ -205,45 +174,19 @@ public class CrosstabDataIT extends TestCase {
     private ValidateExpression( final boolean reverse ) {
       setName( "Validate" );
       if ( reverse ) {
-        validateData = new Object[][]
-          {
-            { "R0", "C0", null },
-            { "R0", "C1", null },
-            { "R0", "C2", null },
-            { "R0", "C3", Integer.valueOf( 4 ) },
-            { "R1", "C0", null },
-            { "R1", "C1", null },
-            { "R1", "C2", Integer.valueOf( 3 ) },
-            { "R1", "C3", null },
-            { "R2", "C0", null },
-            { "R2", "C1", Integer.valueOf( 2 ) },
-            { "R2", "C2", null },
-            { "R2", "C3", null },
-            { "R3", "C0", Integer.valueOf( 1 ) },
-            { "R3", "C1", null },
-            { "R3", "C2", null },
-            { "R3", "C3", null },
-          };
+        validateData =
+            new Object[][] { { "R0", "C0", null }, { "R0", "C1", null }, { "R0", "C2", null },
+              { "R0", "C3", Integer.valueOf( 4 ) }, { "R1", "C0", null }, { "R1", "C1", null },
+              { "R1", "C2", Integer.valueOf( 3 ) }, { "R1", "C3", null }, { "R2", "C0", null },
+              { "R2", "C1", Integer.valueOf( 2 ) }, { "R2", "C2", null }, { "R2", "C3", null },
+              { "R3", "C0", Integer.valueOf( 1 ) }, { "R3", "C1", null }, { "R3", "C2", null }, { "R3", "C3", null }, };
       } else {
-        validateData = new Object[][]
-          {
-            { "R0", "C0", Integer.valueOf( 1 ) },
-            { "R0", "C1", null },
-            { "R0", "C2", null },
-            { "R0", "C3", null },
-            { "R1", "C0", null },
-            { "R1", "C1", Integer.valueOf( 2 ) },
-            { "R1", "C2", null },
-            { "R1", "C3", null },
-            { "R2", "C0", null },
-            { "R2", "C1", null },
-            { "R2", "C2", Integer.valueOf( 3 ) },
-            { "R2", "C3", null },
-            { "R3", "C0", null },
-            { "R3", "C1", null },
-            { "R3", "C2", null },
-            { "R3", "C3", Integer.valueOf( 4 ) },
-          };
+        validateData =
+            new Object[][] { { "R0", "C0", Integer.valueOf( 1 ) }, { "R0", "C1", null }, { "R0", "C2", null },
+              { "R0", "C3", null }, { "R1", "C0", null }, { "R1", "C1", Integer.valueOf( 2 ) }, { "R1", "C2", null },
+              { "R1", "C3", null }, { "R2", "C0", null }, { "R2", "C1", null }, { "R2", "C2", Integer.valueOf( 3 ) },
+              { "R2", "C3", null }, { "R3", "C0", null }, { "R3", "C1", null }, { "R3", "C2", null },
+              { "R3", "C3", Integer.valueOf( 4 ) }, };
       }
     }
 
@@ -260,17 +203,16 @@ public class CrosstabDataIT extends TestCase {
       final Object col = getDataRow().get( "Cols" );
       final Object data = getDataRow().get( "Data" );
       try {
-        assertEquals( validateData[ currentRow ][ 0 ], row );
-        assertEquals( validateData[ currentRow ][ 1 ], col );
-        assertEquals( validateData[ currentRow ][ 2 ], data );
+        assertEquals( validateData[currentRow][0], row );
+        assertEquals( validateData[currentRow][1], col );
+        assertEquals( validateData[currentRow][2], data );
         return currentRow;
       } catch ( AssertionFailedError afe ) {
-        //throw afe;
+        // throw afe;
         return afe;
       }
     }
   }
-
 
   public void testInvalidReportProcessing() throws Exception {
     final TypedTableModel model = new TypedTableModel();
@@ -288,4 +230,3 @@ public class CrosstabDataIT extends TestCase {
   }
 
 }
-

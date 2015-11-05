@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle;
 
@@ -49,30 +49,27 @@ public class BundleStyleRegistry {
         // ignore
       }
     }
-    return retval.toArray( new BundleStyleSetWriteHandler[ retval.size() ] );
+    return retval.toArray( new BundleStyleSetWriteHandler[retval.size()] );
   }
 
-  public StyleReadHandler getReadHandler( final String namespace,
-                                          final String tagName,
-                                          final Locator locator ) throws ParseException {
+  public StyleReadHandler getReadHandler( final String namespace, final String tagName, final Locator locator )
+    throws ParseException {
     try {
       final Class<? extends StyleReadHandler> attribute = styleReadHandlers.getAttribute( namespace, tagName );
       if ( attribute != null ) {
         return attribute.newInstance();
       }
-      throw new ParseException( "Failed to locate style-read-handler for [" + namespace + "|" + tagName + "]",
-        locator );
+      throw new ParseException( "Failed to locate style-read-handler for [" + namespace + "|" + tagName + "]", locator );
     } catch ( ParseException e ) {
       throw e;
     } catch ( Exception e ) {
       throw new ParseException( "Failed to instantiate style-read-handler for [" + namespace + "|" + tagName + "]",
-        locator );
+          locator );
     }
   }
 
-  public void register( final String namespace,
-                        final String tagName,
-                        final Class<? extends StyleReadHandler> readHandler ) {
+  public void register( final String namespace, final String tagName,
+      final Class<? extends StyleReadHandler> readHandler ) {
     if ( readHandler == null ) {
       throw new IllegalStateException();
     }

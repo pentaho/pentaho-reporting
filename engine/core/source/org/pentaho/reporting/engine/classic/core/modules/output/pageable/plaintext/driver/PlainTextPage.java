@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver;
 
@@ -57,11 +57,10 @@ public class PlainTextPage {
   /**
    * Creates a new PlainTextPage with the given dimensions and the specified PrinterCommandSet.
    *
-   * @param driver the command-set for printing and formatting the text.
+   * @param driver
+   *          the command-set for printing and formatting the text.
    */
-  public PlainTextPage( final Paper pageFormat,
-                        final PrinterDriver driver,
-                        final String defaultEncoding ) {
+  public PlainTextPage( final Paper pageFormat, final PrinterDriver driver, final String defaultEncoding ) {
     if ( driver == null ) {
       throw new NullPointerException( "PrinterCommandSet must be defined." );
     }
@@ -75,13 +74,13 @@ public class PlainTextPage {
     final float characterWidthInPoint = ( 72.0f / driver.getCharactersPerInch() );
     final float characterHeightInPoint = ( 72.0f / driver.getLinesPerInch() );
 
-    final int currentPageHeight = PlainTextPage.correctedDivisionFloor( pageFormat.getImageableHeight(),
-      characterHeightInPoint );
-    final int currentPageWidth = PlainTextPage.correctedDivisionFloor( pageFormat.getImageableWidth(),
-      characterWidthInPoint );
+    final int currentPageHeight =
+        PlainTextPage.correctedDivisionFloor( pageFormat.getImageableHeight(), characterHeightInPoint );
+    final int currentPageWidth =
+        PlainTextPage.correctedDivisionFloor( pageFormat.getImageableWidth(), characterWidthInPoint );
 
     // Log.debug("Created page with " + currentPageWidth + ", " + currentPageHeight);
-    pageBuffer = new PlaintextDataChunk[ currentPageWidth ][ currentPageHeight ];
+    pageBuffer = new PlaintextDataChunk[currentPageWidth][currentPageHeight];
     width = currentPageWidth;
     height = currentPageHeight;
     paper = pageFormat;
@@ -92,8 +91,10 @@ public class PlainTextPage {
   /**
    * Fixes some floating point errors when calculating positions.
    *
-   * @param c the divisor
-   * @param d the dividend
+   * @param c
+   *          the divisor
+   * @param d
+   *          the dividend
    * @return the corrected division result.
    */
   public static int correctedDivisionFloor( double c, double d ) {
@@ -123,15 +124,18 @@ public class PlainTextPage {
   /**
    * Adds a new text chunk to this PlainTextPage. A chunk consists of a single line of text.
    *
-   * @param x      the column of the first character of the text
-   * @param y      the row where to print the text
-   * @param w      the number of characters to print.
-   * @param text   the text that should be printed.
-   * @param format the font definition used to format the text.
+   * @param x
+   *          the column of the first character of the text
+   * @param y
+   *          the row where to print the text
+   * @param w
+   *          the number of characters to print.
+   * @param text
+   *          the text that should be printed.
+   * @param format
+   *          the font definition used to format the text.
    */
-  public void addTextChunk( final int x, final int y,
-                            final int w, final String text,
-                            final StyleSheet format ) {
+  public void addTextChunk( final int x, final int y, final int w, final String text, final StyleSheet format ) {
     if ( text.length() == 0 ) {
       return;
     }
@@ -157,12 +161,12 @@ public class PlainTextPage {
     final boolean strikethrough = format.getBooleanStyleProperty( TextStyleKeys.STRIKETHROUGH );
 
     final PlaintextDataChunk chunk =
-      new PlaintextDataChunk( text, font, bold, italic, underline, strikethrough, x, y, w );
+        new PlaintextDataChunk( text, font, bold, italic, underline, strikethrough, x, y, w );
 
     // TODO: Why are we storing a chunk 'x' number of times where 'x' the width of the chunk
     for ( int i = 0; i < w; i++ ) {
-      if ( pageBuffer[ x + i ][ y ] == null ) {
-        pageBuffer[ x + i ][ y ] = chunk;
+      if ( pageBuffer[x + i][y] == null ) {
+        pageBuffer[x + i][y] = chunk;
       }
     }
   }
@@ -170,21 +174,23 @@ public class PlainTextPage {
   /**
    * returns the chunk stored at the given position or null, if no chunk was stored there.
    *
-   * @param x the column
-   * @param y the line
+   * @param x
+   *          the column
+   * @param y
+   *          the line
    * @return the text chunk or null.
    */
   private PlaintextDataChunk getChunk( final int x, final int y ) {
-    return pageBuffer[ x ][ y ];
+    return pageBuffer[x][y];
   }
 
   /**
    * Writes the contents of the page using the printer command set.
    *
-   * @throws java.io.IOException if an I/O error occured while writing the page.
+   * @throws java.io.IOException
+   *           if an I/O error occured while writing the page.
    */
-  public void writePage()
-    throws IOException {
+  public void writePage() throws IOException {
     driver.startPage( paper, defaultEncoding );
     for ( int y = 0; y < height; y++ ) {
       driver.startLine();
@@ -201,7 +207,7 @@ public class PlainTextPage {
             emptyChunkCount = 0;
           }
 
-          //Log.debug ("Print Chunk At " + x);
+          // Log.debug ("Print Chunk At " + x);
           driver.printChunk( chunk );
           x += ( chunk.getWidth() - 1 );
           // we reached the end of the line ...
@@ -211,7 +217,7 @@ public class PlainTextPage {
         }
       }
 
-      // end the page on the last line.  Note: overflow is ignored when ending page or line.
+      // end the page on the last line. Note: overflow is ignored when ending page or line.
       if ( y == ( height - 1 ) ) {
         driver.endPage( overflow );
       } else {

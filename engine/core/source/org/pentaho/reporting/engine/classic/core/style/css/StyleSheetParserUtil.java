@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style.css;
 
@@ -55,26 +55,19 @@ public class StyleSheetParserUtil {
     namespaceCollection.setDefaultNamespaceURI( AttributeNames.Core.NAMESPACE );
   }
 
-  public void addNamespaceDefinition( final String uri,
-                                      final String preferredPrefix ) {
-    namespaceCollection.addDefinition
-      ( new DefaultNamespaceDefinition( uri, null, null, null, preferredPrefix ) );
+  public void addNamespaceDefinition( final String uri, final String preferredPrefix ) {
+    namespaceCollection.addDefinition( new DefaultNamespaceDefinition( uri, null, null, null, preferredPrefix ) );
   }
 
-  public void addNamespaceDefinition( final String uri,
-                                      final String classAttribute,
-                                      final String preferredPrefix ) {
-    namespaceCollection.addDefinition
-      ( new DefaultNamespaceDefinition( uri, null, classAttribute, null, preferredPrefix ) );
+  public void addNamespaceDefinition( final String uri, final String classAttribute, final String preferredPrefix ) {
+    namespaceCollection
+        .addDefinition( new DefaultNamespaceDefinition( uri, null, classAttribute, null, preferredPrefix ) );
   }
 
-  public void addNamespaceDefinition( final String uri,
-                                      final ResourceKey defaultStyleSheet,
-                                      final String classAttribute,
-                                      final String styleAttribute,
-                                      final String preferredPrefix ) {
-    namespaceCollection.addDefinition
-      ( new DefaultNamespaceDefinition( uri, defaultStyleSheet, classAttribute, styleAttribute, preferredPrefix ) );
+  public void addNamespaceDefinition( final String uri, final ResourceKey defaultStyleSheet,
+      final String classAttribute, final String styleAttribute, final String preferredPrefix ) {
+    namespaceCollection.addDefinition( new DefaultNamespaceDefinition( uri, defaultStyleSheet, classAttribute,
+        styleAttribute, preferredPrefix ) );
   }
 
   public NamespaceCollection getNamespaceCollection() {
@@ -85,11 +78,11 @@ public class StyleSheetParserUtil {
    * Parses a single namespace identifier. This simply splits the given attribute name when a namespace separator is
    * encountered ('|').
    *
-   * @param attrName the attribute name
+   * @param attrName
+   *          the attribute name
    * @return the parsed attribute.
    */
-  public String[] parseNamespaceIdent( final String attrName,
-                                       final NamespaceCollection namespaceCollection ) {
+  public String[] parseNamespaceIdent( final String attrName, final NamespaceCollection namespaceCollection ) {
     final String name;
     final String namespace;
     final StringTokenizer strtok = new StringTokenizer( attrName, "|" );
@@ -120,11 +113,10 @@ public class StyleSheetParserUtil {
     return new String[] { namespace, name };
   }
 
-  public SelectorList parseSelector( final NamespaceCollection nc,
-                                     final String selectorText ) throws CSSParseException {
+  public SelectorList parseSelector( final NamespaceCollection nc, final String selectorText ) throws CSSParseException {
     try {
-      return CSSParserFactory.getInstance().createCSSParser( nc )
-        .parseSelectors( new InputSource( new StringReader( selectorText ) ) );
+      return CSSParserFactory.getInstance().createCSSParser( nc ).parseSelectors(
+          new InputSource( new StringReader( selectorText ) ) );
     } catch ( CSSException e ) {
       throw new CSSParseException( "Failed to parse selector", e );
     } catch ( InstantiationException e ) {

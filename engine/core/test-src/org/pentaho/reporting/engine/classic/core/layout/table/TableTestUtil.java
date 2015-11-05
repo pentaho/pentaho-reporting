@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
@@ -43,8 +43,7 @@ public class TableTestUtil {
       this.height = 200;
     }
 
-    public DefaultElementProducer( final float width,
-                                   final float height ) {
+    public DefaultElementProducer( final float width, final float height ) {
       this.createText = true;
       this.width = width;
       this.height = height;
@@ -62,14 +61,13 @@ public class TableTestUtil {
     }
   }
 
-
   public static Band createRow( final Element... boxes ) {
     final Band tableRow = new Band();
     tableRow.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_ROW );
     tableRow.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, 100f );
     tableRow.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
     for ( int i = 0; i < boxes.length; i++ ) {
-      tableRow.addElement( boxes[ i ] );
+      tableRow.addElement( boxes[i] );
     }
     return tableRow;
   }
@@ -78,7 +76,7 @@ public class TableTestUtil {
     final Band tableRow = new Band();
     tableRow.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_AUTO );
     for ( int i = 0; i < boxes.length; i++ ) {
-      tableRow.addElement( boxes[ i ] );
+      tableRow.addElement( boxes[i] );
     }
     return tableRow;
   }
@@ -98,9 +96,8 @@ public class TableTestUtil {
     return tableCell;
   }
 
-  public static Band createCell( final int rowNumber, final int colNumber,
-                                 final float cellWidth, final float cellHeight,
-                                 final Element... elements ) {
+  public static Band createCell( final int rowNumber, final int colNumber, final float cellWidth,
+      final float cellHeight, final Element... elements ) {
     final Band cell = new Band();
     cell.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_CELL );
     cell.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, cellWidth );
@@ -108,7 +105,7 @@ public class TableTestUtil {
     cell.setName( "c-" + rowNumber + "-" + colNumber );
 
     for ( int i = 0; i < elements.length; i++ ) {
-      final Element element = elements[ i ];
+      final Element element = elements[i];
       cell.addElement( element );
     }
     return cell;
@@ -135,10 +132,8 @@ public class TableTestUtil {
     return createTable( columns, headerRows, dataRows, new DefaultElementProducer( addData ) );
   }
 
-  public static Band createTable( final int columns,
-                                  final int headerRows,
-                                  final int dataRows,
-                                  final ElementProducer producer ) {
+  public static Band createTable( final int columns, final int headerRows, final int dataRows,
+      final ElementProducer producer ) {
     final Band table = new Band();
     table.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE );
     table.getStyle().setStyleProperty( BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed );

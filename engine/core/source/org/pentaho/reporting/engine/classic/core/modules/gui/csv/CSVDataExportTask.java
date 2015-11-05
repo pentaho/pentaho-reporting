@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.csv;
 
@@ -65,23 +65,24 @@ public class CSVDataExportTask implements Runnable {
   /**
    * Creates a new CSV export task.
    *
-   * @param report          the report that should be exported.
-   * @param dialog          the progress dialog to inform the user about the report progress.
-   * @param swingGuiContext the context connecting the task to the outside UI.
+   * @param report
+   *          the report that should be exported.
+   * @param dialog
+   *          the progress dialog to inform the user about the report progress.
+   * @param swingGuiContext
+   *          the context connecting the task to the outside UI.
    */
-  public CSVDataExportTask
-  ( final MasterReport report,
-    final ReportProgressDialog dialog,
-    final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
+  public CSVDataExportTask( final MasterReport report, final ReportProgressDialog dialog,
+      final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException( "CSVDataExportTask(..): Report parameter cannot be null" ); //$NON-NLS-1$
     }
 
-    final String filename = report.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.csv.FileName" ); //$NON-NLS-1$
+    final String filename =
+        report.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.gui.csv.FileName" ); //$NON-NLS-1$
     if ( filename == null ) {
-      throw new ReportProcessingException(
-        "CSVDataExportTask(..): Configuration does not contain a valid filename" ); //$NON-NLS-1$
+      throw new ReportProcessingException( "CSVDataExportTask(..): Configuration does not contain a valid filename" ); //$NON-NLS-1$
     }
 
     this.fileName = filename;
@@ -89,8 +90,9 @@ public class CSVDataExportTask implements Runnable {
     this.progressDialog = dialog;
     if ( swingGuiContext != null ) {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages( swingGuiContext.getLocale(), CSVDataExportPlugin.BASE_RESOURCE_CLASS,
-        ObjectUtilities.getClassLoader( CSVDataExportPlugin.class ) );
+      this.messages =
+          new Messages( swingGuiContext.getLocale(), CSVDataExportPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
+              .getClassLoader( CSVDataExportPlugin.class ) );
     }
   }
 
@@ -110,8 +112,9 @@ public class CSVDataExportTask implements Runnable {
         }
       }
 
-      final String encoding = report.getConfiguration().getConfigProperty
-        ( CSVProcessor.CSV_ENCODING, EncodingRegistry.getPlatformDefaultEncoding() );
+      final String encoding =
+          report.getConfiguration().getConfigProperty( CSVProcessor.CSV_ENCODING,
+              EncodingRegistry.getPlatformDefaultEncoding() );
       out = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( file ), encoding ) );
 
       final CSVProcessor target = new CSVProcessor( report );
@@ -130,13 +133,13 @@ public class CSVDataExportTask implements Runnable {
       }
 
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "CSVRawExportTask.USER_TASK_COMPLETE" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "CSVRawExportTask.USER_TASK_COMPLETE" ), null ); //$NON-NLS-1$
       }
     } catch ( ReportInterruptedException re ) {
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "CSVRawExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "CSVRawExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
       }
       try {
         out.close();
@@ -152,8 +155,7 @@ public class CSVDataExportTask implements Runnable {
     } catch ( Exception re ) {
       CSVDataExportTask.logger.error( "Exporting failed .", re ); //$NON-NLS-1$
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.ERROR, messages.getString( "CSVRawExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.ERROR, messages.getString( "CSVRawExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
       }
     } finally {
       try {
@@ -162,8 +164,7 @@ public class CSVDataExportTask implements Runnable {
         }
       } catch ( Exception e ) {
         if ( statusListener != null ) {
-          statusListener.setStatus
-            ( StatusType.ERROR, messages.getString( "CSVRawExportTask.USER_TASK_FAILED" ), e ); //$NON-NLS-1$
+          statusListener.setStatus( StatusType.ERROR, messages.getString( "CSVRawExportTask.USER_TASK_FAILED" ), e ); //$NON-NLS-1$
         }
         CSVDataExportTask.logger.error( "Unable to close the output stream.", e ); //$NON-NLS-1$
       }

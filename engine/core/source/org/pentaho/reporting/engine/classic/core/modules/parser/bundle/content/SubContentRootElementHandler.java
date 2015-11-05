@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.content;
 
@@ -57,8 +57,10 @@ public class SubContentRootElementHandler extends AbstractXmlReadHandler {
   /**
    * Initialises the handler.
    *
-   * @param rootHandler the root handler.
-   * @param tagName     the tag name.
+   * @param rootHandler
+   *          the root handler.
+   * @param tagName
+   *          the tag name.
    */
   public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
     super.init( rootHandler, uri, tagName );
@@ -68,8 +70,10 @@ public class SubContentRootElementHandler extends AbstractXmlReadHandler {
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void startParsing( final Attributes attrs ) throws SAXException {
     final Object maybeReport = getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
@@ -85,15 +89,18 @@ public class SubContentRootElementHandler extends AbstractXmlReadHandler {
   /**
    * Returns the handler for a child element.
    *
-   * @param uri     the URI of the namespace of the current element.
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param uri
+   *          the URI of the namespace of the current element.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler or null, if the tagname is invalid.
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final Attributes atts ) throws SAXException {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
     if ( BundleNamespaces.CONTENT.equals( uri ) == false ) {
       return null;
     }
@@ -152,11 +159,12 @@ public class SubContentRootElementHandler extends AbstractXmlReadHandler {
   /**
    * Done parsing.
    *
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void doneParsing() throws SAXException {
     // Now, after all the user-defined and global files have been parsed, finally override whatever had been
-    //defined in these files with the contents from the bundle. This will merge all the settings from the bundle
+    // defined in these files with the contents from the bundle. This will merge all the settings from the bundle
     // with the global definitions but grants the local settings higer preference
     parseLocalFiles();
   }
@@ -183,7 +191,7 @@ public class SubContentRootElementHandler extends AbstractXmlReadHandler {
       return report == this.report;
     } catch ( ResourceLoadingException e ) {
       SubContentRootElementHandler.logger
-        .warn( "Unable to parse the parameter for this bundle from file: " + stylefile );
+          .warn( "Unable to parse the parameter for this bundle from file: " + stylefile );
       return false;
     }
   }
@@ -192,35 +200,35 @@ public class SubContentRootElementHandler extends AbstractXmlReadHandler {
     try {
       final Map parameters = deriveParseParameters();
       parameters.put( new FactoryParameterKey( ReportParserUtil.HELPER_OBJ_REPORT_NAME ), null );
-      final SubReportDataDefinition dataDefinition = (SubReportDataDefinition)
-        performExternalParsing( parameterFile, SubReportDataDefinition.class, parameters );
+      final SubReportDataDefinition dataDefinition =
+          (SubReportDataDefinition) performExternalParsing( parameterFile, SubReportDataDefinition.class, parameters );
       report.setDataFactory( dataDefinition.getDataFactory() );
       report.setQuery( dataDefinition.getQuery() );
       report.setQueryLimit( dataDefinition.getQueryLimit() );
       report.setQueryTimeout( dataDefinition.getQueryTimeout() );
       final ParameterMapping[] inputMapping = dataDefinition.getImportParameters();
       for ( int i = 0; i < inputMapping.length; i++ ) {
-        final ParameterMapping mapping = inputMapping[ i ];
+        final ParameterMapping mapping = inputMapping[i];
         report.addInputParameter( mapping.getName(), mapping.getAlias() );
       }
       final ParameterMapping[] exportMapping = dataDefinition.getExportParameters();
       for ( int i = 0; i < exportMapping.length; i++ ) {
-        final ParameterMapping mapping = exportMapping[ i ];
+        final ParameterMapping mapping = exportMapping[i];
         report.addExportParameter( mapping.getName(), mapping.getAlias() );
       }
 
       final Expression[] expressions = dataDefinition.getExpressions();
       if ( expressions != null ) {
         for ( int i = 0; i < expressions.length; i++ ) {
-          final Expression expression = expressions[ i ];
+          final Expression expression = expressions[i];
           report.addExpression( expression );
         }
       }
 
       return true;
     } catch ( ResourceLoadingException e ) {
-      SubContentRootElementHandler.logger.warn(
-        "Unable to parse the parameter for this bundle from file: " + parameterFile );
+      SubContentRootElementHandler.logger.warn( "Unable to parse the parameter for this bundle from file: "
+          + parameterFile );
       return false;
     } catch ( ReportDataFactoryException e ) {
       throw new ParseException( "Unable to configure datafactory.", getLocator() );
@@ -231,7 +239,8 @@ public class SubContentRootElementHandler extends AbstractXmlReadHandler {
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if an parser error occured.
+   * @throws SAXException
+   *           if an parser error occured.
    */
   public Object getObject() throws SAXException {
     return report;

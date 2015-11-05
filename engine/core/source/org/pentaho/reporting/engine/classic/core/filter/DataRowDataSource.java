@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
@@ -60,7 +60,8 @@ public class DataRowDataSource implements DataSource {
   /**
    * Constructs a new data source.
    *
-   * @param column the name of the field, function or expression in the data-row.
+   * @param column
+   *          the name of the field, function or expression in the data-row.
    */
   public DataRowDataSource( final String column ) {
     this.field = column;
@@ -93,8 +94,10 @@ public class DataRowDataSource implements DataSource {
   /**
    * Defines the name of the column in the datarow to be queried.
    *
-   * @param dataSourceColumnName the name of the column in the datarow to be queried.
-   * @throws NullPointerException if the name is <code>null</code>.
+   * @param dataSourceColumnName
+   *          the name of the column in the datarow to be queried.
+   * @throws NullPointerException
+   *           if the name is <code>null</code>.
    * @see org.pentaho.reporting.engine.classic.core.DataRow#get
    */
   public void setDataSourceColumnName( final String dataSourceColumnName ) {
@@ -122,7 +125,8 @@ public class DataRowDataSource implements DataSource {
   /**
    * Defines the formula used to compute the value of this data source.
    *
-   * @param formula the formula for the data source.
+   * @param formula
+   *          the formula for the data source.
    */
   public void setFormula( final String formula ) {
     if ( formula == null ) {
@@ -135,9 +139,9 @@ public class DataRowDataSource implements DataSource {
     }
     this.valueExpression.setFormula( formula );
     if ( "field".equals( valueExpression.getFormulaNamespace() ) ) {
-      DataRowDataSource.logger.warn(
-        "Encountered formula with 'field' prefix. Direct access to field-data should not be done using a formula. "
-          + "Auto-Fixing." );
+      DataRowDataSource.logger
+          .warn( "Encountered formula with 'field' prefix. Direct access to field-data should not be done using a formula. "
+              + "Auto-Fixing." );
       this.field = valueExpression.getFormulaExpression();
       this.valueExpression.setFormula( null );
     }
@@ -146,8 +150,9 @@ public class DataRowDataSource implements DataSource {
   /**
    * Returns the current value of the data source, obtained from a particular column in the data-row.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return the value.
    */
@@ -178,10 +183,10 @@ public class DataRowDataSource implements DataSource {
    * Clones the data source. A previously registered report definition is not inherited to the clone.
    *
    * @return a clone.
-   * @throws CloneNotSupportedException if the cloning is not supported.
+   * @throws CloneNotSupportedException
+   *           if the cloning is not supported.
    */
-  public DataRowDataSource clone()
-    throws CloneNotSupportedException {
+  public DataRowDataSource clone() throws CloneNotSupportedException {
     final DataRowDataSource drs = (DataRowDataSource) super.clone();
     if ( valueExpression != null ) {
       drs.valueExpression = (FormulaExpression) valueExpression.clone();

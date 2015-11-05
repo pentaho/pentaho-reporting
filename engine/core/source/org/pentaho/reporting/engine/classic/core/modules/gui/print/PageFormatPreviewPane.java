@@ -1,21 +1,32 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.print;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+
+import javax.swing.JPanel;
 
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -23,13 +34,6 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.base.internal.PageB
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.DrawablePanel;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
 import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
 
 /**
  * A component that renders a picture of an empty page, so that the page-setup-dialog can show the user an approximation
@@ -56,14 +60,14 @@ public class PageFormatPreviewPane extends JPanel {
       final Paper orgPaper = pageFormat.getPaper();
       final PageFormatFactory pff = PageFormatFactory.getInstance();
 
-      final double virtualPaperWidth = orgPaper.getImageableWidth() +
-        pff.getLeftBorder( orgPaper ) + pff.getRightBorder( orgPaper );
-      final double virtualPaperHeight = orgPaper.getImageableHeight() +
-        pff.getTopBorder( orgPaper ) + pff.getBottomBorder( orgPaper );
+      final double virtualPaperWidth =
+          orgPaper.getImageableWidth() + pff.getLeftBorder( orgPaper ) + pff.getRightBorder( orgPaper );
+      final double virtualPaperHeight =
+          orgPaper.getImageableHeight() + pff.getTopBorder( orgPaper ) + pff.getBottomBorder( orgPaper );
 
       final Paper p = pff.createPaper( virtualPaperWidth, virtualPaperHeight );
-      pff.setBorders( p, pff.getTopBorder( orgPaper ), pff.getLeftBorder( orgPaper ),
-        pff.getBottomBorder( orgPaper ), pff.getRightBorder( orgPaper ) );
+      pff.setBorders( p, pff.getTopBorder( orgPaper ), pff.getLeftBorder( orgPaper ), pff.getBottomBorder( orgPaper ),
+          pff.getRightBorder( orgPaper ) );
       return pff.createPageFormat( p, pageFormat.getOrientation() );
     }
 
@@ -79,8 +83,9 @@ public class PageFormatPreviewPane extends JPanel {
     public void draw( final Graphics2D graphics, final Rectangle2D bounds ) {
       final PageFormat gpf = getPageFormat();
 
-      final Rectangle2D.Double imageableArea = new Rectangle2D.Double
-        ( gpf.getImageableX(), gpf.getImageableY(), gpf.getImageableWidth(), gpf.getImageableHeight() );
+      final Rectangle2D.Double imageableArea =
+          new Rectangle2D.Double( gpf.getImageableX(), gpf.getImageableY(), gpf.getImageableWidth(), gpf
+              .getImageableHeight() );
       graphics.setPaint( new Color( 225, 225, 225 ) );
       graphics.fill( imageableArea );
       graphics.setPaint( Color.gray );
@@ -92,15 +97,13 @@ public class PageFormatPreviewPane extends JPanel {
       final Line2D line = new Line2D.Double();
       for ( int splitH = 1; splitH < pcH; splitH += 1 ) {
         final double xPos = gpf.getImageableX() + ( splitH * gpf.getImageableWidth() );
-        line.setLine( xPos, gpf.getImageableY(),
-          xPos, gpf.getImageableY() + gpf.getImageableHeight() );
+        line.setLine( xPos, gpf.getImageableY(), xPos, gpf.getImageableY() + gpf.getImageableHeight() );
         graphics.draw( line );
       }
 
       for ( int splitW = 1; splitW < pcW; splitW += 1 ) {
         final double yPos = gpf.getImageableY() + ( splitW * gpf.getImageableHeight() );
-        line.setLine( gpf.getImageableX(), yPos,
-          gpf.getImageableX() + gpf.getImageableWidth(), yPos );
+        line.setLine( gpf.getImageableX(), yPos, gpf.getImageableX() + gpf.getImageableWidth(), yPos );
         graphics.draw( line );
       }
     }
@@ -109,12 +112,8 @@ public class PageFormatPreviewPane extends JPanel {
       return EMPTY_NODES;
     }
 
-    public RenderNode[] getNodesAt( final double x,
-                                    final double y,
-                                    final double width,
-                                    final double height,
-                                    final String namespace,
-                                    final String name ) {
+    public RenderNode[] getNodesAt( final double x, final double y, final double width, final double height,
+        final String namespace, final String name ) {
       return EMPTY_NODES;
     }
   }
@@ -127,8 +126,10 @@ public class PageFormatPreviewPane extends JPanel {
     /**
      * Draws the object.
      *
-     * @param g2   the graphics device.
-     * @param area the area inside which the object should be drawn.
+     * @param g2
+     *          the graphics device.
+     * @param area
+     *          the area inside which the object should be drawn.
      */
     public void draw( final Graphics2D g2, final Rectangle2D area ) {
       setZoom( 1 );
@@ -142,7 +143,7 @@ public class PageFormatPreviewPane extends JPanel {
 
   private SimplePageDefinition pageDefinition;
   private DrawablePanel drawablePanel;
-  private static final RenderNode[] EMPTY_NODES = new RenderNode[ 0 ];
+  private static final RenderNode[] EMPTY_NODES = new RenderNode[0];
   private PageBackgroundDrawable pageBackgroundDrawable;
 
   /**

@@ -63,7 +63,6 @@ public abstract class ExpressionTestBase {
 
   protected abstract TableModel createTableModel();
 
-
   protected void configureStandardColumns( final TypedTableModel model ) {
     model.addColumn( ROW_DIMENSION_A, String.class );
     model.addColumn( ROW_DIMENSION_B, String.class );
@@ -97,9 +96,7 @@ public abstract class ExpressionTestBase {
     DebugReportRunner.execGraphics2D( report );
   }
 
-  protected abstract Expression create( final String name,
-                                        final String filter,
-                                        final String group );
+  protected abstract Expression create( final String name, final String filter, final String group );
 
   protected boolean isFailHardOnError() {
     return false;
@@ -126,8 +123,7 @@ public abstract class ExpressionTestBase {
     report.addExpression( new ValidateFunctionResultExpression( "#column-a", isFailHardOnError(), null ) );
 
     report.addExpression( create( "column-b", COLUMN_DIMENSION_B, ROW_DIMENSION_A ) );
-    report
-      .addExpression( new ValidateFunctionResultExpression( "#column-b", isFailHardOnError(), COLUMN_DIMENSION_B ) );
+    report.addExpression( new ValidateFunctionResultExpression( "#column-b", isFailHardOnError(), COLUMN_DIMENSION_B ) );
 
     return report;
   }
@@ -156,8 +152,7 @@ public abstract class ExpressionTestBase {
     return report;
   }
 
-  protected MasterReport createRelationalReport( final TableModel tableModel,
-                                                 final String... additionalFields ) {
+  protected MasterReport createRelationalReport( final TableModel tableModel, final String... additionalFields ) {
     final MasterReport report = new MasterReport();
     report.setPageDefinition( new SimplePageDefinition( PageSize.A3, PageFormat.LANDSCAPE, new Insets( 0, 0, 0, 0 ) ) );
     report.setDataFactory( new TableDataFactory( "query", tableModel ) );
@@ -172,7 +167,7 @@ public abstract class ExpressionTestBase {
     builder.addDetails( VALUE, null, Color.lightGray );
     builder.addDetails( "relational", null, Color.yellow );
     for ( int i = 0; i < additionalFields.length; i++ ) {
-      String additionalField = additionalFields[ i ];
+      String additionalField = additionalFields[i];
       builder.addDetails( additionalField, null, null );
     }
 
@@ -189,15 +184,14 @@ public abstract class ExpressionTestBase {
   }
 
   protected void showRelationalGeneratorDialog() {
-    MasterReport relationalReport = createRelationalReport( createTableModel(),
-      "cell", "row-b", "row-a", "column-a", "column-b" );
+    MasterReport relationalReport =
+        createRelationalReport( createTableModel(), "cell", "row-b", "row-a", "column-a", "column-b" );
     PreviewDialog dialog = new PreviewDialog( configureReport( relationalReport, false ) );
     dialog.setModal( true );
     dialog.pack();
     LibSwingUtil.centerFrameOnScreen( dialog );
     dialog.setVisible( true );
   }
-
 
   protected void showCrosstabDialog() {
     MasterReport crosstabReport = createCrosstabReport( createTableModel() );

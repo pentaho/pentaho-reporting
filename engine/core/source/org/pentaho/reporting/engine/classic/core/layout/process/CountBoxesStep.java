@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -40,8 +40,9 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep {
   private boolean validating;
 
   public CountBoxesStep() {
-    enabled = "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false" ) );
+    enabled =
+        "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false" ) );
   }
 
   public int countChildren( final RenderBox box ) {
@@ -74,10 +75,9 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep {
     autoBoxes = 0;
     deepDirtyBoxes = 0;
     startProcessing( box );
-    logger.debug( MessageFormat.format
-      ( "CountBoxes: Total={0}; finished={1}; auto={2}; deepDirty={6} - maxWeight={5} - Finished-Ratio: {3} "
-          + "AutoRatio: {4}",
-        totalCount, finishedBoxes, autoBoxes, finishedBoxes / (double) totalCount * 100f,
+    logger.debug( MessageFormat.format(
+        "CountBoxes: Total={0}; finished={1}; auto={2}; deepDirty={6} - maxWeight={5} - Finished-Ratio: {3} "
+            + "AutoRatio: {4}", totalCount, finishedBoxes, autoBoxes, finishedBoxes / (double) totalCount * 100f,
         autoBoxes / (double) totalCount * 100f, maxBoxSize, deepDirtyBoxes ) );
   }
 
@@ -99,7 +99,6 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep {
     count( box );
     return true;
   }
-
 
   protected void processBoxChilds( final RenderBox box ) {
     if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {

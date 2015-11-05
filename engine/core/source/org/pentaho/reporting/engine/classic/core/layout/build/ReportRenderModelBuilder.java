@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
@@ -36,7 +36,7 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import java.util.ArrayList;
 
 public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
-  private static final InlineSubreportMarker[] EMPTY_SUBREPORT_MARKERS = new InlineSubreportMarker[ 0 ];
+  private static final InlineSubreportMarker[] EMPTY_SUBREPORT_MARKERS = new InlineSubreportMarker[0];
   private LayoutModelBuilder normalFlow;
   private LayoutModelBuilder header;
   private LayoutModelBuilder footer;
@@ -86,7 +86,7 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
 
   protected LayoutModelBuilder createHeaderBuilder( final ProcessingContext processingContext ) {
     HeaderLayoutModelBuilder header =
-      new HeaderLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Header-1" ) );
+        new HeaderLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Header-1" ) );
     header.initialize( processingContext, this.pageBox.getHeaderArea(), renderNodeFactory );
     header.updateState( stateKey );
     return header;
@@ -94,7 +94,7 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
 
   protected LayoutModelBuilder createFooterBuilder( final ProcessingContext processingContext ) {
     FooterLayoutModelBuilder footer =
-      new FooterLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Footer-2" ) );
+        new FooterLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Footer-2" ) );
     footer.initialize( processingContext, this.pageBox.getFooterArea(), renderNodeFactory );
     footer.updateState( stateKey );
     return footer;
@@ -102,7 +102,7 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
 
   protected LayoutModelBuilder createRepeatedFooterBuilder( final ProcessingContext processingContext ) {
     RepeatedFooterLayoutModelBuilder repeatedFooter =
-      new RepeatedFooterLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Repeat-Footer-3" ) );
+        new RepeatedFooterLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Repeat-Footer-3" ) );
     repeatedFooter.initialize( processingContext, this.pageBox.getRepeatFooterArea(), renderNodeFactory );
     repeatedFooter.updateState( stateKey );
     return repeatedFooter;
@@ -110,7 +110,7 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
 
   protected LayoutModelBuilder createWatermarkBuilder( final ProcessingContext processingContext ) {
     WatermarkLayoutModelBuilder watermark =
-      new WatermarkLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Watermark-Section" ) );
+        new WatermarkLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Watermark-Section" ) );
     watermark.initialize( processingContext, this.pageBox.getWatermarkArea(), renderNodeFactory );
     watermark.updateState( stateKey );
     return watermark;
@@ -197,15 +197,13 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
     normalFlow.addManualPageBreakBox( getPageBox().getPageOffset() );
   }
 
-  public void add( final ExpressionRuntime runtime,
-                   final Band band ) throws ReportProcessingException {
+  public void add( final ExpressionRuntime runtime, final Band band ) throws ReportProcessingException {
     final LayoutBuilderStrategy builderStrategy = getLayoutBuilderStrategy();
     LayoutModelBuilder layoutModelBuilder = getLayoutModelBuilder();
     builderStrategy.add( runtime, layoutModelBuilder, band, collectedSubReportMarker );
   }
 
-  public void addToNormalFlow( final ExpressionRuntime runtime,
-                               final Band band ) throws ReportProcessingException {
+  public void addToNormalFlow( final ExpressionRuntime runtime, final Band band ) throws ReportProcessingException {
     final LayoutBuilderStrategy builderStrategy = getLayoutBuilderStrategy();
     builderStrategy.add( runtime, normalFlow, band, collectedSubReportMarker );
   }
@@ -221,8 +219,7 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
     if ( collectedSubReportMarker.isEmpty() ) {
       markers = EMPTY_SUBREPORT_MARKERS;
     } else {
-      markers = collectedSubReportMarker.toArray
-        ( new InlineSubreportMarker[ collectedSubReportMarker.size() ] );
+      markers = collectedSubReportMarker.toArray( new InlineSubreportMarker[collectedSubReportMarker.size()] );
     }
 
     activeSection = Renderer.SectionType.NORMALFLOW;
@@ -258,7 +255,7 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
   }
 
   private LayoutModelBuilder getLayoutModelBuilder() {
-    switch( activeSection ) {
+    switch ( activeSection ) {
       case NORMALFLOW:
         return normalFlow;
       case HEADER:

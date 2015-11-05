@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -46,7 +46,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.valign.NodeAlign
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.ReplacedContentAlignContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.TextElementAlignContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.VerticalAlignmentProcessor;
-
 
 /**
  * Computes the absolute layout. The computed height and y positions of all abolutely positioned elements will be stored
@@ -82,7 +81,8 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
   /**
    * Continues processing. The renderbox must have a valid x-layout (that is: X, content-X1, content-X2 and Width)
    *
-   * @param box the box.
+   * @param box
+   *          the box.
    */
   public void continueComputation( final RenderBox box ) {
     // This is most-likely wrong, but as we do not support inline-block elements yet, we can ignore this for now.
@@ -97,7 +97,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       this.breakState.deinit();
     }
   }
-
 
   protected boolean startBlockLevelBox( final RenderBox box ) {
     if ( checkCacheValid( box ) ) {
@@ -138,8 +137,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       breakState.init( paragraphBox );
     } else if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
       final RenderableReplacedContentBox contentBox = (RenderableReplacedContentBox) box;
-      contentBox.setCachedHeight( ReplacedContentUtil.computeHeight
-        ( contentBox, 0, contentBox.getCachedWidth() ) );
+      contentBox.setCachedHeight( ReplacedContentUtil.computeHeight( contentBox, 0, contentBox.getCachedWidth() ) );
 
     } else if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_WATERMARK ) {
       final WatermarkAreaBox watermarkAreaBox = (WatermarkAreaBox) box;
@@ -257,10 +255,8 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     return computeBlockHeightAndAlign( box, BoxDefinition.EMPTY, 0, true );
   }
 
-  public static long computeBlockHeightAndAlign( final RenderBox box,
-                                                 final BoxDefinition boxDefinition,
-                                                 final long resolveSize,
-                                                 final boolean alignChilds ) {
+  public static long computeBlockHeightAndAlign( final RenderBox box, final BoxDefinition boxDefinition,
+      final long resolveSize, final boolean alignChilds ) {
     if ( resolveSize < 0 ) {
       throw new IllegalArgumentException( "ResovleSize cannot be negative" );
     }
@@ -278,7 +274,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       childY1 = box.getFirstChild().getCachedY();
       if ( lastChildNode.isVisible() ) {
         childY2 =
-          lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
+            lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
       } else {
         childY2 = lastChildNode.getCachedY();
       }
@@ -289,7 +285,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       childY1 = 0;
     }
 
-    //final long blockContextWidth = box.getStaticBoxLayoutProperties().getBlockContextWidth();
+    // final long blockContextWidth = box.getStaticBoxLayoutProperties().getBlockContextWidth();
     final long rminH = minimumHeight.resolve( resolveSize, 0 );
     final long rmaxH = maximumHeight.resolve( resolveSize, InfiniteMajorAxisLayoutStep.MAX_AUTO );
 
@@ -341,8 +337,10 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
   /**
    * We will do the alignment during the CanvasMajorAxisLayoutStep.
    *
-   * @param box         the box to be computed. Must be a box with row-layout
-   * @param resolveSize the current height that makes 100%
+   * @param box
+   *          the box to be computed. Must be a box with row-layout
+   * @param resolveSize
+   *          the current height that makes 100%
    * @return the row's height.
    */
   private long computeRowHeight( final RenderBox box, final long resolveSize ) {
@@ -455,7 +453,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     processor.align( boxAlignContext, contentAreaY1, lineHeight );
   }
 
-
   protected boolean startInlineLevelBox( final RenderBox box ) {
     if ( checkCacheValid( box ) ) {
       return false;
@@ -514,7 +511,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
   protected void processInlineLevelNode( final RenderNode node ) {
     // compute the intial position.
     node.setCachedY( computeVerticalInlinePosition( node ) );
-    // the height and the real position will be computed during the vertical-alignment computation. 
+    // the height and the real position will be computed during the vertical-alignment computation.
 
     if ( breakState.isActive() == false || breakState.isSuspended() ) {
       return;
@@ -530,7 +527,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       breakState.getCurrentLine().addChild( new NodeAlignContext( node ) );
     }
   }
-
 
   protected void finishInlineLevelBox( final RenderBox box ) {
     // todo Arabic text
@@ -585,7 +581,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       return ( 0 );
     }
   }
-
 
   protected boolean startCanvasLevelBox( final RenderBox box ) {
     if ( checkCacheValid( box ) ) {
@@ -645,7 +640,8 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
    * To resolve the value of percentages, the system uses the maximum of the parent's height and the maximum of all (y +
    * height) of all children.)
    *
-   * @param box the box.
+   * @param box
+   *          the box.
    */
   protected void finishCanvasLevelBox( final RenderBox box ) {
     if ( checkCacheValid( box ) ) {
@@ -774,8 +770,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
         prefHeightResolved = consumedHeight;
       }
 
-      final long height = ProcessUtility.computeLength( minHeightResolved, maxHeightResolved,
-        prefHeightResolved );
+      final long height = ProcessUtility.computeLength( minHeightResolved, maxHeightResolved, prefHeightResolved );
       return ( height + insets );
     }
   }
@@ -818,7 +813,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       final RenderableReplacedContentBox rpc = (RenderableReplacedContentBox) box;
       box.setCachedHeight( ReplacedContentUtil.computeHeight( rpc, 0, box.getCachedWidth() ) );
     }
-
 
     return true;
   }

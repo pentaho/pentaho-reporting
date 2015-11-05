@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -21,9 +21,8 @@ import java.util.Date;
 
 /**
  * Prunes a date in a calendar-unware way. This method can be used to zero the milli-seconds or seconds and so on from a
- * date-object. For more complex operations, the {@link org.pentaho.reporting.engine.classic.core.function.date
- * .VariableDateExpression}
- * should be used instead.
+ * date-object. For more complex operations, the
+ * {@link org.pentaho.reporting.engine.classic.core.function.date .VariableDateExpression} should be used instead.
  * <p/>
  * This expression simply executes a integer division followed by a integer multiplication on the milliseconds since
  * 01-01-1970. For a factor of 1000, this sets the milliseconds to zero.
@@ -60,7 +59,8 @@ public class DateCutExpression extends AbstractExpression {
   /**
    * Defines the name of the data-row field from where to read the date that should be modified.
    *
-   * @param field a field name.
+   * @param field
+   *          a field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -78,7 +78,8 @@ public class DateCutExpression extends AbstractExpression {
   /**
    * Defines the factor by which the date should be pruned.
    *
-   * @param factor a factor.
+   * @param factor
+   *          a factor.
    */
   public void setFactor( final long factor ) {
     this.factor = factor;

@@ -1,30 +1,25 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.helper;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Image;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.TextElementArray;
-import com.lowagie.text.pdf.BaseFont;
+import java.awt.Color;
+import java.io.IOException;
+
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
@@ -48,8 +43,14 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.fonts.itext.BaseFontFontMetrics;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-import java.awt.*;
-import java.io.IOException;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.TextElementArray;
+import com.lowagie.text.pdf.BaseFont;
 
 /**
  * Todo: On Block-Level elements, apply the block-level styles like text-alignment and vertical-alignment.
@@ -69,9 +70,8 @@ public class RTFTextExtractor extends DefaultTextExtractor {
     private Color textColor;
     private Color backgroundColor;
 
-    protected StyleContext( final TextElementArray target,
-                            final StyleSheet styleSheet,
-                            final RTFOutputProcessorMetaData metaData ) {
+    protected StyleContext( final TextElementArray target, final StyleSheet styleSheet,
+        final RTFOutputProcessorMetaData metaData ) {
       this.target = target;
       this.metaData = metaData;
       this.fontName = (String) styleSheet.getStyleProperty( TextStyleKeys.FONT );
@@ -190,8 +190,8 @@ public class RTFTextExtractor extends DefaultTextExtractor {
         style |= Font.UNDERLINE;
       }
 
-      final BaseFontFontMetrics fontMetrics = metaData.getBaseFontFontMetrics
-        ( fontName, fontSize, bold, italic, "utf-8", false, false );
+      final BaseFontFontMetrics fontMetrics =
+          metaData.getBaseFontFontMetrics( fontName, fontSize, bold, italic, "utf-8", false, false );
       final BaseFont baseFont = fontMetrics.getBaseFont();
       final Font font = new Font( baseFont, (float) fontSize, style, textColor );
       final Chunk c = new Chunk( text, font );
@@ -214,14 +214,11 @@ public class RTFTextExtractor extends DefaultTextExtractor {
     context = new FastStack<StyleContext>( 50 );
   }
 
-
   private StyleContext getCurrentContext() {
     return context.peek();
   }
 
-  public void compute( final RenderBox box,
-                       final TextElementArray cell,
-                       final RTFImageCache imageCache ) {
+  public void compute( final RenderBox box, final TextElementArray cell, final RTFImageCache imageCache ) {
     this.context.clear();
     this.context.push( new StyleContext( cell, box.getStyleSheet(), metaData ) );
     this.imageCache = imageCache;
@@ -288,7 +285,7 @@ public class RTFTextExtractor extends DefaultTextExtractor {
       }
     } else if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
       // todo: check if special text processing is required for RenderableComplexText nodes
-      //      return;
+      // return;
       if ( node.isVirtualNode() ) {
         return;
       }
@@ -334,10 +331,9 @@ public class RTFTextExtractor extends DefaultTextExtractor {
         image.scaleToFit( targetWidth, targetHeight );
         currentContext.add( image );
       } else if ( rawObject instanceof DrawableWrapper ) {
-        final StrictBounds rect = new StrictBounds
-          ( node.getX(), node.getY(), node.getWidth(), node.getHeight() );
+        final StrictBounds rect = new StrictBounds( node.getX(), node.getY(), node.getWidth(), node.getHeight() );
         final ImageContainer ic =
-          RenderUtility.createImageFromDrawable( (DrawableWrapper) rawObject, rect, node, metaData );
+            RenderUtility.createImageFromDrawable( (DrawableWrapper) rawObject, rect, node, metaData );
         if ( ic == null ) {
           return;
         }
@@ -393,7 +389,7 @@ public class RTFTextExtractor extends DefaultTextExtractor {
       for ( final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks() ) {
         // Add style for current styled chunk
         final StyleContext boxContext =
-          new StyleContext( getCurrentContext().getTarget(), styledChunk.getStyleSheet(), metaData );
+            new StyleContext( getCurrentContext().getTarget(), styledChunk.getStyleSheet(), metaData );
         if ( styledChunk.getText().length() > 0 ) {
           final String text = styledChunk.getText();
           boxContext.add( text );

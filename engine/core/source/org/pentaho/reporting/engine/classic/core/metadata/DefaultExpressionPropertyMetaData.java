@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
@@ -41,22 +41,12 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
   private SharedPropertyDescriptorProxy propertyDescriptor;
 
   @Deprecated
-  public DefaultExpressionPropertyMetaData( final String name,
-                                            final String bundleLocation,
-                                            final boolean expert,
-                                            final boolean preferred,
-                                            final boolean hidden,
-                                            final boolean deprecated,
-                                            final boolean mandatory,
-                                            final boolean computed,
-                                            final String propertyRole,
-                                            final SharedBeanInfo beanInfo,
-                                            final String propertyEditorClass,
-                                            final ExpressionPropertyCore expressionPropertyCore,
-                                            final MaturityLevel maturityLevel,
-                                            final int compatibilityLevel ) {
-    super( name, bundleLocation, "property.", expert, preferred, hidden, deprecated, maturityLevel,
-      compatibilityLevel );
+  public DefaultExpressionPropertyMetaData( final String name, final String bundleLocation, final boolean expert,
+      final boolean preferred, final boolean hidden, final boolean deprecated, final boolean mandatory,
+      final boolean computed, final String propertyRole, final SharedBeanInfo beanInfo,
+      final String propertyEditorClass, final ExpressionPropertyCore expressionPropertyCore,
+      final MaturityLevel maturityLevel, final int compatibilityLevel ) {
+    super( name, bundleLocation, "property.", expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel );
     ArgumentNullException.validate( "propertyRole", propertyRole );
     ArgumentNullException.validate( "beanInfo", beanInfo );
     ArgumentNullException.validate( "expressionPropertyCore", expressionPropertyCore );
@@ -64,8 +54,9 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
     this.propertyDescriptor = new SharedPropertyDescriptorProxy( beanInfo, name );
     this.computed = computed;
     this.expressionPropertyCore = expressionPropertyCore;
-    this.propertyEditorClass = ObjectUtilities.loadAndValidate
-      ( propertyEditorClass, DefaultExpressionPropertyMetaData.class, PropertyEditor.class );
+    this.propertyEditorClass =
+        ObjectUtilities.loadAndValidate( propertyEditorClass, DefaultExpressionPropertyMetaData.class,
+            PropertyEditor.class );
     this.mandatory = mandatory;
     this.propertyRole = propertyRole;
   }
@@ -78,7 +69,6 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
     this.propertyEditorClass = builder.getEditor();
     this.mandatory = builder.isMandatory();
     this.propertyRole = builder.getValueRole();
-
 
     ArgumentNullException.validate( "propertyRole", propertyRole );
     ArgumentNullException.validate( "propertyDescriptor", propertyDescriptor );
@@ -113,12 +103,10 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
     return expressionPropertyCore.getReferencedElements( this, expression, attributeValue );
   }
 
-  public ResourceReference[] getReferencedResources( final Expression expression,
-                                                     final Object attributeValue,
-                                                     final Element reportElement,
-                                                     final ResourceManager resourceManager ) {
-    return expressionPropertyCore.getReferencedResources
-      ( this, expression, attributeValue, reportElement, resourceManager );
+  public ResourceReference[] getReferencedResources( final Expression expression, final Object attributeValue,
+      final Element reportElement, final ResourceManager resourceManager ) {
+    return expressionPropertyCore.getReferencedResources( this, expression, attributeValue, reportElement,
+        resourceManager );
   }
 
   public PropertyDescriptor getBeanDescriptor() throws IllegalStateException {

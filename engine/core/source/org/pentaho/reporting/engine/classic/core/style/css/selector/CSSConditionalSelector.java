@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector;
 
@@ -38,36 +38,36 @@ public class CSSConditionalSelector extends AbstractSelector implements Conditio
   private Condition condition;
   private SimpleSelector simpleSelector;
 
-  public CSSConditionalSelector( final SimpleSelector simpleSelector,
-                                 final Condition condition ) {
+  public CSSConditionalSelector( final SimpleSelector simpleSelector, final Condition condition ) {
     this.simpleSelector = simpleSelector;
     this.condition = condition;
   }
 
   protected SelectorWeight createWeight() {
-    final int[] conditions = new int[ 3 ];
+    final int[] conditions = new int[3];
     countConditions( conditions, condition );
-    return new SelectorWeight
-      ( 0, conditions[ 0 ], conditions[ 1 ], conditions[ 2 ] + 1 );
+    return new SelectorWeight( 0, conditions[0], conditions[1], conditions[2] + 1 );
   }
 
-  private void countConditions
-    ( final int[] conditionCounter, final Condition condition ) {
+  private void countConditions( final int[] conditionCounter, final Condition condition ) {
     if ( condition.getConditionType() == Condition.SAC_ID_CONDITION ) {
-      conditionCounter[ ID_CONDITION ] += 1;
+      conditionCounter[ID_CONDITION] += 1;
     } else if ( condition instanceof AttributeCondition ) {
-      conditionCounter[ ATTR_CONDITION ] += 1;
+      conditionCounter[ATTR_CONDITION] += 1;
     } else if ( condition instanceof CombinatorCondition ) {
       final CombinatorCondition c = (CombinatorCondition) condition;
       countConditions( conditionCounter, c.getFirstCondition() );
       countConditions( conditionCounter, c.getSecondCondition() );
     } else {
-      conditionCounter[ OTHER_CONDITION ] += 1;
+      conditionCounter[OTHER_CONDITION] += 1;
     }
   }
 
   /**
-   * Returns the simple selector. <p>The simple selector can't be a <code>ConditionalSelector</code>.</p>
+   * Returns the simple selector.
+   * <p>
+   * The simple selector can't be a <code>ConditionalSelector</code>.
+   * </p>
    */
   public SimpleSelector getSimpleSelector() {
     return simpleSelector;

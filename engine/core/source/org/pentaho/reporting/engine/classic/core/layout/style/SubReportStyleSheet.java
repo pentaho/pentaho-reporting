@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.style;
 
@@ -29,8 +29,7 @@ public class SubReportStyleSheet extends AbstractStyleSheet {
   private Boolean pagebreakBefore;
   private Boolean pagebreakAfter;
 
-  public SubReportStyleSheet( final boolean pagebeakBefore,
-                              final boolean pagebreakAfter ) {
+  public SubReportStyleSheet( final boolean pagebeakBefore, final boolean pagebreakAfter ) {
     this.parent = ElementDefaultStyleSheet.getDefaultStyle();
     this.pagebreakAfter = pagebreakAfter;
     this.pagebreakBefore = pagebeakBefore;
@@ -60,8 +59,8 @@ public class SubReportStyleSheet extends AbstractStyleSheet {
 
   public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ BandStyleKeys.PAGEBREAK_AFTER.getIdentifier() ] = pagebreakAfter;
-    objects[ BandStyleKeys.PAGEBREAK_BEFORE.getIdentifier() ] = pagebreakBefore;
+    objects[BandStyleKeys.PAGEBREAK_AFTER.getIdentifier()] = pagebreakAfter;
+    objects[BandStyleKeys.PAGEBREAK_BEFORE.getIdentifier()] = pagebreakBefore;
     return objects;
   }
 }

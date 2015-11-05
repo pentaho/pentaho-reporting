@@ -26,10 +26,8 @@ public class CompoundDataFactoryCore extends DefaultDataFactoryCore {
   public CompoundDataFactoryCore() {
   }
 
-  public String[] getReferencedFields( final DataFactoryMetaData metaData,
-                                       final DataFactory element,
-                                       final String query,
-                                       final DataRow parameter ) {
+  public String[] getReferencedFields( final DataFactoryMetaData metaData, final DataFactory element,
+      final String query, final DataRow parameter ) {
     DataFactory m = getDataFactoryForQuery( element, query );
     if ( m == null ) {
       return null;
@@ -57,11 +55,8 @@ public class CompoundDataFactoryCore extends DefaultDataFactoryCore {
     return dataFactoryForQuery;
   }
 
-  public ResourceReference[] getReferencedResources( final DataFactoryMetaData metaData,
-                                                     final DataFactory element,
-                                                     final ResourceManager resourceManager,
-                                                     final String query,
-                                                     final DataRow parameter ) {
+  public ResourceReference[] getReferencedResources( final DataFactoryMetaData metaData, final DataFactory element,
+      final ResourceManager resourceManager, final String query, final DataRow parameter ) {
     DataFactory m = getDataFactoryForQuery( element, query );
     if ( m == null ) {
       return null;
@@ -73,10 +68,8 @@ public class CompoundDataFactoryCore extends DefaultDataFactoryCore {
     return md.getReferencedResources( m, resourceManager, query, parameter );
   }
 
-  public Object getQueryHash( final DataFactoryMetaData dataFactoryMetaData,
-                              final DataFactory dataFactory,
-                              final String queryName,
-                              final DataRow parameter ) {
+  public Object getQueryHash( final DataFactoryMetaData dataFactoryMetaData, final DataFactory dataFactory,
+      final String queryName, final DataRow parameter ) {
     DataFactory m = getDataFactoryForQuery( dataFactory, queryName );
     if ( m == null ) {
       return null;

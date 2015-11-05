@@ -39,6 +39,6 @@ public class Messages extends ResourceBundleSupport {
    */
   private Messages() {
     super( Locale.getDefault(), "org.pentaho.reporting.engine.classic.core.modules.misc.connections.messages",
-      ObjectUtilities.getClassLoader( Messages.class ) );
+        ObjectUtilities.getClassLoader( Messages.class ) );
   }
 }

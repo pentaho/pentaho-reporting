@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
@@ -41,7 +41,7 @@ public class ElementChangeChecker {
     private HashMap<String, Object> fieldsAndValues;
 
     private NeedEvalResult( final boolean needToRun, final ReportElement e,
-                            final HashMap<String, Object> fieldsAndValues ) {
+        final HashMap<String, Object> fieldsAndValues ) {
       this.needToRun = needToRun;
       this.changeTracker = e.getChangeTracker();
       this.fieldsAndValues = fieldsAndValues;
@@ -58,9 +58,8 @@ public class ElementChangeChecker {
     }
 
     public boolean isValid( final ReportElement e, final DataRow dataRow ) {
-      if ( changeTracker != e.getChangeTracker() ||
-        styleChangeTracker != e.getStyle().getChangeTracker() ||
-        styleModificationCounter != e.getStyle().getModificationCount() ) {
+      if ( changeTracker != e.getChangeTracker() || styleChangeTracker != e.getStyle().getChangeTracker()
+          || styleModificationCounter != e.getStyle().getModificationCount() ) {
         return false;
       }
 
@@ -83,8 +82,7 @@ public class ElementChangeChecker {
     private long styleModificationCounter;
     private HashMap<String, Object> seenFields;
 
-    private ElementMetaDataEvaluationResult( final ReportElement e,
-                                             final HashMap<String, Object> seenFields ) {
+    private ElementMetaDataEvaluationResult( final ReportElement e, final HashMap<String, Object> seenFields ) {
       this.seenFields = seenFields;
       changeTracker = e.getChangeTracker();
       styleChangeTracker = e.getStyle().getChangeTracker();
@@ -92,9 +90,8 @@ public class ElementChangeChecker {
     }
 
     public boolean isValid( final ReportElement e, final DataRow dataRow ) {
-      if ( changeTracker != e.getChangeTracker() ||
-        styleChangeTracker != e.getStyle().getChangeTracker() ||
-        styleModificationCounter != e.getStyle().getModificationCount() ) {
+      if ( changeTracker != e.getChangeTracker() || styleChangeTracker != e.getStyle().getChangeTracker()
+          || styleModificationCounter != e.getStyle().getModificationCount() ) {
         return false;
       }
 
@@ -147,7 +144,8 @@ public class ElementChangeChecker {
   /**
    * Evaluates all style expressions from all elements and updates the style-sheet if needed.
    *
-   * @param b the band.
+   * @param b
+   *          the band.
    * @return true if the element needs reprinting.
    */
   protected final boolean processRootBand( final Section b ) {
@@ -168,14 +166,14 @@ public class ElementChangeChecker {
     recordCacheMiss( b );
 
     final boolean needToRunVal = processBand( b );
-    b.setAttribute( AttributeNames.Internal.NAMESPACE, attrName,
-      new NeedEvalResult( needToRunVal, b, (HashMap<String, Object>) currentFieldsAndValues.clone() ), false );
+    b.setAttribute( AttributeNames.Internal.NAMESPACE, attrName, new NeedEvalResult( needToRunVal, b,
+        (HashMap<String, Object>) currentFieldsAndValues.clone() ), false );
     return true;
   }
 
   protected boolean evaluateElement( final ReportElement e ) {
     final ElementMetaDataEvaluationResult evalResult =
-      (ElementMetaDataEvaluationResult) e.getAttribute( AttributeNames.Internal.NAMESPACE, elementAttribute );
+        (ElementMetaDataEvaluationResult) e.getAttribute( AttributeNames.Internal.NAMESPACE, elementAttribute );
     if ( evalResult != null && evalResult.isValid( e, currentDataRow ) ) {
       currentFieldsAndValues.putAll( evalResult.seenFields );
       return false;
@@ -185,7 +183,7 @@ public class ElementChangeChecker {
     final ElementMetaData metaData = e.getElementType().getMetaData();
     final AttributeMetaData[] attributeDescriptions = metaData.getAttributeDescriptions();
     for ( int i = 0; i < attributeDescriptions.length; i++ ) {
-      final AttributeMetaData attributeDescription = attributeDescriptions[ i ];
+      final AttributeMetaData attributeDescription = attributeDescriptions[i];
       final Object attribute = e.getAttribute( attributeDescription.getNameSpace(), attributeDescription.getName() );
       if ( attribute == null ) {
         continue;
@@ -193,7 +191,7 @@ public class ElementChangeChecker {
 
       final String[] referencedFields = attributeDescription.getReferencedFields( e, attribute );
       for ( int j = 0; j < referencedFields.length; j++ ) {
-        final String field = referencedFields[ j ];
+        final String field = referencedFields[j];
         final Object value = currentDataRow.get( field );
         values.put( field, value );
         currentFieldsAndValues.put( field, value );
@@ -213,10 +211,9 @@ public class ElementChangeChecker {
       final Element element = b.getElement( i );
 
       final ElementMetaData.TypeClassification reportElementType = element.getMetaData().getReportElementType();
-      if ( reportElementType == ElementMetaData.TypeClassification.DATA ||
-        reportElementType == ElementMetaData.TypeClassification.CONTROL ||
-        reportElementType == ElementMetaData.TypeClassification.SUBREPORT ||
-        element instanceof Section == false ) {
+      if ( reportElementType == ElementMetaData.TypeClassification.DATA
+          || reportElementType == ElementMetaData.TypeClassification.CONTROL
+          || reportElementType == ElementMetaData.TypeClassification.SUBREPORT || element instanceof Section == false ) {
         if ( evaluateElement( element ) ) {
           hasAttrExpressions = true;
         }
@@ -243,13 +240,11 @@ public class ElementChangeChecker {
 
   protected void reportCachePerformance() {
     if ( performanceLogger.isInfoEnabled() ) {
-      performanceLogger
-        .info( String.format( "Performance: %s => total=%d, evaluated=%d (%f%%), avoided=%d (%f%%)", getClass(),
-          performanceCollector.totalEvaluations,
-          performanceCollector.evaluations,
-          100f * performanceCollector.evaluations / Math.max( 1.0f, performanceCollector.totalEvaluations ),
-          performanceCollector.skippedEvaluations,
-          100f * performanceCollector.skippedEvaluations / Math.max( 1.0f, performanceCollector.totalEvaluations ) ) );
+      performanceLogger.info( String.format( "Performance: %s => total=%d, evaluated=%d (%f%%), avoided=%d (%f%%)",
+          getClass(), performanceCollector.totalEvaluations, performanceCollector.evaluations, 100f
+              * performanceCollector.evaluations / Math.max( 1.0f, performanceCollector.totalEvaluations ),
+          performanceCollector.skippedEvaluations, 100f * performanceCollector.skippedEvaluations
+              / Math.max( 1.0f, performanceCollector.totalEvaluations ) ) );
     }
   }
 

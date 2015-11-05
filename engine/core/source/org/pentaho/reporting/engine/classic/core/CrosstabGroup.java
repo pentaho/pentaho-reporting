@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -36,7 +36,7 @@ import java.util.List;
  * @author Thomas Morgner
  */
 public class CrosstabGroup extends Group {
-  private static final String[] EMPTY_FIELDS = new String[ 0 ];
+  private static final String[] EMPTY_FIELDS = new String[0];
 
   private GroupHeader header;
   private GroupFooter footer;
@@ -76,10 +76,10 @@ public class CrosstabGroup extends Group {
     registerAsChild( noDataBand );
   }
 
-
   /**
-   * Returns the group header. <P> The group header is a report band that contains elements that should be printed at
-   * the start of a group.
+   * Returns the group header.
+   * <P>
+   * The group header is a report band that contains elements that should be printed at the start of a group.
    *
    * @return the group header.
    */
@@ -90,8 +90,10 @@ public class CrosstabGroup extends Group {
   /**
    * Sets the header for the group.
    *
-   * @param header the header (null not permitted).
-   * @throws NullPointerException if the given header is null
+   * @param header
+   *          the header (null not permitted).
+   * @throws NullPointerException
+   *           if the given header is null
    */
   public void setHeader( final GroupHeader header ) {
     if ( header == null ) {
@@ -123,8 +125,10 @@ public class CrosstabGroup extends Group {
   /**
    * Sets the footer for the group.
    *
-   * @param footer the footer (null not permitted).
-   * @throws NullPointerException if the given footer is null.
+   * @param footer
+   *          the footer (null not permitted).
+   * @throws NullPointerException
+   *           if the given footer is null.
    */
   public void setFooter( final GroupFooter footer ) {
     if ( footer == null ) {
@@ -180,8 +184,7 @@ public class CrosstabGroup extends Group {
   }
 
   private void validateBody( final GroupBody body ) {
-    if ( body instanceof CrosstabRowGroupBody == false &&
-      body instanceof CrosstabOtherGroupBody == false ) {
+    if ( body instanceof CrosstabRowGroupBody == false && body instanceof CrosstabOtherGroupBody == false ) {
       throw new IllegalArgumentException();
     }
   }
@@ -214,7 +217,6 @@ public class CrosstabGroup extends Group {
     g.registerAsChild( g.noDataBand );
     return g;
   }
-
 
   protected void removeElement( final Element element ) {
     if ( element == null ) {
@@ -254,7 +256,7 @@ public class CrosstabGroup extends Group {
   }
 
   public Element getElement( final int index ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         return header;
       case 1:
@@ -269,7 +271,7 @@ public class CrosstabGroup extends Group {
   }
 
   public void setElementAt( final int index, final Element element ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         setHeader( (GroupHeader) element );
         break;
@@ -304,27 +306,28 @@ public class CrosstabGroup extends Group {
   }
 
   public Boolean getPrintColumnTitleHeader() {
-    return (Boolean) getAttribute( AttributeNames.Crosstab.NAMESPACE,
-      AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER );
+    return (Boolean) getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER );
   }
 
   public void setPrintColumnTitleHeader( final Boolean printColumnTitleHeader ) {
     setAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER,
-      printColumnTitleHeader );
+        printColumnTitleHeader );
   }
 
   /**
    * Sets the fields for this group. The given list must contain Strings defining the needed fields from the DataRow.
    * Don't reference Function-Fields here, functions are not supported in th groupfield definition.
    *
-   * @param c the list containing strings.
-   * @throws NullPointerException if the given list is null or the list contains null-values.
+   * @param c
+   *          the list containing strings.
+   * @throws NullPointerException
+   *           if the given list is null or the list contains null-values.
    */
   public void setPaddingFields( final List<String> c ) {
     if ( c == null ) {
       throw new NullPointerException();
     }
-    final String[] fields = c.toArray( new String[ c.size() ] );
+    final String[] fields = c.toArray( new String[c.size()] );
     setPaddingFieldsArray( fields );
   }
 
@@ -333,10 +336,12 @@ public class CrosstabGroup extends Group {
   }
 
   /**
-   * Adds a field to the group.  The field names must correspond to the column names in the report's TableModel.
+   * Adds a field to the group. The field names must correspond to the column names in the report's TableModel.
    *
-   * @param name the field name (null not permitted).
-   * @throws NullPointerException if the name is null
+   * @param name
+   *          the field name (null not permitted).
+   * @throws NullPointerException
+   *           if the name is null
    */
   public void addPaddingField( final String name ) {
     if ( name == null ) {
@@ -345,7 +350,7 @@ public class CrosstabGroup extends Group {
     final ArrayList<String> fieldsList = new ArrayList<String>( getPaddingFields() );
     fieldsList.add( name );
     Collections.sort( fieldsList );
-    setPaddingFieldsArray( fieldsList.toArray( new String[ fieldsList.size() ] ) );
+    setPaddingFieldsArray( fieldsList.toArray( new String[fieldsList.size()] ) );
   }
 
   /**

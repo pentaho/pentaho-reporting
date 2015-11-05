@@ -1,27 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
+
+import java.awt.Color;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.RectangleType;
-
-import java.awt.*;
 
 /**
  * The drawable field element factory can be used to create elements that display <code>Drawable</code> elements.
@@ -62,7 +62,8 @@ public class RectangleElementFactory extends AbstractContentElementFactory {
    * Creates a new drawable field element based on the defined properties.
    *
    * @return the generated elements
-   * @throws IllegalStateException if the field name is not set.
+   * @throws IllegalStateException
+   *           if the field name is not set.
    * @see ElementFactory#createElement()
    */
   public Element createElement() {
@@ -83,15 +84,20 @@ public class RectangleElementFactory extends AbstractContentElementFactory {
    * <p/>
    * X, y, width and height can be positive numbers to give a absolute value or negative numbers for percentage values.
    *
-   * @param x      the x position of the element.
-   * @param y      the y position of the element.
-   * @param width  the width of the element.
-   * @param height the height of the element.
-   * @param color  the fill color of the rectangle.
+   * @param x
+   *          the x position of the element.
+   * @param y
+   *          the y position of the element.
+   * @param width
+   *          the width of the element.
+   * @param height
+   *          the height of the element.
+   * @param color
+   *          the fill color of the rectangle.
    * @return the created element.
    */
   public static Element createFilledRectangle( final float x, final float y, final float width, final float height,
-                                               final Color color ) {
+      final Color color ) {
     final RectangleElementFactory rectangleElementFactory = new RectangleElementFactory();
     rectangleElementFactory.setX( new Float( x ) );
     rectangleElementFactory.setY( new Float( y ) );

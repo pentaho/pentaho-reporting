@@ -1,31 +1,33 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
+
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.Window;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.IconTheme;
 import org.pentaho.reporting.libraries.base.config.ExtendedConfiguration;
 import org.pentaho.reporting.libraries.base.config.ExtendedConfigurationWrapper;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
-
-import java.awt.*;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 /**
  * The AbstractExportPlugin provides a basic implementation of the ExportPlugin interface.
@@ -37,7 +39,7 @@ public abstract class AbstractActionPlugin implements ActionPlugin {
   private PropertyChangeSupport propertyChangeSupport;
 
   /**
-   * Localised resources.
+   * Localized resources.
    */
   private ResourceBundleSupport baseResources;
   private IconTheme iconTheme;
@@ -72,9 +74,9 @@ public abstract class AbstractActionPlugin implements ActionPlugin {
       this.context = context;
       this.iconTheme = context.getIconTheme();
       this.configuration = new ExtendedConfigurationWrapper( context.getConfiguration() );
-      this.baseResources = new ResourceBundleSupport
-        ( context.getLocale(), SwingCommonModule.BUNDLE_NAME,
-          ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
+      this.baseResources =
+          new ResourceBundleSupport( context.getLocale(), SwingCommonModule.BUNDLE_NAME, ObjectUtilities
+              .getClassLoader( SwingCommonModule.class ) );
     }
     return true;
   }
@@ -101,7 +103,7 @@ public abstract class AbstractActionPlugin implements ActionPlugin {
 
   /**
    * Returns true if the action is separated, and false otherwise. A separated action starts a new action group and will
-   * be spearated from previous actions on the menu and toolbar.
+   * be sepearated from previous actions on the menu and toolbar.
    *
    * @return true, if the action should be separated from previous actions, false otherwise.
    */
@@ -148,8 +150,7 @@ public abstract class AbstractActionPlugin implements ActionPlugin {
     propertyChangeSupport.addPropertyChangeListener( l );
   }
 
-  public void addPropertyChangeListener( final String property,
-                                         final PropertyChangeListener l ) {
+  public void addPropertyChangeListener( final String property, final PropertyChangeListener l ) {
     propertyChangeSupport.addPropertyChangeListener( property, l );
   }
 
@@ -162,7 +163,6 @@ public abstract class AbstractActionPlugin implements ActionPlugin {
   }
 
   protected abstract String getConfigurationPrefix();
-
 
   /**
    * A sort key used to enforce a certain order within the actions.

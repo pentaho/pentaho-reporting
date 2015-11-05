@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -67,7 +67,8 @@ public class CreateGroupAnchorsFunction extends AbstractFunction {
   /**
    * Defines the prefix for the generated anchor.
    *
-   * @param anchorPrefix the prefix for the anchor.
+   * @param anchorPrefix
+   *          the prefix for the anchor.
    */
   public void setAnchorPrefix( final String anchorPrefix ) {
     if ( anchorPrefix == null ) {
@@ -88,17 +89,20 @@ public class CreateGroupAnchorsFunction extends AbstractFunction {
   /**
    * Defines the name of the group for which an anchor should be generated.
    *
-   * @param group the name of the group.
+   * @param group
+   *          the name of the group.
    */
   public void setGroup( final String group ) {
     this.group = group;
   }
 
   /**
-   * Receives notification that report generation initializes the current run. <P> The event carries a
-   * ReportState.Started state.  Use this to initialize the report.
+   * Receives notification that report generation initializes the current run.
+   * <P>
+   * The event carries a ReportState.Started state. Use this to initialize the report.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void reportInitialized( final ReportEvent event ) {
     count = 0;
@@ -115,7 +119,8 @@ public class CreateGroupAnchorsFunction extends AbstractFunction {
   /**
    * Receives notification that a group has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) == false ) {
@@ -132,7 +137,9 @@ public class CreateGroupAnchorsFunction extends AbstractFunction {
   }
 
   /**
-   * Return the current expression value. <P> The value depends (obviously) on the expression implementation.
+   * Return the current expression value.
+   * <P>
+   * The value depends (obviously) on the expression implementation.
    *
    * @return the value of the function.
    */

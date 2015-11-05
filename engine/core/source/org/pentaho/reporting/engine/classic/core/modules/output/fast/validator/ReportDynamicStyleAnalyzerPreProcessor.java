@@ -27,16 +27,15 @@ public class ReportDynamicStyleAnalyzerPreProcessor extends AbstractReportPrePro
   public ReportDynamicStyleAnalyzerPreProcessor() {
   }
 
-  public MasterReport performPreProcessing( final MasterReport definition,
-                                            final DefaultFlowController flowController )
+  public MasterReport performPreProcessing( final MasterReport definition, final DefaultFlowController flowController )
     throws ReportProcessingException {
     DynamicReportStyleAnalyzer analyzer = new DynamicReportStyleAnalyzer();
     analyzer.compute( definition );
     return definition;
   }
 
-  public SubReport performPreProcessing( final SubReport definition,
-                                         final DefaultFlowController flowController ) throws ReportProcessingException {
+  public SubReport performPreProcessing( final SubReport definition, final DefaultFlowController flowController )
+    throws ReportProcessingException {
     DynamicReportStyleAnalyzer analyzer = new DynamicReportStyleAnalyzer();
     analyzer.compute( definition );
     return definition;

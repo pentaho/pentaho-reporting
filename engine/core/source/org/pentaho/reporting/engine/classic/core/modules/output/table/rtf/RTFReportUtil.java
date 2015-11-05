@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf;
 
@@ -41,20 +41,23 @@ public final class RTFReportUtil {
   /**
    * Saves a report to rich-text format (RTF).
    *
-   * @param report   the report.
-   * @param filename target file name.
-   * @throws ReportProcessingException if the report processing failed.
-   * @throws IOException               if there was an IOerror while processing the report.
+   * @param report
+   *          the report.
+   * @param filename
+   *          target file name.
+   * @throws ReportProcessingException
+   *           if the report processing failed.
+   * @throws IOException
+   *           if there was an IOerror while processing the report.
    */
-  public static void createRTF( final MasterReport report, final String filename )
-    throws IOException, ReportProcessingException {
+  public static void createRTF( final MasterReport report, final String filename ) throws IOException,
+    ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
     }
     if ( filename == null ) {
       throw new NullPointerException();
     }
-
 
     OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
     try {
@@ -81,9 +84,8 @@ public final class RTFReportUtil {
       throw new NullPointerException();
     }
 
-
     final StreamRTFOutputProcessor target =
-      new StreamRTFOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
+        new StreamRTFOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
     final StreamReportProcessor proc = new StreamReportProcessor( report, target );
     proc.processReport();
     proc.close();

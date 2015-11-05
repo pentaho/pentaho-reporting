@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -38,8 +38,8 @@ public abstract class RenderNode implements Cloneable {
 
   static {
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    if ( "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" ) ) ) {
       paranoidModelChecks = true;
     } else {
       paranoidModelChecks = false;
@@ -93,12 +93,8 @@ public abstract class RenderNode implements Cloneable {
 
   private long cachedAge;
 
-  protected RenderNode( final int majorAxis,
-                        final int minorAxis,
-                        final StyleSheet styleSheet,
-                        final InstanceID instanceID,
-                        final ElementType elementType,
-                        final ReportAttributeMap<Object> attributes ) {
+  protected RenderNode( final int majorAxis, final int minorAxis, final StyleSheet styleSheet,
+      final InstanceID instanceID, final ElementType elementType, final ReportAttributeMap<Object> attributes ) {
     this( new NodeLayoutProperties( majorAxis, minorAxis, styleSheet, attributes, instanceID, elementType ) );
   }
 
@@ -111,10 +107,8 @@ public abstract class RenderNode implements Cloneable {
     this.cacheState = RenderNode.CACHE_DIRTY;
   }
 
-  protected void reinit( final StyleSheet styleSheet,
-                         final ElementType elementType,
-                         final ReportAttributeMap<Object> attributes,
-                         final InstanceID instanceId ) {
+  protected void reinit( final StyleSheet styleSheet, final ElementType elementType,
+      final ReportAttributeMap<Object> attributes, final InstanceID instanceId ) {
     if ( attributes == null ) {
       throw new NullPointerException();
     }
@@ -139,9 +133,9 @@ public abstract class RenderNode implements Cloneable {
     this.maximumBoxWidth = 0;
 
     this.cacheState = RenderNode.CACHE_DIRTY;
-    this.nodeLayoutProperties = new NodeLayoutProperties
-      ( this.nodeLayoutProperties.getMajorAxis(), this.nodeLayoutProperties.getMinorAxis(),
-        styleSheet, attributes, instanceId, elementType );
+    this.nodeLayoutProperties =
+        new NodeLayoutProperties( this.nodeLayoutProperties.getMajorAxis(), this.nodeLayoutProperties.getMinorAxis(),
+            styleSheet, attributes, instanceId, elementType );
   }
 
   public ElementType getElementType() {
@@ -195,7 +189,7 @@ public abstract class RenderNode implements Cloneable {
 
   public final void setX( final long x ) {
     this.x = x;
-    //this.updateChangeTracker();
+    // this.updateChangeTracker();
   }
 
   public final long getY() {
@@ -211,7 +205,7 @@ public abstract class RenderNode implements Cloneable {
   }
 
   protected final void updateCacheState( final CacheState state ) {
-    switch( state ) {
+    switch ( state ) {
       case CLEAN:
         break;
       case DIRTY:
@@ -249,7 +243,7 @@ public abstract class RenderNode implements Cloneable {
 
     this.width = width;
     this.updateCacheState( RenderNode.CACHE_DIRTY );
-    //this.updateChangeTracker();
+    // this.updateChangeTracker();
   }
 
   public final long getHeight() {
@@ -261,7 +255,7 @@ public abstract class RenderNode implements Cloneable {
       throw new IndexOutOfBoundsException( "Height cannot be negative" );
     }
     this.height = height;
-    //  this.updateCacheState(RenderNode.CACHE_DIRTY);
+    // this.updateCacheState(RenderNode.CACHE_DIRTY);
   }
 
   public final StyleSheet getStyleSheet() {
@@ -495,20 +489,21 @@ public abstract class RenderNode implements Cloneable {
   public VerticalTextAlign getVerticalTextAlignment() {
     return nodeLayoutProperties.getVerticalTextAlign();
   }
+
   //
-  //  /**
-  //   * The sticky-Marker contains the original Y of this node.
-  //   * @return
-  //   */
-  //  public long getStickyMarker()
-  //  {
-  //    return stickyMarker;
-  //  }
+  // /**
+  // * The sticky-Marker contains the original Y of this node.
+  // * @return
+  // */
+  // public long getStickyMarker()
+  // {
+  // return stickyMarker;
+  // }
   //
-  //  public void setStickyMarker(final long stickyMarker)
-  //  {
-  //    this.stickyMarker = stickyMarker;
-  //  }
+  // public void setStickyMarker(final long stickyMarker)
+  // {
+  // this.stickyMarker = stickyMarker;
+  // }
 
   public String getName() {
     return null;
@@ -563,7 +558,8 @@ public abstract class RenderNode implements Cloneable {
    * The cached positions always specify the border-box. If the user specified sizes as content-box sizes, the layouter
    * converts them into border-box sizes before filling the cache.
    *
-   * @param cachedX the cached x position
+   * @param cachedX
+   *          the cached x position
    */
   public void setCachedX( final long cachedX ) {
     this.cachedX = cachedX;
@@ -593,7 +589,8 @@ public abstract class RenderNode implements Cloneable {
    * The cached positions always specify the border-box. If the user specified sizes as content-box sizes, the layouter
    * converts them into border-box sizes before filling the cache.
    *
-   * @param cachedY the cached y position
+   * @param cachedY
+   *          the cached y position
    */
   public void setCachedY( final long cachedY ) {
     this.cachedY = cachedY;
@@ -640,8 +637,7 @@ public abstract class RenderNode implements Cloneable {
 
     final RenderBox parent = getParent();
     if ( parent != null ) {
-      parent.addOverflowArea( x + getOverflowAreaWidth() - parent.getX(),
-        y + getOverflowAreaHeight() - parent.getY() );
+      parent.addOverflowArea( x + getOverflowAreaWidth() - parent.getX(), y + getOverflowAreaHeight() - parent.getY() );
     }
   }
 
@@ -722,14 +718,13 @@ public abstract class RenderNode implements Cloneable {
     return isNodeVisible( drawAreaX0, drawAreaY0, drawArea.getWidth(), drawArea.getHeight() );
   }
 
-  public final boolean isNodeVisible( final long drawAreaX0, final long drawAreaY0,
-                                      final long drawAreaWidth, final long drawAreaHeight ) {
+  public final boolean isNodeVisible( final long drawAreaX0, final long drawAreaY0, final long drawAreaWidth,
+      final long drawAreaHeight ) {
     return isNodeVisible( drawAreaX0, drawAreaY0, drawAreaWidth, drawAreaHeight, isBoxOverflowX(), isBoxOverflowY() );
   }
 
-  public final boolean isNodeVisible( final long drawAreaX0, final long drawAreaY0,
-                                      final long drawAreaWidth, final long drawAreaHeight,
-                                      final boolean overflowX, final boolean overflowY ) {
+  public final boolean isNodeVisible( final long drawAreaX0, final long drawAreaY0, final long drawAreaWidth,
+      final long drawAreaHeight, final boolean overflowX, final boolean overflowY ) {
     if ( getStyleSheet().getBooleanStyleProperty( ElementStyleKeys.VISIBLE ) == false ) {
       return false;
     }
@@ -812,9 +807,8 @@ public abstract class RenderNode implements Cloneable {
       return true;
     }
 
-
-    if ( parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT &&
-      parent.getStaticBoxLayoutProperties().isOverflowX() == false ) {
+    if ( parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT
+        && parent.getStaticBoxLayoutProperties().isOverflowX() == false ) {
       final long parentX1 = parent.getX();
       final long parentX2 = parentX1 + parent.getWidth();
 
@@ -835,15 +829,14 @@ public abstract class RenderNode implements Cloneable {
     }
 
     final int layoutNodeType = getLayoutNodeType();
-    if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ||
-      layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
+    if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_CELL || layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
       // we cannot perform an overflow test for table-rows or table-cells based on the parent node.
       // With col and row-spanning, this can be non-deterministic.
       return true;
     }
 
-    if ( parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT &&
-      parent.getStaticBoxLayoutProperties().isOverflowY() == false ) {
+    if ( parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT
+        && parent.getStaticBoxLayoutProperties().isOverflowY() == false ) {
       // Compute whether the box is at least partially contained in the parent's bounding box.
       final long parentY1 = parent.getY();
       final long parentY2 = parentY1 + parent.getHeight();

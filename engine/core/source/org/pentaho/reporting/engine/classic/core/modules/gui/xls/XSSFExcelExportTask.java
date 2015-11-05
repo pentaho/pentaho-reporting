@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.xls;
 
@@ -69,18 +69,19 @@ public class XSSFExcelExportTask implements Runnable {
   /**
    * Creates a new export task.
    *
-   * @param dialog the progress dialog that will monitor the report progress.
-   * @param report the report that should be exported.
+   * @param dialog
+   *          the progress dialog that will monitor the report progress.
+   * @param report
+   *          the report that should be exported.
    */
-  public XSSFExcelExportTask
-  ( final MasterReport report,
-    final ReportProgressDialog dialog,
-    final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
+  public XSSFExcelExportTask( final MasterReport report, final ReportProgressDialog dialog,
+      final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException( "ExcelExportTask(..): Null report parameter not permitted" ); //$NON-NLS-1$
     }
-    this.fileName = report.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.xls.FileName" ); //$NON-NLS-1$
+    this.fileName =
+        report.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.gui.xls.FileName" ); //$NON-NLS-1$
     if ( fileName == null ) {
       throw new ReportProcessingException( "ExcelExportTask(): Filename is not defined" ); //$NON-NLS-1$
     }
@@ -88,8 +89,9 @@ public class XSSFExcelExportTask implements Runnable {
     this.report = report;
     if ( swingGuiContext != null ) {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages( swingGuiContext.getLocale(), ExcelExportPlugin.BASE_RESOURCE_CLASS,
-        ObjectUtilities.getClassLoader( ExcelExportPlugin.class ) );
+      this.messages =
+          new Messages( swingGuiContext.getLocale(), ExcelExportPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
+              .getClassLoader( ExcelExportPlugin.class ) );
     }
   }
 
@@ -115,7 +117,7 @@ public class XSSFExcelExportTask implements Runnable {
       ReportProcessor reportProcessor;
       if ( validator.isValidForFastProcessing( report ) == false ) {
         final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor( report.getConfiguration(), out, report.getResourceManager() );
+            new FlowExcelOutputProcessor( report.getConfiguration(), out, report.getResourceManager() );
         target.setUseXlsxFormat( true );
         reportProcessor = new FlowReportProcessor( report, target );
       } else {
@@ -135,14 +137,13 @@ public class XSSFExcelExportTask implements Runnable {
       }
 
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "ExcelExportTask.USER_TASK_FINISHED" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "ExcelExportTask.USER_TASK_FINISHED" ), null ); //$NON-NLS-1$
       }
 
     } catch ( ReportInterruptedException re ) {
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.WARNING, messages.getString( "ExcelExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.WARNING, messages.getString( "ExcelExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
       }
 
       try {
@@ -159,8 +160,7 @@ public class XSSFExcelExportTask implements Runnable {
     } catch ( Exception re ) {
       XSSFExcelExportTask.logger.error( "Excel export failed", re ); //$NON-NLS-1$
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.WARNING, messages.getString( "ExcelExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.WARNING, messages.getString( "ExcelExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
       }
     } finally {
       try {
@@ -170,8 +170,7 @@ public class XSSFExcelExportTask implements Runnable {
       } catch ( Exception e ) {
         XSSFExcelExportTask.logger.error( "Unable to close the output stream.", e ); //$NON-NLS-1$
         if ( statusListener != null ) {
-          statusListener.setStatus
-            ( StatusType.WARNING, messages.getString( "ExcelExportTask.USER_TASK_FAILED" ), e ); //$NON-NLS-1$
+          statusListener.setStatus( StatusType.WARNING, messages.getString( "ExcelExportTask.USER_TASK_FAILED" ), e ); //$NON-NLS-1$
         }
         // if there is already another error, this exception is
         // just a minor obstactle. Something big crashed before ...

@@ -1,21 +1,45 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.html;
+
+import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.AbstractExportDialog;
@@ -29,14 +53,6 @@ import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.text.MessageFormat;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 /**
  * A dialog that is used to perform the printing of a report into an HTML file.
  *
@@ -46,8 +62,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   /**
    * The 'HTML encoding' property key.
    */
-  public static final String HTML_OUTPUT_ENCODING
-    = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Encoding"; //$NON-NLS-1$
+  public static final String HTML_OUTPUT_ENCODING =
+      "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Encoding"; //$NON-NLS-1$
   /**
    * A default value of the 'HTML encoding' property key.
    */
@@ -67,7 +83,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
     /**
      * Receives notification that the action has occurred.
      *
-     * @param e the action event.
+     * @param e
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent e ) {
       performSelectFileZip();
@@ -128,7 +145,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   /**
    * Creates a new HTML save dialog.
    *
-   * @param owner the dialog owner.
+   * @param owner
+   *          the dialog owner.
    */
   public HtmlZipExportDialog( final Frame owner ) {
     super( owner );
@@ -138,7 +156,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   /**
    * Creates a new HTML export dialog.
    *
-   * @param owner the dialog owner.
+   * @param owner
+   *          the dialog owner.
    */
   public HtmlZipExportDialog( final Dialog owner ) {
     super( owner );
@@ -146,7 +165,7 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   }
 
   /**
-   * Creates a new HTML save dialog.  The created dialog is modal.
+   * Creates a new HTML save dialog. The created dialog is modal.
    */
   public HtmlZipExportDialog() {
     initConstructor();
@@ -168,8 +187,7 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
 
   private JPanel createExportPanel() {
     final JLabel lblDirFileName = new JLabel( getResources().getString( "htmlexportdialog.filename" ) ); //$NON-NLS-1$
-    final JLabel lblDirDataFileName = new JLabel( getResources().getString(
-      "htmlexportdialog.datafilename" ) ); //$NON-NLS-1$
+    final JLabel lblDirDataFileName = new JLabel( getResources().getString( "htmlexportdialog.datafilename" ) ); //$NON-NLS-1$
 
     final JPanel contentPane = new JPanel();
     contentPane.setLayout( new GridBagLayout() );
@@ -276,8 +294,7 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
     final JLabel lblAuthor = new JLabel( getResources().getString( "htmlexportdialog.author" ) ); //$NON-NLS-1$
     final JLabel lblTitel = new JLabel( getResources().getString( "htmlexportdialog.title" ) ); //$NON-NLS-1$
     final JLabel lblKeywords = new JLabel( getResources().getString( "htmlexportdialog.keywords" ) ); //$NON-NLS-1$
-    final JLabel lblDescription =
-      new JLabel( getResources().getString( "htmlexportdialog.description" ) ); //$NON-NLS-1$
+    final JLabel lblDescription = new JLabel( getResources().getString( "htmlexportdialog.description" ) ); //$NON-NLS-1$
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -372,8 +389,7 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
 
     cbEncoding = new JComboBox( encodingModel );
     cbxStrictLayout = new JCheckBox( getResources().getString( "htmlexportdialog.strict-layout" ) ); //$NON-NLS-1$
-    cbxCopyExternalReferences = new JCheckBox( getResources().getString(
-      "htmlexportdialog.copy-external-references" ) ); //$NON-NLS-1$
+    cbxCopyExternalReferences = new JCheckBox( getResources().getString( "htmlexportdialog.copy-external-references" ) ); //$NON-NLS-1$
 
     getFormValidator().registerButton( cbxStrictLayout );
     getFormValidator().registerTextField( txFilename );
@@ -384,22 +400,22 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
 
     final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
     final boolean advancedSettingsTabAvail =
-      "true".equals( config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.AdvancedSettingsAvailable" ) );
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.AdvancedSettingsAvailable" ) );
     final boolean metaDataSettingsTabAvail =
-      "true".equals( config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.MetaDataSettingsAvailable" ) );
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.MetaDataSettingsAvailable" ) );
     final JTabbedPane tabbedPane = new JTabbedPane();
     tabbedPane.add( getResources().getString( "htmlexportdialog.export-settings" ), exportPane ); //$NON-NLS-1$
     tabbedPane.add( getResources().getString( "htmlexportdialog.parameters" ), getParametersPanel() ); //$NON-NLS-1$
 
     if ( metaDataSettingsTabAvail ) {
-      tabbedPane.add( getResources().getString( "htmlexportdialog.metadata-settings" ),
-        createMetaDataPanel() ); //$NON-NLS-1$
+      tabbedPane.add( getResources().getString( "htmlexportdialog.metadata-settings" ), createMetaDataPanel() ); //$NON-NLS-1$
     }
     if ( advancedSettingsTabAvail ) {
-      tabbedPane.add( getResources().getString( "htmlexportdialog.advanced-settings" ),
-        createExportOptionsPanel() ); //$NON-NLS-1$
+      tabbedPane.add( getResources().getString( "htmlexportdialog.advanced-settings" ), createExportOptionsPanel() ); //$NON-NLS-1$
     }
 
     setContentPane( createContentPane( tabbedPane ) );
@@ -417,7 +433,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   /**
    * Defines the title of the HTML file.
    *
-   * @param title the title
+   * @param title
+   *          the title
    */
   public void setHTMLTitle( final String title ) {
     this.txTitle.setText( title );
@@ -436,7 +453,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
    * Defines the Author of the report. Any freeform text is valid. This defaults to the value of the systemProperty
    * "user.name".
    *
-   * @param author the name of the author.
+   * @param author
+   *          the name of the author.
    */
   public void setAuthor( final String author ) {
     this.txAuthor.setText( author );
@@ -462,15 +480,13 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
    * Clears all selections and input fields.
    */
   public void clear() {
-    txAuthor.setText( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "user.name", "" ) ); //$NON-NLS-1$ //$NON-NLS-2$
+    txAuthor.setText( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty( "user.name", "" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     txFilename.setText( "" ); //$NON-NLS-1$
     txDataFilename.setText( "" ); //$NON-NLS-1$
     txTitle.setText( "" ); //$NON-NLS-1$
     txKeywords.setText( "" ); //$NON-NLS-1$
     txDescription.setText( "" ); //$NON-NLS-1$
-    cbEncoding.setSelectedIndex( encodingModel.indexOf
-      ( EncodingRegistry.getPlatformDefaultEncoding() ) );
+    cbEncoding.setSelectedIndex( encodingModel.indexOf( EncodingRegistry.getPlatformDefaultEncoding() ) );
     cbxCopyExternalReferences.setSelected( false );
     cbxStrictLayout.setSelected( false );
   }
@@ -485,59 +501,53 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   protected Configuration grabDialogContents( final boolean full ) {
     final DefaultConfiguration p = new DefaultConfiguration();
     if ( full ) {
-      p.setProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.gui.html.ExportMethod",
-          "zip" ); //$NON-NLS-1$ //$NON-NLS-2$
-      p.setProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.DataDirectory",//$NON-NLS-1$
-        getDataFilename() );
-      p.setProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.TargetFileName",//$NON-NLS-1$
-        getFilename() );
+      p.setProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.ExportMethod", "zip" ); //$NON-NLS-1$ //$NON-NLS-2$
+      p.setProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.DataDirectory", //$NON-NLS-1$
+          getDataFilename() );
+      p.setProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.TargetFileName", //$NON-NLS-1$
+          getFilename() );
     }
 
-    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Keywords",//$NON-NLS-1$
-      getKeywords() );
-    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Description",//$NON-NLS-1$
-      getDescription() );
-    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Author",//$NON-NLS-1$
-      getAuthor() );
-    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Encoding",//$NON-NLS-1$
-      getEncoding() );
-    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Title",//$NON-NLS-1$
-      getHTMLTitle() );
+    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Keywords", //$NON-NLS-1$
+        getKeywords() );
+    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Description", //$NON-NLS-1$
+        getDescription() );
+    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Author", //$NON-NLS-1$
+        getAuthor() );
+    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Encoding", //$NON-NLS-1$
+        getEncoding() );
+    p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Title", //$NON-NLS-1$
+        getHTMLTitle() );
     p.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.StrictLayout",
-      //$NON-NLS-1$
-      String.valueOf( isStrictLayout() ) );
+    //$NON-NLS-1$
+        String.valueOf( isStrictLayout() ) );
     return p;
   }
 
   protected void setDialogContents( final Configuration p ) {
-    setHTMLTitle( p.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Title", //$NON-NLS-1$
+    setHTMLTitle( p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Title", //$NON-NLS-1$
         p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Title" ) ) ); //$NON-NLS-1$
     setAuthor( p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Author",
-      //$NON-NLS-1$
-      p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Author" ) ) ); //$NON-NLS-1$
-    setKeywords( p.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Keywords", //$NON-NLS-1$
+    //$NON-NLS-1$
+        p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Author" ) ) ); //$NON-NLS-1$
+    setKeywords( p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Keywords", //$NON-NLS-1$
         p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Keywords" ) ) ); //$NON-NLS-1$
     setDescription( p.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Description", //$NON-NLS-1$
-      p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Description" ) ) ); //$NON-NLS-1$
+        "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Description", //$NON-NLS-1$
+        p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Description" ) ) ); //$NON-NLS-1$
 
-    setStrictLayout( "true".equals( p.getConfigProperty //$NON-NLS-1$
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.StrictLayout" ) ) ); //$NON-NLS-1$
+    setStrictLayout( "true".equals( p.getConfigProperty( //$NON-NLS-1$
+        "org.pentaho.reporting.engine.classic.core.modules.output.table.html.StrictLayout" ) ) ); //$NON-NLS-1$
 
-    final String encoding = p.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Encoding", //$NON-NLS-1$
-        EncodingRegistry.getPlatformDefaultEncoding() );
+    final String encoding =
+        p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Encoding", //$NON-NLS-1$
+            EncodingRegistry.getPlatformDefaultEncoding() );
     encodingModel.ensureEncodingAvailable( encoding );
     setEncoding( encoding );
 
-    setDataFilename( p.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.DataDirectory",
-        "" ) ); //$NON-NLS-1$ //$NON-NLS-2$
-    setFilename( p.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.TargetFileName",
+    setDataFilename( p.getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.DataDirectory", "" ) ); //$NON-NLS-1$ //$NON-NLS-2$
+    setFilename( p.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.TargetFileName",
         "" ) ); //$NON-NLS-1$ //$NON-NLS-2$
 
   }
@@ -554,7 +564,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   /**
    * Sets the directory data file name.
    *
-   * @param dirFilename the file name.
+   * @param dirFilename
+   *          the file name.
    */
   public void setDataFilename( final String dirFilename ) {
     this.txDataFilename.setText( dirFilename );
@@ -572,7 +583,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   /**
    * Sets the directory file name.
    *
-   * @param dirFilename the file name.
+   * @param dirFilename
+   *          the file name.
    */
   public void setFilename( final String dirFilename ) {
     this.txFilename.setText( dirFilename );
@@ -590,7 +602,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   /**
    * Sets the 'strict layout' check-box.
    *
-   * @param s boolean.
+   * @param s
+   *          boolean.
    */
   public void setStrictLayout( final boolean s ) {
     cbxStrictLayout.setSelected( s );
@@ -612,7 +625,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
   /**
    * Sets the encoding.
    *
-   * @param encoding the encoding name.
+   * @param encoding
+   *          the encoding name.
    */
   public void setEncoding( final String encoding ) {
     cbEncoding.setSelectedIndex( encodingModel.indexOf( encoding ) );
@@ -626,10 +640,9 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
 
     if ( fileChooserZip == null ) {
       fileChooserZip = new JFileChooser();
-      fileChooserZip.addChoosableFileFilter
-        ( new FilesystemFilter(
-          new String[] { HtmlZipExportDialog.ZIP_FILE_EXTENSION, HtmlZipExportDialog.JAR_FILE_EXTENSION },
-          getResources().getString( "htmlexportdialog.zip-archives" ), true ) ); //$NON-NLS-1$
+      fileChooserZip.addChoosableFileFilter( new FilesystemFilter( new String[] {
+        HtmlZipExportDialog.ZIP_FILE_EXTENSION, HtmlZipExportDialog.JAR_FILE_EXTENSION }, getResources().getString(
+          "htmlexportdialog.zip-archives" ), true ) ); //$NON-NLS-1$
       fileChooserZip.setMultiSelectionEnabled( false );
     }
 
@@ -658,26 +671,22 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
 
     final String filename = getFilename();
     if ( filename.trim().length() == 0 ) {
-      getStatusBar().setStatus( StatusType.ERROR,
-        getResources().getString( "htmlexportdialog.targetIsEmpty" ) ); //$NON-NLS-1$
+      getStatusBar().setStatus( StatusType.ERROR, getResources().getString( "htmlexportdialog.targetIsEmpty" ) ); //$NON-NLS-1$
       return false;
     }
     final File f = new File( filename );
     if ( f.exists() ) {
       if ( f.isFile() == false ) {
-        getStatusBar().setStatus( StatusType.ERROR,
-          getResources().getString( "htmlexportdialog.targetIsNoFile" ) ); //$NON-NLS-1$
+        getStatusBar().setStatus( StatusType.ERROR, getResources().getString( "htmlexportdialog.targetIsNoFile" ) ); //$NON-NLS-1$
         return false;
       }
       if ( f.canWrite() == false ) {
-        getStatusBar().setStatus( StatusType.ERROR,
-          getResources().getString( "htmlexportdialog.targetIsNotWritable" ) ); //$NON-NLS-1$
+        getStatusBar().setStatus( StatusType.ERROR, getResources().getString( "htmlexportdialog.targetIsNotWritable" ) ); //$NON-NLS-1$
         return false;
       }
 
-      final String message = MessageFormat.format( getResources().getString
-          ( "htmlexportdialog.targetExistsWarning" ), //$NON-NLS-1$
-        new Object[] { filename } );
+      final String message = MessageFormat.format( getResources().getString( "htmlexportdialog.targetExistsWarning" ), //$NON-NLS-1$
+          new Object[] { filename } );
       getStatusBar().setStatus( StatusType.WARNING, message );
     }
 
@@ -686,8 +695,8 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
       final File baseDir = new File( "" ); //$NON-NLS-1$
 
       if ( IOUtils.getInstance().isSubDirectory( baseDir, dataDir ) == false ) {
-        getStatusBar().setStatus( StatusType.ERROR,
-          getResources().getString( "htmlexportdialog.targetPathIsAbsolute" ) ); //$NON-NLS-1$
+        getStatusBar()
+            .setStatus( StatusType.ERROR, getResources().getString( "htmlexportdialog.targetPathIsAbsolute" ) ); //$NON-NLS-1$
         return false;
       }
     } catch ( Exception e ) {
@@ -703,12 +712,9 @@ public class HtmlZipExportDialog extends AbstractExportDialog {
     if ( f.exists() ) {
       final String key1 = "htmlexportdialog.targetOverwriteConfirmation"; //$NON-NLS-1$
       final String key2 = "htmlexportdialog.targetOverwriteTitle"; //$NON-NLS-1$
-      if ( JOptionPane.showConfirmDialog( this,
-        MessageFormat.format( getResources().getString( key1 ),
-          new Object[] { getFilename() } ),
-        getResources().getString( key2 ),
-        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE )
-        == JOptionPane.NO_OPTION ) {
+      if ( JOptionPane.showConfirmDialog( this, MessageFormat.format( getResources().getString( key1 ),
+          new Object[] { getFilename() } ), getResources().getString( key2 ), JOptionPane.YES_NO_OPTION,
+          JOptionPane.QUESTION_MESSAGE ) == JOptionPane.NO_OPTION ) {
         return false;
       }
     }

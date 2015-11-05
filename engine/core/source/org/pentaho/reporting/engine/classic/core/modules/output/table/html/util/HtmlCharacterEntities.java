@@ -1,26 +1,25 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.util;
 
 import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
 
 import java.util.Properties;
-
 
 /**
  * A collection of all character entites defined in the HTML4 standard. The key is the entity name, the property value
@@ -47,7 +46,6 @@ public class HtmlCharacterEntities extends Properties {
     return entityParser;
   }
 
-
   private void addAccentedCharacters() {
     setProperty( "acute", "\u00b4" );
     setProperty( "cedil", "\u00b8" );
@@ -56,7 +54,6 @@ public class HtmlCharacterEntities extends Properties {
     setProperty( "middot", "\u00b7" );
     setProperty( "tilde", "\u02dc" );
     setProperty( "uml", "\u00a8" );
-
 
     setProperty( "Aacute", "\u00c1" );
     setProperty( "aacute", "\u00e1" );

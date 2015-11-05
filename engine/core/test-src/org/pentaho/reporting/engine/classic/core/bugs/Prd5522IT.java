@@ -29,20 +29,18 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelR
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd5522IT
-{
+public class Prd5522IT {
   @Before
   public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testIndention() throws ResourceException, IOException, ReportProcessingException
-  {
+  public void testIndention() throws ResourceException, IOException, ReportProcessingException {
     URL url = getClass().getResource( "Prd-5522.prpt" );
     MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
     org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner.createTestOutputFile();
-    ExcelReportUtil.createXLSX(report,"test-output/Prd-5522.xlsx");
+    ExcelReportUtil.createXLSX( report, "test-output/Prd-5522.xlsx" );
     ;
   }
 }

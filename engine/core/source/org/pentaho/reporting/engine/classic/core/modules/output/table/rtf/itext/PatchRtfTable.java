@@ -32,7 +32,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 /**
  * The PatchRtfTable wraps a Table. INTERNAL USE ONLY
  *
@@ -93,8 +92,10 @@ public class PatchRtfTable extends RtfElement {
   /**
    * Constructs a PatchRtfTable based on a Table for a RtfDocument.
    *
-   * @param doc   The RtfDocument this PatchRtfTable belongs to
-   * @param table The Table that this PatchRtfTable wraps
+   * @param doc
+   *          The RtfDocument this PatchRtfTable belongs to
+   * @param table
+   *          The Table that this PatchRtfTable wraps
    */
   public PatchRtfTable( RtfDocument doc, Table table ) {
     super( doc );
@@ -105,8 +106,10 @@ public class PatchRtfTable extends RtfElement {
   /**
    * Constructs a PatchRtfTable based on a PdfTable for a RtfDocument.
    *
-   * @param doc   The RtfDocument this PatchRtfTable belongs to
-   * @param table The PdfPTable that this PatchRtfTable wraps
+   * @param doc
+   *          The RtfDocument this PatchRtfTable belongs to
+   * @param table
+   *          The PdfPTable that this PatchRtfTable wraps
    * @since 2.1.3
    */
   public PatchRtfTable( RtfDocument doc, PdfPTable table ) {
@@ -117,7 +120,8 @@ public class PatchRtfTable extends RtfElement {
   /**
    * Imports the rows and settings from the Table into this PatchRtfTable.
    *
-   * @param table The source Table
+   * @param table
+   *          The source Table
    */
   private void importTable( Table table ) {
     this.rows = new ArrayList<PatchRtfRow>();
@@ -126,8 +130,8 @@ public class PatchRtfTable extends RtfElement {
     this.cellPadding = (float) ( table.getPadding() * TWIPS_FACTOR );
     this.cellSpacing = (float) ( table.getSpacing() * TWIPS_FACTOR );
     this.borders =
-      new PatchRtfBorderGroup( this.document, PatchRtfBorder.ROW_BORDER, table.getBorder(), table.getBorderWidth(),
-        table.getBorderColor() );
+        new PatchRtfBorderGroup( this.document, PatchRtfBorder.ROW_BORDER, table.getBorder(), table.getBorderWidth(),
+            table.getBorderColor() );
     this.alignment = table.getAlignment();
 
     int i = 0;
@@ -151,29 +155,30 @@ public class PatchRtfTable extends RtfElement {
   /**
    * Imports the rows and settings from the Table into this PatchRtfTable.
    *
-   * @param table The source PdfPTable
+   * @param table
+   *          The source PdfPTable
    * @since 2.1.3
    */
   private void importTable( PdfPTable table ) {
     this.rows = new ArrayList<PatchRtfRow>();
     this.tableWidthPercent = table.getWidthPercentage();
-    //        this.tableWidthPercent = table.getWidth();
+    // this.tableWidthPercent = table.getWidth();
     this.proportionalWidths = table.getAbsoluteWidths();
-    //        this.proportionalWidths = table.getProportionalWidths();
+    // this.proportionalWidths = table.getProportionalWidths();
     this.cellPadding = (float) ( table.spacingAfter() * TWIPS_FACTOR );
-    //        this.cellPadding = (float) (table.getPadding() * TWIPS_FACTOR);
+    // this.cellPadding = (float) (table.getPadding() * TWIPS_FACTOR);
     this.cellSpacing = (float) ( table.spacingAfter() * TWIPS_FACTOR );
-    //        this.cellSpacing = (float) (table.getSpacing() * TWIPS_FACTOR);
-    //        this.borders = new PatchRtfBorderGroup(this.document, PatchRtfBorder.ROW_BORDER, table.getBorder(),
+    // this.cellSpacing = (float) (table.getSpacing() * TWIPS_FACTOR);
+    // this.borders = new PatchRtfBorderGroup(this.document, PatchRtfBorder.ROW_BORDER, table.getBorder(),
     // table.getBorderWidth(), table.getBorderColor());
-    //        this.borders = new PatchRtfBorderGroup(this.document, PatchRtfBorder.ROW_BORDER, table.getBorder(),
+    // this.borders = new PatchRtfBorderGroup(this.document, PatchRtfBorder.ROW_BORDER, table.getBorder(),
     // table.getBorderWidth(), table.getBorderColor());
     this.alignment = table.getHorizontalAlignment();
-    //        this.alignment = table.getAlignment();
+    // this.alignment = table.getAlignment();
 
     int i = 0;
     Iterator rowIterator = table.getRows().iterator();
-    //        Iterator rowIterator = table.iterator();
+    // Iterator rowIterator = table.iterator();
     while ( rowIterator.hasNext() ) {
       this.rows.add( new PatchRtfRow( this.document, this, (PdfPRow) rowIterator.next(), i ) );
       i++;
@@ -184,17 +189,17 @@ public class PatchRtfTable extends RtfElement {
     }
 
     this.headerRows = table.getHeaderRows();
-    //        this.headerRows = table.getLastHeaderRow();
+    // this.headerRows = table.getLastHeaderRow();
     this.cellsFitToPage = table.getKeepTogether();
-    //        this.cellsFitToPage = table.isCellsFitPage();
+    // this.cellsFitToPage = table.isCellsFitPage();
     this.tableFitToPage = table.getKeepTogether();
-    //        this.tableFitToPage = table.isTableFitsPage();
-    //        if(!Float.isNaN(table.getOffset())) {
-    //            this.offset = (int) (table.getOffset() * 2);
-    //        }
-    //        if(!Float.isNaN(table.getOffset())) {
-    //            this.offset = (int) (table.getOffset() * 2);
-    //        }
+    // this.tableFitToPage = table.isTableFitsPage();
+    // if(!Float.isNaN(table.getOffset())) {
+    // this.offset = (int) (table.getOffset() * 2);
+    // }
+    // if(!Float.isNaN(table.getOffset())) {
+    // this.offset = (int) (table.getOffset() * 2);
+    // }
   }
 
   /**
@@ -211,7 +216,7 @@ public class PatchRtfTable extends RtfElement {
 
     for ( int i = 0; i < this.rows.size(); i++ ) {
       RtfElement re = this.rows.get( i );
-      //.result.write(re.write());
+      // .result.write(re.write());
       re.writeContent( result );
     }
 

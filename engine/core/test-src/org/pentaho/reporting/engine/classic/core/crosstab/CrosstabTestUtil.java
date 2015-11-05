@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.crosstab;
 
@@ -40,13 +40,12 @@ import java.util.Arrays;
 public class CrosstabTestUtil {
   private static final Log logger = LogFactory.getLog( CrosstabTestUtil.class );
 
-  public static int advanceCrosstab( final CrosstabSpecification specification,
-                                     final TableModel data,
-                                     final String[][] valData ) {
+  public static int advanceCrosstab( final CrosstabSpecification specification, final TableModel data,
+      final String[][] valData ) {
     // second run. Now with padding ..
     final ProcessingContext prc = new DefaultProcessingContext();
-    final GlobalMasterRow gmr = GlobalMasterRow.createReportRow
-      ( prc, new DefaultDataSchemaDefinition(), new ParameterDataRow() );
+    final GlobalMasterRow gmr =
+        GlobalMasterRow.createReportRow( prc, new DefaultDataSchemaDefinition(), new ParameterDataRow() );
     gmr.requireStructuralProcessing();
     MasterDataRow wdata = gmr.deriveWithQueryData( data );
     int advanceCount = 1;
@@ -55,8 +54,8 @@ public class CrosstabTestUtil {
     logger.debug( "Cols:  " + wdata.getGlobalView().get( "Cols" ) );
     logger.debug( "Data: " + wdata.getGlobalView().get( "Data" ) );
 
-    Assert.assertEquals( valData[ 0 ][ 0 ], wdata.getGlobalView().get( "Rows" ) );
-    Assert.assertEquals( valData[ 0 ][ 1 ], wdata.getGlobalView().get( "Cols" ) );
+    Assert.assertEquals( valData[0][0], wdata.getGlobalView().get( "Rows" ) );
+    Assert.assertEquals( valData[0][1], wdata.getGlobalView().get( "Cols" ) );
 
     Object grpVal = wdata.getGlobalView().get( "Rows" );
     while ( wdata.isAdvanceable() ) {
@@ -73,8 +72,8 @@ public class CrosstabTestUtil {
       logger.debug( "Cols:  " + cols );
       logger.debug( "Data: " + nextdata.getGlobalView().get( "Data" ) );
 
-      Assert.assertEquals( valData[ advanceCount ][ 0 ], rows );
-      Assert.assertEquals( valData[ advanceCount ][ 1 ], cols );
+      Assert.assertEquals( valData[advanceCount][0], rows );
+      Assert.assertEquals( valData[advanceCount][1], cols );
 
       advanceCount += 1;
       wdata = nextdata;
@@ -86,19 +85,17 @@ public class CrosstabTestUtil {
   public static CrosstabSpecification fillOrderedCrosstabSpec( final TableModel model )
     throws ReportProcessingException {
     final CrosstabSpecification spec =
-      new OrderedMergeCrosstabSpecification( new ReportStateKey(), new String[] { "Cols" }, new String[] { "Rows" } );
+        new OrderedMergeCrosstabSpecification( new ReportStateKey(), new String[] { "Cols" }, new String[] { "Rows" } );
     return fillCrosstabSpec( model, spec );
   }
 
-  public static CrosstabSpecification fillSortedCrosstabSpec( final TableModel model )
-    throws ReportProcessingException {
+  public static CrosstabSpecification fillSortedCrosstabSpec( final TableModel model ) throws ReportProcessingException {
     final CrosstabSpecification spec =
-      new SortedMergeCrosstabSpecification( new ReportStateKey(), new String[] { "Cols" }, new String[] { "Rows" } );
+        new SortedMergeCrosstabSpecification( new ReportStateKey(), new String[] { "Cols" }, new String[] { "Rows" } );
     return fillCrosstabSpec( model, spec );
   }
 
-  private static CrosstabSpecification fillCrosstabSpec( final TableModel model,
-                                                         final CrosstabSpecification spec )
+  private static CrosstabSpecification fillCrosstabSpec( final TableModel model, final CrosstabSpecification spec )
     throws ReportProcessingException {
     final TableModelDataRow dr = new TableModelDataRow( model );
 

@@ -1,29 +1,33 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
 
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
+
+import javax.swing.UIManager;
+
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
 
 /**
  * Creation-Date: 17.11.2006, 20:31:36
@@ -87,12 +91,11 @@ public class PageBackgroundDrawable {
   public Dimension getPreferredSize() {
     if ( backend == null ) {
       return new Dimension( (int) ( ( defaultWidth + shadowSize ) * zoom ),
-        (int) ( ( defaultHeight + shadowSize ) * zoom ) );
+          (int) ( ( defaultHeight + shadowSize ) * zoom ) );
     }
     final Dimension preferredSize = backend.getPreferredSize();
 
-    return new Dimension
-      ( (int) ( ( preferredSize.width + shadowSize ) * zoom ),
+    return new Dimension( (int) ( ( preferredSize.width + shadowSize ) * zoom ),
         (int) ( ( preferredSize.height + shadowSize ) * zoom ) );
   }
 
@@ -111,8 +114,10 @@ public class PageBackgroundDrawable {
   /**
    * Draws the object.
    *
-   * @param graphics the graphics device.
-   * @param area     the area inside which the object should be drawn.
+   * @param graphics
+   *          the graphics device.
+   * @param area
+   *          the area inside which the object should be drawn.
    */
   public strictfp void draw( final Graphics2D graphics, final Rectangle2D area ) {
     if ( backend == null ) {
@@ -129,7 +134,7 @@ public class PageBackgroundDrawable {
     final float innerH = (float) pageFormat.getImageableHeight();
 
     final Graphics2D g2 = (Graphics2D) graphics.create();
-    //double paperBorder = paperBorderPixel * zoomFactor;
+    // double paperBorder = paperBorderPixel * zoomFactor;
 
     /** Prepare background **/
     g2.transform( AffineTransform.getScaleInstance( getZoom(), getZoom() ) );
@@ -138,17 +143,13 @@ public class PageBackgroundDrawable {
     /** Prepare background **/
     final Rectangle2D pageArea = new Rectangle2D.Float( 0, 0, outerW, outerH );
     /**
-     * The border around the printable area is painted when the corresponding property is
-     * set to true.
+     * The border around the printable area is painted when the corresponding property is set to true.
      */
     final Rectangle2D printingArea = new Rectangle2D.Float( innerX, innerY, innerW, innerH );
 
     /** Paint Page Shadow */
-    final Rectangle2D southborder = new Rectangle2D.Float
-      ( getShadowSize(), outerH,
-        outerW, getShadowSize() );
-    final Rectangle2D eastborder = new Rectangle2D.Float
-      ( outerW, getShadowSize(), getShadowSize(), outerH );
+    final Rectangle2D southborder = new Rectangle2D.Float( getShadowSize(), outerH, outerW, getShadowSize() );
+    final Rectangle2D eastborder = new Rectangle2D.Float( outerW, getShadowSize(), getShadowSize(), outerH );
 
     g2.setPaint( UIManager.getColor( "controlShadow" ) ); //$NON-NLS-1$
 
@@ -164,14 +165,12 @@ public class PageBackgroundDrawable {
     g2.fill( pageArea );
 
     final Graphics2D g22 = (Graphics2D) g2.create();
-    backend.draw( g22, new Rectangle2D.Double
-      ( 0, 0, pageFormat.getWidth(), pageFormat.getHeight() ) );
+    backend.draw( g22, new Rectangle2D.Double( 0, 0, pageFormat.getWidth(), pageFormat.getHeight() ) );
     g22.dispose();
 
     final Rectangle2D transPageArea = new Rectangle2D.Float( 0, 0, outerW, outerH );
     g2.setPaint( Color.black );
     g2.draw( transPageArea );
-
 
     g2.dispose();
   }

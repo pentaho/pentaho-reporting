@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
@@ -75,10 +75,13 @@ public class DriverConnectionProvider implements ConnectionProvider {
    * the connection in a way so that calls to "close()" on that connection do not prevent subsequent calls to this
    * method to fail.
    *
-   * @param user     the user name.
-   * @param password the password.
+   * @param user
+   *          the user name.
+   * @param password
+   *          the password.
    * @return the connection.
-   * @throws SQLException if the connection has errors.
+   * @throws SQLException
+   *           if the connection has errors.
    */
   public Connection createConnection( final String user, final String password ) throws SQLException {
     if ( url == null ) {
@@ -90,8 +93,8 @@ public class DriverConnectionProvider implements ConnectionProvider {
       if ( driver != null ) {
         driverImpl = ObjectUtilities.loadAndInstantiate( driver, getClass(), Driver.class );
         if ( driverImpl == null ) {
-          logger.warn(
-            "Unable to load specified driver class: " + driver + ". See ObjectUtilities logger for error details." );
+          logger.warn( "Unable to load specified driver class: " + driver
+              + ". See ObjectUtilities logger for error details." );
         }
       }
     } catch ( Throwable e ) {
@@ -149,8 +152,8 @@ public class DriverConnectionProvider implements ConnectionProvider {
 
   public String[] getPropertyNames() {
     final Set<Object> objects = properties.keySet();
-    //noinspection SuspiciousToArrayCall
-    return objects.toArray( new String[ properties.size() ] );
+    // noinspection SuspiciousToArrayCall
+    return objects.toArray( new String[properties.size()] );
   }
 
   public boolean equals( final Object o ) {

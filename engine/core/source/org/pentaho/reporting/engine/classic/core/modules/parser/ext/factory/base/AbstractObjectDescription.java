@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
@@ -29,8 +29,7 @@ import java.util.Iterator;
  *
  * @author Thomas Morgner.
  */
-public abstract class AbstractObjectDescription
-  implements ObjectDescription, Cloneable {
+public abstract class AbstractObjectDescription implements ObjectDescription, Cloneable {
 
   /**
    * The class.
@@ -55,7 +54,8 @@ public abstract class AbstractObjectDescription
   /**
    * Creates a new object description.
    *
-   * @param className the class.
+   * @param className
+   *          the class.
    */
   protected AbstractObjectDescription( final Class className ) {
     this.className = className;
@@ -73,7 +73,8 @@ public abstract class AbstractObjectDescription
   /**
    * Returns a parameter class.
    *
-   * @param name the parameter definition.
+   * @param name
+   *          the parameter definition.
    * @return The class.
    */
   public Class getParameterDefinition( final String name ) {
@@ -83,8 +84,10 @@ public abstract class AbstractObjectDescription
   /**
    * Sets the class for a parameter.
    *
-   * @param name the parameter name.
-   * @param obj  the parameter class.
+   * @param name
+   *          the parameter name.
+   * @param obj
+   *          the parameter class.
    */
   public void setParameterDefinition( final String name, final Class obj ) {
     if ( obj == null ) {
@@ -97,7 +100,8 @@ public abstract class AbstractObjectDescription
   /**
    * Converts primitives to corresponding object class.
    *
-   * @param obj the class.
+   * @param obj
+   *          the class.
    * @return The class.
    */
   public static Class convertPrimitiveClass( final Class obj ) {
@@ -134,25 +138,24 @@ public abstract class AbstractObjectDescription
   /**
    * Sets a parameter.
    *
-   * @param name  the name.
-   * @param value the value.
+   * @param name
+   *          the name.
+   * @param value
+   *          the value.
    */
   public void setParameter( final String name, final Object value ) {
     if ( getParameterDefinition( name ) == null ) {
-      throw new IllegalArgumentException( "No such Parameter defined: " + name
-        + " in class " + getObjectClass() );
+      throw new IllegalArgumentException( "No such Parameter defined: " + name + " in class " + getObjectClass() );
     }
     if ( value == null ) {
       parameters.remove( name );
       return;
     }
 
-    final Class parameterClass = AbstractObjectDescription.convertPrimitiveClass
-      ( getParameterDefinition( name ) );
+    final Class parameterClass = AbstractObjectDescription.convertPrimitiveClass( getParameterDefinition( name ) );
     if ( !parameterClass.isAssignableFrom( value.getClass() ) ) {
-      throw new ClassCastException( "In Object " + getObjectClass()
-        + ": Value is not assignable: " + value.getClass()
-        + " is not assignable from " + parameterClass );
+      throw new ClassCastException( "In Object " + getObjectClass() + ": Value is not assignable: " + value.getClass()
+          + " is not assignable from " + parameterClass );
     }
     this.parameters.put( name, value );
   }
@@ -181,7 +184,8 @@ public abstract class AbstractObjectDescription
   /**
    * Returns a parameter value.
    *
-   * @param name the parameter name.
+   * @param name
+   *          the parameter name.
    * @return The parameter value.
    */
   public Object getParameter( final String name ) {
@@ -218,7 +222,6 @@ public abstract class AbstractObjectDescription
     }
   }
 
-
   /**
    * Returns a cloned instance of the object description. The contents of the parameter objects collection are cloned
    * too, so that any already defined parameter value is copied to the new instance.
@@ -247,7 +250,8 @@ public abstract class AbstractObjectDescription
    * <p/>
    * The configuration contents may change during the reporting.
    *
-   * @param config the configuration, never null
+   * @param config
+   *          the configuration, never null
    */
   public void configure( final Configuration config ) {
     if ( config == null ) {
@@ -268,7 +272,8 @@ public abstract class AbstractObjectDescription
   /**
    * Tests for equality.
    *
-   * @param o the object to test.
+   * @param o
+   *          the object to test.
    * @return A boolean.
    */
   public boolean equals( final Object o ) {

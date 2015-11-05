@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver;
 
@@ -41,15 +41,16 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
     /**
      * Returns the encoding definition for the given java encoding.
      *
-     * @param encoding the java encoding that should be mapped into a printer specific encoding.
+     * @param encoding
+     *          the java encoding that should be mapped into a printer specific encoding.
      * @return the printer specific encoding.
-     * @throws IllegalArgumentException if the given encoding is not supported.
+     * @throws IllegalArgumentException
+     *           if the given encoding is not supported.
      */
     public PrinterEncoding getEncoding( final String encoding ) {
       try {
-        return new PrinterEncoding
-          ( encoding, encoding, encoding, IBMCompatiblePrinterDriver.GenericIBMPrinterSpecification.translateCodePage(
-            encoding ) );
+        return new PrinterEncoding( encoding, encoding, encoding,
+            IBMCompatiblePrinterDriver.GenericIBMPrinterSpecification.translateCodePage( encoding ) );
       } catch ( UnsupportedEncodingException e ) {
         throw new IllegalArgumentException( "The given encoding is not supported." );
       }
@@ -60,12 +61,13 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
      * XXXX is the number of the codepage.
      * <p/>
      *
-     * @param cp the code page
+     * @param cp
+     *          the code page
      * @return the epson byte code.
-     * @throws java.io.UnsupportedEncodingException if the encoding is not supported.
+     * @throws java.io.UnsupportedEncodingException
+     *           if the encoding is not supported.
      */
-    private static byte[] translateCodePage( final String cp )
-      throws UnsupportedEncodingException {
+    private static byte[] translateCodePage( final String cp ) throws UnsupportedEncodingException {
       // Mapping Rule:
       // n = NumberofCodePage + (10000 if codepage contains a character (Cp437G))
       if ( StringUtils.startsWithIgnoreCase( cp, "cp" ) ) {
@@ -84,9 +86,9 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
           } else {
             i = Integer.parseInt( encodingName );
           }
-          final byte[] retval = new byte[ 2 ];
-          retval[ 0 ] = (byte) ( i >> 8 );
-          retval[ 1 ] = (byte) ( i & 0xff );
+          final byte[] retval = new byte[2];
+          retval[0] = (byte) ( i >> 8 );
+          retval[1] = (byte) ( i & 0xff );
           return retval;
         } catch ( Exception e ) {
           throw new UnsupportedEncodingException( "The encoding " + cp + "is not valid" );
@@ -107,7 +109,8 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
     /**
      * Checks whether the given Java-encoding is supported.
      *
-     * @param encoding the java encoding that should be mapped into a printer specific encoding.
+     * @param encoding
+     *          the java encoding that should be mapped into a printer specific encoding.
      * @return true, if there is a mapping, false otherwise.
      */
     public boolean isEncodingSupported( final String encoding ) {
@@ -122,7 +125,8 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
     /**
      * Returns true, if a given operation is supported, false otherwise.
      *
-     * @param operationName the operation, that should be performed
+     * @param operationName
+     *          the operation, that should be performed
      * @return true, if the printer will be able to perform that operation, false otherwise.
      */
     public boolean isFeatureAvailable( final String operationName ) {
@@ -204,9 +208,7 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
   private boolean firstPage;
   private String encoding;
 
-  public IBMCompatiblePrinterDriver( final OutputStream out,
-                                     final float charsPerInch,
-                                     final float linesPerInch ) {
+  public IBMCompatiblePrinterDriver( final OutputStream out, final float charsPerInch, final float linesPerInch ) {
     this.out = out;
     this.charsPerInch = charsPerInch;
     this.linesPerInch = linesPerInch;
@@ -238,10 +240,10 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
    * Ends a new line.
    *
    * @param overflow
-   * @throws java.io.IOException if an IOError occures.
+   * @throws java.io.IOException
+   *           if an IOError occures.
    */
-  public void endLine( final boolean overflow )
-    throws IOException {
+  public void endLine( final boolean overflow ) throws IOException {
     if ( overflow == false ) {
       out.write( PrinterDriverCommands.CARRIAGE_RETURN );
       if ( autoLF == false ) {
@@ -254,10 +256,10 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
    * Ends the current page. Should print empty lines or an FORM_FEED command.
    *
    * @param overflow
-   * @throws java.io.IOException if there was an IOError while writing the command
+   * @throws java.io.IOException
+   *           if there was an IOError while writing the command
    */
-  public void endPage( final boolean overflow )
-    throws IOException {
+  public void endPage( final boolean overflow ) throws IOException {
     if ( overflow == false ) {
       printRaw( endOfPage );
     }
@@ -266,10 +268,10 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
   /**
    * Flushes the output stream.
    *
-   * @throws java.io.IOException if an IOError occured.
+   * @throws java.io.IOException
+   *           if an IOError occured.
    */
-  public void flush()
-    throws IOException {
+  public void flush() throws IOException {
     out.flush();
   }
 
@@ -295,11 +297,12 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
    * Prints a single text chunk at the given position on the current line. The chunk should not be printed, if an
    * previous chunk overlays this chunk.
    *
-   * @param chunk the chunk that should be written
-   * @throws java.io.IOException if an IO error occured.
+   * @param chunk
+   *          the chunk that should be written
+   * @throws java.io.IOException
+   *           if an IO error occured.
    */
-  public void printChunk( final PlaintextDataChunk chunk )
-    throws IOException {
+  public void printChunk( final PlaintextDataChunk chunk ) throws IOException {
     final String text = chunk.getText().substring( 0, chunk.getWidth() );
     final String fd = chunk.getFont();
     sendDefineFont( fontMapper.getPrinterFont( fd ) );
@@ -311,10 +314,10 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
    * Prints an empty chunk. This is called for all undefined chunk-cells. The last defined font is used to print that
    * empty text.
    *
-   * @throws java.io.IOException if an IOError occured.
+   * @throws java.io.IOException
+   *           if an IOError occured.
    */
-  public void printEmptyChunk( final int count )
-    throws IOException {
+  public void printEmptyChunk( final int count ) throws IOException {
     sendFontStyle( driverState.isBold(), driverState.isItalic(), false );
     for ( int i = 0; i < count; i++ ) {
       out.write( PrinterDriverCommands.SPACE );
@@ -324,20 +327,20 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
   /**
    * Prints some raw content. This content is not processed in any way, so be very carefull.
    *
-   * @param raw the content that should be printed.
+   * @param raw
+   *          the content that should be printed.
    */
-  public void printRaw( final byte[] raw )
-    throws IOException {
+  public void printRaw( final byte[] raw ) throws IOException {
     out.write( raw );
   }
 
   /**
    * Starts a new line.
    *
-   * @throws java.io.IOException if an IOError occures.
+   * @throws java.io.IOException
+   *           if an IOError occures.
    */
-  public void startLine()
-    throws IOException {
+  public void startLine() throws IOException {
     final int manualLeftBorder = driverState.getManualLeftBorder();
     for ( int i = 0; i < manualLeftBorder; i++ ) {
       out.write( PrinterDriverCommands.SPACE );
@@ -347,10 +350,10 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
   /**
    * Resets the printer and starts a new page. Prints the top border lines (if necessary).
    *
-   * @throws java.io.IOException if there was an IOError while writing the command
+   * @throws java.io.IOException
+   *           if there was an IOError while writing the command
    */
-  public void startPage( final Paper paper, final String encoding )
-    throws IOException {
+  public void startPage( final Paper paper, final String encoding ) throws IOException {
     this.encoding = encoding;
     final float charWidthPoints = 72.0f / getCharactersPerInch();
     final float lineHeightPoints = 72.0f / getLinesPerInch();
@@ -362,7 +365,6 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
       sendDefineCharacterWidth( getCharactersPerInch() );
       firstPage = false;
     }
-
 
     // set the line spacing ..
     sendLineSpacing( (int) lineHeightPoints );
@@ -391,11 +393,12 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
   /**
    * Defines the line spacing for the printer.
    *
-   * @param lineHeight the height of a single line in points (1/72 inch).
-   * @throws java.io.IOException if an IOException occured while updating the printer state.
+   * @param lineHeight
+   *          the height of a single line in points (1/72 inch).
+   * @throws java.io.IOException
+   *           if an IOException occured while updating the printer state.
    */
-  public void sendLineSpacing( final int lineHeight )
-    throws IOException {
+  public void sendLineSpacing( final int lineHeight ) throws IOException {
     out.write( 0x1b );
     out.write( 0x41 );
     out.write( lineHeight );
@@ -403,24 +406,20 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
     out.write( 0x32 );
   }
 
-  private void sendDefineHorizontalBorders( final int left, final int right )
-    throws IOException {
+  private void sendDefineHorizontalBorders( final int left, final int right ) throws IOException {
     out.write( 0x1b );
     out.write( 0x58 );
     out.write( left );
     out.write( right );
   }
 
-  private void sendDefinePageLengthInLines( final int lines )
-    throws IOException {
+  private void sendDefinePageLengthInLines( final int lines ) throws IOException {
     out.write( 0x1b );
     out.write( 0x43 );
     out.write( lines );
   }
 
-
-  private void sendDefinePrintQuality( final int quality )
-    throws IOException {
+  private void sendDefinePrintQuality( final int quality ) throws IOException {
     out.write( 0x1b );
     out.write( 0x5b );
     out.write( 0x64 );
@@ -432,14 +431,16 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
   /**
    * Defines the font style for the printed text. The IBM-CommandSet does not support strike-through.
    *
-   * @param bold      true, if the text should be printed in bold mode.
-   * @param italic    true, if the text should be italic, false otherwise
-   * @param underline true, if the text should be underlined, false otherwise
-   * @throws java.io.IOException if there was an IOError while writing the command
+   * @param bold
+   *          true, if the text should be printed in bold mode.
+   * @param italic
+   *          true, if the text should be italic, false otherwise
+   * @param underline
+   *          true, if the text should be underlined, false otherwise
+   * @throws java.io.IOException
+   *           if there was an IOError while writing the command
    */
-  private void sendFontStyle( final boolean bold, final boolean italic,
-                              final boolean underline )
-    throws IOException {
+  private void sendFontStyle( final boolean bold, final boolean italic, final boolean underline ) throws IOException {
     if ( driverState.isBold() ) {
       if ( bold == false ) {
         // disable bold
@@ -492,8 +493,7 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
 
   }
 
-  private float sendDefineCharacterWidth( final float charsPerInch )
-    throws IOException {
+  private float sendDefineCharacterWidth( final float charsPerInch ) throws IOException {
     if ( charsPerInch <= 10 ) {
       out.write( 0x12 );
       return 10;
@@ -515,26 +515,24 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
     }
   }
 
-  private void sendDefineCodepage( final String codePage )
-    throws IOException {
+  private void sendDefineCodepage( final String codePage ) throws IOException {
     final PrinterEncoding spec = getPrinterSpecification().getEncoding( codePage );
     final byte[] cp = spec.getCode();
     out.write( 0x1b ); // ESC
     out.write( 0x5b ); // [
     out.write( 0x54 ); // T
     out.write( 0x04 ); // 0x04 (according to LexMark Manual P.30)
-    out.write( 0x00 ); //  const.
-    out.write( 0x00 ); //  const.
-    out.write( 0x00 ); //  const.
-    out.write( cp );   // codepage as 2 byte sequence
+    out.write( 0x00 ); // const.
+    out.write( 0x00 ); // const.
+    out.write( 0x00 ); // const.
+    out.write( cp ); // codepage as 2 byte sequence
   }
 
   private PrinterSpecification getPrinterSpecification() {
     return printerSpecification;
   }
 
-  private void sendAutoLF( final boolean autoLF )
-    throws IOException {
+  private void sendAutoLF( final boolean autoLF ) throws IOException {
     if ( autoLF == false ) {
       out.write( 0x1b );
       out.write( 0x35 );
@@ -546,8 +544,7 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
     }
   }
 
-  private void sendDefineFont( final byte b )
-    throws IOException {
+  private void sendDefineFont( final byte b ) throws IOException {
     if ( driverState.getFont() != b ) {
       out.write( 0x1b );
       out.write( 0x6b );
@@ -557,10 +554,8 @@ public class IBMCompatiblePrinterDriver implements PrinterDriver {
     }
   }
 
-  protected EncodingUtilities getEncodingUtilities( final String encoding )
-    throws IOException {
-    if ( encodingUtilities != null &&
-      encodingUtilities.getEncoding().equals( encoding ) ) {
+  protected EncodingUtilities getEncodingUtilities( final String encoding ) throws IOException {
+    if ( encodingUtilities != null && encodingUtilities.getEncoding().equals( encoding ) ) {
       return encodingUtilities;
     }
 

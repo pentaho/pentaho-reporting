@@ -1,21 +1,29 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
+
+import java.awt.Image;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.URL;
+import java.sql.Blob;
+import java.util.HashSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,20 +36,11 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.awt.*;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.URL;
-import java.sql.Blob;
-import java.util.HashSet;
-
 /**
  * The image load filter is used to load images during the report generation process. This filter expects its datasource
  * to return a java.net.URL. If the datasource does not return an URL, <code>null</code> is returned.
  * <p/>
- * This filter is mostly used in conjunction with the URLFilter, which creates URLs from Strings and files if
- * nessesary.
+ * This filter is mostly used in conjunction with the URLFilter, which creates URLs from Strings and files if nessesary.
  * <p/>
  * The url is used to create a new imagereference which is returned to the caller. The loaded/created imagereference is
  * stored in an internal cache.
@@ -74,7 +73,8 @@ public class ImageLoadFilter implements DataFilter {
   /**
    * Creates a new ImageLoadFilter with the defined cache size.
    *
-   * @param cacheSize the cache size.
+   * @param cacheSize
+   *          the cache size.
    */
   public ImageLoadFilter( final int cacheSize ) {
     failureCache = new HashSet<String>( cacheSize );
@@ -85,8 +85,9 @@ public class ImageLoadFilter implements DataFilter {
    * loaded in a previous run and is still in the cache, no new reference is created and the previously loaded reference
    * is returned.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return the current value for this filter.
    */
@@ -170,7 +171,8 @@ public class ImageLoadFilter implements DataFilter {
   /**
    * Sets the data source.
    *
-   * @param ds The data source.
+   * @param ds
+   *          The data source.
    */
   public void setDataSource( final DataSource ds ) {
     if ( ds == null ) {
@@ -184,10 +186,10 @@ public class ImageLoadFilter implements DataFilter {
    * Clones the filter.
    *
    * @return a clone.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public ImageLoadFilter clone()
-    throws CloneNotSupportedException {
+  public ImageLoadFilter clone() throws CloneNotSupportedException {
     final ImageLoadFilter il = (ImageLoadFilter) super.clone();
     if ( source != null ) {
       il.source = source.clone();
@@ -198,23 +200,26 @@ public class ImageLoadFilter implements DataFilter {
   /**
    * A helper method that is called during the serialization process.
    *
-   * @param out the serialization output stream.
-   * @throws IOException if an IO error occured.
+   * @param out
+   *          the serialization output stream.
+   * @throws IOException
+   *           if an IO error occured.
    */
-  private void writeObject( final ObjectOutputStream out )
-    throws IOException {
+  private void writeObject( final ObjectOutputStream out ) throws IOException {
     out.defaultWriteObject();
   }
 
   /**
    * A helper method that is called during the de-serialization process.
    *
-   * @param in the serialization input stream.
-   * @throws IOException            if an IOError occurs.
-   * @throws ClassNotFoundException if a dependent class cannot be found.
+   * @param in
+   *          the serialization input stream.
+   * @throws IOException
+   *           if an IOError occurs.
+   * @throws ClassNotFoundException
+   *           if a dependent class cannot be found.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     failureCache = new HashSet<String>();
   }

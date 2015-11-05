@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector.conditions;
 
@@ -27,9 +27,7 @@ public class AttributeCSSCondition implements AttributeCondition, CSSCondition {
   private boolean specified;
   private String value;
 
-  public AttributeCSSCondition( final String name,
-                                final String namespace,
-                                final boolean specified, final String value ) {
+  public AttributeCSSCondition( final String name, final String namespace, final boolean specified, final String value ) {
     this.name = name;
     this.namespace = namespace;
     this.specified = specified;
@@ -45,8 +43,12 @@ public class AttributeCSSCondition implements AttributeCondition, CSSCondition {
 
   /**
    * Returns the <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace URI</a> of this attribute condition.
-   * <p><code>NULL</code> if : <ul> <li>this attribute condition can match any namespace. <li>this attribute is an id
-   * attribute. </ul>
+   * <p>
+   * <code>NULL</code> if :
+   * <ul>
+   * <li>this attribute condition can match any namespace.
+   * <li>this attribute is an id attribute.
+   * </ul>
    */
   public String getNamespaceURI() {
     return namespace;
@@ -54,9 +56,23 @@ public class AttributeCSSCondition implements AttributeCondition, CSSCondition {
 
   /**
    * Returns the <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local part</a> of the <a
-   * href="http://www.w3.org/TR/REC-xml-names/#ns-qualnames">qualified name</a> of this attribute. <p><code>NULL</code>
-   * if : <ul> <li><p>this attribute condition can match any attribute. <li><p>this attribute is a class attribute.
-   * <li><p>this attribute is an id attribute. <li><p>this attribute is a pseudo-class attribute. </ul>
+   * href="http://www.w3.org/TR/REC-xml-names/#ns-qualnames">qualified name</a> of this attribute.
+   * <p>
+   * <code>NULL</code> if :
+   * <ul>
+   * <li>
+   * <p>
+   * this attribute condition can match any attribute.
+   * <li>
+   * <p>
+   * this attribute is a class attribute.
+   * <li>
+   * <p>
+   * this attribute is an id attribute.
+   * <li>
+   * <p>
+   * this attribute is a pseudo-class attribute.
+   * </ul>
    */
   public String getLocalName() {
     return name;
@@ -113,7 +129,7 @@ public class AttributeCSSCondition implements AttributeCondition, CSSCondition {
     b.append( '"' );
     final char[] chars = raw.toCharArray();
     for ( int i = 0; i < chars.length; i++ ) {
-      final char c = chars[ i ];
+      final char c = chars[i];
       if ( c == '\n' ) {
         b.append( '\\' );
         b.append( 'n' );

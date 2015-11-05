@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
@@ -52,8 +52,8 @@ public class DefaultParameterContext implements ParameterContext {
     this( report, report.getParameterValues() );
   }
 
-  public DefaultParameterContext( final MasterReport report,
-                                  final ReportParameterValues parameterValues ) throws ReportProcessingException {
+  public DefaultParameterContext( final MasterReport report, final ReportParameterValues parameterValues )
+    throws ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException( "Report parameter must not be null" );
     }
@@ -61,13 +61,14 @@ public class DefaultParameterContext implements ParameterContext {
       throw new NullPointerException( "ParameterValues parameter must not be null" );
     }
     this.configuration = report.getConfiguration();
-    this.resourceBundleFactory = MasterReport.computeAndInitResourceBundleFactory
-      ( report.getResourceBundleFactory(), report.getReportEnvironment() );
+    this.resourceBundleFactory =
+        MasterReport.computeAndInitResourceBundleFactory( report.getResourceBundleFactory(), report
+            .getReportEnvironment() );
     this.contentBase = report.getContentBase();
     this.resourceManager = report.getResourceManager();
     this.reportEnvironment = report.getReportEnvironment();
     final Object dataCacheEnabledRaw =
-      report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
+        report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
     final boolean dataCacheEnabled = Boolean.FALSE.equals( dataCacheEnabledRaw ) == false;
     this.dataFactory = new CachingDataFactory( report.getDataFactory(), dataCacheEnabled );
 
@@ -75,29 +76,26 @@ public class DefaultParameterContext implements ParameterContext {
     if ( bundle != null ) {
       this.documentMetaData = bundle.getMetaData();
     }
-    this.dataFactory.initialize( new DesignTimeDataFactoryContext
-      ( configuration, resourceManager, contentBase, resourceBundleFactory, dataFactory ) );
+    this.dataFactory.initialize( new DesignTimeDataFactoryContext( configuration, resourceManager, contentBase,
+        resourceBundleFactory, dataFactory ) );
 
     final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow( reportEnvironment );
     this.parameterValues = new CompoundDataRow( envDataRow, parameterValues );
 
   }
 
-  public DefaultParameterContext( final DataFactory dataFactory,
-                                  final DataRow parameterValues,
-                                  final Configuration configuration,
-                                  final ResourceBundleFactory resourceBundleFactory,
-                                  final ResourceManager resourceManager,
-                                  final ResourceKey resourceKey,
-                                  final ReportEnvironment reportEnvironment ) throws ReportDataFactoryException {
+  public DefaultParameterContext( final DataFactory dataFactory, final DataRow parameterValues,
+      final Configuration configuration, final ResourceBundleFactory resourceBundleFactory,
+      final ResourceManager resourceManager, final ResourceKey resourceKey, final ReportEnvironment reportEnvironment )
+    throws ReportDataFactoryException {
     this.configuration = configuration;
     this.resourceBundleFactory = resourceBundleFactory;
     this.resourceManager = resourceManager;
     this.contentBase = resourceKey;
     this.reportEnvironment = reportEnvironment;
     this.dataFactory = new CachingDataFactory( dataFactory, false );
-    this.dataFactory.initialize( new DesignTimeDataFactoryContext
-      ( configuration, resourceManager, resourceKey, resourceBundleFactory, dataFactory ) );
+    this.dataFactory.initialize( new DesignTimeDataFactoryContext( configuration, resourceManager, resourceKey,
+        resourceBundleFactory, dataFactory ) );
 
     this.envDataRow = new ReportEnvironmentDataRow( reportEnvironment );
     this.parameterValues = new CompoundDataRow( envDataRow, parameterValues );

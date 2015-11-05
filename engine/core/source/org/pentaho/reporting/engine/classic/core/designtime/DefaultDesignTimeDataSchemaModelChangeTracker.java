@@ -24,8 +24,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 import java.util.HashMap;
 
-public class DefaultDesignTimeDataSchemaModelChangeTracker
-  implements DesignTimeDataSchemaModelChangeTracker {
+public class DefaultDesignTimeDataSchemaModelChangeTracker implements DesignTimeDataSchemaModelChangeTracker {
 
   private final HashMap<InstanceID, Long> nonVisualChangeTrackers;
   private final HashMap<InstanceID, Long> dataFactoryChangeTrackers;
@@ -102,9 +101,8 @@ public class DefaultDesignTimeDataSchemaModelChangeTracker
   }
 
   public boolean isReportQueryChanged() {
-    return ObjectUtilities.equal( this.query, parent.getQuery() ) == false ||
-      queryTimeout != parent.getQueryTimeout() ||
-      isDataFactoryChanged();
+    return ObjectUtilities.equal( this.query, parent.getQuery() ) == false || queryTimeout != parent.getQueryTimeout()
+        || isDataFactoryChanged();
   }
 
   public boolean isReportChanged() {

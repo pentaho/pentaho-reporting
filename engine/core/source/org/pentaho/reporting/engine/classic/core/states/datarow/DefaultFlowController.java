@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
@@ -71,10 +71,8 @@ public final class DefaultFlowController {
   private boolean storedAdvanceRequested;
   private PerformanceMonitorContext performanceMonitorContext;
 
-  public DefaultFlowController( final ProcessingContext reportContext,
-                                final DataSchemaDefinition schemaDefinition,
-                                final ReportParameterValues parameters,
-                                final PerformanceMonitorContext performanceMonitorContext )
+  public DefaultFlowController( final ProcessingContext reportContext, final DataSchemaDefinition schemaDefinition,
+      final ReportParameterValues parameters, final PerformanceMonitorContext performanceMonitorContext )
     throws ReportDataFactoryException {
     ArgumentNullException.validate( "performanceMonitorContext", performanceMonitorContext );
 
@@ -96,12 +94,11 @@ public final class DefaultFlowController {
     this.advanceRequested = false;
     this.parameters = parameters;
 
-    this.dataRow = GlobalMasterRow.createReportRow
-      ( reportContext, schemaDefinition, new ParameterDataRow( parameters ) );
+    this.dataRow =
+        GlobalMasterRow.createReportRow( reportContext, schemaDefinition, new ParameterDataRow( parameters ) );
   }
 
-  private DefaultFlowController( final DefaultFlowController fc,
-                                 final MasterDataRow dataRow ) {
+  private DefaultFlowController( final DefaultFlowController fc, final MasterDataRow dataRow ) {
     ArgumentNullException.validate( "fc", fc );
     ArgumentNullException.validate( "dataRow", dataRow );
 
@@ -166,22 +163,14 @@ public final class DefaultFlowController {
    * @deprecated
    */
   @Deprecated
-  public DefaultFlowController performQuery( final DataFactory dataFactory,
-                                             final String query,
-                                             final int queryLimit,
-                                             final int queryTimeout,
-                                             final ResourceBundleFactory resourceBundleFactory )
-    throws ReportDataFactoryException {
+  public DefaultFlowController performQuery( final DataFactory dataFactory, final String query, final int queryLimit,
+      final int queryTimeout, final ResourceBundleFactory resourceBundleFactory ) throws ReportDataFactoryException {
     List<SortConstraint> objects = Collections.emptyList();
     return performQuery( dataFactory, query, queryLimit, queryTimeout, resourceBundleFactory, objects );
   }
 
-  public DefaultFlowController performQuery( final DataFactory dataFactory,
-                                             final String query,
-                                             final int queryLimit,
-                                             final int queryTimeout,
-                                             final ResourceBundleFactory resourceBundleFactory,
-                                             final List<SortConstraint> sortOrder )
+  public DefaultFlowController performQuery( final DataFactory dataFactory, final String query, final int queryLimit,
+      final int queryTimeout, final ResourceBundleFactory resourceBundleFactory, final List<SortConstraint> sortOrder )
     throws ReportDataFactoryException {
     if ( dataFactory == null ) {
       throw new NullPointerException();
@@ -191,11 +180,11 @@ public final class DefaultFlowController {
     }
 
     final MasterDataRow masterRowWithoutData =
-      dataRow.deriveSubDataRow
-        ( reportContext, dataFactory, new ParameterDataRow( parameters ), resourceBundleFactory );
-    final TableModel tableData = performQueryData
-      ( masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout,
-        masterRowWithoutData.getGlobalView(), false, sortOrder );
+        dataRow
+            .deriveSubDataRow( reportContext, dataFactory, new ParameterDataRow( parameters ), resourceBundleFactory );
+    final TableModel tableData =
+        performQueryData( masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout, masterRowWithoutData
+            .getGlobalView(), false, sortOrder );
     final MasterDataRow masterRow = masterRowWithoutData.deriveWithQueryData( tableData );
 
     final DefaultFlowController fc = new DefaultFlowController( this, masterRow );
@@ -205,11 +194,8 @@ public final class DefaultFlowController {
     return fc;
   }
 
-  public DefaultFlowController performDesignTimeQuery( final DataFactory dataFactory,
-                                                       final String query,
-                                                       final int queryLimit,
-                                                       final int queryTimeout,
-                                                       final ResourceBundleFactory resourceBundleFactory )
+  public DefaultFlowController performDesignTimeQuery( final DataFactory dataFactory, final String query,
+      final int queryLimit, final int queryTimeout, final ResourceBundleFactory resourceBundleFactory )
     throws ReportDataFactoryException {
     if ( dataFactory == null ) {
       throw new NullPointerException();
@@ -219,12 +205,12 @@ public final class DefaultFlowController {
     }
 
     final MasterDataRow masterRowWithoutData =
-      dataRow.deriveSubDataRow
-        ( reportContext, dataFactory, new ParameterDataRow( parameters ), resourceBundleFactory );
+        dataRow
+            .deriveSubDataRow( reportContext, dataFactory, new ParameterDataRow( parameters ), resourceBundleFactory );
     List<SortConstraint> objects = Collections.emptyList();
-    final TableModel tableData = performQueryData
-      ( masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout,
-        masterRowWithoutData.getGlobalView(), true, objects );
+    final TableModel tableData =
+        performQueryData( masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout, masterRowWithoutData
+            .getGlobalView(), true, objects );
     final MasterDataRow masterRow = masterRowWithoutData.deriveWithQueryData( tableData );
 
     final DefaultFlowController fc = new DefaultFlowController( this, masterRow );
@@ -234,14 +220,9 @@ public final class DefaultFlowController {
     return fc;
   }
 
-  private TableModel performQueryData( final DataFactory dataFactory,
-                                       final String query,
-                                       final int queryLimit,
-                                       final int queryTimeout,
-                                       final DataRow parameters,
-                                       final boolean designTime,
-                                       final List<SortConstraint> sortConstraints )
-    throws ReportDataFactoryException {
+  private TableModel performQueryData( final DataFactory dataFactory, final String query, final int queryLimit,
+      final int queryTimeout, final DataRow parameters, final boolean designTime,
+      final List<SortConstraint> sortConstraints ) throws ReportDataFactoryException {
     if ( dataFactory == null ) {
       throw new NullPointerException();
     }
@@ -253,8 +234,9 @@ public final class DefaultFlowController {
       return new EmptyTableModel();
     }
 
-    PerformanceLoggingStopWatch sw = performanceMonitorContext.createStopWatch
-      ( PerformanceTags.REPORT_QUERY, new FormattedMessage( "query={%s}", query ) );
+    PerformanceLoggingStopWatch sw =
+        performanceMonitorContext.createStopWatch( PerformanceTags.REPORT_QUERY, new FormattedMessage( "query={%s}",
+            query ) );
     try {
       DataRow params = new QueryDataRowWrapper( parameters, queryTimeout, queryLimit, sortConstraints );
       TableModel reportData;
@@ -275,8 +257,7 @@ public final class DefaultFlowController {
   }
 
   public DefaultFlowController performInitSubreport( final DataFactory dataFactory,
-                                                     final ParameterMapping[] inputParameters,
-                                                     final ResourceBundleFactory resourceBundleFactory ) {
+      final ParameterMapping[] inputParameters, final ResourceBundleFactory resourceBundleFactory ) {
     if ( dataFactory == null ) {
       throw new NullPointerException();
     }
@@ -305,20 +286,14 @@ public final class DefaultFlowController {
   }
 
   @Deprecated
-  public DefaultFlowController performSubReportQuery( final String query,
-                                                      final int queryLimit,
-                                                      final int queryTimeout,
-                                                      final ParameterMapping[] outputParameters )
-    throws ReportDataFactoryException {
+  public DefaultFlowController performSubReportQuery( final String query, final int queryLimit, final int queryTimeout,
+      final ParameterMapping[] outputParameters ) throws ReportDataFactoryException {
     List<SortConstraint> con = Collections.emptyList();
     return performSubReportQuery( query, queryLimit, queryTimeout, outputParameters, con );
   }
 
-  public DefaultFlowController performSubReportQuery( final String query,
-                                                      final int queryLimit,
-                                                      final int queryTimeout,
-                                                      final ParameterMapping[] outputParameters,
-                                                      final List<SortConstraint> sortConstraints )
+  public DefaultFlowController performSubReportQuery( final String query, final int queryLimit, final int queryTimeout,
+      final ParameterMapping[] outputParameters, final List<SortConstraint> sortConstraints )
     throws ReportDataFactoryException {
     if ( outputParameters == null ) {
       throw new NullPointerException();
@@ -327,17 +302,18 @@ public final class DefaultFlowController {
     final MasterDataRow subReportDataRow = this.dataRow;
     // perform the query ...
     // add the resultset ...
-    final TableModel tableData = performQueryData( subReportDataRow.getDataFactory(),
-      query, queryLimit, queryTimeout, subReportDataRow.getGlobalView(), false, sortConstraints );
+    final TableModel tableData =
+        performQueryData( subReportDataRow.getDataFactory(), query, queryLimit, queryTimeout, subReportDataRow
+            .getGlobalView(), false, sortConstraints );
     final MasterDataRow masterRow = subReportDataRow.deriveWithQueryData( tableData );
 
     if ( isGlobalImportOrExport( outputParameters ) ) {
-      if ( "true".equals( reportContext.getConfiguration().getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.EnableGlobalSubReportImports" ) ) ) {
+      if ( "true".equals( reportContext.getConfiguration().getConfigProperty(
+          "org.pentaho.reporting.engine.classic.core.EnableGlobalSubReportImports" ) ) ) {
         masterRow.getParentDataRow().setImportedDataRow( new ImportedVariablesDataRow( masterRow ) );
       } else {
-        masterRow.getParentDataRow().setImportedDataRow
-          ( new ImportedVariablesDataRow( masterRow, filterGlobalImport( outputParameters ) ) );
+        masterRow.getParentDataRow().setImportedDataRow(
+            new ImportedVariablesDataRow( masterRow, filterGlobalImport( outputParameters ) ) );
       }
     } else {
       // check and rebuild the parameter mapping from the inner to the outer
@@ -356,14 +332,13 @@ public final class DefaultFlowController {
   private ParameterMapping[] filterGlobalImport( final ParameterMapping[] parameterMapping ) {
     final ArrayList<ParameterMapping> filteredList = new ArrayList<ParameterMapping>( parameterMapping.length );
     for ( int i = 0; i < parameterMapping.length; i++ ) {
-      final ParameterMapping mapping = parameterMapping[ i ];
-      if ( "*".equals( mapping.getName() ) &&
-        "*".equals( mapping.getAlias() ) ) {
+      final ParameterMapping mapping = parameterMapping[i];
+      if ( "*".equals( mapping.getName() ) && "*".equals( mapping.getAlias() ) ) {
         continue;
       }
       filteredList.add( mapping );
     }
-    return filteredList.toArray( new ParameterMapping[ filteredList.size() ] );
+    return filteredList.toArray( new ParameterMapping[filteredList.size()] );
   }
 
   /**
@@ -373,17 +348,15 @@ public final class DefaultFlowController {
    */
   private boolean isGlobalImportOrExport( final ParameterMapping[] inputParameters ) {
     for ( int i = 0; i < inputParameters.length; i++ ) {
-      final ParameterMapping inputParameter = inputParameters[ i ];
-      if ( "*".equals( inputParameter.getName() ) &&
-        "*".equals( inputParameter.getAlias() ) ) {
+      final ParameterMapping inputParameter = inputParameters[i];
+      if ( "*".equals( inputParameter.getName() ) && "*".equals( inputParameter.getAlias() ) ) {
         return true;
       }
     }
     return false;
   }
 
-  public DefaultFlowController activateExpressions( final Expression[] expressions,
-                                                    final boolean preserveState )
+  public DefaultFlowController activateExpressions( final Expression[] expressions, final boolean preserveState )
     throws ReportProcessingException {
     if ( expressions == null ) {
       throw new NullPointerException();

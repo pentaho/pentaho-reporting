@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -47,7 +47,6 @@ public class CrosstabRowGroup extends Group {
     registerAsChild( header );
     registerAsChild( summaryHeader );
   }
-
 
   public CrosstabRowGroup( final GroupBody body ) {
     super( body );
@@ -111,7 +110,6 @@ public class CrosstabRowGroup extends Group {
     notifyNodeChildAdded( this.header );
   }
 
-
   public CrosstabSummaryHeader getSummaryHeader() {
     return summaryHeader;
   }
@@ -157,8 +155,7 @@ public class CrosstabRowGroup extends Group {
   }
 
   private void validateBody( final GroupBody body ) {
-    if ( body instanceof CrosstabRowGroupBody == false &&
-      body instanceof CrosstabColumnGroupBody == false ) {
+    if ( body instanceof CrosstabRowGroupBody == false && body instanceof CrosstabColumnGroupBody == false ) {
       throw new IllegalArgumentException( body + " must be either row-group- or column-group-body" );
     }
   }
@@ -201,7 +198,7 @@ public class CrosstabRowGroup extends Group {
   }
 
   public Element getElement( final int index ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         return getTitleHeader();
       case 1:
@@ -216,7 +213,7 @@ public class CrosstabRowGroup extends Group {
   }
 
   public void setElementAt( final int index, final Element element ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         setTitleHeader( (CrosstabTitleHeader) element );
         break;

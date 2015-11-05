@@ -1,20 +1,20 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
-* All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
+ * All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
@@ -78,8 +78,8 @@ public abstract class DataSourceTestBase extends TestCase {
     }
 
     for ( int i = 0; i < queriesAndResults.length; i++ ) {
-      final String query = queriesAndResults[ i ][ 0 ];
-      final String resultFile = queriesAndResults[ i ][ 1 ];
+      final String query = queriesAndResults[i][0];
+      final String resultFile = queriesAndResults[i][1];
 
       DebugLog.log( "Executing query " + query );
 
@@ -104,8 +104,8 @@ public abstract class DataSourceTestBase extends TestCase {
     }
 
     for ( int i = 0; i < queriesAndResults.length; i++ ) {
-      final String query = queriesAndResults[ i ][ 0 ];
-      final String resultFile = queriesAndResults[ i ][ 1 ];
+      final String query = queriesAndResults[i][0];
+      final String resultFile = queriesAndResults[i][1];
       final DataFactory dataFactory = createDataFactory( query );
 
       final DataFactory e2 = dataFactory.derive();
@@ -122,8 +122,8 @@ public abstract class DataSourceTestBase extends TestCase {
     }
 
     for ( int i = 0; i < queriesAndResults.length; i++ ) {
-      final String query = queriesAndResults[ i ][ 0 ];
-      final String resultFile = queriesAndResults[ i ][ 1 ];
+      final String query = queriesAndResults[i][0];
+      final String resultFile = queriesAndResults[i][1];
       final DataFactory dataFactory = createDataFactory( query );
 
       SubReport subReport = new SubReport();
@@ -154,8 +154,8 @@ public abstract class DataSourceTestBase extends TestCase {
     }
 
     for ( int i = 0; i < queriesAndResults.length; i++ ) {
-      final String query = queriesAndResults[ i ][ 0 ];
-      final String resultFile = queriesAndResults[ i ][ 1 ];
+      final String query = queriesAndResults[i][0];
+      final String resultFile = queriesAndResults[i][1];
       final DataFactory dataFactory = createDataFactory( query );
 
       final DataFactory e2 = loadAndSaveOnReport( dataFactory );
@@ -167,8 +167,8 @@ public abstract class DataSourceTestBase extends TestCase {
     }
   }
 
-  public static DataFactory loadAndSaveOnReport( final DataFactory dataFactory )
-    throws IOException, BundleWriterException, ContentIOException, ResourceException {
+  public static DataFactory loadAndSaveOnReport( final DataFactory dataFactory ) throws IOException,
+    BundleWriterException, ContentIOException, ResourceException {
     final MasterReport report = new MasterReport();
     report.setDataFactory( dataFactory );
 
@@ -184,8 +184,8 @@ public abstract class DataSourceTestBase extends TestCase {
 
   protected void runTest( final String[][] queriesAndResults ) throws Exception {
     for ( int i = 0; i < queriesAndResults.length; i++ ) {
-      final String query = queriesAndResults[ i ][ 0 ];
-      final String resultFile = queriesAndResults[ i ][ 1 ];
+      final String query = queriesAndResults[i][0];
+      final String resultFile = queriesAndResults[i][1];
       final DataFactory dataFactory = createDataFactory( query );
       initializeDataFactory( dataFactory );
       final String queryResult = performQueryTest( dataFactory );
@@ -195,8 +195,8 @@ public abstract class DataSourceTestBase extends TestCase {
 
   public void runGenerate( final String[][] queriesAndResults ) throws Exception {
     for ( int i = 0; i < queriesAndResults.length; i++ ) {
-      final String query = queriesAndResults[ i ][ 0 ];
-      final String resultFile = queriesAndResults[ i ][ 1 ];
+      final String query = queriesAndResults[i][0];
+      final String resultFile = queriesAndResults[i][1];
       final DataFactory dataFactory = createDataFactory( query );
       initializeDataFactory( dataFactory );
       generate( dataFactory, resultFile );
@@ -205,9 +205,9 @@ public abstract class DataSourceTestBase extends TestCase {
 
   protected void runTestDesignTime( final String[][] queriesAndResults ) throws Exception {
     for ( int i = 0; i < queriesAndResults.length; i++ ) {
-      final String[] queriesAndResult = queriesAndResults[ i ];
-      final String query = queriesAndResult[ 0 ];
-      final String resultFile = queriesAndResult[ 2 ];
+      final String[] queriesAndResult = queriesAndResults[i];
+      final String query = queriesAndResult[0];
+      final String resultFile = queriesAndResult[2];
       final DataFactoryDesignTimeSupport dataFactory = (DataFactoryDesignTimeSupport) createDataFactory( query );
       initializeDataFactory( dataFactory );
       final String queryResult = performDesignTimeTest( dataFactory );
@@ -217,17 +217,17 @@ public abstract class DataSourceTestBase extends TestCase {
 
   public void runGenerateDesignTime( final String[][] queriesAndResults ) throws Exception {
     for ( int i = 0; i < queriesAndResults.length; i++ ) {
-      final String[] queriesAndResult = queriesAndResults[ i ];
-      final String query = queriesAndResult[ 0 ];
-      final String resultFile = queriesAndResult[ 2 ];
+      final String[] queriesAndResult = queriesAndResults[i];
+      final String query = queriesAndResult[0];
+      final String resultFile = queriesAndResult[2];
       final DataFactoryDesignTimeSupport dataFactory = (DataFactoryDesignTimeSupport) createDataFactory( query );
       initializeDataFactory( dataFactory );
       generateDesignTime( dataFactory, resultFile );
     }
   }
 
-  protected void generate( final DataFactory dataFactory,
-                           final String resultFile ) throws ReportDataFactoryException, SQLException, IOException {
+  protected void generate( final DataFactory dataFactory, final String resultFile ) throws ReportDataFactoryException,
+    SQLException, IOException {
     final String queryResult = performQueryTest( dataFactory );
 
     final String packageName = getClass().getPackage().getName();
@@ -242,8 +242,7 @@ public abstract class DataSourceTestBase extends TestCase {
     }
   }
 
-  protected void generateDesignTime( final DataFactoryDesignTimeSupport dataFactory,
-                                     final String resultFile )
+  protected void generateDesignTime( final DataFactoryDesignTimeSupport dataFactory, final String resultFile )
     throws ReportDataFactoryException, SQLException, IOException {
     final String queryResult = performDesignTimeTest( dataFactory );
 
@@ -275,8 +274,7 @@ public abstract class DataSourceTestBase extends TestCase {
     if ( stream == null ) {
       throw new NullPointerException( "Cannot locate resource '" + sourceFile + "' with context " + getClass() );
     }
-    final BufferedReader compareReader = new BufferedReader( new InputStreamReader
-      ( stream, "UTF-8" ) );
+    final BufferedReader compareReader = new BufferedReader( new InputStreamReader( stream, "UTF-8" ) );
     try {
       int line = 1;
       String lineResult = resultReader.readLine();
@@ -318,13 +316,13 @@ public abstract class DataSourceTestBase extends TestCase {
     }
   }
 
-  protected String performDesignTimeTest( final DataFactoryDesignTimeSupport dataFactory )
-    throws SQLException, ReportDataFactoryException {
+  protected String performDesignTimeTest( final DataFactoryDesignTimeSupport dataFactory ) throws SQLException,
+    ReportDataFactoryException {
     final ByteArrayOutputStream sw = new ByteArrayOutputStream();
     try {
       final PrintStream ps = new PrintStream( sw, true, "UTF-8" );
       final TableModel tableModel =
-        dataFactory.queryDesignTimeStructure( getLogicalQueryForNextTest(), getParameterForNextTest() );
+          dataFactory.queryDesignTimeStructure( getLogicalQueryForNextTest(), getParameterForNextTest() );
       generateCompareText( ps, tableModel );
       if ( tableModel instanceof CloseableTableModel ) {
         final CloseableTableModel ctm = (CloseableTableModel) tableModel;

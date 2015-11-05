@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.configstore.filesystem;
 
@@ -35,7 +35,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
 
-
 /**
  * The FileConfigStorage is a storage provider that stores its content on the local filesystem. The directory used
  * contains the data as plain text property files.
@@ -50,13 +49,13 @@ public class FileConfigStorage implements ConfigStorage {
   /**
    * The configuration header text that is appended to all property files.
    */
-  private static final String CONFIGHEADER =
-    "part of the Pentaho Reporting filesystem config store"; //$NON-NLS-1$
+  private static final String CONFIGHEADER = "part of the Pentaho Reporting filesystem config store"; //$NON-NLS-1$
 
   /**
    * Creates a new file config storage and stores the contents in the given directory.
    *
-   * @param baseDirectory the directory that should contain the files.
+   * @param baseDirectory
+   *          the directory that should contain the files.
    */
   public FileConfigStorage( final File baseDirectory ) {
     this.baseDirectory = baseDirectory;
@@ -67,14 +66,16 @@ public class FileConfigStorage implements ConfigStorage {
    * <p/>
    * This implementation stores the data as property files.
    *
-   * @param configPath the configuration path that specifies where to store the properties.
-   * @param config     the configuration, that should be stored.
-   * @throws ConfigStoreException if an error occured.
+   * @param configPath
+   *          the configuration path that specifies where to store the properties.
+   * @param config
+   *          the configuration, that should be stored.
+   * @throws ConfigStoreException
+   *           if an error occured.
    * @see org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigStorage
-   * #storeProperties(java.lang.String, java.util.Properties)
+   *      #storeProperties(java.lang.String, java.util.Properties)
    */
-  public void store( final String configPath, final Configuration config )
-    throws ConfigStoreException {
+  public void store( final String configPath, final Configuration config ) throws ConfigStoreException {
     if ( ConfigFactory.isValidPath( configPath ) == false ) {
       throw new IllegalArgumentException( "The give path is not valid." ); //$NON-NLS-1$
     }
@@ -107,22 +108,22 @@ public class FileConfigStorage implements ConfigStorage {
   /**
    * Loads the properties from the given path, specifying the given properties as default.
    *
-   * @param configPath the configuration path from where to load the properties.
-   * @param defaults   the property set that acts as fallback to provide default values.
+   * @param configPath
+   *          the configuration path from where to load the properties.
+   * @param defaults
+   *          the property set that acts as fallback to provide default values.
    * @return the loaded properties.
-   * @throws ConfigStoreException if an error occured.
+   * @throws ConfigStoreException
+   *           if an error occured.
    */
-  public Configuration load( final String configPath,
-                             final Configuration defaults )
-    throws ConfigStoreException {
+  public Configuration load( final String configPath, final Configuration defaults ) throws ConfigStoreException {
     if ( ConfigFactory.isValidPath( configPath ) == false ) {
       throw new IllegalArgumentException( "The given path is not valid." ); //$NON-NLS-1$
     }
     try {
       final Properties properties = new Properties();
       final File target = new File( baseDirectory, configPath );
-      final InputStream in = new BufferedInputStream( new FileInputStream(
-        target ) );
+      final InputStream in = new BufferedInputStream( new FileInputStream( target ) );
       try {
         properties.load( in );
       } finally {
@@ -144,7 +145,8 @@ public class FileConfigStorage implements ConfigStorage {
   /**
    * Tests, whether some configuration data exists for the given configuration.
    *
-   * @param configPath the configuration path to the property storage.
+   * @param configPath
+   *          the configuration path to the property storage.
    * @return true, if there are properties under this path, false otherwise.
    */
   public boolean isAvailable( final String configPath ) {

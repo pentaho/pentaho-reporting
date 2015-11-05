@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.crosstab;
 
@@ -84,43 +84,23 @@ public class CrosstabMultiFactDataIT extends TestCase {
   public void testDiagonalMasterDatarow() throws ReportProcessingException {
     final TypedTableModel model = createTestData();
 
-
-    final String[][] validateData = new String[][]
-      {
-        { "R0", "C0" },
-        { "R0", "C0" },
-        { "R0", "C1" },
-        { "R0", "C2" },
-        { "R0", "C3" },
-        { "R1", "C0" },
-        { "R1", "C1" },
-        { "R1", "C1" },
-        { "R1", "C2" },
-        { "R1", "C3" },
-        { "R2", "C0" },
-        { "R2", "C1" },
-        { "R2", "C2" },
-        { "R2", "C2" },
-        { "R2", "C3" },
-        { "R3", "C0" },
-        { "R3", "C1" },
-        { "R3", "C2" },
-        { "R3", "C3" },
-        { "R3", "C3" },
-      };
+    final String[][] validateData =
+        new String[][] { { "R0", "C0" }, { "R0", "C0" }, { "R0", "C1" }, { "R0", "C2" }, { "R0", "C3" },
+          { "R1", "C0" }, { "R1", "C1" }, { "R1", "C1" }, { "R1", "C2" }, { "R1", "C3" }, { "R2", "C0" },
+          { "R2", "C1" }, { "R2", "C2" }, { "R2", "C2" }, { "R2", "C3" }, { "R3", "C0" }, { "R3", "C1" },
+          { "R3", "C2" }, { "R3", "C3" }, { "R3", "C3" }, };
 
     final CrosstabSpecification crosstabSpecification = CrosstabTestUtil.fillOrderedCrosstabSpec( model );
     final int itCount = advanceCrosstab( crosstabSpecification, model, validateData );
     assertEquals( validateData.length, itCount );
   }
 
-  public static int advanceCrosstab( final CrosstabSpecification specification,
-                                     final TableModel data,
-                                     final String[][] valData ) {
+  public static int advanceCrosstab( final CrosstabSpecification specification, final TableModel data,
+      final String[][] valData ) {
     // second run. Now with padding ..
     final ProcessingContext prc = new DefaultProcessingContext();
-    final GlobalMasterRow gmr = GlobalMasterRow.createReportRow
-      ( prc, new DefaultDataSchemaDefinition(), new ParameterDataRow() );
+    final GlobalMasterRow gmr =
+        GlobalMasterRow.createReportRow( prc, new DefaultDataSchemaDefinition(), new ParameterDataRow() );
     gmr.requireStructuralProcessing();
     MasterDataRow wdata = gmr.deriveWithQueryData( data );
     int advanceCount = 1;
@@ -129,8 +109,8 @@ public class CrosstabMultiFactDataIT extends TestCase {
     logger.debug( "Cols:  " + wdata.getGlobalView().get( "Cols" ) );
     logger.debug( "Data: " + wdata.getGlobalView().get( "Data" ) );
 
-    assertEquals( valData[ 0 ][ 0 ], wdata.getGlobalView().get( "Rows" ) );
-    assertEquals( valData[ 0 ][ 1 ], wdata.getGlobalView().get( "Cols" ) );
+    assertEquals( valData[0][0], wdata.getGlobalView().get( "Rows" ) );
+    assertEquals( valData[0][1], wdata.getGlobalView().get( "Cols" ) );
 
     Object grpVal = wdata.getGlobalView().get( "Rows" );
     while ( wdata.isAdvanceable() ) {
@@ -147,8 +127,8 @@ public class CrosstabMultiFactDataIT extends TestCase {
       logger.debug( "Cols:  " + cols );
       logger.debug( "Data: " + nextdata.getGlobalView().get( "Data" ) );
 
-      assertEquals( valData[ advanceCount ][ 0 ], rows );
-      assertEquals( valData[ advanceCount ][ 1 ], cols );
+      assertEquals( valData[advanceCount][0], rows );
+      assertEquals( valData[advanceCount][1], cols );
 
       advanceCount += 1;
       wdata = nextdata;
@@ -206,14 +186,14 @@ public class CrosstabMultiFactDataIT extends TestCase {
     report.setRootGroup( createCrosstab() );
     report.addExpression( new ValidateExpression() );
 
-    //    DebugReportRunner.execGraphics2D(report);
+    // DebugReportRunner.execGraphics2D(report);
 
     PrintReportProcessor rp = new PrintReportProcessor( report );
     final int nop = rp.getNumberOfPages();
     for ( int page = 0; page < nop; page += 1 ) {
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable( page );
       LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
-      //  ModelPrinter.print(logicalPageBox);
+      // ModelPrinter.print(logicalPageBox);
     }
   }
 
@@ -235,31 +215,14 @@ public class CrosstabMultiFactDataIT extends TestCase {
 
     private ValidateExpression() {
       setName( "Validate" );
-      validateData = new Object[][]
-        {
-          { "R0", "C0", Integer.valueOf( 1 ) },
-          { "R0", "C0", Integer.valueOf( 1 ) },
-          { "R0", "C1", null },
-          { "R0", "C2", null },
-          { "R0", "C3", null },
-          { "R1", "C0", null },
-          { "R1", "C1", Integer.valueOf( 2 ) },
-          { "R1", "C1", Integer.valueOf( 2 ) },
-          { "R1", "C2", null },
-          { "R1", "C3", null },
-          { "R2", "C0", null },
-          { "R2", "C1", null },
-          { "R2", "C2", Integer.valueOf( 3 ) },
-          { "R2", "C2", Integer.valueOf( 3 ) },
-          { "R2", "C3", null },
-          { "R3", "C0", null },
-          { "R3", "C1", null },
-          { "R3", "C2", null },
-          { "R3", "C3", Integer.valueOf( 4 ) },
-          { "R3", "C3", Integer.valueOf( 4 ) },
-        };
+      validateData =
+          new Object[][] { { "R0", "C0", Integer.valueOf( 1 ) }, { "R0", "C0", Integer.valueOf( 1 ) },
+            { "R0", "C1", null }, { "R0", "C2", null }, { "R0", "C3", null }, { "R1", "C0", null },
+            { "R1", "C1", Integer.valueOf( 2 ) }, { "R1", "C1", Integer.valueOf( 2 ) }, { "R1", "C2", null },
+            { "R1", "C3", null }, { "R2", "C0", null }, { "R2", "C1", null }, { "R2", "C2", Integer.valueOf( 3 ) },
+            { "R2", "C2", Integer.valueOf( 3 ) }, { "R2", "C3", null }, { "R3", "C0", null }, { "R3", "C1", null },
+            { "R3", "C2", null }, { "R3", "C3", Integer.valueOf( 4 ) }, { "R3", "C3", Integer.valueOf( 4 ) }, };
     }
-
 
     public Object getValue() {
       if ( getRuntime().getProcessingContext().getProcessingLevel() == LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING ) {
@@ -274,9 +237,9 @@ public class CrosstabMultiFactDataIT extends TestCase {
       final Object col = getDataRow().get( "Cols" );
       final Object data = getDataRow().get( "Data" );
       try {
-        assertEquals( validateData[ currentRow ][ 0 ], row );
-        assertEquals( validateData[ currentRow ][ 1 ], col );
-        assertEquals( validateData[ currentRow ][ 2 ], data );
+        assertEquals( validateData[currentRow][0], row );
+        assertEquals( validateData[currentRow][1], col );
+        assertEquals( validateData[currentRow][2], data );
       } catch ( Throwable t ) {
         t.printStackTrace();
       }
@@ -284,4 +247,3 @@ public class CrosstabMultiFactDataIT extends TestCase {
     }
   }
 }
-

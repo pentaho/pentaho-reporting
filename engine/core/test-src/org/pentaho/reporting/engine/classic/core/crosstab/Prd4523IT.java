@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.crosstab;
 
@@ -54,21 +54,21 @@ public class Prd4523IT {
   @Test
   public void testComplexCrosstab() throws ResourceException, ReportProcessingException {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4523.prpt" );
-    report.getReportConfiguration().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts", "true" );
+    report.getReportConfiguration().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts", "true" );
     HtmlReportUtil.createStreamHTML( report, new NullOutputStream() );
   }
 
   @Test
   public void testTableColumns() throws Exception {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4523.prpt" );
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
     assertEquals( 1, elementsByNodeType.length );
-    TableRenderBox table = (TableRenderBox) elementsByNodeType[ 0 ];
+    TableRenderBox table = (TableRenderBox) elementsByNodeType[0];
     long width = table.getWidth();
     DebugLog.log( width );
     SeparateColumnModel columnModel = (SeparateColumnModel) table.getColumnModel();

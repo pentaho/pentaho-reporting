@@ -93,8 +93,8 @@ public class Prd5180IT {
     ByteArrayOutputStream boutSlow = new ByteArrayOutputStream();
     FastExcelReportUtil.processXls( report, boutFast );
     ExcelReportUtil.createXLS( report, boutSlow );
-    //    writeToFile("test-output/PRD-5180-fast.xls", boutFast);
-    //    writeToFile("test-output/PRD-5180-slow.xls", boutSlow);
+    // writeToFile("test-output/PRD-5180-fast.xls", boutFast);
+    // writeToFile("test-output/PRD-5180-slow.xls", boutSlow);
 
     // the two streams are not directly comparable, so we have to manually compare contents
     validateExcelSheet( boutSlow, createData() );
@@ -122,16 +122,16 @@ public class Prd5180IT {
     ByteArrayOutputStream boutSlow = new ByteArrayOutputStream();
     FastExcelReportUtil.processXlsx( report, boutFast );
     ExcelReportUtil.createXLSX( report, boutSlow );
-    //    writeToFile("test-output/PRD-5180-fast.xls", boutFast);
-    //    writeToFile("test-output/PRD-5180-slow.xls", boutSlow);
+    // writeToFile("test-output/PRD-5180-fast.xls", boutFast);
+    // writeToFile("test-output/PRD-5180-slow.xls", boutSlow);
 
     // the two streams are not directly comparable, so we have to manually compare contents
     validateExcelSheet( boutSlow, createData() );
     validateExcelSheet( boutFast, createData() );
   }
 
-  private void validateExcelSheet( final ByteArrayOutputStream boutSlow, final TableModel data )
-    throws IOException, InvalidFormatException {
+  private void validateExcelSheet( final ByteArrayOutputStream boutSlow, final TableModel data ) throws IOException,
+    InvalidFormatException {
     Workbook workbook = WorkbookFactory.create( new ByteArrayInputStream( boutSlow.toByteArray() ) );
     Sheet sheet = workbook.getSheetAt( 0 );
     Assert.assertEquals( 0, sheet.getFirstRowNum() );
@@ -165,7 +165,6 @@ public class Prd5180IT {
       fileOutputStream.close();
     }
   }
-
 
   private TableModel createData() {
     TypedTableModel model = new TypedTableModel();

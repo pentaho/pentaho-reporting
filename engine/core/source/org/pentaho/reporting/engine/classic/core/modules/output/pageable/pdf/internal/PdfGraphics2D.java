@@ -1,35 +1,43 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal;
 
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfGState;
-import com.lowagie.text.pdf.PdfPatternPainter;
-import com.lowagie.text.pdf.PdfShading;
-import com.lowagie.text.pdf.PdfShadingPattern;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
-import org.pentaho.reporting.libraries.fonts.itext.BaseFontFontMetrics;
-import org.pentaho.reporting.libraries.fonts.registry.FontNativeContext;
-
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Composite;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Paint;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.TexturePaint;
+import java.awt.Transparency;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.font.TextAttribute;
@@ -57,6 +65,19 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
+import org.pentaho.reporting.libraries.fonts.itext.BaseFontFontMetrics;
+import org.pentaho.reporting.libraries.fonts.registry.FontNativeContext;
+
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfGState;
+import com.lowagie.text.pdf.PdfPatternPainter;
+import com.lowagie.text.pdf.PdfShading;
+import com.lowagie.text.pdf.PdfShadingPattern;
 
 /**
  * This file is a temporary fix to an iText-Bug. Please do not rely on the existence of this file, as soon as there is
@@ -106,10 +127,10 @@ public class PdfGraphics2D extends Graphics2D {
   private MediaTracker mediaTracker;
 
   // Added by Jurij Bilas
-  private boolean underline;          // indicates if the font style is underlined
+  private boolean underline; // indicates if the font style is underlined
 
-  private PdfGState[] fillGState = new PdfGState[ 256 ];
-  private PdfGState[] strokeGState = new PdfGState[ 256 ];
+  private PdfGState[] fillGState = new PdfGState[256];
+  private PdfGState[] strokeGState = new PdfGState[256];
   private int currentFillGState = 255;
   private int currentStrokeGState = 255;
 
@@ -134,10 +155,8 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * Constructor for PDFGraphics2D.
    */
-  public PdfGraphics2D( final PdfContentByte cb,
-                        final float width,
-                        final float height,
-                        final PdfOutputProcessorMetaData metaData ) {
+  public PdfGraphics2D( final PdfContentByte cb, final float width, final float height,
+      final PdfOutputProcessorMetaData metaData ) {
     this.metaData = metaData;
     dg2.setRenderingHint( RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON );
     setRenderingHint( RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON );
@@ -209,7 +228,7 @@ public class PdfGraphics2D extends Graphics2D {
       if ( keys != null ) {
         final int keyCount = keys.length;
         for ( int i = 0; i < keyCount; i++ ) {
-          properties.put( keys[ i ], img.getProperty( keys[ i ] ) );
+          properties.put( keys[i], img.getProperty( keys[i] ) );
         }
       }
       final BufferedImage result = new BufferedImage( cm, raster, isAlphaPremultiplied, properties );
@@ -236,8 +255,10 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * Calculates position and/or stroke thickness depending on the font size
    *
-   * @param d value to be converted
-   * @param i font size
+   * @param d
+   *          value to be converted
+   * @param i
+   *          font size
    * @return position and/or stroke thickness depending on the font size
    */
   private static double asPoints( final double d, final int i ) {
@@ -310,7 +331,7 @@ public class PdfGraphics2D extends Graphics2D {
     final AffineTransform inverse = this.normalizeMatrix();
     final AffineTransform flipper = FLIP_TRANSFORM;
     inverse.concatenate( flipper );
-    final double[] mx = new double[ 6 ];
+    final double[] mx = new double[6];
     inverse.getMatrix( mx );
     cb.beginText();
 
@@ -320,9 +341,9 @@ public class PdfGraphics2D extends Graphics2D {
       final boolean bold = font.isBold();
       final boolean italic = font.isItalic();
 
-      final BaseFontFontMetrics fontMetrics = metaData.getBaseFontFontMetrics
-        ( fontName, fontSize, bold, italic, null,
-          metaData.isFeatureSupported( OutputProcessorFeature.EMBED_ALL_FONTS ), false );
+      final BaseFontFontMetrics fontMetrics =
+          metaData.getBaseFontFontMetrics( fontName, fontSize, bold, italic, null, metaData
+              .isFeatureSupported( OutputProcessorFeature.EMBED_ALL_FONTS ), false );
       final FontNativeContext nativeContext = fontMetrics.getNativeContext();
       lastBaseFont = fontMetrics.getBaseFont();
 
@@ -342,8 +363,7 @@ public class PdfGraphics2D extends Graphics2D {
       cb.setFontAndSize( lastBaseFont, fontSize );
     }
 
-    cb.setTextMatrix( (float) mx[ 0 ], (float) mx[ 1 ], (float) mx[ 2 ], (float) mx[ 3 ], (float) mx[ 4 ],
-      (float) mx[ 5 ] );
+    cb.setTextMatrix( (float) mx[0], (float) mx[1], (float) mx[2], (float) mx[3], (float) mx[4], (float) mx[5] );
     double width = 0;
     if ( fontSize > 0 ) {
       final float scale = 1000 / fontSize;
@@ -363,7 +383,7 @@ public class PdfGraphics2D extends Graphics2D {
     setTransform( at );
     if ( underline ) {
       // These two are supposed to be taken from the .AFM file
-      //int UnderlinePosition = -100;
+      // int UnderlinePosition = -100;
       final int UnderlineThickness = 50;
       //
       final double d = PdfGraphics2D.asPoints( (double) UnderlineThickness, (int) fontSize );
@@ -385,13 +405,10 @@ public class PdfGraphics2D extends Graphics2D {
    * @see Graphics2D#drawString(AttributedCharacterIterator, float, float)
    */
   public void drawString( final AttributedCharacterIterator iter, float x, final float y ) {
-/*
-        StringBuffer sb = new StringBuffer();
-        for(char c = iter.first(); c != AttributedCharacterIterator.DONE; c = iter.next()) {
-            sb.append(c);
-        }
-        drawString(sb.toString(),x,y);
-*/
+    /*
+     * StringBuffer sb = new StringBuffer(); for(char c = iter.first(); c != AttributedCharacterIterator.DONE; c =
+     * iter.next()) { sb.append(c); } drawString(sb.toString(),x,y);
+     */
     final StringBuilder stringbuffer = new StringBuilder( iter.getEndIndex() );
     for ( char c = iter.first(); c != AttributedCharacterIterator.DONE; c = iter.next() ) {
       if ( iter.getIndex() == iter.getRunStart() ) {
@@ -466,8 +483,7 @@ public class PdfGraphics2D extends Graphics2D {
         if ( realPaint != null && ( realPaint instanceof Color ) ) {
 
           final Color c = (Color) realPaint;
-          paint = new Color( c.getRed(), c.getGreen(), c.getBlue(),
-            (int) ( (float) c.getAlpha() * alpha ) );
+          paint = new Color( c.getRed(), c.getGreen(), c.getBlue(), (int) ( (float) c.getAlpha() * alpha ) );
         }
         return;
       }
@@ -513,11 +529,12 @@ public class PdfGraphics2D extends Graphics2D {
     if ( dash != null ) {
       final int dashLength = dash.length;
       for ( int k = 0; k < dashLength; ++k ) {
-        dash[ k ] *= scale;
+        dash[k] *= scale;
       }
     }
-    return new BasicStroke( st.getLineWidth() * scale, st.getEndCap(), st.getLineJoin(), st.getMiterLimit(), dash,
-      st.getDashPhase() * scale );
+    return new BasicStroke( st.getLineWidth() * scale, st.getEndCap(), st.getLineJoin(), st.getMiterLimit(), dash, st
+        .getDashPhase()
+        * scale );
   }
 
   private void setStrokeDiff( final Stroke newStroke, final Stroke oldStroke ) {
@@ -537,7 +554,7 @@ public class PdfGraphics2D extends Graphics2D {
       cb.setLineWidth( nStroke.getLineWidth() );
     }
     if ( !oldOk || nStroke.getEndCap() != oStroke.getEndCap() ) {
-      switch( nStroke.getEndCap() ) {
+      switch ( nStroke.getEndCap() ) {
         case BasicStroke.CAP_BUTT:
           cb.setLineCap( 0 );
           break;
@@ -549,7 +566,7 @@ public class PdfGraphics2D extends Graphics2D {
       }
     }
     if ( !oldOk || nStroke.getLineJoin() != oStroke.getLineJoin() ) {
-      switch( nStroke.getLineJoin() ) {
+      switch ( nStroke.getLineJoin() ) {
         case BasicStroke.JOIN_MITER:
           cb.setLineJoin( 0 );
           break;
@@ -589,7 +606,7 @@ public class PdfGraphics2D extends Graphics2D {
         cb.setLiteral( '[' );
         final int lim = dash.length;
         for ( int k = 0; k < lim; ++k ) {
-          cb.setLiteral( dash[ k ] );
+          cb.setLiteral( dash[k] );
           cb.setLiteral( ' ' );
         }
         cb.setLiteral( ']' );
@@ -607,7 +624,6 @@ public class PdfGraphics2D extends Graphics2D {
     this.stroke = transformStroke( s );
   }
 
-
   /**
    * Sets a rendering hint
    *
@@ -619,7 +635,8 @@ public class PdfGraphics2D extends Graphics2D {
   }
 
   /**
-   * @param arg0 a key
+   * @param arg0
+   *          a key
    * @return the rendering hint
    */
   public Object getRenderingHint( final RenderingHints.Key arg0 ) {
@@ -755,15 +772,14 @@ public class PdfGraphics2D extends Graphics2D {
     return originalStroke;
   }
 
-
   /**
    * @see Graphics2D#getFontRenderContext()
    */
   public FontRenderContext getFontRenderContext() {
-    final boolean antialias = RenderingHints.VALUE_TEXT_ANTIALIAS_ON.equals( getRenderingHint(
-      RenderingHints.KEY_TEXT_ANTIALIASING ) );
-    final boolean fractions = RenderingHints.VALUE_FRACTIONALMETRICS_ON.equals( getRenderingHint(
-      RenderingHints.KEY_FRACTIONALMETRICS ) );
+    final boolean antialias =
+        RenderingHints.VALUE_TEXT_ANTIALIAS_ON.equals( getRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING ) );
+    final boolean fractions =
+        RenderingHints.VALUE_FRACTIONALMETRICS_ON.equals( getRenderingHint( RenderingHints.KEY_FRACTIONALMETRICS ) );
     return new FontRenderContext( new AffineTransform(), antialias, fractions );
   }
 
@@ -867,7 +883,7 @@ public class PdfGraphics2D extends Graphics2D {
     font = f;
     lastBaseFont = null;
 
-    //    baseFont = fontMapper.awtToPdf(f);
+    // baseFont = fontMapper.awtToPdf(f);
   }
 
   /**
@@ -999,12 +1015,8 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawRoundRect(int, int, int, int, int, int)
    */
-  public void drawRoundRect( final int x,
-                             final int y,
-                             final int width,
-                             final int height,
-                             final int arcWidth,
-                             final int arcHeight ) {
+  public void drawRoundRect( final int x, final int y, final int width, final int height, final int arcWidth,
+      final int arcHeight ) {
     final RoundRectangle2D rect = new RoundRectangle2D.Double( x, y, width, height, arcWidth, arcHeight );
     draw( rect );
   }
@@ -1012,12 +1024,8 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#fillRoundRect(int, int, int, int, int, int)
    */
-  public void fillRoundRect( final int x,
-                             final int y,
-                             final int width,
-                             final int height,
-                             final int arcWidth,
-                             final int arcHeight ) {
+  public void fillRoundRect( final int x, final int y, final int width, final int height, final int arcWidth,
+      final int arcHeight ) {
     final RoundRectangle2D rect = new RoundRectangle2D.Double( x, y, width, height, arcWidth, arcHeight );
     fill( rect );
   }
@@ -1041,12 +1049,8 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawArc(int, int, int, int, int, int)
    */
-  public void drawArc( final int x,
-                       final int y,
-                       final int width,
-                       final int height,
-                       final int startAngle,
-                       final int arcAngle ) {
+  public void drawArc( final int x, final int y, final int width, final int height, final int startAngle,
+      final int arcAngle ) {
     final Arc2D arc = new Arc2D.Double( x, y, width, height, startAngle, arcAngle, Arc2D.OPEN );
     draw( arc );
 
@@ -1055,12 +1059,8 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#fillArc(int, int, int, int, int, int)
    */
-  public void fillArc( final int x,
-                       final int y,
-                       final int width,
-                       final int height,
-                       final int startAngle,
-                       final int arcAngle ) {
+  public void fillArc( final int x, final int y, final int width, final int height, final int startAngle,
+      final int arcAngle ) {
     final Arc2D arc = new Arc2D.Double( x, y, width, height, startAngle, arcAngle, Arc2D.PIE );
     fill( arc );
   }
@@ -1069,9 +1069,9 @@ public class PdfGraphics2D extends Graphics2D {
    * @see Graphics#drawPolyline(int[], int[], int)
    */
   public void drawPolyline( final int[] x, final int[] y, final int nPoints ) {
-    final Line2D line = new Line2D.Double( x[ 0 ], y[ 0 ], x[ 0 ], y[ 0 ] );
+    final Line2D line = new Line2D.Double( x[0], y[0], x[0], y[0] );
     for ( int i = 1; i < nPoints; i++ ) {
-      line.setLine( line.getX2(), line.getY2(), x[ i ], y[ i ] );
+      line.setLine( line.getX2(), line.getY2(), x[i], y[i] );
       draw( line );
     }
   }
@@ -1082,7 +1082,7 @@ public class PdfGraphics2D extends Graphics2D {
   public void drawPolygon( final int[] xPoints, final int[] yPoints, final int nPoints ) {
     final Polygon poly = new Polygon();
     for ( int i = 0; i < nPoints; i++ ) {
-      poly.addPoint( xPoints[ i ], yPoints[ i ] );
+      poly.addPoint( xPoints[i], yPoints[i] );
     }
     draw( poly );
   }
@@ -1093,7 +1093,7 @@ public class PdfGraphics2D extends Graphics2D {
   public void fillPolygon( final int[] xPoints, final int[] yPoints, final int nPoints ) {
     final Polygon poly = new Polygon();
     for ( int i = 0; i < nPoints; i++ ) {
-      poly.addPoint( xPoints[ i ], yPoints[ i ] );
+      poly.addPoint( xPoints[i], yPoints[i] );
     }
     fill( poly );
   }
@@ -1108,20 +1108,16 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, int, int, ImageObserver)
    */
-  public boolean drawImage( final Image img,
-                            final int x,
-                            final int y,
-                            final int width,
-                            final int height,
-                            final ImageObserver observer ) {
+  public boolean drawImage( final Image img, final int x, final int y, final int width, final int height,
+      final ImageObserver observer ) {
     return drawImage( img, x, y, width, height, null, observer );
   }
 
   /**
    * @see Graphics#drawImage(Image, int, int, Color, ImageObserver)
    */
-  public boolean drawImage( final Image img, final int x, final int y, final Color bgcolor,
-                            final ImageObserver observer ) {
+  public boolean
+    drawImage( final Image img, final int x, final int y, final Color bgcolor, final ImageObserver observer ) {
     waitForImage( img );
     return drawImage( img, x, y, img.getWidth( observer ), img.getHeight( observer ), bgcolor, observer );
   }
@@ -1129,13 +1125,8 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, int, int, Color, ImageObserver)
    */
-  public boolean drawImage( final Image img,
-                            final int x,
-                            final int y,
-                            final int width,
-                            final int height,
-                            final Color bgcolor,
-                            final ImageObserver observer ) {
+  public boolean drawImage( final Image img, final int x, final int y, final int width, final int height,
+      final Color bgcolor, final ImageObserver observer ) {
     waitForImage( img );
     final double scalex = width / (double) img.getWidth( observer );
     final double scaley = height / (double) img.getHeight( observer );
@@ -1147,40 +1138,23 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, int, int, int, int, int, int, ImageObserver)
    */
-  public boolean drawImage( final Image img,
-                            final int dx1,
-                            final int dy1,
-                            final int dx2,
-                            final int dy2,
-                            final int sx1,
-                            final int sy1,
-                            final int sx2,
-                            final int sy2,
-                            final ImageObserver observer ) {
+  public boolean drawImage( final Image img, final int dx1, final int dy1, final int dx2, final int dy2, final int sx1,
+      final int sy1, final int sx2, final int sy2, final ImageObserver observer ) {
     return drawImage( img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null, observer );
   }
 
   /**
    * @see Graphics#drawImage(Image, int, int, int, int, int, int, int, int, Color, ImageObserver)
    */
-  public boolean drawImage( final Image img,
-                            final int dx1,
-                            final int dy1,
-                            final int dx2,
-                            final int dy2,
-                            final int sx1,
-                            final int sy1,
-                            final int sx2,
-                            final int sy2,
-                            final Color bgcolor,
-                            final ImageObserver observer ) {
+  public boolean drawImage( final Image img, final int dx1, final int dy1, final int dx2, final int dy2, final int sx1,
+      final int sy1, final int sx2, final int sy2, final Color bgcolor, final ImageObserver observer ) {
     waitForImage( img );
     final double dwidth = (double) dx2 - dx1;
     final double dheight = (double) dy2 - dy1;
     final double swidth = (double) sx2 - sx1;
     final double sheight = (double) sy2 - sy1;
 
-    //if either width or height is 0, then there is nothing to draw
+    // if either width or height is 0, then there is nothing to draw
     if ( dwidth == 0 || dheight == 0 || swidth == 0 || sheight == 0 ) {
       return true;
     }
@@ -1193,8 +1167,8 @@ public class PdfGraphics2D extends Graphics2D {
     final AffineTransform tx = AffineTransform.getTranslateInstance( dx1 - transx, dy1 - transy );
     tx.scale( scalex, scaley );
 
-    final BufferedImage mask = new BufferedImage( img.getWidth( observer ), img.getHeight( observer ),
-      BufferedImage.TYPE_BYTE_BINARY );
+    final BufferedImage mask =
+        new BufferedImage( img.getWidth( observer ), img.getHeight( observer ), BufferedImage.TYPE_BYTE_BINARY );
     final Graphics g = mask.getGraphics();
     g.fillRect( sx1, sy1, (int) swidth, (int) sheight );
     drawImage( img, mask, tx, null, observer );
@@ -1229,33 +1203,32 @@ public class PdfGraphics2D extends Graphics2D {
     }
   }
 
-  //    private void internalDispose(ByteBuffer buf) {
-  //        int last = 0;
+  // private void internalDispose(ByteBuffer buf) {
+  // int last = 0;
   //
-  //        final ByteBuffer buf2 = cb.getInternalBuffer();
+  // final ByteBuffer buf2 = cb.getInternalBuffer();
   //
-  //        for (int k = 0; k < kids.size(); k += 1) {
-  ////            final int pos = ((Integer)kids.get(k)).intValue();
-  //            final PdfGraphics2D g2 = (PdfGraphics2D)kids.get(k + 1);
-  //            g2.cb.restoreState();
-  //            g2.cb.restoreState();
-  //            buf.append(buf2.getBuffer(), last, pos - last);
-  //            g2.dg2.dispose();
-  //            g2.dg2 = null;
-  //            g2.internalDispose(buf);
-  //            last = pos;
-  //        }
+  // for (int k = 0; k < kids.size(); k += 1) {
+  // // final int pos = ((Integer)kids.get(k)).intValue();
+  // final PdfGraphics2D g2 = (PdfGraphics2D)kids.get(k + 1);
+  // g2.cb.restoreState();
+  // g2.cb.restoreState();
+  // buf.append(buf2.getBuffer(), last, pos - last);
+  // g2.dg2.dispose();
+  // g2.dg2 = null;
+  // g2.internalDispose(buf);
+  // last = pos;
+  // }
   //
-  //        buf.append(buf2.getBuffer(), last, buf2.size() - last);
-  //    }
+  // buf.append(buf2.getBuffer(), last, buf2.size() - last);
+  // }
 
-  ///////////////////////////////////////////////
+  // /////////////////////////////////////////////
   //
   //
-  //		implementation specific methods
+  // implementation specific methods
   //
   //
-
 
   private void followPath( Shape s, final int drawType ) {
     if ( s == null ) {
@@ -1281,38 +1254,38 @@ public class PdfGraphics2D extends Graphics2D {
     } else {
       points = s.getPathIterator( transform );
     }
-    final float[] coords = new float[ 6 ];
+    final float[] coords = new float[6];
     int traces = 0;
     while ( !points.isDone() ) {
       ++traces;
       final int segtype = points.currentSegment( coords );
       normalizeY( coords );
-      switch( segtype ) {
+      switch ( segtype ) {
         case PathIterator.SEG_CLOSE:
           cb.closePath();
           break;
 
         case PathIterator.SEG_CUBICTO:
-          cb.curveTo( coords[ 0 ], coords[ 1 ], coords[ 2 ], coords[ 3 ], coords[ 4 ], coords[ 5 ] );
+          cb.curveTo( coords[0], coords[1], coords[2], coords[3], coords[4], coords[5] );
           break;
 
         case PathIterator.SEG_LINETO:
-          cb.lineTo( coords[ 0 ], coords[ 1 ] );
+          cb.lineTo( coords[0], coords[1] );
           break;
 
         case PathIterator.SEG_MOVETO:
-          cb.moveTo( coords[ 0 ], coords[ 1 ] );
+          cb.moveTo( coords[0], coords[1] );
           break;
 
         case PathIterator.SEG_QUADTO:
-          cb.curveTo( coords[ 0 ], coords[ 1 ], coords[ 2 ], coords[ 3 ] );
+          cb.curveTo( coords[0], coords[1], coords[2], coords[3] );
           break;
         default:
           throw new IllegalStateException( "Invalid segment type in path" );
       }
       points.next();
     }
-    switch( drawType ) {
+    switch ( drawType ) {
       case PdfGraphics2D.FILL:
         if ( traces > 0 ) {
           if ( points.getWindingRule() == PathIterator.WIND_EVEN_ODD ) {
@@ -1327,7 +1300,7 @@ public class PdfGraphics2D extends Graphics2D {
           cb.stroke();
         }
         break;
-      default: //drawType==CLIP
+      default: // drawType==CLIP
         if ( traces == 0 ) {
           cb.rectangle( 0, 0, 0, 0 );
         }
@@ -1345,28 +1318,24 @@ public class PdfGraphics2D extends Graphics2D {
   }
 
   private void normalizeY( final float[] coords ) {
-    coords[ 1 ] = normalizeY( coords[ 1 ] );
-    coords[ 3 ] = normalizeY( coords[ 3 ] );
-    coords[ 5 ] = normalizeY( coords[ 5 ] );
+    coords[1] = normalizeY( coords[1] );
+    coords[3] = normalizeY( coords[3] );
+    coords[5] = normalizeY( coords[5] );
   }
 
   private AffineTransform normalizeMatrix() {
-    final double[] mx = new double[ 6 ];
+    final double[] mx = new double[6];
     AffineTransform result = AffineTransform.getTranslateInstance( 0, 0 );
     result.getMatrix( mx );
-    mx[ 3 ] = -1;
-    mx[ 5 ] = height;
+    mx[3] = -1;
+    mx[5] = height;
     result = new AffineTransform( mx );
     result.concatenate( transform );
     return result;
   }
 
-
-  private boolean drawImage( final Image img,
-                             final Image mask,
-                             final AffineTransform xform,
-                             final Color bgColor,
-                             final ImageObserver obs ) {
+  private boolean drawImage( final Image img, final Image mask, final AffineTransform xform, final Color bgColor,
+      final ImageObserver obs ) {
     try {
       final com.lowagie.text.Image image = com.lowagie.text.Image.getInstance( img, bgColor );
       image.setDeflated( true );
@@ -1386,10 +1355,8 @@ public class PdfGraphics2D extends Graphics2D {
 
   }
 
-  public boolean drawPdfImage( final com.lowagie.text.Image image,
-                               final Image img,
-                               AffineTransform xform,
-                               final ImageObserver obs ) {
+  public boolean drawPdfImage( final com.lowagie.text.Image image, final Image img, AffineTransform xform,
+      final ImageObserver obs ) {
     if ( img == null ) {
       throw new NullPointerException( "Image must not be null." );
     }
@@ -1409,26 +1376,25 @@ public class PdfGraphics2D extends Graphics2D {
     inverse.concatenate( flipper );
 
     try {
-      final double[] mx = new double[ 6 ];
+      final double[] mx = new double[6];
       inverse.getMatrix( mx );
       if ( currentFillGState != 255 ) {
-        PdfGState gs = fillGState[ 255 ];
+        PdfGState gs = fillGState[255];
         if ( gs == null ) {
           gs = new PdfGState();
           gs.setFillOpacity( 1 );
-          fillGState[ 255 ] = gs;
+          fillGState[255] = gs;
         }
         cb.setGState( gs );
       }
 
-      cb.addImage( image, (float) mx[ 0 ], (float) mx[ 1 ], (float) mx[ 2 ], (float) mx[ 3 ], (float) mx[ 4 ],
-        (float) mx[ 5 ] );
+      cb.addImage( image, (float) mx[0], (float) mx[1], (float) mx[2], (float) mx[3], (float) mx[4], (float) mx[5] );
     } catch ( Exception ex ) {
       PdfGraphics2D.logger.error( "Failed to draw the image: ", ex );
       // throw new IllegalArgumentException("Failed to draw the image");
     } finally {
       if ( currentFillGState != 255 ) {
-        final PdfGState gs = fillGState[ currentFillGState ];
+        final PdfGState gs = fillGState[currentFillGState];
         cb.setGState( gs );
       }
     }
@@ -1463,11 +1429,11 @@ public class PdfGraphics2D extends Graphics2D {
       if ( fill ) {
         if ( alpha != currentFillGState ) {
           currentFillGState = alpha;
-          PdfGState gs = fillGState[ alpha ];
+          PdfGState gs = fillGState[alpha];
           if ( gs == null ) {
             gs = new PdfGState();
             gs.setFillOpacity( (float) alpha / 255.00f );
-            fillGState[ alpha ] = gs;
+            fillGState[alpha] = gs;
           }
           cb.setGState( gs );
         }
@@ -1475,11 +1441,11 @@ public class PdfGraphics2D extends Graphics2D {
       } else {
         if ( alpha != currentStrokeGState ) {
           currentStrokeGState = alpha;
-          PdfGState gs = strokeGState[ alpha ];
+          PdfGState gs = strokeGState[alpha];
           if ( gs == null ) {
             gs = new PdfGState();
             gs.setStrokeOpacity( (float) alpha / 255.0f );
-            strokeGState[ alpha ] = gs;
+            strokeGState[alpha] = gs;
           }
           cb.setGState( gs );
         }
@@ -1493,8 +1459,9 @@ public class PdfGraphics2D extends Graphics2D {
       transform.transform( p2, p2 );
       final Color c1 = gp.getColor1();
       final Color c2 = gp.getColor2();
-      final PdfShading shading = PdfShading.simpleAxial( cb.getPdfWriter(), (float) p1.getX(), normalizeY(
-        (float) p1.getY() ), (float) p2.getX(), normalizeY( (float) p2.getY() ), c1, c2 );
+      final PdfShading shading =
+          PdfShading.simpleAxial( cb.getPdfWriter(), (float) p1.getX(), normalizeY( (float) p1.getY() ), (float) p2
+              .getX(), normalizeY( (float) p2.getY() ), c1, c2 );
       final PdfShadingPattern pat = new PdfShadingPattern( shading );
       if ( fill ) {
         cb.setShadingFill( pat );
@@ -1511,10 +1478,10 @@ public class PdfGraphics2D extends Graphics2D {
         final AffineTransform inverse = this.normalizeMatrix();
         inverse.translate( rect.getX(), rect.getY() );
         inverse.scale( rect.getWidth() / image.getWidth(), -rect.getHeight() / image.getHeight() );
-        final double[] mx = new double[ 6 ];
+        final double[] mx = new double[6];
         inverse.getMatrix( mx );
-        pattern.setPatternMatrix( (float) mx[ 0 ], (float) mx[ 1 ], (float) mx[ 2 ], (float) mx[ 3 ], (float) mx[ 4 ],
-          (float) mx[ 5 ] );
+        pattern.setPatternMatrix( (float) mx[0], (float) mx[1], (float) mx[2], (float) mx[3], (float) mx[4],
+            (float) mx[5] );
         image.setAbsolutePosition( 0, 0 );
         pattern.addImage( image );
         if ( fill ) {

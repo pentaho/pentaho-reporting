@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -31,7 +31,6 @@ import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.text.Spacing;
 import org.pentaho.reporting.libraries.fonts.text.breaks.BreakOpportunityProducer;
 import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
-
 
 /**
  * The renderable text is a text chunk, enriched with layouting information, such as break opportunities, character
@@ -72,25 +71,15 @@ public final class RenderableText extends RenderNode implements SplittableRender
   private ExtendedBaselineInfo baselineInfo;
   private boolean normalTextSpacing;
 
-  public RenderableText( final StyleSheet layoutContext,
-                         final ElementType elementType,
-                         final InstanceID instanceID,
-                         final ReportAttributeMap<Object> attributes,
-                         final ExtendedBaselineInfo baselineInfo,
-                         final GlyphList glyphs,
-                         final int offset,
-                         final int length,
-                         final int script,
-                         final boolean forceLinebreak ) {
+  public RenderableText( final StyleSheet layoutContext, final ElementType elementType, final InstanceID instanceID,
+      final ReportAttributeMap<Object> attributes, final ExtendedBaselineInfo baselineInfo, final GlyphList glyphs,
+      final int offset, final int length, final int script, final boolean forceLinebreak ) {
     super( new NodeLayoutProperties( layoutContext, attributes, instanceID, elementType ) );
     initialize( glyphs, offset, length, baselineInfo, script, forceLinebreak );
   }
 
-  protected void initialize( final GlyphList glyphs,
-                             final int offset,
-                             final int length,
-                             final ExtendedBaselineInfo baselineInfo,
-                             final int script, final boolean forceLinebreak ) {
+  protected void initialize( final GlyphList glyphs, final int offset, final int length,
+      final ExtendedBaselineInfo baselineInfo, final int script, final boolean forceLinebreak ) {
     if ( glyphs == null ) {
       throw new NullPointerException();
     }
@@ -112,8 +101,8 @@ public final class RenderableText extends RenderNode implements SplittableRender
     normalTextSpacing = true;
     long wordMinChunkWidth = 0;
 
-    //    long heightAbove = 0;
-    //    long heightBelow = 0;
+    // long heightAbove = 0;
+    // long heightBelow = 0;
     long minimumChunkWidth = 0;
 
     long realCharTotal = 0;
@@ -124,8 +113,8 @@ public final class RenderableText extends RenderNode implements SplittableRender
     final int lastPos = Math.min( glyphs.getSize(), offset + length );
     for ( int i = offset; i < lastPos; i++ ) {
       final Glyph glyph = glyphs.getGlyph( i );
-      //      heightAbove = Math.max(glyph.getBaseLine(), heightAbove);
-      //      heightBelow = Math.max(glyph.getHeight() - glyph.getBaseLine(), heightBelow);
+      // heightAbove = Math.max(glyph.getBaseLine(), heightAbove);
+      // heightBelow = Math.max(glyph.getHeight() - glyph.getBaseLine(), heightBelow);
       final int kerning = glyph.getKerning();
       final int width = glyph.getWidth();
       final long realCharSpace = convert( width - kerning );
@@ -136,8 +125,7 @@ public final class RenderableText extends RenderNode implements SplittableRender
         spacerMax += spacing.getMaximum();
         spacerMin += spacing.getMinimum();
         spacerOpt += spacing.getOptimum();
-        if ( normalTextSpacing == true
-          && Spacing.EMPTY_SPACING.equals( spacing ) == false ) {
+        if ( normalTextSpacing == true && Spacing.EMPTY_SPACING.equals( spacing ) == false ) {
           normalTextSpacing = false;
         }
 
@@ -151,8 +139,7 @@ public final class RenderableText extends RenderNode implements SplittableRender
         // Paranoid sanity checks: The word- and linebreaks should have been
         // replaced by other definitions in the text factory.
         if ( glyph.getBreakWeight() == BreakOpportunityProducer.BREAK_LINE ) {
-          throw new IllegalStateException( "A renderable text cannot and must "
-            + "not contain linebreaks." );
+          throw new IllegalStateException( "A renderable text cannot and must " + "not contain linebreaks." );
         }
       }
     }
@@ -268,24 +255,25 @@ public final class RenderableText extends RenderNode implements SplittableRender
   /**
    * {@inheritDoc}
    * <p/>
-   * <b>Important!</b> The separation is allowed only if {@linkplain org.pentaho.reporting.engine.classic.core.style
-   * .TextStyleKeys#WORDBREAK TextStyleKeys.WORDBREAK} property is {@code true}
+   * <b>Important!</b> The separation is allowed only if
+   * {@linkplain org.pentaho.reporting.engine.classic.core.style .TextStyleKeys#WORDBREAK TextStyleKeys.WORDBREAK}
+   * property is {@code true}
    *
-   * @throws IllegalArgumentException if {@code widthOfFirst <= 0}
-   * @throws IllegalStateException if {@code widthOfFirst >= getMinimumWidth()}
+   * @throws IllegalArgumentException
+   *           if {@code widthOfFirst <= 0}
+   * @throws IllegalStateException
+   *           if {@code widthOfFirst >= getMinimumWidth()}
    */
   @Override
   public RenderableText[] splitBy( long widthOfFirst ) {
     if ( widthOfFirst <= 0 ) {
       throw new IllegalArgumentException( String.format(
-        "Illegal width: %d. Only text nodes with non-zero width are not allowed!",
-        widthOfFirst ) );
+          "Illegal width: %d. Only text nodes with non-zero width are not allowed!", widthOfFirst ) );
     }
 
     if ( widthOfFirst >= getMinimumWidth() ) {
       throw new IllegalStateException( String.format(
-        "Split width (%d) should be less than the component's minimum width (%d)!",
-        widthOfFirst, getMinimumWidth() ) );
+          "Split width (%d) should be less than the component's minimum width (%d)!", widthOfFirst, getMinimumWidth() ) );
     }
 
     if ( !getStyleSheet().getBooleanStyleProperty( TextStyleKeys.WORDBREAK ) ) {

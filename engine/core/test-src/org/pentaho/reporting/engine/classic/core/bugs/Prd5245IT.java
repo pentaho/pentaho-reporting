@@ -21,8 +21,7 @@ public class Prd5245IT {
   @Test
   public void testFrom52() throws Exception {
     URL url = getClass().getResource( "Prd-5245-from52.prpt" );
-    MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class )
-      .getResource();
+    MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
     final ByteArrayOutputStream boutFast = new ByteArrayOutputStream();
     final ByteArrayOutputStream boutSlow = new ByteArrayOutputStream();
     FastHtmlReportUtil.processStreamHtml( report, boutFast );
@@ -35,8 +34,7 @@ public class Prd5245IT {
   @Test
   public void testFrom39() throws Exception {
     URL url = getClass().getResource( "Prd-5245-from39.prpt" );
-    MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class )
-      .getResource();
+    MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
     final ByteArrayOutputStream boutFast = new ByteArrayOutputStream();
     final ByteArrayOutputStream boutSlow = new ByteArrayOutputStream();
     FastHtmlReportUtil.processStreamHtml( report, boutFast );

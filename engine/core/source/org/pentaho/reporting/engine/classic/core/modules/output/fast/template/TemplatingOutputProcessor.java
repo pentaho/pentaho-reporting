@@ -31,7 +31,7 @@ public class TemplatingOutputProcessor extends AbstractOutputProcessor {
   private FastExportTemplateListener templateListener;
 
   public TemplatingOutputProcessor( final OutputProcessorMetaData metaData,
-                                    final FastExportTemplateListener templateListener ) {
+      final FastExportTemplateListener templateListener ) {
     if ( metaData == null ) {
       throw new NullPointerException();
     }
@@ -49,16 +49,15 @@ public class TemplatingOutputProcessor extends AbstractOutputProcessor {
     }
   }
 
-  protected void processPaginationContent( final LogicalPageKey logicalPageKey,
-                                           final LogicalPageBox logicalPage ) throws ContentProcessingException {
+  protected void processPaginationContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )
+    throws ContentProcessingException {
     if ( templateListener != null ) {
       templateListener.produceTemplate( logicalPage );
     }
   }
 
-  public static TableContentProducer produceTableLayout( final LogicalPageBox pageBox,
-                                                         final SheetLayout layout,
-                                                         final OutputProcessorMetaData metaData ) {
+  public static TableContentProducer produceTableLayout( final LogicalPageBox pageBox, final SheetLayout layout,
+      final OutputProcessorMetaData metaData ) {
     layout.clearVerticalInfo();
 
     TableLayoutProducer currentLayout = new TableLayoutProducer( metaData, layout );

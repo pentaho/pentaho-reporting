@@ -1,29 +1,29 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
+
+import java.awt.Color;
+import java.util.ArrayList;
 
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderCorner;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 public class CellBackground {
   private ReportAttributeMap<Object> attributes;
@@ -43,7 +43,7 @@ public class CellBackground {
   private boolean origin;
   private ElementType elementType;
   private transient Integer hashCode;
-  private static final String[] EMPTY_ANCHORS = new String[ 0 ];
+  private static final String[] EMPTY_ANCHORS = new String[0];
 
   public CellBackground() {
     this.top = BorderEdge.EMPTY;
@@ -74,10 +74,10 @@ public class CellBackground {
 
     final String[] namespaces = attrs.getNameSpaces();
     for ( int i = 0; i < namespaces.length; i++ ) {
-      final String namespace = namespaces[ i ];
+      final String namespace = namespaces[i];
       final String[] names = attrs.getNames( namespace );
       for ( int j = 0; j < names.length; j++ ) {
-        final String name = names[ j ];
+        final String name = names[j];
         final Object value = attrs.getAttribute( namespace, name );
         if ( value != null ) {
           this.attributes.setAttribute( namespace, name, value );
@@ -100,7 +100,7 @@ public class CellBackground {
       return;
     }
 
-    // common special case: Only one background color defined .. 
+    // common special case: Only one background color defined ..
     if ( backgroundColor == null ) {
       backgroundColor = color;
       this.hashCode = null;
@@ -155,8 +155,10 @@ public class CellBackground {
   /**
    * Adds two colors, the result is the mixed color of the base color and the paint color.
    *
-   * @param base  the base color
-   * @param paint the overlay color
+   * @param base
+   *          the base color
+   * @param paint
+   *          the overlay color
    * @return the merged colors.
    */
   private static Color addColor( final Color base, final Color paint ) {
@@ -172,12 +174,9 @@ public class CellBackground {
     final double effectiveAlpha = 1.0 - baseAlpha * paintAlpha;
 
     final double deltaAlpha = 1.0 - effectiveAlpha;
-    final int red = (int)
-      ( base.getRed() * deltaAlpha + paint.getRed() * effectiveAlpha );
-    final int green = (int)
-      ( base.getGreen() * deltaAlpha + paint.getGreen() * effectiveAlpha );
-    final int blue = (int)
-      ( base.getBlue() * deltaAlpha + paint.getBlue() * effectiveAlpha );
+    final int red = (int) ( base.getRed() * deltaAlpha + paint.getRed() * effectiveAlpha );
+    final int green = (int) ( base.getGreen() * deltaAlpha + paint.getGreen() * effectiveAlpha );
+    final int blue = (int) ( base.getBlue() * deltaAlpha + paint.getBlue() * effectiveAlpha );
     return new Color( red, green, blue, (int) ( effectiveAlpha * 255.0 ) );
   }
 
@@ -292,7 +291,7 @@ public class CellBackground {
     if ( anchors == null ) {
       return EMPTY_ANCHORS;
     }
-    return anchors.toArray( new String[ anchors.size() ] );
+    return anchors.toArray( new String[anchors.size()] );
   }
 
   public void addElementType( final ElementType type ) {

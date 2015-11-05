@@ -1,27 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+
+import javax.swing.JPanel;
+
+import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
 /**
  * A component, that accepts a drawable and which draws that drawable.
@@ -72,7 +75,7 @@ public class DrawablePanel extends JPanel {
   }
 
   /**
-   * If the minimum size has been set to a non-<code>null</code> value just returns it.  If the UI delegate's
+   * If the minimum size has been set to a non-<code>null</code> value just returns it. If the UI delegate's
    * <code>getMinimumSize</code> method returns a non-<code>null</code> value then return that; otherwise defer to the
    * component's layout manager.
    *
@@ -91,8 +94,8 @@ public class DrawablePanel extends JPanel {
    * Returns true if this component is completely opaque.
    * <p/>
    * An opaque component paints every pixel within its rectangular bounds. A non-opaque component paints only a subset
-   * of its pixels or none at all, allowing the pixels underneath it to "show through".  Therefore, a component that
-   * does not fully paint its pixels provides a degree of transparency.
+   * of its pixels or none at all, allowing the pixels underneath it to "show through". Therefore, a component that does
+   * not fully paint its pixels provides a degree of transparency.
    * <p/>
    * Subclasses that guarantee to always completely paint their contents should override this method and return true.
    *
@@ -107,7 +110,7 @@ public class DrawablePanel extends JPanel {
   }
 
   /**
-   * Calls the UI delegate's paint method, if the UI delegate is non-<code>null</code>.  We pass the delegate a copy of
+   * Calls the UI delegate's paint method, if the UI delegate is non-<code>null</code>. We pass the delegate a copy of
    * the <code>Graphics</code> object to protect the rest of the paint code from irrevocable changes (for example,
    * <code>Graphics.translate</code>).
    * <p/>
@@ -119,9 +122,10 @@ public class DrawablePanel extends JPanel {
    * honor the opaque property you will likely see visual artifacts.
    * <p/>
    * The passed in <code>Graphics</code> object might have a transform other than the identify transform installed on
-   * it.  In this case, you might get unexpected results if you cumulatively apply another transform.
+   * it. In this case, you might get unexpected results if you cumulatively apply another transform.
    *
-   * @param g the <code>Graphics</code> object to protect
+   * @param g
+   *          the <code>Graphics</code> object to protect
    * @see #paint
    * @see javax.swing.plaf.ComponentUI
    */
@@ -131,8 +135,7 @@ public class DrawablePanel extends JPanel {
       return;
     }
 
-    final Graphics2D g2 = (Graphics2D) g.create
-      ( 0, 0, getWidth(), getHeight() );
+    final Graphics2D g2 = (Graphics2D) g.create( 0, 0, getWidth(), getHeight() );
 
     drawable.draw( g2, new Rectangle2D.Double( 0, 0, getWidth(), getHeight() ) );
     g2.dispose();

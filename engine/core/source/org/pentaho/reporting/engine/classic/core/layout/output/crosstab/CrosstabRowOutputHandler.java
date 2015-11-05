@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 
@@ -46,8 +46,8 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
   public CrosstabRowOutputHandler() {
   }
 
-  public void groupStarted( final DefaultOutputFunction outputFunction,
-                            final ReportEvent event ) throws ReportProcessingException {
+  public void groupStarted( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
     final LayoutModelBuilder layoutModelBuilder = outputFunction.getRenderer().getNormalFlowLayoutModelBuilder();
     final int gidx = event.getState().getCurrentGroupIndex();
@@ -75,7 +75,7 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
       // flag not empty is needed to connect the new node with the rest of the layout model.
       layoutModelBuilder.legacyFlagNotEmpty();
       final TableSectionRenderBox rowRenderNode =
-        CrosstabOutputHelper.findTableSection( layoutModelBuilder.dangerousRawAccess() );
+          CrosstabOutputHelper.findTableSection( layoutModelBuilder.dangerousRawAccess() );
 
       for ( int i = crosstabLayout.getFirstRowGroupIndex(), count = 0; i < gidx; i += 1, count += 1 ) {
         final InstanceID rowHeader = crosstabLayout.getRowHeader( i - crosstabLayout.getFirstRowGroupIndex() );
@@ -84,8 +84,7 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
           final TableCellRenderBox cellBox = (TableCellRenderBox) cell;
           cellBox.update( cellBox.getRowSpan() + 1, cellBox.getColSpan() );
         } else {
-          throw new IllegalStateException(
-            "Unable to find previously defined row header. Aborting report processing." );
+          throw new IllegalStateException( "Unable to find previously defined row header. Aborting report processing." );
         }
       }
     }
@@ -94,20 +93,19 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
     if ( gidx == firstRowGroupIndex ) {
       RenderNode renderNode = layoutModelBuilder.dangerousRawAccess();
       RenderBox parentNode =
-        (RenderBox) CrosstabOutputHelper.findParentNode( renderNode, crosstabLayout.getCrosstabId() );
+          (RenderBox) CrosstabOutputHelper.findParentNode( renderNode, crosstabLayout.getCrosstabId() );
       parentNode.setPreventPagination( true );
     }
 
     CrosstabOutputHelper.createAutomaticCell( layoutModelBuilder, 1, 1, group.getHeader() );
-    crosstabLayout.setRowHeader( gidx - crosstabLayout.getFirstRowGroupIndex(),
-      layoutModelBuilder.dangerousRawAccess().getInstanceId() );
+    crosstabLayout.setRowHeader( gidx - crosstabLayout.getFirstRowGroupIndex(), layoutModelBuilder.dangerousRawAccess()
+        .getInstanceId() );
     outputFunction.getRenderer().add( group.getHeader(), outputFunction.getRuntime() );
     layoutModelBuilder.finishBox();
   }
 
-
-  public void groupFinished( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void groupFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     CrosstabOutputHelper.printCrosstabSummary( outputFunction, event );
 
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
@@ -122,7 +120,7 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
       // close all header rows
       final InstanceID[] columnHeaders = crosstabLayout.getColumnHeaderSubFlows();
       for ( int i = 0; i < columnHeaders.length; i++ ) {
-        final InstanceID columnHeader = columnHeaders[ i ];
+        final InstanceID columnHeader = columnHeaders[i];
         layoutModelBuilder.startSubFlow( columnHeader );
         layoutModelBuilder.endSubFlow();
       }
@@ -134,20 +132,20 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
     if ( gidx == firstRowGroupIndex ) {
       RenderNode renderNode = layoutModelBuilder.dangerousRawAccess();
       RenderBox parentNode =
-        (RenderBox) CrosstabOutputHelper.findParentNode( renderNode, crosstabLayout.getCrosstabId() );
+          (RenderBox) CrosstabOutputHelper.findParentNode( renderNode, crosstabLayout.getCrosstabId() );
       parentNode.setPreventPagination( false );
     }
   }
 
-  public void groupBodyFinished( final DefaultOutputFunction outputFunction,
-                                 final ReportEvent event ) throws ReportProcessingException {
+  public void groupBodyFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
 
   }
 
   private void buildHeaderPlaceholder( final RenderedCrosstabLayout crosstabLayout,
-                                       final LayoutModelBuilder layoutModelBuilder ) {
-    crosstabLayout.setCrosstabId
-      ( layoutModelBuilder.startBox( CrosstabOutputHelper.createTable( crosstabLayout.getTableLayout() ) ) );
+      final LayoutModelBuilder layoutModelBuilder ) {
+    crosstabLayout.setCrosstabId( layoutModelBuilder.startBox( CrosstabOutputHelper.createTable( crosstabLayout
+        .getTableLayout() ) ) );
 
     layoutModelBuilder.startBox( CrosstabOutputHelper.createTableBand( BandStyleKeys.LAYOUT_TABLE_HEADER ) );
 
@@ -159,16 +157,16 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
     if ( crosstabLayout.isGenerateMeasureHeaders() ) {
       columnGroupCount += 1;
     }
-    final InstanceID[] columnHeaders = new InstanceID[ Math.max( 1, columnGroupCount ) ];
+    final InstanceID[] columnHeaders = new InstanceID[Math.max( 1, columnGroupCount )];
     for ( int i = 0; i < columnHeaders.length; i += 1 ) {
-      columnHeaders[ i ] = layoutModelBuilder.createSubflowPlaceholder( CrosstabOutputHelper.createTableRow() );
+      columnHeaders[i] = layoutModelBuilder.createSubflowPlaceholder( CrosstabOutputHelper.createTableRow() );
     }
 
     if ( columnHeaders.length > 1 ) {
       // Adds a empty cell that consumes the area above the row-header
-      layoutModelBuilder.startSubFlow( columnHeaders[ 0 ] );
-      CrosstabOutputHelper
-        .createAutomaticCell( layoutModelBuilder, crosstabLayout.getRowGroups(), columnHeaders.length - 1 );
+      layoutModelBuilder.startSubFlow( columnHeaders[0] );
+      CrosstabOutputHelper.createAutomaticCell( layoutModelBuilder, crosstabLayout.getRowGroups(),
+          columnHeaders.length - 1 );
       layoutModelBuilder.legacyFlagNotEmpty();
       layoutModelBuilder.finishBox();
       layoutModelBuilder.suspendSubFlow();
@@ -178,34 +176,32 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
 
     layoutModelBuilder.startBox( CrosstabOutputHelper.createTableBand( BandStyleKeys.LAYOUT_TABLE_BODY ) );
 
-
     crosstabLayout.setCrosstabHeaderOpen( true );
     crosstabLayout.setColumnHeaderRowIds( columnHeaders );
   }
 
-  public void itemsStarted( final DefaultOutputFunction outputFunction,
-                            final ReportEvent event ) throws ReportProcessingException {
+  public void itemsStarted( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     throw new ReportProcessingException( "A crosstab-row cannot contain a detail band. Never." );
   }
 
-  public void itemsAdvanced( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void itemsAdvanced( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     throw new ReportProcessingException( "A crosstab-row cannot contain a detail band. Never." );
   }
 
-  public void itemsFinished( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void itemsFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     throw new ReportProcessingException( "A crosstab-row cannot contain a detail band. Never." );
   }
 
-  public void summaryRowStart( final DefaultOutputFunction outputFunction,
-                               final ReportEvent event ) throws ReportProcessingException {
+  public void summaryRowStart( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
     final LayoutModelBuilder layoutModelBuilder = outputFunction.getRenderer().getNormalFlowLayoutModelBuilder();
 
     if ( crosstabLayout.isCrosstabRowOpen() ) {
-      throw new IllegalStateException(
-        "Event Order Error: A summary row cannot be printed while a row is still open." );
+      throw new IllegalStateException( "Event Order Error: A summary row cannot be printed while a row is still open." );
     }
 
     final int gidx = event.getState().getCurrentGroupIndex() + 1;
@@ -236,7 +232,7 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
       // flag not empty is needed to connect the new node with the rest of the layout model.
       layoutModelBuilder.legacyFlagNotEmpty();
       final TableSectionRenderBox rowRenderNode =
-        CrosstabOutputHelper.findTableSection( layoutModelBuilder.dangerousRawAccess() );
+          CrosstabOutputHelper.findTableSection( layoutModelBuilder.dangerousRawAccess() );
       for ( int i = crosstabLayout.getFirstRowGroupIndex(), count = 0; i < gidx; i += 1, count += 1 ) {
         final InstanceID rowHeader = crosstabLayout.getRowHeader( i - crosstabLayout.getFirstRowGroupIndex() );
         final RenderNode cell = CrosstabOutputHelper.findNode( rowRenderNode, rowHeader );
@@ -244,8 +240,7 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
           final TableCellRenderBox cellBox = (TableCellRenderBox) cell;
           cellBox.update( cellBox.getRowSpan() + 1, cellBox.getColSpan() );
         } else {
-          throw new IllegalStateException(
-            "Unable to find previously defined row header. Aborting report processing." );
+          throw new IllegalStateException( "Unable to find previously defined row header. Aborting report processing." );
         }
       }
     }
@@ -254,8 +249,8 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
     // of the data area.
     final int colSpan = crosstabLayout.getFirstColGroupIndex() - gidx;
     CrosstabOutputHelper.createAutomaticCell( layoutModelBuilder, colSpan, 1, group.getSummaryHeader() );
-    crosstabLayout.setRowHeader( gidx - crosstabLayout.getFirstRowGroupIndex(),
-      layoutModelBuilder.dangerousRawAccess().getInstanceId() );
+    crosstabLayout.setRowHeader( gidx - crosstabLayout.getFirstRowGroupIndex(), layoutModelBuilder.dangerousRawAccess()
+        .getInstanceId() );
     outputFunction.getRenderer().add( group.getSummaryHeader(), outputFunction.getRuntime() );
     layoutModelBuilder.finishBox();
 
@@ -264,8 +259,8 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
     crosstabLayout.setProcessingCrosstabHeader( false );
   }
 
-  public void summaryRowEnd( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void summaryRowEnd( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
     if ( crosstabLayout.isSummaryRowPrintable() == false ) {
       return;
@@ -281,8 +276,8 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
     }
   }
 
-  public void summaryRow( final DefaultOutputFunction outputFunction,
-                          final ReportEvent event ) throws ReportProcessingException {
+  public void summaryRow( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
     if ( crosstabLayout.isSummaryRowPrintable() == false ) {
       return;
@@ -291,8 +286,8 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
     printSummaryCell( outputFunction, event );
   }
 
-  private void printSummaryCell( final DefaultOutputFunction outputFunction,
-                                 final ReportEvent event ) throws ReportProcessingException {
+  private void printSummaryCell( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
 
     final int gidx = event.getState().getCurrentGroupIndex();
@@ -308,8 +303,8 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
       columnField = next.getField();
     } else if ( groupBody instanceof CrosstabRowGroupBody ) {
       // the final sum of the row. The column field will be the first column group
-      final CrosstabColumnGroup colGroup = (CrosstabColumnGroup)
-        event.getReport().getGroup( crosstabLayout.getFirstColGroupIndex() );
+      final CrosstabColumnGroup colGroup =
+          (CrosstabColumnGroup) event.getReport().getGroup( crosstabLayout.getFirstColGroupIndex() );
       if ( colGroup.isPrintSummary() == false ) {
         return;
       }
@@ -334,7 +329,7 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler {
       CrosstabOutputHelper.createAutomaticCell( layoutModelBuilder );
       layoutModelBuilder.legacyFlagNotEmpty();
       logger.debug( String.format( "Unable to find summary cell: %s - %s", // NON-NLS
-        crosstabLayout.getSummaryRowField(), columnField ) );
+          crosstabLayout.getSummaryRowField(), columnField ) );
       layoutModelBuilder.finishBox();
     }
 

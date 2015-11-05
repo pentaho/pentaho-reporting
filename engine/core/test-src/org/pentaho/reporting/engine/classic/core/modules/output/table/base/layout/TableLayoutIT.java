@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout;
 
@@ -33,8 +33,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.model.ResultTable;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.model.SourceChunk;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.model.ValidationSequence;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.parser
-  .TableTestSpecXmlResourceFactory;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.parser.TableTestSpecXmlResourceFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.states.DefaultPerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
@@ -78,13 +77,13 @@ public class TableLayoutIT extends TestCase {
     runTest( "background-color.xml" );
   }
 
-  public void testBorderSplittingSimple()
-    throws ResourceException, ContentProcessingException, ReportProcessingException {
+  public void testBorderSplittingSimple() throws ResourceException, ContentProcessingException,
+    ReportProcessingException {
     runTest( "border-splitting-simple.xml" );
   }
 
-  public void testBorderSplittingOverlapping()
-    throws ResourceException, ContentProcessingException, ReportProcessingException {
+  public void testBorderSplittingOverlapping() throws ResourceException, ContentProcessingException,
+    ReportProcessingException {
     runTest( "border-splitting-overlapping.xml" );
   }
 
@@ -100,8 +99,7 @@ public class TableLayoutIT extends TestCase {
     runTest( "legacy-lines-bug2.xml" );
   }
 
-  public void testBorderOverlaySimple()
-    throws ResourceException, ContentProcessingException, ReportProcessingException {
+  public void testBorderOverlaySimple() throws ResourceException, ContentProcessingException, ReportProcessingException {
     runTest( "border-overlay-simple.xml" );
   }
 
@@ -109,13 +107,12 @@ public class TableLayoutIT extends TestCase {
     runTest( "legacy-round-rectangles.xml" ); // Excel does not support round-rects, so this test will fail
   }
 
-  private static void runTest( final String filename )
-    throws ResourceException, ContentProcessingException, ReportProcessingException {
+  private static void runTest( final String filename ) throws ResourceException, ContentProcessingException,
+    ReportProcessingException {
     logger.debug( "Processing " + filename );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
     resourceManager.registerFactory( new TableTestSpecXmlResourceFactory() );
-
 
     final URL url = TableLayoutIT.class.getResource( filename );
     assertNotNull( url );
@@ -124,22 +121,20 @@ public class TableLayoutIT extends TestCase {
 
     final TableLayoutIT runtime = new TableLayoutIT();
 
-    final HierarchicalConfiguration config = new HierarchicalConfiguration(
-      ClassicEngineBoot.getInstance().getGlobalConfig() );
+    final HierarchicalConfiguration config =
+        new HierarchicalConfiguration( ClassicEngineBoot.getInstance().getGlobalConfig() );
     config.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout",
-      String.valueOf( sequence.isStrict() ) );
+        String.valueOf( sequence.isStrict() ) );
     config.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkers",
-      "true" );
+        "true" );
     final HtmlOutputProcessorMetaData metaData =
-      new HtmlOutputProcessorMetaData( HtmlOutputProcessorMetaData.PAGINATION_NONE );
+        new HtmlOutputProcessorMetaData( HtmlOutputProcessorMetaData.PAGINATION_NONE );
     metaData.initialize( config );
 
     runtime.run( sequence, metaData );
   }
 
-
-  public void run( final ValidationSequence sequence,
-                   final OutputProcessorMetaData metaData )
+  public void run( final ValidationSequence sequence, final OutputProcessorMetaData metaData )
     throws ResourceKeyCreationException, ContentProcessingException, ReportProcessingException {
     // Set up the process ..
     final PageFormatFactory fmFactory = PageFormatFactory.getInstance();

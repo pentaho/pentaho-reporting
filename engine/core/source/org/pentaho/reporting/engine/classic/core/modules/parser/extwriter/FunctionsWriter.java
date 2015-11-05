@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
@@ -61,22 +61,24 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
   /**
    * Creates a new writer.
    *
-   * @param reportWriter the report writer.
-   * @param indentLevel  the current indention level.
+   * @param reportWriter
+   *          the report writer.
+   * @param indentLevel
+   *          the current indention level.
    */
-  public FunctionsWriter( final ReportWriterContext reportWriter,
-                          final XmlWriter indentLevel ) {
+  public FunctionsWriter( final ReportWriterContext reportWriter, final XmlWriter indentLevel ) {
     super( reportWriter, indentLevel );
   }
 
   /**
    * Writes the functions to XML.
    *
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if the report function definition could not be written.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if the report function definition could not be written.
    */
-  public void write()
-    throws IOException, ReportWriterException {
+  public void write() throws IOException, ReportWriterException {
     if ( shouldWriteFunctions() ) {
       final XmlWriter writer = getXmlWriter();
       writer.writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.FUNCTIONS_TAG, XmlWriterSupport.OPEN );
@@ -100,19 +102,19 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
   /**
    * Writes a collection of functions/expressions to XML.
    *
-   * @param exp the collection.
-   * @throws java.io.IOException if there is an I/O problem.
+   * @param exp
+   *          the collection.
+   * @throws java.io.IOException
+   *           if there is an I/O problem.
    */
-  public void writeExpressions( final ExpressionCollection exp )
-    throws IOException {
+  public void writeExpressions( final ExpressionCollection exp ) throws IOException {
     for ( int i = 0; i < exp.size(); i++ ) {
       final Expression expression = exp.getExpression( i );
       writeExpression( expression );
     }
   }
 
-  private void writeExpression( final Expression expression )
-    throws IOException {
+  private void writeExpression( final Expression expression ) throws IOException {
     final XmlWriter writer = getXmlWriter();
     if ( expression instanceof FormulaExpression ) {
       final FormulaExpression fe = (FormulaExpression) expression;
@@ -122,8 +124,8 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
       }
       properties.setAttribute( ExtParserModule.NAMESPACE, "formula", fe.getFormula() );
       if ( expression.getDependencyLevel() > 0 ) {
-        properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf(
-          expression.getDependencyLevel() ) );
+        properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String
+            .valueOf( expression.getDependencyLevel() ) );
       }
       writer.writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.EXPRESSION_TAG, properties, XmlWriterSupport.CLOSE );
       return;
@@ -138,8 +140,8 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
       properties.setAttribute( ExtParserModule.NAMESPACE, "formula", fe.getFormula() );
       properties.setAttribute( ExtParserModule.NAMESPACE, "initial", fe.getInitial() );
       if ( expression.getDependencyLevel() > 0 ) {
-        properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf(
-          expression.getDependencyLevel() ) );
+        properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String
+            .valueOf( expression.getDependencyLevel() ) );
       }
       writer.writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.EXPRESSION_TAG, properties, XmlWriterSupport.CLOSE );
       return;
@@ -155,11 +157,10 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
         }
         properties.setAttribute( ExtParserModule.NAMESPACE, "class", expression.getClass().getName() );
         if ( expression.getDependencyLevel() > 0 ) {
-          properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf(
-            expression.getDependencyLevel() ) );
+          properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf( expression
+              .getDependencyLevel() ) );
         }
-        writer
-          .writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.EXPRESSION_TAG, properties, XmlWriterSupport.CLOSE );
+        writer.writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.EXPRESSION_TAG, properties, XmlWriterSupport.CLOSE );
       } else {
         final AttributeList properties = new AttributeList();
         if ( expression.getName() != null ) {
@@ -167,8 +168,8 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
         }
         properties.setAttribute( ExtParserModule.NAMESPACE, "class", expression.getClass().getName() );
         if ( expression.getDependencyLevel() > 0 ) {
-          properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf(
-            expression.getDependencyLevel() ) );
+          properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf( expression
+              .getDependencyLevel() ) );
         }
         writer.writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.EXPRESSION_TAG, properties, XmlWriterSupport.OPEN );
 
@@ -183,21 +184,18 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
     }
   }
 
-
-  public void writeStyleExpression( final Expression expression,
-                                    final StyleKey styleKey )
-    throws IOException {
+  public void writeStyleExpression( final Expression expression, final StyleKey styleKey ) throws IOException {
     if ( expression instanceof FormulaExpression ) {
       final FormulaExpression fe = (FormulaExpression) expression;
       final AttributeList properties = new AttributeList();
       properties.setAttribute( ExtParserModule.NAMESPACE, "style-key", styleKey.getName() );
       properties.setAttribute( ExtParserModule.NAMESPACE, "formula", fe.getFormula() );
       if ( expression.getDependencyLevel() > 0 ) {
-        properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf(
-          expression.getDependencyLevel() ) );
+        properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String
+            .valueOf( expression.getDependencyLevel() ) );
       }
       getXmlWriter().writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.STYLE_EXPRESSION_TAG, properties,
-        XmlWriterSupport.CLOSE );
+          XmlWriterSupport.CLOSE );
       return;
     }
 
@@ -208,11 +206,11 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
       properties.setAttribute( ExtParserModule.NAMESPACE, "formula", fe.getFormula() );
       properties.setAttribute( ExtParserModule.NAMESPACE, "initial", fe.getInitial() );
       if ( expression.getDependencyLevel() > 0 ) {
-        properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf(
-          expression.getDependencyLevel() ) );
+        properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String
+            .valueOf( expression.getDependencyLevel() ) );
       }
       getXmlWriter().writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.STYLE_EXPRESSION_TAG, properties,
-        XmlWriterSupport.CLOSE );
+          XmlWriterSupport.CLOSE );
       return;
     }
 
@@ -224,21 +222,21 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
         properties.setAttribute( ExtParserModule.NAMESPACE, "style-key", styleKey.getName() );
         properties.setAttribute( ExtParserModule.NAMESPACE, "class", expression.getClass().getName() );
         if ( expression.getDependencyLevel() > 0 ) {
-          properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf(
-            expression.getDependencyLevel() ) );
+          properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf( expression
+              .getDependencyLevel() ) );
         }
         getXmlWriter().writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.STYLE_EXPRESSION_TAG, properties,
-          XmlWriterSupport.CLOSE );
+            XmlWriterSupport.CLOSE );
       } else {
         final AttributeList properties = new AttributeList();
         properties.setAttribute( ExtParserModule.NAMESPACE, "style-key", styleKey.getName() );
         properties.setAttribute( ExtParserModule.NAMESPACE, "class", expression.getClass().getName() );
         if ( expression.getDependencyLevel() > 0 ) {
-          properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf(
-            expression.getDependencyLevel() ) );
+          properties.setAttribute( ExtParserModule.NAMESPACE, "deplevel", String.valueOf( expression
+              .getDependencyLevel() ) );
         }
         getXmlWriter().writeTag( ExtParserModule.NAMESPACE, FunctionsWriter.STYLE_EXPRESSION_TAG, properties,
-          XmlWriterSupport.OPEN );
+            XmlWriterSupport.OPEN );
 
         writeExpressionParameters( propertyNames, bu );
 
@@ -253,20 +251,22 @@ public class FunctionsWriter extends AbstractXMLDefinitionWriter {
   /**
    * Writes the parameters for an expression or function.
    *
-   * @param propertyNames the names of the properties.
-   * @param beanUtility   the bean utility containing the expression bean.
-   * @throws IOException   if an IO error occurs.
-   * @throws BeanException if a bean error occured.
+   * @param propertyNames
+   *          the names of the properties.
+   * @param beanUtility
+   *          the bean utility containing the expression bean.
+   * @throws IOException
+   *           if an IO error occurs.
+   * @throws BeanException
+   *           if a bean error occured.
    */
-  private void writeExpressionParameters
-  ( final String[] propertyNames,
-    final BeanUtility beanUtility )
+  private void writeExpressionParameters( final String[] propertyNames, final BeanUtility beanUtility )
     throws IOException, BeanException {
     final XmlWriter writer = getXmlWriter();
     writer.writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.PROPERTIES_TAG, XmlWriterSupport.OPEN );
 
     for ( int i = 0; i < propertyNames.length; i++ ) {
-      final String key = propertyNames[ i ];
+      final String key = propertyNames[i];
       // filter some of the standard properties. These are system-properties
       // and are set elsewhere
       if ( "name".equals( key ) ) {

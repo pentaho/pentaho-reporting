@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
 
@@ -39,7 +39,6 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
   public TextStyleReadHandler() {
   }
 
-
   public ElementStyleSheet getStyleSheet() {
     return styleSheet;
   }
@@ -53,29 +52,31 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
    * <p/>
    * font-smooth="always" text-wrap="wrap" vertical-text-alignment="top" whitespace-collapse="collapse"
    *
-   * @param attrs the attributes.
-   * @throws SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void startParsing( final Attributes attrs ) throws SAXException {
     final String wordSpacing = attrs.getValue( getUri(), "word-spacing" );
     if ( wordSpacing != null ) {
       styleSheet
-        .setStyleProperty( TextStyleKeys.WORD_SPACING, ReportParserUtil.parseFloat( wordSpacing, getLocator() ) );
+          .setStyleProperty( TextStyleKeys.WORD_SPACING, ReportParserUtil.parseFloat( wordSpacing, getLocator() ) );
     }
     final String minLetterSpacing = attrs.getValue( getUri(), "min-letter-spacing" );
     if ( minLetterSpacing != null ) {
       styleSheet.setStyleProperty( TextStyleKeys.X_MIN_LETTER_SPACING, ReportParserUtil.parseFloat( minLetterSpacing,
-        getLocator() ) );
+          getLocator() ) );
     }
     final String maxLetterSpacing = attrs.getValue( getUri(), "max-letter-spacing" );
     if ( maxLetterSpacing != null ) {
       styleSheet.setStyleProperty( TextStyleKeys.X_MAX_LETTER_SPACING, ReportParserUtil.parseFloat( maxLetterSpacing,
-        getLocator() ) );
+          getLocator() ) );
     }
     final String optimumLetterSpacing = attrs.getValue( getUri(), "optimum-letter-spacing" );
     if ( optimumLetterSpacing != null ) {
       styleSheet.setStyleProperty( TextStyleKeys.X_OPTIMUM_LETTER_SPACING, ReportParserUtil.parseFloat(
-        optimumLetterSpacing, getLocator() ) );
+          optimumLetterSpacing, getLocator() ) );
     }
     final String reservedLiteral = attrs.getValue( getUri(), "ellipsis" );
     if ( "UTF-8".equals( reservedLiteral ) ) {
@@ -130,7 +131,8 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
     }
     final String excelIndention = attrs.getValue( getUri(), "excel-text-indention" );
     if ( excelIndention != null ) {
-      styleSheet.setStyleProperty(ElementStyleKeys.EXCEL_INDENTION, ReportParserUtil.parseInteger(excelIndention, getLocator()).shortValue());
+      styleSheet.setStyleProperty( ElementStyleKeys.EXCEL_INDENTION, ReportParserUtil.parseInteger( excelIndention,
+          getLocator() ).shortValue() );
     }
     final String wsCollapse = attrs.getValue( getUri(), "whitespace-collapse" );
     if ( wsCollapse != null ) {
@@ -153,14 +155,14 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
 
     final String verticalTextAlignment = attrs.getValue( getUri(), "vertical-text-alignment" );
     if ( verticalTextAlignment != null ) {
-      styleSheet
-        .setStyleProperty( TextStyleKeys.VERTICAL_TEXT_ALIGNMENT, parseVerticalTextAlign( verticalTextAlignment ) );
+      styleSheet.setStyleProperty( TextStyleKeys.VERTICAL_TEXT_ALIGNMENT,
+          parseVerticalTextAlign( verticalTextAlignment ) );
     }
 
     final String firstLineIndent = attrs.getValue( getUri(), "first-line-indent" );
     if ( firstLineIndent != null ) {
-      styleSheet.setStyleProperty( TextStyleKeys.FIRST_LINE_INDENT,
-        ReportParserUtil.parseFloat( firstLineIndent, getLocator() ) );
+      styleSheet.setStyleProperty( TextStyleKeys.FIRST_LINE_INDENT, ReportParserUtil.parseFloat( firstLineIndent,
+          getLocator() ) );
     }
 
     final String textIndent = attrs.getValue( getUri(), "text-indent" );
@@ -168,7 +170,6 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
       styleSheet.setStyleProperty( TextStyleKeys.TEXT_INDENT, ReportParserUtil.parseFloat( textIndent, getLocator() ) );
     }
   }
-
 
   private WhitespaceCollapse parseWhitespaceCollapse( final String attr ) {
     if ( WhitespaceCollapse.DISCARD.toString().equalsIgnoreCase( attr ) ) {
@@ -254,7 +255,8 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if an parser error occured.
+   * @throws SAXException
+   *           if an parser error occured.
    */
   public Object getObject() throws SAXException {
     return styleSheet;

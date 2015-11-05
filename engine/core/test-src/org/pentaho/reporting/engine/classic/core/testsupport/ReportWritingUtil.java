@@ -24,8 +24,7 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class ReportWritingUtil {
-  public static MasterReport saveAndLoad( MasterReport report )
-    throws Exception {
+  public static MasterReport saveAndLoad( MasterReport report ) throws Exception {
     final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
     BundleWriter.writeReportToZipStream( report, bout );
     final ResourceManager mgr = new ResourceManager();

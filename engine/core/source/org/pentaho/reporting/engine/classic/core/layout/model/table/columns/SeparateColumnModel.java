@@ -1,22 +1,21 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table.columns;
-
 
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 
@@ -46,7 +45,7 @@ public class SeparateColumnModel extends AbstractColumnModel {
     final TableColumn[] columns = getColumns();
     final int colCount = columns.length;
     for ( int i = 0; i < colCount; i++ ) {
-      final TableColumn column = columns[ i ];
+      final TableColumn column = columns[i];
       final int cs = column.getMaxColspan();
       if ( cs > maxColSpan ) {
         maxColSpan = cs;
@@ -59,20 +58,20 @@ public class SeparateColumnModel extends AbstractColumnModel {
     }
 
     // first, find out how much space is already used.
-    final long[] cachedSizes = new long[ colCount ];
+    final long[] cachedSizes = new long[colCount];
 
     // For each colspan distribute the content.
     // The 1-column size also gets the preferred size ...
     for ( int colIdx = 0; colIdx < colCount; colIdx++ ) {
-      final TableColumn column = columns[ colIdx ];
+      final TableColumn column = columns[colIdx];
       final long cachedSize = column.getCachedSize( 1 );
 
-      cachedSizes[ colIdx ] = cachedSize;
+      cachedSizes[colIdx] = cachedSize;
     }
 
     for ( int colspan = 2; colspan <= maxColSpan; colspan += 1 ) {
       for ( int colIdx = 0; colIdx < colCount; colIdx++ ) {
-        final TableColumn column = columns[ colIdx ];
+        final TableColumn column = columns[colIdx];
         final long cachedSize = column.getCachedSize( colspan );
 
         distribute( cachedSize, cachedSizes, colIdx, colspan );
@@ -82,14 +81,14 @@ public class SeparateColumnModel extends AbstractColumnModel {
     this.cachedSize = 0;
     int variableColumns = 0;
     for ( int i = 0; i < colCount; i++ ) {
-      final TableColumn column = columns[ i ];
+      final TableColumn column = columns[i];
       if ( column.isValidated() ) {
         this.cachedSize += column.getEffectiveSize();
         continue;
       }
 
       variableColumns += 1;
-      final long cachedSize = cachedSizes[ i ];
+      final long cachedSize = cachedSizes[i];
       this.cachedSize += cachedSize;
       column.setEffectiveSize( cachedSize );
     }
@@ -105,7 +104,7 @@ public class SeparateColumnModel extends AbstractColumnModel {
       final long extraSpace = tableSize - cachedSize;
       final long extraSpacePerCol = extraSpace / variableColumns;
       for ( int i = 0; i < colCount; i++ ) {
-        final TableColumn column = columns[ i ];
+        final TableColumn column = columns[i];
         if ( column.isValidated() ) {
           continue;
         }
@@ -120,11 +119,7 @@ public class SeparateColumnModel extends AbstractColumnModel {
     validationTrack = table.getChangeTracker();
   }
 
-
-  private void distribute( final long usedSpace,
-                           final long[] allSpaces,
-                           final int colIdx,
-                           final int colspan ) {
+  private void distribute( final long usedSpace, final long[] allSpaces, final int colIdx, final int colspan ) {
     final int maxColspan = Math.min( colIdx + colspan, allSpaces.length ) - colIdx;
     final int maxSize = Math.min( allSpaces.length, colIdx + maxColspan );
 
@@ -133,7 +128,7 @@ public class SeparateColumnModel extends AbstractColumnModel {
     // there is no colspan at all
     long usedPrev = 0;
     for ( int i = colIdx; i < maxSize; i++ ) {
-      usedPrev += allSpaces[ i ];
+      usedPrev += allSpaces[i];
     }
 
     if ( usedSpace <= usedPrev ) {
@@ -145,9 +140,9 @@ public class SeparateColumnModel extends AbstractColumnModel {
     final long distSpace = ( usedSpace - usedPrev );
     final long delta = distSpace / maxColspan;
     for ( int i = 0; i < maxColspan - 1; i++ ) {
-      allSpaces[ colIdx + i ] += delta;
+      allSpaces[colIdx + i] += delta;
     }
     // any uneven remainder gets added to the last column
-    allSpaces[ colIdx + maxColspan - 1 ] += distSpace - ( ( maxColspan - 1 ) * delta );
+    allSpaces[colIdx + maxColspan - 1] += distSpace - ( ( maxColspan - 1 ) * delta );
   }
 }

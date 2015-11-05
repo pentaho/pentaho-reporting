@@ -45,18 +45,18 @@ public class Prd4965IT {
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     RenderNode[] mrs = MatchFactory.findElementsByName( logicalPageBox, "mr" );
     Assert.assertEquals( 2, mrs.length );
-    Assert.assertTrue( mrs[ 0 ] instanceof ParagraphRenderBox );
-    Assert.assertTrue( mrs[ 1 ] instanceof RenderableText );
+    Assert.assertTrue( mrs[0] instanceof ParagraphRenderBox );
+    Assert.assertTrue( mrs[1] instanceof RenderableText );
 
     RenderNode[] sr0s = MatchFactory.findElementsByName( logicalPageBox, "sr-1" );
     Assert.assertEquals( 2, sr0s.length );
-    Assert.assertTrue( sr0s[ 0 ] instanceof ParagraphRenderBox );
-    Assert.assertTrue( sr0s[ 1 ] instanceof RenderableText );
+    Assert.assertTrue( sr0s[0] instanceof ParagraphRenderBox );
+    Assert.assertTrue( sr0s[1] instanceof RenderableText );
 
     RenderNode[] sr1s = MatchFactory.findElementsByName( logicalPageBox, "sr-2" );
     Assert.assertEquals( 2, sr1s.length );
-    Assert.assertTrue( sr1s[ 0 ] instanceof ParagraphRenderBox );
-    Assert.assertTrue( sr1s[ 1 ] instanceof RenderableText );
+    Assert.assertTrue( sr1s[0] instanceof ParagraphRenderBox );
+    Assert.assertTrue( sr1s[1] instanceof RenderableText );
 
   }
 }

@@ -40,11 +40,11 @@ public class Prd4776IT extends TestCase {
   public void testRunReport() throws Exception {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4776.prpt" );
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    //    ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
 
     RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType( logicalPageBox, LabelType.INSTANCE );
     for ( int i = 0; i < elementsByElementType.length; i++ ) {
-      RenderNode renderNode = elementsByElementType[ i ];
+      RenderNode renderNode = elementsByElementType[i];
       StyleSheet styleSheet = renderNode.getNodeLayoutProperties().getStyleSheet();
       Object styleProperty = styleSheet.getStyleProperty( TextStyleKeys.FONT );
       Assert.assertEquals( "Arial", styleProperty );

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 
@@ -33,8 +33,8 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
   public CrosstabColumnOutputHandler() {
   }
 
-  public void groupStarted( final DefaultOutputFunction outputFunction,
-                            final ReportEvent event ) throws ReportProcessingException {
+  public void groupStarted( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
     final LayoutModelBuilder layoutModelBuilder = outputFunction.getRenderer().getNormalFlowLayoutModelBuilder();
     final int gidx = event.getState().getCurrentGroupIndex();
@@ -54,8 +54,8 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
     if ( crosstabLayout.isGenerateColumnTitleHeaders() ) {
       layoutModelBuilder.startSubFlow( crosstabLayout.getColumnTitleHeaderSubflowId( gidx ) );
       CrosstabOutputHelper.createAutomaticCell( layoutModelBuilder );
-      crosstabLayout.setColumnTitleHeaderCellId( gidx - crosstabLayout.getFirstColGroupIndex(),
-        layoutModelBuilder.dangerousRawAccess().getInstanceId() );
+      crosstabLayout.setColumnTitleHeaderCellId( gidx - crosstabLayout.getFirstColGroupIndex(), layoutModelBuilder
+          .dangerousRawAccess().getInstanceId() );
       outputFunction.getRenderer().add( group.getTitleHeader(), outputFunction.getRuntime() );
       layoutModelBuilder.finishBox();
       layoutModelBuilder.suspendSubFlow();
@@ -63,8 +63,8 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
 
     layoutModelBuilder.startSubFlow( crosstabLayout.getColumnHeaderSubflowId( gidx ) );
     CrosstabOutputHelper.createAutomaticCell( layoutModelBuilder );
-    crosstabLayout.setColumnHeaderCellId( gidx - crosstabLayout.getFirstColGroupIndex(),
-      layoutModelBuilder.dangerousRawAccess().getInstanceId() );
+    crosstabLayout.setColumnHeaderCellId( gidx - crosstabLayout.getFirstColGroupIndex(), layoutModelBuilder
+        .dangerousRawAccess().getInstanceId() );
     outputFunction.getRenderer().add( group.getHeader(), outputFunction.getRuntime() );
     layoutModelBuilder.finishBox();
     layoutModelBuilder.suspendSubFlow();
@@ -72,7 +72,7 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
   }
 
   private void expandColumnSpanAfterRowStart( final RenderedCrosstabLayout crosstabLayout,
-                                              final LayoutModelBuilder layoutModelBuilder, final int gidx ) {
+      final LayoutModelBuilder layoutModelBuilder, final int gidx ) {
     if ( crosstabLayout.isProcessingCrosstabHeader() == false ) {
       crosstabLayout.setProcessingCrosstabHeader( true );
 
@@ -80,8 +80,8 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
     }
   }
 
-  public void groupFinished( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void groupFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     if ( CrosstabOutputHelper.isLastColumnGroup( event ) ) {
       return;
     }
@@ -89,12 +89,12 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
     CrosstabOutputHelper.printCrosstabSummary( outputFunction, event );
   }
 
-  public void groupBodyFinished( final DefaultOutputFunction outputFunction,
-                                 final ReportEvent event ) throws ReportProcessingException {
+  public void groupBodyFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
   }
 
-  public void itemsStarted( final DefaultOutputFunction outputFunction,
-                            final ReportEvent event ) throws ReportProcessingException {
+  public void itemsStarted( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     generateMeasureHeader( outputFunction, event );
 
     final LayoutModelBuilder layoutModelBuilder = outputFunction.getRenderer().getNormalFlowLayoutModelBuilder();
@@ -106,8 +106,8 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
     crosstabLayout.setProcessingCrosstabHeader( false );
   }
 
-  private void generateMeasureHeader( final DefaultOutputFunction outputFunction,
-                                      final ReportEvent event ) throws ReportProcessingException {
+  private void generateMeasureHeader( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
     if ( !crosstabLayout.isCrosstabHeaderOpen() ) {
       return;
@@ -130,8 +130,8 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
     layoutModelBuilder.suspendSubFlow();
   }
 
-  public void itemsAdvanced( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void itemsAdvanced( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final CrosstabCellBody dataBody = event.getReport().getCrosstabCellBody();
     if ( dataBody == null ) {
       return;
@@ -162,8 +162,8 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
     }
   }
 
-  public void itemsFinished( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void itemsFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
     if ( CrosstabDetailMode.last.equals( crosstabLayout.getDetailMode() ) ) {
       final CrosstabCellBody dataBody = event.getReport().getCrosstabCellBody();
@@ -179,19 +179,18 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler {
     layoutModelBuilder.finishBox();
   }
 
-
-  public void summaryRowStart( final DefaultOutputFunction outputFunction,
-                               final ReportEvent event ) throws ReportProcessingException {
+  public void summaryRowStart( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     throw new ReportProcessingException( "Crosstab-column groups handler cannot contain summary-rows" );
   }
 
-  public void summaryRowEnd( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void summaryRowEnd( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     throw new ReportProcessingException( "Crosstab-column groups handler cannot contain summary-rows" );
   }
 
-  public void summaryRow( final DefaultOutputFunction outputFunction,
-                          final ReportEvent event ) throws ReportProcessingException {
+  public void summaryRow( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     throw new ReportProcessingException( "Crosstab-column groups handler cannot contain summary-rows" );
   }
 }

@@ -38,8 +38,8 @@ public class FastTextExtractor {
     this.textBuffer = new StringBuilder();
   }
 
-  public Object compute( final ReportElement content,
-                         final ExpressionRuntime runtime ) throws ContentProcessingException {
+  public Object compute( final ReportElement content, final ExpressionRuntime runtime )
+    throws ContentProcessingException {
     this.runtime = runtime;
     this.rawResult = null;
     this.textBuffer.delete( 0, this.textBuffer.length() );
@@ -75,7 +75,6 @@ public class FastTextExtractor {
   public String getText() {
     return textBuffer.toString();
   }
-
 
   protected void traverseSection( final Section section ) throws ContentProcessingException {
     boolean inlineSection;
@@ -131,8 +130,8 @@ public class FastTextExtractor {
       return;
     }
 
-    Object value = AbstractFormattedDataBuilder.filterRichText
-      ( element, element.getElementType().getValue( runtime, element ) );
+    Object value =
+        AbstractFormattedDataBuilder.filterRichText( element, element.getElementType().getValue( runtime, element ) );
     if ( value == null ) {
       return;
     }
@@ -146,9 +145,8 @@ public class FastTextExtractor {
     handleValueContent( element, value, inlineSection );
   }
 
-  protected void handleValueContent( final ReportElement element,
-                                     final Object value,
-                                     final boolean inlineSection ) throws ContentProcessingException {
+  protected void handleValueContent( final ReportElement element, final Object value, final boolean inlineSection )
+    throws ContentProcessingException {
     if ( value instanceof String ) {
       textBuffer.append( value );
 

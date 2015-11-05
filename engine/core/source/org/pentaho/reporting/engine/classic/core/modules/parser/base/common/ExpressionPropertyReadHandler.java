@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
@@ -42,10 +42,8 @@ public class ExpressionPropertyReadHandler extends PropertyStringReadHandler {
   private static final Log logger = LogFactory.getLog( ExpressionPropertyReadHandler.class );
   private boolean strictParsing;
 
-  public ExpressionPropertyReadHandler( final BeanUtility expression,
-                                        final String originalExpressionClass,
-                                        final String expressionClass,
-                                        final String expressionName ) {
+  public ExpressionPropertyReadHandler( final BeanUtility expression, final String originalExpressionClass,
+      final String expressionClass, final String expressionName ) {
     if ( expression == null ) {
       throw new NullPointerException();
     }
@@ -53,26 +51,27 @@ public class ExpressionPropertyReadHandler extends PropertyStringReadHandler {
     this.expressionClass = expressionClass;
     this.expressionName = expressionName;
     this.beanUtility = expression;
-    this.strictParsing = "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.parser.base.StrictParseMode" ) );
+    this.strictParsing =
+        "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.parser.base.StrictParseMode" ) );
     if ( strictParsing == true ) {
       // if we have really really ancient reports, then strict parsing is not an option ..
       strictParsing = ObjectUtilities.equal( originalExpressionClass, expressionClass );
     }
   }
 
-
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  public void startParsing( final PropertyAttributes attrs )
-    throws SAXException {
+  public void startParsing( final PropertyAttributes attrs ) throws SAXException {
     super.startParsing( attrs );
-    propertyType = CompatibilityMapperUtil.mapClassName
-      ( attrs.getValue( getUri(), ExpressionPropertyReadHandler.CLASS_ATT ) );
+    propertyType =
+        CompatibilityMapperUtil.mapClassName( attrs.getValue( getUri(), ExpressionPropertyReadHandler.CLASS_ATT ) );
     propertyName = attrs.getValue( getUri(), ExpressionPropertyReadHandler.NAME_ATT );
     if ( propertyName == null ) {
       throw new ParseException( "Required attribute 'name' is null.", getLocator() );
@@ -82,14 +81,14 @@ public class ExpressionPropertyReadHandler extends PropertyStringReadHandler {
   /**
    * Done parsing.
    *
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  public void doneParsing()
-    throws SAXException {
+  public void doneParsing() throws SAXException {
     super.doneParsing();
     final String result = getResult();
-    final String propertyName = CompatibilityMapperUtil.mapExpressionProperty
-      ( originalExpressionClass, expressionClass, this.propertyName );
+    final String propertyName =
+        CompatibilityMapperUtil.mapExpressionProperty( originalExpressionClass, expressionClass, this.propertyName );
     if ( beanUtility == null ) {
       throw new ParseException( "No current beanUtility", getLocator() );
     }
@@ -103,17 +102,16 @@ public class ExpressionPropertyReadHandler extends PropertyStringReadHandler {
       }
     } catch ( BeanException e ) {
       if ( strictParsing ) {
-        throw new ParseException( "Unable to assign property '" + propertyName
-          + "' to expression '" + expressionName + '\'', e, getLocator() );
+        throw new ParseException( "Unable to assign property '" + propertyName + "' to expression '" + expressionName
+            + '\'', e, getLocator() );
       }
 
-      logger.warn( "Legacy-Parser warning: Unable to assign property '" + propertyName
-          + "' to expression '" + expressionName + '\'',
-        new ParseException( "Unable to assign property '" + propertyName
-          + "' to expression '" + expressionName + '\'', e, getLocator() ) );
+      logger.warn( "Legacy-Parser warning: Unable to assign property '" + propertyName + "' to expression '"
+          + expressionName + '\'', new ParseException( "Unable to assign property '" + propertyName
+            + "' to expression '" + expressionName + '\'', e, getLocator() ) );
     } catch ( ClassNotFoundException e ) {
-      throw new ParseException( "Unable to assign property '" + propertyName
-        + "' to expression '" + expressionName + '\'', e, getLocator() );
+      throw new ParseException( "Unable to assign property '" + propertyName + "' to expression '" + expressionName
+          + '\'', e, getLocator() );
     }
   }
 

@@ -36,9 +36,7 @@ public class FastHtmlExportTemplate implements FastExportTemplate {
     this.contentItems = contentItems;
   }
 
-  public void initialize( final ReportDefinition report,
-                          final ExpressionRuntime runtime,
-                          final boolean pagination ) {
+  public void initialize( final ReportDefinition report, final ExpressionRuntime runtime, final boolean pagination ) {
     OutputProcessorMetaData metaData = runtime.getProcessingContext().getOutputProcessorMetaData();
     if ( pagination ) {
       this.sharedSheetLayout = new SheetLayout( metaData );
@@ -50,8 +48,7 @@ public class FastHtmlExportTemplate implements FastExportTemplate {
     }
   }
 
-  public void write( final Band band,
-                     final ExpressionRuntime runtime ) throws InvalidReportStateException {
+  public void write( final Band band, final ExpressionRuntime runtime ) throws InvalidReportStateException {
     try {
       this.processor.write( band, runtime );
     } catch ( InvalidReportStateException re ) {

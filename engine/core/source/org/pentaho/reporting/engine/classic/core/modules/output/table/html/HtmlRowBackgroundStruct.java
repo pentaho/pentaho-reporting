@@ -1,8 +1,8 @@
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
-import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
+import java.awt.Color;
 
-import java.awt.*;
+import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 
 public class HtmlRowBackgroundStruct {
   private Color color;

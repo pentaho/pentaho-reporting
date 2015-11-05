@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.template;
 
+import java.util.HashSet;
+
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -37,8 +39,6 @@ import org.pentaho.reporting.engine.classic.core.states.DefaultPerformanceMonito
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 
-import java.util.HashSet;
-
 public class FastSheetLayoutProducer implements FastExportTemplate {
   private OutputProcessorMetaData metaData;
   private SheetLayout sharedSheetLayout;
@@ -57,8 +57,8 @@ public class FastSheetLayoutProducer implements FastExportTemplate {
 
     try {
       LayoutProducer templateListener = new LayoutProducer( metaData, sharedSheetLayout );
-      final OutputProcessor op = new TemplatingOutputProcessor
-        ( runtime.getProcessingContext().getOutputProcessorMetaData(), templateListener );
+      final OutputProcessor op =
+          new TemplatingOutputProcessor( runtime.getProcessingContext().getOutputProcessorMetaData(), templateListener );
 
       FastSheetLayoutProducer.performLayout( band, runtime, op );
 
@@ -70,9 +70,8 @@ public class FastSheetLayoutProducer implements FastExportTemplate {
     }
   }
 
-  public void initialize( final ReportDefinition reportDefinition,
-                          final ExpressionRuntime runtime,
-                          final boolean pagination ) {
+  public void initialize( final ReportDefinition reportDefinition, final ExpressionRuntime runtime,
+      final boolean pagination ) {
     this.metaData = runtime.getProcessingContext().getOutputProcessorMetaData();
   }
 
@@ -98,10 +97,9 @@ public class FastSheetLayoutProducer implements FastExportTemplate {
     }
   }
 
-  public static void performLayout( final Band band,
-                                    final ExpressionRuntime runtime,
-                                    final OutputProcessor outputTarget )
-    throws ReportProcessingException, ContentProcessingException {
+  public static void
+    performLayout( final Band band, final ExpressionRuntime runtime, final OutputProcessor outputTarget )
+      throws ReportProcessingException, ContentProcessingException {
     MasterReport report = createDummyReport( band );
 
     StreamingRenderer renderer = new StreamingRenderer( outputTarget );

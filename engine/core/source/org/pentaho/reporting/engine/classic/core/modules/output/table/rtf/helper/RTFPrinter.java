@@ -1,29 +1,26 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.helper;
 
-import com.lowagie.text.Cell;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.Table;
-import com.lowagie.text.rtf.table.RtfBorder;
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineInfo;
@@ -51,9 +48,13 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.awt.*;
-import java.io.IOException;
-import java.io.OutputStream;
+import com.lowagie.text.Cell;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.Table;
+import com.lowagie.text.rtf.table.RtfBorder;
 
 /**
  * Creation-Date: 09.05.2007, 14:52:05
@@ -63,9 +64,8 @@ import java.io.OutputStream;
 public class RTFPrinter {
   private static final Log logger = LogFactory.getLog( RTFPrinter.class );
 
-  private static final String CREATOR =
-    ClassicEngineInfo.getInstance().getName() + " version " +
-      ClassicEngineInfo.getInstance().getVersion();
+  private static final String CREATOR = ClassicEngineInfo.getInstance().getName() + " version "
+      + ClassicEngineInfo.getInstance().getVersion();
 
   private OutputStream outputStream;
   private Configuration config;
@@ -78,9 +78,7 @@ public class RTFPrinter {
   public RTFPrinter() {
   }
 
-  public void init( final Configuration config,
-                    final OutputStream outputStream,
-                    final ResourceManager resourceManager ) {
+  public void init( final Configuration config, final OutputStream outputStream, final ResourceManager resourceManager ) {
     this.outputStream = outputStream;
     this.config = config;
     this.resourceManager = resourceManager;
@@ -89,11 +87,8 @@ public class RTFPrinter {
   /**
    * @noinspection IOResourceOpenedButNotSafelyClosed
    */
-  public void print( final LogicalPageKey logicalPageKey,
-                     final LogicalPageBox logicalPage,
-                     final TableContentProducer contentProducer,
-                     final RTFOutputProcessorMetaData metaData,
-                     final boolean incremental )
+  public void print( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+      final TableContentProducer contentProducer, final RTFOutputProcessorMetaData metaData, final boolean incremental )
     throws ContentProcessingException {
     final int startRow = contentProducer.getFinishedRows();
     final int finishRow = contentProducer.getFilledRows();
@@ -102,9 +97,10 @@ public class RTFPrinter {
     }
 
     if ( document == null ) {
-      this.cellBackgroundProducer = new CellBackgroundProducer
-        ( metaData.isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ),
-          metaData.isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
+      this.cellBackgroundProducer =
+          new CellBackgroundProducer( metaData
+              .isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ), metaData
+              .isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
 
       final PhysicalPageBox pageFormat = logicalPage.getPageGrid().getPage( 0, 0 );
       final float urx = (float) StrictGeomUtility.toExternalValue( pageFormat.getWidth() );
@@ -112,12 +108,12 @@ public class RTFPrinter {
 
       final float marginLeft = (float) StrictGeomUtility.toExternalValue( pageFormat.getImageableX() );
       final float marginRight =
-        (float) StrictGeomUtility.toExternalValue( pageFormat.getWidth()
-          - pageFormat.getImageableWidth() - pageFormat.getImageableX() );
+          (float) StrictGeomUtility.toExternalValue( pageFormat.getWidth() - pageFormat.getImageableWidth()
+              - pageFormat.getImageableX() );
       final float marginTop = (float) StrictGeomUtility.toExternalValue( pageFormat.getImageableY() );
       final float marginBottom =
-        (float) StrictGeomUtility.toExternalValue( pageFormat.getHeight()
-          - pageFormat.getImageableHeight() - pageFormat.getImageableY() );
+          (float) StrictGeomUtility.toExternalValue( pageFormat.getHeight() - pageFormat.getImageableHeight()
+              - pageFormat.getImageableY() );
       final Rectangle pageSize = new Rectangle( urx, ury );
 
       document = new Document( pageSize, marginLeft, marginRight, marginTop, marginBottom );
@@ -127,14 +123,14 @@ public class RTFPrinter {
       final PatchRtfWriter2 instance = PatchRtfWriter2.getInstance( document, new NoCloseOutputStream( outputStream ) );
       instance.getDocumentSettings().setAlwaysUseUnicode( true );
 
-      final String author = config.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.Author" );
+      final String author =
+          config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.Author" );
       if ( author != null ) {
         document.addAuthor( author );
       }
 
-      final String title = config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.Title" );
+      final String title =
+          config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.Title" );
       if ( title != null ) {
         document.addTitle( title );
       }
@@ -162,14 +158,14 @@ public class RTFPrinter {
         table.setWidth( 100 ); // span the full page..
         // and finally the content ..
 
-        final float[] cellWidths = new float[ columnCount ];
+        final float[] cellWidths = new float[columnCount];
         for ( int i = 0; i < columnCount; i++ ) {
-          cellWidths[ i ] = (float) StrictGeomUtility.toExternalValue( sheetLayout.getCellWidth( i, i + 1 ) );
+          cellWidths[i] = (float) StrictGeomUtility.toExternalValue( sheetLayout.getCellWidth( i, i + 1 ) );
         }
         table.setWidths( cellWidths );
       }
 
-      //logger.debug ("Processing: " + startRow + " " + finishRow + " " + incremental);
+      // logger.debug ("Processing: " + startRow + " " + finishRow + " " + incremental);
 
       for ( int row = startRow; row < finishRow; row++ ) {
         for ( short col = 0; col < columnCount; col++ ) {
@@ -180,11 +176,12 @@ public class RTFPrinter {
             final RenderBox backgroundBox = contentProducer.getBackground( row, col );
             final CellBackground background;
             if ( backgroundBox != null ) {
-              background = cellBackgroundProducer.getBackgroundForBox
-                ( logicalPage, sheetLayout, col, row, 1, 1, true, sectionType, backgroundBox );
+              background =
+                  cellBackgroundProducer.getBackgroundForBox( logicalPage, sheetLayout, col, row, 1, 1, true,
+                      sectionType, backgroundBox );
             } else {
               background =
-                cellBackgroundProducer.getBackgroundAt( logicalPage, sheetLayout, col, row, true, sectionType );
+                  cellBackgroundProducer.getBackgroundAt( logicalPage, sheetLayout, col, row, true, sectionType );
             }
             if ( background == null ) {
               // An empty cell .. ignore
@@ -219,8 +216,9 @@ public class RTFPrinter {
           final int colSpan = sheetLayout.getColSpan( col, content.getX() + content.getWidth() );
           final int rowSpan = sheetLayout.getRowSpan( row, content.getY() + content.getHeight() + contentOffset );
 
-          final CellBackground realBackground = cellBackgroundProducer.getBackgroundForBox
-            ( logicalPage, sheetLayout, col, row, colSpan, rowSpan, false, sectionType, content );
+          final CellBackground realBackground =
+              cellBackgroundProducer.getBackgroundForBox( logicalPage, sheetLayout, col, row, colSpan, rowSpan, false,
+                  sectionType, content );
 
           final PatchRtfCell cell = new PatchRtfCell();
           cell.setRowspan( rowSpan );
@@ -239,7 +237,7 @@ public class RTFPrinter {
 
           table.addCell( cell, row, col );
           content.setFinishedTable( true );
-          //logger.debug("set Finished to cell (" + col + ", " + row + "," + content.getName() + ")");
+          // logger.debug("set Finished to cell (" + col + ", " + row + "," + content.getName() + ")");
         }
 
       }
@@ -263,8 +261,8 @@ public class RTFPrinter {
       cell.setVerticalAlignment( Element.ALIGN_TOP );
     }
 
-    final ElementAlignment textAlign = (ElementAlignment)
-      content.getStyleSheet().getStyleProperty( ElementStyleKeys.ALIGNMENT );
+    final ElementAlignment textAlign =
+        (ElementAlignment) content.getStyleSheet().getStyleProperty( ElementStyleKeys.ALIGNMENT );
     if ( ElementAlignment.RIGHT.equals( textAlign ) ) {
       cell.setHorizontalAlignment( Element.ALIGN_RIGHT );
     } else if ( ElementAlignment.JUSTIFY.equals( textAlign ) ) {

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
@@ -55,8 +55,8 @@ public class DataSchemaCompiler {
     private static final String[] CORE_NAMES = new String[] { MetaAttributeNames.Core.NAME,
       MetaAttributeNames.Core.SOURCE, MetaAttributeNames.Core.TYPE };
     private static final String[] FORMATTING_NAMES = new String[] { MetaAttributeNames.Formatting.LABEL };
-    private static final String[] NAMESPACES = new String[]
-      { MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Formatting.NAMESPACE };
+    private static final String[] NAMESPACES = new String[] { MetaAttributeNames.Core.NAMESPACE,
+      MetaAttributeNames.Formatting.NAMESPACE };
 
     private String parameterName;
     private Class parameterType;
@@ -68,11 +68,8 @@ public class DataSchemaCompiler {
       this.globalAttributes = new DefaultDataAttributes();
     }
 
-    public void setup( final String parameterName,
-                       final Class parameterType,
-                       final String source,
-                       final String label,
-                       final DataAttributes globalAttributes ) {
+    public void setup( final String parameterName, final Class parameterType, final String source, final String label,
+        final DataAttributes globalAttributes ) {
       if ( globalAttributes == null ) {
         throw new NullPointerException();
       }
@@ -107,18 +104,13 @@ public class DataSchemaCompiler {
       return metaNamess;
     }
 
-    public Object getMetaAttribute( final String domain,
-                                    final String name,
-                                    final Class type,
-                                    final DataAttributeContext context ) {
+    public Object getMetaAttribute( final String domain, final String name, final Class type,
+        final DataAttributeContext context ) {
       return getMetaAttribute( domain, name, type, context, null );
     }
 
-    public Object getMetaAttribute( final String domain,
-                                    final String name,
-                                    final Class type,
-                                    final DataAttributeContext context,
-                                    final Object defaultValue ) {
+    public Object getMetaAttribute( final String domain, final String name, final Class type,
+        final DataAttributeContext context, final Object defaultValue ) {
       if ( domain == null ) {
         throw new NullPointerException();
       }
@@ -154,8 +146,8 @@ public class DataSchemaCompiler {
     }
 
     public Object clone() throws CloneNotSupportedException {
-      throw new CloneNotSupportedException
-        ( "This is an internal class and should not have been leaked to the outside world" );
+      throw new CloneNotSupportedException(
+          "This is an internal class and should not have been leaked to the outside world" );
     }
 
     public ConceptQueryMapper getMetaAttributeMapper( final String domain, final String name ) {
@@ -163,10 +155,9 @@ public class DataSchemaCompiler {
     }
   }
 
-
   protected static class ParameterDataAttributes implements DataAttributes {
-    private static final String[] NAMES = new String[] { MetaAttributeNames.Core.NAME,
-      MetaAttributeNames.Core.SOURCE, MetaAttributeNames.Core.TYPE };
+    private static final String[] NAMES = new String[] { MetaAttributeNames.Core.NAME, MetaAttributeNames.Core.SOURCE,
+      MetaAttributeNames.Core.TYPE };
     private static final String[] NAMESPACES = new String[] { MetaAttributeNames.Core.NAMESPACE };
 
     private DataAttributes globalAttributes;
@@ -177,10 +168,9 @@ public class DataSchemaCompiler {
       this.globalAttributes = new DefaultDataAttributes();
     }
 
-    public void setup( final ParameterDefinitionEntry parameter,
-                       final DataAttributes globalAttributes,
-                       final ReportEnvironment reportEnvironment,
-                       final ResourceManager resourceManager ) throws ReportDataFactoryException {
+    public void setup( final ParameterDefinitionEntry parameter, final DataAttributes globalAttributes,
+        final ReportEnvironment reportEnvironment, final ResourceManager resourceManager )
+      throws ReportDataFactoryException {
       if ( globalAttributes == null ) {
         throw new NullPointerException();
       }
@@ -190,14 +180,14 @@ public class DataSchemaCompiler {
       this.globalAttributes = globalAttributes;
       this.entry = parameter;
 
-      this.parameterContext = new DefaultParameterContext( new CompoundDataFactory(), new StaticDataRow(),
-        ClassicEngineBoot.getInstance().getGlobalConfig(), new DefaultResourceBundleFactory(),
-        resourceManager, null, reportEnvironment );
+      this.parameterContext =
+          new DefaultParameterContext( new CompoundDataFactory(), new StaticDataRow(), ClassicEngineBoot.getInstance()
+              .getGlobalConfig(), new DefaultResourceBundleFactory(), resourceManager, null, reportEnvironment );
     }
 
     public String[] getMetaAttributeDomains() {
-      return StringUtils.merge( globalAttributes.getMetaAttributeDomains(),
-        StringUtils.merge( ParameterDataAttributes.NAMESPACES, entry.getParameterAttributeNamespaces() ) );
+      return StringUtils.merge( globalAttributes.getMetaAttributeDomains(), StringUtils.merge(
+          ParameterDataAttributes.NAMESPACES, entry.getParameterAttributeNamespaces() ) );
     }
 
     public String[] getMetaAttributeNames( final String domainName ) {
@@ -208,18 +198,13 @@ public class DataSchemaCompiler {
       return StringUtils.merge( metaNamess, entry.getParameterAttributeNames( domainName ) );
     }
 
-    public Object getMetaAttribute( final String domain,
-                                    final String name,
-                                    final Class type,
-                                    final DataAttributeContext context ) {
+    public Object getMetaAttribute( final String domain, final String name, final Class type,
+        final DataAttributeContext context ) {
       return getMetaAttribute( domain, name, type, context, null );
     }
 
-    public Object getMetaAttribute( final String domain,
-                                    final String name,
-                                    final Class type,
-                                    final DataAttributeContext context,
-                                    final Object defaultValue ) {
+    public Object getMetaAttribute( final String domain, final String name, final Class type,
+        final DataAttributeContext context, final Object defaultValue ) {
       if ( domain == null ) {
         throw new NullPointerException();
       }
@@ -249,8 +234,8 @@ public class DataSchemaCompiler {
     }
 
     public Object clone() throws CloneNotSupportedException {
-      throw new CloneNotSupportedException
-        ( "This is an internal class and should not have been leaked to the outside world" );
+      throw new CloneNotSupportedException(
+          "This is an internal class and should not have been leaked to the outside world" );
     }
 
     public ConceptQueryMapper getMetaAttributeMapper( final String domain, final String name ) {
@@ -261,8 +246,8 @@ public class DataSchemaCompiler {
   protected static class ExpressionsDataAttributes implements DataAttributes {
     private static final String[] CORENAMES = new String[] { MetaAttributeNames.Core.NAME,
       MetaAttributeNames.Core.SOURCE, MetaAttributeNames.Core.TYPE };
-    private static final String[] NAMESPACES =
-      new String[] { MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Expressions.NAMESPACE };
+    private static final String[] NAMESPACES = new String[] { MetaAttributeNames.Core.NAMESPACE,
+      MetaAttributeNames.Expressions.NAMESPACE };
     private static final String[] EXPRESSIONNAMES = new String[] { MetaAttributeNames.Expressions.CLASS };
 
     private ExpressionMetaData expressionMetaData;
@@ -271,7 +256,7 @@ public class DataSchemaCompiler {
     private String expressionName;
     private BeanUtility beanUtility;
     private String[] expressionProperties;
-    private static final String[] EMPTY_STRINGS = new String[ 0 ];
+    private static final String[] EMPTY_STRINGS = new String[0];
 
     public ExpressionsDataAttributes( final Expression expression ) {
       if ( expression == null ) {
@@ -283,11 +268,10 @@ public class DataSchemaCompiler {
 
       this.expressionType = expression.getClass();
       if ( ExpressionRegistry.getInstance().isExpressionRegistered( expressionType.getName() ) ) {
-        this.expressionMetaData =
-          ExpressionRegistry.getInstance().getExpressionMetaData( expressionType.getName() );
+        this.expressionMetaData = ExpressionRegistry.getInstance().getExpressionMetaData( expressionType.getName() );
         this.resultType = expressionMetaData.getResultType();
-        this.expressionProperties = StringUtils.merge( expressionMetaData.getPropertyNames(),
-          ExpressionsDataAttributes.EXPRESSIONNAMES );
+        this.expressionProperties =
+            StringUtils.merge( expressionMetaData.getPropertyNames(), ExpressionsDataAttributes.EXPRESSIONNAMES );
       } else {
         this.expressionMetaData = null;
         this.resultType = Object.class;
@@ -317,18 +301,13 @@ public class DataSchemaCompiler {
       return ExpressionsDataAttributes.EMPTY_STRINGS;
     }
 
-    public Object getMetaAttribute( final String domain,
-                                    final String name,
-                                    final Class type,
-                                    final DataAttributeContext context ) {
+    public Object getMetaAttribute( final String domain, final String name, final Class type,
+        final DataAttributeContext context ) {
       return getMetaAttribute( domain, name, type, context, null );
     }
 
-    public Object getMetaAttribute( final String domain,
-                                    final String name,
-                                    final Class type,
-                                    final DataAttributeContext context,
-                                    final Object defaultValue ) {
+    public Object getMetaAttribute( final String domain, final String name, final Class type,
+        final DataAttributeContext context, final Object defaultValue ) {
       if ( domain == null ) {
         throw new NullPointerException();
       }
@@ -355,8 +334,7 @@ public class DataSchemaCompiler {
           return expressionType;
         }
         if ( beanUtility != null && expressionMetaData != null ) {
-          final ExpressionPropertyMetaData propertyMetaData =
-            expressionMetaData.getPropertyDescription( name );
+          final ExpressionPropertyMetaData propertyMetaData = expressionMetaData.getPropertyDescription( name );
           if ( propertyMetaData != null ) {
             try {
               return beanUtility.getProperty( name );
@@ -374,8 +352,8 @@ public class DataSchemaCompiler {
     }
 
     public Object clone() throws CloneNotSupportedException {
-      throw new CloneNotSupportedException
-        ( "This is an internal class and should not have been leaked to the outside world" );
+      throw new CloneNotSupportedException(
+          "This is an internal class and should not have been leaked to the outside world" );
     }
   }
 
@@ -392,8 +370,7 @@ public class DataSchemaCompiler {
   private ResourceManager resourceManager;
   private boolean initialized;
 
-  public DataSchemaCompiler( final DataSchemaDefinition reportSchemaDefinition,
-                             final DataAttributeContext context ) {
+  public DataSchemaCompiler( final DataSchemaDefinition reportSchemaDefinition, final DataAttributeContext context ) {
     this( reportSchemaDefinition, context, createDefaultResourceManager() );
   }
 
@@ -401,9 +378,8 @@ public class DataSchemaCompiler {
     return new ResourceManager();
   }
 
-  public DataSchemaCompiler( final DataSchemaDefinition reportSchemaDefinition,
-                             final DataAttributeContext context,
-                             final ResourceManager resourceManager ) {
+  public DataSchemaCompiler( final DataSchemaDefinition reportSchemaDefinition, final DataAttributeContext context,
+      final ResourceManager resourceManager ) {
     if ( reportSchemaDefinition == null ) {
       throw new NullPointerException();
     }
@@ -431,7 +407,7 @@ public class DataSchemaCompiler {
     this.globalReferences = new DefaultDataAttributeReferences();
     final DataSchemaRule[] globalRules = schemaDefinition.getGlobalRules();
     for ( int i = 0; i < globalRules.length; i++ ) {
-      final DataSchemaRule rule = globalRules[ i ];
+      final DataSchemaRule rule = globalRules[i];
       final DataAttributes attributes = rule.getStaticAttributes();
       globalAttributes.merge( attributes, context );
       final DataAttributeReferences mappedAttributes = rule.getMappedAttributes();
@@ -455,11 +431,9 @@ public class DataSchemaCompiler {
     return initialized;
   }
 
-  public DataSchema compile( final TableModel data,
-                             final Expression[] expressions,
-                             final ParameterDataRow parameters,
-                             final ParameterDefinitionEntry[] parameterDefinitions,
-                             final ReportEnvironment reportEnvironment ) throws ReportDataFactoryException {
+  public DataSchema compile( final TableModel data, final Expression[] expressions, final ParameterDataRow parameters,
+      final ParameterDefinitionEntry[] parameterDefinitions, final ReportEnvironment reportEnvironment )
+    throws ReportDataFactoryException {
     if ( initialized == false ) {
       init();
     }
@@ -475,14 +449,14 @@ public class DataSchemaCompiler {
     }
 
     if ( parameters != null ) {
-      processParameters( parameters, parameterDefinitions, reportEnvironment,
-        globalAttributes, indirectRules, directRules, defaultDataSchema );
+      processParameters( parameters, parameterDefinitions, reportEnvironment, globalAttributes, indirectRules,
+          directRules, defaultDataSchema );
     }
 
     // expressions
     if ( expressions != null ) {
       for ( int i = 0; i < expressions.length; i++ ) {
-        final Expression expression = expressions[ i ];
+        final Expression expression = expressions[i];
         final String name = expression.getName();
         if ( name == null ) {
           continue;
@@ -504,8 +478,8 @@ public class DataSchemaCompiler {
           continue;
         }
 
-        tableDataAttributes.setup( colName, data.getColumnClass( i ),
-          MetaAttributeNames.Core.SOURCE_VALUE_TABLE, colName, globalAttributes );
+        tableDataAttributes.setup( colName, data.getColumnClass( i ), MetaAttributeNames.Core.SOURCE_VALUE_TABLE,
+            colName, globalAttributes );
 
         final DefaultDataAttributes computedParameterDataAttributes = new DefaultDataAttributes();
         computedParameterDataAttributes.merge( this.tableDataAttributes, context );
@@ -536,8 +510,8 @@ public class DataSchemaCompiler {
         computedParameterDataAttributes.merge( tableGlobalAttributes, context );
         computedParameterDataAttributes.merge( mt.getColumnAttributes( i ), context );
 
-        tableDataAttributes.setup( colName, data.getColumnClass( i ),
-          MetaAttributeNames.Core.SOURCE_VALUE_TABLE, null, EmptyDataAttributes.INSTANCE );
+        tableDataAttributes.setup( colName, data.getColumnClass( i ), MetaAttributeNames.Core.SOURCE_VALUE_TABLE, null,
+            EmptyDataAttributes.INSTANCE );
         computedParameterDataAttributes.merge( tableDataAttributes, context );
 
         applyRules( indirectRules, directRules, computedParameterDataAttributes );
@@ -548,18 +522,17 @@ public class DataSchemaCompiler {
     return defaultDataSchema;
   }
 
-  protected void applyRules( final DataSchemaRule[] indirectRules,
-                             final DataSchemaRule[] directRules,
-                             final DefaultDataAttributes computedParameterDataAttributes ) {
+  protected void applyRules( final DataSchemaRule[] indirectRules, final DataSchemaRule[] directRules,
+      final DefaultDataAttributes computedParameterDataAttributes ) {
     for ( int j = 0; j < indirectRules.length; j++ ) {
-      final DataSchemaRule rule = indirectRules[ j ];
+      final DataSchemaRule rule = indirectRules[j];
       if ( rule.isMatch( computedParameterDataAttributes, context ) ) {
         computedParameterDataAttributes.merge( rule.getStaticAttributes(), context );
       }
     }
 
     for ( int j = 0; j < directRules.length; j++ ) {
-      final DataSchemaRule rule = directRules[ j ];
+      final DataSchemaRule rule = directRules[j];
       if ( rule.isMatch( computedParameterDataAttributes, context ) ) {
         computedParameterDataAttributes.merge( rule.getStaticAttributes(), context );
       }
@@ -568,7 +541,7 @@ public class DataSchemaCompiler {
     computedParameterDataAttributes.mergeReferences( globalReferences, context );
 
     for ( int j = 0; j < indirectRules.length; j++ ) {
-      final DataSchemaRule rule = indirectRules[ j ];
+      final DataSchemaRule rule = indirectRules[j];
       if ( rule.isMatch( computedParameterDataAttributes, context ) ) {
         final DataAttributeReferences mappedAttributes = rule.getMappedAttributes();
         computedParameterDataAttributes.mergeReferences( mappedAttributes, context );
@@ -576,31 +549,28 @@ public class DataSchemaCompiler {
     }
 
     for ( int j = 0; j < directRules.length; j++ ) {
-      final DataSchemaRule rule = directRules[ j ];
+      final DataSchemaRule rule = directRules[j];
       if ( rule.isMatch( computedParameterDataAttributes, context ) ) {
         final DataAttributeReferences mappedAttributes = rule.getMappedAttributes();
         computedParameterDataAttributes.mergeReferences( mappedAttributes, context );
       }
     }
 
-
   }
 
   protected void processReportEnvironment( final DefaultDataAttributes globalAttributes,
-                                           final DataSchemaRule[] indirectRules,
-                                           final DataSchemaRule[] directRules,
-                                           final DefaultDataSchema schema ) {
+      final DataSchemaRule[] indirectRules, final DataSchemaRule[] directRules, final DefaultDataSchema schema ) {
     final Map<String, String> names = DefaultReportEnvironmentMapping.INSTANCE.createEnvironmentMapping();
-    final String[] parameterNames = names.keySet().toArray( new String[ names.size() ] );
+    final String[] parameterNames = names.keySet().toArray( new String[names.size()] );
     for ( int i = 0; i < parameterNames.length; i++ ) {
-      final String envName = parameterNames[ i ];
+      final String envName = parameterNames[i];
       final String name = names.get( envName );
       if ( envName.endsWith( "-array" ) ) {
-        environmentDataAttributes.setup
-          ( name, String[].class, MetaAttributeNames.Core.SOURCE_VALUE_ENVIRONMENT, name, globalAttributes );
+        environmentDataAttributes.setup( name, String[].class, MetaAttributeNames.Core.SOURCE_VALUE_ENVIRONMENT, name,
+            globalAttributes );
       } else {
-        environmentDataAttributes.setup
-          ( name, String.class, MetaAttributeNames.Core.SOURCE_VALUE_ENVIRONMENT, name, globalAttributes );
+        environmentDataAttributes.setup( name, String.class, MetaAttributeNames.Core.SOURCE_VALUE_ENVIRONMENT, name,
+            globalAttributes );
       }
 
       final DefaultDataAttributes computedParameterDataAttributes = new DefaultDataAttributes();
@@ -611,16 +581,12 @@ public class DataSchemaCompiler {
     }
   }
 
-
   protected void processParameters( final ParameterDataRow parameters,
-                                    final ParameterDefinitionEntry[] parameterDefinitionEntries,
-                                    final ReportEnvironment reportEnvironment,
-                                    final DefaultDataAttributes globalAttributes,
-                                    final DataSchemaRule[] indirectRules,
-                                    final DataSchemaRule[] directRules,
-                                    final DefaultDataSchema schema ) throws ReportDataFactoryException {
+      final ParameterDefinitionEntry[] parameterDefinitionEntries, final ReportEnvironment reportEnvironment,
+      final DefaultDataAttributes globalAttributes, final DataSchemaRule[] indirectRules,
+      final DataSchemaRule[] directRules, final DefaultDataSchema schema ) throws ReportDataFactoryException {
     final Map<String, ParameterDefinitionEntry> map =
-      normalizeParameterDefinitions( parameters, parameterDefinitionEntries );
+        normalizeParameterDefinitions( parameters, parameterDefinitionEntries );
     for ( final Map.Entry<String, ParameterDefinitionEntry> entry : map.entrySet() ) {
       final ParameterDefinitionEntry parameter = entry.getValue();
       parameterDataAttributes.setup( parameter, globalAttributes, reportEnvironment, resourceManager );
@@ -634,18 +600,17 @@ public class DataSchemaCompiler {
   }
 
   private Map<String, ParameterDefinitionEntry> normalizeParameterDefinitions( final ParameterDataRow parameters,
-                                                                               final ParameterDefinitionEntry[]
-                                                                                 parameterDefinitionEntries ) {
+      final ParameterDefinitionEntry[] parameterDefinitionEntries ) {
     final String[] parameterNames = parameters.getColumnNames();
     final HashMap<String, ParameterDefinitionEntry> map = new HashMap<String, ParameterDefinitionEntry>();
     if ( parameterDefinitionEntries != null ) {
       for ( int i = 0; i < parameterDefinitionEntries.length; i++ ) {
-        final ParameterDefinitionEntry entry = parameterDefinitionEntries[ i ];
+        final ParameterDefinitionEntry entry = parameterDefinitionEntries[i];
         map.put( entry.getName(), entry );
       }
     }
     for ( int i = 0; i < parameterNames.length; i++ ) {
-      final String name = parameterNames[ i ];
+      final String name = parameterNames[i];
       if ( map.containsKey( name ) ) {
         continue;
       }

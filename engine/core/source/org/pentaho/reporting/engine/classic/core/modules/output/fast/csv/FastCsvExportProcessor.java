@@ -39,8 +39,8 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
       metaData = new CSVOutputProcessorMetaData( CSVOutputProcessorMetaData.PAGINATION_NONE );
     }
 
-    protected void processPageContent( final LogicalPageKey logicalPageKey,
-                                       final LogicalPageBox logicalPage ) throws ContentProcessingException {
+    protected void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )
+      throws ContentProcessingException {
       // not used ..
     }
 
@@ -52,14 +52,13 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
   private OutputStream outputStream;
   private final String encoding;
 
-  public FastCsvExportProcessor( final MasterReport report,
-                                 final OutputStream outputStream ) throws ReportProcessingException {
+  public FastCsvExportProcessor( final MasterReport report, final OutputStream outputStream )
+    throws ReportProcessingException {
     this( report, outputStream, null );
   }
 
-  public FastCsvExportProcessor( final MasterReport report,
-                                 final OutputStream outputStream,
-                                 final String encoding ) throws ReportProcessingException {
+  public FastCsvExportProcessor( final MasterReport report, final OutputStream outputStream, final String encoding )
+    throws ReportProcessingException {
     super( report, new CSVDataOutputProcessor() );
 
     this.outputStream = outputStream;
@@ -69,6 +68,5 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
   protected OutputFunction createLayoutManager() {
     return new FastExportOutputFunction( new FastCsvExportTemplate( outputStream, encoding ) );
   }
-
 
 }

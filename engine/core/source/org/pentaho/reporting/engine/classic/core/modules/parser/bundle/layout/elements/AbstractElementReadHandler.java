@@ -1,21 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements;
+
+import java.beans.PropertyEditor;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,12 +54,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
-import java.beans.PropertyEditor;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 
 public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler implements ElementReadHandler {
   private static final Log logger = LogFactory.getLog( AbstractElementReadHandler.class );
@@ -88,8 +88,7 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
     this.element = createElement();
   }
 
-  protected void initialize( final ElementType elementType )
-    throws ParseException {
+  protected void initialize( final ElementType elementType ) throws ParseException {
     metaData = elementType.getMetaData();
     element = createElement();
   }
@@ -109,8 +108,10 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void startParsing( final Attributes attrs ) throws SAXException {
     final ReportElement element = getElement();
@@ -120,14 +121,13 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
 
     final int length = attrs.getLength();
     for ( int i = 0; i < length; i++ ) {
-      if ( "xmlns".equals( attrs.getQName( i ) ) ||
-        attrs.getQName( i ).startsWith( "xmlns:" ) ) {
+      if ( "xmlns".equals( attrs.getQName( i ) ) || attrs.getQName( i ).startsWith( "xmlns:" ) ) {
         // workaround for buggy parsers
         continue;
       }
       final String name = attrs.getLocalName( i );
       if ( name.indexOf( ':' ) > -1 ) {
-        // attribute with ':' are not valid and indicate a namespace definition or so 
+        // attribute with ':' are not valid and indicate a namespace definition or so
         continue;
       }
       final String namespace = attrs.getURI( i );
@@ -137,11 +137,8 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
     }
   }
 
-  private void setAttributeValue( final ReportElement element,
-                                  final String namespace,
-                                  final String name,
-                                  final String attributeValue,
-                                  final ReportAttributeMap attributes ) throws ParseException {
+  private void setAttributeValue( final ReportElement element, final String namespace, final String name,
+      final String attributeValue, final ReportAttributeMap attributes ) throws ParseException {
     final AttributeMetaData attributeMetaData = metaData.getAttributeDescription( namespace, name );
     if ( attributeMetaData == null || attributeValue == null ) {
       element.setAttribute( namespace, name, attributeValue );
@@ -214,8 +211,8 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
 
       } catch ( BeanException e ) {
         // ignore.
-        AbstractElementReadHandler.logger.warn(
-          "Attribute '" + namespace + '|' + name + "' is not convertible with the bean-methods " + getLocator() );
+        AbstractElementReadHandler.logger.warn( "Attribute '" + namespace + '|' + name
+            + "' is not convertible with the bean-methods " + getLocator() );
       }
     }
   }
@@ -234,9 +231,9 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
     if ( "false".equals( object ) ) {
       return valueKey;
     }
-    if ( "org.pentaho.reporting.libraries.docbundle.bundleloader.RepositoryResourceBundleLoader"
-      .equals( valueKey.getSchema() ) == false &&
-      object == null ) {
+    if ( "org.pentaho.reporting.libraries.docbundle.bundleloader.RepositoryResourceBundleLoader".equals( valueKey
+        .getSchema() ) == false
+        && object == null ) {
       return valueKey;
     }
 
@@ -257,15 +254,18 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
   /**
    * Returns the handler for a child element.
    *
-   * @param uri     the URI of the namespace of the current element.
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param uri
+   *          the URI of the namespace of the current element.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler or null, if the tagname is invalid.
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final Attributes atts ) throws SAXException {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
     if ( BundleNamespaces.LAYOUT.equals( uri ) ) {
       if ( "attribute-expression".equals( tagName ) ) {
         final AttributeExpressionReadHandler readHandler = new AttributeExpressionReadHandler();
@@ -306,7 +306,8 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
   /**
    * Done parsing.
    *
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void doneParsing() throws SAXException {
     for ( int i = 0; i < styleExpressions.size(); i++ ) {
@@ -326,14 +327,13 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
 
     for ( int i = 0; i < bulkattributes.size(); i++ ) {
       final BulkAttributeReadHandler attributeReadHandler = bulkattributes.get( i );
-      setAttributeValue( element, attributeReadHandler.getNamespace(),
-        attributeReadHandler.getName(), attributeReadHandler.getResult(),
-        attributeReadHandler.getAttributes() );
+      setAttributeValue( element, attributeReadHandler.getNamespace(), attributeReadHandler.getName(),
+          attributeReadHandler.getResult(), attributeReadHandler.getAttributes() );
     }
     for ( int i = 0; i < bulkexpressions.size(); i++ ) {
       final BulkExpressionReadHandler expressionReadHandler = bulkexpressions.get( i );
-      element.setAttribute( expressionReadHandler.getAttributeNameSpace(),
-        expressionReadHandler.getAttributeName(), expressionReadHandler.getObject() );
+      element.setAttribute( expressionReadHandler.getAttributeNameSpace(), expressionReadHandler.getAttributeName(),
+          expressionReadHandler.getObject() );
     }
   }
 
@@ -341,7 +341,8 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if an parser error occured.
+   * @throws SAXException
+   *           if an parser error occured.
    */
   public Object getObject() throws SAXException {
     return getElement();

@@ -1,34 +1,44 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
+
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.text.MessageFormat;
+
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.text.MessageFormat;
 
 /**
  * A progress monitor dialog component that visualizes the report processing progress. It will receive update events
@@ -121,17 +131,17 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   private JProgressBar progressBar;
 
   /**
-   * The reuseable message format for the page label.
+   * The reusable message format for the page label.
    */
   private MessageFormat pageMessageFormatter;
 
   /**
-   * The reuseable message format for the rows label.
+   * The reusable message format for the rows label.
    */
   private MessageFormat rowsMessageFormatter;
 
   /**
-   * The reuseable message format for the pass label.
+   * The reusable message format for the pass label.
    */
   private MessageFormat passMessageFormatter;
 
@@ -166,7 +176,7 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   private String outputText;
 
   /**
-   * Localised messages.
+   * Localized messages.
    */
   private Messages messages;
 
@@ -177,7 +187,8 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   /**
    * Creates a non-modal dialog without a title and with the specified Dialog owner.
    *
-   * @param dialog the owner of the dialog
+   * @param dialog
+   *          the owner of the dialog
    */
   public ReportProgressDialog( final Dialog dialog ) {
     super( dialog );
@@ -188,7 +199,8 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   /**
    * Creates a non-modal dialog without a title and with the specified Frame owner.
    *
-   * @param frame the owner of the dialog
+   * @param frame
+   *          the owner of the dialog
    */
   public ReportProgressDialog( final Frame frame ) {
     super( frame );
@@ -197,7 +209,7 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   }
 
   /**
-   * Creates a non-modal dialog without a title and without a specified Frame owner.  A shared, hidden frame will be set
+   * Creates a non-modal dialog without a title and without a specified Frame owner. A shared, hidden frame will be set
    * as the owner of the Dialog.
    */
   public ReportProgressDialog() {
@@ -217,8 +229,9 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
    */
   private void initConstructor() {
     updateRunnable = new ScreenUpdateRunnable();
-    messages = new Messages( getLocale(), SwingCommonModule.BUNDLE_NAME,
-      ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
+    messages =
+        new Messages( getLocale(), SwingCommonModule.BUNDLE_NAME, ObjectUtilities
+            .getClassLoader( SwingCommonModule.class ) );
     initialize();
     addWindowListener( new ToFrontHandler() );
 
@@ -315,7 +328,8 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   /**
    * Defines the current message.
    *
-   * @param message the current global message.
+   * @param message
+   *          the current global message.
    */
   public void setMessage( final String message ) {
     messageCarrier.setText( message );
@@ -324,7 +338,8 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   /**
    * Updates the page message label if the current page has changed.
    *
-   * @param page the new page parameter.
+   * @param page
+   *          the new page parameter.
    */
   protected void updatePageMessage( final int page ) {
     if ( lastPage != page ) {
@@ -337,8 +352,10 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   /**
    * Updates the rows message label if either the rows or maxrows changed.
    *
-   * @param rows    the currently processed rows.
-   * @param maxRows the maximum number of rows in the report.
+   * @param rows
+   *          the currently processed rows.
+   * @param maxRows
+   *          the maximum number of rows in the report.
    */
   protected void updateRowsMessage( final int rows, final int maxRows ) {
     if ( maxRows != lastMaxRow ) {
@@ -353,7 +370,8 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
    * Updates the pass message label if either the pass or prepare state changed. The pass reflects the current
    * processing level, one level for every function dependency level.
    *
-   * @param activity the current reporting pass.
+   * @param activity
+   *          the current reporting pass.
    */
   protected void updateActivityMessage( final int activity ) {
     if ( lastActivity != activity ) {
@@ -366,7 +384,8 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   /**
    * Updates the progress bar to show the current progress
    *
-   * @param event the event data used to update the progress bar
+   * @param event
+   *          the event data used to update the progress bar
    */
   protected void updateProgressBar( final ReportProgressEvent event ) {
     progressBar.setValue( (int) ReportProgressEvent.computePercentageComplete( event, isOnlyPagination() ) );
@@ -438,12 +457,12 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   /**
    * Defines the output text message. This text describes the export phases of the report processing.
    *
-   * @param outputText the output message.
+   * @param outputText
+   *          the output message.
    */
   public void setOutputText( final String outputText ) {
     if ( outputText == null ) {
-      throw new NullPointerException( messages.getErrorString(
-        "ReportProgressDialog.ERROR_0001_OUTPUT_TEXT_NULL" ) ); //$NON-NLS-1$
+      throw new NullPointerException( messages.getErrorString( "ReportProgressDialog.ERROR_0001_OUTPUT_TEXT_NULL" ) ); //$NON-NLS-1$
     }
     this.outputText = outputText;
   }
@@ -460,12 +479,12 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   /**
    * Defines the layout text message. This text describes the prepare phases of the report processing.
    *
-   * @param layoutText the layout message.
+   * @param layoutText
+   *          the layout message.
    */
   public void setLayoutText( final String layoutText ) {
     if ( layoutText == null ) {
-      throw new NullPointerException( messages.getErrorString(
-        "ReportProgressDialog.ERROR_0002_LAYOUT_TEXT_NULL" ) ); //$NON-NLS-1$
+      throw new NullPointerException( messages.getErrorString( "ReportProgressDialog.ERROR_0002_LAYOUT_TEXT_NULL" ) ); //$NON-NLS-1$
     }
     this.layoutText = layoutText;
   }
@@ -487,7 +506,7 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
   }
 
   private void postUpdate( final ReportProgressEvent event ) {
-    synchronized( this.updateRunnable ) {
+    synchronized ( this.updateRunnable ) {
       if ( this.updateRunnable.update( event ) ) {
         if ( SwingUtilities.isEventDispatchThread() ) {
           this.updateRunnable.run();

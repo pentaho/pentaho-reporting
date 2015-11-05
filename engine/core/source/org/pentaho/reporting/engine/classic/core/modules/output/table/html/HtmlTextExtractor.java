@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
@@ -70,10 +70,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
   private HtmlTextExtractorState processStack;
   private HtmlTextExtractorHelper textExtractorHelper;
 
-  public HtmlTextExtractor( final OutputProcessorMetaData metaData,
-                            final XmlWriter xmlWriter,
-                            final HtmlContentGenerator contentGenerator,
-                            final HtmlTagHelper tagHelper ) {
+  public HtmlTextExtractor( final OutputProcessorMetaData metaData, final XmlWriter xmlWriter,
+      final HtmlContentGenerator contentGenerator, final HtmlTagHelper tagHelper ) {
     super( metaData );
     if ( xmlWriter == null ) {
       throw new NullPointerException();
@@ -117,7 +115,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
    * at some point. If for some strange reason a canvas box appears in the middle of a box-structure, your layouter is
    * probably a mess and this method will treat the box as a generic content container.
    *
-   * @param box the canvas box
+   * @param box
+   *          the canvas box
    * @return true, if the child content will be processed, false otherwise.
    */
   protected boolean startCanvasBox( final CanvasRenderBox box ) {
@@ -125,8 +124,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
       return false;
     }
 
-    return textExtractorHelper.startBox
-      ( box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box.getBoxDefinition(), false );
+    return textExtractorHelper.startBox( box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box
+        .getBoxDefinition(), false );
   }
 
   protected void finishCanvasBox( final CanvasRenderBox box ) {
@@ -142,8 +141,10 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
    * elsewhere. This method assumes that the attributes of the paragraph have been processed as part of the table-cell
    * processing.
    *
-   * @param box the paragraph box
-   * @throws IOException if an IO error occured.
+   * @param box
+   *          the paragraph box
+   * @throws IOException
+   *           if an IO error occured.
    */
   protected void processInitialBox( final ParagraphRenderBox box ) throws IOException {
     if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
@@ -159,9 +160,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
       processStack = new HtmlTextExtractorState( processStack, false );
     }
 
-    if ( Boolean.TRUE.equals
-      ( box.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.SUPPRESS_CONTENT ) )
-      == false ) {
+    if ( Boolean.TRUE.equals( box.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE,
+        AttributeNames.Html.SUPPRESS_CONTENT ) ) == false ) {
       processParagraphChilds( box );
     }
 
@@ -202,8 +202,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
       return false;
     }
 
-    return textExtractorHelper.startBox
-      ( box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box.getBoxDefinition(), true );
+    return textExtractorHelper.startBox( box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box
+        .getBoxDefinition(), true );
   }
 
   protected void finishBlockBox( final BlockRenderBox box ) {
@@ -223,8 +223,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
       return false;
     }
 
-    return textExtractorHelper.startBox
-      ( box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box.getBoxDefinition(), true );
+    return textExtractorHelper.startBox( box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box
+        .getBoxDefinition(), true );
   }
 
   protected void finishRowBox( final RenderBox box ) {
@@ -239,8 +239,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
     if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
-    return textExtractorHelper.startInlineBox
-      ( box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box.getBoxDefinition() );
+    return textExtractorHelper.startInlineBox( box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box
+        .getBoxDefinition() );
   }
 
   protected void finishInlineBox( final InlineRenderBox box ) {
@@ -254,8 +254,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
   protected void processOtherNode( final RenderNode node ) {
     try {
       final int nodeType = node.getNodeType();
-      if ( nodeType == LayoutNodeTypes.TYPE_NODE_TEXT ||
-        nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
+      if ( nodeType == LayoutNodeTypes.TYPE_NODE_TEXT || nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
         super.processOtherNode( node );
         return;
       }
@@ -311,8 +310,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
   /**
    * @noinspection StringConcatenation
    */
-  private void processReplacedContent( final RenderableReplacedContentBox node )
-    throws IOException, ContentIOException {
+  private void processReplacedContent( final RenderableReplacedContentBox node ) throws IOException, ContentIOException {
 
     final RenderableReplacedContent rc = node.getContent();
     final ReportAttributeMap attrs = node.getAttributes();
@@ -325,8 +323,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
     final Object rawObject = rc.getRawObject();
     // We have to do three things here. First, we have to check what kind
     // of content we deal with.
-    if ( textExtractorHelper
-      .processRenderableReplacedContent( attrs, styleSheet, width, height, contentWidth, contentHeight, rawObject ) ) {
+    if ( textExtractorHelper.processRenderableReplacedContent( attrs, styleSheet, width, height, contentWidth,
+        contentHeight, rawObject ) ) {
       result = true;
     }
   }
@@ -374,8 +372,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
       for ( final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks() ) {
         RenderNode node = styledChunk.getOriginatingTextNode();
         InstanceID dummy = node.getInstanceId();
-        textExtractorHelper.startInlineBox( dummy,
-          styledChunk.getOriginalAttributes(), styledChunk.getStyleSheet(), BoxDefinition.EMPTY );
+        textExtractorHelper.startInlineBox( dummy, styledChunk.getOriginalAttributes(), styledChunk.getStyleSheet(),
+            BoxDefinition.EMPTY );
         if ( node instanceof RenderableReplacedContentBox ) {
           processRenderableContent( (RenderableReplacedContentBox) node );
           result = true;

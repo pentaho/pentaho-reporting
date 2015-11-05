@@ -8,10 +8,9 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
 public class ConnectionModule extends AbstractModule {
   public static final String NAMESPACE =
-    "http://reporting.pentaho.org/namespaces/engine/classic/extensions/connections/1.0";
+      "http://reporting.pentaho.org/namespaces/engine/classic/extensions/connections/1.0";
 
-  public ConnectionModule()
-    throws ModuleInitializeException {
+  public ConnectionModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -20,11 +19,12 @@ public class ConnectionModule extends AbstractModule {
    * a modules lifetime. If the initializing cannot be completed, throw a ModuleInitializeException to indicate the
    * error. The module will not be available to the system.
    *
-   * @param subSystem the subSystem.
-   * @throws ModuleInitializeException if an error ocurred while initializing the module.
+   * @param subSystem
+   *          the subSystem.
+   * @throws ModuleInitializeException
+   *           if an error ocurred while initializing the module.
    */
-  public void initialize( final SubSystem subSystem )
-    throws ModuleInitializeException {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     DatabaseConnectionsXmlResourceFactory.register( DatabaseConnectionsXmlFactoryModule.class );
   }
 

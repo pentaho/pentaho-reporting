@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -52,7 +52,8 @@ public final class Worker extends Thread {
   /**
    * Creates a new worker.
    *
-   * @param sleeptime the time this worker sleeps until he checks for new work.
+   * @param sleeptime
+   *          the time this worker sleeps until he checks for new work.
    */
   public Worker( final int sleeptime ) {
     this.lock = new Object();
@@ -71,11 +72,13 @@ public final class Worker extends Thread {
   /**
    * Set the next workload for this worker.
    *
-   * @param r the next workload for the worker.
-   * @throws IllegalStateException if the worker is not idle.
+   * @param r
+   *          the next workload for the worker.
+   * @throws IllegalStateException
+   *           if the worker is not idle.
    */
   public void setWorkload( final Runnable r ) {
-    synchronized( lock ) {
+    synchronized ( lock ) {
       if ( state == Worker.STATE_DEAD ) {
         throw new IllegalStateException( "Thread is dead already." );
       }
@@ -102,7 +105,7 @@ public final class Worker extends Thread {
    * Kills the worker immediately. Awakens the worker if he's sleeping, so that the worker dies without delay.
    */
   public void finish() {
-    synchronized( lock ) {
+    synchronized ( lock ) {
       if ( state == Worker.STATE_DEAD ) {
         return;
       }
@@ -123,7 +126,7 @@ public final class Worker extends Thread {
    * @return true, if this worker has no more work and is currently sleeping.
    */
   public boolean isAvailable() {
-    synchronized( lock ) {
+    synchronized ( lock ) {
       return ( state == Worker.STATE_IDLE );
     }
   }
@@ -135,7 +138,7 @@ public final class Worker extends Thread {
   public void run() {
     while ( true ) {
       final Runnable nextWorkLoad;
-      synchronized( lock ) {
+      synchronized ( lock ) {
         if ( workload != null ) {
           state = Worker.STATE_WORKING;
           nextWorkLoad = workload;
@@ -153,9 +156,9 @@ public final class Worker extends Thread {
         Worker.logger.error( "Worker caught exception on run: ", e );
       }
 
-      synchronized( lock ) {
+      synchronized ( lock ) {
         if ( state == Worker.STATE_DEAD ) {
-          synchronized( this ) {
+          synchronized ( this ) {
             this.notifyAll();
           }
           return;
@@ -172,7 +175,6 @@ public final class Worker extends Thread {
       }
     }
 
-
   }
 
   /**
@@ -181,7 +183,7 @@ public final class Worker extends Thread {
    * @return true, if the worker should finish the work and end the thread.
    */
   public boolean isFinish() {
-    synchronized( lock ) {
+    synchronized ( lock ) {
       return state == Worker.STATE_DEAD;
     }
   }

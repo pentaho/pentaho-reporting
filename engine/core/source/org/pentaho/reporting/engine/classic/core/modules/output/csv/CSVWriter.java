@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.csv;
 
@@ -69,20 +69,20 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     /**
      * Creates a new CSVQuoter. The Quoter uses the system's default line separator.
      *
-     * @param quoter a utility class for quoting CSV strings.
+     * @param quoter
+     *          a utility class for quoting CSV strings.
      */
     protected CSVRow( final CSVQuoter quoter ) {
       data = new ArrayList<Object>();
       this.quoter = quoter;
-      lineSeparator =
-        ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-          ( "line.separator", "\n" );
+      lineSeparator = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty( "line.separator", "\n" );
     }
 
     /**
      * appends the given integer value as java.lang.Integer to this row.
      *
-     * @param value the appended int value
+     * @param value
+     *          the appended int value
      */
     public void append( final int value ) {
       data.add( value );
@@ -91,7 +91,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     /**
      * appends the given Object to this row.
      *
-     * @param o the appended value
+     * @param o
+     *          the appended value
      */
     public void append( final Object o ) {
       data.add( o );
@@ -100,11 +101,12 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     /**
      * Writes the contents of the collected row, using the defined separator.
      *
-     * @param w the writer.
-     * @throws IOException if an I/O error occurred.
+     * @param w
+     *          the writer.
+     * @throws IOException
+     *           if an I/O error occurred.
      */
-    public void write( final Writer w )
-      throws IOException {
+    public void write( final Writer w ) throws IOException {
       final Iterator it = data.iterator();
       while ( it.hasNext() ) {
         w.write( quoter.doQuoting( String.valueOf( it.next() ) ) );
@@ -165,7 +167,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Defines, whether to print column names in the first row.
    *
-   * @param writeDataRowNames true, if column names are printed, false otherwise
+   * @param writeDataRowNames
+   *          true, if column names are printed, false otherwise
    */
   public void setWriteDataRowNames( final boolean writeDataRowNames ) {
     this.writeDataRowNames = writeDataRowNames;
@@ -231,7 +234,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Defines the writer which should be used to output the generated data.
    *
-   * @param w the writer
+   * @param w
+   *          the writer
    */
   public void setWriter( final Writer w ) {
     this.w = w;
@@ -240,9 +244,12 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Defines the separator, which is used to separate columns in a row.
    *
-   * @param separator the separator string, never null.
-   * @throws NullPointerException     if the separator is null.
-   * @throws IllegalArgumentException if the separator is an empty string.
+   * @param separator
+   *          the separator string, never null.
+   * @throws NullPointerException
+   *           if the separator is null.
+   * @throws IllegalArgumentException
+   *           if the separator is an empty string.
    */
   public void setSeparator( final String separator ) {
     if ( separator == null ) {
@@ -266,14 +273,16 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the contents of the dataRow into the CSVRow.
    *
-   * @param dr  the dataRow which should be written
-   * @param row the CSVRow used to collect the RowData.
+   * @param dr
+   *          the dataRow which should be written
+   * @param row
+   *          the CSVRow used to collect the RowData.
    */
   private void writeDataRow( final DataRow dr, final CSVRow row ) {
     final String[] names = dr.getColumnNames();
     final int length = names.length;
     for ( int i = 0; i < length; i++ ) {
-      final Object o = dr.get( names[ i ] );
+      final Object o = dr.get( names[i] );
       row.append( o );
     }
   }
@@ -281,14 +290,16 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the names of the columns of the dataRow into the CSVRow.
    *
-   * @param dr  the dataRow which should be written
-   * @param row the CSVRow used to collect the RowData.
+   * @param dr
+   *          the dataRow which should be written
+   * @param row
+   *          the CSVRow used to collect the RowData.
    */
   private void writeDataRowNames( final DataRow dr, final CSVRow row ) {
     final String[] names = dr.getColumnNames();
     final int length = names.length;
     for ( int i = 0; i < length; i++ ) {
-      final String columnName = names[ i ];
+      final String columnName = names[i];
       row.append( columnName );
     }
   }
@@ -296,7 +307,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the ReportHeader and (if defined) the dataRow names.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportStarted( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -336,7 +348,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the ReportFooter.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportFinished( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -367,7 +380,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the GroupHeader of the current group.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( ( event.getState().isPrepareRun() ) || ( isEnableGroupHeader() == false ) ) {
@@ -401,7 +415,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the GroupFooter of the active group.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupFinished( final ReportEvent event ) {
     if ( ( event.getState().isPrepareRun() ) || ( isEnableGroupFooter() == false ) ) {
@@ -431,20 +446,24 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   }
 
   /**
-   * Receives notification that a group of item bands is about to be processed. <P> The next events will be
-   * itemsAdvanced events until the itemsFinished event is raised.
+   * Receives notification that a group of item bands is about to be processed.
+   * <P>
+   * The next events will be itemsAdvanced events until the itemsFinished event is raised.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void itemsStarted( final ReportEvent event ) {
     collectSubReports( event.getReport().getDetailsHeader() );
   }
 
   /**
-   * Receives notification that a group of item bands has been completed. <P> The itemBand is finished, the report
-   * starts to close open groups.
+   * Receives notification that a group of item bands has been completed.
+   * <P>
+   * The itemBand is finished, the report starts to close open groups.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void itemsFinished( final ReportEvent event ) {
     collectSubReports( event.getReport().getDetailsFooter() );
@@ -453,7 +472,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the current ItemBand.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -506,7 +526,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * Overrides the depency level. Should be lower than any other function depency.
    *
-   * @param deplevel the new depency level.
+   * @param deplevel
+   *          the new depency level.
    */
   public void setDependencyLevel( final int deplevel ) {
     this.depLevel = deplevel;
@@ -541,12 +562,14 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   }
 
   /**
-   * Clones the expression.  The expression should be reinitialized after the cloning. <P> Expressions maintain no
-   * state, cloning is done at the beginning of the report processing to disconnect the expression from any other object
-   * space.
+   * Clones the expression. The expression should be reinitialized after the cloning.
+   * <P>
+   * Expressions maintain no state, cloning is done at the beginning of the report processing to disconnect the
+   * expression from any other object space.
    *
    * @return a clone of this expression.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
   public Object clone() throws CloneNotSupportedException {
     final CSVWriter o = (CSVWriter) super.clone();
@@ -555,14 +578,13 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   }
 
   public InlineSubreportMarker[] getInlineSubreports() {
-    return inlineSubreports.toArray
-      ( new InlineSubreportMarker[ inlineSubreports.size() ] );
+    return inlineSubreports.toArray( new InlineSubreportMarker[inlineSubreports.size()] );
   }
 
   public void clearInlineSubreports( final SubReportProcessType inlineExecution ) {
     final InlineSubreportMarker[] subreports = getInlineSubreports();
     for ( int i = 0; i < subreports.length; i++ ) {
-      final InlineSubreportMarker subreport = subreports[ i ];
+      final InlineSubreportMarker subreport = subreports[i];
       if ( inlineExecution == subreport.getProcessType() ) {
         inlineSubreports.remove( i );
       }
@@ -588,10 +610,10 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   private void collectSubReports( final Band band ) throws FunctionProcessingException {
     final Element[] elements = band.getElementArray();
     for ( int i = 0; i < elements.length; i++ ) {
-      final Element element = elements[ i ];
+      final Element element = elements[i];
       if ( element instanceof SubReport ) {
         final InlineSubreportMarker marker =
-          new InlineSubreportMarker( (SubReport) element.clone(), null, SubReportProcessType.BANDED );
+            new InlineSubreportMarker( (SubReport) element.clone(), null, SubReportProcessType.BANDED );
         inlineSubreports.add( marker );
       } else if ( element instanceof Band ) {
         collectSubReports( (Band) element );

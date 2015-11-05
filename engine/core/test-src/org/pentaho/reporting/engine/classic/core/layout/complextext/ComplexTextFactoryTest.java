@@ -27,7 +27,7 @@ import java.util.Arrays;
 public class ComplexTextFactoryTest {
   private String[] processText( String t ) {
     int[] ints = CodePointUtilities.charsToCodepoint( t );
-    return ComplexTextFactory.processText( ints, 0, ints.length ).toArray( new String[ 0 ] );
+    return ComplexTextFactory.processText( ints, 0, ints.length ).toArray( new String[0] );
   }
 
   @Test
@@ -44,9 +44,8 @@ public class ComplexTextFactoryTest {
   }
 
   private void assertArrayEquals( String[] g, String[] b ) {
-    Assert.assertEquals( "Not the same" + Arrays.asList( g ) + " - " + Arrays.asList( b ), Arrays.asList( g ),
-      Arrays.asList( b ) );
+    Assert.assertEquals( "Not the same" + Arrays.asList( g ) + " - " + Arrays.asList( b ), Arrays.asList( g ), Arrays
+        .asList( b ) );
   }
-
 
 }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util.geom;
 
@@ -47,8 +47,10 @@ public class StrictDimension implements Serializable, Cloneable {
   /**
    * Creates a new dimension object with the given width and height. The object is not locked.
    *
-   * @param width  the width.
-   * @param height the height.
+   * @param width
+   *          the width.
+   * @param height
+   *          the height.
    */
   public StrictDimension( final long width, final long height ) {
     this.width = width;
@@ -93,9 +95,12 @@ public class StrictDimension implements Serializable, Cloneable {
   /**
    * Sets the size of this <code>Dimension</code> object to the specified width and height.
    *
-   * @param width  the new width for the <code>Dimension</code> object
-   * @param height the new height for the <code>Dimension</code> object
-   * @throws IllegalStateException if the dimension object is locked
+   * @param width
+   *          the new width for the <code>Dimension</code> object
+   * @param height
+   *          the new height for the <code>Dimension</code> object
+   * @throws IllegalStateException
+   *           if the dimension object is locked
    */
   public void setSize( final long width, final long height ) {
     if ( locked ) {
@@ -118,7 +123,8 @@ public class StrictDimension implements Serializable, Cloneable {
   /**
    * Updates the height of this dimension object.
    *
-   * @param height the new height, given in micro-points.
+   * @param height
+   *          the new height, given in micro-points.
    */
   public void setHeight( final long height ) {
     if ( locked ) {
@@ -139,7 +145,8 @@ public class StrictDimension implements Serializable, Cloneable {
   /**
    * Updates the width of this dimension object.
    *
-   * @param width the new width, given in micro-points.
+   * @param width
+   *          the new width, given in micro-points.
    */
   public void setWidth( final long width ) {
     if ( locked ) {
@@ -161,23 +168,21 @@ public class StrictDimension implements Serializable, Cloneable {
     }
   }
 
-
   /**
    * Returns a String representation of this dimension object.
    *
    * @return a string describing the object.
    */
   public String toString() {
-    return "org.pentaho.reporting.engine.classic.core.util.geom.StrictDimension{" +
-      "width=" + width +
-      ", height=" + height +
-      '}';
+    return "org.pentaho.reporting.engine.classic.core.util.geom.StrictDimension{" + "width=" + width + ", height="
+        + height + '}';
   }
 
   /**
    * Checks whether the given object is a StrictDimension instance convering the same area as this dimension.
    *
-   * @param o the other object.
+   * @param o
+   *          the other object.
    * @return true, if the other object is equal to this object, false otherwise.
    */
   public boolean equals( final Object o ) {

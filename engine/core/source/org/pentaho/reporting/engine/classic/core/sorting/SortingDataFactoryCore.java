@@ -29,10 +29,8 @@ public class SortingDataFactoryCore extends CompoundDataFactoryCore {
   public SortingDataFactoryCore() {
   }
 
-  public String[] getReferencedFields( final DataFactoryMetaData metaData,
-                                       final DataFactory element,
-                                       final String query,
-                                       final DataRow parameter ) {
+  public String[] getReferencedFields( final DataFactoryMetaData metaData, final DataFactory element,
+      final String query, final DataRow parameter ) {
     String[] referencedFields = super.getReferencedFields( metaData, element, query, parameter );
     if ( referencedFields == null ) {
       return null;
@@ -41,6 +39,6 @@ public class SortingDataFactoryCore extends CompoundDataFactoryCore {
     ArrayList<String> fields = new ArrayList<String>();
     fields.addAll( Arrays.asList( referencedFields ) );
     fields.add( DataFactory.QUERY_SORT );
-    return fields.toArray( new String[ fields.size() ] );
+    return fields.toArray( new String[fields.size()] );
   }
 }

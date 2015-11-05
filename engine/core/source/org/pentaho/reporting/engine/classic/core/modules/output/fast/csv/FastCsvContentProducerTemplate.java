@@ -33,18 +33,16 @@ public class FastCsvContentProducerTemplate extends AbstractContentProducerTempl
   private final OutputStream outputStream;
   private String encoding;
 
-  public FastCsvContentProducerTemplate( final SheetLayout sharedSheetLayout,
-                                         final OutputStream outputStream,
-                                         final String encoding ) {
+  public FastCsvContentProducerTemplate( final SheetLayout sharedSheetLayout, final OutputStream outputStream,
+      final String encoding ) {
     super( sharedSheetLayout );
     this.outputStream = outputStream;
     this.encoding = encoding;
   }
 
-  protected void writeContent( final Band band,
-                               final ExpressionRuntime runtime,
-                               final FormattedDataBuilder messageFormatSupport )
-    throws IOException, ReportProcessingException, ContentProcessingException {
+  protected void writeContent( final Band band, final ExpressionRuntime runtime,
+      final FormattedDataBuilder messageFormatSupport ) throws IOException, ReportProcessingException,
+    ContentProcessingException {
     messageFormatSupport.compute( band, runtime, outputStream );
   }
 

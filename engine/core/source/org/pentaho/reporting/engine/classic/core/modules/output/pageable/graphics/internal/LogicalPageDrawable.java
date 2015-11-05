@@ -1,21 +1,37 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -65,13 +81,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-
 /**
  * The page drawable is the content provider for the Graphics2DOutputTarget. This component is responsible for rendering
  * the current page to a Graphics2D object.
@@ -87,9 +96,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     private float fontSize;
     private Graphics2D graphics;
 
-    protected TextSpec( final StyleSheet layoutContext,
-                        final OutputProcessorMetaData metaData,
-                        final Graphics2D graphics ) {
+    protected TextSpec( final StyleSheet layoutContext, final OutputProcessorMetaData metaData,
+        final Graphics2D graphics ) {
       if ( graphics == null ) {
         throw new NullPointerException();
       }
@@ -101,8 +109,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       }
 
       this.graphics = graphics;
-      fontName = metaData.getNormalizedFontFamilyName
-        ( (String) layoutContext.getStyleProperty( TextStyleKeys.FONT ) );
+      fontName = metaData.getNormalizedFontFamilyName( (String) layoutContext.getStyleProperty( TextStyleKeys.FONT ) );
       fontSize = (float) layoutContext.getDoubleStyleProperty( TextStyleKeys.FONTSIZE, 10 );
       bold = layoutContext.getBooleanStyleProperty( TextStyleKeys.BOLD );
       italics = layoutContext.getBooleanStyleProperty( TextStyleKeys.ITALIC );
@@ -265,16 +272,14 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   }
 
   @Deprecated
-  public LogicalPageDrawable( final LogicalPageBox rootBox,
-                              final OutputProcessorMetaData metaData,
-                              final ResourceManager resourceManager ) {
+  public LogicalPageDrawable( final LogicalPageBox rootBox, final OutputProcessorMetaData metaData,
+      final ResourceManager resourceManager ) {
     this();
     init( rootBox, metaData, resourceManager );
   }
 
-  public void init( final LogicalPageBox rootBox,
-                    final OutputProcessorMetaData metaData,
-                    final ResourceManager resourceManager ) {
+  public void init( final LogicalPageBox rootBox, final OutputProcessorMetaData metaData,
+      final ResourceManager resourceManager ) {
     if ( rootBox == null ) {
       throw new NullPointerException();
     }
@@ -297,21 +302,23 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     this.pageFormat = new PageFormat();
     this.pageFormat.setPaper( paper );
 
-    this.strictClipping = "true".equals( metaData.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.StrictClipping" ) );
-    this.outlineMode = "true".equals( metaData.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.debug.OutlineMode" ) );
-    if ( "true".equals( metaData.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.debug.PrintPageContents" ) ) ) {
+    this.strictClipping =
+        "true".equals( metaData.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.StrictClipping" ) );
+    this.outlineMode =
+        "true".equals( metaData.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.debug.OutlineMode" ) );
+    if ( "true".equals( metaData.getConfiguration().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.debug.PrintPageContents" ) ) ) {
       ModelPrinter.INSTANCE.print( rootBox );
     }
 
     this.unalignedPageBands = metaData.isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS );
     revalidateTextEllipseProcessStep = new RevalidateTextEllipseProcessStep( metaData );
     collectSelectedNodesStep = new CollectSelectedNodesStep();
-    this.clipOnWordBoundary = "true".equals
-      ( metaData.getConfiguration().getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary" ) );
+    this.clipOnWordBoundary =
+        "true".equals( metaData.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary" ) );
   }
 
   public LogicalPageBox getLogicalPageBox() {
@@ -381,8 +388,10 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   /**
    * Draws the object.
    *
-   * @param graphics the graphics device.
-   * @param area     the area inside which the object should be drawn.
+   * @param graphics
+   *          the graphics device.
+   * @param area
+   *          the area inside which the object should be drawn.
    */
   public void draw( final Graphics2D graphics, final Rectangle2D area ) {
     final Graphics2D g2 = (Graphics2D) graphics.create();
@@ -394,7 +403,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
     try {
       final StrictBounds pageBounds =
-        StrictGeomUtility.createBounds( area.getX(), area.getY(), area.getWidth(), area.getHeight() );
+          StrictGeomUtility.createBounds( area.getX(), area.getY(), area.getWidth(), area.getHeight() );
       this.pageArea = pageBounds;
       this.drawArea = pageBounds;
       this.graphics = g2;
@@ -422,14 +431,15 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final BlockRenderBox footerArea = rootBox.getFooterArea();
     final BlockRenderBox repeatFooterArea = rootBox.getRepeatFooterArea();
     final StrictBounds headerBounds =
-      new StrictBounds( headerArea.getX(), headerArea.getY(), headerArea.getWidth(), headerArea.getHeight() );
+        new StrictBounds( headerArea.getX(), headerArea.getY(), headerArea.getWidth(), headerArea.getHeight() );
     final StrictBounds footerBounds =
-      new StrictBounds( footerArea.getX(), footerArea.getY(), footerArea.getWidth(), footerArea.getHeight() );
-    final StrictBounds repeatFooterBounds = new StrictBounds
-      ( repeatFooterArea.getX(), repeatFooterArea.getY(), repeatFooterArea.getWidth(), repeatFooterArea.getHeight() );
-    final StrictBounds contentBounds = new StrictBounds
-      ( rootBox.getX(), headerArea.getY() + headerArea.getHeight(),
-        rootBox.getWidth(), repeatFooterArea.getY() - headerArea.getHeight() );
+        new StrictBounds( footerArea.getX(), footerArea.getY(), footerArea.getWidth(), footerArea.getHeight() );
+    final StrictBounds repeatFooterBounds =
+        new StrictBounds( repeatFooterArea.getX(), repeatFooterArea.getY(), repeatFooterArea.getWidth(),
+            repeatFooterArea.getHeight() );
+    final StrictBounds contentBounds =
+        new StrictBounds( rootBox.getX(), headerArea.getY() + headerArea.getHeight(), rootBox.getWidth(),
+            repeatFooterArea.getY() - headerArea.getHeight() );
 
     final double headerHeight = StrictGeomUtility.toExternalValue( drawArea.getHeight() );
 
@@ -448,8 +458,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
     if ( unalignedPageBands ) {
       this.graphics.translate( 0, -headerHeight );
-      this.graphics.translate( 0,
-        height - StrictGeomUtility.toExternalValue( footerBounds.getHeight() + repeatFooterBounds.getHeight() ) );
+      this.graphics.translate( 0, height
+          - StrictGeomUtility.toExternalValue( footerBounds.getHeight() + repeatFooterBounds.getHeight() ) );
     }
 
     setDrawArea( repeatFooterBounds );
@@ -476,8 +486,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   }
 
   protected Rectangle2D createClipRect( final StrictBounds bounds ) {
-    return StrictGeomUtility.createAWTRectangle( bounds.getX() - 1, bounds.getY() - 1,
-      bounds.getWidth() + 2, bounds.getHeight() + 2 );
+    return StrictGeomUtility.createAWTRectangle( bounds.getX() - 1, bounds.getY() - 1, bounds.getWidth() + 2, bounds
+        .getHeight() + 2 );
   }
 
   protected LogicalPageBox getRootBox() {
@@ -578,10 +588,9 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         // clip the printable area to an infinite large area below the header.
         // Pdf output has a limit of 32768 for its floating point numbers (16-bit),
         // any larger value yields an invalid clipping area.
-        final StrictBounds clipBounds = new StrictBounds
-          ( bounds.getX(), bounds.getY() + bounds.getHeight(),
-            StrictGeomUtility.toInternalValue( Short.MAX_VALUE ),
-            StrictGeomUtility.toInternalValue( Short.MAX_VALUE ) );
+        final StrictBounds clipBounds =
+            new StrictBounds( bounds.getX(), bounds.getY() + bounds.getHeight(), StrictGeomUtility
+                .toInternalValue( Short.MAX_VALUE ), StrictGeomUtility.toInternalValue( Short.MAX_VALUE ) );
         clip( clipBounds );
         tableContext.getDrawArea().setRect( drawArea );
         drawArea.setRect( drawArea.createIntersection( clipBounds ) );
@@ -766,8 +775,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final Graphics2D graphics = (Graphics2D) getGraphics().create();
     graphics.setColor( decorationSpec.getTextColor() );
     graphics.setStroke( new BasicStroke( (float) decorationSpec.getLineWidth() ) );
-    graphics.draw( new Line2D.Double( decorationSpec.getStart(), decorationSpec.getVerticalPosition(),
-      decorationSpec.getEnd(), decorationSpec.getVerticalPosition() ) );
+    graphics.draw( new Line2D.Double( decorationSpec.getStart(), decorationSpec.getVerticalPosition(), decorationSpec
+        .getEnd(), decorationSpec.getVerticalPosition() ) );
     graphics.dispose();
   }
 
@@ -782,7 +791,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       if ( needClipping ) {
         // clip
         StrictBounds safeBounds =
-          new StrictBounds( lineBox.getX(), lineBox.getY(), lineBox.getWidth() * 3 / 2, lineBox.getHeight() );
+            new StrictBounds( lineBox.getX(), lineBox.getY(), lineBox.getWidth() * 3 / 2, lineBox.getHeight() );
         clip( safeBounds );
       }
       while ( lineBox != null ) {
@@ -799,9 +808,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
   }
 
-  protected void processTextLine( final RenderBox lineBox,
-                                  final long contentAreaX1,
-                                  final long contentAreaX2 ) {
+  protected void processTextLine( final RenderBox lineBox, final long contentAreaX1, final long contentAreaX2 ) {
     if ( lineBox.isNodeVisible( drawArea ) == false ) {
       return;
     }
@@ -844,7 +851,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     this.textLineOverflow = textLineOverflow;
   }
 
-
   protected void processOtherNode( final RenderNode node ) {
     if ( node.isNodeVisible( drawArea ) == false ) {
       return;
@@ -866,9 +872,9 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
             }
           } else if ( isClipOnWordBoundary() == false && type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
             final RenderableComplexText text = (RenderableComplexText) node;
-            //final long ellipseSize = extractEllipseSize(node);
+            // final long ellipseSize = extractEllipseSize(node);
             final long x1 = text.getX();
-            //final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
+            // final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
 
             if ( x1 < contentAreaX2 ) {
               // The text node that is printed will overlap with the ellipse we need to print.
@@ -933,9 +939,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
           // the text will be fully visible.
           drawText( text );
         } else {
-          if ( x1 >= contentAreaX2 ) {
-            // Skip, the node will not be visible.
-          } else {
+          if ( x1 < contentAreaX2 ) {
             // The text node that is printed will overlap with the ellipse we need to print.
             drawText( text, effectiveAreaX2 );
           }
@@ -957,9 +961,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       final RenderableComplexText text = (RenderableComplexText) node;
       final long x1 = text.getX();
 
-      if ( x1 >= contentAreaX2 ) {
-        // Skip, the node will not be visible.
-      } else {
+      if ( x1 < contentAreaX2 ) {
         // The text node that is printed will overlap with the ellipse we need to print.
         final Graphics2D g2;
         if ( getTextSpec() == null ) {
@@ -1050,7 +1052,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   /**
    * To be overriden in the PDF drawable.
    *
-   * @param content the render-node that defines the anchor.
+   * @param content
+   *          the render-node that defines the anchor.
    */
   protected void drawAnchor( final RenderNode content ) {
 
@@ -1099,9 +1102,9 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       final int clipWidth = Math.min( width, (int) Math.ceil( deviceScaleFactor * imageWidth ) );
       final int clipHeight = Math.min( height, (int) Math.ceil( deviceScaleFactor * imageHeight ) );
       final ElementAlignment horizontalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
       final ElementAlignment verticalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
       final int alignmentX = (int) RenderUtility.computeHorizontalAlignment( horizontalAlignment, width, clipWidth );
       final int alignmentY = (int) RenderUtility.computeVerticalAlignment( verticalAlignment, height, clipHeight );
 
@@ -1136,9 +1139,9 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       final int clipHeight = (int) ( scaleY * imageHeight );
 
       final ElementAlignment horizontalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
       final ElementAlignment verticalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
       final int alignmentX = (int) RenderUtility.computeHorizontalAlignment( horizontalAlignment, width, clipWidth );
       final int alignmentY = (int) RenderUtility.computeVerticalAlignment( verticalAlignment, height, clipHeight );
 
@@ -1149,8 +1152,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         image = (Image) contentCached;
         scaleTransform = null;
       } else if ( metaData.isFeatureSupported( OutputProcessorFeature.PREFER_NATIVE_SCALING ) == false ) {
-        image = RenderUtility.scaleImage( image, clipWidth, clipHeight, RenderingHints.VALUE_INTERPOLATION_BICUBIC,
-          true );
+        image =
+            RenderUtility.scaleImage( image, clipWidth, clipHeight, RenderingHints.VALUE_INTERPOLATION_BICUBIC, true );
         content.getContent().setContentCached( image );
         obs = new WaitingImageObserver( image );
         obs.waitImageLoaded();
@@ -1172,9 +1175,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     return true;
   }
 
-  protected boolean drawDrawable( final RenderableReplacedContentBox content,
-                                  final Graphics2D g2,
-                                  final DrawableWrapper d ) {
+  protected boolean drawDrawable( final RenderableReplacedContentBox content, final Graphics2D g2,
+      final DrawableWrapper d ) {
     final double x = StrictGeomUtility.toExternalValue( content.getX() );
     final double y = StrictGeomUtility.toExternalValue( content.getY() );
     final double width = StrictGeomUtility.toExternalValue( content.getWidth() );
@@ -1185,7 +1187,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
 
     final Graphics2D clone = (Graphics2D) g2.create();
-
 
     final StyleSheet styleSheet = content.getStyleSheet();
     final Object attribute = styleSheet.getStyleProperty( ElementStyleKeys.ANTI_ALIASING );
@@ -1213,8 +1214,9 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         extraPadding = 0.5;
       }
 
-      final Rectangle2D.Double clipBounds = new Rectangle2D.Double
-        ( x - extraPadding, y - extraPadding, width + 2 * extraPadding, height + 2 * extraPadding );
+      final Rectangle2D.Double clipBounds =
+          new Rectangle2D.Double( x - extraPadding, y - extraPadding, width + 2 * extraPadding, height + 2
+              * extraPadding );
 
       clone.clip( clipBounds );
       clone.translate( x, y );
@@ -1239,7 +1241,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   /**
    * Renders the glyphs stored in the text node.
    *
-   * @param renderableText the text node that should be rendered.
+   * @param renderableText
+   *          the text node that should be rendered.
    * @param contentX2
    */
   protected void drawText( final RenderableText renderableText, final long contentX2 ) {
@@ -1280,8 +1283,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final long awtBaseLine = StrictGeomUtility.toInternalValue( -rect.getY() );
 
     final GlyphList gs = renderableText.getGlyphs();
-    if ( metaData.isFeatureSupported( OutputProcessorFeature.FAST_FONTRENDERING ) &&
-      isNormalTextSpacing( renderableText ) ) {
+    if ( metaData.isFeatureSupported( OutputProcessorFeature.FAST_FONTRENDERING )
+        && isNormalTextSpacing( renderableText ) ) {
       final int maxLength = renderableText.computeMaximumTextSize( contentX2 );
       final String text = gs.getText( renderableText.getOffset(), maxLength, codePointBuffer );
       final float y = (float) StrictGeomUtility.toExternalValue( posY + awtBaseLine );
@@ -1292,12 +1295,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       long runningPos = posX;
       final long baseline = baselineInfo.getBaseline( baselineInfo.getDominantBaseline() );
       final long baselineDelta = awtBaseLine - baseline;
-      final float y = (float) ( StrictGeomUtility.toExternalValue
-        ( posY + awtBaseLine + baselineDelta ) );
+      final float y = (float) ( StrictGeomUtility.toExternalValue( posY + awtBaseLine + baselineDelta ) );
       for ( int i = renderableText.getOffset(); i < maxPos; i++ ) {
         final Glyph g = gs.getGlyph( i );
-        g2.drawString( gs.getGlyphAsString( i, codePointBuffer ),
-          (float) StrictGeomUtility.toExternalValue( runningPos ), y );
+        g2.drawString( gs.getGlyphAsString( i, codePointBuffer ), (float) StrictGeomUtility
+            .toExternalValue( runningPos ), y );
         runningPos += RenderableText.convert( g.getWidth() ) + g.getSpacing().getMinimum();
       }
     }
@@ -1349,11 +1351,12 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final Color cssColor = (Color) layoutContext.getStyleProperty( ElementStyleKeys.PAINT );
     g2.setColor( cssColor );
 
-    final int fontSize = layoutContext.getIntStyleProperty( TextStyleKeys.FONTSIZE,
-      (int) metaData.getNumericFeatureValue( OutputProcessorFeature.DEFAULT_FONT_SIZE ) );
+    final int fontSize =
+        layoutContext.getIntStyleProperty( TextStyleKeys.FONTSIZE, (int) metaData
+            .getNumericFeatureValue( OutputProcessorFeature.DEFAULT_FONT_SIZE ) );
 
-    final String fontName = metaData.getNormalizedFontFamilyName
-      ( (String) layoutContext.getStyleProperty( TextStyleKeys.FONT ) );
+    final String fontName =
+        metaData.getNormalizedFontFamilyName( (String) layoutContext.getStyleProperty( TextStyleKeys.FONT ) );
     g2.setFont( new Font( fontName, style, fontSize ) );
   }
 
@@ -1374,7 +1377,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     graphics = graphicsContexts.pop();
   }
 
-
   public Graphics2D getGraphics() {
     return graphics;
   }
@@ -1383,23 +1385,25 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
    * Retries the nodes under the given coordinate which have a given attribute set. If name and namespace are null, all
    * nodes are returned. The nodes returned are listed in their respective hierarchical order.
    *
-   * @param x         the x coordinate
-   * @param y         the y coordinate
-   * @param namespace the namespace on which to filter on
-   * @param name      the name on which to filter on
+   * @param x
+   *          the x coordinate
+   * @param y
+   *          the y coordinate
+   * @param namespace
+   *          the namespace on which to filter on
+   * @param name
+   *          the name on which to filter on
    * @return the ordered list of nodes.
    */
   public RenderNode[] getNodesAt( final double x, final double y, final String namespace, final String name ) {
-    return collectSelectedNodesStep.getNodesAt
-      ( this.rootBox, StrictGeomUtility.createBounds( x, y, 1, 1 ), namespace, name );
+    return collectSelectedNodesStep.getNodesAt( this.rootBox, StrictGeomUtility.createBounds( x, y, 1, 1 ), namespace,
+        name );
   }
 
-  public RenderNode[] getNodesAt( final double x, final double y,
-                                  final double width, final double height,
-                                  final String namespace, final String name ) {
-    return collectSelectedNodesStep.getNodesAt
-      ( this.rootBox, StrictGeomUtility.createBounds( x, y, width, height ), namespace, name );
+  public RenderNode[] getNodesAt( final double x, final double y, final double width, final double height,
+      final String namespace, final String name ) {
+    return collectSelectedNodesStep.getNodesAt( this.rootBox, StrictGeomUtility.createBounds( x, y, width, height ),
+        namespace, name );
   }
-
 
 }

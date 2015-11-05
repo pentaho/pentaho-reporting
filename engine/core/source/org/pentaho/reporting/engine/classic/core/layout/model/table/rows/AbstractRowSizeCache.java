@@ -37,7 +37,7 @@ public class AbstractRowSizeCache {
     int rowCount = rows.size();
     if ( this.validatedSizes == null || this.validatedSizes.length < rowCount ) {
       int growth = computeMaxArraySize( this.validatedSizes, rowCount );
-      long[] newValidatedSizes = new long[ growth ];
+      long[] newValidatedSizes = new long[growth];
       if ( this.validatedSizes != null ) {
         System.arraycopy( this.validatedSizes, 0, newValidatedSizes, 0, this.validatedSizes.length );
       }

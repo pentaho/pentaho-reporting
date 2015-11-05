@@ -29,27 +29,23 @@ public class WordBreakingLineIterator extends LineBreakIterator {
   private static final float INFINITY = 10000000f;
   private final BreakIterator wordInstance;
 
-  public WordBreakingLineIterator( final ParagraphRenderBox box,
-                                   final FontRenderContext fontRenderContext,
-                                   final AttributedCharacterIterator ci,
-                                   final String text ) {
+  public WordBreakingLineIterator( final ParagraphRenderBox box, final FontRenderContext fontRenderContext,
+      final AttributedCharacterIterator ci, final String text ) {
     super( box, fontRenderContext, ci );
 
     wordInstance = BreakIterator.getWordInstance();
     wordInstance.setText( text );
   }
 
-  protected TextLayout postProcess( final int start,
-                                    final TextLayout textLayout,
-                                    final LineBreakMeasurer lineBreakMeasurer ) {
+  protected TextLayout postProcess( final int start, final TextLayout textLayout,
+      final LineBreakMeasurer lineBreakMeasurer ) {
     int end = lineBreakMeasurer.getPosition();
     final TextLayout layout = performWordBreak( start, textLayout, lineBreakMeasurer, end );
     return super.postProcess( start, layout, lineBreakMeasurer );
   }
 
-  private TextLayout performWordBreak( final int start,
-                                       final TextLayout textLayout,
-                                       final LineBreakMeasurer lineBreakMeasurer, final int end ) {
+  private TextLayout performWordBreak( final int start, final TextLayout textLayout,
+      final LineBreakMeasurer lineBreakMeasurer, final int end ) {
     final TextLayout layout;
     if ( wordInstance.isBoundary( end ) != false ) {
       return textLayout;

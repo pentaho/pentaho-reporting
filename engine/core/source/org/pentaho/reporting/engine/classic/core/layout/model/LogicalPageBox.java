@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -50,9 +50,7 @@ public final class LogicalPageBox extends BlockRenderBox {
   private PageAreaBox savedFooterArea;
   private PageAreaBox savedRepeatFooterArea;
 
-  public LogicalPageBox( final ReportDefinition report,
-                         final StyleSheet style,
-                         final BoxDefinition box ) {
+  public LogicalPageBox( final ReportDefinition report, final StyleSheet style, final BoxDefinition box ) {
     super( style, report.getObjectID(), box, AutoLayoutBoxType.INSTANCE, report.getAttributes(), null );
     this.headerArea = new PageAreaBox();
     this.headerArea.setName( "Logical-Page-Header-Area" );
@@ -70,9 +68,9 @@ public final class LogicalPageBox extends BlockRenderBox {
     this.watermarkArea.setName( "Logical-Page-Watermark-Area" );
     this.watermarkArea.setLogicalPage( this );
 
-    final BlockRenderBox contentArea = new BlockRenderBox
-      ( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY, new MasterReportType(),
-        report.getAttributes(), null );
+    final BlockRenderBox contentArea =
+        new BlockRenderBox( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
+            new MasterReportType(), report.getAttributes(), null );
     contentArea.setName( "Logical-Page-Content-Area" );
     addChild( contentArea );
     contentAreaId = contentArea.getInstanceId();
@@ -276,4 +274,3 @@ public final class LogicalPageBox extends BlockRenderBox {
     this.processedTableOffset = processedTableOffset;
   }
 }
-

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
@@ -60,8 +60,7 @@ public class DataProcessor implements Cloneable {
     this.reportDataRow = null;
   }
 
-  public void setReportDataRow( final ReportDataRow reportDataRow,
-                                final MasterDataRowChangeHandler changeHandler ) {
+  public void setReportDataRow( final ReportDataRow reportDataRow, final MasterDataRowChangeHandler changeHandler ) {
     if ( reportDataRow == null ) {
       throw new NullPointerException();
     }
@@ -101,8 +100,7 @@ public class DataProcessor implements Cloneable {
     return reportDataRow.getReportData();
   }
 
-  public DataProcessor advance( final boolean deepTraversingOnly,
-                                final FastGlobalView globalView ) {
+  public DataProcessor advance( final boolean deepTraversingOnly, final FastGlobalView globalView ) {
     if ( deepTraversingOnly ) {
       return this;
     }
@@ -125,7 +123,7 @@ public class DataProcessor implements Cloneable {
         refreshData( globalView, reportDataRow );
         if ( logger.isDebugEnabled() ) {
           logger.debug( "Pre-Padding finished; Using dataset at cursor = " + dataRow.cursor + "; padding = "
-            + dataRow.paddingCount );
+              + dataRow.paddingCount );
         }
         dataRow.prepadding = false;
       } else {
@@ -137,19 +135,18 @@ public class DataProcessor implements Cloneable {
         // if the row key has changed ...
         if ( ObjectUtilities.equalArray( tempRowKey, oldRowKey ) == false ) {
           if ( logger.isDebugEnabled() ) {
-            logger.debug(
-              "TempRowKey=" + Arrays.asList( tempRowKey ) + "; RowKey=" + Arrays.asList( oldRowKey ) + " Cursor="
-                + dataRow.cursor );
+            logger.debug( "TempRowKey=" + Arrays.asList( tempRowKey ) + "; RowKey=" + Arrays.asList( oldRowKey )
+                + " Cursor=" + dataRow.cursor );
           }
           // .. check whether the current row has processed all column dimensions ...
           if ( dataRow.paddingDataRow.getCurrentCursorPosition() < dataRow.paddingDataRow.getCrosstabColumnCount() ) {
             // post padding mode. Ignore the advance, mark the next few advances as paddings until we completed all
             // column dimensions
             dataRow.paddingCount =
-              dataRow.paddingDataRow.getCrosstabColumnCount() - dataRow.paddingDataRow.getCurrentCursorPosition() - 1;
+                dataRow.paddingDataRow.getCrosstabColumnCount() - dataRow.paddingDataRow.getCurrentCursorPosition() - 1;
             if ( logger.isDebugEnabled() ) {
               logger.debug( "RowKey Changed - Need post-padding; Cursor = " + dataRow.cursor + "; padding = "
-                + dataRow.paddingCount );
+                  + dataRow.paddingCount );
             }
             dataRow.paddingDataRow.activate( globalView );
             dataRow.paddingDataRow.refreshPaddedRow( globalView, dataRow.reportDataRow );
@@ -159,9 +156,8 @@ public class DataProcessor implements Cloneable {
             dataRow.reportDataRow = tempReportDataRow;
             if ( dataRow.paddingCount > 0 ) {
               if ( logger.isDebugEnabled() ) {
-                logger.debug(
-                  "RowKey Changed, but detected need for Pre-Padding = " + dataRow.paddingCount + "; Cursor = "
-                    + dataRow.cursor );
+                logger.debug( "RowKey Changed, but detected need for Pre-Padding = " + dataRow.paddingCount
+                    + "; Cursor = " + dataRow.cursor );
               }
               dataRow.paddingCount -= 1;
               dataRow.paddingDataRow.activate( globalView );
@@ -169,12 +165,12 @@ public class DataProcessor implements Cloneable {
               dataRow.prepadding = true;
             } else {
               if ( logger.isDebugEnabled() ) {
-                logger.debug(
-                  "RowKey Changed; Advance; Cursor = " + dataRow.cursor + "; padding = " + dataRow.paddingCount );
+                logger.debug( "RowKey Changed; Advance; Cursor = " + dataRow.cursor + "; padding = "
+                    + dataRow.paddingCount );
               }
               dataRow.paddingDataRow.activate( globalView );
               dataRow.paddingDataRow.refreshRow( globalView, tempReportDataRow );
-              //   refreshData(globalView, tempReportDataRow);
+              // refreshData(globalView, tempReportDataRow);
             }
           }
         } else {
@@ -182,36 +178,35 @@ public class DataProcessor implements Cloneable {
           final Object[] oldColKey = dataRow.paddingDataRow.createColumnKey( globalView );
           if ( ObjectUtilities.equalArray( tempColKey, oldColKey ) ) {
             if ( logger.isDebugEnabled() ) {
-              logger.debug(
-                "Row- and Column-Key still the same, staying in current crosstab-position = " + dataRow.paddingCount
-                  + "; Cursor = " + dataRow.cursor );
+              logger.debug( "Row- and Column-Key still the same, staying in current crosstab-position = "
+                  + dataRow.paddingCount + "; Cursor = " + dataRow.cursor );
             }
             // undo the advance for the padding data-row, but advance the report-data row
             dataRow.paddingDataRow = paddingDataRow;
             dataRow.reportDataRow = tempReportDataRow;
             dataRow.paddingDataRow.activate( globalView );
             dataRow.paddingDataRow.refreshRow( globalView, tempReportDataRow );
-            //    refreshData(globalView, tempReportDataRow);
+            // refreshData(globalView, tempReportDataRow);
           } else {
             // rowkey is still the same, so check for pre-paddings ...
             dataRow.paddingCount = dataRow.paddingDataRow.getPrePaddingRows( tempGlobalView );
             if ( dataRow.paddingCount > 0 ) {
               if ( logger.isDebugEnabled() ) {
                 logger.debug( "RowKey same, but detected need for Padding = " + dataRow.paddingCount + "; Cursor = "
-                  + dataRow.cursor );
+                    + dataRow.cursor );
               }
               dataRow.paddingCount -= 1;
               dataRow.paddingDataRow.activate( globalView );
               dataRow.paddingDataRow.refreshPaddedRow( globalView, dataRow.reportDataRow );
             } else {
               if ( logger.isDebugEnabled() ) {
-                logger
-                  .debug( "RowKey Same; Advance; Cursor = " + dataRow.cursor + "; padding = " + dataRow.paddingCount );
+                logger.debug( "RowKey Same; Advance; Cursor = " + dataRow.cursor + "; padding = "
+                    + dataRow.paddingCount );
               }
               dataRow.reportDataRow = tempReportDataRow;
               dataRow.paddingDataRow.activate( globalView );
               dataRow.paddingDataRow.refreshRow( globalView, tempReportDataRow );
-              //   refreshData(globalView, tempReportDataRow);
+              // refreshData(globalView, tempReportDataRow);
             }
           }
         }
@@ -241,7 +236,7 @@ public class DataProcessor implements Cloneable {
       // at the end of the report, we should be also at the end of the columns ...
       if ( paddingDataRow != null ) {
         final int colsToGo =
-          ( paddingDataRow.getCrosstabColumnCount() - paddingDataRow.getCurrentCursorPosition() ) - 1;
+            ( paddingDataRow.getCrosstabColumnCount() - paddingDataRow.getCurrentCursorPosition() ) - 1;
         if ( colsToGo > 0 ) {
           return true;
         }
@@ -250,9 +245,7 @@ public class DataProcessor implements Cloneable {
     return false;
   }
 
-
-  private static void refreshData( final MasterDataRowChangeHandler changeHandler,
-                                   final ReportDataRow reportDataRow ) {
+  private static void refreshData( final MasterDataRowChangeHandler changeHandler, final ReportDataRow reportDataRow ) {
     if ( reportDataRow == null ) {
       return;
     }
@@ -277,7 +270,7 @@ public class DataProcessor implements Cloneable {
   }
 
   public DataProcessor startCrosstabMode( final CrosstabSpecification crosstabSpecification,
-                                          final FastGlobalView globalView ) {
+      final FastGlobalView globalView ) {
     logger.debug( "Starting crosstab mode" );
 
     final DataProcessor dataRow = derive();

@@ -1,21 +1,50 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.print;
+
+import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.util.Locale;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
@@ -25,18 +54,6 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import java.util.Locale;
 
 public class PageSetupDialog extends CommonDialog {
   private class PageSizeSelectionAction implements ActionListener {
@@ -65,20 +82,22 @@ public class PageSetupDialog extends CommonDialog {
     }
 
     /**
-     * Gives notification that there was an insert into the document.  The range given by the DocumentEvent bounds the
+     * Gives notification that there was an insert into the document. The range given by the DocumentEvent bounds the
      * freshly inserted region.
      *
-     * @param e the document event
+     * @param e
+     *          the document event
      */
     public void insertUpdate( final DocumentEvent e ) {
       changedUpdate( e );
     }
 
     /**
-     * Gives notification that a portion of the document has been removed.  The range is given in terms of what the view
+     * Gives notification that a portion of the document has been removed. The range is given in terms of what the view
      * last saw (that is, before updating sticky positions).
      *
-     * @param e the document event
+     * @param e
+     *          the document event
      */
     public void removeUpdate( final DocumentEvent e ) {
       changedUpdate( e );
@@ -87,7 +106,8 @@ public class PageSetupDialog extends CommonDialog {
     /**
      * Gives notification that an attribute or set of attributes changed.
      *
-     * @param e the document event
+     * @param e
+     *          the document event
      */
     public void changedUpdate( final DocumentEvent e ) {
       validateInputs( false );
@@ -101,7 +121,8 @@ public class PageSetupDialog extends CommonDialog {
     /**
      * Invoked when the target of the listener has changed its state.
      *
-     * @param e a ChangeEvent object
+     * @param e
+     *          a ChangeEvent object
      */
     public void stateChanged( final ChangeEvent e ) {
       if ( userDefinedPageSizeBox.isSelected() ) {
@@ -145,7 +166,7 @@ public class PageSetupDialog extends CommonDialog {
   private PageFormatPreviewPane previewPane;
   private ResourceBundleSupport messages;
   private static final String MESSAGES =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.print.messages.messages";
+      "org.pentaho.reporting.engine.classic.core.modules.gui.print.messages.messages";
 
   public PageSetupDialog( final GuiContext guiContext ) {
     init( guiContext );
@@ -162,9 +183,9 @@ public class PageSetupDialog extends CommonDialog {
   }
 
   protected void init( final GuiContext guiContext ) {
-    messages = new ResourceBundleSupport
-      ( Locale.getDefault(), MESSAGES,
-        ObjectUtilities.getClassLoader( PageSetupDialog.class ) );
+    messages =
+        new ResourceBundleSupport( Locale.getDefault(), MESSAGES, ObjectUtilities
+            .getClassLoader( PageSetupDialog.class ) );
 
     this.guiContext = guiContext;
     final RevalidateListener revalidateListener = new RevalidateListener();
@@ -270,19 +291,18 @@ public class PageSetupDialog extends CommonDialog {
   private JPanel createOrientationPanel() {
     final Icon portraitIcon = guiContext.getIconTheme().getLargeIcon( getLocale(), "pagesetup.portrait" );
     final JLabel portraitLabel =
-      new JLabel( messages.getString( "PageSetupDialog.Portrait" ), portraitIcon, SwingConstants.LEFT );
+        new JLabel( messages.getString( "PageSetupDialog.Portrait" ), portraitIcon, SwingConstants.LEFT );
     portraitLabel.setLabelFor( portraitModeBox );
 
     final Icon landscapeIcon = guiContext.getIconTheme().getLargeIcon( getLocale(), "pagesetup.landscape" );
     final JLabel landscapeLabel =
-      new JLabel( messages.getString( "PageSetupDialog.Landscape" ), landscapeIcon, SwingConstants.LEFT );
+        new JLabel( messages.getString( "PageSetupDialog.Landscape" ), landscapeIcon, SwingConstants.LEFT );
     landscapeLabel.setLabelFor( landscapeModeBox );
 
     final JPanel contentPane = new JPanel();
     contentPane.setLayout( new BoxLayout( contentPane, BoxLayout.X_AXIS ) );
-    contentPane.setBorder( BorderFactory.createCompoundBorder
-      ( BorderFactory.createTitledBorder( messages.getString( "PageSetupDialog.Orientation" ) ),
-        BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
+    contentPane.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createTitledBorder( messages
+        .getString( "PageSetupDialog.Orientation" ) ), BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
     contentPane.add( portraitModeBox );
     contentPane.add( portraitLabel );
     contentPane.add( Box.createHorizontalGlue() );
@@ -295,9 +315,8 @@ public class PageSetupDialog extends CommonDialog {
   private JPanel createPageSpanningPanel() {
     final JPanel contentPane = new JPanel();
     contentPane.setLayout( new GridBagLayout() );
-    contentPane.setBorder( BorderFactory.createCompoundBorder
-      ( BorderFactory.createTitledBorder( messages.getString( "PageSetupDialog.PageSpanning" ) ),
-        BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
+    contentPane.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createTitledBorder( messages
+        .getString( "PageSetupDialog.PageSpanning" ) ), BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.anchor = GridBagConstraints.WEST;
@@ -341,9 +360,8 @@ public class PageSetupDialog extends CommonDialog {
 
     final JPanel contentPane = new JPanel();
     contentPane.setLayout( new GridBagLayout() );
-    contentPane.setBorder( BorderFactory.createCompoundBorder
-      ( BorderFactory.createTitledBorder( messages.getString( "PageSetupDialog.PageSize" ) ),
-        BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
+    contentPane.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createTitledBorder( messages
+        .getString( "PageSetupDialog.PageSize" ) ), BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.anchor = GridBagConstraints.WEST;
@@ -410,9 +428,8 @@ public class PageSetupDialog extends CommonDialog {
   private JPanel createPreviewPanel() {
     final JPanel contentPane = new JPanel();
     contentPane.setLayout( new BorderLayout() );
-    contentPane.setBorder( BorderFactory.createCompoundBorder
-      ( BorderFactory.createTitledBorder( messages.getString( "PageSetupDialog.Preview" ) ),
-        BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
+    contentPane.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createTitledBorder( messages
+        .getString( "PageSetupDialog.Preview" ) ), BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
 
     contentPane.add( previewPane, BorderLayout.CENTER );
     return contentPane;
@@ -421,9 +438,8 @@ public class PageSetupDialog extends CommonDialog {
   private JPanel createMarginsPanel() {
     final JPanel contentPane = new JPanel();
     contentPane.setLayout( new GridBagLayout() );
-    contentPane.setBorder( BorderFactory.createCompoundBorder
-      ( BorderFactory.createTitledBorder( messages.getString( "PageSetupDialog.Margins" ) ),
-        BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
+    contentPane.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createTitledBorder( messages
+        .getString( "PageSetupDialog.Margins" ) ), BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.anchor = GridBagConstraints.WEST;
@@ -572,7 +588,6 @@ public class PageSetupDialog extends CommonDialog {
       marginBottomField.setText( "18" );
     }
 
-
     if ( performEdit() == false ) {
       return original;
     }
@@ -623,11 +638,10 @@ public class PageSetupDialog extends CommonDialog {
       PageFormatFactory.getInstance().setBorders( p, marginTop, marginLeft, marginBottom, marginRight );
       pf = PageFormatFactory.getInstance().createPageFormat( p, PageFormat.PORTRAIT );
     } else {
-      //noinspection SuspiciousNameCombination
+      // noinspection SuspiciousNameCombination
       PageFormatFactory.getInstance().setBorders( p, marginRight, marginTop, marginLeft, marginBottom );
       pf = PageFormatFactory.getInstance().createPageFormat( p, PageFormat.LANDSCAPE );
     }
-
 
     return new SimplePageDefinition( pf, spanHorizontal, spanVertical );
   }

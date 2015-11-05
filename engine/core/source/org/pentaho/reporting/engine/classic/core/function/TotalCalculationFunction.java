@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -61,8 +61,9 @@ public class TotalCalculationFunction extends AbstractFunction {
   private String crosstabFilterGroup;
 
   /**
-   * Constructs a new function. <P> Initially the function has no name...be sure to assign one before using the
-   * function.
+   * Constructs a new function.
+   * <P>
+   * Initially the function has no name...be sure to assign one before using the function.
    */
   public TotalCalculationFunction() {
     results = new HashMap<ReportStateKey, Sequence<Object>>();
@@ -71,7 +72,8 @@ public class TotalCalculationFunction extends AbstractFunction {
   /**
    * Receives notification that the report has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     globalStateKey = event.getState().getProcessKey();
@@ -89,7 +91,8 @@ public class TotalCalculationFunction extends AbstractFunction {
   /**
    * Receives notification that a group has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
@@ -115,7 +118,8 @@ public class TotalCalculationFunction extends AbstractFunction {
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( field == null ) {
@@ -149,7 +153,8 @@ public class TotalCalculationFunction extends AbstractFunction {
   /**
    * Defines the name of the group to be totalled. If the name is null, all groups are totalled.
    *
-   * @param group the group name.
+   * @param group
+   *          the group name.
    */
   public void setGroup( final String group ) {
     this.group = group;
@@ -167,14 +172,17 @@ public class TotalCalculationFunction extends AbstractFunction {
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
   }
 
   /**
-   * Return the current expression value. <P> The value depends (obviously) on the expression implementation.
+   * Return the current expression value.
+   * <P>
+   * The value depends (obviously) on the expression implementation.
    *
    * @return the value of the function.
    */
@@ -197,19 +205,20 @@ public class TotalCalculationFunction extends AbstractFunction {
   /**
    * Helper method for serialization.
    *
-   * @param in the input stream from where to read the serialized object.
-   * @throws java.io.IOException    when reading the stream fails.
-   * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
+   * @param in
+   *          the input stream from where to read the serialized object.
+   * @throws java.io.IOException
+   *           when reading the stream fails.
+   * @throws ClassNotFoundException
+   *           if a class definition for a serialized object could not be found.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     results = new HashMap<ReportStateKey, Sequence<Object>>();
   }
 
   public Expression getInstance() {
-    final TotalCalculationFunction fn =
-      (TotalCalculationFunction) super.getInstance();
+    final TotalCalculationFunction fn = (TotalCalculationFunction) super.getInstance();
     fn.results = new HashMap<ReportStateKey, Sequence<Object>>();
     return fn;
   }

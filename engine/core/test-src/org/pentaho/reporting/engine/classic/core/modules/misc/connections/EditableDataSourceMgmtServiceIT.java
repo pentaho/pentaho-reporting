@@ -91,7 +91,6 @@ public class EditableDataSourceMgmtServiceIT extends TestCase {
     assertEquals( c2.getName(), backend.getDatasourceByName( c2.getName() ).getName() );
   }
 
-
   public void testRemoveThenAddThenRemoveDataSource() {
     InMemoryDataSourceMgmtService backend = new InMemoryDataSourceMgmtService();
     IDatabaseConnection r = ConnectionDefinitionIOIT.generateDatabaseConnection();

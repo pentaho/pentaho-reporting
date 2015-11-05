@@ -50,8 +50,7 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
-public class SimpleTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep
-  implements TextMinorAxisLayoutStep {
+public class SimpleTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep implements TextMinorAxisLayoutStep {
   private static final Log logger = LogFactory.getLog( SimpleTextMinorAxisLayoutStep.class );
 
   private MinorAxisParagraphBreakState lineBreakState;
@@ -74,9 +73,7 @@ public class SimpleTextMinorAxisLayoutStep extends IterateSimpleStructureProcess
     return nodeContext;
   }
 
-  public void process( final ParagraphRenderBox box,
-                       final MinorAxisNodeContext nodeContext,
-                       final PageGrid pageGrid ) {
+  public void process( final ParagraphRenderBox box, final MinorAxisNodeContext nodeContext, final PageGrid pageGrid ) {
     this.nodeContext = nodeContext;
     this.pageGrid = pageGrid;
     try {
@@ -145,8 +142,7 @@ public class SimpleTextMinorAxisLayoutStep extends IterateSimpleStructureProcess
     return true;
   }
 
-  private void finishLine( final RenderBox inlineRenderBox,
-                           final MinorAxisParagraphBreakState breakState ) {
+  private void finishLine( final RenderBox inlineRenderBox, final MinorAxisParagraphBreakState breakState ) {
     if ( breakState.isInsideParagraph() == false || breakState.isSuspended() ) {
       throw new IllegalStateException( "No active breakstate, finish-line cannot continue." );
     }
@@ -249,8 +245,8 @@ public class SimpleTextMinorAxisLayoutStep extends IterateSimpleStructureProcess
       lineBreakState.add( TextSequenceElement.INSTANCE, node );
     } else if ( nodeType == LayoutNodeTypes.TYPE_NODE_SPACER ) {
       final StyleSheet styleSheet = node.getStyleSheet();
-      if ( WhitespaceCollapse.PRESERVE.equals( styleSheet.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE ) ) &&
-        styleSheet.getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
+      if ( WhitespaceCollapse.PRESERVE.equals( styleSheet.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE ) )
+          && styleSheet.getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
         // bug-alert: This condition could indicate a workaround for a logic-flaw in the text-processor
         lineBreakState.add( SpacerSequenceElement.INSTANCE, node );
       } else if ( lineBreakState.isContainsContent() ) {
@@ -315,6 +311,5 @@ public class SimpleTextMinorAxisLayoutStep extends IterateSimpleStructureProcess
   protected MinorAxisParagraphBreakState getLineBreakState() {
     return lineBreakState;
   }
-
 
 }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -51,7 +51,7 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
   private int[] bufferArray;
 
   public RevalidateTextEllipseProcessStep( final OutputProcessorMetaData metaData ) {
-    this.bufferArray = new int[ 500 ];
+    this.bufferArray = new int[500];
     this.textCache = new TextCache( 500 );
     this.complexTextFeature = metaData.isFeatureSupported( OutputProcessorFeature.COMPLEX_TEXT );
     if ( complexTextFeature ) {
@@ -69,9 +69,7 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     this.ellipseOverride = ellipseOverride;
   }
 
-  public void compute( final RenderBox box,
-                       final long contentAreaX1,
-                       final long contentAreaX2 ) {
+  public void compute( final RenderBox box, final long contentAreaX1, final long contentAreaX2 ) {
     this.contentAreaX1 = contentAreaX1;
     this.contentAreaX2 = contentAreaX2;
     startProcessing( box );
@@ -102,7 +100,6 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     return true;
   }
 
-
   private RenderBox processTextEllipse( final RenderBox box, final long x2 ) {
     final StyleSheet style = box.getStyleSheet();
     final String reslit = (String) style.getStyleProperty( TextStyleKeys.RESERVED_LITERAL, ellipseOverride );
@@ -118,12 +115,10 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     }
   }
 
-  private RenderBox processTextEllipseComplex( final RenderBox box,
-                                               final long x2,
-                                               final String reslit ) {
+  private RenderBox processTextEllipseComplex( final RenderBox box, final long x2, final String reslit ) {
     // todo Implement Arabic support
     return null;
-    //    return processTextEllipseNormal(box, x2, reslit);
+    // return processTextEllipseNormal(box, x2, reslit);
   }
 
   private RenderBox processTextEllipseNormal( final RenderBox box, final long x2, String reslit ) {
@@ -131,8 +126,8 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
 
     final RenderBox textEllipse = (RenderBox) box.derive( false );
     final ReportAttributeMap map = box.getAttributes();
-    final TextCache.Result result = textCache.get
-      ( style.getId(), style.getChangeTracker(), map.getChangeTracker(), reslit );
+    final TextCache.Result result =
+        textCache.get( style.getId(), style.getChangeTracker(), map.getChangeTracker(), reslit );
     if ( result != null ) {
       textEllipse.addGeneratedChilds( result.getText() );
       textEllipse.addGeneratedChilds( result.getFinish() );
@@ -147,14 +142,15 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     bufferArray = buffer.getBuffer( bufferArray );
 
     textFactory.startText();
-    final RenderNode[] renderNodes = textFactory.createText
-      ( bufferArray, 0, buffer.getLength(), style, box.getElementType(), box.getInstanceId(), map );
+    final RenderNode[] renderNodes =
+        textFactory.createText( bufferArray, 0, buffer.getLength(), style, box.getElementType(), box.getInstanceId(),
+            map );
     final RenderNode[] finishNodes = textFactory.finishText();
 
     textEllipse.addGeneratedChilds( renderNodes );
     textEllipse.addGeneratedChilds( finishNodes );
-    textCache.store( style.getId(), style.getChangeTracker(),
-      map.getChangeTracker(), reslit, style, map, renderNodes, finishNodes );
+    textCache.store( style.getId(), style.getChangeTracker(), map.getChangeTracker(), reslit, style, map, renderNodes,
+        finishNodes );
     performTextEllipseLayout( textEllipse, x2 );
     return textEllipse;
   }

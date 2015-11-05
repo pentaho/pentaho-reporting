@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -107,14 +107,9 @@ public abstract class RenderBox extends RenderNode {
   private RestrictFinishClearOut restrictFinishClearOut;
   private int parentWidowContexts;
 
-  protected RenderBox( final int majorAxis,
-                       final int minorAxis,
-                       final StyleSheet styleSheet,
-                       final InstanceID instanceId,
-                       final BoxDefinition boxDefinition,
-                       final ElementType elementType,
-                       final ReportAttributeMap attributes,
-                       final ReportStateKey stateKey ) {
+  protected RenderBox( final int majorAxis, final int minorAxis, final StyleSheet styleSheet,
+      final InstanceID instanceId, final BoxDefinition boxDefinition, final ElementType elementType,
+      final ReportAttributeMap attributes, final ReportStateKey stateKey ) {
     super( majorAxis, minorAxis, styleSheet, instanceId, elementType, attributes );
     if ( boxDefinition == null ) {
       throw new NullPointerException();
@@ -129,8 +124,8 @@ public abstract class RenderBox extends RenderNode {
     this.setOpen( true );
     this.staticBoxLayoutProperties = new StaticBoxLayoutProperties();
     this.staticBoxPropertiesAge = -1;
-    this.staticBoxLayoutProperties.setBreakAfter
-      ( getStyleSheet().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER ) );
+    this.staticBoxLayoutProperties.setBreakAfter( getStyleSheet().getBooleanStyleProperty(
+        BandStyleKeys.PAGEBREAK_AFTER ) );
     this.stateKey = stateKey;
     this.descendantCount = 1;
     this.restrictFinishClearOut = RestrictFinishClearOut.UNRESTRICTED;
@@ -253,8 +248,8 @@ public abstract class RenderBox extends RenderNode {
   }
 
   public long getInsets() {
-    return staticBoxLayoutProperties.getBorderLeft() + staticBoxLayoutProperties.getBorderRight() +
-      boxDefinition.getPaddingLeft() + boxDefinition.getPaddingRight();
+    return staticBoxLayoutProperties.getBorderLeft() + staticBoxLayoutProperties.getBorderRight()
+        + boxDefinition.getPaddingLeft() + boxDefinition.getPaddingRight();
   }
 
   public RenderNode getFirstChild() {
@@ -285,8 +280,7 @@ public abstract class RenderBox extends RenderNode {
 
   public void addGeneratedChild( final RenderNode child ) {
     if ( child == null ) {
-      throw new NullPointerException
-        ( "Child to be added must not be null." );
+      throw new NullPointerException( "Child to be added must not be null." );
     }
 
     final RenderNode oldLastChild = getLastChild();
@@ -321,28 +315,26 @@ public abstract class RenderBox extends RenderNode {
     final CountBoxesStep step = new CountBoxesStep();
     final int count = step.countChildren( this );
     if ( count != descendantCount ) {
-      throw new InvalidReportStateException( getClass().getSimpleName() + "(" + getName() + "): Counted boxes of " +
-        count + " but claimed to have " + descendantCount );
+      throw new InvalidReportStateException( getClass().getSimpleName() + "(" + getName() + "): Counted boxes of "
+          + count + " but claimed to have " + descendantCount );
     }
   }
 
   public void addChild( final RenderNode child ) {
     if ( child == null ) {
-      throw new NullPointerException
-        ( "Child to be added must not be null." );
+      throw new NullPointerException( "Child to be added must not be null." );
     }
 
     if ( isOpen() == false ) {
-      throw new IllegalStateException
-        ( "Adding content to an already closed element: " + this );
+      throw new IllegalStateException( "Adding content to an already closed element: " + this );
     }
 
     if ( isParanoidModelChecks() ) {
       if ( ( getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK ) == LayoutNodeTypes.MASK_BOX_BLOCK ) {
         if ( ( child.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_INLINE ) == LayoutNodeTypes.MASK_BOX_INLINE ) {
-          throw new IllegalStateException
-            ( "Paranoid Check: A block box cannot contain a inline box directly. They must be wrapped into a "
-              + "paragraph." );
+          throw new IllegalStateException(
+              "Paranoid Check: A block box cannot contain a inline box directly. They must be wrapped into a "
+                  + "paragraph." );
         }
       }
     }
@@ -479,8 +471,7 @@ public abstract class RenderBox extends RenderNode {
     }
 
     if ( ( descendantCount - count ) < 1 ) {
-      throw new IndexOutOfBoundsException(
-        "New Descendant-Count would be negative. " + descendantCount + " - " + count );
+      throw new IndexOutOfBoundsException( "New Descendant-Count would be negative. " + descendantCount + " - " + count );
     }
 
     descendantCount -= count;
@@ -553,8 +544,7 @@ public abstract class RenderBox extends RenderNode {
     }
   }
 
-  public void replaceChilds( final RenderNode old,
-                             final RenderNode[] replacement ) {
+  public void replaceChilds( final RenderNode old, final RenderNode[] replacement ) {
     if ( old.getParent() != this ) {
       throw new IllegalArgumentException( "None of my childs." );
     }
@@ -564,13 +554,13 @@ public abstract class RenderBox extends RenderNode {
       throw new IndexOutOfBoundsException( "Array is empty .." );
     }
 
-    if ( old == replacement[ 0 ] ) {
+    if ( old == replacement[0] ) {
       if ( replacementCount == 1 ) {
         // nothing to do ...
         return;
       }
-      //      throw new IllegalArgumentException
-      //          ("Thou shall not use the replace method to insert new elements!");
+      // throw new IllegalArgumentException
+      // ("Thou shall not use the replace method to insert new elements!");
     }
 
     final RenderNode oldPrev = old.getPrev();
@@ -586,7 +576,7 @@ public abstract class RenderBox extends RenderNode {
 
     for ( int i = 0; i < replacementCount; i++ ) {
       if ( last == null ) {
-        last = replacement[ i ];
+        last = replacement[i];
         if ( last != null ) {
           first = last;
           first.setParent( this );
@@ -594,8 +584,7 @@ public abstract class RenderBox extends RenderNode {
         continue;
       }
 
-
-      final RenderNode node = replacement[ i ];
+      final RenderNode node = replacement[i];
 
       last.setNextUnchecked( node );
       node.setPrevUnchecked( last );
@@ -630,7 +619,7 @@ public abstract class RenderBox extends RenderNode {
     onChildRemoved( old );
 
     for ( int i = 0; i < replacementCount; i++ ) {
-      final RenderNode renderNode = replacement[ i ];
+      final RenderNode renderNode = replacement[i];
       renderNode.updateChangeTracker();
       onChildAdded( renderNode );
     }
@@ -748,14 +737,14 @@ public abstract class RenderBox extends RenderNode {
   public void addChilds( final RenderNode[] nodes ) {
     final int length = nodes.length;
     for ( int i = 0; i < length; i++ ) {
-      addChild( nodes[ i ] );
+      addChild( nodes[i] );
     }
   }
 
   public void addGeneratedChilds( final RenderNode[] nodes ) {
     final int nodeLength = nodes.length;
     for ( int i = 0; i < nodeLength; i++ ) {
-      addGeneratedChild( nodes[ i ] );
+      addGeneratedChild( nodes[i] );
     }
   }
 
@@ -935,8 +924,8 @@ public abstract class RenderBox extends RenderNode {
     final RenderBox otherBox = (RenderBox) derive( false );
     if ( boxDefinition.isEmpty() == false ) {
       final BoxDefinition[] boxDefinitions = boxDefinition.split( axis );
-      boxDefinition = boxDefinitions[ 0 ];
-      otherBox.boxDefinition = boxDefinitions[ 1 ];
+      boxDefinition = boxDefinitions[0];
+      otherBox.boxDefinition = boxDefinitions[1];
     }
     return otherBox;
   }
@@ -987,24 +976,17 @@ public abstract class RenderBox extends RenderNode {
 
   public void setStaticBoxPropertiesAge( final long staticBoxPropertiesAge ) {
     if ( staticBoxLayoutProperties.getNominalBaselineInfo() == null ) {
-      throw new IllegalStateException
-        ( "Assertation: Cannot declare static-properties finished without a nominal baseline info" );
+      throw new IllegalStateException(
+          "Assertation: Cannot declare static-properties finished without a nominal baseline info" );
     }
     this.staticBoxPropertiesAge = staticBoxPropertiesAge;
   }
 
   public String toString() {
-    return getClass().getName() + '{' +
-      "name='" + name + '\'' +
-      ", x='" + getX() + '\'' +
-      ", y='" + getY() + '\'' +
-      ", width='" + getWidth() + '\'' +
-      ", height='" + getHeight() + '\'' +
-      ", elementType='" + getElementType() + '\'' +
-      ", finishedPaginate='" + isFinishedPaginate() + '\'' +
-      ", finishedTable='" + isFinishedTable() + '\'' +
-      ", committed='" + isCommited() + '\'' +
-      '}';
+    return getClass().getName() + '{' + "name='" + name + '\'' + ", x='" + getX() + '\'' + ", y='" + getY() + '\''
+        + ", width='" + getWidth() + '\'' + ", height='" + getHeight() + '\'' + ", elementType='" + getElementType()
+        + '\'' + ", finishedPaginate='" + isFinishedPaginate() + '\'' + ", finishedTable='" + isFinishedTable() + '\''
+        + ", committed='" + isCommited() + '\'' + '}';
   }
 
   public void commit() {
@@ -1157,7 +1139,7 @@ public abstract class RenderBox extends RenderNode {
 
   public boolean isEmptyNodesHaveSignificance() {
     return getNodeLayoutProperties().getStyleSheet()
-      .getBooleanStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE );
+        .getBooleanStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE );
   }
 
   public boolean isAcceptInlineBoxes() {
@@ -1223,7 +1205,7 @@ public abstract class RenderBox extends RenderNode {
   protected long extendHeightInBlockMode( final RenderNode child, final long heightOffset ) {
     setHeight( getHeight() + heightOffset );
     setOverflowAreaHeight( getOverflowAreaHeight() + heightOffset );
-    //updateCacheState(CACHE_DIRTY);
+    // updateCacheState(CACHE_DIRTY);
     return heightOffset;
   }
 
@@ -1247,7 +1229,7 @@ public abstract class RenderBox extends RenderNode {
     final long delta = Math.min( deltaToBase, heightOffset );
     setHeight( getHeight() + delta );
     setOverflowAreaHeight( getOverflowAreaHeight() + delta );
-    //updateCacheState(CACHE_DIRTY);
+    // updateCacheState(CACHE_DIRTY);
     return delta;
   }
 
@@ -1306,8 +1288,8 @@ public abstract class RenderBox extends RenderNode {
     final RenderBox parent = getParent();
     // only propagate across block-elements. Canvas, Inline or row-elements do not carry
     // the pagebreak-restrictions upwards.
-    if ( parent != null && parent.isBlockForPagebreakPurpose() &&
-      restrictFinishedClearOut != RestrictFinishClearOut.UNRESTRICTED ) {
+    if ( parent != null && parent.isBlockForPagebreakPurpose()
+        && restrictFinishedClearOut != RestrictFinishClearOut.UNRESTRICTED ) {
       parent.setRestrictFinishedClearOut( RestrictFinishClearOut.RESTRICTED );
     }
   }
@@ -1374,9 +1356,7 @@ public abstract class RenderBox extends RenderNode {
       // subreport content cannot be cached ..
       return false;
     }
-    return ( getProcessKeyStepAge() == getChangeTracker() &&
-      isProcessKeyFinish() == isFinishedPaginate() &&
-      this.processKeyContentRefCount == getDescendantCount() );
+    return ( getProcessKeyStepAge() == getChangeTracker() && isProcessKeyFinish() == isFinishedPaginate() && this.processKeyContentRefCount == getDescendantCount() );
 
   }
 

@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
+import javax.swing.JComponent;
+
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -24,8 +26,6 @@ import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.m
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.QueryDialogModel;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-
-import javax.swing.*;
 
 public class DefaultQueryEditorPanel extends QueryEditorPanel<String> {
   private class QueryDocumentListener extends TextFieldBinding {

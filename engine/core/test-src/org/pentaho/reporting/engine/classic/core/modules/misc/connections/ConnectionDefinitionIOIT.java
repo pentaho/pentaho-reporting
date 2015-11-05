@@ -32,7 +32,6 @@ public class ConnectionDefinitionIOIT extends TestCase {
     final IDatabaseConnection connection1 = generateDatabaseConnection();
     final IDatabaseConnection connection2 = generateDatabaseConnection();
 
-
     final FileDataSourceMgmtWriter writer = new FileDataSourceMgmtWriter();
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     writer.write( new IDatabaseConnection[] { connection1, connection2 }, bout );
@@ -43,8 +42,8 @@ public class ConnectionDefinitionIOIT extends TestCase {
     final DatabaseConnectionCollection resource = (DatabaseConnectionCollection) directly.getResource();
     final IDatabaseConnection[] connections = resource.getConnections();
     assertEquals( 2, connections.length );
-    assertEquals( connection1, connections[ 0 ] );
-    assertEquals( connection2, connections[ 1 ] );
+    assertEquals( connection1, connections[0] );
+    assertEquals( connection2, connections[1] );
   }
 
   private void assertEquals( final IDatabaseConnection connection1, final IDatabaseConnection connection2 ) {

@@ -49,7 +49,7 @@ public class FastExcelCellStyleProducerTest implements Answer<CellStyle> {
   public void setUp() {
     backend = mock( CellStyleProducer.class );
     when( backend.createCellStyle( any( InstanceID.class ), any( StyleSheet.class ), any( CellBackground.class ) ) )
-      .thenAnswer( this );
+        .thenAnswer( this );
 
     element = mock( StyleSheet.class );
     producer = new FastExcelCellStyleProducer( backend );
@@ -113,19 +113,17 @@ public class FastExcelCellStyleProducerTest implements Answer<CellStyle> {
     assertNotCached( style, style2 );
   }
 
-
   private void assertCached( final CellStyle style, final CellStyle style2 ) {
     assertTrue( style == style2 );
-    verify( backend, only() )
-      .createCellStyle( any( InstanceID.class ), any( StyleSheet.class ), any( CellBackground.class ) );
+    verify( backend, only() ).createCellStyle( any( InstanceID.class ), any( StyleSheet.class ),
+        any( CellBackground.class ) );
   }
 
   private void assertNotCached( final CellStyle style, final CellStyle style2 ) {
     assertFalse( style == style2 );
-    verify( backend, atLeast( 2 ) )
-      .createCellStyle( any( InstanceID.class ), any( StyleSheet.class ), any( CellBackground.class ) );
+    verify( backend, atLeast( 2 ) ).createCellStyle( any( InstanceID.class ), any( StyleSheet.class ),
+        any( CellBackground.class ) );
   }
-
 
   @Override
   public CellStyle answer( final InvocationOnMock invocation ) throws Throwable {

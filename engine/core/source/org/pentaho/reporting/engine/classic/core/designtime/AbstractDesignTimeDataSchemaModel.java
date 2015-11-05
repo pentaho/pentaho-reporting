@@ -41,7 +41,7 @@ public abstract class AbstractDesignTimeDataSchemaModel implements ContextAwareD
   private final MasterReport masterReportElement;
 
   protected AbstractDesignTimeDataSchemaModel( final MasterReport masterReportElement,
-                                               final AbstractReportDefinition report ) {
+      final AbstractReportDefinition report ) {
     ArgumentNullException.validate( "masterReportElement", masterReportElement );
     ArgumentNullException.validate( "report", report );
 
@@ -69,15 +69,15 @@ public abstract class AbstractDesignTimeDataSchemaModel implements ContextAwareD
     if ( parent instanceof MasterReport ) {
       final MasterReport mr = (MasterReport) parent;
       final LinkedMap values = computeParameterValueMap( mr );
-      parameterRow = new ParameterDataRow( (String[]) values.keys( new String[ values.size() ] ), values.values() );
+      parameterRow = new ParameterDataRow( (String[]) values.keys( new String[values.size()] ), values.values() );
     } else if ( parent instanceof SubReport ) {
       final SubReport sr = (SubReport) parent;
       final ParameterMapping[] inputMappings = sr.getInputMappings();
-      final Object[] values = new Object[ inputMappings.length ];
-      final String[] names = new String[ inputMappings.length ];
+      final Object[] values = new Object[inputMappings.length];
+      final String[] names = new String[inputMappings.length];
       for ( int i = 0; i < inputMappings.length; i++ ) {
-        final ParameterMapping inputMapping = inputMappings[ i ];
-        names[ i ] = inputMapping.getAlias();
+        final ParameterMapping inputMapping = inputMappings[i];
+        names[i] = inputMapping.getAlias();
       }
       parameterRow = new ParameterDataRow( names, values );
     } else {
@@ -102,7 +102,7 @@ public abstract class AbstractDesignTimeDataSchemaModel implements ContextAwareD
     final ReportParameterValues reportParameterValues = report.getParameterValues();
     final ParameterDefinitionEntry[] columnNames = report.getParameterDefinition().getParameterDefinitions();
     for ( int i = 0; i < columnNames.length; i++ ) {
-      final ParameterDefinitionEntry parameter = columnNames[ i ];
+      final ParameterDefinitionEntry parameter = columnNames[i];
       final String columnName = parameter.getName();
       if ( columnName == null ) {
         continue;

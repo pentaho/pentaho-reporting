@@ -20,9 +20,8 @@ public class DatabaseConnectionsReadHandler extends AbstractXmlReadHandler {
     readHandlers = new ArrayList<DatabaseMetaReadHandler>();
   }
 
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final Attributes atts ) throws SAXException {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
     if ( isSameNamespace( uri ) == false ) {
       return null;
     }
@@ -43,7 +42,7 @@ public class DatabaseConnectionsReadHandler extends AbstractXmlReadHandler {
     }
     try {
       collection =
-        new DatabaseConnectionCollection( connections.toArray( new IDatabaseConnection[ connections.size() ] ) );
+          new DatabaseConnectionCollection( connections.toArray( new IDatabaseConnection[connections.size()] ) );
     } catch ( IOException e ) {
       throw new ParseException( e, getLocator() );
     }

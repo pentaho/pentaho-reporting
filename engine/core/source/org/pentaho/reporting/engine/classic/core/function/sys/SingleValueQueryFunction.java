@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.sys;
 
@@ -37,15 +37,14 @@ import javax.swing.table.TableModel;
  */
 public class SingleValueQueryFunction extends ColumnAggregationExpression {
   private static class QueryParametersDataRow extends StaticDataRow {
-    private QueryParametersDataRow( final DataRow globalView,
-                                    final ParameterMapping[] parameterMappings ) {
-      final String[] outerNames = new String[ parameterMappings.length ];
-      final Object[] values = new Object[ parameterMappings.length ];
+    private QueryParametersDataRow( final DataRow globalView, final ParameterMapping[] parameterMappings ) {
+      final String[] outerNames = new String[parameterMappings.length];
+      final Object[] values = new Object[parameterMappings.length];
       for ( int i = 0; i < parameterMappings.length; i++ ) {
-        final ParameterMapping mapping = parameterMappings[ i ];
+        final ParameterMapping mapping = parameterMappings[i];
         final String name = mapping.getAlias();
-        values[ i ] = globalView.get( name );
-        outerNames[ i ] = mapping.getName();
+        values[i] = globalView.get( name );
+        outerNames[i] = mapping.getName();
 
       }
       setData( outerNames, values );
@@ -93,7 +92,8 @@ public class SingleValueQueryFunction extends ColumnAggregationExpression {
    * Defines the name of the result-column. The result-column specified the name of the column of the query's
    * result-table that should be used. If undefined, the first column is used.
    *
-   * @param resultColumn the result column name.
+   * @param resultColumn
+   *          the result column name.
    */
   public void setResultColumn( final String resultColumn ) {
     this.resultColumn = resultColumn;
@@ -111,7 +111,8 @@ public class SingleValueQueryFunction extends ColumnAggregationExpression {
   /**
    * Defines the query name.
    *
-   * @param query the query name.
+   * @param query
+   *          the query name.
    */
   public void setQuery( final String query ) {
     this.query = query;
@@ -130,9 +131,9 @@ public class SingleValueQueryFunction extends ColumnAggregationExpression {
       final DataFactory dataFactory = getRuntime().getDataFactory();
       final String[] fields = getField();
       final int length = fields.length;
-      final ParameterMapping[] mappings = new ParameterMapping[ length ];
+      final ParameterMapping[] mappings = new ParameterMapping[length];
       for ( int i = 0; i < length; i++ ) {
-        mappings[ i ] = new ParameterMapping( fields[ i ], fields[ i ] );
+        mappings[i] = new ParameterMapping( fields[i], fields[i] );
       }
 
       final QueryParametersDataRow params = new QueryParametersDataRow( getDataRow(), mappings );

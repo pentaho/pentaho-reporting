@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements;
 
@@ -47,22 +47,24 @@ public class ReportDefinitionWriteHandler extends AbstractElementWriteHandler {
   public ReportDefinitionWriteHandler() {
   }
 
-
   /**
    * Writes a single element as XML structure.
    *
-   * @param bundle    the bundle to which to write to.
-   * @param state     the current write-state.
-   * @param xmlWriter the xml writer.
-   * @param element   the element.
-   * @throws IOException           if an IO error occured.
-   * @throws BundleWriterException if an Bundle writer.
+   * @param bundle
+   *          the bundle to which to write to.
+   * @param state
+   *          the current write-state.
+   * @param xmlWriter
+   *          the xml writer.
+   * @param element
+   *          the element.
+   * @throws IOException
+   *           if an IO error occured.
+   * @throws BundleWriterException
+   *           if an Bundle writer.
    */
-  public void writeElement( final WriteableDocumentBundle bundle,
-                            final BundleWriterState state,
-                            final XmlWriter xmlWriter,
-                            final Element element )
-    throws IOException, BundleWriterException {
+  public void writeElement( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final XmlWriter xmlWriter, final Element element ) throws IOException, BundleWriterException {
     if ( bundle == null ) {
       throw new NullPointerException();
     }
@@ -95,11 +97,11 @@ public class ReportDefinitionWriteHandler extends AbstractElementWriteHandler {
     final AbstractReportDefinition report = (AbstractReportDefinition) element;
     final ReportPreProcessor[] processors = report.getPreProcessors();
     for ( int i = 0; i < processors.length; i++ ) {
-      final ReportPreProcessor processor = processors[ i ];
+      final ReportPreProcessor processor = processors[i];
       // write the preprocessor ...
       try {
-        xmlWriter.writeTag( BundleNamespaces.LAYOUT, "preprocessor",
-          "class", processor.getClass().getName(), XmlWriterSupport.OPEN );
+        xmlWriter.writeTag( BundleNamespaces.LAYOUT, "preprocessor", "class", processor.getClass().getName(),
+            XmlWriterSupport.OPEN );
         writePreProcessor( xmlWriter, processor );
         xmlWriter.writeCloseTag();
       } catch ( IntrospectionException e ) {
@@ -123,17 +125,13 @@ public class ReportDefinitionWriteHandler extends AbstractElementWriteHandler {
     xmlWriter.writeCloseTag();
   }
 
-  private void writeChildElement( final WriteableDocumentBundle bundle,
-                                  final BundleWriterState state,
-                                  final XmlWriter xmlWriter, final Element re )
-    throws IOException, BundleWriterException {
+  private void writeChildElement( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final XmlWriter xmlWriter, final Element re ) throws IOException, BundleWriterException {
     final BundleElementWriteHandler writeHandler = BundleElementRegistry.getInstance().getWriteHandler( re );
     writeHandler.writeElement( bundle, state, xmlWriter, re );
   }
 
-
-  private void writePreProcessor( final XmlWriter writer,
-                                  final ReportPreProcessor preProcessor )
+  private void writePreProcessor( final XmlWriter writer, final ReportPreProcessor preProcessor )
     throws IntrospectionException, BeanException, IOException {
     if ( writer == null ) {
       throw new NullPointerException();
@@ -149,7 +147,7 @@ public class ReportDefinitionWriteHandler extends AbstractElementWriteHandler {
     final String[] propertyNames = beanUtility.getProperties();
 
     for ( int i = 0; i < propertyNames.length; i++ ) {
-      final String key = propertyNames[ i ];
+      final String key = propertyNames[i];
       final Object property = beanUtility.getProperty( key );
       final Class propertyType = beanUtility.getPropertyType( key );
       final String value = beanUtility.getPropertyAsString( key );
@@ -165,7 +163,6 @@ public class ReportDefinitionWriteHandler extends AbstractElementWriteHandler {
       }
     }
   }
-
 
   protected boolean isFiltered( final AttributeMetaData attributeMetaData ) {
     if ( AttributeNames.Internal.NAMESPACE.equals( attributeMetaData.getNameSpace() ) ) {
@@ -191,6 +188,5 @@ public class ReportDefinitionWriteHandler extends AbstractElementWriteHandler {
     }
     return super.isFiltered( attributeMetaData );
   }
-
 
 }

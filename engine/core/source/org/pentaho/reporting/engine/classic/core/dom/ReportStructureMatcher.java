@@ -1,21 +1,26 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.dom;
+
+import java.io.IOException;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
+import java.util.ArrayList;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -23,11 +28,6 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
-
-import java.io.IOException;
-import java.io.StreamTokenizer;
-import java.io.StringReader;
-import java.util.ArrayList;
 
 public class ReportStructureMatcher {
   private static class NodeIterator {
@@ -40,9 +40,7 @@ public class ReportStructureMatcher {
       nodes = new ArrayList<ReportElement>();
     }
 
-    public ReportElement get( final MatcherContext context,
-                              final ReportElement node,
-                              final NodeMatcher matcher ) {
+    public ReportElement get( final MatcherContext context, final ReportElement node, final NodeMatcher matcher ) {
       if ( node == null ) {
         throw new NullPointerException();
       }
@@ -75,9 +73,7 @@ public class ReportStructureMatcher {
       }
     }
 
-    public ReportElement[] getAll( final MatcherContext context,
-                                   final ReportElement node,
-                                   final NodeMatcher matcher ) {
+    public ReportElement[] getAll( final MatcherContext context, final ReportElement node, final NodeMatcher matcher ) {
       if ( node == null ) {
         throw new NullPointerException();
       }
@@ -90,7 +86,7 @@ public class ReportStructureMatcher {
       this.nodes.clear();
       this.singleResult = false;
       startProcessing( node, true );
-      return this.nodes.toArray( new ReportElement[ this.nodes.size() ] );
+      return this.nodes.toArray( new ReportElement[this.nodes.size()] );
     }
 
     protected boolean startBox( final ReportElement box ) {
@@ -149,7 +145,7 @@ public class ReportStructureMatcher {
       if ( token == StreamTokenizer.TT_WORD || token == '*' ) {
         NodeMatcher matcher = null;
 
-        switch( selectorType ) {
+        switch ( selectorType ) {
           case Start:
             elementMatcher = createMatcher( tokenizer );
             matcher = elementMatcher;
@@ -172,8 +168,8 @@ public class ReportStructureMatcher {
               elementMatcher = createMatcher( tokenizer );
               matcher = elementMatcher;
             }
-            elementMatcher
-              .add( new AttributeMatcher( AttributeNames.Xml.NAMESPACE, AttributeNames.Xml.ID, tokenizer.sval ) );
+            elementMatcher.add( new AttributeMatcher( AttributeNames.Xml.NAMESPACE, AttributeNames.Xml.ID,
+                tokenizer.sval ) );
             break;
           case Class:
             if ( elementMatcher == null ) {
@@ -183,8 +179,8 @@ public class ReportStructureMatcher {
               elementMatcher = createMatcher( tokenizer );
               matcher = elementMatcher;
             }
-            elementMatcher.add(
-              new AttributeMatcher( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_CLASS, tokenizer.sval ) );
+            elementMatcher.add( new AttributeMatcher( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_CLASS,
+                tokenizer.sval ) );
             break;
           default:
             throw new IOException();
@@ -210,8 +206,7 @@ public class ReportStructureMatcher {
           selectorType = Type.Id;
         }
         if ( Character.isWhitespace( token ) ) {
-          if ( selectorType == Type.Class ||
-            selectorType == Type.Id ) {
+          if ( selectorType == Type.Class || selectorType == Type.Id ) {
             throw new IllegalStateException();
           }
 
@@ -224,9 +219,7 @@ public class ReportStructureMatcher {
     return n;
   }
 
-  public static ReportElement match( final MatcherContext context,
-                                     final ReportElement base,
-                                     final NodeMatcher parse ) {
+  public static ReportElement match( final MatcherContext context, final ReportElement base, final NodeMatcher parse ) {
     if ( parse == null ) {
       throw new NullPointerException();
     }
@@ -234,9 +227,8 @@ public class ReportStructureMatcher {
     return new NodeIterator().get( context, base, parse );
   }
 
-  public static ReportElement[] matchAll( final MatcherContext context,
-                                          final ReportElement base,
-                                          final NodeMatcher parse ) {
+  public static ReportElement[] matchAll( final MatcherContext context, final ReportElement base,
+      final NodeMatcher parse ) {
     if ( parse == null ) {
       throw new NullPointerException();
     }
@@ -244,15 +236,14 @@ public class ReportStructureMatcher {
     return new NodeIterator().getAll( context, base, parse );
   }
 
-  public static ReportElement match( final MatcherContext context,
-                                     final ReportElement base, final String selector ) throws IOException {
+  public static ReportElement match( final MatcherContext context, final ReportElement base, final String selector )
+    throws IOException {
     final NodeMatcher parse = parse( selector );
     return match( context, base, parse );
   }
 
-  public static ReportElement[] matchAll( final MatcherContext context,
-                                          final ReportElement base,
-                                          final String selector ) throws IOException {
+  public static ReportElement[]
+    matchAll( final MatcherContext context, final ReportElement base, final String selector ) throws IOException {
     final NodeMatcher parse = parse( selector );
     return matchAll( context, base, parse );
   }
@@ -261,13 +252,13 @@ public class ReportStructureMatcher {
     return findElementsByAttribute( section, AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, name );
   }
 
-  public static ReportElement[] findElementsByAttribute( final ReportElement section, final String ns,
-                                                         final String name ) {
+  public static ReportElement[]
+    findElementsByAttribute( final ReportElement section, final String ns, final String name ) {
     return findElementsByAttribute( section, ns, name, null );
   }
 
   public static ReportElement[] findElementsByAttribute( final ReportElement section, final String ns,
-                                                         final String name, final Object value ) {
+      final String name, final Object value ) {
     final MatcherContext context = new MatcherContext();
     context.setMatchSubReportChilds( false );
 

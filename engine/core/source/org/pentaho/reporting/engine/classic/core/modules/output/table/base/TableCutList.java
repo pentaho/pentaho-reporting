@@ -1,27 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import java.util.Arrays;
 
 public class TableCutList implements Cloneable {
-  private static final Boolean[] EMPTY_ENTRIES = new Boolean[ 0 ];
-  private static final long[] EMPTY_KEYS = new long[ 0 ];
+  private static final Boolean[] EMPTY_ENTRIES = new Boolean[0];
+  private static final long[] EMPTY_KEYS = new long[0];
   private static final int LIN_VS_BIN = 16;
 
   private Boolean[] entries;
@@ -72,16 +72,17 @@ public class TableCutList implements Cloneable {
    * Ensures, that the list backend can store at least <code>c</code> elements. This method does nothing, if the new
    * capacity is less than the current capacity.
    *
-   * @param c the new capacity of the list.
+   * @param c
+   *          the new capacity of the list.
    */
   private void ensureCapacity( final int c ) {
     if ( keys.length <= c ) {
       final int newIncrement = Math.min( 25000, Math.max( keys.length / 2, increment ) );
-      final long[] newKeys = new long[ Math.max( keys.length + newIncrement, c + 1 ) ];
+      final long[] newKeys = new long[Math.max( keys.length + newIncrement, c + 1 )];
       System.arraycopy( keys, 0, newKeys, 0, size );
       keys = newKeys;
 
-      final Boolean[] newCuts = new Boolean[ Math.max( entries.length + newIncrement, c + 1 ) ];
+      final Boolean[] newCuts = new Boolean[Math.max( entries.length + newIncrement, c + 1 )];
       System.arraycopy( entries, 0, newCuts, 0, size );
       entries = newCuts;
     }
@@ -95,15 +96,15 @@ public class TableCutList implements Cloneable {
       throw new NullPointerException();
     }
 
-    //    accessLogWriter.println("put - " + System.currentTimeMillis() + " - " + key);
+    // accessLogWriter.println("put - " + System.currentTimeMillis() + " - " + key);
     if ( size > 0 ) {
       // try a short-cut, which is usefull for y-coordinates (which are almost always sorted).
-      if ( key > keys[ size - 1 ] ) {
+      if ( key > keys[size - 1] ) {
         ensureCapacity( size + 1 );
-        keys[ size ] = key;
-        entries[ size ] = entry;
+        keys[size] = key;
+        entries[size] = entry;
         size += 1;
-        scaleFactor = ( key - keys[ 0 ] ) / size;
+        scaleFactor = ( key - keys[0] ) / size;
         return true;
       }
     }
@@ -111,20 +112,20 @@ public class TableCutList implements Cloneable {
     int start = 0;
     int end = size;
     if ( enableQuickLookup && size > 0 && scaleFactor != 0 ) {
-      if ( key < keys[ 0 ] ) {
+      if ( key < keys[0] ) {
         end = 1;
       } else {
         // assume a relatively uniform layout, all rows have roughly the same size ..
         // this means, we can guess-jump close to the target-position ..
         final int maxIdx = size - 1;
-        final long lastVal = keys[ maxIdx ];
+        final long lastVal = keys[maxIdx];
         if ( lastVal > 0 ) {
-          final int targetIdx = (int) ( ( key - keys[ 0 ] ) / scaleFactor );
+          final int targetIdx = (int) ( ( key - keys[0] ) / scaleFactor );
           final int minTgtIdx = Math.max( 0, Math.min( maxIdx, targetIdx - 7 ) );
           final int maxTgtIdx = Math.min( maxIdx, targetIdx + 7 );
 
-          final long minKey = keys[ minTgtIdx ];
-          final long maxKey = keys[ maxTgtIdx ];
+          final long minKey = keys[minTgtIdx];
+          final long maxKey = keys[maxTgtIdx];
           final boolean minLessPos = key >= minKey;
           final boolean maxMorePos = key <= maxKey;
           if ( minLessPos ) {
@@ -147,12 +148,12 @@ public class TableCutList implements Cloneable {
       position = binarySearch( keys, key, start, end );
     }
     if ( position >= 0 ) {
-      final Boolean entryFromList = entries[ position ];
+      final Boolean entryFromList = entries[position];
       if ( entryFromList == null ) {
         throw new IllegalStateException( "Must not happen" );
       }
       if ( Boolean.TRUE.equals( entryFromList ) ) {
-        entries[ position ] = entry;
+        entries[position] = entry;
       }
       return false;
     }
@@ -165,15 +166,15 @@ public class TableCutList implements Cloneable {
       System.arraycopy( keys, insertPoint, keys, insertPoint + 1, size - insertPoint );
       System.arraycopy( entries, insertPoint, entries, insertPoint + 1, size - insertPoint );
     }
-    keys[ insertPoint ] = key;
-    entries[ insertPoint ] = entry;
+    keys[insertPoint] = key;
+    entries[insertPoint] = entry;
     size += 1;
     if ( insertPoint == ( size - 1 ) ) {
       // we modified the last entry, so update the lookup-scale-factor ..
-      scaleFactor = ( key - keys[ 0 ] ) / size;
+      scaleFactor = ( key - keys[0] ) / size;
     } else {
       // we modified a inner entry, so update the lookup-scale-factor ..
-      scaleFactor = ( keys[ size - 1 ] - keys[ 0 ] ) / size;
+      scaleFactor = ( keys[size - 1] - keys[0] ) / size;
     }
     return true;
   }
@@ -181,7 +182,8 @@ public class TableCutList implements Cloneable {
   /**
    * Performs a binary-search, but includes some optimizations in case we search for the same key all the time.
    *
-   * @param pos the starting position of the box.
+   * @param pos
+   *          the starting position of the box.
    * @return the position as positive integer or a negative integer indicating the insert-point.
    */
   private int findKeyInternal( final long pos ) {
@@ -193,27 +195,27 @@ public class TableCutList implements Cloneable {
     int end = size;
 
     if ( lastFoundPos != -1 && lastFoundPos < size ) {
-      if ( keys[ lastFoundPos ] == pos ) {
+      if ( keys[lastFoundPos] == pos ) {
         return lastFoundPos;
       }
     }
 
     if ( enableQuickLookup && size > 0 && scaleFactor != 0 ) {
-      if ( pos < keys[ 0 ] ) {
+      if ( pos < keys[0] ) {
         return -1;
       }
 
       // assume a relatively uniform layout, all rows have roughly the same size ..
       // this means, we can guess-jump close to the target-position ..
       final int maxIdx = size - 1;
-      final long lastVal = keys[ maxIdx ];
+      final long lastVal = keys[maxIdx];
       if ( lastVal > 0 ) {
-        final int targetIdx = (int) ( ( pos - keys[ 0 ] ) / scaleFactor );
+        final int targetIdx = (int) ( ( pos - keys[0] ) / scaleFactor );
         final int minTgtIdx = Math.max( 0, Math.min( maxIdx, targetIdx - 7 ) );
         final int maxTgtIdx = Math.min( maxIdx, targetIdx + 7 );
 
-        final long minKey = keys[ minTgtIdx ];
-        final long maxKey = keys[ maxTgtIdx ];
+        final long minKey = keys[minTgtIdx];
+        final long maxKey = keys[maxTgtIdx];
         final boolean minLessPos = pos >= minKey;
         final boolean maxMorePos = pos <= maxKey;
         if ( minLessPos ) {
@@ -245,23 +247,22 @@ public class TableCutList implements Cloneable {
 
   }
 
-
   public boolean remove( final long key ) {
     final int position = findKeyInternal( key );
-    //binarySearch(keys, key, 0, size);
+    // binarySearch(keys, key, 0, size);
     if ( position < 0 ) {
       return false;
     }
 
     final int shiftElements = size - position - 1;
     if ( shiftElements == 0 ) {
-      keys[ position ] = 0;
-      entries[ position ] = null;
+      keys[position] = 0;
+      entries[position] = null;
       size -= 1;
       if ( size == 0 ) {
         scaleFactor = 0;
       } else {
-        scaleFactor = ( keys[ size - 1 ] - keys[ 0 ] ) / size;
+        scaleFactor = ( keys[size - 1] - keys[0] ) / size;
       }
       return true;
     }
@@ -270,12 +271,12 @@ public class TableCutList implements Cloneable {
     System.arraycopy( keys, position + 1, keys, position, shiftElements );
     System.arraycopy( entries, position + 1, entries, position, shiftElements );
 
-    keys[ size ] = 0;
-    entries[ size ] = null;
+    keys[size] = 0;
+    entries[size] = null;
     if ( size == 0 ) {
       scaleFactor = 0;
     } else {
-      scaleFactor = ( keys[ size - 1 ] - keys[ 0 ] ) / size;
+      scaleFactor = ( keys[size - 1] - keys[0] ) / size;
     }
     return true;
   }
@@ -285,43 +286,43 @@ public class TableCutList implements Cloneable {
       return null;
     }
 
-    if ( key > keys[ size - 1 ] ) {
+    if ( key > keys[size - 1] ) {
       return null;
     }
 
     final int position = findKeyInternal( key );
-    //binarySearch(keys, key, 0, size);
+    // binarySearch(keys, key, 0, size);
     if ( position < 0 ) {
       return null;
     }
-    return entries[ position ];
+    return entries[position];
   }
 
   public Boolean getPrevious( final long key ) {
     if ( size == 0 ) {
       return null;
     }
-    if ( key > keys[ size - 1 ] ) {
-      return entries[ size - 1 ];
+    if ( key > keys[size - 1] ) {
+      return entries[size - 1];
     }
 
     final int position = findKeyInternal( key );
-    //binarySearch(keys, key, 0, size);
+    // binarySearch(keys, key, 0, size);
     if ( position == 0 ) {
       return null;
     }
     if ( position > 0 ) {
-      return entries[ position - 1 ];
+      return entries[position - 1];
     }
 
     final int insertPoint = -( position + 2 );
-    return entries[ insertPoint ];
+    return entries[insertPoint];
   }
 
   public boolean containsKey( final long key ) {
     if ( size > 0 ) {
       // try a short-cut, which is usefull for y-coordinates (which are almost always sorted).
-      if ( key > keys[ size - 1 ] ) {
+      if ( key > keys[size - 1] ) {
         return false;
       }
     }
@@ -330,7 +331,7 @@ public class TableCutList implements Cloneable {
 
   private static int linearSearch( final long[] array, final long key, final int start, final int end ) {
     for ( int i = start; i < end; i++ ) {
-      final long value = array[ i ];
+      final long value = array[i];
       if ( value == key ) {
         return i;
       }
@@ -342,13 +343,13 @@ public class TableCutList implements Cloneable {
   }
 
   private static int binarySearch( final long[] array, final long key, final int start, final int end ) {
-    //    int itCount = 0;
+    // int itCount = 0;
     int low = start;
     int high = end - 1;
     while ( low <= high ) {
-      //      itCount += 1;
+      // itCount += 1;
       final int mid = ( low + high ) >>> 1;
-      final long midVal = array[ mid ];
+      final long midVal = array[mid];
 
       if ( midVal < key ) {
         low = mid + 1;
@@ -358,7 +359,7 @@ public class TableCutList implements Cloneable {
         return mid; // key found
       }
     }
-    return -( low + 1 );  // key not found.
+    return -( low + 1 ); // key not found.
   }
 
   public Boolean[] getRawEntries() {
@@ -380,14 +381,14 @@ public class TableCutList implements Cloneable {
       return (long[]) keys.clone();
     }
 
-    final long[] retval = new long[ size ];
+    final long[] retval = new long[size];
     System.arraycopy( keys, 0, retval, 0, size );
     return retval;
   }
 
   public long[] getKeys( long[] retval ) {
     if ( retval == null || retval.length < size ) {
-      retval = new long[ size ];
+      retval = new long[size];
     }
     System.arraycopy( keys, 0, retval, 0, size );
     return retval;
@@ -433,19 +434,19 @@ public class TableCutList implements Cloneable {
     if ( indexPosition >= size || indexPosition < 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    return keys[ indexPosition ];
+    return keys[indexPosition];
   }
 
   public Boolean getValueAt( final int indexPosition ) {
     if ( indexPosition >= size || indexPosition < 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    return entries[ indexPosition ];
+    return entries[indexPosition];
   }
 
   public long findKey( final long key, final boolean upperBounds ) {
     final int pos = findKeyPosition( key, upperBounds );
-    return keys[ pos ];
+    return keys[pos];
   }
 
   /**
@@ -460,12 +461,12 @@ public class TableCutList implements Cloneable {
     }
 
     int cutIndex = 0;
-    long currentCut = cutArray[ 0 ];
+    long currentCut = cutArray[0];
 
     int targetPosition = 0;
     int sourcePosition = 0;
-    for (; sourcePosition < size; sourcePosition++ ) {
-      final long key = keys[ sourcePosition ];
+    for ( ; sourcePosition < size; sourcePosition++ ) {
+      final long key = keys[sourcePosition];
       if ( key == currentCut ) {
         // do nothing ..
         cutIndex += 1;
@@ -475,10 +476,10 @@ public class TableCutList implements Cloneable {
           targetPosition = size - cutIndex;
           break;
         }
-        currentCut = cutArray[ cutIndex ];
+        currentCut = cutArray[cutIndex];
       } else {
-        keys[ targetPosition ] = key;
-        entries[ targetPosition ] = entries[ sourcePosition ];
+        keys[targetPosition] = key;
+        entries[targetPosition] = entries[sourcePosition];
         targetPosition += 1;
       }
     }
@@ -487,7 +488,7 @@ public class TableCutList implements Cloneable {
     Arrays.fill( entries, targetPosition, size, null );
     size = targetPosition;
     if ( size != 0 ) {
-      scaleFactor = ( keys[ size - 1 ] - keys[ 0 ] ) / size;
+      scaleFactor = ( keys[size - 1] - keys[0] ) / size;
     } else {
       scaleFactor = 0;
     }

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -53,7 +53,6 @@ public class Prd4626IT extends TestCase {
     ClassicEngineBoot.getInstance().start();
   }
 
-
   public void testBugExists() throws Exception {
     final URL resource = getClass().getResource( "Prd-4626-2.prpt" );
     assertNotNull( resource );
@@ -64,19 +63,18 @@ public class Prd4626IT extends TestCase {
     final MasterReport report = (MasterReport) parsed.getResource();
 
     final PdfOutputProcessor outputProcessor =
-      new TestPdfOutputProcessor( report.getConfiguration(), new NullOutputStream() );
+        new TestPdfOutputProcessor( report.getConfiguration(), new NullOutputStream() );
     final PageableReportProcessor reportProcessor = new PageableReportProcessor( report, outputProcessor );
     reportProcessor.processReport();
   }
 
   private static class TestPdfOutputProcessor extends PdfOutputProcessor {
-    private TestPdfOutputProcessor( final Configuration configuration,
-                                    final OutputStream outputStream ) {
+    private TestPdfOutputProcessor( final Configuration configuration, final OutputStream outputStream ) {
       super( configuration, outputStream );
     }
 
-    protected void processLogicalPage( final LogicalPageKey key,
-                                       final LogicalPageBox logicalPage ) throws ContentProcessingException {
+    protected void processLogicalPage( final LogicalPageKey key, final LogicalPageBox logicalPage )
+      throws ContentProcessingException {
       if ( key.getPosition() >= 4 ) {
         Assert.fail( "More than 4 pages" );
       }
@@ -85,21 +83,20 @@ public class Prd4626IT extends TestCase {
 
     protected PdfDocumentWriter createPdfDocumentWriter() {
       return new TestPdfDocumentWriter( (PdfOutputProcessorMetaData) getMetaData(), getOutputStream(),
-        getResourceManager() );
+          getResourceManager() );
     }
   }
 
   private static class TestPdfDocumentWriter extends PdfDocumentWriter {
-    private TestPdfDocumentWriter( final PdfOutputProcessorMetaData metaData,
-                                   final OutputStream out,
-                                   final ResourceManager resourceManager ) {
+    private TestPdfDocumentWriter( final PdfOutputProcessorMetaData metaData, final OutputStream out,
+        final ResourceManager resourceManager ) {
       super( metaData, out, resourceManager );
     }
 
     protected PdfLogicalPageDrawable createLogicalPageDrawable( final LogicalPageBox logicalPage,
-                                                                final PhysicalPageBox page ) {
+        final PhysicalPageBox page ) {
       final PdfLogicalPageDrawable drawable =
-        new TestPdfLogicalPageDrawable( getWriter(), getImageCache(), getVersion() );
+          new TestPdfLogicalPageDrawable( getWriter(), getImageCache(), getVersion() );
       drawable.init( logicalPage, getMetaData(), getResourceManager(), page );
       return drawable;
     }
@@ -108,16 +105,18 @@ public class Prd4626IT extends TestCase {
   private static class TestPdfLogicalPageDrawable extends PdfLogicalPageDrawable {
     private Rectangle2D area;
 
-    private TestPdfLogicalPageDrawable( final PdfWriter writer,
-                                        final LFUMap<ResourceKey, Image> imageCache, final char version ) {
+    private TestPdfLogicalPageDrawable( final PdfWriter writer, final LFUMap<ResourceKey, Image> imageCache,
+        final char version ) {
       super( writer, imageCache, version );
     }
 
     /**
      * Draws the object.
      *
-     * @param graphics the graphics device.
-     * @param area     the area inside which the object should be drawn.
+     * @param graphics
+     *          the graphics device.
+     * @param area
+     *          the area inside which the object should be drawn.
      */
     public void draw( final Graphics2D graphics, final Rectangle2D area ) {
       this.area = area;

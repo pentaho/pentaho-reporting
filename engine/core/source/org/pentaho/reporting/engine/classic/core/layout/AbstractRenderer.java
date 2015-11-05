@@ -1,21 +1,24 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,9 +60,6 @@ import org.pentaho.reporting.engine.classic.core.states.process.ProcessState;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * The LayoutSystem is a simplified version of the LibLayout-rendering system.
@@ -181,9 +181,8 @@ public abstract class AbstractRenderer implements Renderer {
     return staticPropertiesStep.isWidowOrphanDefinitionsEncountered();
   }
 
-  public void startReport( final ReportDefinition report,
-                           final ProcessingContext processingContext,
-                           final PerformanceMonitorContext performanceMonitorContext ) {
+  public void startReport( final ReportDefinition report, final ProcessingContext processingContext,
+      final PerformanceMonitorContext performanceMonitorContext ) {
     ArgumentNullException.validate( "report", report );
     ArgumentNullException.validate( "processingContext", processingContext );
     ArgumentNullException.validate( "performanceMonitorContext", performanceMonitorContext );
@@ -212,11 +211,13 @@ public abstract class AbstractRenderer implements Renderer {
 
   protected void initializeRendererOnStartReport( final ProcessingContext processingContext ) {
     final OutputProcessorMetaData metaData = getMetaData();
-    this.paranoidChecks = "true".equals( metaData.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" ) ) &&
-      processingContext.getOutputProcessorMetaData().isFeatureSupported( OutputProcessorFeature.DESIGNTIME ) == false;
-    this.wrapProgressMarkerInSection = "true".equals( metaData.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection" ) );
+    this.paranoidChecks =
+        "true".equals( metaData.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" ) )
+            && processingContext.getOutputProcessorMetaData().isFeatureSupported( OutputProcessorFeature.DESIGNTIME ) == false;
+    this.wrapProgressMarkerInSection =
+        "true".equals( metaData.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection" ) );
 
     staticPropertiesStep.initialize( metaData, processingContext );
     canvasMinorAxisLayoutStep.initialize( metaData, processingContext );
@@ -309,8 +310,7 @@ public abstract class AbstractRenderer implements Renderer {
     markDirty();
   }
 
-  public void addEmptyRootLevelBand()
-    throws ReportProcessingException {
+  public void addEmptyRootLevelBand() throws ReportProcessingException {
     if ( readOnly ) {
       throw new IllegalStateException();
     }
@@ -318,8 +318,7 @@ public abstract class AbstractRenderer implements Renderer {
     renderModelBuilder.addEmptyRootLevelBand();
   }
 
-  public void addProgressBox()
-    throws ReportProcessingException {
+  public void addProgressBox() throws ReportProcessingException {
     if ( readOnly ) {
       throw new IllegalStateException();
     }
@@ -333,8 +332,7 @@ public abstract class AbstractRenderer implements Renderer {
     }
   }
 
-  public void add( final Band band, final ExpressionRuntime runtime )
-    throws ReportProcessingException {
+  public void add( final Band band, final ExpressionRuntime runtime ) throws ReportProcessingException {
     if ( readOnly ) {
       throw new IllegalStateException();
     }
@@ -342,8 +340,7 @@ public abstract class AbstractRenderer implements Renderer {
     renderModelBuilder.add( runtime, band );
   }
 
-  public void addToNormalFlow( final Band band,
-                               final ExpressionRuntime runtime ) throws ReportProcessingException {
+  public void addToNormalFlow( final Band band, final ExpressionRuntime runtime ) throws ReportProcessingException {
     if ( readOnly ) {
       throw new IllegalStateException();
     }
@@ -351,8 +348,7 @@ public abstract class AbstractRenderer implements Renderer {
     renderModelBuilder.addToNormalFlow( runtime, band );
   }
 
-  public LayoutResult validatePages()
-    throws ContentProcessingException {
+  public LayoutResult validatePages() throws ContentProcessingException {
     if ( readOnly ) {
       throw new IllegalStateException();
     }
@@ -372,8 +368,7 @@ public abstract class AbstractRenderer implements Renderer {
 
       setLastStateKey( null );
       setPagebreaks( 0 );
-      if ( validateModelStep.isLayoutable( pageBox ) == false ) // STRUCT
-      {
+      if ( validateModelStep.isLayoutable( pageBox ) == false ) { // STRUCT
         if ( logger.isDebugEnabled() ) {
           logger.debug( "Content-Ref# " + pageBox.getContentRefCount() );
         }
@@ -420,12 +415,11 @@ public abstract class AbstractRenderer implements Renderer {
   protected abstract boolean isPageFinished();
 
   public void processIncrementalUpdate( final boolean performOutput ) throws ContentProcessingException {
-    //    dirty = false;
+    // dirty = false;
   }
 
-  public boolean processPage( final LayoutPagebreakHandler handler,
-                              final Object commitMarker,
-                              final boolean performOutput ) throws ContentProcessingException {
+  public boolean processPage( final LayoutPagebreakHandler handler, final Object commitMarker,
+      final boolean performOutput ) throws ContentProcessingException {
     if ( readOnly ) {
       throw new IllegalStateException();
     }
@@ -436,12 +430,12 @@ public abstract class AbstractRenderer implements Renderer {
       final LogicalPageBox pageBox = getPageBox();
       if ( pageBox == null ) {
         // StartReport has not been called yet ..
-        //      Log.debug ("PageBox null");
+        // Log.debug ("PageBox null");
         return false;
       }
 
       if ( dirty == false ) {
-        //      Log.debug ("Not dirty");
+        // Log.debug ("Not dirty");
         return false;
       }
 
@@ -492,14 +486,14 @@ public abstract class AbstractRenderer implements Renderer {
     }
   }
 
-  protected abstract boolean performPagination( LayoutPagebreakHandler handler,
-                                                final boolean performOutput )
+  protected abstract boolean performPagination( LayoutPagebreakHandler handler, final boolean performOutput )
     throws ContentProcessingException;
 
   /**
    * A hook to allow easier debugging.
    *
-   * @param pageBox the current page box.
+   * @param pageBox
+   *          the current page box.
    * @noinspection NoopMethodInAbstractClass
    */
   protected void debugPrint( final LogicalPageBox pageBox ) {
@@ -621,7 +615,6 @@ public abstract class AbstractRenderer implements Renderer {
     }
   }
 
-
   public void applyAutoCommit() {
     final LogicalPageBox pageBox = getPageBox();
     if ( pageBox != null ) {
@@ -649,7 +642,7 @@ public abstract class AbstractRenderer implements Renderer {
   public void newPageStarted() {
     if ( logger.isDebugEnabled() ) {
       logger.debug( "================================ CLEAR HEADER AND FOOTER ==================================: "
-        + getPageCount() );
+          + getPageCount() );
     }
 
     final LogicalPageBox pageBox = getPageBox();
@@ -668,17 +661,11 @@ public abstract class AbstractRenderer implements Renderer {
    * @param rollback
    */
   @SuppressWarnings( "UnusedDeclaration" )
-  public void printLayoutStateToFile( final ProcessState state,
-                                      final boolean print,
-                                      final boolean rollback ) {
+  public void printLayoutStateToFile( final ProcessState state, final boolean print, final boolean rollback ) {
     /*
-    if (((state.getSequenceCounter() <= 14440 || state.getSequenceCounter() >= 14445)) ||
-        (state.getSequenceCounter() % 1) != 0)
-    {
-      return;
-    }
-
-*/
+     * if (((state.getSequenceCounter() <= 14440 || state.getSequenceCounter() >= 14445)) || (state.getSequenceCounter()
+     * % 1) != 0) { return; }
+     */
     String fileName = "test-output/" + state.getSequenceCounter();
     fileName += print ? "-print" : "-paginate";
     fileName += rollback ? "-rb" : "";

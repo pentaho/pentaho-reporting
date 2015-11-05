@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.sql.writer;
 
@@ -48,16 +48,18 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
    * returned is always absolute and can be made relative by using the IOUtils of LibBase. If the writer-handler did not
    * generate a file on its own, it should return null.
    *
-   * @param bundle the bundle where to write to.
-   * @param state  the writer state to hold the current processing information.
+   * @param bundle
+   *          the bundle where to write to.
+   * @param state
+   *          the writer state to hold the current processing information.
    * @return the name of the newly generated file or null if no file was created.
-   * @throws IOException           if any error occured
-   * @throws BundleWriterException if a bundle-management error occured.
+   * @throws IOException
+   *           if any error occured
+   * @throws BundleWriterException
+   *           if a bundle-management error occured.
    */
-  public String writeDataFactory( final WriteableDocumentBundle bundle,
-                                  final DataFactory dataFactory,
-                                  final BundleWriterState state )
-    throws IOException, BundleWriterException {
+  public String writeDataFactory( final WriteableDocumentBundle bundle, final DataFactory dataFactory,
+      final BundleWriterState state ) throws IOException, BundleWriterException {
     if ( bundle == null ) {
       throw new NullPointerException();
     }
@@ -67,7 +69,6 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
     if ( state == null ) {
       throw new NullPointerException();
     }
-
 
     final SQLReportDataFactory df = (SQLReportDataFactory) dataFactory;
 
@@ -90,8 +91,8 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
     tagDescription.setElementHasCData( SQLDataFactoryModule.NAMESPACE, "url", true );
     tagDescription.setElementHasCData( SQLDataFactoryModule.NAMESPACE, "username", true );
 
-    final XmlWriter xmlWriter = new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ",
-      "\n" );
+    final XmlWriter xmlWriter =
+        new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ", "\n" );
     final AttributeList rootAttrs = new AttributeList();
     rootAttrs.addNamespaceDeclaration( "data", SQLDataFactoryModule.NAMESPACE );
     xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "sql-datasource", rootAttrs, XmlWriterSupport.OPEN );
@@ -106,8 +107,8 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
     final String globalScript = df.getGlobalScript();
     final String globalScriptLanguage = df.getGlobalScriptLanguage();
     if ( StringUtils.isEmpty( globalScript ) == false && StringUtils.isEmpty( globalScriptLanguage ) == false ) {
-      xmlWriter.writeTag
-        ( SQLDataFactoryModule.NAMESPACE, "global-script", "language", globalScriptLanguage, XmlWriterSupport.OPEN );
+      xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "global-script", "language", globalScriptLanguage,
+          XmlWriterSupport.OPEN );
       xmlWriter.writeTextNormalized( globalScript, false );
       xmlWriter.writeCloseTag();
     }
@@ -115,7 +116,7 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
     xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "query-definitions", XmlWriterSupport.OPEN );
     final String[] queryNames = df.getQueryNames();
     for ( int i = 0; i < queryNames.length; i++ ) {
-      final String queryName = queryNames[ i ];
+      final String queryName = queryNames[i];
       final String query = df.getQuery( queryName );
       xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN );
 
@@ -126,14 +127,13 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
       final String queryScriptLanguage = df.getScriptingLanguage( queryName );
       final String queryScript = df.getScript( queryName );
 
-      if ( StringUtils.isEmpty( queryScript ) == false &&
-        ( StringUtils.isEmpty( queryScriptLanguage ) == false
-          || StringUtils.isEmpty( globalScriptLanguage ) == false ) ) {
+      if ( StringUtils.isEmpty( queryScript ) == false
+          && ( StringUtils.isEmpty( queryScriptLanguage ) == false || StringUtils.isEmpty( globalScriptLanguage ) == false ) ) {
         if ( StringUtils.isEmpty( queryScriptLanguage ) ) {
           xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "script", XmlWriterSupport.OPEN );
         } else {
           xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "script", "language", queryScriptLanguage,
-            XmlWriterSupport.OPEN );
+              XmlWriterSupport.OPEN );
         }
         xmlWriter.writeTextNormalized( queryScript, false );
         xmlWriter.writeCloseTag();
@@ -149,17 +149,15 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
     return fileName;
   }
 
-  private void writeConnectionInfo( final WriteableDocumentBundle bundle,
-                                    final BundleWriterState state,
-                                    final XmlWriter xmlWriter,
-                                    final ConnectionProvider connectionProvider )
-    throws IOException, BundleWriterException {
+  private void writeConnectionInfo( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final XmlWriter xmlWriter, final ConnectionProvider connectionProvider ) throws IOException,
+    BundleWriterException {
     final String configKey = SQLDataFactoryModule.CONNECTION_WRITER_PREFIX + connectionProvider.getClass().getName();
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
     final String value = globalConfig.getConfigProperty( configKey );
     if ( value != null ) {
-      final ConnectionProviderWriteHandler handler = ObjectUtilities.loadAndInstantiate
-        ( value, SQLReportDataFactory.class, ConnectionProviderWriteHandler.class );
+      final ConnectionProviderWriteHandler handler =
+          ObjectUtilities.loadAndInstantiate( value, SQLReportDataFactory.class, ConnectionProviderWriteHandler.class );
       if ( handler != null ) {
         handler.writeReport( bundle, state, xmlWriter, connectionProvider );
       }

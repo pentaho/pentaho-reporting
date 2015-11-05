@@ -1,34 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.survey;
 
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
-import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
-import org.pentaho.reporting.engine.classic.core.util.ReportDrawable;
-import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.serializer.SerializerHelper;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Ellipse2D;
@@ -41,14 +37,25 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
+import org.pentaho.reporting.engine.classic.core.util.ReportDrawable;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.serializer.SerializerHelper;
+
 /**
- * Draws a survey scale.  By implementing the Drawable interface, instances can be displayed within a report using
- * elemnts that use the {@link org.pentaho.reporting.engine.classic.core.filter.types.ContentType} class.
+ * Draws a survey scale. By implementing the Drawable interface, instances can be displayed within a report using
+ * elements that use the {@link org.pentaho.reporting.engine.classic.core.filter.types.ContentType} class.
  *
  * @author David Gilbert
  */
 public class SurveyScale implements ReportDrawable, Serializable {
-  private static final Number[] EMPTY_VALUES = new Number[ 0 ];
+  private static final Number[] EMPTY_VALUES = new Number[0];
 
   /**
    * The lowest response value on the scale.
@@ -159,14 +166,17 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Creates a new instance.
    *
-   * @param lowest  the lowest response value on the scale.
-   * @param highest the highest response value on the scale.
-   * @param values  the values to display.
+   * @param lowest
+   *          the lowest response value on the scale.
+   * @param highest
+   *          the highest response value on the scale.
+   * @param values
+   *          the values to display.
    */
-  public SurveyScale( final int lowest, final int highest,
-                      final Number[] values ) {
-    final String configFontMetricsStringBounds = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.misc.survey.UseFontMetricsGetStringBounds", "auto" );
+  public SurveyScale( final int lowest, final int highest, final Number[] values ) {
+    final String configFontMetricsStringBounds =
+        ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.misc.survey.UseFontMetricsGetStringBounds", "auto" );
     if ( "auto".equals( configFontMetricsStringBounds ) ) {
       useFontMetricsGetStringBounds = ( ObjectUtilities.isJDK14() == true );
     } else {
@@ -278,7 +288,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Creates a diamond shape.
    *
-   * @param s the size factor (equal to half the height of the diamond).
+   * @param s
+   *          the size factor (equal to half the height of the diamond).
    * @return A diamond shape.
    */
   public static Shape createDiamond( final float s ) {
@@ -294,7 +305,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Creates a triangle shape that points upwards.
    *
-   * @param s the size factor (equal to half the height of the triangle).
+   * @param s
+   *          the size factor (equal to half the height of the triangle).
    * @return A triangle shape.
    */
   public static Shape createUpTriangle( final float s ) {
@@ -309,7 +321,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Creates a triangle shape that points downwards.
    *
-   * @param s the size factor (equal to half the height of the triangle).
+   * @param s
+   *          the size factor (equal to half the height of the triangle).
    * @return A triangle shape.
    */
   public static Shape createDownTriangle( final float s ) {
@@ -321,9 +334,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
     return p0;
   }
 
-
   /**
-   * Returns the lower bound of the highlighted range.  A <code>null</code> value indicates that no range is set for
+   * Returns the lower bound of the highlighted range. A <code>null</code> value indicates that no range is set for
    * highlighting.
    *
    * @return The lower bound (possibly <code>null</code>).
@@ -335,14 +347,15 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the lower bound for the range that is highlighted on the scale.
    *
-   * @param bound the lower bound (<code>null</code> permitted).
+   * @param bound
+   *          the lower bound (<code>null</code> permitted).
    */
   public void setRangeLowerBound( final Number bound ) {
     this.rangeLowerBound = bound;
   }
 
   /**
-   * Returns the upper bound of the highlighted range.  A <code>null</code> value indicates that no range is set for
+   * Returns the upper bound of the highlighted range. A <code>null</code> value indicates that no range is set for
    * highlighting.
    *
    * @return The upper bound (possibly <code>null</code>).
@@ -354,7 +367,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the upper bound for the range that is highlighted on the scale.
    *
-   * @param bound the upper bound (<code>null</code> permitted).
+   * @param bound
+   *          the upper bound (<code>null</code> permitted).
    */
   public void setRangeUpperBound( final Number bound ) {
     this.rangeUpperBound = bound;
@@ -372,7 +386,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the flag that controls whether the tick marks are drawn.
    *
-   * @param flag a boolean.
+   * @param flag
+   *          a boolean.
    */
   public void setDrawTickMarks( final boolean flag ) {
     this.drawTickMarks = flag;
@@ -390,7 +405,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets a flag that controls whether or not scale values are drawn.
    *
-   * @param flag the flag.
+   * @param flag
+   *          the flag.
    */
   public void setDrawScaleValues( final boolean flag ) {
     this.drawScaleValues = flag;
@@ -408,7 +424,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the font used to display the scale values.
    *
-   * @param font the font (<code>null</code> not permitted).
+   * @param font
+   *          the font (<code>null</code> not permitted).
    */
   public void setScaleValueFont( final Font font ) {
     this.scaleValueFont = font;
@@ -426,7 +443,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the color used to draw the scale values.
    *
-   * @param paint the paint (<code>null</code> not permitted).
+   * @param paint
+   *          the paint (<code>null</code> not permitted).
    */
   public void setScaleValuePaint( final Paint paint ) {
     if ( paint == null ) {
@@ -438,7 +456,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Returns the shape used to indicate the value of a response.
    *
-   * @param index the value index (zero-based).
+   * @param index
+   *          the value index (zero-based).
    * @return The shape.
    */
   public Shape getShape( final int index ) {
@@ -454,8 +473,10 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the shape used to mark a particular value in the dataset.
    *
-   * @param index the value index (zero-based).
-   * @param shape the shape (<code>null</code> not permitted).
+   * @param index
+   *          the value index (zero-based).
+   * @param shape
+   *          the shape (<code>null</code> not permitted).
    */
   public void setShape( final int index, final Shape shape ) {
     if ( index < 0 ) {
@@ -475,8 +496,10 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the shape used to mark a particular value in the dataset.
    *
-   * @param index the value index (zero-based).
-   * @param shape the shape (<code>null</code> not permitted).
+   * @param index
+   *          the value index (zero-based).
+   * @param shape
+   *          the shape (<code>null</code> not permitted).
    */
   public void setShape( final int index, final SurveyScaleShapeType shape ) {
     if ( index < 0 ) {
@@ -496,7 +519,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Returns a flag that controls whether the shape for a particular value should be filled.
    *
-   * @param index the value index (zero-based).
+   * @param index
+   *          the value index (zero-based).
    * @return A boolean.
    */
   public boolean isShapeFilled( final int index ) {
@@ -515,11 +539,13 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the flag that controls whether the shape for a particular value should be filled.
    *
-   * @param index the value index (zero-based).
-   * @param fill  the flag.
+   * @param index
+   *          the value index (zero-based).
+   * @param fill
+   *          the flag.
    */
   public void setShapeFilled( final int index, final boolean fill ) {
-    //noinspection ConditionalExpression
+    // noinspection ConditionalExpression
     this.fillShapes.set( index, fill ? Boolean.TRUE : Boolean.FALSE );
   }
 
@@ -535,7 +561,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Sets the paint used to highlight the range (if one is specified).
    *
-   * @param paint the paint (<code>null</code> not permitted).
+   * @param paint
+   *          the paint (<code>null</code> not permitted).
    */
   public void setRangePaint( final Paint paint ) {
     if ( paint == null ) {
@@ -556,8 +583,10 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Redefines the default shape.
    *
-   * @param defaultShape the default shape
-   * @throws NullPointerException if the given shape is null.
+   * @param defaultShape
+   *          the default shape
+   * @throws NullPointerException
+   *           if the given shape is null.
    */
   public void setDefaultShape( final Shape defaultShape ) {
     if ( defaultShape == null ) {
@@ -629,8 +658,10 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Draws the survey scale.
    *
-   * @param g2   the graphics device.
-   * @param area the area.
+   * @param g2
+   *          the graphics device.
+   * @param area
+   *          the area.
    */
   public void draw( final Graphics2D g2, final Rectangle2D area ) {
     drawRangeArea( area, g2 );
@@ -648,8 +679,7 @@ public class SurveyScale implements ReportDrawable, Serializable {
     drawValues( g2, area );
   }
 
-  protected void drawValues( final Graphics2D g2,
-                             final Rectangle2D area ) {
+  protected void drawValues( final Graphics2D g2, final Rectangle2D area ) {
 
     // draw data values...
     final Number[] values = getValues();
@@ -664,7 +694,7 @@ public class SurveyScale implements ReportDrawable, Serializable {
 
     g2.setPaint( getFillPaint() );
     for ( int i = 0; i < values.length; i++ ) {
-      final Number n = values[ i ];
+      final Number n = values[i];
       if ( n == null ) {
         continue;
       }
@@ -729,7 +759,6 @@ public class SurveyScale implements ReportDrawable, Serializable {
         width = fm.stringWidth( text );
       }
 
-
       final LineMetrics metrics = f.getLineMetrics( text, frc );
       final float descent = metrics.getDescent();
       final float leading = metrics.getLeading();
@@ -747,14 +776,12 @@ public class SurveyScale implements ReportDrawable, Serializable {
     for ( int i = getLowest(); i <= highest; i++ ) {
       for ( int j = 0; j < 10; j++ ) {
         final double xx = valueToJava2D( i + j / 10.0, area );
-        final Line2D mark = new Line2D.Double( xx, area.getCenterY() - 2.0, xx,
-          area.getCenterY() + 2.0 );
+        final Line2D mark = new Line2D.Double( xx, area.getCenterY() - 2.0, xx, area.getCenterY() + 2.0 );
         g2.draw( mark );
       }
     }
     final double xx = valueToJava2D( highest, area );
-    final Line2D mark = new Line2D.Double( xx, area.getCenterY() - 2.0, xx,
-      area.getCenterY() + 2.0 );
+    final Line2D mark = new Line2D.Double( xx, area.getCenterY() - 2.0, xx, area.getCenterY() + 2.0 );
     g2.draw( mark );
   }
 
@@ -766,8 +793,7 @@ public class SurveyScale implements ReportDrawable, Serializable {
     }
     final double x0 = valueToJava2D( rangeLowerBound.doubleValue(), area );
     final double x1 = valueToJava2D( rangeUpperBound.doubleValue(), area );
-    final Rectangle2D rangeArea = new Rectangle2D.Double( x0, area.getY(),
-      ( x1 - x0 ), area.getHeight() );
+    final Rectangle2D rangeArea = new Rectangle2D.Double( x0, area.getY(), ( x1 - x0 ), area.getHeight() );
     g2.setPaint( getRangePaint() );
     g2.fill( rangeArea );
   }
@@ -775,22 +801,21 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Translates a data value to Java2D coordinates.
    *
-   * @param value the value.
-   * @param area  the area.
+   * @param value
+   *          the value.
+   * @param area
+   *          the area.
    * @return The Java2D coordinate.
    */
-  private double valueToJava2D( final double value,
-                                final Rectangle2D area ) {
+  private double valueToJava2D( final double value, final Rectangle2D area ) {
 
     final double upperBound = getUpperBound();
     final double lowerBound = getLowerBound();
-    return area.getMinX() + ( ( value - lowerBound ) /
-      ( upperBound - lowerBound ) * area.getWidth() );
+    return area.getMinX() + ( ( value - lowerBound ) / ( upperBound - lowerBound ) * area.getWidth() );
 
   }
 
-  private void writeObject( final ObjectOutputStream out )
-    throws IOException {
+  private void writeObject( final ObjectOutputStream out ) throws IOException {
     out.defaultWriteObject();
     final SerializerHelper helper = SerializerHelper.getInstance();
     helper.writeObject( scaleValuePaint, out );
@@ -808,8 +833,7 @@ public class SurveyScale implements ReportDrawable, Serializable {
     }
   }
 
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     final SerializerHelper helper = SerializerHelper.getInstance();
     scaleValuePaint = (Paint) helper.readObject( in );
@@ -833,7 +857,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
    * Provides the current report configuration of the current report process to the drawable. The report configuration
    * can be used to configure the drawing process through the report.
    *
-   * @param config the report configuration.
+   * @param config
+   *          the report configuration.
    */
   public void setConfiguration( final Configuration config ) {
   }
@@ -841,7 +866,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Provides the computed stylesheet of the report element that contained this drawable. The stylesheet is immutable.
    *
-   * @param style the stylesheet.
+   * @param style
+   *          the stylesheet.
    */
   public void setStyleSheet( final StyleSheet style ) {
     this.styleSheet = style;
@@ -872,7 +898,8 @@ public class SurveyScale implements ReportDrawable, Serializable {
   /**
    * Defines the resource-bundle factory that can be used to localize the drawing process.
    *
-   * @param bundleFactory the resource-bundle factory.
+   * @param bundleFactory
+   *          the resource-bundle factory.
    */
   public void setResourceBundleFactory( final ResourceBundleFactory bundleFactory ) {
   }

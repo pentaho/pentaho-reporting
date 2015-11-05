@@ -26,8 +26,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public interface FormattedDataBuilder {
-  void compute( Band band,
-                ExpressionRuntime runtime,
-                OutputStream out )
-    throws ReportProcessingException, ContentProcessingException, IOException;
+  void compute( Band band, ExpressionRuntime runtime, OutputStream out ) throws ReportProcessingException,
+    ContentProcessingException, IOException;
 }

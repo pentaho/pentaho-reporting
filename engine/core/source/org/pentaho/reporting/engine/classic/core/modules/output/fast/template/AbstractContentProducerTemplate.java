@@ -72,23 +72,19 @@ public abstract class AbstractContentProducerTemplate implements FastExportTempl
 
   }
 
-  protected abstract void writeContent( final Band band,
-                                        final ExpressionRuntime runtime,
-                                        final FormattedDataBuilder messageFormatSupport )
-    throws IOException, ReportProcessingException, ContentProcessingException;
+  protected abstract void writeContent( final Band band, final ExpressionRuntime runtime,
+      final FormattedDataBuilder messageFormatSupport ) throws IOException, ReportProcessingException,
+    ContentProcessingException;
 
-  public void initialize( final ReportDefinition report,
-                          final ExpressionRuntime runtime,
-                          final boolean pagination ) {
+  public void initialize( final ReportDefinition report, final ExpressionRuntime runtime, final boolean pagination ) {
     metaData = runtime.getProcessingContext().getOutputProcessorMetaData();
   }
 
-  protected FormattedDataBuilder createTemplate( final Band band,
-                                                 final ExpressionRuntime runtime )
+  protected FormattedDataBuilder createTemplate( final Band band, final ExpressionRuntime runtime )
     throws ReportProcessingException, ContentProcessingException {
     FastExportTemplateProducer templateListener = createTemplateProducer();
-    final OutputProcessor op = new TemplatingOutputProcessor
-      ( runtime.getProcessingContext().getOutputProcessorMetaData(), templateListener );
+    final OutputProcessor op =
+        new TemplatingOutputProcessor( runtime.getProcessingContext().getOutputProcessorMetaData(), templateListener );
     FastSheetLayoutProducer.performLayout( band, runtime, op );
     return templateListener.createDataBuilder();
   }

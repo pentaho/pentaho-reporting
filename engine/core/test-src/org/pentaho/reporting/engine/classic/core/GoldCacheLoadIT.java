@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -62,7 +62,7 @@ public class GoldCacheLoadIT extends GoldTestBase {
 
   protected MasterReport postProcess( final MasterReport report ) throws Exception {
     final Object dataCacheEnabledRaw =
-      report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
+        report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
     assertFalse( Boolean.FALSE.equals( dataCacheEnabledRaw ) );
 
     masterReportList.put( new Long( Thread.currentThread().getId() ), report );
@@ -77,26 +77,26 @@ public class GoldCacheLoadIT extends GoldTestBase {
     ResourceManager resourceManager = report.getResourceManager();
 
     // TODO - validate that the cache is provisioned correctly (especially diskPersistence)
-    //    resourceManager.getBundleCache().
-
+    // resourceManager.getBundleCache().
 
     String[] queryNames = report.getDataFactory().getQueryNames();
     assertNotNull( queryNames );
     assertEquals( 2, queryNames.length );
-    assertEquals( "TerritoryList", queryNames[ 0 ] );
-    assertEquals( "Query 1", queryNames[ 1 ] );
+    assertEquals( "TerritoryList", queryNames[0] );
+    assertEquals( "Query 1", queryNames[1] );
 
     PageDefinition pageDefinition = report.getPageDefinition();
     assertNotNull( pageDefinition );
 
     // TODO - this was causing failures - not sure why
-    //    assertEquals(576.0, pageDefinition.getHeight());
-    //    assertEquals(734.0, pageDefinition.getWidth());
+    // assertEquals(576.0, pageDefinition.getHeight());
+    // assertEquals(734.0, pageDefinition.getWidth());
     assertEquals( 1, pageDefinition.getPageCount() );
 
     Configuration configuration = report.getConfiguration();
-    String configDate = configuration
-      .getConfigProperty( "org.pentaho.reporting.engine.classic.core.environment.::internal::report.date" );
+    String configDate =
+        configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.environment.::internal::report.date" );
     assertEquals( "2011-04-07T15:00:00.000+0000", configDate );
 
     // TODO - add more tests to validate against a corrupt report

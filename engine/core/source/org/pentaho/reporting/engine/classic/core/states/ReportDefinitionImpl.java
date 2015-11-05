@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states;
 
@@ -47,8 +47,7 @@ import java.util.Set;
 
 /**
  * A report definition. This the working copy of the JFreeReport object. This object is not serializable, as it is used
- * internally. This implementation is not intended to be known outside. Whatever you planned to do with it - dont do
- * it!
+ * internally. This implementation is not intended to be known outside. Whatever you planned to do with it - dont do it!
  * <p/>
  * Its only pupose is to be used and manipulated in the report states, there is no reason to do it outside.
  *
@@ -93,20 +92,20 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition {
   /**
    * Creates a report definition from a report object.
    *
-   * @param report         the report.
-   * @param pageDefinition the current page definition.
-   * @throws ReportProcessingException if there is a problem cloning.
+   * @param report
+   *          the report.
+   * @param pageDefinition
+   *          the current page definition.
+   * @throws ReportProcessingException
+   *           if there is a problem cloning.
    */
-  public ReportDefinitionImpl( final MasterReport report,
-                               final PageDefinition pageDefinition )
+  public ReportDefinitionImpl( final MasterReport report, final PageDefinition pageDefinition )
     throws ReportProcessingException {
     super( report.getObjectID() );
     copyReport( report, pageDefinition );
   }
 
-  public ReportDefinitionImpl( final SubReport report,
-                               final PageDefinition pageDefinition,
-                               final Section parentSection )
+  public ReportDefinitionImpl( final SubReport report, final PageDefinition pageDefinition, final Section parentSection )
     throws ReportProcessingException {
     super( report.getObjectID() );
     copyReport( report, pageDefinition );
@@ -131,10 +130,10 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition {
 
     final String[] attrExprNamespaces = report.getAttributeExpressionNamespaces();
     for ( int i = 0; i < attrExprNamespaces.length; i++ ) {
-      final String namespace = attrExprNamespaces[ i ];
+      final String namespace = attrExprNamespaces[i];
       final String[] attributeNames = report.getAttributeExpressionNames( namespace );
       for ( int j = 0; j < attributeNames.length; j++ ) {
-        final String name = attributeNames[ j ];
+        final String name = attributeNames[j];
         setAttributeExpression( namespace, name, report.getAttributeExpression( namespace, name ) );
       }
     }
@@ -248,9 +247,9 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition {
   }
 
   /**
-   * Returns the details header  band.
+   * Returns the details header band.
    *
-   * @return The details header  band.
+   * @return The details header band.
    */
   public DetailsFooter getDetailsFooter() {
     final Group group = getInnerMostGroup();
@@ -305,7 +304,9 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition {
   }
 
   /**
-   * Returns the number of groups in this report. <P> Every report has at least one group defined.
+   * Returns the number of groups in this report.
+   * <P>
+   * Every report has at least one group defined.
    *
    * @return the group count.
    */
@@ -338,10 +339,13 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition {
   /**
    * Returns the group at the specified index or null, if there is no such group.
    *
-   * @param groupIndex the group index.
+   * @param groupIndex
+   *          the group index.
    * @return the requested group.
-   * @throws IllegalArgumentException  if the count is negative.
-   * @throws IndexOutOfBoundsException if the count is greater than the number of defined groups.
+   * @throws IllegalArgumentException
+   *           if the count is negative.
+   * @throws IndexOutOfBoundsException
+   *           if the count is greater than the number of defined groups.
    */
   public Group getGroup( final int groupIndex ) {
     if ( groupIndex < 0 ) {
@@ -375,17 +379,16 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition {
         gb = null;
       }
     }
-    throw new IndexOutOfBoundsException(
-      "No group defined at the given index " + groupIndex + " . Max-index=" + result );
+    throw new IndexOutOfBoundsException( "No group defined at the given index " + groupIndex + " . Max-index=" + result );
   }
 
   /**
    * Creates and returns a copy of this object.
    *
    * @return a clone of this instance.
-   * @throws CloneNotSupportedException if the object's class does not support the <code>Cloneable</code> interface.
-   *                                    Subclasses that override the <code>clone</code> method can also throw this
-   *                                    exception to indicate that an instance cannot be cloned.
+   * @throws CloneNotSupportedException
+   *           if the object's class does not support the <code>Cloneable</code> interface. Subclasses that override the
+   *           <code>clone</code> method can also throw this exception to indicate that an instance cannot be cloned.
    * @see java.lang.Cloneable
    */
   public ReportDefinitionImpl clone() {
@@ -456,13 +459,13 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition {
   }
 
   protected void removeElement( final Element element ) {
-    throw new UnsupportedOperationException
-      ( "Method 'removeElement' is not supported in the read-only report-definition." );
+    throw new UnsupportedOperationException(
+        "Method 'removeElement' is not supported in the read-only report-definition." );
   }
 
   public void setElementAt( final int position, final Element element ) {
-    throw new UnsupportedOperationException
-      ( "Method 'removeElement' is not supported in the read-only report-definition." );
+    throw new UnsupportedOperationException(
+        "Method 'removeElement' is not supported in the read-only report-definition." );
   }
 
   public int getElementCount() {
@@ -470,7 +473,7 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition {
   }
 
   public Element getElement( final int index ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         return pageHeader;
       case 1:

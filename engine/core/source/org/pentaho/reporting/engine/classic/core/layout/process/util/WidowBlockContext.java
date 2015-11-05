@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
@@ -40,10 +40,8 @@ public class WidowBlockContext implements WidowContext {
   public WidowBlockContext() {
   }
 
-  public void init( final StackedObjectPool<WidowBlockContext> pool,
-                    final WidowContext parent,
-                    final RenderBox contextBox,
-                    final int widows ) {
+  public void init( final StackedObjectPool<WidowBlockContext> pool, final WidowContext parent,
+      final RenderBox contextBox, final int widows ) {
     this.breakMarkerSeen = false;
     this.pool = pool;
     this.parent = parent;
@@ -61,7 +59,6 @@ public class WidowBlockContext implements WidowContext {
       }
     }
   }
-
 
   public void startChild( final RenderBox box ) {
     currentNode = box;
@@ -169,11 +166,10 @@ public class WidowBlockContext implements WidowContext {
 
   public void subContextCommitted( final RenderBox contextBox ) {
     final long cachedY2 = contextBox.getCachedY2();
-    if ( cachedY2 > getWidowValue() ||
-      ( cachedY2 == this.contextBox.getCachedY2() && cachedY2 == getWidowValue() ) ) {
+    if ( cachedY2 > getWidowValue() || ( cachedY2 == this.contextBox.getCachedY2() && cachedY2 == getWidowValue() ) ) {
       widowOverride = Math.min( widowOverride, cachedY2 - contextBox.getWidowConstraintSize() );
       widowOverrideWithKeepTogether =
-        Math.min( widowOverrideWithKeepTogether, cachedY2 - contextBox.getWidowConstraintSizeWithKeepTogether() );
+          Math.min( widowOverrideWithKeepTogether, cachedY2 - contextBox.getWidowConstraintSizeWithKeepTogether() );
     }
 
     if ( parent != null ) {

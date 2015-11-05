@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.testsupport.base;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
-
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class ExpressionTestHelper {
   private static final Log logger = LogFactory.getLog( ExpressionTestHelper.class );
@@ -78,8 +78,8 @@ public class ExpressionTestHelper {
     return false;
   }
 
-  private static void validateCoreMetaData( final ExpressionMetaData metaData,
-                                            final ArrayList<String> missingProperties ) {
+  private static void
+    validateCoreMetaData( final ExpressionMetaData metaData, final ArrayList<String> missingProperties ) {
     final Locale locale = Locale.getDefault();
     final String typeName = metaData.getName();
 
@@ -100,29 +100,28 @@ public class ExpressionTestHelper {
   }
 
   private static void validatePropertyMetaData( final ExpressionMetaData metaData,
-                                                final ArrayList<String> missingProperties ) {
+      final ArrayList<String> missingProperties ) {
     final Locale locale = Locale.getDefault();
     final String typeName = metaData.getName();
 
     final ExpressionPropertyMetaData[] styleMetaDatas = metaData.getPropertyDescriptions();
     for ( int j = 0; j < styleMetaDatas.length; j++ ) {
-      final ExpressionPropertyMetaData propertyMetaData = styleMetaDatas[ j ];
+      final ExpressionPropertyMetaData propertyMetaData = styleMetaDatas[j];
       final String propertyDisplayName = propertyMetaData.getDisplayName( locale );
       if ( isValid( propertyDisplayName, propertyMetaData.getName(), missingProperties ) == false ) {
-        logger
-          .warn( "ExpressionMetaData '" + typeName + ": Property " + propertyMetaData.getName() + ": No DisplayName" );
+        logger.warn( "ExpressionMetaData '" + typeName + ": Property " + propertyMetaData.getName()
+            + ": No DisplayName" );
       }
 
       final String propertyGrouping = propertyMetaData.getGrouping( locale );
       if ( isValid( propertyGrouping, "Required", missingProperties ) == false ) {
-        logger.warn(
-          "ExpressionMetaData '" + typeName + ": Property " + propertyMetaData.getName() + ": Grouping is not valid" );
+        logger.warn( "ExpressionMetaData '" + typeName + ": Property " + propertyMetaData.getName()
+            + ": Grouping is not valid" );
       }
       if ( propertyMetaData.isDeprecated() ) {
         final String deprecateMessage = propertyMetaData.getDeprecationMessage( locale );
         if ( isValid( deprecateMessage, "Deprecated", missingProperties ) == false ) {
-          logger.warn(
-            "ExpressionMetaData '" + typeName + ": Property " + propertyMetaData.getName()
+          logger.warn( "ExpressionMetaData '" + typeName + ": Property " + propertyMetaData.getName()
               + ": No valid deprecate message" );
         }
       }
@@ -133,9 +132,8 @@ public class ExpressionTestHelper {
     if ( translation == null ) {
       return false;
     }
-    if ( translation.length() > 2 &&
-      translation.charAt( 0 ) == '!' &&
-      translation.charAt( translation.length() - 1 ) == '!' ) {
+    if ( translation.length() > 2 && translation.charAt( 0 ) == '!'
+        && translation.charAt( translation.length() - 1 ) == '!' ) {
       final String retval = translation.substring( 1, translation.length() - 1 );
       missingProperties.add( retval + "=" + displayName );
       return false;

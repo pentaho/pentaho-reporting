@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -64,18 +64,19 @@ public class LeftAlignmentProcessorTest extends TestCase {
 
   private RenderNode createText( String text ) {
     final CodePointBuffer buffer = Utf16LE.getInstance().decodeString( text, null );
-    final int[] bufferArray = buffer.getBuffer( new int[ 0 ] );
+    final int[] bufferArray = buffer.getBuffer( new int[0] );
 
     final RenderableTextFactory textFactory = new DefaultRenderableTextFactory( outputProcessorMetaData );
     textFactory.startText();
 
-    final RenderNode[] renderNodes = textFactory.createText( bufferArray, 0, buffer.getLength(),
-      SimpleStyleSheet.EMPTY_STYLE, AutoLayoutBoxType.INSTANCE, new InstanceID(), ReportAttributeMap.EMPTY_MAP );
+    final RenderNode[] renderNodes =
+        textFactory.createText( bufferArray, 0, buffer.getLength(), SimpleStyleSheet.EMPTY_STYLE,
+            AutoLayoutBoxType.INSTANCE, new InstanceID(), ReportAttributeMap.EMPTY_MAP );
     final RenderNode[] finishNodes = textFactory.finishText();
     if ( renderNodes.length > 0 ) {
-      return renderNodes[ 0 ];
+      return renderNodes[0];
     }
-    return finishNodes[ 0 ];
+    return finishNodes[0];
   }
 
   public void testSimpleCase() {
@@ -87,8 +88,8 @@ public class LeftAlignmentProcessorTest extends TestCase {
     list.add( EndSequenceElement.INSTANCE, new InlineRenderBox() );
 
     final LeftAlignmentProcessor p = new LeftAlignmentProcessor();
-    p.initialize( outputProcessorMetaData, list,
-      StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 90 ), pageGrid, false );
+    p.initialize( outputProcessorMetaData, list, StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility
+        .toInternalValue( 90 ), pageGrid, false );
     assertTrue( p.hasNext() );
     final RenderBox next = p.next();
 
@@ -99,32 +100,32 @@ public class LeftAlignmentProcessorTest extends TestCase {
     final DefaultSequenceList list = new DefaultSequenceList();
     list.add( StartSequenceElement.INSTANCE, new InlineRenderBox() );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
     list.add( EndSequenceElement.INSTANCE, new InlineRenderBox() );
 
     final LeftAlignmentProcessor p = new LeftAlignmentProcessor();
-    p.initialize( outputProcessorMetaData, list,
-      StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 60 ), pageGrid, false );
+    p.initialize( outputProcessorMetaData, list, StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility
+        .toInternalValue( 60 ), pageGrid, false );
     int count = 0;
     while ( p.hasNext() ) {
       count += 1;
@@ -132,7 +133,7 @@ public class LeftAlignmentProcessorTest extends TestCase {
       assertNotNull( box.getFirstChild() );
       assertFalse( box.getFirstChild() instanceof SpacerRenderNode );
       assertFalse( box.getLastChild() instanceof SpacerRenderNode );
-      //ModelPrinter.print(box);
+      // ModelPrinter.print(box);
     }
     assertEquals( 4, count );
   }
@@ -141,32 +142,32 @@ public class LeftAlignmentProcessorTest extends TestCase {
     final DefaultSequenceList list = new DefaultSequenceList();
     list.add( StartSequenceElement.INSTANCE, new InlineRenderBox() );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
-    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode
-      ( StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
+    list.add( SpacerSequenceElement.INSTANCE, new SpacerRenderNode( StrictGeomUtility.toInternalValue( 10 ),
+        StrictGeomUtility.toInternalValue( 10 ), false, 1 ) );
     list.add( TextSequenceElement.INSTANCE, createText( "Test" ) );
     list.add( EndSequenceElement.INSTANCE, new InlineRenderBox() );
 
     final LeftAlignmentProcessor p = new LeftAlignmentProcessor();
-    p.initialize( outputProcessorMetaData, list,
-      StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility.toInternalValue( 40 ), pageGrid, false );
+    p.initialize( outputProcessorMetaData, list, StrictGeomUtility.toInternalValue( 10 ), StrictGeomUtility
+        .toInternalValue( 40 ), pageGrid, false );
     int count = 0;
     while ( p.hasNext() ) {
       count += 1;

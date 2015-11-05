@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -92,21 +92,21 @@ public final class PaginationStep extends IterateVisualProcessStep {
 
       // Note: For now, we limit both the header and footer to a single physical
       // page. This safes me a lot of trouble for now.
-      final long lastBreakLocal = allCurrentBreaks[ allCurrentBreaks.length - 1 ];
+      final long lastBreakLocal = allCurrentBreaks[allCurrentBreaks.length - 1];
       final long reservedHeight = PaginationStepLib.restrictPageAreaHeights( pageBox, allCurrentBreaks );
       if ( reservedHeight >= lastBreakLocal ) {
         // This is also bad. There will be no space left to print a single element.
         throw new InvalidReportStateException(
-          "Header and footer consume the whole page. No space left for normal-flow." );
+            "Header and footer consume the whole page. No space left for normal-flow." );
       }
 
-      PaginationStepLib
-        .configureBreakUtility( basePageBreakList, pageBox, allCurrentBreaks, reservedHeight, lastBreakLocal );
+      PaginationStepLib.configureBreakUtility( basePageBreakList, pageBox, allCurrentBreaks, reservedHeight,
+          lastBreakLocal );
 
       final long pageEnd = basePageBreakList.getLastMasterBreak();
       final long pageHeight = pageBox.getPageHeight();
-      this.paginationTableState = new PaginationTableState
-        ( pageHeight, pageBox.getPageOffset(), pageEnd, basePageBreakList );
+      this.paginationTableState =
+          new PaginationTableState( pageHeight, pageBox.getPageOffset(), pageEnd, basePageBreakList );
 
       // now process all the other content (excluding the header and footer area)
       if ( startBlockLevelBox( pageBox ) ) {
@@ -169,9 +169,8 @@ public final class PaginationStep extends IterateVisualProcessStep {
 
     // If this box does not cross any (major or minor) break, it may need no additional shifting at all.
     final RenderLength fixedPositionLength = box.getBoxDefinition().getFixedPosition();
-    if ( shiftState.isManualBreakSuspended() ||
-      RenderLength.AUTO.equals( fixedPositionLength ) ||
-      paginationTableState.isFixedPositionProcessingSuspended() ) {
+    if ( shiftState.isManualBreakSuspended() || RenderLength.AUTO.equals( fixedPositionLength )
+        || paginationTableState.isFixedPositionProcessingSuspended() ) {
       return handleAutomaticPagebreak( box, shiftState );
     }
 
@@ -181,7 +180,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
     final long fixedPositionResolved = fixedPositionLength.resolve( paginationTableState.getPageHeight(), 0 );
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     final long fixedPositionInFlow =
-      breakUtility.computeFixedPositionInFlow( shiftedBoxPosition, fixedPositionResolved );
+        breakUtility.computeFixedPositionInFlow( shiftedBoxPosition, fixedPositionResolved );
     if ( fixedPositionInFlow < shiftedBoxPosition ) {
       // ... but the fixed position is invalid, so treat it as non-defined.
       return handleAutomaticPagebreak( box, shiftState );
@@ -191,8 +190,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
     // Compute what happens if the whole box can fit on the current page.
     // We have an opportunity to optimize our processing by skipping all content if there are no
     // manual pagebreaks defined on one of the childs.
-    if ( breakUtility.isCrossingPagebreakWithFixedPosition
-      ( shiftedBoxPosition, box.getHeight(), fixedPositionResolved ) == false ) {
+    if ( breakUtility.isCrossingPagebreakWithFixedPosition( shiftedBoxPosition, box.getHeight(), fixedPositionResolved ) == false ) {
       return handleFixedPositionWithoutBreakOnBox( box, shift, fixedPositionInFlow );
     }
 
@@ -210,9 +208,8 @@ public final class PaginationStep extends IterateVisualProcessStep {
     return true;
   }
 
-  private boolean handleFixedPositionWithoutBreakOnBox( final RenderBox box,
-                                                        final long shift,
-                                                        final long fixedPositionInFlow ) {
+  private boolean handleFixedPositionWithoutBreakOnBox( final RenderBox box, final long shift,
+      final long fixedPositionInFlow ) {
     final long boxY = box.getY();
     final long shiftedBoxPosition = boxY + shift;
     final long fixedPositionDelta = fixedPositionInFlow - shiftedBoxPosition;
@@ -224,8 +221,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
       shiftState.setShift( shift + fixedPositionDelta );
       updateStateKey( box );
       return true;
-    } else // if (breakIndicator == RenderBox.BreakIndicator.NO_MANUAL_BREAK)
-    {
+    } else { // if (breakIndicator == RenderBox.BreakIndicator.NO_MANUAL_BREAK)
       // The whole box fits on the current page. However, we have to apply the shifting to move the box
       // to its defined fixed-position.
       //
@@ -313,7 +309,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
 
     if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION ) {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
-      switch( sectionRenderBox.getDisplayRole() ) {
+      switch ( sectionRenderBox.getDisplayRole() ) {
         case HEADER: {
           shiftState = shiftStatePool.create( box, shiftState );
 
@@ -364,7 +360,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
     final long contextShift = shiftState.getShiftForNextChild();
     // shift the header downwards,
     // 1. Check that this table actually breaks across the current page. Header position must be
-    //    before the pagebox-offset. If not, return false, after the normal shifting.
+    // before the pagebox-offset. If not, return false, after the normal shifting.
     final long pageOffset = paginationTableState.getPageOffset();
     final long delta = pageOffset - ( sectionRenderBox.getY() + contextShift );
     if ( delta <= 0 ) {
@@ -377,7 +373,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
     }
 
     // 2. Shift the whole header downwards so that its upper edge matches the start of the page.
-    //    return false afterwards.
+    // return false afterwards.
 
     if ( logger.isDebugEnabled() ) {
       logger.debug( "HEADER SHIFTED; DELTA = " + delta + " -> " + contextShift );
@@ -385,7 +381,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
     long headerShift = sectionRenderBox.getHeaderShift( pageOffsetKey );
     if ( headerShift == 0 ) {
       final long previousPageOffset =
-        paginationTableState.getBreakPositions().findPageStartPositionForPageEndPosition( pageOffset );
+          paginationTableState.getBreakPositions().findPageStartPositionForPageEndPosition( pageOffset );
       headerShift = sectionRenderBox.getHeaderShift( previousPageOffset ) + box.getHeight();
       if ( logger.isDebugEnabled() ) {
         logger.debug( "HeaderShift: " + headerShift + " <=> " + pageOffset + " ; prevOffset=" + previousPageOffset );
@@ -411,7 +407,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
   protected void finishTableLevelBox( final RenderBox box ) {
     if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION ) {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
-      switch( sectionRenderBox.getDisplayRole() ) {
+      switch ( sectionRenderBox.getDisplayRole() ) {
         case HEADER:
           shiftState = shiftState.pop( box.getInstanceId() );
           paginationTableState = paginationTableState.pop();
@@ -566,25 +562,23 @@ public final class PaginationStep extends IterateVisualProcessStep {
     }
   }
 
-  private boolean handleAutomaticPagebreak( final RenderBox box,
-                                            final PaginationShiftState boxContext ) {
+  private boolean handleAutomaticPagebreak( final RenderBox box, final PaginationShiftState boxContext ) {
     final long shift = boxContext.getShiftForNextChild();
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
-    final long boxHeightAndWidowArea = Math.max
-      ( box.getHeight(), PaginationStepLib.getWidowConstraint( box, boxContext, paginationTableState ) );
+    final long boxHeightAndWidowArea =
+        Math.max( box.getHeight(), PaginationStepLib.getWidowConstraint( box, boxContext, paginationTableState ) );
     if ( breakUtility.isCrossingPagebreak( box.getY(), boxHeightAndWidowArea, shift ) == false ) {
       // The whole box fits on the current page. No need to do anything fancy.
       final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
-      if ( breakIndicator == RenderBox.BreakIndicator.INDIRECT_MANUAL_BREAK ||
-        box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.RESTRICTED ) {
+      if ( breakIndicator == RenderBox.BreakIndicator.INDIRECT_MANUAL_BREAK
+          || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.RESTRICTED ) {
         // One of the children of this box will cause a manual pagebreak. We have to dive deeper into this child.
         // for now, we will only apply the ordinary shift.
         final long boxY = box.getY();
         box.setY( boxY + shift );
         updateStateKey( box );
         return true;
-      } else // if (breakIndicator == RenderBox.BreakIndicator.NO_MANUAL_BREAK)
-      {
+      } else { // if (breakIndicator == RenderBox.BreakIndicator.NO_MANUAL_BREAK)
         // As neither this box nor any of the children will cause a pagebreak, we can shift them and skip the processing
         // from here.
         BoxShifter.shiftBox( box, shift );
@@ -640,9 +634,8 @@ public final class PaginationStep extends IterateVisualProcessStep {
     return true;
   }
 
-  private boolean handleManualBreakOnBox( final RenderBox box,
-                                          final PaginationShiftState boxContext,
-                                          final boolean breakPending ) {
+  private boolean handleManualBreakOnBox( final RenderBox box, final PaginationShiftState boxContext,
+      final boolean breakPending ) {
     final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
     // First check the simple cases:
     // If the box wants to break, then there's no point in waiting: Shift the box and continue.
@@ -655,14 +648,13 @@ public final class PaginationStep extends IterateVisualProcessStep {
       final BreakMarkerRenderBox bmrb = (BreakMarkerRenderBox) box;
       final long pageOffsetForMarker = bmrb.getValidityRange();
       final long pageEndForOffset =
-        paginationTableState.getBreakPositions().findPageEndForPageStartPosition( pageOffsetForMarker );
+          paginationTableState.getBreakPositions().findPageEndForPageStartPosition( pageOffsetForMarker );
       if ( ( box.getY() + shift ) > pageEndForOffset ) {
         // we ignore this one. It has been pushed outside of the page for which it was generated.
         return false;
       }
 
-      if ( this.breakIndicatorEncountered == null ||
-        this.breakIndicatorEncountered.getY() < ( bmrb.getY() + shift ) ) {
+      if ( this.breakIndicatorEncountered == null || this.breakIndicatorEncountered.getY() < ( bmrb.getY() + shift ) ) {
         this.breakIndicatorEncountered = bmrb;
       }
     }
@@ -674,7 +666,7 @@ public final class PaginationStep extends IterateVisualProcessStep {
     final long shiftedBoxY = boxY + shift;
     final long nextNonShiftedMajorBreak = breakUtility.findNextMajorBreakPosition( shiftedBoxY );
     final long fixedPositionOnNextPage =
-      breakUtility.computeFixedPositionInFlow( nextNonShiftedMajorBreak, fixedPositionResolved );
+        breakUtility.computeFixedPositionInFlow( nextNonShiftedMajorBreak, fixedPositionResolved );
     final long nextMajorBreak = Math.max( nextNonShiftedMajorBreak, fixedPositionOnNextPage );
     if ( nextMajorBreak < shiftedBoxY ) {
       // This band will be outside the last pagebreak. We can only shift it normally, but there is no way

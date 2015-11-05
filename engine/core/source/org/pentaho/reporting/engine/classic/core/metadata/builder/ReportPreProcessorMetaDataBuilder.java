@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.builder;
 
-import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
-import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyMetaData;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
+import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyMetaData;
 
 public class ReportPreProcessorMetaDataBuilder extends MetaDataBuilder<ReportPreProcessorMetaDataBuilder> {
   private Class<? extends ReportPreProcessor> impl;
@@ -46,8 +46,8 @@ public class ReportPreProcessorMetaDataBuilder extends MetaDataBuilder<ReportPre
     return impl.getName();
   }
 
-  public ReportPreProcessorMetaDataBuilder properties(
-    final Map<String, ReportPreProcessorPropertyMetaData> properties ) {
+  public ReportPreProcessorMetaDataBuilder
+    properties( final Map<String, ReportPreProcessorPropertyMetaData> properties ) {
     this.properties.putAll( properties );
     return self();
   }

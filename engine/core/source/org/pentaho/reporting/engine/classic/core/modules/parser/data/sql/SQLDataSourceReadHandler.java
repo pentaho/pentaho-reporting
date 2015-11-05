@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.sql;
 
@@ -31,8 +31,7 @@ import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
 
-public class SQLDataSourceReadHandler extends AbstractXmlReadHandler
-  implements DataFactoryReadHandler {
+public class SQLDataSourceReadHandler extends AbstractXmlReadHandler implements DataFactoryReadHandler {
   private ConnectionReadHandler connectionProviderReadHandler;
   private ArrayList<PropertyReadHandler> queries;
   private ConfigReadHandler configReadHandler;
@@ -47,14 +46,15 @@ public class SQLDataSourceReadHandler extends AbstractXmlReadHandler
   /**
    * Returns the handler for a child element.
    *
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler or null, if the tagname is invalid.
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final Attributes atts )
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
     throws SAXException {
     final ConnectionReadHandlerFactory factory = ConnectionReadHandlerFactory.getInstance();
     final XmlReadHandler handler = factory.getHandler( uri, tagName );
@@ -87,14 +87,14 @@ public class SQLDataSourceReadHandler extends AbstractXmlReadHandler
       return queryDefinitionsReadHandler;
     }
 
-
     return null;
   }
 
   /**
    * Done parsing.
    *
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void doneParsing() throws SAXException {
     ConnectionProvider provider = null;
@@ -105,8 +105,7 @@ public class SQLDataSourceReadHandler extends AbstractXmlReadHandler
       provider = (ConnectionProvider) getRootHandler().getHelperObject( "connection-provider" );
     }
     if ( provider == null ) {
-      throw new SAXException(
-        "Unable to create SQL Factory: No connection provider specified or recognized." );
+      throw new SAXException( "Unable to create SQL Factory: No connection provider specified or recognized." );
     }
 
     final SQLReportDataFactory dataFactory = new SQLReportDataFactory( provider );
@@ -123,8 +122,8 @@ public class SQLDataSourceReadHandler extends AbstractXmlReadHandler
     if ( queryDefinitionsReadHandler != null ) {
       final ArrayList<QueryDefinitionReadHandler> scriptedQueries = queryDefinitionsReadHandler.getScriptedQueries();
       for ( final QueryDefinitionReadHandler scriptedQuery : scriptedQueries ) {
-        dataFactory.setQuery( scriptedQuery.getName(), scriptedQuery.getQuery(),
-          scriptedQuery.getScriptLanguage(), scriptedQuery.getScript() );
+        dataFactory.setQuery( scriptedQuery.getName(), scriptedQuery.getQuery(), scriptedQuery.getScriptLanguage(),
+            scriptedQuery.getScript() );
       }
     }
 
@@ -135,7 +134,8 @@ public class SQLDataSourceReadHandler extends AbstractXmlReadHandler
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   public Object getObject() throws SAXException {
     return dataFactory;

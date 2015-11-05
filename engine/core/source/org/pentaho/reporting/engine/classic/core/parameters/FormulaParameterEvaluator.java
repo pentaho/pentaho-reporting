@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
@@ -44,30 +44,28 @@ public class FormulaParameterEvaluator {
    * @param parameterContext
    * @return
    * @deprecated This method is unsafe. Do not use it or you may open up your application to all kinds of security
-   * risks. The method will be removed in the next release.
+   *             risks. The method will be removed in the next release.
    */
   public static ReportParameterValues evaluate( final ValidationResult result,
-                                                final ReportParameterDefinition parameterDefinition,
-                                                final ParameterContext parameterContext ) {
+      final ReportParameterDefinition parameterDefinition, final ParameterContext parameterContext ) {
 
     final ReportParameterValues parameterValues = new ReportParameterValues();
     parameterValues.putAll( parameterContext.getParameterData() );
     final ParameterDefinitionEntry[] entries = parameterDefinition.getParameterDefinitions();
     for ( int i = 0; i < entries.length; i++ ) {
-      final ParameterDefinitionEntry entry = entries[ i ];
+      final ParameterDefinitionEntry entry = entries[i];
       try {
-        final Object o = computePostProcessingValue
-          ( result, parameterContext, parameterValues, entry, parameterValues.get( entry.getName() ),
-            entry.getDefaultValue( parameterContext ) );
+        final Object o =
+            computePostProcessingValue( result, parameterContext, parameterValues, entry, parameterValues.get( entry
+                .getName() ), entry.getDefaultValue( parameterContext ) );
         parameterValues.put( entry.getName(), o );
       } catch ( ReportProcessingException e ) {
         if ( logger.isDebugEnabled() ) {
           logger.debug( "Unable to compute default value for parameter '" + entry.getName() + "'", e );
         }
         if ( result != null ) {
-          result.addError( entry.getName(),
-            new ValidationMessage( Messages.getInstance().formatMessage
-              ( "FormulaParameterEvaluator.PostProcessingInitFailed", e.getLocalizedMessage() ) ) );
+          result.addError( entry.getName(), new ValidationMessage( Messages.getInstance().formatMessage(
+              "FormulaParameterEvaluator.PostProcessingInitFailed", e.getLocalizedMessage() ) ) );
         }
       }
 
@@ -77,29 +75,24 @@ public class FormulaParameterEvaluator {
   }
 
   public static Object computePostProcessingValue( final ValidationResult result,
-                                                   final ParameterContext parameterContext,
-                                                   final ReportParameterValues parameterValues,
-                                                   final ParameterDefinitionEntry entry,
-                                                   final Object untrustedValue,
-                                                   final Object defaultValue ) throws ReportProcessingException {
+      final ParameterContext parameterContext, final ReportParameterValues parameterValues,
+      final ParameterDefinitionEntry entry, final Object untrustedValue, final Object defaultValue )
+    throws ReportProcessingException {
     final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow( parameterContext.getReportEnvironment() );
-    final String formula = entry.getParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
-        parameterContext );
+    final String formula =
+        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+            ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA, parameterContext );
     if ( StringUtils.isEmpty( formula, true ) ) {
       return untrustedValue;
     }
 
-    final ParameterExpressionRuntime runtime = new ParameterExpressionRuntime( parameterContext,
-      new CompoundDataRow( envDataRow, parameterValues ) );
+    final ParameterExpressionRuntime runtime =
+        new ParameterExpressionRuntime( parameterContext, new CompoundDataRow( envDataRow, parameterValues ) );
     return computeValue( runtime, formula, result, entry, defaultValue );
   }
 
-  public static Object computeValue( final ExpressionRuntime runtime,
-                                     final String formula,
-                                     final ValidationResult result,
-                                     final ParameterDefinitionEntry entry,
-                                     final Object defaultValue ) {
+  public static Object computeValue( final ExpressionRuntime runtime, final String formula,
+      final ValidationResult result, final ParameterDefinitionEntry entry, final Object defaultValue ) {
     final FormulaExpression fe = new FormulaExpression();
     fe.setFormula( formula );
     fe.setRuntime( runtime );
@@ -108,9 +101,8 @@ public class FormulaParameterEvaluator {
       final Exception error = fe.getFormulaError();
       if ( error != null ) {
         if ( result != null ) {
-          result.addError( entry.getName(),
-            new ValidationMessage( Messages.getInstance().formatMessage
-              ( "FormulaParameterEvaluator.PostProcessingFormulaFailed", error.getLocalizedMessage() ) ) );
+          result.addError( entry.getName(), new ValidationMessage( Messages.getInstance().formatMessage(
+              "FormulaParameterEvaluator.PostProcessingFormulaFailed", error.getLocalizedMessage() ) ) );
         }
 
         if ( logger.isDebugEnabled() ) {
@@ -128,9 +120,9 @@ public class FormulaParameterEvaluator {
       final ErrorValue errorValue = (ErrorValue) value;
       if ( result != null ) {
         result.addError( entry.getName(),
-          new ValidationMessage( Messages.getInstance().formatMessage
-            ( "FormulaParameterEvaluator.PostProcessingFormulaFailed",
-              errorValue.getErrorMessage( Locale.getDefault() ) ) ) );
+            new ValidationMessage( Messages.getInstance().formatMessage(
+                "FormulaParameterEvaluator.PostProcessingFormulaFailed",
+                errorValue.getErrorMessage( Locale.getDefault() ) ) ) );
       }
       // if the value is a hard error, we return <null> instead of the default value.
       // This way, a mandatory parameter will not continue in case of eval-errors.
@@ -139,7 +131,7 @@ public class FormulaParameterEvaluator {
       final ValueConverter valueConverter = ConverterRegistry.getInstance().getValueConverter( entry.getValueType() );
       if ( valueConverter != null ) {
         // try to convert it; if this conversion fails we resort to String.valueOf,
-        // but it will take care of converting dates and number subtypes correctly  ..
+        // but it will take care of converting dates and number subtypes correctly ..
         String textValue;
         try {
           textValue = ConverterRegistry.toAttributeValue( value );
@@ -154,11 +146,10 @@ public class FormulaParameterEvaluator {
             logger.debug( "Unable to convert computed default value for parameter '" + entry.getName() + "'", e );
           }
           if ( result != null ) {
-            result.addError( entry.getName(),
-              new ValidationMessage( Messages.getInstance().getString
-                ( "FormulaParameterEvaluator.ErrorConvertingValue" ) ) );
-            result.addError( entry.getName(),
-              new ValidationMessage( "The post-processing result cannot be converted into the target-type." ) );
+            result.addError( entry.getName(), new ValidationMessage( Messages.getInstance().getString(
+                "FormulaParameterEvaluator.ErrorConvertingValue" ) ) );
+            result.addError( entry.getName(), new ValidationMessage(
+                "The post-processing result cannot be converted into the target-type." ) );
           }
           return null;
         }

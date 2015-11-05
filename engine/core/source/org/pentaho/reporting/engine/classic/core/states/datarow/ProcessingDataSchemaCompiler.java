@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
@@ -45,9 +45,8 @@ public class ProcessingDataSchemaCompiler extends DataSchemaCompiler {
   private DataSchemaDefinition globalDefaults;
 
   public ProcessingDataSchemaCompiler( final DataSchemaDefinition reportSchemaDefinition,
-                                       final DataAttributeContext context,
-                                       final ResourceManager resourceManager,
-                                       final DataSchemaDefinition globalDefaults ) {
+      final DataAttributeContext context, final ResourceManager resourceManager,
+      final DataSchemaDefinition globalDefaults ) {
     super( reportSchemaDefinition, context, resourceManager );
     this.resourceManager = resourceManager;
     this.globalDefaults = globalDefaults;
@@ -64,8 +63,8 @@ public class ProcessingDataSchemaCompiler extends DataSchemaCompiler {
     return globalDefaults;
   }
 
-  public DataSchema compile( final MasterDataRow masterRow,
-                             final ReportEnvironment reportEnvironment ) throws ReportDataFactoryException {
+  public DataSchema compile( final MasterDataRow masterRow, final ReportEnvironment reportEnvironment )
+    throws ReportDataFactoryException {
     if ( masterRow == null ) {
       throw new NullPointerException();
     }
@@ -88,16 +87,16 @@ public class ProcessingDataSchemaCompiler extends DataSchemaCompiler {
     if ( parameters != null ) {
       final MasterDataRow parentRow = masterRow.getParentDataRow();
       if ( parentRow == null ) {
-        processParameters( parameters, null, reportEnvironment,
-          globalAttributes, indirectRules, directRules, defaultDataSchema );
+        processParameters( parameters, null, reportEnvironment, globalAttributes, indirectRules, directRules,
+            defaultDataSchema );
       } else {
         // import the parameters that have been computed already ..
         final String[] parameterNames = parameters.getParentNames();
         final String[] innerNames = parameters.getColumnNames();
         for ( int i = 0; i < parameterNames.length; i++ ) {
-          final String name = parameterNames[ i ];
+          final String name = parameterNames[i];
           final DataAttributes attributes = parentRow.getDataSchema().getAttributes( name );
-          defaultDataSchema.setAttributes( innerNames[ i ], attributes );
+          defaultDataSchema.setAttributes( innerNames[i], attributes );
         }
       }
     }
@@ -105,7 +104,7 @@ public class ProcessingDataSchemaCompiler extends DataSchemaCompiler {
     // expressions
     final Expression[] expressions = expressionsRow.getExpressions();
     for ( int i = 0; i < expressions.length; i++ ) {
-      final Expression expression = expressions[ i ];
+      final Expression expression = expressions[i];
       final String name = expression.getName();
       if ( name == null ) {
         continue;
@@ -126,9 +125,8 @@ public class ProcessingDataSchemaCompiler extends DataSchemaCompiler {
         final int count = data.getColumnCount();
         for ( int i = 0; i < count; i++ ) {
           final String colName = data.getColumnName( i );
-          parameterDataAttributes.setup
-            ( colName, data.getColumnClass( i ), MetaAttributeNames.Core.SOURCE_VALUE_TABLE, colName,
-              globalAttributes );
+          parameterDataAttributes.setup( colName, data.getColumnClass( i ), MetaAttributeNames.Core.SOURCE_VALUE_TABLE,
+              colName, globalAttributes );
 
           final DefaultDataAttributes computedParameterDataAttributes = new DefaultDataAttributes();
           computedParameterDataAttributes.merge( parameterDataAttributes, context );
@@ -154,8 +152,8 @@ public class ProcessingDataSchemaCompiler extends DataSchemaCompiler {
           computedParameterDataAttributes.merge( tableGlobalAttributes, context );
           computedParameterDataAttributes.merge( mt.getColumnAttributes( i ), context );
 
-          parameterDataAttributes.setup( colName, data.getColumnClass( i ),
-            MetaAttributeNames.Core.SOURCE_VALUE_TABLE, null, EmptyDataAttributes.INSTANCE );
+          parameterDataAttributes.setup( colName, data.getColumnClass( i ), MetaAttributeNames.Core.SOURCE_VALUE_TABLE,
+              null, EmptyDataAttributes.INSTANCE );
           computedParameterDataAttributes.merge( parameterDataAttributes, context );
 
           applyRules( indirectRules, directRules, computedParameterDataAttributes );
@@ -168,7 +166,7 @@ public class ProcessingDataSchemaCompiler extends DataSchemaCompiler {
     if ( importedDataRow != null ) {
       final String[] columnNames = importedDataRow.getColumnNames();
       for ( int i = 0; i < columnNames.length; i++ ) {
-        final String columnName = columnNames[ i ];
+        final String columnName = columnNames[i];
         defaultDataSchema.setAttributes( columnName, importedDataRow.getAttributes( columnName ) );
       }
     }

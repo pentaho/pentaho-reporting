@@ -39,8 +39,8 @@ public class Prd4606IT extends TestCase {
     RenderNode[] tableRows = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW );
 
     assertEquals( 1, tables.length );
-    assertEquals( StrictGeomUtility.toInternalValue( 240 ), tables[ 0 ].getHeight() );
-    TableRenderBox table = (TableRenderBox) tables[ 0 ];
+    assertEquals( StrictGeomUtility.toInternalValue( 240 ), tables[0].getHeight() );
+    TableRenderBox table = (TableRenderBox) tables[0];
     assertEquals( 1, table.getColumnModel().getColumnCount() );
 
     assertEquals( 12, tableRows.length );
@@ -56,8 +56,8 @@ public class Prd4606IT extends TestCase {
     RenderNode[] tables = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
     RenderNode[] tableRows = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW );
     assertEquals( 1, tables.length );
-    assertEquals( StrictGeomUtility.toInternalValue( 240 ), tables[ 0 ].getHeight() );
-    TableRenderBox table = (TableRenderBox) tables[ 0 ];
+    assertEquals( StrictGeomUtility.toInternalValue( 240 ), tables[0].getHeight() );
+    TableRenderBox table = (TableRenderBox) tables[0];
     assertEquals( 2, table.getColumnModel().getColumnCount() );
 
     assertEquals( 12, tableRows.length );
@@ -71,10 +71,10 @@ public class Prd4606IT extends TestCase {
       return;
     }
 
-    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true" );
-    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true" );
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4606-0001.prpt" );
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
     SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference( 0 );
@@ -91,10 +91,10 @@ public class Prd4606IT extends TestCase {
       return;
     }
 
-    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true" );
-    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true" );
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4606-0001.prpt" );
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
     SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference( 0 );
@@ -105,19 +105,19 @@ public class Prd4606IT extends TestCase {
 
     StopWatch sw = StopWatch.startNew();
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 5 );
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
     DebugLog.log( sw );
 
-    //    ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
     RenderNode[] tables = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
     RenderNode[] tableRows = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW );
 
     assertEquals( 1, tables.length );
-    //    assertEquals(StrictGeomUtility.toInternalValue(240), tables[0].getHeight());
-    TableRenderBox table = (TableRenderBox) tables[ 0 ];
-    //    assertEquals(1, table.getColumnModel().getColumnCount());
+    // assertEquals(StrictGeomUtility.toInternalValue(240), tables[0].getHeight());
+    TableRenderBox table = (TableRenderBox) tables[0];
+    // assertEquals(1, table.getColumnModel().getColumnCount());
 
-    //    assertEquals(12, tableRows.length);
+    // assertEquals(12, tableRows.length);
     for ( RenderNode tableRow : tableRows ) {
       assertEquals( StrictGeomUtility.toInternalValue( 20 ), tableRow.getHeight() );
     }
@@ -127,10 +127,10 @@ public class Prd4606IT extends TestCase {
   }
 
   public void testPageSpanningAcrossPages() throws Exception {
-    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false" );
-    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false" );
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4606-0003.prpt" );
     report.setPageDefinition( new SimplePageDefinition( new PageSize( 500, 100 ) ) );
 

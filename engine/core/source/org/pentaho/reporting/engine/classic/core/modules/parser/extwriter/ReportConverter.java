@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
@@ -62,21 +62,25 @@ public class ReportConverter {
   /**
    * Writes a report in the new XML format.
    *
-   * @param report      the report.
-   * @param w           a character stream writer.
-   * @param contentBase the content base for creating relative URLs.
-   * @param encoding    the encoding of the generated file.
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if there were problems while serializing the report definition.
+   * @param report
+   *          the report.
+   * @param w
+   *          a character stream writer.
+   * @param contentBase
+   *          the content base for creating relative URLs.
+   * @param encoding
+   *          the encoding of the generated file.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if there were problems while serializing the report definition.
    */
-  public void write( final MasterReport report, final Writer w,
-                     final URL contentBase, final String encoding )
+  public void write( final MasterReport report, final Writer w, final URL contentBase, final String encoding )
     throws IOException, ReportWriterException {
     if ( contentBase == null ) {
       throw new NullPointerException( "ContentBase is null" );
     }
-    final ModifiableConfiguration config =
-      new HierarchicalConfiguration( report.getReportConfiguration() );
+    final ModifiableConfiguration config = new HierarchicalConfiguration( report.getReportConfiguration() );
     config.setConfigProperty( AbstractXmlResourceFactory.CONTENTBASE_KEY, contentBase.toExternalForm() );
 
     final ReportWriter writer = new ReportWriter( report, encoding, config );
@@ -97,9 +101,11 @@ public class ReportConverter {
   /**
    * Returns the URL of a report.
    *
-   * @param name the report name.
+   * @param name
+   *          the report name.
    * @return The URL (or <code>null</code>).
-   * @throws java.io.IOException if there is an I/O problem.
+   * @throws java.io.IOException
+   *           if there is an I/O problem.
    */
   public URL findReport( final String name ) throws IOException {
     final URL in = ObjectUtilities.getResource( name, ReportConverter.class );
@@ -116,12 +122,13 @@ public class ReportConverter {
   /**
    * Parses a report from the specified template file.
    *
-   * @param templateURL the template location.
+   * @param templateURL
+   *          the template location.
    * @return The report.
-   * @throws java.io.IOException if there is an I/O problem.
+   * @throws java.io.IOException
+   *           if there is an I/O problem.
    */
-  private MasterReport parseReport( final URL templateURL )
-    throws IOException {
+  private MasterReport parseReport( final URL templateURL ) throws IOException {
     try {
       final ReportGenerator generator = ReportGenerator.getInstance();
       return generator.parseReport( templateURL );
@@ -134,15 +141,19 @@ public class ReportConverter {
   /**
    * Parses a report from the old version of the XML report format, and writes a file in the new XML report format.
    *
-   * @param inName   the input report file.
-   * @param outFile  the output report file.
-   * @param encoding the encoding of the generated file.
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if there is a problem writing the report.
+   * @param inName
+   *          the input report file.
+   * @param outFile
+   *          the output report file.
+   * @param encoding
+   *          the encoding of the generated file.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if there is a problem writing the report.
    */
-  public void convertReport( final String inName, final String outFile,
-                             final String encoding )
-    throws IOException, ReportWriterException {
+  public void convertReport( final String inName, final String outFile, final String encoding ) throws IOException,
+    ReportWriterException {
     final URL reportURL = findReport( inName );
     if ( reportURL == null ) {
       throw new IOException( "The specified report definition was not found" );
@@ -160,17 +171,21 @@ public class ReportConverter {
   /**
    * Parses a report from the old version of the XML report format, and writes a file in the new XML report format.
    *
-   * @param in       the input report file.
-   * @param out      the output report file.
-   * @param encoding the encoding of the generated file.
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if there is a problem writing the report.
+   * @param in
+   *          the input report file.
+   * @param out
+   *          the output report file.
+   * @param encoding
+   *          the encoding of the generated file.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if there is a problem writing the report.
    */
-  public void convertReport( final File in, final File out, final String encoding )
-    throws IOException, ReportWriterException {
+  public void convertReport( final File in, final File out, final String encoding ) throws IOException,
+    ReportWriterException {
     final OutputStream base = new FileOutputStream( out );
-    final Writer w = new BufferedWriter
-      ( new OutputStreamWriter( base, encoding ) );
+    final Writer w = new BufferedWriter( new OutputStreamWriter( base, encoding ) );
     try {
       convertReport( in.toURL(), out.toURL(), w, encoding );
     } finally {
@@ -181,15 +196,20 @@ public class ReportConverter {
   /**
    * Parses a report from the old version of the XML report format, and writes a file in the new XML report format.
    *
-   * @param in          the input resource from where to read the report
-   * @param contentBase the contentbase where the new report will be stored.
-   * @param w           the report writer
-   * @param encoding    the encoding of the generated file.
-   * @throws IOException           if there is an I/O problem.
-   * @throws ReportWriterException if there is a problem writing the report.
+   * @param in
+   *          the input resource from where to read the report
+   * @param contentBase
+   *          the contentbase where the new report will be stored.
+   * @param w
+   *          the report writer
+   * @param encoding
+   *          the encoding of the generated file.
+   * @throws IOException
+   *           if there is an I/O problem.
+   * @throws ReportWriterException
+   *           if there is a problem writing the report.
    */
-  public void convertReport( final URL in, final URL contentBase,
-                             final Writer w, final String encoding )
+  public void convertReport( final URL in, final URL contentBase, final Writer w, final String encoding )
     throws IOException, ReportWriterException {
     if ( in == null ) {
       throw new NullPointerException( "Input URL is null" );
@@ -209,20 +229,21 @@ public class ReportConverter {
   }
 
   /**
-   * The starting point for the conversion utility.  The utility accepts two command line arguments, the first is the
+   * The starting point for the conversion utility. The utility accepts two command line arguments, the first is the
    * name of the input file (a report in the old format) and the second is the name of the output file (a report in the
    * new format will be written to this file).
    *
-   * @param args command line arguments.
-   * @throws Exception if there is any problem.
+   * @param args
+   *          command line arguments.
+   * @throws Exception
+   *           if there is any problem.
    */
-  public static void main( final String[] args )
-    throws IOException, ReportWriterException {
+  public static void main( final String[] args ) throws IOException, ReportWriterException {
     if ( args.length != 2 ) {
       System.err.println( "Usage: ReportConverter <InFile> <OutFile>" );
       System.exit( 1 );
     }
     final ReportConverter converter = new ReportConverter();
-    converter.convertReport( args[ 0 ], args[ 1 ], "UTF-16" );
+    converter.convertReport( args[0], args[1], "UTF-16" );
   }
 }

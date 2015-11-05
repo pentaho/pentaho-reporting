@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DefaultImageReference;
@@ -37,17 +40,13 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 public class RichTextImageProducer {
   private static final Log logger = LogFactory.getLog( RichTextImageProducer.class );
 
   private OutputProcessorMetaData metaData;
   private ResourceManager resourceManager;
 
-  public RichTextImageProducer( final OutputProcessorMetaData metaData,
-                                final ResourceManager resourceManager ) {
+  public RichTextImageProducer( final OutputProcessorMetaData metaData, final ResourceManager resourceManager ) {
     this.metaData = metaData;
     this.resourceManager = resourceManager;
   }
@@ -61,8 +60,8 @@ public class RichTextImageProducer {
     final int h = (int) Math.max( 1, StrictGeomUtility.toExternalValue( height ) );
 
     if ( metaData.isFeatureSupported( OutputProcessorFeature.DIRECT_RICHTEXT_RENDERING ) ) {
-      final Image img = processRenderableReplacedContent
-        ( content.getStyleSheet(), width, height, content.getContent().getRawObject() );
+      final Image img =
+          processRenderableReplacedContent( content.getStyleSheet(), width, height, content.getContent().getRawObject() );
       if ( img != null ) {
         return img;
       }
@@ -73,10 +72,8 @@ public class RichTextImageProducer {
     return new BufferedImage( 1, 1, BufferedImage.TYPE_3BYTE_BGR ).getScaledInstance( w, h, Image.SCALE_FAST );
   }
 
-  private Image processRenderableReplacedContent( final StyleSheet styleSheet,
-                                                  final long width,
-                                                  final long height,
-                                                  final Object rawObject ) {
+  private Image processRenderableReplacedContent( final StyleSheet styleSheet, final long width, final long height,
+      final Object rawObject ) {
     // Fallback: (At the moment, we only support drawables and images.)
     if ( rawObject instanceof LocalImageContainer ) {
       LocalImageContainer li = (LocalImageContainer) rawObject;
@@ -106,10 +103,9 @@ public class RichTextImageProducer {
       final DrawableWrapper drawable = (DrawableWrapper) rawObject;
       // render it into an Buffered image and make it a PNG file.
       final StrictBounds cb = new StrictBounds( 0, 0, width, height );
-      final DefaultImageReference image =
-        RenderUtility.createImageFromDrawable( drawable, cb, styleSheet, metaData );
+      final DefaultImageReference image = RenderUtility.createImageFromDrawable( drawable, cb, styleSheet, metaData );
       if ( image == null ) {
-        //xmlWriter.writeComment("Drawable content [No image generated]:" + source);
+        // xmlWriter.writeComment("Drawable content [No image generated]:" + source);
         return null;
       }
 

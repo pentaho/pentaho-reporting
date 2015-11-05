@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
@@ -46,14 +46,15 @@ public class BandReadHandler extends ElementReadHandler {
   /**
    * Returns the handler for a child element.
    *
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler or null, if the tagname is invalid.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final PropertyAttributes atts )
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final PropertyAttributes atts )
     throws SAXException {
     if ( isSameNamespace( uri ) == false ) {
       return null;
@@ -62,8 +63,8 @@ public class BandReadHandler extends ElementReadHandler {
     if ( "style".equals( tagName ) ) {
       return new StyleReadHandler( getElement().getStyle() );
     } else if ( "default-style".equals( tagName ) ) {
-      BandReadHandler.logger.warn( "Tag <default-style> is deprecated. All definitions " +
-        "have been mapped into the bands primary style sheet." );
+      BandReadHandler.logger.warn( "Tag <default-style> is deprecated. All definitions "
+          + "have been mapped into the bands primary style sheet." );
       return new StyleReadHandler( getElement().getStyle() );
     }
     if ( "style-expression".equals( tagName ) ) {
@@ -74,13 +75,11 @@ public class BandReadHandler extends ElementReadHandler {
       // type is not really used anymore. We always return org.pentaho.reporting.engine.classic.core.Element
       final String type = atts.getValue( getUri(), "type" );
 
-      final ElementFactoryCollector fc = (ElementFactoryCollector)
-        getRootHandler().getHelperObject
-          ( ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY );
+      final ElementFactoryCollector fc =
+          (ElementFactoryCollector) getRootHandler().getHelperObject( ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY );
       final Element element = fc.getElementForType( type );
       if ( element == null ) {
-        throw new ParseException( "There is no factory for elements of type '" +
-          type + '\'', getLocator() );
+        throw new ParseException( "There is no factory for elements of type '" + type + '\'', getLocator() );
       }
 
       final XmlReadHandler readHandler = new ElementReadHandler( element );
@@ -97,10 +96,10 @@ public class BandReadHandler extends ElementReadHandler {
   /**
    * Done parsing.
    *
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void doneParsing()
-    throws SAXException {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final Band band = (Band) getElement();
     for ( int i = 0; i < elementHandlers.size(); i++ ) {
@@ -108,8 +107,7 @@ public class BandReadHandler extends ElementReadHandler {
       band.addElement( readHandler.getElement() );
     }
     for ( int i = 0; i < styleExpressionHandlers.size(); i++ ) {
-      final StyleExpressionHandler handler =
-        (StyleExpressionHandler) styleExpressionHandlers.get( i );
+      final StyleExpressionHandler handler = (StyleExpressionHandler) styleExpressionHandlers.get( i );
       final StyleKey key = handler.getKey();
       if ( handler.getKey() != null ) {
         final Expression expression = handler.getExpression();

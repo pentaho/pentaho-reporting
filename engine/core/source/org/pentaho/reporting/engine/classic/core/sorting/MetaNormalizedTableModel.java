@@ -40,8 +40,7 @@ public class MetaNormalizedTableModel implements MetaTableModel {
     }
   }
 
-  public DataAttributes getCellDataAttributes( final int row,
-                                               final int column ) {
+  public DataAttributes getCellDataAttributes( final int row, final int column ) {
     return metaTableModel.getCellDataAttributes( row, column );
   }
 

@@ -1,21 +1,24 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
+
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -23,9 +26,6 @@ import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
-
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 /**
  * A factory to define text fields. Text fields read their content from the dataRow and try to print it as plain text
@@ -68,7 +68,8 @@ public class TextFieldElementFactory extends TextElementFactory {
    * Defines the field name from where to read the content of the element. The field name is the name of a datarow
    * column.
    *
-   * @param fieldname the field name.
+   * @param fieldname
+   *          the field name.
    */
   public void setFieldname( final String fieldname ) {
     this.fieldname = fieldname;
@@ -88,7 +89,8 @@ public class TextFieldElementFactory extends TextElementFactory {
    * Assigns a formula to the element to compute the value for this element. If a formula is defined, it will override
    * the 'field' property.
    *
-   * @param formula the formula as a string.
+   * @param formula
+   *          the formula as a string.
    */
   public void setFormula( final String formula ) {
     this.formula = formula;
@@ -107,7 +109,8 @@ public class TextFieldElementFactory extends TextElementFactory {
    * Defines the null string for the text element. The null string is used when no content is found for that element.
    * The nullstring itself can be null.
    *
-   * @param nullString the null string.
+   * @param nullString
+   *          the null string.
    */
   public void setNullString( final String nullString ) {
     this.nullString = nullString;
@@ -140,53 +143,61 @@ public class TextFieldElementFactory extends TextElementFactory {
   /**
    * Creates a new TextElement without any additional filtering.
    *
-   * @param name       the name of the new element
-   * @param bounds     the bounds of the new element
-   * @param paint      the text color of this text element
-   * @param alignment  the horizontal text alignment.
-   * @param font       the font for this element
-   * @param nullString the text used when the value of this element is null
-   * @param field      the field in the datamodel to retrieve values from
+   * @param name
+   *          the name of the new element
+   * @param bounds
+   *          the bounds of the new element
+   * @param paint
+   *          the text color of this text element
+   * @param alignment
+   *          the horizontal text alignment.
+   * @param font
+   *          the font for this element
+   * @param nullString
+   *          the text used when the value of this element is null
+   * @param field
+   *          the field in the datamodel to retrieve values from
    * @return a report element for displaying <code>String</code> objects.
-   * @throws NullPointerException     if bounds, name or function are null
-   * @throws IllegalArgumentException if the given alignment is invalid
+   * @throws NullPointerException
+   *           if bounds, name or function are null
+   * @throws IllegalArgumentException
+   *           if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createStringElement( final String name,
-                                             final Rectangle2D bounds,
-                                             final Color paint,
-                                             final ElementAlignment alignment,
-                                             final FontDefinition font,
-                                             final String nullString,
-                                             final String field ) {
-    return createStringElement( name, bounds, paint, alignment,
-      ElementAlignment.TOP, font, nullString, field );
+  public static Element createStringElement( final String name, final Rectangle2D bounds, final Color paint,
+      final ElementAlignment alignment, final FontDefinition font, final String nullString, final String field ) {
+    return createStringElement( name, bounds, paint, alignment, ElementAlignment.TOP, font, nullString, field );
   }
 
   /**
    * Creates a new TextElement without any additional filtering.
    *
-   * @param name       the name of the new element
-   * @param bounds     the bounds of the new element
-   * @param paint      the text color of this text element
-   * @param alignment  the horizontal text alignment.
-   * @param valign     the vertical alignment.
-   * @param font       the font for this element
-   * @param nullString the text used when the value of this element is null
-   * @param field      the field in the datamodel to retrieve values from
+   * @param name
+   *          the name of the new element
+   * @param bounds
+   *          the bounds of the new element
+   * @param paint
+   *          the text color of this text element
+   * @param alignment
+   *          the horizontal text alignment.
+   * @param valign
+   *          the vertical alignment.
+   * @param font
+   *          the font for this element
+   * @param nullString
+   *          the text used when the value of this element is null
+   * @param field
+   *          the field in the datamodel to retrieve values from
    * @return a report element for displaying <code>String</code> objects.
-   * @throws NullPointerException     if bounds, name or function are null
-   * @throws IllegalArgumentException if the given alignment is invalid
+   * @throws NullPointerException
+   *           if bounds, name or function are null
+   * @throws IllegalArgumentException
+   *           if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createStringElement( final String name,
-                                             final Rectangle2D bounds,
-                                             final Color paint,
-                                             final ElementAlignment alignment,
-                                             final ElementAlignment valign,
-                                             final FontDefinition font,
-                                             final String nullString,
-                                             final String field ) {
+  public static Element createStringElement( final String name, final Rectangle2D bounds, final Color paint,
+      final ElementAlignment alignment, final ElementAlignment valign, final FontDefinition font,
+      final String nullString, final String field ) {
     final TextFieldElementFactory factory = new TextFieldElementFactory();
     factory.setX( new Float( bounds.getX() ) );
     factory.setY( new Float( bounds.getY() ) );
@@ -211,6 +222,5 @@ public class TextFieldElementFactory extends TextElementFactory {
     factory.setNullString( nullString );
     return factory.createElement();
   }
-
 
 }

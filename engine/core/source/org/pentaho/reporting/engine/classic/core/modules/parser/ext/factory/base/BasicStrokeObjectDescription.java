@@ -1,23 +1,23 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
-import java.awt.*;
+import java.awt.BasicStroke;
 
 /**
  * An object-description for a <code>BasicStroke</code> object.
@@ -39,7 +39,8 @@ public class BasicStrokeObjectDescription extends AbstractObjectDescription {
   /**
    * Returns a parameter as a float.
    *
-   * @param param the parameter name.
+   * @param param
+   *          the parameter name.
    * @return The float value.
    */
   private float getFloatParameter( final String param ) {
@@ -71,21 +72,22 @@ public class BasicStrokeObjectDescription extends AbstractObjectDescription {
     if ( realWidth == null || dashes == null ) {
       return null;
     }
-    final float[] dashesPrimitive = new float[ dashes.length ];
+    final float[] dashesPrimitive = new float[dashes.length];
     for ( int i = 0; i < dashes.length; i++ ) {
-      final Float dash = dashes[ i ];
-      dashesPrimitive[ i ] = dash.floatValue();
+      final Float dash = dashes[i];
+      dashesPrimitive[i] = dash.floatValue();
     }
-    return new BasicStroke( realWidth.floatValue(),
-      BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER,
-      10.0f, dashesPrimitive, 0.0f );
+    return new BasicStroke( realWidth.floatValue(), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f,
+        dashesPrimitive, 0.0f );
   }
 
   /**
    * Sets the parameters for this description to match the supplied object.
    *
-   * @param o the object (instance of <code>BasicStroke</code> required).
-   * @throws ObjectFactoryException if the supplied object is not an instance of <code>BasicStroke</code>.
+   * @param o
+   *          the object (instance of <code>BasicStroke</code> required).
+   * @throws ObjectFactoryException
+   *           if the supplied object is not an instance of <code>BasicStroke</code>.
    */
   public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
     if ( !( o instanceof BasicStroke ) ) {

@@ -36,7 +36,7 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
   private HashNMap<InstanceID, StyleKey> styleById;
 
   public DynamicStyleRootBandAnalyzer( final HashNMap<String, StyleKey> styleByElementName,
-                                       final HashNMap<InstanceID, StyleKey> styleById ) {
+      final HashNMap<InstanceID, StyleKey> styleById ) {
     this.styleByElementName = styleByElementName;
     this.styleById = styleById;
     this.dynamicTemplateInfo = new HashNMap<InstanceID, StyleKey>();
@@ -48,8 +48,8 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
     traverseSection( rootLevelBand );
 
     HashMap<InstanceID, StyleKey[]> stash = buildStash();
-    rootLevelBand.setAttribute
-      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH, stash );
+    rootLevelBand.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH,
+        stash );
   }
 
   private HashMap<InstanceID, StyleKey[]> buildStash() {
@@ -57,12 +57,11 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
 
     for ( InstanceID id : this.dynamicTemplateInfo.keySet() ) {
       int valueCount = this.dynamicTemplateInfo.getValueCount( id );
-      StyleKey[] styleKeys = this.dynamicTemplateInfo.toArray( id, new StyleKey[ valueCount ] );
+      StyleKey[] styleKeys = this.dynamicTemplateInfo.toArray( id, new StyleKey[valueCount] );
       stash.put( id, styleKeys );
     }
     return stash;
   }
-
 
   protected void traverseSection( final Section section ) {
     traverseSectionWithoutSubReports( section );
@@ -73,10 +72,8 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
     traverseStyleExpressions( element );
   }
 
-  protected void inspectStyleExpression( final ReportElement element,
-                                         final StyleKey styleKey,
-                                         final Expression expression,
-                                         final ExpressionMetaData expressionMetaData ) {
+  protected void inspectStyleExpression( final ReportElement element, final StyleKey styleKey,
+      final Expression expression, final ExpressionMetaData expressionMetaData ) {
     dynamicTemplateInfo.add( element.getObjectID(), styleKey );
   }
 }

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
@@ -52,7 +52,6 @@ public interface StyleBuilder {
       return value;
     }
 
-
     public boolean equals( final Object o ) {
       if ( this == o ) {
         return true;
@@ -82,57 +81,31 @@ public interface StyleBuilder {
       return result;
     }
 
-
     public String toString() {
-      return "StyleCarrier{" +
-        "key='" + key + '\'' +
-        ", value='" + value + '\'' +
-        ", unit='" + unit + '\'' +
-        '}';
+      return "StyleCarrier{" + "key='" + key + '\'' + ", value='" + value + '\'' + ", unit='" + unit + '\'' + '}';
     }
   }
 
   public enum CSSKeys {
     COLOR( "color", true ),
 
-    PADDING( "padding" ),
-    PADDING_TOP( "padding-top" ),
-    PADDING_BOTTOM( "padding-bottom" ),
-    PADDING_LEFT( "padding-left" ),
-    PADDING_RIGHT( "padding-right" ),
+    PADDING( "padding" ), PADDING_TOP( "padding-top" ), PADDING_BOTTOM( "padding-bottom" ), PADDING_LEFT(
+        "padding-left" ), PADDING_RIGHT( "padding-right" ),
 
-    FONT_SIZE( "font-size", true ),
-    FONT_FAMILY( "font-family", true ),
-    FONT_WEIGHT( "font-weight", true ),
-    FONT_STYLE( "font-style", true ),
-    TEXT_DECORATION( "text-decoration", true ),
-    TEXT_ALIGN( "text-align", true ),
+    FONT_SIZE( "font-size", true ), FONT_FAMILY( "font-family", true ), FONT_WEIGHT( "font-weight", true ), FONT_STYLE(
+        "font-style", true ), TEXT_DECORATION( "text-decoration", true ), TEXT_ALIGN( "text-align", true ),
 
-    WORD_SPACING( "word-spacing", true ),
-    LETTER_SPACING( "letter-spacing", true ),
-    WHITE_SPACE( "white-space", true ),
+    WORD_SPACING( "word-spacing", true ), LETTER_SPACING( "letter-spacing", true ), WHITE_SPACE( "white-space", true ),
 
-    BORDER_COLLAPSE( "border-collapse" ),
-    EMPTY_CELLS( "empty-cells" ),
-    TABLE_LAYOUT( "table-layout" ),
-    BORDER( "border" ),
-    BORDER_TOP( "border-top" ),
-    BORDER_LEFT( "border-left" ),
-    BORDER_BOTTOM( "border-bottom" ),
-    BORDER_RIGHT( "border-right" ),
-    MOZ_BORDER_RADIUS_TOP_LEFT( "-moz-border-radius-topleft" ),
-    MOZ_BORDER_RADIUS_TOP_RIGHT( "-moz-border-radius-topright" ),
-    MOZ_BORDER_RADIUS_BOTTOM_LEFT( "-moz-border-radius-bottomleft" ),
-    MOZ_BORDER_RADIUS_BOTTOM_RIGHT( "-moz-border-radius-bottomright" ),
-    BORDER_TOP_LEFT_RADIUS( "border-top-left-radius" ),
-    BORDER_TOP_RIGHT_RADIUS( "border-top-right-radius" ),
-    BORDER_BOTTOM_LEFT_RADIUS( "border-bottom-left-radius" ),
-    BORDER_BOTTOM_RIGHT_RADIUS( "border-bottom-right-radius" ),
+    BORDER_COLLAPSE( "border-collapse" ), EMPTY_CELLS( "empty-cells" ), TABLE_LAYOUT( "table-layout" ), BORDER(
+        "border" ), BORDER_TOP( "border-top" ), BORDER_LEFT( "border-left" ), BORDER_BOTTOM( "border-bottom" ), BORDER_RIGHT(
+        "border-right" ), MOZ_BORDER_RADIUS_TOP_LEFT( "-moz-border-radius-topleft" ), MOZ_BORDER_RADIUS_TOP_RIGHT(
+        "-moz-border-radius-topright" ), MOZ_BORDER_RADIUS_BOTTOM_LEFT( "-moz-border-radius-bottomleft" ), MOZ_BORDER_RADIUS_BOTTOM_RIGHT(
+        "-moz-border-radius-bottomright" ), BORDER_TOP_LEFT_RADIUS( "border-top-left-radius" ), BORDER_TOP_RIGHT_RADIUS(
+        "border-top-right-radius" ), BORDER_BOTTOM_LEFT_RADIUS( "border-bottom-left-radius" ), BORDER_BOTTOM_RIGHT_RADIUS(
+        "border-bottom-right-radius" ),
 
-    BACKGROUND_COLOR( "background-color", true ),
-    OVERFLOW( "overflow" ),
-    WIDTH( "width" ),
-    HEIGHT( "height" );
+    BACKGROUND_COLOR( "background-color", true ), OVERFLOW( "overflow" ), WIDTH( "width" ), HEIGHT( "height" );
 
     private String cssName;
     private boolean inherit;

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
 
@@ -37,8 +37,7 @@ public class StyleDefinitionWriter {
   public StyleDefinitionWriter() {
   }
 
-  public void write( final File file,
-                     final ElementStyleDefinition styleDefinition ) throws IOException {
+  public void write( final File file, final ElementStyleDefinition styleDefinition ) throws IOException {
     final FileOutputStream fout = new FileOutputStream( file );
     final BufferedOutputStream bout = new BufferedOutputStream( fout );
     try {
@@ -48,12 +47,11 @@ public class StyleDefinitionWriter {
     }
   }
 
-  public void write( final OutputStream outputStream,
-                     final ElementStyleDefinition styleDefinition ) throws IOException {
+  public void write( final OutputStream outputStream, final ElementStyleDefinition styleDefinition ) throws IOException {
     final DefaultTagDescription tagDescription = BundleWriterHandlerRegistry.getInstance().createWriterTagDescription();
     final XmlWriter writer =
-      new XmlWriter( new OutputStreamWriter( new NoCloseOutputStream( outputStream ), "UTF-8" ), tagDescription, "  ",
-        "\n" );
+        new XmlWriter( new OutputStreamWriter( new NoCloseOutputStream( outputStream ), "UTF-8" ), tagDescription,
+            "  ", "\n" );
     writer.writeXmlDeclaration( "UTF-8" );
 
     final AttributeList rootAttributes = new AttributeList();

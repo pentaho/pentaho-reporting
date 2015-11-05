@@ -58,15 +58,15 @@ public class DesignTimeRowLayoutTest {
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBandInDesignTime( report, reportHeader );
 
     RenderNode[] elementsByElementType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
     Assert.assertEquals( 3, elementsByElementType.length );
 
-    Assert.assertEquals( 0, elementsByElementType[ 0 ].getX() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 0 ].getWidth() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getX() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getWidth() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 200 ), elementsByElementType[ 2 ].getX() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 2 ].getWidth() );
+    Assert.assertEquals( 0, elementsByElementType[0].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[0].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[1].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[1].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 200 ), elementsByElementType[2].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[2].getWidth() );
   }
 
   @Test
@@ -83,15 +83,15 @@ public class DesignTimeRowLayoutTest {
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBandInDesignTime( report, reportHeader );
 
     RenderNode[] elementsByElementType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
     Assert.assertEquals( 3, elementsByElementType.length );
 
-    Assert.assertEquals( 0, elementsByElementType[ 0 ].getX() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 0 ].getWidth() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getX() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getWidth() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 2 ].getX() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 2 ].getWidth() );
+    Assert.assertEquals( 0, elementsByElementType[0].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[0].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[1].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[1].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[2].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[2].getWidth() );
   }
 
   @Test
@@ -107,13 +107,13 @@ public class DesignTimeRowLayoutTest {
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
 
     RenderNode[] elementsByElementType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
     Assert.assertEquals( 2, elementsByElementType.length );
 
-    Assert.assertEquals( 0, elementsByElementType[ 0 ].getX() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 0 ].getWidth() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getX() );
-    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getWidth() );
+    Assert.assertEquals( 0, elementsByElementType[0].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[0].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[1].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[1].getWidth() );
   }
 
   private Element createElement( boolean visible ) {

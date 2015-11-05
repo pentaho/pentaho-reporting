@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.csv;
 
@@ -70,25 +70,26 @@ public class CSVTableExportTask implements Runnable {
   /**
    * Creates a new CSV export task.
    *
-   * @param swingGuiContext the GUI Context
-   * @param dialog          the progress monitor
-   * @param report          the report that should be exported.
-   * @throws ReportProcessingException if the report did not define a valid filename.
+   * @param swingGuiContext
+   *          the GUI Context
+   * @param dialog
+   *          the progress monitor
+   * @param report
+   *          the report that should be exported.
+   * @throws ReportProcessingException
+   *           if the report did not define a valid filename.
    */
-  public CSVTableExportTask
-  ( final MasterReport report,
-    final ReportProgressDialog dialog,
-    final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
+  public CSVTableExportTask( final MasterReport report, final ReportProgressDialog dialog,
+      final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
     if ( report == null ) {
-      throw new NullPointerException
-        ( "CSVTableExportTask(..): Report parameter cannot be null" ); //$NON-NLS-1$
+      throw new NullPointerException( "CSVTableExportTask(..): Report parameter cannot be null" ); //$NON-NLS-1$
     }
 
-    final String filename = report.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.csv.FileName" ); //$NON-NLS-1$
+    final String filename =
+        report.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.gui.csv.FileName" ); //$NON-NLS-1$
     if ( filename == null ) {
-      throw new ReportProcessingException
-        ( "CSVTableExportTask(..): Configuration does not contain a valid filename" ); //$NON-NLS-1$
+      throw new ReportProcessingException( "CSVTableExportTask(..): Configuration does not contain a valid filename" ); //$NON-NLS-1$
     }
 
     this.progressDialog = dialog;
@@ -96,8 +97,9 @@ public class CSVTableExportTask implements Runnable {
     this.fileName = filename;
     if ( swingGuiContext != null ) {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages( swingGuiContext.getLocale(), CSVTableExportPlugin.BASE_RESOURCE_CLASS,
-        ObjectUtilities.getClassLoader( CSVTableExportPlugin.class ) );
+      this.messages =
+          new Messages( swingGuiContext.getLocale(), CSVTableExportPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
+              .getClassLoader( CSVTableExportPlugin.class ) );
     }
   }
 
@@ -127,7 +129,6 @@ public class CSVTableExportTask implements Runnable {
         reportProcessor = new FastCsvExportProcessor( report, out );
       }
 
-
       if ( progressDialog != null ) {
         progressDialog.setModal( false );
         progressDialog.setVisible( true );
@@ -141,13 +142,13 @@ public class CSVTableExportTask implements Runnable {
       }
 
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "CSVTableExportTask.USER_TASK_COMPLETE" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "CSVTableExportTask.USER_TASK_COMPLETE" ), null ); //$NON-NLS-1$
       }
     } catch ( ReportInterruptedException re ) {
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "CSVTableExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "CSVTableExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
       }
 
       try {
@@ -164,8 +165,7 @@ public class CSVTableExportTask implements Runnable {
     } catch ( Exception re ) {
       CSVTableExportTask.logger.error( "Exporting failed .", re ); //$NON-NLS-1$
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.ERROR, messages.getString( "CSVTableExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.ERROR, messages.getString( "CSVTableExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
       }
     } finally {
       try {

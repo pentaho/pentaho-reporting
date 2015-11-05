@@ -1,21 +1,27 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics;
+
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.OutputStream;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportProcessTask;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -25,8 +31,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.output.PhysicalPageKey;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.GraphicsContentInterceptor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.GraphicsOutputProcessor;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal
-  .StreamGraphicsOutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.StreamGraphicsOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.encoder.ImageEncoder;
@@ -35,11 +40,6 @@ import org.pentaho.reporting.libraries.repository.ContentItem;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
-
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.OutputStream;
 
 public class Graphics2DReportProcessTask extends AbstractReportProcessTask {
   private static class ImageGeneratorInterceptor implements GraphicsContentInterceptor {
@@ -89,19 +89,24 @@ public class Graphics2DReportProcessTask extends AbstractReportProcessTask {
     try {
       final MasterReport masterReport = getReport();
       final Configuration configuration = masterReport.getConfiguration();
-      final boolean alphaChannel = "true".equals( configuration.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.AlphaChannel" ) );
+      final boolean alphaChannel =
+          "true"
+              .equals( configuration
+                  .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.AlphaChannel" ) );
       final String mimeType = computeMimeType( configuration );
-      final float quality = ParserUtil.parseFloat( configuration.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.Quality" ), 0.9f );
+      final float quality =
+          ParserUtil
+              .parseFloat(
+                  configuration
+                      .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.Quality" ),
+                  0.9f );
 
-
-      final GraphicsOutputProcessor outputProcessor = new GraphicsOutputProcessor
-        ( new StreamGraphicsOutputProcessorMetaData(), masterReport.getResourceManager() );
+      final GraphicsOutputProcessor outputProcessor =
+          new GraphicsOutputProcessor( new StreamGraphicsOutputProcessorMetaData(), masterReport.getResourceManager() );
       final StreamReportProcessor streamReportProcessor = new StreamReportProcessor( masterReport, outputProcessor );
       final ReportProgressListener[] progressListeners = getReportProgressListeners();
       for ( int i = 0; i < progressListeners.length; i++ ) {
-        final ReportProgressListener listener = progressListeners[ i ];
+        final ReportProgressListener listener = progressListeners[i];
         streamReportProcessor.addReportProgressListener( listener );
       }
 
@@ -112,8 +117,7 @@ public class Graphics2DReportProcessTask extends AbstractReportProcessTask {
 
       final ContentLocation contentLocation = getBodyContentLocation();
       final NameGenerator nameGenerator = getBodyNameGenerator();
-      final ContentItem contentItem =
-        contentLocation.createItem( nameGenerator.generateName( null, mimeType ) );
+      final ContentItem contentItem = contentLocation.createItem( nameGenerator.generateName( null, mimeType ) );
       final BufferedImage image = interceptor.getImage();
       final ImageEncoder imageEncoder = ImageEncoderRegistry.getInstance().createEncoder( mimeType );
       final OutputStream outputStream = contentItem.getOutputStream();
@@ -125,8 +129,8 @@ public class Graphics2DReportProcessTask extends AbstractReportProcessTask {
   }
 
   protected String computeMimeType( final Configuration configuration ) {
-    return configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.EncoderMime", "image/png" );
+    return configuration.getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.EncoderMime", "image/png" );
   }
 
   public String getReportMimeType() {

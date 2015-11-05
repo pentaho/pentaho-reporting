@@ -17,6 +17,28 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.script.ScriptEngineFactory;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -31,21 +53,12 @@ import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.VerticalLayout;
 
-import javax.script.ScriptEngineFactory;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public abstract class QueryEditorPanel<T> extends JPanel {
   private class QuerySelectedHandler implements ListSelectionListener {
     private QueryDialogModel<T> dialogModel;
     private JList queryNameList;
 
-    private QuerySelectedHandler( final QueryDialogModel<T> dialogModel,
-                                  final JList queryNameList ) {
+    private QuerySelectedHandler( final QueryDialogModel<T> dialogModel, final JList queryNameList ) {
       this.dialogModel = dialogModel;
       this.queryNameList = queryNameList;
     }
@@ -153,8 +166,8 @@ public abstract class QueryEditorPanel<T> extends JPanel {
         setGlobalScriptingLanguage( globalScriptLanguage );
 
         ScriptEngineFactory globalLanguage = (ScriptEngineFactory) globalLanguageField.getSelectedItem();
-        globalScriptTextArea.setSyntaxEditingStyle
-          ( DataFactoryEditorSupport.mapLanguageToSyntaxHighlighting( globalLanguage ) );
+        globalScriptTextArea.setSyntaxEditingStyle( DataFactoryEditorSupport
+            .mapLanguageToSyntaxHighlighting( globalLanguage ) );
         queryLanguageListCellRenderer.setDefaultValue( globalLanguage );
       }
       if ( ObjectUtilities.equal( globalScriptTextArea.getText(), globalScript ) == false ) {
@@ -194,8 +207,8 @@ public abstract class QueryEditorPanel<T> extends JPanel {
         if ( queryScriptLanguage == null ) {
           queryScriptTextArea.setSyntaxEditingStyle( globalScriptTextArea.getSyntaxEditingStyle() );
         } else {
-          queryScriptTextArea
-            .setSyntaxEditingStyle( DataFactoryEditorSupport.mapLanguageToSyntaxHighlighting( queryScriptLanguage ) );
+          queryScriptTextArea.setSyntaxEditingStyle( DataFactoryEditorSupport
+              .mapLanguageToSyntaxHighlighting( queryScriptLanguage ) );
         }
       }
 
@@ -244,7 +257,7 @@ public abstract class QueryEditorPanel<T> extends JPanel {
     globalScriptTextArea.getDocument().addDocumentListener( new GlobalScriptUpdateHandler() );
 
     globalLanguageField =
-      new SmartComboBox( new DefaultComboBoxModel( DataFactoryEditorSupport.getScriptEngineLanguages() ) );
+        new SmartComboBox( new DefaultComboBoxModel( DataFactoryEditorSupport.getScriptEngineLanguages() ) );
     globalLanguageField.setRenderer( new QueryLanguageListCellRenderer() );
     globalLanguageField.addActionListener( new UpdateGlobalScriptLanguageHandler() );
 
@@ -253,7 +266,7 @@ public abstract class QueryEditorPanel<T> extends JPanel {
     queryScriptTextArea.getDocument().addDocumentListener( new QueryScriptUpdateHandler() );
 
     queryLanguageField =
-      new SmartComboBox( new DefaultComboBoxModel( DataFactoryEditorSupport.getScriptEngineLanguages() ) );
+        new SmartComboBox( new DefaultComboBoxModel( DataFactoryEditorSupport.getScriptEngineLanguages() ) );
 
     queryLanguageListCellRenderer = new QueryLanguageListCellRenderer();
     queryLanguageField.setRenderer( queryLanguageListCellRenderer );
@@ -378,7 +391,7 @@ public abstract class QueryEditorPanel<T> extends JPanel {
 
     final JPanel queryControlsPanel = new JPanel( new BorderLayout() );
     queryControlsPanel
-      .add( new JLabel( Messages.getString( "QueryEditorPanel.QueryDetailsLabel" ) ), BorderLayout.WEST );
+        .add( new JLabel( Messages.getString( "QueryEditorPanel.QueryDetailsLabel" ) ), BorderLayout.WEST );
     JComponent extraQueryButtons = getExtraQueryButtons();
     if ( extraQueryButtons != null ) {
       queryControlsPanel.add( extraQueryButtons, BorderLayout.EAST );

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -89,12 +89,11 @@ public class Pre492IT extends TestCase {
     final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-
     try {
       final ZipRepository zipRepository = new ZipRepository( new NullOutputStream() );
       final ContentLocation root = zipRepository.getRoot();
-      final ContentLocation data = RepositoryUtilities.createLocation
-        ( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
+      final ContentLocation data =
+          RepositoryUtilities.createLocation( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
 
       final DebugFlowOutputProcessor outputProcessor = new DebugFlowOutputProcessor();
 
@@ -119,44 +118,44 @@ public class Pre492IT extends TestCase {
 
   public void testPagebreakHonoredOnFirstPage() throws Exception {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Pre-492.prpt" );
-    masterReport.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    masterReport.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "true" );
     List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages( masterReport, 0, 1 );
     final LogicalPageBox page0 = logicalPageBoxes.get( 0 );
-    //    ModelPrinter.INSTANCE.print(page0);
+    // ModelPrinter.INSTANCE.print(page0);
 
     final RenderNode[] elementsByElementType =
-      MatchFactory.findElementsByElementType( page0.getContentArea(), AutoLayoutBoxType.INSTANCE );
+        MatchFactory.findElementsByElementType( page0.getContentArea(), AutoLayoutBoxType.INSTANCE );
     assertEquals( 28, elementsByElementType.length );
-    assertEquals( StrictGeomUtility.toInternalValue( 199 ), elementsByElementType[ 27 ].getY() );
+    assertEquals( StrictGeomUtility.toInternalValue( 199 ), elementsByElementType[27].getY() );
 
     final LogicalPageBox page1 = logicalPageBoxes.get( 1 );
     final RenderNode[] elementsPage1 =
-      MatchFactory.findElementsByElementType( page1.getContentArea(), AutoLayoutBoxType.INSTANCE );
+        MatchFactory.findElementsByElementType( page1.getContentArea(), AutoLayoutBoxType.INSTANCE );
     assertEquals( 31, elementsPage1.length );
-    assertEquals( StrictGeomUtility.toInternalValue( 211 ), elementsPage1[ 30 ].getY() );
-    //  ModelPrinter.INSTANCE.print(page1);
+    assertEquals( StrictGeomUtility.toInternalValue( 211 ), elementsPage1[30].getY() );
+    // ModelPrinter.INSTANCE.print(page1);
   }
 
   public void testPagebreakHonoredOnFirstPageSimple() throws Exception {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Pre-492.prpt" );
-    masterReport.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    masterReport.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages( masterReport, 0, 1 );
     final LogicalPageBox page0 = logicalPageBoxes.get( 0 );
-    //    ModelPrinter.INSTANCE.print(page0);
+    // ModelPrinter.INSTANCE.print(page0);
 
     final RenderNode[] elementsByElementType =
-      MatchFactory.findElementsByElementType( page0.getContentArea(), AutoLayoutBoxType.INSTANCE );
+        MatchFactory.findElementsByElementType( page0.getContentArea(), AutoLayoutBoxType.INSTANCE );
     assertEquals( 31, elementsByElementType.length );
-    assertEquals( StrictGeomUtility.toInternalValue( 199 ),
-      elementsByElementType[ elementsByElementType.length - 1 ].getY() );
+    assertEquals( StrictGeomUtility.toInternalValue( 199 ), elementsByElementType[elementsByElementType.length - 1]
+        .getY() );
 
     final LogicalPageBox page1 = logicalPageBoxes.get( 1 );
     final RenderNode[] elementsPage1 =
-      MatchFactory.findElementsByElementType( page1.getContentArea(), AutoLayoutBoxType.INSTANCE );
+        MatchFactory.findElementsByElementType( page1.getContentArea(), AutoLayoutBoxType.INSTANCE );
     assertEquals( 34, elementsPage1.length );
-    assertEquals( StrictGeomUtility.toInternalValue( 211 ), elementsPage1[ elementsPage1.length - 1 ].getY() );
-    //  ModelPrinter.INSTANCE.print(page1);
+    assertEquals( StrictGeomUtility.toInternalValue( 211 ), elementsPage1[elementsPage1.length - 1].getY() );
+    // ModelPrinter.INSTANCE.print(page1);
   }
 }

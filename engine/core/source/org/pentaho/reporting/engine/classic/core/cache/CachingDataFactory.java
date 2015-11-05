@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.cache;
 
@@ -53,14 +53,13 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
   private boolean debugDataSources;
   private boolean profileDataSources;
   private boolean noClose;
-  private static final String[] EMPTY_NAMES = new String[ 0 ];
+  private static final String[] EMPTY_NAMES = new String[0];
 
   public CachingDataFactory( final DataFactory backend, final boolean dataCacheEnabled ) {
     this( backend, false, dataCacheEnabled );
   }
 
-  public CachingDataFactory( final DataFactory backend, final boolean noClose,
-                             final boolean dataCacheEnabled ) {
+  public CachingDataFactory( final DataFactory backend, final boolean noClose, final boolean dataCacheEnabled ) {
     this( backend, noClose, produceDefault( dataCacheEnabled ) );
   }
 
@@ -72,9 +71,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     }
   }
 
-  public CachingDataFactory( final DataFactory backend,
-                             final boolean noClose,
-                             final DataCache dataCache ) {
+  public CachingDataFactory( final DataFactory backend, final boolean noClose, final DataCache dataCache ) {
     if ( backend == null ) {
       throw new NullPointerException();
     }
@@ -89,10 +86,11 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     this.sessionCache = new HashMap<DataCacheKey, TableModel>();
     this.dataCache = dataCache;
 
-    this.debugDataSources = "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.DebugDataSources" ) );
-    this.profileDataSources = "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.ProfileDataSources" ) );
+    this.debugDataSources =
+        "true".equals( configuration.getConfigProperty( "org.pentaho.reporting.engine.classic.core.DebugDataSources" ) );
+    this.profileDataSources =
+        "true"
+            .equals( configuration.getConfigProperty( "org.pentaho.reporting.engine.classic.core.ProfileDataSources" ) );
 
   }
 
@@ -159,8 +157,8 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     return wrapAsIndexed( data );
   }
 
-  public TableModel queryDesignTimeStructureStatic( final String query,
-                                                    final DataRow parameters ) throws ReportDataFactoryException {
+  public TableModel queryDesignTimeStructureStatic( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
     if ( query == null ) {
       throw new NullPointerException();
     }
@@ -281,8 +279,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
    * @param parameters
    * @return
    */
-  public TableModel queryData( final String query, final DataRow parameters )
-    throws ReportDataFactoryException {
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
     ArgumentNullException.validate( "query", query );
     ArgumentNullException.validate( "parameters", parameters );
 
@@ -308,8 +305,8 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     throw new ReportDataFactoryException( "The specified query '" + query + "' is not executable here." );
   }
 
-  public TableModel queryDesignTimeStructure( final String query,
-                                              final DataRow parameters ) throws ReportDataFactoryException {
+  public TableModel queryDesignTimeStructure( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
     ArgumentNullException.validate( "query", query );
     ArgumentNullException.validate( "parameters", parameters );
 
@@ -345,7 +342,6 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     return data;
   }
 
-
   private TableModel wrapAsIndexed( final TableModel data ) {
     if ( data instanceof MetaTableModel ) {
       return new IndexedMetaTableModel( (MetaTableModel) data );
@@ -354,9 +350,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     }
   }
 
-  private DataCacheKey createCacheKey( final String query,
-                                       final DataRow parameters,
-                                       final boolean designTime ) {
+  private DataCacheKey createCacheKey( final String query, final DataRow parameters, final boolean designTime ) {
     try {
       if ( dataCache == null ) {
         return null;
@@ -374,7 +368,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
         } else {
           key = new DataCacheKey();
           for ( int i = 0; i < referencedFields.length; i++ ) {
-            final String field = referencedFields[ i ];
+            final String field = referencedFields[i];
             key.addParameter( field, parameters.get( field ) );
           }
 
@@ -390,25 +384,23 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       return key;
     } catch ( final MetaDataLookupException mle ) {
-      logger.error( String.format
-        ( "Data-source used for query '%s' does not provide metadata. Caching will be disabled.", query ), mle );
+      logger.error( String.format(
+          "Data-source used for query '%s' does not provide metadata. Caching will be disabled.", query ), mle );
       return null;
     }
   }
 
-  private TableModel queryInternal( final String query,
-                                    final DataRow parameters,
-                                    final QueryStyle queryStyle )
+  private TableModel queryInternal( final String query, final DataRow parameters, final QueryStyle queryStyle )
     throws ReportDataFactoryException {
     if ( profileDataSources && CachingDataFactory.logger.isDebugEnabled() ) {
-      CachingDataFactory.logger.debug( System.identityHashCode(
-        Thread.currentThread() ) + ": Query processing time: Starting" );
+      CachingDataFactory.logger.debug( System.identityHashCode( Thread.currentThread() )
+          + ": Query processing time: Starting" );
     }
     final long startTime = System.currentTimeMillis();
     try {
       final StaticDataRow params = new StaticDataRow( parameters );
       final TableModel dataFromQuery;
-      switch( queryStyle ) {
+      switch ( queryStyle ) {
         case FreeForm:
           dataFromQuery = backend.queryFreeForm( query, params );
           break;
@@ -422,7 +414,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
           throw new IllegalStateException();
       }
       if ( dataFromQuery == null ) {
-        //final DefaultTableModel value = new DefaultTableModel();
+        // final DefaultTableModel value = new DefaultTableModel();
         if ( debugDataSources && CachingDataFactory.logger.isDebugEnabled() ) {
           CachingDataFactory.logger.debug( "Query failed for query '" + query + '\'' );
         }
@@ -438,17 +430,17 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     } finally {
       final long queryTime = System.currentTimeMillis();
       if ( profileDataSources && CachingDataFactory.logger.isDebugEnabled() ) {
-        CachingDataFactory.logger.debug( System.identityHashCode(
-          Thread.currentThread() ) + ": Query processing time: " + ( ( queryTime - startTime ) / 1000.0 ) );
+        CachingDataFactory.logger.debug( System.identityHashCode( Thread.currentThread() )
+            + ": Query processing time: " + ( ( queryTime - startTime ) / 1000.0 ) );
       }
     }
   }
 
-  private TableModel queryDesignTimeStructureInternal( final String query,
-                                                       final DataRow parameters ) throws ReportDataFactoryException {
+  private TableModel queryDesignTimeStructureInternal( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
     if ( profileDataSources && CachingDataFactory.logger.isDebugEnabled() ) {
-      CachingDataFactory.logger.debug( System.identityHashCode(
-        Thread.currentThread() ) + ": Query processing time: Starting" );
+      CachingDataFactory.logger.debug( System.identityHashCode( Thread.currentThread() )
+          + ": Query processing time: Starting" );
     }
     final long startTime = System.currentTimeMillis();
     try {
@@ -456,8 +448,8 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     } finally {
       final long queryTime = System.currentTimeMillis();
       if ( profileDataSources && CachingDataFactory.logger.isDebugEnabled() ) {
-        CachingDataFactory.logger.debug( System.identityHashCode(
-          Thread.currentThread() ) + ": Query processing time: " + ( ( queryTime - startTime ) / 1000.0 ) );
+        CachingDataFactory.logger.debug( System.identityHashCode( Thread.currentThread() )
+            + ": Query processing time: " + ( ( queryTime - startTime ) / 1000.0 ) );
       }
     }
   }
@@ -489,7 +481,8 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
    * Closing one data factory must not affect the other factories.
    *
    * @return nothing, the method dies instead.
-   * @throws UnsupportedOperationException as this class is not derivable.
+   * @throws UnsupportedOperationException
+   *           as this class is not derivable.
    */
   public DataFactory derive() {
     // If you see that exception, then you've probably tried to use that
@@ -501,7 +494,8 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
   /**
    * Prints a table model to standard output.
    *
-   * @param mod the model.
+   * @param mod
+   *          the model.
    */
   public static void printTableModelContents( final TableModel mod ) {
     if ( mod == null ) {
@@ -510,9 +504,8 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
 
     logger.debug( "Tablemodel contains " + mod.getRowCount() + " rows." ); //$NON-NLS-1$ //$NON-NLS-2$
     for ( int i = 0; i < mod.getColumnCount(); i++ ) {
-      logger.debug( "Column: " + i + " Name = " + mod.getColumnName(
-        i ) + "; DataType = " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        + mod.getColumnClass( i ) );
+      logger.debug( "Column: " + i + " Name = " + mod.getColumnName( i ) + "; DataType = " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          + mod.getColumnClass( i ) );
     }
 
     logger.debug( "Checking the data inside" ); //$NON-NLS-1$

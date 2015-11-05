@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process.alignment;
 
@@ -48,8 +48,8 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
     int contentIndex = start;
     InlineSequenceElement contentElement = null;
     for ( int i = 0; i < endIndex; i++ ) {
-      final InlineSequenceElement element = sequenceElements[ i ];
-      final RenderNode node = nodes[ i ];
+      final InlineSequenceElement element = sequenceElements[i];
+      final RenderNode node = nodes[i];
       usedWidth += element.getMaximumWidth( node );
       if ( i < start ) {
         usedWidthToStart += element.getMaximumWidth( node );
@@ -66,12 +66,11 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
     if ( nextPosition > lastPageBreak ) {
       // The contents we processed so far will not fit on the current line. That's dangerous.
       // We have to center align the content up to the start position.
-      performCenterAlignment( start, usedWidthToStart,
-        sequenceElements, nodes, elementDimensions, elementPositions );
+      performCenterAlignment( start, usedWidthToStart, sequenceElements, nodes, elementDimensions, elementPositions );
 
       // we cross a pagebreak. Stop working on it - we bail out here.
 
-      if ( nodes[ contentIndex ] instanceof SplittableRenderNode ) {
+      if ( nodes[contentIndex] instanceof SplittableRenderNode ) {
         // the element may be splittable. Test, and if so, give a hint to the
         // outside world ..
         setSkipIndex( endIndex );
@@ -83,16 +82,16 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
       // This is the first element and it still does not fit. How evil.
       if ( start == 0 ) {
         if ( contentElement instanceof InlineBoxSequenceElement ) {
-          final RenderNode node = nodes[ contentIndex ];
+          final RenderNode node = nodes[contentIndex];
           if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
             // OK, limit the size of the box to the maximum line width and
             // revalidate it.
-            final long contentPosition = elementPositions[ contentIndex ];
+            final long contentPosition = elementPositions[contentIndex];
             final RenderBox box = (RenderBox) node;
             final long maxWidth = ( getEndOfLine() - contentPosition );
             computeInlineBlock( box, contentPosition, maxWidth );
 
-            elementDimensions[ endIndex - 1 ] = node.getCachedWidth();
+            elementDimensions[endIndex - 1] = node.getCachedWidth();
           }
         }
         setSkipIndex( endIndex );
@@ -104,29 +103,25 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
     // into the available space. (Assuming that there is no inner pagebreak;
     // a thing we do not handle yet)
 
-    if ( performCenterAlignment( endIndex, usedWidth,
-      sequenceElements, nodes, elementDimensions, elementPositions ) ) {
+    if ( performCenterAlignment( endIndex, usedWidth, sequenceElements, nodes, elementDimensions, elementPositions ) ) {
       return endIndex;
     }
     return start;
   }
 
-  private boolean performCenterAlignment( final int endIndex,
-                                          final long usedWidth,
-                                          final InlineSequenceElement[] sequenceElements,
-                                          final RenderNode[] nodes,
-                                          final long[] elementDimensions,
-                                          final long[] elementPositions ) {
+  private boolean performCenterAlignment( final int endIndex, final long usedWidth,
+      final InlineSequenceElement[] sequenceElements, final RenderNode[] nodes, final long[] elementDimensions,
+      final long[] elementPositions ) {
     final long startOfLine = getStartOfLine();
     final long totalWidth = getEndOfLine() - startOfLine;
     final long emptySpace = Math.max( 0, ( totalWidth - usedWidth ) );
     long position = startOfLine + emptySpace / 2;
     // first, make a very simple distribution of the text over all the space, and ignore the pagebreaks
     for ( int i = 0; i < endIndex; i++ ) {
-      final RenderNode node = nodes[ i ];
-      final long elementWidth = sequenceElements[ i ].getMaximumWidth( node );
-      elementDimensions[ i ] = elementWidth;
-      elementPositions[ i ] = position;
+      final RenderNode node = nodes[i];
+      final long elementWidth = sequenceElements[i].getMaximumWidth( node );
+      elementDimensions[i] = elementWidth;
+      elementPositions[i] = position;
 
       position += elementWidth;
     }
@@ -150,8 +145,8 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
       // case 1: The center point sits directly on a pagebreak. This means, we shift the element touching the center
       // point to the left; and everything else is shifted to the right.
       final int centerElement = findElementLeftOfPosition( centerPoint, endIndex );
-      final long centerElementPosition = elementPositions[ centerElement ];
-      final long centerElementEnd = centerElementPosition + elementDimensions[ centerElement ];
+      final long centerElementPosition = elementPositions[centerElement];
+      final long centerElementEnd = centerElementPosition + elementDimensions[centerElement];
       if ( ( centerPoint - centerElementPosition ) > ( centerElementEnd - centerPoint ) ) {
         leftShiftEndIndex = centerElement + 1;
         rightShiftStartIndex = centerElement + 1;
@@ -165,8 +160,8 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
       final int startOfLineSegment = 0;
       if ( centerPageSegment > startOfLineSegment ) {
         final int leftElement = findElementLeftOfPosition( centerPageSegmentStart, endIndex );
-        final long elementPosition = elementPositions[ leftElement ];
-        final long elementEnd = elementPosition + elementDimensions[ leftElement ];
+        final long elementPosition = elementPositions[leftElement];
+        final long elementEnd = elementPosition + elementDimensions[leftElement];
         if ( elementEnd < centerPageSegmentStart ) {
           // if the element found fully fits on the left-hand area, include it in the shift to the left
           leftShiftEndIndex = leftElement + 1;
@@ -181,8 +176,8 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
         // we also have some elements that need to be shifted to the right.
         final long centerPageSegmentEnd = getPageBreak( centerPageSegmentNext );
         final int rightElement = findElementLeftOfPosition( centerPageSegmentEnd, endIndex );
-        final long elementPosition = elementPositions[ rightElement ];
-        final long elementEnd = elementPosition + elementDimensions[ rightElement ];
+        final long elementPosition = elementPositions[rightElement];
+        final long elementEnd = elementPosition + elementDimensions[rightElement];
         if ( elementEnd < centerPageSegmentEnd ) {
           // if the element found fully fits on the left-hand area, include it in the shift to the left
           rightShiftStartIndex = rightElement + 1;
@@ -202,16 +197,15 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
 
     // The center-element will be shifted to the right.
     if ( performShiftLeft( leftShiftEndIndex, centerPageSegment, savedElementPos )
-      && performShiftRight( rightShiftStartIndex, endIndex, centerPageSegmentNext, savedElementPos ) ) {
+        && performShiftRight( rightShiftStartIndex, endIndex, centerPageSegmentNext, savedElementPos ) ) {
       System.arraycopy( savedElementPos, 0, elementPositions, 0, savedElementPos.length );
       return true;
     }
     return false;
   }
 
-
   private boolean performShiftRight( final int firstElementIndex, final int lastElementIndex, int segment,
-                                     final long[] elementPositions ) {
+      final long[] elementPositions ) {
     if ( firstElementIndex >= lastElementIndex ) {
       // nothing to do here ..
       return true;
@@ -221,7 +215,7 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
     final long endOfLine = getEndOfLine();
 
     // We dont need the start of the center-segment, we need the end of it.
-    //int segment = findStartOfPageSegmentForPosition(centerPoint) + 1;
+    // int segment = findStartOfPageSegmentForPosition(centerPoint) + 1;
     final int pagebreakCount = getPagebreakCount();
     // prevent crash.
     if ( segment >= pagebreakCount ) {
@@ -233,7 +227,7 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
     long segmentStart = getStartOfSegment( segment );
 
     for ( int i = firstElementIndex; i < lastElementIndex; i++ ) {
-      final long elementWidth = elementDimensions[ i ];
+      final long elementWidth = elementDimensions[i];
       long elementEnd = segmentStart + elementWidth;
       if ( elementEnd > endOfLine ) {
         // this element will not fit ..
@@ -256,15 +250,14 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
         return false;
       }
 
-      elementPositions[ i ] = segmentStart;
+      elementPositions[i] = segmentStart;
       segmentStart = elementEnd;
     }
 
     return true;
   }
 
-  private boolean performShiftLeft( final int lastElementIndex, int segment,
-                                    final long[] elementPositions ) {
+  private boolean performShiftLeft( final int lastElementIndex, int segment, final long[] elementPositions ) {
     if ( lastElementIndex == 0 ) {
       // there is nothing to shift here ..
       return true;
@@ -286,12 +279,12 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
 
     //
 
-    //int segment = findStartOfPageSegmentForPosition(centerPoint);
+    // int segment = findStartOfPageSegmentForPosition(centerPoint);
     long segmentEnd = getPageBreak( segment );
     long segmentStart = getStartOfSegment( segment );
 
     for ( int i = elementIdx; i >= 0; i-- ) {
-      final long elementWidth = elementDimensions[ i ];
+      final long elementWidth = elementDimensions[i];
       long elementStart = segmentEnd - elementWidth;
       if ( elementStart < startOfLine ) {
         // this element will not fit. Skip it.
@@ -310,7 +303,7 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
         return false;
       }
 
-      elementPositions[ i ] = elementStart;
+      elementPositions[i] = elementStart;
       segmentEnd = elementStart;
     }
 
@@ -330,7 +323,8 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
    * Returns the index of the previous pagebreak (the page-boundary that is left to the given position) for the
    * specified position. This specifies the page-segment in which the position sits.
    *
-   * @param position the position in micro-points.
+   * @param position
+   *          the position in micro-points.
    * @return the number of the page segment.
    */
   private int findStartOfPageSegmentForPosition( final long position ) {
@@ -351,8 +345,10 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
    * Finds the element that is closest to the given position without being larger than the position. This method returns
    * endIndex - 1 if all elements are smaller than the given position.
    *
-   * @param position the position for which an element should be found.
-   * @param endIndex the maximum index on which to search in the element-positions list.
+   * @param position
+   *          the position for which an element should be found.
+   * @param endIndex
+   *          the maximum index on which to search in the element-positions list.
    * @return the index of the element closes to the given position.
    */
   private int findElementLeftOfPosition( final long position, final int endIndex ) {
@@ -375,7 +371,7 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
 
     while ( low <= high ) {
       final int mid = ( low + high ) >>> 1;
-      final long midVal = array[ mid ];
+      final long midVal = array[mid];
 
       if ( midVal < key ) {
         low = mid + 1;
@@ -385,7 +381,7 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
         return mid; // key found
       }
     }
-    return -( low + 1 );  // key not found.
+    return -( low + 1 ); // key not found.
   }
 
 }

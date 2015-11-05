@@ -42,9 +42,9 @@ public class Prd5143IT {
   public void testLayoutWorks() throws Exception {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-5143.prpt" );
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
     Assert.assertEquals( 1, elementsByNodeType.length );
   }
 

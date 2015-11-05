@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory;
 
@@ -72,7 +72,7 @@ public class DataFactoryEditorSupport {
     for ( final ScriptEngineFactory engineFactory : engineFactories ) {
       langSet.add( engineFactory );
     }
-    return langSet.toArray( new ScriptEngineFactory[ langSet.size() ] );
+    return langSet.toArray( new ScriptEngineFactory[langSet.size()] );
   }
 
   public static String mapLanguageToSyntaxHighlighting( final ScriptEngineFactory script ) {
@@ -81,10 +81,8 @@ public class DataFactoryEditorSupport {
     }
 
     final String language = script.getLanguageName();
-    if ( "ECMAScript".equalsIgnoreCase( language ) ||
-      "js".equalsIgnoreCase( language ) ||
-      "rhino".equalsIgnoreCase( language ) ||
-      "javascript".equalsIgnoreCase( language ) ) {
+    if ( "ECMAScript".equalsIgnoreCase( language ) || "js".equalsIgnoreCase( language )
+        || "rhino".equalsIgnoreCase( language ) || "javascript".equalsIgnoreCase( language ) ) {
       return SYNTAX_STYLE_JAVASCRIPT;
     }
     if ( "groovy".equalsIgnoreCase( language ) ) {
@@ -93,16 +91,13 @@ public class DataFactoryEditorSupport {
     return SYNTAX_STYLE_NONE;
   }
 
-  public static void configureDataFactoryForPreview( final DataFactory dataFactory,
-                                                     final DesignTimeContext context )
+  public static void configureDataFactoryForPreview( final DataFactory dataFactory, final DesignTimeContext context )
     throws ReportProcessingException {
-    configureDataFactoryForPreview( dataFactory, context, new DataFactory[ 0 ] );
+    configureDataFactoryForPreview( dataFactory, context, new DataFactory[0] );
   }
 
-  public static void configureDataFactoryForPreview( final DataFactory dataFactory,
-                                                     final DesignTimeContext context,
-                                                     final DataFactory[] additionalDataFactories )
-    throws ReportProcessingException {
+  public static void configureDataFactoryForPreview( final DataFactory dataFactory, final DesignTimeContext context,
+      final DataFactory[] additionalDataFactories ) throws ReportProcessingException {
     final AbstractReportDefinition report = context.getReport();
     final MasterReport masterReport = DesignTimeUtil.getMasterReport( report );
     final Configuration configuration;
@@ -131,15 +126,15 @@ public class DataFactoryEditorSupport {
     final CompoundDataFactory compoundDataFactory = new CompoundDataFactory();
     compoundDataFactory.add( dataFactory );
     for ( int i = 0; i < additionalDataFactories.length; i++ ) {
-      compoundDataFactory.add( additionalDataFactories[ i ] );
+      compoundDataFactory.add( additionalDataFactories[i] );
     }
     if ( reportDataFactory != null ) {
       compoundDataFactory.add( reportDataFactory );
     }
 
-    final DesignTimeDataFactoryContext dataFactoryContext = new DesignTimeDataFactoryContext( configuration,
-      resourceManager, contentBase, MasterReport.computeAndInitResourceBundleFactory
-      ( resourceBundleFactory, reportEnvironment ), compoundDataFactory );
+    final DesignTimeDataFactoryContext dataFactoryContext =
+        new DesignTimeDataFactoryContext( configuration, resourceManager, contentBase, MasterReport
+            .computeAndInitResourceBundleFactory( resourceBundleFactory, reportEnvironment ), compoundDataFactory );
     dataFactory.initialize( dataFactoryContext );
     compoundDataFactory.initialize( dataFactoryContext );
   }

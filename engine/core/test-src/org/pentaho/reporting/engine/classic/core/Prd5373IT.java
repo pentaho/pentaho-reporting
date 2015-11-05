@@ -38,8 +38,9 @@ public class Prd5373IT {
 
   @Test
   public void testDataConfigurationDefault() {
-    String conf = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent", "not-defined" );
+    String conf =
+        ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent", "not-defined" );
     Assert.assertEquals( conf, "false" );
   }
 
