@@ -277,7 +277,16 @@ This is the build file for the collection of Shims modules to provide support
   <target name="jacoco" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="subfloor.jacoco"/>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="jacoco"/>
+      </sequential>
+    </for>
+  </target>
+
+  <!-- Runs "jacoco-integration" on the modules defined in the property "modules" -->
+  <target name="jacoco-integration" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="jacoco-integration"/>
       </sequential>
     </for>
   </target>
@@ -286,7 +295,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="sonar" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="subfloor.sonar"/>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="sonar"/>
       </sequential>
     </for>
   </target>
@@ -295,7 +304,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="build-sonar" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="subfloor.build-sonar"/>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="build-sonar"/>
       </sequential>
     </for>
   </target>
@@ -304,7 +313,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="continuous-sonar" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="subfloor.continuous-sonar"/>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="continuous-sonar"/>
       </sequential>
     </for>
   </target>
