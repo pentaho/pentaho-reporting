@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes;
 
@@ -25,11 +25,13 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 
 /**
  * This single expression handling all types of barcode can be used in Simple XML report definition using a
- * drawable-field element.<br/> The barcode type can be: 3of9, 3of9ext, code39, code39ext, usd3, usd3ext, usd-3,
- * usd-3ext, codabar, code27, usd4, 2of7, monarch, nw7, usd-4, nw-7, ean13, ean-13, upca, upc-a, isbn, bookland,
- * code128, code128a, code128b, code128c, uccean128, 2of5, std2of5, int2of5, postnet or pdf417.<p/> The data as well as
- * type can be retrieved from the datasource fields using <code>rawDataField</code> and <code>rawTypeField</code>. The
- * static type supersedes the type retrieved from the datasource field.
+ * drawable-field element.<br/>
+ * The barcode type can be: 3of9, 3of9ext, code39, code39ext, usd3, usd3ext, usd-3, usd-3ext, codabar, code27, usd4,
+ * 2of7, monarch, nw7, usd-4, nw-7, ean13, ean-13, upca, upc-a, isbn, bookland, code128, code128a, code128b, code128c,
+ * uccean128, 2of5, std2of5, int2of5, postnet or pdf417.
+ * <p/>
+ * The data as well as type can be retrieved from the datasource fields using <code>rawDataField</code> and
+ * <code>rawTypeField</code>. The static type supersedes the type retrieved from the datasource field.
  *
  * @author Cedric Pronzato
  */
@@ -78,8 +80,8 @@ public class SimpleBarcodesExpression extends AbstractExpression {
     }
 
     try {
-      final BarcodeGenerator generator = SimpleBarcodesUtility.createBarcode4J
-        ( type, showText, checksum, Integer.valueOf( barHeight ) );
+      final BarcodeGenerator generator =
+          SimpleBarcodesUtility.createBarcode4J( type, showText, checksum, Integer.valueOf( barHeight ) );
       if ( generator != null ) {
         return new BarcodeDrawable( generator, data );
       }
@@ -89,7 +91,6 @@ public class SimpleBarcodesExpression extends AbstractExpression {
       }
       return null;
     }
-
 
     final Barcode barcode = SimpleBarcodesUtility.createBarcode( data, ltype, checksum );
     if ( barcode == null ) {

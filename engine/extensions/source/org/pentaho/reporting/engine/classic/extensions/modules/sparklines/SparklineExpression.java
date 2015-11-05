@@ -1,30 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines;
+
+import java.awt.Color;
+import java.util.ArrayList;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.ElementTypeUtils;
 import org.pentaho.reporting.engine.classic.core.function.ColumnAggregationExpression;
 import org.pentaho.reporting.libraries.libsparklines.BarGraphDrawable;
 import org.pentaho.reporting.libraries.libsparklines.LineGraphDrawable;
 import org.pentaho.reporting.libraries.libsparklines.PieGraphDrawable;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 public class SparklineExpression extends ColumnAggregationExpression {
   public static final Color DEFAULT_COLOR = Color.GRAY;
@@ -108,7 +108,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the color for the highest bars (for bar graphs) or the color for the highest slice (for pie graphs)
    *
-   * @param highColor The color to use.
+   * @param highColor
+   *          The color to use.
    */
   public void setHighColor( final Color highColor ) {
     this.highColor = highColor;
@@ -126,7 +127,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the color of the last bar (for bar graphs)
    *
-   * @param lastColor The color to use.
+   * @param lastColor
+   *          The color to use.
    */
   public void setLastColor( final Color lastColor ) {
     this.lastColor = lastColor;
@@ -144,7 +146,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the color for the medium slice (for pie graphs)
    *
-   * @param mediumColor The color to use.
+   * @param mediumColor
+   *          The color to use.
    */
   public void setMediumColor( Color mediumColor ) {
     this.mediumColor = mediumColor;
@@ -162,7 +165,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the color for the lower slice (for pie graphs)
    *
-   * @param lowColor The color to use.
+   * @param lowColor
+   *          The color to use.
    */
   public void setLowColor( Color lowColor ) {
     this.lowColor = lowColor;
@@ -180,7 +184,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the percentage from which to end the higher slice (for pie graphs). It should be "1.0".
    *
-   * @param highSlice The begin in percentage.
+   * @param highSlice
+   *          The begin in percentage.
    */
   public void setHighSlice( Double highSlice ) {
     this.highSlice = highSlice;
@@ -198,7 +203,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the percentage from which to end the medium slice (for pie graphs).
    *
-   * @param mediumSlice The begin in percentage.
+   * @param mediumSlice
+   *          The begin in percentage.
    */
   public void setMediumSlice( Double mediumSlice ) {
     this.mediumSlice = mediumSlice;
@@ -216,7 +222,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the percentage from which to end the lower slice (for pie graphs).
    *
-   * @param lowSlice The begin in percentage.
+   * @param lowSlice
+   *          The begin in percentage.
    */
   public void setLowSlice( Double lowSlice ) {
     this.lowSlice = lowSlice;
@@ -234,7 +241,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the graph drawing orientation (for pie graphs). <code>true</code> means counter clockwise.
    *
-   * @param counterClockWise The new clockwise value.
+   * @param counterClockWise
+   *          The new clockwise value.
    */
   public void setCounterClockWise( boolean counterClockWise ) {
     this.counterClockWise = counterClockWise;
@@ -250,9 +258,10 @@ public class SparklineExpression extends ColumnAggregationExpression {
   }
 
   /**
-   * Sets the angle from which the graph should start drawing (for pie graphys). 0 means 12 o'clock.
+   * Sets the angle from which the graph should start drawing (for pie graphs). 0 means 12 o'clock.
    *
-   * @param startAngle The new angle in degrees.
+   * @param startAngle
+   *          The new angle in degrees.
    */
   public void setStartAngle( int startAngle ) {
     this.startAngle = startAngle;
@@ -270,7 +279,8 @@ public class SparklineExpression extends ColumnAggregationExpression {
   /**
    * Sets the spacing between each datapoint.
    *
-   * @param spacing The new spacing value to use.
+   * @param spacing
+   *          The new spacing value to use.
    */
   public void setSpacing( final int spacing ) {
     this.spacing = spacing;
@@ -306,7 +316,7 @@ public class SparklineExpression extends ColumnAggregationExpression {
       if ( data.length < 1 ) {
         return null;
       }
-      drawable.setValue( data[ 0 ] );
+      drawable.setValue( data[0] );
       drawable.setColor( color );
       drawable.setBackground( backgroundColor );
       drawable.setLowColor( lowColor );
@@ -343,13 +353,13 @@ public class SparklineExpression extends ColumnAggregationExpression {
 
     final Object[] values = getFieldValues();
     for ( int i = 0; i < values.length; i++ ) {
-      final Object value = values[ i ];
+      final Object value = values[i];
       if ( value instanceof Number ) {
         final Number n = (Number) value;
         numbers.add( n );
       }
     }
-    return (Number[]) numbers.toArray( new Number[ numbers.size() ] );
+    return (Number[]) numbers.toArray( new Number[numbers.size()] );
   }
 
 }

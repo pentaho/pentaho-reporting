@@ -19,6 +19,12 @@
  */
 package org.pentaho.reporting.engine.classic.extensions.modules.connections;
 
+import java.sql.Driver;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverConnectionFactory;
@@ -39,11 +45,6 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-import javax.sql.DataSource;
-import java.sql.Driver;
-import java.util.Map;
-import java.util.Properties;
-
 public class PooledDatasourceHelper {
   private static final Log logger = LogFactory.getLog( PooledDatasourceHelper.class );
   public static final String GENERIC = "GENERIC";
@@ -55,9 +56,9 @@ public class PooledDatasourceHelper {
     throws DatasourceServiceException {
     try {
       final DataSourceCacheManager cacheManager =
-        ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceCacheManager.class );
+          ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceCacheManager.class );
       final IDatabaseDialectService databaseDialectService =
-        ClassicEngineBoot.getInstance().getObjectFactory().get( IDatabaseDialectService.class );
+          ClassicEngineBoot.getInstance().getObjectFactory().get( IDatabaseDialectService.class );
       final IDatabaseDialect dialect = databaseDialectService.getDialect( databaseConnection );
 
       final String driverClass;
@@ -75,22 +76,22 @@ public class PooledDatasourceHelper {
         url = null;
       }
 
-      // Read default connecion pooling parameter
-      final String maxdleConn = getSystemSetting( "dbcp-defaults.max-idle-conn" );  //$NON-NLS-1$
-      final String minIdleConn = getSystemSetting( "dbcp-defaults.min-idle-conn" );  //$NON-NLS-1$
-      final String maxActConn = getSystemSetting( "dbcp-defaults.max-act-conn" );  //$NON-NLS-1$
+      // Read default connection pooling parameter
+      final String maxdleConn = getSystemSetting( "dbcp-defaults.max-idle-conn" ); //$NON-NLS-1$
+      final String minIdleConn = getSystemSetting( "dbcp-defaults.min-idle-conn" ); //$NON-NLS-1$
+      final String maxActConn = getSystemSetting( "dbcp-defaults.max-act-conn" ); //$NON-NLS-1$
       String validQuery = null;
-      final String whenExhaustedAction = getSystemSetting( "dbcp-defaults.when-exhausted-action" );  //$NON-NLS-1$
-      final String wait = getSystemSetting( "dbcp-defaults.wait" );  //$NON-NLS-1$
-      final String testWhileIdleValue = getSystemSetting( "dbcp-defaults.test-while-idle" );  //$NON-NLS-1$
-      final String testOnBorrowValue = getSystemSetting( "dbcp-defaults.test-on-borrow" );  //$NON-NLS-1$
-      final String testOnReturnValue = getSystemSetting( "dbcp-defaults.test-on-return" );  //$NON-NLS-1$
+      final String whenExhaustedAction = getSystemSetting( "dbcp-defaults.when-exhausted-action" ); //$NON-NLS-1$
+      final String wait = getSystemSetting( "dbcp-defaults.wait" ); //$NON-NLS-1$
+      final String testWhileIdleValue = getSystemSetting( "dbcp-defaults.test-while-idle" ); //$NON-NLS-1$
+      final String testOnBorrowValue = getSystemSetting( "dbcp-defaults.test-on-borrow" ); //$NON-NLS-1$
+      final String testOnReturnValue = getSystemSetting( "dbcp-defaults.test-on-return" ); //$NON-NLS-1$
       final boolean testWhileIdle =
-        !StringUtils.isEmpty( testWhileIdleValue ) && Boolean.parseBoolean( testWhileIdleValue );
+          !StringUtils.isEmpty( testWhileIdleValue ) && Boolean.parseBoolean( testWhileIdleValue );
       final boolean testOnBorrow =
-        !StringUtils.isEmpty( testOnBorrowValue ) && Boolean.parseBoolean( testOnBorrowValue );
+          !StringUtils.isEmpty( testOnBorrowValue ) && Boolean.parseBoolean( testOnBorrowValue );
       final boolean testOnReturn =
-        !StringUtils.isEmpty( testOnReturnValue ) && Boolean.parseBoolean( testOnReturnValue );
+          !StringUtils.isEmpty( testOnReturnValue ) && Boolean.parseBoolean( testOnReturnValue );
       int maxActiveConnection = -1;
       long waitTime = -1;
       byte whenExhaustedActionType = -1;
@@ -124,9 +125,9 @@ public class PooledDatasourceHelper {
 
       final PoolingDataSource poolingDataSource = new PoolingDataSource();
       final Driver driver =
-        ObjectUtilities.loadAndInstantiate( driverClass, PooledDatasourceHelper.class, Driver.class );
+          ObjectUtilities.loadAndInstantiate( driverClass, PooledDatasourceHelper.class, Driver.class );
 
-      // As the name says, this is a generic pool; it returns  basic Object-class objects.
+      // As the name says, this is a generic pool; it returns basic Object-class objects.
       final GenericObjectPool pool = new GenericObjectPool( null );
       pool.setWhenExhaustedAction( whenExhaustedActionType );
 
@@ -140,47 +141,43 @@ public class PooledDatasourceHelper {
       pool.setTestOnBorrow( testOnBorrow );
       pool.setTestWhileIdle( testWhileIdle );
       /*
-      ConnectionFactory creates connections on behalf of the pool.
-	    Here, we use the DriverManagerConnectionFactory because that essentially
-	    uses DriverManager as the source of connections.
-	    */
+       * ConnectionFactory creates connections on behalf of the pool. Here, we use the DriverManagerConnectionFactory
+       * because that essentially uses DriverManager as the source of connections.
+       */
       final Properties properties = new Properties();
       properties.setProperty( "user", databaseConnection.getUsername() );
       properties.setProperty( "password", databaseConnection.getPassword() );
       final ConnectionFactory factory = new DriverConnectionFactory( driver, url, properties );
 
-	    /*
-	    Puts pool-specific wrappers on factory connections.  For clarification:
-	    "[PoolableConnection]Factory," not "Poolable[ConnectionFactory]."
-	    */
+      /*
+       * Puts pool-specific wrappers on factory connections. For clarification: "[PoolableConnection]Factory," not
+       * "Poolable[ConnectionFactory]."
+       */
       // This declaration is used implicitly.
-      //noinspection UnusedDeclaration
+      // noinspection UnusedDeclaration
       final PoolableConnectionFactory pcf = new PoolableConnectionFactory( factory, // ConnectionFactory
-        pool, // ObjectPool
-        null, // KeyedObjectPoolFactory
-        validQuery, // String (validation query)
-        false, // boolean (default to read-only?)
-        true // boolean (default to auto-commit statements?)
+          pool, // ObjectPool
+          null, // KeyedObjectPoolFactory
+          validQuery, // String (validation query)
+          false, // boolean (default to read-only?)
+          true // boolean (default to auto-commit statements?)
       );
 
-	    /*
-	    initialize the pool to X connections
-	    */
-      logger.debug(
-        "Pool defaults to " + maxActiveConnection + " max active/" + maxIdleConnection + "max idle" + "with " + waitTime
-          + "wait time"//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+      /*
+       * initialize the pool to X connections
+       */
+      logger.debug( "Pool defaults to " + maxActiveConnection + " max active/" + maxIdleConnection + "max idle"
+          + "with " + waitTime + "wait time"//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
           + " idle connections." ); //$NON-NLS-1$
 
       for ( int i = 0; i < maxIdleConnection; ++i ) {
         pool.addObject();
       }
-      logger.debug( "Pool now has " + pool.getNumActive() + " active/" + pool.getNumIdle()
-        + " idle connections." ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	    /*
-	    All of this is wrapped in a DataSource, which client code should
-	    already know how to handle (since it's the same class of object
-	    they'd fetch via the container's JNDI tree
-	    */
+      logger.debug( "Pool now has " + pool.getNumActive() + " active/" + pool.getNumIdle() + " idle connections." ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      /*
+       * All of this is wrapped in a DataSource, which client code should already know how to handle (since it's the
+       * same class of object they'd fetch via the container's JNDI tree
+       */
       poolingDataSource.setPool( pool );
 
       // store the pool, so we can get to it later
@@ -199,12 +196,12 @@ public class PooledDatasourceHelper {
   public static DataSource convert( final IDatabaseConnection databaseConnection ) {
     final BasicDataSource basicDatasource = new BasicDataSource();
     final IDatabaseDialectService databaseDialectService =
-      ClassicEngineBoot.getInstance().getObjectFactory().get( IDatabaseDialectService.class );
+        ClassicEngineBoot.getInstance().getObjectFactory().get( IDatabaseDialectService.class );
     final IDatabaseDialect dialect = databaseDialectService.getDialect( databaseConnection );
     if ( "GENERIC".equals( databaseConnection.getDatabaseType().getShortName() ) )//$NON-NLS-1$
     {
-      basicDatasource.setDriverClassName(
-        databaseConnection.getAttributes().get( GenericDatabaseDialect.ATTRIBUTE_CUSTOM_DRIVER_CLASS ) );
+      basicDatasource.setDriverClassName( databaseConnection.getAttributes().get(
+          GenericDatabaseDialect.ATTRIBUTE_CUSTOM_DRIVER_CLASS ) );
     } else {
       basicDatasource.setDriverClassName( dialect.getNativeDriver() );
     }
