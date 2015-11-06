@@ -17,10 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import junit.framework.TestCase;
-import org.junit.Assert;
-import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
-import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,6 +26,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+
+import junit.framework.TestCase;
+
+import org.junit.Assert;
+import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
+import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
+import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
 public class ElementTest extends TestCase {
   public ElementTest( final String s ) {
@@ -213,5 +219,83 @@ public class ElementTest extends TestCase {
 
     Assert.assertEquals( LabelType.INSTANCE, e1.getElementType() );
     Assert.assertEquals( NumberFieldType.INSTANCE, e2.getElementType() );
+  }
+
+  public void testGetAttributeExpressions() {
+    Expression expression = mock( Expression.class );
+    Element elem = new Element();
+    elem.setAttributeExpression( "namespace", "test_name", expression );
+    assertNotNull( elem.getAttributeExpressions() );
+    assertEquals( expression, elem.getAttributeExpressions().getAttribute( "namespace", "test_name" ) );
+  }
+
+  public void testGetFirstAttribute() {
+    Element elem = new Element();
+    elem.setAttribute( "namespace_0", "test_name", "test_value_0" );
+    elem.setAttribute( "namespace_1", "test_name", "test_value_1" );
+    assertNotNull( elem.getFirstAttribute( "test_name" ) );
+    assertEquals( "test_value_0", elem.getFirstAttribute( "test_name" ) );
+  }
+
+  public void testIsVisible() {
+    Element elem = new Element();
+    elem.getStyle().setBooleanStyleProperty( ElementStyleKeys.VISIBLE, true );
+    assertEquals( true, elem.isVisible() );
+  }
+
+  public void testGetId() {
+    Element elem = new Element();
+    elem.setAttribute( AttributeNames.Xml.NAMESPACE, AttributeNames.Xml.ID, "id_0" );
+    assertEquals( "id_0", elem.getId() );
+  }
+
+  public void testIsDynamicContent() {
+    Element elem = new Element();
+    elem.getStyle().setBooleanStyleProperty( ElementStyleKeys.DYNAMIC_HEIGHT, true );
+    assertEquals( true, elem.isDynamicContent() );
+  }
+
+  public void testSetDynamicContent() {
+    Element elem = new Element();
+    elem.setDynamicContent( true );
+    assertEquals( true, elem.getStyle().getBooleanStyleProperty( ElementStyleKeys.DYNAMIC_HEIGHT ) );
+  }
+
+  public void testGetReportDefinition() {
+    Element elem = new Element();
+    elem.setParent( null );
+    assertNull( elem.getReportDefinition() );
+
+    ReportDefinition defn = mock( ReportDefinition.class );
+    Section parent = mock( Section.class );
+    doReturn( defn ).when( parent ).getReportDefinition();
+    elem.setParent( parent );
+    assertNotNull( elem.getReportDefinition() );
+    assertEquals( defn, elem.getReportDefinition() );
+  }
+
+  public void testGetMasterReport() {
+    Element elem = new Element();
+    elem.setParent( null );
+    assertNull( elem.getMasterReport() );
+
+    ReportDefinition defn = mock( ReportDefinition.class );
+    Section parent = mock( Section.class );
+    doReturn( defn ).when( parent ).getMasterReport();
+    elem.setParent( parent );
+    assertNotNull( elem.getMasterReport() );
+    assertEquals( defn, elem.getMasterReport() );
+  }
+
+  public void testSetHRefTarget() {
+    Element elem = new Element();
+    elem.setHRefTarget( "test_target" );
+    assertEquals( "test_target", elem.getStyle().getStyleProperty( ElementStyleKeys.HREF_TARGET ) );
+  }
+
+  public void testGetHRefTarget() {
+    Element elem = new Element();
+    elem.getStyle().setStyleProperty( ElementStyleKeys.HREF_TARGET, "test_target" );
+    assertEquals( "test_target", elem.getHRefTarget() );
   }
 }

@@ -61,8 +61,8 @@ public abstract class AbstractImageMapEntry implements ImageMapEntry {
       final float coord = coords[i];
       if ( i > 0 ) {
         stringBuilder.append( "," );
-        stringBuilder.append( coord );
       }
+      stringBuilder.append( coord );
     }
     stringBuilder.append( "\"" );
     final String[] namespaces = attributeMap.getNameSpaces();

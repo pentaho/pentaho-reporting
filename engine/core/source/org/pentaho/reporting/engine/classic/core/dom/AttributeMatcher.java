@@ -29,8 +29,7 @@ public class AttributeMatcher implements NodeMatcher {
   }
 
   public AttributeMatcher( final String namespace, final String name ) {
-    this.namespace = namespace;
-    this.name = name;
+    this( namespace, name, null );
   }
 
   public AttributeMatcher( final String namespace, final String name, final Object value ) {

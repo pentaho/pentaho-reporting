@@ -15,7 +15,11 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout;
+package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
+
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
@@ -23,21 +27,12 @@ import org.pentaho.reporting.engine.classic.core.layout.model.BorderCorner;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackgroundProducer;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.util.beans.ColorValueConverter;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
-
-import java.awt.*;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 /**
  * Creation-Date: 22.08.2007, 12:08:55

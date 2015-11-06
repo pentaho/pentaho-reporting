@@ -31,7 +31,6 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.base.ParameterRepor
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
-import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 
 public class TextAreaParameterComponent extends JScrollPane implements ParameterComponent {
@@ -95,7 +94,7 @@ public class TextAreaParameterComponent extends JScrollPane implements Parameter
           } else {
             textArea.setText( ConverterRegistry.toAttributeValue( value ) );
           }
-        } catch ( BeanException e ) {
+        } catch ( Exception e ) {
           // ignore illegal values, set them as plain text.
           textArea.setText( value.toString() );
           setBackground( ParameterReportControllerPane.ERROR_COLOR );

@@ -15,9 +15,10 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout;
+package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import junit.framework.AssertionFailedError;
+
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
@@ -25,9 +26,6 @@ import org.pentaho.reporting.engine.classic.core.layout.output.FlowSelector;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.AllPageFlowSelector;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.AbstractTableOutputProcessor;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.model.ResultTable;
 
 public class TableDebugOutputProcessor extends AbstractTableOutputProcessor {

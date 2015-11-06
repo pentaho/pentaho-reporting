@@ -15,7 +15,7 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout;
+package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;

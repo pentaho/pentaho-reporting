@@ -17,17 +17,29 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import junit.framework.TestCase;
-import org.pentaho.reporting.engine.classic.core.elementfactory.TextFieldElementFactory;
-import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
-import org.pentaho.reporting.libraries.base.util.FloatDimension;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import junit.framework.TestCase;
+
+import org.junit.Test;
+import org.pentaho.reporting.engine.classic.core.elementfactory.TextFieldElementFactory;
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.BandType;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.FloatDimension;
 
 public class BandTest extends TestCase {
   public BandTest( final String s ) {
@@ -39,7 +51,7 @@ public class BandTest extends TestCase {
   }
 
   public void testBandCreate() {
-    final Band b = new Band();
+    Band b = new Band();
     assertNotNull( b.getDataSource() );
     assertNotNull( b.getStyle() );
     assertNotNull( b.getName() );
@@ -47,7 +59,53 @@ public class BandTest extends TestCase {
     assertNull( b.getParent() );
     assertNotNull( b.getElementArray() );
     assertTrue( b.getElementCount() == 0 );
-    // assertNotNull(b.getElements());
+    assertTrue( b.getElementType() instanceof BandType );
+    assertFalse( b.isPagebreakBeforePrint() );
+    assertFalse( b.isPagebreakAfterPrint() );
+
+    InstanceID id = new InstanceID();
+    b = new Band( id );
+    assertNotNull( b.getTreeLock() );
+    assertEquals( id, b.getTreeLock() );
+    assertTrue( b.getElementType() instanceof BandType );
+    assertFalse( b.isPagebreakBeforePrint() );
+    assertFalse( b.isPagebreakAfterPrint() );
+
+    b = new Band( true, true );
+    assertTrue( b.getElementType() instanceof BandType );
+    assertTrue( b.isPagebreakBeforePrint() );
+    assertTrue( b.isPagebreakAfterPrint() );
+  }
+
+  public void testAddElementWrongPosition() {
+    try {
+      Band band = new Band();
+      band.addElement( -1, mock( Element.class ) );
+      fail( "should throw exception" );
+    } catch ( IllegalArgumentException e ) {
+      // expected
+    }
+  }
+
+  public void testAddElementTooBigPosition() {
+    try {
+      Band band = new Band();
+      band.addElement( 10, mock( Element.class ) );
+      fail( "should throw exception" );
+    } catch ( IllegalArgumentException e ) {
+      // expected
+    }
+  }
+
+  @Test( expected = NullPointerException.class )
+  public void testAddNullElement() {
+    try {
+      Band band = new Band();
+      band.addElement( 0, null );
+      fail( "should throw exception" );
+    } catch ( NullPointerException e ) {
+      // expected
+    }
   }
 
   public void testBandMethods() {
@@ -236,7 +294,75 @@ public class BandTest extends TestCase {
 
     // report.getStyleSheetCollection().debug();
     DebugReportRunner.execGraphics2D( report );
+  }
 
+  public void testGetDefaultStyleSheet() {
+    Band band = new Band();
+    assertThat( band.getDefaultStyleSheet(), is( notNullValue() ) );
+  }
+
+  public void testAddElements() {
+    Band band = new Band();
+    try {
+      band.addElements( null );
+      fail( "should throw exception" );
+    } catch ( NullPointerException e ) {
+      // expected
+    }
+
+    Element elem = mock( Element.class );
+    List<Element> elements = new ArrayList<Element>();
+    elements.add( elem );
+    band.addElements( elements );
+    assertEquals( 1, band.getElementCount() );
+    assertEquals( elem, band.getElement( 0 ) );
+  }
+
+  public void testGetElement() {
+    Band band = new Band();
+    try {
+      band.getElement( null );
+      fail( "should throw exception" );
+    } catch ( NullPointerException e ) {
+      // expected
+    }
+
+    Element elem = mock( Element.class );
+    doReturn( "test_name" ).when( elem ).getName();
+    band.addElement( elem );
+    assertEquals( 1, band.getElementCount() );
+    assertEquals( elem, band.getElement( "test_name" ) );
+  }
+
+  public void testSetElementAt() {
+    Band band = new Band();
+    band.addElement( mock( Element.class ) );
+    Element elem = mock( Element.class );
+    try {
+      band.setElementAt( -1, elem );
+      fail( "should throw exception" );
+    } catch ( IllegalArgumentException e ) {
+      // expected
+    }
+
+    try {
+      band.setElementAt( 10, elem );
+      fail( "should throw exception" );
+    } catch ( IllegalArgumentException e ) {
+      // expected
+    }
+
+    try {
+      band.setElementAt( 0, null );
+      fail( "should throw exception" );
+    } catch ( NullPointerException e ) {
+      // expected
+    }
+
+    band.setElementAt( 0, elem );
+    assertEquals( 1, band.getElementCount() );
+    assertEquals( elem, band.getElement( 0 ) );
+    assertEquals( band, elem.getParentSection() );
   }
 
 }
