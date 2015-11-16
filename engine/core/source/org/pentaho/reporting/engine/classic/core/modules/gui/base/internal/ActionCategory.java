@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
 
@@ -39,8 +39,9 @@ public class ActionCategory implements Comparable {
   }
 
   public void initialize( final SwingGuiContext context ) {
-    resources = new ResourceBundleSupport
-      ( context.getLocale(), resourceBase, ObjectUtilities.getClassLoader( ActionCategory.class ) );
+    resources =
+        new ResourceBundleSupport( context.getLocale(), resourceBase, ObjectUtilities
+            .getClassLoader( ActionCategory.class ) );
   }
 
   public String getResourceBase() {
@@ -132,14 +133,17 @@ public class ActionCategory implements Comparable {
   }
 
   /**
-   * Compares this object with the specified object for order.  Returns a negative integer, zero, or a positive integer
-   * as this object is less than, equal to, or greater than the specified object.<p>
+   * Compares this object with the specified object for order. Returns a negative integer, zero, or a positive integer
+   * as this object is less than, equal to, or greater than the specified object.
+   * <p>
    * <p/>
    *
-   * @param o the Object to be compared.
+   * @param o
+   *          the Object to be compared.
    * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the
-   * specified object.
-   * @throws ClassCastException if the specified object's type prevents it from being compared to this Object.
+   *         specified object.
+   * @throws ClassCastException
+   *           if the specified object's type prevents it from being compared to this Object.
    */
   public int compareTo( final Object o ) {
     final ActionCategory other = (ActionCategory) o;
@@ -154,12 +158,12 @@ public class ActionCategory implements Comparable {
 
   public String toString() {
     return "ActionCategory{" + //$NON-NLS-1$
-      "name='" + name + '\'' + //$NON-NLS-1$
-      ", position=" + position + //$NON-NLS-1$
-      ", resourceBase='" + resourceBase + '\'' + //$NON-NLS-1$
-      ", resourcePrefix='" + resourcePrefix + '\'' + //$NON-NLS-1$
-      ", resources=" + resources + //$NON-NLS-1$
-      '}';
+        "name='" + name + '\'' + //$NON-NLS-1$
+        ", position=" + position + //$NON-NLS-1$
+        ", resourceBase='" + resourceBase + '\'' + //$NON-NLS-1$
+        ", resourcePrefix='" + resourcePrefix + '\'' + //$NON-NLS-1$
+        ", resources=" + resources + //$NON-NLS-1$
+        '}';
   }
 
   public boolean isUserDefined() {

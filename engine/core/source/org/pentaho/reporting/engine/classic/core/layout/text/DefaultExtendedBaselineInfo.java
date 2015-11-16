@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.text;
 
@@ -31,36 +31,29 @@ public final class DefaultExtendedBaselineInfo implements ExtendedBaselineInfo {
   private long underlinePosition;
   private long strikethroughPosition;
 
-  public DefaultExtendedBaselineInfo( final int dominantBaseline,
-                                      final BaselineInfo baselines,
-                                      final long beforeEdge,
-                                      final long textBeforeEdge,
-                                      final long textAfterEdge,
-                                      final long afterEdge,
-                                      final long underlinePosition,
-                                      final long strikethroughPosition ) {
+  public DefaultExtendedBaselineInfo( final int dominantBaseline, final BaselineInfo baselines, final long beforeEdge,
+      final long textBeforeEdge, final long textAfterEdge, final long afterEdge, final long underlinePosition,
+      final long strikethroughPosition ) {
     if ( baselines == null ) {
       throw new NullPointerException();
     }
     final long[] rawbaselines = baselines.getBaselines();
-    this.baselines = new long[ ExtendedBaselineInfo.BASELINE_COUNT ];
-    this.baselines[ ExtendedBaselineInfo.BEFORE_EDGE ] = RenderableText.convert( beforeEdge );
-    this.baselines[ ExtendedBaselineInfo.TEXT_BEFORE_EDGE ] = RenderableText.convert( textBeforeEdge );
-    this.baselines[ ExtendedBaselineInfo.HANGING ] = RenderableText.convert( rawbaselines[ BaselineInfo.HANGING ] );
-    this.baselines[ ExtendedBaselineInfo.CENTRAL ] = RenderableText.convert( rawbaselines[ BaselineInfo.CENTRAL ] );
-    this.baselines[ ExtendedBaselineInfo.MIDDLE ] = RenderableText.convert( rawbaselines[ BaselineInfo.MIDDLE ] );
-    this.baselines[ ExtendedBaselineInfo.MATHEMATICAL ] =
-      RenderableText.convert( rawbaselines[ BaselineInfo.MATHEMATICAL ] );
-    this.baselines[ ExtendedBaselineInfo.ALPHABETHIC ] =
-      RenderableText.convert( rawbaselines[ BaselineInfo.ALPHABETIC ] );
-    this.baselines[ ExtendedBaselineInfo.IDEOGRAPHIC ] =
-      RenderableText.convert( rawbaselines[ BaselineInfo.IDEOGRAPHIC ] );
-    this.baselines[ ExtendedBaselineInfo.TEXT_AFTER_EDGE ] = RenderableText.convert( textAfterEdge );
-    this.baselines[ ExtendedBaselineInfo.AFTER_EDGE ] = RenderableText.convert( afterEdge );
+    this.baselines = new long[ExtendedBaselineInfo.BASELINE_COUNT];
+    this.baselines[ExtendedBaselineInfo.BEFORE_EDGE] = RenderableText.convert( beforeEdge );
+    this.baselines[ExtendedBaselineInfo.TEXT_BEFORE_EDGE] = RenderableText.convert( textBeforeEdge );
+    this.baselines[ExtendedBaselineInfo.HANGING] = RenderableText.convert( rawbaselines[BaselineInfo.HANGING] );
+    this.baselines[ExtendedBaselineInfo.CENTRAL] = RenderableText.convert( rawbaselines[BaselineInfo.CENTRAL] );
+    this.baselines[ExtendedBaselineInfo.MIDDLE] = RenderableText.convert( rawbaselines[BaselineInfo.MIDDLE] );
+    this.baselines[ExtendedBaselineInfo.MATHEMATICAL] =
+        RenderableText.convert( rawbaselines[BaselineInfo.MATHEMATICAL] );
+    this.baselines[ExtendedBaselineInfo.ALPHABETHIC] = RenderableText.convert( rawbaselines[BaselineInfo.ALPHABETIC] );
+    this.baselines[ExtendedBaselineInfo.IDEOGRAPHIC] = RenderableText.convert( rawbaselines[BaselineInfo.IDEOGRAPHIC] );
+    this.baselines[ExtendedBaselineInfo.TEXT_AFTER_EDGE] = RenderableText.convert( textAfterEdge );
+    this.baselines[ExtendedBaselineInfo.AFTER_EDGE] = RenderableText.convert( afterEdge );
 
     this.strikethroughPosition = RenderableText.convert( strikethroughPosition );
     this.underlinePosition = RenderableText.convert( underlinePosition );
-    //this.baselines = baselines;
+    // this.baselines = baselines;
     this.dominantBaseline = dominantBaseline;
   }
 
@@ -80,17 +73,17 @@ public final class DefaultExtendedBaselineInfo implements ExtendedBaselineInfo {
     return baselines.clone();
   }
 
-  //  public void setBaselines(final long[] baselines)
-  //  {
-  //    if (baselines.length != ExtendedBaselineInfo.BASELINE_COUNT)
-  //    {
-  //      throw new IllegalArgumentException();
-  //    }
-  //    System.arraycopy(baselines, 0, this.baselines, 0, ExtendedBaselineInfo.BASELINE_COUNT);
-  //  }
+  // public void setBaselines(final long[] baselines)
+  // {
+  // if (baselines.length != ExtendedBaselineInfo.BASELINE_COUNT)
+  // {
+  // throw new IllegalArgumentException();
+  // }
+  // System.arraycopy(baselines, 0, this.baselines, 0, ExtendedBaselineInfo.BASELINE_COUNT);
+  // }
 
   public long getBaseline( final int baseline ) {
-    return baselines[ baseline ];
+    return baselines[baseline];
   }
 
   public String toString() {

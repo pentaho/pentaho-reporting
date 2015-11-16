@@ -1,34 +1,41 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
+
+import java.awt.BorderLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JApplet;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.IconTheme;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.JStatusBar;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressBar;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.RequestFocusHandler;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Creation-Date: 11.11.2006, 19:35:22
@@ -44,7 +51,8 @@ public class PreviewApplet extends JApplet {
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param evt
+     *          A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
     public void propertyChange( final PropertyChangeEvent evt ) {
@@ -55,7 +63,7 @@ public class PreviewApplet extends JApplet {
         if ( menus != null && menus.length > 0 ) {
           final JMenuBar menuBar = new JMenuBar();
           for ( int i = 0; i < menus.length; i++ ) {
-            final JMenu menu = menus[ i ];
+            final JMenu menu = menus[i];
             menuBar.add( menu );
           }
           setJMenuBar( menuBar );
@@ -66,7 +74,7 @@ public class PreviewApplet extends JApplet {
       }
 
       if ( PreviewPane.STATUS_TEXT_PROPERTY.equals( propertyName )
-        || PreviewPane.STATUS_TYPE_PROPERTY.equals( propertyName ) ) {
+          || PreviewPane.STATUS_TYPE_PROPERTY.equals( propertyName ) ) {
         statusBar.setStatus( previewPane.getStatusType(), previewPane.getStatusText() );
         return;
       }
@@ -91,13 +99,12 @@ public class PreviewApplet extends JApplet {
       }
 
       if ( PreviewPane.PAGE_NUMBER_PROPERTY.equals( propertyName )
-        || PreviewPane.NUMBER_OF_PAGES_PROPERTY.equals( propertyName ) ) {
+          || PreviewPane.NUMBER_OF_PAGES_PROPERTY.equals( propertyName ) ) {
         pageLabel.setText( previewPane.getPageNumber() + "/" + previewPane.getNumberOfPages() ); //$NON-NLS-1$
       }
 
     }
   }
-
 
   private static class TriggerPaginationListener extends ComponentAdapter {
     private PreviewPane pane;
@@ -159,7 +166,7 @@ public class PreviewApplet extends JApplet {
     if ( menus != null && menus.length > 0 ) {
       final JMenuBar menuBar = new JMenuBar();
       for ( int i = 0; i < menus.length; i++ ) {
-        final JMenu menu = menus[ i ];
+        final JMenu menu = menus[i];
         menuBar.add( menu );
       }
       setJMenuBar( menuBar );

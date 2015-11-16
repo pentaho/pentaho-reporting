@@ -1,29 +1,37 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.IllegalComponentStateException;
+import java.util.Locale;
+
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.DefaultIconTheme;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.IconTheme;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.Locale;
 
 public class JStatusBar extends JComponent {
   public static final String STATUS_TYPE_PROPERTY = "statusType";
@@ -41,8 +49,7 @@ public class JStatusBar extends JComponent {
 
   public JStatusBar( final IconTheme theme ) {
     setLayout( new BorderLayout() );
-    setBorder( BorderFactory.createMatteBorder
-      ( 1, 0, 0, 0, UIManager.getDefaults().getColor( "controlShadow" ) ) ); //$NON-NLS-1$
+    setBorder( BorderFactory.createMatteBorder( 1, 0, 0, 0, UIManager.getDefaults().getColor( "controlShadow" ) ) ); //$NON-NLS-1$
     statusHolder = new JLabel( " " ); //$NON-NLS-1$
     statusHolder.setMinimumSize( new Dimension( 0, 20 ) );
     add( statusHolder, BorderLayout.CENTER );
@@ -129,9 +136,9 @@ public class JStatusBar extends JComponent {
    * Gets the locale of this component.
    *
    * @return this component's locale; if this component does not have a locale, the locale of its parent is returned
-   * @throws java.awt.IllegalComponentStateException if the <code>Component</code> does not have its own locale and has
-   *                                                 not yet been added to a containment hierarchy such that the locale
-   *                                                 can be determined from the containing parent
+   * @throws java.awt.IllegalComponentStateException
+   *           if the <code>Component</code> does not have its own locale and has not yet been added to a containment
+   *           hierarchy such that the locale can be determined from the containing parent
    * @see #setLocale
    * @since JDK1.1
    */

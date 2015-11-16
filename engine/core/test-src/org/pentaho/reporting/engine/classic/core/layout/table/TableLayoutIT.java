@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
@@ -57,41 +57,35 @@ public class TableLayoutIT extends TestCase {
     if ( DebugReportRunner.isSkipLongRunTest() ) {
       return;
     }
-    final int[][] layout = new int[][] {
-      { 200, 400 },
-      { 400, 800 }
-    };
+    final int[][] layout = new int[][] { { 200, 400 }, { 400, 800 } };
 
     final Band table = createTable( layout, 1 );
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( new MasterReport(), table );
 
     // TESTBUG: Test disabled for a few days, until we can deal with it properly
-    //    ModelPrinter.print(logicalPageBox);
-    //    assertWidth(layout, logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
+    // assertWidth(layout, logicalPageBox);
   }
 
   public void testLayoutLargeToSmall() throws ReportProcessingException, ContentProcessingException {
-    final int[][] layout = new int[][] {
-      { 300, 600 },
-      { 200, 100 }
-    };
+    final int[][] layout = new int[][] { { 300, 600 }, { 200, 100 } };
 
     final Band table = createTable( layout, 1 );
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( new MasterReport(), table );
 
     // TESTBUG: Test disabled for a few days, until we can deal with it properly
-    //    ModelPrinter.INSTANCE.print(logicalPageBox);
-    //    assertWidth(layout, logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
+    // assertWidth(layout, logicalPageBox);
   }
 
   public void assertWidth( final int[][] layout, final RenderNode logicalPageBox ) {
     final GenericObjectTable<Long> table = new GenericObjectTable<Long>();
 
     for ( int r = 0; r < layout.length; r++ ) {
-      final int[] cells = layout[ r ];
+      final int[] cells = layout[r];
       for ( int c = 0; c < cells.length; c++ ) {
         final Long object = table.getObject( 0, c );
-        final long l = StrictGeomUtility.toInternalValue( cells[ c ] );
+        final long l = StrictGeomUtility.toInternalValue( cells[c] );
         if ( object == null ) {
           table.setObject( 0, c, Long.valueOf( l ) );
         } else {
@@ -101,12 +95,12 @@ public class TableLayoutIT extends TestCase {
     }
 
     for ( int r = 0; r < layout.length; r++ ) {
-      final int[] cells = layout[ r ];
+      final int[] cells = layout[r];
       for ( int c = 0; c < cells.length; c++ ) {
         final String cellName = "c-" + r + "-" + c;
         final RenderNode[] elementsByName = MatchFactory.findElementsByName( logicalPageBox, cellName );
         assertEquals( "Cell '" + cellName + "' exists", 1, elementsByName.length );
-        assertEquals( table.getObject( 0, c ).longValue(), elementsByName[ 0 ].getWidth() );
+        assertEquals( table.getObject( 0, c ).longValue(), elementsByName[0].getWidth() );
       }
     }
 
@@ -138,7 +132,7 @@ public class TableLayoutIT extends TestCase {
     report.getReportHeader().addElement( tableSection );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final RenderNode renderedCell1 = MatchFactory.findElementByName( logicalPageBox, "c-0-0" );
     assertNotNull( renderedCell1 );
@@ -166,15 +160,15 @@ public class TableLayoutIT extends TestCase {
   }
 
   public void testFixedSizeTableCellsRelativeSizeComplex() throws Exception {
-    if (!DebugReportRunner.isSafeToTestComplexText()) {
+    if ( !DebugReportRunner.isSafeToTestComplexText() ) {
       return;
     }
 
     final Band tableCell1 =
-      TableTestUtil.createCell( 0, 0, 100, 10, TableTestUtil.createDataItem( "Text", -100, -100 ) );
+        TableTestUtil.createCell( 0, 0, 100, 10, TableTestUtil.createDataItem( "Text", -100, -100 ) );
     tableCell1.setAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, Integer.valueOf( 2 ) );
     final Band tableCell2 =
-      TableTestUtil.createCell( 0, 1, 100, 10, TableTestUtil.createDataItem( "Text2", -100, -100 ) );
+        TableTestUtil.createCell( 0, 1, 100, 10, TableTestUtil.createDataItem( "Text2", -100, -100 ) );
 
     final Band tableRow = new Band();
     tableRow.setLayout( BandStyleKeys.LAYOUT_TABLE_ROW );
@@ -182,7 +176,7 @@ public class TableLayoutIT extends TestCase {
     tableRow.addElement( tableCell2 );
 
     final Band tableCell3 =
-      TableTestUtil.createCell( 1, 1, 100, 10, TableTestUtil.createDataItem( "Text3", -100, -100 ) );
+        TableTestUtil.createCell( 1, 1, 100, 10, TableTestUtil.createDataItem( "Text3", -100, -100 ) );
     final Band tableRow2 = new Band();
     tableRow2.setLayout( BandStyleKeys.LAYOUT_TABLE_ROW );
     tableRow2.addElement( tableCell3 );
@@ -195,12 +189,12 @@ public class TableLayoutIT extends TestCase {
     final MasterReport report = new MasterReport();
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getReportHeader().setLayout( BandStyleKeys.LAYOUT_TABLE );
     report.getReportHeader().addElement( tableSection );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final RenderNode renderedCell1 = MatchFactory.findElementByName( logicalPageBox, "c-0-0" );
     assertNotNull( renderedCell1 );
@@ -234,10 +228,10 @@ public class TableLayoutIT extends TestCase {
   public void testFixedSizeTableCellsRelativeSize() throws Exception {
 
     final Band tableCell1 =
-      TableTestUtil.createCell( 0, 0, 100, 10, TableTestUtil.createDataItem( "Text", -100, -100 ) );
+        TableTestUtil.createCell( 0, 0, 100, 10, TableTestUtil.createDataItem( "Text", -100, -100 ) );
     tableCell1.setAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, Integer.valueOf( 2 ) );
     final Band tableCell2 =
-      TableTestUtil.createCell( 0, 1, 100, 10, TableTestUtil.createDataItem( "Text2", -100, -100 ) );
+        TableTestUtil.createCell( 0, 1, 100, 10, TableTestUtil.createDataItem( "Text2", -100, -100 ) );
 
     final Band tableRow = new Band();
     tableRow.setLayout( BandStyleKeys.LAYOUT_TABLE_ROW );
@@ -245,7 +239,7 @@ public class TableLayoutIT extends TestCase {
     tableRow.addElement( tableCell2 );
 
     final Band tableCell3 =
-      TableTestUtil.createCell( 1, 1, 100, 10, TableTestUtil.createDataItem( "Text3", -100, -100 ) );
+        TableTestUtil.createCell( 1, 1, 100, 10, TableTestUtil.createDataItem( "Text3", -100, -100 ) );
     final Band tableRow2 = new Band();
     tableRow2.setLayout( BandStyleKeys.LAYOUT_TABLE_ROW );
     tableRow2.addElement( tableCell3 );
@@ -256,13 +250,13 @@ public class TableLayoutIT extends TestCase {
     tableSection.addElement( tableRow2 );
 
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     report.getReportHeader().setLayout( BandStyleKeys.LAYOUT_TABLE );
     report.getReportHeader().addElement( tableSection );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final RenderNode renderedCell1 = MatchFactory.findElementByName( logicalPageBox, "c-0-0" );
     assertNotNull( renderedCell1 );
@@ -299,19 +293,19 @@ public class TableLayoutIT extends TestCase {
   }
 
   public void testFixedSizeTableCellsRelativeSizeCanvas() throws Exception {
-    final Band tableCell1 = TableTestUtil.createCell( 0, 0, 100, 10,
-      wrapInCanvas( TableTestUtil.createDataItem( "Text", -100, -100 ) ) );
+    final Band tableCell1 =
+        TableTestUtil.createCell( 0, 0, 100, 10, wrapInCanvas( TableTestUtil.createDataItem( "Text", -100, -100 ) ) );
     tableCell1.setAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, 2 );
-    final Band tableCell2 = TableTestUtil.createCell( 0, 1, 100, 10,
-      wrapInCanvas( TableTestUtil.createDataItem( "Text2", -100, -100 ) ) );
+    final Band tableCell2 =
+        TableTestUtil.createCell( 0, 1, 100, 10, wrapInCanvas( TableTestUtil.createDataItem( "Text2", -100, -100 ) ) );
 
     final Band tableRow = new Band();
     tableRow.setLayout( BandStyleKeys.LAYOUT_TABLE_ROW );
     tableRow.addElement( tableCell1 );
     tableRow.addElement( tableCell2 );
 
-    final Band tableCell3 = TableTestUtil.createCell( 1, 1, 100, 10,
-      wrapInCanvas( TableTestUtil.createDataItem( "Text3", -100, -100 ) ) );
+    final Band tableCell3 =
+        TableTestUtil.createCell( 1, 1, 100, 10, wrapInCanvas( TableTestUtil.createDataItem( "Text3", -100, -100 ) ) );
     final Band tableRow2 = new Band();
     tableRow2.setLayout( BandStyleKeys.LAYOUT_TABLE_ROW );
     tableRow2.addElement( tableCell3 );
@@ -322,13 +316,13 @@ public class TableLayoutIT extends TestCase {
     tableSection.addElement( tableRow2 );
 
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     report.getReportHeader().setLayout( BandStyleKeys.LAYOUT_TABLE );
     report.getReportHeader().addElement( tableSection );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final RenderBox renderedCell1 = (RenderBox) MatchFactory.findElementByName( logicalPageBox, "c-0-0" );
     assertNotNull( renderedCell1 );
@@ -371,22 +365,22 @@ public class TableLayoutIT extends TestCase {
   }
 
   public void testFixedSizeTableCellsRelativeSizeCanvasComplex() throws Exception {
-    if (!DebugReportRunner.isSafeToTestComplexText()) {
+    if ( !DebugReportRunner.isSafeToTestComplexText() ) {
       return;
     }
-    final Band tableCell1 = TableTestUtil.createCell( 0, 0, 100, 10,
-      wrapInCanvas( TableTestUtil.createDataItem( "Text", -100, -100 ) ) );
+    final Band tableCell1 =
+        TableTestUtil.createCell( 0, 0, 100, 10, wrapInCanvas( TableTestUtil.createDataItem( "Text", -100, -100 ) ) );
     tableCell1.setAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, 2 );
-    final Band tableCell2 = TableTestUtil.createCell( 0, 1, 100, 10,
-      wrapInCanvas( TableTestUtil.createDataItem( "Text2", -100, -100 ) ) );
+    final Band tableCell2 =
+        TableTestUtil.createCell( 0, 1, 100, 10, wrapInCanvas( TableTestUtil.createDataItem( "Text2", -100, -100 ) ) );
 
     final Band tableRow = new Band();
     tableRow.setLayout( BandStyleKeys.LAYOUT_TABLE_ROW );
     tableRow.addElement( tableCell1 );
     tableRow.addElement( tableCell2 );
 
-    final Band tableCell3 = TableTestUtil.createCell( 1, 1, 100, 10,
-      wrapInCanvas( TableTestUtil.createDataItem( "Text3", -100, -100 ) ) );
+    final Band tableCell3 =
+        TableTestUtil.createCell( 1, 1, 100, 10, wrapInCanvas( TableTestUtil.createDataItem( "Text3", -100, -100 ) ) );
     final Band tableRow2 = new Band();
     tableRow2.setLayout( BandStyleKeys.LAYOUT_TABLE_ROW );
     tableRow2.addElement( tableCell3 );
@@ -399,12 +393,12 @@ public class TableLayoutIT extends TestCase {
     final MasterReport report = new MasterReport();
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getReportHeader().setLayout( BandStyleKeys.LAYOUT_TABLE );
     report.getReportHeader().addElement( tableSection );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
-    //ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.print(logicalPageBox);
 
     final RenderBox renderedCell1 = (RenderBox) MatchFactory.findElementByName( logicalPageBox, "c-0-0" );
     assertNotNull( renderedCell1 );
@@ -460,9 +454,9 @@ public class TableLayoutIT extends TestCase {
         row.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_ROW );
         row.setName( "r-" + r );
 
-        final int[] rowDefinition = layout[ r ];
+        final int[] rowDefinition = layout[r];
         for ( int cellNumber = 0; cellNumber < rowDefinition.length; cellNumber++ ) {
-          final int cellWidth = rowDefinition[ cellNumber ];
+          final int cellWidth = rowDefinition[cellNumber];
 
           final Band cell = TableTestUtil.createCell( r, cellNumber, cellWidth, 10 );
           cell.setName( "c-" + r + "-" + cellNumber );
@@ -480,9 +474,9 @@ public class TableLayoutIT extends TestCase {
       row.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_ROW );
       row.setName( "r-" + r );
 
-      final int[] rowDefinition = layout[ r ];
+      final int[] rowDefinition = layout[r];
       for ( int cellNumber = 0; cellNumber < rowDefinition.length; cellNumber++ ) {
-        final int cellWidth = rowDefinition[ cellNumber ];
+        final int cellWidth = rowDefinition[cellNumber];
 
         final Band cell = TableTestUtil.createCell( r, cellNumber, cellWidth, 10 );
         cell.setName( "c-" + r + "-" + cellNumber );

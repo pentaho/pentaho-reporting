@@ -17,31 +17,33 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
+import java.util.Locale;
+import java.util.MissingResourceException;
+
+import javax.swing.Icon;
+import javax.swing.KeyStroke;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
-import javax.swing.*;
-import java.util.Locale;
-import java.util.MissingResourceException;
-
 public class Messages {
   private static final Log logger = LogFactory.getLog( Messages.class );
-  private static ResourceBundleSupport bundle =
-    new ResourceBundleSupport( Locale.getDefault(),
-      "org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui.messages",
-      ObjectUtilities.getClassLoader( Messages.class ) );
+  private static ResourceBundleSupport bundle = new ResourceBundleSupport( Locale.getDefault(),
+      "org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui.messages", ObjectUtilities
+          .getClassLoader( Messages.class ) );
 
   private Messages() {
   }
 
-
   /**
    * Formats the message stored in the resource bundle (using a MessageFormat).
    *
-   * @param key    the resourcebundle key
-   * @param param1 the parameter for the message
+   * @param key
+   *          the resourcebundle key
+   * @param param1
+   *          the parameter for the message
    * @return the formated string
    */
   public static String getString( final String key, final Object... param1 ) {

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
@@ -30,8 +30,7 @@ public class JoiningTableModel extends AbstractTableModel {
     private int tableOffset;
     private int columnOffset;
 
-    private TablePosition( final TableModel tableModel,
-                           final String prefix ) {
+    private TablePosition( final TableModel tableModel, final String prefix ) {
       if ( tableModel == null ) {
         throw new NullPointerException( "Model must not be null" ); //$NON-NLS-1$
       }
@@ -72,11 +71,9 @@ public class JoiningTableModel extends AbstractTableModel {
      * This fine grain notification tells listeners the exact range of cells, rows, or columns that changed.
      */
     public void tableChanged( final TableModelEvent e ) {
-      if ( e.getType() == TableModelEvent.UPDATE &&
-        e.getFirstRow() == TableModelEvent.HEADER_ROW ) {
+      if ( e.getType() == TableModelEvent.UPDATE && e.getFirstRow() == TableModelEvent.HEADER_ROW ) {
         updateStructure();
-      } else if ( e.getType() == TableModelEvent.INSERT ||
-        e.getType() == TableModelEvent.DELETE ) {
+      } else if ( e.getType() == TableModelEvent.INSERT || e.getType() == TableModelEvent.DELETE ) {
         updateRowCount();
       } else {
         updateData();
@@ -146,8 +143,8 @@ public class JoiningTableModel extends AbstractTableModel {
         columnTypes.add( tableModel.getColumnClass( c ) );
       }
     }
-    this.columnNames = columnNames.toArray( new String[ columnNames.size() ] );
-    this.columnTypes = columnTypes.toArray( new Class[ columnTypes.size() ] );
+    this.columnNames = columnNames.toArray( new String[columnNames.size()] );
+    this.columnTypes = columnTypes.toArray( new Class[columnTypes.size()] );
     this.rowCount = rowOffset;
     fireTableStructureChanged();
   }
@@ -172,29 +169,33 @@ public class JoiningTableModel extends AbstractTableModel {
   /**
    * Returns <code>Object.class</code> regardless of <code>columnIndex</code>.
    *
-   * @param columnIndex the column being queried
+   * @param columnIndex
+   *          the column being queried
    * @return the Object.class
    */
   public synchronized Class getColumnClass( final int columnIndex ) {
-    return columnTypes[ columnIndex ];
+    return columnTypes[columnIndex];
   }
 
   /**
-   * Returns a default name for the column using spreadsheet conventions: A, B, C, ... Z, AA, AB, etc.  If
+   * Returns a default name for the column using spreadsheet conventions: A, B, C, ... Z, AA, AB, etc. If
    * <code>column</code> cannot be found, returns an empty string.
    *
-   * @param column the column being queried
+   * @param column
+   *          the column being queried
    * @return a string containing the default name of <code>column</code>
    */
   public synchronized String getColumnName( final int column ) {
-    return columnNames[ column ];
+    return columnNames[column];
   }
 
   /**
    * Returns false. JFreeReport does not like changing cells.
    *
-   * @param rowIndex    the row being queried
-   * @param columnIndex the column being queried
+   * @param rowIndex
+   *          the row being queried
+   * @param columnIndex
+   *          the column being queried
    * @return false
    */
   public final boolean isCellEditable( final int rowIndex, final int columnIndex ) {
@@ -214,7 +215,7 @@ public class JoiningTableModel extends AbstractTableModel {
 
   /**
    * Returns the number of records managed by the data source object. A <B>JTable</B> uses this method to determine how
-   * many rows it should create and display.  This method should be quick, as it is call by <B>JTable</B> quite
+   * many rows it should create and display. This method should be quick, as it is call by <B>JTable</B> quite
    * frequently.
    *
    * @return the number or rows in the model
@@ -227,8 +228,10 @@ public class JoiningTableModel extends AbstractTableModel {
   /**
    * Returns an attribute value for the cell at <I>columnIndex</I> and <I>rowIndex</I>.
    *
-   * @param rowIndex    the row whose value is to be looked up
-   * @param columnIndex the column whose value is to be looked up
+   * @param rowIndex
+   *          the row whose value is to be looked up
+   * @param columnIndex
+   *          the column whose value is to be looked up
    * @return the value Object at the specified cell
    */
   public synchronized Object getValueAt( final int rowIndex, final int columnIndex ) {
@@ -251,8 +254,7 @@ public class JoiningTableModel extends AbstractTableModel {
     if ( columnIndex >= ( columnOffset + tableModel.getColumnCount() ) ) {
       return null;
     }
-    return tableModel.getValueAt
-      ( rowIndex - pos.getTableOffset(), columnIndex - columnOffset );
+    return tableModel.getValueAt( rowIndex - pos.getTableOffset(), columnIndex - columnOffset );
   }
 
   private TablePosition getTableModelForRow( final int row ) {

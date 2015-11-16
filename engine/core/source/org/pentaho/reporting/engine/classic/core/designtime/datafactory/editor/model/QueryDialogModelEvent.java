@@ -30,14 +30,12 @@ public class QueryDialogModelEvent<T> extends EventObject {
     this( source, -1, null );
   }
 
-  public QueryDialogModelEvent( final QueryDialogModel<T> source,
-                                final int index, final Query<T> query ) {
+  public QueryDialogModelEvent( final QueryDialogModel<T> source, final int index, final Query<T> query ) {
     this( source, index, query, index, query );
   }
 
-  public QueryDialogModelEvent( final QueryDialogModel<T> source,
-                                final int newIndex, final Query<T> newQuery,
-                                final int oldIndex, final Query<T> oldQuery ) {
+  public QueryDialogModelEvent( final QueryDialogModel<T> source, final int newIndex, final Query<T> newQuery,
+      final int oldIndex, final Query<T> oldQuery ) {
     super( source );
     this.eventSource = source;
     this.newIndex = newIndex;

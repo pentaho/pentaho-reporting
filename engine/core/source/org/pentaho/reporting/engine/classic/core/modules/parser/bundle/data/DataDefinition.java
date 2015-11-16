@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data;
 
@@ -29,7 +29,7 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
  * @author Thomas Morgner
  */
 public class DataDefinition {
-  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[ 0 ];
+  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[0];
 
   private ReportParameterDefinition parameterDefinition;
   private DataFactory primaryDataFactory;
@@ -38,12 +38,8 @@ public class DataDefinition {
   private int queryLimit;
   private int queryTimeout;
 
-  public DataDefinition( final ReportParameterDefinition parameterDefinition,
-                         final DataFactory primaryDataFactory,
-                         final String query,
-                         final int queryLimit,
-                         final int queryTimeout,
-                         final Expression[] expressions ) {
+  public DataDefinition( final ReportParameterDefinition parameterDefinition, final DataFactory primaryDataFactory,
+      final String query, final int queryLimit, final int queryTimeout, final Expression[] expressions ) {
     this.parameterDefinition = parameterDefinition;
     this.primaryDataFactory = primaryDataFactory;
     this.query = query;
@@ -53,7 +49,6 @@ public class DataDefinition {
       this.expressions = (Expression[]) expressions.clone();
     }
   }
-
 
   public String getQuery() {
     return query;
@@ -72,10 +67,10 @@ public class DataDefinition {
       return EMPTY_EXPRESSIONS;
     }
 
-    final Expression[] targetExpressions = new Expression[ expressions.length ];
+    final Expression[] targetExpressions = new Expression[expressions.length];
     for ( int i = 0; i < expressions.length; i++ ) {
-      final Expression expression = expressions[ i ];
-      targetExpressions[ i ] = expression.getInstance();
+      final Expression expression = expressions[i];
+      targetExpressions[i] = expression.getInstance();
     }
     return targetExpressions;
   }

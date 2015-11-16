@@ -1,27 +1,27 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
-import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class ReportEnvironmentDataRow implements DataRow {
   private ReportEnvironment environment;
@@ -33,7 +33,7 @@ public class ReportEnvironmentDataRow implements DataRow {
   }
 
   public ReportEnvironmentDataRow( final ReportEnvironment environment,
-                                   final ReportEnvironmentMapping reportEnvironmentMapping ) {
+      final ReportEnvironmentMapping reportEnvironmentMapping ) {
     final Map<String, String> envMapping = reportEnvironmentMapping.createEnvironmentMapping();
     this.columnMap = new LinkedHashMap<String, String>();
     for ( final Map.Entry<String, String> entry : envMapping.entrySet() ) {
@@ -43,7 +43,7 @@ public class ReportEnvironmentDataRow implements DataRow {
         this.columnMap.put( value, key );
       }
     }
-    this.columnNames = columnMap.keySet().toArray( new String[ columnMap.size() ] );
+    this.columnNames = columnMap.keySet().toArray( new String[columnMap.size()] );
     this.environment = environment;
   }
 
@@ -53,7 +53,8 @@ public class ReportEnvironmentDataRow implements DataRow {
    * method is called and for columns from the tablemodel the tablemodel method <code>getValueAt(row, column)</code>
    * gets called.
    *
-   * @param col the item index.
+   * @param col
+   *          the item index.
    * @return the value.
    */
   public Object get( final String col ) {
@@ -61,19 +62,18 @@ public class ReportEnvironmentDataRow implements DataRow {
     if ( envName == null ) {
       return null;
     }
-    if ( envName.endsWith( "-array" ) ) // NON-NLS
-    {
+    if ( envName.endsWith( "-array" ) ) { // NON-NLS
       final String name = envName.substring( 0, envName.length() - 6 );
       final Object s = environment.getEnvironmentProperty( name );
       if ( s == null ) {
-        return new String[ 0 ];
+        return new String[0];
       }
 
       final CSVTokenizer csvTokenizer = new CSVTokenizer( String.valueOf( s ), ",", "\"", false );
       final int length = csvTokenizer.countTokens();
-      final String[] rolesArray = new String[ length ];
+      final String[] rolesArray = new String[length];
       for ( int i = 0; i < length; i += 1 ) {
-        rolesArray[ i ] = csvTokenizer.nextToken();
+        rolesArray[i] = csvTokenizer.nextToken();
       }
       return rolesArray;
     }
@@ -94,7 +94,8 @@ public class ReportEnvironmentDataRow implements DataRow {
   /**
    * Checks whether the value contained in the column has changed since the last advance-operation.
    *
-   * @param name the name of the column.
+   * @param name
+   *          the name of the column.
    * @return true, if the value has changed, false otherwise.
    */
   public boolean isChanged( final String name ) {
@@ -112,7 +113,6 @@ public class ReportEnvironmentDataRow implements DataRow {
   public ReportEnvironment getEnvironment() {
     return environment;
   }
-
 
   public String toString() {
     final StringBuilder sb = new StringBuilder();

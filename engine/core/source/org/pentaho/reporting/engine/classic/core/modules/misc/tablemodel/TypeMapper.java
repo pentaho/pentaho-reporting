@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
@@ -44,7 +44,7 @@ public class TypeMapper {
   private static final Class byteArrayClass = byte[].class;
 
   private static Class mapSQLType( final int t ) {
-    switch( t ) {
+    switch ( t ) {
       case Types.ARRAY:
         return Object[].class;
       case Types.BIGINT:
@@ -123,9 +123,9 @@ public class TypeMapper {
   public static Class[] mapTypes( final ResultSetMetaData rsmd ) {
     final Class[] types;
     try {
-      types = new Class[ rsmd.getColumnCount() ];
+      types = new Class[rsmd.getColumnCount()];
     } catch ( SQLException sqle ) {
-      // indicate that we do not have knowledge about any types .. 
+      // indicate that we do not have knowledge about any types ..
       return null;
     }
 
@@ -137,23 +137,23 @@ public class TypeMapper {
           final String tn = rsmd.getColumnClassName( i + 1 );
           if ( tn == null ) {
             final int colType = rsmd.getColumnType( i + 1 );
-            types[ i ] = mapSQLType( colType );
+            types[i] = mapSQLType( colType );
           } else {
-            types[ i ] = Class.forName( tn, false, cl );
+            types[i] = Class.forName( tn, false, cl );
           }
         } catch ( final Exception oops ) {
           // ignore exception
           final int colType = rsmd.getColumnType( i + 1 );
-          types[ i ] = mapSQLType( colType );
+          types[i] = mapSQLType( colType );
         }
       } catch ( Exception e ) {
         // still ignore the exception
-        types[ i ] = Object.class;
+        types[i] = Object.class;
       }
 
-      if ( types[ i ] == null ) {
+      if ( types[i] == null ) {
         logger.error( "JDBC Driver returned <null> as column type. This driver violates the JDBC specifications." );
-        types[ i ] = Object.class;
+        types[i] = Object.class;
       }
     }
 

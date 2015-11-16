@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
@@ -65,7 +65,6 @@ public class MapStringExpression extends AbstractExpression {
     values = new ArrayList();
   }
 
-
   /**
    * Returns the name of the field from where to read the key value.
    *
@@ -78,7 +77,8 @@ public class MapStringExpression extends AbstractExpression {
   /**
    * Defines the name of the field from where to read the key value.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -96,7 +96,8 @@ public class MapStringExpression extends AbstractExpression {
   /**
    * Defines the value that is returned if the key-field evaluates to <code>null</code>.
    *
-   * @param nullValue the null-value.
+   * @param nullValue
+   *          the null-value.
    */
   public void setNullValue( final String nullValue ) {
     this.nullValue = nullValue;
@@ -114,7 +115,8 @@ public class MapStringExpression extends AbstractExpression {
   /**
    * Defines the value that is returned if none of the predefined keys matches the lookup-value.
    *
-   * @param fallbackValue the fallback value.
+   * @param fallbackValue
+   *          the fallback value.
    */
   public void setFallbackValue( final String fallbackValue ) {
     this.fallbackValue = fallbackValue;
@@ -124,8 +126,10 @@ public class MapStringExpression extends AbstractExpression {
    * Defines a key value to which the lookup-field's value is compared. If the key is defined, a matching value must be
    * defined too.
    *
-   * @param index the index position of the key in the list.
-   * @param key   the key value.
+   * @param index
+   *          the index position of the key in the list.
+   * @param key
+   *          the key value.
    */
   public void setKey( final int index, final String key ) {
     if ( keys.size() == index ) {
@@ -138,7 +142,8 @@ public class MapStringExpression extends AbstractExpression {
   /**
    * Returns a key value at the given index.
    *
-   * @param index the index position of the key in the list.
+   * @param index
+   *          the index position of the key in the list.
    * @return the key value.
    */
   public String getKey( final int index ) {
@@ -160,13 +165,14 @@ public class MapStringExpression extends AbstractExpression {
    * @return all defined keys.
    */
   public String[] getKey() {
-    return (String[]) keys.toArray( new String[ keys.size() ] );
+    return (String[]) keys.toArray( new String[keys.size()] );
   }
 
   /**
    * Defines all keys using the values from the string array.
    *
-   * @param keys all defined keys.
+   * @param keys
+   *          all defined keys.
    */
   public void setKey( final String[] keys ) {
     this.keys.clear();
@@ -177,8 +183,10 @@ public class MapStringExpression extends AbstractExpression {
    * Defines the mapped text for the key at the given position. This text is returned if the key matches the value read
    * from the lookup-field column.
    *
-   * @param index the index of the entry.
-   * @param value the text that is returned if the key is selected.
+   * @param index
+   *          the index of the entry.
+   * @param value
+   *          the text that is returned if the key is selected.
    */
   public void setText( final int index, final String value ) {
     if ( values.size() == index ) {
@@ -192,7 +200,8 @@ public class MapStringExpression extends AbstractExpression {
    * Returns the mapped text for the key at the given position. This text is returned if the key matches the value read
    * from the lookup-field column.
    *
-   * @param index the index of the entry.
+   * @param index
+   *          the index of the entry.
    * @return the text that is returned if the key is selected.
    */
   public String getText( final int index ) {
@@ -214,13 +223,14 @@ public class MapStringExpression extends AbstractExpression {
    * @return all texts.
    */
   public String[] getText() {
-    return (String[]) values.toArray( new String[ values.size() ] );
+    return (String[]) values.toArray( new String[values.size()] );
   }
 
   /**
    * Defines all texts by using the values from the given text-array.
    *
-   * @param texts the new text-values.
+   * @param texts
+   *          the new text-values.
    */
   public void setText( final String[] texts ) {
     this.values.clear();
@@ -239,7 +249,8 @@ public class MapStringExpression extends AbstractExpression {
   /**
    * Defines, whether the key-lookup should be case-insensitive.
    *
-   * @param ignoreCase true, if the key comparison is case-insensitive, false otherwise.
+   * @param ignoreCase
+   *          true, if the key comparison is case-insensitive, false otherwise.
    */
   public void setIgnoreCase( final boolean ignoreCase ) {
     this.ignoreCase = ignoreCase;

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
@@ -68,9 +68,9 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
   }
 
   public FastGlobalView() {
-    this.warnInvalidColumns = "true".equals
-      ( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.WarnInvalidColumns" ) );
+    this.warnInvalidColumns =
+        "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.WarnInvalidColumns" ) );
     if ( warnInvalidColumns ) {
       this.invalidColumns = new HashSet<String>();
     }
@@ -79,11 +79,11 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     this.duplicateColumns = new HashSet<String>();
     this.nameCache = new HashMap<String, Integer>();
     this.modifiableNameCache = true;
-    this.columnNames = new String[ 20 ];
-    this.columnChanged = new Boolean[ 20 ];
-    this.columnValue = new Object[ 20 ];
-    this.columnOldValue = new Object[ 20 ];
-    this.columnPrev = new int[ 20 ];
+    this.columnNames = new String[20];
+    this.columnChanged = new Boolean[20];
+    this.columnValue = new Object[20];
+    this.columnOldValue = new Object[20];
+    this.columnPrev = new int[20];
   }
 
   public MasterDataRowChangeEvent getReusableEvent() {
@@ -103,7 +103,7 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
   }
 
   public String[] getColumnNames() {
-    final String[] columnNames = new String[ length ];
+    final String[] columnNames = new String[length];
     System.arraycopy( this.columnNames, 0, columnNames, 0, length );
     return columnNames;
   }
@@ -119,20 +119,20 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
       return null;
     }
 
-    if ( columnChanged[ idx ] != null ) {
-      return columnValue[ idx ];
+    if ( columnChanged[idx] != null ) {
+      return columnValue[idx];
     }
 
-    final String columnName = columnNames[ idx ];
+    final String columnName = columnNames[idx];
     if ( duplicateColumns.contains( columnName ) ) {
       for ( int i = idx - 1; i >= 0; i-- ) {
-        if ( columnNames[ i ].equals( columnName ) && columnChanged[ i ] != null ) {
-          return columnValue[ i ];
+        if ( columnNames[i].equals( columnName ) && columnChanged[i] != null ) {
+          return columnValue[i];
         }
       }
     }
 
-    return columnValue[ idx ];
+    return columnValue[idx];
   }
 
   private int findColumn( final String name ) {
@@ -160,16 +160,16 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     if ( col < 0 || col >= length ) {
       throw new IndexOutOfBoundsException( "Column-Index " + col + " is invalid." );
     }
-    final Boolean val = columnChanged[ col ];
+    final Boolean val = columnChanged[col];
     if ( val != null ) {
       return val.booleanValue();
     }
 
-    final String columnName = columnNames[ col ];
+    final String columnName = columnNames[col];
     if ( duplicateColumns.contains( columnName ) ) {
       for ( int i = col - 1; i >= 0; i-- ) {
-        if ( columnNames[ col ].equals( columnName ) && columnChanged[ i ] != null ) {
-          return columnChanged[ i ].booleanValue();
+        if ( columnNames[col].equals( columnName ) && columnChanged[i] != null ) {
+          return columnChanged[i].booleanValue();
         }
       }
     }
@@ -179,9 +179,8 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     //
     // When called from a formula, the formula now catches the exception and returns 'error' instead.
     // When called from a expression, this has to be caught or the expression evaluates to a error state.
-    throw new IllegalStateException
-      ( "Checking the 'isChanged' flag before all data for this row is known. " +
-        "This is a error condition that must be checked by the caller." );
+    throw new IllegalStateException( "Checking the 'isChanged' flag before all data for this row is known. "
+        + "This is a error condition that must be checked by the caller." );
   }
 
   public FastGlobalView derive() {
@@ -202,7 +201,7 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
       needToRebuildCache = true;
       // linear index search from the end ..
       for ( int i = columnNames.length - 1; i >= 0; i -= 1 ) {
-        if ( ObjectUtilities.equal( name, columnNames[ i ] ) ) {
+        if ( ObjectUtilities.equal( name, columnNames[i] ) ) {
           idx = i;
           break;
         }
@@ -220,9 +219,8 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     }
 
     if ( logger.isTraceEnabled() ) {
-      logger.trace(
-        "Removing column " + name + " (Length: " + length + " NameCache: " +
-          nameCache.size() + ", Idx: " + idx );
+      logger.trace( "Removing column " + name + " (Length: " + length + " NameCache: " + nameCache.size() + ", Idx: "
+          + idx );
     }
 
     if ( modifiableNameCache == false ) {
@@ -233,21 +231,21 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     }
 
     if ( idx == ( length - 1 ) ) {
-      columnChanged[ idx ] = null;
-      columnNames[ idx ] = null;
-      columnValue[ idx ] = null;
-      if ( columnPrev[ idx ] == -1 ) {
+      columnChanged[idx] = null;
+      columnNames[idx] = null;
+      columnValue[idx] = null;
+      if ( columnPrev[idx] == -1 ) {
         nameCache.remove( name );
       } else {
-        nameCache.put( name, IntegerCache.getInteger( columnPrev[ idx ] ) );
+        nameCache.put( name, IntegerCache.getInteger( columnPrev[idx] ) );
       }
       // thats the easy case ..
       length -= 1;
       if ( needToRebuildCache ) {
-        if ( columnPrev[ idx ] == -1 ) {
+        if ( columnPrev[idx] == -1 ) {
           logger.warn( "Column marked as duplicate but no duplicate index recorded: " + name );
         } else {
-          if ( columnPrev[ columnPrev[ idx ] ] == -1 ) {
+          if ( columnPrev[columnPrev[idx]] == -1 ) {
             duplicateColumns.remove( name );
           }
         }
@@ -259,10 +257,10 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
       logger.warn( "Out of order removeal of a column: " + name );
     }
 
-    if ( columnPrev[ idx ] == -1 ) {
+    if ( columnPrev[idx] == -1 ) {
       nameCache.remove( name );
     } else {
-      nameCache.put( name, IntegerCache.getInteger( columnPrev[ idx ] ) );
+      nameCache.put( name, IntegerCache.getInteger( columnPrev[idx] ) );
     }
 
     final int moveStartIdx = idx + 1;
@@ -272,17 +270,17 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     System.arraycopy( columnOldValue, moveStartIdx, columnOldValue, idx, moveLength );
     System.arraycopy( columnValue, moveStartIdx, columnValue, idx, moveLength );
     System.arraycopy( columnPrev, moveStartIdx, columnPrev, idx, moveLength );
-    columnNames[ length - 1 ] = null;
-    columnChanged[ length - 1 ] = null;
-    columnOldValue[ length - 1 ] = null;
-    columnPrev[ length - 1 ] = 0;
+    columnNames[length - 1] = null;
+    columnChanged[length - 1] = null;
+    columnOldValue[length - 1] = null;
+    columnPrev[length - 1] = 0;
 
     // Now it gets expensive: Rebuild the namecache ..
     final int newLength = moveLength + idx;
     nameCache.clear();
     duplicateColumns.clear();
     for ( int i = 0; i < newLength; i++ ) {
-      final String columnName = columnNames[ i ];
+      final String columnName = columnNames[i];
       final Integer oldVal = nameCache.get( columnName );
       if ( nameCache.containsKey( columnName ) ) {
         duplicateColumns.add( columnName );
@@ -290,9 +288,9 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
 
       nameCache.put( columnName, IntegerCache.getInteger( i ) );
       if ( oldVal != null ) {
-        columnPrev[ i ] = oldVal.intValue();
+        columnPrev[i] = oldVal.intValue();
       } else {
-        columnPrev[ i ] = -1;
+        columnPrev[i] = -1;
       }
     }
     length -= 1;
@@ -301,10 +299,7 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     }
   }
 
-  private void putField( final String name,
-                         final Object value,
-                         final boolean update,
-                         final boolean optional ) {
+  private void putField( final String name, final Object value, final boolean update, final boolean optional ) {
     if ( logger.isTraceEnabled() ) {
       if ( update ) {
         logger.debug( "  +   : " + name );
@@ -313,7 +308,6 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
       }
 
     }
-
 
     if ( update == false ) {
       addColumn( name, value );
@@ -339,7 +333,7 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     if ( duplicateColumns.isEmpty() == false && duplicateColumns.contains( name ) ) {
       final int length = this.length;
       for ( int i = 0; i < length; i += 1 ) {
-        if ( columnChanged[ i ] == null && ObjectUtilities.equal( name, columnNames[ i ] ) ) {
+        if ( columnChanged[i] == null && ObjectUtilities.equal( name, columnNames[i] ) ) {
           idx = i;
           break;
         }
@@ -351,14 +345,14 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
       idx = o.intValue();
     }
 
-    columnNames[ idx ] = name;
-    final Object oldValue = columnValue[ idx ];
-    columnValue[ idx ] = value;
-    if ( columnChanged[ idx ] == null ) {
+    columnNames[idx] = name;
+    final Object oldValue = columnValue[idx];
+    columnValue[idx] = value;
+    if ( columnChanged[idx] == null ) {
       if ( ObjectUtilities.equal( oldValue, value ) ) {
-        columnChanged[ idx ] = Boolean.FALSE;
+        columnChanged[idx] = Boolean.FALSE;
       } else {
-        columnChanged[ idx ] = Boolean.TRUE;
+        columnChanged[idx] = Boolean.TRUE;
       }
     }
   }
@@ -372,18 +366,18 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
 
     // A new column ...
     ensureCapacity( length + 1 );
-    columnNames[ length ] = name;
-    columnValue[ length ] = value;
+    columnNames[length] = name;
+    columnValue[length] = value;
     final Integer o = nameCache.get( name );
     if ( o == null ) {
-      columnPrev[ length ] = -1;
+      columnPrev[length] = -1;
     } else {
-      columnPrev[ length ] = o.intValue();
+      columnPrev[length] = o.intValue();
       duplicateColumns.add( name );
     }
 
-    columnOldValue[ length ] = null;
-    columnChanged[ length ] = Boolean.TRUE;
+    columnOldValue[length] = null;
+    columnChanged[length] = Boolean.TRUE;
     nameCache.put( name, IntegerCache.getInteger( length ) );
     length += 1;
   }
@@ -395,32 +389,32 @@ public final class FastGlobalView implements DataRow, MasterDataRowChangeHandler
     }
     final int newSize = Math.max( capacity << 1, requestedSize + 10 );
 
-    final String[] newColumnNames = new String[ newSize ];
+    final String[] newColumnNames = new String[newSize];
     System.arraycopy( columnNames, 0, newColumnNames, 0, length );
     this.columnNames = newColumnNames;
 
-    final Boolean[] newColumnChanged = new Boolean[ newSize ];
+    final Boolean[] newColumnChanged = new Boolean[newSize];
     System.arraycopy( columnChanged, 0, newColumnChanged, 0, length );
     this.columnChanged = newColumnChanged;
 
-    final int[] newColumnPrev = new int[ newSize ];
+    final int[] newColumnPrev = new int[newSize];
     System.arraycopy( columnPrev, 0, newColumnPrev, 0, length );
     this.columnPrev = newColumnPrev;
 
-    final Object[] newColumnValue = new Object[ newSize ];
+    final Object[] newColumnValue = new Object[newSize];
     System.arraycopy( columnValue, 0, newColumnValue, 0, length );
     this.columnValue = newColumnValue;
 
-    final Object[] newOldColumnValue = new Object[ newSize ];
+    final Object[] newOldColumnValue = new Object[newSize];
     System.arraycopy( columnOldValue, 0, newOldColumnValue, 0, length );
     this.columnOldValue = newOldColumnValue;
   }
 
   public void validateChangedFlags() {
     for ( int i = 0; i < length; i++ ) {
-      final Boolean b = columnChanged[ i ];
+      final Boolean b = columnChanged[i];
       if ( b == null ) {
-        throw new IllegalStateException( "Validate failed: " + columnNames[ i ] );
+        throw new IllegalStateException( "Validate failed: " + columnNames[i] );
       }
     }
   }

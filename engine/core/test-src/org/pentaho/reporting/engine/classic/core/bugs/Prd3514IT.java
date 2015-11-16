@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -89,11 +89,10 @@ public class Prd3514IT extends TestCase {
     final MasterReport report = new MasterReport();
     report.getReportHeader().addElement( textField );
     report.setCompatibilityLevel( null );
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
-    LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
     ModelPrinter.INSTANCE.print( logicalPageBox );
 
     RenderNode textFieldBox = MatchFactory.findElementByName( logicalPageBox, "textField" );
@@ -122,11 +121,10 @@ public class Prd3514IT extends TestCase {
     final MasterReport report = new MasterReport();
     report.getReportHeader().addElement( textField );
     report.setCompatibilityLevel( null );
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
-    LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
     ModelPrinter.INSTANCE.print( logicalPageBox );
 
     RenderNode textFieldBox = MatchFactory.findElementByName( logicalPageBox, "textField" );
@@ -155,11 +153,10 @@ public class Prd3514IT extends TestCase {
     final MasterReport report = new MasterReport();
     report.getReportHeader().addElement( textField );
     report.setCompatibilityLevel( null );
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
-    LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
     ModelPrinter.INSTANCE.print( logicalPageBox );
 
     RenderNode textFieldBox = MatchFactory.findElementByName( logicalPageBox, "textField" );
@@ -170,7 +167,6 @@ public class Prd3514IT extends TestCase {
     // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
     assertEquals( StrictGeomUtility.toInternalValue( 42 ), textFieldBox.getHeight() );
   }
-
 
   public void testWeirdTocLayout() throws ReportProcessingException, ContentProcessingException {
     Element textField = new Element();
@@ -198,12 +194,13 @@ public class Prd3514IT extends TestCase {
     dotField.getStyle().setStyleProperty( ElementStyleKeys.WIDTH, 100f );
     dotField.getStyle().setStyleProperty( ElementStyleKeys.MAX_WIDTH, 100f );
     dotField.setElementType( LabelType.INSTANCE );
-    dotField.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-      " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
-        " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
-        ". . . . . . . . . . . . . . . . . ."
-    );
-
+    dotField
+        .setAttribute(
+            AttributeNames.Core.NAMESPACE,
+            AttributeNames.Core.VALUE,
+            " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+                + " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+                + ". . . . . . . . . . . . . . . . . ." );
 
     Band band = new Band();
     band.setName( "outer-box" );
@@ -222,11 +219,10 @@ public class Prd3514IT extends TestCase {
     final MasterReport report = new MasterReport();
     report.getReportHeader().addElement( band );
     report.setCompatibilityLevel( null );
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
-    LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
     ModelPrinter.INSTANCE.print( logicalPageBox );
 
     RenderNode textFieldBox = MatchFactory.findElementByName( logicalPageBox, "textField" );
@@ -264,12 +260,13 @@ public class Prd3514IT extends TestCase {
     dotField.getStyle().setStyleProperty( ElementStyleKeys.WIDTH, 100f );
     dotField.getStyle().setStyleProperty( ElementStyleKeys.MAX_WIDTH, 100f );
     dotField.setElementType( LabelType.INSTANCE );
-    dotField.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-      " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
-        " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
-        ". . . . . . . . . . . . . . . . . ."
-    );
-
+    dotField
+        .setAttribute(
+            AttributeNames.Core.NAMESPACE,
+            AttributeNames.Core.VALUE,
+            " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+                + " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+                + ". . . . . . . . . . . . . . . . . ." );
 
     Band band = new Band();
     band.setName( "outer-box" );
@@ -289,12 +286,11 @@ public class Prd3514IT extends TestCase {
     report.getReportHeader().addElement( band );
     report.setCompatibilityLevel( null );
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
 
-    LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
-    //  ModelPrinter.INSTANCE.print(logicalPageBox);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
 
     RenderBox outerBox = (RenderBox) MatchFactory.findElementByName( logicalPageBox, "outer-box" );
     assertNotNull( outerBox );
@@ -305,6 +301,6 @@ public class Prd3514IT extends TestCase {
     assertTrue( outerBox.getHeight() >= StrictGeomUtility.toInternalValue( 16 ) );
     assertSame( outerBox.getFirstChild(), outerBox.getLastChild() );
     // no valid test.
-    //   assertEquals(outerBox.getHeight(), outerBox.getFirstChild().getHeight());
+    // assertEquals(outerBox.getHeight(), outerBox.getFirstChild().getHeight());
   }
 }

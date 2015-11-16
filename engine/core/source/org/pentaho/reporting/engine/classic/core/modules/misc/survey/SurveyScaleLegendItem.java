@@ -1,23 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.survey;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
@@ -59,15 +63,16 @@ public class SurveyScaleLegendItem {
   /**
    * Creates a new legend item.
    *
-   * @param shape the shape.
-   * @param label the label.
-   * @param draw  draw the shape?
-   * @param fill  fill the shape?
+   * @param shape
+   *          the shape.
+   * @param label
+   *          the label.
+   * @param draw
+   *          draw the shape?
+   * @param fill
+   *          fill the shape?
    */
-  public SurveyScaleLegendItem( final Shape shape,
-                                final String label,
-                                final boolean draw,
-                                final boolean fill ) {
+  public SurveyScaleLegendItem( final Shape shape, final String label, final boolean draw, final boolean fill ) {
     this.shape = shape;
     this.label = label;
     this.draw = draw;
@@ -77,8 +82,10 @@ public class SurveyScaleLegendItem {
   /**
    * Draws the legend item.
    *
-   * @param g2   the graphic device.
-   * @param area the area.
+   * @param g2
+   *          the graphic device.
+   * @param area
+   *          the area.
    */
   public void draw( final Graphics2D g2, final Rectangle2D area ) {
     if ( shape == null || font == null || label == null ) {
@@ -107,7 +114,7 @@ public class SurveyScaleLegendItem {
 
     final FontRenderContext frc = g2.getFontRenderContext();
     final Font f = g2.getFont();
-    //    final FontMetrics fm = g2.getFontMetrics(f);
+    // final FontMetrics fm = g2.getFontMetrics(f);
     final LineMetrics metrics = f.getLineMetrics( label, frc );
     final float ascent = metrics.getAscent();
     final float halfAscent = ascent / 2.0f;

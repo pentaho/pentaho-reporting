@@ -34,8 +34,7 @@ public class Prd4924IT {
 
   @Test
   public void testGetPropertyType() {
-    ReportPreProcessorMetaData[] metas =
-      ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
+    ReportPreProcessorMetaData[] metas = ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
     for ( ReportPreProcessorMetaData meta : metas ) {
       ReportPreProcessorPropertyMetaData[] propertyDescriptions = meta.getPropertyDescriptions();
       for ( ReportPreProcessorPropertyMetaData propertyDescription : propertyDescriptions ) {
@@ -46,8 +45,7 @@ public class Prd4924IT {
 
   @Test
   public void testGetBeanDescriptor() {
-    ReportPreProcessorMetaData[] metas =
-      ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
+    ReportPreProcessorMetaData[] metas = ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
     for ( ReportPreProcessorMetaData meta : metas ) {
       ReportPreProcessorPropertyMetaData[] propertyDescriptions = meta.getPropertyDescriptions();
       for ( ReportPreProcessorPropertyMetaData propertyDescription : propertyDescriptions ) {

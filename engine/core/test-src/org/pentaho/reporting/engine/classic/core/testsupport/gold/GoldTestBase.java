@@ -1,20 +1,20 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
-* All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
+ * All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.testsupport.gold;
 
@@ -114,10 +114,8 @@ public class GoldTestBase {
     private ReportProcessingMode processingMode;
     private List<Throwable> errors;
 
-    private ExecuteReportRunner( final File reportFile,
-                                 final File goldTemplate,
-                                 final List<Throwable> errors,
-                                 final ReportProcessingMode processingMode ) {
+    private ExecuteReportRunner( final File reportFile, final File goldTemplate, final List<Throwable> errors,
+        final ReportProcessingMode processingMode ) {
       this.reportFile = reportFile;
       this.goldTemplate = goldTemplate;
       this.processingMode = processingMode;
@@ -175,7 +173,7 @@ public class GoldTestBase {
     final File marker = findMarker();
     final String[] directories = new String[] { "reports", "reports-4.0" };
     for ( int i = 0; i < directories.length; i++ ) {
-      final String directory = directories[ i ];
+      final String directory = directories[i];
       final File reports = new File( marker, directory );
       final File[] files = reports.listFiles( filesystemFilter );
       final HashSet<String> fileSet = new HashSet<String>();
@@ -185,8 +183,8 @@ public class GoldTestBase {
           if ( fileSet.add( s ) == false ) {
             // the toy systems MacOS X and Windows use case-insensitive file systems and completely
             // mess up when there are two files with what they consider the same name.
-            throw new IllegalStateException( "There is a golden sample with the same Windows/Mac " +
-              "filename in the directory. Make sure your files are unique and lowercase." );
+            throw new IllegalStateException( "There is a golden sample with the same Windows/Mac "
+                + "filename in the directory. Make sure your files are unique and lowercase." );
           }
         }
 
@@ -197,7 +195,6 @@ public class GoldTestBase {
           return file;
         }
       }
-
 
     }
 
@@ -221,10 +218,10 @@ public class GoldTestBase {
 
   protected MasterReport tuneForTesting( final MasterReport report ) throws Exception {
     final ModifiableConfiguration configuration = report.getReportConfiguration();
-    configuration.setConfigProperty
-      ( DefaultReportEnvironment.ENVIRONMENT_KEY + "::internal::report.date", "2011-04-07T15:00:00.000+0000" );
-    configuration.setConfigProperty
-      ( DefaultReportEnvironment.ENVIRONMENT_TYPE + "::internal::report.date", "java.util.Date" );
+    configuration.setConfigProperty( DefaultReportEnvironment.ENVIRONMENT_KEY + "::internal::report.date",
+        "2011-04-07T15:00:00.000+0000" );
+    configuration.setConfigProperty( DefaultReportEnvironment.ENVIRONMENT_TYPE + "::internal::report.date",
+        "java.util.Date" );
     return report;
   }
 
@@ -245,8 +242,7 @@ public class GoldTestBase {
     return report;
   }
 
-  protected void run( final File file, final File gold, final ReportProcessingMode mode )
-    throws Exception {
+  protected void run( final File file, final File gold, final ReportProcessingMode mode ) throws Exception {
     final MasterReport originalReport = parseReport( file );
     final MasterReport tunedReport = tuneForTesting( originalReport );
     MasterReport report = postProcess( tunedReport, file );
@@ -265,8 +261,7 @@ public class GoldTestBase {
     handleXmlContent( executeTablePage( report ), new File( gold, fileName + "-table-page.xml" ) );
   }
 
-  protected MasterReport postProcess( final MasterReport originalReport,
-                                      final File file ) throws Exception {
+  protected MasterReport postProcess( final MasterReport originalReport, final File file ) throws Exception {
     return postProcess( originalReport );
   }
 
@@ -278,7 +273,7 @@ public class GoldTestBase {
     final byte[] goldData;
     final InputStream goldInput = new BufferedInputStream( new FileInputStream( goldSample ) );
     final MemoryByteArrayOutputStream goldByteStream =
-      new MemoryByteArrayOutputStream( Math.min( 1024 * 1024, (int) goldSample.length() ), 1024 * 1024 );
+        new MemoryByteArrayOutputStream( Math.min( 1024 * 1024, (int) goldSample.length() ), 1024 * 1024 );
 
     try {
       IOUtils.getInstance().copyStreams( goldInput, goldByteStream );
@@ -307,7 +302,7 @@ public class GoldTestBase {
     try {
       File testOutputFile = DebugReportRunner.createTestOutputFile();
       final FileOutputStream w =
-        new FileOutputStream( new File( testOutputFile, "gold-failure-" + goldSample.getName() ) );
+          new FileOutputStream( new File( testOutputFile, "gold-failure-" + goldSample.getName() ) );
       try {
         w.write( reportOutput );
       } finally {
@@ -319,13 +314,12 @@ public class GoldTestBase {
     }
   }
 
-  protected byte[] executeTablePage( final MasterReport report )
-    throws IOException, ReportProcessingException {
+  protected byte[] executeTablePage( final MasterReport report ) throws IOException, ReportProcessingException {
     final MemoryByteArrayOutputStream outputStream = new MemoryByteArrayOutputStream();
     try {
       final XmlTableOutputProcessor outputProcessor =
-        new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
-          XmlTableOutputProcessorMetaData.PAGINATION_FULL, localFontRegistry ) );
+          new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
+              XmlTableOutputProcessorMetaData.PAGINATION_FULL, localFontRegistry ) );
       final ReportProcessor streamReportProcessor = new PageableReportProcessor( report, outputProcessor );
       try {
         streamReportProcessor.processReport();
@@ -338,13 +332,12 @@ public class GoldTestBase {
     return ( outputStream.toByteArray() );
   }
 
-  protected byte[] executeTableFlow( final MasterReport report )
-    throws IOException, ReportProcessingException {
+  protected byte[] executeTableFlow( final MasterReport report ) throws IOException, ReportProcessingException {
     final MemoryByteArrayOutputStream outputStream = new MemoryByteArrayOutputStream();
     try {
       final XmlTableOutputProcessor outputProcessor =
-        new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
-          XmlTableOutputProcessorMetaData.PAGINATION_MANUAL, localFontRegistry ) );
+          new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
+              XmlTableOutputProcessorMetaData.PAGINATION_MANUAL, localFontRegistry ) );
       final ReportProcessor streamReportProcessor = new FlowReportProcessor( report, outputProcessor );
       try {
         streamReportProcessor.processReport();
@@ -357,14 +350,12 @@ public class GoldTestBase {
     return ( outputStream.toByteArray() );
   }
 
-  protected byte[] executePageable( final MasterReport report )
-    throws IOException, ReportProcessingException {
+  protected byte[] executePageable( final MasterReport report ) throws IOException, ReportProcessingException {
     final MemoryByteArrayOutputStream outputStream = new MemoryByteArrayOutputStream();
     try {
-      final XmlPageOutputProcessor outputProcessor = new XmlPageOutputProcessor
-        ( outputStream, new XmlPageOutputProcessorMetaData( localFontRegistry ) );
-      final PageableReportProcessor streamReportProcessor =
-        new PageableReportProcessor( report, outputProcessor );
+      final XmlPageOutputProcessor outputProcessor =
+          new XmlPageOutputProcessor( outputStream, new XmlPageOutputProcessorMetaData( localFontRegistry ) );
+      final PageableReportProcessor streamReportProcessor = new PageableReportProcessor( report, outputProcessor );
       try {
         streamReportProcessor.processReport();
       } finally {
@@ -376,13 +367,12 @@ public class GoldTestBase {
     return ( outputStream.toByteArray() );
   }
 
-  protected byte[] executeTableStream( final MasterReport report )
-    throws IOException, ReportProcessingException {
+  protected byte[] executeTableStream( final MasterReport report ) throws IOException, ReportProcessingException {
     final MemoryByteArrayOutputStream outputStream = new MemoryByteArrayOutputStream();
     try {
       final XmlTableOutputProcessor outputProcessor =
-        new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
-          XmlTableOutputProcessorMetaData.PAGINATION_NONE, localFontRegistry ) );
+          new XmlTableOutputProcessor( outputStream, new XmlTableOutputProcessorMetaData(
+              XmlTableOutputProcessorMetaData.PAGINATION_NONE, localFontRegistry ) );
       final ReportProcessor streamReportProcessor = new StreamReportProcessor( report, outputProcessor );
       try {
         streamReportProcessor.processReport();
@@ -400,15 +390,15 @@ public class GoldTestBase {
   }
 
   protected void runAllGoldReports() throws Exception {
-    if ( "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY ) ) ) {
-      Assert
-        .fail( "Dont run GoldenSample tests with the new layout system. These tests are not platform independent." );
+    if ( "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+        ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY ) ) ) {
+      Assert.fail( "Dont run GoldenSample tests with the new layout system. These tests are not platform independent." );
     }
 
-    final int numThreads = Math.max( 1, ClassicEngineBoot.getInstance().getExtendedConfig().getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads",
-        Math.max( 1, Runtime.getRuntime().availableProcessors() - 1 ) ) );
+    final int numThreads =
+        Math.max( 1, ClassicEngineBoot.getInstance().getExtendedConfig().getIntProperty(
+            "org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads",
+            Math.max( 1, Runtime.getRuntime().availableProcessors() - 1 ) ) );
 
     StopWatch w = new StopWatch();
     w.start();
@@ -453,10 +443,9 @@ public class GoldTestBase {
 
     final List<Throwable> errors = Collections.synchronizedList( new ArrayList<Throwable>() );
 
-    final ExecutorService threadPool = new ThreadPoolExecutor( threads, threads,
-      0L, TimeUnit.MILLISECONDS,
-      new LinkedBlockingQueue<Runnable>(),
-      new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy() );
+    final ExecutorService threadPool =
+        new ThreadPoolExecutor( threads, threads, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(),
+            new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy() );
 
     List<ExecuteReportRunner> reports = new ArrayList<ExecuteReportRunner>();
     reports.addAll( collectReports( "reports", ReportProcessingMode.legacy, errors ) );
@@ -482,9 +471,8 @@ public class GoldTestBase {
     }
   }
 
-  private List<ExecuteReportRunner> collectReports( final String sourceDirectoryName,
-                                                    final ReportProcessingMode mode,
-                                                    final List<Throwable> errors ) throws Exception {
+  private List<ExecuteReportRunner> collectReports( final String sourceDirectoryName, final ReportProcessingMode mode,
+      final List<Throwable> errors ) throws Exception {
     final File marker = findMarker();
     final File reports = new File( marker, sourceDirectoryName );
     final File gold = new File( marker, mode.getGoldDirectoryName() );
@@ -501,8 +489,8 @@ public class GoldTestBase {
       if ( fileSet.add( s ) == false ) {
         // the toy systems MacOS X and Windows use case-insensitive file systems and completely
         // mess up when there are two files with what they consider the same name.
-        throw new IllegalStateException( "There is a golden sample with the same Windows/Mac " +
-          "filename in the directory. Make sure your files are unique and lowercase." );
+        throw new IllegalStateException( "There is a golden sample with the same Windows/Mac "
+            + "filename in the directory. Make sure your files are unique and lowercase." );
       }
     }
 

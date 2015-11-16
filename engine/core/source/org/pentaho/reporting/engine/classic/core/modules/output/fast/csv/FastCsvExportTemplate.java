@@ -35,14 +35,12 @@ public class FastCsvExportTemplate implements FastExportTemplate {
   private SheetLayout sharedSheetLayout;
   private FastExportTemplate processor;
 
-  public FastCsvExportTemplate( final OutputStream outputStream,
-                                final String encoding ) {
+  public FastCsvExportTemplate( final OutputStream outputStream, final String encoding ) {
     this.outputStream = outputStream;
     this.encoding = encoding;
   }
 
-  public void initialize( final ReportDefinition report,
-                          final ExpressionRuntime runtime, final boolean pagination ) {
+  public void initialize( final ReportDefinition report, final ExpressionRuntime runtime, final boolean pagination ) {
     OutputProcessorMetaData metaData = runtime.getProcessingContext().getOutputProcessorMetaData();
     if ( pagination ) {
       this.sharedSheetLayout = new SheetLayout( metaData );
@@ -54,8 +52,7 @@ public class FastCsvExportTemplate implements FastExportTemplate {
     }
   }
 
-  public void write( final Band band,
-                     final ExpressionRuntime runtime ) throws InvalidReportStateException {
+  public void write( final Band band, final ExpressionRuntime runtime ) throws InvalidReportStateException {
     try {
       this.processor.write( band, runtime );
     } catch ( InvalidReportStateException re ) {

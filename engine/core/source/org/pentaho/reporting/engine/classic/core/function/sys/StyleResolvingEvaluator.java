@@ -1,21 +1,25 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.sys;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,19 +42,14 @@ import org.pentaho.reporting.engine.classic.core.util.DoubleKeyedCounter;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-
 public class StyleResolvingEvaluator extends AbstractElementFormatFunction implements StructureFunction {
   private static class StyleResolverCacheEntry implements Serializable {
     private long elementChangeTracker;
     private long styleChangeHash;
     private long styleModificationCount;
 
-    private StyleResolverCacheEntry( final long elementChangeTracker,
-                                     final long styleChangeHash,
-                                     final long styleModificationCount ) {
+    private StyleResolverCacheEntry( final long elementChangeTracker, final long styleChangeHash,
+        final long styleModificationCount ) {
       this.elementChangeTracker = elementChangeTracker;
       this.styleChangeHash = styleChangeHash;
       this.styleModificationCount = styleModificationCount;
@@ -65,7 +64,7 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
         this.elementChangeTracker = parentEntry.getElementChangeTracker() * 31 + e.getChangeTracker();
         this.styleChangeHash = parentEntry.getStyleChangeHash() * 31 + e.getStyle().getChangeTrackerHash();
         this.styleModificationCount =
-          parentEntry.getStyleModificationCount() * 31 + e.getStyle().getModificationCount();
+            parentEntry.getStyleModificationCount() * 31 + e.getStyle().getModificationCount();
       }
     }
 
@@ -160,14 +159,13 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
     return state.getReport();
   }
 
-  private static StyleResolver createStyleResolver( final ReportDefinition reportDefinition,
-                                                    final ProcessingContext pc ) {
+  private static StyleResolver
+    createStyleResolver( final ReportDefinition reportDefinition, final ProcessingContext pc ) {
     final ResourceManager resourceManager = pc.getResourceManager();
     final ResourceKey contentBase = pc.getContentBase();
 
     return CSSStyleResolver.createDesignTimeResolver( reportDefinition, resourceManager, contentBase, false );
   }
-
 
   protected void recordCacheHit( final ReportElement e ) {
     super.recordCacheHit( e );
@@ -181,7 +179,7 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
 
   protected void reportCachePerformance() {
     super.reportCachePerformance();
-    //    logger.debug(statisticsHit.printStatistic() + "\n" + statisticsMiss.printStatistic());
+    // logger.debug(statisticsHit.printStatistic() + "\n" + statisticsMiss.printStatistic());
   }
 
   protected boolean evaluateElement( final ReportElement e ) {
@@ -230,19 +228,20 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
     }
 
     super.reportDone( event );
-    //    logger.info(styleCache.printPerformanceStats() + "\n" + resolver.toString());
+    // logger.info(styleCache.printPerformanceStats() + "\n" + resolver.toString());
   }
-
 
   /**
    * Helper method for serialization.
    *
-   * @param in the input stream from where to read the serialized object.
-   * @throws java.io.IOException    when reading the stream fails.
-   * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
+   * @param in
+   *          the input stream from where to read the serialized object.
+   * @throws java.io.IOException
+   *           when reading the stream fails.
+   * @throws ClassNotFoundException
+   *           if a class definition for a serialized object could not be found.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     styleCache = new DefaultStyleCache( "StyleResolver" );
   }

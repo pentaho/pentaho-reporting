@@ -39,8 +39,8 @@ public class FastExcelExportProcessor extends AbstractReportProcessor {
       metaData = new ExcelOutputProcessorMetaData( ExcelOutputProcessorMetaData.PAGINATION_NONE );
     }
 
-    protected void processPageContent( final LogicalPageKey logicalPageKey,
-                                       final LogicalPageBox logicalPage ) throws ContentProcessingException {
+    protected void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )
+      throws ContentProcessingException {
       // not used ..
     }
 
@@ -52,9 +52,8 @@ public class FastExcelExportProcessor extends AbstractReportProcessor {
   private OutputStream outputStream;
   private boolean useXlsx;
 
-  public FastExcelExportProcessor( final MasterReport report,
-                                   final OutputStream outputStream,
-                                   final boolean useXlsx ) throws ReportProcessingException {
+  public FastExcelExportProcessor( final MasterReport report, final OutputStream outputStream, final boolean useXlsx )
+    throws ReportProcessingException {
     super( report, new ExcelDataOutputProcessor() );
     this.outputStream = outputStream;
     this.useXlsx = useXlsx;
@@ -63,6 +62,5 @@ public class FastExcelExportProcessor extends AbstractReportProcessor {
   protected OutputFunction createLayoutManager() {
     return new FastExportOutputFunction( new FastExcelExportTemplate( outputStream, useXlsx ) );
   }
-
 
 }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.date;
 
@@ -107,7 +107,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the epoch time, that is the time in seconds since 01-Jan-1970.
    *
-   * @param epochTimeField a fieldname.
+   * @param epochTimeField
+   *          a fieldname.
    */
   public void setEpochTimeField( final String epochTimeField ) {
     this.epochTimeField = epochTimeField;
@@ -125,7 +126,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the month.
    *
-   * @param monthField a fieldname.
+   * @param monthField
+   *          a fieldname.
    */
   public void setMonthField( final String monthField ) {
     this.monthField = monthField;
@@ -143,7 +145,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the year.
    *
-   * @param yearField a fieldname.
+   * @param yearField
+   *          a fieldname.
    */
   public void setYearField( final String yearField ) {
     this.yearField = yearField;
@@ -161,7 +164,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the hour of the day.
    *
-   * @param hourField a fieldname.
+   * @param hourField
+   *          a fieldname.
    */
   public void setHourField( final String hourField ) {
     this.hourField = hourField;
@@ -179,7 +183,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the minute.
    *
-   * @param minuteField a fieldname.
+   * @param minuteField
+   *          a fieldname.
    */
   public void setMinuteField( final String minuteField ) {
     this.minuteField = minuteField;
@@ -197,7 +202,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the second.
    *
-   * @param secondField a fieldname.
+   * @param secondField
+   *          a fieldname.
    */
   public void setSecondField( final String secondField ) {
     this.secondField = secondField;
@@ -215,7 +221,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the milliseconds.
    *
-   * @param milliSecondField a fieldname.
+   * @param milliSecondField
+   *          a fieldname.
    */
   public void setMilliSecondField( final String milliSecondField ) {
     this.milliSecondField = milliSecondField;
@@ -233,7 +240,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the time in milli-seconds since 01-Jan-1970.
    *
-   * @param timeField a fieldname.
+   * @param timeField
+   *          a fieldname.
    */
   public void setTimeField( final String timeField ) {
     this.timeField = timeField;
@@ -251,7 +259,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the day of the week.
    *
-   * @param dayOfWeekField a fieldname.
+   * @param dayOfWeekField
+   *          a fieldname.
    */
   public void setDayOfWeekField( final String dayOfWeekField ) {
     this.dayOfWeekField = dayOfWeekField;
@@ -269,7 +278,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the day of the year.
    *
-   * @param dayOfYearField a fieldname.
+   * @param dayOfYearField
+   *          a fieldname.
    */
   public void setDayOfYearField( final String dayOfYearField ) {
     this.dayOfYearField = dayOfYearField;
@@ -287,7 +297,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the day of the month.
    *
-   * @param dayOfMonthField a fieldname.
+   * @param dayOfMonthField
+   *          a fieldname.
    */
   public void setDayOfMonthField( final String dayOfMonthField ) {
     this.dayOfMonthField = dayOfMonthField;
@@ -305,7 +316,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the day of the week in the current month.
    *
-   * @param dayOfWeekInMonthField a fieldname.
+   * @param dayOfWeekInMonthField
+   *          a fieldname.
    */
   public void setDayOfWeekInMonthField( final String dayOfWeekInMonthField ) {
     this.dayOfWeekInMonthField = dayOfWeekInMonthField;
@@ -323,7 +335,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the time-zone.
    *
-   * @param timeZoneField a fieldname.
+   * @param timeZoneField
+   *          a fieldname.
    */
   public void setTimeZoneField( final String timeZoneField ) {
     this.timeZoneField = timeZoneField;
@@ -341,7 +354,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Defines the name of the field that contains the week of the year.
    *
-   * @param weekOfYearField a fieldname.
+   * @param weekOfYearField
+   *          a fieldname.
    */
   public void setWeekOfYearField( final String weekOfYearField ) {
     this.weekOfYearField = weekOfYearField;
@@ -359,7 +373,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Returns the name of the field that contains the week of the month.
    *
-   * @param weekOfMonthField a fieldname.
+   * @param weekOfMonthField
+   *          a fieldname.
    */
   public void setWeekOfMonthField( final String weekOfMonthField ) {
     this.weekOfMonthField = weekOfMonthField;
@@ -368,7 +383,8 @@ public class VariableDateExpression extends DateExpression {
   /**
    * Configures the given Calendar instance by applying all defined fields to it.
    *
-   * @param calendar the week of the year property.
+   * @param calendar
+   *          the week of the year property.
    */
   protected void configureCalendar( final Calendar calendar ) {
     // first add the hardcoded values, if any ...
@@ -443,9 +459,12 @@ public class VariableDateExpression extends DateExpression {
    * A helper method tha tries to update a field from a column in the data-row. The calendar is only updated, if the
    * field contains a Number.
    *
-   * @param calendar the calendar that should be updated
-   * @param field    the field as specified in the Calendar class
-   * @param column   the data-row column from where to read the number
+   * @param calendar
+   *          the calendar that should be updated
+   * @param field
+   *          the field as specified in the Calendar class
+   * @param column
+   *          the data-row column from where to read the number
    */
   private void trySetField( final Calendar calendar, final int field, final String column ) {
     if ( column == null ) {

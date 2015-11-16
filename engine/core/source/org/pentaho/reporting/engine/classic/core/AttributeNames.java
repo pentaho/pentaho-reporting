@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -43,8 +43,7 @@ public class AttributeNames {
   }
 
   public static class Crosstab {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/crosstab";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/crosstab";
     public static final String DETAIL_MODE = "detail-mode";
     public static final String COLUMN_FIELD = "column-field";
     public static final String ROW_FIELD = "row-field";
@@ -65,8 +64,7 @@ public class AttributeNames {
   }
 
   public static class Html {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/html";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/html";
 
     public static final String ONKEYUP = "onkeyup";
     public static final String ONKEYDOWN = "onkeydown";
@@ -97,8 +95,7 @@ public class AttributeNames {
   }
 
   public static class Pdf {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/pdf";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/pdf";
     public static final String SCRIPT_ACTION = "scriptAction";
 
     private Pdf() {
@@ -106,8 +103,7 @@ public class AttributeNames {
   }
 
   public static class Excel {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/excel";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/excel";
     public static final String PAGE_HEADER_CENTER = "page-header-center";
     public static final String PAGE_FOOTER_CENTER = "page-footer-center";
     public static final String PAGE_HEADER_LEFT = "page-header-left";
@@ -123,8 +119,7 @@ public class AttributeNames {
   }
 
   public static class Swing {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/swing";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/swing";
     public static final String ACTION = "action";
     public static final String TOOLTIP = "tooltip";
 
@@ -133,8 +128,7 @@ public class AttributeNames {
   }
 
   public static class Internal {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/internal";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/internal";
 
     public static final String EXCEL_CELL_FORMAT_AUTOCOMPUTE = "excel-cellformat-auto-compute";
     public static final String QUERY = "query";
@@ -159,8 +153,7 @@ public class AttributeNames {
   }
 
   public static class Table {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/table";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/table";
 
     public static final String COLSPAN = "colspan";
     public static final String ROWSPAN = "rowspan";
@@ -170,8 +163,7 @@ public class AttributeNames {
   }
 
   public static class Core {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/core";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/core";
 
     public static final String RESOURCE_IDENTIFIER = "resource-identifier";
     public static final String NULL_VALUE = "null-value";
@@ -225,13 +217,11 @@ public class AttributeNames {
   }
 
   public static class Wizard {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/wizard";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/wizard";
 
     /**
      * Adds structural information that this field/element is a label for a field. The content of the attribute denotes
-     * a field-name that can be looked up in the dataschema. The field's dataschema will be used to configure the
-     * label.
+     * a field-name that can be looked up in the dataschema. The field's dataschema will be used to configure the label.
      */
     public static final String LABEL_FOR = "label-for";
     /**
@@ -272,14 +262,12 @@ public class AttributeNames {
     public static final String CACHED_WIZARD_FIELD_DATA = "CachedWizardFieldData";
     public static final String PRESERVE_USER_STYLING = "preserve-user-styling";
 
-
     private Wizard() {
     }
   }
 
   public static class Pentaho {
-    public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/pentaho";
+    public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/attributes/pentaho";
 
     private Pentaho() {
     }

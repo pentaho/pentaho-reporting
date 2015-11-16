@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
@@ -25,7 +25,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * A filter that returns the value from a data source as a String. The value is converted to an String using
  * String.valueOf () which uses Object.toString() to convert the object into the string.
  * <p/>
- * You can specify a default string to return when the value from the data source is <code>null</code>.  Initially the
+ * You can specify a default string to return when the value from the data source is <code>null</code>. Initially the
  * string 'null' is used.
  *
  * @author Thomas Morgner
@@ -50,7 +50,8 @@ public class StringFilter implements DataFilter, RawDataSource {
   /**
    * Sets the string used to represent a null value.
    *
-   * @param nullvalue the null value.
+   * @param nullvalue
+   *          the null value.
    */
   public void setNullValue( final String nullvalue ) {
     this.nullvalue = nullvalue;
@@ -66,11 +67,14 @@ public class StringFilter implements DataFilter, RawDataSource {
   }
 
   /**
-   * Returns the value obtained from the data source. <P> The filter ensures that the returned value is a String, even
-   * though the return type is Object (as required by the DataSource interface).
+   * Returns the value obtained from the data source.
+   * <P>
+   * The filter ensures that the returned value is a String, even though the return type is Object (as required by the
+   * DataSource interface).
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return the string.
    */
@@ -103,7 +107,8 @@ public class StringFilter implements DataFilter, RawDataSource {
   /**
    * Sets the data source for this filter.
    *
-   * @param ds the data source.
+   * @param ds
+   *          the data source.
    */
   public void setDataSource( final DataSource ds ) {
     if ( ds == null ) {
@@ -116,10 +121,10 @@ public class StringFilter implements DataFilter, RawDataSource {
    * Clones the filter.
    *
    * @return a clone.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public StringFilter clone()
-    throws CloneNotSupportedException {
+  public StringFilter clone() throws CloneNotSupportedException {
     final StringFilter f = (StringFilter) super.clone();
     if ( source != null ) {
       f.source = source.clone();
@@ -135,9 +140,8 @@ public class StringFilter implements DataFilter, RawDataSource {
     return source.getValue( runtime, element );
   }
 
-  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
-                                              final ReportElement element,
-                                              FormatSpecification formatSpecification ) {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime, final ReportElement element,
+      FormatSpecification formatSpecification ) {
     if ( source instanceof RawDataSource ) {
       final RawDataSource rds = (RawDataSource) source;
       return rds.getFormatString( runtime, element, formatSpecification );

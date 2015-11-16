@@ -37,8 +37,8 @@ public class FastHtmlExportProcessor extends AbstractReportProcessor {
       metaData = new HtmlOutputProcessorMetaData( HtmlOutputProcessorMetaData.PAGINATION_NONE );
     }
 
-    protected void processPageContent( final LogicalPageKey logicalPageKey,
-                                       final LogicalPageBox logicalPage ) throws ContentProcessingException {
+    protected void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )
+      throws ContentProcessingException {
       // not used ..
     }
 
@@ -49,8 +49,8 @@ public class FastHtmlExportProcessor extends AbstractReportProcessor {
 
   private FastHtmlContentItems contentItems;
 
-  public FastHtmlExportProcessor( final MasterReport report,
-                                  final FastHtmlContentItems contentItems ) throws ReportProcessingException {
+  public FastHtmlExportProcessor( final MasterReport report, final FastHtmlContentItems contentItems )
+    throws ReportProcessingException {
     super( report, new HtmlDataOutputProcessor() );
     this.contentItems = contentItems;
   }

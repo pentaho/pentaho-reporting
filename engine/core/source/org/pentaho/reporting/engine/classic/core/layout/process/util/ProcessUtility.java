@@ -1,21 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
@@ -36,12 +45,6 @@ import org.pentaho.reporting.engine.classic.core.util.StrokeUtility;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-
 /**
  * Creation-Date: 16.07.2007, 13:42:43
  *
@@ -55,7 +58,8 @@ public class ProcessUtility {
    * Returns the computed block-context width. This width is a content-size width - so it excludes paddings and borders.
    * (See CSS3-BOX 4.2; http://www.w3.org/TR/css3-box/#containing)
    *
-   * @param box the box for which the block-context width should be computed.
+   * @param box
+   *          the box for which the block-context width should be computed.
    * @return the block context width.
    */
   public static long computeBlockContextWidth( final RenderNode box ) {
@@ -84,10 +88,8 @@ public class ProcessUtility {
     return parentBlockContext.getCachedWidth();
   }
 
-  public static boolean isContent( final RenderBox element,
-                                   final boolean ellipseAsBackground,
-                                   final boolean shapesAsContent ) {
-
+  public static boolean isContent( final RenderBox element, final boolean ellipseAsBackground,
+      final boolean shapesAsContent ) {
 
     // For legacy reasons: A single ReplacedContent in a paragraph means, we may have a old-style border and
     // background definition.

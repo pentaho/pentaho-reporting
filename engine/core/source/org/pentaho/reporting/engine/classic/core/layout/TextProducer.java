@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -43,7 +43,7 @@ public class TextProducer {
       this.textFactory = new DefaultRenderableTextFactory( metaData );
     }
     this.textCache = new TextCache( 500 );
-    this.bufferArray = new int[ 500 ];
+    this.bufferArray = new int[500];
     this.utf16LE = Utf16LE.getInstance();
   }
 
@@ -60,27 +60,26 @@ public class TextProducer {
     textFactory.startText();
   }
 
-  public RenderNode[] getRenderNodes( final ReportElement element,
-                                      final StyleSheet elementStyle,
-                                      final String text ) {
+  public RenderNode[] getRenderNodes( final ReportElement element, final StyleSheet elementStyle, final String text ) {
     final ReportAttributeMap attrs = element.getAttributes();
     final RenderNode[] renderNodes;
     final RenderNode[] finishNodes;
 
-    final TextCache.Result result = textCache.get
-      ( elementStyle.getId(), elementStyle.getChangeTracker(), attrs.getChangeTracker(), text );
+    final TextCache.Result result =
+        textCache.get( elementStyle.getId(), elementStyle.getChangeTracker(), attrs.getChangeTracker(), text );
     if ( result != null ) {
       renderNodes = result.getText();
       finishNodes = result.getFinish();
     } else {
       transformText( text );
 
-      renderNodes = textFactory.createText
-        ( bufferArray, 0, buffer.getLength(), elementStyle, element.getElementType(), element.getObjectID(), attrs );
+      renderNodes =
+          textFactory.createText( bufferArray, 0, buffer.getLength(), elementStyle, element.getElementType(), element
+              .getObjectID(), attrs );
       finishNodes = textFactory.finishText();
 
       textCache.store( elementStyle.getId(), elementStyle.getChangeTracker(), attrs.getChangeTracker(), text,
-        elementStyle, attrs, renderNodes, finishNodes );
+          elementStyle, attrs, renderNodes, finishNodes );
     }
 
     if ( renderNodes.length == 0 ) {
@@ -90,7 +89,7 @@ public class TextProducer {
       return renderNodes;
     }
 
-    final RenderNode[] data = new RenderNode[ finishNodes.length + renderNodes.length ];
+    final RenderNode[] data = new RenderNode[finishNodes.length + renderNodes.length];
     System.arraycopy( renderNodes, 0, data, 0, renderNodes.length );
     System.arraycopy( finishNodes, 0, data, renderNodes.length, finishNodes.length );
     return data;

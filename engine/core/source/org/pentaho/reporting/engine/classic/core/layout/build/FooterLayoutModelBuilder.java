@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
@@ -52,9 +52,8 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper {
     this.slots = new ArrayList<RenderNode>();
   }
 
-  public void initialize( final ProcessingContext metaData,
-                          final RenderBox parentBox,
-                          final RenderNodeFactory renderNodeFactory ) {
+  public void initialize( final ProcessingContext metaData, final RenderBox parentBox,
+      final RenderNodeFactory renderNodeFactory ) {
     this.parentBox = parentBox;
     getParent().initialize( metaData, parentBox, renderNodeFactory );
     this.metaData = metaData.getOutputProcessorMetaData();
@@ -193,11 +192,11 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper {
     super.endSection();
 
     /**
-     * DOCMARK: This is a incomplete fix for PRD-3620 - this fix needs some work as the layouter code has
-     * changed significantly since PRD-3.9 and currently does not behave exactly like the old version.
+     * DOCMARK: This is a incomplete fix for PRD-3620 - this fix needs some work as the layouter code has changed
+     * significantly since PRD-3.9 and currently does not behave exactly like the old version.
      *
-     * To make sticky page-footers behave correctly, we need to ensure that progress-marker are not merged
-     * and that empty bands produce exactly one progress marker. 
+     * To make sticky page-footers behave correctly, we need to ensure that progress-marker are not merged and that
+     * empty bands produce exactly one progress marker.
      */
     if ( logger.isDebugEnabled() ) {
       logger.debug( "Slot counter: " + slotCounter + " " + slots.size() );
@@ -209,8 +208,8 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper {
     }
     // this is not correct ... we should insert the new band before the old one ..
     final RenderNode firstChild = parentBox.getFirstChild();
-    if ( slotCounter < slots.size() &&
-      ( firstChild.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
+    if ( slotCounter < slots.size()
+        && ( firstChild.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
       final ArrayList<RenderNode> childsAdded = new ArrayList<RenderNode>();
 
       // Store the added children until we need them ..

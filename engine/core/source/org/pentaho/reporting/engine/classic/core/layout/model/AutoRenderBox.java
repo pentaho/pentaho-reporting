@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -39,36 +39,24 @@ public class AutoRenderBox extends RenderBox {
     this( new InstanceID(), null, styleSheet, ReportAttributeMap.EMPTY_MAP );
   }
 
-  public AutoRenderBox( final InstanceID instanceId,
-                        final ReportStateKey stateKey,
-                        final ReportAttributeMap attributes ) {
+  public AutoRenderBox( final InstanceID instanceId, final ReportStateKey stateKey, final ReportAttributeMap attributes ) {
     this( instanceId, stateKey, DEFAULT_STYLE, attributes );
   }
 
-  public AutoRenderBox( final InstanceID instanceId,
-                        final ReportStateKey stateKey,
-                        final StyleSheet styleSheet,
-                        final ReportAttributeMap attributes ) {
+  public AutoRenderBox( final InstanceID instanceId, final ReportStateKey stateKey, final StyleSheet styleSheet,
+      final ReportAttributeMap attributes ) {
     this( instanceId, stateKey, styleSheet, attributes, AutoLayoutBoxType.INSTANCE );
   }
 
-  public AutoRenderBox( final InstanceID instanceId,
-                        final ReportStateKey stateKey,
-                        final StyleSheet styleSheet,
-                        final ReportAttributeMap attributes,
-                        final ElementType elementType ) {
+  public AutoRenderBox( final InstanceID instanceId, final ReportStateKey stateKey, final StyleSheet styleSheet,
+      final ReportAttributeMap attributes, final ElementType elementType ) {
     this( instanceId, stateKey, styleSheet, BoxDefinition.EMPTY, attributes, elementType );
   }
 
-  public AutoRenderBox( final InstanceID instanceId,
-                        final ReportStateKey stateKey,
-                        final StyleSheet styleSheet,
-                        final BoxDefinition boxDefinition,
-                        final ReportAttributeMap attributes,
-                        final ElementType elementType ) {
-    super( RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS,
-      styleSheet, instanceId, boxDefinition, elementType,
-      attributes, stateKey );
+  public AutoRenderBox( final InstanceID instanceId, final ReportStateKey stateKey, final StyleSheet styleSheet,
+      final BoxDefinition boxDefinition, final ReportAttributeMap attributes, final ElementType elementType ) {
+    super( RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS, styleSheet, instanceId, boxDefinition, elementType,
+        attributes, stateKey );
   }
 
   public int getNodeType() {
@@ -101,10 +89,10 @@ public class AutoRenderBox extends RenderBox {
 
   public long extendHeight( final RenderNode child, final long heightOffset ) {
     final int layoutNodeType = getLayoutNodeType();
-    if ( ( layoutNodeType & LayoutNodeTypes.MASK_BOX_INLINE ) == LayoutNodeTypes.MASK_BOX_INLINE ||
-      ( layoutNodeType & LayoutNodeTypes.MASK_BOX_ROW ) == LayoutNodeTypes.MASK_BOX_ROW ||
-      ( layoutNodeType & LayoutNodeTypes.MASK_BOX_CANVAS ) == LayoutNodeTypes.MASK_BOX_CANVAS ||
-      ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) ) {
+    if ( ( layoutNodeType & LayoutNodeTypes.MASK_BOX_INLINE ) == LayoutNodeTypes.MASK_BOX_INLINE
+        || ( layoutNodeType & LayoutNodeTypes.MASK_BOX_ROW ) == LayoutNodeTypes.MASK_BOX_ROW
+        || ( layoutNodeType & LayoutNodeTypes.MASK_BOX_CANVAS ) == LayoutNodeTypes.MASK_BOX_CANVAS
+        || ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) ) {
       return extendHeightInRowMode( child, heightOffset );
     } else {
       return extendHeightInBlockMode( child, heightOffset );

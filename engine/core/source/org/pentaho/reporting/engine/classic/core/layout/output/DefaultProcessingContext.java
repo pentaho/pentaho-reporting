@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
@@ -68,8 +68,9 @@ public class DefaultProcessingContext implements ProcessingContext {
     } catch ( ResourceKeyCreationException rkce ) {
       this.contentBase = null;
     }
-    formulaContext = DefaultFormulaContextFactory.INSTANCE.create
-      ( resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone() );
+    formulaContext =
+        DefaultFormulaContextFactory.INSTANCE.create( resourceBundleFactory.getLocale(), resourceBundleFactory
+            .getTimeZone() );
     metaData = new MemoryDocumentMetaData();
     compatibilityLevel = -1;
   }
@@ -80,13 +81,8 @@ public class DefaultProcessingContext implements ProcessingContext {
 
   public DefaultProcessingContext( final MasterReport report, final OutputProcessorMetaData metaData )
     throws ReportProcessingException {
-    this( metaData,
-      report.getResourceBundleFactory(),
-      report.getConfiguration(),
-      report.getResourceManager(),
-      report.getContentBase(),
-      report.getBundle().getMetaData(),
-      report.getReportEnvironment(), -1 );
+    this( metaData, report.getResourceBundleFactory(), report.getConfiguration(), report.getResourceManager(), report
+        .getContentBase(), report.getBundle().getMetaData(), report.getReportEnvironment(), -1 );
 
     final Integer comLev = report.getCompatibilityLevel();
     if ( comLev != null ) {
@@ -99,17 +95,14 @@ public class DefaultProcessingContext implements ProcessingContext {
    * @param resourceBundleFactory
    * @param configuration
    * @param resourceManager
-   * @param contentBase             the content base, from where to load additional resources. (Can be null).
+   * @param contentBase
+   *          the content base, from where to load additional resources. (Can be null).
    * @param metaData
    */
   public DefaultProcessingContext( final OutputProcessorMetaData outputProcessorMetaData,
-                                   final ResourceBundleFactory resourceBundleFactory,
-                                   final Configuration configuration,
-                                   final ResourceManager resourceManager,
-                                   final ResourceKey contentBase,
-                                   final DocumentMetaData metaData,
-                                   final ReportEnvironment environment,
-                                   final int compatibilityLevel ) throws ReportProcessingException {
+      final ResourceBundleFactory resourceBundleFactory, final Configuration configuration,
+      final ResourceManager resourceManager, final ResourceKey contentBase, final DocumentMetaData metaData,
+      final ReportEnvironment environment, final int compatibilityLevel ) throws ReportProcessingException {
     if ( environment == null ) {
       throw new NullPointerException();
     }
@@ -130,8 +123,9 @@ public class DefaultProcessingContext implements ProcessingContext {
     this.resourceManager = resourceManager;
     this.outputProcessorMetaData = outputProcessorMetaData;
     this.resourceBundleFactory = MasterReport.computeAndInitResourceBundleFactory( resourceBundleFactory, environment );
-    this.formulaContext = DefaultFormulaContextFactory.INSTANCE.create
-      ( resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone() );
+    this.formulaContext =
+        DefaultFormulaContextFactory.INSTANCE.create( resourceBundleFactory.getLocale(), resourceBundleFactory
+            .getTimeZone() );
     this.configuration = configuration;
     if ( metaData == null ) {
       this.metaData = new MemoryDocumentMetaData();

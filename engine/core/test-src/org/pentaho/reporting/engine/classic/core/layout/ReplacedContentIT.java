@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -64,14 +64,13 @@ public class ReplacedContentIT extends TestCase {
     final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-      ( basereport, report.getReportHeader(), true, false );
+    final LogicalPageBox logicalPageBox =
+        DebugReportRunner.layoutSingleBand( basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     // ModelPrinter.print(logicalPageBox);
     new ValidateRunner().startValidation( logicalPageBox );
   }
-
 
   public void testReplacedContentRel() throws Exception {
     final MasterReport basereport = new MasterReport();
@@ -98,17 +97,16 @@ public class ReplacedContentIT extends TestCase {
   private static class ValidateRunner extends IterateStructuralProcessStep {
     protected void processRenderableContent( final RenderableReplacedContentBox node ) {
       final String s = node.getName();
-      if ( s.endsWith( "i" ) ||
-        s.charAt( s.length() - 2 ) == 'i' ) {
+      if ( s.endsWith( "i" ) || s.charAt( s.length() - 2 ) == 'i' ) {
         // inline elements take the intrinsinc width/height unless explicitly defined otherwise
-        assertEquals( "Rect height=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
-          node.getCachedHeight() );
+        assertEquals( "Rect height=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ), node
+            .getCachedHeight() );
       } else {
-        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ),
-          node.getCachedHeight() );
+        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ), node
+            .getCachedHeight() );
       }
-      assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
-        node.getCachedWidth() );
+      assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ), node
+          .getCachedWidth() );
     }
 
     protected boolean startBox( final RenderBox box ) {
@@ -152,37 +150,34 @@ public class ReplacedContentIT extends TestCase {
 
   private static class ValidateRelativeRunner extends IterateStructuralProcessStep {
     protected void processRenderableContent( final RenderableReplacedContentBox node ) {
-      if ( node.getParent() instanceof InlineRenderBox ||
-        node.getName().startsWith( "rect-i" ) ) {
-        assertEquals( "Rect height=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
-          node.getCachedHeight() );
-        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
-          node.getCachedWidth() );
-      } else if ( node.getName().equals( "rect-cb" ) ||
-        node.getName().equals( "rect-rb" ) ) {
+      if ( node.getParent() instanceof InlineRenderBox || node.getName().startsWith( "rect-i" ) ) {
+        assertEquals( "Rect height=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ), node
+            .getCachedHeight() );
+        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ), node
+            .getCachedWidth() );
+      } else if ( node.getName().equals( "rect-cb" ) || node.getName().equals( "rect-rb" ) ) {
         assertEquals( "Rect height=0; " + node.getName(), 0, node.getCachedHeight() );
-        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
-          node.getCachedWidth() );
+        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ), node
+            .getCachedWidth() );
       } else if ( node.getName().equals( "rect-bb" ) ) {
         assertEquals( "Rect height=0; " + node.getName(), 0, node.getCachedHeight() );
-        assertEquals( "Rect width=545000; " + node.getName(), StrictGeomUtility.toInternalValue( 545 ),
-          node.getCachedWidth() );
-      } else if ( node.getName().equals( "rect-bc" ) ||
-        node.getName().equals( "rect-br" ) ) {
-        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ),
-          node.getCachedHeight() );
-        assertEquals( "Rect width=545000; " + node.getName(), StrictGeomUtility.toInternalValue( 545 ),
-          node.getCachedWidth() );
+        assertEquals( "Rect width=545000; " + node.getName(), StrictGeomUtility.toInternalValue( 545 ), node
+            .getCachedWidth() );
+      } else if ( node.getName().equals( "rect-bc" ) || node.getName().equals( "rect-br" ) ) {
+        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ), node
+            .getCachedHeight() );
+        assertEquals( "Rect width=545000; " + node.getName(), StrictGeomUtility.toInternalValue( 545 ), node
+            .getCachedWidth() );
       } else if ( node.getParent() instanceof RowRenderBox ) {
-        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ),
-          node.getCachedHeight() );
-        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
-          node.getCachedWidth() );
+        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ), node
+            .getCachedHeight() );
+        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ), node
+            .getCachedWidth() );
       } else {
-        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ),
-          node.getCachedHeight() );
-        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
-          node.getCachedWidth() );
+        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ), node
+            .getCachedHeight() );
+        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ), node
+            .getCachedWidth() );
       }
     }
 

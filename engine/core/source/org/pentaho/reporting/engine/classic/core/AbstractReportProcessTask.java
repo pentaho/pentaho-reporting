@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -51,7 +51,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask {
   /**
    * Defines the content location (and implicitly the repository) for the generated report document.
    *
-   * @param bodyContentLocation the content location for the report document.
+   * @param bodyContentLocation
+   *          the content location for the report document.
    */
   public void setBodyContentLocation( final ContentLocation bodyContentLocation ) {
     this.bodyContentLocation = bodyContentLocation;
@@ -70,7 +71,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask {
    * Defines the body name generator, that generates name sequences in case the target name is already taken. The given
    * namegenerator should return the first-choice document name as first generated name.
    *
-   * @param bodyNameGenerator the name generator.
+   * @param bodyNameGenerator
+   *          the name generator.
    */
   public void setBodyNameGenerator( final NameGenerator bodyNameGenerator ) {
     this.bodyNameGenerator = bodyNameGenerator;
@@ -89,7 +91,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask {
    * Defines the report that will be executed in this task. It is assumed that the report is fully parametrized. Report
    * processing will fail if the report requires parameters that are not given.
    *
-   * @param report the report.
+   * @param report
+   *          the report.
    */
   public void setReport( final MasterReport report ) {
     this.report = report;
@@ -98,7 +101,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask {
   /**
    * Adds a report progress listener that is able to monitor the export progress.
    *
-   * @param listener the listener.
+   * @param listener
+   *          the listener.
    */
   public void addReportProgressListener( final ReportProgressListener listener ) {
     listeners.add( ReportProgressListener.class, listener );
@@ -107,7 +111,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask {
   /**
    * Removes the given report progress listener from the list of listeners.
    *
-   * @param listener the listener.
+   * @param listener
+   *          the listener.
    */
   public void removeReportProgressListener( final ReportProgressListener listener ) {
     listeners.remove( ReportProgressListener.class, listener );
@@ -134,7 +139,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask {
   /**
    * Updates the error cause.
    *
-   * @param error the error.
+   * @param error
+   *          the error.
    */
   protected void setError( final Throwable error ) {
     this.error = error;

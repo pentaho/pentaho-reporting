@@ -1,31 +1,31 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * A function that performs basic traffic lighting based on a range of values and a given set of colors to use. The
@@ -62,8 +62,10 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
     /**
      * Creates a definition with the given limit and color.
      *
-     * @param limit the limit that activates the color.
-     * @param color the color for the limit.
+     * @param limit
+     *          the limit that activates the color.
+     * @param color
+     *          the color for the limit.
      */
     protected LightDefinition( final Number limit, final Color color ) {
       this.limit = limit;
@@ -135,9 +137,11 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
      * Compares this LightDefinition with another LightDefinition. This will happily crash if the given object is no
      * LightDefinition object.
      *
-     * @param o the other object.
+     * @param o
+     *          the other object.
      * @return -1, 0 or -1 depending on whether this object is less, equal or greater than the given object.
-     * @throws ClassCastException if the given object is no LightDefinition.
+     * @throws ClassCastException
+     *           if the given object is no LightDefinition.
      */
     public int compareTo( final Object o ) {
       final LightDefinition ldef = (LightDefinition) o;
@@ -227,7 +231,6 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
     }
   }
 
-
   /**
    * Defines, whether all negative limits should be made positive, by calling 'Math.abs'.
    *
@@ -240,7 +243,8 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
   /**
    * Defines, whether all negative limits should be made positive, by calling 'Math.abs'.
    *
-   * @param useAbsoluteValue The useAbsoluteValue to set.
+   * @param useAbsoluteValue
+   *          The useAbsoluteValue to set.
    */
   public void setUseAbsoluteValue( final boolean useAbsoluteValue ) {
     this.useAbsoluteValue = useAbsoluteValue;
@@ -259,7 +263,8 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
    * Defines whether limits specify the lower or the upper boundary of a range. This property defaults to false, making
    * limits define the lower boundary.
    *
-   * @param useOppositeLogic true, if limits specify the upper boundaries, false otherwise.
+   * @param useOppositeLogic
+   *          true, if limits specify the upper boundaries, false otherwise.
    */
   public void setUseOppositeLogic( final boolean useOppositeLogic ) {
     this.useOppositeLogic = useOppositeLogic;
@@ -268,8 +273,10 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
   /**
    * Updates the color at the given index in the list of LightDefinition entries.
    *
-   * @param index the position of the entry that should be updated.
-   * @param color the new color.
+   * @param index
+   *          the position of the entry that should be updated.
+   * @param color
+   *          the new color.
    */
   public void setColor( final int index, final Color color ) {
     if ( limits.size() == index ) {
@@ -293,7 +300,8 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
   /**
    * Returns the color at the given index in the list of LightDefinition entries.
    *
-   * @param index the position of the entry that should be queried.
+   * @param index
+   *          the position of the entry that should be queried.
    * @return the color at the given position.
    */
   public Color getColor( final int index ) {
@@ -319,10 +327,10 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
    * @return the colors as array.
    */
   public Color[] getColor() {
-    final Color[] retval = new Color[ limits.size() ];
+    final Color[] retval = new Color[limits.size()];
     for ( int i = 0; i < limits.size(); i++ ) {
       final LightDefinition definition = limits.get( i );
-      retval[ i ] = definition.getColor();
+      retval[i] = definition.getColor();
     }
     return retval;
   }
@@ -332,11 +340,12 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
    * entries than the function has, new LightDefinitions will be added. If the given array contains fewer entries, the
    * extra LightDefinitions will be deleted.
    *
-   * @param colors the colors as array.
+   * @param colors
+   *          the colors as array.
    */
   public void setColor( final Color[] colors ) {
     for ( int i = 0; i < colors.length; i++ ) {
-      final Color color = colors[ i ];
+      final Color color = colors[i];
       setColor( i, color );
     }
     final int size = this.limits.size();
@@ -351,8 +360,10 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
   /**
    * Updates the numerical limit at the given index in the list of LightDefinition entries.
    *
-   * @param index the position of the entry that should be updated.
-   * @param value the new numerical limit.
+   * @param index
+   *          the position of the entry that should be updated.
+   * @param value
+   *          the new numerical limit.
    */
   public void setLimit( final int index, final Number value ) {
     if ( limits.size() == index ) {
@@ -374,7 +385,8 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
   /**
    * Returns the numerical limit at the given index in the list of LightDefinition entries.
    *
-   * @param index the position of the entry that should be queried.
+   * @param index
+   *          the position of the entry that should be queried.
    * @return the numerical limit at the given position.
    */
   public Number getLimit( final int index ) {
@@ -400,10 +412,10 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
    * @return the numerical limits as array.
    */
   public Number[] getLimit() {
-    final Number[] retval = new Number[ limits.size() ];
+    final Number[] retval = new Number[limits.size()];
     for ( int i = 0; i < limits.size(); i++ ) {
       final LightDefinition definition = limits.get( i );
-      retval[ i ] = definition.getLimit();
+      retval[i] = definition.getLimit();
     }
     return retval;
   }
@@ -413,11 +425,12 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
    * limits-array contains more entries than the function has, new LightDefinitions will be added. If the given array
    * contains fewer entries, the extra LightDefinitions will be deleted.
    *
-   * @param limits the numerical limits as array.
+   * @param limits
+   *          the numerical limits as array.
    */
   public void setLimit( final Number[] limits ) {
     for ( int i = 0; i < limits.length; i++ ) {
-      final Number limit = limits[ i ];
+      final Number limit = limits[i];
       setLimit( i, limit );
     }
     final int size = this.limits.size();
@@ -441,7 +454,8 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
   /**
    * Defines the default color that is used if none of the limits applies.
    *
-   * @param defaultColor the default color.
+   * @param defaultColor
+   *          the default color.
    */
   public void setDefaultColor( final Color defaultColor ) {
     this.defaultColor = defaultColor;
@@ -459,7 +473,8 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
   /**
    * Defines whether the computed color is applied to the foreground or background of the element.
    *
-   * @param defineBackground true, if the color is applied as background, false if the color is applied as foreground.
+   * @param defineBackground
+   *          true, if the color is applied as background, false if the color is applied as foreground.
    */
   public void setDefineBackground( final boolean defineBackground ) {
     this.defineBackground = defineBackground;
@@ -481,7 +496,8 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
    * <p/>
    * The field name corresponds to a column name in the data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -534,7 +550,7 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
     }
 
     if ( lightDefArray == null ) {
-      lightDefArray = limits.toArray( new LightDefinition[ limits.size() ] );
+      lightDefArray = limits.toArray( new LightDefinition[limits.size()] );
       Arrays.sort( lightDefArray );
     }
 
@@ -549,7 +565,7 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
 
       Color returnColor = defaultColor;
       for ( int i = lightDefArray.length - 1; i >= 0; i-- ) {
-        final LightDefinition definition = lightDefArray[ i ];
+        final LightDefinition definition = lightDefArray[i];
         if ( definition == null ) {
           continue;
         }
@@ -573,7 +589,7 @@ public class ElementTrafficLightFunction extends AbstractElementFormatFunction {
 
       Color returnColor = defaultColor;
       for ( int i = 0; i < lightDefArray.length; i++ ) {
-        final LightDefinition definition = lightDefArray[ i ];
+        final LightDefinition definition = lightDefArray[i];
         if ( definition == null ) {
           continue;
         }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.helper;
 
@@ -58,12 +58,10 @@ public class RTFImageCache {
     if ( StringUtils.endsWithIgnoreCase( file, ".png" ) ) {
       return true;
     }
-    if ( StringUtils.endsWithIgnoreCase( file, ".jpg" ) ||
-      StringUtils.endsWithIgnoreCase( file, ".jpeg" ) ) {
+    if ( StringUtils.endsWithIgnoreCase( file, ".jpg" ) || StringUtils.endsWithIgnoreCase( file, ".jpeg" ) ) {
       return true;
     }
-    if ( StringUtils.endsWithIgnoreCase( file, ".bmp" ) ||
-      StringUtils.endsWithIgnoreCase( file, ".ico" ) ) {
+    if ( StringUtils.endsWithIgnoreCase( file, ".bmp" ) || StringUtils.endsWithIgnoreCase( file, ".ico" ) ) {
       return true;
     }
     return false;
@@ -73,13 +71,15 @@ public class RTFImageCache {
    * Helperfunction to extract an image from an imagereference. If the image is contained as java.awt.Image object only,
    * the image is recoded into an PNG-Image.
    *
-   * @param reference the image reference.
+   * @param reference
+   *          the image reference.
    * @return an image.
-   * @throws com.lowagie.text.DocumentException if no PDFImageElement could be created using the given ImageReference.
-   * @throws java.io.IOException                if the image could not be read.
+   * @throws com.lowagie.text.DocumentException
+   *           if no PDFImageElement could be created using the given ImageReference.
+   * @throws java.io.IOException
+   *           if the image could not be read.
    */
-  public Image getImage( final ImageContainer reference )
-    throws DocumentException, IOException {
+  public Image getImage( final ImageContainer reference ) throws DocumentException, IOException {
     if ( reference == null ) {
       throw new NullPointerException();
     }
@@ -120,8 +120,7 @@ public class RTFImageCache {
     }
 
     if ( reference instanceof LocalImageContainer && image == null ) {
-      final LocalImageContainer localImageContainer =
-        (LocalImageContainer) reference;
+      final LocalImageContainer localImageContainer = (LocalImageContainer) reference;
       image = localImageContainer.getImage();
       if ( image != null ) {
         // check, if the content was cached ...

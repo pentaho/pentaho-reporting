@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
@@ -32,8 +32,7 @@ import java.text.SimpleDateFormat;
  *
  * @author Thomas Morgner
  */
-public class DateFieldTemplate extends AbstractTemplate
-  implements RawDataSource {
+public class DateFieldTemplate extends AbstractTemplate implements RawDataSource {
   /**
    * The date format filter.
    */
@@ -72,7 +71,8 @@ public class DateFieldTemplate extends AbstractTemplate
   /**
    * Sets the date format string.
    *
-   * @param format the format string.
+   * @param format
+   *          the format string.
    */
   public void setFormat( final String format ) {
     getDateFilter().setFormatString( format );
@@ -90,7 +90,8 @@ public class DateFieldTemplate extends AbstractTemplate
   /**
    * Sets the field name.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     getDataRowDataSource().setDataSourceColumnName( field );
@@ -108,7 +109,8 @@ public class DateFieldTemplate extends AbstractTemplate
   /**
    * Defines the formula used to compute the value of this data source.
    *
-   * @param formula the formula for the data source.
+   * @param formula
+   *          the formula for the data source.
    */
   public void setFormula( final String formula ) {
     dataRowDataSource.setFormula( formula );
@@ -126,7 +128,8 @@ public class DateFieldTemplate extends AbstractTemplate
   /**
    * Sets the string that represents <code>null</code> values.
    *
-   * @param nullValue the string that represents <code>null</code> values.
+   * @param nullValue
+   *          the string that represents <code>null</code> values.
    */
   public void setNullValue( final String nullValue ) {
     getStringFilter().setNullValue( nullValue );
@@ -144,7 +147,8 @@ public class DateFieldTemplate extends AbstractTemplate
   /**
    * Sets the date formatter.
    *
-   * @param dateFormat the date formatter.
+   * @param dateFormat
+   *          the date formatter.
    */
   public void setDateFormat( final SimpleDateFormat dateFormat ) {
     getDateFilter().setFormatter( dateFormat );
@@ -153,8 +157,9 @@ public class DateFieldTemplate extends AbstractTemplate
   /**
    * Returns the current value for the data source.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return the value.
    */
@@ -166,10 +171,10 @@ public class DateFieldTemplate extends AbstractTemplate
    * Clones this template.
    *
    * @return the clone.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public DateFieldTemplate clone()
-    throws CloneNotSupportedException {
+  public DateFieldTemplate clone() throws CloneNotSupportedException {
     final DateFieldTemplate template = (DateFieldTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.dateFilter = (SimpleDateFormatFilter) template.stringFilter.getDataSource();
@@ -208,9 +213,8 @@ public class DateFieldTemplate extends AbstractTemplate
     return dateFilter.getRawValue( runtime, element );
   }
 
-  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
-                                              final ReportElement element,
-                                              final FormatSpecification formatSpecification ) {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime, final ReportElement element,
+      final FormatSpecification formatSpecification ) {
     return dateFilter.getFormatString( runtime, element, formatSpecification );
   }
 }

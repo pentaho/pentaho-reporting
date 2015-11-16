@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -42,8 +42,8 @@ public class Prd4295IT extends TestCase {
 
   public void testBold() throws Exception {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Prd-3857-002.prpt" );
-    masterReport.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    masterReport.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     masterReport.setQueryLimit( 1 );
     final CrosstabCellBody crosstabCellBody = masterReport.getCrosstabCellBody();
     final CrosstabCell element = crosstabCellBody.findElement( null, null );
@@ -52,25 +52,22 @@ public class Prd4295IT extends TestCase {
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( masterReport, 0 );
     final RenderNode[] elementsByName = MatchFactory.findElementsByName( logicalPageBox, "Cell-Sample" );
     assertTrue( elementsByName.length > 0 );
-    final RenderNode renderNode = elementsByName[ 0 ];
-    assertEquals( Boolean.TRUE,
-      renderNode.getNodeLayoutProperties().getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
+    final RenderNode renderNode = elementsByName[0];
+    assertEquals( Boolean.TRUE, renderNode.getNodeLayoutProperties().getStyleSheet().getStyleProperty(
+        TextStyleKeys.BOLD ) );
 
-    //    ModelPrinter.INSTANCE.print(renderNode);
-    final RenderNode[] texts =
-      MatchFactory.findElementsByNodeType( renderNode, LayoutNodeTypes.TYPE_NODE_TEXT );
-    assertEquals( Boolean.TRUE,
-      texts[ 0 ].getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
-    assertEquals( 1945000,
-      texts[ 0 ].getMinimumChunkWidth() );
+    // ModelPrinter.INSTANCE.print(renderNode);
+    final RenderNode[] texts = MatchFactory.findElementsByNodeType( renderNode, LayoutNodeTypes.TYPE_NODE_TEXT );
+    assertEquals( Boolean.TRUE, texts[0].getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
+    assertEquals( 1945000, texts[0].getMinimumChunkWidth() );
 
     DebugReportRunner.showDialog( masterReport );
   }
 
   public void testBoldComplex() throws Exception {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Prd-3857-002.prpt" );
-    masterReport.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    masterReport.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "true" );
     masterReport.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
     masterReport.setQueryLimit( 1 );
     final CrosstabCellBody crosstabCellBody = masterReport.getCrosstabCellBody();
@@ -80,18 +77,16 @@ public class Prd4295IT extends TestCase {
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( masterReport, 0 );
     final RenderNode[] elementsByName = MatchFactory.findElementsByName( logicalPageBox, "Cell-Sample" );
     assertTrue( elementsByName.length > 0 );
-    final RenderNode renderNode = elementsByName[ 0 ];
-    assertEquals( Boolean.TRUE,
-      renderNode.getNodeLayoutProperties().getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
+    final RenderNode renderNode = elementsByName[0];
+    assertEquals( Boolean.TRUE, renderNode.getNodeLayoutProperties().getStyleSheet().getStyleProperty(
+        TextStyleKeys.BOLD ) );
 
-    //    ModelPrinter.INSTANCE.print(renderNode);
-    final RenderNode[] texts =
-      MatchFactory.findElementsByNodeType( renderNode, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT );
-    assertEquals( Boolean.TRUE,
-      texts[ 0 ].getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
-    assertTrue( texts[ 0 ].getWidth() > 0 );
+    // ModelPrinter.INSTANCE.print(renderNode);
+    final RenderNode[] texts = MatchFactory.findElementsByNodeType( renderNode, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT );
+    assertEquals( Boolean.TRUE, texts[0].getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
+    assertTrue( texts[0].getWidth() > 0 );
     // complex-text nodes no longer have a min-chunk width after line-breaking
-    assertEquals( texts[ 0 ].getWidth(), extractOriginalPool( texts[ 0 ] ).getMinimumChunkWidth() );
+    assertEquals( texts[0].getWidth(), extractOriginalPool( texts[0] ).getMinimumChunkWidth() );
 
     DebugReportRunner.showDialog( masterReport );
   }

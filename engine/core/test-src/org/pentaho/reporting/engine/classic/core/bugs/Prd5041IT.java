@@ -43,7 +43,6 @@ public class Prd5041IT {
       setDependencyLevel( dependencyLevel );
     }
 
-
     protected void validateHook() {
     }
 

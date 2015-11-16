@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xml.internal;
 
@@ -34,7 +34,7 @@ import org.pentaho.reporting.libraries.fonts.registry.FontRegistry;
  */
 public class XmlTableOutputProcessorMetaData extends AbstractOutputProcessorMetaData {
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature WRITE_RESOURCEKEYS =
-    new OutputProcessorFeature.BooleanOutputProcessorFeature( "xml.write-resourcekeys" );
+      new OutputProcessorFeature.BooleanOutputProcessorFeature( "xml.write-resourcekeys" );
 
   public static final int PAGINATION_NONE = 0;
   public static final int PAGINATION_MANUAL = 1;
@@ -49,8 +49,7 @@ public class XmlTableOutputProcessorMetaData extends AbstractOutputProcessorMeta
     this( paginationMode, new AWTFontRegistry() );
   }
 
-  public XmlTableOutputProcessorMetaData( final int paginationMode,
-                                          final FontRegistry fontRegistry ) {
+  public XmlTableOutputProcessorMetaData( final int paginationMode, final FontRegistry fontRegistry ) {
     super( new DefaultFontStorage( fontRegistry ) );
     this.paginationMode = paginationMode;
     setFamilyMapping( null, "Helvetica" );
@@ -63,20 +62,20 @@ public class XmlTableOutputProcessorMetaData extends AbstractOutputProcessorMeta
     addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     addFeature( OutputProcessorFeature.SPACING_SUPPORTED );
 
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.AssumeOverflowX" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.AssumeOverflowX" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_X );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.AssumeOverflowY" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.AssumeOverflowY" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
     }
-    if ( "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.ShapeAsContent" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.ShapeAsContent" ) ) ) {
       addFeature( AbstractTableOutputProcessor.SHAPES_CONTENT );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.WriteResourceKeys" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.WriteResourceKeys" ) ) ) {
       addFeature( WRITE_RESOURCEKEYS );
     }
 
@@ -109,9 +108,8 @@ public class XmlTableOutputProcessorMetaData extends AbstractOutputProcessorMeta
     return mappedName;
   }
 
-
   public String getExportDescriptor() {
-    switch( paginationMode ) {
+    switch ( paginationMode ) {
       case HtmlOutputProcessorMetaData.PAGINATION_FULL:
         return "table/xml+pagination";
       case HtmlOutputProcessorMetaData.PAGINATION_MANUAL:
@@ -120,10 +118,7 @@ public class XmlTableOutputProcessorMetaData extends AbstractOutputProcessorMeta
         return "table/xml+stream";
     }
   }
-/*
-  public boolean isExtraContentElement(final StyleSheet style, final ReportAttributeMap attributes)
-  {
-    return true;
-  }
-  */
+  /*
+   * public boolean isExtraContentElement(final StyleSheet style, final ReportAttributeMap attributes) { return true; }
+   */
 }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
@@ -50,10 +50,10 @@ public class CompoundObjectReadHandler extends BasicObjectReadHandler {
   /**
    * Done parsing.
    *
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void doneParsing()
-    throws SAXException {
+  protected void doneParsing() throws SAXException {
     final ObjectDescription objectDescription = getObjectDescription();
     final Iterator basicObjectsEntries = basicObjects.entrySet().iterator();
     while ( basicObjectsEntries.hasNext() ) {
@@ -75,14 +75,15 @@ public class CompoundObjectReadHandler extends BasicObjectReadHandler {
   /**
    * Returns the handler for a child element.
    *
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler or null, if the tagname is invalid.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final PropertyAttributes atts )
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final PropertyAttributes atts )
     throws SAXException {
     if ( isSameNamespace( uri ) == false ) {
       return null;
@@ -96,12 +97,10 @@ public class CompoundObjectReadHandler extends BasicObjectReadHandler {
     return null;
   }
 
-  protected XmlReadHandler handleBasicObject( final Attributes atts )
-    throws ParseException {
+  protected XmlReadHandler handleBasicObject( final Attributes atts ) throws ParseException {
     final String name = atts.getValue( getUri(), "name" );
     if ( name == null ) {
-      throw new ParseException
-        ( "Required attribute 'name' is missing.", getLocator() );
+      throw new ParseException( "Required attribute 'name' is missing.", getLocator() );
     }
 
     final ClassFactory fact = getClassFactory();
@@ -109,39 +108,31 @@ public class CompoundObjectReadHandler extends BasicObjectReadHandler {
     final Class paramDesc = currentOd.getParameterDefinition( name );
     if ( paramDesc == null ) {
       currentOd.getParameterDefinition( name );
-      throw new ParseException
-        ( "The parameter type for '" + name + "' is not known.", getLocator() );
+      throw new ParseException( "The parameter type for '" + name + "' is not known.", getLocator() );
     }
-    final ObjectDescription objectDescription =
-      ObjectFactoryUtility.findDescription( fact, paramDesc, getLocator() );
+    final ObjectDescription objectDescription = ObjectFactoryUtility.findDescription( fact, paramDesc, getLocator() );
 
-    final BasicObjectReadHandler readHandler =
-      new BasicObjectReadHandler( objectDescription );
+    final BasicObjectReadHandler readHandler = new BasicObjectReadHandler( objectDescription );
     basicObjects.put( name, readHandler );
     return readHandler;
   }
 
-  protected XmlReadHandler handleCompoundObject( final Attributes atts )
-    throws ParseException {
+  protected XmlReadHandler handleCompoundObject( final Attributes atts ) throws ParseException {
     final String name = atts.getValue( getUri(), "name" );
     if ( name == null ) {
-      throw new ParseException
-        ( "Required attribute 'name' is missing.", getLocator() );
+      throw new ParseException( "Required attribute 'name' is missing.", getLocator() );
     }
 
     final ClassFactory fact = getClassFactory();
     final ObjectDescription currentObjDesc = getObjectDescription();
-    final Class parameterDefinition =
-      currentObjDesc.getParameterDefinition( name );
+    final Class parameterDefinition = currentObjDesc.getParameterDefinition( name );
     if ( parameterDefinition == null ) {
       throw new ParseException( "No such parameter description: " + name, getLocator() );
     }
     final ObjectDescription objectDescription =
-      ObjectFactoryUtility.findDescription( fact,
-        parameterDefinition, getLocator() );
+        ObjectFactoryUtility.findDescription( fact, parameterDefinition, getLocator() );
 
-    final CompoundObjectReadHandler readHandler =
-      new CompoundObjectReadHandler( objectDescription );
+    final CompoundObjectReadHandler readHandler = new CompoundObjectReadHandler( objectDescription );
     compoundObjects.put( name, readHandler );
     return readHandler;
   }
@@ -149,11 +140,12 @@ public class CompoundObjectReadHandler extends BasicObjectReadHandler {
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void startParsing( final PropertyAttributes attrs )
-    throws SAXException {
+  protected void startParsing( final PropertyAttributes attrs ) throws SAXException {
     handleStartParsing( attrs );
   }
 }

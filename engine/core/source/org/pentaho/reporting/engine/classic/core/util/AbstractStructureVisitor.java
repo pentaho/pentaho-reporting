@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -46,7 +46,7 @@ public abstract class AbstractStructureVisitor {
       final ReportParameterDefinition parameters = mr.getParameterDefinition();
       final ParameterDefinitionEntry[] entries = parameters.getParameterDefinitions();
       for ( int i = 0; i < entries.length; i++ ) {
-        final ParameterDefinitionEntry entry = entries[ i ];
+        final ParameterDefinitionEntry entry = entries[i];
         inspectParameter( reportDefinition, parameters, entry );
       }
     }
@@ -60,7 +60,7 @@ public abstract class AbstractStructureVisitor {
     final ExpressionCollection expressions = reportDefinition.getExpressions();
     final Expression[] expressionsArray = expressions.getExpressions();
     for ( int i = 0; i < expressionsArray.length; i++ ) {
-      final Expression expression = expressionsArray[ i ];
+      final Expression expression = expressionsArray[i];
       inspectExpression( reportDefinition, expression );
     }
 
@@ -117,10 +117,10 @@ public abstract class AbstractStructureVisitor {
 
     final String[] attrExprNamespaces = element.getAttributeExpressionNamespaces();
     for ( int i = 0; i < attrExprNamespaces.length; i++ ) {
-      final String attrExprNamespace = attrExprNamespaces[ i ];
+      final String attrExprNamespace = attrExprNamespaces[i];
       final String[] names = element.getAttributeExpressionNames( attrExprNamespace );
       for ( int j = 0; j < names.length; j++ ) {
-        final String name = names[ j ];
+        final String name = names[j];
         final Expression expression = element.getAttributeExpression( attrExprNamespace, name );
         if ( expression == null ) {
           continue;
@@ -136,11 +136,8 @@ public abstract class AbstractStructureVisitor {
     }
   }
 
-  protected void inspectAttributeExpression( final ReportElement element,
-                                             final String attributeNamespace,
-                                             final String attributeName,
-                                             final Expression expression,
-                                             final ExpressionMetaData expressionMetaData ) {
+  protected void inspectAttributeExpression( final ReportElement element, final String attributeNamespace,
+      final String attributeName, final Expression expression, final ExpressionMetaData expressionMetaData ) {
   }
 
   protected void traverseStyleExpressions( final ReportElement element ) {
@@ -165,23 +162,18 @@ public abstract class AbstractStructureVisitor {
     }
   }
 
-  protected void inspectStyleExpression( final ReportElement element,
-                                         final StyleKey styleKey,
-                                         final Expression expression,
-                                         final ExpressionMetaData expressionMetaData ) {
+  protected void inspectStyleExpression( final ReportElement element, final StyleKey styleKey,
+      final Expression expression, final ExpressionMetaData expressionMetaData ) {
   }
 
-  protected void inspectExpression( final AbstractReportDefinition report,
-                                    final Expression expression ) {
+  protected void inspectExpression( final AbstractReportDefinition report, final Expression expression ) {
 
   }
 
-  protected void inspectParameter( final AbstractReportDefinition report,
-                                   final ReportParameterDefinition definition,
-                                   final ParameterDefinitionEntry parameter ) {
+  protected void inspectParameter( final AbstractReportDefinition report, final ReportParameterDefinition definition,
+      final ParameterDefinitionEntry parameter ) {
   }
 
-  protected void inspectDataSource( final AbstractReportDefinition report,
-                                    final DataFactory dataFactory ) {
+  protected void inspectDataSource( final AbstractReportDefinition report, final DataFactory dataFactory ) {
   }
 }

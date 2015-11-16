@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
@@ -43,8 +43,7 @@ import java.sql.Statement;
  *
  * @author Thomas Morgner
  */
-public class ScrollableResultSetTableModel extends AbstractTableModel
-  implements CloseableTableModel, MetaTableModel {
+public class ScrollableResultSetTableModel extends AbstractTableModel implements CloseableTableModel, MetaTableModel {
   /**
    * The scrollable ResultSet source.
    */
@@ -72,16 +71,18 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
   /**
    * Constructs the model.
    *
-   * @param resultset         the result set.
-   * @param columnNameMapping defines, whether to use column names or column labels to compute the column index.
-   * @param closeStatement    a flag indicating whether the statement, that created the resultset should be closed when
-   *                          the resultset gets closed.
-   * @throws SQLException if there is a problem with the result set.
+   * @param resultset
+   *          the result set.
+   * @param columnNameMapping
+   *          defines, whether to use column names or column labels to compute the column index.
+   * @param closeStatement
+   *          a flag indicating whether the statement, that created the resultset should be closed when the resultset
+   *          gets closed.
+   * @throws SQLException
+   *           if there is a problem with the result set.
    */
-  public ScrollableResultSetTableModel( final ResultSet resultset,
-                                        final boolean columnNameMapping,
-                                        final boolean closeStatement )
-    throws SQLException {
+  public ScrollableResultSetTableModel( final ResultSet resultset, final boolean columnNameMapping,
+      final boolean closeStatement ) throws SQLException {
     this.columnNameMapping = columnNameMapping;
     this.closeStatement = closeStatement;
     this.rowCount = -1;
@@ -107,11 +108,12 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
   /**
    * Updates the result set in this model with the given ResultSet object.
    *
-   * @param resultset the new result set.
-   * @throws SQLException if there is a problem with the result set.
+   * @param resultset
+   *          the new result set.
+   * @throws SQLException
+   *           if there is a problem with the result set.
    */
-  public void updateResultSet( final ResultSet resultset )
-    throws SQLException {
+  public void updateResultSet( final ResultSet resultset ) throws SQLException {
     if ( this.resultset != null ) {
       close();
     }
@@ -150,7 +152,7 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
         resultset.close();
       } catch ( SQLException e ) {
         // Just in case the JDBC driver can't close a result set twice.
-        //  e.printStackTrace();
+        // e.printStackTrace();
         // Closing is fine if it fails ..
       }
 
@@ -195,7 +197,7 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
         rowCount = 0;
       }
     } catch ( SQLException sqle ) {
-      //Log.debug ("GetRowCount failed, returning 0 rows", sqle);
+      // Log.debug ("GetRowCount failed, returning 0 rows", sqle);
       throw new DataTableException( "Accessing the result set failed: ", sqle );
     }
     return rowCount;
@@ -217,7 +219,7 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
       try {
         return dbmd.getColumnCount();
       } catch ( SQLException e ) {
-        //Log.debug ("GetColumnCount failed", e);
+        // Log.debug ("GetColumnCount failed", e);
         throw new DataTableException( "Accessing the result set failed: ", e );
       }
     }
@@ -228,17 +230,18 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * Returns the columnLabel or column name for the given column. Whether the label or the name is returned depends on
    * the label map mode.
    *
-   * @param column the column index.
+   * @param column
+   *          the column index.
    * @return the column name.
    * @see java.sql.ResultSetMetaData#getColumnLabel(int)
    */
   public String getColumnName( final int column ) {
     if ( dbmd != null ) {
       try {
-        // In past many database drivers were returning same value for column label and column name.  So it is
+        // In past many database drivers were returning same value for column label and column name. So it is
         // inconsistent
         // what the database driver will return for column name vs column label.
-        // We have a legacy configuration for this.  If set, then if column label is null or empty then return column
+        // We have a legacy configuration for this. If set, then if column label is null or empty then return column
         // name.
         // Otherwise return column label.
         // If non-legacy mode, then we return exactly what the JDBC driver returns (label for label, name for name)
@@ -246,10 +249,10 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
         // any interpretation or interpolation.
         final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
         final boolean useLegacyColumnMapping =
-          "legacy".equalsIgnoreCase(                                                                          // NON-NLS
-            globalConfig.getConfigProperty(
-              "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode",
-              "legacy" ) );  // NON-NLS
+            "legacy".equalsIgnoreCase( // NON-NLS
+                globalConfig.getConfigProperty(
+                    "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode",
+                    "legacy" ) ); // NON-NLS
 
         String columnLabel = dbmd.getColumnLabel( column + 1 );
         if ( useLegacyColumnMapping ) {
@@ -276,8 +279,10 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
   /**
    * Returns the value of the specified row and the specified column from within the resultset.
    *
-   * @param row    the row index.
-   * @param column the column index.
+   * @param row
+   *          the row index.
+   * @param column
+   *          the column index.
    * @return the value.
    */
   public Object getValueAt( final int row, final int column ) {
@@ -295,18 +300,19 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
   /**
    * Returns the class of the resultset column. Returns Object.class if an error occurred.
    *
-   * @param column the column index.
+   * @param column
+   *          the column index.
    * @return the column class.
    */
   public Class getColumnClass( final int column ) {
     if ( types != null ) {
-      return types[ column ];
+      return types[column];
     }
     if ( dbmd != null ) {
       try {
         types = TypeMapper.mapTypes( dbmd );
         if ( types != null ) {
-          return types[ column ];
+          return types[column];
         }
       } catch ( Exception e ) {
         throw new DataTableException( "Accessing the result set failed: ", e );
@@ -322,8 +328,10 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * <p/>
    * Meta-data models that only describe meta-data for columns can ignore the row-parameter.
    *
-   * @param row    the row of the cell for which the meta-data is queried.
-   * @param column the index of the column for which the meta-data is queried.
+   * @param row
+   *          the row of the cell for which the meta-data is queried.
+   * @param column
+   *          the index of the column for which the meta-data is queried.
    * @return the meta-data object.
    */
   public DataAttributes getCellDataAttributes( final int row, final int column ) {

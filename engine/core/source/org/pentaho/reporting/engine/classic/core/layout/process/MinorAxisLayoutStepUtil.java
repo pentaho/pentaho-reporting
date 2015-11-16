@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -30,15 +30,13 @@ public class MinorAxisLayoutStepUtil {
   private MinorAxisLayoutStepUtil() {
   }
 
-  public static long resolveNodeWidthOnStart( final RenderBox box,
-                                              final MinorAxisNodeContext nodeContext,
-                                              final long x ) {
+  public static long
+    resolveNodeWidthOnStart( final RenderBox box, final MinorAxisNodeContext nodeContext, final long x ) {
     final long width = resolveNodeWidthOnStartInternal( box, nodeContext );
     return correctForRoundingErrors( nodeContext, x, width );
   }
 
-  private static long correctForRoundingErrors( final MinorAxisNodeContext nodeContext, final long x,
-                                                final long width ) {
+  private static long correctForRoundingErrors( final MinorAxisNodeContext nodeContext, final long x, final long width ) {
     final long parentX2 = nodeContext.getParentX2();
     if ( parentX2 == 0 ) {
       return width;
@@ -60,8 +58,7 @@ public class MinorAxisLayoutStepUtil {
    * @param box
    * @return
    */
-  private static long resolveNodeWidthOnStartInternal( final RenderBox box,
-                                                       final MinorAxisNodeContext nodeContext ) {
+  private static long resolveNodeWidthOnStartInternal( final RenderBox box, final MinorAxisNodeContext nodeContext ) {
     final long minChunkWidth = 0;
     final BoxDefinition boxDef = box.getBoxDefinition();
     final RenderLength minLength = boxDef.getMinimumWidth();
@@ -87,8 +84,7 @@ public class MinorAxisLayoutStepUtil {
   }
 
   public static long resolveNodeWidthOnStartForCanvasLegacy( final RenderBox box,
-                                                             final MinorAxisNodeContext nodeContext,
-                                                             final long x ) {
+      final MinorAxisNodeContext nodeContext, final long x ) {
     final long width = resolveNodeWidthOnStartForCanvasLegacyInternal( box, nodeContext );
     return correctForRoundingErrors( nodeContext, x, width );
   }
@@ -100,7 +96,7 @@ public class MinorAxisLayoutStepUtil {
    * @return
    */
   private static long resolveNodeWidthOnStartForCanvasLegacyInternal( final RenderBox box,
-                                                                      final MinorAxisNodeContext nodeContext ) {
+      final MinorAxisNodeContext nodeContext ) {
     final long minChunkWidth = 0;
     final BoxDefinition boxDef = box.getBoxDefinition();
     final RenderLength definedMinLength = boxDef.getMinimumWidth();
@@ -135,23 +131,20 @@ public class MinorAxisLayoutStepUtil {
     }
   }
 
-  public static long resolveNodeWidthOnFinish( final RenderBox box,
-                                               final MinorAxisNodeContext nodeContext,
-                                               final boolean strictLegacyMode ) {
+  public static long resolveNodeWidthOnFinish( final RenderBox box, final MinorAxisNodeContext nodeContext,
+      final boolean strictLegacyMode ) {
     final long width = resolveNodeWidthOnFinishInternal( box, nodeContext, strictLegacyMode );
     return correctForRoundingErrors( nodeContext, nodeContext.getX(), width );
   }
 
   /**
-   * If the element has no preferred size, apply the current element's constraints against the box children's used
-   * area.
+   * If the element has no preferred size, apply the current element's constraints against the box children's used area.
    *
    * @param box
    * @return
    */
-  private static long resolveNodeWidthOnFinishInternal( final RenderBox box,
-                                                        final MinorAxisNodeContext nodeContext,
-                                                        final boolean strictLegacyMode ) {
+  private static long resolveNodeWidthOnFinishInternal( final RenderBox box, final MinorAxisNodeContext nodeContext,
+      final boolean strictLegacyMode ) {
     final BoxDefinition boxDef = box.getBoxDefinition();
     if ( RenderLength.AUTO.equals( boxDef.getPreferredWidth() ) == false ) {
       return nodeContext.getWidth();

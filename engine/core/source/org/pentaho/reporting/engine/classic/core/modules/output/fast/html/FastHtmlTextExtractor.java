@@ -17,6 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
+import java.awt.Shape;
+import java.io.IOException;
+import java.util.HashMap;
+
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
@@ -44,10 +48,6 @@ import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
 import org.pentaho.reporting.libraries.xmlns.writer.HtmlCharacterEntities;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-import java.awt.*;
-import java.io.IOException;
-import java.util.HashMap;
-
 public class FastHtmlTextExtractor extends FastTextExtractor {
   private final CharacterEntityParser characterEntityParser;
   private final XmlWriter xmlWriter;
@@ -58,10 +58,8 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
   private boolean result;
   private HtmlTextExtractorState processStack;
 
-  public FastHtmlTextExtractor( final OutputProcessorMetaData metaData,
-                                final XmlWriter xmlWriter,
-                                final HtmlContentGenerator contentGenerator,
-                                final HtmlTagHelper tagHelper ) {
+  public FastHtmlTextExtractor( final OutputProcessorMetaData metaData, final XmlWriter xmlWriter,
+      final HtmlContentGenerator contentGenerator, final HtmlTagHelper tagHelper ) {
     this.characterEntityParser = HtmlCharacterEntities.getEntityParser();
     this.xmlWriter = xmlWriter;
     this.styleBuilder = tagHelper.getStyleBuilder();
@@ -69,10 +67,9 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
     this.boxDefinitionFactory = new BoxDefinitionFactory();
   }
 
-  public boolean performOutput( final ReportElement content,
-                                final StyleBuilder.StyleCarrier[] cellStyle,
-                                final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds,
-                                final ExpressionRuntime runtime ) throws IOException, ContentProcessingException {
+  public boolean performOutput( final ReportElement content, final StyleBuilder.StyleCarrier[] cellStyle,
+      final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds, final ExpressionRuntime runtime )
+    throws IOException, ContentProcessingException {
     this.recordedBounds = recordedBounds;
     styleBuilder.clear();
     clearText();
@@ -96,8 +93,10 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
    * elsewhere. This method assumes that the attributes of the paragraph have been processed as part of the table-cell
    * processing.
    *
-   * @param box the paragraph box
-   * @throws java.io.IOException if an IO error occured.
+   * @param box
+   *          the paragraph box
+   * @throws java.io.IOException
+   *           if an IO error occured.
    */
   private void processInitialBox( final ReportElement box ) throws IOException, ContentProcessingException {
     if ( box.getComputedStyle().getBooleanStyleProperty( ElementStyleKeys.VISIBLE ) == false ) {
@@ -113,9 +112,8 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
       processStack = new HtmlTextExtractorState( processStack, false );
     }
 
-    if ( Boolean.TRUE.equals
-      ( box.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.SUPPRESS_CONTENT ) )
-      == false ) {
+    if ( Boolean.TRUE.equals( box.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE,
+        AttributeNames.Html.SUPPRESS_CONTENT ) ) == false ) {
       if ( box instanceof Section ) {
         traverseSection( (Section) box );
       } else {
@@ -132,11 +130,11 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
   protected boolean inspectStartSection( final ReportElement box, final boolean inlineSection ) {
     BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( box.getComputedStyle() );
     if ( inlineSection == false ) {
-      return textExtractorHelper.startBox
-        ( box.getObjectID(), box.getAttributes(), box.getComputedStyle(), boxDefinition, true );
+      return textExtractorHelper.startBox( box.getObjectID(), box.getAttributes(), box.getComputedStyle(),
+          boxDefinition, true );
     } else {
-      return textExtractorHelper.startInlineBox
-        ( box.getObjectID(), box.getAttributes(), box.getComputedStyle(), boxDefinition );
+      return textExtractorHelper.startInlineBox( box.getObjectID(), box.getAttributes(), box.getComputedStyle(),
+          boxDefinition );
     }
   }
 
@@ -145,9 +143,8 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
   }
 
   @Override
-  protected void handleValueContent( final ReportElement element,
-                                     final Object value,
-                                     final boolean inlineSection ) throws ContentProcessingException {
+  protected void handleValueContent( final ReportElement element, final Object value, final boolean inlineSection )
+    throws ContentProcessingException {
     super.handleValueContent( element, value, inlineSection );
 
     if ( value instanceof Shape ) {
@@ -181,8 +178,8 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
       SimpleStyleSheet computedStyle = element.getComputedStyle();
       long width = cb.getWidth();
       long height = cb.getHeight();
-      if ( textExtractorHelper.processRenderableReplacedContent
-        ( attributes, computedStyle, width, height, cb.getContentWidth(), cb.getContentHeight(), rawObject ) ) {
+      if ( textExtractorHelper.processRenderableReplacedContent( attributes, computedStyle, width, height, cb
+          .getContentWidth(), cb.getContentHeight(), rawObject ) ) {
         result = true;
       }
     } catch ( ContentIOException e ) {
@@ -196,6 +193,5 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
     boolean keepAr = element.getComputedStyle().getBooleanStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO );
     handleImage( element, new ShapeDrawable( image, keepAr ) );
   }
-
 
 }

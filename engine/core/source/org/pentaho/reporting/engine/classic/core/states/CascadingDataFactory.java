@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states;
 
@@ -48,16 +48,15 @@ public class CascadingDataFactory extends CompoundDataFactory {
     super.addRaw( factory );
   }
 
-  protected TableModel handleFallThrough( final String query )
-    throws ReportDataFactoryException {
+  protected TableModel handleFallThrough( final String query ) throws ReportDataFactoryException {
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    if ( "warn".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.states.NullDataSourceHandling" ) ) ) {
-      logger.warn( "Deprecated behavior: None of the data-factories was able to handle the query '" + query + "'. " +
-        "Returning empty tablemodel instead of failing hard." );
-      logger.warn( "Be aware that the default for this setting will change in version 0.8.11. " +
-        "To avoid this warning, make sure that all data-sources are properly configured and " +
-        "that no report references illegal queries." );
+    if ( "warn".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.states.NullDataSourceHandling" ) ) ) {
+      logger.warn( "Deprecated behavior: None of the data-factories was able to handle the query '" + query + "'. "
+          + "Returning empty tablemodel instead of failing hard." );
+      logger.warn( "Be aware that the default for this setting will change in version 0.8.11. "
+          + "To avoid this warning, make sure that all data-sources are properly configured and "
+          + "that no report references illegal queries." );
       return new DefaultTableModel();
     } else {
       throw new ReportDataFactoryException( "None of the data-factories was able to handle this query." );

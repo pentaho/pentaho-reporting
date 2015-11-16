@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -87,7 +87,8 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -96,7 +97,8 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
   /**
    * Receives notification that the report has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     globalStateKey = event.getState().getProcessKey();
@@ -114,7 +116,8 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
   /**
    * Receives notification that a group has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
@@ -137,11 +140,11 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
     }
   }
 
-
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( field == null ) {
@@ -188,7 +191,8 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
   /**
    * Defines the name of the group to be totalled. If the name is null, the minimum for the whole report is computed.
    *
-   * @param group the group name.
+   * @param group
+   *          the group name.
    */
   public void setGroup( final String group ) {
     this.group = group;
@@ -222,12 +226,14 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
   /**
    * Helper function for the serialization.
    *
-   * @param in the input stream.
-   * @throws IOException            if an IO error occured.
-   * @throws ClassNotFoundException if a required class could not be found.
+   * @param in
+   *          the input stream.
+   * @throws IOException
+   *           if an IO error occured.
+   * @throws ClassNotFoundException
+   *           if a required class could not be found.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     results = new HashMap<ReportStateKey, Sequence<Comparable>>();
   }

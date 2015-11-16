@@ -40,7 +40,6 @@ public class Prd4922IT {
     ClassicEngineBoot.getInstance().start();
   }
 
-
   private static class TestEnv extends DefaultReportEnvironment {
     private TestEnv( final Configuration configuration ) {
       super( configuration );
@@ -125,10 +124,10 @@ public class Prd4922IT {
     MasterReport report = new MasterReport();
     report.addExpression( new SingleValueExpression( "expression" ) );
     report.getReportHeader().addSubReport( createSubReport() );
-    Object[] result = new Object[ 1 ];
+    Object[] result = new Object[1];
     report.addExpression( new ValidateLazyValueExpression( "subreport", result ) );
     DebugReportRunner.execGraphics2D( report );
-    Assert.assertEquals( Boolean.TRUE, result[ 0 ] );
+    Assert.assertEquals( Boolean.TRUE, result[0] );
   }
 
   private static class ValidateValueExpression extends AbstractExpression {
@@ -157,7 +156,7 @@ public class Prd4922IT {
 
     public Object getValue() {
       if ( ObjectUtilities.equal( expected, getDataRow().get( "test-column" ) ) ) {
-        result[ 0 ] = true;
+        result[0] = true;
       }
       return true;
     }

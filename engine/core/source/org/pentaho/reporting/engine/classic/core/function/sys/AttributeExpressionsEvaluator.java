@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.sys;
 
@@ -46,8 +46,7 @@ import java.sql.SQLException;
  *
  * @author Thomas Morgner
  */
-public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
-  implements StructureFunction {
+public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction implements StructureFunction {
   private static final Log logger = LogFactory.getLog( AttributeExpressionsEvaluator.class );
 
   private boolean failOnErrors;
@@ -59,14 +58,17 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
   }
 
   /**
-   * Receives notification that report generation initializes the current run. <P> The event carries a
-   * ReportState.Started state.  Use this to initialize the report.
+   * Receives notification that report generation initializes the current run.
+   * <P>
+   * The event carries a ReportState.Started state. Use this to initialize the report.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void reportInitialized( final ReportEvent event ) {
-    failOnErrors = "true".equals( getRuntime().getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors" ) );
+    failOnErrors =
+        "true".equals( getRuntime().getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors" ) );
 
     if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
@@ -82,11 +84,11 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
     }
   }
 
-
   /**
    * Evaluates all defined style-expressions of the given element.
    *
-   * @param e the element that should be updated.
+   * @param e
+   *          the element that should be updated.
    * @return true, if the element had attribute-expressions, false otherwise.
    */
   protected boolean evaluateElement( final ReportElement e ) {
@@ -103,10 +105,10 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
     boolean retval = false;
 
     for ( int namespaceIdx = 0; namespaceIdx < namespaces.length; namespaceIdx++ ) {
-      final String namespace = namespaces[ namespaceIdx ];
+      final String namespace = namespaces[namespaceIdx];
       final String[] names = e.getAttributeExpressionNames( namespace );
       for ( int nameIdx = 0; nameIdx < names.length; nameIdx++ ) {
-        final String name = names[ nameIdx ];
+        final String name = names[nameIdx];
         final Expression ex = e.getAttributeExpression( namespace, name );
         if ( ex == null ) {
           continue;
@@ -122,7 +124,7 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
         try {
           final Object value = evaluate( ex );
           if ( attribute == null ) {
-            // Not a declared attribute, but maybe one of the output-handlers can work on this one. 
+            // Not a declared attribute, but maybe one of the output-handlers can work on this one.
             e.setAttribute( namespace, name, value );
           } else {
             final Class<?> type = attribute.getTargetType();
@@ -130,10 +132,9 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
               e.setAttribute( namespace, name, value );
             } else if ( value instanceof ErrorValue ) {
               if ( failOnErrors ) {
-                throw new InvalidReportStateException( String.format
-                  ( "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
-                    namespace, name,
-                    FunctionUtilities.computeElementLocation( e ) ) );
+                throw new InvalidReportStateException( String.format(
+                    "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                    namespace, name, FunctionUtilities.computeElementLocation( e ) ) );
               }
               e.setAttribute( namespace, name, null );
             } else {
@@ -161,16 +162,13 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
           throw exception;
         } catch ( Exception exception ) {
           if ( logger.isDebugEnabled() ) {
-            logger.debug( String.format
-              ( "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
-                namespace, name,
-                FunctionUtilities.computeElementLocation( e ) ), exception );
+            logger.debug( String.format( "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                namespace, name, FunctionUtilities.computeElementLocation( e ) ), exception );
           }
           if ( failOnErrors ) {
-            throw new InvalidReportStateException( String.format
-              ( "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
-                namespace, name,
-                FunctionUtilities.computeElementLocation( e ) ), exception );
+            throw new InvalidReportStateException( String.format(
+                "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                namespace, name, FunctionUtilities.computeElementLocation( e ) ), exception );
           }
           e.setAttribute( namespace, name, null );
         } finally {

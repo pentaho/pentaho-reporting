@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
@@ -59,7 +59,8 @@ public class DecimalFormatFilter extends NumberFormatFilter {
    * Returns the format for the filter. The DecimalFormatParser has only DecimalFormat objects assigned.
    *
    * @return the formatter.
-   * @throws NullPointerException if the given format is null
+   * @throws NullPointerException
+   *           if the given format is null
    */
   public DecimalFormat getDecimalFormat() {
     return (DecimalFormat) getFormatter();
@@ -68,8 +69,10 @@ public class DecimalFormatFilter extends NumberFormatFilter {
   /**
    * Sets the format for the filter.
    *
-   * @param format the format.
-   * @throws NullPointerException if the given format is null
+   * @param format
+   *          the format.
+   * @throws NullPointerException
+   *           if the given format is null
    */
   public void setDecimalFormat( final DecimalFormat format ) {
     setFormatter( format );
@@ -78,9 +81,12 @@ public class DecimalFormatFilter extends NumberFormatFilter {
   /**
    * Sets the format for the filter. If the given format is no Decimal format, a ClassCastException is thrown
    *
-   * @param format the format.
-   * @throws NullPointerException if the given format is null
-   * @throws ClassCastException   if the format is no decimal format
+   * @param format
+   *          the format.
+   * @throws NullPointerException
+   *           if the given format is null
+   * @throws ClassCastException
+   *           if the format is no decimal format
    */
   public void setFormatter( final Format format ) {
     final DecimalFormat dfmt = (DecimalFormat) format;
@@ -99,7 +105,8 @@ public class DecimalFormatFilter extends NumberFormatFilter {
   /**
    * Applies a format string to the internal <code>DecimalFormat</code> instance.
    *
-   * @param format the format string.
+   * @param format
+   *          the format string.
    */
   public void setFormatString( final String format ) {
     getDecimalFormat().applyPattern( format );
@@ -118,13 +125,13 @@ public class DecimalFormatFilter extends NumberFormatFilter {
   /**
    * Applies a localised format string to the internal <code>DecimalFormat</code> instance.
    *
-   * @param format the format string.
+   * @param format
+   *          the format string.
    */
   public void setLocalizedFormatString( final String format ) {
     getDecimalFormat().applyLocalizedPattern( format );
     invalidateCache();
   }
-
 
   /**
    * Defines, whether the filter should keep its state, if a locale change is detected. This will effectivly disable the
@@ -140,7 +147,8 @@ public class DecimalFormatFilter extends NumberFormatFilter {
    * Defines, whether the filter should keep its state, if a locale change is detected. This will effectivly disable the
    * locale update.
    *
-   * @param keepState set to true, if the locale should not update the DateSymbols, false otherwise.
+   * @param keepState
+   *          set to true, if the locale should not update the DateSymbols, false otherwise.
    */
   public void setKeepState( final boolean keepState ) {
     this.keepState = keepState;
@@ -153,8 +161,9 @@ public class DecimalFormatFilter extends NumberFormatFilter {
    * <p/>
    * If format, datasource or object are null, the NullValue is returned.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return The formatted value.
    */
@@ -170,10 +179,8 @@ public class DecimalFormatFilter extends NumberFormatFilter {
     return super.getValue( runtime, element );
   }
 
-
-  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
-                                              final ReportElement element,
-                                              FormatSpecification formatSpecification ) {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime, final ReportElement element,
+      FormatSpecification formatSpecification ) {
     if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }

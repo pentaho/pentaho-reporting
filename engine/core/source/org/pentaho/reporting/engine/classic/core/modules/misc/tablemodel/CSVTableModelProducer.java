@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-
 
 /**
  * Creates a <code>TableModel</code> using a file formated in CSV for input. The separation can be what ever you want
@@ -50,8 +49,7 @@ public class CSVTableModelProducer {
     this( new BufferedReader( new InputStreamReader( in, encoding ) ) );
   }
 
-  public CSVTableModelProducer( final String filename )
-    throws FileNotFoundException {
+  public CSVTableModelProducer( final String filename ) throws FileNotFoundException {
     this( new BufferedReader( new FileReader( filename ) ) );
   }
 
@@ -63,8 +61,7 @@ public class CSVTableModelProducer {
     this.separator = ","; //$NON-NLS-1$
   }
 
-  public void close()
-    throws IOException {
+  public void close() throws IOException {
     this.reader.close();
   }
 
@@ -73,16 +70,14 @@ public class CSVTableModelProducer {
    *
    * @see this.getTableModel()
    */
-  public synchronized TableModel parse()
-    throws IOException {
+  public synchronized TableModel parse() throws IOException {
     if ( tableModel != null ) {
       return tableModel;
     }
 
-
     this.tableModel = new CSVTableModel();
 
-    if ( this.columnNameFirst == true ) {   //read the fisrt line
+    if ( this.columnNameFirst == true ) { // read the fisrt line
       final String first = this.reader.readLine();
 
       if ( first == null ) {
@@ -106,7 +101,7 @@ public class CSVTableModelProducer {
 
     close();
 
-    final Object[][] array = new Object[ data.size() ][];
+    final Object[][] array = new Object[data.size()][];
     data.toArray( array );
     this.tableModel.setData( array );
     return tableModel;
@@ -124,7 +119,7 @@ public class CSVTableModelProducer {
       }
 
     }
-    return (String[]) row.toArray( new String[ row.size() ] );
+    return (String[]) row.toArray( new String[row.size()] );
   }
 
   /**
@@ -140,7 +135,8 @@ public class CSVTableModelProducer {
    * Sets the separator for parsing the input. It can be a regexp as we use the function <code>String.split()</code>.
    * The default separator is a <code>;</code>.
    *
-   * @param separator a regexp
+   * @param separator
+   *          a regexp
    */
   public void setSeparator( final String separator ) {
     this.separator = separator;
@@ -151,8 +147,7 @@ public class CSVTableModelProducer {
    *
    * @return the new TableModel
    */
-  public TableModel getTableModel()
-    throws IOException {
+  public TableModel getTableModel() throws IOException {
     return this.parse();
   }
 
@@ -168,7 +163,8 @@ public class CSVTableModelProducer {
   /**
    * Set if the first line of the input is column names or not.
    *
-   * @param columnNameFirst boolean
+   * @param columnNameFirst
+   *          boolean
    */
   public void setColumnNameFirstLine( final boolean columnNameFirst ) {
     this.columnNameFirst = columnNameFirst;

@@ -1,21 +1,23 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
+
+import java.io.IOException;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
@@ -41,8 +43,6 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-import java.io.IOException;
-
 public class ExpressionWriterUtility {
   private ExpressionWriterUtility() {
   }
@@ -60,8 +60,7 @@ public class ExpressionWriterUtility {
         continue;
       }
 
-      final ExpressionMetaData emd =
-        registry.getExpressionMetaData( expression.getClass().getName() );
+      final ExpressionMetaData emd = registry.getExpressionMetaData( expression.getClass().getName() );
       if ( emd.isElementLayoutProcessor() ) {
         return true;
       }
@@ -70,9 +69,7 @@ public class ExpressionWriterUtility {
   }
 
   public static void writeElementLayoutExpressions( final WriteableDocumentBundle bundle,
-                                                    final BundleWriterState state,
-                                                    final XmlWriter writer )
-    throws IOException, BundleWriterException {
+      final BundleWriterState state, final XmlWriter writer ) throws IOException, BundleWriterException {
     if ( state == null ) {
       throw new NullPointerException();
     }
@@ -83,7 +80,6 @@ public class ExpressionWriterUtility {
       throw new NullPointerException();
     }
 
-
     final ExpressionCollection exp = state.getReport().getExpressions();
     final ExpressionRegistry registry = ExpressionRegistry.getInstance();
     for ( int i = 0; i < exp.size(); i++ ) {
@@ -92,10 +88,9 @@ public class ExpressionWriterUtility {
         continue;
       }
 
-      final ExpressionMetaData emd =
-        registry.getExpressionMetaData( expression.getClass().getName() );
+      final ExpressionMetaData emd = registry.getExpressionMetaData( expression.getClass().getName() );
       if ( emd.isElementLayoutProcessor() ) {
-        writeExpression( bundle, state, expression, writer, BundleNamespaces.LAYOUT, "expression" );// NON-NLS
+        writeExpression( bundle, state, expression, writer, BundleNamespaces.LAYOUT, "expression" ); // NON-NLS
       }
     }
   }
@@ -113,8 +108,7 @@ public class ExpressionWriterUtility {
         continue;
       }
 
-      final ExpressionMetaData emd =
-        registry.getExpressionMetaData( expression.getClass().getName() );
+      final ExpressionMetaData emd = registry.getExpressionMetaData( expression.getClass().getName() );
       if ( emd.isGlobalLayoutProcessor() ) {
         return true;
       }
@@ -122,10 +116,8 @@ public class ExpressionWriterUtility {
     return false;
   }
 
-  public static void writeGlobalLayoutExpressions( final WriteableDocumentBundle bundle,
-                                                   final BundleWriterState state,
-                                                   final XmlWriter writer )
-    throws IOException, BundleWriterException {
+  public static void writeGlobalLayoutExpressions( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final XmlWriter writer ) throws IOException, BundleWriterException {
     if ( state == null ) {
       throw new NullPointerException();
     }
@@ -136,7 +128,6 @@ public class ExpressionWriterUtility {
       throw new NullPointerException();
     }
 
-
     final ExpressionCollection exp = state.getReport().getExpressions();
     final ExpressionRegistry registry = ExpressionRegistry.getInstance();
     for ( int i = 0; i < exp.size(); i++ ) {
@@ -145,18 +136,15 @@ public class ExpressionWriterUtility {
         continue;
       }
 
-      final ExpressionMetaData emd =
-        registry.getExpressionMetaData( expression.getClass().getName() );
+      final ExpressionMetaData emd = registry.getExpressionMetaData( expression.getClass().getName() );
       if ( emd.isGlobalLayoutProcessor() ) {
-        writeExpression( bundle, state, expression, writer, BundleNamespaces.LAYOUT, "expression" );// NON-NLS
+        writeExpression( bundle, state, expression, writer, BundleNamespaces.LAYOUT, "expression" ); // NON-NLS
       }
     }
   }
 
-  public static void writeDataExpressions( final WriteableDocumentBundle bundle,
-                                           final BundleWriterState state,
-                                           final XmlWriter writer )
-    throws IOException, BundleWriterException {
+  public static void writeDataExpressions( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final XmlWriter writer ) throws IOException, BundleWriterException {
     if ( state == null ) {
       throw new NullPointerException();
     }
@@ -167,7 +155,6 @@ public class ExpressionWriterUtility {
       throw new NullPointerException();
     }
 
-
     final ExpressionCollection exp = state.getReport().getExpressions();
     final ExpressionRegistry registry = ExpressionRegistry.getInstance();
     for ( int i = 0; i < exp.size(); i++ ) {
@@ -176,22 +163,17 @@ public class ExpressionWriterUtility {
         continue;
       }
 
-      final ExpressionMetaData emd =
-        registry.getExpressionMetaData( expression.getClass().getName() );
+      final ExpressionMetaData emd = registry.getExpressionMetaData( expression.getClass().getName() );
       if ( emd.isGlobalLayoutProcessor() || emd.isElementLayoutProcessor() ) {
         continue;
       }
 
-      writeExpression( bundle, state, expression, writer, BundleNamespaces.DATADEFINITION, "expression" );// NON-NLS
+      writeExpression( bundle, state, expression, writer, BundleNamespaces.DATADEFINITION, "expression" ); // NON-NLS
     }
   }
 
-  public static void writeExpression( final WriteableDocumentBundle bundle,
-                                      final BundleWriterState state,
-                                      final Expression expression,
-                                      final XmlWriter writer,
-                                      final String namespaceUri,
-                                      final String expressionTag )
+  public static void writeExpression( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final Expression expression, final XmlWriter writer, final String namespaceUri, final String expressionTag )
     throws IOException, BundleWriterException {
     if ( state == null ) {
       throw new NullPointerException();
@@ -218,21 +200,16 @@ public class ExpressionWriterUtility {
     }
 
     if ( expression.getDependencyLevel() > 0 ) {
-      expressionAttrList.setAttribute( namespaceUri, "deplevel",// NON-NLS
-        String.valueOf( expression.getDependencyLevel() ) );
+      expressionAttrList.setAttribute( namespaceUri, "deplevel", // NON-NLS
+          String.valueOf( expression.getDependencyLevel() ) );
     }
 
     writeExpressionCore( bundle, state, expression, writer, namespaceUri, expressionTag, expressionAttrList );
   }
 
-  public static void writeStyleExpression( final WriteableDocumentBundle bundle,
-                                           final BundleWriterState state,
-                                           final Expression expression,
-                                           final XmlWriter writer,
-                                           final StyleKey styleKey,
-                                           final String namespaceUri,
-                                           final String expressionTag )
-    throws IOException, BundleWriterException {
+  public static void writeStyleExpression( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final Expression expression, final XmlWriter writer, final StyleKey styleKey, final String namespaceUri,
+      final String expressionTag ) throws IOException, BundleWriterException {
     if ( bundle == null ) {
       throw new NullPointerException();
     }
@@ -256,19 +233,14 @@ public class ExpressionWriterUtility {
     }
 
     final AttributeList expressionAttrList = new AttributeList();
-    expressionAttrList.setAttribute( namespaceUri, "style-key", styleKey.getName() );// NON-NLS
+    expressionAttrList.setAttribute( namespaceUri, "style-key", styleKey.getName() ); // NON-NLS
 
     writeExpressionCore( bundle, state, expression, writer, namespaceUri, expressionTag, expressionAttrList );
   }
 
-  public static void writeExpressionCore( final WriteableDocumentBundle bundle,
-                                          final BundleWriterState state,
-                                          final Expression expression,
-                                          final XmlWriter writer,
-                                          final String namespaceUri,
-                                          final String expressionTag,
-                                          final AttributeList expressionAttrList )
-    throws IOException, BundleWriterException {
+  public static void writeExpressionCore( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final Expression expression, final XmlWriter writer, final String namespaceUri, final String expressionTag,
+      final AttributeList expressionAttrList ) throws IOException, BundleWriterException {
     if ( bundle == null ) {
       throw new NullPointerException();
     }
@@ -296,7 +268,7 @@ public class ExpressionWriterUtility {
       if ( StringUtils.isEmpty( fe.getFormula() ) ) {
         return;
       }
-      expressionAttrList.setAttribute( namespaceUri, "formula", fe.getFormula() );// NON-NLS
+      expressionAttrList.setAttribute( namespaceUri, "formula", fe.getFormula() ); // NON-NLS
       writer.writeTag( namespaceUri, expressionTag, expressionAttrList, XmlWriterSupport.CLOSE );
       return;
     }
@@ -306,8 +278,8 @@ public class ExpressionWriterUtility {
       if ( StringUtils.isEmpty( fe.getFormula() ) ) {
         return;
       }
-      expressionAttrList.setAttribute( namespaceUri, "formula", fe.getFormula() );// NON-NLS
-      expressionAttrList.setAttribute( namespaceUri, "initial", fe.getInitial() );// NON-NLS
+      expressionAttrList.setAttribute( namespaceUri, "formula", fe.getFormula() ); // NON-NLS
+      expressionAttrList.setAttribute( namespaceUri, "initial", fe.getInitial() ); // NON-NLS
       writer.writeTag( namespaceUri, expressionTag, expressionAttrList, XmlWriterSupport.CLOSE );
       return;
     }
@@ -329,7 +301,7 @@ public class ExpressionWriterUtility {
         final ExpressionPropertyMetaData[] expressionProperties = emd.getPropertyDescriptions();
         boolean propertiesOpen = false;
         for ( int i = 0; i < expressionProperties.length; i++ ) {
-          final ExpressionPropertyMetaData metaData = expressionProperties[ i ];
+          final ExpressionPropertyMetaData metaData = expressionProperties[i];
           final String propertyName = metaData.getName();
           if ( isFilteredProperty( propertyName ) ) {
             continue;
@@ -339,7 +311,7 @@ public class ExpressionWriterUtility {
           }
           if ( propertiesOpen == false ) {
             writer.writeTag( namespaceUri, expressionTag, expressionAttrList, XmlWriterSupport.OPEN );
-            writer.writeTag( namespaceUri, "properties", XmlWriterSupport.OPEN );// NON-NLS
+            writer.writeTag( namespaceUri, "properties", XmlWriterSupport.OPEN ); // NON-NLS
             propertiesOpen = true;
           }
 
@@ -362,7 +334,7 @@ public class ExpressionWriterUtility {
         final String[] propertyNames = beanUtility.getProperties();
 
         for ( int i = 0; i < propertyNames.length; i++ ) {
-          final String key = propertyNames[ i ];
+          final String key = propertyNames[i];
           // filter some of the standard properties. These are system-properties
           // and are set elsewhere
           if ( isFilteredProperty( key ) ) {
@@ -383,24 +355,19 @@ public class ExpressionWriterUtility {
     if ( name == null ) {
       throw new NullPointerException();
     }
-    if ( "name".equals( name ) )// NON-NLS
-    {
+    if ( "name".equals( name ) ) { // NON-NLS
       return true;
     }
-    if ( "dependencyLevel".equals( name ) )// NON-NLS
-    {
+    if ( "dependencyLevel".equals( name ) ) { // NON-NLS
       return true;
     }
-    if ( "runtime".equals( name ) )// NON-NLS
-    {
+    if ( "runtime".equals( name ) ) { // NON-NLS
       return true;
     }
-    if ( "active".equals( name ) )// NON-NLS
-    {
+    if ( "active".equals( name ) ) { // NON-NLS
       return true;
     }
-    if ( "preserve".equals( name ) )// NON-NLS
-    {
+    if ( "preserve".equals( name ) ) { // NON-NLS
       return true;
     }
 
@@ -410,19 +377,21 @@ public class ExpressionWriterUtility {
   /**
    * Writes the parameters for an expression or function.
    *
-   * @param propertyName the name of the properties that should be written.
-   * @param namespaceUri the namespace that should be used when writing elements.
-   * @param writer       the xml writer.
-   * @param beanUtility  the bean utility containing the expression bean.
-   * @throws IOException   if an IO error occurs.
-   * @throws BeanException if a bean error occured.
+   * @param propertyName
+   *          the name of the properties that should be written.
+   * @param namespaceUri
+   *          the namespace that should be used when writing elements.
+   * @param writer
+   *          the xml writer.
+   * @param beanUtility
+   *          the bean utility containing the expression bean.
+   * @throws IOException
+   *           if an IO error occurs.
+   * @throws BeanException
+   *           if a bean error occured.
    */
-  private static void writeExpressionParameter
-  ( final XmlWriter writer,
-    final BeanUtility beanUtility,
-    final String propertyName,
-    final String namespaceUri )
-    throws IOException, BeanException {
+  private static void writeExpressionParameter( final XmlWriter writer, final BeanUtility beanUtility,
+      final String propertyName, final String namespaceUri ) throws IOException, BeanException {
     // filter some of the standard properties. These are system-properties
     // and are set elsewhere
 
@@ -441,11 +410,8 @@ public class ExpressionWriterUtility {
     }
   }
 
-  public static void copyStaticResources( final WriteableDocumentBundle bundle,
-                                          final BundleWriterState state,
-                                          final Expression expression,
-                                          final BeanUtility beanUtility,
-                                          final ExpressionPropertyMetaData[] datas )
+  public static void copyStaticResources( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final Expression expression, final BeanUtility beanUtility, final ExpressionPropertyMetaData[] datas )
     throws BundleWriterException, BeanException {
     if ( bundle == null ) {
       throw new NullPointerException();
@@ -489,15 +455,15 @@ public class ExpressionWriterUtility {
     final ResourceManager resourceManager = state.getMasterReport().getResourceManager();
 
     for ( int i = 0; i < datas.length; i++ ) {
-      final ExpressionPropertyMetaData attributeMetaData = datas[ i ];
+      final ExpressionPropertyMetaData attributeMetaData = datas[i];
       final Object attValue = beanUtility.getProperty( attributeMetaData.getName() );
       if ( attValue == null ) {
         continue;
       }
-      final ResourceReference[] referencedResources = attributeMetaData.getReferencedResources
-        ( expression, attValue, report, resourceManager );
+      final ResourceReference[] referencedResources =
+          attributeMetaData.getReferencedResources( expression, attValue, report, resourceManager );
       for ( int j = 0; j < referencedResources.length; j++ ) {
-        final ResourceReference reference = referencedResources[ j ];
+        final ResourceReference reference = referencedResources[j];
         if ( reference.isLinked() ) {
           continue;
         }

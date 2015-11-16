@@ -1,21 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.print;
+
+import java.util.Locale;
+
+import javax.swing.Icon;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -26,9 +32,6 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-import javax.swing.*;
-import java.util.Locale;
-
 /**
  * An export plugin for the <code>java.awt.print</code> API.
  * <p/>
@@ -37,7 +40,7 @@ import java.util.Locale;
  */
 public class PrintingPlugin extends AbstractExportActionPlugin {
   /**
-   * Localised resources.
+   * Localized resources.
    */
   private final ResourceBundleSupport resources;
 
@@ -45,16 +48,17 @@ public class PrintingPlugin extends AbstractExportActionPlugin {
    * The base resource class.
    */
   public static final String BASE_RESOURCE_CLASS =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.print.messages.messages"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.print.messages.messages"; //$NON-NLS-1$
   public static final String PROGRESS_DIALOG_ENABLE_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.print.ProgressDialogEnabled"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.print.ProgressDialogEnabled"; //$NON-NLS-1$
 
   /**
    * DefaultConstructor.
    */
   public PrintingPlugin() {
-    resources = new ResourceBundleSupport( Locale.getDefault(), PrintingPlugin.BASE_RESOURCE_CLASS,
-      ObjectUtilities.getClassLoader( PrintingPlugin.class ) );
+    resources =
+        new ResourceBundleSupport( Locale.getDefault(), PrintingPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
+            .getClassLoader( PrintingPlugin.class ) );
   }
 
   public boolean initialize( final SwingGuiContext context ) {
@@ -66,7 +70,6 @@ public class PrintingPlugin extends AbstractExportActionPlugin {
     }
     return true;
   }
-
 
   /**
    * Returns the resourcebundle used to translate strings.
@@ -98,15 +101,15 @@ public class PrintingPlugin extends AbstractExportActionPlugin {
   /**
    * Exports a report.
    *
-   * @param report the report.
-   * @return true, if the export was successfull, false otherwise.
+   * @param report
+   *          the report.
+   * @return true, if the export was successful, false otherwise.
    */
   public boolean performExport( final MasterReport report ) {
     // need to connect to the report pane to receive state updates ...
     final ReportProgressDialog progressDialog;
     if ( "true".equals( report.getReportConfiguration().getConfigProperty( PrintingPlugin.PROGRESS_DIALOG_ENABLE_KEY,
-      "false" ) ) ) //$NON-NLS-1$ //$NON-NLS-2$
-    {
+        "false" ) ) ) { //$NON-NLS-1$ //$NON-NLS-2$
       progressDialog = createProgressDialog();
       if ( report.getTitle() == null ) {
         progressDialog.setTitle( getResources().getString( "ProgressDialog.EMPTY_TITLE" ) );

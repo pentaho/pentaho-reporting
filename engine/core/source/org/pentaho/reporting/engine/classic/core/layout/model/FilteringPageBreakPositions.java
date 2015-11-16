@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -31,7 +31,8 @@ public class FilteringPageBreakPositions implements PageBreakPositions {
    * the flow after the given position. If the position given is larger than the largest posible page-break, then this
    * returns the last pagebreak instead.
    *
-   * @param position the position from where to search the next pagebreak.
+   * @param position
+   *          the position from where to search the next pagebreak.
    * @return the position.
    */
   public long findNextBreakPosition( final long position ) {
@@ -49,7 +50,8 @@ public class FilteringPageBreakPositions implements PageBreakPositions {
    * This returns the next master pagebreak in the flow after the given position. If the position given is larger than
    * the largest posible page-break, then this returns the last pagebreak instead.
    *
-   * @param position the position from where to search the next pagebreak.
+   * @param position
+   *          the position from where to search the next pagebreak.
    * @return the position.
    */
   public long findNextMajorBreakPosition( final long position ) {
@@ -83,9 +85,7 @@ public class FilteringPageBreakPositions implements PageBreakPositions {
     return backend.findPageEndForPageStartPosition( pageOffset );
   }
 
-  public boolean isCrossingPagebreak( final long boxY,
-                                      final long boxHeight,
-                                      final long pagebreakShift ) {
+  public boolean isCrossingPagebreak( final long boxY, final long boxHeight, final long pagebreakShift ) {
     final long shiftedYPos = boxY + pagebreakShift;
     if ( shiftedYPos <= pageStart ) {
       if ( shiftedYPos + boxHeight >= pageStart ) {
@@ -97,9 +97,8 @@ public class FilteringPageBreakPositions implements PageBreakPositions {
     return backend.isCrossingPagebreak( boxY, boxHeight, pagebreakShift );
   }
 
-  public boolean isCrossingPagebreakWithFixedPosition( final long shiftedBoxPosition,
-                                                       final long height,
-                                                       final long fixedPositionResolved ) {
+  public boolean isCrossingPagebreakWithFixedPosition( final long shiftedBoxPosition, final long height,
+      final long fixedPositionResolved ) {
     if ( shiftedBoxPosition <= pageStart ) {
       // by definition: We cannot support fixed-position handling within the complex pagebreak schema of tables.
       return false;

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style;
 
@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * A style key represents a (key, class) pair.  Style keys are used to access style attributes defined in a
+ * A style key represents a (key, class) pair. Style keys are used to access style attributes defined in a
  * <code>BandStyleSheet</code> or an <code>ElementStyleSheet</code>
  * <p/>
  * Note that this class also defines a static Hashtable in which all defined keys are stored.
@@ -79,16 +79,17 @@ public final class StyleKey implements Serializable, Cloneable {
   /**
    * Creates a new style key.
    *
-   * @param name        the name (never null).
-   * @param valueType   the class of the value for this key (never null).
-   * @param inheritable a flag indicating whether the value will be inherited from parent bands to child elements.
-   * @param trans       a flag indicating whether the style property should be saved. Transient properties are temporary
-   *                    artifacts and should not be stored in report definitions.
+   * @param name
+   *          the name (never null).
+   * @param valueType
+   *          the class of the value for this key (never null).
+   * @param inheritable
+   *          a flag indicating whether the value will be inherited from parent bands to child elements.
+   * @param trans
+   *          a flag indicating whether the style property should be saved. Transient properties are temporary artifacts
+   *          and should not be stored in report definitions.
    */
-  private StyleKey( final String name,
-                    final Class valueType,
-                    final boolean trans,
-                    final boolean inheritable ) {
+  private StyleKey( final String name, final Class valueType, final boolean trans, final boolean inheritable ) {
     if ( name == null ) {
       throw new NullPointerException( "StyleKey.setName(...): null not permitted." );
     }
@@ -124,8 +125,10 @@ public final class StyleKey implements Serializable, Cloneable {
    * Returns the key with the specified name. The given type is not checked against a possibly alredy defined
    * definition, it is assumed that the type is only given for a new key definition.
    *
-   * @param name      the name.
-   * @param valueType the class.
+   * @param name
+   *          the name.
+   * @param valueType
+   *          the class.
    * @return the style key.
    */
   public static StyleKey getStyleKey( final String name, final Class valueType ) {
@@ -136,17 +139,19 @@ public final class StyleKey implements Serializable, Cloneable {
    * Returns the key with the specified name. The given type is not checked against a possibly alredy defined
    * definition, it is assumed that the type is only given for a new key definition.
    *
-   * @param name        the name.
-   * @param valueType   the class.
-   * @param inheritable a flag indicating whether the value will be inherited from parent bands to child elements.
-   * @param trans       a flag indicating whether the style property should be saved. Transient properties are temporary
-   *                    artifacts and should not be stored in report definitions.
+   * @param name
+   *          the name.
+   * @param valueType
+   *          the class.
+   * @param inheritable
+   *          a flag indicating whether the value will be inherited from parent bands to child elements.
+   * @param trans
+   *          a flag indicating whether the style property should be saved. Transient properties are temporary artifacts
+   *          and should not be stored in report definitions.
    * @return the style key.
    */
-  public static synchronized StyleKey getStyleKey( final String name,
-                                                   final Class valueType,
-                                                   final boolean trans,
-                                                   final boolean inheritable ) {
+  public static synchronized StyleKey getStyleKey( final String name, final Class valueType, final boolean trans,
+      final boolean inheritable ) {
     if ( locked ) {
       throw new IllegalStateException( "StyleKeys have been locked after booting was completed." );
     }
@@ -171,7 +176,8 @@ public final class StyleKey implements Serializable, Cloneable {
   /**
    * Returns the key with the specified name.
    *
-   * @param name the name.
+   * @param name
+   *          the name.
    * @return the style key.
    */
   public static synchronized StyleKey getStyleKey( final String name ) {
@@ -185,7 +191,8 @@ public final class StyleKey implements Serializable, Cloneable {
   /**
    * Indicates whether some other object is "equal to" this one.
    *
-   * @param o the reference object with which to compare.
+   * @param o
+   *          the reference object with which to compare.
    * @return <code>true</code> if this object is the same as the obj argument; <code>false</code> otherwise.
    */
   public boolean equals( final Object o ) {
@@ -223,11 +230,11 @@ public final class StyleKey implements Serializable, Cloneable {
    * Replaces the automaticly generated instance with one of the defined stylekey instances or creates a new stylekey.
    *
    * @return the resolved element
-   * @throws ObjectStreamException if the element could not be resolved.
+   * @throws ObjectStreamException
+   *           if the element could not be resolved.
    */
-  private Object readResolve()
-    throws ObjectStreamException {
-    synchronized( StyleKey.class ) {
+  private Object readResolve() throws ObjectStreamException {
+    synchronized ( StyleKey.class ) {
       final StyleKey key = StyleKey.getStyleKey( name );
       if ( key != null ) {
         return key;
@@ -255,8 +262,7 @@ public final class StyleKey implements Serializable, Cloneable {
     return b.toString();
   }
 
-  public Object clone()
-    throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
@@ -275,18 +281,18 @@ public final class StyleKey implements Serializable, Cloneable {
   public static synchronized StyleKey[] getDefinedStyleKeys() {
     if ( definedKeys == null ) {
       throw new IllegalStateException(
-        "The engine has not been booted and the default keys have no been registered yet." );
+          "The engine has not been booted and the default keys have no been registered yet." );
     }
     if ( definedKeysArray != null ) {
       assertNoNullEntries();
       return definedKeysArray.clone();
     }
 
-    final StyleKey[] keys = (StyleKey[]) definedKeys.values().toArray( new StyleKey[ definedKeys.size() ] );
+    final StyleKey[] keys = (StyleKey[]) definedKeys.values().toArray( new StyleKey[definedKeys.size()] );
     definedKeysArray = keys.clone();
     for ( int i = 0; i < keys.length; i++ ) {
-      final StyleKey key = keys[ i ];
-      definedKeysArray[ key.identifier ] = key;
+      final StyleKey key = keys[i];
+      definedKeysArray[key.identifier] = key;
     }
     assertNoNullEntries();
     return definedKeysArray.clone();
@@ -294,13 +300,12 @@ public final class StyleKey implements Serializable, Cloneable {
 
   public static void assertNoNullEntries() {
     for ( int i = 0; i < definedKeysArray.length; i++ ) {
-      final StyleKey styleKey = definedKeysArray[ i ];
+      final StyleKey styleKey = definedKeysArray[i];
       if ( styleKey == null ) {
         throw new NullPointerException();
       }
     }
   }
-
 
   /**
    * @noinspection ProhibitedExceptionCaught
@@ -332,15 +337,14 @@ public final class StyleKey implements Serializable, Cloneable {
     try {
       final Field[] fields = c.getFields();
       for ( int i = 0; i < fields.length; i++ ) {
-        final Field field = fields[ i ];
+        final Field field = fields[i];
         final int modifiers = field.getModifiers();
-        if ( Modifier.isPublic( modifiers ) &&
-          Modifier.isStatic( modifiers ) ) {
+        if ( Modifier.isPublic( modifiers ) && Modifier.isStatic( modifiers ) ) {
           if ( Modifier.isFinal( modifiers ) == false ) {
             logger.warn( "Invalid implementation: StyleKeys should be 'public static final': " + c );
           }
           if ( field.getType().isAssignableFrom( StyleKey.class ) ) {
-            //noinspection UnusedDeclaration
+            // noinspection UnusedDeclaration
             final StyleKey value = (StyleKey) field.get( null );
             // ignore the returned value, all we want is to trigger the key
             // creation

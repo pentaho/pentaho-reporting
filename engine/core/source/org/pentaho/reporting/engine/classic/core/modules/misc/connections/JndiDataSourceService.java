@@ -20,7 +20,7 @@ public class JndiDataSourceService implements DataSourceService {
   }
 
   private static final String JNDI_PREFIX_CONFIGURATION =
-    "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.jndi-prefix.";
+      "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.jndi-prefix.";
 
   private static final Log logger = LogFactory.getLog( JndiDataSourceService.class );
   private InitialContext initialContext;
@@ -52,8 +52,7 @@ public class JndiDataSourceService implements DataSourceService {
     return result.path;
   }
 
-  private LookupResult findDataSource( final String connectionPath )
-    throws DatasourceServiceException {
+  private LookupResult findDataSource( final String connectionPath ) throws DatasourceServiceException {
     try {
       final Context initialContext = getInitialContext();
       final Object o = initialContext.lookup( connectionPath );
@@ -88,7 +87,7 @@ public class JndiDataSourceService implements DataSourceService {
       }
     }
 
-    throw new DatasourceServiceException( "Failed to access the JNDI system: Cannot find the requested datasource '" +
-      connectionPath + "' anywhere in the JNDI system." );
+    throw new DatasourceServiceException( "Failed to access the JNDI system: Cannot find the requested datasource '"
+        + connectionPath + "' anywhere in the JNDI system." );
   }
 }

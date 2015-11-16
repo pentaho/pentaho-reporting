@@ -1,30 +1,24 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
-import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.JTextComponent;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -36,6 +30,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
+
+import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
+import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
+
 public class TextComponentEditHandler implements Runnable, DocumentListener, ActionListener {
   private Class type;
   private String keyName;
@@ -46,11 +48,8 @@ public class TextComponentEditHandler implements Runnable, DocumentListener, Act
   private boolean inProgress;
   private boolean adjustingToExternalInput;
 
-  public TextComponentEditHandler( final Class type,
-                                   final String keyName,
-                                   final JTextComponent textComponent,
-                                   final ParameterUpdateContext updateContext,
-                                   final Format formatter ) {
+  public TextComponentEditHandler( final Class type, final String keyName, final JTextComponent textComponent,
+      final ParameterUpdateContext updateContext, final Format formatter ) {
     this.type = type;
     this.keyName = keyName;
     this.textComponent = textComponent;
@@ -75,20 +74,22 @@ public class TextComponentEditHandler implements Runnable, DocumentListener, Act
   }
 
   /**
-   * Gives notification that there was an insert into the document.  The range given by the DocumentEvent bounds the
+   * Gives notification that there was an insert into the document. The range given by the DocumentEvent bounds the
    * freshly inserted region.
    *
-   * @param e the document event
+   * @param e
+   *          the document event
    */
   public void insertUpdate( final DocumentEvent e ) {
     convertParameterValue();
   }
 
   /**
-   * Gives notification that a portion of the document has been removed.  The range is given in terms of what the view
+   * Gives notification that a portion of the document has been removed. The range is given in terms of what the view
    * last saw (that is, before updating sticky positions).
    *
-   * @param e the document event
+   * @param e
+   *          the document event
    */
   public void removeUpdate( final DocumentEvent e ) {
     convertParameterValue();
@@ -97,7 +98,8 @@ public class TextComponentEditHandler implements Runnable, DocumentListener, Act
   /**
    * Gives notification that an attribute or set of attributes changed.
    *
-   * @param e the document event
+   * @param e
+   *          the document event
    */
   public void changedUpdate( final DocumentEvent e ) {
     convertParameterValue();
@@ -144,8 +146,7 @@ public class TextComponentEditHandler implements Runnable, DocumentListener, Act
         throw new BeanException( "Failed to format object" );
       }
     }
-    if ( Object.class == type ||
-      String.class == type ) {
+    if ( Object.class == type || String.class == type ) {
       return text;
     }
 
@@ -159,8 +160,7 @@ public class TextComponentEditHandler implements Runnable, DocumentListener, Act
     convert( true );
   }
 
-  public static TimeZone createTimeZone( final String selectedItem,
-                                         final TimeZone defaultValue ) {
+  public static TimeZone createTimeZone( final String selectedItem, final TimeZone defaultValue ) {
     if ( selectedItem == null ) {
       return defaultValue;
     }
@@ -180,10 +180,8 @@ public class TextComponentEditHandler implements Runnable, DocumentListener, Act
     return timeZone;
   }
 
-  public static Format createFormat( final String formatString,
-                                     final Locale locale,
-                                     final TimeZone timeZone,
-                                     final Class parameterType ) {
+  public static Format createFormat( final String formatString, final Locale locale, final TimeZone timeZone,
+      final Class parameterType ) {
     if ( formatString == null || parameterType == null ) {
       return null;
     }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -61,7 +61,8 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction {
   /**
    * Defines the name of the field from where the compare value is read.
    *
-   * @param field the name of the field.
+   * @param field
+   *          the name of the field.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -70,8 +71,10 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction {
   /**
    * Defines one of the values that hide the element. This defines the value at the given index in the list.
    *
-   * @param value the compare value.
-   * @param index the position in the list of all values.
+   * @param value
+   *          the compare value.
+   * @param index
+   *          the position in the list of all values.
    */
   public void setValues( final int index, final Object value ) {
     if ( values.size() == index ) {
@@ -84,7 +87,8 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction {
   /**
    * Returns one of the values that hide the element. This returns the defined value at the given index in the list.
    *
-   * @param index the position in the list of all values.
+   * @param index
+   *          the position in the list of all values.
    * @return the value at the given position.
    */
   public Object getValues( final int index ) {
@@ -103,7 +107,8 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction {
   /**
    * Defines all values using the object from the value-array.
    *
-   * @param values the new list of compare values.
+   * @param values
+   *          the new list of compare values.
    */
   public void setValues( final Object[] values ) {
     this.values.clear();
@@ -155,6 +160,5 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction {
     ex.values = (ArrayList) values.clone();
     return ex;
   }
-
 
 }

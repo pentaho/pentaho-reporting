@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.helper;
 
@@ -36,7 +36,7 @@ public class RTFOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
   public static final int PAGINATION_FULL = 2;
 
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature IMAGES_ENABLED =
-    new OutputProcessorFeature.BooleanOutputProcessorFeature( "RTF.EnableImages" );
+      new OutputProcessorFeature.BooleanOutputProcessorFeature( "RTF.EnableImages" );
   private int paginationMode;
 
   public RTFOutputProcessorMetaData( final int paginationMode ) {
@@ -46,34 +46,36 @@ public class RTFOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
 
   public void initialize( final Configuration configuration ) {
     super.initialize( configuration );
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.EnableImages" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.EnableImages" ) ) ) {
       addFeature( RTFOutputProcessorMetaData.IMAGES_ENABLED );
     }
 
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.StrictLayout" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.StrictLayout" ) ) ) {
       addFeature( AbstractTableOutputProcessor.STRICT_LAYOUT );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout" ) ) ) {
       addFeature( AbstractTableOutputProcessor.STRICT_LAYOUT );
     }
 
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.UsePageBands" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.UsePageBands" ) ) ) {
       addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.UsePageBands" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.UsePageBands" ) ) ) {
       addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.TreatEllipseAsRectangle" ) ) ) {
+    if ( "true"
+        .equals( configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.TreatEllipseAsRectangle" ) ) ) {
       addFeature( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.TreatEllipseAsRectangle" ) ) ) {
+    if ( "true"
+        .equals( configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.TreatEllipseAsRectangle" ) ) ) {
       addFeature( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE );
     }
 
@@ -89,22 +91,23 @@ public class RTFOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
     }
 
     final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper( configuration );
-    final double deviceResolution = extendedConfig.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.DeviceResolution", 0 );
+    final double deviceResolution =
+        extendedConfig.getIntProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.DeviceResolution", 0 );
     if ( deviceResolution > 0 ) {
       setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution );
     }
 
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.AssumeOverflowX" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.AssumeOverflowX" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_X );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.AssumeOverflowY" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.AssumeOverflowY" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
     }
-    if ( "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.ShapeAsContent" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.ShapeAsContent" ) ) ) {
       addFeature( AbstractTableOutputProcessor.SHAPES_CONTENT );
     }
 
@@ -155,24 +158,19 @@ public class RTFOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
    * @return
    * @throws IllegalArgumentException
    */
-  public BaseFontFontMetrics getBaseFontFontMetrics( final String fontFamily,
-                                                     final double fontSize,
-                                                     final boolean bold,
-                                                     final boolean italics,
-                                                     final String encoding,
-                                                     final boolean embedded,
-                                                     final boolean antiAliasing ) throws IllegalArgumentException {
+  public BaseFontFontMetrics getBaseFontFontMetrics( final String fontFamily, final double fontSize,
+      final boolean bold, final boolean italics, final String encoding, final boolean embedded,
+      final boolean antiAliasing ) throws IllegalArgumentException {
     try {
-      final FontMetrics metrics = super.getFontMetrics( fontFamily, fontSize, bold, italics, encoding, embedded,
-        antiAliasing );
+      final FontMetrics metrics =
+          super.getFontMetrics( fontFamily, fontSize, bold, italics, encoding, embedded, antiAliasing );
       if ( metrics instanceof LegacyFontMetrics ) {
         final LegacyFontMetrics lm = (LegacyFontMetrics) metrics;
         return (BaseFontFontMetrics) lm.getParent();
       }
       return (BaseFontFontMetrics) metrics;
     } catch ( ClassCastException ce ) {
-      throw new IllegalArgumentException
-        ( "Ups, I did it again! ClassCastException in RTFOutputProcessorMetaData" );
+      throw new IllegalArgumentException( "Ups, I did it again! ClassCastException in RTFOutputProcessorMetaData" );
     }
   }
 

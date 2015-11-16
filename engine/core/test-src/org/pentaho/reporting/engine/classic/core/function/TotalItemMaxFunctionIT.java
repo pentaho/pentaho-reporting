@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -68,7 +68,7 @@ public class TotalItemMaxFunctionIT extends TestCase {
     model.addRow( "R1", "r1", "C1", "c2", 2, 2, 2, 2, 6, 2, 6 );
     model.addRow( "R1", "r1", "C2", "c1", 3, 3, 3, 4, 8, 4, 7 );
     model.addRow( "R1", "r1", "C2", "c2", 4, 4, 4, 4, 8, 4, 8 );
-    model.addRow( "R1", "r2", "C1", "c1", 5, 5, 5, 6, 6, 6, 5 ); //*
+    model.addRow( "R1", "r2", "C1", "c1", 5, 5, 5, 6, 6, 6, 5 ); // *
     model.addRow( "R1", "r2", "C1", "c2", 6, 6, 6, 6, 6, 6, 6 );
     model.addRow( "R1", "r2", "C2", "c1", 7, 7, 7, 8, 8, 8, 7 ); //
     model.addRow( "R1", "r2", "C2", "c2", 8, 8, 8, 8, 8, 8, 8 );
@@ -85,10 +85,8 @@ public class TotalItemMaxFunctionIT extends TestCase {
     return model;
   }
 
-  private FieldAggregationFunction create( final String name,
-                                           final String field,
-                                           final String filter,
-                                           final String group ) {
+  private FieldAggregationFunction create( final String name, final String field, final String filter,
+      final String group ) {
     final TotalItemMaxFunction detailsSum = new TotalItemMaxFunction();
     detailsSum.setName( name );
     detailsSum.setField( field );

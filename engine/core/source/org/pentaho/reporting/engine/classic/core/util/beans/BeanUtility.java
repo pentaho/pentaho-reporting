@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
 
@@ -58,7 +58,8 @@ public final class BeanUtility {
     /**
      * Creates a new PropertySpecification object for the given property string.
      *
-     * @param raw the property string, posssibly with index specifications.
+     * @param raw
+     *          the property string, posssibly with index specifications.
      */
     private PropertySpecification( final String raw ) {
       this.raw = raw;
@@ -69,7 +70,8 @@ public final class BeanUtility {
     /**
      * Returns the name of the property without any index information.
      *
-     * @param property the raw name
+     * @param property
+     *          the raw name
      * @return the normalized name.
      */
     private String getNormalizedName( final String property ) {
@@ -83,7 +85,8 @@ public final class BeanUtility {
     /**
      * Extracts the first index from the given raw property.
      *
-     * @param property the raw name
+     * @param property
+     *          the raw name
      * @return the index as String.
      */
     private String getIndex( final String property ) {
@@ -123,16 +126,14 @@ public final class BeanUtility {
   private Object bean;
   private HashMap<String, PropertyDescriptor> properties;
 
-  public BeanUtility( final Object o )
-    throws IntrospectionException {
+  public BeanUtility( final Object o ) throws IntrospectionException {
     beanInfo = Introspector.getBeanInfo( o.getClass() );
     bean = o;
     properties = new HashMap<String, PropertyDescriptor>();
 
-    final PropertyDescriptor[] propertyDescriptors =
-      beanInfo.getPropertyDescriptors();
+    final PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
     for ( int i = 0; i < propertyDescriptors.length; i++ ) {
-      properties.put( propertyDescriptors[ i ].getName(), propertyDescriptors[ i ] );
+      properties.put( propertyDescriptors[i].getName(), propertyDescriptors[i] );
     }
   }
 
@@ -144,10 +145,9 @@ public final class BeanUtility {
       bean = o;
       properties.clear();
 
-      final PropertyDescriptor[] propertyDescriptors =
-        beanInfo.getPropertyDescriptors();
+      final PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
       for ( int i = 0; i < propertyDescriptors.length; i++ ) {
-        properties.put( propertyDescriptors[ i ].getName(), propertyDescriptors[ i ] );
+        properties.put( propertyDescriptors[i].getName(), propertyDescriptors[i] );
       }
     }
   }
@@ -156,13 +156,11 @@ public final class BeanUtility {
     return beanInfo.getPropertyDescriptors();
   }
 
-  public Object getProperty( final String name )
-    throws BeanException {
+  public Object getProperty( final String name ) throws BeanException {
     return getPropertyForSpecification( new PropertySpecification( name ) );
   }
 
-  private Object getPropertyForSpecification( final PropertySpecification name )
-    throws BeanException {
+  private Object getPropertyForSpecification( final PropertySpecification name ) throws BeanException {
     final PropertyDescriptor pd = properties.get( name.getName() );
     if ( pd == null ) {
       throw new BeanException( "No such property:" + name );
@@ -187,15 +185,15 @@ public final class BeanUtility {
       if ( name.getIndex() != null ) {
         // handle access to array-only properties ..
         try {
-          //System.out.println(readMethod);
+          // System.out.println(readMethod);
           final Object value = readMethod.invoke( bean );
           // we have (possibly) an array.
           if ( value == null ) {
-            //noinspection ThrowCaughtLocally
+            // noinspection ThrowCaughtLocally
             throw new IndexOutOfBoundsException( "No such index, property is null" );
           }
           if ( value.getClass().isArray() == false ) {
-            //noinspection ThrowCaughtLocally
+            // noinspection ThrowCaughtLocally
             throw new BeanException( "The property contains no array." );
           }
           final int index = Integer.parseInt( name.getIndex() );
@@ -217,8 +215,7 @@ public final class BeanUtility {
     }
   }
 
-  public String getPropertyAsString( final String name )
-    throws BeanException {
+  public String getPropertyAsString( final String name ) throws BeanException {
     final PropertySpecification ps = new PropertySpecification( name );
     final PropertyDescriptor pd = properties.get( ps.getName() );
     if ( pd == null ) {
@@ -229,24 +226,21 @@ public final class BeanUtility {
       return null;
     }
 
-    final ValueConverter vc =
-      ConverterRegistry.getInstance().getValueConverter( o.getClass() );
+    final ValueConverter vc = ConverterRegistry.getInstance().getValueConverter( o.getClass() );
     if ( vc == null ) {
       throw new BeanException( "Unable to handle property of type " + o.getClass().getName() );
     }
     return vc.toAttributeValue( o );
   }
 
-  public void setProperty( final String name, final Object o )
-    throws BeanException {
+  public void setProperty( final String name, final Object o ) throws BeanException {
     if ( name == null ) {
       throw new NullPointerException( "Name must not be null" );
     }
     setProperty( new PropertySpecification( name ), o );
   }
 
-  private void setProperty( final PropertySpecification name, final Object o )
-    throws BeanException {
+  private void setProperty( final PropertySpecification name, final Object o ) throws BeanException {
     final PropertyDescriptor pd = properties.get( name.getName() );
     if ( pd == null ) {
       throw new BeanException( "No such property:" + name );
@@ -278,22 +272,20 @@ public final class BeanUtility {
       try {
         writeMethod.invoke( bean, o );
       } catch ( Exception e ) {
-        throw BeanException.getInstance( "InvokationError on property '" +
-          name + "' on bean type " + bean.getClass(), e );
+        throw BeanException.getInstance( "InvokationError on property '" + name + "' on bean type " + bean.getClass(),
+            e );
       }
     }
   }
 
-  private void updateArrayProperty( final PropertyDescriptor pd,
-                                    final PropertySpecification name,
-                                    final Object o )
+  private void updateArrayProperty( final PropertyDescriptor pd, final PropertySpecification name, final Object o )
     throws BeanException {
     final Method readMethod = pd.getReadMethod();
     if ( readMethod == null ) {
       throw new BeanException( "Property is not readable, cannot perform array update: " + name );
     }
     try {
-      //System.out.println(readMethod);
+      // System.out.println(readMethod);
       final Object value = readMethod.invoke( bean );
       // we have (possibly) an array.
       final int index = Integer.parseInt( name.getIndex() );
@@ -313,8 +305,7 @@ public final class BeanUtility {
   /**
    * @noinspection SuspiciousSystemArraycopy
    */
-  private Object validateArray( final Class propertyType,
-                                final Object o, final int minArrayIndexValue )
+  private Object validateArray( final Class propertyType, final Object o, final int minArrayIndexValue )
     throws BeanException {
 
     if ( propertyType.isArray() == false ) {
@@ -339,8 +330,7 @@ public final class BeanUtility {
     return o;
   }
 
-  public void setPropertyAsString( final String name, final String txt )
-    throws BeanException {
+  public void setPropertyAsString( final String name, final String txt ) throws BeanException {
     if ( name == null ) {
       throw new NullPointerException( "Name must not be null" );
     }
@@ -368,8 +358,7 @@ public final class BeanUtility {
     return BeanUtility.getPropertyType( pd );
   }
 
-  public static Class getPropertyType( final PropertyDescriptor pd )
-    throws BeanException {
+  public static Class getPropertyType( final PropertyDescriptor pd ) throws BeanException {
     final Class typeFromDescriptor = pd.getPropertyType();
     if ( typeFromDescriptor != null ) {
       return typeFromDescriptor;
@@ -381,8 +370,7 @@ public final class BeanUtility {
     throw new BeanException( "Unable to determine the property type." );
   }
 
-  public void setPropertyAsString( final String name, final Class type, final String txt )
-    throws BeanException {
+  public void setPropertyAsString( final String name, final Class type, final String txt ) throws BeanException {
     if ( name == null ) {
       throw new NullPointerException( "Name must not be null" );
     }
@@ -400,24 +388,21 @@ public final class BeanUtility {
       vc = ConverterRegistry.getInstance().getValueConverter( type );
     }
     if ( vc == null ) {
-      throw new BeanException
-        ( "Unable to handle '" + type + "' for property '" + name + '\'' );
+      throw new BeanException( "Unable to handle '" + type + "' for property '" + name + '\'' );
     }
     final Object o = vc.toPropertyValue( txt );
     setProperty( ps, o );
   }
 
-  public String[] getProperties()
-    throws BeanException {
+  public String[] getProperties() throws BeanException {
     final ArrayList<String> propertyNames = new ArrayList<String>();
     final PropertyDescriptor[] pd = getPropertyInfos();
     for ( int i = 0; i < pd.length; i++ ) {
-      final PropertyDescriptor property = pd[ i ];
+      final PropertyDescriptor property = pd[i];
       if ( property.isHidden() ) {
         continue;
       }
-      if ( property.getReadMethod() == null ||
-        property.getWriteMethod() == null ) {
+      if ( property.getReadMethod() == null || property.getWriteMethod() == null ) {
         // it will make no sense to write a property now, that
         // we can't read in later...
         continue;
@@ -431,13 +416,12 @@ public final class BeanUtility {
         propertyNames.add( property.getName() );
       }
     }
-    return propertyNames.toArray( new String[ propertyNames.size() ] );
+    return propertyNames.toArray( new String[propertyNames.size()] );
   }
 
   private int findMaximumIndex( final PropertyDescriptor id ) {
     try {
-      final Object o = getPropertyForSpecification
-        ( new PropertySpecification( id.getName() ) );
+      final Object o = getPropertyForSpecification( new PropertySpecification( id.getName() ) );
       return Array.getLength( o );
     } catch ( Exception e ) {
       // ignore, we run 'til we encounter an index out of bounds Ex.

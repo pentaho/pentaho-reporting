@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.style;
 
@@ -90,10 +90,7 @@ public class DefaultStyleCache implements StyleCache {
     }
 
     public String toString() {
-      return "CacheKey{" +
-        "instanceId=" + instanceId +
-        ", styleClass='" + styleClass + '\'' +
-        '}';
+      return "CacheKey{" + "instanceId=" + instanceId + ", styleClass='" + styleClass + '\'' + '}';
     }
   }
 
@@ -132,8 +129,9 @@ public class DefaultStyleCache implements StyleCache {
 
     this.lookupKey = new CacheKey();
     this.cache = new LFUMap<CacheKey, CacheCarrier>( 500 );
-    this.validateCache = "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.layout.style.ValidateStyleCacheResults" ) );
+    this.validateCache =
+        "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.layout.style.ValidateStyleCacheResults" ) );
   }
 
   public SimpleStyleSheet getStyleSheet( final StyleSheet parent ) {
@@ -173,23 +171,22 @@ public class DefaultStyleCache implements StyleCache {
     }
 
     for ( int i = 0; i < validateKeys.length; i++ ) {
-      final StyleKey validateKey = validateKeys[ i ];
+      final StyleKey validateKey = validateKeys[i];
       final Object o1 = s1.getStyleProperty( validateKey );
       final Object o2 = s2.getStyleProperty( validateKey );
       if ( ObjectUtilities.equal( o1, o2 ) ) {
         continue;
       }
 
-      throw new InvalidReportStateException( "Cache-Failure on " + s1.getId() + " " + validateKey + " " +
-        o1 + " vs " + o2 + " [" + s1.getChangeTracker() + "; " + s2.getChangeTracker() + "]" );
+      throw new InvalidReportStateException( "Cache-Failure on " + s1.getId() + " " + validateKey + " " + o1 + " vs "
+          + o2 + " [" + s1.getChangeTracker() + "; " + s2.getChangeTracker() + "]" );
     }
   }
 
   public String printPerformanceStats() {
     final int total = cacheHits + cacheMiss;
-    return ( "StyleCache: " + name + " " +
-      "Total=" + total +
-      " Hits=" + cacheHits + " (" + ( 100f * cacheHits / Math.max( 1, total ) ) + "%)" +
-      " Miss=" + cacheMiss + " (" + ( 100f * cacheMiss / Math.max( 1, total ) ) + "%)" );
+    return ( "StyleCache: " + name + " " + "Total=" + total + " Hits=" + cacheHits + " ("
+        + ( 100f * cacheHits / Math.max( 1, total ) ) + "%)" + " Miss=" + cacheMiss + " ("
+        + ( 100f * cacheMiss / Math.max( 1, total ) ) + "%)" );
   }
 }

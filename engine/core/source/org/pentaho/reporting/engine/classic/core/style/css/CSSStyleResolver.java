@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style.css;
 
@@ -38,7 +38,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 /**
  * A cascading style resolver. This resolver follows the cascading rules as outlined by the Cascading Stylesheet
  * Standard.
@@ -62,9 +61,7 @@ public class CSSStyleResolver implements StyleResolver, Cloneable {
   }
 
   public static StyleResolver createDesignTimeResolver( final ReportDefinition report,
-                                                        final ResourceManager resourceManager,
-                                                        final ResourceKey contentBase,
-                                                        final boolean designTime ) {
+      final ResourceManager resourceManager, final ResourceKey contentBase, final boolean designTime ) {
     final ElementStyleDefinition styleDefinition = createStyleDefinition( report, resourceManager, contentBase );
 
     if ( styleDefinition.getRuleCount() == 0 && styleDefinition.getStyleSheetCount() == 0 ) {
@@ -73,18 +70,17 @@ public class CSSStyleResolver implements StyleResolver, Cloneable {
       final CSSStyleResolver resolver = new CSSStyleResolver( designTime );
       final NamespaceCollection namespaceCollection = StyleSheetParserUtil.getInstance().getNamespaceCollection();
       final DefaultDocumentContext documentContext =
-        new DefaultDocumentContext( namespaceCollection, resourceManager, contentBase, null, styleDefinition );
+          new DefaultDocumentContext( namespaceCollection, resourceManager, contentBase, null, styleDefinition );
       resolver.initialize( documentContext );
       return resolver;
     }
   }
 
   private static ElementStyleDefinition createStyleDefinition( final ReportDefinition reportDefinition,
-                                                               final ResourceManager resourceManager,
-                                                               final ResourceKey contentBase ) {
+      final ResourceManager resourceManager, final ResourceKey contentBase ) {
     final ElementStyleDefinition styleDefinition;
     final Object maybeStyleSheet =
-      reportDefinition.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET );
+        reportDefinition.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET );
     if ( maybeStyleSheet instanceof ElementStyleDefinition ) {
       final ElementStyleDefinition sd = (ElementStyleDefinition) maybeStyleSheet;
       styleDefinition = sd.clone();
@@ -93,12 +89,12 @@ public class CSSStyleResolver implements StyleResolver, Cloneable {
     }
 
     final Object styleSheetRefs =
-      reportDefinition.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET_REFERENCE );
+        reportDefinition.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET_REFERENCE );
     final ArrayList<Object> styleRefs = new ArrayList<Object>();
     if ( styleSheetRefs instanceof Object[] ) {
       final Object[] styleArray = (Object[]) styleSheetRefs;
       for ( int i = 0; i < styleArray.length; i++ ) {
-        styleRefs.add( styleArray[ i ] );
+        styleRefs.add( styleArray[i] );
       }
     } else if ( styleSheetRefs instanceof Collection ) {
       final Collection c = (Collection) styleSheetRefs;
@@ -163,32 +159,31 @@ public class CSSStyleResolver implements StyleResolver, Cloneable {
   }
 
   /*
-   * Todo: Make sure that the 'activeStyles' are sorted and then apply them with the
-   * lowest style first. All Matching styles have to be added.
+   * Todo: Make sure that the 'activeStyles' are sorted and then apply them with the lowest style first. All Matching
+   * styles have to be added.
    */
-  private void performSelectionStep( final ReportElement element,
-                                     final ElementStyleSheet target ) {
+  private void performSelectionStep( final ReportElement element, final ElementStyleSheet target ) {
     final StyleRuleMatcher.MatcherResult[] activeStyleRules = styleRuleMatcher.getMatchingRules( element );
 
-    final SelectorWeight[] weights = new SelectorWeight[ target.getPropertyKeys().length ];
+    final SelectorWeight[] weights = new SelectorWeight[target.getPropertyKeys().length];
     for ( int i = 0; i < activeStyleRules.length; i++ ) {
-      final StyleRuleMatcher.MatcherResult activeStyleRule = activeStyleRules[ i ];
+      final StyleRuleMatcher.MatcherResult activeStyleRule = activeStyleRules[i];
       final ElementStyleRule rule = activeStyleRule.getRule();
       final SelectorWeight weight = activeStyleRule.getWeight();
 
       final StyleKey[] definedPropertyNamesArray = rule.getDefinedPropertyNamesArray();
       for ( int j = 0; j < definedPropertyNamesArray.length; j++ ) {
-        final StyleKey styleKey = definedPropertyNamesArray[ j ];
+        final StyleKey styleKey = definedPropertyNamesArray[j];
         if ( styleKey == null ) {
           continue;
         }
 
-        final SelectorWeight selectorWeight = weights[ j ];
+        final SelectorWeight selectorWeight = weights[j];
         if ( selectorWeight == null || ( selectorWeight.compareTo( weight ) > 0 ) ) {
           final Object styleProperty = rule.getStyleProperty( styleKey );
           if ( styleProperty != null ) {
             target.setStyleProperty( styleKey, styleProperty );
-            weights[ j ] = weight;
+            weights[j] = weight;
           }
         }
       }

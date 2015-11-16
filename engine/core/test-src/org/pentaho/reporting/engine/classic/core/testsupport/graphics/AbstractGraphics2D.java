@@ -1,23 +1,39 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.testsupport.graphics;
 
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Composite;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Paint;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
@@ -63,7 +79,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * time/quality trade-off in the rendering process. Refer to the <code>RenderingHints</code> class for definitions of
    * some common keys and values.
    *
-   * @param hints the rendering hints to be set
+   * @param hints
+   *          the rendering hints to be set
    * @see java.awt.RenderingHints
    */
   public void addRenderingHints( final Map<?, ?> hints ) {
@@ -74,16 +91,21 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Renders a <code>BufferedImage</code> that is filtered with a {@link java.awt.image.BufferedImageOp}. The rendering
    * attributes applied include the <code>Clip</code>, <code>Transform</code> and <code>Composite</code> attributes.
    * This is equivalent to:
+   * 
    * <pre>
-   * img1 = op.filter(img, null);
-   * drawImage(img1, new AffineTransform(1f,0f,0f,1f,x,y), null);
+   * img1 = op.filter( img, null );
+   * drawImage( img1, new AffineTransform( 1f, 0f, 0f, 1f, x, y ), null );
    * </pre>
    *
-   * @param op  the filter to be applied to the image before rendering
-   * @param img the specified <code>BufferedImage</code> to be rendered. This method does nothing if <code>img</code> is
-   *            null.
-   * @param x   the x coordinate of the location in user space where the upper left corner of the image is rendered
-   * @param y   the y coordinate of the location in user space where the upper left corner of the image is rendered
+   * @param op
+   *          the filter to be applied to the image before rendering
+   * @param img
+   *          the specified <code>BufferedImage</code> to be rendered. This method does nothing if <code>img</code> is
+   *          null.
+   * @param x
+   *          the x coordinate of the location in user space where the upper left corner of the image is rendered
+   * @param y
+   *          the y coordinate of the location in user space where the upper left corner of the image is rendered
    * @see #transform
    * @see #setTransform
    * @see #setComposite
@@ -121,8 +143,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
       if ( keys != null ) {
         final int keyCount = keys.length;
         for ( int i = 0; i < keyCount; i++ ) {
-          //noinspection unchecked
-          properties.put( keys[ i ], img.getProperty( keys[ i ] ) );
+          // noinspection unchecked
+          properties.put( keys[i], img.getProperty( keys[i] ) );
         }
       }
       final BufferedImage result = new BufferedImage( cm, raster, isAlphaPremultiplied, properties );
@@ -146,8 +168,10 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * <code>RenderedImage</code> should be obtained directly from the <code>RenderableImage</code> and rendered using
    * {@link #drawRenderedImage(java.awt.image.RenderedImage, java.awt.geom.AffineTransform) drawRenderedImage}.
    *
-   * @param img   the image to be rendered. This method does nothing if <code>img</code> is null.
-   * @param xform the transformation from image space into user space
+   * @param img
+   *          the image to be rendered. This method does nothing if <code>img</code> is null.
+   * @param xform
+   *          the transformation from image space into user space
    * @see #transform
    * @see #setTransform
    * @see #setComposite
@@ -163,14 +187,18 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Renders the text of the specified <code>String</code>, using the current text attribute state in the
    * <code>Graphics2D</code> context. The baseline of the first character is at position (<i>x</i>,&nbsp;<i>y</i>) in
    * the User Space. The rendering attributes applied include the <code>Clip</code>, <code>Transform</code>,
-   * <code>Paint</code>, <code>Font</code> and <code>Composite</code> attributes.  For characters in script systems such
+   * <code>Paint</code>, <code>Font</code> and <code>Composite</code> attributes. For characters in script systems such
    * as Hebrew and Arabic, the glyphs can be rendered from right to left, in which case the coordinate supplied is the
    * location of the leftmost character on the baseline.
    *
-   * @param str the string to be rendered
-   * @param x   the x coordinate of the location where the <code>String</code> should be rendered
-   * @param y   the y coordinate of the location where the <code>String</code> should be rendered
-   * @throws NullPointerException if <code>str</code> is <code>null</code>
+   * @param str
+   *          the string to be rendered
+   * @param x
+   *          the x coordinate of the location where the <code>String</code> should be rendered
+   * @param y
+   *          the y coordinate of the location where the <code>String</code> should be rendered
+   * @throws NullPointerException
+   *           if <code>str</code> is <code>null</code>
    * @see java.awt.Graphics#drawBytes
    * @see java.awt.Graphics#drawChars
    * @since JDK1.0
@@ -187,10 +215,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * script systems such as Hebrew and Arabic, the glyphs can be rendered from right to left, in which case the
    * coordinate supplied is the location of the leftmost character on the baseline.
    *
-   * @param iterator the iterator whose text is to be rendered
-   * @param x        the x coordinate where the iterator's text is to be rendered
-   * @param y        the y coordinate where the iterator's text is to be rendered
-   * @throws NullPointerException if <code>iterator</code> is <code>null</code>
+   * @param iterator
+   *          the iterator whose text is to be rendered
+   * @param x
+   *          the x coordinate where the iterator's text is to be rendered
+   * @param y
+   *          the y coordinate where the iterator's text is to be rendered
+   * @throws NullPointerException
+   *           if <code>iterator</code> is <code>null</code>
    * @see #setPaint
    * @see java.awt.Graphics#setColor
    * @see #setTransform
@@ -204,14 +236,18 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   /**
    * Renders the text of the specified {@link java.awt.font.GlyphVector} using the <code>Graphics2D</code> context's
    * rendering attributes. The rendering attributes applied include the <code>Clip</code>, <code>Transform</code>,
-   * <code>Paint</code>, and <code>Composite</code> attributes.  The <code>GlyphVector</code> specifies individual
-   * glyphs from a {@link java.awt.Font}. The <code>GlyphVector</code> can also contain the glyph positions. This is the
+   * <code>Paint</code>, and <code>Composite</code> attributes. The <code>GlyphVector</code> specifies individual glyphs
+   * from a {@link java.awt.Font}. The <code>GlyphVector</code> can also contain the glyph positions. This is the
    * fastest way to render a set of characters to the screen.
    *
-   * @param g the <code>GlyphVector</code> to be rendered
-   * @param x the x position in User Space where the glyphs should be rendered
-   * @param y the y position in User Space where the glyphs should be rendered
-   * @throws NullPointerException if <code>g</code> is <code>null</code>.
+   * @param g
+   *          the <code>GlyphVector</code> to be rendered
+   * @param x
+   *          the x position in User Space where the glyphs should be rendered
+   * @param y
+   *          the y position in User Space where the glyphs should be rendered
+   * @throws NullPointerException
+   *           if <code>g</code> is <code>null</code>.
    * @see java.awt.Font#createGlyphVector
    * @see java.awt.font.GlyphVector
    * @see #setPaint
@@ -228,16 +264,19 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   /**
    * Checks whether or not the specified <code>Shape</code> intersects the specified {@link java.awt.Rectangle}, which
    * is in device space. If <code>onStroke</code> is false, this method checks whether or not the interior of the
-   * specified <code>Shape</code> intersects the specified <code>Rectangle</code>.  If <code>onStroke</code> is
+   * specified <code>Shape</code> intersects the specified <code>Rectangle</code>. If <code>onStroke</code> is
    * <code>true</code>, this method checks whether or not the <code>Stroke</code> of the specified <code>Shape</code>
    * outline intersects the specified <code>Rectangle</code>. The rendering attributes taken into account include the
    * <code>Clip</code>, <code>Transform</code>, and <code>Stroke</code> attributes.
    *
-   * @param rect     the area in device space to check for a hit
-   * @param s        the <code>Shape</code> to check for a hit
-   * @param onStroke flag used to choose between testing the stroked or the filled shape.  If the flag is
-   *                 <code>true</code>, the <code>Stroke</code> oultine is tested.  If the flag is <code>false</code>,
-   *                 the filled <code>Shape</code> is tested.
+   * @param rect
+   *          the area in device space to check for a hit
+   * @param s
+   *          the <code>Shape</code> to check for a hit
+   * @param onStroke
+   *          flag used to choose between testing the stroked or the filled shape. If the flag is <code>true</code>, the
+   *          <code>Stroke</code> oultine is tested. If the flag is <code>false</code>, the filled <code>Shape</code> is
+   *          tested.
    * @return <code>true</code> if there is a hit; <code>false</code> otherwise.
    * @see #setStroke
    * @see #fill
@@ -273,15 +312,18 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Sets the <code>Composite</code> for the <code>Graphics2D</code> context. The <code>Composite</code> is used in all
    * drawing methods such as <code>drawImage</code>, <code>drawString</code>, <code>draw</code>, and <code>fill</code>.
    * It specifies how new pixels are to be combined with the existing pixels on the graphics device during the rendering
-   * process. <p>If this <code>Graphics2D</code> context is drawing to a <code>Component</code> on the display screen
-   * and the <code>Composite</code> is a custom object rather than an instance of the <code>AlphaComposite</code> class,
-   * and if there is a security manager, its <code>checkPermission</code> method is called with an
+   * process.
+   * <p>
+   * If this <code>Graphics2D</code> context is drawing to a <code>Component</code> on the display screen and the
+   * <code>Composite</code> is a custom object rather than an instance of the <code>AlphaComposite</code> class, and if
+   * there is a security manager, its <code>checkPermission</code> method is called with an
    * <code>AWTPermission("readDisplayPixels")</code> permission.
    *
-   * @param comp the <code>Composite</code> object to be used for rendering
-   * @throws SecurityException if a custom <code>Composite</code> object is being used to render to the screen and a
-   *                           security manager is set and its <code>checkPermission</code> method does not allow the
-   *                           operation.
+   * @param comp
+   *          the <code>Composite</code> object to be used for rendering
+   * @throws SecurityException
+   *           if a custom <code>Composite</code> object is being used to render to the screen and a security manager is
+   *           set and its <code>checkPermission</code> method does not allow the operation.
    * @see java.awt.Graphics#setXORMode
    * @see java.awt.Graphics#setPaintMode
    * @see #getComposite
@@ -308,14 +350,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
     alpha = 1.0F;
   }
 
-
   /**
-   * Sets the <code>Paint</code> attribute for the <code>Graphics2D</code> context.  Calling this method with a
+   * Sets the <code>Paint</code> attribute for the <code>Graphics2D</code> context. Calling this method with a
    * <code>null</code> <code>Paint</code> object does not have any effect on the current <code>Paint</code> attribute of
    * this <code>Graphics2D</code>.
    *
-   * @param paint the <code>Paint</code> object to be used to generate color during the rendering process, or
-   *              <code>null</code>
+   * @param paint
+   *          the <code>Paint</code> object to be used to generate color during the rendering process, or
+   *          <code>null</code>
    * @see java.awt.Graphics#setColor
    * @see #getPaint
    * @see java.awt.GradientPaint
@@ -343,7 +385,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   /**
    * Sets the <code>Stroke</code> for the <code>Graphics2D</code> context.
    *
-   * @param s the <code>Stroke</code> object to be used to stroke a <code>Shape</code> during the rendering process
+   * @param s
+   *          the <code>Stroke</code> object to be used to stroke a <code>Shape</code> during the rendering process
    * @see java.awt.BasicStroke
    * @see #getStroke
    */
@@ -353,11 +396,13 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 
   /**
    * Sets the value of a single preference for the rendering algorithms. Hint categories include controls for rendering
-   * quality and overall time/quality trade-off in the rendering process.  Refer to the <code>RenderingHints</code>
-   * class for definitions of some common keys and values.
+   * quality and overall time/quality trade-off in the rendering process. Refer to the <code>RenderingHints</code> class
+   * for definitions of some common keys and values.
    *
-   * @param hintKey   the key of the hint to be set.
-   * @param hintValue the value indicating preferences for the specified hint category.
+   * @param hintKey
+   *          the key of the hint to be set.
+   * @param hintValue
+   *          the value indicating preferences for the specified hint category.
    * @see #getRenderingHint(java.awt.RenderingHints.Key)
    * @see java.awt.RenderingHints
    */
@@ -367,12 +412,13 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 
   /**
    * Returns the value of a single preference for the rendering algorithms. Hint categories include controls for
-   * rendering quality and overall time/quality trade-off in the rendering process.  Refer to the
+   * rendering quality and overall time/quality trade-off in the rendering process. Refer to the
    * <code>RenderingHints</code> class for definitions of some common keys and values.
    *
-   * @param hintKey the key corresponding to the hint to get.
+   * @param hintKey
+   *          the key corresponding to the hint to get.
    * @return an object representing the value for the specified hint key. Some of the keys and their associated values
-   * are defined in the <code>RenderingHints</code> class.
+   *         are defined in the <code>RenderingHints</code> class.
    * @see java.awt.RenderingHints
    * @see #setRenderingHint(java.awt.RenderingHints.Key, Object)
    */
@@ -387,7 +433,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * time/quality trade-off in the rendering process. Refer to the <code>RenderingHints</code> class for definitions of
    * some common keys and values.
    *
-   * @param hints the rendering hints to be set
+   * @param hints
+   *          the rendering hints to be set
    * @see #getRenderingHints
    * @see java.awt.RenderingHints
    */
@@ -396,9 +443,9 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   }
 
   /**
-   * Gets the preferences for the rendering algorithms.  Hint categories include controls for rendering quality and
+   * Gets the preferences for the rendering algorithms. Hint categories include controls for rendering quality and
    * overall time/quality trade-off in the rendering process. Returns all of the hint key/value pairs that were ever
-   * specified in one operation.  Refer to the <code>RenderingHints</code> class for definitions of some common keys and
+   * specified in one operation. Refer to the <code>RenderingHints</code> class for definitions of some common keys and
    * values.
    *
    * @return a reference to an instance of <code>RenderingHints</code> that contains the current preferences.
@@ -412,11 +459,13 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   /**
    * Translates the origin of the <code>Graphics2D</code> context to the point (<i>x</i>,&nbsp;<i>y</i>) in the current
    * coordinate system. Modifies the <code>Graphics2D</code> context so that its new origin corresponds to the point
-   * (<i>x</i>,&nbsp;<i>y</i>) in the <code>Graphics2D</code> context's former coordinate system.  All coordinates used
+   * (<i>x</i>,&nbsp;<i>y</i>) in the <code>Graphics2D</code> context's former coordinate system. All coordinates used
    * in subsequent rendering operations on this graphics context are relative to this new origin.
    *
-   * @param x the specified x coordinate
-   * @param y the specified y coordinate
+   * @param x
+   *          the specified x coordinate
+   * @param y
+   *          the specified y coordinate
    * @since JDK1.0
    */
   public void translate( final int x, final int y ) {
@@ -427,14 +476,17 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Concatenates the current <code>Graphics2D</code> <code>Transform</code> with a translation transform. Subsequent
    * rendering is translated by the specified distance relative to the previous position. This is equivalent to calling
    * transform(T), where T is an <code>AffineTransform</code> represented by the following matrix:
+   * 
    * <pre>
    *          [   1    0    tx  ]
    *          [   0    1    ty  ]
    *          [   0    0    1   ]
    * </pre>
    *
-   * @param tx the distance to translate along the x-axis
-   * @param ty the distance to translate along the y-axis
+   * @param tx
+   *          the distance to translate along the x-axis
+   * @param ty
+   *          the distance to translate along the y-axis
    */
   public void translate( final double tx, final double ty ) {
     dg2.translate( tx, ty );
@@ -444,14 +496,17 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Concatenates the current <code>Graphics2D</code> <code>Transform</code> with a rotation transform. Subsequent
    * rendering is rotated by the specified radians relative to the previous origin. This is equivalent to calling
    * <code>transform(R)</code>, where R is an <code>AffineTransform</code> represented by the following matrix:
+   * 
    * <pre>
    *          [   cos(theta)    -sin(theta)    0   ]
    *          [   sin(theta)     cos(theta)    0   ]
    *          [       0              0         1   ]
    * </pre>
+   * 
    * Rotating with a positive angle theta rotates points on the positive x axis toward the positive y axis.
    *
-   * @param theta the angle of rotation in radians
+   * @param theta
+   *          the angle of rotation in radians
    */
   public void rotate( final double theta ) {
     dg2.rotate( theta );
@@ -460,18 +515,23 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   /**
    * Concatenates the current <code>Graphics2D</code> <code>Transform</code> with a translated rotation transform.
    * Subsequent rendering is transformed by a transform which is constructed by translating to the specified location,
-   * rotating by the specified radians, and translating back by the same amount as the original translation.  This is
+   * rotating by the specified radians, and translating back by the same amount as the original translation. This is
    * equivalent to the following sequence of calls:
+   * 
    * <pre>
-   *          translate(x, y);
-   *          rotate(theta);
-   *          translate(-x, -y);
+   * translate( x, y );
+   * rotate( theta );
+   * translate( -x, -y );
    * </pre>
+   * 
    * Rotating with a positive angle theta rotates points on the positive x axis toward the positive y axis.
    *
-   * @param theta the angle of rotation in radians
-   * @param x     the x coordinate of the origin of the rotation
-   * @param y     the y coordinate of the origin of the rotation
+   * @param theta
+   *          the angle of rotation in radians
+   * @param x
+   *          the x coordinate of the origin of the rotation
+   * @param y
+   *          the y coordinate of the origin of the rotation
    */
   public void rotate( final double theta, final double x, final double y ) {
     dg2.rotate( theta, x, y );
@@ -482,16 +542,19 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * rendering is resized according to the specified scaling factors relative to the previous scaling. This is
    * equivalent to calling <code>transform(S)</code>, where S is an <code>AffineTransform</code> represented by the
    * following matrix:
+   * 
    * <pre>
    *          [   sx   0    0   ]
    *          [   0    sy   0   ]
    *          [   0    0    1   ]
    * </pre>
    *
-   * @param sx the amount by which X coordinates in subsequent rendering operations are multiplied relative to previous
-   *           rendering operations.
-   * @param sy the amount by which Y coordinates in subsequent rendering operations are multiplied relative to previous
-   *           rendering operations.
+   * @param sx
+   *          the amount by which X coordinates in subsequent rendering operations are multiplied relative to previous
+   *          rendering operations.
+   * @param sy
+   *          the amount by which Y coordinates in subsequent rendering operations are multiplied relative to previous
+   *          rendering operations.
    */
   public void scale( final double sx, final double sy ) {
     dg2.scale( sx, sy );
@@ -501,16 +564,19 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Concatenates the current <code>Graphics2D</code> <code>Transform</code> with a shearing transform. Subsequent
    * renderings are sheared by the specified multiplier relative to the previous position. This is equivalent to calling
    * <code>transform(SH)</code>, where SH is an <code>AffineTransform</code> represented by the following matrix:
+   * 
    * <pre>
    *          [   1   shx   0   ]
    *          [  shy   1    0   ]
    *          [   0    0    1   ]
    * </pre>
    *
-   * @param shx the multiplier by which coordinates are shifted in the positive X axis direction as a function of their
-   *            Y coordinate
-   * @param shy the multiplier by which coordinates are shifted in the positive Y axis direction as a function of their
-   *            X coordinate
+   * @param shx
+   *          the multiplier by which coordinates are shifted in the positive X axis direction as a function of their Y
+   *          coordinate
+   * @param shy
+   *          the multiplier by which coordinates are shifted in the positive Y axis direction as a function of their X
+   *          coordinate
    */
   public void shear( final double shx, final double shy ) {
     dg2.shear( shx, shy );
@@ -518,14 +584,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 
   /**
    * Composes an <code>AffineTransform</code> object with the <code>Transform</code> in this <code>Graphics2D</code>
-   * according to the rule last-specified-first-applied.  If the current <code>Transform</code> is Cx, the result of
-   * composition with Tx is a new <code>Transform</code> Cx'.  Cx' becomes the current <code>Transform</code> for this
+   * according to the rule last-specified-first-applied. If the current <code>Transform</code> is Cx, the result of
+   * composition with Tx is a new <code>Transform</code> Cx'. Cx' becomes the current <code>Transform</code> for this
    * <code>Graphics2D</code>. Transforming a point p by the updated <code>Transform</code> Cx' is equivalent to first
-   * transforming p by Tx and then transforming the result by the original <code>Transform</code> Cx.  In other words,
-   * Cx'(p) = Cx(Tx(p)).  A copy of the Tx is made, if necessary, so further modifications to Tx do not affect
-   * rendering.
+   * transforming p by Tx and then transforming the result by the original <code>Transform</code> Cx. In other words,
+   * Cx'(p) = Cx(Tx(p)). A copy of the Tx is made, if necessary, so further modifications to Tx do not affect rendering.
    *
-   * @param tx the <code>AffineTransform</code> object to be composed with the current <code>Transform</code>
+   * @param tx
+   *          the <code>AffineTransform</code> object to be composed with the current <code>Transform</code>
    * @see #setTransform
    * @see java.awt.geom.AffineTransform
    */
@@ -537,11 +603,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Overwrites the Transform in the <code>Graphics2D</code> context. WARNING: This method should <b>never</b> be used
    * to apply a new coordinate transform on top of an existing transform because the <code>Graphics2D</code> might
    * already have a transform that is needed for other purposes, such as rendering Swing components or applying a
-   * scaling transformation to adjust for the resolution of a printer. <p>To add a coordinate transform, use the
-   * <code>transform</code>, <code>rotate</code>, <code>scale</code>, or <code>shear</code> methods.  The
-   * <code>setTransform</code> method is intended only for restoring the original <code>Graphics2D</code> transform
-   * after rendering, as shown in this example:
-   * <pre><blockquote>
+   * scaling transformation to adjust for the resolution of a printer.
+   * <p>
+   * To add a coordinate transform, use the <code>transform</code>, <code>rotate</code>, <code>scale</code>, or
+   * <code>shear</code> methods. The <code>setTransform</code> method is intended only for restoring the original
+   * <code>Graphics2D</code> transform after rendering, as shown in this example:
+   * 
+   * <pre>
+   * <blockquote>
    * // Get the current transform
    * AffineTransform saveAT = g2.getTransform();
    * // Perform transformation
@@ -550,9 +619,11 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * g2d.draw(...);
    * // Restore original transform
    * g2d.setTransform(saveAT);
-   * </blockquote></pre>
+   * </blockquote>
+   * </pre>
    *
-   * @param tx the <code>AffineTransform</code> that was retrieved from the <code>getTransform</code> method
+   * @param tx
+   *          the <code>AffineTransform</code> that was retrieved from the <code>getTransform</code> method
    * @see #transform
    * @see #getTransform
    * @see java.awt.geom.AffineTransform
@@ -605,10 +676,11 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Sets the background color for the <code>Graphics2D</code> context. The background color is used for clearing a
    * region. When a <code>Graphics2D</code> is constructed for a <code>Component</code>, the background color is
    * inherited from the <code>Component</code>. Setting the background color in the <code>Graphics2D</code> context only
-   * affects the subsequent <code>clearRect</code> calls and not the background color of the <code>Component</code>.  To
+   * affects the subsequent <code>clearRect</code> calls and not the background color of the <code>Component</code>. To
    * change the background of the <code>Component</code>, use appropriate methods of the <code>Component</code>.
    *
-   * @param color the background color that isused in subsequent calls to <code>clearRect</code>
+   * @param color
+   *          the background color that isused in subsequent calls to <code>clearRect</code>
    * @see #getBackground
    * @see java.awt.Graphics#clearRect
    */
@@ -638,15 +710,16 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 
   /**
    * Intersects the current <code>Clip</code> with the interior of the specified <code>Shape</code> and sets the
-   * <code>Clip</code> to the resulting intersection.  The specified <code>Shape</code> is transformed with the current
-   * <code>Graphics2D</code> <code>Transform</code> before being intersected with the current <code>Clip</code>.  This
+   * <code>Clip</code> to the resulting intersection. The specified <code>Shape</code> is transformed with the current
+   * <code>Graphics2D</code> <code>Transform</code> before being intersected with the current <code>Clip</code>. This
    * method is used to make the current <code>Clip</code> smaller. To make the <code>Clip</code> larger, use
    * <code>setClip</code>. The <i>user clip</i> modified by this method is independent of the clipping associated with
-   * device bounds and visibility.  If no clip has previously been set, or if the clip has been cleared using {@link
-   * java.awt.Graphics#setClip(java.awt.Shape) setClip} with a <code>null</code> argument, the specified
+   * device bounds and visibility. If no clip has previously been set, or if the clip has been cleared using
+   * {@link java.awt.Graphics#setClip(java.awt.Shape) setClip} with a <code>null</code> argument, the specified
    * <code>Shape</code> becomes the new user clip.
    *
-   * @param s the <code>Shape</code> to be intersected with the current <code>Clip</code>.  If <code>s</code> is
+   * @param s
+   *          the <code>Shape</code> to be intersected with the current <code>Clip</code>. If <code>s</code> is
    *          <code>null</code>, this method clears the current <code>Clip</code>.
    */
   public void clip( Shape s ) {
@@ -654,12 +727,12 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   }
 
   /**
-   * Get the rendering context of the <code>Font</code> within this <code>Graphics2D</code> context. The {@link
-   * java.awt.font.FontRenderContext} encapsulates application hints such as anti-aliasing and fractional metrics, as
-   * well as target device specific information such as dots-per-inch.  This information should be provided by the
-   * application when using objects that perform typographical formatting, such as <code>Font</code> and
-   * <code>TextLayout</code>.  This information should also be provided by applications that perform their own layout
-   * and need accurate measurements of various characteristics of glyphs such as advance and line height when various
+   * Get the rendering context of the <code>Font</code> within this <code>Graphics2D</code> context. The
+   * {@link java.awt.font.FontRenderContext} encapsulates application hints such as anti-aliasing and fractional
+   * metrics, as well as target device specific information such as dots-per-inch. This information should be provided
+   * by the application when using objects that perform typographical formatting, such as <code>Font</code> and
+   * <code>TextLayout</code>. This information should also be provided by applications that perform their own layout and
+   * need accurate measurements of various characteristics of glyphs such as advance and line height when various
    * rendering hints have been applied to the text rendering.
    *
    * @return a reference to an instance of FontRenderContext.
@@ -669,10 +742,10 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * @since 1.2
    */
   public FontRenderContext getFontRenderContext() {
-    final boolean antialias = RenderingHints.VALUE_TEXT_ANTIALIAS_ON.equals( getRenderingHint(
-      RenderingHints.KEY_TEXT_ANTIALIASING ) );
-    final boolean fractions = RenderingHints.VALUE_FRACTIONALMETRICS_ON.equals( getRenderingHint(
-      RenderingHints.KEY_FRACTIONALMETRICS ) );
+    final boolean antialias =
+        RenderingHints.VALUE_TEXT_ANTIALIAS_ON.equals( getRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING ) );
+    final boolean fractions =
+        RenderingHints.VALUE_FRACTIONALMETRICS_ON.equals( getRenderingHint( RenderingHints.KEY_FRACTIONALMETRICS ) );
     return new FontRenderContext( new AffineTransform(), antialias, fractions );
   }
 
@@ -719,7 +792,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Sets this graphics context's current color to the specified color. All subsequent graphics operations using this
    * graphics context use this specified color.
    *
-   * @param c the new rendering color.
+   * @param c
+   *          the new rendering color.
    * @see java.awt.Color
    * @see java.awt.Graphics#getColor
    */
@@ -729,7 +803,7 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 
   /**
    * Sets the paint mode of this graphics context to overwrite the destination with this graphics context's current
-   * color. This sets the logical pixel operation function to the paint or overwrite mode.  All subsequent rendering
+   * color. This sets the logical pixel operation function to the paint or overwrite mode. All subsequent rendering
    * operations will overwrite the destination with the current color.
    */
   public void setPaintMode() {
@@ -747,7 +821,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Pixels that are of colors other than those two colors are changed in an unpredictable but reversible manner; if the
    * same figure is drawn twice, then all pixels are restored to their original values.
    *
-   * @param c1 the XOR alternation color
+   * @param c1
+   *          the XOR alternation color
    */
   public void setXORMode( final Color c1 ) {
 
@@ -768,7 +843,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Sets this graphics context's font to the specified font. All subsequent text operations using this graphics context
    * use this font. A null argument is silently ignored.
    *
-   * @param font the font.
+   * @param font
+   *          the font.
    * @see java.awt.Graphics#getFont
    * @see java.awt.Graphics#drawString(String, int, int)
    * @see java.awt.Graphics#drawBytes(byte[], int, int, int, int)
@@ -784,7 +860,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   /**
    * Gets the font metrics for the specified font.
    *
-   * @param f the specified font
+   * @param f
+   *          the specified font
    * @return the font metrics for the specified font.
    * @see java.awt.Graphics#getFont
    * @see java.awt.FontMetrics
@@ -818,16 +895,20 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 
   /**
    * Intersects the current clip with the specified rectangle. The resulting clipping area is the intersection of the
-   * current clipping area and the specified rectangle.  If there is no current clipping area, either because the clip
+   * current clipping area and the specified rectangle. If there is no current clipping area, either because the clip
    * has never been set, or the clip has been cleared using <code>setClip(null)</code>, the specified rectangle becomes
    * the new clip. This method sets the user clip, which is independent of the clipping associated with device bounds
    * and window visibility. This method can only be used to make the current clip smaller. To set the current clip
    * larger, use any of the setClip methods. Rendering operations have no effect outside of the clipping area.
    *
-   * @param x      the x coordinate of the rectangle to intersect the clip with
-   * @param y      the y coordinate of the rectangle to intersect the clip with
-   * @param width  the width of the rectangle to intersect the clip with
-   * @param height the height of the rectangle to intersect the clip with
+   * @param x
+   *          the x coordinate of the rectangle to intersect the clip with
+   * @param y
+   *          the y coordinate of the rectangle to intersect the clip with
+   * @param width
+   *          the width of the rectangle to intersect the clip with
+   * @param height
+   *          the height of the rectangle to intersect the clip with
    * @see #setClip(int, int, int, int)
    * @see #setClip(java.awt.Shape)
    */
@@ -837,14 +918,18 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   }
 
   /**
-   * Sets the current clip to the rectangle specified by the given coordinates.  This method sets the user clip, which
-   * is independent of the clipping associated with device bounds and window visibility. Rendering operations have no
+   * Sets the current clip to the rectangle specified by the given coordinates. This method sets the user clip, which is
+   * independent of the clipping associated with device bounds and window visibility. Rendering operations have no
    * effect outside of the clipping area.
    *
-   * @param x      the <i>x</i> coordinate of the new clip rectangle.
-   * @param y      the <i>y</i> coordinate of the new clip rectangle.
-   * @param width  the width of the new clip rectangle.
-   * @param height the height of the new clip rectangle.
+   * @param x
+   *          the <i>x</i> coordinate of the new clip rectangle.
+   * @param y
+   *          the <i>y</i> coordinate of the new clip rectangle.
+   * @param width
+   *          the width of the new clip rectangle.
+   * @param height
+   *          the height of the new clip rectangle.
    * @see java.awt.Graphics#clipRect
    * @see java.awt.Graphics#setClip(java.awt.Shape)
    * @see java.awt.Graphics#getClip
@@ -873,12 +958,13 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 
   /**
    * Sets the current clipping area to an arbitrary clip shape. Not all objects that implement the <code>Shape</code>
-   * interface can be used to set the clip.  The only <code>Shape</code> objects that are guaranteed to be supported are
+   * interface can be used to set the clip. The only <code>Shape</code> objects that are guaranteed to be supported are
    * <code>Shape</code> objects that are obtained via the <code>getClip</code> method and via <code>Rectangle</code>
-   * objects.  This method sets the user clip, which is independent of the clipping associated with device bounds and
+   * objects. This method sets the user clip, which is independent of the clipping associated with device bounds and
    * window visibility.
    *
-   * @param clip the <code>Shape</code> to use to set the clip
+   * @param clip
+   *          the <code>Shape</code> to use to set the clip
    * @see java.awt.Graphics#getClip()
    * @see java.awt.Graphics#clipRect
    * @see java.awt.Graphics#setClip(int, int, int, int)
@@ -890,18 +976,24 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 
   /**
    * Copies an area of the component by a distance specified by <code>dx</code> and <code>dy</code>. From the point
-   * specified by <code>x</code> and <code>y</code>, this method copies downwards and to the right.  To copy an area of
+   * specified by <code>x</code> and <code>y</code>, this method copies downwards and to the right. To copy an area of
    * the component to the left or upwards, specify a negative value for <code>dx</code> or <code>dy</code>. If a portion
    * of the source rectangle lies outside the bounds of the component, or is obscured by another window or component,
    * <code>copyArea</code> will be unable to copy the associated pixels. The area that is omitted can be refreshed by
    * calling the component's <code>paint</code> method.
    *
-   * @param x      the <i>x</i> coordinate of the source rectangle.
-   * @param y      the <i>y</i> coordinate of the source rectangle.
-   * @param width  the width of the source rectangle.
-   * @param height the height of the source rectangle.
-   * @param dx     the horizontal distance to copy the pixels.
-   * @param dy     the vertical distance to copy the pixels.
+   * @param x
+   *          the <i>x</i> coordinate of the source rectangle.
+   * @param y
+   *          the <i>y</i> coordinate of the source rectangle.
+   * @param width
+   *          the width of the source rectangle.
+   * @param height
+   *          the height of the source rectangle.
+   * @param dx
+   *          the horizontal distance to copy the pixels.
+   * @param dy
+   *          the vertical distance to copy the pixels.
    */
   public void copyArea( final int x, final int y, final int width, final int height, final int dx, final int dy ) {
 
@@ -911,10 +1003,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * Draws a line, using the current color, between the points <code>(x1,&nbsp;y1)</code> and <code>(x2,&nbsp;y2)</code>
    * in this graphics context's coordinate system.
    *
-   * @param x1 the first point's <i>x</i> coordinate.
-   * @param y1 the first point's <i>y</i> coordinate.
-   * @param x2 the second point's <i>x</i> coordinate.
-   * @param y2 the second point's <i>y</i> coordinate.
+   * @param x1
+   *          the first point's <i>x</i> coordinate.
+   * @param y1
+   *          the first point's <i>y</i> coordinate.
+   * @param x2
+   *          the second point's <i>x</i> coordinate.
+   * @param y2
+   *          the second point's <i>y</i> coordinate.
    */
   public void drawLine( final int x1, final int y1, final int x2, final int y2 ) {
     final Line2D line = new Line2D.Double( (double) x1, (double) y1, (double) x2, (double) y2 );
@@ -927,10 +1023,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * <code>y&nbsp;+&nbsp;height&nbsp;-&nbsp;1</code>. The resulting rectangle covers an area <code>width</code> pixels
    * wide by <code>height</code> pixels tall. The rectangle is filled using the graphics context's current color.
    *
-   * @param x      the <i>x</i> coordinate of the rectangle to be filled.
-   * @param y      the <i>y</i> coordinate of the rectangle to be filled.
-   * @param width  the width of the rectangle to be filled.
-   * @param height the height of the rectangle to be filled.
+   * @param x
+   *          the <i>x</i> coordinate of the rectangle to be filled.
+   * @param y
+   *          the <i>y</i> coordinate of the rectangle to be filled.
+   * @param width
+   *          the width of the rectangle to be filled.
+   * @param height
+   *          the height of the rectangle to be filled.
    * @see java.awt.Graphics#clearRect
    * @see java.awt.Graphics#drawRect
    */
@@ -946,10 +1046,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * use <code>setColor</code> followed by <code>fillRect</code> to ensure that an offscreen image is cleared to a
    * specific color.
    *
-   * @param x      the <i>x</i> coordinate of the rectangle to clear.
-   * @param y      the <i>y</i> coordinate of the rectangle to clear.
-   * @param width  the width of the rectangle to clear.
-   * @param height the height of the rectangle to clear.
+   * @param x
+   *          the <i>x</i> coordinate of the rectangle to clear.
+   * @param y
+   *          the <i>y</i> coordinate of the rectangle to clear.
+   * @param width
+   *          the width of the rectangle to clear.
+   * @param height
+   *          the height of the rectangle to clear.
    * @see java.awt.Graphics#fillRect(int, int, int, int)
    * @see java.awt.Graphics#drawRect
    * @see java.awt.Graphics#setColor(java.awt.Color)
@@ -968,20 +1072,22 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * the rectangle are at <code>x</code> and <code>x&nbsp;+&nbsp;width</code>, respectively. The top and bottom edges of
    * the rectangle are at <code>y</code> and <code>y&nbsp;+&nbsp;height</code>.
    *
-   * @param x         the <i>x</i> coordinate of the rectangle to be drawn.
-   * @param y         the <i>y</i> coordinate of the rectangle to be drawn.
-   * @param width     the width of the rectangle to be drawn.
-   * @param height    the height of the rectangle to be drawn.
-   * @param arcWidth  the horizontal diameter of the arc at the four corners.
-   * @param arcHeight the vertical diameter of the arc at the four corners.
+   * @param x
+   *          the <i>x</i> coordinate of the rectangle to be drawn.
+   * @param y
+   *          the <i>y</i> coordinate of the rectangle to be drawn.
+   * @param width
+   *          the width of the rectangle to be drawn.
+   * @param height
+   *          the height of the rectangle to be drawn.
+   * @param arcWidth
+   *          the horizontal diameter of the arc at the four corners.
+   * @param arcHeight
+   *          the vertical diameter of the arc at the four corners.
    * @see java.awt.Graphics#fillRoundRect
    */
-  public void drawRoundRect( final int x,
-                             final int y,
-                             final int width,
-                             final int height,
-                             final int arcWidth,
-                             final int arcHeight ) {
+  public void drawRoundRect( final int x, final int y, final int width, final int height, final int arcWidth,
+      final int arcHeight ) {
     final RoundRectangle2D rect = new RoundRectangle2D.Double( x, y, width, height, arcWidth, arcHeight );
     draw( rect );
   }
@@ -991,20 +1097,22 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * at <code>x</code> and <code>x&nbsp;+&nbsp;width&nbsp;-&nbsp;1</code>, respectively. The top and bottom edges of the
    * rectangle are at <code>y</code> and <code>y&nbsp;+&nbsp;height&nbsp;-&nbsp;1</code>.
    *
-   * @param x         the <i>x</i> coordinate of the rectangle to be filled.
-   * @param y         the <i>y</i> coordinate of the rectangle to be filled.
-   * @param width     the width of the rectangle to be filled.
-   * @param height    the height of the rectangle to be filled.
-   * @param arcWidth  the horizontal diameter of the arc at the four corners.
-   * @param arcHeight the vertical diameter of the arc at the four corners.
+   * @param x
+   *          the <i>x</i> coordinate of the rectangle to be filled.
+   * @param y
+   *          the <i>y</i> coordinate of the rectangle to be filled.
+   * @param width
+   *          the width of the rectangle to be filled.
+   * @param height
+   *          the height of the rectangle to be filled.
+   * @param arcWidth
+   *          the horizontal diameter of the arc at the four corners.
+   * @param arcHeight
+   *          the vertical diameter of the arc at the four corners.
    * @see java.awt.Graphics#drawRoundRect
    */
-  public void fillRoundRect( final int x,
-                             final int y,
-                             final int width,
-                             final int height,
-                             final int arcWidth,
-                             final int arcHeight ) {
+  public void fillRoundRect( final int x, final int y, final int width, final int height, final int arcWidth,
+      final int arcHeight ) {
     final RoundRectangle2D rect = new RoundRectangle2D.Double( x, y, width, height, arcWidth, arcHeight );
     fill( rect );
   }
@@ -1016,10 +1124,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * The oval covers an area that is <code>width&nbsp;+&nbsp;1</code> pixels wide and <code>height&nbsp;+&nbsp;1</code>
    * pixels tall.
    *
-   * @param x      the <i>x</i> coordinate of the upper left corner of the oval to be drawn.
-   * @param y      the <i>y</i> coordinate of the upper left corner of the oval to be drawn.
-   * @param width  the width of the oval to be drawn.
-   * @param height the height of the oval to be drawn.
+   * @param x
+   *          the <i>x</i> coordinate of the upper left corner of the oval to be drawn.
+   * @param y
+   *          the <i>y</i> coordinate of the upper left corner of the oval to be drawn.
+   * @param width
+   *          the width of the oval to be drawn.
+   * @param height
+   *          the height of the oval to be drawn.
    * @see java.awt.Graphics#fillOval
    */
   public void drawOval( final int x, final int y, final int width, final int height ) {
@@ -1030,10 +1142,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   /**
    * Fills an oval bounded by the specified rectangle with the current color.
    *
-   * @param x      the <i>x</i> coordinate of the upper left corner of the oval to be filled.
-   * @param y      the <i>y</i> coordinate of the upper left corner of the oval to be filled.
-   * @param width  the width of the oval to be filled.
-   * @param height the height of the oval to be filled.
+   * @param x
+   *          the <i>x</i> coordinate of the upper left corner of the oval to be filled.
+   * @param y
+   *          the <i>y</i> coordinate of the upper left corner of the oval to be filled.
+   * @param width
+   *          the width of the oval to be filled.
+   * @param height
+   *          the height of the oval to be filled.
    * @see java.awt.Graphics#drawOval
    */
   public void fillOval( final int x, final int y, final int width, final int height ) {
@@ -1059,20 +1175,22 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * if the bounding rectangle is noticeably longer in one axis than the other, the angles to the start and end of the
    * arc segment will be skewed farther along the longer axis of the bounds.
    *
-   * @param x          the <i>x</i> coordinate of the upper-left corner of the arc to be drawn.
-   * @param y          the <i>y</i>  coordinate of the upper-left corner of the arc to be drawn.
-   * @param width      the width of the arc to be drawn.
-   * @param height     the height of the arc to be drawn.
-   * @param startAngle the beginning angle.
-   * @param arcAngle   the angular extent of the arc, relative to the start angle.
+   * @param x
+   *          the <i>x</i> coordinate of the upper-left corner of the arc to be drawn.
+   * @param y
+   *          the <i>y</i> coordinate of the upper-left corner of the arc to be drawn.
+   * @param width
+   *          the width of the arc to be drawn.
+   * @param height
+   *          the height of the arc to be drawn.
+   * @param startAngle
+   *          the beginning angle.
+   * @param arcAngle
+   *          the angular extent of the arc, relative to the start angle.
    * @see java.awt.Graphics#fillArc
    */
-  public void drawArc( final int x,
-                       final int y,
-                       final int width,
-                       final int height,
-                       final int startAngle,
-                       final int arcAngle ) {
+  public void drawArc( final int x, final int y, final int width, final int height, final int startAngle,
+      final int arcAngle ) {
     final Arc2D arc = new Arc2D.Double( x, y, width, height, startAngle, arcAngle, Arc2D.OPEN );
     draw( arc );
   }
@@ -1095,20 +1213,22 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * if the bounding rectangle is noticeably longer in one axis than the other, the angles to the start and end of the
    * arc segment will be skewed farther along the longer axis of the bounds.
    *
-   * @param x          the <i>x</i> coordinate of the upper-left corner of the arc to be filled.
-   * @param y          the <i>y</i>  coordinate of the upper-left corner of the arc to be filled.
-   * @param width      the width of the arc to be filled.
-   * @param height     the height of the arc to be filled.
-   * @param startAngle the beginning angle.
-   * @param arcAngle   the angular extent of the arc, relative to the start angle.
+   * @param x
+   *          the <i>x</i> coordinate of the upper-left corner of the arc to be filled.
+   * @param y
+   *          the <i>y</i> coordinate of the upper-left corner of the arc to be filled.
+   * @param width
+   *          the width of the arc to be filled.
+   * @param height
+   *          the height of the arc to be filled.
+   * @param startAngle
+   *          the beginning angle.
+   * @param arcAngle
+   *          the angular extent of the arc, relative to the start angle.
    * @see java.awt.Graphics#drawArc
    */
-  public void fillArc( final int x,
-                       final int y,
-                       final int width,
-                       final int height,
-                       final int startAngle,
-                       final int arcAngle ) {
+  public void fillArc( final int x, final int y, final int width, final int height, final int startAngle,
+      final int arcAngle ) {
     final Arc2D arc = new Arc2D.Double( x, y, width, height, startAngle, arcAngle, Arc2D.OPEN );
     fill( arc );
   }
@@ -1118,16 +1238,19 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * (<i>x</i>,&nbsp;<i>y</i>) coordinates defines a point. The figure is not closed if the first point differs from the
    * last point.
    *
-   * @param x       an array of <i>x</i> points
-   * @param y       an array of <i>y</i> points
-   * @param nPoints the total number of points
+   * @param x
+   *          an array of <i>x</i> points
+   * @param y
+   *          an array of <i>y</i> points
+   * @param nPoints
+   *          the total number of points
    * @see java.awt.Graphics#drawPolygon(int[], int[], int)
    * @since JDK1.1
    */
   public void drawPolyline( final int[] x, final int[] y, final int nPoints ) {
-    final Line2D line = new Line2D.Double( x[ 0 ], y[ 0 ], x[ 0 ], y[ 0 ] );
+    final Line2D line = new Line2D.Double( x[0], y[0], x[0], y[0] );
     for ( int i = 1; i < nPoints; i++ ) {
-      line.setLine( line.getX2(), line.getY2(), x[ i ], y[ i ] );
+      line.setLine( line.getX2(), line.getY2(), x[i], y[i] );
       draw( line );
     }
   }
@@ -1138,21 +1261,23 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * <p/>
    * This method draws the polygon defined by <code>nPoint</code> line segments, where the first
    * <code>nPoint&nbsp;-&nbsp;1</code> line segments are line segments from <code>(xPoints[i&nbsp;-&nbsp;1],&nbsp;
-   * yPoints[i&nbsp;-&nbsp;1])</code>
-   * to <code>(xPoints[i],&nbsp;yPoints[i])</code>, for 1&nbsp;&le;&nbsp;<i>i</i>&nbsp;&le;&nbsp;<code>nPoints</code>.
-   * The figure is automatically closed by drawing a line connecting the final point to the first point, if those points
-   * are different.
+   * yPoints[i&nbsp;-&nbsp;1])</code> to <code>(xPoints[i],&nbsp;yPoints[i])</code>, for
+   * 1&nbsp;&le;&nbsp;<i>i</i>&nbsp;&le;&nbsp;<code>nPoints</code>. The figure is automatically closed by drawing a line
+   * connecting the final point to the first point, if those points are different.
    *
-   * @param xPoints a an array of <code>x</code> coordinates.
-   * @param yPoints a an array of <code>y</code> coordinates.
-   * @param nPoints a the total number of points.
+   * @param xPoints
+   *          a an array of <code>x</code> coordinates.
+   * @param yPoints
+   *          a an array of <code>y</code> coordinates.
+   * @param nPoints
+   *          a the total number of points.
    * @see java.awt.Graphics#fillPolygon
    * @see java.awt.Graphics#drawPolyline
    */
   public void drawPolygon( final int[] xPoints, final int[] yPoints, final int nPoints ) {
     final Polygon poly = new Polygon();
     for ( int i = 0; i < nPoints; i++ ) {
-      poly.addPoint( xPoints[ i ], yPoints[ i ] );
+      poly.addPoint( xPoints[i], yPoints[i] );
     }
     draw( poly );
   }
@@ -1162,22 +1287,24 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * <p/>
    * This method draws the polygon defined by <code>nPoint</code> line segments, where the first
    * <code>nPoint&nbsp;-&nbsp;1</code> line segments are line segments from <code>(xPoints[i&nbsp;-&nbsp;1],&nbsp;
-   * yPoints[i&nbsp;-&nbsp;1])</code>
-   * to <code>(xPoints[i],&nbsp;yPoints[i])</code>, for 1&nbsp;&le;&nbsp;<i>i</i>&nbsp;&le;&nbsp;<code>nPoints</code>.
-   * The figure is automatically closed by drawing a line connecting the final point to the first point, if those points
-   * are different.
+   * yPoints[i&nbsp;-&nbsp;1])</code> to <code>(xPoints[i],&nbsp;yPoints[i])</code>, for
+   * 1&nbsp;&le;&nbsp;<i>i</i>&nbsp;&le;&nbsp;<code>nPoints</code>. The figure is automatically closed by drawing a line
+   * connecting the final point to the first point, if those points are different.
    * <p/>
    * The area inside the polygon is defined using an even-odd fill rule, also known as the alternating rule.
    *
-   * @param xPoints a an array of <code>x</code> coordinates.
-   * @param yPoints a an array of <code>y</code> coordinates.
-   * @param nPoints a the total number of points.
+   * @param xPoints
+   *          a an array of <code>x</code> coordinates.
+   * @param yPoints
+   *          a an array of <code>y</code> coordinates.
+   * @param nPoints
+   *          a the total number of points.
    * @see java.awt.Graphics#drawPolygon(int[], int[], int)
    */
   public void fillPolygon( final int[] xPoints, final int[] yPoints, final int nPoints ) {
     final Polygon poly = new Polygon();
     for ( int i = 0; i < nPoints; i++ ) {
-      poly.addPoint( xPoints[ i ], yPoints[ i ] );
+      poly.addPoint( xPoints[i], yPoints[i] );
     }
     fill( poly );
   }
@@ -1195,10 +1322,14 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * available or it is time to draw another frame of animation, the process that loads the image notifies the specified
    * image observer.
    *
-   * @param img      the specified image to be drawn. This method does nothing if <code>img</code> is null.
-   * @param x        the <i>x</i> coordinate.
-   * @param y        the <i>y</i> coordinate.
-   * @param observer object to be notified as more of the image is converted.
+   * @param img
+   *          the specified image to be drawn. This method does nothing if <code>img</code> is null.
+   * @param x
+   *          the <i>x</i> coordinate.
+   * @param y
+   *          the <i>y</i> coordinate.
+   * @param observer
+   *          object to be notified as more of the image is converted.
    * @return <code>false</code> if the image pixels are still changing; <code>true</code> otherwise.
    * @see java.awt.Image
    * @see java.awt.image.ImageObserver
@@ -1220,32 +1351,34 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * the image notifies the image observer by calling its <code>imageUpdate</code> method.
    * <p/>
    * A scaled version of an image will not necessarily be available immediately just because an unscaled version of the
-   * image has been constructed for this output device.  Each size of the image may be cached separately and generated
+   * image has been constructed for this output device. Each size of the image may be cached separately and generated
    * from the original data in a separate image production sequence.
    *
-   * @param img      the specified image to be drawn. This method does nothing if <code>img</code> is null.
-   * @param x        the <i>x</i> coordinate.
-   * @param y        the <i>y</i> coordinate.
-   * @param width    the width of the rectangle.
-   * @param height   the height of the rectangle.
-   * @param observer object to be notified as more of the image is converted.
+   * @param img
+   *          the specified image to be drawn. This method does nothing if <code>img</code> is null.
+   * @param x
+   *          the <i>x</i> coordinate.
+   * @param y
+   *          the <i>y</i> coordinate.
+   * @param width
+   *          the width of the rectangle.
+   * @param height
+   *          the height of the rectangle.
+   * @param observer
+   *          object to be notified as more of the image is converted.
    * @return <code>false</code> if the image pixels are still changing; <code>true</code> otherwise.
    * @see java.awt.Image
    * @see java.awt.image.ImageObserver
    * @see java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
    */
-  public boolean drawImage( final Image img,
-                            final int x,
-                            final int y,
-                            final int width,
-                            final int height,
-                            final ImageObserver observer ) {
+  public boolean drawImage( final Image img, final int x, final int y, final int width, final int height,
+      final ImageObserver observer ) {
     return drawImage( img, x, y, width, height, null, observer );
   }
 
   /**
    * Draws as much of the specified image as is currently available. The image is drawn with its top-left corner at
-   * (<i>x</i>,&nbsp;<i>y</i>) in this graphics context's coordinate space.  Transparent pixels are drawn in the
+   * (<i>x</i>,&nbsp;<i>y</i>) in this graphics context's coordinate space. Transparent pixels are drawn in the
    * specified background color.
    * <p/>
    * This operation is equivalent to filling a rectangle of the width and height of the specified image with the given
@@ -1259,18 +1392,23 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * available or it is time to draw another frame of animation, the process that loads the image notifies the specified
    * image observer.
    *
-   * @param img      the specified image to be drawn. This method does nothing if <code>img</code> is null.
-   * @param x        the <i>x</i> coordinate.
-   * @param y        the <i>y</i> coordinate.
-   * @param bgcolor  the background color to paint under the non-opaque portions of the image.
-   * @param observer object to be notified as more of the image is converted.
+   * @param img
+   *          the specified image to be drawn. This method does nothing if <code>img</code> is null.
+   * @param x
+   *          the <i>x</i> coordinate.
+   * @param y
+   *          the <i>y</i> coordinate.
+   * @param bgcolor
+   *          the background color to paint under the non-opaque portions of the image.
+   * @param observer
+   *          object to be notified as more of the image is converted.
    * @return <code>false</code> if the image pixels are still changing; <code>true</code> otherwise.
    * @see java.awt.Image
    * @see java.awt.image.ImageObserver
    * @see java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
    */
-  public boolean drawImage( final Image img, final int x, final int y, final Color bgcolor,
-                            final ImageObserver observer ) {
+  public boolean
+    drawImage( final Image img, final int x, final int y, final Color bgcolor, final ImageObserver observer ) {
     return drawImage( img, x, y, img.getWidth( observer ), img.getHeight( observer ), bgcolor, observer );
   }
 
@@ -1288,28 +1426,30 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * the image notifies the specified image observer.
    * <p/>
    * A scaled version of an image will not necessarily be available immediately just because an unscaled version of the
-   * image has been constructed for this output device.  Each size of the image may be cached separately and generated
+   * image has been constructed for this output device. Each size of the image may be cached separately and generated
    * from the original data in a separate image production sequence.
    *
-   * @param img      the specified image to be drawn. This method does nothing if <code>img</code> is null.
-   * @param x        the <i>x</i> coordinate.
-   * @param y        the <i>y</i> coordinate.
-   * @param width    the width of the rectangle.
-   * @param height   the height of the rectangle.
-   * @param bgcolor  the background color to paint under the non-opaque portions of the image.
-   * @param observer object to be notified as more of the image is converted.
+   * @param img
+   *          the specified image to be drawn. This method does nothing if <code>img</code> is null.
+   * @param x
+   *          the <i>x</i> coordinate.
+   * @param y
+   *          the <i>y</i> coordinate.
+   * @param width
+   *          the width of the rectangle.
+   * @param height
+   *          the height of the rectangle.
+   * @param bgcolor
+   *          the background color to paint under the non-opaque portions of the image.
+   * @param observer
+   *          object to be notified as more of the image is converted.
    * @return <code>false</code> if the image pixels are still changing; <code>true</code> otherwise.
    * @see java.awt.Image
    * @see java.awt.image.ImageObserver
    * @see java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
    */
-  public boolean drawImage( final Image img,
-                            final int x,
-                            final int y,
-                            final int width,
-                            final int height,
-                            final Color bgcolor,
-                            final ImageObserver observer ) {
+  public boolean drawImage( final Image img, final int x, final int y, final int width, final int height,
+      final Color bgcolor, final ImageObserver observer ) {
     waitForImage( img );
     final double scalex = width / (double) img.getWidth( observer );
     final double scaley = height / (double) img.getHeight( observer );
@@ -1348,32 +1488,34 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * first coordinate of the destination rectangle, and the second source coordinate is mapped to the second destination
    * coordinate. The subimage is scaled and flipped as needed to preserve those mappings.
    *
-   * @param img      the specified image to be drawn. This method does nothing if <code>img</code> is null.
-   * @param dx1      the <i>x</i> coordinate of the first corner of the destination rectangle.
-   * @param dy1      the <i>y</i> coordinate of the first corner of the destination rectangle.
-   * @param dx2      the <i>x</i> coordinate of the second corner of the destination rectangle.
-   * @param dy2      the <i>y</i> coordinate of the second corner of the destination rectangle.
-   * @param sx1      the <i>x</i> coordinate of the first corner of the source rectangle.
-   * @param sy1      the <i>y</i> coordinate of the first corner of the source rectangle.
-   * @param sx2      the <i>x</i> coordinate of the second corner of the source rectangle.
-   * @param sy2      the <i>y</i> coordinate of the second corner of the source rectangle.
-   * @param observer object to be notified as more of the image is scaled and converted.
+   * @param img
+   *          the specified image to be drawn. This method does nothing if <code>img</code> is null.
+   * @param dx1
+   *          the <i>x</i> coordinate of the first corner of the destination rectangle.
+   * @param dy1
+   *          the <i>y</i> coordinate of the first corner of the destination rectangle.
+   * @param dx2
+   *          the <i>x</i> coordinate of the second corner of the destination rectangle.
+   * @param dy2
+   *          the <i>y</i> coordinate of the second corner of the destination rectangle.
+   * @param sx1
+   *          the <i>x</i> coordinate of the first corner of the source rectangle.
+   * @param sy1
+   *          the <i>y</i> coordinate of the first corner of the source rectangle.
+   * @param sx2
+   *          the <i>x</i> coordinate of the second corner of the source rectangle.
+   * @param sy2
+   *          the <i>y</i> coordinate of the second corner of the source rectangle.
+   * @param observer
+   *          object to be notified as more of the image is scaled and converted.
    * @return <code>false</code> if the image pixels are still changing; <code>true</code> otherwise.
    * @see java.awt.Image
    * @see java.awt.image.ImageObserver
    * @see java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
    * @since JDK1.1
    */
-  public boolean drawImage( final Image img,
-                            final int dx1,
-                            final int dy1,
-                            final int dx2,
-                            final int dy2,
-                            final int sx1,
-                            final int sy1,
-                            final int sx2,
-                            final int sy2,
-                            final ImageObserver observer ) {
+  public boolean drawImage( final Image img, final int dx1, final int dy1, final int dx2, final int dy2, final int sx1,
+      final int sy1, final int sx2, final int sy2, final ImageObserver observer ) {
     return drawImage( img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null, observer );
   }
 
@@ -1396,41 +1538,43 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    * first coordinate of the destination rectangle, and the second source coordinate is mapped to the second destination
    * coordinate. The subimage is scaled and flipped as needed to preserve those mappings.
    *
-   * @param img      the specified image to be drawn. This method does nothing if <code>img</code> is null.
-   * @param dx1      the <i>x</i> coordinate of the first corner of the destination rectangle.
-   * @param dy1      the <i>y</i> coordinate of the first corner of the destination rectangle.
-   * @param dx2      the <i>x</i> coordinate of the second corner of the destination rectangle.
-   * @param dy2      the <i>y</i> coordinate of the second corner of the destination rectangle.
-   * @param sx1      the <i>x</i> coordinate of the first corner of the source rectangle.
-   * @param sy1      the <i>y</i> coordinate of the first corner of the source rectangle.
-   * @param sx2      the <i>x</i> coordinate of the second corner of the source rectangle.
-   * @param sy2      the <i>y</i> coordinate of the second corner of the source rectangle.
-   * @param bgcolor  the background color to paint under the non-opaque portions of the image.
-   * @param observer object to be notified as more of the image is scaled and converted.
+   * @param img
+   *          the specified image to be drawn. This method does nothing if <code>img</code> is null.
+   * @param dx1
+   *          the <i>x</i> coordinate of the first corner of the destination rectangle.
+   * @param dy1
+   *          the <i>y</i> coordinate of the first corner of the destination rectangle.
+   * @param dx2
+   *          the <i>x</i> coordinate of the second corner of the destination rectangle.
+   * @param dy2
+   *          the <i>y</i> coordinate of the second corner of the destination rectangle.
+   * @param sx1
+   *          the <i>x</i> coordinate of the first corner of the source rectangle.
+   * @param sy1
+   *          the <i>y</i> coordinate of the first corner of the source rectangle.
+   * @param sx2
+   *          the <i>x</i> coordinate of the second corner of the source rectangle.
+   * @param sy2
+   *          the <i>y</i> coordinate of the second corner of the source rectangle.
+   * @param bgcolor
+   *          the background color to paint under the non-opaque portions of the image.
+   * @param observer
+   *          object to be notified as more of the image is scaled and converted.
    * @return <code>false</code> if the image pixels are still changing; <code>true</code> otherwise.
    * @see java.awt.Image
    * @see java.awt.image.ImageObserver
    * @see java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
    * @since JDK1.1
    */
-  public boolean drawImage( final Image img,
-                            final int dx1,
-                            final int dy1,
-                            final int dx2,
-                            final int dy2,
-                            final int sx1,
-                            final int sy1,
-                            final int sx2,
-                            final int sy2,
-                            final Color bgcolor,
-                            final ImageObserver observer ) {
+  public boolean drawImage( final Image img, final int dx1, final int dy1, final int dx2, final int dy2, final int sx1,
+      final int sy1, final int sx2, final int sy2, final Color bgcolor, final ImageObserver observer ) {
     waitForImage( img );
     final double dwidth = (double) dx2 - dx1;
     final double dheight = (double) dy2 - dy1;
     final double swidth = (double) sx2 - sx1;
     final double sheight = (double) sy2 - sy1;
 
-    //if either width or height is 0, then there is nothing to draw
+    // if either width or height is 0, then there is nothing to draw
     if ( dwidth == 0 || dheight == 0 || swidth == 0 || sheight == 0 ) {
       return true;
     }
@@ -1443,8 +1587,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
     final AffineTransform tx = AffineTransform.getTranslateInstance( dx1 - transx, dy1 - transy );
     tx.scale( scalex, scaley );
 
-    final BufferedImage mask = new BufferedImage( img.getWidth( observer ), img.getHeight( observer ),
-      BufferedImage.TYPE_BYTE_BINARY );
+    final BufferedImage mask =
+        new BufferedImage( img.getWidth( observer ), img.getHeight( observer ), BufferedImage.TYPE_BYTE_BINARY );
     final Graphics g = mask.getGraphics();
     g.fillRect( sx1, sy1, (int) swidth, (int) sheight );
     drawImage( img, mask, tx, null, observer );
@@ -1452,11 +1596,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
     return true;
   }
 
-  protected abstract boolean drawImage( final Image img,
-                                        final Image mask,
-                                        final AffineTransform xform,
-                                        final Color bgColor,
-                                        final ImageObserver obs );
+  protected abstract boolean drawImage( final Image img, final Image mask, final AffineTransform xform,
+      final Color bgColor, final ImageObserver obs );
 
   /**
    * Disposes of this graphics context and releases any system resources that it is using. A <code>Graphics</code>

@@ -1,21 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.plaintext;
+
+import java.util.Locale;
+
+import javax.swing.Icon;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -26,9 +32,6 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-import javax.swing.*;
-import java.util.Locale;
-
 /**
  * Encapsulates the PlainTextExportDialog into a separate plugin.
  *
@@ -36,7 +39,7 @@ import java.util.Locale;
  */
 public class PlainTextExportPlugin extends AbstractExportActionPlugin {
   /**
-   * Localised resources.
+   * Localized resources.
    */
   private final ResourceBundleSupport resources;
 
@@ -44,8 +47,9 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin {
    * DefaultConstructor.
    */
   public PlainTextExportPlugin() {
-    resources = new ResourceBundleSupport( Locale.getDefault(), PlainTextExportGUIModule.BUNDLE_NAME,
-      ObjectUtilities.getClassLoader( PlainTextExportGUIModule.class ) );
+    resources =
+        new ResourceBundleSupport( Locale.getDefault(), PlainTextExportGUIModule.BUNDLE_NAME, ObjectUtilities
+            .getClassLoader( PlainTextExportGUIModule.class ) );
   }
 
   public boolean initialize( final SwingGuiContext context ) {
@@ -57,7 +61,6 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin {
     }
     return true;
   }
-
 
   /**
    * Creates the progress dialog that monitors the export process.
@@ -80,12 +83,13 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin {
   /**
    * Shows this dialog and (if the dialog is confirmed) saves the complete report into an Excel file.
    *
-   * @param report the report being processed.
+   * @param report
+   *          the report being processed.
    * @return true or false.
    */
   public boolean performExport( final MasterReport report ) {
-    final boolean result = performShowExportDialog
-      ( report, "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.Dialog" ); //$NON-NLS-1$
+    final boolean result =
+        performShowExportDialog( report, "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.Dialog" ); //$NON-NLS-1$
     if ( result == false ) {
       // user canceled the dialog ...
       return false;
@@ -93,7 +97,7 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin {
 
     final ReportProgressDialog progressDialog;
     if ( isProgressDialogEnabled( report,
-      "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.ProgressDialogEnabled" ) ) {
+        "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.ProgressDialogEnabled" ) ) {
       progressDialog = createProgressDialog();
       if ( report.getTitle() == null ) {
         progressDialog.setTitle( getResources().getString( "ProgressDialog.EMPTY_TITLE" ) );
@@ -103,7 +107,6 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin {
     } else {
       progressDialog = null;
     }
-
 
     final PlainTextExportTask task = new PlainTextExportTask( report, progressDialog, getContext() );
     final Thread thread = new Thread( task );
@@ -170,7 +173,7 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin {
   /**
    * Returns the resourcebundle to be used to translate strings into localized content.
    *
-   * @return the resourcebundle for the localisation.
+   * @return the resourcebundle for the localization.
    */
   protected ResourceBundleSupport getResources() {
     return resources;

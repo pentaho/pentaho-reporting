@@ -42,18 +42,14 @@ public class FastExcelFormattedDataBuilder extends AbstractFormattedDataBuilder 
   private final FastExcelPrinter excelPrinter;
 
   public FastExcelFormattedDataBuilder( final HashMap<InstanceID, CellLayoutInfo> layout,
-                                        final ArrayList<CellLayoutInfo> backgroundCells,
-                                        final long[] cellHeights,
-                                        final FastExcelPrinter excelPrinter ) {
+      final ArrayList<CellLayoutInfo> backgroundCells, final long[] cellHeights, final FastExcelPrinter excelPrinter ) {
     this.layout = layout;
     this.backgroundCells = backgroundCells;
     this.cellHeights = cellHeights;
     this.excelPrinter = excelPrinter;
   }
 
-  public void compute( final Band band,
-                       final ExpressionRuntime runtime,
-                       final OutputStream out )
+  public void compute( final Band band, final ExpressionRuntime runtime, final OutputStream out )
     throws ReportProcessingException, ContentProcessingException, IOException {
     SimpleStyleSheet computedStyle = band.getComputedStyle();
     if ( computedStyle.getBooleanStyleProperty( ElementStyleKeys.VISIBLE ) == false ) {

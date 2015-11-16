@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -70,12 +70,13 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
   /**
    * Creates a new weak reference list. The storage of the list is limited to getMaxChildCount() elements.
    *
-   * @param maxChildCount the maximum number of elements.
+   * @param maxChildCount
+   *          the maximum number of elements.
    */
   protected WeakReferenceList( final int maxChildCount ) {
     this.maxChilds = maxChildCount;
-    //noinspection unchecked
-    this.childs = new Reference[ maxChildCount - 1 ];
+    // noinspection unchecked
+    this.childs = new Reference[maxChildCount - 1];
   }
 
   /**
@@ -104,7 +105,8 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
   /**
    * Attempts to restore the child stored on the given index.
    *
-   * @param index the index.
+   * @param index
+   *          the index.
    * @return null if the child could not be restored or the restored child.
    */
   protected abstract T restoreChild( int index );
@@ -113,21 +115,22 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
    * Returns the child stored at the given index. If the child has been garbage collected, it gets restored using the
    * restoreChild function.
    *
-   * @param index the index.
+   * @param index
+   *          the index.
    * @return the object.
    */
   public Object get( final int index ) {
     if ( isMaster( index ) ) {
       return master;
     } else {
-      final Reference<T> ref = childs[ getChildPos( index ) ];
+      final Reference<T> ref = childs[getChildPos( index )];
       if ( ref == null ) {
         throw new IllegalStateException( "State: " + index );
       }
       T ob = ref.get();
       if ( ob == null ) {
         ob = restoreChild( index );
-        childs[ getChildPos( index ) ] = createReference( ob );
+        childs[getChildPos( index )] = createReference( ob );
       }
       return ob;
     }
@@ -137,7 +140,7 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
     if ( isMaster( index ) ) {
       return master;
     } else {
-      final Reference<T> ref = childs[ getChildPos( index ) ];
+      final Reference<T> ref = childs[getChildPos( index )];
       if ( ref == null ) {
         throw new IllegalStateException( "State: " + index );
       }
@@ -148,21 +151,24 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
   /**
    * Replaces the child stored at the given index with the new child which can be null.
    *
-   * @param report the object.
-   * @param index  the index.
+   * @param report
+   *          the object.
+   * @param index
+   *          the index.
    */
   public void set( final T report, final int index ) {
     if ( isMaster( index ) ) {
       master = report;
     } else {
-      childs[ getChildPos( index ) ] = createReference( report );
+      childs[getChildPos( index )] = createReference( report );
     }
   }
 
   /**
    * Creates a new reference for the given object.
    *
-   * @param o the object.
+   * @param o
+   *          the object.
    * @return a WeakReference for the object o without any ReferenceQueue attached.
    */
   private Reference<T> createReference( final T o ) {
@@ -173,7 +179,8 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
    * Adds the element to the list. If the maximum size of the list is exceeded, this function returns false to indicate
    * that adding failed.
    *
-   * @param rs the object.
+   * @param rs
+   *          the object.
    * @return true, if the object was successfully added to the list, false otherwise
    */
   public boolean add( final T rs ) {
@@ -183,7 +190,7 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
       return true;
     } else {
       if ( size < getMaxChildCount() ) {
-        childs[ size - 1 ] = createReference( rs );
+        childs[size - 1] = createReference( rs );
         size++;
         return true;
       } else {
@@ -196,7 +203,8 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
   /**
    * Returns true, if the given index denotes a master index of this list.
    *
-   * @param index the index.
+   * @param index
+   *          the index.
    * @return true if the index is a master index.
    */
   protected boolean isMaster( final int index ) {
@@ -206,7 +214,8 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
   /**
    * Returns the internal storage position for the child.
    *
-   * @param index the index.
+   * @param index
+   *          the index.
    * @return the internal storage index.
    */
   protected int getChildPos( final int index ) {
@@ -225,43 +234,55 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
   /**
    * Serialisation support. The transient child elements were not saved.
    *
-   * @param in the input stream.
-   * @throws IOException            if there is an I/O error.
-   * @throws ClassNotFoundException if a serialized class is not defined on this system.
+   * @param in
+   *          the input stream.
+   * @throws IOException
+   *           if there is an I/O error.
+   * @throws ClassNotFoundException
+   *           if a serialized class is not defined on this system.
    * @noinspection unchecked
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    childs = new Reference[ getMaxChildCount() - 1 ];
+    childs = new Reference[getMaxChildCount() - 1];
     for ( int i = 0; i < childs.length; i++ ) {
-      childs[ i ] = createReference( null );
+      childs[i] = createReference( null );
     }
   }
 
   /**
-   * Creates and returns a copy of this object.  The precise meaning of "copy" may depend on the class of the object.
-   * The general intent is that, for any object <tt>x</tt>, the expression: <blockquote>
+   * Creates and returns a copy of this object. The precise meaning of "copy" may depend on the class of the object. The
+   * general intent is that, for any object <tt>x</tt>, the expression: <blockquote>
+   * 
    * <pre>
-   * x.clone() != x</pre></blockquote>
-   * will be true, and that the expression: <blockquote>
+   * x.clone() != x
+   * </pre>
+   * 
+   * </blockquote> will be true, and that the expression: <blockquote>
+   * 
    * <pre>
-   * x.clone().getClass() == x.getClass()</pre></blockquote>
-   * will be <tt>true</tt>, but these are not absolute requirements. While it is typically the case that: <blockquote>
+   * x.clone().getClass() == x.getClass()
+   * </pre>
+   * 
+   * </blockquote> will be <tt>true</tt>, but these are not absolute requirements. While it is typically the case that:
+   * <blockquote>
+   * 
    * <pre>
-   * x.clone().equals(x)</pre></blockquote>
-   * will be <tt>true</tt>, this is not an absolute requirement.
+   * x.clone().equals( x )
+   * </pre>
+   * 
+   * </blockquote> will be <tt>true</tt>, this is not an absolute requirement.
    *
-   * By convention, the returned object should be obtained by calling <tt>super.clone</tt>.  If a class and all of its
+   * By convention, the returned object should be obtained by calling <tt>super.clone</tt>. If a class and all of its
    * superclasses (except <tt>Object</tt>) obey this convention, it will be the case that <tt>x.clone().getClass() ==
    * x.getClass()</tt>.
    *
-   * By convention, the object returned by this method should be independent of this object (which is being cloned).  To
+   * By convention, the object returned by this method should be independent of this object (which is being cloned). To
    * achieve this independence, it may be necessary to modify one or more fields of the object returned by
-   * <tt>super.clone</tt> before returning it.  Typically, this means copying any mutable objects that comprise the
+   * <tt>super.clone</tt> before returning it. Typically, this means copying any mutable objects that comprise the
    * internal "deep structure" of the object being cloned and replacing the references to these objects with references
-   * to the copies.  If a class contains only primitive fields or references to immutable objects, then it is usually
-   * the case that no fields in the object returned by <tt>super.clone</tt> need to be modified.
+   * to the copies. If a class contains only primitive fields or references to immutable objects, then it is usually the
+   * case that no fields in the object returned by <tt>super.clone</tt> need to be modified.
    *
    * The method <tt>clone</tt> for class <tt>Object</tt> performs a specific cloning operation. First, if the class of
    * this object does not implement the interface <tt>Cloneable</tt>, then a <tt>CloneNotSupportedException</tt> is
@@ -274,13 +295,12 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
    * method on an object whose class is <tt>Object</tt> will result in throwing an exception at run time.
    *
    * @return a clone of this instance.
-   * @throws CloneNotSupportedException if the object's class does not support the <code>Cloneable</code> interface.
-   *                                    Subclasses that override the <code>clone</code> method can also throw this
-   *                                    exception to indicate that an instance cannot be cloned.
+   * @throws CloneNotSupportedException
+   *           if the object's class does not support the <code>Cloneable</code> interface. Subclasses that override the
+   *           <code>clone</code> method can also throw this exception to indicate that an instance cannot be cloned.
    * @see Cloneable
    */
-  protected Object clone()
-    throws CloneNotSupportedException {
+  protected Object clone() throws CloneNotSupportedException {
     final WeakReferenceList list = (WeakReferenceList) super.clone();
     list.childs = childs.clone();
     return list;

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.bsf;
 
@@ -74,11 +74,12 @@ public class BSFExpression extends AbstractExpression {
   /**
    * Initializes the Bean-Scripting Framework manager.
    *
-   * @param interpreter the BSF-Manager that should be initialized.
-   * @throws BSFException if an error occured.
+   * @param interpreter
+   *          the BSF-Manager that should be initialized.
+   * @throws BSFException
+   *           if an error occured.
    */
-  protected void initializeInterpreter( final BSFManager interpreter )
-    throws BSFException {
+  protected void initializeInterpreter( final BSFManager interpreter ) throws BSFException {
     dataRowWrapper = new LegacyDataRowWrapper();
     runtimeWrapper = new WrapperExpressionRuntime();
     runtimeWrapper.update( getDataRow(), getRuntime() );
@@ -113,11 +114,10 @@ public class BSFExpression extends AbstractExpression {
     try {
       runtimeWrapper.update( null, getRuntime() );
       dataRowWrapper.setParent( getDataRow() );
-      return interpreter.eval
-        ( getLanguage(), "expression", 1, 1, getExpression() ); //$NON-NLS-1$
+      return interpreter.eval( getLanguage(), "expression", 1, 1, getExpression() ); //$NON-NLS-1$
     } catch ( Exception e ) {
       BSFExpression.logger.warn( "Evaluation error: " + //$NON-NLS-1$
-        e.getClass() + " - " + e.getMessage(), e ); //$NON-NLS-1$
+          e.getClass() + " - " + e.getMessage(), e ); //$NON-NLS-1$
       return null;
     } finally {
       runtimeWrapper.update( null, null );
@@ -129,25 +129,26 @@ public class BSFExpression extends AbstractExpression {
    * Clones the expression and reinitializes the script.
    *
    * @return a clone of the expression.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public Object clone()
-    throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     final BSFExpression expression = (BSFExpression) super.clone();
     expression.interpreter = null;
     return expression;
   }
 
-
   /**
    * Serialisation support. The transient child elements were not saved.
    *
-   * @param in the input stream.
-   * @throws IOException            if there is an I/O error.
-   * @throws ClassNotFoundException if a serialized class is not defined on this system.
+   * @param in
+   *          the input stream.
+   * @throws IOException
+   *           if there is an I/O error.
+   * @throws ClassNotFoundException
+   *           if a serialized class is not defined on this system.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
   }
 
@@ -170,7 +171,8 @@ public class BSFExpression extends AbstractExpression {
   /**
    * Sets the script that should be executed. Whats in the script depends on what langage is selected.
    *
-   * @param expression the script.
+   * @param expression
+   *          the script.
    */
   public void setExpression( final String expression ) {
     this.expression = expression;
@@ -189,7 +191,8 @@ public class BSFExpression extends AbstractExpression {
   /**
    * Defines the programming language of the script and expression.
    *
-   * @param language the programming language of the script.
+   * @param language
+   *          the programming language of the script.
    */
   public void setLanguage( final String language ) {
     this.language = language;
@@ -210,7 +213,8 @@ public class BSFExpression extends AbstractExpression {
    * Defines the script. The script is a predefined piece of code that gets executed once. It can (and should) be used
    * to perform global initializations and to define functions.
    *
-   * @param script an initialization script.
+   * @param script
+   *          an initialization script.
    */
   public void setScript( final String script ) {
     this.script = script;

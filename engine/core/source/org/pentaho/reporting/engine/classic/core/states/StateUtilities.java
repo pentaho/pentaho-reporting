@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states;
 
@@ -62,17 +62,21 @@ public class StateUtilities {
     }
 
     /**
-     * Compares its two arguments for order.  Returns a negative integer, zero, or a positive integer as the first
-     * argument is less than, equal to, or greater than the second.<p>
+     * Compares its two arguments for order. Returns a negative integer, zero, or a positive integer as the first
+     * argument is less than, equal to, or greater than the second.
+     * <p>
      *
-     * @param c1 the first object to be compared.
-     * @param c2 the second object to be compared.
+     * @param c1
+     *          the first object to be compared.
+     * @param c2
+     *          the second object to be compared.
      * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater
-     * than the second.
-     * @throws ClassCastException if the arguments' types prevent them from being compared by this Comparator.
+     *         than the second.
+     * @throws ClassCastException
+     *           if the arguments' types prevent them from being compared by this Comparator.
      */
     public int compare( final T c1, final T c2 ) {
-      //noinspection unchecked
+      // noinspection unchecked
       return -1 * c1.compareTo( c2 );
     }
   }
@@ -80,9 +84,8 @@ public class StateUtilities {
   private StateUtilities() {
   }
 
-  public static boolean computeLevels( final DefaultFlowController report,
-                                       final LayoutProcess lp,
-                                       final HashSet<Integer> levels ) {
+  public static boolean computeLevels( final DefaultFlowController report, final LayoutProcess lp,
+      final HashSet<Integer> levels ) {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -95,7 +98,7 @@ public class StateUtilities {
     boolean retval = false;
     final StructureFunction[] collectionFunctions = lp.getCollectionFunctions();
     for ( int i = 0; i < collectionFunctions.length; i++ ) {
-      final StructureFunction function = collectionFunctions[ i ];
+      final StructureFunction function = collectionFunctions[i];
       if ( function.getDependencyLevel() == LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING ) {
         // this indicates a structural-preprocessor function, like the CrosstabNormalizer. They do not
         // take part in the ordinary processing.
@@ -112,7 +115,7 @@ public class StateUtilities {
 
     final Expression[] expressions = report.getMasterRow().getExpressionDataRow().getExpressions();
     for ( int i = 0; i < expressions.length; i++ ) {
-      final Expression expression = expressions[ i ];
+      final Expression expression = expressions[i];
       final Integer level = IntegerCache.getInteger( expression.getDependencyLevel() );
       levels.add( level );
       if ( level != LayoutProcess.LEVEL_PAGINATE ) {
@@ -123,8 +126,8 @@ public class StateUtilities {
     return retval;
   }
 
-  public static ValidationResult validate( final MasterReport report,
-                                           final ValidationResult result ) throws ReportProcessingException {
+  public static ValidationResult validate( final MasterReport report, final ValidationResult result )
+    throws ReportProcessingException {
 
     final ReportParameterDefinition parameters = report.getParameterDefinition();
     final DefaultParameterContext parameterContext = new DefaultParameterContext( report );
@@ -155,7 +158,7 @@ public class StateUtilities {
     try {
       final ReportParameterValidator reportParameterValidator = parameters.getValidator();
       final ValidationResult validationResult =
-        reportParameterValidator.validate( new ValidationResult(), parameters, parameterContext );
+          reportParameterValidator.validate( new ValidationResult(), parameters, parameterContext );
       parameterValues = validationResult.getParameterValues();
       return computeParameterValueSet( report, parameterValues );
     } finally {
@@ -164,14 +167,13 @@ public class StateUtilities {
   }
 
   public static ReportParameterValues computeParameterValueSet( final MasterReport report,
-                                                                final ReportParameterValues parameterValues )
-    throws ReportProcessingException {
+      final ReportParameterValues parameterValues ) throws ReportProcessingException {
     final ReportParameterValues retval = new ReportParameterValues();
     retval.putAll( parameterValues );
 
     final Configuration config = report.getConfiguration();
-    if ( "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.legacy.ReportNameAsProperty" ) ) ) {
+    if ( "true".equals( config
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.legacy.ReportNameAsProperty" ) ) ) {
       retval.put( "report.name", report.getName() );
     }
 
@@ -185,7 +187,6 @@ public class StateUtilities {
     return retval;
   }
 
-
   public static ReportParameterValues computeParameterValueSet( final SubReport report ) {
     // todo: Grab parent reports and compute the dataschema for them, so that the parameters here
     // get a meaning.
@@ -196,7 +197,7 @@ public class StateUtilities {
 
     final ParameterMapping[] reportParameterValues = report.getInputMappings();
     for ( int i = 0; i < reportParameterValues.length; i++ ) {
-      final ParameterMapping mapping = reportParameterValues[ i ];
+      final ParameterMapping mapping = reportParameterValues[i];
       if ( "*".equals( mapping.getName() ) ) {
         continue;
       }
@@ -206,12 +207,12 @@ public class StateUtilities {
   }
 
   public static ReportPreProcessor[] getAllPreProcessors( final AbstractReportDefinition reportDefinition,
-                                                          final boolean designTime ) {
+      final boolean designTime ) {
     final ReportPreProcessorRegistry registry = ReportPreProcessorRegistry.getInstance();
     final ReportPreProcessor[] processors = reportDefinition.getPreProcessors();
     final ArrayList<ReportPreProcessor> preProcessors = new ArrayList<ReportPreProcessor>();
     for ( int i = 0; i < processors.length; i++ ) {
-      final ReportPreProcessor o = processors[ i ];
+      final ReportPreProcessor o = processors[i];
       if ( o == null ) {
         continue;
       }
@@ -229,7 +230,7 @@ public class StateUtilities {
     final ReportPreProcessorMetaData[] allProcessors = registry.getAllReportPreProcessorMetaDatas();
     Arrays.sort( allProcessors, new PreProcessorComparator() );
     for ( int i = 0; i < allProcessors.length; i++ ) {
-      final ReportPreProcessorMetaData processor = allProcessors[ i ];
+      final ReportPreProcessorMetaData processor = allProcessors[i];
       if ( designTime && processor.isExecuteInDesignMode() == false ) {
         continue;
       }
@@ -242,7 +243,7 @@ public class StateUtilities {
         }
       }
     }
-    return preProcessors.toArray( new ReportPreProcessor[ preProcessors.size() ] );
+    return preProcessors.toArray( new ReportPreProcessor[preProcessors.size()] );
   }
 
   private static class PreProcessorComparator implements Comparator<ReportPreProcessorMetaData> {

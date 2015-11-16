@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -51,34 +51,24 @@ public class BorderIT extends TestCase {
   public static void testBorder() throws IOException, ReportWriterException {
     Object[] columnNames = new Object[] { "Customer", "City", "Number" };
 
-    DefaultTableModel reportTableModel = new DefaultTableModel(
-      new Object[][] { { "Customer_ASDFSDFSDFSDFSaasdasdasdasweruzweurzwiezrwieuzriweuzriweu", "Bern", "123" },
-        { "Hugo", "Z?rich", "2234" }, },
-      columnNames );
+    DefaultTableModel reportTableModel =
+        new DefaultTableModel( new Object[][] {
+          { "Customer_ASDFSDFSDFSDFSaasdasdasdasweruzweurzwiezrwieuzriweuzriweu", "Bern", "123" },
+          { "Hugo", "Z?rich", "2234" }, }, columnNames );
 
     MasterReport report = new MasterReport();
 
     report.setName( "BorderTest" );
 
+    report.getItemBand().addElement(
+        LabelElementFactory.createLabelElement( "CustomerLabel", new Rectangle2D.Double( 0, 0, 200, 100 ), Color.RED,
+            ElementAlignment.LEFT, new FontDefinition( "Arial", 12 ), "CustomerLabel" ) );
 
-    report.getItemBand().addElement( LabelElementFactory.createLabelElement( "CustomerLabel",
-      new Rectangle2D.Double( 0, 0, 200, 100 ),
-      Color.RED,
-      ElementAlignment.LEFT,
-      new FontDefinition( "Arial", 12 ),
-      "CustomerLabel" ) );
-
-    Element element = TextFieldElementFactory.createStringElement(
-      "CustomerField",
-      new Rectangle2D.Double( 210, 0, 150, 30 ),
-      Color.black,
-      ElementAlignment.LEFT,
-      ElementAlignment.TOP,
-      null, // font
-      "-", // null string
-      "Customer"
-    );
-
+    Element element =
+        TextFieldElementFactory.createStringElement( "CustomerField", new Rectangle2D.Double( 210, 0, 150, 30 ),
+            Color.black, ElementAlignment.LEFT, ElementAlignment.TOP, null, // font
+            "-", // null string
+            "Customer" );
 
     element.getStyle().setStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR, Color.RED );
     element.getStyle().setStyleProperty( ElementStyleKeys.BORDER_TOP_WIDTH, new Float( 1 ) );
@@ -104,7 +94,6 @@ public class BorderIT extends TestCase {
     report.getItemBand().addElement( element );
     report.setQuery( "default" );
     report.setDataFactory( new TableDataFactory( "default", reportTableModel ) );
-
 
     DebugReportRunner.execGraphics2D( report );
   }

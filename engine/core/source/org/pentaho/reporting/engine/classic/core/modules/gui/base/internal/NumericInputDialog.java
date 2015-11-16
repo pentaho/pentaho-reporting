@@ -1,38 +1,59 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
 
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.FormValidator;
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.NumericDocument;
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingCommonModule;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ResourceBundle;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.FormValidator;
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.NumericDocument;
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingCommonModule;
+import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 /**
  * Creation-Date: 29.10.2007, 18:36:13
@@ -45,7 +66,6 @@ public class NumericInputDialog extends JDialog {
 
     private SyncValuesHandler() {
     }
-
 
     public void insertUpdate( final DocumentEvent e ) {
       if ( inStateChange ) {
@@ -124,7 +144,8 @@ public class NumericInputDialog extends JDialog {
     /**
      * Receives notification that the action has occurred.
      *
-     * @param e the action event.
+     * @param e
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent e ) {
       if ( performValidate() ) {
@@ -149,7 +170,8 @@ public class NumericInputDialog extends JDialog {
     /**
      * Receives notification that the action has occurred.
      *
-     * @param e the action event.
+     * @param e
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent e ) {
       setConfirmed( false );
@@ -338,9 +360,8 @@ public class NumericInputDialog extends JDialog {
     buttonPanel.add( btnCancel );
     btnConfirm.setDefaultCapable( true );
     getRootPane().setDefaultButton( btnConfirm );
-    buttonPanel.registerKeyboardAction( getConfirmAction(),
-      KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0 ),
-      JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT );
+    buttonPanel.registerKeyboardAction( getConfirmAction(), KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0 ),
+        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT );
 
     final JPanel buttonCarrier = new JPanel();
     buttonCarrier.setLayout( new FlowLayout( FlowLayout.RIGHT ) );
@@ -412,7 +433,6 @@ public class NumericInputDialog extends JDialog {
   public void setMaximum( final int maximum ) {
     valueSlider.setMaximum( maximum );
   }
-
 
   public boolean isConfirmed() {
     return confirmed;
@@ -494,14 +514,8 @@ public class NumericInputDialog extends JDialog {
     return dialog;
   }
 
-  public static Integer showInputDialog( final Component parent,
-                                         final int icon,
-                                         final String title,
-                                         final String message,
-                                         final int minimum,
-                                         final int maximum,
-                                         final int initialValue,
-                                         final boolean bounded ) {
+  public static Integer showInputDialog( final Component parent, final int icon, final String title,
+      final String message, final int minimum, final int maximum, final int initialValue, final boolean bounded ) {
     final NumericInputDialog dialog = createDialog( parent );
     if ( title != null ) {
       dialog.setTitle( title );
@@ -524,12 +538,8 @@ public class NumericInputDialog extends JDialog {
     return null;
   }
 
-  public static Integer showInputDialog( final Component parent,
-                                         final int icon,
-                                         final String title,
-                                         final String message,
-                                         final int initialValue,
-                                         final boolean bounded ) {
+  public static Integer showInputDialog( final Component parent, final int icon, final String title,
+      final String message, final int initialValue, final boolean bounded ) {
     final NumericInputDialog dialog = createDialog( parent );
     if ( title != null ) {
       dialog.setTitle( title );
@@ -550,13 +560,8 @@ public class NumericInputDialog extends JDialog {
     return null;
   }
 
-  public static Integer showSliderDialog( final Component parent,
-                                          final int icon,
-                                          final String title,
-                                          final String message,
-                                          final int minimum,
-                                          final int maximum,
-                                          final int initialValue ) {
+  public static Integer showSliderDialog( final Component parent, final int icon, final String title,
+      final String message, final int minimum, final int maximum, final int initialValue ) {
     final NumericInputDialog dialog = createDialog( parent );
     if ( title != null ) {
       dialog.setTitle( title );
@@ -584,18 +589,18 @@ public class NumericInputDialog extends JDialog {
    */
   private static Icon createDefaultIcon( final int messageType ) {
     final String propertyName;
-    switch( messageType ) {
+    switch ( messageType ) {
       case 0:
-        propertyName = "OptionPane.errorIcon";//$NON-NLS-1$
+        propertyName = "OptionPane.errorIcon"; //$NON-NLS-1$
         break;
       case 1:
-        propertyName = "OptionPane.informationIcon";//$NON-NLS-1$
+        propertyName = "OptionPane.informationIcon"; //$NON-NLS-1$
         break;
       case 2:
-        propertyName = "OptionPane.warningIcon";//$NON-NLS-1$
+        propertyName = "OptionPane.warningIcon"; //$NON-NLS-1$
         break;
       case 3:
-        propertyName = "OptionPane.questionIcon";//$NON-NLS-1$
+        propertyName = "OptionPane.questionIcon"; //$NON-NLS-1$
         break;
       default:
         return null;

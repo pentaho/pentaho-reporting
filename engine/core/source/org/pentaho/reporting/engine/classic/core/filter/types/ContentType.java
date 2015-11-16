@@ -1,21 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
+
+import java.awt.Component;
+import java.awt.Image;
+import java.awt.Shape;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+
+import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,12 +42,6 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Locale;
 
 /**
  * @noinspection HardCodedStringLiteral
@@ -65,9 +68,11 @@ public class ContentType extends AbstractElementType {
   /**
    * Returns the current value for the data source.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
-   * @param element the element for which the data is computed.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
+   * @param element
+   *          the element for which the data is computed.
    * @return the value.
    */
   public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
@@ -85,12 +90,13 @@ public class ContentType extends AbstractElementType {
       if ( filteredValue != null ) {
         return filteredValue;
       } else {
-        final boolean isBrokenImageEnabled = "true".equals
-          ( runtime.getConfiguration()
-            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.EnableBrokenImage" ) );
+        final boolean isBrokenImageEnabled =
+            "true".equals( runtime.getConfiguration().getConfigProperty(
+                "org.pentaho.reporting.engine.classic.core.EnableBrokenImage" ) );
         if ( isBrokenImageEnabled ) {
-          resource = ContentType.class.getResource
-            ( "/org/pentaho/reporting/engine/classic/core/metadata/icons/image_broken_50.png" );
+          resource =
+              ContentType.class
+                  .getResource( "/org/pentaho/reporting/engine/classic/core/metadata/icons/image_broken_50.png" );
         }
       }
     }
@@ -105,8 +111,8 @@ public class ContentType extends AbstractElementType {
 
     try {
       if ( resource == null ) {
-        resource = ContentType.class.getResource
-          ( "/org/pentaho/reporting/engine/classic/core/metadata/icons/image_50.png" );
+        resource =
+            ContentType.class.getResource( "/org/pentaho/reporting/engine/classic/core/metadata/icons/image_50.png" );
       }
       if ( resource != null ) {
         final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
@@ -165,7 +171,7 @@ public class ContentType extends AbstractElementType {
       final ResourceKey contentBase = runtime.getProcessingContext().getContentBase();
       final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
       final Object contentBaseValue =
-        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE );
+          element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE );
       final ResourceKey key = resManager.createOrDeriveKey( contentBase, value, contentBaseValue );
       if ( key == null ) {
         return null;
@@ -192,13 +198,12 @@ public class ContentType extends AbstractElementType {
     return null;
   }
 
-  protected final ComponentDrawable createComponentDrawable( final ExpressionRuntime runtime,
-                                                             final Component c,
-                                                             final ReportElement element ) {
+  protected final ComponentDrawable createComponentDrawable( final ExpressionRuntime runtime, final Component c,
+      final ReportElement element ) {
     final Configuration config = runtime.getConfiguration();
     final ComponentDrawable cd;
-    final String drawMode = config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.ComponentDrawableMode",
-      "shared" );
+    final String drawMode =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.ComponentDrawableMode", "shared" );
     if ( "private".equals( drawMode ) ) {
       cd = new ComponentDrawable();
     } else if ( "synchronized".equals( drawMode ) ) {
@@ -213,8 +218,8 @@ public class ContentType extends AbstractElementType {
       cd.setPaintSynchronized( true );
     }
 
-    final String allowOwnPeer = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable" );
+    final String allowOwnPeer =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable" );
     cd.setAllowOwnPeer( "true".equals( allowOwnPeer ) );
     cd.setComponent( c );
     return cd;

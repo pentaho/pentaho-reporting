@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states;
 
@@ -60,7 +60,8 @@ public final class DataRowConnector implements DataRow {
    * Sets the data row backend for this DataRowConnector. The backend actually contains the data which will be queried,
    * while this DataRowConnector is simply a proxy forwarding all requests to the backend.
    *
-   * @param dataRow the data row backend
+   * @param dataRow
+   *          the data row backend
    */
   public void setDataRowBackend( final DataRow dataRow ) {
     this.dataRow = dataRow;
@@ -69,9 +70,11 @@ public final class DataRowConnector implements DataRow {
   /**
    * Returns the value of the column, function or expression using its name.
    *
-   * @param col the column, function or expression index.
+   * @param col
+   *          the column, function or expression index.
    * @return The column, function or expression value.
-   * @throws java.lang.IllegalStateException if there is no backend connected
+   * @throws java.lang.IllegalStateException
+   *           if there is no backend connected
    */
   public Object get( final String col ) {
     if ( dataRow == null ) {
@@ -86,7 +89,8 @@ public final class DataRowConnector implements DataRow {
    * The last datasource is used to feed data into the data processing chain. The result of this computation is
    * retrieved by the element using the registered datasource to query the queue.
    *
-   * @param e the data target.
+   * @param e
+   *          the data target.
    * @return The last DataSource in the chain.
    * @deprecated no longer used.
    */

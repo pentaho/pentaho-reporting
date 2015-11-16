@@ -1,27 +1,22 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
-import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -29,17 +24,25 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.AbstractButton;
+import javax.swing.Action;
+import javax.swing.JComboBox;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
+
 public abstract class FormValidator {
 
-  private class FormTextfieldListener
-    implements DocumentListener, PropertyChangeListener {
+  private class FormTextfieldListener implements DocumentListener, PropertyChangeListener {
     private FormTextfieldListener() {
     }
 
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param evt
+     *          A PropertyChangeEvent object describing the event source and the property that has changed.
      */
     public void propertyChange( final PropertyChangeEvent evt ) {
       if ( FormValidator.DOCUMENT_PROPERTY_NAME.equals( evt.getPropertyName() ) ) {
@@ -53,27 +56,30 @@ public abstract class FormValidator {
     /**
      * Gives notification that an attribute or set of attributes changed.
      *
-     * @param e the document event
+     * @param e
+     *          the document event
      */
     public void changedUpdate( final DocumentEvent e ) {
       handleValidate();
     }
 
     /**
-     * Gives notification that there was an insert into the document.  The range given by the DocumentEvent bounds the
+     * Gives notification that there was an insert into the document. The range given by the DocumentEvent bounds the
      * freshly inserted region.
      *
-     * @param e the document event
+     * @param e
+     *          the document event
      */
     public void insertUpdate( final DocumentEvent e ) {
       handleValidate();
     }
 
     /**
-     * Gives notification that a portion of the document has been removed.  The range is given in terms of what the view
+     * Gives notification that a portion of the document has been removed. The range is given in terms of what the view
      * last saw (that is, before updating sticky positions).
      *
-     * @param e the document event
+     * @param e
+     *          the document event
      */
     public void removeUpdate( final DocumentEvent e ) {
       handleValidate();

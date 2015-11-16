@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 /**
  * @deprecated This class is not used anywhere and you can get the same functionality via a default-list-parameter and a
- * table-datasource.
+ *             table-datasource.
  */
 @Deprecated
 public class StaticListParameter extends AbstractParameter implements ListParameter {
@@ -45,12 +45,12 @@ public class StaticListParameter extends AbstractParameter implements ListParame
 
     public Object getKeyValue( final int row ) {
       final Object[] o = backend.get( row );
-      return o[ 0 ];
+      return o[0];
     }
 
     public Object getTextValue( final int row ) {
       final Object[] o = backend.get( row );
-      return o[ 1 ];
+      return o[1];
     }
   }
 
@@ -58,10 +58,8 @@ public class StaticListParameter extends AbstractParameter implements ListParame
   private boolean allowMultiSelection;
   private StaticParameterValues parameterValues;
 
-  public StaticListParameter( final String name,
-                              final boolean allowMultiSelection,
-                              final boolean strictValueCheck,
-                              final Class valueType ) {
+  public StaticListParameter( final String name, final boolean allowMultiSelection, final boolean strictValueCheck,
+      final Class valueType ) {
     super( name, valueType );
     this.allowMultiSelection = allowMultiSelection;
     this.strictValueCheck = strictValueCheck;
@@ -89,10 +87,9 @@ public class StaticListParameter extends AbstractParameter implements ListParame
   }
 
   private boolean isParameterAutoSelectFirstValue( final ParameterContext parameterContext ) {
-    return ( "true".equals( parameterContext.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.ParameterAutoFillsSelection" ) ) );
+    return ( "true".equals( parameterContext.getConfiguration().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.ParameterAutoFillsSelection" ) ) );
   }
-
 
   public Object getDefaultValue( final ParameterContext context ) throws ReportDataFactoryException {
     final Object o = super.getDefaultValue( context );

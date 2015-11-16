@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.pdf;
 
@@ -58,9 +58,8 @@ public class PdfExportTask implements Runnable {
   /**
    * Creates a new PDF export task.
    */
-  public PdfExportTask( final MasterReport report,
-                        final ReportProgressDialog progressListener,
-                        final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
+  public PdfExportTask( final MasterReport report, final ReportProgressDialog progressListener,
+      final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException( "PdfExportTask(..): Report parameter cannot be null" );
     }
@@ -68,17 +67,19 @@ public class PdfExportTask implements Runnable {
     this.report = report;
     if ( swingGuiContext != null ) {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages( swingGuiContext.getLocale(), PdfExportPlugin.BASE_RESOURCE_CLASS,
-        ObjectUtilities.getClassLoader( PdfExportPlugin.class ) );
+      this.messages =
+          new Messages( swingGuiContext.getLocale(), PdfExportPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
+              .getClassLoader( PdfExportPlugin.class ) );
     } else {
-      this.messages = new Messages( Locale.getDefault(), PdfExportPlugin.BASE_RESOURCE_CLASS,
-        ObjectUtilities.getClassLoader( PdfExportPlugin.class ) );
+      this.messages =
+          new Messages( Locale.getDefault(), PdfExportPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
+              .getClassLoader( PdfExportPlugin.class ) );
     }
 
     this.progressListener = progressListener;
     final Configuration config = report.getConfiguration();
-    final String targetFileName = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.TargetFileName" ); //$NON-NLS-1$
+    final String targetFileName =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.TargetFileName" ); //$NON-NLS-1$
     if ( targetFileName == null ) {
       throw new NullPointerException( "TargetFileName must be set in the configuration." );
     }
@@ -86,8 +87,7 @@ public class PdfExportTask implements Runnable {
     targetFile = new File( targetFileName );
     if ( targetFile.exists() ) {
       if ( targetFile.delete() == false ) {
-        throw new ReportProcessingException( messages.getErrorString(
-          "PdfExportTask.ERROR_0001_TARGET_EXISTS" ) ); //$NON-NLS-1$
+        throw new ReportProcessingException( messages.getErrorString( "PdfExportTask.ERROR_0001_TARGET_EXISTS" ) ); //$NON-NLS-1$
       }
     }
   }
@@ -105,8 +105,8 @@ public class PdfExportTask implements Runnable {
     OutputStream fout = null;
     try {
       fout = new BufferedOutputStream( new FileOutputStream( targetFile ) );
-      final PdfOutputProcessor outputProcessor = new PdfOutputProcessor( report.getConfiguration(), fout,
-        report.getResourceManager() );
+      final PdfOutputProcessor outputProcessor =
+          new PdfOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
       proc = new PageableReportProcessor( report, outputProcessor );
       if ( progressListener != null ) {
         proc.addReportProgressListener( progressListener );
@@ -114,13 +114,12 @@ public class PdfExportTask implements Runnable {
       }
       proc.processReport();
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "PdfExportTask.USER_EXPORT_COMPLETE" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "PdfExportTask.USER_EXPORT_COMPLETE" ), null ); //$NON-NLS-1$
       }
     } catch ( Exception e ) {
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.ERROR, messages.getString( "PdfExportTask.USER_EXPORT_FAILED" ), e ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.ERROR, messages.getString( "PdfExportTask.USER_EXPORT_FAILED" ), e ); //$NON-NLS-1$
       }
       PdfExportTask.logger.error( "Failed" ); //$NON-NLS-1$
     } finally {

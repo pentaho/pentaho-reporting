@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
 
+import java.awt.Color;
+import java.util.ArrayList;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -33,9 +36,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
-import java.awt.*;
-import java.util.ArrayList;
-
 public class FastExcelTextExtractor extends FastTextExtractor {
   private static final Log logger = LogFactory.getLog( FastExcelTextExtractor.class );
 
@@ -45,9 +45,8 @@ public class FastExcelTextExtractor extends FastTextExtractor {
   private final ExcelColorProducer colorProducer;
   private final FastStack<RichTextFormat> formatBufferStack;
 
-  public FastExcelTextExtractor( final ExcelColorProducer colorProducer,
-                                 final ExcelFontFactory fontFactory,
-                                 final CreationHelper creationHelper ) {
+  public FastExcelTextExtractor( final ExcelColorProducer colorProducer, final ExcelFontFactory fontFactory,
+      final CreationHelper creationHelper ) {
     this.colorProducer = colorProducer;
     this.formatBuffer = new ArrayList<RichTextFormat>();
     this.fontFactory = fontFactory;
@@ -55,8 +54,8 @@ public class FastExcelTextExtractor extends FastTextExtractor {
     this.formatBufferStack = new FastStack<RichTextFormat>();
   }
 
-  public Object compute( final ReportElement content,
-                         final ExpressionRuntime runtime ) throws ContentProcessingException {
+  public Object compute( final ReportElement content, final ExpressionRuntime runtime )
+    throws ContentProcessingException {
     this.formatBuffer.clear();
     super.compute( content, runtime );
 
@@ -87,8 +86,7 @@ public class FastExcelTextExtractor extends FastTextExtractor {
     }
 
     final Color textColor = (Color) styleSheet.getStyleProperty( ElementStyleKeys.PAINT );
-    final HSSFFontWrapper wrapper = new HSSFFontWrapper
-      ( styleSheet, colorProducer.getNearestColor( textColor ) );
+    final HSSFFontWrapper wrapper = new HSSFFontWrapper( styleSheet, colorProducer.getNearestColor( textColor ) );
     final RichTextFormat rtf = new RichTextFormat( getTextLength(), wrapper );
 
     // Check the style.
@@ -110,9 +108,8 @@ public class FastExcelTextExtractor extends FastTextExtractor {
   }
 
   @Override
-  protected void handleValueContent( final ReportElement element,
-                                     final Object value,
-                                     final boolean inlineSection ) throws ContentProcessingException {
+  protected void handleValueContent( final ReportElement element, final Object value, final boolean inlineSection )
+    throws ContentProcessingException {
     super.handleValueContent( element, value, inlineSection );
   }
 

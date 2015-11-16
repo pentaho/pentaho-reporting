@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -25,14 +25,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- * Calculates the sum of a field for an entire page.  The function will also reset by group if the optional
- * <code>group</code> parameter is specified.  If the specified group spans a page break, the sum will be reset with the
+ * Calculates the sum of a field for an entire page. The function will also reset by group if the optional
+ * <code>group</code> parameter is specified. If the specified group spans a page break, the sum will be reset with the
  * new page and sum only the items for the group from the subsequent page.
  *
  * @author Thomas Morgner
  */
-public class TotalPageSumFunction extends TotalGroupSumFunction
-  implements PageEventListener {
+public class TotalPageSumFunction extends TotalGroupSumFunction implements PageEventListener {
   /**
    * holds the collection of values associated with pages and groups
    */
@@ -57,7 +56,8 @@ public class TotalPageSumFunction extends TotalGroupSumFunction
   /**
    * If this is the group associated with the function, store away the final value
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupFinished( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
@@ -68,7 +68,8 @@ public class TotalPageSumFunction extends TotalGroupSumFunction
   /**
    * Handles the pageStartedEvent.
    *
-   * @param event the report event.
+   * @param event
+   *          the report event.
    */
   public void pageStarted( final ReportEvent event ) {
     pageIndex++;
@@ -79,7 +80,8 @@ public class TotalPageSumFunction extends TotalGroupSumFunction
    * Handles the pageFinishedEvent. Stores the current page value and clears the counter. pageFinished can be hit
    * multiple times for a single page, but the stored value should be consistent.
    *
-   * @param event the report event.
+   * @param event
+   *          the report event.
    */
   public void pageFinished( final ReportEvent event ) {
     storeValue( event );
@@ -110,12 +112,14 @@ public class TotalPageSumFunction extends TotalGroupSumFunction
   /**
    * Helper function for the serialization.
    *
-   * @param in the input stream.
-   * @throws java.io.IOException    if an IO error occured.
-   * @throws ClassNotFoundException if a required class could not be found.
+   * @param in
+   *          the input stream.
+   * @throws java.io.IOException
+   *           if an IO error occured.
+   * @throws ClassNotFoundException
+   *           if a required class could not be found.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     values = new PageGroupValues();
   }

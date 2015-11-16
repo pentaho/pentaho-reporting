@@ -37,9 +37,8 @@ public class FastHtmlFormattedDataBuilder extends AbstractFormattedDataBuilder {
   private HashMap<InstanceID, ReportElement> elements;
   private FastHtmlStyleCache styleCache;
 
-  public FastHtmlFormattedDataBuilder( final FastGridLayout gridLayout,
-                                       final FastHtmlPrinter htmlPrinter,
-                                       final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds ) {
+  public FastHtmlFormattedDataBuilder( final FastGridLayout gridLayout, final FastHtmlPrinter htmlPrinter,
+      final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds ) {
     this.gridLayout = gridLayout;
     this.htmlPrinter = htmlPrinter;
     this.recordedBounds = recordedBounds;
@@ -47,9 +46,7 @@ public class FastHtmlFormattedDataBuilder extends AbstractFormattedDataBuilder {
     this.styleCache = new FastHtmlStyleCache();
   }
 
-  public void compute( final Band band,
-                       final ExpressionRuntime runtime,
-                       final OutputStream out )
+  public void compute( final Band band, final ExpressionRuntime runtime, final OutputStream out )
     throws ReportProcessingException, ContentProcessingException, IOException {
     elements.clear();
     super.compute( band, runtime );

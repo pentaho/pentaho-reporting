@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -35,7 +35,7 @@ public class LongList implements Serializable, Cloneable {
   /**
    * An empty array used to avoid object creation.
    */
-  private static final long[] EMPTY_ARRAY = new long[ 0 ];
+  private static final long[] EMPTY_ARRAY = new long[0];
   /**
    * The array holding the list data.
    */
@@ -53,10 +53,11 @@ public class LongList implements Serializable, Cloneable {
    * Creates a new IntList with the given initial capacity. The capacity will also be used as increment value when
    * extending the capacity of the list.
    *
-   * @param capacity the initial capacity.
+   * @param capacity
+   *          the initial capacity.
    */
   public LongList( final int capacity ) {
-    data = new long[ capacity ];
+    data = new long[capacity];
     increment = capacity;
   }
 
@@ -69,11 +70,12 @@ public class LongList implements Serializable, Cloneable {
    * Ensures, that the list backend can store at least <code>c</code> elements. This method does nothing, if the new
    * capacity is less than the current capacity.
    *
-   * @param c the new capacity of the list.
+   * @param c
+   *          the new capacity of the list.
    */
   private void ensureCapacity( final int c ) {
     if ( data.length <= c ) {
-      final long[] newData = new long[ Math.max( data.length + increment, c + 1 ) ];
+      final long[] newData = new long[Math.max( data.length + increment, c + 1 )];
       System.arraycopy( data, 0, newData, 0, size );
       data = newData;
     }
@@ -82,11 +84,12 @@ public class LongList implements Serializable, Cloneable {
   /**
    * Adds the given int value to the list.
    *
-   * @param value the new value to be added.
+   * @param value
+   *          the new value to be added.
    */
   public void add( final long value ) {
     ensureCapacity( size );
-    data[ size ] = value;
+    data[size] = value;
     size += 1;
   }
 
@@ -100,36 +103,39 @@ public class LongList implements Serializable, Cloneable {
       System.arraycopy( data, index + 1, data, index, tailSize );
     }
     size -= 1;
-    data[ size ] = 0;
+    data[size] = 0;
   }
 
   /**
    * Adds the given int value to the list.
    *
-   * @param value the new value to be defined.
-   * @param index the position of the valur that should be redefined.
+   * @param value
+   *          the new value to be defined.
+   * @param index
+   *          the position of the valur that should be redefined.
    */
   public void set( final int index, final long value ) {
     ensureCapacity( index );
-    data[ index ] = value;
+    data[index] = value;
     if ( index >= size ) {
       size = index + 1;
     }
   }
 
-
   /**
    * Returns the value at the given index.
    *
-   * @param index the index
+   * @param index
+   *          the index
    * @return the value at the given index
-   * @throws IndexOutOfBoundsException if the index is greater or equal to the list size or if the index is negative.
+   * @throws IndexOutOfBoundsException
+   *           if the index is greater or equal to the list size or if the index is negative.
    */
   public long get( final int index ) {
     if ( index >= size || index < 0 ) {
       throw new IndexOutOfBoundsException( "Illegal Index: " + index + " Max:" + size );
     }
-    return data[ index ];
+    return data[index];
   }
 
   /**
@@ -162,7 +168,7 @@ public class LongList implements Serializable, Cloneable {
       return data.clone();
     }
 
-    final long[] retval = new long[ size ];
+    final long[] retval = new long[size];
     System.arraycopy( data, 0, retval, 0, size );
     return retval;
   }
@@ -170,12 +176,13 @@ public class LongList implements Serializable, Cloneable {
   /**
    * Copys the list contents into a new array.
    *
-   * @param retval the array that should receive the contents.
+   * @param retval
+   *          the array that should receive the contents.
    * @return the list contents as array.
    */
   public long[] toArray( long[] retval ) {
     if ( retval == null || retval.length < size ) {
-      retval = new long[ size ];
+      retval = new long[size];
     }
     System.arraycopy( data, 0, retval, 0, size );
     return retval;
@@ -185,7 +192,8 @@ public class LongList implements Serializable, Cloneable {
    * Creates a copy of this list.
    *
    * @return a copy of this list.
-   * @throws CloneNotSupportedException if something went wrong during the cloning.
+   * @throws CloneNotSupportedException
+   *           if something went wrong during the cloning.
    */
   public Object clone() throws CloneNotSupportedException {
     final LongList intList = (LongList) super.clone();
@@ -202,7 +210,7 @@ public class LongList implements Serializable, Cloneable {
       if ( i > 0 ) {
         b.append( "," );
       }
-      b.append( data[ i ] );
+      b.append( data[i] );
     }
     b.append( "}}" );
     return b.toString();

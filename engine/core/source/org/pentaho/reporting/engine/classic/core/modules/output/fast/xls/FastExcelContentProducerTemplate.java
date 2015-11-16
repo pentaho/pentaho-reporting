@@ -35,27 +35,23 @@ public class FastExcelContentProducerTemplate extends AbstractContentProducerTem
   private final boolean useXlsx;
   private FastExcelPrinter excelPrinter;
 
-  public FastExcelContentProducerTemplate( final SheetLayout sheetLayout,
-                                           final OutputStream outputStream,
-                                           final boolean useXlsx ) {
+  public FastExcelContentProducerTemplate( final SheetLayout sheetLayout, final OutputStream outputStream,
+      final boolean useXlsx ) {
     super( sheetLayout );
     this.outputStream = outputStream;
     this.useXlsx = useXlsx;
   }
 
-  public void initialize( final ReportDefinition report,
-                          final ExpressionRuntime runtime,
-                          final boolean pagination ) {
+  public void initialize( final ReportDefinition report, final ExpressionRuntime runtime, final boolean pagination ) {
     super.initialize( report, runtime, pagination );
     this.excelPrinter = new FastExcelPrinter( getSharedSheetLayout() );
     this.excelPrinter.setUseXlsxFormat( useXlsx );
     this.excelPrinter.init( getMetaData(), runtime.getProcessingContext().getResourceManager(), report );
   }
 
-  protected void writeContent( final Band band,
-                               final ExpressionRuntime runtime,
-                               final FormattedDataBuilder messageFormatSupport )
-    throws IOException, ReportProcessingException, ContentProcessingException {
+  protected void writeContent( final Band band, final ExpressionRuntime runtime,
+      final FormattedDataBuilder messageFormatSupport ) throws IOException, ReportProcessingException,
+    ContentProcessingException {
     messageFormatSupport.compute( band, runtime, outputStream );
   }
 

@@ -50,7 +50,7 @@ public class SortingIT {
     private List<SortConstraint> expectedConstraints;
 
     public ValidateDataFactory( final String name, final TableModel tableModel,
-                                final List<SortConstraint> expectedConstraints ) {
+        final List<SortConstraint> expectedConstraints ) {
       super( name, tableModel );
       this.expectedConstraints = expectedConstraints;
     }
@@ -72,14 +72,12 @@ public class SortingIT {
     }
 
     public String[] getReferencedFields( final DataFactory element, final String queryName, final DataRow parameter ) {
-      return new String[ 0 ];
+      return new String[0];
     }
 
     public ResourceReference[] getReferencedResources( final DataFactory element,
-                                                       final ResourceManager resourceManager,
-                                                       final String queryName,
-                                                       final DataRow parameter ) {
-      return new ResourceReference[ 0 ];
+        final ResourceManager resourceManager, final String queryName, final DataRow parameter ) {
+      return new ResourceReference[0];
     }
 
     public boolean isEditable() {
@@ -220,6 +218,5 @@ public class SortingIT {
 
     int i = DebugReportRunner.execGraphics2D( report );
   }
-
 
 }

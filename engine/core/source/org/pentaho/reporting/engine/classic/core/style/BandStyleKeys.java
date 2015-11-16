@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style;
 
@@ -26,8 +26,8 @@ public class BandStyleKeys {
   /**
    * A key for the band's 'page break before' flag.
    */
-  public static final StyleKey PAGEBREAK_BEFORE =
-    StyleKey.getStyleKey( "pagebreak-before", Boolean.class, false, false );
+  public static final StyleKey PAGEBREAK_BEFORE = StyleKey
+      .getStyleKey( "pagebreak-before", Boolean.class, false, false );
 
   /**
    * A key for the band's 'page break after' flag.
@@ -37,15 +37,14 @@ public class BandStyleKeys {
   /**
    * A key for the band's 'display on first page' flag.
    */
-  public static final StyleKey DISPLAY_ON_FIRSTPAGE =
-    StyleKey.getStyleKey( "display-on-firstpage", Boolean.class, false,
-      false );
+  public static final StyleKey DISPLAY_ON_FIRSTPAGE = StyleKey.getStyleKey( "display-on-firstpage", Boolean.class,
+      false, false );
 
   /**
    * A key for the band's 'display on last page' flag.
    */
   public static final StyleKey DISPLAY_ON_LASTPAGE = StyleKey.getStyleKey( "display-on-lastpage", Boolean.class, false,
-    false );
+      false );
 
   /**
    * A key for the band's 'repeat header' flag.
@@ -83,8 +82,8 @@ public class BandStyleKeys {
   /**
    * An internal carrier key that is used to store the computed sheetname for a given band.
    */
-  public static final StyleKey COMPUTED_SHEETNAME =
-    StyleKey.getStyleKey( "computed-sheetname", String.class, true, false );
+  public static final StyleKey COMPUTED_SHEETNAME = StyleKey.getStyleKey( "computed-sheetname", String.class, true,
+      false );
 
   public static final StyleKey TABLE_LAYOUT = StyleKey.getStyleKey( "table-layout", TableLayout.class, false, false );
 

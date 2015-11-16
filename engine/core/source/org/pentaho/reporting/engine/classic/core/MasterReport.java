@@ -1,21 +1,31 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
+
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterJob;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+
+import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,7 +34,6 @@ import org.pentaho.reporting.engine.classic.core.designtime.StyleChange;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.MasterReportType;
-import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.LegacyBundleResourceRegistry;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.ModifiableReportParameterDefinition;
@@ -47,27 +56,18 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterJob;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Date;
-
 /**
  * A JFreeReport instance is used as report template to define the visual layout of a report and to collect all data
- * sources for the reporting. Possible data sources are the {@link TableModel}, {@link Expression}s or {@link
- * ReportParameterValues}. The report is made up of 'bands', which are used repeatedly as necessary to generate small
- * sections of the report.
+ * sources for the reporting. Possible data sources are the {@link javax.swing.table.TableModel}, {@link Expression}s or
+ * {@link ReportParameterValues}. The report is made up of 'bands', which are used repeatedly as necessary to generate
+ * small sections of the report.
  * <p/>
  * <h2>Accessing the bands and the elements:</h2>
  * <p/>
  * The different bands can be accessed using the main report definition (this class):
  * <p/>
- * <ul> <li>the report header and footer can be reached by using <code>getReportHeader()</code> and
+ * <ul>
+ * <li>the report header and footer can be reached by using <code>getReportHeader()</code> and
  * <code>getReportFooter()</code>
  * <p/>
  * <li>the page header and page footer can be reached by using <code>getPageHeader()</code> and
@@ -77,7 +77,8 @@ import java.util.Date;
  * <p/>
  * <li>the no-data band is reachable with <code>getNoDataBand()</code>
  * <p/>
- * <li>the watermark band is reachable with <code>getWaterMark()</code> </ul>
+ * <li>the watermark band is reachable with <code>getWaterMark()</code>
+ * </ul>
  * <p/>
  * Groups can be queried using <code>getGroup(int groupLevel)</code>. The group header and footer are accessible through
  * the group object, so use <code>getGroup(int groupLevel).getGroupHeader()<code> and <code>getGroup(int
@@ -148,8 +149,8 @@ public class MasterReport extends AbstractReportDefinition {
         final AttributeChange attributeChange = (AttributeChange) event.getParameter();
 
         // This is an attribute change event on the master report ... see if it is one we are concerned about
-        if ( AttributeNames.Core.NAMESPACE.equals( attributeChange.getNamespace() ) &&
-          AttributeNames.Core.BUNDLE.equals( attributeChange.getName() ) ) {
+        if ( AttributeNames.Core.NAMESPACE.equals( attributeChange.getNamespace() )
+            && AttributeNames.Core.BUNDLE.equals( attributeChange.getName() ) ) {
           final Object value = attributeChange.getNewValue();
           if ( ( value instanceof DocumentBundle ) == false ) {
             return;
@@ -204,8 +205,7 @@ public class MasterReport extends AbstractReportDefinition {
     setElementType( new MasterReportType() );
     setResourceBundleFactory( new LibLoaderResourceBundleFactory() );
 
-    this.reportConfiguration = new HierarchicalConfiguration
-      ( ClassicEngineBoot.getInstance().getGlobalConfig() );
+    this.reportConfiguration = new HierarchicalConfiguration( ClassicEngineBoot.getInstance().getGlobalConfig() );
     this.parameterValues = new ReportParameterValues();
 
     setPageDefinition( null );
@@ -222,8 +222,8 @@ public class MasterReport extends AbstractReportDefinition {
     this.parameterDefinition = new DefaultParameterDefinition();
     final MemoryDocumentBundle documentBundle = new MemoryDocumentBundle();
     documentBundle.getWriteableDocumentMetaData().setBundleType( ClassicEngineBoot.BUNDLE_TYPE );
-    documentBundle.getWriteableDocumentMetaData().setBundleAttribute
-      ( ODFMetaAttributeNames.Meta.NAMESPACE, ODFMetaAttributeNames.Meta.CREATION_DATE, new Date() );
+    documentBundle.getWriteableDocumentMetaData().setBundleAttribute( ODFMetaAttributeNames.Meta.NAMESPACE,
+        ODFMetaAttributeNames.Meta.CREATION_DATE, new Date() );
     setBundle( documentBundle );
 
     setContentBase( documentBundle.getBundleMainKey() );
@@ -232,17 +232,16 @@ public class MasterReport extends AbstractReportDefinition {
     updateResourceBundleFactoryInternal();
   }
 
-  public static ResourceBundleFactory computeAndInitResourceBundleFactory
-    ( final ResourceBundleFactory resourceBundleFactory,
-      final ReportEnvironment environment ) {
+  public static ResourceBundleFactory computeAndInitResourceBundleFactory(
+      final ResourceBundleFactory resourceBundleFactory, final ReportEnvironment environment ) {
     if ( resourceBundleFactory instanceof ExtendedResourceBundleFactory == false ) {
       return resourceBundleFactory;
     }
     final ExtendedResourceBundleFactory rawResourceBundleFactory =
-      (ExtendedResourceBundleFactory) resourceBundleFactory;
+        (ExtendedResourceBundleFactory) resourceBundleFactory;
     try {
       final ExtendedResourceBundleFactory extendedResourceBundleFactory =
-        (ExtendedResourceBundleFactory) rawResourceBundleFactory.clone();
+          (ExtendedResourceBundleFactory) rawResourceBundleFactory.clone();
       if ( extendedResourceBundleFactory.getLocale() == null ) {
         extendedResourceBundleFactory.setLocale( environment.getLocale() );
       }
@@ -254,7 +253,6 @@ public class MasterReport extends AbstractReportDefinition {
       throw new IllegalStateException( "Cannot clone resource-bundle factory" );
     }
   }
-
 
   /**
    * Returns the resource bundle factory for this report definition. The {@link ResourceBundleFactory} is used in
@@ -269,8 +267,10 @@ public class MasterReport extends AbstractReportDefinition {
   /**
    * Redefines the resource bundle factory for the report.
    *
-   * @param resourceBundleFactory the new resource bundle factory, never null.
-   * @throws NullPointerException if the given ResourceBundleFactory is null.
+   * @param resourceBundleFactory
+   *          the new resource bundle factory, never null.
+   * @throws NullPointerException
+   *           if the given ResourceBundleFactory is null.
    */
   public void setResourceBundleFactory( final ResourceBundleFactory resourceBundleFactory ) {
     ArgumentNullException.validate( "resourceBundleFactory", resourceBundleFactory );
@@ -325,8 +325,9 @@ public class MasterReport extends AbstractReportDefinition {
   public String getTitle() {
     final DocumentBundle bundle = getBundle();
     if ( bundle != null ) {
-      final Object o = bundle.getMetaData().getBundleAttribute
-        ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE );
+      final Object o =
+          bundle.getMetaData().getBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
+              ODFMetaAttributeNames.DublinCore.TITLE );
       if ( o != null ) {
         return o.toString();
       }
@@ -340,8 +341,8 @@ public class MasterReport extends AbstractReportDefinition {
    * @return the page definition.
    */
   public PageDefinition getPageDefinition() {
-    final PageDefinition pageDefinition = (PageDefinition)
-      getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PAGE_DEFINITION );
+    final PageDefinition pageDefinition =
+        (PageDefinition) getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PAGE_DEFINITION );
     if ( pageDefinition == null ) {
       return createDefaultPageDefinition();
     }
@@ -352,11 +353,12 @@ public class MasterReport extends AbstractReportDefinition {
    * Defines the logical page definition for this report. If no format is defined the system's default page format is
    * used.
    * <p/>
-   * If there is no printer available and the JDK blocks during the printer discovery, you can set the {@link
-   * Configuration} key "org.pentaho.reporting.engine.classic.core.NoPrinterAvailable" to "false" and JFreeReport will
-   * use a hardcoded default page format instead.
+   * If there is no printer available and the JDK blocks during the printer discovery, you can set the
+   * {@link Configuration} key "org.pentaho.reporting.engine.classic.core.NoPrinterAvailable" to "false" and JFreeReport
+   * will use a hardcoded default page format instead.
    *
-   * @param format the default format (<code>null</code> permitted).
+   * @param format
+   *          the default format (<code>null</code> permitted).
    */
   public void setPageDefinition( PageDefinition format ) {
     if ( format == null ) {
@@ -389,7 +391,8 @@ public class MasterReport extends AbstractReportDefinition {
   /**
    * Sets the data factory for the report.
    *
-   * @param dataFactory the data factory for the report, never null.
+   * @param dataFactory
+   *          the data factory for the report, never null.
    */
   public void setDataFactory( final DataFactory dataFactory ) {
     if ( dataFactory == null ) {
@@ -472,8 +475,7 @@ public class MasterReport extends AbstractReportDefinition {
    * Returns the resource manager that was responsible for loading the report. This method will return a default manager
    * if the report had been constructed otherwise.
    * <p/>
-   * The resource manager of the report should be used for all resource loading activities during the report
-   * processing.
+   * The resource manager of the report should be used for all resource loading activities during the report processing.
    *
    * @return the resource manager, never null.
    */
@@ -489,7 +491,8 @@ public class MasterReport extends AbstractReportDefinition {
    * Assigns a new resource manager or clears the current one. If no resource manager is set anymore, the next call to
    * 'getResourceManager' will recreate one.
    *
-   * @param resourceManager the new resource manager or null.
+   * @param resourceManager
+   *          the new resource manager or null.
    */
   public void setResourceManager( final ResourceManager resourceManager ) {
     this.resourceManager = resourceManager;
@@ -507,11 +510,12 @@ public class MasterReport extends AbstractReportDefinition {
   /**
    * A helper method that serializes the element object.
    *
-   * @param stream the stream to which the element should be serialized.
-   * @throws IOException if an IO error occured or a property was not serializable.
+   * @param stream
+   *          the stream to which the element should be serialized.
+   * @throws IOException
+   *           if an IO error occured or a property was not serializable.
    */
-  private void writeObject( final ObjectOutputStream stream )
-    throws IOException {
+  private void writeObject( final ObjectOutputStream stream ) throws IOException {
     stream.defaultWriteObject();
     try {
       final DocumentBundle bundle = getBundle();
@@ -533,12 +537,14 @@ public class MasterReport extends AbstractReportDefinition {
   /**
    * A helper method that deserializes a object from the given stream.
    *
-   * @param stream the stream from which to read the object data.
-   * @throws IOException            if an IO error occured.
-   * @throws ClassNotFoundException if an referenced class cannot be found.
+   * @param stream
+   *          the stream from which to read the object data.
+   * @throws IOException
+   *           if an IO error occured.
+   * @throws ClassNotFoundException
+   *           if an referenced class cannot be found.
    */
-  private void readObject( final ObjectInputStream stream )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream stream ) throws IOException, ClassNotFoundException {
     stream.defaultReadObject();
 
     updateResourceBundleFactoryInternal();
@@ -574,7 +580,7 @@ public class MasterReport extends AbstractReportDefinition {
 
   public Integer getCompatibilityLevel() {
     final Object definedCompatLevel =
-      getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL );
+        getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL );
     if ( definedCompatLevel instanceof Integer ) {
       return (Integer) definedCompatLevel;
     }
@@ -605,17 +611,16 @@ public class MasterReport extends AbstractReportDefinition {
   }
 
   public boolean isStrictLegacyMode() {
-    return "true".equals( getReportConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility" ) );
+    return "true".equals( getReportConfiguration().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility" ) );
   }
 
   public void setStrictLegacyMode( final boolean strict ) {
-    getReportConfiguration().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", String.valueOf( strict ) );
+    getReportConfiguration().setConfigProperty( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility",
+        String.valueOf( strict ) );
   }
 
   public ReportDefinition getMasterReport() {
     return this;
   }
 }
-

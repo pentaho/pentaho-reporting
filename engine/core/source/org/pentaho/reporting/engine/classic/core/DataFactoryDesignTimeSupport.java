@@ -22,6 +22,5 @@ import javax.swing.table.TableModel;
 public interface DataFactoryDesignTimeSupport extends DataFactory {
   public static final String DESIGN_TIME = "::org.pentaho.reporting::design-time";
 
-  public TableModel queryDesignTimeStructure( String query, DataRow parameter )
-    throws ReportDataFactoryException;
+  public TableModel queryDesignTimeStructure( String query, DataRow parameter ) throws ReportDataFactoryException;
 }

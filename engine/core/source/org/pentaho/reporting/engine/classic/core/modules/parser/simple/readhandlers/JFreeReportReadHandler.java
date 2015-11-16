@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.simple.readhandlers;
 
@@ -159,8 +159,10 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
   /**
    * Initialises the handler.
    *
-   * @param rootHandler the root handler.
-   * @param tagName     the tag name.
+   * @param rootHandler
+   *          the root handler.
+   * @param tagName
+   *          the tag name.
    */
   public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
     super.init( rootHandler, uri, tagName );
@@ -170,12 +172,13 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    * @noinspection SuspiciousNameCombination
    */
-  protected void startParsing( final PropertyAttributes attrs )
-    throws SAXException {
+  protected void startParsing( final PropertyAttributes attrs ) throws SAXException {
     RootXmlReadHandler rootHandler = getRootHandler();
     final Object maybeReport = rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
     final MasterReport report;
@@ -193,8 +196,8 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
       if ( g instanceof RelationalGroup ) {
         groupList.add( (RelationalGroup) g );
       } else {
-        throw new ParseException( "The existing report contains non-default groups. " +
-          "This parser cannot handle such a construct." );
+        throw new ParseException( "The existing report contains non-default groups. "
+            + "This parser cannot handle such a construct." );
       }
     }
 
@@ -212,37 +215,32 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
 
       PageFormat format = report.getPageDefinition().getPageFormat( 0 );
       float defTopMargin = (float) format.getImageableY();
-      float defBottomMargin = (float) ( format.getHeight() - format.getImageableHeight()
-        - format.getImageableY() );
+      float defBottomMargin = (float) ( format.getHeight() - format.getImageableHeight() - format.getImageableY() );
       float defLeftMargin = (float) format.getImageableX();
-      float defRightMargin = (float) ( format.getWidth() - format.getImageableWidth()
-        - format.getImageableX() );
+      float defRightMargin = (float) ( format.getWidth() - format.getImageableWidth() - format.getImageableX() );
 
       format = createPageFormat( format, attrs );
 
-      defTopMargin = ParserUtil.parseFloat( attrs.getValue( getUri(), JFreeReportReadHandler.TOPMARGIN_ATT ),
-        defTopMargin );
-      defBottomMargin = ParserUtil.parseFloat( attrs.getValue( getUri(), JFreeReportReadHandler.BOTTOMMARGIN_ATT ),
-        defBottomMargin );
-      defLeftMargin = ParserUtil.parseFloat( attrs.getValue( getUri(), JFreeReportReadHandler.LEFTMARGIN_ATT ),
-        defLeftMargin );
-      defRightMargin = ParserUtil.parseFloat( attrs.getValue( getUri(), JFreeReportReadHandler.RIGHTMARGIN_ATT ),
-        defRightMargin );
+      defTopMargin =
+          ParserUtil.parseFloat( attrs.getValue( getUri(), JFreeReportReadHandler.TOPMARGIN_ATT ), defTopMargin );
+      defBottomMargin =
+          ParserUtil.parseFloat( attrs.getValue( getUri(), JFreeReportReadHandler.BOTTOMMARGIN_ATT ), defBottomMargin );
+      defLeftMargin =
+          ParserUtil.parseFloat( attrs.getValue( getUri(), JFreeReportReadHandler.LEFTMARGIN_ATT ), defLeftMargin );
+      defRightMargin =
+          ParserUtil.parseFloat( attrs.getValue( getUri(), JFreeReportReadHandler.RIGHTMARGIN_ATT ), defRightMargin );
 
       final Paper p = format.getPaper();
-      switch( format.getOrientation() ) {
+      switch ( format.getOrientation() ) {
         case PageFormat.PORTRAIT:
-          PageFormatFactory.getInstance().setBorders( p, defTopMargin, defLeftMargin,
-            defBottomMargin, defRightMargin );
+          PageFormatFactory.getInstance().setBorders( p, defTopMargin, defLeftMargin, defBottomMargin, defRightMargin );
           break;
         case PageFormat.LANDSCAPE:
           // right, top, left, bottom
-          PageFormatFactory.getInstance().setBorders( p, defRightMargin, defTopMargin,
-            defLeftMargin, defBottomMargin );
+          PageFormatFactory.getInstance().setBorders( p, defRightMargin, defTopMargin, defLeftMargin, defBottomMargin );
           break;
         case PageFormat.REVERSE_LANDSCAPE:
-          PageFormatFactory.getInstance().setBorders( p, defLeftMargin, defBottomMargin,
-            defRightMargin, defTopMargin );
+          PageFormatFactory.getInstance().setBorders( p, defLeftMargin, defBottomMargin, defRightMargin, defTopMargin );
           break;
         default:
           throw new IllegalStateException( "Unexpected paper orientation." );
@@ -254,21 +252,19 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
       report.setPageDefinition( new SimplePageDefinition( format, pageSpan, 1 ) );
     }
     if ( rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES ) instanceof HashMap == false ) {
-      rootHandler
-        .setHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>() );
+      rootHandler.setHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>() );
     }
     rootHandler.setHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME, report );
 
     final String useMinChunkWidth = attrs.getValue( getUri(), "use-min-chunkwidth" );
     if ( useMinChunkWidth != null ) {
-      report.getStyle().setStyleProperty
-        ( ElementStyleKeys.USE_MIN_CHUNKWIDTH, ReportParserUtil.parseBoolean( useMinChunkWidth, getLocator() ) );
+      report.getStyle().setStyleProperty( ElementStyleKeys.USE_MIN_CHUNKWIDTH,
+          ReportParserUtil.parseBoolean( useMinChunkWidth, getLocator() ) );
     }
 
     report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
     this.report = report;
   }
-
 
   /**
    * Creates the pageFormat by using the given Attributes. If an PageFormat name is given, the named PageFormat is used
@@ -276,13 +272,15 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
    * create the pageformat. The attributes define the dimension of the PageFormat in points, where the printing
    * resolution is defined at 72 pixels per inch.
    *
-   * @param format the page format.
-   * @param atts   the element attributes.
+   * @param format
+   *          the page format.
+   * @param atts
+   *          the element attributes.
    * @return the page format.
-   * @throws SAXException if there is an error parsing the report.
+   * @throws SAXException
+   *           if there is an error parsing the report.
    */
-  private PageFormat createPageFormat( final PageFormat format, final Attributes atts )
-    throws SAXException {
+  private PageFormat createPageFormat( final PageFormat format, final Attributes atts ) throws SAXException {
     final String pageformatName = atts.getValue( getUri(), JFreeReportReadHandler.PAGEFORMAT_ATT );
 
     final int orientationVal;
@@ -296,8 +294,7 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
     } else if ( orientation.equals( JFreeReportReadHandler.ORIENTATION_PORTRAIT_VAL ) ) {
       orientationVal = PageFormat.PORTRAIT;
     } else {
-      throw new ParseException( "Orientation value in REPORT-Tag is invalid.",
-        getRootHandler().getDocumentLocator() );
+      throw new ParseException( "Orientation value in REPORT-Tag is invalid.", getRootHandler().getDocumentLocator() );
     }
     if ( pageformatName != null ) {
       final Paper p = PageFormatFactory.getInstance().createPaper( pageformatName );
@@ -308,18 +305,19 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
       return PageFormatFactory.getInstance().createPageFormat( p, orientationVal );
     }
 
-    if ( atts.getValue( getUri(), JFreeReportReadHandler.WIDTH_ATT ) != null &&
-      atts.getValue( getUri(), JFreeReportReadHandler.HEIGHT_ATT ) != null ) {
-      final int[] pageformatData = new int[ 2 ];
-      pageformatData[ 0 ] =
-        ParserUtil.parseInt( atts.getValue( getUri(), JFreeReportReadHandler.WIDTH_ATT ), "No Width set",
-          getLocator() );
-      pageformatData[ 1 ] = ParserUtil.parseInt( atts.getValue( getUri(), JFreeReportReadHandler.HEIGHT_ATT ),
-        "No Height set", getLocator() );
+    if ( atts.getValue( getUri(), JFreeReportReadHandler.WIDTH_ATT ) != null
+        && atts.getValue( getUri(), JFreeReportReadHandler.HEIGHT_ATT ) != null ) {
+      final int[] pageformatData = new int[2];
+      pageformatData[0] =
+          ParserUtil.parseInt( atts.getValue( getUri(), JFreeReportReadHandler.WIDTH_ATT ), "No Width set",
+              getLocator() );
+      pageformatData[1] =
+          ParserUtil.parseInt( atts.getValue( getUri(), JFreeReportReadHandler.HEIGHT_ATT ), "No Height set",
+              getLocator() );
       final Paper p = PageFormatFactory.getInstance().createPaper( pageformatData );
       if ( p == null ) {
-        JFreeReportReadHandler.logger.warn( "Unable to create the requested Paper. Paper={" + pageformatData[ 0 ] + ", "
-          + pageformatData[ 1 ] + '}' );
+        JFreeReportReadHandler.logger.warn( "Unable to create the requested Paper. Paper={" + pageformatData[0] + ", "
+            + pageformatData[1] + '}' );
         return format;
       }
       return PageFormatFactory.getInstance().createPageFormat( p, orientationVal );
@@ -332,14 +330,15 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
   /**
    * Returns the handler for a child element.
    *
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final PropertyAttributes atts )
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final PropertyAttributes atts )
     throws SAXException {
 
     final DataFactoryReadHandlerFactory factory = DataFactoryReadHandlerFactory.getInstance();
@@ -393,7 +392,8 @@ public class JFreeReportReadHandler extends AbstractPropertyXmlReadHandler {
   /**
    * Done parsing.
    *
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
   protected void doneParsing() throws SAXException {
     if ( dataFactoryReadHandler != null ) {

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
@@ -41,8 +41,8 @@ public class JavascriptValueConverter implements ScriptValueConverter {
       return null;
     }
     final String classString = o.getClass().getName();
-    if ( "sun.org.mozilla.javascript.internal.Wrapper".equals( classString ) ||
-      "sun.org.mozilla.javascript.Wrapper".equals( classString ) ) {
+    if ( "sun.org.mozilla.javascript.internal.Wrapper".equals( classString )
+        || "sun.org.mozilla.javascript.Wrapper".equals( classString ) ) {
       try {
         final Method unwrap = o.getClass().getMethod( "unwrap" );
         return unwrap.invoke( o );
@@ -65,15 +65,14 @@ public class JavascriptValueConverter implements ScriptValueConverter {
     try {
       final Method getLength = o.getClass().getMethod( "getLength" );
       final Long length = (Long) getLength.invoke( o );
-      final Object[] result = new Object[ length.intValue() ];
+      final Object[] result = new Object[length.intValue()];
       final Method getIds = o.getClass().getMethod( "getIds" );
       final Object[] ids = (Object[]) getIds.invoke( o );
-      final Method get = o.getClass().getMethod( "get", Integer.TYPE,
-        Class.forName( scriptableClassName ) );
+      final Method get = o.getClass().getMethod( "get", Integer.TYPE, Class.forName( scriptableClassName ) );
 
       for ( final Object val : ids ) {
         final int index = (Integer) val;
-        result[ index ] = get.invoke( o, index, null );
+        result[index] = get.invoke( o, index, null );
       }
       return result;
     } catch ( Throwable e ) {

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
@@ -55,8 +55,10 @@ public class NamedStaticDataFactory extends StaticDataFactory {
   /**
    * Adds an query-alias to this factory.
    *
-   * @param alias       the alias
-   * @param queryString the real query string that should be used when the alias is specified as query.
+   * @param alias
+   *          the alias
+   * @param queryString
+   *          the real query string that should be used when the alias is specified as query.
    */
   public void setQuery( final String alias, final String queryString ) {
     if ( queryString == null ) {
@@ -93,12 +95,13 @@ public class NamedStaticDataFactory extends StaticDataFactory {
    * <p/>
    * The dataset may change between two calls, do not assume anything!
    *
-   * @param query      the alias-name of the query.
-   * @param parameters the set of parameters.
+   * @param query
+   *          the alias-name of the query.
+   * @param parameters
+   *          the set of parameters.
    * @return the tablemodel.
    */
-  public TableModel queryData( final String query, final DataRow parameters )
-    throws ReportDataFactoryException {
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
     if ( query == null ) {
       throw new NullPointerException( "Query is null." ); //$NON-NLS-1$
     }
@@ -112,7 +115,8 @@ public class NamedStaticDataFactory extends StaticDataFactory {
   /**
    * Returns the query for the given alias-name or null, if there is no such alias defined.
    *
-   * @param name the alias name.
+   * @param name
+   *          the alias name.
    * @return the real query or null.
    */
   public String getQuery( final String name ) {
@@ -125,7 +129,7 @@ public class NamedStaticDataFactory extends StaticDataFactory {
    * @return all alias-names as string-array.
    */
   public String[] getQueryNames() {
-    return querymappings.keySet().toArray( new String[ querymappings.size() ] );
+    return querymappings.keySet().toArray( new String[querymappings.size()] );
   }
 
   public String translateQuery( final String queryName ) {

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -113,7 +113,7 @@ public class WidowIT extends TestCase {
     final RenderBox grInBox = (RenderBox) grIn;
     assertEquals( StrictGeomUtility.toInternalValue( 40 ), grInBox.getWidowConstraintSize() );
 
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
   public void testReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException {
@@ -155,10 +155,9 @@ public class WidowIT extends TestCase {
     report.getItemBand().addElement( TableTestUtil.createDataItem( "detail-field", 100, 20 ) );
     report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.WIDOWS, 2 );
 
-    //    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Widow-1.prpt");
-    //PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
+    // BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Widow-1.prpt");
+    // PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
   }
-
 
   public void testSubReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException {
     final TypedTableModel model = new TypedTableModel();
@@ -201,14 +200,13 @@ public class WidowIT extends TestCase {
     report.getItemBand().addElement( TableTestUtil.createDataItem( "detail-field", 100, 20 ) );
     report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.WIDOWS, 2 );
 
-
     final MasterReport master = new MasterReport();
     master.setPageDefinition( new SimplePageDefinition( new PageSize( 500, 100 ) ) );
     master.getReportHeader().addElement( report );
 
     DebugReportRunner.createPDF( master );
-    //    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Widow-2.prpt");
-    //    PdfReportUtil.createPDF(master, "/tmp/WidowTest.pdf");
+    // BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Widow-2.prpt");
+    // PdfReportUtil.createPDF(master, "/tmp/WidowTest.pdf");
   }
 
   private Band createBand( final String name ) {

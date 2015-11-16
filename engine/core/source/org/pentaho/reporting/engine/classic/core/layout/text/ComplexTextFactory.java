@@ -15,13 +15,8 @@ public class ComplexTextFactory implements RenderableTextFactory {
   public ComplexTextFactory() {
   }
 
-  public RenderNode[] createText( final int[] text,
-                                  final int offset,
-                                  final int length,
-                                  final StyleSheet layoutContext,
-                                  final ElementType elementType,
-                                  final InstanceID instanceId,
-                                  final ReportAttributeMap<Object> attributeMap ) {
+  public RenderNode[] createText( final int[] text, final int offset, final int length, final StyleSheet layoutContext,
+      final ElementType elementType, final InstanceID instanceId, final ReportAttributeMap<Object> attributeMap ) {
     List<String> strings = processText( text, offset, length );
     ArrayList<RenderableComplexText> result = new ArrayList<RenderableComplexText>();
     Iterator<String> lines = strings.iterator();
@@ -33,16 +28,16 @@ public class ComplexTextFactory implements RenderableTextFactory {
       }
 
       RenderableComplexText rct =
-        new RenderableComplexText( layoutContext, instanceId, elementType, attributeMap, next );
+          new RenderableComplexText( layoutContext, instanceId, elementType, attributeMap, next );
       rct.setForceLinebreak( lines.hasNext() );
       result.add( rct );
     }
 
-    return result.toArray( new RenderNode[ result.size() ] );
+    return result.toArray( new RenderNode[result.size()] );
   }
 
   public RenderNode[] finishText() {
-    return new RenderNode[ 0 ];
+    return new RenderNode[0];
   }
 
   public void startText() {
@@ -61,20 +56,18 @@ public class ComplexTextFactory implements RenderableTextFactory {
    * @param length
    * @return
    */
-  public static List<String> processText( final int[] text,
-                                          final int offset,
-                                          final int length ) {
+  public static List<String> processText( final int[] text, final int offset, final int length ) {
     final ArrayList<String> result = new ArrayList<String>();
     final int end = offset + length;
     int start = offset;
     State state = State.None;
     for ( int i = offset; i < end; i += 1 ) {
       State oldState = state;
-      int cp = text[ i ];
-      switch( cp ) {
+      int cp = text[i];
+      switch ( cp ) {
         case '\n': {
           state = State.LF;
-          switch( oldState ) {
+          switch ( oldState ) {
             case CR: {
               // LF+CR causes linebreaks
               String txt = new String( text, start, i - start - 1 );
@@ -122,7 +115,7 @@ public class ComplexTextFactory implements RenderableTextFactory {
       }
     }
 
-    switch( state ) {
+    switch ( state ) {
       case None:
       case LF: {
         result.add( new String( text, start, offset + length - start ) );

@@ -127,7 +127,7 @@ public class DynamicStyleKey {
   private Integer hashCode;
 
   private DynamicStyleKey( final InstanceID rootBandId,
-                           final Map<InstanceID, StyleInfoCollection> dynamicStylePerElement ) {
+      final Map<InstanceID, StyleInfoCollection> dynamicStylePerElement ) {
     this.rootBandId = rootBandId;
     this.dynamicStylePerElement = dynamicStylePerElement;
   }
@@ -179,8 +179,9 @@ public class DynamicStyleKey {
       ArgumentNullException.validate( "runtime", runtime );
 
       this.runtime = runtime;
-      dynamicTemplateInfo = (HashMap<InstanceID, StyleKey[]>)
-        band.getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH );
+      dynamicTemplateInfo =
+          (HashMap<InstanceID, StyleKey[]>) band.getAttribute( AttributeNames.Internal.NAMESPACE,
+              AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH );
       if ( dynamicTemplateInfo == null ) {
         return Collections.emptyMap();
       }
@@ -203,12 +204,12 @@ public class DynamicStyleKey {
       Object value = element.getElementType().getValue( runtime, element );
       boolean empty = isEmpty( value );
 
-      StyleInfoCollection lastCollection = (StyleInfoCollection)
-        element.getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_ELEMENT_STASH );
+      StyleInfoCollection lastCollection =
+          (StyleInfoCollection) element.getAttribute( AttributeNames.Internal.NAMESPACE,
+              AttributeNames.Internal.FAST_EXPORT_ELEMENT_STASH );
       SimpleStyleSheet computedStyle = element.getComputedStyle();
-      if ( lastCollection != null &&
-        lastCollection.getStyleChangeTracker() == computedStyle.getChangeTrackerHash() &&
-        lastCollection.nullValue == empty ) {
+      if ( lastCollection != null && lastCollection.getStyleChangeTracker() == computedStyle.getChangeTrackerHash()
+          && lastCollection.nullValue == empty ) {
         // no changes
         styleInfo.put( element.getObjectID(), lastCollection );
         return;

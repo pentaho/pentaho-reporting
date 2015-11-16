@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml;
 
@@ -36,12 +36,13 @@ public class XmlPageReportUtil {
   /**
    * Saves a report to XML format.
    *
-   * @param report   the report.
-   * @param fileName target file.
+   * @param report
+   *          the report.
+   * @param fileName
+   *          target file.
    * @return true if the report has been successfully exported, false otherwise.
    */
-  public static boolean createXml( final MasterReport report,
-                                   final File fileName ) {
+  public static boolean createXml( final MasterReport report, final File fileName ) {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -72,12 +73,13 @@ public class XmlPageReportUtil {
   /**
    * Saves a report to XML format.
    *
-   * @param report the report.
-   * @param out    target output stream.
+   * @param report
+   *          the report.
+   * @param out
+   *          target output stream.
    * @return true if the report has been successfully exported, false otherwise.
    */
-  public static boolean createXml( final MasterReport report,
-                                   final OutputStream out ) {
+  public static boolean createXml( final MasterReport report, final OutputStream out ) {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -87,8 +89,7 @@ public class XmlPageReportUtil {
     PageableReportProcessor proc = null;
     try {
 
-      final XmlPageOutputProcessor outputProcessor = new XmlPageOutputProcessor
-        ( report.getConfiguration(), out );
+      final XmlPageOutputProcessor outputProcessor = new XmlPageOutputProcessor( report.getConfiguration(), out );
       proc = new PageableReportProcessor( report, outputProcessor );
       proc.processReport();
       return true;
@@ -105,12 +106,13 @@ public class XmlPageReportUtil {
   /**
    * Concates and saves a list of reports to XML format.
    *
-   * @param report   the report.
-   * @param fileName target file name.
+   * @param report
+   *          the report.
+   * @param fileName
+   *          target file name.
    * @return true if the report has been successfully exported, false otherwise.
    */
-  public static boolean createXml( final MasterReport report,
-                                   final String fileName ) {
+  public static boolean createXml( final MasterReport report, final String fileName ) {
     if ( report == null ) {
       throw new NullPointerException();
     }
@@ -119,6 +121,5 @@ public class XmlPageReportUtil {
     }
     return createXml( report, new File( fileName ) );
   }
-
 
 }

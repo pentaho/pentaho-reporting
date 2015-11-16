@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
@@ -119,7 +119,6 @@ public abstract class TextElementFactory extends ElementFactory {
    */
   private Float optimumLetterSpacing;
 
-
   /**
    * Default Constructor.
    */
@@ -138,7 +137,8 @@ public abstract class TextElementFactory extends ElementFactory {
   /**
    * Defines the vertical text alignment for this element.
    *
-   * @param verticalTextAlignment the vertical text alignment property or null, if the property should not be defined.
+   * @param verticalTextAlignment
+   *          the vertical text alignment property or null, if the property should not be defined.
    */
   public void setVerticalTextAlignment( final VerticalTextAlign verticalTextAlignment ) {
     this.verticalTextAlignment = verticalTextAlignment;
@@ -157,7 +157,8 @@ public abstract class TextElementFactory extends ElementFactory {
   /**
    * Defines how and when text-wrapping should occur inside a text element.
    *
-   * @param wrap the defined text-wrap property.
+   * @param wrap
+   *          the defined text-wrap property.
    * @see TextWrap
    */
   public void setWrap( final TextWrap wrap ) {
@@ -177,7 +178,8 @@ public abstract class TextElementFactory extends ElementFactory {
   /**
    * Defines how to treat whitespaces in the text of a text-element.
    *
-   * @param whitespaceCollapse the white space collapse constant or null, if undefined.
+   * @param whitespaceCollapse
+   *          the white space collapse constant or null, if undefined.
    * @see WhitespaceCollapse
    */
   public void setWhitespaceCollapse( final WhitespaceCollapse whitespaceCollapse ) {
@@ -198,7 +200,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the maximum letter spacing for a text element. This property controls how the justify-alignment distributes
    * extra space on a line.
    *
-   * @param maximumLetterSpacing the maximum letter spacing.
+   * @param maximumLetterSpacing
+   *          the maximum letter spacing.
    */
   public void setMaximumLetterSpacing( final Float maximumLetterSpacing ) {
     this.maximumLetterSpacing = maximumLetterSpacing;
@@ -218,7 +221,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the minimum letter spacing for a text element. This property controls how the justify-alignment distributes
    * extra space on a line and controls how much extra space is applied between the characters of a text.
    *
-   * @param minimumLetterSpacing the minimum letter spacing or null, if undefined.
+   * @param minimumLetterSpacing
+   *          the minimum letter spacing or null, if undefined.
    */
   public void setMinimumLetterSpacing( final Float minimumLetterSpacing ) {
     this.minimumLetterSpacing = minimumLetterSpacing;
@@ -238,7 +242,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the optimum letter spacing for a text element. This property controls how the justify-alignment distributes
    * extra space on a line.
    *
-   * @param optimumLetterSpacing the optimum letter spacing or null, if undefined.
+   * @param optimumLetterSpacing
+   *          the optimum letter spacing or null, if undefined.
    */
   public void setOptimumLetterSpacing( final Float optimumLetterSpacing ) {
     this.optimumLetterSpacing = optimumLetterSpacing;
@@ -256,7 +261,8 @@ public abstract class TextElementFactory extends ElementFactory {
   /**
    * Defines that the font should be embedded if possible.
    *
-   * @param embedFont embedds the font if possible.
+   * @param embedFont
+   *          embedds the font if possible.
    */
   public void setEmbedFont( final Boolean embedFont ) {
     this.embedFont = embedFont;
@@ -274,7 +280,8 @@ public abstract class TextElementFactory extends ElementFactory {
   /**
    * Defines the name of the font that should be used to print the text.
    *
-   * @param fontName the name of the font.
+   * @param fontName
+   *          the name of the font.
    */
   public void setFontName( final String fontName ) {
     this.fontName = fontName;
@@ -294,7 +301,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the state of the bold flag for the font. This value may be set to null to indicate that that value should
    * be inherited from the parents.
    *
-   * @param bold the bold-flag.
+   * @param bold
+   *          the bold-flag.
    */
   public void setBold( final Boolean bold ) {
     this.bold = bold;
@@ -314,7 +322,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the state of the italic flag for the font. This value may be set to null to indicate that that value should
    * be inherited from the parents.
    *
-   * @param italic the italic-flag.
+   * @param italic
+   *          the italic-flag.
    */
   public void setItalic( final Boolean italic ) {
     this.italic = italic;
@@ -334,7 +343,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the state of the underline flag for the font. This value may be set to null to indicate that that value
    * should be inherited from the parents.
    *
-   * @param underline the underline-flag.
+   * @param underline
+   *          the underline-flag.
    */
   public void setUnderline( final Boolean underline ) {
     this.underline = underline;
@@ -354,7 +364,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the state of the strike through flag for the font. This value may be set to null to indicate that that
    * value should be inherited from the parents.
    *
-   * @param strikethrough the strikethrough-flag.
+   * @param strikethrough
+   *          the strikethrough-flag.
    */
   public void setStrikethrough( final Boolean strikethrough ) {
     this.strikethrough = strikethrough;
@@ -372,7 +383,8 @@ public abstract class TextElementFactory extends ElementFactory {
   /**
    * Returns the font size in points.
    *
-   * @param fontSize the font size.
+   * @param fontSize
+   *          the font size.
    */
   public void setFontSize( final Integer fontSize ) {
     this.fontSize = fontSize;
@@ -392,7 +404,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the lineheight defined for the text element. The lineheight must be greater than the font size, or this
    * value will be ignored.
    *
-   * @param lineHeight the line height.
+   * @param lineHeight
+   *          the line height.
    */
   public void setLineHeight( final Float lineHeight ) {
     this.lineHeight = lineHeight;
@@ -412,7 +425,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the font encoding used to write the text. This parameter is only used by some output targets and will be
    * ignored otherwise.
    *
-   * @param encoding the font encoding.
+   * @param encoding
+   *          the font encoding.
    */
   public void setEncoding( final String encoding ) {
     this.encoding = encoding;
@@ -432,7 +446,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Defines the defined reserved literal, which should be appended to the text to signal text, which was not completly
    * printed.
    *
-   * @param reservedLiteral the reserved literal.
+   * @param reservedLiteral
+   *          the reserved literal.
    */
   public void setReservedLiteral( final String reservedLiteral ) {
     this.reservedLiteral = reservedLiteral;
@@ -442,7 +457,7 @@ public abstract class TextElementFactory extends ElementFactory {
    * Returns, whether the text lines should be trimmed.
    *
    * @return Boolean.TRUE, if the text should be trimmed, Boolean.FALSE if the text should never be trimmed or null, if
-   * the default should be applied.
+   *         the default should be applied.
    */
   public Boolean getTrimTextContent() {
     return trimTextContent;
@@ -451,8 +466,9 @@ public abstract class TextElementFactory extends ElementFactory {
   /**
    * Defines, whether the text lines should be trimmed.
    *
-   * @param trimTextContent Boolean.TRUE, if the text should be trimmed, Boolean.FALSE if the text should never be
-   *                        trimmed or null, if the default should be applied.
+   * @param trimTextContent
+   *          Boolean.TRUE, if the text should be trimmed, Boolean.FALSE if the text should never be trimmed or null, if
+   *          the default should be applied.
    */
   public void setTrimTextContent( final Boolean trimTextContent ) {
     this.trimTextContent = trimTextContent;
@@ -470,7 +486,8 @@ public abstract class TextElementFactory extends ElementFactory {
   /**
    * Defines, whether the text should be wrapped in excel cells.
    *
-   * @param wrapText the wrap text flag.
+   * @param wrapText
+   *          the wrap text flag.
    */
   public void setWrapText( final Boolean wrapText ) {
     this.wrapText = wrapText;
@@ -480,7 +497,8 @@ public abstract class TextElementFactory extends ElementFactory {
    * Applies the defined element style to the given stylesheet. This is a helper function to reduce the code size of the
    * implementors.
    *
-   * @param style the stlyesheet.
+   * @param style
+   *          the stlyesheet.
    */
   protected void applyStyle( final ElementStyleSheet style ) {
     super.applyStyle( style );

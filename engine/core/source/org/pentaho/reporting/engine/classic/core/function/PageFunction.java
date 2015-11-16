@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -64,9 +64,10 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
    */
   private boolean ignoreNextGroupStart;
 
-
   /**
-   * Constructs an unnamed function. <P> This constructor is intended for use by the SAX handler class only.
+   * Constructs an unnamed function.
+   * <P>
+   * This constructor is intended for use by the SAX handler class only.
    */
   public PageFunction() {
     this.startPage = 1;
@@ -77,7 +78,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * Constructs a named function.
    *
-   * @param name the function name.
+   * @param name
+   *          the function name.
    */
   public PageFunction( final String name ) {
     this();
@@ -107,12 +109,13 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * Defines the defined dependency level. For page functions, this level can be as low as the pagination level.
    *
-   * @param dependencyLevel the dependency level.
+   * @param dependencyLevel
+   *          the dependency level.
    */
   public void setDependencyLevel( final int dependencyLevel ) {
     if ( dependencyLevel < LayoutProcess.LEVEL_PAGINATE ) {
       throw new IllegalArgumentException(
-        "PageFunction.setDependencyLevel(...) : A dependency level lower than paginate is not allowed." );
+          "PageFunction.setDependencyLevel(...) : A dependency level lower than paginate is not allowed." );
     }
     this.dependencyLevel = dependencyLevel;
   }
@@ -129,7 +132,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * Defines the page increment.
    *
-   * @param pageIncrement the page increment.
+   * @param pageIncrement
+   *          the page increment.
    */
   public void setPageIncrement( final int pageIncrement ) {
     this.pageIncrement = pageIncrement;
@@ -147,7 +151,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * Sets the name of the group that the function acts upon.
    *
-   * @param group the group name.
+   * @param group
+   *          the group name.
    */
   public void setGroup( final String group ) {
     this.group = group;
@@ -165,7 +170,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * Defines the page number where the counting starts.
    *
-   * @param startPage the page number of the first page.
+   * @param startPage
+   *          the page number of the first page.
    */
   public void setStartPage( final int startPage ) {
     this.startPage = startPage;
@@ -183,7 +189,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * Sets the current page.
    *
-   * @param page the page.
+   * @param page
+   *          the page.
    */
   protected void setPage( final int page ) {
     this.page = page;
@@ -192,7 +199,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * Receives notification that the report has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     if ( event.isDeepTraversing() ) {
@@ -205,11 +213,11 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
     // waitForNextGroupStart = false;
   }
 
-
   /**
    * Receives notification that a group has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     // The defined group is only valid for the master-report.
@@ -221,9 +229,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
       return;
     }
 
-
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
-      //   waitForNextGroupStart = false;
+      // waitForNextGroupStart = false;
 
       if ( ignoreNextGroupStart ) {
         // The report-header had been printed recently. Add it to the group's list of pages
@@ -242,7 +249,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
    * Receives notification from the report engine that a new page is starting. Grabs the page number from the report
    * state and stores it.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void pageStarted( final ReportEvent event ) {
     if ( ( event.getType() & ReportEvent.REPORT_INITIALIZED ) == ReportEvent.REPORT_INITIALIZED ) {
@@ -255,17 +263,16 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
       ignoreNextPageStart = false;
       return;
     }
-    //    if (waitForNextGroupStart &&
-    //        (event.getType() & ReportEvent.GROUP_STARTED) == ReportEvent.GROUP_STARTED)
-    //    {
-    //      this.setPage(getStartPage());
-    //      this.waitForNextGroupStart = false;
-    //      return;
-    //    }
+    // if (waitForNextGroupStart &&
+    // (event.getType() & ReportEvent.GROUP_STARTED) == ReportEvent.GROUP_STARTED)
+    // {
+    // this.setPage(getStartPage());
+    // this.waitForNextGroupStart = false;
+    // return;
+    // }
 
     setPage( getPage() + getPageIncrement() );
   }
-
 
   /**
    * Returns, whether the next page-start event will be ignored. This is an internal state flag to keep the computation
@@ -280,30 +287,32 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * Receives notification that a page is completed.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void pageFinished( final ReportEvent event ) {
     // ignored ...
   }
+
   //
-  //  public void groupFinished(final ReportEvent event)
-  //  {
-  //    // The defined group is only valid for the master-report.
-  //    if (event.isDeepTraversing())
-  //    {
-  //      return;
-  //    }
-  //    // if we have no defined group, no need to do anything else.
-  //    if (getGroup() == null)
-  //    {
-  //      return;
-  //    }
+  // public void groupFinished(final ReportEvent event)
+  // {
+  // // The defined group is only valid for the master-report.
+  // if (event.isDeepTraversing())
+  // {
+  // return;
+  // }
+  // // if we have no defined group, no need to do anything else.
+  // if (getGroup() == null)
+  // {
+  // return;
+  // }
   //
-  ////    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-  ////    {
-  ////      waitForNextGroupStart = true;
-  ////    }
-  //  }
+  // // if (FunctionUtilities.isDefinedGroup(getGroup(), event))
+  // // {
+  // // waitForNextGroupStart = true;
+  // // }
+  // }
 
   /**
    * Returns the page number (function value).
@@ -337,7 +346,8 @@ public class PageFunction extends AbstractFunction implements PageEventListener 
   /**
    * A obsolete setter. Ignore it please, it has no effect.
    *
-   * @param ignorePageCancelEvents ignored.
+   * @param ignorePageCancelEvents
+   *          ignored.
    * @deprecated No longer used.
    */
   public void setIgnorePageCancelEvents( final boolean ignorePageCancelEvents ) {

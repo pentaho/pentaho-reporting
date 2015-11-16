@@ -1,21 +1,45 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
+
+import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,19 +63,7 @@ import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-public abstract class AbstractExportDialog extends JDialog
-  implements ExportDialog {
+public abstract class AbstractExportDialog extends JDialog implements ExportDialog {
   private static final Log logger = LogFactory.getLog( AbstractExportDialog.class );
 
   /**
@@ -68,7 +80,8 @@ public abstract class AbstractExportDialog extends JDialog
     /**
      * Receives notification that the action has occurred.
      *
-     * @param e the action event.
+     * @param e
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent e ) {
       if ( performValidate() && performConfirm() ) {
@@ -85,7 +98,7 @@ public abstract class AbstractExportDialog extends JDialog
         final ReportParameterValues reportParameters = reportJob.getParameterValues();
         final String[] strings = properties.getColumnNames();
         for ( int i = 0; i < strings.length; i++ ) {
-          final String propertyName = strings[ i ];
+          final String propertyName = strings[i];
           reportParameters.put( propertyName, properties.get( propertyName ) );
         }
       }
@@ -107,7 +120,8 @@ public abstract class AbstractExportDialog extends JDialog
     /**
      * Receives notification that the action has occurred.
      *
-     * @param e the action event.
+     * @param e
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent e ) {
       setConfirmed( false );
@@ -160,29 +174,30 @@ public abstract class AbstractExportDialog extends JDialog
   private ParameterReportControllerPane parametersPanel;
 
   /**
-   * Creates a non-modal dialog without a title and without a specified <code>Frame</code> owner.  A shared, hidden
-   * frame will be set as the owner of the dialog.
+   * Creates a non-modal dialog without a title and without a specified <code>Frame</code> owner. A shared, hidden frame
+   * will be set as the owner of the dialog.
    */
   protected AbstractExportDialog() {
     initialize();
   }
 
   /**
-   * Creates a non-modal dialog without a title with the specified <code>Frame</code> as its owner.  If
+   * Creates a non-modal dialog without a title with the specified <code>Frame</code> as its owner. If
    * <code>owner</code> is <code>null</code>, a shared, hidden frame will be set as the owner of the dialog.
    *
-   * @param owner the <code>Frame</code> from which the dialog is displayed
+   * @param owner
+   *          the <code>Frame</code> from which the dialog is displayed
    */
   protected AbstractExportDialog( final Frame owner ) {
     super( owner );
     initialize();
   }
 
-
   /**
    * Creates a non-modal dialog without a title with the specified <code>Dialog</code> as its owner.
    *
-   * @param owner the non-null <code>Dialog</code> from which the dialog is displayed
+   * @param owner
+   *          the non-null <code>Dialog</code> from which the dialog is displayed
    */
   protected AbstractExportDialog( final Dialog owner ) {
     super( owner );
@@ -203,8 +218,9 @@ public abstract class AbstractExportDialog extends JDialog
     setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
     addWindowListener( new WindowCloseHandler() );
 
-    messages = new Messages( defaultContext.getLocale(), SwingCommonModule.BUNDLE_NAME,
-      ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
+    messages =
+        new Messages( defaultContext.getLocale(), SwingCommonModule.BUNDLE_NAME, ObjectUtilities
+            .getClassLoader( SwingCommonModule.class ) );
 
     parametersPanel = new ParameterReportControllerPane();
     parametersLayoutPanel = new JPanel( new BorderLayout() );
@@ -235,9 +251,8 @@ public abstract class AbstractExportDialog extends JDialog
     buttonPanel.add( btnCancel );
     btnConfirm.setDefaultCapable( true );
     getRootPane().setDefaultButton( btnConfirm );
-    buttonPanel.registerKeyboardAction( getConfirmAction(),
-      KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0 ),
-      JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT );
+    buttonPanel.registerKeyboardAction( getConfirmAction(), KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0 ),
+        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT );
 
     final JPanel buttonCarrier = new JPanel();
     buttonCarrier.setLayout( new FlowLayout( FlowLayout.RIGHT ) );
@@ -269,8 +284,7 @@ public abstract class AbstractExportDialog extends JDialog
     return formValidator;
   }
 
-  protected void initializeFromJob( final MasterReport job,
-                                    final GuiContext guiContext ) {
+  protected void initializeFromJob( final MasterReport job, final GuiContext guiContext ) {
     final JStatusBar statusBar = getStatusBar();
     if ( statusBar != null ) {
       statusBar.setIconTheme( guiContext.getIconTheme() );
@@ -289,11 +303,11 @@ public abstract class AbstractExportDialog extends JDialog
    * Opens the dialog to query all necessary input from the user. This will not start the processing, as this is done
    * elsewhere.
    *
-   * @param reportJob the report that should be processed.
+   * @param reportJob
+   *          the report that should be processed.
    * @return true, if the processing should continue, false otherwise.
    */
-  public boolean performQueryForExport( final MasterReport reportJob,
-                                        final SwingGuiContext guiContext ) {
+  public boolean performQueryForExport( final MasterReport reportJob, final SwingGuiContext guiContext ) {
     if ( reportJob == null ) {
       throw new NullPointerException();
     }
@@ -338,8 +352,7 @@ public abstract class AbstractExportDialog extends JDialog
     formValidator.setEnabled( false );
 
     final Configuration fullDialogContents = grabDialogContents( true );
-    final Enumeration configProperties =
-      fullDialogContents.getConfigProperties();
+    final Enumeration configProperties = fullDialogContents.getConfigProperties();
     while ( configProperties.hasMoreElements() ) {
       final String key = (String) configProperties.nextElement();
       repConf.setConfigProperty( key, fullDialogContents.getConfigProperty( key ) );
@@ -369,10 +382,8 @@ public abstract class AbstractExportDialog extends JDialog
     }
   }
 
-  private void saveToConfigStore( final MasterReport reportJob,
-                                  final Configuration reportConfiguration ) {
-    final String configPath = ConfigFactory.encodePath(
-      reportJob.getTitle() + getConfigurationSuffix() );
+  private void saveToConfigStore( final MasterReport reportJob, final Configuration reportConfiguration ) {
+    final String configPath = ConfigFactory.encodePath( reportJob.getTitle() + getConfigurationSuffix() );
 
     try {
       final boolean fullStorageEnabled = isFullInputStorageEnabled( reportConfiguration );
@@ -380,21 +391,19 @@ public abstract class AbstractExportDialog extends JDialog
       final ConfigStorage storage = ConfigFactory.getInstance().getUserStorage();
       storage.store( configPath, dialogContents );
     } catch ( ConfigStoreException cse ) {
-      AbstractExportDialog.logger.debug( messages.getString( "AbstractExportDialog.DEBUG_CANT_STORE_DEFAULTS",
-        String.valueOf( getClass() ) ) ); //$NON-NLS-1$//$NON-NLS-2$
+      AbstractExportDialog.logger.debug( messages.getString( "AbstractExportDialog.DEBUG_CANT_STORE_DEFAULTS", String
+          .valueOf( getClass() ) ) ); //$NON-NLS-1$//$NON-NLS-2$
     }
   }
 
-  private Configuration loadFromConfigStore( final MasterReport reportJob,
-                                             final Configuration defaultConfig ) {
-    final String configPath = ConfigFactory.encodePath(
-      reportJob.getTitle() + getConfigurationSuffix() );
+  private Configuration loadFromConfigStore( final MasterReport reportJob, final Configuration defaultConfig ) {
+    final String configPath = ConfigFactory.encodePath( reportJob.getTitle() + getConfigurationSuffix() );
     final ConfigStorage storage = ConfigFactory.getInstance().getUserStorage();
     try {
       return storage.load( configPath, defaultConfig );
     } catch ( Exception cse ) {
-      AbstractExportDialog.logger.debug( messages.getString( "AbstractExportDialog.DEBUG_CANT_LOAD_DEFAULTS",
-        String.valueOf( getClass() ) ) ); //$NON-NLS-1$ //$NON-NLS-2$
+      AbstractExportDialog.logger.debug( messages.getString( "AbstractExportDialog.DEBUG_CANT_LOAD_DEFAULTS", String
+          .valueOf( getClass() ) ) ); //$NON-NLS-1$ //$NON-NLS-2$
     }
     return defaultConfig;
   }
@@ -428,29 +437,27 @@ public abstract class AbstractExportDialog extends JDialog
   }
 
   protected boolean isInputStorageEnabled( final Configuration config ) {
-    if ( "true".equals( config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.gui.base.StoreExportDialogInputs" ) ) == false ) {
+    if ( "true".equals( config
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.base.StoreExportDialogInputs" ) ) == false ) {
       return false;
     }
 
-    final String confVal = config.getConfigProperty
-      ( getConfigurationPrefix() + "StoreDialogContents" ); //$NON-NLS-1$
+    final String confVal = config.getConfigProperty( getConfigurationPrefix() + "StoreDialogContents" ); //$NON-NLS-1$
     return "none".equalsIgnoreCase( confVal ) == false; //$NON-NLS-1$
   }
 
   protected boolean isFullInputStorageEnabled( final Configuration config ) {
-    if ( "true".equals( config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.gui.base.StoreExportDialogInputs" ) ) == false ) {
+    if ( "true".equals( config
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.base.StoreExportDialogInputs" ) ) == false ) {
       return false;
     }
 
-    final String confVal = config.getConfigProperty
-      ( getConfigurationPrefix() + "StoreDialogContents" ); //$NON-NLS-1$
+    final String confVal = config.getConfigProperty( getConfigurationPrefix() + "StoreDialogContents" ); //$NON-NLS-1$
     return "all".equalsIgnoreCase( confVal ); //$NON-NLS-1$
   }
 
   /**
-   * Returns <code>true</code> if the user confirmed the selection, and <code>false</code> otherwise.  The file should
+   * Returns <code>true</code> if the user confirmed the selection, and <code>false</code> otherwise. The file should
    * only be saved if the result is <code>true</code>.
    *
    * @return A boolean.
@@ -462,7 +469,8 @@ public abstract class AbstractExportDialog extends JDialog
   /**
    * Defines whether this dialog has been finished using the 'OK' or the 'Cancel' option.
    *
-   * @param confirmed set to <code>true</code>, if OK was pressed, <code>false</code> otherwise
+   * @param confirmed
+   *          set to <code>true</code>, if OK was pressed, <code>false</code> otherwise
    */
   protected void setConfirmed( final boolean confirmed ) {
     this.confirmed = confirmed;
@@ -476,28 +484,26 @@ public abstract class AbstractExportDialog extends JDialog
 
   protected abstract String getResourceBaseName();
 
-
   /**
-   * Resolves file names for the exports. An occurence of "~/" at the beginning of the name will be replaced with the
+   * Resolves file names for the exports. An occurrence of "~/" at the beginning of the name will be replaced with the
    * users home directory.
    *
-   * @param baseDirectory the base directory as specified in the configuration.
+   * @param baseDirectory
+   *          the base directory as specified in the configuration.
    * @return the file object pointing to that directory.
-   * @throws IllegalArgumentException if the base directory is null.
+   * @throws IllegalArgumentException
+   *           if the base directory is null.
    */
   protected File resolvePath( String baseDirectory ) {
     if ( baseDirectory == null ) {
-      throw new IllegalArgumentException( messages.getString(
-        "AbstractExportDialog.ERROR_0001_INVALID_BASE_DIR" ) ); //$NON-NLS-1$
+      throw new IllegalArgumentException( messages.getString( "AbstractExportDialog.ERROR_0001_INVALID_BASE_DIR" ) ); //$NON-NLS-1$
     }
 
-    if ( baseDirectory.startsWith( "~/" ) == false ) //$NON-NLS-1$
-    {
+    if ( baseDirectory.startsWith( "~/" ) == false ) { //$NON-NLS-1$
       return new File( baseDirectory );
     } else {
       final String homeDirectory = System.getProperty( "user.home" ); //$NON-NLS-1$
-      if ( "~/".equals( baseDirectory ) ) //$NON-NLS-1$
-      {
+      if ( "~/".equals( baseDirectory ) ) { //$NON-NLS-1$
         return new File( homeDirectory );
       } else {
         baseDirectory = baseDirectory.substring( 2 );

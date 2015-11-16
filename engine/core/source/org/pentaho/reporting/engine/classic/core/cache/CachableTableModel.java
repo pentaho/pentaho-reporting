@@ -1,21 +1,30 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.cache;
+
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.util.ArrayList;
+import java.util.Date;
+
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
@@ -26,12 +35,6 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeCont
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 import org.pentaho.reporting.libraries.base.util.GenericObjectTable;
-
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class CachableTableModel extends AbstractTableModel implements MetaTableModel {
   private GenericObjectTable<DefaultDataAttributes> cellAttributes;
@@ -50,9 +53,9 @@ public class CachableTableModel extends AbstractTableModel implements MetaTableM
         final Class columnType = model.getColumnClass( i );
         final DefaultDataAttributes attributes = new DefaultDataAttributes();
         attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
-          new DefaultConceptQueryMapper(), columnName );
+            new DefaultConceptQueryMapper(), columnName );
         attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
-          new DefaultConceptQueryMapper(), columnType );
+            new DefaultConceptQueryMapper(), columnType );
         attributes.merge( metaTableModel.getColumnAttributes( i ), dataAttributeContext );
         columnAttributes.add( attributes );
       }
@@ -77,16 +80,16 @@ public class CachableTableModel extends AbstractTableModel implements MetaTableM
         final Class columnType = model.getColumnClass( i );
         final DefaultDataAttributes attributes = new DefaultDataAttributes();
         attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
-          new DefaultConceptQueryMapper(), columnName );
+            new DefaultConceptQueryMapper(), columnName );
         attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
-          new DefaultConceptQueryMapper(), columnType );
+            new DefaultConceptQueryMapper(), columnType );
         columnAttributes.add( attributes );
       }
       tableAttributes = EmptyDataAttributes.INSTANCE;
     }
 
     cellValues =
-      new GenericObjectTable<Object>( Math.max( 1, model.getRowCount() ), Math.max( 1, model.getColumnCount() ) );
+        new GenericObjectTable<Object>( Math.max( 1, model.getRowCount() ), Math.max( 1, model.getColumnCount() ) );
     for ( int row = 0; row < model.getRowCount(); row += 1 ) {
       for ( int columns = 0; columns < model.getColumnCount(); columns += 1 ) {
         cellValues.setObject( row, columns, model.getValueAt( row, columns ) );
@@ -97,14 +100,14 @@ public class CachableTableModel extends AbstractTableModel implements MetaTableM
 
   public String getColumnName( final int column ) {
     final DataAttributes attributes = columnAttributes.get( column );
-    return (String) attributes.getMetaAttribute
-      ( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME, String.class, dataAttributeContext );
+    return (String) attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
+        String.class, dataAttributeContext );
   }
 
   public Class getColumnClass( final int columnIndex ) {
     final DataAttributes attributes = columnAttributes.get( columnIndex );
-    return (Class) attributes.getMetaAttribute
-      ( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE, Class.class, dataAttributeContext );
+    return (Class) attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
+        Class.class, dataAttributeContext );
   }
 
   public DataAttributes getCellDataAttributes( final int row, final int column ) {

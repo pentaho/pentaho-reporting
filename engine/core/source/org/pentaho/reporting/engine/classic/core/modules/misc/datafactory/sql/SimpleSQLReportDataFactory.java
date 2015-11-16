@@ -1,34 +1,22 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
-import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-
-import javax.swing.table.TableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,6 +31,19 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
 
+import javax.swing.table.TableModel;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 /**
  * @noinspection AssignmentToCollectionOrArrayFieldFromParameter
  */
@@ -53,8 +54,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
 
   private boolean columnNameMapping;
   private static final String COLUMN_NAME_MAPPING_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnNameMapping"; //$NON-NLS-1$
-  private static final String[] EMPTY_NAMES = new String[ 0 ];
+      "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnNameMapping"; //$NON-NLS-1$
+  private static final String[] EMPTY_NAMES = new String[0];
   private transient Statement currentRunningStatement;
 
   private String userField;
@@ -62,8 +63,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
 
   public SimpleSQLReportDataFactory() {
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-    this.columnNameMapping = "Name".equalsIgnoreCase( globalConfig.getConfigProperty //$NON-NLS-1$
-      ( SimpleSQLReportDataFactory.COLUMN_NAME_MAPPING_KEY, "Name" ) ); //$NON-NLS-1$
+    this.columnNameMapping = "Name".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
+        SimpleSQLReportDataFactory.COLUMN_NAME_MAPPING_KEY, "Name" ) ); //$NON-NLS-1$
   }
 
   public SimpleSQLReportDataFactory( final Connection connection ) {
@@ -129,17 +130,16 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
   }
 
   private int getBestResultSetType( final DataRow dataRow ) throws SQLException {
-    if ( "simple".equalsIgnoreCase( getConfiguration().getConfigProperty //$NON-NLS-1$
-      ( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ) ) //$NON-NLS-1$
-    {
+    if ( "simple".equalsIgnoreCase( getConfiguration().getConfigProperty( //$NON-NLS-1$
+        ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ) ) { //$NON-NLS-1$
       return ResultSet.TYPE_FORWARD_ONLY;
     }
 
     final Connection connection = getConnection( dataRow );
-    final boolean supportsScrollInsensitive = connection.getMetaData().supportsResultSetType
-      ( ResultSet.TYPE_SCROLL_INSENSITIVE );
-    final boolean supportsScrollSensitive = connection.getMetaData().supportsResultSetType
-      ( ResultSet.TYPE_SCROLL_SENSITIVE );
+    final boolean supportsScrollInsensitive =
+        connection.getMetaData().supportsResultSetType( ResultSet.TYPE_SCROLL_INSENSITIVE );
+    final boolean supportsScrollSensitive =
+        connection.getMetaData().supportsResultSetType( ResultSet.TYPE_SCROLL_SENSITIVE );
 
     if ( supportsScrollInsensitive ) {
       return ResultSet.TYPE_SCROLL_INSENSITIVE;
@@ -167,8 +167,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
 
       final Connection connection = getConnection( parameters );
       final ParametrizationProvider parametrizationProvider = factory.create( connection );
-      final String translatedQuery = parametrizationProvider.rewriteQueryForParametrization
-        ( connection, query, parameters );
+      final String translatedQuery =
+          parametrizationProvider.rewriteQueryForParametrization( connection, query, parameters );
       final String[] preparedParameterNames = parametrizationProvider.getPreparedParameterNames();
       if ( logger.isDebugEnabled() ) {
         logger.debug( "Translated-Query: " + translatedQuery );
@@ -176,7 +176,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       }
 
       return parametrizeAndQuery( parameters, translatedQuery, preparedParameterNames );
-      //it catch exception only for java 1.6 and jdbc 4
+      // it catch exception only for java 1.6 and jdbc 4
     } catch ( SQLTimeoutException e ) {
       throw new ReportDataFactoryQueryTimeoutException();
     } catch ( Exception e ) {
@@ -186,26 +186,26 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     }
   }
 
-  private ParametrizationProviderFactory createParametrizationProviderFactory()
-    throws ReportDataFactoryException {
+  private ParametrizationProviderFactory createParametrizationProviderFactory() throws ReportDataFactoryException {
     final ParametrizationProviderFactory factory;
-    final String parametrizationProviderClassname = getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ParametrizationProviderFactory" );
+    final String parametrizationProviderClassname =
+        getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ParametrizationProviderFactory" );
     if ( parametrizationProviderClassname == null ) {
       factory = new DefaultParametrizationProviderFactory();
     } else {
-      factory = ObjectUtilities.loadAndInstantiate
-        ( parametrizationProviderClassname, SimpleSQLReportDataFactory.class, ParametrizationProviderFactory.class );
+      factory =
+          ObjectUtilities.loadAndInstantiate( parametrizationProviderClassname, SimpleSQLReportDataFactory.class,
+              ParametrizationProviderFactory.class );
       if ( factory == null ) {
-        throw new ReportDataFactoryException
-          ( "The specified parametrization factory is not valid: " + parametrizationProviderClassname );
+        throw new ReportDataFactoryException( "The specified parametrization factory is not valid: "
+            + parametrizationProviderClassname );
       }
     }
     return factory;
   }
 
-  public String[] getReferencedFields( final String query, final DataRow parameters )
-    throws ReportDataFactoryException {
+  public String[] getReferencedFields( final String query, final DataRow parameters ) throws ReportDataFactoryException {
     try {
       final ParametrizationProviderFactory factory = createParametrizationProviderFactory();
       final Connection connection = getConnection( parameters );
@@ -221,7 +221,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         list.add( passwordField );
       }
       list.add( DataFactory.QUERY_LIMIT );
-      return list.toArray( new String[ list.size() ] );
+      return list.toArray( new String[list.size()] );
     } catch ( ReportDataFactoryException e ) {
       logger.warn( "Unable to perform cache preparation", e );
       throw e;
@@ -243,20 +243,19 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     return isCallableStatement( query ) == false && isCallableStatementQuery( query ) == false;
   }
 
-  protected TableModel parametrizeAndQuery( final DataRow parameters,
-                                            final String translatedQuery,
-                                            final String[] preparedParameterNames )
-    throws SQLException {
+  protected TableModel parametrizeAndQuery( final DataRow parameters, final String translatedQuery,
+      final String[] preparedParameterNames ) throws SQLException {
     final boolean callableStatementQuery = isCallableStatementQuery( translatedQuery );
     final boolean callableStatementUsed = callableStatementQuery || isCallableStatement( translatedQuery );
     final Statement statement;
     if ( preparedParameterNames.length == 0 ) {
-      statement = getConnection( parameters ).createStatement
-        ( getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
+      statement =
+          getConnection( parameters ).createStatement( getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
     } else {
       if ( callableStatementUsed ) {
-        final CallableStatement pstmt = getConnection( parameters ).prepareCall
-          ( translatedQuery, getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
+        final CallableStatement pstmt =
+            getConnection( parameters ).prepareCall( translatedQuery, getBestResultSetType( parameters ),
+                ResultSet.CONCUR_READ_ONLY );
         if ( isCallableStatementQuery( translatedQuery ) ) {
           pstmt.registerOutParameter( 1, Types.OTHER );
           parametrize( parameters, preparedParameterNames, pstmt, false, 1 );
@@ -265,8 +264,9 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         }
         statement = pstmt;
       } else {
-        final PreparedStatement pstmt = getConnection( parameters ).prepareStatement
-          ( translatedQuery, getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
+        final PreparedStatement pstmt =
+            getConnection( parameters ).prepareStatement( translatedQuery, getBestResultSetType( parameters ),
+                ResultSet.CONCUR_READ_ONLY );
         parametrize( parameters, preparedParameterNames, pstmt, isExpandArrays(), 0 );
         statement = pstmt;
       }
@@ -315,8 +315,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     }
 
     // equalsIgnore, as this is what the ResultSetTableModelFactory uses.
-    final boolean simpleMode = "simple".equalsIgnoreCase( getConfiguration().getConfigProperty //$NON-NLS-1$
-      ( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ); //$NON-NLS-1$
+    final boolean simpleMode = "simple".equalsIgnoreCase( getConfiguration().getConfigProperty( //$NON-NLS-1$
+        ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ); //$NON-NLS-1$
 
     if ( simpleMode ) {
       return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( res, columnNameMapping );
@@ -324,16 +324,12 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     return ResultSetTableModelFactory.getInstance().createTableModel( res, columnNameMapping, true );
   }
 
-  private void parametrize( final DataRow parameters,
-                            final String[] params,
-                            final PreparedStatement pstmt,
-                            final boolean expandArrays,
-                            final int parameterOffset )
-    throws SQLException {
+  private void parametrize( final DataRow parameters, final String[] params, final PreparedStatement pstmt,
+      final boolean expandArrays, final int parameterOffset ) throws SQLException {
     pstmt.clearParameters();
     int paramIndex = parameterOffset;
     for ( int i = 0; i < params.length; i++ ) {
-      final String param = params[ i ];
+      final String param = params[i];
       final Object pvalue = parameters.get( param );
       if ( pvalue == null ) {
         // this should work, but some driver are known to die here.
@@ -346,10 +342,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         final Object[] values = (Object[]) pvalue;
         if ( values.length > 0 ) {
           for ( int j = 0; j < values.length; j++ ) {
-            final Object ivalue = values[ j ];
-            if ( ivalue instanceof java.sql.Date ||
-              ivalue instanceof java.sql.Time ||
-              ivalue instanceof Timestamp ) {
+            final Object ivalue = values[j];
+            if ( ivalue instanceof java.sql.Date || ivalue instanceof java.sql.Time || ivalue instanceof Timestamp ) {
               pstmt.setObject( paramIndex + 1, ivalue );
             } else if ( ivalue instanceof Date ) {
               // for now we're going to convert java.util.Date to java.sql.Timestamp
@@ -369,9 +363,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
           paramIndex++;
         }
       } else {
-        if ( pvalue instanceof java.sql.Date ||
-          pvalue instanceof java.sql.Time ||
-          pvalue instanceof Timestamp ) {
+        if ( pvalue instanceof java.sql.Date || pvalue instanceof java.sql.Time || pvalue instanceof Timestamp ) {
           pstmt.setObject( paramIndex + 1, pvalue );
         } else if ( pvalue instanceof Date ) {
           // see comment above about java.util.Date/java.sql.Timestamp conversion
@@ -399,8 +391,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       currentRunningStatement.cancel();
     } catch ( SQLException e ) {
       // Apparently this is not supported for this driver.
-      logger.warn(
-        "Could not cancel running query [maybe the driver does not support that operation] : " + e.getMessage() );
+      logger.warn( "Could not cancel running query [maybe the driver does not support that operation] : "
+          + e.getMessage() );
     } finally {
       logger.debug( "Returning from attempt to cancel current running statement" );
     }
@@ -411,7 +403,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     final char[] chars = query.toCharArray();
     final int length = query.length();
     for ( int i = 0; i < length; i++ ) {
-      final char c = chars[ i ];
+      final char c = chars[i];
       if ( Character.isWhitespace( c ) ) {
         if ( state == 5 ) {
           return true;
@@ -441,7 +433,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     final char[] chars = query.toCharArray();
     final int length = query.length();
     for ( int i = 0; i < length; i++ ) {
-      final char c = chars[ i ];
+      final char c = chars[i];
       if ( Character.isWhitespace( c ) ) {
         if ( state == 7 ) {
           return true;

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
@@ -49,8 +49,7 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
   public AggregateFieldPreProcessor() {
   }
 
-  public MasterReport performPreProcessing( final MasterReport definition,
-                                            final DefaultFlowController flowController )
+  public MasterReport performPreProcessing( final MasterReport definition, final DefaultFlowController flowController )
     throws ReportProcessingException {
     try {
       this.generatedExpressionNames = new HashSet<String>();
@@ -68,8 +67,7 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
     }
   }
 
-  public SubReport performPreProcessing( final SubReport definition,
-                                         final DefaultFlowController flowController )
+  public SubReport performPreProcessing( final SubReport definition, final DefaultFlowController flowController )
     throws ReportProcessingException {
     try {
       this.generatedExpressionNames = new HashSet<String>();
@@ -101,7 +99,7 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
       }
 
       final Object attribute =
-        element.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE );
+          element.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE );
       if ( attribute instanceof Class == false ) {
         continue;
       }
@@ -119,8 +117,7 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
     }
   }
 
-  protected void processAggregateElement( final ReportElement element,
-                                          final Class<AggregationFunction> aggType )
+  protected void processAggregateElement( final ReportElement element, final Class<AggregationFunction> aggType )
     throws InstantiationException, IllegalAccessException, ReportProcessingException {
     final AggregationFunction o = aggType.newInstance();
 
@@ -134,15 +131,14 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
       fo.setField( fieldName );
     }
 
-    final Object labelFor =
-      element.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR );
+    final Object labelFor = element.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR );
     if ( labelFor == null ) {
       element.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, fieldName );
     }
 
-    final String name = AutoGeneratorUtility.generateUniqueExpressionName
-      ( schema, "::wizard:aggregation:{0}",
-        generatedExpressionNames.toArray( new String[ generatedExpressionNames.size() ] ) );
+    final String name =
+        AutoGeneratorUtility.generateUniqueExpressionName( schema, "::wizard:aggregation:{0}", generatedExpressionNames
+            .toArray( new String[generatedExpressionNames.size()] ) );
     o.setName( name );
     generatedExpressionNames.add( name );
 
@@ -154,8 +150,8 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
 
   private void configureRelationalAggreation( final ReportElement element, final AggregationFunction o ) {
     // relational element ...
-    final String group = (String) element.getAttribute
-      ( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_GROUP );
+    final String group =
+        (String) element.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_GROUP );
     if ( group != null ) {
       o.setGroup( group );
     } else {
@@ -180,13 +176,12 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
       // special case handling for detail cells.
       // detail cells have no filter, and reset on the innermost column group.
       // This saves a few bytes as we dont have to run a result-sequence for this case.
-      final CrosstabColumnGroup group = (CrosstabColumnGroup) groups[ groups.length - 1 ];
+      final CrosstabColumnGroup group = (CrosstabColumnGroup) groups[groups.length - 1];
       final String name = group.getName();
       o.setGroup( name );
       o.setCrosstabFilterGroup( null );
       return true;
     }
-
 
     if ( rowField == null ) {
       // this is a detail-row.
@@ -200,7 +195,7 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
     }
 
     if ( columnField == null ) {
-      final Group lastColumnGroup = groups[ groups.length - 1 ];
+      final Group lastColumnGroup = groups[groups.length - 1];
       o.setCrosstabFilterGroup( lastColumnGroup.getName() );
     } else {
       final CrosstabColumnGroup columnGroup = findColumnGroup( columnField );
@@ -221,7 +216,7 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
 
   private CrosstabRowGroup findLastRowGroup() throws ReportProcessingException {
     for ( int i = groups.length - 1; i >= 0; i -= 1 ) {
-      final Group group = groups[ i ];
+      final Group group = groups[i];
       if ( group instanceof CrosstabRowGroup ) {
         return (CrosstabRowGroup) group;
       }
@@ -248,7 +243,7 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
 
   private CrosstabRowGroup findRowGroup( final String field ) throws ReportProcessingException {
     for ( int i = 0; i < groups.length; i++ ) {
-      final Group group = groups[ i ];
+      final Group group = groups[i];
       if ( group instanceof CrosstabRowGroup ) {
         final CrosstabRowGroup rowGroup = (CrosstabRowGroup) group;
         if ( ObjectUtilities.equal( rowGroup.getField(), field ) ) {
@@ -258,13 +253,12 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
     }
 
     // This is a hard error. No point in waiting to fail here.
-    throw new ReportProcessingException(
-      "Trying to find a crosstab-row for field '" + field + "', but there is none." );
+    throw new ReportProcessingException( "Trying to find a crosstab-row for field '" + field + "', but there is none." );
   }
 
   private CrosstabColumnGroup findColumnGroup( final String field ) throws ReportProcessingException {
     for ( int i = 0; i < groups.length; i++ ) {
-      final Group group = groups[ i ];
+      final Group group = groups[i];
       if ( group instanceof CrosstabColumnGroup ) {
         final CrosstabColumnGroup columnGroup = (CrosstabColumnGroup) group;
         if ( ObjectUtilities.equal( columnGroup.getField(), field ) ) {
@@ -274,8 +268,8 @@ public class AggregateFieldPreProcessor extends AbstractReportPreProcessor {
     }
 
     // This is a hard error. No point in waiting to fail here.
-    throw new ReportProcessingException(
-      "Trying to find a crosstab-column for field '" + field + "', but there is none." );
+    throw new ReportProcessingException( "Trying to find a crosstab-column for field '" + field
+        + "', but there is none." );
   }
 
   private CrosstabCell findCrosstabCell( final ReportElement element ) {

@@ -1,40 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.ColumnText;
-import com.lowagie.text.pdf.PdfAction;
-import com.lowagie.text.pdf.PdfAnnotation;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfDestination;
-import com.lowagie.text.pdf.PdfName;
-import com.lowagie.text.pdf.PdfObject;
-import com.lowagie.text.pdf.PdfOutline;
-import com.lowagie.text.pdf.PdfString;
-import com.lowagie.text.pdf.PdfTextArray;
-import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.font.TextAttribute;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.text.AttributedCharacterIterator.Attribute;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -79,12 +69,24 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 import org.pentaho.reporting.libraries.xmlns.LibXmlInfo;
 
-import java.awt.*;
-import java.awt.font.TextAttribute;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-
-import static java.text.AttributedCharacterIterator.Attribute;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.ColumnText;
+import com.lowagie.text.pdf.PdfAction;
+import com.lowagie.text.pdf.PdfAnnotation;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfDestination;
+import com.lowagie.text.pdf.PdfName;
+import com.lowagie.text.pdf.PdfObject;
+import com.lowagie.text.pdf.PdfOutline;
+import com.lowagie.text.pdf.PdfString;
+import com.lowagie.text.pdf.PdfTextArray;
+import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * Creation-Date: 17.07.2007, 18:41:46
@@ -98,11 +100,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     private BaseFontFontMetrics fontMetrics;
     private PdfContentByte contentByte;
 
-    protected PdfTextSpec( final StyleSheet layoutContext,
-                           final PdfOutputProcessorMetaData metaData,
-                           final PdfGraphics2D g2,
-                           final BaseFontFontMetrics fontMetrics,
-                           final PdfContentByte cb ) {
+    protected PdfTextSpec( final StyleSheet layoutContext, final PdfOutputProcessorMetaData metaData,
+        final PdfGraphics2D g2, final BaseFontFontMetrics fontMetrics, final PdfContentByte cb ) {
       super( layoutContext, metaData, g2 );
       if ( fontMetrics == null ) {
         throw new NullPointerException();
@@ -124,7 +123,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
 
     public void close() {
       contentByte.endText();
-      //super.close(); // we do not dispose the graphics as we are working on the original object
+      // super.close(); // we do not dispose the graphics as we are working on the original object
     }
   }
 
@@ -138,9 +137,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
   private PdfImageHandler imageHandler;
   private boolean legacyLineHeightCalc;
 
-  public PdfLogicalPageDrawable( final PdfWriter writer,
-                                 final LFUMap<ResourceKey, com.lowagie.text.Image> imageCache,
-                                 final char version ) {
+  public PdfLogicalPageDrawable( final PdfWriter writer, final LFUMap<ResourceKey, com.lowagie.text.Image> imageCache,
+      final char version ) {
     if ( writer == null ) {
       throw new NullPointerException();
     }
@@ -152,21 +150,18 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     this.version = version;
   }
 
-  public void init( final LogicalPageBox rootBox,
-                    final OutputProcessorMetaData metaData,
-                    final ResourceManager resourceManager ) {
+  public void init( final LogicalPageBox rootBox, final OutputProcessorMetaData metaData,
+      final ResourceManager resourceManager ) {
     throw new UnsupportedOperationException();
   }
 
-  public void init( final LogicalPageBox rootBox,
-                    final PdfOutputProcessorMetaData metaData,
-                    final ResourceManager resourceManager,
-                    final PhysicalPageBox page ) {
+  public void init( final LogicalPageBox rootBox, final PdfOutputProcessorMetaData metaData,
+      final ResourceManager resourceManager, final PhysicalPageBox page ) {
     super.init( rootBox, metaData, resourceManager );
 
     if ( page != null ) {
-      this.globalHeight = (float)
-        StrictGeomUtility.toExternalValue( page.getHeight() - page.getImageableY() + page.getGlobalY() );
+      this.globalHeight =
+          (float) StrictGeomUtility.toExternalValue( page.getHeight() - page.getImageableY() + page.getGlobalY() );
     } else {
       this.globalHeight = rootBox.getPageHeight();
     }
@@ -186,8 +181,10 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
   /**
    * Draws the object.
    *
-   * @param graphics the graphics device.
-   * @param area     the area inside which the object should be drawn.
+   * @param graphics
+   *          the graphics device.
+   * @param area
+   *          the area inside which the object should be drawn.
    */
   public void draw( final Graphics2D graphics, final Rectangle2D area ) {
     super.draw( graphics, area );
@@ -216,8 +213,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
   }
 
   protected boolean drawPdfScript( final RenderNode box ) {
-    final Object attribute = box.getAttributes().getAttribute
-      ( AttributeNames.Pdf.NAMESPACE, AttributeNames.Pdf.SCRIPT_ACTION );
+    final Object attribute =
+        box.getAttributes().getAttribute( AttributeNames.Pdf.NAMESPACE, AttributeNames.Pdf.SCRIPT_ACTION );
     if ( attribute == null ) {
       return false;
     }
@@ -292,8 +289,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     } else if ( StringUtils.isEmpty( title ) == false ) {
       final Rectangle rect = new Rectangle( leftX, lowerY, rightX, upperY );
       final PdfAnnotation commentAnnotation = PdfAnnotation.createText( writer, rect, "Tooltip", title, false, null );
-      commentAnnotation.setAppearance( PdfAnnotation.APPEARANCE_NORMAL,
-        writer.getDirectContent().createAppearance( rect.getWidth(), rect.getHeight() ) );
+      commentAnnotation.setAppearance( PdfAnnotation.APPEARANCE_NORMAL, writer.getDirectContent().createAppearance(
+          rect.getWidth(), rect.getHeight() ) );
       writer.addAnnotation( commentAnnotation );
     }
   }
@@ -329,8 +326,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
       final StyleSheet layoutContext = renderableText.getStyleSheet();
 
       // The code below may be weird, but at least it is predictable weird.
-      final String fontName = getMetaData().getNormalizedFontFamilyName
-        ( (String) layoutContext.getStyleProperty( TextStyleKeys.FONT ) );
+      final String fontName =
+          getMetaData().getNormalizedFontFamilyName( (String) layoutContext.getStyleProperty( TextStyleKeys.FONT ) );
       final String encoding = (String) layoutContext.getStyleProperty( TextStyleKeys.FONTENCODING );
       final float fontSize = (float) layoutContext.getDoubleStyleProperty( TextStyleKeys.FONTSIZE, 10 );
 
@@ -338,15 +335,15 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
       final boolean bold = layoutContext.getBooleanStyleProperty( TextStyleKeys.BOLD );
       final boolean italics = layoutContext.getBooleanStyleProperty( TextStyleKeys.ITALIC );
 
-      final BaseFontFontMetrics fontMetrics = getMetaData().getBaseFontFontMetrics
-        ( fontName, fontSize, bold, italics, encoding, embed, false );
+      final BaseFontFontMetrics fontMetrics =
+          getMetaData().getBaseFontFontMetrics( fontName, fontSize, bold, italics, encoding, embed, false );
 
       final PdfGraphics2D g2 = (PdfGraphics2D) getGraphics();
       final Color cssColor = (Color) layoutContext.getStyleProperty( ElementStyleKeys.PAINT );
       g2.setPaint( cssColor );
       g2.setFillPaint();
       g2.setStrokePaint();
-      //final float translateY = (float) affineTransform.getTranslateY();
+      // final float translateY = (float) affineTransform.getTranslateY();
 
       cb = g2.getRawContentByte();
 
@@ -390,8 +387,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
 
     // if the font does not declare to be italics already, emulate it ..
     if ( baseFontRecord.isTrueTypeFont() && textSpec.isItalics() && nativeContext.isNativeItalics() == false ) {
-      final float italicAngle =
-        baseFont.getFontDescriptor( BaseFont.ITALICANGLE, textSpec.getFontSize() );
+      final float italicAngle = baseFont.getFontDescriptor( BaseFont.ITALICANGLE, textSpec.getFontSize() );
       if ( italicAngle == 0 ) {
         // italics requested, but the font itself does not supply italics gylphs.
         cb.setTextMatrix( 1, 0, PdfLogicalPageDrawable.ITALIC_ANGLE, 1, x1 + translateX, y );
@@ -407,8 +403,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     final int offset = renderableText.getOffset();
 
     final CodePointBuffer codePointBuffer = getCodePointBuffer();
-    if ( metaData.isFeatureSupported( OutputProcessorFeature.FAST_FONTRENDERING ) &&
-      isNormalTextSpacing( renderableText ) ) {
+    if ( metaData.isFeatureSupported( OutputProcessorFeature.FAST_FONTRENDERING )
+        && isNormalTextSpacing( renderableText ) ) {
       final int maxLength = renderableText.computeMaximumTextSize( contentX2 );
       final String text = gs.getText( renderableText.getOffset(), maxLength, codePointBuffer );
 
@@ -533,9 +529,9 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
       ColumnText ct = cc.reconfigure( cb, p );
       ct.setText( p );
       if ( ct.go( false ) == ColumnText.NO_MORE_COLUMN ) {
-        throw new InvalidReportStateException
-          ( "iText signaled an error when printing text. Failing to prevent silent data-loss: Width=" +
-            ct.getFilledWidth() );
+        throw new InvalidReportStateException(
+            "iText signaled an error when printing text. Failing to prevent silent data-loss: Width="
+                + ct.getFilledWidth() );
       }
     } catch ( DocumentException e ) {
       throw new InvalidReportStateException( e );
@@ -551,13 +547,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     private int alignment;
     private int runDirection;
 
-    private ColumnConfig( final float llx,
-                          final float lly,
-                          final float urx,
-                          final float ury,
-                          final float leading,
-                          final int alignment,
-                          final int runDirection ) {
+    private ColumnConfig( final float llx, final float lly, final float urx, final float ury, final float leading,
+        final int alignment, final int runDirection ) {
       this.llx = llx;
       this.lly = lly;
       this.urx = urx;
@@ -599,8 +590,9 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     final float lly = globalHeight - y2;
     final float ury = (float) ( lly - 1.2 * StrictGeomUtility.toExternalValue( node.getHeight() ) );
 
-    final ColumnConfig ct = new ColumnConfig( llx, lly, urx, ury,
-      node.getParagraphFontMetrics().getAscent(), mapAlignment( node ), computeRunDirection( node ) );
+    final ColumnConfig ct =
+        new ColumnConfig( llx, lly, urx, ury, node.getParagraphFontMetrics().getAscent(), mapAlignment( node ),
+            computeRunDirection( node ) );
     return ct;
   }
 
@@ -623,7 +615,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
         com.lowagie.text.Image image = imageHandler.createImage( content );
         if ( image != null ) {
           Chunk chunk = new Chunk( image, 0, 0 );
-          //  chunk.setFont(font);
+          // chunk.setFont(font);
           p.add( chunk );
         }
       } else {
@@ -658,15 +650,14 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     final Float weightRaw = attributes.get( TextAttribute.WEIGHT, TextAttribute.WEIGHT_REGULAR, Float.class );
     final Float italicsRaw = attributes.get( TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE, Float.class );
 
-
-    final BaseFontFontMetrics fontMetrics = getMetaData().getBaseFontFontMetrics
-      ( fontName, fontSize.doubleValue(), weightRaw >= TextAttribute.WEIGHT_DEMIBOLD,
-        italicsRaw >= TextAttribute.POSTURE_OBLIQUE, encoding, embed, false );
+    final BaseFontFontMetrics fontMetrics =
+        getMetaData().getBaseFontFontMetrics( fontName, fontSize.doubleValue(),
+            weightRaw >= TextAttribute.WEIGHT_DEMIBOLD, italicsRaw >= TextAttribute.POSTURE_OBLIQUE, encoding, embed,
+            false );
     return new PdfTextSpec( layoutContext, getMetaData(), g2, fontMetrics, cb );
   }
 
-  private int computeStyle( final TypedMapWrapper<Attribute, Object> attributes,
-                            final PdfTextSpec pdfTextSpec ) {
+  private int computeStyle( final TypedMapWrapper<Attribute, Object> attributes, final PdfTextSpec pdfTextSpec ) {
     final Float weight = attributes.get( TextAttribute.WEIGHT, TextAttribute.WEIGHT_REGULAR, Float.class );
     final Float italics = attributes.get( TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE, Float.class );
     final boolean underlined = attributes.exists( TextAttribute.UNDERLINE );
@@ -777,7 +768,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
 
     final ImageMapEntry[] imageMapEntries = imageMap.getMapEntries();
     for ( int i = 0; i < imageMapEntries.length; i++ ) {
-      final ImageMapEntry imageMapEntry = imageMapEntries[ i ];
+      final ImageMapEntry imageMapEntry = imageMapEntries[i];
       final String link = imageMapEntry.getAttribute( LibXmlInfo.XHTML_NAMESPACE, "href" );
       final String tooltip = imageMapEntry.getAttribute( LibXmlInfo.XHTML_NAMESPACE, "title" );
       if ( StringUtils.isEmpty( tooltip ) ) {
@@ -796,22 +787,20 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     }
   }
 
-
   private float[] translateCoordinates( final float[] coords, final float dx, final float dy ) {
     final float[] floats = coords.clone();
     if ( floats.length % 2 != 0 ) {
       throw new IllegalArgumentException( "Corrdinates are not x/y pairs" );
     }
     for ( int i = 0; i < floats.length; i += 2 ) {
-      floats[ i ] += dx;
-      floats[ i + 1 ] = globalHeight - floats[ i + 1 ] + dy;
+      floats[i] += dx;
+      floats[i + 1] = globalHeight - floats[i + 1] + dy;
     }
     return floats;
   }
 
-  protected boolean drawImage( final RenderableReplacedContentBox content,
-                               final Image image,
-                               final com.lowagie.text.Image itextImage ) {
+  protected boolean drawImage( final RenderableReplacedContentBox content, final Image image,
+      final com.lowagie.text.Image itextImage ) {
     final StyleSheet layoutContext = content.getStyleSheet();
     final boolean shouldScale = layoutContext.getBooleanStyleProperty( ElementStyleKeys.SCALE );
 
@@ -850,9 +839,9 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
       final int clipWidth = Math.min( width, (int) Math.ceil( deviceScaleFactor * imageWidth ) );
       final int clipHeight = Math.min( height, (int) Math.ceil( deviceScaleFactor * imageHeight ) );
       final ElementAlignment horizontalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
       final ElementAlignment verticalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
       final int alignmentX = (int) RenderUtility.computeHorizontalAlignment( horizontalAlignment, width, clipWidth );
       final int alignmentY = (int) RenderUtility.computeVerticalAlignment( verticalAlignment, height, clipHeight );
 
@@ -887,9 +876,9 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
       final int clipHeight = (int) ( scaleY * imageHeight );
 
       final ElementAlignment horizontalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.ALIGNMENT );
       final ElementAlignment verticalAlignment =
-        (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
+          (ElementAlignment) layoutContext.getStyleProperty( ElementStyleKeys.VALIGNMENT );
       final int alignmentX = (int) RenderUtility.computeHorizontalAlignment( horizontalAlignment, width, clipWidth );
       final int alignmentY = (int) RenderUtility.computeVerticalAlignment( verticalAlignment, height, clipHeight );
 

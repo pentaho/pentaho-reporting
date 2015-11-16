@@ -1,21 +1,26 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
+
+import java.awt.Window;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Locale;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -24,11 +29,6 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.common.IconTheme;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListener;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-
-import java.awt.*;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.Locale;
 
 public abstract class AbstractGuiContext implements SwingGuiContext, StatusListener, ReportEventSource {
   public static final String STATUS_TYPE_PROPERTY = "statusType";
@@ -124,8 +124,8 @@ public abstract class AbstractGuiContext implements SwingGuiContext, StatusListe
     final int oldNumberOfPages = this.numberOfPages;
     this.numberOfPages = numberOfPages;
 
-    propertyChangeSupport
-      .firePropertyChange( ReportEventSource.NUMBER_OF_PAGES_PROPERTY, oldNumberOfPages, numberOfPages );
+    propertyChangeSupport.firePropertyChange( ReportEventSource.NUMBER_OF_PAGES_PROPERTY, oldNumberOfPages,
+        numberOfPages );
   }
 
   public int getNumberOfPages() {
@@ -167,8 +167,7 @@ public abstract class AbstractGuiContext implements SwingGuiContext, StatusListe
     propertyChangeSupport.removePropertyChangeListener( propertyChangeListener );
   }
 
-  public void removePropertyChangeListener( final String property,
-                                            final PropertyChangeListener propertyChangeListener ) {
+  public void removePropertyChangeListener( final String property, final PropertyChangeListener propertyChangeListener ) {
     propertyChangeSupport.removePropertyChangeListener( property, propertyChangeListener );
   }
 

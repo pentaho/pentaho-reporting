@@ -1,29 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal;
 
-import com.lowagie.text.DocWriter;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Image;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineInfo;
@@ -40,11 +38,13 @@ import org.pentaho.reporting.libraries.base.util.LFUMap;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.OutputStream;
-
+import com.lowagie.text.DocWriter;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfWriter;
 
 @SuppressWarnings( "HardCodedStringLiteral" )
 public class PdfDocumentWriter {
@@ -54,19 +54,17 @@ public class PdfDocumentWriter {
    * A useful constant for specifying the PDF creator.
    */
   private static final String CREATOR = ClassicEngineInfo.getInstance().getName() + " version "
-    + ClassicEngineInfo.getInstance().getVersion();
+      + ClassicEngineInfo.getInstance().getVersion();
 
   /**
    * A bytearray containing an empty password. iText replaces the owner password with random values, but Adobe allows to
    * have encryption without an owner password set. Copied from iText
    */
-  private static final byte[] PDF_PASSWORD_PAD = {
-    (byte) 0x28, (byte) 0xBF, (byte) 0x4E, (byte) 0x5E, (byte) 0x4E, (byte) 0x75,
-    (byte) 0x8A, (byte) 0x41, (byte) 0x64, (byte) 0x00, (byte) 0x4E, (byte) 0x56,
-    (byte) 0xFF, (byte) 0xFA, (byte) 0x01, (byte) 0x08, (byte) 0x2E, (byte) 0x2E,
-    (byte) 0x00, (byte) 0xB6, (byte) 0xD0, (byte) 0x68, (byte) 0x3E, (byte) 0x80,
-    (byte) 0x2F, (byte) 0x0C, (byte) 0xA9, (byte) 0xFE, (byte) 0x64, (byte) 0x53,
-    (byte) 0x69, (byte) 0x7A };
+  private static final byte[] PDF_PASSWORD_PAD = { (byte) 0x28, (byte) 0xBF, (byte) 0x4E, (byte) 0x5E, (byte) 0x4E,
+    (byte) 0x75, (byte) 0x8A, (byte) 0x41, (byte) 0x64, (byte) 0x00, (byte) 0x4E, (byte) 0x56, (byte) 0xFF,
+    (byte) 0xFA, (byte) 0x01, (byte) 0x08, (byte) 0x2E, (byte) 0x2E, (byte) 0x00, (byte) 0xB6, (byte) 0xD0,
+    (byte) 0x68, (byte) 0x3E, (byte) 0x80, (byte) 0x2F, (byte) 0x0C, (byte) 0xA9, (byte) 0xFE, (byte) 0x64,
+    (byte) 0x53, (byte) 0x69, (byte) 0x7A };
 
   private Document document;
   private PdfOutputProcessorMetaData metaData;
@@ -78,9 +76,8 @@ public class PdfDocumentWriter {
   private LFUMap<ResourceKey, com.lowagie.text.Image> imageCache;
   private char version;
 
-  public PdfDocumentWriter( final PdfOutputProcessorMetaData metaData,
-                            final OutputStream out,
-                            final ResourceManager resourceManager ) {
+  public PdfDocumentWriter( final PdfOutputProcessorMetaData metaData, final OutputStream out,
+      final ResourceManager resourceManager ) {
     if ( metaData == null ) {
       throw new NullPointerException();
     }
@@ -104,27 +101,28 @@ public class PdfDocumentWriter {
 
   public void open() throws DocumentException {
     this.document = new Document();
-    //pageSize, marginLeft, marginRight, marginTop, marginBottom));
+    // pageSize, marginLeft, marginRight, marginTop, marginBottom));
 
     writer = PdfWriter.getInstance( document, out );
     writer.setLinearPageMode();
-
 
     version = getVersion();
     writer.setPdfVersion( version );
     writer.setViewerPreferences( getViewerPreferences() );
 
-    final String encrypt = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encryption" );
+    final String encrypt =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encryption" );
 
     if ( encrypt != null ) {
       if ( encrypt.equals( PdfPageableModule.SECURITY_ENCRYPTION_128BIT ) == true
-        || encrypt.equals( PdfPageableModule.SECURITY_ENCRYPTION_40BIT ) == true ) {
-        final String userpassword = config.getConfigProperty(
-          "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.UserPassword" );
-        final String ownerpassword = config.getConfigProperty(
-          "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.OwnerPassword" );
-        //Log.debug ("UserPassword: " + userpassword + " - OwnerPassword: " + ownerpassword);
+          || encrypt.equals( PdfPageableModule.SECURITY_ENCRYPTION_40BIT ) == true ) {
+        final String userpassword =
+            config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.UserPassword" );
+        final String ownerpassword =
+            config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.OwnerPassword" );
+        // Log.debug ("UserPassword: " + userpassword + " - OwnerPassword: " + ownerpassword);
         final byte[] userpasswordbytes = DocWriter.getISOBytes( userpassword );
         byte[] ownerpasswordbytes = DocWriter.getISOBytes( ownerpassword );
         if ( ownerpasswordbytes == null ) {
@@ -143,18 +141,18 @@ public class PdfDocumentWriter {
     /**
      * MetaData can be set when the writer is registered to the document.
      */
-    final String title = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Title",
-      config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Title" ) );
-    final String subject = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Description",
-      config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Description" ) );
-    final String author = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author",
-      config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Author" ) );
-    final String keyWords = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Keywords",
-      config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Keywords" ) );
+    final String title =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Title", config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Title" ) );
+    final String subject =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Description",
+            config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Description" ) );
+    final String author =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author",
+            config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Author" ) );
+    final String keyWords =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Keywords",
+            config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.metadata.Keywords" ) );
 
     if ( title != null ) {
       document.addTitle( title );
@@ -172,10 +170,9 @@ public class PdfDocumentWriter {
     document.addCreator( PdfDocumentWriter.CREATOR );
     document.addCreationDate();
 
-    //getDocument().open();
+    // getDocument().open();
     awaitOpenDocument = true;
   }
-
 
   /**
    * Extracts the Page Layout and page mode settings for this PDF (ViewerPreferences). All preferences are defined as
@@ -184,28 +181,38 @@ public class PdfDocumentWriter {
    * @return the ViewerPreferences.
    */
   private int getViewerPreferences() {
-    final String pageLayout = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PageLayout" );
-    final String pageMode = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PageMode" );
-    final String fullScreenMode = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.FullScreenMode" );
-    final boolean hideToolBar = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.HideToolBar" ) );
-    final boolean hideMenuBar = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.HideMenuBar" ) );
-    final boolean hideWindowUI = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.HideWindowUI" ) );
-    final boolean fitWindow = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.FitWindow" ) );
-    final boolean centerWindow = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.CenterWindow" ) );
-    final boolean displayDocTitle = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.DisplayDocTitle" ) );
-    final boolean printScalingNone = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PrintScalingNone" ) );
-    final String direction = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Direction" );
+    final String pageLayout =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PageLayout" );
+    final String pageMode =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PageMode" );
+    final String fullScreenMode =
+        config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.FullScreenMode" );
+    final boolean hideToolBar =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.HideToolBar" ) );
+    final boolean hideMenuBar =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.HideMenuBar" ) );
+    final boolean hideWindowUI =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.HideWindowUI" ) );
+    final boolean fitWindow =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.FitWindow" ) );
+    final boolean centerWindow =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.CenterWindow" ) );
+    final boolean displayDocTitle =
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.DisplayDocTitle" ) );
+    final boolean printScalingNone =
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PrintScalingNone" ) );
+    final String direction =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Direction" );
 
     int viewerPreferences = 0;
     if ( "PageLayoutOneColumn".equals( pageLayout ) ) {
@@ -282,12 +289,8 @@ public class PdfDocumentWriter {
     return viewerPreferences;
   }
 
-  public void processPhysicalPage( final PageGrid pageGrid,
-                                   final LogicalPageBox logicalPage,
-                                   final int row,
-                                   final int col,
-                                   final PhysicalPageKey pageKey )
-    throws DocumentException {
+  public void processPhysicalPage( final PageGrid pageGrid, final LogicalPageBox logicalPage, final int row,
+      final int col, final PhysicalPageKey pageKey ) throws DocumentException {
     final PhysicalPageBox page = pageGrid.getPage( row, col );
     if ( page == null ) {
       return;
@@ -299,11 +302,11 @@ public class PdfDocumentWriter {
     final Rectangle pageSize = new Rectangle( width, height );
 
     final float marginLeft = (float) StrictGeomUtility.toExternalValue( page.getImageableX() );
-    final float marginRight = (float) StrictGeomUtility.toExternalValue
-      ( page.getWidth() - page.getImageableWidth() - page.getImageableX() );
+    final float marginRight =
+        (float) StrictGeomUtility.toExternalValue( page.getWidth() - page.getImageableWidth() - page.getImageableX() );
     final float marginTop = (float) StrictGeomUtility.toExternalValue( page.getImageableY() );
-    final float marginBottom = (float) StrictGeomUtility.toExternalValue
-      ( page.getHeight() - page.getImageableHeight() - page.getImageableY() );
+    final float marginBottom =
+        (float) StrictGeomUtility.toExternalValue( page.getHeight() - page.getImageableHeight() - page.getImageableY() );
 
     final Document document = getDocument();
     document.setPageSize( pageSize );
@@ -326,13 +329,11 @@ public class PdfDocumentWriter {
   }
 
   protected PhysicalPageDrawable createPhysicalPageDrawable( final PdfLogicalPageDrawable logicalPageDrawable,
-                                                             final PhysicalPageBox page ) {
+      final PhysicalPageBox page ) {
     return new PhysicalPageDrawable( logicalPageDrawable, page );
   }
 
-  public void processLogicalPage( final LogicalPageKey key,
-                                  final LogicalPageBox logicalPage )
-    throws DocumentException {
+  public void processLogicalPage( final LogicalPageKey key, final LogicalPageBox logicalPage ) throws DocumentException {
 
     final float width = (float) StrictGeomUtility.toExternalValue( logicalPage.getPageWidth() );
     final float height = (float) StrictGeomUtility.toExternalValue( logicalPage.getPageHeight() );
@@ -375,7 +376,7 @@ public class PdfDocumentWriter {
   }
 
   protected PdfLogicalPageDrawable createLogicalPageDrawable( final LogicalPageBox logicalPage,
-                                                              final PhysicalPageBox page ) {
+      final PhysicalPageBox page ) {
     final PdfLogicalPageDrawable drawable = new PdfLogicalPageDrawable( getWriter(), getImageCache(), getVersion() );
     drawable.init( logicalPage, getMetaData(), getResourceManager(), page );
     return drawable;
@@ -402,8 +403,8 @@ public class PdfDocumentWriter {
    * @return the itext character defining the version.
    */
   protected char getVersion() {
-    final String version = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Version" );
+    final String version =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Version" );
 
     if ( version == null ) {
       return '5';
@@ -420,7 +421,6 @@ public class PdfDocumentWriter {
     return retval;
   }
 
-
   /**
    * Extracts the permissions for this PDF. The permissions are returned as flags in the integer value. All permissions
    * are defined as properties which have to be set before the target is opened.
@@ -428,25 +428,35 @@ public class PdfDocumentWriter {
    * @return the permissions.
    */
   private int getPermissions() {
-    final String printLevel = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PrintLevel" );
+    final String printLevel =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PrintLevel" );
 
     final boolean allowPrinting = "none".equals( printLevel ) == false;
     final boolean allowDegradedPrinting = "degraded".equals( printLevel );
 
-    final boolean allowModifyContents = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowModifyContents" ) );
-    final boolean allowModifyAnn = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowModifyAnnotations" ) );
+    final boolean allowModifyContents =
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowModifyContents" ) );
+    final boolean allowModifyAnn =
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowModifyAnnotations" ) );
 
-    final boolean allowCopy = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowCopy" ) );
-    final boolean allowFillIn = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowFillIn" ) );
-    final boolean allowScreenReaders = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowScreenReader" ) );
-    final boolean allowAssembly = "true".equals( config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowAssembly" ) );
+    final boolean allowCopy =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowCopy" ) );
+    final boolean allowFillIn =
+        "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowFillIn" ) );
+    final boolean allowScreenReaders =
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowScreenReader" ) );
+    final boolean allowAssembly =
+        "true"
+            .equals( config
+                .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowAssembly" ) );
 
     int permissions = 0;
     if ( allowPrinting ) {

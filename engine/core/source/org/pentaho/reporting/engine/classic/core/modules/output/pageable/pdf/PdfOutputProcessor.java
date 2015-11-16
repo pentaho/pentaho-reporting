@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf;
 
@@ -47,8 +47,7 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor {
   private PdfDocumentWriter writer;
   private ResourceManager resourceManager;
 
-  public PdfOutputProcessor( final Configuration configuration,
-                             final OutputStream outputStream ) {
+  public PdfOutputProcessor( final Configuration configuration, final OutputStream outputStream ) {
     this( configuration, outputStream, PdfOutputProcessor.createResourceManager() );
   }
 
@@ -56,9 +55,8 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor {
     return new ResourceManager();
   }
 
-  public PdfOutputProcessor( final Configuration configuration,
-                             final OutputStream outputStream,
-                             final ResourceManager resourceManager ) {
+  public PdfOutputProcessor( final Configuration configuration, final OutputStream outputStream,
+      final ResourceManager resourceManager ) {
     if ( configuration == null ) {
       throw new NullPointerException( "Configuration must not be null" );
     }
@@ -109,12 +107,8 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor {
     }
   }
 
-  protected void processPhysicalPage( final PageGrid pageGrid,
-                                      final LogicalPageBox logicalPage,
-                                      final int row,
-                                      final int col,
-                                      final PhysicalPageKey pageKey )
-    throws ContentProcessingException {
+  protected void processPhysicalPage( final PageGrid pageGrid, final LogicalPageBox logicalPage, final int row,
+      final int col, final PhysicalPageKey pageKey ) throws ContentProcessingException {
     try {
       if ( writer == null ) {
         writer = createPdfDocumentWriter();
@@ -126,8 +120,7 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor {
     }
   }
 
-  protected void processLogicalPage( final LogicalPageKey key,
-                                     final LogicalPageBox logicalPage )
+  protected void processLogicalPage( final LogicalPageKey key, final LogicalPageBox logicalPage )
     throws ContentProcessingException {
     try {
       if ( writer == null ) {

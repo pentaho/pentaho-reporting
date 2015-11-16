@@ -20,7 +20,7 @@ public class DatabaseConnectionsXmlResourceFactory extends AbstractXmlResourceFa
     super.initializeDefaults();
     final XmlFactoryModule[] registeredHandlers = registry.getRegisteredHandlers();
     for ( int i = 0; i < registeredHandlers.length; i++ ) {
-      registerModule( registeredHandlers[ i ] );
+      registerModule( registeredHandlers[i] );
     }
   }
 

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -36,11 +36,9 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  */
 public final class ParagraphRenderBox extends BlockRenderBox {
   private static class LineBoxRenderBox extends BlockRenderBox {
-    protected LineBoxRenderBox( final StyleSheet styleSheet,
-                                final ReportStateKey stateKey ) {
+    protected LineBoxRenderBox( final StyleSheet styleSheet, final ReportStateKey stateKey ) {
       super( styleSheet, new InstanceID(), BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
-        ReportAttributeMap.EMPTY_MAP,
-        stateKey );
+          ReportAttributeMap.EMPTY_MAP, stateKey );
     }
 
     public boolean isAcceptInlineBoxes() {
@@ -61,12 +59,9 @@ public final class ParagraphRenderBox extends BlockRenderBox {
   private long firstLineIndent;
   private long cachedMaxChildX2;
 
-  public ParagraphRenderBox( final StyleSheet styleSheet,
-                             final InstanceID instanceID,
-                             final BoxDefinition boxDefinition,
-                             final ElementType elementType,
-                             final ReportAttributeMap attributeMap,
-                             final ReportStateKey stateKey ) {
+  public ParagraphRenderBox( final StyleSheet styleSheet, final InstanceID instanceID,
+      final BoxDefinition boxDefinition, final ElementType elementType, final ReportAttributeMap attributeMap,
+      final ReportStateKey stateKey ) {
     super( styleSheet, instanceID, boxDefinition, elementType, attributeMap, stateKey );
 
     pool = new ParagraphPoolBox( new ParagraphPoolboxStyleSheet( styleSheet ), instanceID, stateKey );
@@ -74,8 +69,8 @@ public final class ParagraphRenderBox extends BlockRenderBox {
 
     // level 3 means: Add all lineboxes to the paragraph
     // This gets auto-generated ..
-    this.textAlignment = (ElementAlignment)
-      styleSheet.getStyleProperty( ElementStyleKeys.ALIGNMENT, ElementAlignment.LEFT );
+    this.textAlignment =
+        (ElementAlignment) styleSheet.getStyleProperty( ElementStyleKeys.ALIGNMENT, ElementAlignment.LEFT );
     this.lastLineAlignment = textAlignment;
     if ( this.textAlignment == ElementAlignment.JUSTIFY ) {
       this.lastLineAlignment = ElementAlignment.LEFT;
@@ -83,7 +78,7 @@ public final class ParagraphRenderBox extends BlockRenderBox {
 
     final double rawTextIndent = styleSheet.getDoubleStyleProperty( TextStyleKeys.TEXT_INDENT, 0 );
     final double rawFirstLineIndent =
-      styleSheet.getDoubleStyleProperty( TextStyleKeys.FIRST_LINE_INDENT, rawTextIndent );
+        styleSheet.getDoubleStyleProperty( TextStyleKeys.FIRST_LINE_INDENT, rawTextIndent );
 
     this.textIndent = RenderLength.resolveLength( 0, Math.max( 0, rawTextIndent ) );
     this.firstLineIndent = RenderLength.resolveLength( 0, Math.max( 0, rawFirstLineIndent ) );
@@ -278,9 +273,8 @@ public final class ParagraphRenderBox extends BlockRenderBox {
 
   public boolean isLineBoxUnchanged() {
     final long lineBoxChangeTracker = getEffectiveLineboxContainer().getChangeTracker();
-    if ( lineBoxChangeTracker == getMinorLayoutAge() &&
-      minorLayoutValidationX1 == getContentAreaX1() &&
-      minorLayoutValidationX2 == getContentAreaX2() ) {
+    if ( lineBoxChangeTracker == getMinorLayoutAge() && minorLayoutValidationX1 == getContentAreaX1()
+        && minorLayoutValidationX2 == getContentAreaX2() ) {
       // testing for both content-changes and positional changes due to subreports or other delayed content
       // inserting new data at an earlier point in the model.
       return true;

@@ -30,8 +30,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class FastHtmlReportUtil {
-  public static void processStreamHtml( MasterReport report,
-                                        OutputStream out ) throws ReportProcessingException, IOException {
+  public static void processStreamHtml( MasterReport report, OutputStream out ) throws ReportProcessingException,
+    IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
     if ( validator.isValidForFastProcessing( report ) == false ) {
       HtmlReportUtil.createStreamHTML( report, out );

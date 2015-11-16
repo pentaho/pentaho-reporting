@@ -17,17 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.itext;
 
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.rtf.RtfElement;
-import com.lowagie.text.rtf.document.RtfDocument;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.rtf.RtfElement;
+import com.lowagie.text.rtf.document.RtfDocument;
 
 /**
  * The PatchRtfBorderGroup represents a collection of RtfBorders to use in a PatchRtfCell or PatchRtfTable.
@@ -57,11 +56,14 @@ public class PatchRtfBorderGroup extends RtfElement {
   /**
    * Constructs a PatchRtfBorderGroup with on border style for multiple borders.
    *
-   * @param bordersToAdd The borders to add (Rectangle.LEFT, Rectangle.RIGHT, Rectangle.TOP, Rectangle.BOTTOM,
-   *                     Rectangle.BOX)
-   * @param borderStyle  The style of border to add (from PatchRtfBorder)
-   * @param borderWidth  The border width to use
-   * @param borderColor  The border color to use
+   * @param bordersToAdd
+   *          The borders to add (Rectangle.LEFT, Rectangle.RIGHT, Rectangle.TOP, Rectangle.BOTTOM, Rectangle.BOX)
+   * @param borderStyle
+   *          The style of border to add (from PatchRtfBorder)
+   * @param borderWidth
+   *          The border width to use
+   * @param borderColor
+   *          The border color to use
    */
   public PatchRtfBorderGroup( int bordersToAdd, int borderStyle, float borderWidth, Color borderColor ) {
     super( null );
@@ -72,9 +74,12 @@ public class PatchRtfBorderGroup extends RtfElement {
   /**
    * Constructs a PatchRtfBorderGroup based on another PatchRtfBorderGroup.
    *
-   * @param doc         The RtfDocument this PatchRtfBorderGroup belongs to
-   * @param borderType  The type of borders this PatchRtfBorderGroup contains
-   * @param borderGroup The PatchRtfBorderGroup to use as a base
+   * @param doc
+   *          The RtfDocument this PatchRtfBorderGroup belongs to
+   * @param borderType
+   *          The type of borders this PatchRtfBorderGroup contains
+   * @param borderGroup
+   *          The PatchRtfBorderGroup to use as a base
    */
   protected PatchRtfBorderGroup( RtfDocument doc, int borderType, PatchRtfBorderGroup borderGroup ) {
     super( doc );
@@ -90,18 +95,18 @@ public class PatchRtfBorderGroup extends RtfElement {
   /**
    * Constructs a PatchRtfBorderGroup with certain borders
    *
-   * @param doc          The RtfDocument this PatchRtfBorderGroup belongs to
-   * @param borderType   The type of borders this PatchRtfBorderGroup contains
-   * @param bordersToUse The borders to add (Rectangle.LEFT, Rectangle.RIGHT, Rectangle.TOP, Rectangle.BOTTOM,
-   *                     Rectangle.BOX)
-   * @param borderWidth  The border width to use
-   * @param borderColor  The border color to use
+   * @param doc
+   *          The RtfDocument this PatchRtfBorderGroup belongs to
+   * @param borderType
+   *          The type of borders this PatchRtfBorderGroup contains
+   * @param bordersToUse
+   *          The borders to add (Rectangle.LEFT, Rectangle.RIGHT, Rectangle.TOP, Rectangle.BOTTOM, Rectangle.BOX)
+   * @param borderWidth
+   *          The border width to use
+   * @param borderColor
+   *          The border color to use
    */
-  protected PatchRtfBorderGroup( RtfDocument doc,
-                                 int borderType,
-                                 int bordersToUse,
-                                 float borderWidth,
-                                 Color borderColor ) {
+  protected PatchRtfBorderGroup( RtfDocument doc, int borderType, int bordersToUse, float borderWidth, Color borderColor ) {
     super( doc );
     this.borderType = borderType;
     this.borders = new HashMap<Integer, PatchRtfBorder>();
@@ -111,25 +116,32 @@ public class PatchRtfBorderGroup extends RtfElement {
   /**
    * Sets a border in the Hashtable of borders
    *
-   * @param borderPosition The position of this PatchRtfBorder
-   * @param borderStyle    The type of borders this PatchRtfBorderGroup contains
-   * @param borderWidth    The border width to use
-   * @param borderColor    The border color to use
+   * @param borderPosition
+   *          The position of this PatchRtfBorder
+   * @param borderStyle
+   *          The type of borders this PatchRtfBorderGroup contains
+   * @param borderWidth
+   *          The border width to use
+   * @param borderColor
+   *          The border color to use
    */
   private void setBorder( int borderPosition, int borderStyle, float borderWidth, Color borderColor ) {
     PatchRtfBorder border =
-      new PatchRtfBorder( this.document, this.borderType, borderPosition, borderStyle, borderWidth, borderColor );
+        new PatchRtfBorder( this.document, this.borderType, borderPosition, borderStyle, borderWidth, borderColor );
     this.borders.put( borderPosition, border );
   }
 
   /**
    * Adds borders to the PatchRtfBorderGroup
    *
-   * @param bordersToAdd The borders to add (Rectangle.LEFT, Rectangle.RIGHT, Rectangle.TOP, Rectangle.BOTTOM,
-   *                     Rectangle.BOX)
-   * @param borderStyle  The style of border to add (from PatchRtfBorder)
-   * @param borderWidth  The border width to use
-   * @param borderColor  The border color to use
+   * @param bordersToAdd
+   *          The borders to add (Rectangle.LEFT, Rectangle.RIGHT, Rectangle.TOP, Rectangle.BOTTOM, Rectangle.BOX)
+   * @param borderStyle
+   *          The style of border to add (from PatchRtfBorder)
+   * @param borderWidth
+   *          The border width to use
+   * @param borderColor
+   *          The border color to use
    */
   public void addBorder( int bordersToAdd, int borderStyle, float borderWidth, Color borderColor ) {
     if ( ( bordersToAdd & Rectangle.LEFT ) == Rectangle.LEFT ) {
@@ -153,7 +165,8 @@ public class PatchRtfBorderGroup extends RtfElement {
   /**
    * Removes borders from the list of borders
    *
-   * @param bordersToRemove The borders to remove (from Rectangle)
+   * @param bordersToRemove
+   *          The borders to remove (from Rectangle)
    */
   public void removeBorder( int bordersToRemove ) {
     if ( ( bordersToRemove & Rectangle.LEFT ) == Rectangle.LEFT ) {

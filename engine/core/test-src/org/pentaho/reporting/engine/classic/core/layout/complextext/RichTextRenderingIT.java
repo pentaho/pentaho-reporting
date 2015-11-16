@@ -102,7 +102,7 @@ public class RichTextRenderingIT {
     ClassicEngineBoot.getInstance().start();
   }
 
-  //@Test
+  // @Test
   public void testPdf() throws ResourceException, ReportProcessingException, IOException {
     URL resource = getClass().getResource( "rich-text-sample1.prpt" );
     ResourceManager mgr = new ResourceManager();
@@ -112,28 +112,31 @@ public class RichTextRenderingIT {
     report.getReportHeader().removeElement( 0 );
     report.getReportHeader().getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, Color.YELLOW );
     report.getReportFooter().clear();
-    //    DebugReportRunner.showDialog(report);
-    //    PdfReportUtil.createPDF(report, new File(DebugReportRunner.createTestOutputFile(), "rich-text-sample1.pdf"));
+    // DebugReportRunner.showDialog(report);
+    // PdfReportUtil.createPDF(report, new File(DebugReportRunner.createTestOutputFile(), "rich-text-sample1.pdf"));
   }
 
-  //@Test
+  // @Test
   public void testPdfRendering() throws Exception {
     MasterReport report = new MasterReport();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
-    report.getReportHeader().addElement( createDataItem(
-      "A longer text asda askdjalejqi halfhlajdfh askdjfha ksdfjhLKFDH ASKDJFHAS asda askdjalejqi halfhlajdfh "
-        + "askdjfha ksdfjhLKFDH ASKDJFHAS asda askdjalejqi halfhlajdfh askdjfha ksdfjhLKFDH ASKDJFHAS DKFHSDKF",
-      400, 60 ) );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    report
+        .getReportHeader()
+        .addElement(
+            createDataItem(
+                "A longer text asda askdjalejqi halfhlajdfh askdjfha ksdfjhLKFDH ASKDJFHAS asda askdjalejqi halfhlajdfh "
+                    + "askdjfha ksdfjhLKFDH ASKDJFHAS asda askdjalejqi halfhlajdfh askdjfha ksdfjhLKFDH ASKDJFHAS DKFHSDKF",
+                400, 60 ) );
     report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.RTL );
     report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( TextStyleKeys.FONT, "Arial Unicode MS" );
     report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( TextStyleKeys.FONTSIZE, 15 );
-    report.getReportHeader().getElement( 0 ).getStyle()
-      .setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, Color.YELLOW );
-    report.getReportHeader().getElement( 0 ).getStyle()
-      .setStyleProperty( ElementStyleKeys.ALIGNMENT, ElementAlignment.RIGHT );
-    //    DebugReportRunner.showDialog(report);
-    //    PdfReportUtil.createPDF(report, new File(DebugReportRunner.createTestOutputFile(), "rich-text-sample1.pdf"));
+    report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR,
+        Color.YELLOW );
+    report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( ElementStyleKeys.ALIGNMENT,
+        ElementAlignment.RIGHT );
+    // DebugReportRunner.showDialog(report);
+    // PdfReportUtil.createPDF(report, new File(DebugReportRunner.createTestOutputFile(), "rich-text-sample1.pdf"));
   }
 
   @Test
@@ -142,7 +145,7 @@ public class RichTextRenderingIT {
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.LTR );
     report.getReportHeader().getElement( 1 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.RTL );
     report.getReportHeader().removeElement( 0 );
@@ -155,7 +158,7 @@ public class RichTextRenderingIT {
     assertTrue( second instanceof RenderBox );
 
     ExcelOutputProcessorMetaData metaData =
-      new ExcelOutputProcessorMetaData( ExcelOutputProcessorMetaData.PAGINATION_FULL );
+        new ExcelOutputProcessorMetaData( ExcelOutputProcessorMetaData.PAGINATION_FULL );
     metaData.initialize( report.getConfiguration() );
 
     XSSFWorkbook hssfWorkbook = new XSSFWorkbook();
@@ -176,7 +179,7 @@ public class RichTextRenderingIT {
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.LTR );
     report.getReportHeader().getElement( 1 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.RTL );
     report.getReportHeader().removeElement( 0 );
@@ -184,7 +187,7 @@ public class RichTextRenderingIT {
     report.getReportFooter().clear();
 
     ExpressionRuntime runtime =
-      new GenericExpressionRuntime( new DefaultTableModel(), 0, new DefaultProcessingContext( report ) );
+        new GenericExpressionRuntime( new DefaultTableModel(), 0, new DefaultProcessingContext( report ) );
 
     RichTextStyleResolver.resolveStyle( report );
 
@@ -207,7 +210,7 @@ public class RichTextRenderingIT {
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.LTR );
     report.getReportHeader().getElement( 1 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.RTL );
     report.getReportHeader().removeElement( 0 );
@@ -235,7 +238,7 @@ public class RichTextRenderingIT {
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.LTR );
     report.getReportHeader().getElement( 1 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.RTL );
     report.getReportHeader().removeElement( 0 );
@@ -249,13 +252,13 @@ public class RichTextRenderingIT {
 
     Band element = (Band) report.getReportHeader().getElement( 0 );
     HashMap<InstanceID, FastHtmlImageBounds> recordedBounds = new HashMap<InstanceID, FastHtmlImageBounds>();
-    FastHtmlImageBounds bounds = new FastHtmlImageBounds( StrictGeomUtility.toInternalValue( 20.465 ),
-      StrictGeomUtility.toInternalValue( 20.465 ), StrictGeomUtility.toInternalValue( 16 ),
-      StrictGeomUtility.toInternalValue( 16 ) );
+    FastHtmlImageBounds bounds =
+        new FastHtmlImageBounds( StrictGeomUtility.toInternalValue( 20.465 ), StrictGeomUtility
+            .toInternalValue( 20.465 ), StrictGeomUtility.toInternalValue( 16 ), StrictGeomUtility.toInternalValue( 16 ) );
     recordedBounds.put( element.getElement( 1 ).getObjectID(), bounds );
 
     ExpressionRuntime runtime =
-      new GenericExpressionRuntime( new DefaultTableModel(), 0, new DefaultProcessingContext( report ) );
+        new GenericExpressionRuntime( new DefaultTableModel(), 0, new DefaultProcessingContext( report ) );
     assertTrue( te.performOutput( element, setup.productImpliedStyles(), recordedBounds, runtime ) );
     String text = setup.getResult();
     String start = text.substring( 0, FAST_HTML_MATCH.length() );
@@ -263,11 +266,9 @@ public class RichTextRenderingIT {
     assertTrue( text.endsWith( "</span>\n" ) );
   }
 
-  private static final String FAST_HTML_MATCH = "<span>Label</span>\n" +
-    "<span><img src=\"image.gif\" border=\"0\" style=\"width: 27px; height: 27px\"/></span>\n" +
-    "<span style=\"font-size: 15pt\">Label</span>\n" +
-    "<span style=\"font-size: 20pt\">Label</span>\n" +
-    "<span>";
+  private static final String FAST_HTML_MATCH = "<span>Label</span>\n"
+      + "<span><img src=\"image.gif\" border=\"0\" style=\"width: 27px; height: 27px\"/></span>\n"
+      + "<span style=\"font-size: 15pt\">Label</span>\n" + "<span style=\"font-size: 20pt\">Label</span>\n" + "<span>";
 
   public static Element createDataItem( final String text, final float width, final float height ) {
     final Element label = new Element();
@@ -281,7 +282,7 @@ public class RichTextRenderingIT {
     return label;
   }
 
-  //@Test
+  // @Test
   public void testGraphics() throws ResourceException, ReportProcessingException, IOException {
     URL resource = getClass().getResource( "rich-text-sample1.prpt" );
     ResourceManager mgr = new ResourceManager();
@@ -298,7 +299,7 @@ public class RichTextRenderingIT {
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     RenderNode first = MatchFactory.findElementByName( logicalPageBox, "first" );
@@ -306,11 +307,11 @@ public class RichTextRenderingIT {
     assertTrue( first.getHeight() > StrictGeomUtility.toInternalValue( 20 ) );
 
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( first, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT );
+        MatchFactory.findElementsByNodeType( first, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT );
     assertEquals( 1, elementsByNodeType.length );
-    assertTrue( elementsByNodeType[ 0 ] instanceof RenderableComplexText );
+    assertTrue( elementsByNodeType[0] instanceof RenderableComplexText );
 
-    RenderableComplexText text = (RenderableComplexText) elementsByNodeType[ 0 ];
+    RenderableComplexText text = (RenderableComplexText) elementsByNodeType[0];
     RichTextSpec richText = text.getRichText();
     assertEquals( 4, richText.getStyleChunks().size() );
     assertEquals( "Label@LabelLabel", richText.getText() );
@@ -322,9 +323,9 @@ public class RichTextRenderingIT {
 
     assertTrue( second.getHeight() > StrictGeomUtility.toInternalValue( 20 ) );
     RenderNode[] secondText = MatchFactory.findElementsByNodeType( second, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT );
-    assertTrue(
-      secondText.length > 10 ); // this is an approximate value. There is no safe stable value with complex text
-    assertTrue( secondText[ 0 ] instanceof RenderableComplexText );
+    assertTrue( secondText.length > 10 ); // this is an approximate value. There is no safe stable value with complex
+                                          // text
+    assertTrue( secondText[0] instanceof RenderableComplexText );
   }
 
   @Test
@@ -333,7 +334,7 @@ public class RichTextRenderingIT {
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getReportHeader().removeElement( report.getReportHeader().getElement( 0 ) );
     report.getReportHeader().getElement( 0 ).getStyle().setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.RTL );
 
@@ -349,10 +350,10 @@ public class RichTextRenderingIT {
 
     RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType( p, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT );
     assertContainsImage( elementsByNodeType );
-    RenderableComplexText t = (RenderableComplexText) elementsByNodeType[ 0 ];
+    RenderableComplexText t = (RenderableComplexText) elementsByNodeType[0];
     AttributedString attributedString = t.getRichText().getAttributedString();
-    assertEquals( TextAttribute.RUN_DIRECTION_RTL,
-      attributedString.getIterator().getAttribute( TextAttribute.RUN_DIRECTION ) );
+    assertEquals( TextAttribute.RUN_DIRECTION_RTL, attributedString.getIterator().getAttribute(
+        TextAttribute.RUN_DIRECTION ) );
 
   }
 
@@ -369,7 +370,6 @@ public class RichTextRenderingIT {
     }
     Assert.fail();
   }
-
 
   private static class DummyContentUrlReWriteService implements ContentUrlReWriteService {
     public String rewriteContentDataItem( final ContentItem item ) throws URLRewriteException {
@@ -429,7 +429,7 @@ public class RichTextRenderingIT {
       ZipRepository zr = new ZipRepository( new ByteArrayOutputStream() );
       DefaultHtmlContentGenerator contentGenerator = new DefaultHtmlContentGenerator( report.getResourceManager() );
       contentGenerator.setDataWriter( zr.getRoot(), new DefaultNameGenerator( zr.getRoot() ),
-        new RichTextRenderingIT.DummyContentUrlReWriteService() );
+          new RichTextRenderingIT.DummyContentUrlReWriteService() );
       return contentGenerator;
     }
 

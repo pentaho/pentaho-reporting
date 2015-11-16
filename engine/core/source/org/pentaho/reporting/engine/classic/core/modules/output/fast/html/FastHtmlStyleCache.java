@@ -63,8 +63,7 @@ public class FastHtmlStyleCache {
     private AttributeList cellAttributeList;
     private StyleBuilder.StyleCarrier[] cellStyle;
 
-    public CellStyle( final AttributeList cellAttributeList,
-                      final StyleBuilder.StyleCarrier[] cellStyle ) {
+    public CellStyle( final AttributeList cellAttributeList, final StyleBuilder.StyleCarrier[] cellStyle ) {
       this.cellAttributeList = cellAttributeList;
       this.cellStyle = cellStyle;
     }

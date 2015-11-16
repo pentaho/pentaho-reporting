@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -84,8 +84,9 @@ public abstract class PropertyLookupParser implements Serializable {
     escapeChar = '\\';
 
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final String escapeModeText = configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.util.PropertyLookupParserEscapeMode", "strict" );
+    final String escapeModeText =
+        configuration.getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.util.PropertyLookupParserEscapeMode", "strict" );
     if ( "all".equals( escapeModeText ) ) {
       escapeMode = ESCAPE_MODE_ALL;
     } else if ( "none".equals( escapeModeText ) ) {
@@ -115,7 +116,8 @@ public abstract class PropertyLookupParser implements Serializable {
   /**
    * Defines the closing brace character.
    *
-   * @param closingBraceChar the closed-brace character.
+   * @param closingBraceChar
+   *          the closed-brace character.
    */
   public void setClosingBraceChar( final char closingBraceChar ) {
     this.closingBraceChar = closingBraceChar;
@@ -133,7 +135,8 @@ public abstract class PropertyLookupParser implements Serializable {
   /**
    * Defines the escape char.
    *
-   * @param escapeChar the escape char
+   * @param escapeChar
+   *          the escape char
    */
   public void setEscapeChar( final char escapeChar ) {
     this.escapeChar = escapeChar;
@@ -151,7 +154,8 @@ public abstract class PropertyLookupParser implements Serializable {
   /**
    * Defines the opening brace character.
    *
-   * @param openingBraceChar the opening-brace character.
+   * @param openingBraceChar
+   *          the opening-brace character.
    */
   public void setOpeningBraceChar( final char openingBraceChar ) {
     this.openingBraceChar = openingBraceChar;
@@ -169,7 +173,8 @@ public abstract class PropertyLookupParser implements Serializable {
   /**
    * Defines initial property marker char.
    *
-   * @param markerChar the initial property marker character.
+   * @param markerChar
+   *          the initial property marker character.
    */
   public void setMarkerChar( final char markerChar ) {
     this.markerChar = markerChar;
@@ -178,7 +183,8 @@ public abstract class PropertyLookupParser implements Serializable {
   /**
    * Translates the given string and resolves the embedded property references.
    *
-   * @param value the raw value,
+   * @param value
+   *          the raw value,
    * @return the fully translated string.
    */
   public String translateAndLookup( final String value ) {
@@ -188,7 +194,8 @@ public abstract class PropertyLookupParser implements Serializable {
   /**
    * Translates the given string and resolves the embedded property references.
    *
-   * @param value the raw value,
+   * @param value
+   *          the raw value,
    * @return the fully translated string.
    */
   public String translateAndLookup( final String value, final DataRow parameters ) {
@@ -204,12 +211,11 @@ public abstract class PropertyLookupParser implements Serializable {
     final FastStack<StringBuilder> stack = new FastStack<StringBuilder>();
 
     for ( int i = 0; i < chars.length; i++ ) {
-      final char c = chars[ i ];
+      final char c = chars[i];
 
       if ( haveEscape ) {
         haveEscape = false;
-        if ( state == PropertyLookupParser.EXPECT_CLOSE_BRACE ||
-          escapeMode == ESCAPE_MODE_ALL ) {
+        if ( state == PropertyLookupParser.EXPECT_CLOSE_BRACE || escapeMode == ESCAPE_MODE_ALL ) {
           result.append( c );
         } else {
           if ( c == openingBraceChar || c == closingBraceChar || c == escapeChar || c == markerChar ) {
@@ -223,7 +229,7 @@ public abstract class PropertyLookupParser implements Serializable {
       }
 
       if ( ( state == PropertyLookupParser.EXPECT_DOLLAR || state == PropertyLookupParser.EXPECT_CLOSE_BRACE )
-        && c == markerChar ) {
+          && c == markerChar ) {
         state = PropertyLookupParser.EXPECT_OPEN_BRACE;
         continue;
       }
@@ -290,9 +296,7 @@ public abstract class PropertyLookupParser implements Serializable {
     return c;
   }
 
-  protected void handleVariableLookup( final StringBuilder result,
-                                       final DataRow parameters,
-                                       final String columnName ) {
+  protected void handleVariableLookup( final StringBuilder result, final DataRow parameters, final String columnName ) {
     final String s = lookupVariable( columnName );
     if ( s == null ) {
       result.append( markerChar );
@@ -307,7 +311,8 @@ public abstract class PropertyLookupParser implements Serializable {
   /**
    * Looks up the property with the given name.
    *
-   * @param property the name of the property to look up.
+   * @param property
+   *          the name of the property to look up.
    * @return the translated value.
    */
   protected abstract String lookupVariable( String property );

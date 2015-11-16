@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.print;
 
@@ -38,23 +38,21 @@ public class PrintUtil {
   private static final Log logger = LogFactory.getLog( PrintUtil.class );
 
   public static final String PRINTER_JOB_NAME_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.print.JobName"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.print.JobName"; //$NON-NLS-1$
   public static final String NUMBER_COPIES_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.print.NumberOfCopies"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.print.NumberOfCopies"; //$NON-NLS-1$
 
   private PrintUtil() {
   }
 
-  public static void printDirectly( final MasterReport report )
-    throws PrinterException, ReportProcessingException {
+  public static void printDirectly( final MasterReport report ) throws PrinterException, ReportProcessingException {
     printDirectly( report, null );
   }
 
   public static void printDirectly( final MasterReport report, final ReportProgressListener progressListener )
     throws PrinterException, ReportProcessingException {
     final ModifiableConfiguration reportConfiguration = report.getReportConfiguration();
-    final String jobName = reportConfiguration.getConfigProperty
-      ( PRINTER_JOB_NAME_KEY, report.getTitle() );
+    final String jobName = reportConfiguration.getConfigProperty( PRINTER_JOB_NAME_KEY, report.getTitle() );
 
     final PrinterJob printerJob = PrinterJob.getPrinterJob();
     if ( jobName != null ) {
@@ -77,8 +75,7 @@ public class PrintUtil {
     }
   }
 
-  public static boolean print( final MasterReport report )
-    throws PrinterException, ReportProcessingException {
+  public static boolean print( final MasterReport report ) throws PrinterException, ReportProcessingException {
     return print( report, null );
   }
 
@@ -117,8 +114,7 @@ public class PrintUtil {
 
   public static int getNumberOfCopies( final Configuration configuration ) {
     try {
-      return Math.max( 1, Integer.parseInt
-        ( configuration.getConfigProperty( NUMBER_COPIES_KEY, "1" ) ) ); //$NON-NLS-1$
+      return Math.max( 1, Integer.parseInt( configuration.getConfigProperty( NUMBER_COPIES_KEY, "1" ) ) ); //$NON-NLS-1$
     } catch ( Exception e ) {
       logger.warn( "PrintUtil: Number of copies declared for the report is invalid" ); //$NON-NLS-1$
       return 1;

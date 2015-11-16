@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
@@ -43,20 +43,13 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
   private transient String[] propertyKeys;
   private transient ExpressionPropertyMetaData[] propertyMetaData;
 
-  public DefaultExpressionMetaData( final String bundleLocation,
-                                    final boolean expert,
-                                    final boolean preferred,
-                                    final boolean hidden,
-                                    final boolean deprecated,
-                                    final Class<? extends Expression> expressionType,
-                                    final Class<?> resultType,
-                                    final Map<String, ExpressionPropertyMetaData> attributes,
-                                    final SharedBeanInfo beanInfo,
-                                    final int layoutProcessorMode,
-                                    final MaturityLevel maturityLevel,
-                                    final int compatibilityLevel ) {
-    super( expressionType.getName(), bundleLocation, "",
-      expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel );
+  public DefaultExpressionMetaData( final String bundleLocation, final boolean expert, final boolean preferred,
+      final boolean hidden, final boolean deprecated, final Class<? extends Expression> expressionType,
+      final Class<?> resultType, final Map<String, ExpressionPropertyMetaData> attributes,
+      final SharedBeanInfo beanInfo, final int layoutProcessorMode, final MaturityLevel maturityLevel,
+      final int compatibilityLevel ) {
+    super( expressionType.getName(), bundleLocation, "", expert, preferred, hidden, deprecated, maturityLevel,
+        compatibilityLevel );
     if ( resultType == null ) {
       throw new NullPointerException();
     }
@@ -114,15 +107,14 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
 
   public String[] getPropertyNames() {
     if ( propertyKeys == null ) {
-      propertyKeys = properties.keySet().toArray( new String[ properties.size() ] );
+      propertyKeys = properties.keySet().toArray( new String[properties.size()] );
     }
     return propertyKeys;
   }
 
   public ExpressionPropertyMetaData[] getPropertyDescriptions() {
     if ( propertyMetaData == null ) {
-      propertyMetaData = properties.values().toArray
-        ( new ExpressionPropertyMetaData[ properties.size() ] );
+      propertyMetaData = properties.values().toArray( new ExpressionPropertyMetaData[properties.size()] );
     }
     return propertyMetaData;
   }
@@ -172,14 +164,12 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
     return expressionType.hashCode();
   }
 
-  private void writeObject( ObjectOutputStream out )
-    throws IOException {
+  private void writeObject( ObjectOutputStream out ) throws IOException {
     out.defaultWriteObject();
     out.writeObject( beanInfo.getBeanClass() );
   }
 
-  private void readObject( ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     final Class c = (Class) in.readObject();
     beanInfo = new SharedBeanInfo( c );

@@ -34,12 +34,10 @@ public class LineBreakIterator implements Iterator<LineBreakIteratorState> {
   private final AttributedCharacterIterator ci;
   private final float wrappingWidth;
 
-  public LineBreakIterator( ParagraphRenderBox box,
-                            FontRenderContext fontRenderContext,
-                            AttributedCharacterIterator ci ) {
+  public LineBreakIterator( ParagraphRenderBox box, FontRenderContext fontRenderContext, AttributedCharacterIterator ci ) {
     this.wrappingWidth = (float) StrictGeomUtility.toExternalValue( box.getCachedWidth() );
     this.justifiedLayout =
-      ElementAlignment.JUSTIFY.equals( box.getStyleSheet().getStyleProperty( ElementStyleKeys.ALIGNMENT ) );
+        ElementAlignment.JUSTIFY.equals( box.getStyleSheet().getStyleProperty( ElementStyleKeys.ALIGNMENT ) );
     this.ci = ci;
     this.lineBreakMeasurer = new LineBreakMeasurer( ci, fontRenderContext );
     this.lineBreakMeasurer.setPosition( ci.getBeginIndex() );
@@ -63,9 +61,8 @@ public class LineBreakIterator implements Iterator<LineBreakIteratorState> {
     return new LineBreakIteratorState( textLayout, start, end );
   }
 
-  protected TextLayout postProcess( final int start,
-                                    final TextLayout textLayout,
-                                    final LineBreakMeasurer lineBreakMeasurer ) {
+  protected TextLayout postProcess( final int start, final TextLayout textLayout,
+      final LineBreakMeasurer lineBreakMeasurer ) {
     if ( justifiedLayout ) {
       return textLayout.getJustifiedLayout( wrappingWidth );
     } else {

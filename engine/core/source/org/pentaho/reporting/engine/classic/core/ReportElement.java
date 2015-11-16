@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -43,17 +43,22 @@ public interface ReportElement extends Cloneable, Serializable {
    * Functions cannot be used as attribute-expressions as attribute- and style-expressions do not receive events and are
    * not guaranteed to be executed unless the element is processed.
    *
-   * @param namespace the attribute's namespace.
-   * @param name      the attribute's name.
-   * @param value     the expression.
+   * @param namespace
+   *          the attribute's namespace.
+   * @param name
+   *          the attribute's name.
+   * @param value
+   *          the expression.
    */
   public void setAttributeExpression( String namespace, String name, Expression value );
 
   /**
    * Returns the attribute expression for the given attribute identified by its namespace and attribute name.
    *
-   * @param namespace the attribute's namespace.
-   * @param name      the attribute's name.
+   * @param namespace
+   *          the attribute's namespace.
+   * @param name
+   *          the attribute's name.
    * @return the assigned expression or <code>null</code> if the attribute has no expression assigned.
    */
   public Expression getAttributeExpression( String namespace, String name );
@@ -68,7 +73,8 @@ public interface ReportElement extends Cloneable, Serializable {
   /**
    * Returns the names of all attributes for the given namespace that have attribute-expressions assigned.
    *
-   * @param namespace the namespace for which the attribute-names should be returned, never null.
+   * @param namespace
+   *          the namespace for which the attribute-names should be returned, never null.
    * @return the known attribute names as array.
    */
   public String[] getAttributeExpressionNames( String namespace );
@@ -78,9 +84,12 @@ public interface ReportElement extends Cloneable, Serializable {
    * Setting a attribute value to <code>null</code> removes the attribute. Attribute values are not checked for type
    * safety.
    *
-   * @param namespace the attribute's namespace.
-   * @param name      the attribute name.
-   * @param value     the attribute value, or null to remove the attribute.
+   * @param namespace
+   *          the attribute's namespace.
+   * @param name
+   *          the attribute name.
+   * @param value
+   *          the attribute value, or null to remove the attribute.
    */
   public void setAttribute( String namespace, String name, Object value );
 
@@ -108,8 +117,7 @@ public interface ReportElement extends Cloneable, Serializable {
 
   public ReportDefinition getReportDefinition();
 
-  public void setStyleExpression( StyleKey property,
-                                  Expression function );
+  public void setStyleExpression( StyleKey property, Expression function );
 
   public Expression getStyleExpression( StyleKey property );
 

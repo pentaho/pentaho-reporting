@@ -44,8 +44,8 @@ import java.awt.font.TextLayout;
 import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 
-public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep
-  implements TextMinorAxisLayoutStep {
+public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep implements
+    TextMinorAxisLayoutStep {
 
   private static final Log logger = LogFactory.getLog( ComplexTextMinorAxisLayoutStep.class );
   private final boolean strictCompatibility;
@@ -54,8 +54,7 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
 
   private MinorAxisNodeContext nodeContext;
 
-  public ComplexTextMinorAxisLayoutStep( final OutputProcessorMetaData metaData,
-                                         final ResourceManager resourceManager ) {
+  public ComplexTextMinorAxisLayoutStep( final OutputProcessorMetaData metaData, final ResourceManager resourceManager ) {
     this.resourceManager = resourceManager;
     ArgumentNullException.validate( "metaData", metaData );
 
@@ -109,9 +108,8 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     return new FontRenderContext( null, antiAliasing, true );
   }
 
-  private void addGeneratedComplexTextLines( final ParagraphRenderBox box,
-                                             final ParagraphPoolBox lineBoxContainer,
-                                             final StyleSheet layoutContext ) {
+  private void addGeneratedComplexTextLines( final ParagraphRenderBox box, final ParagraphPoolBox lineBoxContainer,
+      final StyleSheet layoutContext ) {
     updateNodeContextWidth( box );
 
     // Determine if anti-aliasing is required or not
@@ -143,13 +141,12 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     }
   }
 
-  private LineBreakIterator createLineBreakIterator( final ParagraphRenderBox box,
-                                                     final StyleSheet layoutContext,
-                                                     final RichTextSpec richText ) {
+  private LineBreakIterator createLineBreakIterator( final ParagraphRenderBox box, final StyleSheet layoutContext,
+      final RichTextSpec richText ) {
     final AttributedCharacterIterator ci = richText.createAttributedCharacterIterator();
     final FontRenderContext fontRenderContext = createFontRenderContext( layoutContext );
-    final boolean breakOnWordBoundary = strictCompatibility ||
-      layoutContext.getBooleanStyleProperty( TextStyleKeys.WORDBREAK );
+    final boolean breakOnWordBoundary =
+        strictCompatibility || layoutContext.getBooleanStyleProperty( TextStyleKeys.WORDBREAK );
 
     if ( breakOnWordBoundary ) {
       return new WordBreakingLineIterator( box, fontRenderContext, ci, richText.getText() );
@@ -158,9 +155,8 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     }
   }
 
-  private void addCompleteLine( final ParagraphRenderBox box,
-                                final ParagraphPoolBox lineBoxContainer,
-                                final StyleSheet layoutContext ) {
+  private void addCompleteLine( final ParagraphRenderBox box, final ParagraphPoolBox lineBoxContainer,
+      final StyleSheet layoutContext ) {
     RichTextSpec richText = RichTextSpecProducer.compute( lineBoxContainer, metaData, resourceManager );
 
     final FontRenderContext fontRenderContext = createFontRenderContext( layoutContext );
@@ -177,24 +173,21 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     box.addGeneratedChild( line );
   }
 
-  private RenderBox generateLine( final ParagraphRenderBox paragraph,
-                                  final ParagraphPoolBox lineBoxContainer,
-                                  final RenderableComplexText text,
-                                  final double height,
-                                  final ParagraphFontMetricsImpl metrics ) {
-    //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
+  private RenderBox generateLine( final ParagraphRenderBox paragraph, final ParagraphPoolBox lineBoxContainer,
+      final RenderableComplexText text, final double height, final ParagraphFontMetricsImpl metrics ) {
+    // derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
     TextLayout textLayout = text.getTextLayout();
 
     // Store the height and width, so that the other parts of the layouter have access to the information
-    //        text.setCachedHeight();
+    // text.setCachedHeight();
     text.setCachedHeight( Math.max( StrictGeomUtility.toInternalValue( height ), lineBoxContainer.getLineHeight() ) );
     text.setCachedWidth( StrictGeomUtility.toInternalValue( textLayout.getAdvance() ) );
     text.setParagraphFontMetrics( metrics );
 
-
     MinorAxisNodeContext nodeContext = getNodeContext();
-    final long alignmentX = RenderUtility.computeHorizontalAlignment( paragraph.getTextAlignment(),
-      nodeContext.getContentAreaWidth(), StrictGeomUtility.toInternalValue( textLayout.getAdvance() ) );
+    final long alignmentX =
+        RenderUtility.computeHorizontalAlignment( paragraph.getTextAlignment(), nodeContext.getContentAreaWidth(),
+            StrictGeomUtility.toInternalValue( textLayout.getAdvance() ) );
     text.setCachedX( alignmentX + nodeContext.getX() );
 
     // Create a shallow copy of the paragraph-pool to act as a line container.

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 
@@ -52,8 +52,8 @@ public class ReportGenerator {
   /**
    * Enable DTD validation of the parsed XML.
    */
-  public static final String PARSER_VALIDATE_KEY
-    = "org.pentaho.reporting.engine.classic.core.modules.parser.base.Validate";
+  public static final String PARSER_VALIDATE_KEY =
+      "org.pentaho.reporting.engine.classic.core.modules.parser.base.Validate";
 
   /**
    * disable DTD validation by default.
@@ -79,7 +79,8 @@ public class ReportGenerator {
   /**
    * Set to false, to globaly disable the xml-validation.
    *
-   * @param validate true, if the parser should validate the xml files.
+   * @param validate
+   *          true, if the parser should validate the xml files.
    */
   public void setValidateDTD( final boolean validate ) {
     this.validateDTD = validate;
@@ -94,16 +95,16 @@ public class ReportGenerator {
     return validateDTD;
   }
 
-
   /**
    * Parses a report using the given parameter as filename and the directory containing the file as content base.
    *
-   * @param file the file name.
+   * @param file
+   *          the file name.
    * @return the report.
-   * @throws java.io.IOException if an I/O error occurs.
+   * @throws java.io.IOException
+   *           if an I/O error occurs.
    */
-  public MasterReport parseReport( final String file )
-    throws IOException, ResourceException {
+  public MasterReport parseReport( final String file ) throws IOException, ResourceException {
     if ( file == null ) {
       throw new NullPointerException( "File may not be null" );
     }
@@ -115,12 +116,13 @@ public class ReportGenerator {
    * Parses an XML file which is loaded using the given URL. All needed relative file- and resourcespecification are
    * loaded using the URL <code>file</code> as base.
    *
-   * @param file the URL for the report template file.
+   * @param file
+   *          the URL for the report template file.
    * @return the report.
-   * @throws java.io.IOException if an I/O error occurs.
+   * @throws java.io.IOException
+   *           if an I/O error occurs.
    */
-  public MasterReport parseReport( final URL file )
-    throws IOException, ResourceException {
+  public MasterReport parseReport( final URL file ) throws IOException, ResourceException {
     return parseReport( file, file );
   }
 
@@ -131,25 +133,28 @@ public class ReportGenerator {
    * After the report is generated, the ReportDefinition-source and the contentbase are stored as string in the
    * reportproperties.
    *
-   * @param file        the URL for the report template file.
-   * @param contentBase the URL for the report template content base.
+   * @param file
+   *          the URL for the report template file.
+   * @param contentBase
+   *          the URL for the report template content base.
    * @return the parsed report.
    */
-  public MasterReport parseReport( final URL file, final URL contentBase )
-    throws ResourceException {
+  public MasterReport parseReport( final URL file, final URL contentBase ) throws ResourceException {
     return parse( file, contentBase );
   }
 
   /**
    * Parses the report from a given URL.
    *
-   * @param file        the report definition location.
-   * @param contentBase the report's context (used to load content that has been referenced with relative URLs).
+   * @param file
+   *          the report definition location.
+   * @param contentBase
+   *          the report's context (used to load content that has been referenced with relative URLs).
    * @return the parsed report.
-   * @throws ResourceException if parsing or loading failed for some reason.
+   * @throws ResourceException
+   *           if parsing or loading failed for some reason.
    */
-  private MasterReport parse( final URL file, final URL contentBase )
-    throws ResourceException {
+  private MasterReport parse( final URL file, final URL contentBase ) throws ResourceException {
     final ResourceManager resourceManager = new ResourceManager();
     final ResourceKey contextKey = resourceManager.createKey( contentBase );
 
@@ -185,8 +190,7 @@ public class ReportGenerator {
 
     final Reader characterStream = input.getCharacterStream();
     if ( characterStream == null ) {
-      throw new IOException
-        ( "InputSource has neither an Byte nor a CharacterStream" );
+      throw new IOException( "InputSource has neither an Byte nor a CharacterStream" );
     }
 
     try {
@@ -204,12 +208,13 @@ public class ReportGenerator {
    * Parses an XML file which is loaded using the given file. All needed relative file- and resourcespecification are
    * loaded using the parent directory of the file <code>file</code> as base.
    *
-   * @param file the report template file.
+   * @param file
+   *          the report template file.
    * @return the parsed report.
-   * @throws java.io.IOException if an I/O error occurs.
+   * @throws java.io.IOException
+   *           if an I/O error occurs.
    */
-  public MasterReport parseReport( final File file )
-    throws IOException, ResourceException {
+  public MasterReport parseReport( final File file ) throws IOException, ResourceException {
     if ( file == null ) {
       throw new NullPointerException();
     }
@@ -238,14 +243,18 @@ public class ReportGenerator {
   /**
    * Parses the report from a given SAX-InputSource.
    *
-   * @param input       the report definition location.
-   * @param contentBase the report's context (used to load content that has been referenced with relative URLs).
+   * @param input
+   *          the report definition location.
+   * @param contentBase
+   *          the report's context (used to load content that has been referenced with relative URLs).
    * @return the parsed report.
-   * @throws ResourceException if parsing or loading failed for some reason.
-   * @throws IOException       if an IO-related error occurs.
+   * @throws ResourceException
+   *           if parsing or loading failed for some reason.
+   * @throws IOException
+   *           if an IO-related error occurs.
    */
-  public MasterReport parseReport( final InputSource input, final URL contentBase )
-    throws IOException, ResourceException {
+  public MasterReport parseReport( final InputSource input, final URL contentBase ) throws IOException,
+    ResourceException {
     if ( input.getCharacterStream() != null ) {
       // Sourceforge Bug #1712734. We cannot safely route the character-stream through libloader.
       // Therefore we skip libloader and parse the report directly. This is for backward compatibility,
@@ -298,15 +307,17 @@ public class ReportGenerator {
   /**
    * Parses the report using the provided resource manager.
    *
-   * @param manager    the resource manager (can be null).
-   * @param input      the resource key pointing to the report definition.
-   * @param contextKey the report's context (used to load content that has been referenced with relative URLs).
+   * @param manager
+   *          the resource manager (can be null).
+   * @param input
+   *          the resource key pointing to the report definition.
+   * @param contextKey
+   *          the report's context (used to load content that has been referenced with relative URLs).
    * @return the parsed report.
-   * @throws ResourceException if parsing or loading failed for some reason.
+   * @throws ResourceException
+   *           if parsing or loading failed for some reason.
    */
-  public MasterReport parseReport( ResourceManager manager,
-                                   final ResourceKey input,
-                                   final ResourceKey contextKey )
+  public MasterReport parseReport( ResourceManager manager, final ResourceKey input, final ResourceKey contextKey )
     throws ResourceException {
     if ( manager == null ) {
       manager = new ResourceManager();
@@ -319,8 +330,8 @@ public class ReportGenerator {
       map.put( new FactoryParameterKey( name ), helperObjects.get( name ) );
     }
 
-    final ResourceKey key = new ResourceKey( input.getParent(),
-      input.getSchema(), input.getIdentifier(), input.getFactoryParameters() );
+    final ResourceKey key =
+        new ResourceKey( input.getParent(), input.getSchema(), input.getIdentifier(), input.getFactoryParameters() );
     final Resource resource = manager.create( key, contextKey, MasterReport.class );
     return (MasterReport) resource.getResource();
   }
@@ -351,8 +362,10 @@ public class ReportGenerator {
   /**
    * Assigns a parse-context object.
    *
-   * @param key   the parse-context key used to lookup the object later.
-   * @param value the value.
+   * @param key
+   *          the parse-context key used to lookup the object later.
+   * @param value
+   *          the value.
    */
   public void setObject( final String key, final Object value ) {
     if ( key == null ) {
@@ -368,7 +381,8 @@ public class ReportGenerator {
   /**
    * Returns the parse context object for the given key.
    *
-   * @param key the key.
+   * @param key
+   *          the key.
    * @return the value or null if there is no such value.
    */
   public Object getObject( final String key ) {

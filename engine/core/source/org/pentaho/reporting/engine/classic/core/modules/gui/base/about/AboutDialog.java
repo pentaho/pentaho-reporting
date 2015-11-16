@@ -1,30 +1,42 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.about;
+
+import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.util.ResourceBundle;
+
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.SwingPreviewModule;
 import org.pentaho.reporting.libraries.base.versioning.Licenses;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
-import java.util.ResourceBundle;
 
 /**
  * A dialog that displays information about the demonstration application.
@@ -76,8 +88,10 @@ public class AboutDialog extends JDialog {
   /**
    * Constructs an about frame.
    *
-   * @param title   the frame title.
-   * @param project information about the project.
+   * @param title
+   *          the frame title.
+   * @param project
+   *          information about the project.
    */
   public AboutDialog( final String title, final ProjectInformation project ) {
 
@@ -88,11 +102,10 @@ public class AboutDialog extends JDialog {
   /**
    * Creates a non-modal dialog without a title with the specifed <code>Frame</code> as its owner.
    *
-   * @param owner the <code>Frame</code> from which the dialog is displayed
+   * @param owner
+   *          the <code>Frame</code> from which the dialog is displayed
    */
-  public AboutDialog( final Frame owner,
-                      final String title,
-                      final ProjectInformation project ) {
+  public AboutDialog( final Frame owner, final String title, final ProjectInformation project ) {
     super( owner );
     init( title, project );
   }
@@ -100,11 +113,10 @@ public class AboutDialog extends JDialog {
   /**
    * Creates a non-modal dialog without a title with the specifed <code>Dialog</code> as its owner.
    *
-   * @param owner the <code>Dialog</code> from which the dialog is displayed
+   * @param owner
+   *          the <code>Dialog</code> from which the dialog is displayed
    */
-  public AboutDialog( final Dialog owner,
-                      final String title,
-                      final ProjectInformation project ) {
+  public AboutDialog( final Dialog owner, final String title, final ProjectInformation project ) {
     super( owner );
     init( title, project );
   }
@@ -112,11 +124,12 @@ public class AboutDialog extends JDialog {
   /**
    * Constructs an 'About' frame.
    *
-   * @param title     the frame title.
-   * @param libraries a list of libraries.
+   * @param title
+   *          the frame title.
+   * @param libraries
+   *          a list of libraries.
    */
-  private void init( final String title,
-                     final ProjectInformation libraries ) {
+  private void init( final String title, final ProjectInformation libraries ) {
 
     setTitle( title );
     setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
@@ -125,11 +138,9 @@ public class AboutDialog extends JDialog {
     this.version = libraries.getVersion();
     this.copyright = libraries.getCopyright();
     this.info = libraries.getInfo();
-    if ( "GPL".equalsIgnoreCase( libraries.getLicenseName() ) ) // NON-NLS
-    {
+    if ( "GPL".equalsIgnoreCase( libraries.getLicenseName() ) ) { // NON-NLS
       this.licence = Licenses.getInstance().getGPL();
-    } else if ( "LGPL".equalsIgnoreCase( libraries.getLicenseName() ) ) // NON-NLS
-    {
+    } else if ( "LGPL".equalsIgnoreCase( libraries.getLicenseName() ) ) { // NON-NLS
       this.licence = Licenses.getInstance().getLGPL();
     } else {
       this.licence = libraries.getLicenseName();
@@ -268,6 +279,5 @@ public class AboutDialog extends JDialog {
     return licencePanel;
 
   }
-
 
 }

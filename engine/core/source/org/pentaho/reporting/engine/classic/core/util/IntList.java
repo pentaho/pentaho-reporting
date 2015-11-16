@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -34,7 +34,7 @@ public class IntList implements Cloneable {
   /**
    * An empty array used to avoid object creation.
    */
-  private static final int[] EMPTY_ARRAY = new int[ 0 ];
+  private static final int[] EMPTY_ARRAY = new int[0];
   /**
    * The array holding the list data.
    */
@@ -52,10 +52,11 @@ public class IntList implements Cloneable {
    * Creates a new IntList with the given initial capacity. The capacity will also be used as increment value when
    * extending the capacity of the list.
    *
-   * @param capacity the initial capacity.
+   * @param capacity
+   *          the initial capacity.
    */
   public IntList( final int capacity ) {
-    data = new int[ capacity ];
+    data = new int[capacity];
     increment = capacity;
   }
 
@@ -73,11 +74,12 @@ public class IntList implements Cloneable {
    * Ensures, that the list backend can store at least <code>c</code> elements. This method does nothing, if the new
    * capacity is less than the current capacity.
    *
-   * @param c the new capacity of the list.
+   * @param c
+   *          the new capacity of the list.
    */
   private void ensureCapacity( final int c ) {
     if ( data.length <= c ) {
-      final int[] newData = new int[ Math.max( data.length + increment, c + 1 ) ];
+      final int[] newData = new int[Math.max( data.length + increment, c + 1 )];
       System.arraycopy( data, 0, newData, 0, size );
       data = newData;
     }
@@ -86,11 +88,12 @@ public class IntList implements Cloneable {
   /**
    * Adds the given int value to the list.
    *
-   * @param value the new value to be added.
+   * @param value
+   *          the new value to be added.
    */
   public void add( final int value ) {
     ensureCapacity( size );
-    data[ size ] = value;
+    data[size] = value;
     size += 1;
   }
 
@@ -100,23 +103,25 @@ public class IntList implements Cloneable {
     }
 
     size -= 1;
-    final int retval = data[ size ];
-    data[ size ] = 0;
+    final int retval = data[size];
+    data[size] = 0;
     return retval;
   }
 
   /**
    * Returns the value at the given index.
    *
-   * @param index the index
+   * @param index
+   *          the index
    * @return the value at the given index
-   * @throws IndexOutOfBoundsException if the index is greater or equal to the list size or if the index is negative.
+   * @throws IndexOutOfBoundsException
+   *           if the index is greater or equal to the list size or if the index is negative.
    */
   public int get( final int index ) {
     if ( index >= size || index < 0 ) {
       throw new IndexOutOfBoundsException( String.valueOf( index ) );
     }
-    return data[ index ];
+    return data[index];
   }
 
   /**
@@ -145,7 +150,7 @@ public class IntList implements Cloneable {
       return IntList.EMPTY_ARRAY;
     }
 
-    final int[] retval = new int[ size ];
+    final int[] retval = new int[size];
     System.arraycopy( data, 0, retval, 0, size );
     return retval;
   }
@@ -166,7 +171,7 @@ public class IntList implements Cloneable {
     }
     final int listSize = toIndex - fromIndex;
 
-    final int[] retval = new int[ listSize ];
+    final int[] retval = new int[listSize];
     System.arraycopy( data, fromIndex, retval, 0, listSize );
     return retval;
   }
@@ -176,7 +181,7 @@ public class IntList implements Cloneable {
       throw new IndexOutOfBoundsException( String.valueOf( index ) );
     }
 
-    data[ index ] = value;
+    data[index] = value;
   }
 
   public String toString() {
@@ -190,7 +195,7 @@ public class IntList implements Cloneable {
     } else {
       sb.append( "{" );
       for ( int i = 0; data != null && i < size; ++i ) {
-        sb.append( i == 0 ? "" : ", " ).append( data[ i ] );
+        sb.append( i == 0 ? "" : ", " ).append( data[i] );
       }
       sb.append( data == null ? "null" : "}" );
     }

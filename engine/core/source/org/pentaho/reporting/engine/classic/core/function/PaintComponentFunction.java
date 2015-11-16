@@ -1,29 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
+
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-
-import java.awt.*;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 
 /**
  * Paints a AWT or Swing Component, fitting the component into the element bounds. The component must be contained in
@@ -33,7 +34,8 @@ import java.io.ObjectInputStream;
  *
  * @author Thomas Morgner
  * @deprecated Use the new Component-Element instead. It uses drawables for this job, and therefore the result looks
- * much better. This method does no longer work, as it depended on implementation details that are no longer in use.
+ *             much better. This method does no longer work, as it depended on implementation details that are no longer
+ *             in use.
  */
 @SuppressWarnings( "deprecation" )
 public class PaintComponentFunction extends AbstractFunction {
@@ -70,8 +72,10 @@ public class PaintComponentFunction extends AbstractFunction {
   }
 
   /**
-   * Returns the element used by the function. <P> The element name corresponds to a element in the report. The element
-   * name must be unique, as the first occurence of the element is used.
+   * Returns the element used by the function.
+   * <P>
+   * The element name corresponds to a element in the report. The element name must be unique, as the first occurence of
+   * the element is used.
    *
    * @return The field name.
    */
@@ -80,10 +84,13 @@ public class PaintComponentFunction extends AbstractFunction {
   }
 
   /**
-   * Sets the element name for the function. <P> The element name corresponds to a element in the report. The element
-   * name must be unique, as the first occurence of the element is used.
+   * Sets the element name for the function.
+   * <P>
+   * The element name corresponds to a element in the report. The element name must be unique, as the first occurence of
+   * the element is used.
    *
-   * @param field the field name (null not permitted).
+   * @param field
+   *          the field name (null not permitted).
    */
   public void setElement( final String field ) {
     if ( field == null ) {
@@ -104,7 +111,8 @@ public class PaintComponentFunction extends AbstractFunction {
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -116,12 +124,14 @@ public class PaintComponentFunction extends AbstractFunction {
    * @return true, if this is an headless environment, false otherwise.
    */
   protected static boolean isHeadless() {
-    return "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "java.awt.headless", "false" ) );
+    return "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty( "java.awt.headless",
+        "false" ) );
   }
 
   /**
-   * Return the current expression value. <P> The value depends (obviously) on the expression implementation.
+   * Return the current expression value.
+   * <P>
+   * The value depends (obviously) on the expression implementation.
    *
    * @return the value of the function.
    */
@@ -133,7 +143,8 @@ public class PaintComponentFunction extends AbstractFunction {
    * Define a scale factor for the created image. Using a higher scale factor will produce better results. A scale
    * factor of 2 will double the resolution. A scale factor of 1 will create 72 dpi images.
    *
-   * @param scale the scale factor.
+   * @param scale
+   *          the scale factor.
    */
   public void setScale( final float scale ) {
     this.scale = scale;
@@ -167,12 +178,14 @@ public class PaintComponentFunction extends AbstractFunction {
   /**
    * Helper method for serialization.
    *
-   * @param in the input stream from where to read the serialized object.
-   * @throws IOException            when reading the stream fails.
-   * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
+   * @param in
+   *          the input stream from where to read the serialized object.
+   * @throws IOException
+   *           when reading the stream fails.
+   * @throws ClassNotFoundException
+   *           if a class definition for a serialized object could not be found.
    */
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     if ( PaintComponentFunction.isHeadless() == false ) {
       peerSupply = new Frame();

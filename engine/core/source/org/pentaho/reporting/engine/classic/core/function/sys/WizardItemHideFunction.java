@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.sys;
 
@@ -26,8 +26,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractElementFormatF
 import org.pentaho.reporting.engine.classic.core.function.StructureFunction;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
-public class WizardItemHideFunction extends AbstractElementFormatFunction
-  implements StructureFunction {
+public class WizardItemHideFunction extends AbstractElementFormatFunction implements StructureFunction {
   private static final Log logger = LogFactory.getLog( WizardItemHideFunction.class );
   private boolean pageStarted;
 
@@ -39,11 +38,11 @@ public class WizardItemHideFunction extends AbstractElementFormatFunction
     return 6000;
   }
 
-
   /**
    * Evaluates all defined style-expressions of the given element.
    *
-   * @param e the element that should be updated.
+   * @param e
+   *          the element that should be updated.
    * @return true, if attributes or style were changed, false if no change was made.
    */
   protected boolean evaluateElement( final ReportElement e ) {
@@ -54,7 +53,7 @@ public class WizardItemHideFunction extends AbstractElementFormatFunction
     boolean retval = false;
 
     final Object maybeShowChanging =
-      e.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ONLY_SHOW_CHANGING_VALUES );
+        e.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ONLY_SHOW_CHANGING_VALUES );
     if ( Boolean.TRUE.equals( maybeShowChanging ) ) {
       Object field = e.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR );
       if ( field == null ) {

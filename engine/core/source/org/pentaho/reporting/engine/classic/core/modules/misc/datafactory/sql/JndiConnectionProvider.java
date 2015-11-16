@@ -43,9 +43,7 @@ public class JndiConnectionProvider implements ConnectionProvider {
     dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceService.class );
   }
 
-  public JndiConnectionProvider( final String connectionPath,
-                                 final String username,
-                                 final String password ) {
+  public JndiConnectionProvider( final String connectionPath, final String username, final String password ) {
     this();
     this.connectionPath = connectionPath;
     this.username = username;
@@ -81,10 +79,13 @@ public class JndiConnectionProvider implements ConnectionProvider {
    * the connection in a way so that calls to "close()" on that connection do not prevent subsequent calls to this
    * method to fail.
    *
-   * @param user     the user name.
-   * @param password the password.
+   * @param user
+   *          the user name.
+   * @param password
+   *          the password.
    * @return the connection.
-   * @throws SQLException if the connection has errors.
+   * @throws SQLException
+   *           if the connection has errors.
    */
   public Connection createConnection( final String user, final String password ) throws SQLException {
     if ( connectionPath == null ) {
@@ -164,8 +165,7 @@ public class JndiConnectionProvider implements ConnectionProvider {
     return result;
   }
 
-  private void readObject( final ObjectInputStream stream )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream stream ) throws IOException, ClassNotFoundException {
     stream.defaultReadObject();
     dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceService.class );
   }

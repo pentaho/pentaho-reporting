@@ -75,14 +75,13 @@ public class SheetPropertyCollector extends AbstractStructureVisitor implements 
     this.pageFooterRight = lookup( element, AttributeNames.Excel.PAGE_FOOTER_RIGHT, this.pageFooterRight );
 
     final Integer freezeTop =
-      (Integer) element.getAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FREEZING_TOP_POSITION );
+        (Integer) element.getAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FREEZING_TOP_POSITION );
     if ( this.freezeTop == null && freezeTop != null ) {
       this.freezeTop = freezeTop;
     }
 
-
     final Integer freezeLeft =
-      (Integer) element.getAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FREEZING_LEFT_POSITION );
+        (Integer) element.getAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FREEZING_LEFT_POSITION );
     if ( this.freezeLeft == null && freezeLeft != null ) {
       this.freezeLeft = freezeLeft;
     }
@@ -126,9 +125,7 @@ public class SheetPropertyCollector extends AbstractStructureVisitor implements 
     return pageFooterRight;
   }
 
-  private String lookup( final ReportElement box,
-                         final String attribute,
-                         final String defaultValue ) {
+  private String lookup( final ReportElement box, final String attribute, final String defaultValue ) {
     final Object value = box.getAttribute( AttributeNames.Excel.NAMESPACE, attribute );
     if ( value != null && defaultValue == null ) {
       return String.valueOf( value );

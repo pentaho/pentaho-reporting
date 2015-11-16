@@ -1,21 +1,23 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.text;
+
+import java.util.ArrayList;
 
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -56,16 +58,14 @@ import org.pentaho.reporting.libraries.fonts.text.whitespace.PreserveWhiteSpaceF
 import org.pentaho.reporting.libraries.fonts.text.whitespace.WhiteSpaceFilter;
 import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
-import java.util.ArrayList;
-
 /**
  * Creation-Date: 03.04.2007, 16:43:48
  *
  * @author Thomas Morgner
  */
 public final class DefaultRenderableTextFactory implements RenderableTextFactory {
-  private static final RenderNode[] EMPTY_RENDER_NODE = new RenderNode[ 0 ];
-  private static final RenderableText[] EMPTY_TEXT = new RenderableText[ 0 ];
+  private static final RenderNode[] EMPTY_RENDER_NODE = new RenderNode[0];
+  private static final RenderableText[] EMPTY_TEXT = new RenderableText[0];
   private static final GlyphList EMPTY_GLYPHS = new GlyphList( 1 ).lock();
   private static final int[] END_OF_TEXT = new int[] { ClassificationProducer.END_OF_TEXT };
 
@@ -125,13 +125,8 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
    * @param text
    * @return
    */
-  public RenderNode[] createText( final int[] text,
-                                  final int offset,
-                                  final int length,
-                                  final StyleSheet layoutContext,
-                                  final ElementType elementType,
-                                  final InstanceID instanceId,
-                                  final ReportAttributeMap<Object> attributeMap ) {
+  public RenderNode[] createText( final int[] text, final int offset, final int length, final StyleSheet layoutContext,
+      final ElementType elementType, final InstanceID instanceId, final ReportAttributeMap<Object> attributeMap ) {
     this.instanceId = instanceId;
     if ( layoutContext == null ) {
       throw new NullPointerException();
@@ -146,7 +141,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
       throw new NullPointerException();
     }
     this.layoutContext = layoutContext;
-    //    this.parentLayoutContext = new NodeLayoutProperties(majorAxis, minorAxis, layoutContext);
+    // this.parentLayoutContext = new NodeLayoutProperties(majorAxis, minorAxis, layoutContext);
     this.elementType = elementType;
     this.attributeMap = attributeMap;
     this.fontMetrics = metaData.getFontMetrics( layoutContext );
@@ -160,8 +155,8 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
     this.layoutContext = layoutContext;
 
     if ( metaData.isFeatureSupported( OutputProcessorFeature.SPACING_SUPPORTED ) ) {
-      this.wordSpacing = FontStrictGeomUtility.toInternalValue
-        ( layoutContext.getDoubleStyleProperty( TextStyleKeys.WORD_SPACING, 0 ) );
+      this.wordSpacing =
+          FontStrictGeomUtility.toInternalValue( layoutContext.getDoubleStyleProperty( TextStyleKeys.WORD_SPACING, 0 ) );
     } else {
       this.wordSpacing = 0;
     }
@@ -176,15 +171,12 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
     return processText( text, offset, length );
   }
 
-  protected RenderNode[] processText( final int[] text,
-                                      final int offset,
-                                      final int length ) {
+  protected RenderNode[] processText( final int[] text, final int offset, final int length ) {
     final int maxLen = Math.min( length + offset, text.length );
     int clusterStartIdx = offset < maxLen ? 0 : -1;
     for ( int i = offset; i < maxLen; i++ ) {
-      final int codePoint = text[ i ];
-      final boolean clusterStarted =
-        this.clusterProducer.createGraphemeCluster( codePoint );
+      final int codePoint = text[i];
+      final boolean clusterStarted = this.clusterProducer.createGraphemeCluster( codePoint );
       // ignore the first cluster start; we need to see the whole cluster.
       if ( clusterStarted ) {
         if ( i > offset ) {
@@ -203,7 +195,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
     }
 
     if ( words.isEmpty() == false ) {
-      final RenderNode[] renderableTexts = words.toArray( new RenderNode[ words.size() ] );
+      final RenderNode[] renderableTexts = words.toArray( new RenderNode[words.size()] );
       words.clear();
       return renderableTexts;
     } else {
@@ -213,8 +205,8 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
   }
 
   protected void addGlyph( final int[] text, final int offset, final int extraCharCount ) {
-    //  Log.debug ("Processing " + rawCodePoint);
-    final int rawCodePoint = text[ offset ];
+    // Log.debug ("Processing " + rawCodePoint);
+    final int rawCodePoint = text[offset];
     if ( rawCodePoint == ClassificationProducer.END_OF_TEXT ) {
       whitespaceFilter.filter( rawCodePoint );
       classificationProducer.getClassification( rawCodePoint );
@@ -259,7 +251,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
     lastLanguage = languageClassifier.getScript( codePoint );
 
     for ( int i = 0; i < extraCharCount; i++ ) {
-      final int extraChar = text[ offset + i + 1 ];
+      final int extraChar = text[offset + i + 1];
       dims = fontSizeProducer.getCharacterSize( extraChar, dims );
       width = Math.max( width, ( dims.getWidth() & 0x7FFFFFFF ) );
       height = Math.max( height, ( dims.getHeight() & 0x7FFFFFFF ) );
@@ -267,8 +259,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
       glyphClassification = classificationProducer.getClassification( extraChar );
     }
 
-    if ( ( Glyph.SPACE_CHAR == glyphClassification ) &&
-      isWordBreak( breakweight ) ) {
+    if ( ( Glyph.SPACE_CHAR == glyphClassification ) && isWordBreak( breakweight ) ) {
 
       // Finish the current word ...
       final boolean forceLinebreak = breakweight == BreakOpportunityProducer.BREAK_LINE;
@@ -283,14 +274,14 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
       // next word by the character's width.
       leadingMargin += width + wordSpacing;
       spaceCount += 1;
-      //   Log.debug ("Increasing Margin");
+      // Log.debug ("Increasing Margin");
       return;
     }
 
-    //    final Glyph glyph = new DefaultGlyph(codePoint, breakweight, glyphClassification, spacing, width, height,
-    //        dims.getBaselinePosition(), (int) kerning, extraChars);
+    // final Glyph glyph = new DefaultGlyph(codePoint, breakweight, glyphClassification, spacing, width, height,
+    // dims.getBaselinePosition(), (int) kerning, extraChars);
     glyphList.addGlyphData( text, offset, extraCharCount + 1, breakweight, glyphClassification, spacing, width, height,
-      dims.getBaselinePosition(), (int) kerning );
+        dims.getBaselinePosition(), (int) kerning );
     // Log.debug ("Adding Glyph");
 
     // does this finish a word? Check it!
@@ -318,14 +309,15 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
       // If there is a preservable whitespace, the leading margin will be non-zero.
       if ( leadingMargin > 0 ) {
         final SpacerRenderNode spacer =
-          new SpacerRenderNode( RenderableText.convert( leadingMargin ), 0, true, spaceCount );
+            new SpacerRenderNode( RenderableText.convert( leadingMargin ), 0, true, spaceCount );
         words.add( spacer );
       }
       if ( forceLinebreak ) {
         final ExtendedBaselineInfo info = getBaselineInfo( '\n' );
-        ///        TextUtility.createBaselineInfo('\n', fontMetrics, baselineInfo);
-        final RenderableText text = new RenderableText( layoutContext, elementType, instanceId, attributeMap,
-          info, DefaultRenderableTextFactory.EMPTY_GLYPHS, 0, 0, lastLanguage, true );
+        // / TextUtility.createBaselineInfo('\n', fontMetrics, baselineInfo);
+        final RenderableText text =
+            new RenderableText( layoutContext, elementType, instanceId, attributeMap, info,
+                DefaultRenderableTextFactory.EMPTY_GLYPHS, 0, 0, lastLanguage, true );
         words.add( text );
       }
       leadingMargin = 0;
@@ -333,11 +325,10 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
       return;
     }
 
-    //final DefaultGlyph[] glyphs = (DefaultGlyph[]) glyphList.toArray(new DefaultGlyph[glyphList.size()]);
-    if ( leadingMargin > 0 )// && words.isEmpty() == false)
-    {
+    // final DefaultGlyph[] glyphs = (DefaultGlyph[]) glyphList.toArray(new DefaultGlyph[glyphList.size()]);
+    if ( leadingMargin > 0 ) {
       final SpacerRenderNode spacer =
-        new SpacerRenderNode( RenderableText.convert( leadingMargin ), 0, true, spaceCount );
+          new SpacerRenderNode( RenderableText.convert( leadingMargin ), 0, true, spaceCount );
       words.add( spacer );
     }
 
@@ -347,10 +338,11 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
     final int codePoint = glyphList.getGlyph( 0 ).getCodepoint();
 
     final ExtendedBaselineInfo baselineInfo = getBaselineInfo( codePoint );
-    //    final ExtendedBaselineInfo baselineInfo = TextUtility.createBaselineInfo(codePoint, fontMetrics, this
+    // final ExtendedBaselineInfo baselineInfo = TextUtility.createBaselineInfo(codePoint, fontMetrics, this
     // .baselineInfo);
-    final RenderableText text = new RenderableText( layoutContext, elementType, instanceId, attributeMap,
-      baselineInfo, glyphList.lock(), 0, glyphList.getSize(), lastLanguage, forceLinebreak );
+    final RenderableText text =
+        new RenderableText( layoutContext, elementType, instanceId, attributeMap, baselineInfo, glyphList.lock(), 0,
+            glyphList.getSize(), lastLanguage, forceLinebreak );
     words.add( text );
 
     glyphList.clear();
@@ -359,16 +351,15 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
   }
 
   private boolean isWordBreak( final int breakOp ) {
-    if ( BreakOpportunityProducer.BREAK_WORD == breakOp ||
-      BreakOpportunityProducer.BREAK_LINE == breakOp ) {
+    if ( BreakOpportunityProducer.BREAK_WORD == breakOp || BreakOpportunityProducer.BREAK_LINE == breakOp ) {
       return true;
     }
     return false;
   }
 
   protected WhiteSpaceFilter createWhitespaceFilter( final StyleSheet layoutContext ) {
-    final WhitespaceCollapse wsColl = (WhitespaceCollapse) layoutContext.getStyleProperty(
-      TextStyleKeys.WHITE_SPACE_COLLAPSE );
+    final WhitespaceCollapse wsColl =
+        (WhitespaceCollapse) layoutContext.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE );
 
     if ( whitespaceFilter != null ) {
       if ( ObjectUtilities.equal( whitespaceFilterValue, wsColl ) ) {
@@ -392,8 +383,8 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
   }
 
   protected GlyphClassificationProducer createGlyphClassifier( final StyleSheet layoutContext ) {
-    final WhitespaceCollapse wsColl = (WhitespaceCollapse) layoutContext.getStyleProperty(
-      TextStyleKeys.WHITE_SPACE_COLLAPSE );
+    final WhitespaceCollapse wsColl =
+        (WhitespaceCollapse) layoutContext.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE );
     if ( classificationProducer != null ) {
       if ( ObjectUtilities.equal( whitespaceCollapseValue, wsColl ) ) {
         classificationProducer.reset();
@@ -403,16 +394,15 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
 
     whitespaceCollapseValue = wsColl;
 
-    //    if (WhitespaceCollapse.PRESERVE_BREAKS.equals(wsColl))
-    //    {
-    //      return new LinebreakClassificationProducer();
-    //    }
+    // if (WhitespaceCollapse.PRESERVE_BREAKS.equals(wsColl))
+    // {
+    // return new LinebreakClassificationProducer();
+    // }
     classificationProducer = new WhitespaceClassificationProducer();
     return classificationProducer;
   }
 
-  protected BreakOpportunityProducer createBreakProducer
-    ( final StyleSheet layoutContext ) {
+  protected BreakOpportunityProducer createBreakProducer( final StyleSheet layoutContext ) {
     final TextWrap wordBreak = (TextWrap) layoutContext.getStyleProperty( TextStyleKeys.TEXT_WRAP );
     if ( breakOpportunityProducer != null ) {
       if ( ObjectUtilities.equal( breakOpportunityValue, wordBreak ) ) {
@@ -434,8 +424,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
     return breakOpportunityProducer;
   }
 
-  protected SpacingProducer createSpacingProducer
-    ( final StyleSheet layoutContext ) {
+  protected SpacingProducer createSpacingProducer( final StyleSheet layoutContext ) {
     final Spacing spacing;
     if ( metaData.isFeatureSupported( OutputProcessorFeature.SPACING_SUPPORTED ) ) {
       final double minValue = layoutContext.getDoubleStyleProperty( TextStyleKeys.X_MIN_LETTER_SPACING, 0 );

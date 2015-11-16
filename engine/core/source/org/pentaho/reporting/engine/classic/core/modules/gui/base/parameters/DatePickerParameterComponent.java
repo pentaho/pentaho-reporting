@@ -1,36 +1,24 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
-import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
-import org.pentaho.reporting.libraries.designtime.swing.date.DateChooserPanel;
-import org.pentaho.reporting.libraries.designtime.swing.date.DateChooserPopupMenu;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -41,6 +29,28 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
+import org.pentaho.reporting.libraries.designtime.swing.date.DateChooserPanel;
+import org.pentaho.reporting.libraries.designtime.swing.date.DateChooserPopupMenu;
 
 public class DatePickerParameterComponent extends JPanel implements ParameterComponent {
   private class DateUpdateHandler implements ChangeListener {
@@ -68,8 +78,8 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
     private PickDateListener() {
-      final URL iconRes = getClass().getResource
-        ( "/org/pentaho/reporting/engine/classic/core/modules/gui/base/date/datepicker.png" ); // NON-NLS
+      final URL iconRes =
+          getClass().getResource( "/org/pentaho/reporting/engine/classic/core/modules/gui/base/date/datepicker.png" ); // NON-NLS
       if ( iconRes != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( iconRes ) );
       } else {
@@ -84,7 +94,6 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
       if ( dateWindow != null && dateWindow.isVisible() ) {
         return;
       }
-
 
       if ( dateWindow == null ) {
         dateChooserPanel.setBorder( BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) );
@@ -136,12 +145,13 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
   /**
    * Constructs a new <code>DatePickerParameterComponent</code>.
    *
-   * @param entry         the parameter-definition for which we create an input component.
-   * @param updateContext the update context, which resyncs parameters on changes.
+   * @param entry
+   *          the parameter-definition for which we create an input component.
+   * @param updateContext
+   *          the update context, which resyncs parameters on changes.
    */
-  public DatePickerParameterComponent( final ParameterDefinitionEntry entry,
-                                       final ParameterContext parameterContext,
-                                       final ParameterUpdateContext updateContext ) {
+  public DatePickerParameterComponent( final ParameterDefinitionEntry entry, final ParameterContext parameterContext,
+      final ParameterUpdateContext updateContext ) {
     this.parameterName = entry.getName();
     this.updateContext = updateContext;
     this.dateType = entry.getValueType();
@@ -149,13 +159,16 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
       this.dateType = this.dateType.getComponentType();
     }
 
-    final String formatString = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
-    final String timeZoneSpec = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.TIMEZONE, parameterContext );
+    final String formatString =
+        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
+            parameterContext );
+    final String timeZoneSpec =
+        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
+            parameterContext );
     final Locale locale = parameterContext.getResourceBundleFactory().getLocale();
-    final TimeZone timeZone = TextComponentEditHandler.createTimeZone( timeZoneSpec,
-      parameterContext.getResourceBundleFactory().getTimeZone() );
+    final TimeZone timeZone =
+        TextComponentEditHandler.createTimeZone( timeZoneSpec, parameterContext.getResourceBundleFactory()
+            .getTimeZone() );
 
     sdf = createDateFormat( formatString, locale, timeZone );
 
@@ -169,7 +182,7 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
     dateField.setColumns( 20 );
 
     final TextComponentEditHandler listener =
-      new TextComponentEditHandler( entry.getValueType(), entry.getName(), dateField, updateContext, sdf );
+        new TextComponentEditHandler( entry.getValueType(), entry.getName(), dateField, updateContext, sdf );
     dateField.getDocument().addDocumentListener( listener );
     dateField.addActionListener( listener );
 
@@ -186,9 +199,8 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
     this.updateContext.addChangeListener( new DateUpdateHandler( parameterName ) );
   }
 
-  private DateFormat createDateFormat( final String parameterFormatString,
-                                       final Locale locale,
-                                       final TimeZone timeZone ) {
+  private DateFormat
+    createDateFormat( final String parameterFormatString, final Locale locale, final TimeZone timeZone ) {
     if ( parameterFormatString != null ) {
       try {
         final SimpleDateFormat dateFormat = new SimpleDateFormat( parameterFormatString, locale );
@@ -204,7 +216,6 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
 
     return DateFormat.getDateTimeInstance( DateFormat.LONG, DateFormat.LONG, locale );
   }
-
 
   private void setDate( final Object value ) {
     if ( dateWindow != null && dateWindow.isVisible() ) {
@@ -238,7 +249,7 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
       }
     } else {
       logger.debug( "Date-parameter must be set either as normalized date-string or as date-object: " + // NON-NLS
-        value + " [" + value.getClass() + "]" );
+          value + " [" + value.getClass() + "]" );
     }
 
   }

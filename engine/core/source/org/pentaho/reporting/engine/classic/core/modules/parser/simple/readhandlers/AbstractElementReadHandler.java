@@ -1,21 +1,25 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.simple.readhandlers;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -33,15 +37,11 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * @noinspection HardCodedStringLiteral
  */
-public abstract class AbstractElementReadHandler
-  extends AbstractPropertyXmlReadHandler implements ReportElementReadHandler {
+public abstract class AbstractElementReadHandler extends AbstractPropertyXmlReadHandler implements
+    ReportElementReadHandler {
 
   /**
    * Literal text for an XML attribute.
@@ -146,41 +146,40 @@ public abstract class AbstractElementReadHandler
   /**
    * Starts parsing.
    *
-   * @param atts the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param atts
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void startParsing( final PropertyAttributes atts )
-    throws SAXException {
+  protected void startParsing( final PropertyAttributes atts ) throws SAXException {
     final ElementFactory factory = getElementFactory();
     factory.setName( atts.getValue( getUri(), AbstractElementReadHandler.NAME_ATT ) );
     styleClass = atts.getValue( getUri(), AbstractElementReadHandler.STYLE_CLASS_ATT );
 
-    final Color color = ReportParserUtil.parseColor( atts.getValue( getUri(), AbstractElementReadHandler.COLOR_ATT ),
-      null );
+    final Color color =
+        ReportParserUtil.parseColor( atts.getValue( getUri(), AbstractElementReadHandler.COLOR_ATT ), null );
     factory.setColor( color );
 
     final String posX = atts.getValue( getUri(), "x" );
     if ( posX != null ) {
-      factory.setX( ReportParserUtil.parseRelativeFloat
-        ( posX, "Attribute 'x' not valid", getLocator() ) );
+      factory.setX( ReportParserUtil.parseRelativeFloat( posX, "Attribute 'x' not valid", getLocator() ) );
     }
 
     final String posY = atts.getValue( getUri(), "y" );
     if ( posY != null ) {
-      factory.setY( ReportParserUtil.parseRelativeFloat
-        ( posY, "Attribute 'y' not valid", getLocator() ) );
+      factory.setY( ReportParserUtil.parseRelativeFloat( posY, "Attribute 'y' not valid", getLocator() ) );
     }
 
     final String width = atts.getValue( getUri(), "width" );
     if ( width != null ) {
-      factory.setMinimumWidth( ReportParserUtil.parseRelativeFloat
-        ( width, "Attribute 'width' not valid", getLocator() ) );
+      factory
+          .setMinimumWidth( ReportParserUtil.parseRelativeFloat( width, "Attribute 'width' not valid", getLocator() ) );
     }
 
     final String height = atts.getValue( getUri(), "height" );
     if ( height != null ) {
-      factory.setMinimumHeight( ReportParserUtil.parseRelativeFloat
-        ( height, "Attribute 'height' not valid", getLocator() ) );
+      factory.setMinimumHeight( ReportParserUtil.parseRelativeFloat( height, "Attribute 'height' not valid",
+          getLocator() ) );
     }
 
     final String useMinChunkWidth = atts.getValue( getUri(), "use-min-chunkwidth" );
@@ -231,7 +230,6 @@ public abstract class AbstractElementReadHandler
       final boolean value = ParserUtil.parseBoolean( overflowY, false );
       factory.setOverflowY( ( value ) ? Boolean.TRUE : Boolean.FALSE );
     }
-
 
     final String widows = atts.getValue( getUri(), "widows" );
     if ( widows != null ) {
@@ -325,11 +323,10 @@ public abstract class AbstractElementReadHandler
     final String borderStyleBreak = atts.getValue( getUri(), "border-break-style" );
     factory.setBorderBreakStyle( parseBorderStyle( borderStyleBreak ) );
 
-
-    factory.setHorizontalAlignment( ReportParserUtil.parseHorizontalElementAlignment
-      ( atts.getValue( getUri(), AbstractElementReadHandler.ALIGNMENT_ATT ), getLocator() ) );
-    factory.setVerticalAlignment( ReportParserUtil.parseVerticalElementAlignment
-      ( atts.getValue( getUri(), AbstractElementReadHandler.VALIGNMENT_ATT ), getLocator() ) );
+    factory.setHorizontalAlignment( ReportParserUtil.parseHorizontalElementAlignment( atts.getValue( getUri(),
+        AbstractElementReadHandler.ALIGNMENT_ATT ), getLocator() ) );
+    factory.setVerticalAlignment( ReportParserUtil.parseVerticalElementAlignment( atts.getValue( getUri(),
+        AbstractElementReadHandler.VALIGNMENT_ATT ), getLocator() ) );
 
     final String borderRadiusWidth = atts.getValue( getUri(), "border-radius-width" );
     if ( borderRadiusWidth != null ) {
@@ -357,23 +354,22 @@ public abstract class AbstractElementReadHandler
     }
     final String borderBottomLeftRadiusWidth = atts.getValue( getUri(), "border-bottom-left-radius-width" );
     if ( borderBottomLeftRadiusWidth != null ) {
-      factory
-        .setBorderBottomLeftRadiusWidth( ReportParserUtil.parseFloat( borderBottomLeftRadiusWidth, getLocator() ) );
+      factory.setBorderBottomLeftRadiusWidth( ReportParserUtil.parseFloat( borderBottomLeftRadiusWidth, getLocator() ) );
     }
     final String borderBottomLeftRadiusHeight = atts.getValue( getUri(), "border-bottom-left-radius-height" );
     if ( borderBottomLeftRadiusHeight != null ) {
       factory
-        .setBorderBottomLeftRadiusHeight( ReportParserUtil.parseFloat( borderBottomLeftRadiusHeight, getLocator() ) );
+          .setBorderBottomLeftRadiusHeight( ReportParserUtil.parseFloat( borderBottomLeftRadiusHeight, getLocator() ) );
     }
     final String borderBottomRightRadiusWidth = atts.getValue( getUri(), "border-bottom-right-radius-width" );
     if ( borderBottomRightRadiusWidth != null ) {
       factory
-        .setBorderBottomRightRadiusWidth( ReportParserUtil.parseFloat( borderBottomRightRadiusWidth, getLocator() ) );
+          .setBorderBottomRightRadiusWidth( ReportParserUtil.parseFloat( borderBottomRightRadiusWidth, getLocator() ) );
     }
     final String borderBottomRightRadiusHeight = atts.getValue( getUri(), "border-bottom-right-radius-height" );
     if ( borderBottomRightRadiusHeight != null ) {
       factory.setBorderBottomRightRadiusHeight( ReportParserUtil.parseFloat( borderBottomRightRadiusHeight,
-        getLocator() ) );
+          getLocator() ) );
     }
   }
 
@@ -417,9 +413,7 @@ public abstract class AbstractElementReadHandler
     return null;
   }
 
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final PropertyAttributes attrs )
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final PropertyAttributes attrs )
     throws SAXException {
     if ( isSameNamespace( uri ) == false ) {
       return null;
@@ -436,7 +430,8 @@ public abstract class AbstractElementReadHandler
   /**
    * Done parsing.
    *
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
   protected void doneParsing() throws SAXException {
     element = getElementFactory().createElement();
@@ -457,8 +452,9 @@ public abstract class AbstractElementReadHandler
 
   protected void handleInheritedStyle( final String styleClass ) {
     if ( styleClass != null ) {
-      final HashMap<String, ElementStyleSheet> report = (HashMap<String, ElementStyleSheet>)
-        getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES );
+      final HashMap<String, ElementStyleSheet> report =
+          (HashMap<String, ElementStyleSheet>) getRootHandler().getHelperObject(
+              ReportParserUtil.HELPER_OBJ_LEGACY_STYLES );
       if ( report != null ) {
         final ElementStyleSheet existingStyleSheet = report.get( styleClass );
         if ( existingStyleSheet != null ) {

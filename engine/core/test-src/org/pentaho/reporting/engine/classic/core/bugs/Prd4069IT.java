@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -65,8 +65,9 @@ public class Prd4069IT extends TestCase {
       return;
     }
     final MasterReport report = createTestReport();
-    final FlowExcelOutputProcessor target = new ValidatingFlowExcelOutputProcessor
-      ( report.getConfiguration(), new NullOutputStream(), report.getResourceManager() );
+    final FlowExcelOutputProcessor target =
+        new ValidatingFlowExcelOutputProcessor( report.getConfiguration(), new NullOutputStream(), report
+            .getResourceManager() );
     target.setUseXlsxFormat( true );
     final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
     reportProcessor.processReport();
@@ -77,16 +78,14 @@ public class Prd4069IT extends TestCase {
   private static class ValidatingFlowExcelOutputProcessor extends FlowExcelOutputProcessor {
     private CountBoxesStep countBoxesStep;
 
-    private ValidatingFlowExcelOutputProcessor( final Configuration config,
-                                                final OutputStream outputStream,
-                                                final ResourceManager resourceManager ) {
+    private ValidatingFlowExcelOutputProcessor( final Configuration config, final OutputStream outputStream,
+        final ResourceManager resourceManager ) {
       super( config, outputStream, resourceManager );
       countBoxesStep = new CountBoxesStep();
     }
 
-    protected void processTableContent( final LogicalPageKey logicalPageKey,
-                                        final LogicalPageBox logicalPage,
-                                        final TableContentProducer contentProducer ) throws ContentProcessingException {
+    protected void processTableContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+        final TableContentProducer contentProducer ) throws ContentProcessingException {
       final int count = countBoxesStep.countChildren( logicalPage );
       // Count the maximum number of boxes that are active at any given point in time in the model.
       // The model should work on a revolving basis, removing boxes that have been processed, so that
@@ -97,10 +96,9 @@ public class Prd4069IT extends TestCase {
       super.processTableContent( logicalPageKey, logicalPage, contentProducer );
     }
 
-    protected void updateTableContent( final LogicalPageKey logicalPageKey,
-                                       final LogicalPageBox logicalPageBox,
-                                       final TableContentProducer tableContentProducer,
-                                       final boolean performOutput ) throws ContentProcessingException {
+    protected void updateTableContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPageBox,
+        final TableContentProducer tableContentProducer, final boolean performOutput )
+      throws ContentProcessingException {
       final int count = countBoxesStep.countChildren( logicalPageBox );
       // Count the maximum number of boxes that are active at any given point in time in the model.
       // The model should work on a revolving basis, removing boxes that have been processed, so that
@@ -140,11 +138,9 @@ public class Prd4069IT extends TestCase {
       countBoxesStep = new CountBoxesStep();
     }
 
-    public void print( final LogicalPageKey logicalPageKey,
-                       final LogicalPageBox logicalPage,
-                       final TableContentProducer contentProducer,
-                       final OutputProcessorMetaData metaData,
-                       final boolean incremental ) throws ContentProcessingException {
+    public void print( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+        final TableContentProducer contentProducer, final OutputProcessorMetaData metaData, final boolean incremental )
+      throws ContentProcessingException {
       final int count = countBoxesStep.countChildren( logicalPage );
       // Count the maximum number of boxes that are active at any given point in time in the model.
       // The model should work on a revolving basis, removing boxes that have been processed, so that
@@ -155,7 +151,6 @@ public class Prd4069IT extends TestCase {
       super.print( logicalPageKey, logicalPage, contentProducer, metaData, incremental );
     }
   }
-
 
   private MasterReport createTestReport() {
     final PerformanceTestSequence sequence = new PerformanceTestSequence();

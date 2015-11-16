@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
@@ -47,15 +47,15 @@ public class ZipHtmlReportProcessTask extends AbstractReportProcessTask {
       final ContentLocation contentLocation = getBodyContentLocation();
       final NameGenerator nameGenerator = getBodyNameGenerator();
       final ContentItem contentItem =
-        contentLocation.createItem( nameGenerator.generateName( null, "application/zip" ) );
+          contentLocation.createItem( nameGenerator.generateName( null, "application/zip" ) );
       final OutputStream out = contentItem.getOutputStream();
 
       try {
         final ZipRepository zipRepository = new ZipRepository( out );
         try {
           final ContentLocation root = zipRepository.getRoot();
-          final ContentLocation data = RepositoryUtilities.createLocation
-            ( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
+          final ContentLocation data =
+              RepositoryUtilities.createLocation( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
 
           final FlowHtmlOutputProcessor outputProcessor = new FlowHtmlOutputProcessor();
 
@@ -69,7 +69,7 @@ public class ZipHtmlReportProcessTask extends AbstractReportProcessTask {
           try {
             final ReportProgressListener[] progressListeners = getReportProgressListeners();
             for ( int i = 0; i < progressListeners.length; i++ ) {
-              final ReportProgressListener listener = progressListeners[ i ];
+              final ReportProgressListener listener = progressListeners[i];
               sp.addReportProgressListener( listener );
             }
             sp.processReport();

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -32,7 +32,8 @@ public interface ReportProcessTask extends Runnable {
   /**
    * Defines the content location (and implicitly the repository) for the generated report document.
    *
-   * @param body the content location for the report document.
+   * @param body
+   *          the content location for the report document.
    */
   public void setBodyContentLocation( final ContentLocation body );
 
@@ -47,7 +48,8 @@ public interface ReportProcessTask extends Runnable {
    * Defines the body name generator, that generates name sequences in case the target name is already taken. The given
    * namegenerator should return the first-choice document name as first generated name.
    *
-   * @param nameGenerator the name generator.
+   * @param nameGenerator
+   *          the name generator.
    */
   public void setBodyNameGenerator( final NameGenerator nameGenerator );
 
@@ -62,7 +64,8 @@ public interface ReportProcessTask extends Runnable {
    * Defines the report that will be executed in this task. It is assumed that the report is fully parametrized. Report
    * processing will fail if the report requires parameters that are not given.
    *
-   * @param report the report.
+   * @param report
+   *          the report.
    */
   public void setReport( MasterReport report );
 
@@ -76,14 +79,16 @@ public interface ReportProcessTask extends Runnable {
   /**
    * Adds a report progress listener that is able to monitor the export progress.
    *
-   * @param listener the listener.
+   * @param listener
+   *          the listener.
    */
   public void addReportProgressListener( ReportProgressListener listener );
 
   /**
    * Removes the given report progress listener from the list of listeners.
    *
-   * @param listener the listener.
+   * @param listener
+   *          the listener.
    */
   public void removeReportProgressListener( ReportProgressListener listener );
 

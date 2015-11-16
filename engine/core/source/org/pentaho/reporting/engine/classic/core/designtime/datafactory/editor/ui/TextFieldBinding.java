@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
-import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
-
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
+
+import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
 
 public abstract class TextFieldBinding extends DocumentChangeHandler implements Runnable {
   private boolean executed;

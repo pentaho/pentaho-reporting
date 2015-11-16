@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -42,6 +42,7 @@ import java.util.Locale;
  * The Syntax of the <code>pattern</code> property is explained in the class {@link java.text.MessageFormat}.
  * <p/>
  * Example:
+ * 
  * <pre>
  * <expression name="expr" class="org.pentaho.reporting.engine.classic.core.function.TextFormatExpression">
  * <properties>
@@ -125,7 +126,8 @@ public class TextFormatExpression extends AbstractExpression {
   /**
    * Defines the character encoding that is used to transform the Java-Unicode strings into bytes.
    *
-   * @param encoding the encoding.
+   * @param encoding
+   *          the encoding.
    */
   public void setEncoding( final String encoding ) {
     if ( encoding == null ) {
@@ -138,8 +140,9 @@ public class TextFormatExpression extends AbstractExpression {
    * Defines, whether the values read from the data-row should be URL encoded. Dates and Number objects are never
    * encoded.
    *
-   * @param urlEncode true, if the values from the data-row should be URL encoded before they are passed to the
-   *                  MessageFormat, false otherwise.
+   * @param urlEncode
+   *          true, if the values from the data-row should be URL encoded before they are passed to the MessageFormat,
+   *          false otherwise.
    */
   public void setUrlEncodeValues( final boolean urlEncode ) {
     this.urlEncodeData = urlEncode;
@@ -166,7 +169,8 @@ public class TextFormatExpression extends AbstractExpression {
   /**
    * Defines, whether the formatted result-string will be URL encoded.
    *
-   * @param urlEncodeResult true, if the formatted result will be encoded, false otherwise.
+   * @param urlEncodeResult
+   *          true, if the formatted result will be encoded, false otherwise.
    */
   public void setUrlEncodeResult( final boolean urlEncodeResult ) {
     this.urlEncodeResult = urlEncodeResult;
@@ -191,15 +195,14 @@ public class TextFormatExpression extends AbstractExpression {
 
     try {
       if ( oldFieldValues == null || oldFieldValues.length != fields.size() ) {
-        oldFieldValues = new Object[ fields.size() ];
+        oldFieldValues = new Object[fields.size()];
       } else if ( fieldValues != null && fieldValues.length == oldFieldValues.length ) {
         System.arraycopy( fieldValues, 0, oldFieldValues, 0, fields.size() );
       }
 
       fieldValues = getFieldValues( fieldValues );
       final String result;
-      if ( cachedResult != null &&
-        Arrays.equals( oldFieldValues, fieldValues ) ) {
+      if ( cachedResult != null && Arrays.equals( oldFieldValues, fieldValues ) ) {
         result = cachedResult;
       } else {
         result = messageFormat.format( fieldValues );
@@ -220,39 +223,40 @@ public class TextFormatExpression extends AbstractExpression {
   /**
    * Collects the values of all fields defined in the fieldList.
    *
-   * @param retval an optional array that will receive the field values.
+   * @param retval
+   *          an optional array that will receive the field values.
    * @return an Object-array containing all defined values from the datarow
-   * @throws java.io.UnsupportedEncodingException if the character encoding is not recognized by the JDK.
+   * @throws java.io.UnsupportedEncodingException
+   *           if the character encoding is not recognized by the JDK.
    */
-  protected Object[] getFieldValues( Object[] retval )
-    throws UnsupportedEncodingException {
+  protected Object[] getFieldValues( Object[] retval ) throws UnsupportedEncodingException {
     final int size = fields.size();
     if ( retval == null || retval.length != size ) {
-      retval = new Object[ size ];
+      retval = new Object[size];
     }
 
     final DataRow dataRow = getDataRow();
     for ( int i = 0; i < size; i++ ) {
       final String field = (String) fields.get( i );
       if ( field == null ) {
-        retval[ i ] = null;
+        retval[i] = null;
         continue;
       }
       final Object fieldValue = dataRow.get( field );
       if ( isUrlEncodeValues() ) {
         if ( fieldValue == null ) {
-          retval[ i ] = null;
+          retval[i] = null;
         } else if ( fieldValue instanceof Date ) {
-          retval[ i ] = fieldValue;
+          retval[i] = fieldValue;
         } else if ( fieldValue instanceof Number ) {
-          retval[ i ] = fieldValue;
+          retval[i] = fieldValue;
         } else if ( isUrlEncodeValues() ) {
-          retval[ i ] = URLEncoder.encode( String.valueOf( fieldValue ), encoding );
+          retval[i] = URLEncoder.encode( String.valueOf( fieldValue ), encoding );
         } else {
-          retval[ i ] = fieldValue;
+          retval[i] = fieldValue;
         }
       } else {
-        retval[ i ] = fieldValue;
+        retval[i] = fieldValue;
       }
     }
     return retval;
@@ -271,7 +275,8 @@ public class TextFormatExpression extends AbstractExpression {
    * Defines the pattern for this expression. The pattern syntax is defined by the java.text.MessageFormat object and
    * the given pattern string has to be valid according to the rules defined there.
    *
-   * @param pattern the pattern string
+   * @param pattern
+   *          the pattern string
    */
   public void setPattern( final String pattern ) {
     if ( pattern == null ) {
@@ -300,8 +305,10 @@ public class TextFormatExpression extends AbstractExpression {
   /**
    * Defines the field in the field-list at the given index.
    *
-   * @param index the position in the list, where the field should be defined.
-   * @param field the name of the field.
+   * @param index
+   *          the position in the list, where the field should be defined.
+   * @param field
+   *          the name of the field.
    */
   public void setField( final int index, final String field ) {
     if ( fields.size() == index ) {
@@ -317,7 +324,8 @@ public class TextFormatExpression extends AbstractExpression {
   /**
    * Returns the defined field at the given index-position.
    *
-   * @param index the position of the field name that should be queried.
+   * @param index
+   *          the position of the field name that should be queried.
    * @return the field name at the given position.
    */
   public String getField( final int index ) {
@@ -339,13 +347,14 @@ public class TextFormatExpression extends AbstractExpression {
    * @return all the fields.
    */
   public String[] getField() {
-    return (String[]) fields.toArray( new String[ fields.size() ] );
+    return (String[]) fields.toArray( new String[fields.size()] );
   }
 
   /**
    * Defines all fields as array. This completely replaces any previously defined fields.
    *
-   * @param fields the new list of fields.
+   * @param fields
+   *          the new list of fields.
    */
   public void setField( final String[] fields ) {
     this.fields.clear();

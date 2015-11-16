@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -123,8 +123,8 @@ public class Prd2499IT extends TestCase {
         assertTrue( "PageBox must start at top", box.getY() == 0 );
       } else {
         assertTrue( "Box within boundaries of parent", box.getY() >= parent.getY() );
-        assertTrue( "Box within boundaries of parent",
-          ( box.getY() + box.getHeight() ) <= ( parent.getY() + parent.getHeight() ) );
+        assertTrue( "Box within boundaries of parent", ( box.getY() + box.getHeight() ) <= ( parent.getY() + parent
+            .getHeight() ) );
       }
 
       if ( box.getPrev() != null ) {
@@ -139,10 +139,10 @@ public class Prd2499IT extends TestCase {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Prd-2499.prpt" );
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( masterReport, 0 );
     final RenderNode[] elementsByElementType =
-      MatchFactory.findElementsByElementType( logicalPageBox, ItemBandType.INSTANCE );
+        MatchFactory.findElementsByElementType( logicalPageBox, ItemBandType.INSTANCE );
 
     assertEquals( 12, elementsByElementType.length );
-    assertEquals( StrictGeomUtility.toInternalValue( 726 ), elementsByElementType[ 11 ].getY2() );
+    assertEquals( StrictGeomUtility.toInternalValue( 726 ), elementsByElementType[11].getY2() );
 
   }
 }

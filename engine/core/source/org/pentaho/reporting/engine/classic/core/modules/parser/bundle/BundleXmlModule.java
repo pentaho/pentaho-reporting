@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle;
 
@@ -96,21 +96,17 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.La
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.ResourceWriter;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.SettingsFileWriter;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.StyleFileWriter;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements
-  .CrosstabColumnGroupElementWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabColumnGroupElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabElementWriteHandler;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements
-  .CrosstabOtherGroupElementWriteHandler;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements
-  .CrosstabRowGroupElementWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabOtherGroupElementWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabRowGroupElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.DataGroupBodyElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.GroupFooterElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.GroupHeaderElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.ItembandElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.LegacyElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.NoDataBandElementWriteHandler;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements
-  .RelationalGroupElementWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.RelationalGroupElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.ReportFooterElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.ReportHeaderElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.SubGroupBodyElementWriteHandler;
@@ -138,8 +134,10 @@ public class BundleXmlModule extends AbstractModule {
    * a modules lifetime. If the initializing cannot be completed, throw a ModuleInitializeException to indicate the
    * error,. The module will not be available to the system.
    *
-   * @param subSystem the subSystem.
-   * @throws ModuleInitializeException if an error ocurred while initializing the module.
+   * @param subSystem
+   *          the subSystem.
+   * @throws ModuleInitializeException
+   *           if an error ocurred while initializing the module.
    */
   public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     ElementStyleDefinitionXmlResourceFactory.register( ElementStyleDefinitionXmlFactoryModule.class );
@@ -165,12 +163,12 @@ public class BundleXmlModule extends AbstractModule {
     BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "band-styles", BandStyleReadHandler.class );
     BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "text-styles", TextStyleReadHandler.class );
     BundleStyleRegistry.getInstance()
-      .register( BundleNamespaces.STYLE, "spatial-styles", SpatialStyleReadHandler.class );
+        .register( BundleNamespaces.STYLE, "spatial-styles", SpatialStyleReadHandler.class );
     BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "common-styles", CommonStyleReadHandler.class );
     BundleStyleRegistry.getInstance()
-      .register( BundleNamespaces.STYLE, "content-styles", ContentStyleReadHandler.class );
-    BundleStyleRegistry.getInstance()
-      .register( BundleNamespaces.STYLE, "page-band-styles", PageBandStyleReadHandler.class );
+        .register( BundleNamespaces.STYLE, "content-styles", ContentStyleReadHandler.class );
+    BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "page-band-styles",
+        PageBandStyleReadHandler.class );
     BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "border-styles", BorderStyleReadHandler.class );
 
     BundleElementRegistry.getInstance().registerGenericElement( ContentFieldType.INSTANCE );
@@ -212,26 +210,25 @@ public class BundleXmlModule extends AbstractModule {
     BundleElementRegistry.getInstance().register( ItemBandType.INSTANCE, ItembandElementWriteHandler.class );
     BundleElementRegistry.getInstance().register( LegacyType.INSTANCE, LegacyElementWriteHandler.class );
     BundleElementRegistry.getInstance().register( NoDataBandType.INSTANCE, NoDataBandElementWriteHandler.class );
-    BundleElementRegistry.getInstance()
-      .register( RelationalGroupType.INSTANCE, RelationalGroupElementWriteHandler.class );
+    BundleElementRegistry.getInstance().register( RelationalGroupType.INSTANCE,
+        RelationalGroupElementWriteHandler.class );
     BundleElementRegistry.getInstance().register( ReportFooterType.INSTANCE, ReportFooterElementWriteHandler.class );
     BundleElementRegistry.getInstance().register( ReportHeaderType.INSTANCE, ReportHeaderElementWriteHandler.class );
-    BundleElementRegistry.getInstance()
-      .register( RelationalGroupType.INSTANCE, RelationalGroupElementWriteHandler.class );
-    BundleElementRegistry.getInstance()
-      .register( CrosstabOtherGroupType.INSTANCE, CrosstabOtherGroupElementWriteHandler.class );
-    BundleElementRegistry.getInstance()
-      .register( CrosstabRowGroupType.INSTANCE, CrosstabRowGroupElementWriteHandler.class );
-    BundleElementRegistry.getInstance()
-      .register( CrosstabColumnGroupType.INSTANCE, CrosstabColumnGroupElementWriteHandler.class );
+    BundleElementRegistry.getInstance().register( RelationalGroupType.INSTANCE,
+        RelationalGroupElementWriteHandler.class );
+    BundleElementRegistry.getInstance().register( CrosstabOtherGroupType.INSTANCE,
+        CrosstabOtherGroupElementWriteHandler.class );
+    BundleElementRegistry.getInstance().register( CrosstabRowGroupType.INSTANCE,
+        CrosstabRowGroupElementWriteHandler.class );
+    BundleElementRegistry.getInstance().register( CrosstabColumnGroupType.INSTANCE,
+        CrosstabColumnGroupElementWriteHandler.class );
     BundleElementRegistry.getInstance().register( SubReportType.INSTANCE, SubreportElementWriteHandler.class );
     BundleElementRegistry.getInstance().register( CrosstabElementType.INSTANCE, CrosstabElementWriteHandler.class );
 
     BundleElementRegistry.getInstance().registerReader( BandType.INSTANCE, BandReadHandler.class );
     BundleElementRegistry.getInstance().registerReader( LegacyType.INSTANCE, LegacyElementReadHandler.class );
     BundleElementRegistry.getInstance().registerReader( SubReportType.INSTANCE, SubReportReadHandler.class );
-    BundleElementRegistry.getInstance()
-      .registerReader( CrosstabElementType.INSTANCE, CrosstabElementReadHandler.class );
+    BundleElementRegistry.getInstance().registerReader( CrosstabElementType.INSTANCE, CrosstabElementReadHandler.class );
 
     BundleWriterHandlerRegistry.getInstance().registerMasterReportHandler( ContentFileWriter.class );
     BundleWriterHandlerRegistry.getInstance().registerMasterReportHandler( BundleMetaFileWriter.class );

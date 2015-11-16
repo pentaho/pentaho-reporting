@@ -79,9 +79,7 @@ public class RichTextLineBreakingIT {
     dotField.getStyle().setStyleProperty( ElementStyleKeys.WIDTH, 100f );
     dotField.getStyle().setStyleProperty( ElementStyleKeys.MAX_WIDTH, 100f );
     dotField.setElementType( LabelType.INSTANCE );
-    dotField.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-      " Some more data"
-    );
+    dotField.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, " Some more data" );
 
     Band band = new Band();
     band.setName( "outer-box" );
@@ -102,11 +100,10 @@ public class RichTextLineBreakingIT {
     report.getReportHeader().addElement( band );
     report.setCompatibilityLevel( null );
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
 
-    LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
 
     ParagraphRenderBox outerBox = (ParagraphRenderBox) MatchFactory.findElementByName( logicalPageBox, "outer-box" );
     assertNotNull( outerBox );

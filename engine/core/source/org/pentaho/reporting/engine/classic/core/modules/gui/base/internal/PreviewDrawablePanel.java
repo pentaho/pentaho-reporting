@@ -1,21 +1,29 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.print.PageFormat;
+import java.util.ArrayList;
+
+import javax.swing.ToolTipManager;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
@@ -34,13 +42,6 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 import org.pentaho.reporting.libraries.xmlns.LibXmlInfo;
-
-import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.print.PageFormat;
-import java.util.ArrayList;
 
 public class PreviewDrawablePanel extends DrawablePanel {
   private class ReportMouseHandler implements MouseListener, MouseMotionListener {
@@ -81,7 +82,7 @@ public class PreviewDrawablePanel extends DrawablePanel {
     }
 
     /**
-     * Invoked when a mouse button is pressed on a component and then dragged.  <code>MOUSE_DRAGGED</code> events will
+     * Invoked when a mouse button is pressed on a component and then dragged. <code>MOUSE_DRAGGED</code> events will
      * continue to be delivered to the component where the drag originated until the mouse button is released
      * (regardless of whether the mouse position is within the bounds of the component).
      * <p/>
@@ -203,8 +204,8 @@ public class PreviewDrawablePanel extends DrawablePanel {
     }
 
     if ( cachedReportMouseListeners == null ) {
-      cachedReportMouseListeners = (ReportMouseListener[])
-        reportMouseListener.toArray( new ReportMouseListener[ reportMouseListener.size() ] );
+      cachedReportMouseListeners =
+          (ReportMouseListener[]) reportMouseListener.toArray( new ReportMouseListener[reportMouseListener.size()] );
     }
     if ( cachedReportMouseListeners.length == 0 ) {
       return;
@@ -217,16 +218,15 @@ public class PreviewDrawablePanel extends DrawablePanel {
 
     final ReportMouseListener[] currentListeners = cachedReportMouseListeners;
     for ( int n = 0; n < nodes.length; n++ ) {
-      final RenderNode node = nodes[ n ];
+      final RenderNode node = nodes[n];
       final ReportMouseEvent reportEvent = new ReportMouseEvent( node, event );
 
       for ( int i = 0; i < currentListeners.length; i++ ) {
-        final ReportMouseListener listener = currentListeners[ i ];
+        final ReportMouseListener listener = currentListeners[i];
         listener.reportMouseClicked( reportEvent );
       }
     }
   }
-
 
   protected void fireReportMouseMoved( final MouseEvent event ) {
     if ( reportMouseListener == null ) {
@@ -234,8 +234,8 @@ public class PreviewDrawablePanel extends DrawablePanel {
     }
 
     if ( cachedReportMouseListeners == null ) {
-      cachedReportMouseListeners = (ReportMouseListener[])
-        reportMouseListener.toArray( new ReportMouseListener[ reportMouseListener.size() ] );
+      cachedReportMouseListeners =
+          (ReportMouseListener[]) reportMouseListener.toArray( new ReportMouseListener[reportMouseListener.size()] );
     }
     if ( cachedReportMouseListeners.length == 0 ) {
       return;
@@ -248,16 +248,15 @@ public class PreviewDrawablePanel extends DrawablePanel {
 
     final ReportMouseListener[] currentListeners = cachedReportMouseListeners;
     for ( int n = 0; n < nodes.length; n++ ) {
-      final RenderNode node = nodes[ n ];
+      final RenderNode node = nodes[n];
       final ReportMouseEvent reportEvent = new ReportMouseEvent( node, event );
 
       for ( int i = 0; i < currentListeners.length; i++ ) {
-        final ReportMouseListener listener = currentListeners[ i ];
+        final ReportMouseListener listener = currentListeners[i];
         listener.reportMouseMoved( reportEvent );
       }
     }
   }
-
 
   protected void fireReportMouseDragged( final MouseEvent event ) {
     if ( reportMouseListener == null ) {
@@ -265,8 +264,8 @@ public class PreviewDrawablePanel extends DrawablePanel {
     }
 
     if ( cachedReportMouseListeners == null ) {
-      cachedReportMouseListeners = (ReportMouseListener[])
-        reportMouseListener.toArray( new ReportMouseListener[ reportMouseListener.size() ] );
+      cachedReportMouseListeners =
+          (ReportMouseListener[]) reportMouseListener.toArray( new ReportMouseListener[reportMouseListener.size()] );
     }
     if ( cachedReportMouseListeners.length == 0 ) {
       return;
@@ -279,11 +278,11 @@ public class PreviewDrawablePanel extends DrawablePanel {
 
     final ReportMouseListener[] currentListeners = cachedReportMouseListeners;
     for ( int n = 0; n < nodes.length; n++ ) {
-      final RenderNode node = nodes[ n ];
+      final RenderNode node = nodes[n];
       final ReportMouseEvent reportEvent = new ReportMouseEvent( node, event );
 
       for ( int i = 0; i < currentListeners.length; i++ ) {
-        final ReportMouseListener listener = currentListeners[ i ];
+        final ReportMouseListener listener = currentListeners[i];
         listener.reportMouseDragged( reportEvent );
       }
     }
@@ -295,26 +294,26 @@ public class PreviewDrawablePanel extends DrawablePanel {
     }
 
     if ( cachedReportActionListeners == null ) {
-      cachedReportActionListeners = (ReportActionListener[])
-        reportActionListener.toArray( new ReportActionListener[ reportActionListener.size() ] );
+      cachedReportActionListeners =
+          (ReportActionListener[]) reportActionListener.toArray( new ReportActionListener[reportActionListener.size()] );
     }
     if ( cachedReportMouseListeners.length == 0 ) {
       return;
     }
 
-    final RenderNode[] nodes = getNodesForScreenPoint
-      ( event.getX(), event.getY(), AttributeNames.Swing.NAMESPACE, AttributeNames.Swing.ACTION );
+    final RenderNode[] nodes =
+        getNodesForScreenPoint( event.getX(), event.getY(), AttributeNames.Swing.NAMESPACE, AttributeNames.Swing.ACTION );
     if ( nodes == null ) {
       return;
     }
 
     final ReportActionListener[] currentListeners = cachedReportActionListeners;
     for ( int n = 0; n < nodes.length; n++ ) {
-      final RenderNode node = nodes[ n ];
+      final RenderNode node = nodes[n];
       final ReportActionEvent reportEvent = new ReportActionEvent( this, node );
 
       for ( int i = 0; i < currentListeners.length; i++ ) {
-        final ReportActionListener listener = currentListeners[ i ];
+        final ReportActionListener listener = currentListeners[i];
         listener.reportActionPerformed( reportEvent );
       }
     }
@@ -326,8 +325,8 @@ public class PreviewDrawablePanel extends DrawablePanel {
     }
 
     if ( cachedReportMouseListeners == null ) {
-      cachedReportMouseListeners = (ReportMouseListener[])
-        reportMouseListener.toArray( new ReportMouseListener[ reportMouseListener.size() ] );
+      cachedReportMouseListeners =
+          (ReportMouseListener[]) reportMouseListener.toArray( new ReportMouseListener[reportMouseListener.size()] );
     }
     if ( cachedReportMouseListeners.length == 0 ) {
       return;
@@ -340,11 +339,11 @@ public class PreviewDrawablePanel extends DrawablePanel {
 
     final ReportMouseListener[] currentListeners = cachedReportMouseListeners;
     for ( int n = 0; n < nodes.length; n++ ) {
-      final RenderNode node = nodes[ n ];
+      final RenderNode node = nodes[n];
       final ReportMouseEvent reportEvent = new ReportMouseEvent( node, event );
 
       for ( int i = 0; i < currentListeners.length; i++ ) {
-        final ReportMouseListener listener = currentListeners[ i ];
+        final ReportMouseListener listener = currentListeners[i];
         listener.reportMousePressed( reportEvent );
       }
     }
@@ -361,25 +360,24 @@ public class PreviewDrawablePanel extends DrawablePanel {
     }
 
     if ( cachedReportMouseListeners == null ) {
-      cachedReportMouseListeners = (ReportMouseListener[])
-        reportMouseListener.toArray( new ReportMouseListener[ reportMouseListener.size() ] );
+      cachedReportMouseListeners =
+          (ReportMouseListener[]) reportMouseListener.toArray( new ReportMouseListener[reportMouseListener.size()] );
     }
 
     final ReportMouseListener[] currentListeners = cachedReportMouseListeners;
     for ( int n = 0; n < nodes.length; n++ ) {
-      final RenderNode node = nodes[ n ];
+      final RenderNode node = nodes[n];
       final ReportMouseEvent reportEvent = new ReportMouseEvent( node, event );
 
       for ( int i = 0; i < currentListeners.length; i++ ) {
-        final ReportMouseListener listener = currentListeners[ i ];
+        final ReportMouseListener listener = currentListeners[i];
         listener.reportMouseReleased( reportEvent );
       }
     }
   }
 
-  private RenderNode[] getNodesForScreenPoint( final int x, final int y,
-                                               final String namespace,
-                                               final String attribute ) {
+  private RenderNode[]
+    getNodesForScreenPoint( final int x, final int y, final String namespace, final String attribute ) {
     final PageBackgroundDrawable backgroundDrawable = getBackgroundDrawable();
     if ( backgroundDrawable == null ) {
       return null;
@@ -425,7 +423,7 @@ public class PreviewDrawablePanel extends DrawablePanel {
 
   /**
    * Returns the string to be used as the tooltip for <i>event</i>. By default this returns any string set using
-   * <code>setToolTipText</code>.  If a component provides more extensive API to support differing tooltips at different
+   * <code>setToolTipText</code>. If a component provides more extensive API to support differing tooltips at different
    * locations, this method should be overridden.
    */
   public String getToolTipText( final MouseEvent event ) {
@@ -448,10 +446,10 @@ public class PreviewDrawablePanel extends DrawablePanel {
     }
 
     for ( int i = nodes.length - 1; i >= 0; i -= 1 ) {
-      final RenderNode node = nodes[ i ];
+      final RenderNode node = nodes[i];
       final ReportAttributeMap attributes = node.getAttributes();
       final Object swingTooltip =
-        attributes.getAttribute( AttributeNames.Swing.NAMESPACE, AttributeNames.Swing.TOOLTIP );
+          attributes.getAttribute( AttributeNames.Swing.NAMESPACE, AttributeNames.Swing.TOOLTIP );
       if ( swingTooltip != null ) {
         return String.valueOf( swingTooltip );
       }
@@ -486,7 +484,7 @@ public class PreviewDrawablePanel extends DrawablePanel {
 
       final ImageMapEntry[] imageMapEntries = imageMap.getEntriesForPoint( imageMapX, imageMapY );
       for ( int j = 0; j < imageMapEntries.length; j++ ) {
-        final ImageMapEntry imageMapEntry = imageMapEntries[ j ];
+        final ImageMapEntry imageMapEntry = imageMapEntries[j];
         final Object imageMapTooltip = imageMapEntry.getAttribute( LibXmlInfo.XHTML_NAMESPACE, "title" );
         if ( imageMapTooltip != null ) {
           return String.valueOf( imageMapTooltip );

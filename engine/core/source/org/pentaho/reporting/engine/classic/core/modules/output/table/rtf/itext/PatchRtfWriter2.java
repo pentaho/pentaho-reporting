@@ -17,6 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.itext;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.EventListener;
+
 import com.lowagie.text.DocWriter;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -25,17 +31,10 @@ import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.rtf.RtfBasicElement;
 import com.lowagie.text.rtf.RtfElement;
-import com.lowagie.text.rtf.document.RtfDocument;
 import com.lowagie.text.rtf.document.RtfDocumentSettings;
 import com.lowagie.text.rtf.parser.RtfImportMappings;
 import com.lowagie.text.rtf.parser.RtfParser;
 import com.lowagie.text.rtf.text.RtfNewPage;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.EventListener;
 
 /**
  * The RtfWriter allows the creation of rtf documents via the iText system
@@ -53,8 +52,10 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * Constructs a new RtfWriter that listens to the specified Document and writes its output to the OutputStream.
    *
-   * @param doc The Document that this RtfWriter listens to
-   * @param os  The OutputStream to write to
+   * @param doc
+   *          The Document that this RtfWriter listens to
+   * @param os
+   *          The OutputStream to write to
    */
   protected PatchRtfWriter2( Document doc, OutputStream os ) {
     super( doc, os );
@@ -65,8 +66,10 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * Static method to generate RtfWriters
    *
-   * @param doc The Document that this RtfWriter listens to
-   * @param os  The OutputStream to write to
+   * @param doc
+   *          The Document that this RtfWriter listens to
+   * @param os
+   *          The OutputStream to write to
    * @return The new RtfWriter
    */
   public static PatchRtfWriter2 getInstance( Document doc, OutputStream os ) {
@@ -76,7 +79,8 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * Sets the header to use
    *
-   * @param hf The HeaderFooter to use
+   * @param hf
+   *          The HeaderFooter to use
    */
   public void setHeader( HeaderFooter hf ) {
     this.rtfDoc.getDocumentHeader().setHeader( hf );
@@ -92,7 +96,8 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * Sets the footer to use
    *
-   * @param hf The HeaderFooter to use
+   * @param hf
+   *          The HeaderFooter to use
    */
   public void setFooter( HeaderFooter hf ) {
     this.rtfDoc.getDocumentHeader().setFooter( hf );
@@ -108,7 +113,8 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * This method is not supported in the RtfWriter
    *
-   * @param i Unused
+   * @param i
+   *          Unused
    */
   public void setPageCount( int i ) {
   }
@@ -147,7 +153,8 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * Adds an Element to the Document
    *
-   * @param element The element to be added
+   * @param element
+   *          The element to be added
    * @return <code>false</code>
    * @throws DocumentException
    */
@@ -158,8 +165,8 @@ public class PatchRtfWriter2 extends DocWriter {
     RtfBasicElement[] rtfElements = rtfDoc.getMapper().mapElement( element );
     if ( rtfElements.length != 0 ) {
       for ( int i = 0; i < rtfElements.length; i++ ) {
-        if ( rtfElements[ i ] != null ) {
-          rtfDoc.add( rtfElements[ i ] );
+        if ( rtfElements[i] != null ) {
+          rtfDoc.add( rtfElements[i] );
         }
       }
       return true;
@@ -181,10 +188,14 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * Sets the page margins
    *
-   * @param left   The left margin
-   * @param right  The right margin
-   * @param top    The top margin
-   * @param bottom The bottom margin
+   * @param left
+   *          The left margin
+   * @param right
+   *          The right margin
+   * @param top
+   *          The top margin
+   * @param bottom
+   *          The bottom margin
    * @return <code>false</code>
    */
   public boolean setMargins( float left, float right, float top, float bottom ) {
@@ -198,7 +209,8 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * Sets the size of the page
    *
-   * @param rect A Rectangle representing the page
+   * @param rect
+   *          A Rectangle representing the page
    * @return <code>false</code>
    */
   public boolean setPageSize( Rectangle rect ) {
@@ -209,7 +221,8 @@ public class PatchRtfWriter2 extends DocWriter {
   /**
    * Whether to automagically generate table of contents entries when adding Chapters or Sections.
    *
-   * @param autogenerate Whether to automatically generate TOC entries
+   * @param autogenerate
+   *          Whether to automatically generate TOC entries
    */
   public void setAutogenerateTOCEntries( boolean autogenerate ) {
     this.rtfDoc.setAutogenerateTOCEntries( autogenerate );
@@ -225,13 +238,15 @@ public class PatchRtfWriter2 extends DocWriter {
   }
 
   /**
-   * Adds the complete RTF document to the current RTF document being generated. It will parse the font and color
-   * tables
+   * Adds the complete RTF document to the current RTF document being generated. It will parse the font and color tables
    * and correct the font and color references so that the imported RTF document retains its formattings.
    *
-   * @param documentSource The Reader to read the RTF document from.
-   * @throws IOException       On errors reading the RTF document.
-   * @throws DocumentException On errors adding to this RTF document.
+   * @param documentSource
+   *          The Reader to read the RTF document from.
+   * @throws IOException
+   *           On errors reading the RTF document.
+   * @throws DocumentException
+   *           On errors adding to this RTF document.
    * @since 2.1.0
    */
   public void importRtfDocument( FileInputStream documentSource ) throws IOException, DocumentException {
@@ -239,46 +254,49 @@ public class PatchRtfWriter2 extends DocWriter {
   }
 
   /**
-   * Adds the complete RTF document to the current RTF document being generated. It will parse the font and color
-   * tables
+   * Adds the complete RTF document to the current RTF document being generated. It will parse the font and color tables
    * and correct the font and color references so that the imported RTF document retains its formattings. Uses new
    * RtfParser object.
    * <p/>
    * (author: Howard Shank)
    *
-   * @param documentSource The InputStream to read the RTF document from.
-   * @param events         The array of event listeners. May be null
+   * @param documentSource
+   *          The InputStream to read the RTF document from.
+   * @param events
+   *          The array of event listeners. May be null
    * @throws IOException
    * @throws DocumentException
    * @see RtfParser
-   * @see RtfParser#importRtfDocument(InputStream, RtfDocument)
+   * @see RtfParser#importRtfDocument(InputStream, com.lowagie.text.rtf.document.RtfDocument)
    * @since 2.0.8
    */
-  public void importRtfDocument( InputStream documentSource, EventListener[] events )
-    throws IOException, DocumentException {
+  public void importRtfDocument( InputStream documentSource, EventListener[] events ) throws IOException,
+    DocumentException {
     if ( !this.open ) {
       throw new DocumentException( "The document must be open to import RTF documents." );
     }
     RtfParser rtfImport = new RtfParser( this.document );
     if ( events != null ) {
       for ( int idx = 0; idx < events.length; idx++ ) {
-        rtfImport.addListener( events[ idx ] );
+        rtfImport.addListener( events[idx] );
       }
     }
     rtfImport.importRtfDocument( documentSource, this.rtfDoc );
   }
 
   /**
-   * Adds a fragment of an RTF document to the current RTF document being generated. Since this fragment doesn't
-   * contain
-   * font or color tables, all fonts and colors are mapped to the default font and color. If the font and color
-   * mappings
+   * Adds a fragment of an RTF document to the current RTF document being generated. Since this fragment doesn't contain
+   * font or color tables, all fonts and colors are mapped to the default font and color. If the font and color mappings
    * are known, they can be specified via the mappings parameter.
    *
-   * @param documentSource The InputStream to read the RTF fragment from.
-   * @param mappings       The RtfImportMappings that contain font and color mappings to apply to the fragment.
-   * @throws IOException       On errors reading the RTF fragment.
-   * @throws DocumentException On errors adding to this RTF fragment.
+   * @param documentSource
+   *          The InputStream to read the RTF fragment from.
+   * @param mappings
+   *          The RtfImportMappings that contain font and color mappings to apply to the fragment.
+   * @throws IOException
+   *           On errors reading the RTF fragment.
+   * @throws DocumentException
+   *           On errors adding to this RTF fragment.
    * @since 2.1.0
    */
   public void importRtfFragment( InputStream documentSource, RtfImportMappings mappings ) throws IOException,
@@ -287,22 +305,25 @@ public class PatchRtfWriter2 extends DocWriter {
   }
 
   /**
-   * Adds a fragment of an RTF document to the current RTF document being generated. Since this fragment doesn't
-   * contain
-   * font or color tables, all fonts and colors are mapped to the default font and color. If the font and color
-   * mappings
+   * Adds a fragment of an RTF document to the current RTF document being generated. Since this fragment doesn't contain
+   * font or color tables, all fonts and colors are mapped to the default font and color. If the font and color mappings
    * are known, they can be specified via the mappings parameter. Uses new RtfParser object.
    * <p/>
    * (author: Howard Shank)
    *
-   * @param documentSource The InputStream to read the RTF fragment from.
-   * @param mappings       The RtfImportMappings that contain font and color mappings to apply to the fragment.
-   * @param events         The array of event listeners. May be null
-   * @throws IOException       On errors reading the RTF fragment.
-   * @throws DocumentException On errors adding to this RTF fragment.
+   * @param documentSource
+   *          The InputStream to read the RTF fragment from.
+   * @param mappings
+   *          The RtfImportMappings that contain font and color mappings to apply to the fragment.
+   * @param events
+   *          The array of event listeners. May be null
+   * @throws IOException
+   *           On errors reading the RTF fragment.
+   * @throws DocumentException
+   *           On errors adding to this RTF fragment.
    * @see RtfImportMappings
    * @see RtfParser
-   * @see RtfParser#importRtfFragment(InputStream, RtfDocument, RtfImportMappings)
+   * @see RtfParser#importRtfFragment(InputStream, com.lowagie.text.rtf.document.RtfDocument, RtfImportMappings)
    * @since 2.0.8
    */
   public void importRtfFragment( InputStream documentSource, RtfImportMappings mappings, EventListener[] events )
@@ -313,22 +334,24 @@ public class PatchRtfWriter2 extends DocWriter {
     RtfParser rtfImport = new RtfParser( this.document );
     if ( events != null ) {
       for ( int idx = 0; idx < events.length; idx++ ) {
-        rtfImport.addListener( events[ idx ] );
+        rtfImport.addListener( events[idx] );
       }
     }
     rtfImport.importRtfFragment( documentSource, this.rtfDoc, mappings );
   }
 
-
   /**
-   * Adds the complete RTF document to the current RTF element being generated. It will parse the font and color
-   * tables
+   * Adds the complete RTF document to the current RTF element being generated. It will parse the font and color tables
    * and correct the font and color references so that the imported RTF document retains its formattings.
    *
-   * @param elem           The Element the RTF document is to be imported into.
-   * @param documentSource The Reader to read the RTF document from.
-   * @throws IOException       On errors reading the RTF document.
-   * @throws DocumentException On errors adding to this RTF document.
+   * @param elem
+   *          The Element the RTF document is to be imported into.
+   * @param documentSource
+   *          The Reader to read the RTF document from.
+   * @throws IOException
+   *           On errors reading the RTF document.
+   * @throws DocumentException
+   *           On errors adding to this RTF document.
    * @since 2.1.4
    */
   public void importRtfDocumentIntoElement( Element elem, FileInputStream documentSource ) throws IOException,
@@ -337,15 +360,19 @@ public class PatchRtfWriter2 extends DocWriter {
   }
 
   /**
-   * Adds the complete RTF document to the current RTF element being generated. It will parse the font and color
-   * tables
+   * Adds the complete RTF document to the current RTF element being generated. It will parse the font and color tables
    * and correct the font and color references so that the imported RTF document retains its formattings.
    *
-   * @param elem           The Element the RTF document is to be imported into.
-   * @param documentSource The Reader to read the RTF document from.
-   * @param events         The event array for listeners.
-   * @throws IOException       On errors reading the RTF document.
-   * @throws DocumentException On errors adding to this RTF document.
+   * @param elem
+   *          The Element the RTF document is to be imported into.
+   * @param documentSource
+   *          The Reader to read the RTF document from.
+   * @param events
+   *          The event array for listeners.
+   * @throws IOException
+   *           On errors reading the RTF document.
+   * @throws DocumentException
+   *           On errors adding to this RTF document.
    * @since 2.1.4
    */
   public void importRtfDocumentIntoElement( Element elem, FileInputStream documentSource, EventListener[] events )
@@ -354,7 +381,7 @@ public class PatchRtfWriter2 extends DocWriter {
     RtfParser rtfImport = new RtfParser( this.document );
     if ( events != null ) {
       for ( int idx = 0; idx < events.length; idx++ ) {
-        rtfImport.addListener( events[ idx ] );
+        rtfImport.addListener( events[idx] );
       }
     }
     rtfImport.importRtfDocumentIntoElement( elem, documentSource, rtfDoc );

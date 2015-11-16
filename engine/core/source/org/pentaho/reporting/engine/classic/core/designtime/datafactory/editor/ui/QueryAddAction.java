@@ -17,21 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
-import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.Query;
-import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.QueryDialogModel;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.text.MessageFormat;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.Query;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.QueryDialogModel;
 
 public class QueryAddAction<T> extends AbstractAction {
   private QueryDialogModel<T> model;
 
   public QueryAddAction( final QueryDialogModel<T> model ) {
     this.model = model;
-    final URL location = QueryAddAction.class.getResource
-      ( "/org/pentaho/reporting/engine/classic/core/designtime/datafactory/resources/Add.png" ); // NON-NLS
+    final URL location =
+        QueryAddAction.class
+            .getResource( "/org/pentaho/reporting/engine/classic/core/designtime/datafactory/resources/Add.png" ); // NON-NLS
     if ( location != null ) {
       putValue( Action.SMALL_ICON, new ImageIcon( location ) );
     } else {

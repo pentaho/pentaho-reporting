@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal
-  .GraphicsOutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.GraphicsOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.LogicalPageDrawable;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
@@ -59,7 +58,7 @@ public class Prd4215IT extends TestCase {
     e.setElementType( LabelType.INSTANCE );
     e.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE, "text/html" );
     e.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-      "Hi I am trying to use the <b>rich text type = text/html</b> in PRD version - 3.7." );
+        "Hi I am trying to use the <b>rich text type = text/html</b> in PRD version - 3.7." );
     e.getStyle().setStyleProperty( TextStyleKeys.FONTSIZE, 12 );
     e.getStyle().setStyleProperty( TextStyleKeys.FONT, "Arial" );
     e.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, 285f );
@@ -67,18 +66,18 @@ public class Prd4215IT extends TestCase {
 
     final MasterReport report = new MasterReport();
     report.getReportHeader().addElement( e );
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
     final LogicalPageBox logicalPageBox =
-      DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
+        DebugReportRunner.layoutSingleBand( report, report.getReportHeader(), false, false );
     logicalPageBox.getRepeatFooterArea().setY( logicalPageBox.getContentArea().getHeight() );
     logicalPageBox.getFooterArea().setY( logicalPageBox.getContentArea().getHeight() );
 
     // ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
     assertEquals( 17, elementsByNodeType.length ); // quick and easy way to see that all elements are there.
 
     // debugPrintText(elementsByNodeType);
@@ -87,7 +86,7 @@ public class Prd4215IT extends TestCase {
     registry.initialize();
 
     final GraphicsOutputProcessorMetaData metaData =
-      new GraphicsOutputProcessorMetaData( new DefaultFontStorage( registry ) );
+        new GraphicsOutputProcessorMetaData( new DefaultFontStorage( registry ) );
     metaData.initialize( report.getConfiguration() );
 
     final LogicalPageDrawable drawable = new LogicalPageDrawable();
@@ -95,14 +94,11 @@ public class Prd4215IT extends TestCase {
 
     final TracingGraphics g2 = new TracingGraphics();
     drawable.draw( g2, new Rectangle2D.Double( 0, 0, 500, 500 ) );
-/*
-    for (int i = 0; i < g2.records.size(); i++)
-    {
-      final TextTraceRecord record = g2.records.get(i);
-      System.out.println ("goldenSamples.add(new TextTraceRecord(" + record.x + ", " + record.y + ", \"" + record
-      .text +"\"));");
-    }
-*/
+    /*
+     * for (int i = 0; i < g2.records.size(); i++) { final TextTraceRecord record = g2.records.get(i);
+     * System.out.println ("goldenSamples.add(new TextTraceRecord(" + record.x + ", " + record.y + ", \"" + record .text
+     * +"\"));"); }
+     */
     assertEquals( getSamples(), g2.records );
   }
 
@@ -170,11 +166,7 @@ public class Prd4215IT extends TestCase {
     }
 
     public String toString() {
-      return "TextTraceRecord{" +
-        "text='" + text + '\'' +
-        ", x=" + x +
-        ", y=" + y +
-        '}';
+      return "TextTraceRecord{" + "text='" + text + '\'' + ", x=" + x + ", y=" + y + '}';
     }
   }
 
@@ -192,7 +184,7 @@ public class Prd4215IT extends TestCase {
 
   private void debugPrintText( final RenderNode[] elementsByNodeType ) {
     for ( int i = 0; i < elementsByNodeType.length; i++ ) {
-      final RenderableText renderNode = (RenderableText) elementsByNodeType[ i ];
+      final RenderableText renderNode = (RenderableText) elementsByNodeType[i];
       DebugLog.log( renderNode.getRawText() );
     }
   }

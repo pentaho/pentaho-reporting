@@ -81,5 +81,4 @@ public class ComputeSafeCutsTest extends TestCase {
     assertEquals( 0, CleanTableRowsPreparationStep.computeSafeCut( pageOffset, cells, 5 ) );
   }
 
-
 }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
@@ -112,61 +112,56 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler {
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void startParsing( final PropertyAttributes attrs )
-    throws SAXException {
+  protected void startParsing( final PropertyAttributes attrs ) throws SAXException {
     handlePageFormat( attrs );
     x = ParserUtil.parseFloat( attrs.getValue( getUri(), "x" ), 0 );
     y = ParserUtil.parseFloat( attrs.getValue( getUri(), "y" ), 0 );
   }
 
-
   /**
    * Handles the page format.
    *
-   * @param atts the attributes.
-   * @throws SAXException if a parser error occurs or the validation failed.
+   * @param atts
+   *          the attributes.
+   * @throws SAXException
+   *           if a parser error occurs or the validation failed.
    * @noinspection SuspiciousNameCombination
    */
-  private void handlePageFormat( final Attributes atts )
-    throws SAXException {
-    final MasterReport report = (MasterReport)
-      getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+  private void handlePageFormat( final Attributes atts ) throws SAXException {
+    final MasterReport report =
+        (MasterReport) getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
 
     // grab the default page definition ...
     PageFormat format = report.getPageDefinition().getPageFormat( 0 );
     float defTopMargin = (float) format.getImageableY();
-    float defBottomMargin = (float) ( format.getHeight() - format.getImageableHeight()
-      - format.getImageableY() );
+    float defBottomMargin = (float) ( format.getHeight() - format.getImageableHeight() - format.getImageableY() );
     float defLeftMargin = (float) format.getImageableX();
-    float defRightMargin = (float) ( format.getWidth() - format.getImageableWidth()
-      - format.getImageableX() );
+    float defRightMargin = (float) ( format.getWidth() - format.getImageableWidth() - format.getImageableX() );
 
     format = createPageFormat( format, atts );
 
     defTopMargin = ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.TOPMARGIN_ATT ), defTopMargin );
     defBottomMargin =
-      ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.BOTTOMMARGIN_ATT ), defBottomMargin );
+        ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.BOTTOMMARGIN_ATT ), defBottomMargin );
     defLeftMargin = ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.LEFTMARGIN_ATT ), defLeftMargin );
-    defRightMargin =
-      ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.RIGHTMARGIN_ATT ), defRightMargin );
+    defRightMargin = ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.RIGHTMARGIN_ATT ), defRightMargin );
 
     final Paper p = format.getPaper();
-    switch( format.getOrientation() ) {
+    switch ( format.getOrientation() ) {
       case PageFormat.PORTRAIT:
-        PageFormatFactory.getInstance().setBorders( p, defTopMargin, defLeftMargin,
-          defBottomMargin, defRightMargin );
+        PageFormatFactory.getInstance().setBorders( p, defTopMargin, defLeftMargin, defBottomMargin, defRightMargin );
         break;
       case PageFormat.LANDSCAPE:
         // right, top, left, bottom
-        PageFormatFactory.getInstance().setBorders( p, defRightMargin, defTopMargin,
-          defLeftMargin, defBottomMargin );
+        PageFormatFactory.getInstance().setBorders( p, defRightMargin, defTopMargin, defLeftMargin, defBottomMargin );
         break;
       case PageFormat.REVERSE_LANDSCAPE:
-        PageFormatFactory.getInstance().setBorders( p, defLeftMargin, defBottomMargin,
-          defRightMargin, defTopMargin );
+        PageFormatFactory.getInstance().setBorders( p, defLeftMargin, defBottomMargin, defRightMargin, defTopMargin );
         break;
       default:
         // will not happen..
@@ -183,13 +178,15 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler {
    * create the pageformat. The attributes define the dimension of the PageFormat in points, where the printing
    * resolution is defined at 72 pixels per inch.
    *
-   * @param format the page format.
-   * @param atts   the element attributes.
+   * @param format
+   *          the page format.
+   * @param atts
+   *          the element attributes.
    * @return the page format.
-   * @throws SAXException if there is an error parsing the report.
+   * @throws SAXException
+   *           if there is an error parsing the report.
    */
-  private PageFormat createPageFormat( final PageFormat format, final Attributes atts )
-    throws SAXException {
+  private PageFormat createPageFormat( final PageFormat format, final Attributes atts ) throws SAXException {
     final String pageformatName = atts.getValue( getUri(), PageReadHandler.PAGEFORMAT_ATT );
 
     final int orientationVal;
@@ -203,8 +200,7 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler {
     } else if ( orientation.equals( PageReadHandler.ORIENTATION_PORTRAIT_VAL ) ) {
       orientationVal = PageFormat.PORTRAIT;
     } else {
-      throw new ParseException( "Orientation value in REPORT-Tag is invalid.",
-        getRootHandler().getDocumentLocator() );
+      throw new ParseException( "Orientation value in REPORT-Tag is invalid.", getRootHandler().getDocumentLocator() );
     }
     if ( pageformatName != null ) {
       final Paper p = PageFormatFactory.getInstance().createPaper( pageformatName );
@@ -215,17 +211,17 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler {
       return PageFormatFactory.getInstance().createPageFormat( p, orientationVal );
     }
 
-    if ( atts.getValue( getUri(), PageReadHandler.WIDTH_ATT ) != null && atts.getValue( getUri(),
-      PageReadHandler.HEIGHT_ATT ) != null ) {
-      final int[] pageformatData = new int[ 2 ];
-      pageformatData[ 0 ] = ParserUtil.parseInt( atts.getValue( getUri(), PageReadHandler.WIDTH_ATT ), "No Width set",
-        getLocator() );
-      pageformatData[ 1 ] = ParserUtil.parseInt( atts.getValue( getUri(), PageReadHandler.HEIGHT_ATT ), "No Height set",
-        getLocator() );
+    if ( atts.getValue( getUri(), PageReadHandler.WIDTH_ATT ) != null
+        && atts.getValue( getUri(), PageReadHandler.HEIGHT_ATT ) != null ) {
+      final int[] pageformatData = new int[2];
+      pageformatData[0] =
+          ParserUtil.parseInt( atts.getValue( getUri(), PageReadHandler.WIDTH_ATT ), "No Width set", getLocator() );
+      pageformatData[1] =
+          ParserUtil.parseInt( atts.getValue( getUri(), PageReadHandler.HEIGHT_ATT ), "No Height set", getLocator() );
       final Paper p = PageFormatFactory.getInstance().createPaper( pageformatData );
       if ( p == null ) {
-        PageReadHandler.logger.warn( "Unable to create the requested Paper. Paper={" + pageformatData[ 0 ] + ", "
-          + pageformatData[ 1 ] + '}' );
+        PageReadHandler.logger.warn( "Unable to create the requested Paper. Paper={" + pageformatData[0] + ", "
+            + pageformatData[1] + '}' );
         return format;
       }
       return PageFormatFactory.getInstance().createPageFormat( p, orientationVal );

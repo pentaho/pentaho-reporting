@@ -22,8 +22,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContext;
 
 public interface TextMinorAxisLayoutStep {
-  public void process( final ParagraphRenderBox box,
-                       final MinorAxisNodeContext nodeContext,
-                       final PageGrid pageGrid );
+  public void process( final ParagraphRenderBox box, final MinorAxisNodeContext nodeContext, final PageGrid pageGrid );
 
 }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.csv;
 
@@ -38,8 +38,10 @@ public class CSVQuoter {
   /**
    * Creates a new <code>CSVQuoter</code>, which uses the defined separator.
    *
-   * @param separator the separator.
-   * @throws NullPointerException if the given separator is <code>null</code>.
+   * @param separator
+   *          the separator.
+   * @throws NullPointerException
+   *           if the given separator is <code>null</code>.
    */
   public CSVQuoter( final String separator ) {
     setSeparator( separator );
@@ -49,7 +51,8 @@ public class CSVQuoter {
    * Encodes the string, so that the string can safely be used in CSV files. If the string does not need quoting, the
    * original string is returned unchanged.
    *
-   * @param original the unquoted string.
+   * @param original
+   *          the unquoted string.
    * @return The quoted string
    */
   public String doQuoting( final String original ) {
@@ -68,7 +71,8 @@ public class CSVQuoter {
    * Decodes the string, so that all escape sequences get removed. If the string was not quoted, then the string is
    * returned unchanged.
    *
-   * @param nativeString the quoted string.
+   * @param nativeString
+   *          the quoted string.
    * @return The unquoted string.
    */
   public String undoQuoting( final String nativeString ) {
@@ -97,7 +101,8 @@ public class CSVQuoter {
    * Tests, whether this string needs to be quoted. A string is encoded if the string contains a newline character, a
    * quote character or the defined separator.
    *
-   * @param str the string that should be tested.
+   * @param str
+   *          the string that should be tested.
    * @return true, if quoting needs to be applied, false otherwise.
    */
   private boolean isQuotingNeeded( final String str ) {
@@ -116,8 +121,10 @@ public class CSVQuoter {
   /**
    * Applies the quoting to a given string, and stores the result in the StringBuffer <code>b</code>.
    *
-   * @param b        the result buffer
-   * @param original the string, that should be quoted.
+   * @param b
+   *          the result buffer
+   * @param original
+   *          the string, that should be quoted.
    */
   private void applyQuote( final StringBuffer b, final String original ) {
     // This solution needs improvements. Copy blocks instead of single
@@ -147,7 +154,8 @@ public class CSVQuoter {
    * Defines the separator, which is used in the CSV file. If you use different separators for quoting and writing, the
    * resulting file will be invalid.
    *
-   * @param separator the separator (<code>null</code> not permitted).
+   * @param separator
+   *          the separator (<code>null</code> not permitted).
    */
   public void setSeparator( final String separator ) {
     if ( separator == null ) {

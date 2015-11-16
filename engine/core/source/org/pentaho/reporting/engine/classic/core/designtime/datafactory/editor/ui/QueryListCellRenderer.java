@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
+import java.awt.Component;
+
+import javax.swing.JList;
+
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.Query;
 import org.pentaho.reporting.libraries.designtime.swing.FixDefaultListCellRenderer;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class QueryListCellRenderer extends FixDefaultListCellRenderer {
   public QueryListCellRenderer() {
   }
 
-  public Component getListCellRendererComponent( final JList list,
-                                                 final Object value,
-                                                 final int index,
-                                                 final boolean isSelected,
-                                                 final boolean cellHasFocus ) {
+  public Component getListCellRendererComponent( final JList list, final Object value, final int index,
+      final boolean isSelected, final boolean cellHasFocus ) {
     if ( value instanceof Query ) {
       Query q = (Query) value;
       return super.getListCellRendererComponent( list, q.getName(), index, isSelected, cellHasFocus );

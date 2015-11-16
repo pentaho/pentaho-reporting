@@ -48,7 +48,7 @@ class MasterReportProcessPreprocessor {
     DataSchemaDefinition fullDefinition = report.getDataSchemaDefinition();
     MasterReport fullReport = report;
     for ( int i = 0; i < processors.length; i++ ) {
-      final ReportPreProcessor processor = processors[ i ];
+      final ReportPreProcessor processor = processors[i];
       fullReport = processor.performPreDataProcessing( fullReport, flowController );
       if ( fullReport.getDataSchemaDefinition() != fullDefinition ) {
         fullDefinition = fullReport.getDataSchemaDefinition();
@@ -65,7 +65,7 @@ class MasterReportProcessPreprocessor {
     DataSchemaDefinition fullDefinition = report.getDataSchemaDefinition();
     MasterReport fullReport = report;
     for ( int i = 0; i < processors.length; i++ ) {
-      final ReportPreProcessor processor = processors[ i ];
+      final ReportPreProcessor processor = processors[i];
       fullReport = processor.performPreProcessing( fullReport, flowController );
       if ( fullReport.getDataSchemaDefinition() != fullDefinition ) {
         fullDefinition = fullReport.getDataSchemaDefinition();

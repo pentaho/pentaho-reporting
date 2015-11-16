@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector;
 
@@ -29,15 +29,12 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public class CSSSilblingSelector extends AbstractSelector
-  implements SiblingSelector, Serializable {
+public class CSSSilblingSelector extends AbstractSelector implements SiblingSelector, Serializable {
   private short nodeType;
   private Selector selector;
   private SimpleSelector silblingSelector;
 
-  public CSSSilblingSelector( final short nodeType,
-                              final Selector selector,
-                              final SimpleSelector silblingSelector ) {
+  public CSSSilblingSelector( final short nodeType, final Selector selector, final SimpleSelector silblingSelector ) {
     this.nodeType = nodeType;
     this.selector = selector;
     this.silblingSelector = silblingSelector;
@@ -59,8 +56,8 @@ public class CSSSilblingSelector extends AbstractSelector
   }
 
   /*
-  * Returns the second selector.
-  */
+   * Returns the second selector.
+   */
   public SimpleSelector getSiblingSelector() {
     return silblingSelector;
   }
@@ -73,8 +70,7 @@ public class CSSSilblingSelector extends AbstractSelector
   }
 
   protected SelectorWeight createWeight() {
-    if ( silblingSelector instanceof CSSSelector == false ||
-      selector instanceof CSSSelector == false ) {
+    if ( silblingSelector instanceof CSSSelector == false || selector instanceof CSSSelector == false ) {
       throw new ClassCastException( "Invalid selector implementation!" );
     }
     final CSSSelector anchestor = (CSSSelector) silblingSelector;

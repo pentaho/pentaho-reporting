@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -53,8 +53,8 @@ public class MinChunkWidthIT extends TestCase {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
     basereport.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
-    basereport.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    basereport.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
     final URL target = LayoutIT.class.getResource( "min-chunkwidth.xml" );
     final ResourceManager rm = new ResourceManager();
@@ -65,11 +65,11 @@ public class MinChunkWidthIT extends TestCase {
     // need to set WORDBREAK to false to keep the previous behaviour
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, false );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(
-      basereport, report.getReportHeader(), true, false );
+    final LogicalPageBox logicalPageBox =
+        DebugReportRunner.layoutSingleBand( basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
     new ValidateRunner( true, false ).startValidation( logicalPageBox );
   }
 
@@ -77,8 +77,8 @@ public class MinChunkWidthIT extends TestCase {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
     basereport.setCompatibilityLevel( null );
-    basereport.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    basereport.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
     final URL target = LayoutIT.class.getResource( "min-chunkwidth.xml" );
     final ResourceManager rm = new ResourceManager();
@@ -89,11 +89,11 @@ public class MinChunkWidthIT extends TestCase {
     // need to set WORDBREAK to false to keep the previous behaviour
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, false );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(
-      basereport, report.getReportHeader(), true, false );
+    final LogicalPageBox logicalPageBox =
+        DebugReportRunner.layoutSingleBand( basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
     new ValidateRunner( false, false ).startValidation( logicalPageBox );
   }
 
@@ -105,8 +105,8 @@ public class MinChunkWidthIT extends TestCase {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
     basereport.setCompatibilityLevel( null );
-    basereport.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    basereport.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "true" );
 
     final URL target = LayoutIT.class.getResource( "min-chunkwidth.xml" );
     final ResourceManager rm = new ResourceManager();
@@ -115,8 +115,8 @@ public class MinChunkWidthIT extends TestCase {
     final MasterReport report = (MasterReport) directly.getResource();
     report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(
-      basereport, report.getReportHeader(), true, false );
+    final LogicalPageBox logicalPageBox =
+        DebugReportRunner.layoutSingleBand( basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485 or 400
     // and that only two lines exist for each
     ModelPrinter.INSTANCE.print( logicalPageBox );
@@ -128,8 +128,7 @@ public class MinChunkWidthIT extends TestCase {
     private final boolean complexText;
     private boolean legacyMode;
 
-    private ValidateRunner( final boolean legacyMode,
-                            final boolean complexText ) {
+    private ValidateRunner( final boolean legacyMode, final boolean complexText ) {
       this.legacyMode = legacyMode;
       this.complexText = complexText;
     }
@@ -160,14 +159,14 @@ public class MinChunkWidthIT extends TestCase {
       if ( s.startsWith( "test-" ) ) {
         assertEquals( "Width = 468: " + s, StrictGeomUtility.toInternalValue( 468 ), box.getWidth() );
         if ( !complexText ) {
-          assertEquals( "Height = '" + expectedHeight + "' (PRD-4255): " + s,
-            StrictGeomUtility.toInternalValue( expectedHeight ), box.getHeight() );
+          assertEquals( "Height = '" + expectedHeight + "' (PRD-4255): " + s, StrictGeomUtility
+              .toInternalValue( expectedHeight ), box.getHeight() );
         }
       } else if ( s.startsWith( "canvas-" ) ) {
         assertTrue( "Width is not zero!: " + s, box.getWidth() != 0 );
         if ( !complexText ) {
-          assertEquals( "Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue( expectedHeight ),
-            box.getHeight() );
+          assertEquals( "Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue( expectedHeight ), box
+              .getHeight() );
         }
       } else if ( s.startsWith( "label-b" ) ) {
         // thats (nearly) random ..
@@ -195,5 +194,3 @@ public class MinChunkWidthIT extends TestCase {
     }
   }
 }
-
-

@@ -1,21 +1,29 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+
+import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -24,25 +32,17 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-import javax.swing.table.TableModel;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-
 /**
  * This report data factory uses introspection to search for a report data source. The query can have the following
  * formats:
  * <p/>
  * &lt;full-qualified-classname&gt;#methodName(Parameters) &lt;full-qualified-classname&gt;(constructorparams)
- * #methodName(Parameters)
- * &lt;full-qualified-classname&gt;(constructorparams)
+ * #methodName(Parameters) &lt;full-qualified-classname&gt;(constructorparams)
  *
  * @author Thomas Morgner
  */
 public class StaticDataFactory extends AbstractDataFactory {
-  private static final String[] EMPTY_NAMES = new String[ 0 ];
+  private static final String[] EMPTY_NAMES = new String[0];
   private static final String[] EMPTY_PARAMS = EMPTY_NAMES;
 
   /**
@@ -68,12 +68,13 @@ public class StaticDataFactory extends AbstractDataFactory {
    * <p/>
    * The dataset may change between two calls, do not assume anything!
    *
-   * @param query      the method call.
-   * @param parameters the set of parameters.
+   * @param query
+   *          the method call.
+   * @param parameters
+   *          the set of parameters.
    * @return the tablemodel from the executed method call, never null.
    */
-  public TableModel queryData( final String query, final DataRow parameters )
-    throws ReportDataFactoryException {
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
     final int methodSeparatorIdx = query.indexOf( '#' );
 
     if ( ( methodSeparatorIdx + 1 ) >= query.length() ) {
@@ -98,20 +99,18 @@ public class StaticDataFactory extends AbstractDataFactory {
       try {
         final Constructor c = findDirectConstructor( constructorName, parameterNames.length );
 
-        final Object[] params = new Object[ parameterNames.length ];
+        final Object[] params = new Object[parameterNames.length];
         for ( int i = 0; i < parameterNames.length; i++ ) {
-          final String name = parameterNames[ i ];
-          params[ i ] = parameters.get( name );
+          final String name = parameterNames[i];
+          params[i] = parameters.get( name );
         }
         return (TableModel) c.newInstance( params );
       } catch ( Exception e ) {
-        throw new ReportDataFactoryException
-          ( "Unable to instantiate class for non static call.", e ); //$NON-NLS-1$
+        throw new ReportDataFactoryException( "Unable to instantiate class for non static call.", e ); //$NON-NLS-1$
       }
     }
 
-    return createComplexTableModel
-      ( query, methodSeparatorIdx, parameters );
+    return createComplexTableModel( query, methodSeparatorIdx, parameters );
   }
 
   public String[] getParameterFields( final String query ) throws ReportDataFactoryException {
@@ -130,7 +129,7 @@ public class StaticDataFactory extends AbstractDataFactory {
       } else {
         final String[] list = createParameterList( query, parameterStartIdx );
         final LinkedHashSet<String> hashSet = new LinkedHashSet<String>( Arrays.asList( list ) );
-        return hashSet.toArray( new String[ hashSet.size() ] );
+        return hashSet.toArray( new String[hashSet.size()] );
       }
     }
 
@@ -145,7 +144,7 @@ public class StaticDataFactory extends AbstractDataFactory {
       } else {
         final String[] list = createParameterList( methodSpec, parameterStartIdx );
         final LinkedHashSet<String> hashSet = new LinkedHashSet<String>( Arrays.asList( list ) );
-        return hashSet.toArray( new String[ hashSet.size() ] );
+        return hashSet.toArray( new String[hashSet.size()] );
       }
     }
 
@@ -160,22 +159,25 @@ public class StaticDataFactory extends AbstractDataFactory {
       final String[] list = createParameterList( methodQuery, parameterStartIdx );
       hashSet.addAll( Arrays.asList( list ) );
     }
-    return hashSet.toArray( new String[ hashSet.size() ] );
+    return hashSet.toArray( new String[hashSet.size()] );
   }
 
   /**
    * Performs a complex query, where the tablemodel is retrieved from an method that was instantiated using parameters.
    *
-   * @param query              the query-string that contains the method to call.
-   * @param methodSeparatorIdx the position where the method specification starts.
-   * @param parameters         the set of parameters.
+   * @param query
+   *          the query-string that contains the method to call.
+   * @param methodSeparatorIdx
+   *          the position where the method specification starts.
+   * @param parameters
+   *          the set of parameters.
    * @return the resulting tablemodel, never null.
-   * @throws ReportDataFactoryException if something goes wrong.
+   * @throws ReportDataFactoryException
+   *           if something goes wrong.
    */
-  private TableModel createComplexTableModel( final String query,
-                                              final int methodSeparatorIdx,
-                                              final DataRow parameters )
-    throws ReportDataFactoryException {
+  private TableModel
+    createComplexTableModel( final String query, final int methodSeparatorIdx, final DataRow parameters )
+      throws ReportDataFactoryException {
     final String constructorSpec = query.substring( 0, methodSeparatorIdx );
     final int constParamIdx = constructorSpec.indexOf( '(' );
     if ( constParamIdx == -1 ) {
@@ -203,17 +205,17 @@ public class StaticDataFactory extends AbstractDataFactory {
     final Method m = findCallableMethod( className.trim(), methodName.trim(), methodParameterNames.length );
 
     try {
-      final Object[] constrParams = new Object[ parameterNames.length ];
+      final Object[] constrParams = new Object[parameterNames.length];
       for ( int i = 0; i < parameterNames.length; i++ ) {
-        final String name = parameterNames[ i ];
-        constrParams[ i ] = parameters.get( name );
+        final String name = parameterNames[i];
+        constrParams[i] = parameters.get( name );
       }
       final Object o = c.newInstance( constrParams );
 
-      final Object[] methodParams = new Object[ methodParameterNames.length ];
+      final Object[] methodParams = new Object[methodParameterNames.length];
       for ( int i = 0; i < methodParameterNames.length; i++ ) {
-        final String name = methodParameterNames[ i ];
-        methodParams[ i ] = parameters.get( name );
+        final String name = methodParameterNames[i];
+        methodParams[i] = parameters.get( name );
       }
       final Object data = m.invoke( o, methodParams );
       if ( data == null ) {
@@ -221,24 +223,25 @@ public class StaticDataFactory extends AbstractDataFactory {
       }
       return (TableModel) data;
     } catch ( Exception e ) {
-      throw new ReportDataFactoryException
-        ( "Unable to instantiate class for non static call." ); //$NON-NLS-1$
+      throw new ReportDataFactoryException( "Unable to instantiate class for non static call." ); //$NON-NLS-1$
     }
   }
 
   /**
    * Loads a tablemodel from a parameterless class or method. Call does not use any parameters.
    *
-   * @param query              the query-string that contains the method to call.
-   * @param methodSeparatorIdx the position where the method specification starts.
-   * @param parameters         the set of parameters.
+   * @param query
+   *          the query-string that contains the method to call.
+   * @param methodSeparatorIdx
+   *          the position where the method specification starts.
+   * @param parameters
+   *          the set of parameters.
    * @return the resulting tablemodel, never null.
-   * @throws ReportDataFactoryException if something goes wrong.
+   * @throws ReportDataFactoryException
+   *           if something goes wrong.
    */
-  private TableModel loadFromDefaultConstructor( final String query,
-                                                 final int methodSeparatorIdx,
-                                                 final DataRow parameters )
-    throws ReportDataFactoryException {
+  private TableModel loadFromDefaultConstructor( final String query, final int methodSeparatorIdx,
+      final DataRow parameters ) throws ReportDataFactoryException {
     final String className = query.substring( 0, methodSeparatorIdx );
 
     final String methodSpec = query.substring( methodSeparatorIdx + 1 );
@@ -256,10 +259,10 @@ public class StaticDataFactory extends AbstractDataFactory {
 
     try {
       final Method m = findCallableMethod( className.trim(), methodName.trim(), parameterNames.length );
-      final Object[] params = new Object[ parameterNames.length ];
+      final Object[] params = new Object[parameterNames.length];
       for ( int i = 0; i < parameterNames.length; i++ ) {
-        final String name = parameterNames[ i ];
-        params[ i ] = parameters.get( name );
+        final String name = parameterNames[i];
+        params[i] = parameters.get( name );
       }
 
       if ( Modifier.isStatic( m.getModifiers() ) ) {
@@ -274,8 +277,7 @@ public class StaticDataFactory extends AbstractDataFactory {
       final Class c = Class.forName( className, false, classLoader );
       final Object o = c.newInstance();
       if ( o == null ) {
-        throw new ReportDataFactoryException
-          ( "Unable to instantiate class for non static call." ); //$NON-NLS-1$
+        throw new ReportDataFactoryException( "Unable to instantiate class for non static call." ); //$NON-NLS-1$
       }
       final Object data = m.invoke( o, params );
       if ( data == null ) {
@@ -285,34 +287,34 @@ public class StaticDataFactory extends AbstractDataFactory {
     } catch ( ReportDataFactoryException rdfe ) {
       throw rdfe;
     } catch ( Exception e ) {
-      throw new ReportDataFactoryException
-        ( "Something went terribly wrong: ", e ); //$NON-NLS-1$
+      throw new ReportDataFactoryException( "Something went terribly wrong: ", e ); //$NON-NLS-1$
     }
   }
 
   /**
    * Creates the list of column names that should be mapped into the method or constructor parameters.
    *
-   * @param query             the query-string.
-   * @param parameterStartIdx the index from where to read the parameter list.
+   * @param query
+   *          the query-string.
+   * @param parameterStartIdx
+   *          the index from where to read the parameter list.
    * @return an array with column names.
-   * @throws ReportDataFactoryException if something goes wrong.
+   * @throws ReportDataFactoryException
+   *           if something goes wrong.
    */
-  private String[] createParameterList( final String query,
-                                        final int parameterStartIdx )
+  private String[] createParameterList( final String query, final int parameterStartIdx )
     throws ReportDataFactoryException {
     final int parameterEndIdx = query.lastIndexOf( ')' );
     if ( parameterEndIdx < parameterStartIdx ) {
       throw new ReportDataFactoryException( "Malformed query: " + query ); //$NON-NLS-1$
     }
-    final String parameterText =
-      query.substring( parameterStartIdx + 1, parameterEndIdx );
+    final String parameterText = query.substring( parameterStartIdx + 1, parameterEndIdx );
     final CSVTokenizer tokenizer = new CSVTokenizer( parameterText, ",", "\"", false );
     final int size = tokenizer.countTokens();
-    final String[] parameterNames = new String[ size ];
+    final String[] parameterNames = new String[size];
     int i = 0;
     while ( tokenizer.hasMoreTokens() ) {
-      parameterNames[ i ] = tokenizer.nextToken();
+      parameterNames[i] = tokenizer.nextToken();
       i += 1;
     }
     return parameterNames;
@@ -331,15 +333,17 @@ public class StaticDataFactory extends AbstractDataFactory {
    * Tries to locate a method-object for the call. This method will throw an Exception if the method was not found or
    * not public.
    *
-   * @param className  the name of the class where to seek the method.
-   * @param methodName the name of the method.
-   * @param paramCount the parameter count of the method we seek.
+   * @param className
+   *          the name of the class where to seek the method.
+   * @param methodName
+   *          the name of the method.
+   * @param paramCount
+   *          the parameter count of the method we seek.
    * @return the method object.
-   * @throws ReportDataFactoryException if something goes wrong.
+   * @throws ReportDataFactoryException
+   *           if something goes wrong.
    */
-  private Method findCallableMethod( final String className,
-                                     final String methodName,
-                                     final int paramCount )
+  private Method findCallableMethod( final String className, final String methodName, final int paramCount )
     throws ReportDataFactoryException {
     final ClassLoader classLoader = getClassLoader();
 
@@ -354,7 +358,7 @@ public class StaticDataFactory extends AbstractDataFactory {
 
       final Method[] methods = c.getMethods();
       for ( int i = 0; i < methods.length; i++ ) {
-        final Method method = methods[ i ];
+        final Method method = methods[i];
         if ( Modifier.isPublic( method.getModifiers() ) == false ) {
           continue;
         }
@@ -373,10 +377,8 @@ public class StaticDataFactory extends AbstractDataFactory {
     } catch ( ClassNotFoundException e ) {
       throw new ReportDataFactoryException( "No such Class: " + className, e ); //$NON-NLS-1$
     }
-    throw new ReportDataFactoryException(
-      "No such Method: " + className + '#' + methodName ); //$NON-NLS-1$ //$NON-NLS-2$
+    throw new ReportDataFactoryException( "No such Method: " + className + '#' + methodName ); //$NON-NLS-1$ //$NON-NLS-2$
   }
-
 
   /**
    * Tries to locate a suitable public constructor for the number of parameters. This will return the first constructor
@@ -384,13 +386,15 @@ public class StaticDataFactory extends AbstractDataFactory {
    * <p/>
    * The Class that is referenced must be a Tablemodel implementation.
    *
-   * @param className  the classname on where to find the constructor.
-   * @param paramCount the number of parameters expected in the constructor.
+   * @param className
+   *          the classname on where to find the constructor.
+   * @param paramCount
+   *          the number of parameters expected in the constructor.
    * @return the Constructor object, never null.
-   * @throws ReportDataFactoryException if the constructor could not be found or something went wrong.
+   * @throws ReportDataFactoryException
+   *           if the constructor could not be found or something went wrong.
    */
-  private Constructor findDirectConstructor( final String className,
-                                             final int paramCount )
+  private Constructor findDirectConstructor( final String className, final int paramCount )
     throws ReportDataFactoryException {
     final ClassLoader classLoader = getClassLoader();
     if ( classLoader == null ) {
@@ -400,18 +404,16 @@ public class StaticDataFactory extends AbstractDataFactory {
     try {
       final Class c = Class.forName( className, false, classLoader );
       if ( TableModel.class.isAssignableFrom( c ) == false ) {
-        throw new ReportDataFactoryException
-          ( "The specified class must be either a TableModel or a ReportData implementation: "
-            + className ); //$NON-NLS-1$
+        throw new ReportDataFactoryException(
+            "The specified class must be either a TableModel or a ReportData implementation: " + className ); //$NON-NLS-1$
       }
       if ( Modifier.isAbstract( c.getModifiers() ) ) {
-        throw new ReportDataFactoryException
-          ( "The specified class cannot be instantiated: it is abstract:" + className ); //$NON-NLS-1$
+        throw new ReportDataFactoryException( "The specified class cannot be instantiated: it is abstract:" + className ); //$NON-NLS-1$
       }
 
       final Constructor[] methods = c.getConstructors();
       for ( int i = 0; i < methods.length; i++ ) {
-        final Constructor method = methods[ i ];
+        final Constructor method = methods[i];
         if ( Modifier.isPublic( method.getModifiers() ) == false ) {
           continue;
         }
@@ -423,8 +425,7 @@ public class StaticDataFactory extends AbstractDataFactory {
     } catch ( ClassNotFoundException e ) {
       throw new ReportDataFactoryException( "No such Class", e ); //$NON-NLS-1$
     }
-    throw new ReportDataFactoryException
-      ( "There is no constructor in class " + className + //$NON-NLS-1$
+    throw new ReportDataFactoryException( "There is no constructor in class " + className + //$NON-NLS-1$
         " that accepts " + paramCount + " parameters." ); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
@@ -432,13 +433,15 @@ public class StaticDataFactory extends AbstractDataFactory {
    * Tries to locate a constructor that accepts the specified number of parameters. The referenced class can be of any
    * type, as we will call a method on that class that will return the tablemodel for us.
    *
-   * @param className  the classname of the class where to search the constructor.
-   * @param paramCount the numbers of parameters expected.
+   * @param className
+   *          the classname of the class where to search the constructor.
+   * @param paramCount
+   *          the numbers of parameters expected.
    * @return the constructor object, never null.
-   * @throws ReportDataFactoryException if the constructor could not be found or something went wrong.
+   * @throws ReportDataFactoryException
+   *           if the constructor could not be found or something went wrong.
    */
-  private Constructor findIndirectConstructor( final String className,
-                                               final int paramCount )
+  private Constructor findIndirectConstructor( final String className, final int paramCount )
     throws ReportDataFactoryException {
     final ClassLoader classLoader = getClassLoader();
     if ( classLoader == null ) {
@@ -448,13 +451,12 @@ public class StaticDataFactory extends AbstractDataFactory {
     try {
       final Class c = Class.forName( className, false, classLoader );
       if ( Modifier.isAbstract( c.getModifiers() ) ) {
-        throw new ReportDataFactoryException(
-          "The specified class cannot be instantiated: it is abstract." ); //$NON-NLS-1$
+        throw new ReportDataFactoryException( "The specified class cannot be instantiated: it is abstract." ); //$NON-NLS-1$
       }
 
       final Constructor[] methods = c.getConstructors();
       for ( int i = 0; i < methods.length; i++ ) {
-        final Constructor method = methods[ i ];
+        final Constructor method = methods[i];
         if ( Modifier.isPublic( method.getModifiers() ) == false ) {
           continue;
         }
@@ -466,8 +468,7 @@ public class StaticDataFactory extends AbstractDataFactory {
     } catch ( ClassNotFoundException e ) {
       throw new ReportDataFactoryException( "No such Class", e ); //$NON-NLS-1$
     }
-    throw new ReportDataFactoryException
-      ( "There is no constructor in class " + className + //$NON-NLS-1$
+    throw new ReportDataFactoryException( "There is no constructor in class " + className + //$NON-NLS-1$
         " that accepts " + paramCount + " parameters." ); //$NON-NLS-1$ //$NON-NLS-2$
   }
 

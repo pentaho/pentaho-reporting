@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.xml;
 
@@ -51,8 +51,8 @@ public class XMLProcessor extends AbstractReportProcessor {
       metaData = new GenericOutputProcessorMetaData( EXPORT_DESCRIPTOR );
     }
 
-    protected void processPageContent( final LogicalPageKey logicalPageKey,
-                                       final LogicalPageBox logicalPage ) throws ContentProcessingException {
+    protected void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )
+      throws ContentProcessingException {
 
     }
 
@@ -71,11 +71,12 @@ public class XMLProcessor extends AbstractReportProcessor {
   /**
    * Creates a new XMLProcessor. The processor will output the report as simple xml stream.
    *
-   * @param report the report that should be processed
-   * @throws ReportProcessingException if the report could not be initialized
+   * @param report
+   *          the report that should be processed
+   * @throws ReportProcessingException
+   *           if the report could not be initialized
    */
-  public XMLProcessor( final MasterReport report )
-    throws ReportProcessingException {
+  public XMLProcessor( final MasterReport report ) throws ReportProcessingException {
     super( report, new XMLDataOutputProcessor( report.getConfiguration() ) );
   }
 
@@ -91,7 +92,8 @@ public class XMLProcessor extends AbstractReportProcessor {
   /**
    * Sets the writer, which will receive the generated output. The writer should have the proper encoding set.
    *
-   * @param writer that should receive the generated output.
+   * @param writer
+   *          that should receive the generated output.
    */
   public void setWriter( final Writer writer ) {
     this.writer = writer;
@@ -100,7 +102,8 @@ public class XMLProcessor extends AbstractReportProcessor {
   /**
    * Checks whether report processing should be aborted when an exception occurs.
    *
-   * @param config the configuration.
+   * @param config
+   *          the configuration.
    * @return if strict error handling is enabled.
    */
   protected static boolean isStrictErrorHandling( final Configuration config ) {

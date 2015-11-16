@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
@@ -40,7 +40,7 @@ import javax.swing.table.TableModel;
 public final class ExpressionDataRow extends ExpressionEventHelper {
   private static final Log logger = LogFactory.getLog( ExpressionDataRow.class );
 
-  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[ 0 ];
+  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[0];
 
   private static class DataRowRuntime implements ExpressionRuntime {
     private ExpressionDataRow expressionDataRow;
@@ -144,7 +144,6 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
     }
   }
 
-
   private MasterDataRowChangeHandler masterRowChangeHandler;
   private MasterDataRow masterRow;
   private ProcessingContext processingContext;
@@ -154,9 +153,8 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
   private DataRowRuntime runtime;
   private boolean includeStructuralProcessing;
 
-  public ExpressionDataRow( final MasterDataRowChangeHandler masterRowChangeHandler,
-                            final MasterDataRow masterRow,
-                            final ProcessingContext processingContext ) {
+  public ExpressionDataRow( final MasterDataRowChangeHandler masterRowChangeHandler, final MasterDataRow masterRow,
+      final ProcessingContext processingContext ) {
     if ( masterRow == null ) {
       throw new NullPointerException();
     }
@@ -185,17 +183,14 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
     this.levelData = LevelStorageBackend.revalidate( this.expressions, length, includeStructuralProcessing );
   }
 
-  private ExpressionDataRow( final MasterDataRowChangeHandler masterRowChangeHandler,
-                             final MasterDataRow masterRow,
-                             final ExpressionDataRow previousRow,
-                             final boolean updateGlobalView )
-    throws CloneNotSupportedException {
+  private ExpressionDataRow( final MasterDataRowChangeHandler masterRowChangeHandler, final MasterDataRow masterRow,
+      final ExpressionDataRow previousRow, final boolean updateGlobalView ) throws CloneNotSupportedException {
     final MasterDataRowChangeEvent chEvent = masterRowChangeHandler.getReusableEvent();
     chEvent.reuse( MasterDataRowChangeEvent.COLUMN_UPDATED, "", "" );
     this.processingContext = previousRow.processingContext;
     this.masterRow = masterRow;
     this.masterRowChangeHandler = masterRowChangeHandler;
-    this.expressions = new Expression[ previousRow.expressions.length ];
+    this.expressions = new Expression[previousRow.expressions.length];
     this.length = previousRow.length;
     this.levelData = previousRow.levelData;
     this.runtime = new DataRowRuntime( this );
@@ -203,16 +198,16 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
     this.includeStructuralProcessing = previousRow.includeStructuralProcessing;
 
     for ( int i = 0; i < length; i++ ) {
-      final Expression expression = previousRow.expressions[ i ];
+      final Expression expression = previousRow.expressions[i];
       if ( expression == null ) {
         ExpressionDataRow.logger.debug( "Error: Expression is null..." );
         throw new IllegalStateException();
       }
 
       if ( expression instanceof Function ) {
-        expressions[ i ] = (Expression) expression.clone();
+        expressions[i] = (Expression) expression.clone();
       } else {
-        expressions[ i ] = expression;
+        expressions[i] = expression;
       }
 
       if ( updateGlobalView == false ) {
@@ -253,13 +248,14 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
   /**
    * This adds the expression to the data-row and queries the expression for the first time.
    *
-   * @param expressionSlot the expression that should be added.
-   * @param preserveState  a flag indicating whether the expression is statefull and should preserve its internal
-   *                       state.
-   * @throws ReportProcessingException if the processing failed due to invalid function implementations.
+   * @param expressionSlot
+   *          the expression that should be added.
+   * @param preserveState
+   *          a flag indicating whether the expression is statefull and should preserve its internal state.
+   * @throws ReportProcessingException
+   *           if the processing failed due to invalid function implementations.
    */
-  private void pushExpression( final Expression expressionSlot,
-                               final boolean preserveState )
+  private void pushExpression( final Expression expressionSlot, final boolean preserveState )
     throws ReportProcessingException {
     if ( expressionSlot == null ) {
       throw new NullPointerException();
@@ -268,10 +264,10 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
     ensureCapacity( length + 1 );
 
     if ( preserveState == false ) {
-      this.expressions[ length ] = expressionSlot.getInstance();
+      this.expressions[length] = expressionSlot.getInstance();
     } else {
       try {
-        this.expressions[ length ] = (Expression) expressionSlot.clone();
+        this.expressions[length] = (Expression) expressionSlot.clone();
       } catch ( final CloneNotSupportedException e ) {
         throw new ReportProcessingException( "Failed to clone the expression.", e );
       }
@@ -288,8 +284,7 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
     }
   }
 
-  public void pushExpressions( final Expression[] expressionSlots,
-                               final boolean preserveState )
+  public void pushExpressions( final Expression[] expressionSlots, final boolean preserveState )
     throws ReportProcessingException {
     if ( expressionSlots == null ) {
       throw new NullPointerException();
@@ -297,7 +292,7 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
 
     ensureCapacity( length + expressionSlots.length );
     for ( int i = 0; i < expressionSlots.length; i++ ) {
-      final Expression expression = expressionSlots[ i ];
+      final Expression expression = expressionSlots[i];
       if ( expression == null ) {
         continue;
       }
@@ -319,11 +314,11 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
     if ( length == 0 ) {
       return;
     }
-    final Expression removedExpression = this.expressions[ length - 1 ];
+    final Expression removedExpression = this.expressions[length - 1];
     final String originalName = removedExpression.getName();
     removedExpression.setRuntime( null );
 
-    this.expressions[ length - 1 ] = null;
+    this.expressions[length - 1] = null;
     this.length -= 1;
     if ( originalName != null ) {
       if ( removedExpression.isPreserve() == false ) {
@@ -341,7 +336,7 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
     }
     final int newSize = Math.max( capacity * 2, requestedSize + 10 );
 
-    final Expression[] newExpressions = new Expression[ newSize ];
+    final Expression[] newExpressions = new Expression[newSize];
     System.arraycopy( expressions, 0, newExpressions, 0, length );
 
     this.expressions = newExpressions;
@@ -381,7 +376,7 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
       // we are in the data-pre-processing stage. Include all common expressions, in case they
       // compute a group-break.
       if ( levelData.length > 0 ) {
-        activeLevel = levelData[ 0 ].getLevelNumber();
+        activeLevel = levelData[0].getLevelNumber();
       } else {
         activeLevel = rawLevel;
       }
@@ -392,8 +387,7 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
   }
 
   public ExpressionDataRow derive( final MasterDataRowChangeHandler masterRowChangeHandler,
-                                   final MasterDataRow masterRow,
-                                   final boolean update ) {
+      final MasterDataRow masterRow, final boolean update ) {
     try {
       return new ExpressionDataRow( masterRowChangeHandler, masterRow, this, update );
     } catch ( final CloneNotSupportedException e ) {
@@ -407,7 +401,7 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
   }
 
   public Expression[] getExpressions() {
-    final Expression[] retval = new Expression[ length ];
+    final Expression[] retval = new Expression[length];
     System.arraycopy( expressions, 0, retval, 0, length );
     return retval;
   }
@@ -441,7 +435,7 @@ public final class ExpressionDataRow extends ExpressionEventHelper {
   }
 
   protected LevelStorage getRunLevel( final int index ) {
-    final LevelStorageBackend backend = levelData[ index ];
+    final LevelStorageBackend backend = levelData[index];
     return LevelStorageBackend.getLevelStorage( backend, expressions );
   }
 }

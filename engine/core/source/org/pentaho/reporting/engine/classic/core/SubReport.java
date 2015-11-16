@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -128,8 +128,10 @@ public class SubReport extends AbstractReportDefinition {
    * Adds an export-parameter mapping to the subreport. The parameter specified by 'sourceColumn' will be made available
    * with the name 'outerName' in the parent report.
    *
-   * @param outerName    the name the parameter will get in the master report.
-   * @param sourceColumn the source-column in the sub-report.
+   * @param outerName
+   *          the name the parameter will get in the master report.
+   * @param sourceColumn
+   *          the source-column in the sub-report.
    */
   public void addExportParameter( final String outerName, final String sourceColumn ) {
     if ( outerName == null ) {
@@ -141,14 +143,15 @@ public class SubReport extends AbstractReportDefinition {
 
     final ParameterMapping[] oldMappings = getExportMappings();
     exportParameters.put( outerName, sourceColumn );
-    notifyNodePropertiesChanged( new SubReportParameterChange
-      ( SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings() ) );
+    notifyNodePropertiesChanged( new SubReportParameterChange( SubReportParameterChange.Type.EXPORT, oldMappings,
+        getExportMappings() ) );
   }
 
   /**
    * Removes the export parameter from the mapping.
    *
-   * @param outerName the name of the parameter as it is known in the master report.
+   * @param outerName
+   *          the name of the parameter as it is known in the master report.
    */
   public void removeExportParameter( final String outerName ) {
     if ( outerName == null ) {
@@ -156,8 +159,8 @@ public class SubReport extends AbstractReportDefinition {
     }
     final ParameterMapping[] oldMappings = getExportMappings();
     exportParameters.remove( outerName );
-    notifyNodePropertiesChanged( new SubReportParameterChange
-      ( SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings() ) );
+    notifyNodePropertiesChanged( new SubReportParameterChange( SubReportParameterChange.Type.EXPORT, oldMappings,
+        getExportMappings() ) );
   }
 
   /**
@@ -168,13 +171,13 @@ public class SubReport extends AbstractReportDefinition {
    */
   public ParameterMapping[] getExportMappings() {
     final int length = exportParameters.size();
-    final String[] keys = exportParameters.keySet().toArray( new String[ length ] );
-    final ParameterMapping[] mapping = new ParameterMapping[ length ];
+    final String[] keys = exportParameters.keySet().toArray( new String[length] );
+    final ParameterMapping[] mapping = new ParameterMapping[length];
 
     for ( int i = 0; i < length; i++ ) {
-      final String name = keys[ i ];
+      final String name = keys[i];
       final String alias = exportParameters.get( name );
-      mapping[ i ] = new ParameterMapping( name, alias );
+      mapping[i] = new ParameterMapping( name, alias );
     }
     return mapping;
   }
@@ -188,12 +191,12 @@ public class SubReport extends AbstractReportDefinition {
 
     exportParameters.clear();
     for ( int i = 0; i < mappings.length; i++ ) {
-      final ParameterMapping mapping = mappings[ i ];
+      final ParameterMapping mapping = mappings[i];
       exportParameters.put( mapping.getName(), mapping.getAlias() );
     }
 
-    notifyNodePropertiesChanged( new SubReportParameterChange
-      ( SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings() ) );
+    notifyNodePropertiesChanged( new SubReportParameterChange( SubReportParameterChange.Type.EXPORT, oldMappings,
+        getExportMappings() ) );
   }
 
   /**
@@ -203,8 +206,10 @@ public class SubReport extends AbstractReportDefinition {
    * Input parameter mapping happens only once, so after the report has been started, changes to the parameters will not
    * pass through to the subreport.
    *
-   * @param outerName    the name of the parent report's column that provides the data.
-   * @param sourceColumn the name under which the parameter will be available in the subreport.
+   * @param outerName
+   *          the name of the parent report's column that provides the data.
+   * @param sourceColumn
+   *          the name under which the parameter will be available in the subreport.
    */
   public void addInputParameter( final String outerName, final String sourceColumn ) {
     if ( outerName == null ) {
@@ -216,14 +221,15 @@ public class SubReport extends AbstractReportDefinition {
     final ParameterMapping[] oldMappings = getInputMappings();
 
     inputParameters.put( sourceColumn, outerName );
-    notifyNodePropertiesChanged( new SubReportParameterChange
-      ( SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings() ) );
+    notifyNodePropertiesChanged( new SubReportParameterChange( SubReportParameterChange.Type.INPUT, oldMappings,
+        getInputMappings() ) );
   }
 
   /**
    * Removes the input parameter from the parameter mapping.
    *
-   * @param sourceColumn the name of the column of the subreport report that acts as source for the input parameter.
+   * @param sourceColumn
+   *          the name of the column of the subreport report that acts as source for the input parameter.
    */
   public void removeInputParameter( final String sourceColumn ) {
     if ( sourceColumn == null ) {
@@ -233,16 +239,16 @@ public class SubReport extends AbstractReportDefinition {
     final ParameterMapping[] oldMappings = getInputMappings();
 
     inputParameters.remove( sourceColumn );
-    notifyNodePropertiesChanged( new SubReportParameterChange
-      ( SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings() ) );
+    notifyNodePropertiesChanged( new SubReportParameterChange( SubReportParameterChange.Type.INPUT, oldMappings,
+        getInputMappings() ) );
   }
 
   public void clearInputParameters() {
     final ParameterMapping[] oldMappings = getInputMappings();
 
     inputParameters.clear();
-    notifyNodePropertiesChanged( new SubReportParameterChange
-      ( SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings() ) );
+    notifyNodePropertiesChanged( new SubReportParameterChange( SubReportParameterChange.Type.INPUT, oldMappings,
+        getInputMappings() ) );
   }
 
   public void clearExportParameters() {
@@ -250,8 +256,8 @@ public class SubReport extends AbstractReportDefinition {
 
     exportParameters.clear();
     notifyNodePropertiesChanged();
-    notifyNodePropertiesChanged( new SubReportParameterChange
-      ( SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings() ) );
+    notifyNodePropertiesChanged( new SubReportParameterChange( SubReportParameterChange.Type.EXPORT, oldMappings,
+        getExportMappings() ) );
   }
 
   /**
@@ -261,13 +267,13 @@ public class SubReport extends AbstractReportDefinition {
    */
   public ParameterMapping[] getInputMappings() {
     final int length = inputParameters.size();
-    final String[] keys = inputParameters.keySet().toArray( new String[ length ] );
-    final ParameterMapping[] mapping = new ParameterMapping[ length ];
+    final String[] keys = inputParameters.keySet().toArray( new String[length] );
+    final ParameterMapping[] mapping = new ParameterMapping[length];
 
     for ( int i = 0; i < length; i++ ) {
-      final String alias = keys[ i ];
+      final String alias = keys[i];
       final String name = inputParameters.get( alias );
-      mapping[ i ] = new ParameterMapping( name, alias );
+      mapping[i] = new ParameterMapping( name, alias );
     }
     return mapping;
   }
@@ -281,12 +287,12 @@ public class SubReport extends AbstractReportDefinition {
 
     inputParameters.clear();
     for ( int i = 0; i < mappings.length; i++ ) {
-      final ParameterMapping mapping = mappings[ i ];
+      final ParameterMapping mapping = mappings[i];
       inputParameters.put( mapping.getAlias(), mapping.getName() );
     }
 
-    notifyNodePropertiesChanged( new SubReportParameterChange
-      ( SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings() ) );
+    notifyNodePropertiesChanged( new SubReportParameterChange( SubReportParameterChange.Type.INPUT, oldMappings,
+        getInputMappings() ) );
   }
 
   /**

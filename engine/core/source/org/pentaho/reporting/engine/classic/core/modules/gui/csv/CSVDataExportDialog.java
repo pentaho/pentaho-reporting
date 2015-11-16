@@ -1,21 +1,50 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.csv;
+
+import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.AbstractExportDialog;
@@ -32,31 +61,21 @@ import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.text.MessageFormat;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 /**
  * A dialog for exporting a report to CSV format.
  *
  * @author Thomas Morgner.
  */
 public class CSVDataExportDialog extends AbstractExportDialog {
-  //  /**
-  //   * The 'CSV encoding' property key.
-  //   */
-  //  public static final String CSV_OUTPUT_ENCODING
+  // /**
+  // * The 'CSV encoding' property key.
+  // */
+  // public static final String CSV_OUTPUT_ENCODING
   //      = "org.pentaho.reporting.engine.classic.core.modules.gui.csv.Encoding"; //$NON-NLS-1$
   /**
    * A default value of the 'CSV encoding' property key.
    */
-  public static final String CSV_OUTPUT_ENCODING_DEFAULT =
-    EncodingRegistry.getPlatformDefaultEncoding();
+  public static final String CSV_OUTPUT_ENCODING_DEFAULT = EncodingRegistry.getPlatformDefaultEncoding();
 
   /**
    * Internal action class to confirm the dialog and to validate the input.
@@ -71,7 +90,8 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     /**
      * Receives notification that the action has occurred.
      *
-     * @param e the action event.
+     * @param e
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent e ) {
       performSeparatorSelection();
@@ -92,7 +112,8 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     /**
      * Receives notification that the action has occurred.
      *
-     * @param e the action event.
+     * @param e
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent e ) {
       performSelectFile();
@@ -163,11 +184,11 @@ public class CSVDataExportDialog extends AbstractExportDialog {
   private static final String TAB_SEPARATOR = "\t"; //$NON-NLS-1$
   private static final String CSV_FILE_EXTENSION = ".csv"; //$NON-NLS-1$
 
-
   /**
    * Creates a new CSV export dialog.
    *
-   * @param owner the dialog owner.
+   * @param owner
+   *          the dialog owner.
    */
   public CSVDataExportDialog( final Frame owner ) {
     super( owner );
@@ -177,7 +198,8 @@ public class CSVDataExportDialog extends AbstractExportDialog {
   /**
    * Creates a new CSV export dialog.
    *
-   * @param owner the dialog owner.
+   * @param owner
+   *          the dialog owner.
    */
   public CSVDataExportDialog( final Dialog owner ) {
     super( owner );
@@ -185,7 +207,7 @@ public class CSVDataExportDialog extends AbstractExportDialog {
   }
 
   /**
-   * Creates a new CSV export dialog.  The created dialog is modal.
+   * Creates a new CSV export dialog. The created dialog is modal.
    */
   public CSVDataExportDialog() {
     initConstructor();
@@ -214,29 +236,21 @@ public class CSVDataExportDialog extends AbstractExportDialog {
    * Initializes the Swing components of this dialog.
    */
   private void initialize() {
-    cbxWriteStateColumns = new JCheckBox
-      ( getResources().getString( "csvexportdialog.write-state-columns" ) ); //$NON-NLS-1$
-    cbxColumnNamesAsFirstRow = new JCheckBox
-      ( getResources().getString( "cvsexportdialog.export.columnnames" ) ); //$NON-NLS-1$
+    cbxWriteStateColumns = new JCheckBox( getResources().getString( "csvexportdialog.write-state-columns" ) ); //$NON-NLS-1$
+    cbxColumnNamesAsFirstRow = new JCheckBox( getResources().getString( "cvsexportdialog.export.columnnames" ) ); //$NON-NLS-1$
 
     getFormValidator().registerButton( cbxColumnNamesAsFirstRow );
-    cbxEnableReportHeader =
-      new JCheckBox( getResources().getString( "csvexportdialog.enable-report-header" ) ); //$NON-NLS-1$
-    cbxEnableReportFooter =
-      new JCheckBox( getResources().getString( "csvexportdialog.enable-report-footer" ) ); //$NON-NLS-1$
-    cbxEnableItemband =
-      new JCheckBox( getResources().getString( "csvexportdialog.enable-itemband" ) ); //$NON-NLS-1$
-    cbxEnableGroupHeader =
-      new JCheckBox( getResources().getString( "csvexportdialog.enable-group-header" ) ); //$NON-NLS-1$
-    cbxEnableGroupFooter =
-      new JCheckBox( getResources().getString( "csvexportdialog.enable-group-footer" ) ); //$NON-NLS-1$
+    cbxEnableReportHeader = new JCheckBox( getResources().getString( "csvexportdialog.enable-report-header" ) ); //$NON-NLS-1$
+    cbxEnableReportFooter = new JCheckBox( getResources().getString( "csvexportdialog.enable-report-footer" ) ); //$NON-NLS-1$
+    cbxEnableItemband = new JCheckBox( getResources().getString( "csvexportdialog.enable-itemband" ) ); //$NON-NLS-1$
+    cbxEnableGroupHeader = new JCheckBox( getResources().getString( "csvexportdialog.enable-group-header" ) ); //$NON-NLS-1$
+    cbxEnableGroupFooter = new JCheckBox( getResources().getString( "csvexportdialog.enable-group-footer" ) ); //$NON-NLS-1$
 
     getFormValidator().registerButton( cbxEnableGroupFooter );
     getFormValidator().registerButton( cbxEnableGroupHeader );
     getFormValidator().registerButton( cbxEnableItemband );
     getFormValidator().registerButton( cbxEnableReportFooter );
     getFormValidator().registerButton( cbxEnableReportHeader );
-
 
     txFilename = new JTextField();
     txFilename.setColumns( 30 );
@@ -250,10 +264,10 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     tabbedPane.add( getResources().getString( "csvexportdialog.export-settings" ), exportPane ); //$NON-NLS-1$
     tabbedPane.add( getResources().getString( "csvexportdialog.parameters" ), getParametersPanel() ); //$NON-NLS-1$
     final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
-    if ( "true".equals( config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.gui.csv.data.AdvancedSettingsAvailable" ) ) ) {
-      tabbedPane.add( getResources().getString( "csvexportdialog.advanced-settings" ),
-        createAdvancedOptionsPanel() ); //$NON-NLS-1$
+    if ( "true"
+        .equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.csv.data.AdvancedSettingsAvailable" ) ) ) {
+      tabbedPane.add( getResources().getString( "csvexportdialog.advanced-settings" ), createAdvancedOptionsPanel() ); //$NON-NLS-1$
     }
     setContentPane( createContentPane( tabbedPane ) );
 
@@ -311,11 +325,8 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     contentPane.setLayout( new GridBagLayout() );
     contentPane.setBorder( BorderFactory.createEmptyBorder( 3, 3, 3, 3 ) );
 
-    final JLabel lblFileName = new JLabel( getResources().getString(
-      "csvexportdialog.filename" ) ); //$NON-NLS-1$
-    final JButton btnSelect = new JButton( new ActionSelectFile(
-      getResources() ) );
-
+    final JLabel lblFileName = new JLabel( getResources().getString( "csvexportdialog.filename" ) ); //$NON-NLS-1$
+    final JButton btnSelect = new JButton( new ActionSelectFile( getResources() ) );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -364,9 +375,7 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     final JPanel exportTypePanel = new JPanel();
     exportTypePanel.setLayout( new BorderLayout() );
 
-    final TitledBorder tb =
-      new TitledBorder( getResources().getString(
-        "csvexportdialog.exported-bands" ) ); //$NON-NLS-1$
+    final TitledBorder tb = new TitledBorder( getResources().getString( "csvexportdialog.exported-bands" ) ); //$NON-NLS-1$
     exportTypePanel.setBorder( tb );
 
     final JPanel rowTypePanel = new JPanel();
@@ -380,7 +389,6 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     return exportTypePanel;
   }
 
-
   /**
    * Creates a panel for the export type.
    *
@@ -390,12 +398,9 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     // separator panel
     final JPanel exportTypePanel = new JPanel();
     exportTypePanel.setLayout( new GridBagLayout() );
-    final JLabel lblEncoding = new JLabel( getResources().getString(
-      "csvexportdialog.encoding" ) ); //$NON-NLS-1$
+    final JLabel lblEncoding = new JLabel( getResources().getString( "csvexportdialog.encoding" ) ); //$NON-NLS-1$
 
-    final TitledBorder tb =
-      new TitledBorder( getResources().getString(
-        "csvexportdialog.export-options" ) ); //$NON-NLS-1$
+    final TitledBorder tb = new TitledBorder( getResources().getString( "csvexportdialog.export-options" ) ); //$NON-NLS-1$
     exportTypePanel.setBorder( tb );
 
     GridBagConstraints gbc = new GridBagConstraints();
@@ -447,19 +452,13 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     final JPanel separatorPanel = new JPanel();
     separatorPanel.setLayout( new GridBagLayout() );
 
-    final TitledBorder tb =
-      new TitledBorder( getResources().getString(
-        "csvexportdialog.separatorchar" ) ); //$NON-NLS-1$
+    final TitledBorder tb = new TitledBorder( getResources().getString( "csvexportdialog.separatorchar" ) ); //$NON-NLS-1$
     separatorPanel.setBorder( tb );
 
-    rbSeparatorTab = new JRadioButton( getResources().getString(
-      "csvexportdialog.separator.tab" ) ); //$NON-NLS-1$
-    rbSeparatorColon = new JRadioButton( getResources().getString(
-      "csvexportdialog.separator.colon" ) ); //$NON-NLS-1$
-    rbSeparatorSemicolon = new JRadioButton( getResources().getString(
-      "csvexportdialog.separator.semicolon" ) ); //$NON-NLS-1$
-    rbSeparatorOther = new JRadioButton( getResources().getString(
-      "csvexportdialog.separator.other" ) ); //$NON-NLS-1$
+    rbSeparatorTab = new JRadioButton( getResources().getString( "csvexportdialog.separator.tab" ) ); //$NON-NLS-1$
+    rbSeparatorColon = new JRadioButton( getResources().getString( "csvexportdialog.separator.colon" ) ); //$NON-NLS-1$
+    rbSeparatorSemicolon = new JRadioButton( getResources().getString( "csvexportdialog.separator.semicolon" ) ); //$NON-NLS-1$
+    rbSeparatorOther = new JRadioButton( getResources().getString( "csvexportdialog.separator.other" ) ); //$NON-NLS-1$
 
     getFormValidator().registerButton( rbSeparatorColon );
     getFormValidator().registerButton( rbSeparatorOther );
@@ -483,7 +482,6 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     txSeparatorOther.setDocument( ldoc );
     txSeparatorOther.setColumns( 5 );
     getFormValidator().registerTextField( txSeparatorOther );
-
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.anchor = GridBagConstraints.WEST;
@@ -542,7 +540,8 @@ public class CSVDataExportDialog extends AbstractExportDialog {
   /**
    * Sets the export file name.
    *
-   * @param filename the file name.
+   * @param filename
+   *          the file name.
    */
   public void setFilename( final String filename ) {
     this.txFilename.setText( filename );
@@ -553,8 +552,7 @@ public class CSVDataExportDialog extends AbstractExportDialog {
    */
   public void clear() {
     txFilename.setText( "" ); //$NON-NLS-1$
-    cbEncoding.setSelectedIndex( encodingModel.indexOf
-      ( EncodingRegistry.getPlatformDefaultEncoding() ) );
+    cbEncoding.setSelectedIndex( encodingModel.indexOf( EncodingRegistry.getPlatformDefaultEncoding() ) );
     rbSeparatorColon.setSelected( true );
     cbxColumnNamesAsFirstRow.setSelected( false );
     performSeparatorSelection();
@@ -579,8 +577,7 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     config.setConfigProperty( CSVProcessor.CSV_ENABLE_REPORTFOOTER, String.valueOf( isEnableReportFooter() ) );
     config.setConfigProperty( CSVProcessor.CSV_ENABLE_REPORTHEADER, String.valueOf( isEnableReportHeader() ) );
 
-    config.setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.csv.FileName", getFilename() ); //$NON-NLS-1$
+    config.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.csv.FileName", getFilename() ); //$NON-NLS-1$
     config.setConfigProperty( CSVProcessor.CSV_WRITE_STATECOLUMNS, "false" ); //$NON-NLS-1$
 
     return config;
@@ -589,49 +586,46 @@ public class CSVDataExportDialog extends AbstractExportDialog {
   /**
    * Initialises the CSV export dialog from the settings in the report configuration.
    *
-   * @param config the report configuration.
+   * @param config
+   *          the report configuration.
    */
   protected void setDialogContents( final Configuration config ) {
     // the CSV separator has two sources, either the data CSV or the
     // table CSV. As we have only one input field for that property,
     // we use a cascading schema to resolve this. The data oriented
     // separator is preferred ...
-    final String tableCSVSeparator = config.getConfigProperty( CSVTableModule.SEPARATOR,
-      CSVDataExportDialog.COMMA_SEPARATOR );
+    final String tableCSVSeparator =
+        config.getConfigProperty( CSVTableModule.SEPARATOR, CSVDataExportDialog.COMMA_SEPARATOR );
     setSeparatorString( config.getConfigProperty( CSVProcessor.CSV_SEPARATOR, tableCSVSeparator ) );
 
     final String colNames = config.getConfigProperty( CSVProcessor.CSV_DATAROWNAME, "false" ); //$NON-NLS-1$
     setColumnNamesAsFirstRow( "true".equals( colNames ) ); //$NON-NLS-1$
 
-    final String encoding = config.getConfigProperty( CSVProcessor.CSV_ENCODING,
-      CSVDataExportDialog.CSV_OUTPUT_ENCODING_DEFAULT );
+    final String encoding =
+        config.getConfigProperty( CSVProcessor.CSV_ENCODING, CSVDataExportDialog.CSV_OUTPUT_ENCODING_DEFAULT );
     encodingModel.ensureEncodingAvailable( encoding );
     setEncoding( encoding );
 
     final String stateCols = config.getConfigProperty( CSVProcessor.CSV_WRITE_STATECOLUMNS, "false" ); //$NON-NLS-1$
     setWriteStateColumns( "true".equals( stateCols ) ); //$NON-NLS-1$
 
-    final String enableReportHeader = config.getConfigProperty( CSVProcessor.CSV_ENABLE_REPORTHEADER,
-      "false" ); //$NON-NLS-1$
+    final String enableReportHeader = config.getConfigProperty( CSVProcessor.CSV_ENABLE_REPORTHEADER, "false" ); //$NON-NLS-1$
     setEnableReportHeader( "true".equals( enableReportHeader ) ); //$NON-NLS-1$
 
-    final String enableReportFooter = config.getConfigProperty( CSVProcessor.CSV_ENABLE_REPORTFOOTER,
-      "false" ); //$NON-NLS-1$
+    final String enableReportFooter = config.getConfigProperty( CSVProcessor.CSV_ENABLE_REPORTFOOTER, "false" ); //$NON-NLS-1$
     setEnableReportFooter( "true".equals( enableReportFooter ) ); //$NON-NLS-1$
 
-    final String enableGroupHeader = config.getConfigProperty( CSVProcessor.CSV_ENABLE_GROUPHEADERS,
-      "false" ); //$NON-NLS-1$
+    final String enableGroupHeader = config.getConfigProperty( CSVProcessor.CSV_ENABLE_GROUPHEADERS, "false" ); //$NON-NLS-1$
     setEnableGroupHeader( "true".equals( enableGroupHeader ) ); //$NON-NLS-1$
 
-    final String enableGroupFooter = config.getConfigProperty( CSVProcessor.CSV_ENABLE_GROUPFOOTERS,
-      "false" ); //$NON-NLS-1$
+    final String enableGroupFooter = config.getConfigProperty( CSVProcessor.CSV_ENABLE_GROUPFOOTERS, "false" ); //$NON-NLS-1$
     setEnableGroupFooter( "true".equals( enableGroupFooter ) ); //$NON-NLS-1$
 
     final String enableItemBand = config.getConfigProperty( CSVProcessor.CSV_ENABLE_ITEMBANDS, "false" ); //$NON-NLS-1$
     setEnableItembands( "true".equals( enableItemBand ) ); //$NON-NLS-1$
 
-    final String defaultFileName = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.gui.csv.FileName" ); //$NON-NLS-1$
+    final String defaultFileName =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.csv.FileName" ); //$NON-NLS-1$
     if ( defaultFileName != null ) {
       setFilename( resolvePath( defaultFileName ).getAbsolutePath() );
     } else {
@@ -663,7 +657,8 @@ public class CSVDataExportDialog extends AbstractExportDialog {
   /**
    * Sets the separator string.
    *
-   * @param s the separator.
+   * @param s
+   *          the separator.
    */
   public void setSeparatorString( final String s ) {
     if ( s == null ) {
@@ -698,7 +693,8 @@ public class CSVDataExportDialog extends AbstractExportDialog {
   /**
    * Sets the encoding.
    *
-   * @param encoding the encoding.
+   * @param encoding
+   *          the encoding.
    */
   public void setEncoding( final String encoding ) {
     cbEncoding.setSelectedIndex( encodingModel.indexOf( encoding ) );
@@ -710,9 +706,9 @@ public class CSVDataExportDialog extends AbstractExportDialog {
   protected void performSelectFile() {
     if ( fileChooser == null ) {
       fileChooser = new JFileChooser();
-      final FilesystemFilter filter = new FilesystemFilter
-        ( CSVDataExportDialog.CSV_FILE_EXTENSION, getResources().getString(
-          "csvexportdialog.csv-file-description" ) ); //$NON-NLS-1$
+      final FilesystemFilter filter =
+          new FilesystemFilter( CSVDataExportDialog.CSV_FILE_EXTENSION, getResources().getString(
+              "csvexportdialog.csv-file-description" ) ); //$NON-NLS-1$
       fileChooser.addChoosableFileFilter( filter );
       fileChooser.setMultiSelectionEnabled( false );
     }
@@ -724,8 +720,7 @@ public class CSVDataExportDialog extends AbstractExportDialog {
       String selFileName = selFile.getAbsolutePath();
 
       // Test if ends on csv
-      if ( StringUtils.endsWithIgnoreCase( selFileName,
-        CSVDataExportDialog.CSV_FILE_EXTENSION ) == false ) {
+      if ( StringUtils.endsWithIgnoreCase( selFileName, CSVDataExportDialog.CSV_FILE_EXTENSION ) == false ) {
         selFileName = selFileName + CSVDataExportDialog.CSV_FILE_EXTENSION;
       }
       setFilename( selFileName );
@@ -742,37 +737,30 @@ public class CSVDataExportDialog extends AbstractExportDialog {
 
     final String filename = getFilename();
     if ( filename.trim().length() == 0 ) {
-      getStatusBar().setStatus( StatusType.ERROR,
-        getResources().getString( "csvexportdialog.targetIsEmpty" ) ); //$NON-NLS-1$
+      getStatusBar().setStatus( StatusType.ERROR, getResources().getString( "csvexportdialog.targetIsEmpty" ) ); //$NON-NLS-1$
       return false;
     }
     final File f = new File( filename );
     if ( f.exists() ) {
       if ( f.isFile() == false ) {
-        getStatusBar().setStatus( StatusType.ERROR,
-          getResources().getString( "csvexportdialog.targetIsNoFile" ) ); //$NON-NLS-1$
+        getStatusBar().setStatus( StatusType.ERROR, getResources().getString( "csvexportdialog.targetIsNoFile" ) ); //$NON-NLS-1$
         return false;
       }
       if ( f.canWrite() == false ) {
-        getStatusBar().setStatus( StatusType.ERROR,
-          getResources().getString( "csvexportdialog.targetIsNotWritable" ) ); //$NON-NLS-1$
+        getStatusBar().setStatus( StatusType.ERROR, getResources().getString( "csvexportdialog.targetIsNotWritable" ) ); //$NON-NLS-1$
         return false;
       }
 
-      final String message = MessageFormat.format( getResources().getString
-          ( "csvexportdialog.targetExistsWarning" ), //$NON-NLS-1$
-        new Object[] { filename } );
+      final String message = MessageFormat.format( getResources().getString( "csvexportdialog.targetExistsWarning" ), //$NON-NLS-1$
+          new Object[] { filename } );
       getStatusBar().setStatus( StatusType.WARNING, message );
 
     }
 
-    if ( cbxEnableGroupFooter.isSelected() == false &&
-      cbxEnableGroupHeader.isSelected() == false &&
-      cbxEnableReportFooter.isSelected() == false &&
-      cbxEnableReportHeader.isSelected() == false &&
-      cbxEnableItemband.isSelected() == false ) {
-      getStatusBar().setStatus( StatusType.ERROR,
-        getResources().getString( "csvexportdialog.noContentForExport" ) ); //$NON-NLS-1$
+    if ( cbxEnableGroupFooter.isSelected() == false && cbxEnableGroupHeader.isSelected() == false
+        && cbxEnableReportFooter.isSelected() == false && cbxEnableReportHeader.isSelected() == false
+        && cbxEnableItemband.isSelected() == false ) {
+      getStatusBar().setStatus( StatusType.ERROR, getResources().getString( "csvexportdialog.noContentForExport" ) ); //$NON-NLS-1$
       return false;
     }
 
@@ -784,18 +772,14 @@ public class CSVDataExportDialog extends AbstractExportDialog {
     if ( f.exists() ) {
       final String key1 = "csvexportdialog.targetOverwriteConfirmation"; //$NON-NLS-1$
       final String key2 = "csvexportdialog.targetOverwriteTitle"; //$NON-NLS-1$
-      if ( JOptionPane.showConfirmDialog( this,
-        MessageFormat.format( getResources().getString( key1 ),
-          new Object[] { getFilename() } ),
-        getResources().getString( key2 ),
-        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE )
-        == JOptionPane.NO_OPTION ) {
+      if ( JOptionPane.showConfirmDialog( this, MessageFormat.format( getResources().getString( key1 ),
+          new Object[] { getFilename() } ), getResources().getString( key2 ), JOptionPane.YES_NO_OPTION,
+          JOptionPane.QUESTION_MESSAGE ) == JOptionPane.NO_OPTION ) {
         return false;
       }
     }
     return true;
   }
-
 
   /**
    * Enables or disables the 'other' separator text field.

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 public class ElementMetaDataParser {
   public static final String GLOBAL_INCLUDES_PREFIX =
-    "org.pentaho.reporting.engine.classic.core.metadata.global-includes.";
+      "org.pentaho.reporting.engine.classic.core.metadata.global-includes.";
 
   private static final Log logger = LogFactory.getLog( ElementMetaDataParser.class );
 
@@ -56,14 +56,14 @@ public class ElementMetaDataParser {
     final URL reportPreProcessorMetaSource = ObjectUtilities.getResource( source, ElementMetaDataParser.class );
     if ( reportPreProcessorMetaSource == null ) {
       throw new ModuleInitializeException(
-        "Error: Could not find the core report-preprocessor meta-data description file: " + source );
+          "Error: Could not find the core report-preprocessor meta-data description file: " + source );
     }
     try {
       ReportPreProcessorRegistry.getInstance().registerFromXml( reportPreProcessorMetaSource );
     } catch ( Exception e ) {
       logger.debug( "Failed:", e );
       throw new ModuleInitializeException( "Error: Could not parse the report-preprocessor meta-data description file",
-        e );
+          e );
     }
   }
 
@@ -72,23 +72,21 @@ public class ElementMetaDataParser {
     final URL reportPreProcessorMetaSource = ObjectUtilities.getResource( source, ElementMetaDataParser.class );
     if ( reportPreProcessorMetaSource == null ) {
       throw new ModuleInitializeException(
-        "Error: Could not find the core report-process-task meta-data description file: " + source );
+          "Error: Could not find the core report-process-task meta-data description file: " + source );
     }
     try {
       ReportProcessTaskRegistry.getInstance().registerFromXml( reportPreProcessorMetaSource );
     } catch ( Exception e ) {
       logger.debug( "Failed:", e );
       throw new ModuleInitializeException( "Error: Could not parse the report-process-task meta-data description file",
-        e );
+          e );
     }
   }
 
   public static void initializeOptionalExpressionsMetaData( final String source ) throws ModuleInitializeException {
-    final URL expressionMetaSource = ObjectUtilities.getResource
-      ( source, ElementMetaDataParser.class );
+    final URL expressionMetaSource = ObjectUtilities.getResource( source, ElementMetaDataParser.class );
     if ( expressionMetaSource == null ) {
-      throw new ModuleInitializeException(
-        "Error: Could not find the expression meta-data description file: " + source );
+      throw new ModuleInitializeException( "Error: Could not find the expression meta-data description file: " + source );
     }
     try {
       ExpressionRegistry.getInstance().registerFromXml( expressionMetaSource );
@@ -101,8 +99,8 @@ public class ElementMetaDataParser {
   public static void initializeOptionalElementMetaData( final String source ) throws ModuleInitializeException {
     final URL metaDataSource = ObjectUtilities.getResource( source, ElementMetaDataParser.class );
     if ( metaDataSource == null ) {
-      throw new ModuleInitializeException(
-        "Error: Could not find the optional element meta-data description file: " + source );
+      throw new ModuleInitializeException( "Error: Could not find the optional element meta-data description file: "
+          + source );
     }
     try {
       ElementTypeRegistry.getInstance().registerFromXml( metaDataSource );

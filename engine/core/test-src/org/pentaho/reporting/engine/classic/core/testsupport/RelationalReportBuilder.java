@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
@@ -50,10 +50,8 @@ public class RelationalReportBuilder {
     private boolean headerAggregation;
     private boolean footerAggregation;
 
-    public GroupDefinition( final String groupField,
-                            final boolean header,
-                            final boolean headerAggregation,
-                            final boolean footerAggregation ) {
+    public GroupDefinition( final String groupField, final boolean header, final boolean headerAggregation,
+        final boolean footerAggregation ) {
       this.groupField = groupField;
       this.header = header;
       this.headerAggregation = headerAggregation;
@@ -148,10 +146,8 @@ public class RelationalReportBuilder {
     addGroup( field, true, true, true );
   }
 
-  public void addGroup( final String field,
-                        final boolean printHeader,
-                        final boolean printHeaderAgg,
-                        final boolean printFooterAgg ) {
+  public void addGroup( final String field, final boolean printHeader, final boolean printHeaderAgg,
+      final boolean printFooterAgg ) {
     groups.add( new GroupDefinition( field, printHeader, printHeaderAgg, printFooterAgg ) );
   }
 
@@ -201,7 +197,7 @@ public class RelationalReportBuilder {
       }
     }
 
-    //noinspection ConstantConditions
+    // noinspection ConstantConditions
     final GroupDataBody body = (GroupDataBody) innerGroup.getBody();
     final ItemBand band = body.getItemBand();
     band.setLayout( "row" );
@@ -224,9 +220,8 @@ public class RelationalReportBuilder {
     return getGroupNamePrefix() + g.getGroupField();
   }
 
-  private void configureGroupFooter( final GroupDefinition groupDefinition,
-                                     final RelationalGroup g,
-                                     final boolean headerPrinted ) {
+  private void configureGroupFooter( final GroupDefinition groupDefinition, final RelationalGroup g,
+      final boolean headerPrinted ) {
     final GroupFooter footer = g.getFooter();
     footer.setLayout( "row" );
     footer.getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true );
@@ -240,15 +235,14 @@ public class RelationalReportBuilder {
     if ( groupDefinition.isFooterAggregation() ) {
       for ( int d = 0; d < details.size(); d += 1 ) {
         final RelationalDetail relationalDetail = details.get( d );
-        footer.addElement( createFieldItem( relationalDetail.getField(),
-          relationalDetail.getAggregation(), relationalDetail.getBackground() ) );
+        footer.addElement( createFieldItem( relationalDetail.getField(), relationalDetail.getAggregation(),
+            relationalDetail.getBackground() ) );
       }
     }
   }
 
-  private void configureGroupHeader( final GroupDefinition groupDefinition,
-                                     final RelationalGroup g,
-                                     final boolean anyHeaderPrinted ) {
+  private void configureGroupHeader( final GroupDefinition groupDefinition, final RelationalGroup g,
+      final boolean anyHeaderPrinted ) {
     final GroupHeader header = g.getHeader();
     header.setLayout( "row" );
     header.getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true );
@@ -262,8 +256,8 @@ public class RelationalReportBuilder {
     if ( groupDefinition.isHeaderAggregation() ) {
       for ( int d = 0; d < details.size(); d += 1 ) {
         final RelationalDetail relationalDetail = details.get( d );
-        header.addElement( createFieldItem( relationalDetail.getField(),
-          relationalDetail.getAggregation(), relationalDetail.getBackground() ) );
+        header.addElement( createFieldItem( relationalDetail.getField(), relationalDetail.getAggregation(),
+            relationalDetail.getBackground() ) );
       }
     }
   }
@@ -284,9 +278,7 @@ public class RelationalReportBuilder {
     }
   }
 
-  private Element createFieldItem( final String fieldName,
-                                   final Class aggregationType,
-                                   final Color background ) {
+  private Element createFieldItem( final String fieldName, final Class aggregationType, final Color background ) {
     final ElementType targetType;
     if ( dataSchemaModel != null ) {
       final DataAttributeContext context = dataSchemaModel.getDataAttributeContext();
@@ -310,8 +302,7 @@ public class RelationalReportBuilder {
     element.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, 80f );
     element.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 20f );
     element.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE, aggregationType );
-    element
-      .setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.FALSE );
+    element.setAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.FALSE );
     return element;
   }
 

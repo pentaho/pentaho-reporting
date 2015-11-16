@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
@@ -41,42 +41,47 @@ public class ExcelOutputProcessorMetaData extends AbstractOutputProcessorMetaDat
 
   public void initialize( final Configuration configuration ) {
     super.initialize( configuration );
-    final String localStrict = configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.StrictLayout" );
+    final String localStrict =
+        configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.StrictLayout" );
     if ( localStrict != null ) {
       if ( "true".equals( localStrict ) ) {
         addFeature( AbstractTableOutputProcessor.STRICT_LAYOUT );
       }
     } else {
-      final String globalStrict = configuration.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout" );
+      final String globalStrict =
+          configuration
+              .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout" );
       if ( "true".equals( globalStrict ) ) {
         addFeature( AbstractTableOutputProcessor.STRICT_LAYOUT );
       }
     }
 
-    final String emulatePadding = configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.EmulateCellPadding" );
+    final String emulatePadding =
+        configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.EmulateCellPadding" );
     if ( "true".equals( emulatePadding ) == false ) {
       addFeature( OutputProcessorFeature.DISABLE_PADDING );
     } else {
       addFeature( OutputProcessorFeature.EMULATE_PADDING );
     }
 
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.UsePageBands" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.UsePageBands" ) ) ) {
       addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.UsePageBands" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.UsePageBands" ) ) ) {
       addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.TreatEllipseAsRectangle" ) ) ) {
+    if ( "true"
+        .equals( configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.TreatEllipseAsRectangle" ) ) ) {
       addFeature( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.TreatEllipseAsRectangle" ) ) ) {
+    if ( "true"
+        .equals( configuration
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.TreatEllipseAsRectangle" ) ) ) {
       addFeature( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE );
     }
 
@@ -91,22 +96,23 @@ public class ExcelOutputProcessorMetaData extends AbstractOutputProcessorMetaDat
       addFeature( OutputProcessorFeature.UNALIGNED_PAGEBANDS );
     }
 
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowX" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowX" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_X );
     }
-    if ( "true".equals( configuration.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowY" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowY" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
     }
-    if ( "true".equals( configuration.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ShapeAsContent" ) ) ) {
+    if ( "true".equals( configuration
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ShapeAsContent" ) ) ) {
       addFeature( AbstractTableOutputProcessor.SHAPES_CONTENT );
     }
 
     final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper( configuration );
-    final double deviceResolution = extendedConfig.getIntProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.DeviceResolution", 0 );
+    final double deviceResolution =
+        extendedConfig.getIntProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.DeviceResolution", 0 );
     if ( deviceResolution > 0 ) {
       setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution );
     }
@@ -143,8 +149,8 @@ public class ExcelOutputProcessorMetaData extends AbstractOutputProcessorMetaDat
       return true;
     }
 
-    if ( StringUtils.isEmpty( (String)
-      attributes.getAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FIELD_FORMULA ) ) == false ) {
+    if ( StringUtils.isEmpty( (String) attributes.getAttribute( AttributeNames.Excel.NAMESPACE,
+        AttributeNames.Excel.FIELD_FORMULA ) ) == false ) {
       return true;
     }
     return false;

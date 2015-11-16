@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -71,13 +71,11 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     chunkWidthUpdatePool = new StaticChunkWidthUpdatePool();
   }
 
-  public void initialize( final OutputProcessorMetaData metaData,
-                          final ProcessingContext processingContext ) {
+  public void initialize( final OutputProcessorMetaData metaData, final ProcessingContext processingContext ) {
     this.metaData = metaData;
     this.overflowXSupported = metaData.isFeatureSupported( OutputProcessorFeature.ASSUME_OVERFLOW_X );
     this.overflowYSupported = metaData.isFeatureSupported( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
-    this.widowsEnabled =
-      !ClassicEngineBoot.isEnforceCompatibilityFor( processingContext.getCompatibilityLevel(), 3, 8 );
+    this.widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor( processingContext.getCompatibilityLevel(), 3, 8 );
     this.widowOrphanDefinitionsEncountered = false;
     this.designTime = metaData.isFeatureSupported( OutputProcessorFeature.DESIGNTIME );
     this.resourceManager = processingContext.getResourceManager();
@@ -166,8 +164,8 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
       }
     }
 
-    final boolean fixedPosition = RenderLength.AUTO.equals
-      ( styleSheet.getStyleProperty( BandStyleKeys.FIXED_POSITION, RenderLength.AUTO ) ) == false;
+    final boolean fixedPosition =
+        RenderLength.AUTO.equals( styleSheet.getStyleProperty( BandStyleKeys.FIXED_POSITION, RenderLength.AUTO ) ) == false;
     if ( fixedPosition ) {
       applyIndirectManualBreakIndicator( box );
     } else {
@@ -190,7 +188,8 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
    * layout model does not know anything about margins or borders, so in that case resolving against the CSS model is
    * ok.
    *
-   * @param box the box that should be processed.
+   * @param box
+   *          the box that should be processed.
    * @return true if the box is new, false otherwise
    */
   private void updateStaticProperties( final RenderBox box ) {
@@ -271,14 +270,13 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     sblp.setPreserveSpace( WhitespaceCollapse.PRESERVE.equals( collapse ) );
     sblp.setOverflowX( style.getBooleanStyleProperty( ElementStyleKeys.OVERFLOW_X, overflowXSupported ) );
     sblp.setOverflowY( style.getBooleanStyleProperty( ElementStyleKeys.OVERFLOW_Y, overflowYSupported ) );
-    sblp.setInvisibleConsumesSpace( style.getBooleanStyleProperty
-      ( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX ) );
+    sblp.setInvisibleConsumesSpace( style.getBooleanStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE,
+        nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX ) );
     sblp.setVisible( style.getBooleanStyleProperty( ElementStyleKeys.VISIBLE ) );
 
     final RenderBox parent = box.getParent();
-    if ( parent != null &&
-      style.getDoubleStyleProperty( ElementStyleKeys.MIN_WIDTH, 0 ) == 0 &&
-      style.getDoubleStyleProperty( ElementStyleKeys.WIDTH, 0 ) == 0 ) {
+    if ( parent != null && style.getDoubleStyleProperty( ElementStyleKeys.MIN_WIDTH, 0 ) == 0
+        && style.getDoubleStyleProperty( ElementStyleKeys.WIDTH, 0 ) == 0 ) {
       // todo: Should that flag also take paddings and borders of the parent into account?
       // They alter the available space for the childs, and thus it would make sense to establish a new
       // context for resolving percentage-widths
@@ -295,9 +293,8 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     }
   }
 
-  private void computeMarginsAndBorders( final RenderBox box,
-                                         final BoxDefinition boxDefinition,
-                                         final StaticBoxLayoutProperties sblp ) {
+  private void computeMarginsAndBorders( final RenderBox box, final BoxDefinition boxDefinition,
+      final StaticBoxLayoutProperties sblp ) {
     final int nodeType = box.getLayoutNodeType();
     if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW || nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION ) {
       sblp.setBorderBottom( 0 );
@@ -322,8 +319,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     if ( nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
       return chunkWidthUpdatePool.createParagraph( chunkWidthUpdate, (ParagraphRenderBox) box );
     }
-    if ( nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX ||
-      nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX || nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
       return chunkWidthUpdatePool.createHorizontal( chunkWidthUpdate, box );
     }
     return chunkWidthUpdatePool.createVertical( chunkWidthUpdate, box );
@@ -350,6 +346,5 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
       chunkWidthUpdate.update( box.getMinimumChunkWidth() );
     }
   }
-
 
 }

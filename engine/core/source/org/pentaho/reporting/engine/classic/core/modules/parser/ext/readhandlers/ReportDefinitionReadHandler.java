@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
@@ -52,26 +52,27 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler 
   /**
    * Initialises the handler.
    *
-   * @param rootHandler the root handler.
-   * @param tagName     the tag name.
+   * @param rootHandler
+   *          the root handler.
+   * @param tagName
+   *          the tag name.
    */
   public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
     super.init( rootHandler, uri, tagName );
     rootHandler.setHelperObject( "property-expansion", Boolean.TRUE );
   }
 
-
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected void startParsing( final PropertyAttributes attrs )
-    throws SAXException {
+  protected void startParsing( final PropertyAttributes attrs ) throws SAXException {
     RootXmlReadHandler rootHandler = getRootHandler();
-    final Object maybeReport = rootHandler.getHelperObject
-      ( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+    final Object maybeReport = rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
     final MasterReport report;
     if ( maybeReport instanceof MasterReport == false ) {
       // replace it ..
@@ -103,8 +104,7 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler 
     templateFactory.configure( rootHandler.getParserConfiguration() );
 
     if ( rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES ) instanceof HashMap == false ) {
-      rootHandler
-        .setHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>() );
+      rootHandler.setHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>() );
     }
     rootHandler.setHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME, report );
     rootHandler.setHelperObject( ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY, elementFactory );
@@ -121,14 +121,15 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler 
   /**
    * Returns the handler for a child element.
    *
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler or null, if the tagname is invalid.
-   * @throws org.xml.sax.SAXException if there is a parsing error.
+   * @throws org.xml.sax.SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final PropertyAttributes atts )
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final PropertyAttributes atts )
     throws SAXException {
     if ( isSameNamespace( uri ) == false ) {
       return null;

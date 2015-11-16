@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
@@ -30,15 +30,14 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import java.util.ArrayList;
 
 public class DefaultAttributeCore implements AttributeCore {
-  private static final String[] EMPTY = new String[ 0 ];
-  private static final ResourceReference[] EMPTY_RESOURCES = new ResourceReference[ 0 ];
+  private static final String[] EMPTY = new String[0];
+  private static final ResourceReference[] EMPTY_RESOURCES = new ResourceReference[0];
 
   public DefaultAttributeCore() {
   }
 
-  public String[] getReferencedFields( final AttributeMetaData metaData,
-                                       final ReportElement element,
-                                       final Object attributeValue ) {
+  public String[] getReferencedFields( final AttributeMetaData metaData, final ReportElement element,
+      final Object attributeValue ) {
     if ( element == null ) {
       throw new NullPointerException();
     }
@@ -64,12 +63,12 @@ public class DefaultAttributeCore implements AttributeCore {
         final Object[] objects = FormulaUtil.getReferences( formula );
         final ArrayList<String> list = new ArrayList<String>();
         for ( int i = 0; i < objects.length; i++ ) {
-          final Object object = objects[ i ];
+          final Object object = objects[i];
           if ( object instanceof String ) {
             list.add( (String) object );
           }
         }
-        return list.toArray( new String[ list.size() ] );
+        return list.toArray( new String[list.size()] );
       } catch ( ParseException e ) {
         return EMPTY;
       }
@@ -77,9 +76,8 @@ public class DefaultAttributeCore implements AttributeCore {
     return EMPTY;
   }
 
-  public String[] getReferencedGroups( final AttributeMetaData metaData,
-                                       final ReportElement element,
-                                       final Object attributeValue ) {
+  public String[] getReferencedGroups( final AttributeMetaData metaData, final ReportElement element,
+      final Object attributeValue ) {
     final String valueRole = metaData.getValueRole();
     if ( element == null ) {
       throw new NullPointerException();
@@ -98,10 +96,8 @@ public class DefaultAttributeCore implements AttributeCore {
     return EMPTY;
   }
 
-  public ResourceReference[] getReferencedResources( final AttributeMetaData metaData,
-                                                     final ReportElement element,
-                                                     final ResourceManager resourceManager,
-                                                     final Object attributeValue ) {
+  public ResourceReference[] getReferencedResources( final AttributeMetaData metaData, final ReportElement element,
+      final ResourceManager resourceManager, final Object attributeValue ) {
     if ( element == null ) {
       throw new NullPointerException();
     }
@@ -144,7 +140,6 @@ public class DefaultAttributeCore implements AttributeCore {
     return EMPTY_RESOURCES;
   }
 
-
   protected ResourceKey getDefinitionSource( final ReportElement element ) {
     final Object o = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE );
     if ( o instanceof ResourceKey ) {
@@ -170,6 +165,6 @@ public class DefaultAttributeCore implements AttributeCore {
   }
 
   public String[] getExtraCalculationFields( final AttributeMetaData metaData ) {
-    return new String[ 0 ];
+    return new String[0];
   }
 }

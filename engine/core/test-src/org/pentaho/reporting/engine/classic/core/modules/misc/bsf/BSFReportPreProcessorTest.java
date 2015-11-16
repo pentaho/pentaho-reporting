@@ -29,11 +29,11 @@ import org.pentaho.reporting.engine.classic.core.testsupport.base.PreProcessorTe
 
 public class BSFReportPreProcessorTest extends PreProcessorTestBase {
   private static final String SCRIPT =
-    "org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFReportPreProcessorTest.run(definition, \"script\")"
-      + "; return definition;";
+      "org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFReportPreProcessorTest.run(definition, \"script\")"
+          + "; return definition;";
   private static final String PRESCRIPT =
-    "org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFReportPreProcessorTest.run(definition, "
-      + "\"pre-data-script\"); return definition;";
+      "org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFReportPreProcessorTest.run(definition, "
+          + "\"pre-data-script\"); return definition;";
 
   public static void run( AbstractReportDefinition def, String value ) {
     def.setAttribute( "test", "test", value );

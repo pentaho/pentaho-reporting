@@ -58,9 +58,8 @@ public class Prd3820IT {
     private final Graphics2D g;
     private ArrayList<Long> textRendering;
 
-    private TestPdfLogicalPageDrawable( final PdfWriter writer,
-                                        final LFUMap<ResourceKey, Image> imageCache, final char version,
-                                        final Graphics2D g ) {
+    private TestPdfLogicalPageDrawable( final PdfWriter writer, final LFUMap<ResourceKey, Image> imageCache,
+        final char version, final Graphics2D g ) {
       super( writer, imageCache, version );
       this.g = g;
       this.textRendering = new ArrayList<Long>();
@@ -73,7 +72,6 @@ public class Prd3820IT {
     public void draw() {
       draw( g, new Rectangle2D.Double( 0, 0, 700, 500 ) );
     }
-
 
     protected void drawText( final RenderableText renderableText, final long contentX2 ) {
       super.drawText( renderableText, contentX2 );
@@ -89,14 +87,13 @@ public class Prd3820IT {
     ClassicEngineBoot.getInstance().start();
   }
 
-
   @Test
   public void testTextRenderingComplex() throws Exception {
     URL resource = getClass().getResource( "Prd-3820.prpt" );
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
     LogicalPageBox logicalPageBox = layoutPage( report, 0 );
     ParagraphRenderBox first = (ParagraphRenderBox) MatchFactory.findElementByName( logicalPageBox, "first" );
@@ -105,7 +102,6 @@ public class Prd3820IT {
     Assert.assertEquals( StrictGeomUtility.toInternalValue( 29 ), first.getFirstChild().getY2() );
     Assert.assertEquals( StrictGeomUtility.toInternalValue( 29 ), second.getFirstChild().getY2() );
 
-
     TestPdfLogicalPageDrawable pdf = createDrawableForTest( report, logicalPageBox );
     pdf.draw();
     Assert.assertEquals( 2, pdf.textRendering.size() );
@@ -113,12 +109,11 @@ public class Prd3820IT {
     Assert.assertTrue( pdf.textRendering.get( 0 ) < StrictGeomUtility.toInternalValue( 29 ) );
   }
 
-
   private LogicalPageBox layoutPage( final MasterReport report, final int page ) throws Exception {
 
     final DebugReportRunner.InterceptingXmlPageOutputProcessor outputProcessor =
-      new DebugReportRunner.InterceptingXmlPageOutputProcessor
-        ( new NullOutputStream(), new XmlPageOutputProcessorMetaData( BaseFontModule.getFontRegistry() ) );
+        new DebugReportRunner.InterceptingXmlPageOutputProcessor( new NullOutputStream(),
+            new XmlPageOutputProcessorMetaData( BaseFontModule.getFontRegistry() ) );
     outputProcessor.setFlowSelector( new SinglePageFlowSelector( page, false ) );
     final PageableReportProcessor proc = new PageableReportProcessor( report, outputProcessor );
     proc.processReport();
@@ -131,8 +126,7 @@ public class Prd3820IT {
   }
 
   protected TestPdfLogicalPageDrawable createDrawableForTest( final MasterReport report,
-                                                              final LogicalPageBox logicalPageBox )
-    throws DocumentException {
+      final LogicalPageBox logicalPageBox ) throws DocumentException {
     Document document = new Document();
     PdfWriter writer = PdfWriter.getInstance( document, new NullOutputStream() );
     writer.setLinearPageMode();
@@ -142,15 +136,13 @@ public class Prd3820IT {
     document.setMargins( 10, 10, 10, 10 );
     document.open();
 
-
     PdfOutputProcessorMetaData metaData =
-      new PdfOutputProcessorMetaData( new ITextFontStorage( BaseFontModule.getFontRegistry() ) );
+        new PdfOutputProcessorMetaData( new ITextFontStorage( BaseFontModule.getFontRegistry() ) );
     metaData.initialize( report.getConfiguration() );
     final Graphics2D graphics = new PdfGraphics2D( writer.getDirectContent(), 700, 500, metaData );
 
-
     TestPdfLogicalPageDrawable pdf =
-      new TestPdfLogicalPageDrawable( writer, new LFUMap<ResourceKey, Image>( 10 ), '5', graphics );
+        new TestPdfLogicalPageDrawable( writer, new LFUMap<ResourceKey, Image>( 10 ), '5', graphics );
     pdf.init( logicalPageBox, metaData, report.getResourceManager(), logicalPageBox.getPageGrid().getPage( 0, 0 ) );
     return pdf;
   }

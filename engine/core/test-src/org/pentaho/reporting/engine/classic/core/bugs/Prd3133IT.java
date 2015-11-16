@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -79,8 +79,8 @@ public class Prd3133IT extends TestCase {
 
   public void testPageSum() throws Exception {
     final MasterReport report = createReport();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
 
     final DebugRenderer renderer = new DebugRenderer();
     renderer.setValidator( new Prd3133ReportValidator( false ) );
@@ -91,14 +91,13 @@ public class Prd3133IT extends TestCase {
   public void testPageSumComplex() throws Exception {
     final MasterReport report = createReport();
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
 
     final DebugRenderer renderer = new DebugRenderer();
     renderer.setValidator( new Prd3133ReportValidator( true ) );
     final DebugReportProcessor reportProcessor = new DebugReportProcessor( report, renderer );
     reportProcessor.processReport();
   }
-
 
   private MasterReport createReport() {
     final TypedTableModel model = new TypedTableModel();
@@ -126,18 +125,18 @@ public class Prd3133IT extends TestCase {
     return report;
   }
 
-
   /**
    * Creates a new TextElement containing a numeric filter structure.
    *
-   * @param field the field in the datamodel to retrieve values from.
+   * @param field
+   *          the field in the datamodel to retrieve values from.
    * @return a report element for displaying <code>Number</code> objects.
-   * @throws NullPointerException     if bounds, name or function are null
-   * @throws IllegalArgumentException if the given alignment is invalid
+   * @throws NullPointerException
+   *           if bounds, name or function are null
+   * @throws IllegalArgumentException
+   *           if the given alignment is invalid
    */
-  public static Element createNumberElement( final int x,
-                                             final String field,
-                                             final String name ) {
+  public static Element createNumberElement( final int x, final String field, final String name ) {
 
     final NumberFieldElementFactory factory = new NumberFieldElementFactory();
     factory.setX( new Float( x ) );
@@ -157,7 +156,6 @@ public class Prd3133IT extends TestCase {
     return factory.createElement();
   }
 
-
   public RenderNode getElementByName( final RenderNode node, final String name ) {
     if ( ObjectUtilities.equal( node.getName(), name ) ) {
       return node;
@@ -176,6 +174,5 @@ public class Prd3133IT extends TestCase {
     }
     return null;
   }
-
 
 }

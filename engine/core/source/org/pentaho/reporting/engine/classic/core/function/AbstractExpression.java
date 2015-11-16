@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -70,13 +70,19 @@ public abstract class AbstractExpression implements Expression {
   }
 
   /**
-   * Sets the name of the expression. <P> The name should be unique among: <ul> <li>the functions and expressions for
-   * the report; <li>the columns in the report's <code>TableModel</code>; </ul> This allows the expression to be
-   * referenced by name from any report element.
+   * Sets the name of the expression.
+   * <P>
+   * The name should be unique among:
+   * <ul>
+   * <li>the functions and expressions for the report;
+   * <li>the columns in the report's <code>TableModel</code>;
+   * </ul>
+   * This allows the expression to be referenced by name from any report element.
    * <p/>
    * You should not change the name of an expression once it has been added to the report's expression collection.
    *
-   * @param name the name (<code>null</code> not permitted).
+   * @param name
+   *          the name (<code>null</code> not permitted).
    */
   public void setName( final String name ) {
     this.name = name;
@@ -96,7 +102,8 @@ public abstract class AbstractExpression implements Expression {
   /**
    * Defines, whether the expression is an active expression. This method has no effect anymore.
    *
-   * @param active a flag.
+   * @param active
+   *          a flag.
    * @deprecated All expressions are always active. This method has no effect anymore.
    */
   public final void setActive( final boolean active ) {
@@ -115,15 +122,15 @@ public abstract class AbstractExpression implements Expression {
    * Sets the dependency level for the expression.
    * <p/>
    * The dependency level controls the order of evaluation for expressions and functions. Higher level expressions are
-   * evaluated before lower level expressions.  Any level in the range 0 to Integer.MAX_VALUE is allowed. Negative
-   * values are reserved for system functions (printing and layouting).
+   * evaluated before lower level expressions. Any level in the range 0 to Integer.MAX_VALUE is allowed. Negative values
+   * are reserved for system functions (printing and layouting).
    *
-   * @param level the level (must be greater than or equal to 0).
+   * @param level
+   *          the level (must be greater than or equal to 0).
    */
   public void setDependencyLevel( final int level ) {
     if ( level < 0 ) {
-      throw new IllegalArgumentException(
-        "AbstractExpression.setDependencyLevel(...) : negative "
+      throw new IllegalArgumentException( "AbstractExpression.setDependencyLevel(...) : negative "
           + "dependency not allowed for user-defined expressions." );
     }
     this.dependency = level;
@@ -142,15 +149,16 @@ public abstract class AbstractExpression implements Expression {
   }
 
   /**
-   * Clones the expression.  The expression should be reinitialized after the cloning. <P> Expressions maintain no
-   * state, cloning is done at the beginning of the report processing to disconnect the expression from any other object
-   * space.
+   * Clones the expression. The expression should be reinitialized after the cloning.
+   * <P>
+   * Expressions maintain no state, cloning is done at the beginning of the report processing to disconnect the
+   * expression from any other object space.
    *
    * @return a clone of this expression.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public Object clone()
-    throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
@@ -189,7 +197,8 @@ public abstract class AbstractExpression implements Expression {
    * events or gets evaluated and is unset afterwards. Do not hold references on the runtime or you will create
    * memory-leaks.
    *
-   * @param runtime the runtime information for the expression
+   * @param runtime
+   *          the runtime information for the expression
    */
   public void setRuntime( final ExpressionRuntime runtime ) {
     this.runtime = runtime;
@@ -228,7 +237,8 @@ public abstract class AbstractExpression implements Expression {
   /**
    * Defines, whether this expression's last value is preserved after the expression goes out of scope.
    *
-   * @param preserve true, if the expression's last value is preserved, false otherwise.
+   * @param preserve
+   *          true, if the expression's last value is preserved, false otherwise.
    */
   public void setPreserve( final boolean preserve ) {
     this.preserve = preserve;

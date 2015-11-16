@@ -1,32 +1,32 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
+
+import java.awt.Color;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
-
-import java.awt.*;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * POI Excel utility methods.
@@ -70,7 +70,8 @@ public final class StaticExcelColorSupport implements ExcelColorProducer {
    * triplets. The color wins, which has the smallest triplet difference and where all triplets are nearest to the
    * requested color. Damn, why couldn't these guys from microsoft implement a real color system.
    *
-   * @param awtColor the awt color that should be transformed into an Excel color.
+   * @param awtColor
+   *          the awt color that should be transformed into an Excel color.
    * @return the excel color index that is nearest to the supplied color.
    */
   public short getNearestColor( final Color awtColor ) {
@@ -91,22 +92,18 @@ public final class StaticExcelColorSupport implements ExcelColorProducer {
     double minDiff = Double.MAX_VALUE;
 
     // get the color without the alpha chanel
-    final float[] hsb = Color.RGBtoHSB
-      ( awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue(), null );
+    final float[] hsb = Color.RGBtoHSB( awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue(), null );
 
     float[] excelHsb = null;
     final Iterator elements = triplets.values().iterator();
     while ( elements.hasNext() ) {
       final HSSFColor crtColor = (HSSFColor) elements.next();
       final short[] rgb = crtColor.getTriplet();
-      excelHsb = Color.RGBtoHSB( rgb[ 0 ], rgb[ 1 ], rgb[ 2 ], excelHsb );
+      excelHsb = Color.RGBtoHSB( rgb[0], rgb[1], rgb[2], excelHsb );
 
       final double weight =
-        3.0 * ( Math.min
-          ( Math.abs( excelHsb[ 0 ] - hsb[ 0 ] ),
-            Math.abs( excelHsb[ 0 ] - hsb[ 0 ] + 1 ) ) ) +
-          Math.abs( excelHsb[ 1 ] - hsb[ 1 ] ) +
-          Math.abs( excelHsb[ 2 ] - hsb[ 2 ] );
+          3.0 * ( Math.min( Math.abs( excelHsb[0] - hsb[0] ), Math.abs( excelHsb[0] - hsb[0] + 1 ) ) )
+              + Math.abs( excelHsb[1] - hsb[1] ) + Math.abs( excelHsb[2] - hsb[2] );
 
       if ( weight < minDiff ) {
         minDiff = weight;

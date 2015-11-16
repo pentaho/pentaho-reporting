@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util.geom;
 
@@ -56,13 +56,16 @@ public class StrictBounds implements Serializable, Cloneable {
   /**
    * Creates a StrictBounds object with the given coordinates, width and height.
    *
-   * @param x      the x-coordinate
-   * @param y      the y-coordinate
-   * @param width  the width of the rectangle
-   * @param height the height of the rectangle
+   * @param x
+   *          the x-coordinate
+   * @param y
+   *          the y-coordinate
+   * @param width
+   *          the width of the rectangle
+   * @param height
+   *          the height of the rectangle
    */
-  public StrictBounds( final long x, final long y,
-                       final long width, final long height ) {
+  public StrictBounds( final long x, final long y, final long width, final long height ) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -77,7 +80,6 @@ public class StrictBounds implements Serializable, Cloneable {
   public boolean isLocked() {
     return locked;
   }
-
 
   /**
    * Returns a copy of this bounds object which cannot be modified anymore.
@@ -105,11 +107,11 @@ public class StrictBounds implements Serializable, Cloneable {
     return retval;
   }
 
-
   /**
    * Sets the location and size of this <code>StrictBounds</code> to the specified double values.
    *
-   * @param bounds the bounds from where to copy all properties <code>StrictBounds</code>
+   * @param bounds
+   *          the bounds from where to copy all properties <code>StrictBounds</code>
    */
   public void setRect( final StrictBounds bounds ) {
     if ( locked ) {
@@ -124,13 +126,16 @@ public class StrictBounds implements Serializable, Cloneable {
   /**
    * Sets the location and size of this <code>StrictBounds</code> to the specified double values.
    *
-   * @param x the coordinates to which to set the location of the upper left corner of this <code>StrictBounds</code>
-   * @param y the coordinates to which to set the location of the upper left corner of this <code>StrictBounds</code>
-   * @param w the value to use to set the width of this <code>StrictBounds</code>
-   * @param h the value to use to set the height of this <code>StrictBounds</code>
+   * @param x
+   *          the coordinates to which to set the location of the upper left corner of this <code>StrictBounds</code>
+   * @param y
+   *          the coordinates to which to set the location of the upper left corner of this <code>StrictBounds</code>
+   * @param w
+   *          the value to use to set the width of this <code>StrictBounds</code>
+   * @param h
+   *          the value to use to set the height of this <code>StrictBounds</code>
    */
-  public void setRect( final long x, final long y,
-                       final long w, final long h ) {
+  public void setRect( final long x, final long y, final long w, final long h ) {
     if ( locked ) {
       throw new IllegalStateException( "This object is locked" );
     }
@@ -202,8 +207,10 @@ public class StrictBounds implements Serializable, Cloneable {
   /**
    * Checks whether this rectangle contains the given point.
    *
-   * @param x the x-coordinate of the point.
-   * @param y the y-coordinate of the point.
+   * @param x
+   *          the x-coordinate of the point.
+   * @param y
+   *          the y-coordinate of the point.
    * @return true, if the point is inside or directly on the border of this rectangle, false otherwise.
    */
   public boolean contains( final long x, final long y ) {
@@ -219,17 +226,17 @@ public class StrictBounds implements Serializable, Cloneable {
     return y <= ( this.y + this.height );
   }
 
-
   /**
    * Checks whether the given rectangle1 fully contains rectangle 2 (even if rectangle 2 has a height or width of
    * zero!).
    *
-   * @param rect1 the first rectangle.
-   * @param rect2 the second rectangle.
+   * @param rect1
+   *          the first rectangle.
+   * @param rect2
+   *          the second rectangle.
    * @return true, if the rectangles intersect each other, false otherwise.
    */
-  public static boolean intersects( final StrictBounds rect1,
-                                    final StrictBounds rect2 ) {
+  public static boolean intersects( final StrictBounds rect1, final StrictBounds rect2 ) {
 
     final double x0 = rect1.getX();
     final double y0 = rect1.getY();
@@ -238,16 +245,14 @@ public class StrictBounds implements Serializable, Cloneable {
     final double width = rect2.getWidth();
     final double y = rect2.getY();
     final double height = rect2.getHeight();
-    return ( x + width >= x0 &&
-      y + height >= y0 &&
-      x <= x0 + rect1.getWidth() &&
-      y <= y0 + rect1.getHeight() );
+    return ( x + width >= x0 && y + height >= y0 && x <= x0 + rect1.getWidth() && y <= y0 + rect1.getHeight() );
   }
 
   /**
    * Adds the given bounds to this bounds instance. The resulting rectangle will fully contain both rectangles.
    *
-   * @param bounds the rectangle that should be added.
+   * @param bounds
+   *          the rectangle that should be added.
    */
   public void add( final StrictBounds bounds ) {
     if ( locked ) {
@@ -280,7 +285,8 @@ public class StrictBounds implements Serializable, Cloneable {
    * Intersects this rectangle with the given bounds. The resulting rectangle will cover the space, that is occupied by
    * both rectangles at the same time.
    *
-   * @param bounds the other rectangle.
+   * @param bounds
+   *          the other rectangle.
    * @return the resulting intersection.
    */
   public StrictBounds createIntersection( final StrictBounds bounds ) {
@@ -292,17 +298,17 @@ public class StrictBounds implements Serializable, Cloneable {
     return new StrictBounds( x1, y1, Math.max( 0, x2 - x1 ), Math.max( 0, y2 - y1 ) );
   }
 
-
   /**
    * Checks whether the given rectangle1 fully contains rectangle 2 (even if rectangle 2 has a height or width of
    * zero!).
    *
-   * @param rect1 the first rectangle.
-   * @param rect2 the second rectangle.
+   * @param rect1
+   *          the first rectangle.
+   * @param rect2
+   *          the second rectangle.
    * @return A boolean.
    */
-  public static boolean contains( final StrictBounds rect1,
-                                  final StrictBounds rect2 ) {
+  public static boolean contains( final StrictBounds rect1, final StrictBounds rect2 ) {
 
     final long x0 = rect1.getX();
     final long y0 = rect1.getY();
@@ -311,16 +317,16 @@ public class StrictBounds implements Serializable, Cloneable {
     final long w = rect2.getWidth();
     final long h = rect2.getHeight();
 
-    return ( ( x >= x0 ) && ( y >= y0 ) &&
-      ( ( x + w ) <= ( x0 + rect1.getWidth() ) ) &&
-      ( ( y + h ) <= ( y0 + rect1.getHeight() ) ) );
+    return ( ( x >= x0 ) && ( y >= y0 ) && ( ( x + w ) <= ( x0 + rect1.getWidth() ) ) && ( ( y + h ) <= ( y0 + rect1
+        .getHeight() ) ) );
 
   }
 
   /**
    * Checks whether the given object is a StrictBounds instance convering the same area as these bounds.
    *
-   * @param o the other object.
+   * @param o
+   *          the other object.
    * @return true, if the other object is equal to this object, false otherwise.
    */
   public boolean equals( final Object o ) {
@@ -359,31 +365,23 @@ public class StrictBounds implements Serializable, Cloneable {
     return result;
   }
 
-
   /**
    * Returns a string representation of these bounds.
    *
    * @return the string representing this object.
    */
   public String toString() {
-    return new StringBuffer( 100 ).append( "org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds{" ).append(
-      "x=" )
-      .append( x )
-      .append( ", y=" )
-      .append( y )
-      .append( ", width=" )
-      .append( width )
-      .append( ", height=" )
-      .append( height )
-      .append( '}' )
-      .toString();
+    return new StringBuffer( 100 ).append( "org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds{" )
+        .append( "x=" ).append( x ).append( ", y=" ).append( y ).append( ", width=" ).append( width ).append(
+            ", height=" ).append( height ).append( '}' ).toString();
   }
 
   /**
    * Creates a union from this and the given rectangle. This is similiar to calling 'add'. Calling this method does not
    * modify the original and there are no guarantees, that the resulting rectangle has a positive width or height.
    *
-   * @param bg the other rectangle.
+   * @param bg
+   *          the other rectangle.
    * @return the resulting union rectangle.
    */
   public StrictBounds createUnion( final StrictBounds bg ) {

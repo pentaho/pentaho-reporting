@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -31,7 +31,8 @@ public class NoCloseOutputStream extends FilterOutputStream {
   /**
    * Create a new NoCloseOutputStream with the given output stream a parent.
    *
-   * @param out the parent stream
+   * @param out
+   *          the parent stream
    */
   public NoCloseOutputStream( final OutputStream out ) {
     super( out );
@@ -46,12 +47,12 @@ public class NoCloseOutputStream extends FilterOutputStream {
    * <p/>
    * The <code>close</code> method of <code>FilterOutputStream</code> calls its <code>flush</code> method.
    *
-   * @throws IOException if an I/O error occurs.
+   * @throws IOException
+   *           if an I/O error occurs.
    * @see FilterOutputStream#flush()
    * @see FilterOutputStream#out
    */
-  public void close()
-    throws IOException {
+  public void close() throws IOException {
     flush();
     // do not close the parent stream ... !
   }

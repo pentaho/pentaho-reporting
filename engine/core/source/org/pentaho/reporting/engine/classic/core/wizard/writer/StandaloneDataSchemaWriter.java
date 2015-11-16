@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.wizard.writer;
 
@@ -51,9 +51,8 @@ public class StandaloneDataSchemaWriter {
     context = new DefaultDataAttributeContext( new GenericOutputProcessorMetaData(), Locale.US );
   }
 
-  public void write( final DataSchemaDefinition definition,
-                     final OutputStream outputStream,
-                     final String encoding ) throws IOException {
+  public void write( final DataSchemaDefinition definition, final OutputStream outputStream, final String encoding )
+    throws IOException {
     if ( definition == null ) {
       throw new NullPointerException();
     }
@@ -64,9 +63,8 @@ public class StandaloneDataSchemaWriter {
       throw new NullPointerException();
     }
 
-
     final XmlWriter writer =
-      new XmlWriter( new OutputStreamWriter( outputStream, encoding ), new DefaultTagDescription() );
+        new XmlWriter( new OutputStreamWriter( outputStream, encoding ), new DefaultTagDescription() );
     writer.writeXmlDeclaration( encoding );
 
     final AttributeList rootAttributes = new AttributeList();
@@ -86,7 +84,7 @@ public class StandaloneDataSchemaWriter {
     try {
 
       for ( int i = 0; i < globalRules.length; i++ ) {
-        final DataSchemaRule rule = globalRules[ i ];
+        final DataSchemaRule rule = globalRules[i];
         if ( rule instanceof GlobalRule ) {
           writer.writeTag( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "global-mapping", XmlWriterSupport.OPEN );
           writeAttributes( writer, rule.getStaticAttributes() );
@@ -95,21 +93,20 @@ public class StandaloneDataSchemaWriter {
       }
 
       for ( int i = 0; i < indirectRules.length; i++ ) {
-        final DataSchemaRule rule = indirectRules[ i ];
+        final DataSchemaRule rule = indirectRules[i];
         if ( rule instanceof MetaSelectorRule ) {
           final MetaSelectorRule selectorRule = (MetaSelectorRule) rule;
           writer.writeTag( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "indirect-mapping", XmlWriterSupport.OPEN );
           final MetaSelector[] selectors = selectorRule.getSelectors();
           for ( int j = 0; j < selectors.length; j++ ) {
-            final MetaSelector selector = selectors[ j ];
+            final MetaSelector selector = selectors[j];
             final AttributeList selectorAttributeList = new AttributeList();
-            selectorAttributeList
-              .setAttribute( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "domain", selector.getDomain() );
+            selectorAttributeList.setAttribute( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "domain", selector.getDomain() );
             selectorAttributeList.setAttribute( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "name", selector.getName() );
             final String stringValue = ConverterRegistry.toAttributeValue( selector.getValue() );
             selectorAttributeList.setAttribute( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "value", stringValue );
             writer.writeTag( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "match", selectorAttributeList,
-              XmlWriterSupport.CLOSE );
+                XmlWriterSupport.CLOSE );
           }
           writeAttributes( writer, rule.getStaticAttributes() );
           writer.writeCloseTag();
@@ -117,11 +114,11 @@ public class StandaloneDataSchemaWriter {
       }
 
       for ( int i = 0; i < directRules.length; i++ ) {
-        final DataSchemaRule rule = directRules[ i ];
+        final DataSchemaRule rule = directRules[i];
         if ( rule instanceof DirectFieldSelectorRule ) {
           final DirectFieldSelectorRule fieldSelectorRule = (DirectFieldSelectorRule) rule;
-          writer.writeTag( ClassicEngineBoot.DATASCHEMA_NAMESPACE,
-            "direct-mapping", "fieldame", fieldSelectorRule.getFieldName(), XmlWriterSupport.OPEN );
+          writer.writeTag( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "direct-mapping", "fieldame", fieldSelectorRule
+              .getFieldName(), XmlWriterSupport.OPEN );
           writeAttributes( writer, rule.getStaticAttributes() );
           writer.writeCloseTag();
         }
@@ -134,24 +131,23 @@ public class StandaloneDataSchemaWriter {
     writer.flush();
   }
 
-
-  private void writeAttributes( final XmlWriter writer, final DataAttributes attributes )
-    throws BeanException, IOException {
+  private void writeAttributes( final XmlWriter writer, final DataAttributes attributes ) throws BeanException,
+    IOException {
     final AttributeList attributeList = new AttributeList();
 
     final String[] domains = attributes.getMetaAttributeDomains();
     for ( int i = 0; i < domains.length; i++ ) {
-      final String domain = domains[ i ];
+      final String domain = domains[i];
       final String[] names = attributes.getMetaAttributeNames( domain );
       for ( int j = 0; j < names.length; j++ ) {
-        final String name = names[ j ];
+        final String name = names[j];
         final Object value = attributes.getMetaAttribute( domain, name, null, context );
         final String stringValue = ConverterRegistry.toAttributeValue( value );
         attributeList.setAttribute( domain, name, stringValue );
       }
     }
     writer
-      .writeTag( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "column-attributes", attributeList, XmlWriterSupport.CLOSE );
+        .writeTag( ClassicEngineBoot.DATASCHEMA_NAMESPACE, "column-attributes", attributeList, XmlWriterSupport.CLOSE );
   }
 
 }

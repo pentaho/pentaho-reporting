@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
@@ -58,8 +58,10 @@ public class FormatParser implements DataFilter {
   /**
    * Sets the format for the filter.
    *
-   * @param format The format.
-   * @throws NullPointerException if the given format is null
+   * @param format
+   *          The format.
+   * @throws NullPointerException
+   *           if the given format is null
    */
   public void setFormatter( final Format format ) {
     if ( format == null ) {
@@ -86,8 +88,9 @@ public class FormatParser implements DataFilter {
    * <p/>
    * If format, datasource or object are null, the NullValue is returned.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return The formatted value.
    */
@@ -122,7 +125,8 @@ public class FormatParser implements DataFilter {
    * Checks whether the given value is already a valid result. IF the datasource already returned a valid value, and no
    * parsing is required, a parser can skip the parsing process by returning true in this function.
    *
-   * @param o the object to parse.
+   * @param o
+   *          the object to parse.
    * @return false as this class does not know anything about the format of input or result objects.
    */
   protected boolean isValidOutput( final Object o ) {
@@ -141,7 +145,8 @@ public class FormatParser implements DataFilter {
   /**
    * Sets the data source.
    *
-   * @param ds The data source.
+   * @param ds
+   *          The data source.
    */
   public void setDataSource( final DataSource ds ) {
     if ( ds == null ) {
@@ -154,7 +159,8 @@ public class FormatParser implements DataFilter {
    * Sets the value that will be displayed if the data source supplies a null value. The nullValue itself can be null to
    * cover the case when no reasonable default value can be defined.
    *
-   * @param nullvalue The value returned when the parsing failed.
+   * @param nullvalue
+   *          The value returned when the parsing failed.
    */
   public void setNullValue( final Object nullvalue ) {
     this.nullvalue = nullvalue;
@@ -174,10 +180,10 @@ public class FormatParser implements DataFilter {
    * Clones the parser.
    *
    * @return a clone.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public FormatParser clone()
-    throws CloneNotSupportedException {
+  public FormatParser clone() throws CloneNotSupportedException {
     final FormatParser p = (FormatParser) super.clone();
     if ( datasource != null ) {
       p.datasource = datasource.clone();

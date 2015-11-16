@@ -1,21 +1,45 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.io.PrintWriter;
+import java.util.Locale;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,12 +47,6 @@ import org.pentaho.reporting.libraries.base.util.MemoryStringWriter;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.PrintWriter;
-import java.util.Locale;
 
 /**
  * The exception dialog is used to display an exception and the exceptions stacktrace to the user.
@@ -52,7 +70,8 @@ public class ExceptionDialog extends JDialog {
     /**
      * Receives notification that an action event has occurred.
      *
-     * @param event the action event.
+     * @param event
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent event ) {
       setVisible( false );
@@ -73,7 +92,8 @@ public class ExceptionDialog extends JDialog {
     /**
      * Receives notification that an action event has occurred.
      *
-     * @param event the action event.
+     * @param event
+     *          the action event.
      */
     public void actionPerformed( final ActionEvent event ) {
       setScrollerVisible( !( isScrollerVisible() ) );
@@ -139,8 +159,9 @@ public class ExceptionDialog extends JDialog {
   }
 
   private void init() {
-    messages = new Messages( getLocale(), SwingCommonModule.BUNDLE_NAME,
-      ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
+    messages =
+        new Messages( getLocale(), SwingCommonModule.BUNDLE_NAME, ObjectUtilities
+            .getClassLoader( SwingCommonModule.class ) );
     setModal( true );
     detailsAction = new DetailsAction();
 
@@ -224,7 +245,8 @@ public class ExceptionDialog extends JDialog {
   /**
    * Defines, whether the scroll pane of the exception stack trace area is visible.
    *
-   * @param b true, if the scroller should be visible, false otherwise.
+   * @param b
+   *          true, if the scroller should be visible, false otherwise.
    */
   protected void setScrollerVisible( final boolean b ) {
     scroller.setVisible( b );
@@ -257,14 +279,15 @@ public class ExceptionDialog extends JDialog {
   /**
    * Sets the message for this exception dialog. The message is displayed on the main page.
    *
-   * @param mesg the message.
+   * @param mesg
+   *          the message.
    */
   public void setMessage( final String mesg ) {
     messageLabel.setText( mesg );
   }
 
   /**
-   * Returns the message for this exception dialog.   The message is displayed on the main page.
+   * Returns the message for this exception dialog. The message is displayed on the main page.
    *
    * @return the message.
    */
@@ -276,7 +299,8 @@ public class ExceptionDialog extends JDialog {
    * Sets the exception for this dialog. If no exception is set, the "Detail" button is disabled and the stacktrace text
    * cleared. Else the stacktraces text is read into the detail message area.
    *
-   * @param e the exception.
+   * @param e
+   *          the exception.
    */
   public void setException( final Exception e ) {
     currentEx = e;
@@ -291,12 +315,13 @@ public class ExceptionDialog extends JDialog {
   /**
    * Reads the stacktrace text from the exception.
    *
-   * @param e the exception.
+   * @param e
+   *          the exception.
    * @return the stack trace.
    * @noinspection IOResourceOpenedButNotSafelyClosed
    */
   private String readFromException( final Exception e ) {
-    String text = messages.getString( "ExceptionDialog.USER_NO_BACKTRACE" );//$NON-NLS-1$
+    String text = messages.getString( "ExceptionDialog.USER_NO_BACKTRACE" ); //$NON-NLS-1$
     try {
       final MemoryStringWriter writer = new MemoryStringWriter();
       final PrintWriter pwriter = new PrintWriter( writer );
@@ -321,13 +346,17 @@ public class ExceptionDialog extends JDialog {
   /**
    * Shows an default dialog with the given message and title and the exceptions stacktrace in the detail area.
    *
-   * @param parent  the parent component.
-   * @param title   the title.
-   * @param message the message.
-   * @param e       the exception.
+   * @param parent
+   *          the parent component.
+   * @param title
+   *          the title.
+   * @param message
+   *          the message.
+   * @param e
+   *          the exception.
    */
-  public static void showExceptionDialog
-  ( final Component parent, final String title, final String message, final Exception e ) {
+  public static void showExceptionDialog( final Component parent, final String title, final String message,
+      final Exception e ) {
     final Window window = LibSwingUtil.getWindowAncestor( parent );
     final ExceptionDialog defaultDialog;
     if ( window instanceof Frame ) {
@@ -338,8 +367,9 @@ public class ExceptionDialog extends JDialog {
       defaultDialog = new ExceptionDialog();
     }
     if ( e != null ) {
-      final Messages messages = new Messages( Locale.getDefault(), SwingCommonModule.BUNDLE_NAME,
-        ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
+      final Messages messages =
+          new Messages( Locale.getDefault(), SwingCommonModule.BUNDLE_NAME, ObjectUtilities
+              .getClassLoader( SwingCommonModule.class ) );
       logger.error( messages.getErrorString( "ExceptionDialog.ERROR_0001_USER_ERROR" ), e ); //$NON-NLS-1$
     }
     defaultDialog.setTitle( title );

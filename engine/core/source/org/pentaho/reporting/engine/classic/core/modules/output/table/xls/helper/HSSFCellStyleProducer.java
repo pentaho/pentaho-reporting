@@ -1,21 +1,24 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
+
+import java.awt.Color;
+import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,9 +42,6 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-
-import java.awt.*;
-import java.util.HashMap;
 
 /**
  * The cellstyle producer converts the JFreeReport content into excel cell styles. This class is able to use the POI 2.0
@@ -136,15 +136,14 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
     private Integer hashCode;
 
     /**
-     * @param background   can be null
-     * @param contentStyle can be null
+     * @param background
+     *          can be null
+     * @param contentStyle
+     *          can be null
      */
-    protected HSSFCellStyleKey( final CellBackground background,
-                                final StyleSheet contentStyle,
-                                final DataFormat dataFormat,
-                                final ExcelFontFactory fontFactory,
-                                final ExcelColorProducer colorProducer,
-                                final ExcelColorProducer fontColorProducer ) {
+    protected HSSFCellStyleKey( final CellBackground background, final StyleSheet contentStyle,
+        final DataFormat dataFormat, final ExcelFontFactory fontFactory, final ExcelColorProducer colorProducer,
+        final ExcelColorProducer fontColorProducer ) {
       if ( dataFormat == null ) {
         throw new NullPointerException();
       }
@@ -187,24 +186,23 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
 
       if ( contentStyle != null ) {
         final Color textColor = (Color) contentStyle.getStyleProperty( ElementStyleKeys.PAINT );
-        final HSSFFontWrapper wrapper = new HSSFFontWrapper
-          ( contentStyle, fontColorProducer.getNearestColor( textColor ) );
+        final HSSFFontWrapper wrapper =
+            new HSSFFontWrapper( contentStyle, fontColorProducer.getNearestColor( textColor ) );
         final Font excelFont = fontFactory.getExcelFont( wrapper );
         this.font = excelFont.getIndex();
 
         final ElementAlignment horizontal =
-          (ElementAlignment) contentStyle.getStyleProperty( ElementStyleKeys.ALIGNMENT );
+            (ElementAlignment) contentStyle.getStyleProperty( ElementStyleKeys.ALIGNMENT );
         this.horizontalAlignment = HSSFCellStyleProducer.convertAlignment( horizontal );
         final ElementAlignment vertical =
-          (ElementAlignment) contentStyle.getStyleProperty( ElementStyleKeys.VALIGNMENT );
+            (ElementAlignment) contentStyle.getStyleProperty( ElementStyleKeys.VALIGNMENT );
         this.verticalAlignment = HSSFCellStyleProducer.convertAlignment( vertical );
-        final String dataStyle =
-          (String) contentStyle.getStyleProperty( ElementStyleKeys.EXCEL_DATA_FORMAT_STRING );
+        final String dataStyle = (String) contentStyle.getStyleProperty( ElementStyleKeys.EXCEL_DATA_FORMAT_STRING );
         if ( dataStyle != null ) {
           this.dataStyle = dataFormat.getFormat( dataStyle );
         }
         this.wrapText = isWrapText( contentStyle );
-        this.indention=getIndention(contentStyle);
+        this.indention = getIndention( contentStyle );
       }
     }
 
@@ -216,10 +214,9 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       return TextWrap.WRAP.equals( styleSheet.getStyleProperty( TextStyleKeys.TEXT_WRAP, TextWrap.WRAP ) );
     }
 
-    private Short getIndention(final StyleSheet styleSheet)
-    {
-      Short indention=(Short)styleSheet.getStyleProperty(ElementStyleKeys.EXCEL_INDENTION);
-      return indention==null?0:indention;
+    private Short getIndention( final StyleSheet styleSheet ) {
+      Short indention = (Short) styleSheet.getStyleProperty( ElementStyleKeys.EXCEL_INDENTION );
+      return indention == null ? 0 : indention;
     }
 
     protected HSSFCellStyleKey( final XSSFCellStyle style ) {
@@ -252,7 +249,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
         return null;
       }
       final byte[] rgb = color.getRgb();
-      return new Color( 0xFF & rgb[ 0 ], 0xFF & rgb[ 1 ], 0xFF & rgb[ 2 ] );
+      return new Color( 0xFF & rgb[0], 0xFF & rgb[1], 0xFF & rgb[2] );
     }
 
     protected HSSFCellStyleKey( final CellStyle style ) {
@@ -476,7 +473,9 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       return dataStyle;
     }
 
-    public short getIndention() {return indention; }
+    public short getIndention() {
+      return indention;
+    }
   }
 
   /**
@@ -507,12 +506,11 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
   /**
    * The class does the dirty work of creating the HSSF-objects.
    *
-   * @param workbook the workbook for which the styles should be created.
+   * @param workbook
+   *          the workbook for which the styles should be created.
    */
-  public HSSFCellStyleProducer( final Workbook workbook,
-                                final boolean hardLimit,
-                                final ExcelColorProducer colorProducer,
-                                final ExcelColorProducer fontColorProducer ) {
+  public HSSFCellStyleProducer( final Workbook workbook, final boolean hardLimit,
+      final ExcelColorProducer colorProducer, final ExcelColorProducer fontColorProducer ) {
     this.fontColorProducer = fontColorProducer;
     if ( workbook == null ) {
       throw new NullPointerException();
@@ -548,16 +546,16 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
    * Creates a HSSFCellStyle based on the given ExcelDataCellStyle. If a similiar cell style was previously generated,
    * then reuse that cached result.
    *
-   * @param element can be null for background only cells.
-   * @param bg      the optional background style for the table cell.
+   * @param element
+   *          can be null for background only cells.
+   * @param bg
+   *          the optional background style for the table cell.
    * @return the generated or cached HSSFCellStyle.
    */
-  public CellStyle createCellStyle( final InstanceID id,
-                                    final StyleSheet element,
-                                    final CellBackground bg ) {
+  public CellStyle createCellStyle( final InstanceID id, final StyleSheet element, final CellBackground bg ) {
     // check, whether that style is already created
-    final HSSFCellStyleKey styleKey = new HSSFCellStyleKey
-      ( bg, element, dataFormat, fontFactory, colorProducer, fontColorProducer );
+    final HSSFCellStyleKey styleKey =
+        new HSSFCellStyleKey( bg, element, dataFormat, fontFactory, colorProducer, fontColorProducer );
     if ( styleCache.containsKey( styleKey ) ) {
       return styleCache.get( styleKey );
     }
@@ -568,8 +566,8 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
         warningDone = true;
       }
       if ( hardLimit ) {
-        HSSFCellStyleProducer.logger.warn(
-          "HSSFCellStyleProducer will not create more styles. New cells will not have any style." );
+        HSSFCellStyleProducer.logger
+            .warn( "HSSFCellStyleProducer will not create more styles. New cells will not have any style." );
         return null;
       }
     }
@@ -580,7 +578,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       hssfCellStyle.setVerticalAlignment( styleKey.getVerticalAlignment() );
       hssfCellStyle.setFont( workbook.getFontAt( styleKey.getFont() ) );
       hssfCellStyle.setWrapText( styleKey.isWrapText() );
-      hssfCellStyle.setIndention(styleKey.getIndention());
+      hssfCellStyle.setIndention( styleKey.getIndention() );
       if ( styleKey.getDataStyle() >= 0 ) {
         hssfCellStyle.setDataFormat( styleKey.getDataStyle() );
       }
@@ -590,23 +588,23 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
         final XSSFCellStyle xssfCellStyle = (XSSFCellStyle) hssfCellStyle;
         if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
           hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
-          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.BOTTOM,
-            createXSSFColor( styleKey.getExtendedColorBottom() ) );
+          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.BOTTOM, createXSSFColor( styleKey
+              .getExtendedColorBottom() ) );
         }
         if ( BorderStyle.NONE.equals( bg.getTop().getBorderStyle() ) == false ) {
           hssfCellStyle.setBorderTop( styleKey.getBorderStrokeTop() );
-          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.TOP,
-            createXSSFColor( styleKey.getExtendedColorTop() ) );
+          xssfCellStyle
+              .setBorderColor( XSSFCellBorder.BorderSide.TOP, createXSSFColor( styleKey.getExtendedColorTop() ) );
         }
         if ( BorderStyle.NONE.equals( bg.getLeft().getBorderStyle() ) == false ) {
           hssfCellStyle.setBorderLeft( styleKey.getBorderStrokeLeft() );
-          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.LEFT,
-            createXSSFColor( styleKey.getExtendedColorLeft() ) );
+          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.LEFT, createXSSFColor( styleKey
+              .getExtendedColorLeft() ) );
         }
         if ( BorderStyle.NONE.equals( bg.getRight().getBorderStyle() ) == false ) {
           hssfCellStyle.setBorderRight( styleKey.getBorderStrokeRight() );
-          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.RIGHT,
-            createXSSFColor( styleKey.getExtendedColorRight() ) );
+          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.RIGHT, createXSSFColor( styleKey
+              .getExtendedColorRight() ) );
         }
         if ( bg.getBackgroundColor() != null ) {
           xssfCellStyle.setFillForegroundColor( createXSSFColor( styleKey.getExtendedColor() ) );
@@ -636,7 +634,6 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       }
     }
 
-
     styleCache.put( styleKey, hssfCellStyle );
     return hssfCellStyle;
   }
@@ -649,9 +646,11 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
   /**
    * Converts the given element alignment into one of the HSSFCellStyle-constants.
    *
-   * @param e the JFreeReport element alignment.
+   * @param e
+   *          the JFreeReport element alignment.
    * @return the HSSFCellStyle-Alignment.
-   * @throws IllegalArgumentException if an Unknown JFreeReport alignment is given.
+   * @throws IllegalArgumentException
+   *           if an Unknown JFreeReport alignment is given.
    */
   protected static short convertAlignment( final ElementAlignment e ) {
     if ( ElementAlignment.LEFT.equals( e ) ) {
@@ -682,7 +681,8 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
   /**
    * Tries to translate the given stroke width into one of the predefined excel border styles.
    *
-   * @param widthRaw the AWT-Stroke-Width.
+   * @param widthRaw
+   *          the AWT-Stroke-Width.
    * @return the translated excel border width.
    */
   protected static short translateStroke( final BorderStyle borderStyle, final long widthRaw ) {
@@ -726,12 +726,11 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       return HSSFCellStyle.BORDER_THIN;
     } else if ( width <= 1.5 ) {
       return HSSFCellStyle.BORDER_MEDIUM;
-    }
-    //    else if (width <= 2)
-    //    {
-    //      return HSSFCellStyle.BORDER_DOUBLE;
-    //    }
-    else {
+      // }
+      // else if (width <= 2)
+      // {
+      // return HSSFCellStyle.BORDER_DOUBLE;
+    } else {
       return HSSFCellStyle.BORDER_THICK;
     }
   }

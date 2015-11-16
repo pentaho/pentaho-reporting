@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -96,7 +96,8 @@ public class ItemPercentageFunction extends AbstractFunction {
   /**
    * Defines whether the returned value should be scaled to 100.
    *
-   * @param scaleToHundred true, if the value should be scaled to 100, false otherwise.
+   * @param scaleToHundred
+   *          true, if the value should be scaled to 100, false otherwise.
    */
   public void setScaleToHundred( final boolean scaleToHundred ) {
     this.scaleToHundred = scaleToHundred;
@@ -115,7 +116,8 @@ public class ItemPercentageFunction extends AbstractFunction {
   /**
    * Defines the rounding mode. This influences the precision of the divide-operation.
    *
-   * @param roundingMode the rounding mode.
+   * @param roundingMode
+   *          the rounding mode.
    * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
   public void setRoundingMode( final int roundingMode ) {
@@ -134,7 +136,8 @@ public class ItemPercentageFunction extends AbstractFunction {
   /**
    * Defines the scale for the divide-operation. The scale influences the precision of the division.
    *
-   * @param scale the scale.
+   * @param scale
+   *          the scale.
    */
   public void setScale( final int scale ) {
     this.scale = scale;
@@ -150,10 +153,12 @@ public class ItemPercentageFunction extends AbstractFunction {
   }
 
   /**
-   * Sets the group name. <P> If a group is defined, the minimum value is reset to zero at the start of every instance
-   * of this group.
+   * Sets the group name.
+   * <P>
+   * If a group is defined, the minimum value is reset to zero at the start of every instance of this group.
    *
-   * @param name the group name (null permitted).
+   * @param name
+   *          the group name (null permitted).
    */
   public void setGroup( final String name ) {
     this.group = name;
@@ -180,7 +185,8 @@ public class ItemPercentageFunction extends AbstractFunction {
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -190,7 +196,8 @@ public class ItemPercentageFunction extends AbstractFunction {
   /**
    * Receives notification that the report has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportStarted( final ReportEvent event ) {
     totalSumFunction.reportStarted( event );
@@ -212,7 +219,8 @@ public class ItemPercentageFunction extends AbstractFunction {
   /**
    * Receives notification that a group has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     totalSumFunction.groupStarted( event );
@@ -234,7 +242,8 @@ public class ItemPercentageFunction extends AbstractFunction {
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     totalSumFunction.itemsAdvanced( event );
@@ -257,7 +266,8 @@ public class ItemPercentageFunction extends AbstractFunction {
   /**
    * Receives notification that the report has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     totalSumFunction.reportInitialized( event );
@@ -265,8 +275,9 @@ public class ItemPercentageFunction extends AbstractFunction {
   }
 
   /**
-   * Return the current function value. <P> Don not count on the correctness of this function until the preparerun has
-   * finished.
+   * Return the current function value.
+   * <P>
+   * Don not count on the correctness of this function until the preparerun has finished.
    *
    * @return The value of the function.
    */
@@ -284,14 +295,16 @@ public class ItemPercentageFunction extends AbstractFunction {
   }
 
   /**
-   * Returns a clone of the function. <P> Be aware, this does not create a deep copy. If you have complex strucures
-   * contained in objects, you have to overwrite this function.
+   * Returns a clone of the function.
+   * <P>
+   * Be aware, this does not create a deep copy. If you have complex strucures contained in objects, you have to
+   * overwrite this function.
    *
    * @return A clone of the function.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public Object clone()
-    throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     final ItemPercentageFunction clone = (ItemPercentageFunction) super.clone();
     clone.totalSumFunction = (TotalGroupSumFunction) totalSumFunction.clone();
     return clone;
@@ -322,7 +335,8 @@ public class ItemPercentageFunction extends AbstractFunction {
    * <p/>
    * This updates the internal TotalItemSumFunction.
    *
-   * @param runtime the runtime information for the expression
+   * @param runtime
+   *          the runtime information for the expression
    */
   public void setRuntime( final ExpressionRuntime runtime ) {
     super.setRuntime( runtime );

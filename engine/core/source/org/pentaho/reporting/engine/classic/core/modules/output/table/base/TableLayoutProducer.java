@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
@@ -50,8 +50,7 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep {
     this.unalignedPagebands = metaData.isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS );
   }
 
-  public TableLayoutProducer( final OutputProcessorMetaData metaData,
-                              final SheetLayout sheetLayout ) {
+  public TableLayoutProducer( final OutputProcessorMetaData metaData, final SheetLayout sheetLayout ) {
     initialize( metaData );
     this.layout = sheetLayout;
   }
@@ -68,15 +67,14 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep {
     return layout;
   }
 
-  public void update( final LogicalPageBox logicalPage,
-                      final boolean iterativeUpdate ) {
+  public void update( final LogicalPageBox logicalPage, final boolean iterativeUpdate ) {
     if ( unalignedPagebands == false ) {
       // The page-header and footer area are aligned/shifted within the logical pagebox so that all areas
       // share a common coordinate system. This also implies, that the whole logical page is aligned content.
       pageOffset = 0;
       effectiveHeaderSize = 0;
       pageEndPosition = logicalPage.getPageEnd();
-      //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
+      // Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
       if ( startBox( logicalPage ) ) {
         if ( headerProcessed == false ) {
           if ( processWatermark ) {
@@ -168,8 +166,8 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep {
 
     final long height = box.getHeight();
     //
-    //    DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
-    //    DebugLog.log ("Processing Box " + box);
+    // DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
+    // DebugLog.log ("Processing Box " + box);
 
     if ( height > 0 ) {
       if ( ( box.getY() + height ) <= pageOffset ) {
@@ -188,9 +186,7 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep {
       }
     }
 
-    if ( box.isOpen() == false &&
-      box.isFinishedTable() == false &&
-      box.isCommited() ) {
+    if ( box.isOpen() == false && box.isFinishedTable() == false && box.isCommited() ) {
       if ( layout.add( box, pageOffset, effectiveHeaderSize, pageEndPosition ) ) {
         return false;
       }
@@ -202,9 +198,7 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep {
   }
 
   protected void processRenderableContent( final RenderableReplacedContentBox box ) {
-    if ( box.isOpen() == false &&
-      box.isFinishedTable() == false &&
-      box.isCommited() ) {
+    if ( box.isOpen() == false && box.isFinishedTable() == false && box.isCommited() ) {
       startBoxInternal( box );
       layout.addRenderableContent( box, pageOffset, effectiveHeaderSize, pageEndPosition );
     }
@@ -227,7 +221,8 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep {
    * A designtime support method to compute a sheet layout for the given section. A new sheetlayout is created on each
    * call.
    *
-   * @param box the section that should be processed.
+   * @param box
+   *          the section that should be processed.
    * @return the computed sheet layout.
    */
   public void computeDesigntimeConflicts( final RenderBox box ) {

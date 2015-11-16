@@ -46,33 +46,32 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
   private String template;
   private CSVQuoter quoter;
 
-  public CsvTemplateProducer( final OutputProcessorMetaData metaData,
-                              final SheetLayout sheetLayout,
-                              final String encoding ) {
+  public CsvTemplateProducer( final OutputProcessorMetaData metaData, final SheetLayout sheetLayout,
+      final String encoding ) {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
     this.encoding = encoding;
     this.idMapping = new HashMap<InstanceID, String>();
 
-    final String separator = metaData.getConfiguration().getConfigProperty
-      ( CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT );
+    final String separator =
+        metaData.getConfiguration().getConfigProperty( CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT );
     if ( separator.length() == 0 ) {
       throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
     }
 
     if ( this.encoding == null ) {
-      this.encoding = metaData.getConfiguration().getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Encoding",
-          EncodingRegistry.getPlatformDefaultEncoding() );
+      this.encoding =
+          metaData.getConfiguration().getConfigProperty(
+              "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Encoding",
+              EncodingRegistry.getPlatformDefaultEncoding() );
     }
-
 
     quoter = new CSVQuoter( separator.charAt( 0 ) );
   }
 
   public void produceTemplate( final LogicalPageBox pageBox ) {
     TableContentProducer contentProducer =
-      TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData );
+        TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData );
 
     final SheetLayout sheetLayout = contentProducer.getSheetLayout();
     final int columnCount = contentProducer.getColumnCount();
@@ -96,9 +95,9 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
         }
 
         final long contentOffset = contentProducer.getContentOffset( row, col );
-        final TableRectangle rectangle = sheetLayout.getTableBounds
-          ( content.getX(), content.getY() + contentOffset,
-            content.getWidth(), content.getHeight(), null );
+        final TableRectangle rectangle =
+            sheetLayout.getTableBounds( content.getX(), content.getY() + contentOffset, content.getWidth(), content
+                .getHeight(), null );
         if ( rectangle.isOrigin( col, row ) == false ) {
           // A spanned cell ..
           continue;

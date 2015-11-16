@@ -34,7 +34,6 @@ public class WriterService {
   private BufferedWriter writer;
   private XmlWriter xmlWriter;
 
-
   private WriterService( final BufferedWriter bufferedWriter ) {
     this.writer = bufferedWriter;
   }

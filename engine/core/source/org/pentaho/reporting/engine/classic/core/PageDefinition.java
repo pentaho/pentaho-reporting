@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -74,7 +74,8 @@ public interface PageDefinition extends Cloneable, Serializable {
    * Describes the internal position of the given page within the logical page. The logical page does not include any
    * page margins, the printable area for a page starts at (0,0).
    *
-   * @param index the index of the physical pageformat
+   * @param index
+   *          the index of the physical pageformat
    * @return the bounds for the page.
    */
   public Rectangle2D getPagePosition( int index );
@@ -83,7 +84,8 @@ public interface PageDefinition extends Cloneable, Serializable {
    * Returns the page format for the given page number. The page format contains local coordinates - that means that the
    * point (0,0) denotes the upper left corner of this returned page format and not global coordinates.
    *
-   * @param pos the position of the pageformat within the page
+   * @param pos
+   *          the position of the pageformat within the page
    * @return the given pageformat.
    */
   public PageFormat getPageFormat( int pos );
@@ -92,8 +94,8 @@ public interface PageDefinition extends Cloneable, Serializable {
    * Creates a copy of the page definition.
    *
    * @return a copy of the page definition.
-   * @throws CloneNotSupportedException if cloning failed for some reason.
+   * @throws CloneNotSupportedException
+   *           if cloning failed for some reason.
    */
-  public Object clone()
-    throws CloneNotSupportedException;
+  public Object clone() throws CloneNotSupportedException;
 }

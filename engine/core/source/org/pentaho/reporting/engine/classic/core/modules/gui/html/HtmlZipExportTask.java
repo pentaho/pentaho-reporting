@@ -1,21 +1,28 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.html;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,13 +50,6 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
 import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Locale;
 
 /**
  * An export task implementation that exports the report into a ZIPped Html directory structure.
@@ -80,33 +80,36 @@ public class HtmlZipExportTask implements Runnable {
   /**
    * Creates a new html export task.
    *
-   * @param dialog the progress monitor component.
-   * @param report the report that should be exported.
+   * @param dialog
+   *          the progress monitor component.
+   * @param report
+   *          the report that should be exported.
    */
-  public HtmlZipExportTask( final MasterReport report,
-                            final ReportProgressDialog dialog,
-                            final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
+  public HtmlZipExportTask( final MasterReport report, final ReportProgressDialog dialog,
+      final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
     if ( report == null ) {
       throw new ReportProcessingException( "HtmlZipExportTask(..): Report-Parameter cannot be null" ); //$NON-NLS-1$
     }
 
     final Configuration config = report.getConfiguration();
-    dataDirectory = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.DataDirectory" ); //$NON-NLS-1$
-    final String targetFileName = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.TargetFileName" ); //$NON-NLS-1$
-    exportMethod = config.getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.ExportMethod" ); //$NON-NLS-1$
+    dataDirectory =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.DataDirectory" ); //$NON-NLS-1$
+    final String targetFileName =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.TargetFileName" ); //$NON-NLS-1$
+    exportMethod =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.ExportMethod" ); //$NON-NLS-1$
 
     this.progressDialog = dialog;
     this.report = report;
     if ( swingGuiContext != null ) {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages( swingGuiContext.getLocale(), HtmlExportGUIModule.BASE_RESOURCE_CLASS,
-        ObjectUtilities.getClassLoader( HtmlExportGUIModule.class ) );
+      this.messages =
+          new Messages( swingGuiContext.getLocale(), HtmlExportGUIModule.BASE_RESOURCE_CLASS, ObjectUtilities
+              .getClassLoader( HtmlExportGUIModule.class ) );
     } else {
-      this.messages = new Messages( Locale.getDefault(), HtmlExportGUIModule.BASE_RESOURCE_CLASS,
-        ObjectUtilities.getClassLoader( HtmlExportGUIModule.class ) );
+      this.messages =
+          new Messages( Locale.getDefault(), HtmlExportGUIModule.BASE_RESOURCE_CLASS, ObjectUtilities
+              .getClassLoader( HtmlExportGUIModule.class ) );
     }
 
     targetFile = new File( targetFileName );
@@ -114,8 +117,8 @@ public class HtmlZipExportTask implements Runnable {
     if ( targetFile.exists() ) {
       // lets try to delete it ..
       if ( targetFile.delete() == false ) {
-        throw new ReportProcessingException( messages.getErrorString(
-          "HtmlZipExportTask.ERROR_0002_TARGET_FILE_EXISTS" ) ); //$NON-NLS-1$
+        throw new ReportProcessingException( messages
+            .getErrorString( "HtmlZipExportTask.ERROR_0002_TARGET_FILE_EXISTS" ) ); //$NON-NLS-1$
       }
     }
   }
@@ -130,14 +133,12 @@ public class HtmlZipExportTask implements Runnable {
 
       final ZipRepository zipRepository = new ZipRepository( out );
       final ContentLocation root = zipRepository.getRoot();
-      final ContentLocation data = RepositoryUtilities.createLocation
-        ( zipRepository, RepositoryUtilities.splitPath( dataDirectory, "/" ) ); //$NON-NLS-1$
+      final ContentLocation data =
+          RepositoryUtilities.createLocation( zipRepository, RepositoryUtilities.splitPath( dataDirectory, "/" ) ); //$NON-NLS-1$
 
       final ReportProcessor sp;
-      if ( "pageable".equals( exportMethod ) )//$NON-NLS-1$
-      {
-        final PageableHtmlOutputProcessor outputProcessor =
-          new PageableHtmlOutputProcessor( report.getConfiguration() );
+      if ( "pageable".equals( exportMethod ) ) { //$NON-NLS-1$
+        final PageableHtmlOutputProcessor outputProcessor = new PageableHtmlOutputProcessor( report.getConfiguration() );
         final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
         printer.setContentWriter( root, new DefaultNameGenerator( root, "report.html" ) ); //$NON-NLS-1$
         printer.setDataWriter( data, new DefaultNameGenerator( data, "content" ) ); //$NON-NLS-1$
@@ -170,13 +171,13 @@ public class HtmlZipExportTask implements Runnable {
       }
 
       if ( statusListener != null ) {
-        statusListener.setStatus( StatusType.INFORMATION, messages.getString
-          ( "HtmlZipExportTask.USER_TASK_FINISHED" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "HtmlZipExportTask.USER_TASK_FINISHED" ), null ); //$NON-NLS-1$
       }
     } catch ( ReportInterruptedException re ) {
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "HtmlZipExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "HtmlZipExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
       }
       try {
         out.close();
@@ -187,8 +188,7 @@ public class HtmlZipExportTask implements Runnable {
     } catch ( Exception re ) {
       HtmlZipExportTask.logger.error( "Exporting failed .", re ); //$NON-NLS-1$
       if ( statusListener != null ) {
-        statusListener.setStatus( StatusType.ERROR, messages.getString
-          ( "HtmlZipExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.ERROR, messages.getString( "HtmlZipExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
       }
     } finally {
       try {
@@ -198,8 +198,7 @@ public class HtmlZipExportTask implements Runnable {
       } catch ( Exception e ) {
         HtmlZipExportTask.logger.error( "Unable to close the output stream.", e ); //$NON-NLS-1$
         if ( statusListener != null ) {
-          statusListener.setStatus
-            ( StatusType.ERROR, messages.getString( "HtmlZipExportTask.USER_TASK_FAILED" ), e ); //$NON-NLS-1$
+          statusListener.setStatus( StatusType.ERROR, messages.getString( "HtmlZipExportTask.USER_TASK_FAILED" ), e ); //$NON-NLS-1$
         }
       }
     }
@@ -208,13 +207,10 @@ public class HtmlZipExportTask implements Runnable {
     }
   }
 
-
   protected HtmlOutputProcessor createOutputProcessor() {
-    if ( "pageable".equals( exportMethod ) ) //$NON-NLS-1$
-    {
+    if ( "pageable".equals( exportMethod ) ) { //$NON-NLS-1$
       return new PageableHtmlOutputProcessor( report.getConfiguration() );
-    } else if ( "flow".equals( exportMethod ) ) //$NON-NLS-1$
-    {
+    } else if ( "flow".equals( exportMethod ) ) { //$NON-NLS-1$
       return new FlowHtmlOutputProcessor();
     } else {
       return new StreamHtmlOutputProcessor( report.getConfiguration() );

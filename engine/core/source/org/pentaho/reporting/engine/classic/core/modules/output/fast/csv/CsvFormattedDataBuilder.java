@@ -45,10 +45,8 @@ public class CsvFormattedDataBuilder extends AbstractFormattedDataBuilder {
   private String encoding;
   private FastTextExtractor textExtractor;
 
-  public CsvFormattedDataBuilder( HashMap<InstanceID, String> idMapping,
-                                  MessageFormatSupport messageFormatSupport,
-                                  CSVQuoter csvQuoter,
-                                  String encoding ) {
+  public CsvFormattedDataBuilder( HashMap<InstanceID, String> idMapping, MessageFormatSupport messageFormatSupport,
+      CSVQuoter csvQuoter, String encoding ) {
     this.idMapping = idMapping;
     this.messageFormatSupport = messageFormatSupport;
     this.csvQuoter = csvQuoter;
@@ -56,9 +54,7 @@ public class CsvFormattedDataBuilder extends AbstractFormattedDataBuilder {
     this.values = new HashMap<String, Object>();
   }
 
-  public void compute( final Band band,
-                       final ExpressionRuntime runtime,
-                       final OutputStream out )
+  public void compute( final Band band, final ExpressionRuntime runtime, final OutputStream out )
     throws ReportProcessingException, ContentProcessingException, IOException {
     String text = messageFormatSupport.performFormat( computeData( band, runtime ) );
     out.write( text.getBytes( encoding ) );

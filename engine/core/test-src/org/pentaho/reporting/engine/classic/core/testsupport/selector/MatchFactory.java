@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 
@@ -68,7 +68,7 @@ public class MatchFactory {
       this.nodes.clear();
       this.singleResult = false;
       startProcessing( node );
-      return this.nodes.toArray( new RenderNode[ this.nodes.size() ] );
+      return this.nodes.toArray( new RenderNode[this.nodes.size()] );
     }
 
     protected boolean startBox( final RenderBox box ) {
@@ -122,7 +122,7 @@ public class MatchFactory {
       if ( token == StreamTokenizer.TT_WORD || token == '*' ) {
         NodeMatcher matcher = null;
 
-        switch( selectorType ) {
+        switch ( selectorType ) {
           case Start:
             elementMatcher = createMatcher( tokenizer );
             matcher = elementMatcher;
@@ -145,8 +145,8 @@ public class MatchFactory {
               elementMatcher = createMatcher( tokenizer );
               matcher = elementMatcher;
             }
-            elementMatcher
-              .add( new AttributeMatcher( AttributeNames.Xml.NAMESPACE, AttributeNames.Xml.ID, tokenizer.sval ) );
+            elementMatcher.add( new AttributeMatcher( AttributeNames.Xml.NAMESPACE, AttributeNames.Xml.ID,
+                tokenizer.sval ) );
             break;
           case Class:
             if ( elementMatcher == null ) {
@@ -156,8 +156,8 @@ public class MatchFactory {
               elementMatcher = createMatcher( tokenizer );
               matcher = elementMatcher;
             }
-            elementMatcher.add(
-              new AttributeMatcher( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_CLASS, tokenizer.sval ) );
+            elementMatcher.add( new AttributeMatcher( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_CLASS,
+                tokenizer.sval ) );
             break;
           default:
             throw new IOException();
@@ -183,8 +183,7 @@ public class MatchFactory {
           selectorType = Type.Id;
         }
         if ( Character.isWhitespace( token ) ) {
-          if ( selectorType == Type.Class ||
-            selectorType == Type.Id ) {
+          if ( selectorType == Type.Class || selectorType == Type.Id ) {
             throw new IllegalStateException();
           }
 
@@ -223,11 +222,11 @@ public class MatchFactory {
 
   public static RenderNode findElementByName( final RenderNode section, final String name ) {
     final RenderNode[] retval =
-      findElementsByAttribute( section, AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, name );
+        findElementsByAttribute( section, AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, name );
     if ( retval.length == 0 ) {
       return null;
     }
-    return retval[ 0 ];
+    return retval[0];
   }
 
   public static RenderNode[] findElementsByName( final RenderNode section, final String name ) {
@@ -235,7 +234,7 @@ public class MatchFactory {
   }
 
   public static RenderNode[] findElementsByAttribute( final RenderNode section, final String ns, final String name,
-                                                      final Object value ) {
+      final Object value ) {
     return matchAll( section, new AttributeMatcher( ns, name, value ) );
   }
 
@@ -247,15 +246,11 @@ public class MatchFactory {
     return matchAll( section, new RenderNodeTypeMatcher( type ) );
   }
 
-/*
-  public static void main(final String[] args) throws IOException
-  {
-    System.out.println(new MatchFactory().parse("Test Element > test .c#i"));
-
-    final AndMatcher a1 = new AndMatcher(new ElementMatcher("p"),
-        new DescendantMatcher(new AndMatcher(new ElementMatcher("div"),
-            new DescendantMatcher(new ElementMatcher("body")))));
-    System.out.println(a1);
-  }
-*/
+  /*
+   * public static void main(final String[] args) throws IOException { System.out.println(new
+   * MatchFactory().parse("Test Element > test .c#i"));
+   * 
+   * final AndMatcher a1 = new AndMatcher(new ElementMatcher("p"), new DescendantMatcher(new AndMatcher(new
+   * ElementMatcher("div"), new DescendantMatcher(new ElementMatcher("body"))))); System.out.println(a1); }
+   */
 }

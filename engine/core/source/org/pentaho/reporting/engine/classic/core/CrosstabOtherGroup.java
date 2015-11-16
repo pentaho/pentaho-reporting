@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -64,10 +64,10 @@ public class CrosstabOtherGroup extends Group {
     registerAsChild( header );
   }
 
-
   /**
-   * Returns the group header. <P> The group header is a report band that contains elements that should be printed at
-   * the start of a group.
+   * Returns the group header.
+   * <P>
+   * The group header is a report band that contains elements that should be printed at the start of a group.
    *
    * @return the group header.
    */
@@ -78,8 +78,10 @@ public class CrosstabOtherGroup extends Group {
   /**
    * Sets the header for the group.
    *
-   * @param header the header (null not permitted).
-   * @throws NullPointerException if the given header is null
+   * @param header
+   *          the header (null not permitted).
+   * @throws NullPointerException
+   *           if the given header is null
    */
   public void setHeader( final GroupHeader header ) {
     if ( header == null ) {
@@ -111,8 +113,10 @@ public class CrosstabOtherGroup extends Group {
   /**
    * Sets the footer for the group.
    *
-   * @param footer the footer (null not permitted).
-   * @throws NullPointerException if the given footer is null.
+   * @param footer
+   *          the footer (null not permitted).
+   * @throws NullPointerException
+   *           if the given footer is null.
    */
   public void setFooter( final GroupFooter footer ) {
     if ( footer == null ) {
@@ -157,7 +161,6 @@ public class CrosstabOtherGroup extends Group {
     return g;
   }
 
-
   protected void removeElement( final Element element ) {
     if ( element == null ) {
       throw new NullPointerException();
@@ -185,7 +188,7 @@ public class CrosstabOtherGroup extends Group {
   }
 
   public Element getElement( final int index ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         return header;
       case 1:
@@ -202,7 +205,7 @@ public class CrosstabOtherGroup extends Group {
   }
 
   public void setElementAt( final int index, final Element element ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         setHeader( (GroupHeader) element );
         break;
@@ -240,8 +243,7 @@ public class CrosstabOtherGroup extends Group {
   }
 
   private void validateBody( final GroupBody body ) {
-    if ( body instanceof CrosstabRowGroupBody == false &&
-      body instanceof CrosstabOtherGroupBody == false ) {
+    if ( body instanceof CrosstabRowGroupBody == false && body instanceof CrosstabOtherGroupBody == false ) {
       throw new IllegalArgumentException();
     }
   }

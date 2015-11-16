@@ -47,13 +47,10 @@ public class RichTextSpec {
     private StyleSheet styleSheet;
     private InstanceID instanceID;
 
-    public StyledChunk( final int start,
-                        final int end,
-                        final RenderNode originatingTextNode,
-                        final Map<AttributedCharacterIterator.Attribute, Object> attributes,
-                        final ReportAttributeMap<Object> originalAttributes,
-                        final StyleSheet styleSheet, final InstanceID instanceID,
-                        final String text ) {
+    public StyledChunk( final int start, final int end, final RenderNode originatingTextNode,
+        final Map<AttributedCharacterIterator.Attribute, Object> attributes,
+        final ReportAttributeMap<Object> originalAttributes, final StyleSheet styleSheet, final InstanceID instanceID,
+        final String text ) {
       ArgumentNullException.validate( "originatingTextNode", originatingTextNode );
       ArgumentNullException.validate( "attributes", attributes );
       ArgumentNullException.validate( "text", text );
@@ -151,9 +148,7 @@ public class RichTextSpec {
   private List<StyledChunk> styleChunks;
   private TextDirection runDirection;
 
-  public RichTextSpec( final String text,
-                       final TextDirection runDirection,
-                       final List<StyledChunk> styleChunks ) {
+  public RichTextSpec( final String text, final TextDirection runDirection, final List<StyledChunk> styleChunks ) {
     ArgumentNullException.validate( "text", text );
     ArgumentNullException.validate( "styleChunks", styleChunks );
     ArgumentNullException.validate( "runDirection", runDirection );
@@ -230,8 +225,8 @@ public class RichTextSpec {
       }
 
       String clippedText = text.substring( textStart, textEnd );
-      clippedChunks.add( new StyledChunk( chunkStart, chunkEnd, chunk.originatingTextNode,
-        chunk.attributes, chunk.originalAttributes, chunk.styleSheet, chunk.instanceID, clippedText ) );
+      clippedChunks.add( new StyledChunk( chunkStart, chunkEnd, chunk.originatingTextNode, chunk.attributes,
+          chunk.originalAttributes, chunk.styleSheet, chunk.instanceID, clippedText ) );
     }
     return new RichTextSpec( text.substring( start, end ), runDirection, clippedChunks );
   }
@@ -241,10 +236,8 @@ public class RichTextSpec {
     return create( lineBoxContainer, ci.getBeginIndex(), ci.getEndIndex() );
   }
 
-  public RenderableComplexText create( final RenderBox lineBoxContainer,
-                                       final int start, final int end ) {
-    return new RenderableComplexText
-      ( lineBoxContainer.getStyleSheet(), lineBoxContainer.getInstanceId(),
+  public RenderableComplexText create( final RenderBox lineBoxContainer, final int start, final int end ) {
+    return new RenderableComplexText( lineBoxContainer.getStyleSheet(), lineBoxContainer.getInstanceId(),
         lineBoxContainer.getElementType(), lineBoxContainer.getAttributes(), this.substring( start, end ) );
   }
 

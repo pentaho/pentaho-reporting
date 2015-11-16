@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.content;
 
@@ -73,8 +73,10 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
   /**
    * Initialises the handler.
    *
-   * @param rootHandler the root handler.
-   * @param tagName     the tag name.
+   * @param rootHandler
+   *          the root handler.
+   * @param tagName
+   *          the tag name.
    */
   public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
     super.init( rootHandler, uri, tagName );
@@ -84,16 +86,17 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void startParsing( final Attributes attrs ) throws SAXException {
     final Object maybeReport = getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
     if ( maybeReport instanceof MasterReport == false ) {
       // replace it ..
       report = new MasterReport();
-      report
-        .setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FILEFORMAT, "unified-fileformat" );
+      report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FILEFORMAT, "unified-fileformat" );
 
       final ResourceKey key = getRootHandler().getSource();
       if ( key.getParent() != null ) {
@@ -108,8 +111,8 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
           final int versionMinorRaw = getBundleAttribute( metaData, "prpt-spec.version.minor" );
           final int versionPatchRaw = getBundleAttribute( metaData, "prpt-spec.version.patch" );
 
-          if ( versionMajorRaw == -1 || versionMinorRaw == -1 || versionPatchRaw == -1 ||
-            ( versionMajorRaw == 0 && versionMinorRaw == 0 && versionPatchRaw == 0 ) ) {
+          if ( versionMajorRaw == -1 || versionMinorRaw == -1 || versionPatchRaw == -1
+              || ( versionMajorRaw == 0 && versionMinorRaw == 0 && versionPatchRaw == 0 ) ) {
             // any of the version attributes is missing. Assume we are running with a legacy report.
             getRootHandler().setHelperObject( PRPT_SPEC_VERSION, ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
           } else {
@@ -118,11 +121,11 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
             // file has been created with at least 3.9.0 or a development version. Therefore the
             // version number is set to either the number or zero for dev versions.
             getRootHandler().setHelperObject( PRPT_SPEC_VERSION,
-              ClassicEngineBoot.computeVersionId( versionMajorRaw, versionMinorRaw, versionPatchRaw ) );
+                ClassicEngineBoot.computeVersionId( versionMajorRaw, versionMinorRaw, versionPatchRaw ) );
           }
         } catch ( ResourceException e ) {
-          getRootHandler().warning( new SAXParseException
-            ( "Unable to load the bundle. Bundle data may be unavailable.", getLocator() ) );
+          getRootHandler().warning(
+              new SAXParseException( "Unable to load the bundle. Bundle data may be unavailable.", getLocator() ) );
         }
       }
     } else {
@@ -130,31 +133,26 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
     }
   }
 
-
-  private void validateVersionNumbers( final int prptVersionMajorRaw,
-                                       final int prptVersionMinorRaw,
-                                       final int prptVersionPatchRaw ) throws ParseException {
+  private void validateVersionNumbers( final int prptVersionMajorRaw, final int prptVersionMinorRaw,
+      final int prptVersionPatchRaw ) throws ParseException {
     final ClassicEngineBoot.VersionValidity v =
-      ClassicEngineBoot.isValidVersion( prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw );
+        ClassicEngineBoot.isValidVersion( prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw );
     if ( v == ClassicEngineBoot.VersionValidity.INVALID_RELEASE ) {
-      throw new ParseException( String.format( "The report file you are trying to load was created with " +
-          "Pentaho Reporting %d.%d but you are trying to run it with Pentaho Reporting %s. " +
-          "Please update your reporting installation to match the report designer that was used " +
-          "to create this file.",
-        prptVersionMajorRaw, prptVersionMinorRaw, ClassicEngineInfo.getInstance().getVersion() ) );
+      throw new ParseException( String.format( "The report file you are trying to load was created with "
+          + "Pentaho Reporting %d.%d but you are trying to run it with Pentaho Reporting %s. "
+          + "Please update your reporting installation to match the report designer that was used "
+          + "to create this file.", prptVersionMajorRaw, prptVersionMinorRaw, ClassicEngineInfo.getInstance()
+          .getVersion() ) );
     } else if ( v == ClassicEngineBoot.VersionValidity.INVALID_PATCH ) {
-      logger.warn( String.format( "The report file you are trying to load was created with Pentaho " +
-          "Reporting %d.%d.%d but you are trying to run it with Pentaho Reporting %s. " +
-          "Your reporting engine version may not have all features or bug-fixes required to display " +
-          "this report properly.",
-        prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw,
-        ClassicEngineInfo.getInstance().getVersion() ) );
+      logger.warn( String.format( "The report file you are trying to load was created with Pentaho "
+          + "Reporting %d.%d.%d but you are trying to run it with Pentaho Reporting %s. "
+          + "Your reporting engine version may not have all features or bug-fixes required to display "
+          + "this report properly.", prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw, ClassicEngineInfo
+          .getInstance().getVersion() ) );
     }
   }
 
-
-  private int getBundleAttribute( final DocumentMetaData metaData,
-                                  final String name ) {
+  private int getBundleAttribute( final DocumentMetaData metaData, final String name ) {
     final Object raw = metaData.getBundleAttribute( ClassicEngineBoot.METADATA_NAMESPACE, name );
     if ( raw == null ) {
       return -1;
@@ -169,15 +167,18 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
   /**
    * Returns the handler for a child element.
    *
-   * @param uri     the URI of the namespace of the current element.
-   * @param tagName the tag name.
-   * @param atts    the attributes.
+   * @param uri
+   *          the URI of the namespace of the current element.
+   * @param tagName
+   *          the tag name.
+   * @param atts
+   *          the attributes.
    * @return the handler or null, if the tagname is invalid.
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild( final String uri,
-                                               final String tagName,
-                                               final Attributes atts ) throws SAXException {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
     if ( BundleNamespaces.CONTENT.equals( uri ) == false ) {
       return null;
     }
@@ -253,12 +254,13 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
   /**
    * Done parsing.
    *
-   * @throws SAXException if there is a parsing error.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void doneParsing() throws SAXException {
     // Now, after all the user-defined and global files have been parsed, finally override whatever had been
-    //defined in these files with the contents from the bundle. This will merge all the settings from the bundle
-    // with the global definitions but grants the local settings higer preference 
+    // defined in these files with the contents from the bundle. This will merge all the settings from the bundle
+    // with the global definitions but grants the local settings higer preference
     parseLocalFiles();
 
     final Object definedCompatLevel = report.getCompatibilityLevel();
@@ -286,7 +288,7 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
       final Map parameters = deriveParseParameters();
       parameters.put( new FactoryParameterKey( ReportParserUtil.HELPER_OBJ_REPORT_NAME ), report );
       parameters.put( new FactoryParameterKey( ReportParserUtil.INCLUDE_PARSING_KEY ),
-        ReportParserUtil.INCLUDE_PARSING_VALUE );
+          ReportParserUtil.INCLUDE_PARSING_VALUE );
       final MasterReport report = (MasterReport) performExternalParsing( layout, MasterReport.class, parameters );
       return report == this.report;
     } catch ( ResourceLoadingException e ) {
@@ -300,7 +302,7 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
       final Map parameters = deriveParseParameters();
       parameters.put( new FactoryParameterKey( ReportParserUtil.HELPER_OBJ_REPORT_NAME ), report );
       parameters.put( new FactoryParameterKey( ReportParserUtil.INCLUDE_PARSING_KEY ),
-        ReportParserUtil.INCLUDE_PARSING_VALUE );
+          ReportParserUtil.INCLUDE_PARSING_VALUE );
       final MasterReport report = (MasterReport) performExternalParsing( stylefile, MasterReport.class, parameters );
       return report == this.report;
     } catch ( ResourceLoadingException e ) {
@@ -313,8 +315,8 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
     try {
       final Map parameters = deriveParseParameters();
       parameters.put( new FactoryParameterKey( ReportParserUtil.HELPER_OBJ_REPORT_NAME ), null );
-      final DataDefinition dataDefinition = (DataDefinition)
-        performExternalParsing( parameterFile, DataDefinition.class, parameters );
+      final DataDefinition dataDefinition =
+          (DataDefinition) performExternalParsing( parameterFile, DataDefinition.class, parameters );
 
       report.setQuery( dataDefinition.getQuery() );
       report.setQueryLimit( dataDefinition.getQueryLimit() );
@@ -331,18 +333,18 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
       final Expression[] expressions = dataDefinition.getExpressions();
       if ( expressions != null ) {
         for ( int i = 0; i < expressions.length; i++ ) {
-          final Expression expression = expressions[ i ];
+          final Expression expression = expressions[i];
           report.addExpression( expression );
         }
       }
       return true;
     } catch ( ResourceLoadingException e ) {
-      ContentRootElementHandler.logger.warn(
-        "Unable to parse the parameter for this bundle from file: " + parameterFile );
+      ContentRootElementHandler.logger.warn( "Unable to parse the parameter for this bundle from file: "
+          + parameterFile );
       return false;
     } catch ( ReportDataFactoryException e ) {
-      ContentRootElementHandler.logger.warn(
-        "Unable to parse the parameter for this bundle from file: " + parameterFile );
+      ContentRootElementHandler.logger.warn( "Unable to parse the parameter for this bundle from file: "
+          + parameterFile );
       return false;
     }
   }
@@ -351,8 +353,8 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
     try {
       final Map parameters = deriveParseParameters();
       parameters.put( new FactoryParameterKey( ReportParserUtil.HELPER_OBJ_REPORT_NAME ), null );
-      final BundleSettings settings = (BundleSettings)
-        performExternalParsing( settingsFile, BundleSettings.class, parameters );
+      final BundleSettings settings =
+          (BundleSettings) performExternalParsing( settingsFile, BundleSettings.class, parameters );
       // todo: Apply settings
       final Configuration configuration = settings.getConfiguration();
       final Enumeration configProperties = configuration.getConfigProperties();
@@ -365,8 +367,8 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
       }
       return true;
     } catch ( ResourceLoadingException e ) {
-      ContentRootElementHandler.logger.warn(
-        "Unable to parse the settingsFile for this bundle from file: " + settingsFile );
+      ContentRootElementHandler.logger.warn( "Unable to parse the settingsFile for this bundle from file: "
+          + settingsFile );
       return false;
     }
   }
@@ -376,14 +378,15 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
    * continues. Meta-data parsing is not mergeable - there is only one source for the meta-data of a report-bundle.
    *
    * @return true, if the meta-data bundle has been updated, false otherwise.
-   * @throws ParseException if the parsing fails.
+   * @throws ParseException
+   *           if the parsing fails.
    */
   private boolean parseDataSchema() throws ParseException {
     try {
       final Map parameters = deriveParseParameters();
       parameters.put( new FactoryParameterKey( ReportParserUtil.HELPER_OBJ_REPORT_NAME ), null );
-      final DataSchemaDefinition metaData = (DataSchemaDefinition)
-        performExternalParsing( "dataschema.xml", DataSchemaDefinition.class, parameters );
+      final DataSchemaDefinition metaData =
+          (DataSchemaDefinition) performExternalParsing( "dataschema.xml", DataSchemaDefinition.class, parameters );
       report.setDataSchemaDefinition( metaData );
       return true;
     } catch ( ResourceLoadingException e ) {
@@ -396,7 +399,8 @@ public class ContentRootElementHandler extends AbstractXmlReadHandler {
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if an parser error occured.
+   * @throws SAXException
+   *           if an parser error occured.
    */
   public Object getObject() throws SAXException {
     return report;

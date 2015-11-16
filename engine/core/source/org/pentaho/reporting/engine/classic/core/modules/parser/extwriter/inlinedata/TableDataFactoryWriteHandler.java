@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.inlinedata;
 
@@ -41,15 +41,18 @@ public class TableDataFactoryWriteHandler implements DataFactoryWriteHandler {
   /**
    * Writes a data-source into a XML-stream.
    *
-   * @param reportWriter the writer context that holds all factories.
-   * @param xmlWriter    the XML writer that will receive the generated XML data.
-   * @param dataFactory  the data factory that should be written.
-   * @throws IOException           if any error occured
-   * @throws ReportWriterException if the data factory cannot be written.
+   * @param reportWriter
+   *          the writer context that holds all factories.
+   * @param xmlWriter
+   *          the XML writer that will receive the generated XML data.
+   * @param dataFactory
+   *          the data factory that should be written.
+   * @throws IOException
+   *           if any error occured
+   * @throws ReportWriterException
+   *           if the data factory cannot be written.
    */
-  public void write( final ReportWriterContext reportWriter,
-                     final XmlWriter xmlWriter,
-                     final DataFactory dataFactory )
+  public void write( final ReportWriterContext reportWriter, final XmlWriter xmlWriter, final DataFactory dataFactory )
     throws IOException, ReportWriterException {
     if ( reportWriter == null ) {
       throw new NullPointerException();
@@ -72,14 +75,14 @@ public class TableDataFactoryWriteHandler implements DataFactoryWriteHandler {
 
       final String[] tables = tableDataFactory.getQueryNames();
       for ( int i = 0; i < tables.length; i++ ) {
-        final String tableName = tables[ i ];
+        final String tableName = tables[i];
         final TableModel tableModel = tableDataFactory.queryData( tableName, null );
 
         xmlWriter
-          .writeTag( InlineDataFactoryModule.NAMESPACE, "inline-table", "name", tableName, XmlWriterSupport.OPEN );
+            .writeTag( InlineDataFactoryModule.NAMESPACE, "inline-table", "name", tableName, XmlWriterSupport.OPEN );
         xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "definition", XmlWriterSupport.OPEN );
 
-        final Class[] colTypes = new Class[ tableModel.getColumnCount() ];
+        final Class[] colTypes = new Class[tableModel.getColumnCount()];
         for ( int col = 0; col < tableModel.getColumnCount(); col += 1 ) {
           final AttributeList colAttrs = new AttributeList();
           colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "name", tableModel.getColumnName( col ) );
@@ -87,10 +90,10 @@ public class TableDataFactoryWriteHandler implements DataFactoryWriteHandler {
           final Class columnClass = tableModel.getColumnClass( col );
           if ( columnClass == null ) {
             colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "type", Object.class.getName() );
-            colTypes[ col ] = Object.class;
+            colTypes[col] = Object.class;
           } else {
             colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "type", columnClass.getName() );
-            colTypes[ col ] = columnClass;
+            colTypes[col] = columnClass;
           }
 
           xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "data", colAttrs, XmlWriterSupport.CLOSE );
@@ -107,7 +110,7 @@ public class TableDataFactoryWriteHandler implements DataFactoryWriteHandler {
               xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "data", colAttrs, XmlWriterSupport.CLOSE );
             } else {
               final Class valueClass = value.getClass();
-              if ( ObjectUtilities.equal( colTypes[ col ], valueClass ) == false ) {
+              if ( ObjectUtilities.equal( colTypes[col], valueClass ) == false ) {
                 colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "type", valueClass.getName() );
               }
 
@@ -118,8 +121,8 @@ public class TableDataFactoryWriteHandler implements DataFactoryWriteHandler {
                 xmlWriter.writeCloseTag();
 
               } catch ( BeanException e ) {
-                throw new ReportWriterException( "Unable to convert value at (row:" + row + ";column:" +
-                  col + ") into a string." + value.getClass() );
+                throw new ReportWriterException( "Unable to convert value at (row:" + row + ";column:" + col
+                    + ") into a string." + value.getClass() );
               }
             }
 

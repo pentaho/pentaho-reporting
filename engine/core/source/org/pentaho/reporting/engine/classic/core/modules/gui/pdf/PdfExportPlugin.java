@@ -1,21 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.pdf;
+
+import java.util.Locale;
+
+import javax.swing.Icon;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,9 +35,6 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-import javax.swing.*;
-import java.util.Locale;
-
 /**
  * Encapsulates the PDF export into a separate export plugin.
  *
@@ -41,7 +44,7 @@ public class PdfExportPlugin extends AbstractExportActionPlugin {
   private static final Log logger = LogFactory.getLog( PdfExportPlugin.class );
 
   /**
-   * Localised resources.
+   * Localized resources.
    */
   private final ResourceBundleSupport resources;
 
@@ -49,9 +52,9 @@ public class PdfExportPlugin extends AbstractExportActionPlugin {
    * The base resource class.
    */
   public static final String BASE_RESOURCE_CLASS =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.messages.messages"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.messages.messages"; //$NON-NLS-1$
   public static final String PROGRESS_DIALOG_ENABLE_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.ProgressDialogEnabled"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.ProgressDialogEnabled"; //$NON-NLS-1$
 
   protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.export."; //$NON-NLS-1$
@@ -61,10 +64,10 @@ public class PdfExportPlugin extends AbstractExportActionPlugin {
    * DefaultConstructor.
    */
   public PdfExportPlugin() {
-    resources = new ResourceBundleSupport( Locale.getDefault(), PdfExportPlugin.BASE_RESOURCE_CLASS,
-      ObjectUtilities.getClassLoader( PdfExportPlugin.class ) );
+    resources =
+        new ResourceBundleSupport( Locale.getDefault(), PdfExportPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
+            .getClassLoader( PdfExportPlugin.class ) );
   }
-
 
   public boolean initialize( final SwingGuiContext context ) {
     if ( super.initialize( context ) == false ) {
@@ -93,12 +96,13 @@ public class PdfExportPlugin extends AbstractExportActionPlugin {
   /**
    * Shows this dialog and (if the dialog is confirmed) saves the complete report into an PDF file.
    *
-   * @param report the report being processed.
+   * @param report
+   *          the report being processed.
    * @return true or false.
    */
   public boolean performExport( final MasterReport report ) {
-    final boolean result = performShowExportDialog( report,
-      "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.Dialog" ); //$NON-NLS-1$
+    final boolean result =
+        performShowExportDialog( report, "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.Dialog" ); //$NON-NLS-1$
     if ( result == false ) {
       // user canceled the dialog ...
       return false;
@@ -106,7 +110,7 @@ public class PdfExportPlugin extends AbstractExportActionPlugin {
 
     final ReportProgressDialog progressDialog;
     if ( isProgressDialogEnabled( report,
-      "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.ProgressDialogEnabled" ) ) {
+        "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.ProgressDialogEnabled" ) ) {
       progressDialog = createProgressDialog();
       if ( report.getTitle() == null ) {
         progressDialog.setTitle( getResources().getString( "ProgressDialog.EMPTY_TITLE" ) );
@@ -118,15 +122,14 @@ public class PdfExportPlugin extends AbstractExportActionPlugin {
     }
 
     try {
-      final PdfExportTask task = new PdfExportTask
-        ( report, progressDialog, getContext() );
+      final PdfExportTask task = new PdfExportTask( report, progressDialog, getContext() );
       final Thread worker = new Thread( task );
       worker.start();
       return true;
     } catch ( Exception e ) {
       PdfExportPlugin.logger.error( "Failure while preparing the PDF export", e ); //$NON-NLS-1$
-      getContext().getStatusListener().setStatus
-        ( StatusType.ERROR, resources.getString( "PdfExportPlugin.USER_FAILED" ), e ); //$NON-NLS-1$
+      getContext().getStatusListener().setStatus( StatusType.ERROR,
+          resources.getString( "PdfExportPlugin.USER_FAILED" ), e ); //$NON-NLS-1$
       return false;
     }
   }
@@ -190,7 +193,7 @@ public class PdfExportPlugin extends AbstractExportActionPlugin {
   /**
    * Returns the resourcebundle to be used to translate strings into localized content.
    *
-   * @return the resourcebundle for the localisation.
+   * @return the resourcebundle for the localization.
    */
   protected ResourceBundleSupport getResources() {
     return resources;

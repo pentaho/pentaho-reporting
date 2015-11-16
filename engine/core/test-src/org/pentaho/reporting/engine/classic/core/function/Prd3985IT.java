@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -33,7 +33,6 @@ public class Prd3985IT extends TestCase {
   protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
-
 
   public void testSyntaxErrorFormula() {
     final FormulaExpression function = new FormulaExpression();
@@ -90,10 +89,9 @@ public class Prd3985IT extends TestCase {
     function.setFormula( "=IF(" ); // clearly an bogus formula
 
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
-    report.getReportHeader().setAttributeExpression
-      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
+    report.getReportConfiguration().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
+    report.getReportHeader().setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
 
     try {
       DebugReportRunner.createPDF( report );
@@ -109,8 +107,8 @@ public class Prd3985IT extends TestCase {
     function.setFormula( "=IF(" ); // clearly an bogus formula
 
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors", "true" );
+    report.getReportConfiguration().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors", "true" );
     report.getReportHeader().setStyleExpression( ElementStyleKeys.VISIBLE, function );
 
     try {
@@ -120,7 +118,6 @@ public class Prd3985IT extends TestCase {
       // empty is ok here.
     }
   }
-
 
   public void testEvalErrorFormula() {
     final FormulaExpression function = new FormulaExpression();
@@ -177,10 +174,9 @@ public class Prd3985IT extends TestCase {
     function.setFormula( "=ERROR(\"test\")" ); // clearly an bogus formula
 
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
-    report.getReportHeader().setAttributeExpression
-      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
+    report.getReportConfiguration().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
+    report.getReportHeader().setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
 
     try {
       DebugReportRunner.createPDF( report );
@@ -196,8 +192,8 @@ public class Prd3985IT extends TestCase {
     function.setFormula( "=ERROR(\"test\")" ); // clearly an bogus formula
 
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors", "true" );
+    report.getReportConfiguration().setConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors", "true" );
     report.getReportHeader().setStyleExpression( ElementStyleKeys.VISIBLE, function );
 
     try {

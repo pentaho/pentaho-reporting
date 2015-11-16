@@ -29,11 +29,8 @@ public class RenderableComplexText extends RenderNode {
   private boolean forceLinebreak;
   private ParagraphFontMetrics paragraphFontMetrics;
 
-  public RenderableComplexText( final StyleSheet styleSheet,
-                                final InstanceID instanceID,
-                                final ElementType elementType,
-                                final ReportAttributeMap<Object> attributes,
-                                final RichTextSpec text ) {
+  public RenderableComplexText( final StyleSheet styleSheet, final InstanceID instanceID,
+      final ElementType elementType, final ReportAttributeMap<Object> attributes, final RichTextSpec text ) {
     super( new NodeLayoutProperties( styleSheet, attributes, instanceID, elementType ) );
     this.text = text.getText();
     this.richText = text;
@@ -42,11 +39,8 @@ public class RenderableComplexText extends RenderNode {
     this.end = text.length();
   }
 
-  public RenderableComplexText( final StyleSheet styleSheet,
-                                final InstanceID instanceID,
-                                final ElementType elementType,
-                                final ReportAttributeMap<Object> attributes,
-                                final String text ) {
+  public RenderableComplexText( final StyleSheet styleSheet, final InstanceID instanceID,
+      final ElementType elementType, final ReportAttributeMap<Object> attributes, final String text ) {
     super( new NodeLayoutProperties( styleSheet, attributes, instanceID, elementType ) );
     this.text = text;
     this.richText = null;
@@ -55,15 +49,13 @@ public class RenderableComplexText extends RenderNode {
     this.end = text.length();
   }
 
-
-  public void computeMinimumChunkWidth( final OutputProcessorMetaData data,
-                                        final ResourceManager resourceManager ) {
+  public void computeMinimumChunkWidth( final OutputProcessorMetaData data, final ResourceManager resourceManager ) {
     if ( getMinimumChunkWidth() != 0 ) {
       return;
     }
 
-    if ( data.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY ) == false &&
-      getStyleSheet().getBooleanStyleProperty( TextStyleKeys.WORDBREAK ) == false ) {
+    if ( data.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY ) == false
+        && getStyleSheet().getBooleanStyleProperty( TextStyleKeys.WORDBREAK ) == false ) {
       return;
     }
 
@@ -78,7 +70,8 @@ public class RenderableComplexText extends RenderNode {
     for ( int end = wordInstance.next(); end != BreakIterator.DONE; start = end, end = wordInstance.next() ) {
       String word = text.substring( start, end );
       AttributedCharacterIterator attributedCharacterIterator =
-        new RichTextSpecProducer( data, resourceManager ).computeText( this, word ).createAttributedCharacterIterator();
+          new RichTextSpecProducer( data, resourceManager ).computeText( this, word )
+              .createAttributedCharacterIterator();
       TextLayout t = new TextLayout( attributedCharacterIterator, fontRenderContext );
       double width = t.getVisibleAdvance();
       final long wordMinChunkWidth = StrictGeomUtility.toInternalValue( width );

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
@@ -57,7 +57,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
   private RevalidateTextEllipseProcessStep revalidateTextEllipseProcessStep;
   private CodePointBuffer codePointBuffer;
   private boolean manualBreak;
-  //  private long contentAreaX1;
+  // private long contentAreaX1;
   private long contentAreaX2;
   private boolean ellipseDrawn;
   private boolean clipOnWordBoundary;
@@ -71,9 +71,9 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
     text = new StringBuffer( 400 );
     paragraphBounds = new StrictBounds();
     revalidateTextEllipseProcessStep = new RevalidateTextEllipseProcessStep( metaData );
-    this.clipOnWordBoundary = "true".equals
-      ( metaData.getConfiguration().getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary" ) );
+    this.clipOnWordBoundary =
+        "true".equals( metaData.getConfiguration().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary" ) );
   }
 
   protected CodePointBuffer getCodePointBuffer() {
@@ -219,8 +219,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
       ellipseDrawn = true;
 
       final int nodeType = node.getNodeType();
-      if ( clipOnWordBoundary == false &&
-        nodeType == LayoutNodeTypes.TYPE_NODE_TEXT ) {
+      if ( clipOnWordBoundary == false && nodeType == LayoutNodeTypes.TYPE_NODE_TEXT ) {
         final RenderableText text = (RenderableText) node;
         final long ellipseSize = extractEllipseSize( node );
         final long x1 = text.getX();
@@ -230,8 +229,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
           // The text node that is printed will overlap with the ellipse we need to print.
           drawText( text, effectiveAreaX2 );
         }
-      } else if ( clipOnWordBoundary == false &&
-        nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
+      } else if ( clipOnWordBoundary == false && nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
         final RenderableComplexText text = (RenderableComplexText) node;
         final long x1 = text.getX();
 
@@ -256,7 +254,8 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
   /**
    * Renders the glyphs stored in the text node.
    *
-   * @param renderableText the text node that should be rendered.
+   * @param renderableText
+   *          the text node that should be rendered.
    * @param contentX2
    */
   protected void drawText( final RenderableText renderableText, final long contentX2 ) {
@@ -377,7 +376,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
     paragraphBounds.setRect( box.getX(), box.getY(), box.getWidth(), box.getHeight() );
     overflowX = box.isBoxOverflowX();
     overflowY = box.isBoxOverflowY();
-    //final long y2 = box.getY() + box.getHeight();
+    // final long y2 = box.getY() + box.getHeight();
     final long contentAreaX1 = box.getContentAreaX1();
     contentAreaX2 = box.getContentAreaX2();
 
@@ -410,10 +409,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
     text.append( '\n' );
   }
 
-
-  protected void processTextLine( final RenderBox lineBox,
-                                  final long contentAreaX1,
-                                  final long contentAreaX2 ) {
+  protected void processTextLine( final RenderBox lineBox, final long contentAreaX1, final long contentAreaX2 ) {
     if ( lineBox.isNodeVisible( paragraphBounds, overflowX, overflowY ) == false ) {
       return;
     }
@@ -421,8 +417,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
 
     final boolean overflowProperty = lineBox.getParent().getStaticBoxLayoutProperties().isOverflowX();
 
-    this.textLineOverflow =
-      ( ( lineBox.getX() + lineBox.getWidth() ) > contentAreaX2 ) && overflowProperty == false;
+    this.textLineOverflow = ( ( lineBox.getX() + lineBox.getWidth() ) > contentAreaX2 ) && overflowProperty == false;
 
     if ( textLineOverflow ) {
       revalidateTextEllipseProcessStep.compute( lineBox, contentAreaX1, contentAreaX2 );
@@ -430,7 +425,6 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
 
     startProcessing( lineBox );
   }
-
 
   public Object getRawResult() {
     return rawResult;
@@ -452,11 +446,9 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
     text.delete( 0, text.length() );
   }
 
-
   protected StrictBounds getParagraphBounds() {
     return paragraphBounds;
   }
-
 
   public boolean isTextLineOverflow() {
     return textLineOverflow;

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver;
 
@@ -112,15 +112,13 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
 
   private byte fallBackCharset;
 
-  //private int borderTop;
-  //private int borderBottom;
+  // private int borderTop;
+  // private int borderBottom;
   private DriverState driverState;
   private String encoding;
 
-  protected AbstractEpsonPrinterDriver( final OutputStream out,
-                                        final float charsPerInch,
-                                        final float linesPerInch,
-                                        final String printerModel ) {
+  protected AbstractEpsonPrinterDriver( final OutputStream out, final float charsPerInch, final float linesPerInch,
+      final String printerModel ) {
     if ( out == null ) {
       throw new NullPointerException();
     }
@@ -136,11 +134,10 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
     this.firstPage = true;
     this.driverState = new DriverState();
 
-    //validate the CPI values
+    // validate the CPI values
     if ( isValidCPI( charsPerInch ) == false ) {
-      throw new IllegalArgumentException
-        ( "The given CPI of '" + charsPerInch +
-          "' is invalid for the selected printer model ('" + printerModel + "'." );
+      throw new IllegalArgumentException( "The given CPI of '" + charsPerInch
+          + "' is invalid for the selected printer model ('" + printerModel + "'." );
     }
     // we cannot influence the LPI, so we have to accept what the user gives in
   }
@@ -158,13 +155,12 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
     if ( charsPerInch == PrinterDriverCommands.CPI_20 ) {
       return true;
     }
-    if ( charsPerInch == PrinterDriverCommands.CPI_15 &&
-      getPrinterSpecification().isFeatureAvailable( AbstractEpsonPrinterDriver.FONT_15_CPI ) ) {
+    if ( charsPerInch == PrinterDriverCommands.CPI_15
+        && getPrinterSpecification().isFeatureAvailable( AbstractEpsonPrinterDriver.FONT_15_CPI ) ) {
       return true;
     }
     return false;
   }
-
 
   public AbstractEpsonPrinterDriver.DriverState getDriverState() {
     return driverState;
@@ -197,10 +193,10 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
    * Ends a new line.
    *
    * @param overflow
-   * @throws java.io.IOException if an IOError occures.
+   * @throws java.io.IOException
+   *           if an IOError occures.
    */
-  public void endLine( final boolean overflow )
-    throws IOException {
+  public void endLine( final boolean overflow ) throws IOException {
     if ( overflow == false ) {
       out.write( PrinterDriverCommands.CARRIAGE_RETURN );
       out.write( PrinterDriverCommands.LINE_FEED );
@@ -213,10 +209,10 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
    * Ends the current page. Should print empty lines or an FORM_FEED command.
    *
    * @param overflow
-   * @throws java.io.IOException if there was an IOError while writing the command
+   * @throws java.io.IOException
+   *           if there was an IOError while writing the command
    */
-  public void endPage( final boolean overflow )
-    throws IOException {
+  public void endPage( final boolean overflow ) throws IOException {
     if ( overflow == false ) {
       out.write( PrinterDriverCommands.FORM_FEED );
     }
@@ -243,10 +239,10 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
   /**
    * Flushes the output stream.
    *
-   * @throws java.io.IOException if an IOError occured.
+   * @throws java.io.IOException
+   *           if an IOError occured.
    */
-  public void flush()
-    throws IOException {
+  public void flush() throws IOException {
     out.flush();
   }
 
@@ -254,11 +250,12 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
    * Prints a single text chunk at the given position on the current line. The chunk should not be printed, if an
    * previous chunk overlays this chunk.
    *
-   * @param chunk the chunk that should be written
-   * @throws java.io.IOException if an IO error occured.
+   * @param chunk
+   *          the chunk that should be written
+   * @throws java.io.IOException
+   *           if an IO error occured.
    */
-  public void printChunk( final PlaintextDataChunk chunk )
-    throws IOException {
+  public void printChunk( final PlaintextDataChunk chunk ) throws IOException {
     final String text = chunk.getText().substring( 0, chunk.getWidth() );
     final String fd = chunk.getFont();
 
@@ -267,12 +264,10 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
     getEncodingUtilities( encoding ).writeEncodedText( text, out );
   }
 
-  protected abstract void sendFontStyle( boolean bold, boolean italic,
-                                         boolean underline, boolean strikeTrough )
+  protected abstract void sendFontStyle( boolean bold, boolean italic, boolean underline, boolean strikeTrough )
     throws IOException;
 
-  protected void sendDefineFont( final byte printerFont )
-    throws IOException {
+  protected void sendDefineFont( final byte printerFont ) throws IOException {
     if ( getDriverState().getFont() != printerFont ) {
       getOut().write( 0x1b );
       getOut().write( 0x6b );
@@ -285,10 +280,10 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
    * Prints an empty chunk. This is called for all undefined chunk-cells. The last defined font is used to print that
    * empty text.
    *
-   * @throws java.io.IOException if an IOError occured.
+   * @throws java.io.IOException
+   *           if an IOError occured.
    */
-  public void printEmptyChunk( final int count )
-    throws IOException {
+  public void printEmptyChunk( final int count ) throws IOException {
     sendFontStyle( getDriverState().isBold(), getDriverState().isItalic(), false, false );
     for ( int i = 0; i < count; i++ ) {
       out.write( PrinterDriverCommands.SPACE );
@@ -298,20 +293,20 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
   /**
    * Prints some raw content. This content is not processed in any way, so be very carefull.
    *
-   * @param raw the content that should be printed.
+   * @param raw
+   *          the content that should be printed.
    */
-  public void printRaw( final byte[] raw )
-    throws IOException {
+  public void printRaw( final byte[] raw ) throws IOException {
     out.write( raw );
   }
 
   /**
    * Starts a new line.
    *
-   * @throws java.io.IOException if an IOError occures.
+   * @throws java.io.IOException
+   *           if an IOError occures.
    */
-  public void startLine()
-    throws IOException {
+  public void startLine() throws IOException {
     sendFontStyle( false, false, false, false );
     final int manualLeftBorder = getDriverState().getManualLeftBorder();
     for ( int i = 0; i < manualLeftBorder; i++ ) {
@@ -322,10 +317,10 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
   /**
    * Resets the printer and starts a new page. Prints the top border lines (if necessary).
    *
-   * @throws java.io.IOException if there was an IOError while writing the command
+   * @throws java.io.IOException
+   *           if there was an IOError while writing the command
    */
-  public void startPage( final Paper paper, final String encoding )
-    throws IOException {
+  public void startPage( final Paper paper, final String encoding ) throws IOException {
     this.encoding = encoding;
     final float lineHeightPoints = 72.0f / getLinesPerInch();
     final float charWidthPoints = 72.0f / getCharactersPerInch();
@@ -351,7 +346,7 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
     sendDefineHorizontalBorders( borderLeft, borderRight );
 
     final int borderTop = (int) ( fact.getTopBorder( paper ) / lineHeightPoints );
-    //borderBottom = (int) (fact.getBottomBorder(paper) / lineHeightPoints);
+    // borderBottom = (int) (fact.getBottomBorder(paper) / lineHeightPoints);
 
     // print the top margin ..
     for ( int i = 0; i < borderTop; i++ ) {
@@ -371,8 +366,7 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
     // sendDefineUserCharacters();
   }
 
-  protected void sendDefineCharacterWidth( final float charactersPerInch )
-    throws IOException {
+  protected void sendDefineCharacterWidth( final float charactersPerInch ) throws IOException {
     if ( charactersPerInch == PrinterDriverCommands.CPI_10 ) {
       getOut().write( 0x12 ); // disable condensed printing
       getOut().write( 0x1b );
@@ -401,20 +395,16 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
     }
   }
 
-
-  protected void sendResetPrinter()
-    throws IOException {
+  protected void sendResetPrinter() throws IOException {
     out.write( 0x1b );
     out.write( 0x40 );
   }
 
-  protected abstract void sendDefineLineSpacing( float lineHeightInPoints )
-    throws IOException;
+  protected abstract void sendDefineLineSpacing( float lineHeightInPoints ) throws IOException;
 
-  protected void sendDefinePageLengthInLines( final int paperSizeInLines )
-    throws IOException {
+  protected void sendDefinePageLengthInLines( final int paperSizeInLines ) throws IOException {
     // SideEffects: Setting the page size will mark the current position
-    //              as TopOfForm position
+    // as TopOfForm position
     //
     // All printers support that command.
     getOut().write( 0x1b ); // ESC
@@ -422,8 +412,7 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
     getOut().write( paperSizeInLines );
   }
 
-  protected void sendDefineHorizontalBorders( final int left, final int right )
-    throws IOException {
+  protected void sendDefineHorizontalBorders( final int left, final int right ) throws IOException {
     if ( left < 256 ) {
       // depends on the pitch to be defined correctly.
       // In that implementation we can assume that this is ok.
@@ -443,9 +432,7 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
     // we do not violate that constraint.
   }
 
-
-  protected void sendDefineCodepage( final String encoding, final int characterTable )
-    throws IOException {
+  protected void sendDefineCodepage( final String encoding, final int characterTable ) throws IOException {
     if ( getPrinterSpecification().isFeatureAvailable( AbstractEpsonPrinterDriver.OP_NO_ASSIGN_CHAR_TABLE ) ) {
       out.write( 0x1b ); // ESC
       out.write( 0x52 ); // R
@@ -458,7 +445,7 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
       out.write( 0x03 ); // const: 3
       out.write( 0x00 ); // const: 0
       out.write( characterTable ); // Define charset; (0 works on all printers)
-      out.write( cp );   // the codepage
+      out.write( cp ); // the codepage
     }
     out.write( 0x1b ); // ESC
     out.write( 0x74 ); // t
@@ -468,10 +455,8 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
   protected void sendDefineUserCharacters() {
   }
 
-  protected EncodingUtilities getEncodingUtilities( final String encoding )
-    throws IOException {
-    if ( encodingUtilities != null &&
-      encodingUtilities.getEncoding().equals( encoding ) ) {
+  protected EncodingUtilities getEncodingUtilities( final String encoding ) throws IOException {
+    if ( encodingUtilities != null && encodingUtilities.getEncoding().equals( encoding ) ) {
       return encodingUtilities;
     }
 
@@ -483,14 +468,12 @@ public abstract class AbstractEpsonPrinterDriver implements PrinterDriver {
   protected abstract PrinterSpecificationManager getPrinterSpecificationManager();
 
   private PrinterSpecification lookupPrinterSpecification( final String model ) {
-    final PrinterSpecificationManager printerSpecificationManager =
-      getPrinterSpecificationManager();
+    final PrinterSpecificationManager printerSpecificationManager = getPrinterSpecificationManager();
     if ( model == null ) {
       return PrinterSpecificationManager.getGenericPrinter();
     }
 
-    final PrinterSpecification printerModel =
-      printerSpecificationManager.getPrinter( model );
+    final PrinterSpecification printerModel = printerSpecificationManager.getPrinter( model );
     if ( printerModel == null ) {
       throw new IllegalArgumentException( "The printer model is not supported." );
     }

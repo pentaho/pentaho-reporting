@@ -65,11 +65,11 @@ public class TextDirection implements Serializable {
    * Replaces the automatically generated instance with one of the enumeration instances.
    *
    * @return the resolved element
-   * @throws java.io.ObjectStreamException if the element could not be resolved.
+   * @throws java.io.ObjectStreamException
+   *           if the element could not be resolved.
    * @noinspection UNUSED_SYMBOL
    */
-  protected Object readResolve()
-    throws ObjectStreamException {
+  protected Object readResolve() throws ObjectStreamException {
     if ( this.type.equals( TextDirection.LTR.type ) ) {
       return TextDirection.LTR;
     }

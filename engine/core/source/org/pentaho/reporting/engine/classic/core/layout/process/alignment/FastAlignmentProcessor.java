@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process.alignment;
 
@@ -40,15 +40,11 @@ public class FastAlignmentProcessor implements TextAlignmentProcessor {
   private ChunkIterator iterator;
 
   public FastAlignmentProcessor() {
-    this.pagebreaks = new long[ 10 ];
+    this.pagebreaks = new long[10];
   }
 
-  public void initialize( final OutputProcessorMetaData metaData,
-                          final SequenceList sequence,
-                          final long start,
-                          final long end,
-                          final PageGrid breaks,
-                          final boolean overflowX ) {
+  public void initialize( final OutputProcessorMetaData metaData, final SequenceList sequence, final long start,
+      final long end, final PageGrid breaks, final boolean overflowX ) {
     this.start = start;
     this.end = end;
     this.breaks = breaks;
@@ -66,7 +62,7 @@ public class FastAlignmentProcessor implements TextAlignmentProcessor {
     final int breakCount = horizontalBreaks.length;
     final LongList pageLongList = new LongList( breakCount );
     for ( int i = 0; i < ( breakCount - 1 ); i++ ) {
-      final long pos = horizontalBreaks[ i ];
+      final long pos = horizontalBreaks[i];
       if ( pos <= start ) {
         // skip ..
         continue;

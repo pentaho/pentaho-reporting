@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource;
 
@@ -28,8 +28,7 @@ import java.util.Iterator;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractDataSourceFactory
-  extends ClassFactoryImpl implements DataSourceFactory {
+public abstract class AbstractDataSourceFactory extends ClassFactoryImpl implements DataSourceFactory {
   /**
    * Storage for the data sources.
    */
@@ -45,8 +44,10 @@ public abstract class AbstractDataSourceFactory
   /**
    * Registers a data source.
    *
-   * @param name the name.
-   * @param o    the object description.
+   * @param name
+   *          the name.
+   * @param o
+   *          the object description.
    */
   public void registerDataSources( final String name, final ObjectDescription o ) {
     dataSources.put( name, o );
@@ -56,7 +57,8 @@ public abstract class AbstractDataSourceFactory
   /**
    * Returns a data source description.
    *
-   * @param name the data source name.
+   * @param name
+   *          the data source name.
    * @return The object description.
    */
   public ObjectDescription getDataSourceDescription( final String name ) {
@@ -70,7 +72,8 @@ public abstract class AbstractDataSourceFactory
   /**
    * Returns a data source name given a description.
    *
-   * @param od the object description.
+   * @param od
+   *          the object description.
    * @return The name.
    */
   public String getDataSourceName( final ObjectDescription od ) {

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
@@ -51,7 +51,6 @@ public class Pre448IT extends TestCase {
     ClassicEngineBoot.getInstance().start();
   }
 
-
   public void testBlockLayoutBox() throws Exception {
     final URL target = Pre448IT.class.getResource( "Pre-448.xml" );
     final ResourceManager rm = new ResourceManager();
@@ -62,12 +61,11 @@ public class Pre448IT extends TestCase {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-      ( basereport, (Band) report.getReportHeader().getElement( 3 ), false, true );
+    final LogicalPageBox logicalPageBox =
+        DebugReportRunner.layoutSingleBand( basereport, (Band) report.getReportHeader().getElement( 3 ), false, true );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox );
-
 
   }
 
@@ -81,13 +79,12 @@ public class Pre448IT extends TestCase {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-      ( basereport, (Band) report.getReportHeader().getElement( 2 ), false, true );
+    final LogicalPageBox logicalPageBox =
+        DebugReportRunner.layoutSingleBand( basereport, (Band) report.getReportHeader().getElement( 2 ), false, true );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox );
   }
-
 
   public void testBlockLayout() throws Exception {
     final URL target = Pre448IT.class.getResource( "Pre-448.xml" );
@@ -96,12 +93,11 @@ public class Pre448IT extends TestCase {
     final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-      ( basereport, (Band) report.getReportHeader().getElement( 1 ), false, true );
+    final LogicalPageBox logicalPageBox =
+        DebugReportRunner.layoutSingleBand( basereport, (Band) report.getReportHeader().getElement( 1 ), false, true );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox );
@@ -117,8 +113,8 @@ public class Pre448IT extends TestCase {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-      ( basereport, (Band) report.getReportHeader().getElement( 0 ), false, true );
+    final LogicalPageBox logicalPageBox =
+        DebugReportRunner.layoutSingleBand( basereport, (Band) report.getReportHeader().getElement( 0 ), false, true );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     new ValidateRunner().startValidation( logicalPageBox );

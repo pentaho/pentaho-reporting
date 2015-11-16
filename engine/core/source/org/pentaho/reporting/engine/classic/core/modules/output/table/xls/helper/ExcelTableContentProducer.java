@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
@@ -34,8 +34,7 @@ public class ExcelTableContentProducer extends TableContentProducer implements S
   private Integer freezeTop;
   private Integer freezeLeft;
 
-  public ExcelTableContentProducer( final SheetLayout sheetLayout,
-                                    final OutputProcessorMetaData metaData ) {
+  public ExcelTableContentProducer( final SheetLayout sheetLayout, final OutputProcessorMetaData metaData ) {
     super( sheetLayout, metaData );
   }
 
@@ -106,15 +105,16 @@ public class ExcelTableContentProducer extends TableContentProducer implements S
     this.pageFooterLeft = lookup( box, AttributeNames.Excel.PAGE_FOOTER_LEFT, this.pageFooterLeft );
     this.pageFooterRight = lookup( box, AttributeNames.Excel.PAGE_FOOTER_RIGHT, this.pageFooterRight );
 
-    final Integer freezeTop = (Integer) box.getAttributes()
-      .getAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FREEZING_TOP_POSITION );
+    final Integer freezeTop =
+        (Integer) box.getAttributes().getAttribute( AttributeNames.Excel.NAMESPACE,
+            AttributeNames.Excel.FREEZING_TOP_POSITION );
     if ( this.freezeTop == null && freezeTop != null ) {
       this.freezeTop = freezeTop;
     }
 
-
-    final Integer freezeLeft = (Integer) box.getAttributes()
-      .getAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FREEZING_LEFT_POSITION );
+    final Integer freezeLeft =
+        (Integer) box.getAttributes().getAttribute( AttributeNames.Excel.NAMESPACE,
+            AttributeNames.Excel.FREEZING_LEFT_POSITION );
     if ( this.freezeLeft == null && freezeLeft != null ) {
       this.freezeLeft = freezeLeft;
     }
@@ -134,9 +134,7 @@ public class ExcelTableContentProducer extends TableContentProducer implements S
     return freezeLeft;
   }
 
-  private String lookup( final RenderBox box,
-                         final String attribute,
-                         final String defaultValue ) {
+  private String lookup( final RenderBox box, final String attribute, final String defaultValue ) {
     final Object value = box.getAttributes().getAttribute( AttributeNames.Excel.NAMESPACE, attribute );
     if ( value != null && defaultValue == null ) {
       return String.valueOf( value );

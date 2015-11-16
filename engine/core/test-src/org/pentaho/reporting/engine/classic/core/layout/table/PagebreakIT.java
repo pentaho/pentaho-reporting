@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
@@ -85,11 +85,9 @@ public class PagebreakIT {
     report.getReportHeader().setLayout( "block" );
 
     PdfReportUtil.createPDF( report, "test-output/PRD-3857-rowspan-output.pdf" );
-/*
-    assertPageValid(report, 0);
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
-    */
+    /*
+     * assertPageValid(report, 0); assertPageValid(report, 1); assertPageValid(report, 2);
+     */
   }
 
   @Test
@@ -111,8 +109,8 @@ public class PagebreakIT {
     assertPageValid( pages, 0, StrictGeomUtility.toInternalValue( 10 ) );
     assertPageValid( pages, 1 );
     assertPageValid( pages, 2 );
-    //    assertPageValid(report, 3);
-    //    assertPageValid(report, 4);
+    // assertPageValid(report, 3);
+    // assertPageValid(report, 4);
   }
 
   @Test
@@ -135,8 +133,8 @@ public class PagebreakIT {
     assertPageValid( pages, 0 );
     assertPageValid( pages, 1 );
     assertPageValid( pages, 2 );
-    //    assertPageValid(report, 3);
-    //    assertPageValid(report, 4);
+    // assertPageValid(report, 3);
+    // assertPageValid(report, 4);
   }
 
   private class CustomProducer extends TableTestUtil.DefaultElementProducer {
@@ -205,27 +203,28 @@ public class PagebreakIT {
     final LogicalPageBox pageBox = pages.get( page );
     final long pageOffset = pageBox.getPageOffset();
 
-    //ModelPrinter.INSTANCE.print(pageBox);
+    // ModelPrinter.INSTANCE.print(pageBox);
 
     final RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_SECTION );
+        MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_SECTION );
     Assert.assertEquals( 2, elementsByNodeType.length );
-    final TableSectionRenderBox header = (TableSectionRenderBox) elementsByNodeType[ 0 ];
+    final TableSectionRenderBox header = (TableSectionRenderBox) elementsByNodeType[0];
     Assert.assertEquals( TableSectionRenderBox.Role.HEADER, header.getDisplayRole() );
-    final TableSectionRenderBox body = (TableSectionRenderBox) elementsByNodeType[ 1 ];
+    final TableSectionRenderBox body = (TableSectionRenderBox) elementsByNodeType[1];
     Assert.assertEquals( TableSectionRenderBox.Role.BODY, body.getDisplayRole() );
     final RenderNode[] rows = MatchFactory.findElementsByNodeType( body, LayoutNodeTypes.TYPE_BOX_TABLE_ROW );
     Assert.assertTrue( "Have rows on page " + page, rows.length > 0 );
 
     Assert.assertEquals( "Header starts at top of page " + page, pageOffset + offset, header.getY() );
-    Assert.assertEquals( "Row starts after the header on page " + page, header.getY() + header.getHeight(),
-      rows[ 0 ].getY() );
+    Assert.assertEquals( "Row starts after the header on page " + page, header.getY() + header.getHeight(), rows[0]
+        .getY() );
 
     final RenderNode[] table = MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
     Assert.assertEquals( 1, table.length );
-    final RenderBox box = (RenderBox) table[ 0 ];
+    final RenderBox box = (RenderBox) table[0];
     final RenderNode lastChild = box.getLastChild();
-    Assert.assertEquals( "Table height extends correctly on page " + page,
-      box.getY() + box.getHeight(), lastChild.getY() + lastChild.getHeight() );
+    Assert.assertEquals( "Table height extends correctly on page " + page, box.getY() + box.getHeight(), lastChild
+        .getY()
+        + lastChild.getHeight() );
   }
 }

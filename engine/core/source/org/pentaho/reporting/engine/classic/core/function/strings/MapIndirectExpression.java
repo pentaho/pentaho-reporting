@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
@@ -77,7 +77,8 @@ public class MapIndirectExpression extends AbstractExpression {
   /**
    * Defines the name of the field from where to read the key value.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -95,7 +96,8 @@ public class MapIndirectExpression extends AbstractExpression {
   /**
    * Defines the value that is returned if the key-field evaluates to <code>null</code>.
    *
-   * @param nullValue the null-value.
+   * @param nullValue
+   *          the null-value.
    */
   public void setNullValue( final String nullValue ) {
     this.nullValue = nullValue;
@@ -113,7 +115,8 @@ public class MapIndirectExpression extends AbstractExpression {
   /**
    * Defines the name of the field that is returned if none of the predefined keys matches the lookup-value.
    *
-   * @param fallbackForward the fallback forward field name.
+   * @param fallbackForward
+   *          the fallback forward field name.
    */
   public void setFallbackForward( final String fallbackForward ) {
     this.fallbackForward = fallbackForward;
@@ -123,8 +126,10 @@ public class MapIndirectExpression extends AbstractExpression {
    * Defines a key value to which the lookup-field's value is compared. If the key is defined, a matching value must be
    * defined too.
    *
-   * @param index the index position of the key in the list.
-   * @param key   the key value.
+   * @param index
+   *          the index position of the key in the list.
+   * @param key
+   *          the key value.
    */
   public void setKey( final int index, final String key ) {
     if ( keys.size() == index ) {
@@ -137,7 +142,8 @@ public class MapIndirectExpression extends AbstractExpression {
   /**
    * Returns a key value at the given index.
    *
-   * @param index the index position of the key in the list.
+   * @param index
+   *          the index position of the key in the list.
    * @return the key value.
    */
   public String getKey( final int index ) {
@@ -159,13 +165,14 @@ public class MapIndirectExpression extends AbstractExpression {
    * @return all defined keys.
    */
   public String[] getKey() {
-    return (String[]) keys.toArray( new String[ keys.size() ] );
+    return (String[]) keys.toArray( new String[keys.size()] );
   }
 
   /**
    * Defines all keys using the values from the string array.
    *
-   * @param keys all defined keys.
+   * @param keys
+   *          all defined keys.
    */
   public void setKey( final String[] keys ) {
     this.keys.clear();
@@ -176,8 +183,10 @@ public class MapIndirectExpression extends AbstractExpression {
    * Defines the forward-fieldname for the key at the given position. The forward-field is read, if the lookup value
    * matches the key at this position. The forward-value must be a valid data-row column name.
    *
-   * @param index the index of the entry.
-   * @param value the name of the datarow-column that is read if the key is selected.
+   * @param index
+   *          the index of the entry.
+   * @param value
+   *          the name of the datarow-column that is read if the key is selected.
    */
   public void setForward( final int index, final String value ) {
     if ( forwards.size() == index ) {
@@ -191,7 +200,8 @@ public class MapIndirectExpression extends AbstractExpression {
    * Retrieves the forward-fieldname for the key at the given position. The forward-field is read, if the lookup value
    * matches the key at this position. The forward-value must be a valid data-row column name.
    *
-   * @param index the index of the entry.
+   * @param index
+   *          the index of the entry.
    * @return the name of the datarow-column that is read if the key is selected.
    */
   public String getForward( final int index ) {
@@ -213,14 +223,15 @@ public class MapIndirectExpression extends AbstractExpression {
    * @return all forward-definitions.
    */
   public String[] getForward() {
-    return (String[]) forwards.toArray( new String[ forwards.size() ] );
+    return (String[]) forwards.toArray( new String[forwards.size()] );
   }
 
   /**
    * Defiens all forward-definitions using the values of the string-array. The positions in the array must match the key
    * positions, or funny things will happen.
    *
-   * @param forwards the forward-name array.
+   * @param forwards
+   *          the forward-name array.
    */
   public void setForward( final String[] forwards ) {
     this.forwards.clear();
@@ -239,12 +250,12 @@ public class MapIndirectExpression extends AbstractExpression {
   /**
    * Defines, whether the key-lookup should be case-insensitive.
    *
-   * @param ignoreCase true, if the key comparison is case-insensitive, false otherwise.
+   * @param ignoreCase
+   *          true, if the key comparison is case-insensitive, false otherwise.
    */
   public void setIgnoreCase( final boolean ignoreCase ) {
     this.ignoreCase = ignoreCase;
   }
-
 
   /**
    * Return a completly separated copy of this function. The copy does no longer share any changeable objects with the

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 
@@ -174,9 +174,8 @@ public class RenderedCrosstabLayout implements Cloneable {
     return (RenderedCrosstabLayout) clone();
   }
 
-  public void initialize( final CrosstabSpecification crosstabSpecification,
-                          final CrosstabGroup group,
-                          final int crosstabGroupIndex ) {
+  public void initialize( final CrosstabSpecification crosstabSpecification, final CrosstabGroup group,
+      final int crosstabGroupIndex ) {
     this.crosstabSpecification = crosstabSpecification;
     this.crosstabGroupIndex = crosstabGroupIndex;
     computeGroupCounts( group );
@@ -186,10 +185,12 @@ public class RenderedCrosstabLayout implements Cloneable {
       detailMode = CrosstabDetailMode.last;
     }
     this.detailMode = detailMode;
-    this.generateMeasureHeaders = !( Boolean.FALSE.equals
-      ( group.getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER ) ) );
-    this.generateColumnTitleHeaders = !( Boolean.FALSE.equals
-      ( group.getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER ) ) );
+    this.generateMeasureHeaders =
+        !( Boolean.FALSE.equals( group.getAttribute( AttributeNames.Crosstab.NAMESPACE,
+            AttributeNames.Crosstab.PRINT_DETAIL_HEADER ) ) );
+    this.generateColumnTitleHeaders =
+        !( Boolean.FALSE.equals( group.getAttribute( AttributeNames.Crosstab.NAMESPACE,
+            AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER ) ) );
     this.tableLayout = (TableLayout) group.getStyle().getStyleProperty( BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed );
   }
 
@@ -227,10 +228,10 @@ public class RenderedCrosstabLayout implements Cloneable {
       break;
     }
 
-    rowHeaders = new InstanceID[ rowGroups ];
-    columnHeaders = new InstanceID[ columnGroups ];
-    columnTitleHeaders = new InstanceID[ columnGroups ];
-    sortedKeys = list.toArray( new String[ list.size() ] );
+    rowHeaders = new InstanceID[rowGroups];
+    columnHeaders = new InstanceID[columnGroups];
+    columnTitleHeaders = new InstanceID[columnGroups];
+    sortedKeys = list.toArray( new String[list.size()] );
   }
 
   public void setColumnHeaderRowIds( final InstanceID[] columnHeaders ) {
@@ -251,7 +252,7 @@ public class RenderedCrosstabLayout implements Cloneable {
     if ( columnHeaderSubflows == null ) {
       throw new IllegalStateException();
     }
-    return columnHeaderSubflows[ columnHeaderSubflows.length - 1 ];
+    return columnHeaderSubflows[columnHeaderSubflows.length - 1];
   }
 
   public InstanceID getColumnTitleHeaderSubflowId( final int gidx ) {
@@ -259,15 +260,15 @@ public class RenderedCrosstabLayout implements Cloneable {
       throw new InvalidReportStateException();
     }
     final int offset = gidx - crosstabGroupIndex - otherGroups - rowGroups - 1;
-    return columnHeaderSubflows[ offset * 2 ];
+    return columnHeaderSubflows[offset * 2];
   }
 
   public InstanceID getColumnHeaderSubflowId( final int gidx ) {
     final int offset = gidx - crosstabGroupIndex - otherGroups - rowGroups - 1;
     if ( generateColumnTitleHeaders ) {
-      return columnHeaderSubflows[ offset * 2 + 1 ];
+      return columnHeaderSubflows[offset * 2 + 1];
     } else {
-      return columnHeaderSubflows[ offset ];
+      return columnHeaderSubflows[offset];
     }
   }
 
@@ -275,31 +276,31 @@ public class RenderedCrosstabLayout implements Cloneable {
     if ( generateMeasureHeaders == false ) {
       throw new InvalidReportStateException();
     }
-    return columnHeaderSubflows[ columnHeaderSubflows.length - 1 ];
+    return columnHeaderSubflows[columnHeaderSubflows.length - 1];
   }
 
   public void setRowHeader( final int index, final InstanceID instanceId ) {
-    rowHeaders[ index ] = instanceId;
+    rowHeaders[index] = instanceId;
   }
 
   public InstanceID getRowHeader( final int index ) {
-    return rowHeaders[ index ];
+    return rowHeaders[index];
   }
 
   public void setColumnHeaderCellId( final int index, final InstanceID instanceId ) {
-    columnHeaders[ index ] = instanceId;
+    columnHeaders[index] = instanceId;
   }
 
   public InstanceID getColumnHeaderCellId( final int index ) {
-    return columnHeaders[ index ];
+    return columnHeaders[index];
   }
 
   public void setColumnTitleHeaderCellId( final int index, final InstanceID instanceId ) {
-    columnTitleHeaders[ index ] = instanceId;
+    columnTitleHeaders[index] = instanceId;
   }
 
   public InstanceID getColumnTitleHeaderCellId( final int index ) {
-    return columnTitleHeaders[ index ];
+    return columnTitleHeaders[index];
   }
 
   public int getFirstColGroupIndex() {
@@ -314,9 +315,8 @@ public class RenderedCrosstabLayout implements Cloneable {
     return detailMode;
   }
 
-  public void startSummaryRowProcessing( final boolean summaryRowPrintable,
-                                         final int summaryRowGroupIndex,
-                                         final String summaryRowField ) {
+  public void startSummaryRowProcessing( final boolean summaryRowPrintable, final int summaryRowGroupIndex,
+      final String summaryRowField ) {
     this.summaryRowPrintable = summaryRowPrintable;
     this.summaryRowGroupIndex = summaryRowGroupIndex;
     this.summaryRowField = summaryRowField;

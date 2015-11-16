@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.helper;
 
@@ -39,8 +39,7 @@ public class EncodingUtilities {
    */
   private byte[] encodingHeader;
 
-  public EncodingUtilities( final String codepage )
-    throws UnsupportedEncodingException {
+  public EncodingUtilities( final String codepage ) throws UnsupportedEncodingException {
     if ( codepage == null ) {
       throw new NullPointerException();
     }
@@ -50,8 +49,8 @@ public class EncodingUtilities {
     encodingHeader = " ".getBytes( codepage );
     final byte[] spacesWithHeader = "  ".getBytes( codepage );
     final int spaceCharLength = spacesWithHeader.length - encodingHeader.length;
-    space = new byte[ spaceCharLength ];
-    header = new byte[ encodingHeader.length - spaceCharLength ];
+    space = new byte[spaceCharLength];
+    header = new byte[encodingHeader.length - spaceCharLength];
 
     System.arraycopy( spacesWithHeader, encodingHeader.length, space, 0, spaceCharLength );
     System.arraycopy( encodingHeader, 0, header, 0, header.length );
@@ -68,11 +67,12 @@ public class EncodingUtilities {
   /**
    * Writes encoded text for the current encoding into the output stream.
    *
-   * @param textString the text that should be written.
-   * @throws java.io.IOException if an error occures.
+   * @param textString
+   *          the text that should be written.
+   * @throws java.io.IOException
+   *           if an error occures.
    */
-  public void writeEncodedText( final char[] textString, final OutputStream out )
-    throws IOException {
+  public void writeEncodedText( final char[] textString, final OutputStream out ) throws IOException {
     if ( textString == null ) {
       throw new NullPointerException();
     }
@@ -83,15 +83,15 @@ public class EncodingUtilities {
     out.write( text, encodingHeader.length, text.length - encodingHeader.length );
   }
 
-
   /**
    * Writes encoded text for the current encoding into the output stream.
    *
-   * @param textString the text that should be written.
-   * @throws java.io.IOException if an error occures.
+   * @param textString
+   *          the text that should be written.
+   * @throws java.io.IOException
+   *           if an error occures.
    */
-  public void writeEncodedText( final String textString, final OutputStream out )
-    throws IOException {
+  public void writeEncodedText( final String textString, final OutputStream out ) throws IOException {
     if ( textString == null ) {
       throw new NullPointerException();
     }

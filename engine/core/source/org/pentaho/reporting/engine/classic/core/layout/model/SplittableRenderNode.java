@@ -32,9 +32,11 @@ public interface SplittableRenderNode {
    * <p/>
    * Note, there is no guarantee that the first kid has width equal to {@code widthOfFirst}.
    *
-   * @param widthOfFirst the maximum width of the first component
+   * @param widthOfFirst
+   *          the maximum width of the first component
    * @return a pair of children or {@code null}
-   * @throws IllegalStateException if {@code widthOfFirst >= getMinimumWidth()}
+   * @throws IllegalStateException
+   *           if {@code widthOfFirst >= getMinimumWidth()}
    */
   RenderNode[] splitBy( long widthOfFirst );
 

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects;
 
@@ -21,7 +21,6 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException;
 
 import java.awt.geom.PathIterator;
-
 
 /**
  * Describes the PathIteratorSegment object for the object factories used in the parser.
@@ -92,7 +91,8 @@ public class PathIteratorSegmentObjectDescription extends AbstractObjectDescript
    * Parses the given string representation and returns the path iterator type or -1 if the string does not represent a
    * path iterator value.
    *
-   * @param segment the string that contains the PathIterator type.
+   * @param segment
+   *          the string that contains the PathIterator type.
    * @return the parsed PathIterator type or -1.
    */
   private int parseSegmentType( final String segment ) {
@@ -120,13 +120,14 @@ public class PathIteratorSegmentObjectDescription extends AbstractObjectDescript
   /**
    * Creates a string representation of the given PathIterator segment type.
    *
-   * @param segment the segment type
+   * @param segment
+   *          the segment type
    * @return the segment type as string
-   * @throws IllegalArgumentException if the segment type is none of the predefined PathIterator types.
+   * @throws IllegalArgumentException
+   *           if the segment type is none of the predefined PathIterator types.
    */
-  private String createSegmentType( final int segment )
-    throws IllegalArgumentException {
-    switch( segment ) {
+  private String createSegmentType( final int segment ) throws IllegalArgumentException {
+    switch ( segment ) {
       case PathIterator.SEG_CLOSE:
         return PathIteratorSegmentObjectDescription.SEG_CLOSE;
       case PathIterator.SEG_CUBICTO:
@@ -145,7 +146,8 @@ public class PathIteratorSegmentObjectDescription extends AbstractObjectDescript
   /**
    * Reads the given parameter as float or returns 0 if the parameter is not specified.
    *
-   * @param name the parameter name
+   * @param name
+   *          the parameter name
    * @return the float value of the parameter or 0.
    */
   private float getFloatParameter( final String name ) {
@@ -159,11 +161,12 @@ public class PathIteratorSegmentObjectDescription extends AbstractObjectDescript
   /**
    * Sets the parameters of this description object to match the supplied object.
    *
-   * @param o the object.
-   * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
+   * @param o
+   *          the object.
+   * @throws ObjectFactoryException
+   *           if there is a problem while reading the properties of the given object.
    */
-  public void setParameterFromObject( final Object o )
-    throws ObjectFactoryException {
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
     if ( ( o instanceof PathIteratorSegment ) == false ) {
       throw new ObjectFactoryException( "The given object is no PathIteratorSegment." );
     }

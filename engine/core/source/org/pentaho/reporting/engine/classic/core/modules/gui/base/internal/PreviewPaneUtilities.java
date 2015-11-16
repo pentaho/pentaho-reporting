@@ -1,21 +1,38 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
+
+import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewPane;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.actions.ControlAction;
@@ -36,14 +53,6 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 /**
  * Creation-Date: 17.11.2006, 15:06:51
  *
@@ -51,12 +60,12 @@ import java.util.Map;
  */
 public class PreviewPaneUtilities {
   private static final String ICON_THEME_CONFIG_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.common.IconTheme"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.common.IconTheme"; //$NON-NLS-1$
   private static final String ACTION_FACTORY_CONFIG_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.gui.base.ActionFactory"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.ActionFactory"; //$NON-NLS-1$
   private static final String CATEGORY_PREFIX = "org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.";
-    //$NON-NLS-1$
-  private static final ZoomAction[] EMPTY_ZOOM_ACTION = new ZoomAction[ 0 ];
+  //$NON-NLS-1$
+  private static final ZoomAction[] EMPTY_ZOOM_ACTION = new ZoomAction[0];
 
   private PreviewPaneUtilities() {
   }
@@ -75,10 +84,7 @@ public class PreviewPaneUtilities {
     return menu;
   }
 
-
-  public static ZoomAction[] buildMenu( final JMenu menu,
-                                        final ActionPlugin[] actions,
-                                        final PreviewPane pane ) {
+  public static ZoomAction[] buildMenu( final JMenu menu, final ActionPlugin[] actions, final PreviewPane pane ) {
     if ( actions.length == 0 ) {
       return EMPTY_ZOOM_ACTION;
     }
@@ -87,7 +93,7 @@ public class PreviewPaneUtilities {
     boolean separatorPending = false;
     int count = 0;
     for ( int i = 0; i < actions.length; i++ ) {
-      final ActionPlugin actionPlugin = actions[ i ];
+      final ActionPlugin actionPlugin = actions[i];
       if ( actionPlugin.isAddToMenu() == false ) {
         continue;
       }
@@ -121,19 +127,17 @@ public class PreviewPaneUtilities {
 
   private static ZoomAction[] buildViewMenu( final JMenu zoom, final PreviewPane pane ) {
     final double[] zoomFactors = pane.getZoomFactors();
-    final ZoomAction[] zoomActions = new ZoomAction[ zoomFactors.length ];
+    final ZoomAction[] zoomActions = new ZoomAction[zoomFactors.length];
     for ( int i = 0; i < zoomFactors.length; i++ ) {
-      final double factor = zoomFactors[ i ];
-      zoomActions[ i ] = new ZoomAction( factor, pane );
-      zoom.add( new JMenuItem( zoomActions[ i ] ) );
+      final double factor = zoomFactors[i];
+      zoomActions[i] = new ZoomAction( factor, pane );
+      zoom.add( new JMenuItem( zoomActions[i] ) );
     }
     return zoomActions;
   }
 
-  public static void addActionsToToolBar( final JToolBar toolBar,
-                                          final ActionPlugin[] reportActions,
-                                          final JComboBox zoomSelector,
-                                          final PreviewPane pane ) {
+  public static void addActionsToToolBar( final JToolBar toolBar, final ActionPlugin[] reportActions,
+      final JComboBox zoomSelector, final PreviewPane pane ) {
     if ( reportActions == null ) {
       return;
     }
@@ -141,7 +145,7 @@ public class PreviewPaneUtilities {
     boolean separatorPending = false;
     int count = 0;
     for ( int i = 0; i < reportActions.length; i++ ) {
-      final ActionPlugin actionPlugin = reportActions[ i ];
+      final ActionPlugin actionPlugin = reportActions[i];
       if ( actionPlugin.isAddToToolbar() == false ) {
         continue;
       }
@@ -181,11 +185,11 @@ public class PreviewPaneUtilities {
   /**
    * Creates a button using the given action properties for the button's initialisation.
    *
-   * @param action the action used to set up the button.
+   * @param action
+   *          the action used to set up the button.
    * @return a button based on the supplied action.
    */
-  private static JButton createButton( final Action action,
-                                       final SwingGuiContext swingGuiContext ) {
+  private static JButton createButton( final Action action, final SwingGuiContext swingGuiContext ) {
     final JButton button = new JButton( action );
     boolean needText = true;
     if ( isLargeButtonsEnabled( swingGuiContext ) ) {
@@ -221,22 +225,19 @@ public class PreviewPaneUtilities {
 
   private static boolean isLargeButtonsEnabled( final SwingGuiContext swingGuiContext ) {
     final Configuration configuration = swingGuiContext.getConfiguration();
-    if ( "true".equals( configuration.getConfigProperty //$NON-NLS-1$
-      ( "org.pentaho.reporting.engine.classic.core.modules.gui.base.LargeIcons" ) ) ) //$NON-NLS-1$
-    {
+    if ( "true".equals( configuration.getConfigProperty( //$NON-NLS-1$
+        "org.pentaho.reporting.engine.classic.core.modules.gui.base.LargeIcons" ) ) ) { //$NON-NLS-1$
       return true;
     }
     return false;
   }
 
-
-  public static double getNextZoomOut( final double zoom,
-                                       final double[] zoomFactors ) {
-    if ( zoom <= zoomFactors[ 0 ] ) {
+  public static double getNextZoomOut( final double zoom, final double[] zoomFactors ) {
+    if ( zoom <= zoomFactors[0] ) {
       return ( zoom * 2.0 ) / 3.0;
     }
 
-    final double largestZoom = zoomFactors[ zoomFactors.length - 1 ];
+    final double largestZoom = zoomFactors[zoomFactors.length - 1];
     if ( zoom > largestZoom ) {
       final double linear = ( zoom * 2.0 ) / 3.0;
       if ( linear < largestZoom ) {
@@ -246,7 +247,7 @@ public class PreviewPaneUtilities {
     }
 
     for ( int i = zoomFactors.length - 1; i >= 0; i-- ) {
-      final double factor = zoomFactors[ i ];
+      final double factor = zoomFactors[i];
       if ( factor < zoom ) {
         return factor;
       }
@@ -255,14 +256,13 @@ public class PreviewPaneUtilities {
     return ( zoom * 2.0 ) / 3.0;
   }
 
-  public static double getNextZoomIn( final double zoom,
-                                      final double[] zoomFactors ) {
-    final double largestZoom = zoomFactors[ zoomFactors.length - 1 ];
+  public static double getNextZoomIn( final double zoom, final double[] zoomFactors ) {
+    final double largestZoom = zoomFactors[zoomFactors.length - 1];
     if ( zoom >= largestZoom ) {
       return ( zoom * 1.5 );
     }
 
-    final double smallestZoom = zoomFactors[ 0 ];
+    final double smallestZoom = zoomFactors[0];
     if ( zoom < smallestZoom ) {
       final double linear = ( zoom * 1.5 );
       if ( linear > smallestZoom ) {
@@ -272,14 +272,13 @@ public class PreviewPaneUtilities {
     }
 
     for ( int i = 0; i < zoomFactors.length; i++ ) {
-      final double factor = zoomFactors[ i ];
+      final double factor = zoomFactors[i];
       if ( factor > zoom ) {
         return factor;
       }
     }
     return ( zoom * 1.5 );
   }
-
 
   public static IconTheme createIconTheme( final Configuration config ) {
     final String themeClass = config.getConfigProperty( ICON_THEME_CONFIG_KEY );
@@ -296,8 +295,8 @@ public class PreviewPaneUtilities {
 
   public static ActionFactory createActionFactory( final Configuration config ) {
     final String factoryClass = config.getConfigProperty( ACTION_FACTORY_CONFIG_KEY );
-    final Object maybeFactory = ObjectUtilities.loadAndInstantiate
-      ( factoryClass, PreviewPane.class, ActionFactory.class );
+    final Object maybeFactory =
+        ObjectUtilities.loadAndInstantiate( factoryClass, PreviewPane.class, ActionFactory.class );
     final ActionFactory actionFactory;
     if ( maybeFactory != null ) {
       actionFactory = (ActionFactory) maybeFactory;
@@ -308,14 +307,14 @@ public class PreviewPaneUtilities {
   }
 
   public static CategoryTreeItem[] buildMenuTree( final ActionCategory[] categories ) {
-    final CategoryTreeItem[] tree = new CategoryTreeItem[ categories.length ];
+    final CategoryTreeItem[] tree = new CategoryTreeItem[categories.length];
     for ( int i = 0; i < categories.length; i++ ) {
-      final ActionCategory category = categories[ i ];
-      tree[ i ] = new CategoryTreeItem( category );
+      final ActionCategory category = categories[i];
+      tree[i] = new CategoryTreeItem( category );
     }
 
     for ( int j = 0; j < tree.length; j++ ) {
-      final CategoryTreeItem item = tree[ j ];
+      final CategoryTreeItem item = tree[j];
       final String itemName = item.getName();
       int parentWeight = 0;
       CategoryTreeItem parent = null;
@@ -325,7 +324,7 @@ public class PreviewPaneUtilities {
           // never add yourself ..
           continue;
         }
-        final CategoryTreeItem treeItem = tree[ k ];
+        final CategoryTreeItem treeItem = tree[k];
         final String parentName = treeItem.getName();
         if ( itemName.startsWith( parentName ) == false ) {
           continue;
@@ -340,7 +339,7 @@ public class PreviewPaneUtilities {
     }
 
     for ( int j = 0; j < tree.length; j++ ) {
-      final CategoryTreeItem item = tree[ j ];
+      final CategoryTreeItem item = tree[j];
       final CategoryTreeItem parent = item.getParent();
       if ( parent != null ) {
         parent.add( item );
@@ -357,12 +356,11 @@ public class PreviewPaneUtilities {
     final ActionFactory factory = PreviewPaneUtilities.createActionFactory( configuration );
 
     for ( int i = 0; i < categories.length; i++ ) {
-      final ActionCategory category = categories[ i ];
+      final ActionCategory category = categories[i];
       actions.put( category, factory.getActions( swingGuiContext, category.getName() ) );
     }
     return actions;
   }
-
 
   public static ActionCategory[] loadCategories( final SwingGuiContext swingGuiContext ) {
     final ArrayList categories = new ArrayList();
@@ -370,13 +368,11 @@ public class PreviewPaneUtilities {
     final Iterator keys = configuration.findPropertyKeys( CATEGORY_PREFIX );
     while ( keys.hasNext() ) {
       final String enableKey = (String) keys.next();
-      if ( enableKey.endsWith( ".enabled" ) == false ) //$NON-NLS-1$
-      {
+      if ( enableKey.endsWith( ".enabled" ) == false ) { //$NON-NLS-1$
         continue;
       }
 
-      if ( "true".equals( configuration.getConfigProperty( enableKey ) ) == false ) //$NON-NLS-1$
-      {
+      if ( "true".equals( configuration.getConfigProperty( enableKey ) ) == false ) { //$NON-NLS-1$
         continue;
       }
 
@@ -391,8 +387,8 @@ public class PreviewPaneUtilities {
       if ( className == null ) {
         actionCategory = new ActionCategory();
       } else {
-        actionCategory = (ActionCategory) ObjectUtilities.loadAndInstantiate
-          ( className, PreviewPane.class, ActionCategory.class );
+        actionCategory =
+            (ActionCategory) ObjectUtilities.loadAndInstantiate( className, PreviewPane.class, ActionCategory.class );
         if ( actionCategory == null ) {
           actionCategory = new ActionCategory();
         }
@@ -407,7 +403,6 @@ public class PreviewPaneUtilities {
       categories.add( actionCategory );
     }
 
-    return (ActionCategory[]) categories.toArray
-      ( new ActionCategory[ categories.size() ] );
+    return (ActionCategory[]) categories.toArray( new ActionCategory[categories.size()] );
   }
 }

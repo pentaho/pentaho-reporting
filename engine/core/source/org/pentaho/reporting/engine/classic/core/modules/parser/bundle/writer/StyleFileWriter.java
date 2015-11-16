@@ -1,21 +1,29 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
+
+import java.awt.Insets;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CustomPageDefinition;
@@ -41,14 +49,6 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-import java.awt.*;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 /**
  * @noinspection HardCodedStringLiteral
  */
@@ -70,15 +70,18 @@ public class StyleFileWriter implements BundleWriterHandler {
    * returned is always absolute and can be made relative by using the IOUtils of LibBase. If the writer-handler did not
    * generate a file on its own, it should return null.
    *
-   * @param bundle the bundle where to write to.
-   * @param state  the writer state to hold the current processing information.
+   * @param bundle
+   *          the bundle where to write to.
+   * @param state
+   *          the writer state to hold the current processing information.
    * @return the name of the newly generated file or null if no file was created.
-   * @throws IOException           if any error occured
-   * @throws BundleWriterException if a bundle-management error occured.
+   * @throws IOException
+   *           if any error occurred
+   * @throws BundleWriterException
+   *           if a bundle-management error occurred.
    */
-  public String writeReport( final WriteableDocumentBundle bundle,
-                             final BundleWriterState state )
-    throws IOException, BundleWriterException {
+  public String writeReport( final WriteableDocumentBundle bundle, final BundleWriterState state ) throws IOException,
+    BundleWriterException {
     if ( bundle == null ) {
       throw new NullPointerException();
     }
@@ -86,14 +89,13 @@ public class StyleFileWriter implements BundleWriterHandler {
       throw new NullPointerException();
     }
 
-
     final BundleWriterState styleFileState = new BundleWriterState( state, "styles.xml" );
 
-    final OutputStream outputStream = new BufferedOutputStream( bundle.createEntry( styleFileState.getFileName(),
-      "text/xml" ) );
+    final OutputStream outputStream =
+        new BufferedOutputStream( bundle.createEntry( styleFileState.getFileName(), "text/xml" ) );
     final DefaultTagDescription tagDescription = BundleWriterHandlerRegistry.getInstance().createWriterTagDescription();
     final XmlWriter writer =
-      new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ", "\n" );
+        new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ", "\n" );
     writer.writeXmlDeclaration( "UTF-8" );
 
     final AttributeList rootAttributes = new AttributeList();
@@ -141,15 +143,14 @@ public class StyleFileWriter implements BundleWriterHandler {
     // write page-header
     final PageHeader pageHeader = report.getPageHeader();
     final BundleElementWriteHandler pageHeaderHandler =
-      BundleElementRegistry.getInstance().getWriteHandler( pageHeader );
+        BundleElementRegistry.getInstance().getWriteHandler( pageHeader );
     pageHeaderHandler.writeElement( bundle, styleFileState, writer, pageHeader );
 
     // write page-footer
     final PageFooter pageFooter = report.getPageFooter();
     final BundleElementWriteHandler pageFooterHandler =
-      BundleElementRegistry.getInstance().getWriteHandler( pageFooter );
+        BundleElementRegistry.getInstance().getWriteHandler( pageFooter );
     pageFooterHandler.writeElement( bundle, styleFileState, writer, pageFooter );
-
 
     writer.writeCloseTag();
     writer.close();
@@ -157,8 +158,8 @@ public class StyleFileWriter implements BundleWriterHandler {
     return styleFileState.getFileName();
   }
 
-  public static void writeStyleDefinition( final XmlWriter writer,
-                                           final ElementStyleDefinition styleDefinition ) throws IOException {
+  public static void writeStyleDefinition( final XmlWriter writer, final ElementStyleDefinition styleDefinition )
+    throws IOException {
     final int styleSheetCount = styleDefinition.getStyleSheetCount();
     for ( int s = 0; s < styleSheetCount; s += 1 ) {
       final ElementStyleDefinition child = styleDefinition.getStyleSheet( s );
@@ -205,7 +206,6 @@ public class StyleFileWriter implements BundleWriterHandler {
       throw new NullPointerException();
     }
 
-
     if ( definition instanceof SimplePageDefinition ) {
       final SimplePageDefinition sdef = (SimplePageDefinition) definition;
       final int pageCountHorizontal = sdef.getPageCountHorizontal();
@@ -224,16 +224,16 @@ public class StyleFileWriter implements BundleWriterHandler {
     }
   }
 
-
   /**
    * Compiles a collection of page format properties.
    *
-   * @param fmt    the pageformat
-   * @param retval the attribute list
+   * @param fmt
+   *          the pageformat
+   * @param retval
+   *          the attribute list
    * @return The properties.
    */
-  private static AttributeList buildPageFormatProperties( final PageFormat fmt,
-                                                          final AttributeList retval ) {
+  private static AttributeList buildPageFormatProperties( final PageFormat fmt, final AttributeList retval ) {
     if ( fmt == null ) {
       throw new NullPointerException();
     }
@@ -281,13 +281,14 @@ public class StyleFileWriter implements BundleWriterHandler {
   /**
    * Returns the borders for the given paper.
    *
-   * @param p the paper.
+   * @param p
+   *          the paper.
    * @return The borders.
    */
   private static Insets getBorders( final Paper p ) {
     return new Insets( (int) p.getImageableY(), (int) p.getImageableX(),
-      (int) ( p.getHeight() - ( p.getImageableY() + p.getImageableHeight() ) ),
-      (int) ( p.getWidth() - ( p.getImageableX() + p.getImageableWidth() ) ) );
+        (int) ( p.getHeight() - ( p.getImageableY() + p.getImageableHeight() ) ), (int) ( p.getWidth() - ( p
+            .getImageableX() + p.getImageableWidth() ) ) );
   }
 
 }

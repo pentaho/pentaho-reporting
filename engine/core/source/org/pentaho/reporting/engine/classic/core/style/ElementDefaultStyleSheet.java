@@ -1,25 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style;
 
-import org.pentaho.reporting.engine.classic.core.ElementAlignment;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Stroke;
 
-import java.awt.*;
+import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 
 /**
  * The default element style sheet. This style sheet defines default attribute values for all elements.
@@ -127,7 +129,8 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet {
   /**
    * Defines the locked-state for this stylesheet.
    *
-   * @param locked true, if the stylesheet is locked and read-only, false otherwise.
+   * @param locked
+   *          true, if the stylesheet is locked and read-only, false otherwise.
    */
   protected void setLocked( final boolean locked ) {
     this.locked = locked;
@@ -148,11 +151,16 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet {
   /**
    * Sets a style property (or removes the style if the value is <code>null</code>).
    *
-   * @param key   the style key (<code>null</code> not permitted).
-   * @param value the value.
-   * @throws NullPointerException          if the given key is null.
-   * @throws ClassCastException            if the value cannot be assigned with the given key.
-   * @throws UnsupportedOperationException as this style sheet is read only.
+   * @param key
+   *          the style key (<code>null</code> not permitted).
+   * @param value
+   *          the value.
+   * @throws NullPointerException
+   *           if the given key is null.
+   * @throws ClassCastException
+   *           if the value cannot be assigned with the given key.
+   * @throws UnsupportedOperationException
+   *           as this style sheet is read only.
    */
   public void setStyleProperty( final StyleKey key, final Object value ) {
     if ( isLocked() ) {

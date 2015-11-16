@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -115,7 +115,8 @@ public final class FormulaExpression extends AbstractExpression {
   /**
    * Defines the formula (including the optional namespace) as defined by the OpenFormula standard.
    *
-   * @param formula the formula as text.
+   * @param formula
+   *          the formula as text.
    */
   public void setFormula( String formula ) {
     if ( ObjectUtilities.equal( this.formula, formula ) ) {
@@ -154,13 +155,13 @@ public final class FormulaExpression extends AbstractExpression {
   /**
    * Computes the value of the formula by evaluating the formula against the current data-row.
    *
-   * @return the computed value or null, if an error occured.
+   * @return the computed value or null, if an error occurred.
    */
   private Object computeRegularValue() {
     if ( formulaError != null ) {
       if ( Boolean.TRUE.equals( failOnError ) ) {
-        throw new InvalidReportStateException( String.format
-          ( "Previously failed to evaluate formula-expression with error %s",// NON-NLS
+        throw new InvalidReportStateException( String.format(
+            "Previously failed to evaluate formula-expression with error %s", // NON-NLS
             formulaError ) );
       }
       return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
@@ -177,15 +178,14 @@ public final class FormulaExpression extends AbstractExpression {
 
       final ExpressionRuntime expressionRuntime = getRuntime();
 
-      final ReportFormulaContext context =
-        new ReportFormulaContext( getFormulaContext(), expressionRuntime );
+      final ReportFormulaContext context = new ReportFormulaContext( getFormulaContext(), expressionRuntime );
       try {
         compiledFormula.initialize( context );
         final Object evaluate = compiledFormula.evaluate();
         if ( Boolean.TRUE.equals( failOnError ) ) {
           if ( evaluate instanceof ErrorValue ) {
-            throw new InvalidReportStateException( String.format
-              ( "Failed to evaluate formula-expression with error %s",// NON-NLS
+            throw new InvalidReportStateException( String.format(
+                "Failed to evaluate formula-expression with error %s", // NON-NLS
                 evaluate ) );
           }
         }
@@ -197,16 +197,15 @@ public final class FormulaExpression extends AbstractExpression {
       formulaError = e;
       if ( FormulaExpression.logger.isDebugEnabled() ) {
         final Configuration config = getReportConfiguration();
-        if ( "true".equals( config.getConfigProperty(
-          "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause" ) ) ) {
+        if ( "true".equals( config
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause" ) ) ) {
           FormulaExpression.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']', e );
         } else {
           FormulaExpression.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']' );
         }
       }
       if ( Boolean.TRUE.equals( failOnError ) ) {
-        throw new InvalidReportStateException( String.format
-          ( "Failed to evaluate formula-expression with error %s",// NON-NLS
+        throw new InvalidReportStateException( String.format( "Failed to evaluate formula-expression with error %s", // NON-NLS
             e.getMessage() ), e );
       }
       return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;

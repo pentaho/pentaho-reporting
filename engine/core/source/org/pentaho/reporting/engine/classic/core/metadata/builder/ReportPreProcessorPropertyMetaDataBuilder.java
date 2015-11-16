@@ -24,8 +24,8 @@ import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.Shared
 
 import java.beans.PropertyEditor;
 
-public class ReportPreProcessorPropertyMetaDataBuilder
-  extends MetaDataBuilder<ReportPreProcessorPropertyMetaDataBuilder> {
+public class ReportPreProcessorPropertyMetaDataBuilder extends
+    MetaDataBuilder<ReportPreProcessorPropertyMetaDataBuilder> {
   private boolean mandatory;
   private boolean computed;
   private String valueRole;

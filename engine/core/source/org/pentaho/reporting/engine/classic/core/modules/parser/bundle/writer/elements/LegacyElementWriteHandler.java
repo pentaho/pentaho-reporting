@@ -1,25 +1,26 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements;
 
+import java.io.IOException;
+
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.DataSource;
-import org.pentaho.reporting.engine.classic.core.filter.EmptyDataSource;
 import org.pentaho.reporting.engine.classic.core.filter.templates.Template;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
@@ -50,8 +51,6 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-import java.io.IOException;
-
 /**
  * Todo: Document Me
  *
@@ -64,19 +63,22 @@ public class LegacyElementWriteHandler extends AbstractElementWriteHandler {
   /**
    * Writes a single element as XML structure.
    *
-   * @param bundle    the bundle to which to write to.
-   * @param state     the current write-state.
-   * @param xmlWriter the xml writer.
-   * @param element   the element.
-   * @throws IOException           if an IO error occured.
-   * @throws BundleWriterException if an Bundle writer.
+   * @param bundle
+   *          the bundle to which to write to.
+   * @param state
+   *          the current write-state.
+   * @param xmlWriter
+   *          the xml writer.
+   * @param element
+   *          the element.
+   * @throws IOException
+   *           if an IO error occured.
+   * @throws BundleWriterException
+   *           if an Bundle writer.
    */
   @SuppressWarnings( "deprecation" )
-  public void writeElement( final WriteableDocumentBundle bundle,
-                            final BundleWriterState state,
-                            final XmlWriter xmlWriter,
-                            final Element element )
-    throws IOException, BundleWriterException {
+  public void writeElement( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final XmlWriter xmlWriter, final Element element ) throws IOException, BundleWriterException {
     if ( bundle == null ) {
       throw new NullPointerException();
     }
@@ -109,9 +111,7 @@ public class LegacyElementWriteHandler extends AbstractElementWriteHandler {
     writer.addDataSourceFactory( new DefaultDataSourceFactory() );
     final DataSource datasource = element.getDataSource();
 
-    if ( datasource instanceof EmptyDataSource ) {
-      // do nothing ..
-    } else if ( datasource instanceof Template ) {
+    if ( datasource instanceof Template ) {
       writeLegacyTemplate( xmlWriter, writer, (Template) datasource );
     } else {
       writeLegacyDataSource( xmlWriter, writer, datasource );
@@ -121,9 +121,8 @@ public class LegacyElementWriteHandler extends AbstractElementWriteHandler {
 
   }
 
-  private void writeLegacyTemplate( final XmlWriter xmlWriter,
-                                    final ReportWriterContext writerContext,
-                                    final Template template ) throws BundleWriterException, IOException {
+  private void writeLegacyTemplate( final XmlWriter xmlWriter, final ReportWriterContext writerContext,
+      final Template template ) throws BundleWriterException, IOException {
 
     final TemplateCollector tc = writerContext.getTemplateCollector();
 
@@ -141,8 +140,8 @@ public class LegacyElementWriteHandler extends AbstractElementWriteHandler {
     try {
       templateDescription.setParameterFromObject( template );
 
-      final TemplateWriter templateWriter = new TemplateWriter( writerContext, xmlWriter, templateDescription,
-        parentTemplate );
+      final TemplateWriter templateWriter =
+          new TemplateWriter( writerContext, xmlWriter, templateDescription, parentTemplate );
       templateWriter.write();
     } catch ( ObjectFactoryException ofe ) {
       throw new BundleWriterException( "Error while preparing the template", ofe );
@@ -151,25 +150,19 @@ public class LegacyElementWriteHandler extends AbstractElementWriteHandler {
     }
   }
 
-  private void writeLegacyDataSource( final XmlWriter xmlWriter,
-                                      final ReportWriterContext writerContext,
-                                      final DataSource datasource )
-    throws BundleWriterException, IOException {
-    final ClassFactoryCollector classFactoryCollector =
-      writerContext.getClassFactoryCollector();
-    ObjectDescription od =
-      classFactoryCollector.getDescriptionForClass( datasource.getClass() );
+  private void writeLegacyDataSource( final XmlWriter xmlWriter, final ReportWriterContext writerContext,
+      final DataSource datasource ) throws BundleWriterException, IOException {
+    final ClassFactoryCollector classFactoryCollector = writerContext.getClassFactoryCollector();
+    ObjectDescription od = classFactoryCollector.getDescriptionForClass( datasource.getClass() );
     if ( od == null ) {
-      od = classFactoryCollector.
-        getSuperClassObjectDescription( datasource.getClass(), null );
+      od = classFactoryCollector.getSuperClassObjectDescription( datasource.getClass(), null );
     }
 
     if ( od == null ) {
       throw new BundleWriterException( "Unable to resolve DataSource: " + datasource.getClass() );
     }
 
-    final DataSourceCollector dataSourceCollector =
-      writerContext.getDataSourceCollector();
+    final DataSourceCollector dataSourceCollector = writerContext.getDataSourceCollector();
     final String dsname = dataSourceCollector.getDataSourceName( od );
     if ( dsname == null ) {
       throw new BundleWriterException( "No name for DataSource " + datasource );

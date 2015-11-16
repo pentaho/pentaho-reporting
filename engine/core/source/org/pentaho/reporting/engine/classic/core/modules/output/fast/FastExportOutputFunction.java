@@ -127,7 +127,7 @@ public class FastExportOutputFunction extends AbstractFunction implements Output
 
   public InlineSubreportMarker[] getInlineSubreports() {
     // we do not support inline subreports
-    return new InlineSubreportMarker[ 0 ];
+    return new InlineSubreportMarker[0];
   }
 
   public void clearInlineSubreports( final SubReportProcessType processType ) {

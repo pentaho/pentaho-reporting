@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -56,7 +56,6 @@ public class OrphanIT extends TestCase {
   protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
-
 
   public void testStandardLayout() throws ReportProcessingException, ContentProcessingException {
     final MasterReport report = new MasterReport();
@@ -118,9 +117,8 @@ public class OrphanIT extends TestCase {
     final RenderBox grInBox = (RenderBox) grIn;
     assertEquals( StrictGeomUtility.toInternalValue( 40 ), grInBox.getOrphanConstraintSize() );
 
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
   }
-
 
   public void testStandardLayoutKT() throws ReportProcessingException, ContentProcessingException {
     final MasterReport report = new MasterReport();
@@ -184,7 +182,7 @@ public class OrphanIT extends TestCase {
     final RenderBox grInBox = (RenderBox) grIn;
     assertEquals( StrictGeomUtility.toInternalValue( 80 ), grInBox.getOrphanConstraintSize() );
 
-    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
   public void testReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException {
@@ -225,9 +223,9 @@ public class OrphanIT extends TestCase {
     report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.ORPHANS, 2 );
     group1.getStyle().setStyleProperty( ElementStyleKeys.ORPHANS, 2 );
 
-    //    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-0.prpt");
+    // BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-0.prpt");
     DebugReportRunner.createPDF( report );
-    //    PdfReportUtil.createPDF(report, "/tmp/OrphanTest.pdf");
+    // PdfReportUtil.createPDF(report, "/tmp/OrphanTest.pdf");
   }
 
   public void testSubReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException {
@@ -270,13 +268,12 @@ public class OrphanIT extends TestCase {
     report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.ORPHANS, 2 );
     group1.getStyle().setStyleProperty( ElementStyleKeys.ORPHANS, 2 );
 
-
     final MasterReport master = new MasterReport();
     master.setPageDefinition( new SimplePageDefinition( new PageSize( 500, 100 ) ) );
     master.getReportHeader().addElement( report );
 
-    //    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-3.prpt");
-    //    PdfReportUtil.createPDF(master, "/tmp/OrphanTest3.pdf");
+    // BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-3.prpt");
+    // PdfReportUtil.createPDF(master, "/tmp/OrphanTest3.pdf");
     DebugReportRunner.createPDF( master );
   }
 
@@ -323,14 +320,13 @@ public class OrphanIT extends TestCase {
     report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.ORPHANS, 200 );
     group1.getStyle().setStyleProperty( ElementStyleKeys.ORPHANS, 2 );
 
-    //    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-1.prpt");
+    // BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-1.prpt");
     DebugReportRunner.createPDF( report );
-    //    PdfReportUtil.createPDF(report, "/tmp/OrphanTest1.pdf");
+    // PdfReportUtil.createPDF(report, "/tmp/OrphanTest1.pdf");
 
-    //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 1));
-    //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 2));
+    // ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 1));
+    // ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 2));
   }
-
 
   public void testInvalidSubReport() throws Exception {
     final TypedTableModel model = new TypedTableModel();
@@ -381,8 +377,8 @@ public class OrphanIT extends TestCase {
     master.setPageDefinition( new SimplePageDefinition( new PageSize( 500, 100 ) ) );
     master.getReportHeader().addElement( report );
 
-    //    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-4.prpt");
-    //    PdfReportUtil.createPDF(master, "/tmp/OrphanTest4.pdf");
+    // BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-4.prpt");
+    // PdfReportUtil.createPDF(master, "/tmp/OrphanTest4.pdf");
     DebugReportRunner.createPDF( master );
   }
 
@@ -430,14 +426,13 @@ public class OrphanIT extends TestCase {
     report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.ORPHANS, 200 );
     group1.getStyle().setStyleProperty( ElementStyleKeys.ORPHANS, 2 );
 
-    //    PdfReportUtil.createPDF(report, "/tmp/OrphanTest2.pdf");
-    //    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-2.prpt");
+    // PdfReportUtil.createPDF(report, "/tmp/OrphanTest2.pdf");
+    // BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-2.prpt");
     DebugReportRunner.createPDF( report );
 
-    //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 4));
-    //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 5));
+    // ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 4));
+    // ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 5));
   }
-
 
   public void testInvalidSubReport2() throws Exception {
     final TypedTableModel model = new TypedTableModel();
@@ -489,8 +484,8 @@ public class OrphanIT extends TestCase {
     master.setPageDefinition( new SimplePageDefinition( new PageSize( 500, 100 ) ) );
     master.getReportHeader().addElement( report );
 
-    //    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-5.prpt");
-    //    PdfReportUtil.createPDF(master, "/tmp/OrphanTest5.pdf");
+    // BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-5.prpt");
+    // PdfReportUtil.createPDF(master, "/tmp/OrphanTest5.pdf");
     DebugReportRunner.createPDF( master );
   }
 

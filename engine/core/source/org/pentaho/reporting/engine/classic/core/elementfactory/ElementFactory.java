@@ -1,21 +1,25 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
+
+import java.awt.Color;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
@@ -25,10 +29,6 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
-
-import java.awt.*;
-import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 
 /**
  * The class element factory is the base class for all Element Factories. Element factories can be used to create
@@ -242,8 +242,7 @@ public abstract class ElementFactory {
   private BorderStyle borderBreakStyle;
 
   /**
-   * Defines the global border-color. This property defines a short-hand property for all other border-color
-   * properties.
+   * Defines the global border-color. This property defines a short-hand property for all other border-color properties.
    */
   private Color borderColor;
 
@@ -387,7 +386,8 @@ public abstract class ElementFactory {
    * element. This property defines a short-hand property for all other padding properties. Paddings cannot have
    * relative sizes.
    *
-   * @param padding the padding or null, if the default should be used.
+   * @param padding
+   *          the padding or null, if the default should be used.
    */
   public void setPadding( final Float padding ) {
     this.padding = padding;
@@ -411,7 +411,8 @@ public abstract class ElementFactory {
    * on the layout model of the band that contains this element). This property defines a short-hand property for all
    * other border-width properties.
    *
-   * @param borderWidth the defined border width or null, if the default should be used.
+   * @param borderWidth
+   *          the defined border width or null, if the default should be used.
    */
   public void setBorderWidth( final Float borderWidth ) {
     this.borderWidth = borderWidth;
@@ -433,7 +434,8 @@ public abstract class ElementFactory {
    * property will be ignored and no border is rendered. This property defines a short-hand property for all other
    * border-style properties.
    *
-   * @param borderStyle the defined border-style or null, if none is defined here.
+   * @param borderStyle
+   *          the defined border-style or null, if none is defined here.
    */
   public void setBorderStyle( final BorderStyle borderStyle ) {
     this.borderStyle = borderStyle;
@@ -450,10 +452,10 @@ public abstract class ElementFactory {
   }
 
   /**
-   * Defines the global border-color. This property defines a short-hand property for all other border-color
-   * properties.
+   * Defines the global border-color. This property defines a short-hand property for all other border-color properties.
    *
-   * @param borderColor the defined color for all borders or null, if no global color is defined.
+   * @param borderColor
+   *          the defined color for all borders or null, if no global color is defined.
    */
   public void setBorderColor( final Color borderColor ) {
     this.borderColor = borderColor;
@@ -479,8 +481,9 @@ public abstract class ElementFactory {
    * properties.
    * <p/>
    *
-   * @param borderRadius the defined border-radius for all corners of this element or null, if no global default should
-   *                     be defined here.
+   * @param borderRadius
+   *          the defined border-radius for all corners of this element or null, if no global default should be defined
+   *          here.
    */
   public void setBorderRadius( final Dimension2D borderRadius ) {
     if ( borderRadius == null ) {
@@ -498,7 +501,7 @@ public abstract class ElementFactory {
    * border-radius properties.
    *
    * @return the defined width of the border-radius for all corners of this element or null, if no global default is
-   * defined here.
+   *         defined here.
    */
   public Float getBorderRadiusWidth() {
     return borderRadiusWidth;
@@ -510,8 +513,9 @@ public abstract class ElementFactory {
    * border-radius properties.
    * <p/>
    *
-   * @param borderRadiusWidth the defined width of the border-radius for all corners of this element or null, if no
-   *                          global default should be defined here.
+   * @param borderRadiusWidth
+   *          the defined width of the border-radius for all corners of this element or null, if no global default
+   *          should be defined here.
    */
   public void setBorderRadiusWidth( final Float borderRadiusWidth ) {
     this.borderRadiusWidth = borderRadiusWidth;
@@ -523,7 +527,7 @@ public abstract class ElementFactory {
    * border-radius properties.
    *
    * @return the defined height of the border-radius for all corners of this element or null, if no global default is
-   * defined here.
+   *         defined here.
    */
   public Float getBorderRadiusHeight() {
     return borderRadiusHeight;
@@ -535,8 +539,9 @@ public abstract class ElementFactory {
    * border-radius properties.
    * <p/>
    *
-   * @param borderRadiusHeight the defined height of the border-radius for all corners of this element or null, if no
-   *                           global default should be defined here.
+   * @param borderRadiusHeight
+   *          the defined height of the border-radius for all corners of this element or null, if no global default
+   *          should be defined here.
    */
   public void setBorderRadiusHeight( final Float borderRadiusHeight ) {
     this.borderRadiusHeight = borderRadiusHeight;
@@ -547,7 +552,7 @@ public abstract class ElementFactory {
    * height, the element's border will have a rounded bottom-left corner.
    *
    * @return the defined border-radius for the bottom-left corner of this element or null, if this property is
-   * undefined.
+   *         undefined.
    */
   public Dimension2D getBorderBottomLeftRadius() {
     if ( borderBottomLeftRadiusWidth == null || borderBottomLeftRadiusHeight == null ) {
@@ -560,8 +565,9 @@ public abstract class ElementFactory {
    * Defines the bottom-left border-radius for this element. If the border radius has a non-zero width and height, the
    * element's border will have a rounded bottom-left corner.
    *
-   * @param borderRadius the defined border-radius for the bottom-left corner of this element or null, if this property
-   *                     should be undefined.
+   * @param borderRadius
+   *          the defined border-radius for the bottom-left corner of this element or null, if this property should be
+   *          undefined.
    */
   public void setBorderBottomLeftRadius( final Dimension2D borderRadius ) {
     if ( borderRadius == null ) {
@@ -578,7 +584,7 @@ public abstract class ElementFactory {
    * and height, the element's border will have a rounded bottom-left corner.
    *
    * @return the defined width of the border-radius for the bottom-left corner of this element or null, if this property
-   * is undefined.
+   *         is undefined.
    */
   public Float getBorderBottomLeftRadiusWidth() {
     return borderBottomLeftRadiusWidth;
@@ -588,8 +594,9 @@ public abstract class ElementFactory {
    * Defines width of the bottom-left border-radius for this element. If the border radius has a non-zero width and
    * height, the element's border will have a rounded bottom-left corner.
    *
-   * @param borderBottomLeftRadiusWidth the width of the defined border-radius for the bottom-left corner of this
-   *                                    element or null, if this property should be undefined.
+   * @param borderBottomLeftRadiusWidth
+   *          the width of the defined border-radius for the bottom-left corner of this element or null, if this
+   *          property should be undefined.
    */
   public void setBorderBottomLeftRadiusWidth( final Float borderBottomLeftRadiusWidth ) {
     this.borderBottomLeftRadiusWidth = borderBottomLeftRadiusWidth;
@@ -600,7 +607,7 @@ public abstract class ElementFactory {
    * and height, the element's border will have a rounded bottom-left corner.
    *
    * @return the defined height of the border-radius for the bottom-left corner of this element or null, if this
-   * property is undefined.
+   *         property is undefined.
    */
   public Float getBorderBottomLeftRadiusHeight() {
     return borderBottomLeftRadiusHeight;
@@ -610,8 +617,9 @@ public abstract class ElementFactory {
    * Defines height of the bottom-left border-radius for this element. If the border radius has a non-zero width and
    * height, the element's border will have a rounded bottom-left corner.
    *
-   * @param borderBottomLeftRadiusHeight the height of the defined border-radius for the bottom-left corner of this
-   *                                     element or null, if this property should be undefined.
+   * @param borderBottomLeftRadiusHeight
+   *          the height of the defined border-radius for the bottom-left corner of this element or null, if this
+   *          property should be undefined.
    */
   public void setBorderBottomLeftRadiusHeight( final Float borderBottomLeftRadiusHeight ) {
     this.borderBottomLeftRadiusHeight = borderBottomLeftRadiusHeight;
@@ -622,7 +630,7 @@ public abstract class ElementFactory {
    * height, the element's border will have a rounded bottom-right corner.
    *
    * @return the defined border-radius for the bottom-right corner of this element or null, if this property is
-   * undefined.
+   *         undefined.
    */
   public Dimension2D getBorderBottomRightRadius() {
     if ( borderBottomRightRadiusWidth == null || borderBottomRightRadiusHeight == null ) {
@@ -635,8 +643,9 @@ public abstract class ElementFactory {
    * Defines the bottom-right border-radius for this element. If the border radius has a non-zero width and height, the
    * element's border will have a rounded bottom-right corner.
    *
-   * @param borderRadius the defined border-radius for the bottom-right corner of this element or null, if this property
-   *                     should be undefined.
+   * @param borderRadius
+   *          the defined border-radius for the bottom-right corner of this element or null, if this property should be
+   *          undefined.
    */
   public void setBorderBottomRightRadius( final Dimension2D borderRadius ) {
     if ( borderRadius == null ) {
@@ -653,7 +662,7 @@ public abstract class ElementFactory {
    * width and height, the element's border will have a rounded bottom-right corner.
    *
    * @return the width of the defined border-radius for the bottom-right corner of this element or null, if this
-   * property is undefined.
+   *         property is undefined.
    */
   public Float getBorderBottomRightRadiusWidth() {
     return borderBottomRightRadiusWidth;
@@ -663,8 +672,9 @@ public abstract class ElementFactory {
    * Defines the width of the bottom-right border-radius for this element. If the border radius has a non-zero width and
    * height, the element's border will have a rounded bottom-right corner.
    *
-   * @param borderBottomRightRadiusWidth the width of the defined border-radius for the bottom-right corner of this
-   *                                     element or null, if this property should be undefined.
+   * @param borderBottomRightRadiusWidth
+   *          the width of the defined border-radius for the bottom-right corner of this element or null, if this
+   *          property should be undefined.
    */
   public void setBorderBottomRightRadiusWidth( final Float borderBottomRightRadiusWidth ) {
     this.borderBottomRightRadiusWidth = borderBottomRightRadiusWidth;
@@ -675,7 +685,7 @@ public abstract class ElementFactory {
    * width and height, the element's border will have a rounded bottom-right corner.
    *
    * @return the height of the defined border-radius for the bottom-right corner of this element or null, if this
-   * property is undefined.
+   *         property is undefined.
    */
   public Float getBorderBottomRightRadiusHeight() {
     return borderBottomRightRadiusHeight;
@@ -685,8 +695,9 @@ public abstract class ElementFactory {
    * Defines the height of the bottom-right border-radius for this element. If the border radius has a non-zero width
    * and height, the element's border will have a rounded bottom-right corner.
    *
-   * @param borderBottomRightRadiusHeight the height of the defined border-radius for the bottom-right corner of this
-   *                                      element or null, if this property should be undefined.
+   * @param borderBottomRightRadiusHeight
+   *          the height of the defined border-radius for the bottom-right corner of this element or null, if this
+   *          property should be undefined.
    */
   public void setBorderBottomRightRadiusHeight( final Float borderBottomRightRadiusHeight ) {
     this.borderBottomRightRadiusHeight = borderBottomRightRadiusHeight;
@@ -709,8 +720,9 @@ public abstract class ElementFactory {
    * Defines the top-left border-radius for this element. If the border radius has a non-zero width and height, the
    * element's border will have a rounded top-left corner.
    *
-   * @param borderRadius the defined border-radius for the top-left corner of this element or null, if this property
-   *                     should be undefined.
+   * @param borderRadius
+   *          the defined border-radius for the top-left corner of this element or null, if this property should be
+   *          undefined.
    */
   public void setBorderTopLeftRadius( final Dimension2D borderRadius ) {
     if ( borderRadius == null ) {
@@ -727,7 +739,7 @@ public abstract class ElementFactory {
    * and height, the element's border will have a rounded top-left corner.
    *
    * @return the width of the defined border-radius for the top-left corner of this element or null, if this property is
-   * undefined.
+   *         undefined.
    */
   public Float getBorderTopLeftRadiusWidth() {
     return borderTopLeftRadiusWidth;
@@ -737,8 +749,9 @@ public abstract class ElementFactory {
    * Defines the width of the top-left border-radius for this element. If the border radius has a non-zero width and
    * height, the element's border will have a rounded top-left corner.
    *
-   * @param borderTopLeftRadiusWidth the width of the defined border-radius for the top-left corner of this element or
-   *                                 null, if this property should be undefined.
+   * @param borderTopLeftRadiusWidth
+   *          the width of the defined border-radius for the top-left corner of this element or null, if this property
+   *          should be undefined.
    */
   public void setBorderTopLeftRadiusWidth( final Float borderTopLeftRadiusWidth ) {
     this.borderTopLeftRadiusWidth = borderTopLeftRadiusWidth;
@@ -749,7 +762,7 @@ public abstract class ElementFactory {
    * width and height, the element's border will have a rounded top-left corner.
    *
    * @return the height of the defined border-radius for the top-left corner of this element or null, if this property
-   * is undefined.
+   *         is undefined.
    */
   public Float getBorderTopLeftRadiusHeight() {
     return borderTopLeftRadiusHeight;
@@ -759,8 +772,9 @@ public abstract class ElementFactory {
    * Defines the height of the top-left border-radius for this element. If the border radius has a non-zero width and
    * height, the element's border will have a rounded top-left corner.
    *
-   * @param borderTopLeftRadiusHeight the height of the defined border-radius for the top-left corner of this element or
-   *                                  null, if this property should be undefined.
+   * @param borderTopLeftRadiusHeight
+   *          the height of the defined border-radius for the top-left corner of this element or null, if this property
+   *          should be undefined.
    */
   public void setBorderTopLeftRadiusHeight( final Float borderTopLeftRadiusHeight ) {
     this.borderTopLeftRadiusHeight = borderTopLeftRadiusHeight;
@@ -783,8 +797,9 @@ public abstract class ElementFactory {
    * Defines the top-right border-radius for this element. If the border radius has a non-zero width and height, the
    * element's border will have a rounded top-right corner.
    *
-   * @param borderRadius the defined border-radius for the top-right corner of this element or null, if this property
-   *                     should be undefined.
+   * @param borderRadius
+   *          the defined border-radius for the top-right corner of this element or null, if this property should be
+   *          undefined.
    */
   public void setBorderTopRightRadius( final Dimension2D borderRadius ) {
     if ( borderRadius == null ) {
@@ -801,7 +816,7 @@ public abstract class ElementFactory {
    * width and height, the element's border will have a rounded top-right corner.
    *
    * @return the width of the defined border-radius for the top-right corner of this element or null, if this property
-   * is undefined.
+   *         is undefined.
    */
   public Float getBorderTopRightRadiusWidth() {
     return borderTopRightRadiusWidth;
@@ -811,8 +826,9 @@ public abstract class ElementFactory {
    * Defines the width of the top-right border-radius for this element. If the border radius has a non-zero width and
    * height, the element's border will have a rounded top-right corner.
    *
-   * @param borderTopRightRadiusWidth the width of the defined border-radius for the top-right corner of this element or
-   *                                  null, if this property should be undefined.
+   * @param borderTopRightRadiusWidth
+   *          the width of the defined border-radius for the top-right corner of this element or null, if this property
+   *          should be undefined.
    */
   public void setBorderTopRightRadiusWidth( final Float borderTopRightRadiusWidth ) {
     this.borderTopRightRadiusWidth = borderTopRightRadiusWidth;
@@ -823,7 +839,7 @@ public abstract class ElementFactory {
    * width and height, the element's border will have a rounded top-right corner.
    *
    * @return the height of the defined border-radius for the top-right corner of this element or null, if this property
-   * is undefined.
+   *         is undefined.
    */
   public Float getBorderTopRightRadiusHeight() {
     return borderTopRightRadiusHeight;
@@ -833,8 +849,9 @@ public abstract class ElementFactory {
    * Defines the height of the top-right border-radius for this element. If the border radius has a non-zero width and
    * height, the element's border will have a rounded top-right corner.
    *
-   * @param borderTopRightRadiusHeight the height of the defined border-radius for the top-right corner of this element
-   *                                   or null, if this property should be undefined.
+   * @param borderTopRightRadiusHeight
+   *          the height of the defined border-radius for the top-right corner of this element or null, if this property
+   *          should be undefined.
    */
   public void setBorderTopRightRadiusHeight( final Float borderTopRightRadiusHeight ) {
     this.borderTopRightRadiusHeight = borderTopRightRadiusHeight;
@@ -852,7 +869,8 @@ public abstract class ElementFactory {
   /**
    * Defines the text color for the new element.
    *
-   * @param color the text color.
+   * @param color
+   *          the text color.
    */
   public void setColor( final Color color ) {
     this.color = color;
@@ -870,7 +888,8 @@ public abstract class ElementFactory {
   /**
    * Defines the vertical alignment for the content of this element.
    *
-   * @param verticalAlignment the vertical alignment.
+   * @param verticalAlignment
+   *          the vertical alignment.
    */
   public void setVerticalAlignment( final ElementAlignment verticalAlignment ) {
     this.verticalAlignment = verticalAlignment;
@@ -888,7 +907,8 @@ public abstract class ElementFactory {
   /**
    * Defines the horizontal alignment for the content of this element.
    *
-   * @param horizontalAlignment the vertical alignment.
+   * @param horizontalAlignment
+   *          the vertical alignment.
    */
   public void setHorizontalAlignment( final ElementAlignment horizontalAlignment ) {
     this.horizontalAlignment = horizontalAlignment;
@@ -908,7 +928,8 @@ public abstract class ElementFactory {
    * Defines, whether font smoothing (also known as text-aliasing) is applied to the element. If the font-smooth
    * property is undefined or auto, the actual value will be comptued depending on the element's font size.
    *
-   * @param fontSmooth the font-smooth constant or null, if this property should be left undefined.
+   * @param fontSmooth
+   *          the font-smooth constant or null, if this property should be left undefined.
    */
   public void setFontSmooth( final FontSmooth fontSmooth ) {
     this.fontSmooth = fontSmooth;
@@ -930,7 +951,8 @@ public abstract class ElementFactory {
    * 0 and -100 specifies the width as relative size given in percent of the parent's width or height (depending on the
    * layout model of the band that contains this element).
    *
-   * @param borderTopWidth the border width for the top edge or null if the property should be left undefined.
+   * @param borderTopWidth
+   *          the border width for the top edge or null if the property should be left undefined.
    */
   public void setBorderTopWidth( final Float borderTopWidth ) {
     this.borderTopWidth = borderTopWidth;
@@ -952,7 +974,8 @@ public abstract class ElementFactory {
    * 0 and -100 specifies the width as relative size given in percent of the parent's width or height (depending on the
    * layout model of the band that contains this element).
    *
-   * @param borderLeftWidth the border width for the left edge or null if the property should be left undefined.
+   * @param borderLeftWidth
+   *          the border width for the left edge or null if the property should be left undefined.
    */
   public void setBorderLeftWidth( final Float borderLeftWidth ) {
     this.borderLeftWidth = borderLeftWidth;
@@ -974,7 +997,8 @@ public abstract class ElementFactory {
    * between 0 and -100 specifies the width as relative size given in percent of the parent's width or height (depending
    * on the layout model of the band that contains this element).
    *
-   * @param borderBottomWidth the border width for the bottom edge or null if the property should be left undefined.
+   * @param borderBottomWidth
+   *          the border width for the bottom edge or null if the property should be left undefined.
    */
   public void setBorderBottomWidth( final Float borderBottomWidth ) {
     this.borderBottomWidth = borderBottomWidth;
@@ -996,7 +1020,8 @@ public abstract class ElementFactory {
    * between 0 and -100 specifies the width as relative size given in percent of the parent's width or height (depending
    * on the layout model of the band that contains this element).
    *
-   * @param borderRightWidth the border width for the right edge or null if the property should be left undefined.
+   * @param borderRightWidth
+   *          the border width for the right edge or null if the property should be left undefined.
    */
   public void setBorderRightWidth( final Float borderRightWidth ) {
     this.borderRightWidth = borderRightWidth;
@@ -1022,7 +1047,8 @@ public abstract class ElementFactory {
    * <p/>
    * The break border is applied to all inner border-edges of elements that got split on a pagebreak.
    *
-   * @param borderBreakWidth the width of the break edge of the border or null, if not defined.
+   * @param borderBreakWidth
+   *          the width of the break edge of the border or null, if not defined.
    */
   public void setBorderBreakWidth( final Float borderBreakWidth ) {
     this.borderBreakWidth = borderBreakWidth;
@@ -1042,7 +1068,8 @@ public abstract class ElementFactory {
    * Defines the top border-style for the element. If the border-style is set to NONE or undefined, the border-size
    * property will be ignored and no border is rendered.
    *
-   * @param borderTopStyle the border style for the top edge or null, if the style should remain undefined.
+   * @param borderTopStyle
+   *          the border style for the top edge or null, if the style should remain undefined.
    */
   public void setBorderTopStyle( final BorderStyle borderTopStyle ) {
     this.borderTopStyle = borderTopStyle;
@@ -1062,7 +1089,8 @@ public abstract class ElementFactory {
    * Defines the left border-style for the element. If the border-style is set to NONE or undefined, the border-size
    * property will be ignored and no border is rendered.
    *
-   * @param borderLeftStyle the border style for the left edge or null, if the style should remain undefined.
+   * @param borderLeftStyle
+   *          the border style for the left edge or null, if the style should remain undefined.
    */
   public void setBorderLeftStyle( final BorderStyle borderLeftStyle ) {
     this.borderLeftStyle = borderLeftStyle;
@@ -1082,7 +1110,8 @@ public abstract class ElementFactory {
    * Defines the bottom border-style for the element. If the border-style is set to NONE or undefined, the border-size
    * property will be ignored and no border is rendered.
    *
-   * @param borderBottomStyle the border style for the bottom edge or null, if the style should remain undefined.
+   * @param borderBottomStyle
+   *          the border style for the bottom edge or null, if the style should remain undefined.
    */
   public void setBorderBottomStyle( final BorderStyle borderBottomStyle ) {
     this.borderBottomStyle = borderBottomStyle;
@@ -1102,7 +1131,8 @@ public abstract class ElementFactory {
    * Defines the right border-style for the element. If the border-style is set to NONE or undefined, the border-size
    * property will be ignored and no border is rendered.
    *
-   * @param borderRightStyle the border style for the right edge or null, if the style should remain undefined.
+   * @param borderRightStyle
+   *          the border style for the right edge or null, if the style should remain undefined.
    */
   public void setBorderRightStyle( final BorderStyle borderRightStyle ) {
     this.borderRightStyle = borderRightStyle;
@@ -1122,7 +1152,8 @@ public abstract class ElementFactory {
    * Defines the break border-style for the element. If the border-style is set to NONE or undefined, the border-size
    * property will be ignored and no border is rendered.
    *
-   * @param borderBreakStyle the border style for the break edge or null, if the style should remain undefined.
+   * @param borderBreakStyle
+   *          the border style for the break edge or null, if the style should remain undefined.
    */
   public void setBorderBreakStyle( final BorderStyle borderBreakStyle ) {
     this.borderBreakStyle = borderBreakStyle;
@@ -1140,7 +1171,8 @@ public abstract class ElementFactory {
   /**
    * Defines the top border-color.
    *
-   * @param borderTopColor the color for the top edge or null, if the value should be left undefined here.
+   * @param borderTopColor
+   *          the color for the top edge or null, if the value should be left undefined here.
    */
   public void setBorderTopColor( final Color borderTopColor ) {
     this.borderTopColor = borderTopColor;
@@ -1158,7 +1190,8 @@ public abstract class ElementFactory {
   /**
    * Defines the left border-color.
    *
-   * @param borderLeftColor the color for the left edge or null, if the value should be left undefined here.
+   * @param borderLeftColor
+   *          the color for the left edge or null, if the value should be left undefined here.
    */
   public void setBorderLeftColor( final Color borderLeftColor ) {
     this.borderLeftColor = borderLeftColor;
@@ -1176,7 +1209,8 @@ public abstract class ElementFactory {
   /**
    * Defines the bottom border-color.
    *
-   * @param borderBottomColor the color for the bottom edge or null, if the value should be left undefined here.
+   * @param borderBottomColor
+   *          the color for the bottom edge or null, if the value should be left undefined here.
    */
   public void setBorderBottomColor( final Color borderBottomColor ) {
     this.borderBottomColor = borderBottomColor;
@@ -1194,7 +1228,8 @@ public abstract class ElementFactory {
   /**
    * Defines the right border-color.
    *
-   * @param borderRightColor the color for the right edge or null, if the value should be left undefined here.
+   * @param borderRightColor
+   *          the color for the right edge or null, if the value should be left undefined here.
    */
   public void setBorderRightColor( final Color borderRightColor ) {
     this.borderRightColor = borderRightColor;
@@ -1212,7 +1247,8 @@ public abstract class ElementFactory {
   /**
    * Defines the break border-color.
    *
-   * @param borderBreakColor the color for the break edge or null, if the value should be left undefined here.
+   * @param borderBreakColor
+   *          the color for the break edge or null, if the value should be left undefined here.
    */
   public void setBorderBreakColor( final Color borderBreakColor ) {
     this.borderBreakColor = borderBreakColor;
@@ -1232,7 +1268,8 @@ public abstract class ElementFactory {
    * Defines the top padding of this box. Padding defines the empty area between the border and the content of an
    * element. Paddings cannot have relative sizes.
    *
-   * @param paddingTop the padding or null, if the padding remains undefined here.
+   * @param paddingTop
+   *          the padding or null, if the padding remains undefined here.
    */
   public void setPaddingTop( final Float paddingTop ) {
     this.paddingTop = paddingTop;
@@ -1252,7 +1289,8 @@ public abstract class ElementFactory {
    * Defines the left padding of this box. Padding defines the empty area between the border and the content of an
    * element. Paddings cannot have relative sizes.
    *
-   * @param paddingLeft the padding or null, if the padding remains undefined here.
+   * @param paddingLeft
+   *          the padding or null, if the padding remains undefined here.
    */
   public void setPaddingLeft( final Float paddingLeft ) {
     this.paddingLeft = paddingLeft;
@@ -1272,7 +1310,8 @@ public abstract class ElementFactory {
    * Defines the bottom padding of this box. Padding defines the empty area between the border and the content of an
    * element. Paddings cannot have relative sizes.
    *
-   * @param paddingBottom the padding or null, if the padding remains undefined here.
+   * @param paddingBottom
+   *          the padding or null, if the padding remains undefined here.
    */
   public void setPaddingBottom( final Float paddingBottom ) {
     this.paddingBottom = paddingBottom;
@@ -1292,7 +1331,8 @@ public abstract class ElementFactory {
    * Defines the right padding of this box. Padding defines the empty area between the border and the content of an
    * element. Paddings cannot have relative sizes.
    *
-   * @param paddingRight the padding or null, if the padding remains undefined here.
+   * @param paddingRight
+   *          the padding or null, if the padding remains undefined here.
    */
   public void setPaddingRight( final Float paddingRight ) {
     this.paddingRight = paddingRight;
@@ -1313,7 +1353,8 @@ public abstract class ElementFactory {
    * Defines the number of widow-lines in this element. This avoids pagebreaks inside the first number of lines of a
    * paragraph. If a pagebreak would occur inside the widow-segment, the whole box will be shifted to the next page.
    *
-   * @param widows the number of widow-lines that control the pagebreak inside the paragraph.
+   * @param widows
+   *          the number of widow-lines that control the pagebreak inside the paragraph.
    */
   public void setWidows( final Integer widows ) {
     this.widows = widows;
@@ -1335,7 +1376,8 @@ public abstract class ElementFactory {
    * paragraph. If a pagebreak would occur inside the orphan-segment, the whole number of orphan lines or the whole box
    * will be shifted to the next page.
    *
-   * @param orphans the number of orphan-lines that control the pagebreak inside the paragraph.
+   * @param orphans
+   *          the number of orphan-lines that control the pagebreak inside the paragraph.
    */
   public void setOrphans( final Integer orphans ) {
     this.orphans = orphans;
@@ -1361,7 +1403,8 @@ public abstract class ElementFactory {
   /**
    * Defines the background color of the box.
    *
-   * @param backgroundColor the background color or null, if undefined.
+   * @param backgroundColor
+   *          the background color or null, if undefined.
    */
   public void setBackgroundColor( final Color backgroundColor ) {
     this.backgroundColor = backgroundColor;
@@ -1383,7 +1426,8 @@ public abstract class ElementFactory {
    * the pageable outputs without increasing the total size of the element. Activating this property may cause rendering
    * artifacts.
    *
-   * @param overflowY defines, whether text can overflow the box boundaries or null, to leave this property undefined.
+   * @param overflowY
+   *          defines, whether text can overflow the box boundaries or null, to leave this property undefined.
    */
   public void setOverflowY( final Boolean overflowY ) {
     this.overflowY = overflowY;
@@ -1405,7 +1449,8 @@ public abstract class ElementFactory {
    * the pageable outputs without increasing the total size of the element. Activating this property may cause rendering
    * artifacts.
    *
-   * @param overflowX defines, whether text can overflow the box boundaries or null, to leave this property undefined.
+   * @param overflowX
+   *          defines, whether text can overflow the box boundaries or null, to leave this property undefined.
    */
   public void setOverflowX( final Boolean overflowX ) {
     this.overflowX = overflowX;
@@ -1417,7 +1462,7 @@ public abstract class ElementFactory {
    * hold this element, a pagebreak will be generated inside the element.
    *
    * @return a boolean defining whether pagebreaks are allowed inside the box or null, if this property has been left
-   * undefined.
+   *         undefined.
    */
   public Boolean getAvoidPagebreaks() {
     return avoidPagebreaks;
@@ -1428,8 +1473,9 @@ public abstract class ElementFactory {
    * fit on the current page, it will be moved to the next page. Only if this next page does not have enough space to
    * hold this element, a pagebreak will be generated inside the element.
    *
-   * @param avoidPagebreaks a boolean defining whether pagebreaks are allowed inside the box or null, if this property
-   *                        should be left undefined.
+   * @param avoidPagebreaks
+   *          a boolean defining whether pagebreaks are allowed inside the box or null, if this property should be left
+   *          undefined.
    */
   public void setAvoidPagebreaks( final Boolean avoidPagebreaks ) {
     this.avoidPagebreaks = avoidPagebreaks;
@@ -1447,7 +1493,8 @@ public abstract class ElementFactory {
   /**
    * Defines the link target for the element. The link-target usually specifies the URL for a hyper-link.
    *
-   * @param hRefTarget the link target.
+   * @param hRefTarget
+   *          the link target.
    */
   public void setHRefTarget( final String hRefTarget ) {
     this.hRefTarget = hRefTarget;
@@ -1465,7 +1512,8 @@ public abstract class ElementFactory {
   /**
    * Defines the name of the element. If the name is null, the default (anonymous) name will be used.
    *
-   * @param name the element name.
+   * @param name
+   *          the element name.
    */
   public void setName( final String name ) {
     this.name = name;
@@ -1494,7 +1542,8 @@ public abstract class ElementFactory {
   /**
    * Defines the element's minimum size.
    *
-   * @param minimumSize the element's minimum size.
+   * @param minimumSize
+   *          the element's minimum size.
    * @see ElementFactory#setMinimumWidth(Float)
    * @see ElementFactory#setMinimumHeight(Float)
    */
@@ -1531,7 +1580,8 @@ public abstract class ElementFactory {
   /**
    * Defines the element's maximum size.
    *
-   * @param maximumSize the element's maximum size.
+   * @param maximumSize
+   *          the element's maximum size.
    * @see ElementFactory#setMaximumWidth(Float)
    * @see ElementFactory#setMaximumHeight(Float)
    */
@@ -1568,7 +1618,8 @@ public abstract class ElementFactory {
   /**
    * Returns the element's preferred size.
    *
-   * @param preferredSize the element's preferred size.
+   * @param preferredSize
+   *          the element's preferred size.
    * @see ElementFactory#setWidth(Float)
    * @see ElementFactory#setHeight(Float)
    */
@@ -1607,7 +1658,8 @@ public abstract class ElementFactory {
    * Returns the element's absolute position. This property is only used if the band containing this element uses a
    * canvas-layout strategy.
    *
-   * @param absolutePosition the element's absolute position.
+   * @param absolutePosition
+   *          the element's absolute position.
    * @see ElementFactory#setX(Float)
    * @see ElementFactory#setY(Float)
    */
@@ -1633,7 +1685,8 @@ public abstract class ElementFactory {
   /**
    * Defines whether the element's height should be adjusted automaticly.
    *
-   * @param dynamicHeight the new value of the elements dynamic height feature.
+   * @param dynamicHeight
+   *          the new value of the elements dynamic height feature.
    */
   public void setDynamicHeight( final Boolean dynamicHeight ) {
     this.dynamicHeight = dynamicHeight;
@@ -1659,7 +1712,8 @@ public abstract class ElementFactory {
    * <p/>
    * This property is no longer used. This method will be removed in version 1.0.
    *
-   * @param layoutCachable the layout-cachable flag.
+   * @param layoutCachable
+   *          the layout-cachable flag.
    * @deprecated The layout cachable flag is no longer used.
    */
   public void setLayoutCachable( final Boolean layoutCachable ) {
@@ -1678,7 +1732,8 @@ public abstract class ElementFactory {
   /**
    * Defines, whether the element will be visible.
    *
-   * @param visible the visibility flag of the element.
+   * @param visible
+   *          the visibility flag of the element.
    */
   public void setVisible( final Boolean visible ) {
     this.visible = visible;
@@ -1687,7 +1742,8 @@ public abstract class ElementFactory {
   /**
    * Applies the defined name to the created element.
    *
-   * @param e the element which was created.
+   * @param e
+   *          the element which was created.
    */
   protected void applyElementName( final Element e ) {
     if ( getName() != null ) {
@@ -1709,7 +1765,8 @@ public abstract class ElementFactory {
    * Defines the 'window' parameter for hyperlink references. This property will only make sense in HTML-exports, as all
    * other export targets that support Hyperlinks will open up in a new window anyway.
    *
-   * @param hRefWindow the href-window string.
+   * @param hRefWindow
+   *          the href-window string.
    */
   public void setHRefWindow( final String hRefWindow ) {
     this.hRefWindow = hRefWindow;
@@ -1729,7 +1786,8 @@ public abstract class ElementFactory {
    * Defines the elements minimum width. A number between 0 and -100 specifies the width as relative size given in
    * percent of the parent's width or height (depending on the layout model of the band that contains this element).
    *
-   * @param minimumWidth the minimum width or null, to leave this property undefined.
+   * @param minimumWidth
+   *          the minimum width or null, to leave this property undefined.
    */
   public void setMinimumWidth( final Float minimumWidth ) {
     this.minimumWidth = minimumWidth;
@@ -1749,7 +1807,8 @@ public abstract class ElementFactory {
    * Defines the elements minimum height. A number between 0 and -100 specifies the width as relative size given in
    * percent of the parent's width or height (depending on the layout model of the band that contains this element).
    *
-   * @param minimumHeight the minimum height or null, to leave this property undefined.
+   * @param minimumHeight
+   *          the minimum height or null, to leave this property undefined.
    */
   public void setMinimumHeight( final Float minimumHeight ) {
     this.minimumHeight = minimumHeight;
@@ -1767,7 +1826,8 @@ public abstract class ElementFactory {
   /**
    * Defines the elements maximum width. The maximum width cannot have relative values.
    *
-   * @param maximumWidth the maximum width or null, if no maximum width should be defined.
+   * @param maximumWidth
+   *          the maximum width or null, if no maximum width should be defined.
    */
   public void setMaximumWidth( final Float maximumWidth ) {
     this.maximumWidth = maximumWidth;
@@ -1785,7 +1845,8 @@ public abstract class ElementFactory {
   /**
    * Defines the elements maximum height. The maximum height cannot have relative values.
    *
-   * @param maximumHeight the maximum width or null, if no maximum height should be defined.
+   * @param maximumHeight
+   *          the maximum width or null, if no maximum height should be defined.
    */
   public void setMaximumHeight( final Float maximumHeight ) {
     this.maximumHeight = maximumHeight;
@@ -1806,7 +1867,8 @@ public abstract class ElementFactory {
    * Defines the elements preferred width. A number between 0 and -100 specifies the width as relative size given in
    * percent of the parent's width or height (depending on the layout model of the band that contains this element).
    *
-   * @param width the preferred width or null, if left undefined.
+   * @param width
+   *          the preferred width or null, if left undefined.
    */
   public void setWidth( final Float width ) {
     this.width = width;
@@ -1827,7 +1889,8 @@ public abstract class ElementFactory {
    * Defines the elements preferred height. A number between 0 and -100 specifies the width as relative size given in
    * percent of the parent's width or height (depending on the layout model of the band that contains this element).
    *
-   * @param height the preferred height or null, if left undefined.
+   * @param height
+   *          the preferred height or null, if left undefined.
    */
   public void setHeight( final Float height ) {
     this.height = height;
@@ -1850,7 +1913,8 @@ public abstract class ElementFactory {
    * upper left corner of the content-area. A number between 0 and -100 specifies the width as relative size given in
    * percent of the parent's width or height (depending on the layout model of the band that contains this element).
    *
-   * @param x the elements horizontal position or null, if not defined.
+   * @param x
+   *          the elements horizontal position or null, if not defined.
    */
   public void setX( final Float x ) {
     this.x = x;
@@ -1873,7 +1937,8 @@ public abstract class ElementFactory {
    * upper left corner of the content-area. A number between 0 and -100 specifies the width as relative size given in
    * percent of the parent's width or height (depending on the layout model of the band that contains this element).
    *
-   * @param y the elements vertical position or null, if not defined.
+   * @param y
+   *          the elements vertical position or null, if not defined.
    */
   public void setY( final Float y ) {
     this.y = y;
@@ -1891,7 +1956,8 @@ public abstract class ElementFactory {
   /**
    * Defines the defined HREF-Title. This title is only valid during the HTML export.
    *
-   * @param hRefTitle the href-title as string.
+   * @param hRefTitle
+   *          the href-title as string.
    */
   public void setHRefTitle( final String hRefTitle ) {
     this.hRefTitle = hRefTitle;
@@ -1900,12 +1966,12 @@ public abstract class ElementFactory {
   /**
    * Applies the style definition to the elements stylesheet.
    *
-   * @param style the element stylesheet which should receive the style definition.
+   * @param style
+   *          the element stylesheet which should receive the style definition.
    */
   protected void applyStyle( final ElementStyleSheet style ) {
     if ( getUseMinChunkWidth() != null ) {
-      style.setStyleProperty
-        ( ElementStyleKeys.USE_MIN_CHUNKWIDTH, getUseMinChunkWidth() );
+      style.setStyleProperty( ElementStyleKeys.USE_MIN_CHUNKWIDTH, getUseMinChunkWidth() );
     }
     if ( getX() != null ) {
       style.setStyleProperty( ElementStyleKeys.POS_X, getX() );
@@ -2118,7 +2184,8 @@ public abstract class ElementFactory {
   /**
    * Converts the given primitive boolean into a Boolean object.
    *
-   * @param b the primitive value.
+   * @param b
+   *          the primitive value.
    * @return Boolean.TRUE or Boolean.FALSE.
    */
   protected static Boolean getBooleanValue( final boolean b ) {

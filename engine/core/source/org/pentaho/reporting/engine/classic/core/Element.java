@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -77,7 +77,7 @@ import java.util.Set;
  * @noinspection ClassReferencesSubclass
  */
 public class Element implements DataTarget, ReportElement {
-  private static final String[] EMPTY_NAMES = new String[ 0 ];
+  private static final String[] EMPTY_NAMES = new String[0];
   private static final Log logger = LogFactory.getLog( Element.class );
 
   /**
@@ -95,8 +95,10 @@ public class Element implements DataTarget, ReportElement {
     /**
      * Creates a new internal stylesheet for the given element.
      *
-     * @param element the element
-     * @throws NullPointerException if the element given is null.
+     * @param element
+     *          the element
+     * @throws NullPointerException
+     *           if the element given is null.
      */
     protected InternalElementStyleSheet( final Element element ) {
       this.element = element;
@@ -114,12 +116,12 @@ public class Element implements DataTarget, ReportElement {
     /**
      * Updates the reference to the element after the cloning.
      *
-     * @param e the element that contains this stylesheet.
+     * @param e
+     *          the element that contains this stylesheet.
      */
     protected void updateElementReference( final Element e ) {
       if ( e == null ) {
-        throw new NullPointerException
-          ( "Invalid implementation: Self reference cannot be null after cloning." );
+        throw new NullPointerException( "Invalid implementation: Self reference cannot be null after cloning." );
       }
       this.element = e;
     }
@@ -204,8 +206,9 @@ public class Element implements DataTarget, ReportElement {
   }
 
   public SimpleStyleSheet getComputedStyle() {
-    final SimpleStyleSheet computedStyle = (SimpleStyleSheet)
-      this.attributes.getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_STYLE );
+    final SimpleStyleSheet computedStyle =
+        (SimpleStyleSheet) this.attributes.getAttribute( AttributeNames.Internal.NAMESPACE,
+            AttributeNames.Internal.COMPUTED_STYLE );
     if ( computedStyle == null ) {
       final int hc = System.identityHashCode( this );
       throw new InvalidReportStateException( "No computed style for (" + hc + ") - " + this );
@@ -261,8 +264,7 @@ public class Element implements DataTarget, ReportElement {
     setAttribute( namespace, name, value, true );
   }
 
-  public void setAttribute( final String namespace, final String name, final Object value,
-                            final boolean notifyChange ) {
+  public void setAttribute( final String namespace, final String name, final Object value, final boolean notifyChange ) {
     if ( copyOnWrite ) {
       this.attributes = attributes.clone();
       this.copyOnWrite = false;
@@ -274,8 +276,7 @@ public class Element implements DataTarget, ReportElement {
         cachedAttributes = null;
       }
     }
-    if ( AttributeNames.Core.NAMESPACE.equals( namespace ) &&
-      AttributeNames.Core.ELEMENT_TYPE.equals( name ) ) {
+    if ( AttributeNames.Core.NAMESPACE.equals( namespace ) && AttributeNames.Core.ELEMENT_TYPE.equals( name ) ) {
       if ( value instanceof ElementType ) {
         this.elementType = (ElementType) value;
       } else {
@@ -335,8 +336,7 @@ public class Element implements DataTarget, ReportElement {
 
   public ElementType getElementType() {
     if ( elementType == null ) {
-      final Object maybeElementType =
-        getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE );
+      final Object maybeElementType = getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE );
       if ( maybeElementType instanceof ElementType ) {
         this.elementType = (ElementType) maybeElementType;
       } else {
@@ -378,7 +378,8 @@ public class Element implements DataTarget, ReportElement {
    * This method is public as a implementation side effect. Only a band or section implementation should call this
    * method. Calling this method manually will create a huge disaster.
    *
-   * @param parent (null allowed).
+   * @param parent
+   *          (null allowed).
    */
   protected final void setParent( final Section parent ) {
     this.parent = parent;
@@ -393,7 +394,8 @@ public class Element implements DataTarget, ReportElement {
    * <p/>
    * Names can be used to lookup an element within a band. There is no requirement for element names to be unique.
    *
-   * @param name the name of this element
+   * @param name
+   *          the name of this element
    */
   public void setName( final String name ) {
     setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, name );
@@ -418,7 +420,7 @@ public class Element implements DataTarget, ReportElement {
    *
    * @return the assigned legacy datasource.
    * @deprecated Whereever possible use ElementType implementations instead. This method only exists to let old reports
-   * run.
+   *             run.
    */
   public final DataSource getDataSource() {
     return datasource;
@@ -427,10 +429,12 @@ public class Element implements DataTarget, ReportElement {
   /**
    * Sets the data source for this Element. The data source is used to produce or query the element's display value.
    *
-   * @param ds the datasource (<code>null</code> not permitted).
-   * @throws NullPointerException if the given data source is null.
+   * @param ds
+   *          the datasource (<code>null</code> not permitted).
+   * @throws NullPointerException
+   *           if the given data source is null.
    * @deprecated The data-source should not be used anymore. Use ElementType implementations instead. This method only
-   * exists to let old reports run.
+   *             exists to let old reports run.
    */
   public void setDataSource( final DataSource ds ) {
     if ( ds == null ) {
@@ -453,7 +457,8 @@ public class Element implements DataTarget, ReportElement {
    * Defines, whether this Element should be visible in the output. The interpretation of this flag is up to the content
    * processor.
    *
-   * @param b the new visibility state
+   * @param b
+   *          the new visibility state
    */
   public void setVisible( final boolean b ) {
     if ( b ) {
@@ -483,7 +488,7 @@ public class Element implements DataTarget, ReportElement {
         e.attributeExpressions = attributeExpressions.clone();
         final String[] namespaces = e.attributeExpressions.getNameSpaces();
         for ( int i = 0; i < namespaces.length; i++ ) {
-          final String namespace = namespaces[ i ];
+          final String namespace = namespaces[i];
           final Map<String, Expression> attrsNs = attributeExpressions.getAttributes( namespace );
           for ( final Map.Entry<String, Expression> entry : attrsNs.entrySet() ) {
             final Expression exp = entry.getValue();
@@ -521,11 +526,11 @@ public class Element implements DataTarget, ReportElement {
   /**
    * Creates a deep copy of this element and regenerates all instance-ids.
    *
-   * @param preserveElementInstanceIds defines whether this call generates new instance-ids for the derived elements.
-   *                                   Instance-IDs are used by the report processor to recognize reoccurring elements
-   *                                   and must not changed within the report run. Outside of the report processors new
-   *                                   instance ids should be generated at all times to separate instances and to make
-   *                                   them uniquely identifiable.
+   * @param preserveElementInstanceIds
+   *          defines whether this call generates new instance-ids for the derived elements. Instance-IDs are used by
+   *          the report processor to recognize reoccurring elements and must not changed within the report run. Outside
+   *          of the report processors new instance ids should be generated at all times to separate instances and to
+   *          make them uniquely identifiable.
    * @return the copy of the element.
    */
   public Element derive( final boolean preserveElementInstanceIds ) {
@@ -545,7 +550,7 @@ public class Element implements DataTarget, ReportElement {
       final ElementMetaData metaData = e.getMetaData();
       final String[] namespaces = e.attributes.getNameSpaces();
       for ( int i = 0; i < namespaces.length; i++ ) {
-        final String namespace = namespaces[ i ];
+        final String namespace = namespaces[i];
         final Map attrsNs = attributes.getAttributes( namespace );
         final Iterator it = attrsNs.entrySet().iterator();
         while ( it.hasNext() ) {
@@ -556,8 +561,8 @@ public class Element implements DataTarget, ReportElement {
           final AttributeMetaData data = metaData.getAttributeDescription( namespace, name );
           if ( data == null ) {
             if ( logger.isDebugEnabled() ) {
-              logger.debug(
-                getElementTypeName() + ": Attribute " + namespace + "|" + name + " is not listed in the metadata." );
+              logger.debug( getElementTypeName() + ": Attribute " + namespace + "|" + name
+                  + " is not listed in the metadata." );
             }
           }
           if ( value instanceof Cloneable ) {
@@ -577,7 +582,7 @@ public class Element implements DataTarget, ReportElement {
         e.attributeExpressions = attributeExpressions.clone();
         final String[] attrExprNamespaces = e.attributeExpressions.getNameSpaces();
         for ( int i = 0; i < attrExprNamespaces.length; i++ ) {
-          final String namespace = attrExprNamespaces[ i ];
+          final String namespace = attrExprNamespaces[i];
           final Map attrsNs = attributeExpressions.getAttributes( namespace );
           final Iterator it = attrsNs.entrySet().iterator();
           while ( it.hasNext() ) {
@@ -589,7 +594,7 @@ public class Element implements DataTarget, ReportElement {
       }
 
       if ( styleExpressions != null ) {
-        //noinspection unchecked
+        // noinspection unchecked
         e.styleExpressions = (HashMap<StyleKey, Expression>) styleExpressions.clone();
         final Iterator<Map.Entry<StyleKey, Expression>> styleExpressionsIt = e.styleExpressions.entrySet().iterator();
         while ( styleExpressionsIt.hasNext() ) {
@@ -643,7 +648,8 @@ public class Element implements DataTarget, ReportElement {
    * Defines the Xml-ID of this element. This ID is unique within the report-definition, but is not a internal
    * object-instance ID but a user-defined string.
    *
-   * @param id the element id.
+   * @param id
+   *          the element id.
    */
   public void setId( final String id ) {
     setAttribute( AttributeNames.Xml.NAMESPACE, AttributeNames.Xml.ID, id );
@@ -675,7 +681,8 @@ public class Element implements DataTarget, ReportElement {
    * override any previously defined value for the dynamic attribute. The value can no longer be inherited from parent
    * stylesheets.
    *
-   * @param dynamicContent the new state of the dynamic flag.
+   * @param dynamicContent
+   *          the new state of the dynamic flag.
    */
   public void setDynamicContent( final boolean dynamicContent ) {
     getStyle().setBooleanStyleProperty( ElementStyleKeys.DYNAMIC_HEIGHT, dynamicContent );
@@ -710,7 +717,8 @@ public class Element implements DataTarget, ReportElement {
   /**
    * Redefines the link target for this element.
    *
-   * @param target the target
+   * @param target
+   *          the target
    */
   public void setHRefTarget( final String target ) {
     getStyle().setStyleProperty( ElementStyleKeys.HREF_TARGET, target );
@@ -740,11 +748,12 @@ public class Element implements DataTarget, ReportElement {
   /**
    * Adds a function to the report's collection of expressions.
    *
-   * @param property the stylekey that will be modified by this element.
-   * @param function the function.
+   * @param property
+   *          the stylekey that will be modified by this element.
+   * @param function
+   *          the function.
    */
-  public void setStyleExpression( final StyleKey property,
-                                  final Expression function ) {
+  public void setStyleExpression( final StyleKey property, final Expression function ) {
     if ( styleExpressions == null ) {
       if ( function == null ) {
         return;
@@ -764,7 +773,8 @@ public class Element implements DataTarget, ReportElement {
   /**
    * Returns the expressions for the report.
    *
-   * @param property the stylekey for which an style-expression is returned.
+   * @param property
+   *          the stylekey for which an style-expression is returned.
    * @return the expressions.
    */
   public Expression getStyleExpression( final StyleKey property ) {
@@ -829,7 +839,7 @@ public class Element implements DataTarget, ReportElement {
   }
 
   /**
-   * Notifies the element and any parent element that a property of this element has changed.  This notification updates
+   * Notifies the element and any parent element that a property of this element has changed. This notification updates
    * the change tracker.
    */
   public void notifyNodePropertiesChanged() {
@@ -844,7 +854,8 @@ public class Element implements DataTarget, ReportElement {
    * Notifies the element and any parent element that a child node has been added. This notification updates the change
    * tracker.
    *
-   * @param o the node that has been added.
+   * @param o
+   *          the node that has been added.
    */
   public void notifyNodeChildAdded( final Object o ) {
     updateChangedFlagInternal( this, ReportModelEvent.NODE_ADDED, o );
@@ -854,7 +865,8 @@ public class Element implements DataTarget, ReportElement {
    * Notifies the element and any parent element that a child node has been removed. This notification updates the
    * change tracker.
    *
-   * @param o the node that has been removed.
+   * @param o
+   *          the node that has been removed.
    */
   public void notifyNodeChildRemoved( final Object o ) {
     updateChangedFlagInternal( this, ReportModelEvent.NODE_REMOVED, o );
@@ -871,9 +883,12 @@ public class Element implements DataTarget, ReportElement {
   /**
    * Updates the change flag and notifies the parent, if this element has a parent.
    *
-   * @param element   the element that caused the notification.
-   * @param type      the notification type.
-   * @param parameter the optional parameter further describing the event.
+   * @param element
+   *          the element that caused the notification.
+   * @param type
+   *          the notification type.
+   * @param parameter
+   *          the optional parameter further describing the event.
    */
   protected void updateChangedFlagInternal( final ReportElement element, final int type, final Object parameter ) {
     changeTracker += 1;
@@ -895,7 +910,8 @@ public class Element implements DataTarget, ReportElement {
    * other way will break reports. You have been warned. This method is internal and may change or be renamed at any
    * time.
    *
-   * @param changeTracker the new change tracker value
+   * @param changeTracker
+   *          the new change tracker value
    */
   protected final void setChangeTracker( final long changeTracker ) {
     this.changeTracker = changeTracker;
@@ -904,22 +920,23 @@ public class Element implements DataTarget, ReportElement {
   /**
    * A helper method that serializes the element object.
    *
-   * @param stream the stream to which the element should be serialized.
-   * @throws IOException if an IO error occured or a property was not serializable.
+   * @param stream
+   *          the stream to which the element should be serialized.
+   * @throws IOException
+   *           if an IO error occured or a property was not serializable.
    */
-  private void writeObject( final ObjectOutputStream stream )
-    throws IOException {
+  private void writeObject( final ObjectOutputStream stream ) throws IOException {
     stream.defaultWriteObject();
     final ReportAttributeMap attributes = this.attributes;
     stream.writeLong( attributes.getChangeTracker() );
     final String[] nameSpaces = attributes.getNameSpaces();
     stream.writeObject( nameSpaces );
     for ( int i = 0; i < nameSpaces.length; i++ ) {
-      final String nameSpace = nameSpaces[ i ];
+      final String nameSpace = nameSpaces[i];
       final String[] names = attributes.getNames( nameSpace );
       stream.writeObject( names );
       for ( int j = 0; j < names.length; j++ ) {
-        final String name = names[ j ];
+        final String name = names[j];
         final Object attribute = attributes.getAttribute( nameSpace, name );
 
         final AttributeMetaData data = getMetaData().getAttributeDescription( nameSpace, name );
@@ -932,8 +949,8 @@ public class Element implements DataTarget, ReportElement {
           if ( attribute instanceof ResourceKey ) {
             final ResourceKey key = (ResourceKey) attribute;
             final ResourceKey parent = key.getParent();
-            if ( AttributeNames.Core.NAMESPACE.equals( nameSpace ) &&
-              ( AttributeNames.Core.CONTENT_BASE.equals( name ) || AttributeNames.Core.SOURCE.equals( name ) ) ) {
+            if ( AttributeNames.Core.NAMESPACE.equals( nameSpace )
+                && ( AttributeNames.Core.CONTENT_BASE.equals( name ) || AttributeNames.Core.SOURCE.equals( name ) ) ) {
               if ( parent != null ) {
                 // unwrap the content base attribute. After deserialization, the report assumes the bundle-location
                 // as content base, as the bundle will be gone.
@@ -959,7 +976,7 @@ public class Element implements DataTarget, ReportElement {
                 stream.writeByte( 0 );
                 try {
                   final ResourceKey resourceKey =
-                    ResourceKeyUtils.embedResourceInKey( locateResourceManager(), key, key.getFactoryParameters() );
+                      ResourceKeyUtils.embedResourceInKey( locateResourceManager(), key, key.getFactoryParameters() );
                   SerializerHelper.getInstance().writeObject( resourceKey, stream );
                 } catch ( ResourceException e ) {
                   throw new IOException( "Failed to convert resource-key into byte-array key: " + e );
@@ -1008,20 +1025,22 @@ public class Element implements DataTarget, ReportElement {
   /**
    * A helper method that deserializes a object from the given stream.
    *
-   * @param stream the stream from which to read the object data.
-   * @throws IOException            if an IO error occured.
-   * @throws ClassNotFoundException if an referenced class cannot be found.
+   * @param stream
+   *          the stream from which to read the object data.
+   * @throws IOException
+   *           if an IO error occured.
+   * @throws ClassNotFoundException
+   *           if an referenced class cannot be found.
    */
-  private void readObject( final ObjectInputStream stream )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream stream ) throws IOException, ClassNotFoundException {
     stream.defaultReadObject();
     this.attributes = new ReportAttributeMap<Object>( stream.readLong() );
     final String[] nameSpaces = (String[]) stream.readObject();
     for ( int i = 0; i < nameSpaces.length; i++ ) {
-      final String nameSpace = nameSpaces[ i ];
+      final String nameSpace = nameSpaces[i];
       final String[] names = (String[]) stream.readObject();
       for ( int j = 0; j < names.length; j++ ) {
-        final String name = names[ j ];
+        final String name = names[j];
         final int nullHandler = stream.readByte();
         if ( nullHandler == 0 ) {
           final Object attribute = SerializerHelper.getInstance().readObject( stream );
@@ -1063,10 +1082,10 @@ public class Element implements DataTarget, ReportElement {
     final ElementMetaData metaData = getMetaData();
     final String[] attributeNamespaces = getAttributeNamespaces();
     for ( int i = 0; i < attributeNamespaces.length; i++ ) {
-      final String namespace = attributeNamespaces[ i ];
+      final String namespace = attributeNamespaces[i];
       final String[] attributeNames = getAttributeNames( namespace );
       for ( int j = 0; j < attributeNames.length; j++ ) {
-        final String name = attributeNames[ j ];
+        final String name = attributeNames[j];
         final AttributeMetaData attributeDescription = metaData.getAttributeDescription( namespace, name );
         if ( attributeDescription == null ) {
           continue;
@@ -1077,8 +1096,7 @@ public class Element implements DataTarget, ReportElement {
         if ( attributeDescription.isComputed() ) {
           continue;
         }
-        if ( AttributeNames.Core.ELEMENT_TYPE.equals( name ) &&
-          AttributeNames.Core.NAMESPACE.equals( namespace ) ) {
+        if ( AttributeNames.Core.ELEMENT_TYPE.equals( name ) && AttributeNames.Core.NAMESPACE.equals( namespace ) ) {
           continue;
         }
         target.setAttribute( namespace, name, getAttribute( namespace, name ), false );
@@ -1087,10 +1105,10 @@ public class Element implements DataTarget, ReportElement {
 
     final String[] attrExprNamespaces = getAttributeExpressionNamespaces();
     for ( int i = 0; i < attrExprNamespaces.length; i++ ) {
-      final String namespace = attrExprNamespaces[ i ];
+      final String namespace = attrExprNamespaces[i];
       final String[] attributeNames = getAttributeExpressionNames( namespace );
       for ( int j = 0; j < attributeNames.length; j++ ) {
-        final String name = attributeNames[ j ];
+        final String name = attributeNames[j];
 
         final AttributeMetaData attributeDescription = metaData.getAttributeDescription( namespace, name );
         if ( attributeDescription == null ) {
@@ -1106,7 +1124,7 @@ public class Element implements DataTarget, ReportElement {
     final ElementStyleSheet styleSheet = getStyle();
     final StyleKey[] styleKeys = styleSheet.getDefinedPropertyNamesArray();
     for ( int i = 0; i < styleKeys.length; i++ ) {
-      final StyleKey styleKey = styleKeys[ i ];
+      final StyleKey styleKey = styleKeys[i];
       if ( styleKey != null ) {
         target.getStyle().setStyleProperty( styleKey, styleSheet.getStyleProperty( styleKey ) );
       }
@@ -1133,7 +1151,7 @@ public class Element implements DataTarget, ReportElement {
   }
 
   public void copyAttributes( final ReportAttributeMap<Object> attributes ) {
-    //noinspection unchecked
+    // noinspection unchecked
     this.attributes.putAll( attributes );
     this.cachedAttributes = null;
 

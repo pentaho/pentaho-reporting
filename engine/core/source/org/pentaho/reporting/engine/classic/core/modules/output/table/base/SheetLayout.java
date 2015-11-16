@@ -1,21 +1,27 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
+
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
@@ -30,12 +36,6 @@ import org.pentaho.reporting.engine.classic.core.util.ShapeDrawable;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
-
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 
 /**
  * The sheet layout is used to build the background map and to collect the x- and y-cell-borders.
@@ -71,12 +71,13 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
    * Creates a new TableGrid-object. If strict mode is enabled, all cell bounds are used to create the table grid,
    * resulting in a more complex layout.
    *
-   * @param strict             the strict mode for the layout.
-   * @param ellipseAsRectangle a flag that defines whether ellipse-objects are translated into rectangles and therefore
-   *                           create backgrounds.
+   * @param strict
+   *          the strict mode for the layout.
+   * @param ellipseAsRectangle
+   *          a flag that defines whether ellipse-objects are translated into rectangles and therefore create
+   *          backgrounds.
    */
-  public SheetLayout( final boolean strict,
-                      final boolean ellipseAsRectangle ) {
+  public SheetLayout( final boolean strict, final boolean ellipseAsRectangle ) {
     this.ellipseAsRectangle = ellipseAsRectangle;
     this.xBounds = new TableCutList( 50, true );
     this.yBounds = new TableCutList( 2500, true );
@@ -88,8 +89,8 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
   }
 
   public SheetLayout( OutputProcessorMetaData metaData ) {
-    this( metaData.isFeatureSupported( AbstractTableOutputProcessor.STRICT_LAYOUT ),
-      metaData.isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ) );
+    this( metaData.isFeatureSupported( AbstractTableOutputProcessor.STRICT_LAYOUT ), metaData
+        .isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ) );
   }
 
   public SheetLayout derive() {
@@ -172,8 +173,7 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
       return new SheetLayoutTableCellDefinition( lineType, coordinate );
     }
 
-    if ( rawObject instanceof Rectangle2D ||
-      ( ellipseAsRectangle && rawObject instanceof Ellipse2D ) ) {
+    if ( rawObject instanceof Rectangle2D || ( ellipseAsRectangle && rawObject instanceof Ellipse2D ) ) {
       if ( draw ) {
         final BorderEdge edge = ProcessUtility.produceBorderEdge( box.getStyleSheet() );
         if ( edge != null ) {
@@ -211,11 +211,15 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
    * <p/>
    * This method will do nothing, if the element has a width and height of zero and does not define any anchors.
    *
-   * @param element    the position that should be added to the grid (might be null).
-   * @param offset     the vertical shift which adjusts the visual position of the content.
-   * @param headerSize the vertical shift which adjusts the visual position of the content.
+   * @param element
+   *          the position that should be added to the grid (might be null).
+   * @param offset
+   *          the vertical shift which adjusts the visual position of the content.
+   * @param headerSize
+   *          the vertical shift which adjusts the visual position of the content.
    * @return true, if the box has not changed and can be safely skipped.
-   * @throws NullPointerException if the bounds are null
+   * @throws NullPointerException
+   *           if the bounds are null
    */
   public boolean add( final RenderBox element, final long offset, final long headerSize, final long maxHeight ) {
     final long shift = headerSize - offset;
@@ -254,7 +258,6 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
       unmodified = false;
     }
 
-
     if ( addLine( element, background, elementY, shiftedY, unmodified, headerSize ) ) {
       return unmodified;
     }
@@ -288,10 +291,8 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
     return unmodified;
   }
 
-  public void addRenderableContent( final RenderableReplacedContentBox element,
-                                    final long offset,
-                                    final long headerSize,
-                                    final long maxHeight ) {
+  public void addRenderableContent( final RenderableReplacedContentBox element, final long offset,
+      final long headerSize, final long maxHeight ) {
     final long shift = headerSize - offset;
     final long shiftedY = element.getY() + shift;
     final long elementY;
@@ -328,12 +329,8 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
     }
   }
 
-  private boolean addLine( final RenderBox element,
-                           final SheetLayoutTableCellDefinition background,
-                           final long elementY,
-                           final long shiftedY,
-                           final boolean unmodified,
-                           final long headerSize ) {
+  private boolean addLine( final RenderBox element, final SheetLayoutTableCellDefinition background,
+      final long elementY, final long shiftedY, final boolean unmodified, final long headerSize ) {
 
     // This method handles several special cases. If the element is a non-area box with borderss,
     // it mapps the borders into a equivalent line-definition.
@@ -365,7 +362,7 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
     final long elementRightX = ( element.getWidth() + elementX );
     final long elementBottomY = element.getHeight() + shiftedY;
 
-    // Beginn the mapping ..
+    // Begin the mapping ..
     if ( background.getLineType() == SheetLayoutTableCellDefinition.LINE_HINT_HORIZONTAL ) {
       if ( unmodified == false ) {
         ensureXMapping( elementX, Boolean.FALSE );
@@ -377,8 +374,7 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
       } else {
         ensureYMapping( elementBottomY, Boolean.FALSE );
       }
-    } else // if (lineVertical)
-    {
+    } else {
       ensureYMapping( elementY, Boolean.FALSE );
       ensureYMapping( elementBottomY, Boolean.FALSE );
 
@@ -427,15 +423,20 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
    * Returns the position of the given element within the table. The TableRectangle contains row and cell indices, no
    * layout coordinates.
    *
-   * @param x      the element bounds for which the table bounds should be found.
-   * @param y      the element bounds for which the table bounds should be found.
-   * @param width  the element bounds for which the table bounds should be found.
-   * @param height the element bounds for which the table bounds should be found.
-   * @param rect   the returned rectangle or null, if a new instance should be created
+   * @param x
+   *          the element bounds for which the table bounds should be found.
+   * @param y
+   *          the element bounds for which the table bounds should be found.
+   * @param width
+   *          the element bounds for which the table bounds should be found.
+   * @param height
+   *          the element bounds for which the table bounds should be found.
+   * @param rect
+   *          the returned rectangle or null, if a new instance should be created
    * @return the filled table rectangle.
    */
   public TableRectangle getTableBounds( final long x, final long y, final long width, final long height,
-                                        TableRectangle rect ) {
+      TableRectangle rect ) {
     if ( rect == null ) {
       rect = new TableRectangle();
     }
@@ -448,7 +449,7 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
   }
 
   public TableRectangle getTableBoundsWithCache( final long x, final long y, final long width, final long height,
-                                                 final TableRectangle rect ) {
+      final TableRectangle rect ) {
     if ( rect == null ) {
       throw new NullPointerException();
     }
@@ -474,12 +475,13 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
    * Returns the position of the given element within the table. The TableRectangle contains row and cell indices, no
    * layout coordinates.
    *
-   * @param bounds the element bounds for which the table bounds should be found.
-   * @param rect   the returned rectangle or null, if a new instance should be created
+   * @param bounds
+   *          the element bounds for which the table bounds should be found.
+   * @param rect
+   *          the returned rectangle or null, if a new instance should be created
    * @return the filled table rectangle.
    */
-  public TableRectangle getTableBounds( final StrictBounds bounds,
-                                        TableRectangle rect ) {
+  public TableRectangle getTableBounds( final StrictBounds bounds, TableRectangle rect ) {
     if ( bounds == null ) {
       throw new NullPointerException();
     }
@@ -497,8 +499,7 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
   }
 
   /**
-   * A Callback method to inform the sheet layout, that the current page is complete, and no more content will be
-   * added.
+   * A Callback method to inform the sheet layout, that the current page is complete, and no more content will be added.
    */
   public void pageCompleted() {
     removeAuxilaryBounds();
@@ -510,14 +511,14 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
 
     // Log.debug("Size: " + getRowCount() + ", " + getColumnCount());
 
-    final long[] removedXCuts = new long[ xBounds.size() ];
+    final long[] removedXCuts = new long[xBounds.size()];
     final Boolean[] xEntries = xBounds.getRawEntries();
     final int xEntrySize = xBounds.size();
     int arrayIdx = 0;
     for ( int i = 0; i < xEntrySize; i++ ) {
-      final Boolean cut = xEntries[ i ];
+      final Boolean cut = xEntries[i];
       if ( Boolean.TRUE.equals( cut ) ) {
-        removedXCuts[ arrayIdx ] = xBounds.getKeyAt( i );
+        removedXCuts[arrayIdx] = xBounds.getKeyAt( i );
         arrayIdx += 1;
       }
     }
@@ -525,13 +526,13 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
     xBounds.removeAll( removedXCuts, arrayIdx );
 
     arrayIdx = 0;
-    final long[] removedYCuts = new long[ yBounds.size() ];
+    final long[] removedYCuts = new long[yBounds.size()];
     final Boolean[] yEntries = yBounds.getRawEntries();
     final int ySize = yBounds.size();
     for ( int i = 0; i < ySize; i++ ) {
-      final Boolean cut = yEntries[ i ];
+      final Boolean cut = yEntries[i];
       if ( Boolean.TRUE.equals( cut ) ) {
-        removedYCuts[ arrayIdx ] = yBounds.getKeyAt( i );
+        removedYCuts[arrayIdx] = yBounds.getKeyAt( i );
         arrayIdx += 1;
       }
     }
@@ -541,15 +542,16 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
   /**
    * Computes the height of the given row.
    *
-   * @param row the row, for which the height should be computed.
+   * @param row
+   *          the row, for which the height should be computed.
    * @return the height of the row.
-   * @throws IndexOutOfBoundsException if the row is invalid.
+   * @throws IndexOutOfBoundsException
+   *           if the row is invalid.
    */
   public long getRowHeight( final int row ) {
     final int rowCount = yBounds.size();
     if ( row >= rowCount ) {
-      throw new IndexOutOfBoundsException
-        ( "Row " + row + " is invalid. Max valid row is " + ( rowCount - 1 ) );
+      throw new IndexOutOfBoundsException( "Row " + row + " is invalid. Max valid row is " + ( rowCount - 1 ) );
     }
 
     final long bottomBorder;
@@ -577,10 +579,13 @@ public class SheetLayout implements SlimSheetLayout, Cloneable {
   /**
    * Computes the height of the given row.
    *
-   * @param startCell the first cell in the range
-   * @param endCell   the last cell included in the cell range
+   * @param startCell
+   *          the first cell in the range
+   * @param endCell
+   *          the last cell included in the cell range
    * @return the height of the row.
-   * @throws IndexOutOfBoundsException if the row is invalid.
+   * @throws IndexOutOfBoundsException
+   *           if the row is invalid.
    */
   public long getCellWidth( final int startCell, final int endCell ) {
     if ( startCell < 0 ) {

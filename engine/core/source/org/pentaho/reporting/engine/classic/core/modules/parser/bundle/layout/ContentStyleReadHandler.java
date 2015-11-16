@@ -1,21 +1,23 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
+
+import java.awt.Stroke;
 
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -26,8 +28,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
-import java.awt.*;
 
 /**
  * Todo: Document Me
@@ -56,8 +56,10 @@ public class ContentStyleReadHandler extends AbstractXmlReadHandler implements S
    * draw-shape="true" fill-shape="false" scale="false" keep-aspect-ratio="true" fill-color="#ff00aa" stroke-width="1"
    * paint="#aa0033"
    *
-   * @param attrs the attributes.
-   * @throws SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void startParsing( final Attributes attrs ) throws SAXException {
     final String antiAliasing = attrs.getValue( getUri(), "anti-aliasing" );
@@ -74,12 +76,10 @@ public class ContentStyleReadHandler extends AbstractXmlReadHandler implements S
       styleSheet.setBooleanStyleProperty( ElementStyleKeys.FILL_SHAPE, "true".equals( fillShape ) );
     }
 
-
     final String dynamicHeight = attrs.getValue( getUri(), "dynamic-height" );
     if ( dynamicHeight != null ) {
       styleSheet.setBooleanStyleProperty( ElementStyleKeys.DYNAMIC_HEIGHT, "true".equals( dynamicHeight ) );
     }
-
 
     final String scale = attrs.getValue( getUri(), "scale" );
     if ( scale != null ) {
@@ -112,8 +112,7 @@ public class ContentStyleReadHandler extends AbstractXmlReadHandler implements S
 
   }
 
-  private Stroke readStroke( final Attributes atts )
-    throws ParseException {
+  private Stroke readStroke( final Attributes atts ) throws ParseException {
     final String strokeStyle = atts.getValue( getUri(), "stroke-style" );
     final String weightAttr = atts.getValue( getUri(), "stroke-weight" );
     if ( strokeStyle == null && weightAttr == null ) {
@@ -129,12 +128,12 @@ public class ContentStyleReadHandler extends AbstractXmlReadHandler implements S
     return ReportParserUtil.parseStroke( strokeStyle, weight );
   }
 
-
   /**
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if an parser error occured.
+   * @throws SAXException
+   *           if an parser error occured.
    */
   public Object getObject() throws SAXException {
     return styleSheet;

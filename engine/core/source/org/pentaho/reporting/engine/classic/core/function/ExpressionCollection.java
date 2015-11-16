@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -48,8 +48,10 @@ public class ExpressionCollection implements Cloneable, Serializable {
   /**
    * Creates a new expression collection, populated with the supplied expressions.
    *
-   * @param expressions a collection of expressions.
-   * @throws ClassCastException if the collection does not contain Expressions
+   * @param expressions
+   *          a collection of expressions.
+   * @throws ClassCastException
+   *           if the collection does not contain Expressions
    */
   public ExpressionCollection( final Collection expressions ) {
     this();
@@ -60,8 +62,10 @@ public class ExpressionCollection implements Cloneable, Serializable {
    * Adds all expressions contained in the given collection to this expression collection. The expressions get
    * initialized during the adding process.
    *
-   * @param expressions the expressions to be added.
-   * @throws ClassCastException if the collection does not contain expressions
+   * @param expressions
+   *          the expressions to be added.
+   * @throws ClassCastException
+   *           if the collection does not contain expressions
    */
   public void addAll( final Collection expressions ) {
     if ( expressions != null ) {
@@ -76,7 +80,8 @@ public class ExpressionCollection implements Cloneable, Serializable {
   /**
    * Returns the {@link Expression} with the specified name (or <code>null</code>).
    *
-   * @param name the expression name (<code>null</code> not permitted).
+   * @param name
+   *          the expression name (<code>null</code> not permitted).
    * @return The expression.
    */
   public Expression get( final String name ) {
@@ -90,7 +95,8 @@ public class ExpressionCollection implements Cloneable, Serializable {
   /**
    * Searches the list of expressions for an expression with the given name.
    *
-   * @param name the name, never null.
+   * @param name
+   *          the name, never null.
    * @return the position of the expression with that name or -1 if no expression contains that name.
    */
   private int findExpressionByName( final String name ) {
@@ -104,9 +110,10 @@ public class ExpressionCollection implements Cloneable, Serializable {
   }
 
   /**
-   * Adds an expression to the collection.  The expression is initialized before it is added to this collection.
+   * Adds an expression to the collection. The expression is initialized before it is added to this collection.
    *
-   * @param e the expression.
+   * @param e
+   *          the expression.
    */
   public void add( final Expression e ) {
     if ( e == null ) {
@@ -127,9 +134,11 @@ public class ExpressionCollection implements Cloneable, Serializable {
   /**
    * Removes an expression from the collection.
    *
-   * @param e the expression.
+   * @param e
+   *          the expression.
    * @return true if the expression can be removed from (was present in) the list
-   * @throws NullPointerException if the given Expression is null.
+   * @throws NullPointerException
+   *           if the given Expression is null.
    */
   public boolean removeExpression( final Expression e ) {
     if ( e == null ) {
@@ -141,7 +150,8 @@ public class ExpressionCollection implements Cloneable, Serializable {
   /**
    * Removes an expression from the collection.
    *
-   * @param index the index of the expression ro remove
+   * @param index
+   *          the index of the expression ro remove
    */
   public void removeExpression( final int index ) {
     expressionList.remove( index );
@@ -159,9 +169,11 @@ public class ExpressionCollection implements Cloneable, Serializable {
   /**
    * Returns the expression on the given position in the list.
    *
-   * @param pos the position in the list.
+   * @param pos
+   *          the position in the list.
    * @return the expression.
-   * @throws IndexOutOfBoundsException if the given position is invalid
+   * @throws IndexOutOfBoundsException
+   *           if the given position is invalid
    */
   public Expression getExpression( final int pos ) {
     return expressionList.get( pos );
@@ -209,7 +221,7 @@ public class ExpressionCollection implements Cloneable, Serializable {
    * @return the expressions as array.
    */
   public Expression[] getExpressions() {
-    return expressionList.toArray( new Expression[ expressionList.size() ] );
+    return expressionList.toArray( new Expression[expressionList.size()] );
   }
 
   public boolean contains( final Expression expression ) {

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
@@ -78,7 +78,6 @@ public class DesignTimeUtil {
     return null;
   }
 
-
   public static ResourceBundleFactory getResourceBundleFactory( final AbstractReportDefinition reportDefinition ) {
     ReportDefinition e = reportDefinition.getMasterReport();
     if ( e instanceof MasterReport ) {
@@ -117,32 +116,27 @@ public class DesignTimeUtil {
     final DocumentMetaData metaData = report.getBundle().getMetaData();
     if ( metaData instanceof WriteableDocumentMetaData ) {
       final WriteableDocumentMetaData wmd = (WriteableDocumentMetaData) metaData;
-      wmd.setBundleAttribute( ODFMetaAttributeNames.Meta.NAMESPACE,
-        ODFMetaAttributeNames.Meta.INITIAL_CREATOR, wmd.getBundleAttribute
-          ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.CREATOR ) );
+      wmd.setBundleAttribute( ODFMetaAttributeNames.Meta.NAMESPACE, ODFMetaAttributeNames.Meta.INITIAL_CREATOR, wmd
+          .getBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.CREATOR ) );
       try {
-        wmd.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
-          ODFMetaAttributeNames.DublinCore.CREATOR, System.getProperty( "user.name" ) );
+        wmd.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.CREATOR,
+            System.getProperty( "user.name" ) );
       } catch ( Exception e ) {
         // ignore it, not that important ...
       }
-      wmd.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
-        ODFMetaAttributeNames.DublinCore.DESCRIPTION, null );
-      wmd.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
-        ODFMetaAttributeNames.DublinCore.SUBJECT, null );
-      wmd.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
-        ODFMetaAttributeNames.DublinCore.TITLE, null );
-      wmd.setBundleAttribute( ODFMetaAttributeNames.Meta.NAMESPACE,
-        ODFMetaAttributeNames.Meta.CREATION_DATE, new Date() );
-      wmd.setBundleAttribute( ODFMetaAttributeNames.Meta.NAMESPACE,
-        ODFMetaAttributeNames.Meta.KEYWORDS, null );
+      wmd.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.DESCRIPTION,
+          null );
+      wmd.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.SUBJECT,
+          null );
+      wmd.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE, null );
+      wmd.setBundleAttribute( ODFMetaAttributeNames.Meta.NAMESPACE, ODFMetaAttributeNames.Meta.CREATION_DATE,
+          new Date() );
+      wmd.setBundleAttribute( ODFMetaAttributeNames.Meta.NAMESPACE, ODFMetaAttributeNames.Meta.KEYWORDS, null );
     }
   }
 
-
-  public static boolean isSelectedDataSource( final AbstractReportDefinition report,
-                                              final DataFactory dataFactory,
-                                              final String queryName ) {
+  public static boolean isSelectedDataSource( final AbstractReportDefinition report, final DataFactory dataFactory,
+      final String queryName ) {
     if ( ObjectUtilities.equal( queryName, report.getQuery() ) == false ) {
       // the query/datasource combination given in the parameter cannot be a selected
       // combination if the query does not match the report's active query ..

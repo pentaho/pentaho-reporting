@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.devtools;
 
@@ -38,7 +38,7 @@ public class ExpressionsBundleGenerator {
     final ExpressionMetaData[] datas = ExpressionRegistry.getInstance().getAllExpressionMetaDatas();
     Arrays.sort( datas, GroupedMetaDataComparator.ENGLISH );
     for ( int i = 0; i < datas.length; i++ ) {
-      final ExpressionMetaData data = datas[ i ];
+      final ExpressionMetaData data = datas[i];
       if ( data instanceof AbstractMetaData == false ) {
         continue;
       }
@@ -65,7 +65,7 @@ public class ExpressionsBundleGenerator {
     Arrays.sort( attributes, GroupedMetaDataComparator.ENGLISH );
 
     for ( int j = 0; j < attributes.length; j++ ) {
-      final ExpressionPropertyMetaData attribute = attributes[ j ];
+      final ExpressionPropertyMetaData attribute = attributes[j];
       final String propertyPrefix = calculatePrefix( attribute );
 
       printMetadata( attribute, propertyPrefix, "display-name", attribute.getName() );
@@ -96,7 +96,6 @@ public class ExpressionsBundleGenerator {
     return prefix;
   }
 
-
   private static String readMetadataAttribute( final MetaData metaData, final String name, final String defaultValue ) {
     final String metaAttribute = metaData.getMetaAttribute( name, Locale.ENGLISH );
     if ( metaAttribute == null ) {
@@ -105,10 +104,8 @@ public class ExpressionsBundleGenerator {
     return metaAttribute;
   }
 
-  private static void printMetadata( final MetaData metaData,
-                                     final String prefix,
-                                     final String name,
-                                     final String defaultValue ) {
+  private static void printMetadata( final MetaData metaData, final String prefix, final String name,
+      final String defaultValue ) {
     System.out.println( prefix + name + "=" + readMetadataAttribute( metaData, name, defaultValue ) );
   }
 

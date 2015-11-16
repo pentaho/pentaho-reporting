@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.style.css;
 
@@ -87,23 +87,22 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
       handleStyleNode( dc.getStyleDefinition(), styleRules, counterRules );
     }
 
-    activeStyleRules = styleRules.toArray( new ElementStyleRule[ styleRules.size() ] );
+    activeStyleRules = styleRules.toArray( new ElementStyleRule[styleRules.size()] );
 
     styleRules.clear();
     for ( int i = 0; i < activeStyleRules.length; i++ ) {
-      final ElementStyleRule activeStyleRule = activeStyleRules[ i ];
+      final ElementStyleRule activeStyleRule = activeStyleRules[i];
       if ( isPseudoElementRule( activeStyleRule ) == false ) {
         continue;
       }
       styleRules.add( activeStyleRule );
     }
-    activePseudoStyleRules = styleRules.toArray( new ElementStyleRule[ styleRules.size() ] );
+    activePseudoStyleRules = styleRules.toArray( new ElementStyleRule[styleRules.size()] );
 
   }
 
-  private void handleLinkNode( final Object styleResource,
-                               final ArrayList<ElementStyleRule> styleRules,
-                               final ArrayList<CSSCounterRule> counterRules ) {
+  private void handleLinkNode( final Object styleResource, final ArrayList<ElementStyleRule> styleRules,
+      final ArrayList<CSSCounterRule> counterRules ) {
     // do some external parsing
     // (Same as the <link> element of HTML)
     try {
@@ -128,17 +127,13 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
     }
   }
 
-
-  private void handleStyleNode( final ElementStyleDefinition node,
-                                final ArrayList<ElementStyleRule> styleRules,
-                                final ArrayList<CSSCounterRule> counterRules ) {
+  private void handleStyleNode( final ElementStyleDefinition node, final ArrayList<ElementStyleRule> styleRules,
+      final ArrayList<CSSCounterRule> counterRules ) {
     addStyleRules( node, styleRules );
     addCounterRules( node, counterRules );
   }
 
-
-  private void addCounterRules( final ElementStyleDefinition styleSheet,
-                                final ArrayList<CSSCounterRule> rules ) {
+  private void addCounterRules( final ElementStyleDefinition styleSheet, final ArrayList<CSSCounterRule> rules ) {
     final int sc = styleSheet.getStyleSheetCount();
     for ( int i = 0; i < sc; i++ ) {
       addCounterRules( styleSheet.getStyleSheet( i ), rules );
@@ -155,7 +150,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
   }
 
   private void addStyleRules( final ElementStyleDefinition styleSheet,
-                              final ArrayList<ElementStyleRule> activeStyleRules ) {
+      final ArrayList<ElementStyleRule> activeStyleRules ) {
     final int sc = styleSheet.getStyleSheetCount();
     for ( int i = 0; i < sc; i++ ) {
       addStyleRules( styleSheet.getStyleSheet( i ), activeStyleRules );
@@ -171,11 +166,9 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
     }
   }
 
-  private ElementStyleDefinition parseStyleSheet( final ResourceKey key,
-                                                  final ResourceKey context ) {
+  private ElementStyleDefinition parseStyleSheet( final ResourceKey key, final ResourceKey context ) {
     try {
-      final Resource resource = resourceManager.create
-        ( key, context, ElementStyleDefinition.class );
+      final Resource resource = resourceManager.create( key, context, ElementStyleDefinition.class );
       return (ElementStyleDefinition) resource.getResource();
     } catch ( ResourceException e ) {
       // Log.info("Unable to parse StyleSheet: " + e.getLocalizedMessage());
@@ -207,7 +200,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
 
   public boolean isMatchingPseudoElement( final ReportElement element, final String pseudo ) {
     for ( int i = 0; i < activePseudoStyleRules.length; i++ ) {
-      final ElementStyleRule activeStyleRule = activePseudoStyleRules[ i ];
+      final ElementStyleRule activeStyleRule = activePseudoStyleRules[i];
       final List<CSSSelector> selectorList = activeStyleRule.getSelectorList();
       for ( int x = 0; x < selectorList.size(); x += 1 ) {
         final CSSSelector selector = selectorList.get( x );
@@ -242,8 +235,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
   }
 
   /**
-   * Returns all matching rules for the given element. Each matched rule must carry the weight of the matching
-   * selector.
+   * Returns all matching rules for the given element. Each matched rule must carry the weight of the matching selector.
    *
    * @param element
    * @return
@@ -251,7 +243,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
   public MatcherResult[] getMatchingRules( final ReportElement element ) {
     final ArrayList<MatcherResult> retvals = new ArrayList<MatcherResult>();
     for ( int i = 0; i < activeStyleRules.length; i++ ) {
-      final ElementStyleRule activeStyleRule = activeStyleRules[ i ];
+      final ElementStyleRule activeStyleRule = activeStyleRules[i];
       final List<CSSSelector> selectorList = activeStyleRule.getSelectorList();
       SelectorWeight weight = null;
 
@@ -276,17 +268,16 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
       }
     }
 
-    //    Log.debug ("Got " + retvals.size() + " matching rules for " +
-    //            layoutContext.getTagName() + ":" +
-    //            layoutContext.getPseudoElement());
+    // Log.debug ("Got " + retvals.size() + " matching rules for " +
+    // layoutContext.getTagName() + ":" +
+    // layoutContext.getPseudoElement());
 
-    return retvals.toArray( new MatcherResult[ retvals.size() ] );
+    return retvals.toArray( new MatcherResult[retvals.size()] );
   }
 
-  private boolean isMatch( final ReportElement node,
-                           final Selector selector ) {
+  private boolean isMatch( final ReportElement node, final Selector selector ) {
     final short selectorType = selector.getSelectorType();
-    switch( selectorType ) {
+    switch ( selectorType ) {
       case Selector.SAC_ANY_NODE_SELECTOR:
         return true;
       case Selector.SAC_ROOT_NODE_SELECTOR:
@@ -349,18 +340,15 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
     }
   }
 
-  private boolean evaluateCondition( final ReportElement node,
-                                     final Condition condition ) {
-    switch( condition.getConditionType() ) {
+  private boolean evaluateCondition( final ReportElement node, final Condition condition ) {
+    switch ( condition.getConditionType() ) {
       case Condition.SAC_AND_CONDITION: {
         final CombinatorCondition cc = (CombinatorCondition) condition;
-        return ( evaluateCondition( node, cc.getFirstCondition() ) &&
-          evaluateCondition( node, cc.getSecondCondition() ) );
+        return ( evaluateCondition( node, cc.getFirstCondition() ) && evaluateCondition( node, cc.getSecondCondition() ) );
       }
       case Condition.SAC_OR_CONDITION: {
         final CombinatorCondition cc = (CombinatorCondition) condition;
-        return ( evaluateCondition( node, cc.getFirstCondition() ) ||
-          evaluateCondition( node, cc.getSecondCondition() ) );
+        return ( evaluateCondition( node, cc.getFirstCondition() ) || evaluateCondition( node, cc.getSecondCondition() ) );
       }
       case Condition.SAC_ATTRIBUTE_CONDITION: {
         final AttributeCondition ac = (AttributeCondition) condition;
@@ -388,7 +376,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
         }
         final String[] classAttribute = ndef.getClassAttribute( getTagName( node ) );
         for ( int i = 0; i < classAttribute.length; i++ ) {
-          final String attr = classAttribute[ i ];
+          final String attr = classAttribute[i];
           final String htmlAttr = (String) node.getAttribute( namespace, attr );
           if ( isOneOfAttributes( htmlAttr, ac.getValue() ) ) {
             return true;
@@ -504,8 +492,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
 
   }
 
-  private boolean isDescendantMatch( final ReportElement node,
-                                     final Selector selector ) {
+  private boolean isDescendantMatch( final ReportElement node, final Selector selector ) {
     ReportElement parent = node.getParentSection();
     while ( parent != null ) {
       if ( isMatch( parent, selector ) ) {
@@ -516,8 +503,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
     return false;
   }
 
-  private boolean isSilblingMatch( final ReportElement node,
-                                   final SiblingSelector select ) {
+  private boolean isSilblingMatch( final ReportElement node, final SiblingSelector select ) {
     ReportElement pred = getPreviousReportElement( node );
     while ( pred != null ) {
       if ( isMatch( pred, select ) ) {

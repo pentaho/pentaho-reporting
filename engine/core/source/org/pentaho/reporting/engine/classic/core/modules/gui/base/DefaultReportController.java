@@ -1,26 +1,29 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
 
 public class DefaultReportController extends JPanel implements ReportController {
   private class EnabledUpdateHandler implements PropertyChangeListener {
@@ -30,7 +33,8 @@ public class DefaultReportController extends JPanel implements ReportController 
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param evt
+     *          A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
     public void propertyChange( final PropertyChangeEvent evt ) {
@@ -41,9 +45,8 @@ public class DefaultReportController extends JPanel implements ReportController 
     }
   }
 
-  private static final JMenu[] EMPTY_MENU = new JMenu[ 0 ];
+  private static final JMenu[] EMPTY_MENU = new JMenu[0];
   private EnabledUpdateHandler enabledUpdateHandler;
-
 
   /**
    * Creates a new <code>JPanel</code> with a double buffer and a flow layout.

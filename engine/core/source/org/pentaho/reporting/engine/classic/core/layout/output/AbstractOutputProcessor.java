@@ -1,21 +1,25 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,10 +29,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.libraries.base.util.MemoryUsageMessage;
 import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public abstract class AbstractOutputProcessor implements OutputProcessor {
   private static final Log logger = LogFactory.getLog( AbstractOutputProcessor.class );
@@ -66,7 +66,6 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
     return logicalPages.get( page );
   }
 
-
   /**
    * Checks whether the 'processingFinished' event had been received at least once.
    *
@@ -100,10 +99,10 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
     final double rowsPerSec = ( getPageCursor() * 1000.0 / deltaTime );
     if ( logger.isDebugEnabled() ) {
       final FastMessageFormat messageFormat =
-        new FastMessageFormat(
-          "{0} - Pages: {1} - Time: {2,number,0.000}sec - Throughput: ({3,number,0.000} rows/sec) " );
-      logger.debug( new MemoryUsageMessage( messageFormat.format(
-        new Object[] { message, getPageCursor(), deltaTime / 1000.0, rowsPerSec } ) ) );
+          new FastMessageFormat(
+              "{0} - Pages: {1} - Time: {2,number,0.000}sec - Throughput: ({3,number,0.000} rows/sec) " );
+      logger.debug( new MemoryUsageMessage( messageFormat.format( new Object[] { message, getPageCursor(),
+        deltaTime / 1000.0, rowsPerSec } ) ) );
     }
   }
 
@@ -115,8 +114,7 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
     logicalPages = Collections.unmodifiableList( logicalPages );
   }
 
-  protected LogicalPageKey createLogicalPage( final int width,
-                                              final int height ) {
+  protected LogicalPageKey createLogicalPage( final int width, final int height ) {
     return new LogicalPageKey( logicalPages.size(), width, height );
   }
 
@@ -129,8 +127,7 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
   }
 
   /**
-   * This flag indicates, whether the output processor has collected enough information to start the content
-   * generation.
+   * This flag indicates, whether the output processor has collected enough information to start the content generation.
    *
    * @return
    */
@@ -142,8 +139,7 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
     setPageCursor( pageCursor + 1 );
   }
 
-  public final void processContent( final LogicalPageBox logicalPage )
-    throws ContentProcessingException {
+  public final void processContent( final LogicalPageBox logicalPage ) throws ContentProcessingException {
     if ( isContentGeneratable() == false ) {
       // This is the pagination stage ..
 
@@ -157,15 +153,14 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
       logicalPages.add( key );
       final int pageCursor = getPageCursor();
       if ( key.getPosition() != pageCursor ) {
-        throw new IllegalStateException(
-          "Expected position " + pageCursor + " is not the key's position " + key.getPosition() );
+        throw new IllegalStateException( "Expected position " + pageCursor + " is not the key's position "
+            + key.getPosition() );
       }
 
       processPaginationContent( key, logicalPage );
       setPageCursor( pageCursor + 1 );
 
-    } else // if (isContentGeneratable())
-    {
+    } else { // if (isContentGeneratable())
       // This is the content generation stage ..
 
       final int pageCursor = getPageCursor();
@@ -179,13 +174,11 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
     return isContentGeneratable();
   }
 
-  protected void processPaginationContent( final LogicalPageKey logicalPageKey,
-                                           final LogicalPageBox logicalPage )
+  protected void processPaginationContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )
     throws ContentProcessingException {
   }
 
-  protected abstract void processPageContent( final LogicalPageKey logicalPageKey,
-                                              final LogicalPageBox logicalPage )
+  protected abstract void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )
     throws ContentProcessingException;
 
   public int getPhysicalPageCount() {

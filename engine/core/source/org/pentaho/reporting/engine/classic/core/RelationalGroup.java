@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -32,7 +32,7 @@ import java.util.List;
  * @author Thomas Morgner
  */
 public class RelationalGroup extends Group {
-  private static final String[] EMPTY_FIELDS = new String[ 0 ];
+  private static final String[] EMPTY_FIELDS = new String[0];
 
   private GroupHeader header;
   private GroupFooter footer;
@@ -47,8 +47,9 @@ public class RelationalGroup extends Group {
   }
 
   /**
-   * Returns the group header. <P> The group header is a report band that contains elements that should be printed at
-   * the start of a group.
+   * Returns the group header.
+   * <P>
+   * The group header is a report band that contains elements that should be printed at the start of a group.
    *
    * @return the group header.
    */
@@ -59,8 +60,10 @@ public class RelationalGroup extends Group {
   /**
    * Sets the header for the group.
    *
-   * @param header the header (null not permitted).
-   * @throws NullPointerException if the given header is null
+   * @param header
+   *          the header (null not permitted).
+   * @throws NullPointerException
+   *           if the given header is null
    */
   public void setHeader( final GroupHeader header ) {
     if ( header == null ) {
@@ -92,8 +95,10 @@ public class RelationalGroup extends Group {
   /**
    * Sets the footer for the group.
    *
-   * @param footer the footer (null not permitted).
-   * @throws NullPointerException if the given footer is null.
+   * @param footer
+   *          the footer (null not permitted).
+   * @throws NullPointerException
+   *           if the given footer is null.
    */
   public void setFooter( final GroupFooter footer ) {
     if ( footer == null ) {
@@ -117,14 +122,16 @@ public class RelationalGroup extends Group {
    * Sets the fields for this group. The given list must contain Strings defining the needed fields from the DataRow.
    * Don't reference Function-Fields here, functions are not supported in th groupfield definition.
    *
-   * @param c the list containing strings.
-   * @throws NullPointerException if the given list is null or the list contains null-values.
+   * @param c
+   *          the list containing strings.
+   * @throws NullPointerException
+   *           if the given list is null or the list contains null-values.
    */
   public void setFields( final List<String> c ) {
     if ( c == null ) {
       throw new NullPointerException();
     }
-    final String[] fields = c.toArray( new String[ c.size() ] );
+    final String[] fields = c.toArray( new String[c.size()] );
     setFieldsArray( fields );
   }
 
@@ -141,10 +148,12 @@ public class RelationalGroup extends Group {
   }
 
   /**
-   * Adds a field to the group.  The field names must correspond to the column names in the report's TableModel.
+   * Adds a field to the group. The field names must correspond to the column names in the report's TableModel.
    *
-   * @param name the field name (null not permitted).
-   * @throws NullPointerException if the name is null
+   * @param name
+   *          the field name (null not permitted).
+   * @throws NullPointerException
+   *           if the name is null
    */
   public void addField( final String name ) {
     if ( name == null ) {
@@ -153,7 +162,7 @@ public class RelationalGroup extends Group {
     final ArrayList<String> fieldsList = new ArrayList<String>( getFields() );
     fieldsList.add( name );
     Collections.sort( fieldsList );
-    setFieldsArray( fieldsList.toArray( new String[ fieldsList.size() ] ) );
+    setFieldsArray( fieldsList.toArray( new String[fieldsList.size()] ) );
   }
 
   /**
@@ -204,8 +213,7 @@ public class RelationalGroup extends Group {
   }
 
   public void setBody( final GroupBody body ) {
-    if ( body instanceof GroupDataBody == false &&
-      body instanceof SubGroupBody == false ) {
+    if ( body instanceof GroupDataBody == false && body instanceof SubGroupBody == false ) {
       throw new IllegalArgumentException();
     }
 
@@ -216,7 +224,8 @@ public class RelationalGroup extends Group {
    * Checks whether the group is equal. A group is considered equal to another group, if it defines the same fields as
    * the other group.
    *
-   * @param obj the object to be checked
+   * @param obj
+   *          the object to be checked
    * @return true, if the object is a group instance with the same fields, false otherwise.
    */
   public boolean equals( final Object obj ) {
@@ -247,7 +256,7 @@ public class RelationalGroup extends Group {
     int hashCode = 0;
     final int length = fields.length;
     for ( int i = 0; i < length; i++ ) {
-      final String field = fields[ i ];
+      final String field = fields[i];
       if ( field == null ) {
         hashCode = 29 * hashCode;
       } else {
@@ -263,7 +272,7 @@ public class RelationalGroup extends Group {
     if ( o instanceof String[] ) {
       final String[] fields = (String[]) o;
       for ( int i = 0; i < fields.length; i++ ) {
-        final String field = fields[ i ];
+        final String field = fields[i];
         if ( field != null && dataRow.isChanged( field ) ) {
           return true;
         }
@@ -316,7 +325,6 @@ public class RelationalGroup extends Group {
     return g;
   }
 
-
   protected void removeElement( final Element element ) {
     if ( element == null ) {
       throw new NullPointerException();
@@ -344,7 +352,7 @@ public class RelationalGroup extends Group {
   }
 
   public Element getElement( final int index ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         return header;
       case 1:
@@ -357,7 +365,7 @@ public class RelationalGroup extends Group {
   }
 
   public void setElementAt( final int index, final Element element ) {
-    switch( index ) {
+    switch ( index ) {
       case 0:
         setHeader( (GroupHeader) element );
         break;

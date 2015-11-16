@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
@@ -51,10 +51,8 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
     collectedReports = new ArrayList<InlineSubreportMarker>();
   }
 
-  public void add( final ExpressionRuntime runtime,
-                   final LayoutModelBuilder builder,
-                   final Band band,
-                   final List<InlineSubreportMarker> collectedSubReports ) throws ReportProcessingException {
+  public void add( final ExpressionRuntime runtime, final LayoutModelBuilder builder, final Band band,
+      final List<InlineSubreportMarker> collectedSubReports ) throws ReportProcessingException {
     if ( runtime == null ) {
       throw new NullPointerException();
     }
@@ -68,7 +66,7 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
     try {
       this.runtime = runtime;
       final OutputProcessorMetaData outputProcessorMetaData =
-        runtime.getProcessingContext().getOutputProcessorMetaData();
+          runtime.getProcessingContext().getOutputProcessorMetaData();
       this.designtime = outputProcessorMetaData.isFeatureSupported( OutputProcessorFeature.DESIGNTIME );
       collectedReports.clear();
 
@@ -90,9 +88,7 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
     collectedSubReports.addAll( this.collectedReports );
   }
 
-  private boolean addBandInternal( final Section band,
-                                   final LayoutModelBuilder builder,
-                                   final boolean root ) {
+  private boolean addBandInternal( final Section band, final LayoutModelBuilder builder, final boolean root ) {
     builder.startBox( band );
     final boolean invConsSpace = builder.isEmptyElementsHaveSignificance();
     for ( final ReportElement element : band ) {
@@ -115,7 +111,6 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
         processContent( element, builder );
       }
     }
-
 
     if ( root == false && builder.isEmpty() ) {
       final OutputProcessorMetaData metaData = runtime.getProcessingContext().getOutputProcessorMetaData();
@@ -151,10 +146,9 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
     }
   }
 
-  protected Object filterRichText( final ReportElement element,
-                                   final Object initialValue ) {
+  protected Object filterRichText( final ReportElement element, final Object initialValue ) {
     final Object richTextType =
-      element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE );
+        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE );
     if ( richTextType != null ) {
       final RichTextConverterRegistry registry = RichTextConverterRegistry.getRegistry();
       final RichTextConverter converter = registry.getConverter( String.valueOf( richTextType ) );
@@ -165,8 +159,7 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
     return initialValue;
   }
 
-  protected void processContent( final ReportElement element,
-                                 final LayoutModelBuilder builder ) {
+  protected void processContent( final ReportElement element, final LayoutModelBuilder builder ) {
     final Object value = filterRichText( element, computeValue( runtime, element ) );
     if ( value == null ) {
       builder.processContent( element, null, null );
@@ -180,7 +173,6 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
       return;
     }
 
-
     final DataSource dataSource = element.getElementType();
     final Object rawValue;
     if ( dataSource instanceof RawDataSource ) {
@@ -193,11 +185,11 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
     builder.processContent( element, value, rawValue );
   }
 
-  protected boolean isElementProcessable( final ReportElement element,
-                                          final StyleSheet style ) {
+  protected boolean isElementProcessable( final ReportElement element, final StyleSheet style ) {
     if ( designtime ) {
-      final Object attribute = element.getAttribute( AttributeNames.Designtime.NAMESPACE,
-        AttributeNames.Designtime.HIDE_IN_LAYOUT_GUI_ATTRIBUTE );
+      final Object attribute =
+          element.getAttribute( AttributeNames.Designtime.NAMESPACE,
+              AttributeNames.Designtime.HIDE_IN_LAYOUT_GUI_ATTRIBUTE );
       if ( Boolean.TRUE.equals( attribute ) ) {
         return false;
       }
@@ -220,6 +212,5 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
 
     return element.getElementType().getValue( runtime, element );
   }
-
 
 }

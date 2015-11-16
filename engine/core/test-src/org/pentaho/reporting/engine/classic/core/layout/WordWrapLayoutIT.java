@@ -74,7 +74,6 @@ public class WordWrapLayoutIT {
     ClassicEngineBoot.getInstance().start();
   }
 
-
   @Test
   public void isBreakingWords_WhenWordBreakPropertyIsTrue() throws Exception {
     MasterReport report = createReport( true );
@@ -95,7 +94,6 @@ public class WordWrapLayoutIT {
     return createReport( LONG_WORD, allowWordBreak, LABEL_MAX_WIDTH_NORMAL );
   }
 
-
   @Test
   public void isNotBreakingWords_WhenWordFitsIntoBounds() throws Exception {
     MasterReport report = createReport( SHORT_WORD );
@@ -109,16 +107,14 @@ public class WordWrapLayoutIT {
     return createReport( word, true, LABEL_MAX_WIDTH_NORMAL );
   }
 
-
   @Test
   public void isNotBreakingWords_WhenThereIsNoEnoughSpaceEvenForOneChar() throws Exception {
     MasterReport report = createReport( LONG_WORD, true, LABEL_MAX_WIDTH_TINY );
     ParagraphRenderBox paragraph = pickupParagraph( report );
     List<RenderableText> textNodes = pickupTextNodes( paragraph );
-    assertEquals( "The split should be not done as label's max width is not enough to contain even one char",
-      1, textNodes.size() );
+    assertEquals( "The split should be not done as label's max width is not enough to contain even one char", 1,
+        textNodes.size() );
   }
-
 
   @Test
   public void isBreakingWords_SimilarlyForAllAlignments_LeftVsRight() throws Exception {
@@ -138,7 +134,7 @@ public class WordWrapLayoutIT {
   /*
    * Word breaks are the last action done over a word to cram it into its container's bounds. Hence word-breaking should
    * be done over the word similarly regardless its alignment.
-   *
+   * 
    * Important! The assumption above is true for the ideal case, which means that the text should be a single word.
    * Otherwise it is difficult to predict final layout
    */
@@ -158,21 +154,20 @@ public class WordWrapLayoutIT {
 
   private void assertTextNodesAreSimilar( List<RenderableText> first, List<RenderableText> second ) throws Exception {
     // similarity means:
-    //  1) amounts of chunks are equal
-    //  2) each pair of chunks refers to the same chars
+    // 1) amounts of chunks are equal
+    // 2) each pair of chunks refers to the same chars
     assertEquals( first.size(), second.size() );
     for ( int i = 0; i < first.size(); i++ ) {
       assertEquals( first.get( i ).getRawText(), second.get( i ).getRawText() );
     }
   }
 
-
   private static MasterReport createReport( String word, boolean allowWordBreak, float labelMaxWidth ) {
     return createReport( word, allowWordBreak, labelMaxWidth, ElementAlignment.LEFT );
   }
 
   private static MasterReport createReport( String word, boolean allowWordBreak, float labelMaxWidth,
-                                            ElementAlignment alignment ) {
+      ElementAlignment alignment ) {
     MasterReport report = new MasterReport();
     // force not to use complex text processing
     report.getReportConfiguration().setConfigProperty( COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );

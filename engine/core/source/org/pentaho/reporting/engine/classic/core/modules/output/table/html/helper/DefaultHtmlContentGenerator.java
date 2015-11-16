@@ -17,6 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
+import java.awt.Image;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
@@ -40,17 +51,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-
-import java.awt.*;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
   private static class ImageData {
@@ -122,9 +122,8 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
 
   }
 
-  public void setDataWriter( final ContentLocation dataLocation,
-                             final NameGenerator dataNameGenerator,
-                             final ContentUrlReWriteService rewriterService ) {
+  public void setDataWriter( final ContentLocation dataLocation, final NameGenerator dataNameGenerator,
+      final ContentUrlReWriteService rewriterService ) {
     this.dataNameGenerator = dataNameGenerator;
     this.dataLocation = dataLocation;
     this.rewriterService = rewriterService;
@@ -172,9 +171,8 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
       if ( identifier instanceof URL ) {
         final URL url = (URL) identifier;
         final String protocol = url.getProtocol();
-        if ( "http".equalsIgnoreCase( protocol ) ||
-          "https".equalsIgnoreCase( protocol ) ||
-          "ftp".equalsIgnoreCase( protocol ) ) {
+        if ( "http".equalsIgnoreCase( protocol ) || "https".equalsIgnoreCase( protocol )
+            || "ftp".equalsIgnoreCase( protocol ) ) {
           return url.toExternalForm();
         }
       }
@@ -189,8 +187,8 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
       final String mimeType = queryMimeType( resourceData );
       if ( isValidImage( mimeType ) ) {
         // lets do some voodo ..
-        final ContentItem item = dataLocation.createItem
-          ( dataNameGenerator.generateName( extractFilename( resourceData ), mimeType ) );
+        final ContentItem item =
+            dataLocation.createItem( dataNameGenerator.generateName( extractFilename( resourceData ), mimeType ) );
         if ( item.isWriteable() ) {
           item.setAttribute( LibRepositoryBoot.REPOSITORY_DOMAIN, LibRepositoryBoot.CONTENT_TYPE, mimeType );
 
@@ -222,11 +220,8 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
     return null;
   }
 
-  public String writeImage( final ImageContainer image,
-                            final String encoderType,
-                            final float quality,
-                            final boolean alpha )
-    throws ContentIOException, IOException {
+  public String writeImage( final ImageContainer image, final String encoderType, final float quality,
+      final boolean alpha ) throws ContentIOException, IOException {
     if ( image == null ) {
       throw new NullPointerException();
     }
@@ -260,8 +255,8 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
       }
       // write the encoded picture ...
       final String filename = IOUtils.getInstance().stripFileExtension( data.getOriginalFileName() );
-      final ContentItem dataFile = dataLocation.createItem
-        ( dataNameGenerator.generateName( filename, data.getMimeType() ) );
+      final ContentItem dataFile =
+          dataLocation.createItem( dataNameGenerator.generateName( filename, data.getMimeType() ) );
       final String contentURL = rewriterService.rewriteContentDataItem( dataFile );
 
       // a png encoder is included in JCommon ...
@@ -291,15 +286,14 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
     }
   }
 
-  private String queryMimeType( final ResourceData resourceData )
-    throws ResourceLoadingException, IOException {
+  private String queryMimeType( final ResourceData resourceData ) throws ResourceLoadingException, IOException {
     final Object contentType = resourceData.getAttribute( ResourceData.CONTENT_TYPE );
     if ( contentType instanceof String ) {
       return (String) contentType;
     }
 
     // now we are getting very primitive .. (Kids, dont do this at home)
-    final byte[] data = new byte[ 12 ];
+    final byte[] data = new byte[12];
     resourceData.getResource( resourceManager, data, 0, data.length );
     return queryMimeType( data );
   }
@@ -323,7 +317,7 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
   private boolean isPNG( final ByteArrayInputStream data ) {
     final int[] PNF_FINGERPRINT = { 137, 80, 78, 71, 13, 10, 26, 10 };
     for ( int i = 0; i < PNF_FINGERPRINT.length; i++ ) {
-      if ( PNF_FINGERPRINT[ i ] != data.read() ) {
+      if ( PNF_FINGERPRINT[i] != data.read() ) {
         return false;
       }
     }
@@ -333,7 +327,7 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
   private boolean isJPEG( final InputStream data ) throws IOException {
     final int[] JPG_FINGERPRINT_1 = { 0xFF, 0xD8, 0xFF, 0xE0 };
     for ( int i = 0; i < JPG_FINGERPRINT_1.length; i++ ) {
-      if ( JPG_FINGERPRINT_1[ i ] != data.read() ) {
+      if ( JPG_FINGERPRINT_1[i] != data.read() ) {
         return false;
       }
     }
@@ -347,7 +341,7 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
 
     final int[] JPG_FINGERPRINT_2 = { 0x4A, 0x46, 0x49, 0x46, 0x00 };
     for ( int i = 0; i < JPG_FINGERPRINT_2.length; i++ ) {
-      if ( JPG_FINGERPRINT_2[ i ] != data.read() ) {
+      if ( JPG_FINGERPRINT_2[i] != data.read() ) {
         return false;
       }
     }
@@ -357,7 +351,7 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
   private boolean isGIF( final InputStream data ) throws IOException {
     final int[] GIF_FINGERPRINT = { 'G', 'I', 'F', '8' };
     for ( int i = 0; i < GIF_FINGERPRINT.length; i++ ) {
-      if ( GIF_FINGERPRINT[ i ] != data.read() ) {
+      if ( GIF_FINGERPRINT[i] != data.read() ) {
         return false;
       }
     }
@@ -378,11 +372,8 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
     return validRawTypes.contains( mimeType );
   }
 
-
-  private ImageData getImageData( final ImageContainer image,
-                                  final String encoderType,
-                                  final float quality,
-                                  final boolean alpha ) throws IOException, UnsupportedEncoderException {
+  private ImageData getImageData( final ImageContainer image, final String encoderType, final float quality,
+      final boolean alpha ) throws IOException, UnsupportedEncoderException {
     ResourceManager resourceManager = getResourceManager();
     ResourceKey url = null;
     // The image has an assigned URL ...
@@ -453,14 +444,14 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
     return null;
   }
 
-
   /**
    * Tests, whether the given URL points to a supported file format for common browsers. Returns true if the URL
    * references a JPEG, PNG or GIF image, false otherwise.
    * <p/>
    * The checked filetypes are the ones recommended by the W3C.
    *
-   * @param key the url that should be tested.
+   * @param key
+   *          the url that should be tested.
    * @return true, if the content type is supported by the browsers, false otherwise.
    */
   protected boolean isSupportedImageFormat( final ResourceKey key ) {
@@ -489,7 +480,6 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
   public ContentItem createItem( final String name, final String mimeType ) throws ContentIOException {
     return dataLocation.createItem( dataNameGenerator.generateName( name, mimeType ) );
   }
-
 
   public boolean isExternalContentAvailable() {
     return dataLocation != null;

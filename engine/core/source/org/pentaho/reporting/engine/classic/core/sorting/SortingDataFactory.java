@@ -39,8 +39,7 @@ public class SortingDataFactory extends CompoundDataFactory {
 
   private final PerformanceMonitorContext performanceMonitorContext;
 
-  public SortingDataFactory( final DataFactory parent,
-                             final PerformanceMonitorContext performanceMonitorContext ) {
+  public SortingDataFactory( final DataFactory parent, final PerformanceMonitorContext performanceMonitorContext ) {
     ArgumentNullException.validate( "parent", parent );
     ArgumentNullException.validate( "performanceMonitorContext", performanceMonitorContext );
 
@@ -108,7 +107,7 @@ public class SortingDataFactory extends CompoundDataFactory {
   private TableModel sort( final TableModel tableModel, final List<SortConstraint> sortConstraints ) {
     logger.debug( "Sorting by " + sortConstraints );
     PerformanceLoggingStopWatch stopWatch =
-      this.performanceMonitorContext.createStopWatch( PerformanceTags.REPORT_QUERY_SORT );
+        this.performanceMonitorContext.createStopWatch( PerformanceTags.REPORT_QUERY_SORT );
     stopWatch.start();
     try {
       return new SortingTableModel( new MetaNormalizedTableModel( tableModel ), sortConstraints );

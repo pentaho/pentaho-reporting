@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
@@ -37,13 +37,8 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
   private boolean strictValueCheck;
   private boolean allowMultiSelection;
 
-  public DefaultListParameter( final String query,
-                               final String keyColumn,
-                               final String textColumn,
-                               final String name,
-                               final boolean allowMultiSelection,
-                               final boolean strictValueCheck,
-                               final Class valueType ) {
+  public DefaultListParameter( final String query, final String keyColumn, final String textColumn, final String name,
+      final boolean allowMultiSelection, final boolean strictValueCheck, final Class valueType ) {
     super( name, valueType );
     if ( query == null ) {
       throw new NullPointerException();
@@ -90,15 +85,17 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
     final DataRow parameterData = context.getParameterData();
     final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow( context.getReportEnvironment() );
     final DataFactory dataFactory = context.getDataFactory();
-    PerformanceLoggingStopWatch sw = context.getPerformanceMonitorContext().createStopWatch
-      ( PerformanceTags.REPORT_PARAMETER_QUERY, new FormattedMessage( "query={%s}", getQueryName() ) );
+    PerformanceLoggingStopWatch sw =
+        context.getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PARAMETER_QUERY,
+            new FormattedMessage( "query={%s}", getQueryName() ) );
     try {
       sw.start();
-      final TableModel tableModel = dataFactory.queryData( getQueryName(),
-        new CompoundDataRow( envDataRow, parameterData ) );
+      final TableModel tableModel =
+          dataFactory.queryData( getQueryName(), new CompoundDataRow( envDataRow, parameterData ) );
 
-      final String formula = getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA, context );
+      final String formula =
+          getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+              ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA, context );
       if ( StringUtils.isEmpty( formula, true ) ) {
         return new DefaultParameterValues( tableModel, getKeyColumn(), getTextColumn() );
       }
@@ -114,22 +111,22 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
   }
 
   public void setParameterAutoSelectFirstValue( final boolean autoSelect ) {
-    setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.AUTOFILL_SELECTION, String.valueOf( autoSelect ) );
+    setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.AUTOFILL_SELECTION,
+        String.valueOf( autoSelect ) );
   }
 
   public boolean isParameterAutoSelectFirstValue() {
     return ( "true".equals( getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.AUTOFILL_SELECTION ) ) );
+        ParameterAttributeNames.Core.AUTOFILL_SELECTION ) ) );
   }
 
   private boolean isParameterAutoSelectFirstValue( final ParameterContext parameterContext ) {
     if ( "true".equals( getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.AUTOFILL_SELECTION, parameterContext ) ) ) {
+        ParameterAttributeNames.Core.AUTOFILL_SELECTION, parameterContext ) ) ) {
       return true;
     }
-    return ( "true".equals( parameterContext.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.ParameterAutoFillsSelection" ) ) );
+    return ( "true".equals( parameterContext.getConfiguration().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.ParameterAutoFillsSelection" ) ) );
   }
 
   public Object getDefaultValue( final ParameterContext context ) throws ReportDataFactoryException {

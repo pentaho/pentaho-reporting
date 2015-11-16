@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.html;
 
@@ -77,12 +77,13 @@ public class HtmlStreamExportTask implements Runnable {
   /**
    * Creates a new html export task.
    *
-   * @param dialog the progress monitor component.
-   * @param report the report that should be exported.
+   * @param dialog
+   *          the progress monitor component.
+   * @param report
+   *          the report that should be exported.
    */
-  public HtmlStreamExportTask( final MasterReport report,
-                               final ReportProgressDialog dialog,
-                               final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
+  public HtmlStreamExportTask( final MasterReport report, final ReportProgressDialog dialog,
+      final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
     if ( report == null ) {
       throw new ReportProcessingException( "HtmlStreamExportTask(..): Report-Parameter cannot be null" ); //$NON-NLS-1$
     }
@@ -91,19 +92,20 @@ public class HtmlStreamExportTask implements Runnable {
       this.report = report;
       if ( swingGuiContext != null ) {
         this.statusListener = swingGuiContext.getStatusListener();
-        this.messages = new Messages( swingGuiContext.getLocale(), HtmlExportGUIModule.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader( HtmlExportGUIModule.class ) );
+        this.messages =
+            new Messages( swingGuiContext.getLocale(), HtmlExportGUIModule.BASE_RESOURCE_CLASS, ObjectUtilities
+                .getClassLoader( HtmlExportGUIModule.class ) );
       } else {
-        this.messages = new Messages( Locale.getDefault(), HtmlExportGUIModule.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader( HtmlExportGUIModule.class ) );
+        this.messages =
+            new Messages( Locale.getDefault(), HtmlExportGUIModule.BASE_RESOURCE_CLASS, ObjectUtilities
+                .getClassLoader( HtmlExportGUIModule.class ) );
       }
 
       final Configuration config = report.getConfiguration();
-      final String targetFileName = config.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.TargetFileName" ); //$NON-NLS-1$
+      final String targetFileName =
+          config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.TargetFileName" ); //$NON-NLS-1$
       if ( targetFileName == null ) {
-        throw new ReportProcessingException( messages.getErrorString(
-          "HtmlStreamExportTask.ERROR_0002_TARGET_NOT_SET" ) ); //$NON-NLS-1$
+        throw new ReportProcessingException( messages.getErrorString( "HtmlStreamExportTask.ERROR_0002_TARGET_NOT_SET" ) ); //$NON-NLS-1$
       }
 
       final File targetFile = new File( targetFileName ).getCanonicalFile();
@@ -116,7 +118,7 @@ public class HtmlStreamExportTask implements Runnable {
         // lets try to delete it ..
         if ( targetFile.delete() == false ) {
           throw new ReportProcessingException( messages.getErrorString(
-            "HtmlStreamExportTask.ERROR_0003_TARGET_FILE_EXISTS", targetFile.getAbsolutePath() ) ); //$NON-NLS-1$
+              "HtmlStreamExportTask.ERROR_0003_TARGET_FILE_EXISTS", targetFile.getAbsolutePath() ) ); //$NON-NLS-1$
         }
       }
     } catch ( IOException ioe ) {
@@ -140,8 +142,8 @@ public class HtmlStreamExportTask implements Runnable {
       final FileRepository targetRepository = new FileRepository( targetDirectory );
       final ContentLocation targetRoot = targetRepository.getRoot();
 
-      //      final DummyRepository dataRepository = new DummyRepository();
-      //      final ContentLocation dataRoot = dataRepository.getRoot();
+      // final DummyRepository dataRepository = new DummyRepository();
+      // final ContentLocation dataRoot = dataRepository.getRoot();
       ReportProcessor reportProcessor;
       ReportStructureValidator validator = new ReportStructureValidator();
       if ( validator.isValidForFastProcessing( report ) == false ) {
@@ -160,7 +162,6 @@ public class HtmlStreamExportTask implements Runnable {
         reportProcessor = new FastHtmlExportProcessor( report, printer );
       }
 
-
       if ( progressDialog != null ) {
         progressDialog.setModal( false );
         progressDialog.setVisible( true );
@@ -173,21 +174,18 @@ public class HtmlStreamExportTask implements Runnable {
       }
 
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "HtmlStreamExportTask.USER_TASK_FINISHED" ),
-            null ); //$NON-NLS-1$);
+        statusListener.setStatus( StatusType.INFORMATION, messages
+            .getString( "HtmlStreamExportTask.USER_TASK_FINISHED" ), null ); //$NON-NLS-1$);
       }
     } catch ( ReportInterruptedException re ) {
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.INFORMATION, messages.getString( "HtmlStreamExportTask.USER_TASK_ABORTED" ),
-            null ); //$NON-NLS-1$);
+        statusListener.setStatus( StatusType.INFORMATION,
+            messages.getString( "HtmlStreamExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$);
       }
     } catch ( Exception re ) {
       HtmlStreamExportTask.logger.error( "Exporting failed .", re ); //$NON-NLS-1$
       if ( statusListener != null ) {
-        statusListener.setStatus
-          ( StatusType.ERROR, messages.getString( "HtmlStreamExportTask.USER_TASK_ERROR" ), re ); //$NON-NLS-1$);
+        statusListener.setStatus( StatusType.ERROR, messages.getString( "HtmlStreamExportTask.USER_TASK_ERROR" ), re ); //$NON-NLS-1$);
       }
     }
     if ( progressDialog != null ) {

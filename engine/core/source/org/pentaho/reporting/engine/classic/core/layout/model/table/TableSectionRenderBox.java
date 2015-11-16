@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
@@ -63,16 +63,13 @@ public class TableSectionRenderBox extends BlockRenderBox {
   }
 
   public TableSectionRenderBox() {
-    this( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
-      AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null );
+    this( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
+        ReportAttributeMap.EMPTY_MAP, null );
   }
 
-  public TableSectionRenderBox( final StyleSheet styleSheet,
-                                final InstanceID instanceID,
-                                final BoxDefinition boxDefinition,
-                                final ElementType elementType,
-                                final ReportAttributeMap attributes,
-                                final ReportStateKey stateKey ) {
+  public TableSectionRenderBox( final StyleSheet styleSheet, final InstanceID instanceID,
+      final BoxDefinition boxDefinition, final ElementType elementType, final ReportAttributeMap attributes,
+      final ReportStateKey stateKey ) {
     super( styleSheet, instanceID, boxDefinition, elementType, attributes, stateKey );
     this.rowModel = new SeparateRowModel();
     this.rowModel.setDebugInformation( elementType, instanceID );
@@ -192,7 +189,6 @@ public class TableSectionRenderBox extends BlockRenderBox {
     setActive( isAppliedActive() );
     this.headerShift = (HashMap<Long, Long>) appliedHeaderShift.clone();
   }
-
 
   public void addChild( final RenderNode child ) {
     if ( isValid( child ) == false ) {

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.devtools;
 
@@ -57,10 +57,8 @@ public class StyleMetadataGenerator {
     return metaAttribute;
   }
 
-  private static void printMetadata( final MetaData metaData,
-                                     final String prefix,
-                                     final String name,
-                                     final String defaultValue ) {
+  private static void printMetadata( final MetaData metaData, final String prefix, final String name,
+      final String defaultValue ) {
     System.out.println( prefix + name + "=" + readMetadataAttribute( metaData, name, defaultValue ) );
   }
 
@@ -72,18 +70,18 @@ public class StyleMetadataGenerator {
     Arrays.sort( allTypes, GroupedMetaDataComparator.ENGLISH );
 
     for ( int i = 0; i < allTypes.length; i++ ) {
-      final ElementMetaData type = allTypes[ i ];
+      final ElementMetaData type = allTypes[i];
       final StyleMetaData[] styles = type.getStyleDescriptions();
       for ( int j = 0; j < styles.length; j++ ) {
-        final StyleMetaData style = styles[ j ];
+        final StyleMetaData style = styles[j];
         allStyles.put( style.getName(), style );
       }
     }
 
-    final StyleMetaData[] objects = allStyles.values().toArray( new StyleMetaData[ allStyles.size() ] );
+    final StyleMetaData[] objects = allStyles.values().toArray( new StyleMetaData[allStyles.size()] );
     Arrays.sort( objects, GroupedMetaDataComparator.ENGLISH );
     for ( int i = 0; i < objects.length; i++ ) {
-      final StyleMetaData style = objects[ i ];
+      final StyleMetaData style = objects[i];
       final String stylePrefix = "style." + style.getName() + ".";
       printMetadata( style, stylePrefix, "display-name", style.getName() );
       printMetadata( style, stylePrefix, "grouping", "" );

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -42,11 +42,8 @@ public final class PaginationStepLib {
   private PaginationStepLib() {
   }
 
-  public static void configureBreakUtility( final PageBreakPositionList breakUtility,
-                                            final LogicalPageBox pageBox,
-                                            final long[] allCurrentBreaks,
-                                            final long reservedHeight,
-                                            final long lastBreakLocal ) {
+  public static void configureBreakUtility( final PageBreakPositionList breakUtility, final LogicalPageBox pageBox,
+      final long[] allCurrentBreaks, final long reservedHeight, final long lastBreakLocal ) {
     final PageBreakPositionList allPreviousBreak = pageBox.getAllVerticalBreaks();
     breakUtility.copyFrom( allPreviousBreak );
 
@@ -56,12 +53,11 @@ public final class PaginationStepLib {
     if ( allCurrentBreaks.length == 1 ) {
       breakUtility.addMajorBreak( pageOffset, headerHeight );
       breakUtility.addMajorBreak( ( lastBreakLocal - reservedHeight ) + pageOffset, headerHeight );
-    } else // more than one physical page; therefore header and footer are each on a separate canvas ..
-    {
+    } else { // more than one physical page; therefore header and footer are each on a separate canvas ..
       breakUtility.addMajorBreak( pageOffset, headerHeight );
       final int breakCount = allCurrentBreaks.length - 1;
       for ( int i = 1; i < breakCount; i++ ) {
-        final long aBreak = allCurrentBreaks[ i ];
+        final long aBreak = allCurrentBreaks[i];
         breakUtility.addMinorBreak( pageOffset + ( aBreak - headerHeight ) );
       }
       breakUtility.addMajorBreak( pageOffset + ( lastBreakLocal - reservedHeight ), headerHeight );
@@ -73,24 +69,23 @@ public final class PaginationStepLib {
     if ( lastChild != null ) {
       final long lastChildY2 = lastChild.getY() + lastChild.getHeight();
       if ( lastChildY2 < pageBox.getHeight() ) {
-        //ModelPrinter.print(pageBox);
-        throw new IllegalStateException
-          ( "Assertation failed: Pagination did not proceed: " + lastChildY2 + " < " + pageBox.getHeight() );
+        // ModelPrinter.print(pageBox);
+        throw new IllegalStateException( "Assertation failed: Pagination did not proceed: " + lastChildY2 + " < "
+            + pageBox.getHeight() );
       }
     }
   }
 
-  public static long restrictPageAreaHeights( final LogicalPageBox pageBox,
-                                              final long[] allCurrentBreaks ) {
+  public static long restrictPageAreaHeights( final LogicalPageBox pageBox, final long[] allCurrentBreaks ) {
     final BlockRenderBox headerArea = pageBox.getHeaderArea();
-    final long headerHeight = Math.min( headerArea.getHeight(), allCurrentBreaks[ 0 ] );
+    final long headerHeight = Math.min( headerArea.getHeight(), allCurrentBreaks[0] );
     headerArea.setHeight( headerHeight );
 
     final BlockRenderBox footerArea = pageBox.getFooterArea();
     final BlockRenderBox repeatFooterArea = pageBox.getRepeatFooterArea();
     if ( allCurrentBreaks.length > 1 ) {
-      final long lastBreakLocal = allCurrentBreaks[ allCurrentBreaks.length - 1 ];
-      final long lastPageHeight = lastBreakLocal - allCurrentBreaks[ allCurrentBreaks.length - 2 ];
+      final long lastBreakLocal = allCurrentBreaks[allCurrentBreaks.length - 1];
+      final long lastPageHeight = lastBreakLocal - allCurrentBreaks[allCurrentBreaks.length - 2];
       final long footerHeight = Math.min( footerArea.getHeight(), lastPageHeight );
       footerArea.setHeight( footerHeight );
 
@@ -120,8 +115,7 @@ public final class PaginationStepLib {
         error = false;
         expectedYPos = box.getParent().getY();
         final Object parentVAlignment = box.getParent().getStyleSheet().getStyleProperty( ElementStyleKeys.VALIGNMENT );
-        if ( parentVAlignment != null &&
-          ElementAlignment.TOP.equals( parentVAlignment ) == false ) {
+        if ( parentVAlignment != null && ElementAlignment.TOP.equals( parentVAlignment ) == false ) {
           return;
         }
       } else {
@@ -137,14 +131,14 @@ public final class PaginationStepLib {
       if ( error ) {
         ModelPrinter.INSTANCE.print( box );
         ModelPrinter.INSTANCE.print( ModelPrinter.getRoot( box ) );
-        throw new InvalidReportStateException( String.format( "Assert: Shift is not as expected: " +
-            "realY=%d != expectation=%d; Shift=%d; AdditionalShift=%d; RealShift=%d",
-          realY, expectedYPos, shift, additionalShift, realShift ) );
+        throw new InvalidReportStateException( String.format( "Assert: Shift is not as expected: "
+            + "realY=%d != expectation=%d; Shift=%d; AdditionalShift=%d; RealShift=%d", realY, expectedYPos, shift,
+            additionalShift, realShift ) );
       } else {
         if ( logger.isDebugEnabled() ) {
-          logger.debug( String.format( "Assert: Shift is not as expected: realY=%d != expectation=%d; Shift=%d; " +
-              "AdditionalShift=%d; RealShift=%d (False positive if block box has valign != TOP",
-            realY, expectedYPos, shift, additionalShift, realShift ) );
+          logger.debug( String.format( "Assert: Shift is not as expected: realY=%d != expectation=%d; Shift=%d; "
+              + "AdditionalShift=%d; RealShift=%d (False positive if block box has valign != TOP", realY, expectedYPos,
+              shift, additionalShift, realShift ) );
         }
       }
     }
@@ -153,18 +147,18 @@ public final class PaginationStepLib {
   /**
    * Computes the height that will be required on this page to display at least some parts of the box.
    *
-   * @param box the box for which the height is computed
+   * @param box
+   *          the box for which the height is computed
    * @return the height in micro-points.
    */
-  public static long computeNonBreakableBoxHeight( final RenderBox box,
-                                                   final PaginationShiftState shiftState,
-                                                   final BasePaginationTableState tableState ) {
+  public static long computeNonBreakableBoxHeight( final RenderBox box, final PaginationShiftState shiftState,
+      final BasePaginationTableState tableState ) {
     // must return the reserved space starting from box's y position.
     final long widowSize = getWidowConstraint( box, shiftState, tableState );
 
     final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
-    if ( sblp.isAvoidPagebreakInside() &&
-      box.getRestrictFinishedClearOut() != RenderBox.RestrictFinishClearOut.RESTRICTED ) {
+    if ( sblp.isAvoidPagebreakInside()
+        && box.getRestrictFinishedClearOut() != RenderBox.RestrictFinishClearOut.RESTRICTED ) {
       return Math.max( widowSize, box.getHeight() );
     }
 
@@ -198,9 +192,8 @@ public final class PaginationStepLib {
    * @param tableState
    * @return
    */
-  private static boolean isOrphanConstraintNeeded( final RenderBox box,
-                                                   final PaginationShiftState shiftState,
-                                                   final BasePaginationTableState tableState ) {
+  private static boolean isOrphanConstraintNeeded( final RenderBox box, final PaginationShiftState shiftState,
+      final BasePaginationTableState tableState ) {
     final long boxY = box.getY() + shiftState.getShiftForNextChild();
     final long pageOffset = tableState.getPageOffset( boxY );
     if ( pageOffset == boxY ) {
@@ -217,9 +210,8 @@ public final class PaginationStepLib {
     return true;
   }
 
-  private static boolean isBoxInsideParentOrphanZoneOnThisPage( final RenderBox box,
-                                                                final long pageOffset,
-                                                                final long boxYShifted ) {
+  private static boolean isBoxInsideParentOrphanZoneOnThisPage( final RenderBox box, final long pageOffset,
+      final long boxYShifted ) {
     RenderBox parent = box.getParent();
     while ( parent != null ) {
       if ( parent.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED ) {
@@ -247,10 +239,8 @@ public final class PaginationStepLib {
     return false;
   }
 
-
-  public static long getWidowConstraint( final RenderBox box,
-                                         final PaginationShiftState shiftState,
-                                         final BasePaginationTableState tableState ) {
+  public static long getWidowConstraint( final RenderBox box, final PaginationShiftState shiftState,
+      final BasePaginationTableState tableState ) {
     if ( box.isWidowBox() == false ) {
       return 0;
     }

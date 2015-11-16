@@ -31,9 +31,7 @@ public class FastExcelCellStyleProducer implements CellStyleProducer {
     private final CellBackground background;
     private final InstanceID styleSheetId;
 
-    private CacheKey( final InstanceID id,
-                      final CellBackground background,
-                      final InstanceID styleSheetId ) {
+    private CacheKey( final InstanceID id, final CellBackground background, final InstanceID styleSheetId ) {
       this.id = id;
       this.background = background;
       this.styleSheetId = styleSheetId;
@@ -69,7 +67,6 @@ public class FastExcelCellStyleProducer implements CellStyleProducer {
       return result;
     }
   }
-
 
   private final CellStyleProducer backend;
   private final LFUMap<CellBackground, CellStyle> backgroundCache;

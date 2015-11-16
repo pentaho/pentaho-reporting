@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
@@ -61,11 +61,12 @@ public class ResourceFileFilter implements DataFilter {
   }
 
   /**
-   * Defines the name of the used resource bundle. If undefined, all calls to {@link
-   * DataSource#getValue(ExpressionRuntime, org.pentaho.reporting.engine.classic.core.ReportElement)} will result in
-   * <code>null</code> values.
+   * Defines the name of the used resource bundle. If undefined, all calls to
+   * {@link DataSource#getValue(ExpressionRuntime, org.pentaho.reporting.engine.classic.core.ReportElement)} will result
+   * in <code>null</code> values.
    *
-   * @param resourceIdentifier the resource bundle name
+   * @param resourceIdentifier
+   *          the resource bundle name
    */
   public void setResourceIdentifier( final String resourceIdentifier ) {
     this.resourceIdentifier = resourceIdentifier;
@@ -78,8 +79,9 @@ public class ResourceFileFilter implements DataFilter {
    * The value read from the dataSource is looked up in the given resourcebundle using the
    * <code>ResourceBundle.getObject()</code> method. If the lookup fails, null is returned.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return the value or null, if the value could not be looked up.
    */
@@ -101,18 +103,16 @@ public class ResourceFileFilter implements DataFilter {
       if ( resourceIdentifier != null ) {
         resourceId = resourceIdentifier;
       } else {
-        resourceId = runtime.getConfiguration().getConfigProperty
-          ( ResourceBundleFactory.DEFAULT_RESOURCE_BUNDLE_CONFIG_KEY );
+        resourceId =
+            runtime.getConfiguration().getConfigProperty( ResourceBundleFactory.DEFAULT_RESOURCE_BUNDLE_CONFIG_KEY );
       }
 
       if ( resourceId == null ) {
         return null;
       }
 
-      final ResourceBundleFactory resourceBundleFactory =
-        runtime.getResourceBundleFactory();
-      final ResourceBundle bundle =
-        resourceBundleFactory.getResourceBundle( resourceId );
+      final ResourceBundleFactory resourceBundleFactory = runtime.getResourceBundleFactory();
+      final ResourceBundle bundle = resourceBundleFactory.getResourceBundle( resourceId );
       if ( bundle != null ) {
         return bundle.getObject( svalue );
       }
@@ -127,10 +127,10 @@ public class ResourceFileFilter implements DataFilter {
    * Clones this <code>DataSource</code>.
    *
    * @return the clone.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public ResourceFileFilter clone()
-    throws CloneNotSupportedException {
+  public ResourceFileFilter clone() throws CloneNotSupportedException {
     final ResourceFileFilter filter = (ResourceFileFilter) super.clone();
     filter.dataSource = dataSource.clone();
     return filter;
@@ -148,7 +148,8 @@ public class ResourceFileFilter implements DataFilter {
   /**
    * Assigns a DataSource for this Target.
    *
-   * @param ds The data source.
+   * @param ds
+   *          The data source.
    */
   public void setDataSource( final DataSource ds ) {
     this.dataSource = ds;

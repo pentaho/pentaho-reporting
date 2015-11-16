@@ -40,7 +40,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 /**
  * The PatchRtfCell wraps a Cell, but can also be added directly to a Table. The PatchRtfCell is an extension of Cell,
  * that supports a multitude of different borderstyles.
@@ -150,7 +149,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Constructs a PatchRtfCell based upon a String
    *
-   * @param content The String to base the PatchRtfCell on
+   * @param content
+   *          The String to base the PatchRtfCell on
    */
   public PatchRtfCell( String content ) {
     super( content );
@@ -161,8 +161,10 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Constructs a PatchRtfCell based upon an Element
    *
-   * @param element The Element to base the PatchRtfCell on
-   * @throws BadElementException If the Element is not valid
+   * @param element
+   *          The Element to base the PatchRtfCell on
+   * @throws BadElementException
+   *           If the Element is not valid
    */
   public PatchRtfCell( Element element ) throws BadElementException {
     super( element );
@@ -173,7 +175,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Constructs a deleted PatchRtfCell.
    *
-   * @param deleted Whether this PatchRtfCell is actually deleted.
+   * @param deleted
+   *          Whether this PatchRtfCell is actually deleted.
    */
   protected PatchRtfCell( boolean deleted ) {
     super();
@@ -184,9 +187,12 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Constructs a PatchRtfCell based on a Cell.
    *
-   * @param doc  The RtfDocument this PatchRtfCell belongs to
-   * @param row  The PatchRtfRow this PatchRtfCell lies in
-   * @param cell The Cell to base this PatchRtfCell on
+   * @param doc
+   *          The RtfDocument this PatchRtfCell belongs to
+   * @param row
+   *          The PatchRtfRow this PatchRtfCell lies in
+   * @param cell
+   *          The Cell to base this PatchRtfCell on
    */
   protected PatchRtfCell( RtfDocument doc, PatchRtfRow row, Cell cell ) {
     this.document = doc;
@@ -197,9 +203,12 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Constructs a PatchRtfCell based on a Cell.
    *
-   * @param doc  The RtfDocument this PatchRtfCell belongs to
-   * @param row  The PatchRtfRow this PatchRtfCell lies in
-   * @param cell The PdfPCell to base this PatchRtfCell on
+   * @param doc
+   *          The RtfDocument this PatchRtfCell belongs to
+   * @param row
+   *          The PatchRtfRow this PatchRtfCell lies in
+   * @param cell
+   *          The PdfPCell to base this PatchRtfCell on
    * @since 2.1.3
    */
   protected PatchRtfCell( RtfDocument doc, PatchRtfRow row, PdfPCell cell ) {
@@ -211,14 +220,16 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Imports the Cell properties into the PatchRtfCell
    *
-   * @param cell The Cell to import
+   * @param cell
+   *          The Cell to import
    */
   private void importCell( Cell cell ) {
     this.content = new ArrayList<RtfBasicElement>();
 
     if ( cell == null ) {
-      this.borders = new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER,
-        this.parentRow.getParentTable().getBorders() );
+      this.borders =
+          new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, this.parentRow.getParentTable()
+              .getBorders() );
       return;
     }
 
@@ -234,11 +245,11 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
     }
     if ( cell instanceof PatchRtfCell ) {
       this.borders =
-        new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, ( (PatchRtfCell) cell ).getBorders() );
+          new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, ( (PatchRtfCell) cell ).getBorders() );
     } else {
       this.borders =
-        new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, cell.getBorder(), cell.getBorderWidth(),
-          cell.getBorderColor() );
+          new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, cell.getBorder(), cell.getBorderWidth(),
+              cell.getBorderColor() );
     }
     this.verticalAlignment = cell.getVerticalAlignment();
     if ( cell.getBackgroundColor() == null ) {
@@ -267,8 +278,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
           if ( container != null ) {
             RtfBasicElement[] rtfElements = this.document.getMapper().mapElement( container );
             for ( int i = 0; i < rtfElements.length; i++ ) {
-              rtfElements[ i ].setInTable( true );
-              this.content.add( rtfElements[ i ] );
+              rtfElements[i].setInTable( true );
+              this.content.add( rtfElements[i] );
             }
             container = null;
           }
@@ -280,8 +291,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
 
           RtfBasicElement[] rtfElements = this.document.getMapper().mapElement( element );
           for ( int i = 0; i < rtfElements.length; i++ ) {
-            rtfElements[ i ].setInTable( true );
-            this.content.add( rtfElements[ i ] );
+            rtfElements[i].setInTable( true );
+            this.content.add( rtfElements[i] );
           }
         }
       } catch ( DocumentException de ) {
@@ -292,8 +303,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
       try {
         RtfBasicElement[] rtfElements = this.document.getMapper().mapElement( container );
         for ( int i = 0; i < rtfElements.length; i++ ) {
-          rtfElements[ i ].setInTable( true );
-          this.content.add( rtfElements[ i ] );
+          rtfElements[i].setInTable( true );
+          this.content.add( rtfElements[i] );
         }
       } catch ( DocumentException de ) {
         de.printStackTrace();
@@ -304,15 +315,17 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Imports the Cell properties into the PatchRtfCell
    *
-   * @param cell The PdfPCell to import
+   * @param cell
+   *          The PdfPCell to import
    * @since 2.1.3
    */
   private void importCell( PdfPCell cell ) {
     this.content = new ArrayList<RtfBasicElement>();
 
     if ( cell == null ) {
-      this.borders = new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER,
-        this.parentRow.getParentTable().getBorders() );
+      this.borders =
+          new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, this.parentRow.getParentTable()
+              .getBorders() );
       return;
     }
 
@@ -325,8 +338,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
 
     // BORDERS
     this.borders =
-      new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, cell.getBorder(), cell.getBorderWidth(),
-        cell.getBorderColor() );
+        new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, cell.getBorder(), cell.getBorderWidth(),
+            cell.getBorderColor() );
 
     // border colors
     this.border = cell.getBorder();
@@ -343,13 +356,11 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
     this.borderWidthLeft = cell.getBorderWidthLeft();
     this.borderWidthRight = cell.getBorderWidthRight();
 
-
     this.colspan = cell.getColspan();
-    this.rowspan = 1; //cell.getRowspan();
-    //        if(cell.getRowspan() > 1) {
-    //            this.mergeType = MERGE_VERT_PARENT;
-    //        }
-
+    this.rowspan = 1; // cell.getRowspan();
+    // if(cell.getRowspan() > 1) {
+    // this.mergeType = MERGE_VERT_PARENT;
+    // }
 
     this.verticalAlignment = cell.getVerticalAlignment();
 
@@ -358,7 +369,6 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
     } else {
       this.backgroundColor = new RtfColor( this.document, cell.getBackgroundColor() );
     }
-
 
     // does it have column composite info?
     java.util.List compositeElements = cell.getCompositeElements();
@@ -382,8 +392,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
             if ( container != null ) {
               RtfBasicElement[] rtfElements = this.document.getMapper().mapElement( container );
               for ( int i = 0; i < rtfElements.length; i++ ) {
-                rtfElements[ i ].setInTable( true );
-                this.content.add( rtfElements[ i ] );
+                rtfElements[i].setInTable( true );
+                this.content.add( rtfElements[i] );
               }
               container = null;
             }
@@ -395,8 +405,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
 
             RtfBasicElement[] rtfElements = this.document.getMapper().mapElement( element );
             for ( int i = 0; i < rtfElements.length; i++ ) {
-              rtfElements[ i ].setInTable( true );
-              this.content.add( rtfElements[ i ] );
+              rtfElements[i].setInTable( true );
+              this.content.add( rtfElements[i] );
             }
           }
         } catch ( DocumentException de ) {
@@ -407,8 +417,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
         try {
           RtfBasicElement[] rtfElements = this.document.getMapper().mapElement( container );
           for ( int i = 0; i < rtfElements.length; i++ ) {
-            rtfElements[ i ].setInTable( true );
-            this.content.add( rtfElements[ i ] );
+            rtfElements[i].setInTable( true );
+            this.content.add( rtfElements[i] );
           }
         } catch ( DocumentException de ) {
           de.printStackTrace();
@@ -423,8 +433,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
       try {
         RtfBasicElement[] rtfElements = this.document.getMapper().mapElement( img );
         for ( int i = 0; i < rtfElements.length; i++ ) {
-          rtfElements[ i ].setInTable( true );
-          this.content.add( rtfElements[ i ] );
+          rtfElements[i].setInTable( true );
+          this.content.add( rtfElements[i] );
         }
       } catch ( DocumentException e ) {
         // TODO Auto-generated catch block
@@ -437,8 +447,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
       try {
         RtfBasicElement[] rtfElements = this.document.getMapper().mapElement( phrase );
         for ( int i = 0; i < rtfElements.length; i++ ) {
-          rtfElements[ i ].setInTable( true );
-          this.content.add( rtfElements[ i ] );
+          rtfElements[i].setInTable( true );
+          this.content.add( rtfElements[i] );
         }
       } catch ( DocumentException e ) {
         // TODO Auto-generated catch block
@@ -449,16 +459,16 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
     PdfPTable table = cell.getTable();
     if ( table != null ) {
       this.add( table );
-      //            try {
-      //				RtfBasicElement[] rtfElements = this.document.getMapper().mapElement(table);
-      //				for (int i = 0; i < rtfElements.length; i++) {
-      //					rtfElements[i].setInTable(true);
-      //					this.content.add(rtfElements[i]);
-      //				}
-      //			} catch (DocumentException e) {
-      //				// TODO Auto-generated catch block
-      //				e.printStackTrace();
-      //			}
+      // try {
+      // RtfBasicElement[] rtfElements = this.document.getMapper().mapElement(table);
+      // for (int i = 0; i < rtfElements.length; i++) {
+      // rtfElements[i].setInTable(true);
+      // this.content.add(rtfElements[i]);
+      // }
+      // } catch (DocumentException e) {
+      // // TODO Auto-generated catch block
+      // e.printStackTrace();
+      // }
     }
 
   }
@@ -472,7 +482,7 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
     } else if ( this.mergeType == MERGE_VERT_CHILD ) {
       result.write( DocWriter.getISOBytes( "\\clvmrg" ) );
     }
-    switch( verticalAlignment ) {
+    switch ( verticalAlignment ) {
       case Element.ALIGN_BOTTOM:
         result.write( DocWriter.getISOBytes( "\\clvertalb" ) );
         break;
@@ -517,7 +527,6 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
     result.write( intToByteArray( this.cellRight ) );
   }
 
-
   /**
    * Write the content of this PatchRtfCell
    */
@@ -546,7 +555,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Sets the right margin of this cell. Used in merge operations
    *
-   * @param cellRight The right margin to use
+   * @param cellRight
+   *          The right margin to use
    */
   protected void setCellRight( int cellRight ) {
     this.cellRight = cellRight;
@@ -564,7 +574,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Sets the cell width of this PatchRtfCell. Used in merge operations.
    *
-   * @param cellWidth The cell width to use
+   * @param cellWidth
+   *          The cell width to use
    */
   protected void setCellWidth( int cellWidth ) {
     this.cellWidth = cellWidth;
@@ -600,7 +611,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Set the borders of this PatchRtfCell
    *
-   * @param borderGroup The PatchRtfBorderGroup to use as borders
+   * @param borderGroup
+   *          The PatchRtfBorderGroup to use as borders
    */
   public void setBorders( PatchRtfBorderGroup borderGroup ) {
     this.borders = new PatchRtfBorderGroup( this.document, PatchRtfBorder.CELL_BORDER, borderGroup );
@@ -618,7 +630,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Merge this cell into the parent cell.
    *
-   * @param mergeParent The PatchRtfCell to merge with
+   * @param mergeParent
+   *          The PatchRtfCell to merge with
    */
   protected void setCellMergeChild( PatchRtfCell mergeParent ) {
     this.mergeType = MERGE_VERT_CHILD;
@@ -633,7 +646,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Sets the RtfDocument this PatchRtfCell belongs to
    *
-   * @param doc The RtfDocument to use
+   * @param doc
+   *          The RtfDocument to use
    */
   public void setRtfDocument( RtfDocument doc ) {
     this.document = doc;
@@ -650,7 +664,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Sets whether this PatchRtfCell is in a header
    *
-   * @param inHeader <code>True</code> if this PatchRtfCell is in a header, <code>false</code> otherwise
+   * @param inHeader
+   *          <code>True</code> if this PatchRtfCell is in a header, <code>false</code> otherwise
    */
   public void setInHeader( boolean inHeader ) {
     this.inHeader = inHeader;
@@ -672,7 +687,8 @@ public class PatchRtfCell extends Cell implements RtfExtendedElement {
   /**
    * Transforms an integer into its String representation and then returns the bytes of that string.
    *
-   * @param i The integer to convert
+   * @param i
+   *          The integer to convert
    * @return A byte array representing the integer
    */
   private byte[] intToByteArray( int i ) {

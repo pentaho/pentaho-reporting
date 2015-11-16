@@ -1,30 +1,31 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.filter;
+
+import java.awt.Component;
+
+import javax.swing.JFrame;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.util.ComponentDrawable;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * A filter that wraps AWT- and Swing-components into a Drawable implementation.
@@ -50,8 +51,9 @@ public class ComponentDrawableFilter implements DataFilter {
   /**
    * Returns the ComponentDrawable for the AWT-Component or null.
    *
-   * @param runtime the expression runtime that is used to evaluate formulas and expressions when computing the value of
-   *                this filter.
+   * @param runtime
+   *          the expression runtime that is used to evaluate formulas and expressions when computing the value of this
+   *          filter.
    * @param element
    * @return the value.
    */
@@ -77,11 +79,10 @@ public class ComponentDrawableFilter implements DataFilter {
       return null;
     }
 
-
     final Configuration config = runtime.getConfiguration();
     final ComponentDrawable cd;
-    final String drawMode = config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.ComponentDrawableMode",
-      "shared" );
+    final String drawMode =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.ComponentDrawableMode", "shared" );
     if ( "private".equals( drawMode ) ) {
       cd = new ComponentDrawable();
     } else if ( "synchronized".equals( drawMode ) ) {
@@ -95,8 +96,8 @@ public class ComponentDrawableFilter implements DataFilter {
       cd.setPaintSynchronized( true );
     }
 
-    final String allowOwnPeer = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable" );
+    final String allowOwnPeer =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable" );
     cd.setAllowOwnPeer( "true".equals( allowOwnPeer ) );
     cd.setComponent( (Component) o );
     return cd;
@@ -117,7 +118,8 @@ public class ComponentDrawableFilter implements DataFilter {
    * Creates a clone of this filter.
    *
    * @return the clone.
-   * @throws CloneNotSupportedException if an error occured.
+   * @throws CloneNotSupportedException
+   *           if an error occured.
    */
   public ComponentDrawableFilter clone() throws CloneNotSupportedException {
     final ComponentDrawableFilter il = (ComponentDrawableFilter) super.clone();
@@ -139,7 +141,8 @@ public class ComponentDrawableFilter implements DataFilter {
   /**
    * Assigns a DataSource for this Target.
    *
-   * @param ds The data source.
+   * @param ds
+   *          The data source.
    */
   public void setDataSource( final DataSource ds ) {
     this.source = ds;

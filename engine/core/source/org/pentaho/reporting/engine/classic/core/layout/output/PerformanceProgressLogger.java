@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
@@ -42,9 +42,8 @@ public class PerformanceProgressLogger implements ReportProgressListener {
     this( true, true, true );
   }
 
-  public PerformanceProgressLogger( final boolean logLevelProgress,
-                                    final boolean logPageProgress,
-                                    final boolean logRowProgress ) {
+  public PerformanceProgressLogger( final boolean logLevelProgress, final boolean logPageProgress,
+      final boolean logRowProgress ) {
     this.logLevelProgress = logLevelProgress;
     this.logPageProgress = logPageProgress;
     this.logRowProgress = logRowProgress;
@@ -53,7 +52,8 @@ public class PerformanceProgressLogger implements ReportProgressListener {
   /**
    * Receives a notification that the report processing has started.
    *
-   * @param event the start event.
+   * @param event
+   *          the start event.
    */
   public void reportProcessingStarted( final ReportProgressEvent event ) {
     if ( logger.isInfoEnabled() == false ) {
@@ -62,14 +62,14 @@ public class PerformanceProgressLogger implements ReportProgressListener {
 
     rowCount = -1;
     startTime = System.currentTimeMillis();
-    logger.info( new MemoryUsageMessage
-      ( "[" + Thread.currentThread().getName() + "] Report Processing started. " ) );
+    logger.info( new MemoryUsageMessage( "[" + Thread.currentThread().getName() + "] Report Processing started. " ) );
   }
 
   /**
    * Receives a notification that the report processing made some progress.
    *
-   * @param event the update event.
+   * @param event
+   *          the update event.
    */
   public void reportProcessingUpdate( final ReportProgressEvent event ) {
     if ( logger.isInfoEnabled() == false ) {
@@ -101,10 +101,9 @@ public class PerformanceProgressLogger implements ReportProgressListener {
     }
 
     if ( print ) {
-      logger.info( new MemoryUsageMessage
-        ( "[" + Thread.currentThread().getName() + "] Activity: " + event.getActivity() + " Level: " + +lastStage +
-          " Processing page: " + lastPage + " Row: " + lastRow + " Time: " +
-          ( System.currentTimeMillis() - startTime ) + "ms " ) );
+      logger.info( new MemoryUsageMessage( "[" + Thread.currentThread().getName() + "] Activity: "
+          + event.getActivity() + " Level: " + +lastStage + " Processing page: " + lastPage + " Row: " + lastRow
+          + " Time: " + ( System.currentTimeMillis() - startTime ) + "ms " ) );
 
     }
   }
@@ -112,7 +111,8 @@ public class PerformanceProgressLogger implements ReportProgressListener {
   /**
    * Receives a notification that the report processing was finished.
    *
-   * @param event the finish event.
+   * @param event
+   *          the finish event.
    */
   public void reportProcessingFinished( final ReportProgressEvent event ) {
     if ( logger.isInfoEnabled() == false ) {
@@ -120,14 +120,12 @@ public class PerformanceProgressLogger implements ReportProgressListener {
     }
 
     final FastMessageFormat messageFormat =
-      new FastMessageFormat( "[{0}] Report Processing Finished: {1}ms - {2,number,0.000} rows/sec - " );
+        new FastMessageFormat( "[{0}] Report Processing Finished: {1}ms - {2,number,0.000} rows/sec - " );
 
     final long processTime = System.currentTimeMillis() - startTime;
     final double rowsPerSecond = rowCount * 1000.0f / ( processTime );
-    logger.info( new MemoryUsageMessage
-      ( messageFormat.format( new Object[] {
-        Thread.currentThread().getName(), new Long( processTime ),
-        new Double( rowsPerSecond ) } ) ) );
+    logger.info( new MemoryUsageMessage( messageFormat.format( new Object[] { Thread.currentThread().getName(),
+      new Long( processTime ), new Double( rowsPerSecond ) } ) ) );
 
   }
 }

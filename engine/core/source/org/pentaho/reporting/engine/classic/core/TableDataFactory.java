@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -48,8 +48,10 @@ public class TableDataFactory extends AbstractDataFactory {
   /**
    * Creates a new TableDataFactory and registers the tablemodel with the given name.
    *
-   * @param name       the name of the table.
-   * @param tableModel the tablemodel.
+   * @param name
+   *          the name of the table.
+   * @param tableModel
+   *          the tablemodel.
    */
   public TableDataFactory( final String name, final TableModel tableModel ) {
     this();
@@ -67,13 +69,14 @@ public class TableDataFactory extends AbstractDataFactory {
     return tables.containsKey( query );
   }
 
-
   /**
    * Registers a tablemodel with the given name. If a different tablemodel has been previously registered with the same
    * name, this table will replace the existing one.
    *
-   * @param name       the name of the table.
-   * @param tableModel the tablemodel that should be registered.
+   * @param name
+   *          the name of the table.
+   * @param tableModel
+   *          the tablemodel that should be registered.
    */
   public void addTable( final String name, final TableModel tableModel ) {
     if ( tableModel == null ) {
@@ -88,7 +91,8 @@ public class TableDataFactory extends AbstractDataFactory {
   /**
    * Removes the table that has been registered by the given name.
    *
-   * @param name the name of the table to be removed.
+   * @param name
+   *          the name of the table to be removed.
    */
   public void removeTable( final String name ) {
     tables.remove( name );
@@ -104,8 +108,10 @@ public class TableDataFactory extends AbstractDataFactory {
    * <p/>
    * The dataset may change between two calls, do not assume anything!
    *
-   * @param query      the name of the table.
-   * @param parameters are ignored for this factory.
+   * @param query
+   *          the name of the table.
+   * @param parameters
+   *          are ignored for this factory.
    * @return the report data or null.
    */
   public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
@@ -144,6 +150,6 @@ public class TableDataFactory extends AbstractDataFactory {
   }
 
   public String[] getQueryNames() {
-    return tables.keySet().toArray( new String[ tables.size() ] );
+    return tables.keySet().toArray( new String[tables.size()] );
   }
 }

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
 
@@ -31,7 +31,6 @@ public class CommonStyleReadHandler extends AbstractXmlReadHandler implements St
   public CommonStyleReadHandler() {
   }
 
-
   public ElementStyleSheet getStyleSheet() {
     return styleSheet;
   }
@@ -43,8 +42,10 @@ public class CommonStyleReadHandler extends AbstractXmlReadHandler implements St
   /**
    * Starts parsing.
    *
-   * @param attrs the attributes.
-   * @throws SAXException if there is a parsing error.
+   * @param attrs
+   *          the attributes.
+   * @throws SAXException
+   *           if there is a parsing error.
    */
   protected void startParsing( final Attributes attrs ) throws SAXException {
     final String anchorName = attrs.getValue( getUri(), "anchor-name" );
@@ -77,8 +78,8 @@ public class CommonStyleReadHandler extends AbstractXmlReadHandler implements St
 
     final String invisibleConsumesSpace = attrs.getValue( getUri(), "invisible-consumes-space" );
     if ( invisibleConsumesSpace != null ) {
-      styleSheet
-        .setBooleanStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, "true".equals( invisibleConsumesSpace ) );
+      styleSheet.setBooleanStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, "true"
+          .equals( invisibleConsumesSpace ) );
     }
 
     final String widows = attrs.getValue( getUri(), "widows" );
@@ -88,8 +89,8 @@ public class CommonStyleReadHandler extends AbstractXmlReadHandler implements St
 
     final String widowsOrphanOptOut = attrs.getValue( getUri(), ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT.getName() );
     if ( widowsOrphanOptOut != null ) {
-      styleSheet.setStyleProperty( ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT,
-        ReportParserUtil.parseBoolean( widowsOrphanOptOut, getLocator() ) );
+      styleSheet.setStyleProperty( ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, ReportParserUtil.parseBoolean(
+          widowsOrphanOptOut, getLocator() ) );
     }
 
     final String orphans = attrs.getValue( getUri(), ElementStyleKeys.ORPHANS.getName() );
@@ -114,14 +115,14 @@ public class CommonStyleReadHandler extends AbstractXmlReadHandler implements St
 
     final String valignment = attrs.getValue( getUri(), "vertical-alignment" );
     if ( valignment != null ) {
-      styleSheet.setStyleProperty( ElementStyleKeys.VALIGNMENT,
-        ReportParserUtil.parseVerticalElementAlignment( valignment, getLocator() ) );
+      styleSheet.setStyleProperty( ElementStyleKeys.VALIGNMENT, ReportParserUtil.parseVerticalElementAlignment(
+          valignment, getLocator() ) );
     }
 
     final String alignment = attrs.getValue( getUri(), "alignment" );
     if ( alignment != null ) {
-      styleSheet.setStyleProperty( ElementStyleKeys.ALIGNMENT,
-        ReportParserUtil.parseHorizontalElementAlignment( alignment, getLocator() ) );
+      styleSheet.setStyleProperty( ElementStyleKeys.ALIGNMENT, ReportParserUtil.parseHorizontalElementAlignment(
+          alignment, getLocator() ) );
     }
   }
 
@@ -132,12 +133,12 @@ public class CommonStyleReadHandler extends AbstractXmlReadHandler implements St
     return BoxSizing.BORDER_BOX;
   }
 
-
   /**
    * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
-   * @throws SAXException if an parser error occured.
+   * @throws SAXException
+   *           if an parser error occured.
    */
   public Object getObject() throws SAXException {
     return null;

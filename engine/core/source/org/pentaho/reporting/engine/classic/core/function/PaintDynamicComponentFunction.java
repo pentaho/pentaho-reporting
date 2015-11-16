@@ -1,21 +1,31 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,18 +36,12 @@ import org.pentaho.reporting.engine.classic.core.util.ComponentDrawable;
 import org.pentaho.reporting.engine.classic.core.util.ImageUtils;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 /**
  * Paints a AWT or Swing Component. The component must be contained in the dataRow.
  *
  * @author Thomas Morgner
  * @deprecated Use the new Component-Element instead. It uses drawables for this job, and therefore the result looks
- * much better.
+ *             much better.
  */
 @SuppressWarnings( "deprecation" )
 public class PaintDynamicComponentFunction extends AbstractFunction implements PageEventListener {
@@ -60,8 +64,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * DefaultConstructor.
    *
-   * @throws IllegalStateException (HeadlessException) if no full AWT is available. This function needs a working layout
-   *                               manager.
+   * @throws IllegalStateException
+   *           (HeadlessException) if no full AWT is available. This function needs a working layout manager.
    */
   public PaintDynamicComponentFunction() {
     scale = 1;
@@ -79,7 +83,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -88,17 +93,20 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * Receives notification that the report has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportStarted( final ReportEvent event ) {
     image = null;
   }
 
   /**
-   * Receives notification that report generation initializes the current run. <P> The event carries a
-   * ReportState.Started state.  Use this to initialize the report.
+   * Receives notification that report generation initializes the current run.
+   * <P>
+   * The event carries a ReportState.Started state. Use this to initialize the report.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void reportInitialized( final ReportEvent event ) {
     image = null;
@@ -107,7 +115,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * Receives notification that the report has finished.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportFinished( final ReportEvent event ) {
     image = null;
@@ -116,7 +125,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * Receives notification that a page has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void pageStarted( final ReportEvent event ) {
     image = null;
@@ -125,7 +135,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * Receives notification that a page has ended.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void pageFinished( final ReportEvent event ) {
     image = null;
@@ -134,7 +145,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * Receives notification that a group has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     image = null;
@@ -143,7 +155,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * Receives notification that a group has finished.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupFinished( final ReportEvent event ) {
     image = null;
@@ -152,7 +165,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     image = null;
@@ -165,8 +179,8 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    */
   private float getDeviceScale() {
     final Configuration config = getReportConfiguration();
-    final String resolution = config.getConfigProperty(
-      "org.pentaho.reporting.engine.classic.core.layout.DeviceResolution" );
+    final String resolution =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.layout.DeviceResolution" );
     if ( resolution == null ) {
       return 1;
     }
@@ -210,7 +224,9 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
   }
 
   /**
-   * Return the current expression value. <P> The value depends (obviously) on the expression implementation.
+   * Return the current expression value.
+   * <P>
+   * The value depends (obviously) on the expression implementation.
    *
    * @return the value of the function.
    */
@@ -237,12 +253,12 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    * Define a scale factor for the created image. Using a higher scale factor will produce better results. A scale
    * factor of 2 will double the resolution. A scale factor of 1 will create 72 dpi images.
    *
-   * @param scale the scale factor.
+   * @param scale
+   *          the scale factor.
    */
   public void setScale( final float scale ) {
     this.scale = scale;
   }
-
 
   /**
    * Gets the scale factor for the created image. Using a higher scale factor will produce better results. A scale

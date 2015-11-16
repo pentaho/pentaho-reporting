@@ -1,34 +1,36 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.Date;
+
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.parameters.ListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.math.BigDecimal;
-import java.util.Date;
 
 public class DropDownParameterComponent extends JComboBox implements ParameterComponent {
   private class ComboBoxUpdateHandler implements ChangeListener {
@@ -71,9 +73,8 @@ public class DropDownParameterComponent extends JComboBox implements ParameterCo
   private ParameterContext parameterContext;
   private boolean adjustingToExternalInput;
 
-  public DropDownParameterComponent( final ListParameter listParameter,
-                                     final ParameterUpdateContext updateContext,
-                                     final ParameterContext parameterContext ) {
+  public DropDownParameterComponent( final ListParameter listParameter, final ParameterUpdateContext updateContext,
+      final ParameterContext parameterContext ) {
     if ( listParameter == null ) {
       throw new NullPointerException();
     }
@@ -96,7 +97,7 @@ public class DropDownParameterComponent extends JComboBox implements ParameterCo
     adjustingToExternalInput = true;
     try {
       final KeyedComboBoxModel<Object, Object> keyedComboBoxModel =
-        DefaultParameterComponentFactory.createModel( listParameter, parameterContext );
+          DefaultParameterComponentFactory.createModel( listParameter, parameterContext );
       final Object value = updateContext.getParameterValue( listParameter.getName() );
       setSelectedValue( value, keyedComboBoxModel );
 

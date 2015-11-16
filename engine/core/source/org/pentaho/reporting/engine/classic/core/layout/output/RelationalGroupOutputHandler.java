@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
@@ -33,8 +33,8 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler {
   public RelationalGroupOutputHandler() {
   }
 
-  public void groupStarted( final DefaultOutputFunction outputFunction,
-                            final ReportEvent event ) throws ReportProcessingException {
+  public void groupStarted( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final int gidx = event.getState().getCurrentGroupIndex();
     final RelationalGroup group = (RelationalGroup) event.getReport().getGroup( gidx );
     final Band b = group.getHeader();
@@ -49,8 +49,8 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler {
     renderer.startGroupBody( groupBody, event.getState().getPredictedStateCount() );
   }
 
-  public void itemsStarted( final DefaultOutputFunction outputFunction,
-                            final ReportEvent event ) throws ReportProcessingException {
+  public void itemsStarted( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     // activating this state after the page has ended is invalid.
     final int numberOfRows = event.getState().getNumberOfRows();
     final Renderer renderer = outputFunction.getRenderer();
@@ -76,11 +76,10 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler {
 
   }
 
-  public void itemsAdvanced( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void itemsAdvanced( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final Renderer renderer = outputFunction.getRenderer();
     outputFunction.updateFooterArea( event );
-
 
     final ItemBand itemBand = event.getReport().getItemBand();
     if ( itemBand != null ) {
@@ -90,8 +89,8 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler {
     }
   }
 
-  public void itemsFinished( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void itemsFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final Renderer renderer = outputFunction.getRenderer();
     outputFunction.updateFooterArea( event );
 
@@ -104,16 +103,16 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler {
     }
   }
 
-  public void groupBodyFinished( final DefaultOutputFunction outputFunction,
-                                 final ReportEvent event ) throws ReportProcessingException {
+  public void groupBodyFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final Renderer renderer = outputFunction.getRenderer();
     outputFunction.updateFooterArea( event );
     // only happens for inner groups.
     renderer.endGroupBody();
   }
 
-  public void groupFinished( final DefaultOutputFunction outputFunction,
-                             final ReportEvent event ) throws ReportProcessingException {
+  public void groupFinished( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     final int gidx = event.getState().getCurrentGroupIndex();
     final RelationalGroup g = (RelationalGroup) event.getReport().getGroup( gidx );
     final Band b = g.getFooter();

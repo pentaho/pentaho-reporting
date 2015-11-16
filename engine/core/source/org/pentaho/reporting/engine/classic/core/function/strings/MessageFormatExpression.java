@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
@@ -70,7 +70,8 @@ public class MessageFormatExpression extends AbstractExpression {
     /**
      * Defines the wrapped data-row.
      *
-     * @param wrappedDataRow the wrapped datarow.
+     * @param wrappedDataRow
+     *          the wrapped datarow.
      */
     public void setWrappedDataRow( final DataRow wrappedDataRow ) {
       this.wrappedDataRow = wrappedDataRow;
@@ -88,7 +89,8 @@ public class MessageFormatExpression extends AbstractExpression {
     /**
      * Defines the String-encoding used for the URL encoding.
      *
-     * @param encoding the string-encoding.
+     * @param encoding
+     *          the string-encoding.
      */
     public void setEncoding( final String encoding ) {
       if ( encoding == null ) {
@@ -100,7 +102,8 @@ public class MessageFormatExpression extends AbstractExpression {
     /**
      * Encodes the given value. The encoding process is skipped, if the value is null, is a number or is a date.
      *
-     * @param fieldValue the value that should be encoded.
+     * @param fieldValue
+     *          the value that should be encoded.
      * @return the encoded value.
      */
     private Object encode( final Object fieldValue ) {
@@ -126,9 +129,11 @@ public class MessageFormatExpression extends AbstractExpression {
      * <code>getValue()</code> method is called and for columns from the tablemodel the tablemodel method
      * <code>getValueAt(row, column)</code> gets called.
      *
-     * @param col the item index.
+     * @param col
+     *          the item index.
      * @return the value.
-     * @throws IllegalStateException if the datarow detected a deadlock.
+     * @throws IllegalStateException
+     *           if the datarow detected a deadlock.
      */
     public Object get( final String col ) throws IllegalStateException {
       return encode( wrappedDataRow.get( col ) );
@@ -137,7 +142,8 @@ public class MessageFormatExpression extends AbstractExpression {
     /**
      * Checks whether the value contained in the column has changed since the last advance-operation.
      *
-     * @param name the name of the column.
+     * @param name
+     *          the name of the column.
      * @return true, if the value has changed, false otherwise.
      */
     public boolean isChanged( final String name ) {
@@ -180,7 +186,6 @@ public class MessageFormatExpression extends AbstractExpression {
     encoding = "UTF-8";
   }
 
-
   /**
    * Returns the format string used in the message format.
    *
@@ -193,7 +198,8 @@ public class MessageFormatExpression extends AbstractExpression {
   /**
    * Defines the format string for the {@link java.text.MessageFormat} object used in this implementation.
    *
-   * @param pattern the message format.
+   * @param pattern
+   *          the message format.
    */
   public void setPattern( final String pattern ) {
     this.pattern = pattern;
@@ -211,7 +217,8 @@ public class MessageFormatExpression extends AbstractExpression {
   /**
    * Defines the character encoding that is used to transform the Java-Unicode strings into bytes.
    *
-   * @param encoding the encoding.
+   * @param encoding
+   *          the encoding.
    */
   public void setEncoding( final String encoding ) {
     if ( encoding == null ) {
@@ -224,8 +231,9 @@ public class MessageFormatExpression extends AbstractExpression {
    * Defines, whether the values read from the data-row should be URL encoded. Dates and Number objects are never
    * encoded.
    *
-   * @param urlEncode true, if the values from the data-row should be URL encoded before they are passed to the
-   *                  MessageFormat, false otherwise.
+   * @param urlEncode
+   *          true, if the values from the data-row should be URL encoded before they are passed to the MessageFormat,
+   *          false otherwise.
    */
   public void setUrlEncodeValues( final boolean urlEncode ) {
     this.urlEncodeData = urlEncode;
@@ -252,7 +260,8 @@ public class MessageFormatExpression extends AbstractExpression {
   /**
    * Defines, whether the formatted result-string will be URL encoded.
    *
-   * @param urlEncodeResult true, if the formatted result will be encoded, false otherwise.
+   * @param urlEncodeResult
+   *          true, if the formatted result will be encoded, false otherwise.
    */
   public void setUrlEncodeResult( final boolean urlEncodeResult ) {
     this.urlEncodeResult = urlEncodeResult;
@@ -270,7 +279,8 @@ public class MessageFormatExpression extends AbstractExpression {
   /**
    * Defines the replacement text that is used if one of the referenced message parameters is null.
    *
-   * @param nullString the replacement text for null-values.
+   * @param nullString
+   *          the replacement text for null-values.
    */
   public void setNullString( final String nullString ) {
     this.messageFormatSupport.setNullString( nullString );
@@ -307,7 +317,6 @@ public class MessageFormatExpression extends AbstractExpression {
       return result;
     }
   }
-
 
   public Expression getInstance() {
     final MessageFormatExpression ex = (MessageFormatExpression) super.getInstance();

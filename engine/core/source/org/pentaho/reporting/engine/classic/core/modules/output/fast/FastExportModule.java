@@ -28,8 +28,8 @@ public class FastExportModule extends AbstractModule {
   }
 
   public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
-    ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData
-      ( "org/pentaho/reporting/engine/classic/core/modules/output/fast/meta-report-preprocessors.xml" );
+    ElementMetaDataParser
+        .initializeOptionalReportPreProcessorMetaData( "org/pentaho/reporting/engine/classic/core/modules/output/fast/meta-report-preprocessors.xml" );
 
   }
 }

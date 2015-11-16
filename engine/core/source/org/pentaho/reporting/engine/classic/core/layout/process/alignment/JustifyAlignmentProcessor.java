@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process.alignment;
 
@@ -39,7 +39,7 @@ public class JustifyAlignmentProcessor extends LeftAlignmentProcessor {
     final long[] elementPositions = getElementPositions();
     final long[] elementDimensions = getElementDimensions();
     final int lastIndex = index - 1;
-    final long endPos = elementPositions[ lastIndex ] + elementDimensions[ lastIndex ];
+    final long endPos = elementPositions[lastIndex] + elementDimensions[lastIndex];
 
     final long extraSpace = Math.max( 0, getEndOfLine() - endPos );
     final RenderNode[] nodes = getNodes();
@@ -48,8 +48,8 @@ public class JustifyAlignmentProcessor extends LeftAlignmentProcessor {
       long spacerCount = 0;
       for ( int i = 0; i < index; i++ ) {
         // justify text
-        final InlineSequenceElement ise = sequenceElements[ i ];
-        final RenderNode node = nodes[ i ];
+        final InlineSequenceElement ise = sequenceElements[i];
+        final RenderNode node = nodes[i];
         if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER ) {
           spacerCount += ise.getMaximumWidth( node );
         }
@@ -59,15 +59,15 @@ public class JustifyAlignmentProcessor extends LeftAlignmentProcessor {
         final double extraSpacePerSpacerUnit = extraSpace / (double) spacerCount;
         long shift = 0;
         for ( int i = 0; i < index; i++ ) {
-          elementPositions[ i ] += shift;
+          elementPositions[i] += shift;
 
           // justify text
-          final InlineSequenceElement ise = sequenceElements[ i ];
-          final RenderNode node = nodes[ i ];
+          final InlineSequenceElement ise = sequenceElements[i];
+          final RenderNode node = nodes[i];
           if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER ) {
             final long width = ise.getMaximumWidth( node );
             final long extraSpaceHere = (long) ( extraSpacePerSpacerUnit * width );
-            elementDimensions[ i ] += extraSpaceHere;
+            elementDimensions[i] += extraSpaceHere;
             shift += extraSpaceHere;
           }
         }

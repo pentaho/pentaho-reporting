@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
 
@@ -62,9 +62,8 @@ public class StyleWriterUtility {
   private StyleWriterUtility() {
   }
 
-  public static void writeStyleRule( final String namespace, final String tagName,
-                                     final XmlWriter writer, final ElementStyleSheet style )
-    throws IOException {
+  public static void writeStyleRule( final String namespace, final String tagName, final XmlWriter writer,
+      final ElementStyleSheet style ) throws IOException {
     if ( namespace == null ) {
       throw new NullPointerException();
     }
@@ -87,15 +86,14 @@ public class StyleWriterUtility {
 
     final BundleStyleSetWriteHandler[] writeHandlers = BundleStyleRegistry.getInstance().getWriteHandlers();
     for ( int i = 0; i < writeHandlers.length; i++ ) {
-      final BundleStyleSetWriteHandler writeHandler = writeHandlers[ i ];
+      final BundleStyleSetWriteHandler writeHandler = writeHandlers[i];
       writeHandler.writeStyle( writer, style );
     }
 
     writer.writeCloseTag();
   }
 
-  public static void writeBorderStyles( final XmlWriter writer, final ElementStyleSheet style )
-    throws IOException {
+  public static void writeBorderStyles( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
     if ( writer == null ) {
       throw new NullPointerException();
     }
@@ -107,31 +105,26 @@ public class StyleWriterUtility {
 
     if ( style.isLocalKey( ElementStyleKeys.BACKGROUND_COLOR ) ) {
       final Color value = (Color) style.getStyleProperty( ElementStyleKeys.BACKGROUND_COLOR );
-      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "background-color", ColorValueConverter.colorToString(
-        value ) );
+      bandStyleAtts
+          .setAttribute( BundleNamespaces.STYLE, "background-color", ColorValueConverter.colorToString( value ) );
     }
 
     final FastDecimalFormat absoluteLengthFormat = getAbsoluteLengthFormat();
-    if ( style.isLocalKey( ElementStyleKeys.PADDING_TOP ) &&
-      style.isLocalKey( ElementStyleKeys.PADDING_LEFT ) &&
-      style.isLocalKey( ElementStyleKeys.PADDING_BOTTOM ) &&
-      style.isLocalKey( ElementStyleKeys.PADDING_RIGHT ) ) {
+    if ( style.isLocalKey( ElementStyleKeys.PADDING_TOP ) && style.isLocalKey( ElementStyleKeys.PADDING_LEFT )
+        && style.isLocalKey( ElementStyleKeys.PADDING_BOTTOM ) && style.isLocalKey( ElementStyleKeys.PADDING_RIGHT ) ) {
       final double paddingTop = style.getDoubleStyleProperty( ElementStyleKeys.PADDING_TOP, 0 );
       final double paddingLeft = style.getDoubleStyleProperty( ElementStyleKeys.PADDING_LEFT, 0 );
       final double paddingBottom = style.getDoubleStyleProperty( ElementStyleKeys.PADDING_BOTTOM, 0 );
       final double paddingRight = style.getDoubleStyleProperty( ElementStyleKeys.PADDING_RIGHT, 0 );
-      if ( paddingTop == paddingLeft &&
-        paddingTop == paddingRight &&
-        paddingTop == paddingBottom ) {
+      if ( paddingTop == paddingLeft && paddingTop == paddingRight && paddingTop == paddingBottom ) {
         bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "padding", absoluteLengthFormat.format( paddingTop ) );
       } else {
         bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "padding-top", absoluteLengthFormat.format( paddingTop ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "padding-left", absoluteLengthFormat.format( paddingLeft ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "padding-bottom", absoluteLengthFormat
+            .format( paddingBottom ) );
         bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "padding-left", absoluteLengthFormat.format( paddingLeft ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "padding-bottom", absoluteLengthFormat.format(
-          paddingBottom ) );
-        bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "padding-right", absoluteLengthFormat.format( paddingRight ) );
+            .setAttribute( BundleNamespaces.STYLE, "padding-right", absoluteLengthFormat.format( paddingRight ) );
       }
     } else {
       if ( style.isLocalKey( ElementStyleKeys.PADDING_TOP ) ) {
@@ -152,25 +145,21 @@ public class StyleWriterUtility {
       }
     }
 
-    if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_WIDTH ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_LEFT_WIDTH ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_WIDTH ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_RIGHT_WIDTH ) ) {
+    if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_WIDTH ) && style.isLocalKey( ElementStyleKeys.BORDER_LEFT_WIDTH )
+        && style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_WIDTH )
+        && style.isLocalKey( ElementStyleKeys.BORDER_RIGHT_WIDTH ) ) {
       final double top = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_WIDTH, 0 );
       final double left = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_LEFT_WIDTH, 0 );
       final double bottom = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_WIDTH, 0 );
       final double right = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_RIGHT_WIDTH, 0 );
-      if ( top == left &&
-        top == right &&
-        top == bottom ) {
+      if ( top == left && top == right && top == bottom ) {
         bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-width", absoluteLengthFormat.format( top ) );
       } else {
         bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-width", absoluteLengthFormat.format( top ) );
         bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-left-width", absoluteLengthFormat.format( left ) );
         bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "border-bottom-width", absoluteLengthFormat.format( bottom ) );
-        bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "border-right-width", absoluteLengthFormat.format( right ) );
+            .setAttribute( BundleNamespaces.STYLE, "border-bottom-width", absoluteLengthFormat.format( bottom ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-right-width", absoluteLengthFormat.format( right ) );
       }
     } else {
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_WIDTH ) ) {
@@ -184,12 +173,11 @@ public class StyleWriterUtility {
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_WIDTH, 0 );
         bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "border-bottom-width", absoluteLengthFormat.format( value ) );
+            .setAttribute( BundleNamespaces.STYLE, "border-bottom-width", absoluteLengthFormat.format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_RIGHT_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_RIGHT_WIDTH, 0 );
-        bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "border-right-width", absoluteLengthFormat.format( value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-right-width", absoluteLengthFormat.format( value ) );
       }
     }
     if ( style.isLocalKey( ElementStyleKeys.BORDER_BREAK_WIDTH ) ) {
@@ -197,67 +185,63 @@ public class StyleWriterUtility {
       bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-break-width", absoluteLengthFormat.format( value ) );
     }
 
-    if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_COLOR ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_LEFT_COLOR ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_COLOR ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_RIGHT_COLOR ) ) {
+    if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_COLOR ) && style.isLocalKey( ElementStyleKeys.BORDER_LEFT_COLOR )
+        && style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_COLOR )
+        && style.isLocalKey( ElementStyleKeys.BORDER_RIGHT_COLOR ) ) {
       final Color top = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR );
       final Color left = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_LEFT_COLOR );
       final Color bottom = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_BOTTOM_COLOR );
       final Color right = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_RIGHT_COLOR );
-      if ( ObjectUtilities.equal( top, left ) &&
-        ObjectUtilities.equal( top, right ) &&
-        ObjectUtilities.equal( top, bottom ) ) {
+      if ( ObjectUtilities.equal( top, left ) && ObjectUtilities.equal( top, right )
+          && ObjectUtilities.equal( top, bottom ) ) {
         bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-color", ColorValueConverter.colorToString( top ) );
       } else {
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-color", ColorValueConverter.colorToString(
-          top ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-left-color", ColorValueConverter.colorToString(
-          left ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-color", ColorValueConverter.colorToString(
-          bottom ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-right-color", ColorValueConverter.colorToString(
-          right ) );
+        bandStyleAtts
+            .setAttribute( BundleNamespaces.STYLE, "border-top-color", ColorValueConverter.colorToString( top ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-left-color", ColorValueConverter
+            .colorToString( left ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-color", ColorValueConverter
+            .colorToString( bottom ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-right-color", ColorValueConverter
+            .colorToString( right ) );
       }
     } else {
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_COLOR ) ) {
         final Color value = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-color", ColorValueConverter.colorToString(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-color", ColorValueConverter
+            .colorToString( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_LEFT_COLOR ) ) {
         final Color value = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_LEFT_COLOR );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-left-color", ColorValueConverter.colorToString(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-left-color", ColorValueConverter
+            .colorToString( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_COLOR ) ) {
         final Color value = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_BOTTOM_COLOR );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-color", ColorValueConverter.colorToString(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-color", ColorValueConverter
+            .colorToString( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_RIGHT_COLOR ) ) {
         final Color value = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_RIGHT_COLOR );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-right-color", ColorValueConverter.colorToString(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-right-color", ColorValueConverter
+            .colorToString( value ) );
       }
     }
     if ( style.isLocalKey( ElementStyleKeys.BORDER_BREAK_COLOR ) ) {
       final Color value = (Color) style.getStyleProperty( ElementStyleKeys.BORDER_BREAK_COLOR );
-      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-break-color", ColorValueConverter.colorToString(
-        value ) );
+      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-break-color", ColorValueConverter
+          .colorToString( value ) );
     }
 
-    if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_STYLE ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_LEFT_STYLE ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_STYLE ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_RIGHT_STYLE ) ) {
+    if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_STYLE ) && style.isLocalKey( ElementStyleKeys.BORDER_LEFT_STYLE )
+        && style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_STYLE )
+        && style.isLocalKey( ElementStyleKeys.BORDER_RIGHT_STYLE ) ) {
       final Object top = style.getStyleProperty( ElementStyleKeys.BORDER_TOP_STYLE );
       final Object left = style.getStyleProperty( ElementStyleKeys.BORDER_LEFT_STYLE );
       final Object bottom = style.getStyleProperty( ElementStyleKeys.BORDER_BOTTOM_STYLE );
       final Object right = style.getStyleProperty( ElementStyleKeys.BORDER_RIGHT_STYLE );
-      if ( ObjectUtilities.equal( top, left ) &&
-        ObjectUtilities.equal( top, right ) &&
-        ObjectUtilities.equal( top, bottom ) ) {
+      if ( ObjectUtilities.equal( top, left ) && ObjectUtilities.equal( top, right )
+          && ObjectUtilities.equal( top, bottom ) ) {
         bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-style", top.toString() );
       } else {
         bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-style", top.toString() );
@@ -288,99 +272,91 @@ public class StyleWriterUtility {
       bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-break-style", value.toString() );
     }
 
-    if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH ) &&
-
-      style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH ) ) {
+    if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH )
+        && style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH )
+        && style.isLocalKey( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH )
+        && style.isLocalKey( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH ) ) {
       final double bottomLeft = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, 0 );
       final double bottomRight = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, 0 );
       final double topLeft = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, 0 );
       final double topRight = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, 0 );
-      if ( bottomLeft == bottomRight &&
-        bottomLeft == topRight &&
-        bottomLeft == topLeft ) {
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-radius-width", absoluteLengthFormat.format(
-          bottomLeft ) );
+      if ( bottomLeft == bottomRight && bottomLeft == topRight && bottomLeft == topLeft ) {
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-radius-width", absoluteLengthFormat
+            .format( bottomLeft ) );
       } else {
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-radius-width", absoluteLengthFormat.format(
-          topLeft ) );
-        bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "border-top-right-radius-width", absoluteLengthFormat.format(
-            topRight ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-radius-width",
-          absoluteLengthFormat.format( bottomLeft ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-radius-width",
-          absoluteLengthFormat.format( bottomRight ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-radius-width", absoluteLengthFormat
+            .format( topLeft ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-radius-width", absoluteLengthFormat
+            .format( topRight ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-radius-width", absoluteLengthFormat
+            .format( bottomLeft ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-radius-width", absoluteLengthFormat
+            .format( bottomRight ) );
       }
     } else {
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, 0 );
-        bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "border-top-left-width", absoluteLengthFormat.format( value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-width", absoluteLengthFormat
+            .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-width", absoluteLengthFormat.format(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-width", absoluteLengthFormat
+            .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-width", absoluteLengthFormat.format(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-width", absoluteLengthFormat
+            .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-width", absoluteLengthFormat.format(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-width", absoluteLengthFormat
+            .format( value ) );
       }
     }
 
-    if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT ) &&
-
-      style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT ) &&
-      style.isLocalKey( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT ) ) {
+    if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT )
+        && style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT )
+        && style.isLocalKey( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT )
+        && style.isLocalKey( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT ) ) {
       final double bottomLeft = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, 0 );
       final double bottomRight = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, 0 );
       final double topLeft = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, 0 );
       final double topRight = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, 0 );
-      if ( bottomLeft == bottomRight &&
-        bottomLeft == topRight &&
-        bottomLeft == topLeft ) {
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-radius-height", absoluteLengthFormat.format(
-          bottomLeft ) );
+      if ( bottomLeft == bottomRight && bottomLeft == topRight && bottomLeft == topLeft ) {
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-radius-height", absoluteLengthFormat
+            .format( bottomLeft ) );
       } else {
-        bandStyleAtts
-          .setAttribute( BundleNamespaces.STYLE, "border-top-left-radius-height", absoluteLengthFormat.format(
-            topLeft ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-radius-height",
-          absoluteLengthFormat.format( topRight ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-radius-height",
-          absoluteLengthFormat.format( bottomLeft ) );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-radius-height",
-          absoluteLengthFormat.format( bottomRight ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-radius-height", absoluteLengthFormat
+            .format( topLeft ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-radius-height", absoluteLengthFormat
+            .format( topRight ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-radius-height", absoluteLengthFormat
+            .format( bottomLeft ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-radius-height", absoluteLengthFormat
+            .format( bottomRight ) );
       }
     } else {
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-height", absoluteLengthFormat.format(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-height", absoluteLengthFormat
+            .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-height", absoluteLengthFormat.format(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-height", absoluteLengthFormat
+            .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-height", absoluteLengthFormat.format(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-height", absoluteLengthFormat
+            .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-height", absoluteLengthFormat.format(
-          value ) );
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-height", absoluteLengthFormat
+            .format( value ) );
       }
     }
 
@@ -389,8 +365,7 @@ public class StyleWriterUtility {
     }
   }
 
-  public static void writeSpatialStyles( final XmlWriter writer, final ElementStyleSheet style )
-    throws IOException {
+  public static void writeSpatialStyles( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
     if ( writer == null ) {
       throw new NullPointerException();
     }
@@ -436,8 +411,7 @@ public class StyleWriterUtility {
     }
   }
 
-  public static void writeTextStyles( final XmlWriter writer, final ElementStyleSheet style )
-    throws IOException {
+  public static void writeTextStyles( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
     if ( writer == null ) {
       throw new NullPointerException();
     }
@@ -475,7 +449,7 @@ public class StyleWriterUtility {
       bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "excel-text-wrapping", String.valueOf( value ) );
     }
     if ( style.isLocalKey( ElementStyleKeys.EXCEL_INDENTION ) ) {
-      final int value = style.getIntStyleProperty(ElementStyleKeys.EXCEL_INDENTION, 0 );
+      final int value = style.getIntStyleProperty( ElementStyleKeys.EXCEL_INDENTION, 0 );
       bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "excel-text-indention", String.valueOf( value ) );
     }
     if ( style.isLocalKey( TextStyleKeys.TRIM_TEXT_CONTENT ) ) {
@@ -549,8 +523,7 @@ public class StyleWriterUtility {
     }
   }
 
-  public static void writeContentStyles( final XmlWriter writer, final ElementStyleSheet style )
-    throws IOException {
+  public static void writeContentStyles( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
     if ( writer == null ) {
       throw new NullPointerException();
     }
@@ -599,8 +572,8 @@ public class StyleWriterUtility {
       final Stroke s = (Stroke) style.getStyleProperty( ElementStyleKeys.STROKE );
       final float strokeWidth = StrokeUtility.getStrokeWidth( s );
       final BorderStyle strokeType = StrokeUtility.translateStrokeStyle( s );
-      bandStyleAtts
-        .setAttribute( BundleNamespaces.STYLE, "stroke-weight", getAbsoluteLengthFormat().format( strokeWidth ) );
+      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "stroke-weight", getAbsoluteLengthFormat().format(
+          strokeWidth ) );
       bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "stroke-style", strokeType.toString() );
     }
     if ( bandStyleAtts.isEmpty() == false ) {
@@ -608,8 +581,7 @@ public class StyleWriterUtility {
     }
   }
 
-  public static void writeCommonStyles( final XmlWriter writer, final ElementStyleSheet style )
-    throws IOException {
+  public static void writeCommonStyles( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
     if ( writer == null ) {
       throw new NullPointerException();
     }
@@ -660,8 +632,8 @@ public class StyleWriterUtility {
     }
     if ( style.isLocalKey( ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT ) ) {
       final boolean value = style.getBooleanStyleProperty( ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT );
-      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT.getName(),
-        String.valueOf( value ) );
+      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT.getName(), String
+          .valueOf( value ) );
     }
     if ( style.isLocalKey( ElementStyleKeys.OVERFLOW_X ) ) {
       final boolean value = style.getBooleanStyleProperty( ElementStyleKeys.OVERFLOW_X );
@@ -702,8 +674,7 @@ public class StyleWriterUtility {
     }
   }
 
-  public static void writePageBandStyles( final XmlWriter writer, final ElementStyleSheet style )
-    throws IOException {
+  public static void writePageBandStyles( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
     if ( writer == null ) {
       throw new NullPointerException();
     }
@@ -749,8 +720,7 @@ public class StyleWriterUtility {
     }
   }
 
-  public static void writeBandStyles( final XmlWriter writer, final ElementStyleSheet style )
-    throws IOException {
+  public static void writeBandStyles( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
     if ( writer == null ) {
       throw new NullPointerException();
     }
@@ -793,4 +763,3 @@ public class StyleWriterUtility {
     }
   }
 }
-

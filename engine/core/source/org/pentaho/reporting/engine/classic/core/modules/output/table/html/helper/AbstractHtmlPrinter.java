@@ -17,6 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.text.NumberFormat;
+
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineInfo;
@@ -40,29 +49,18 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.text.NumberFormat;
-
 @SuppressWarnings( "HardCodedStringLiteral" )
 public abstract class AbstractHtmlPrinter {
   public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
-  protected static final String[] XHTML_HEADER = {
-    "<!DOCTYPE html",
+  protected static final String[] XHTML_HEADER = { "<!DOCTYPE html",
     "     PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"",
     "     \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" };
 
   protected static final StyleBuilder.CSSKeys[] EMPTY_CELL_ATTRNAMES =
-    new StyleBuilder.CSSKeys[] { StyleBuilder.CSSKeys.FONT_SIZE };
+      new StyleBuilder.CSSKeys[] { StyleBuilder.CSSKeys.FONT_SIZE };
   protected static final String[] EMPTY_CELL_ATTRVALS = new String[] { "1pt" };
   private static final String GENERATOR = ClassicEngineInfo.getInstance().getName() + " version "
-    + ClassicEngineInfo.getInstance().getVersion();
-
+      + ClassicEngineInfo.getInstance().getVersion();
 
   private DefaultStyleBuilderFactory styleBuilderFactory;
   private DefaultHtmlContentGenerator contentGenerator;
@@ -83,10 +81,10 @@ public abstract class AbstractHtmlPrinter {
   protected void initialize( Configuration configuration ) {
     this.configuration = configuration;
 
-    this.contentGenerator.setCopyExternalImages( "true".equals
-      ( configuration.getConfigProperty( HtmlTableModule.COPY_EXTERNAL_IMAGES ) ) );
-    this.allowRawLinkTargets = "true".equals
-      ( configuration.getConfigProperty( HtmlTableModule.ALLOW_RAW_LINK_TARGETS ) );
+    this.contentGenerator.setCopyExternalImages( "true".equals( configuration
+        .getConfigProperty( HtmlTableModule.COPY_EXTERNAL_IMAGES ) ) );
+    this.allowRawLinkTargets =
+        "true".equals( configuration.getConfigProperty( HtmlTableModule.ALLOW_RAW_LINK_TARGETS ) );
 
     styleBuilderFactory = new DefaultStyleBuilderFactory();
     styleBuilderFactory.configure( ClassicEngineBoot.getInstance().getGlobalConfig() );
@@ -114,8 +112,7 @@ public abstract class AbstractHtmlPrinter {
     return configuration;
   }
 
-  public void setDataWriter( final ContentLocation dataLocation,
-                             final NameGenerator dataNameGenerator ) {
+  public void setDataWriter( final ContentLocation dataLocation, final NameGenerator dataNameGenerator ) {
     this.contentGenerator.setDataWriter( dataLocation, dataNameGenerator, getContentReWriteService() );
   }
 
@@ -141,8 +138,7 @@ public abstract class AbstractHtmlPrinter {
     return "true".equals( getConfiguration().getConfigProperty( HtmlTableModule.PROPORTIONAL_COLUMN_WIDTHS, "false" ) );
   }
 
-  protected void writeColumnDeclaration( final SlimSheetLayout sheetLayout,
-                                         final XmlWriter xmlWriter )
+  protected void writeColumnDeclaration( final SlimSheetLayout sheetLayout, final XmlWriter xmlWriter )
     throws IOException {
     StyleBuilder styleBuilder = getStyleBuilder();
     DefaultStyleBuilderFactory styleBuilderFactory = getStyleBuilderFactory();
@@ -152,7 +148,7 @@ public abstract class AbstractHtmlPrinter {
 
     final int colCount = sheetLayout.getColumnCount();
     final int fullWidth = (int) StrictGeomUtility.toExternalValue( sheetLayout.getMaxWidth() );
-    final String[] colWidths = new String[ colCount ];
+    final String[] colWidths = new String[colCount];
     final boolean proportionalColumnWidths = isProportionalColumnWidths();
     final NumberFormat pointConverter = styleBuilder.getPointConverter();
     final String unit;
@@ -165,10 +161,10 @@ public abstract class AbstractHtmlPrinter {
         final int width = (int) StrictGeomUtility.toExternalValue( sheetLayout.getCellWidth( col, col + 1 ) );
         final double colWidth = styleBuilderFactory.fixLengthForSafari( Math.max( 1, width * 100.0d / fullWidth ) );
         if ( col == colCount - 1 ) {
-          colWidths[ col ] = pointConverter.format( 100 - totalWidth );
+          colWidths[col] = pointConverter.format( 100 - totalWidth );
         } else {
           totalWidth += colWidth;
-          colWidths[ col ] = pointConverter.format( colWidth );
+          colWidths[col] = pointConverter.format( colWidth );
         }
       }
     } else {
@@ -179,10 +175,10 @@ public abstract class AbstractHtmlPrinter {
         final int width = (int) StrictGeomUtility.toExternalValue( sheetLayout.getCellWidth( col, col + 1 ) );
         final double colWidth = styleBuilderFactory.fixLengthForSafari( Math.max( 1, width ) );
         if ( col == colCount - 1 ) {
-          colWidths[ col ] = pointConverter.format( fullWidth - totalWidth );
+          colWidths[col] = pointConverter.format( fullWidth - totalWidth );
         } else {
           totalWidth += colWidth;
-          colWidths[ col ] = pointConverter.format( colWidth );
+          colWidths[col] = pointConverter.format( colWidth );
         }
       }
     }
@@ -190,24 +186,21 @@ public abstract class AbstractHtmlPrinter {
     for ( int col = 0; col < colCount; col++ ) {
       // Print the table.
       styleBuilder.clear();
-      styleBuilder.append( DefaultStyleBuilder.CSSKeys.WIDTH, colWidths[ col ], unit );
+      styleBuilder.append( DefaultStyleBuilder.CSSKeys.WIDTH, colWidths[col], unit );
       xmlWriter.writeTag( null, "col", "style", styleBuilder.toString(), XmlWriterSupport.CLOSE );
     }
   }
 
-
-  protected void writeCompleteHeader( final XmlWriter docWriter,
-                                      final String sheetName,
-                                      final ReportAttributeMap attributes,
-                                      final String styleSheetUrl,
-                                      final StyleManager inlineStyleSheet ) throws IOException {
+  protected void writeCompleteHeader( final XmlWriter docWriter, final String sheetName,
+      final ReportAttributeMap attributes, final String styleSheetUrl, final StyleManager inlineStyleSheet )
+    throws IOException {
     Configuration configuration = getConfiguration();
-    final String encoding = configuration.getConfigProperty
-      ( HtmlTableModule.ENCODING, EncodingRegistry.getPlatformDefaultEncoding() );
+    final String encoding =
+        configuration.getConfigProperty( HtmlTableModule.ENCODING, EncodingRegistry.getPlatformDefaultEncoding() );
 
     docWriter.writeXmlDeclaration( encoding );
     for ( int i = 0; i < XHTML_HEADER.length; i++ ) {
-      docWriter.writeText( XHTML_HEADER[ i ] );
+      docWriter.writeText( XHTML_HEADER[i] );
       docWriter.writeNewLine();
     }
     docWriter.writeTag( XHTML_NAMESPACE, "html", XmlWriterSupport.OPEN );
@@ -218,9 +211,7 @@ public abstract class AbstractHtmlPrinter {
       docWriter.writeTag( XHTML_NAMESPACE, "title", XmlWriterSupport.OPEN );
       docWriter.writeTextNormalized( title, false );
       docWriter.writeCloseTag();
-    }
-    // if no single title defined, use the sheetname function previously computed
-    else if ( sheetName != null ) {
+    } else if ( sheetName != null ) { // if no single title defined, use the sheetname function previously computed
       docWriter.writeTag( XHTML_NAMESPACE, "title", XmlWriterSupport.OPEN );
       docWriter.writeTextNormalized( sheetName, true );
       docWriter.writeCloseTag();
@@ -230,12 +221,9 @@ public abstract class AbstractHtmlPrinter {
       docWriter.writeCloseTag();
     }
 
-    writeMeta( docWriter, "subject",
-      configuration.getConfigProperty( HtmlTableModule.SUBJECT ) );
-    writeMeta( docWriter, "author",
-      configuration.getConfigProperty( HtmlTableModule.AUTHOR ) );
-    writeMeta( docWriter, "keywords",
-      configuration.getConfigProperty( HtmlTableModule.KEYWORDS ) );
+    writeMeta( docWriter, "subject", configuration.getConfigProperty( HtmlTableModule.SUBJECT ) );
+    writeMeta( docWriter, "author", configuration.getConfigProperty( HtmlTableModule.AUTHOR ) );
+    writeMeta( docWriter, "keywords", configuration.getConfigProperty( HtmlTableModule.KEYWORDS ) );
     writeMeta( docWriter, "generator", GENERATOR );
 
     final AttributeList metaAttrs = new AttributeList();
@@ -258,15 +246,14 @@ public abstract class AbstractHtmlPrinter {
       docWriter.writeCloseTag();
     }
 
-    final Object rawHeaderContent = attributes.getAttribute
-      ( AttributeNames.Html.NAMESPACE, AttributeNames.Html.EXTRA_RAW_HEADER_CONTENT );
+    final Object rawHeaderContent =
+        attributes.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.EXTRA_RAW_HEADER_CONTENT );
     if ( rawHeaderContent != null ) {
       // Warning: This text is not escaped or processed in any way. it is *RAW* content.
       docWriter.writeText( String.valueOf( rawHeaderContent ) );
     }
     docWriter.writeCloseTag();
   }
-
 
   private void writeMeta( final XmlWriter writer, final String name, final String value ) throws IOException {
     if ( value == null ) {
@@ -294,10 +281,8 @@ public abstract class AbstractHtmlPrinter {
     return "true".equals( getConfiguration().getConfigProperty( HtmlTableModule.INLINE_STYLE ) );
   }
 
-
-  protected void generateHeaderOnOpen( final ReportAttributeMap attributeMap,
-                                       final String sheetName,
-                                       final XmlWriter xmlWriter ) throws IOException {
+  protected void generateHeaderOnOpen( final ReportAttributeMap attributeMap, final String sheetName,
+      final XmlWriter xmlWriter ) throws IOException {
     if ( isCreateBodyFragment() == false ) {
       if ( isInlineStylesRequested() ) {
         writeCompleteHeader( xmlWriter, sheetName, attributeMap, null, null );
@@ -330,8 +315,8 @@ public abstract class AbstractHtmlPrinter {
   }
 
   protected WriterService createWriterService( final OutputStream out ) throws UnsupportedEncodingException {
-    final String encoding = configuration.getConfigProperty
-      ( HtmlTableModule.ENCODING, EncodingRegistry.getPlatformDefaultEncoding() );
+    final String encoding =
+        configuration.getConfigProperty( HtmlTableModule.ENCODING, EncodingRegistry.getPlatformDefaultEncoding() );
 
     if ( isCreateBodyFragment() == false ) {
       if ( isInlineStylesRequested() ) {
@@ -347,7 +332,6 @@ public abstract class AbstractHtmlPrinter {
       return WriterService.createPassThroughService( out, encoding );
     }
   }
-
 
   protected boolean isForceBufferedWriting() {
     return "true".equals( getConfiguration().getConfigProperty( HtmlTableModule.FORCE_BUFFER_WRITING ) );
@@ -374,15 +358,13 @@ public abstract class AbstractHtmlPrinter {
 
   }
 
-  protected void performCloseFile( final String sheetName,
-                                   final ReportAttributeMap logicalPageBox,
-                                   final WriterService writer )
-    throws IOException, ContentIOException {
+  protected void performCloseFile( final String sheetName, final ReportAttributeMap logicalPageBox,
+      final WriterService writer ) throws IOException, ContentIOException {
     XmlWriter xmlWriter = writer.getXmlWriter();
     xmlWriter.writeCloseTag(); // for the opening table ..
 
-    final Object rawFooterContent = logicalPageBox.getAttribute( AttributeNames.Html.NAMESPACE,
-      AttributeNames.Html.EXTRA_RAW_FOOTER_CONTENT );
+    final Object rawFooterContent =
+        logicalPageBox.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.EXTRA_RAW_FOOTER_CONTENT );
     if ( rawFooterContent != null ) {
       xmlWriter.writeText( String.valueOf( rawFooterContent ) );
     }
@@ -394,10 +376,11 @@ public abstract class AbstractHtmlPrinter {
 
     ContentItem styleFile = getStyleFile();
     if ( styleFile != null ) {
-      final String encoding = getConfiguration().getConfigProperty
-        ( HtmlTableModule.ENCODING, EncodingRegistry.getPlatformDefaultEncoding() );
-      final Writer styleOut = new OutputStreamWriter
-        ( new BufferedOutputStream( styleFile.getOutputStream() ), encoding );
+      final String encoding =
+          getConfiguration()
+              .getConfigProperty( HtmlTableModule.ENCODING, EncodingRegistry.getPlatformDefaultEncoding() );
+      final Writer styleOut =
+          new OutputStreamWriter( new BufferedOutputStream( styleFile.getOutputStream() ), encoding );
       getStyleManager().write( styleOut );
       styleOut.flush();
       styleOut.close();
@@ -440,37 +423,34 @@ public abstract class AbstractHtmlPrinter {
     docWriter.close();
   }
 
-  protected void openSheet( final ReportAttributeMap logicalPage,
-                            final String sheetName,
-                            final OutputProcessorMetaData metaData,
-                            final SlimSheetLayout sheetLayout,
-                            final XmlWriter xmlWriter ) throws ContentIOException, URLRewriteException, IOException {
+  protected void openSheet( final ReportAttributeMap logicalPage, final String sheetName,
+      final OutputProcessorMetaData metaData, final SlimSheetLayout sheetLayout, final XmlWriter xmlWriter )
+    throws ContentIOException, URLRewriteException, IOException {
     setStyleManager( createStyleManager() );
 
     generateExternalStylePlaceHolder();
     generateHeaderOnOpen( logicalPage, sheetName, xmlWriter );
 
-    final Object rawContent = logicalPage.getAttribute( AttributeNames.Html.NAMESPACE,
-      AttributeNames.Html.EXTRA_RAW_CONTENT );
+    final Object rawContent =
+        logicalPage.getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.EXTRA_RAW_CONTENT );
     if ( rawContent != null ) {
       xmlWriter.writeText( String.valueOf( rawContent ) );
     }
 
     // table name
-    if ( "true".equals( metaData.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.EnableSheetNameProcessing" ) ) ) {
+    if ( "true".equals( metaData.getConfiguration().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.output.table.html.EnableSheetNameProcessing" ) ) ) {
       if ( sheetName != null ) {
         xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "h1", getTagHelper().createSheetNameAttributes(),
-          XmlWriterSupport.OPEN );
+            XmlWriterSupport.OPEN );
         xmlWriter.writeTextNormalized( sheetName, true );
         xmlWriter.writeCloseTag();
       }
     }
 
     // table
-    xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "table",
-      getTagHelper().createTableAttributes( sheetLayout, logicalPage ),
-      XmlWriterSupport.OPEN );
+    xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "table", getTagHelper().createTableAttributes( sheetLayout,
+        logicalPage ), XmlWriterSupport.OPEN );
     writeColumnDeclaration( sheetLayout, xmlWriter );
   }
 
@@ -496,18 +476,19 @@ public abstract class AbstractHtmlPrinter {
     final String[] anchor = background.getAnchors();
     if ( anchor.length == 0 && emptyCellsUseCSS ) {
       final StyleBuilder cellStyle =
-        styleBuilderFactory.createCellStyle( styleBuilder, null, null, background, null, null );
+          styleBuilderFactory.createCellStyle( styleBuilder, null, null, background, null, null );
       final AttributeList cellAttributes =
-        getTagHelper().createCellAttributes( 1, 1, null, null, background, cellStyle );
+          getTagHelper().createCellAttributes( 1, 1, null, null, background, cellStyle );
       xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.CLOSE );
     } else {
-      final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle
-        ( styleBuilder, null, null, background, HtmlPrinter.EMPTY_CELL_ATTRNAMES, HtmlPrinter.EMPTY_CELL_ATTRVALS );
+      final StyleBuilder cellStyle =
+          styleBuilderFactory.createCellStyle( styleBuilder, null, null, background, HtmlPrinter.EMPTY_CELL_ATTRNAMES,
+              HtmlPrinter.EMPTY_CELL_ATTRVALS );
       final AttributeList cellAttributes =
-        getTagHelper().createCellAttributes( 1, 1, null, null, background, cellStyle );
+          getTagHelper().createCellAttributes( 1, 1, null, null, background, cellStyle );
       xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.OPEN );
       for ( int i = 0; i < anchor.length; i++ ) {
-        xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "a", "name", anchor[ i ], XmlWriterSupport.CLOSE );
+        xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, "a", "name", anchor[i], XmlWriterSupport.CLOSE );
       }
       xmlWriter.writeText( "&nbsp;" );
       xmlWriter.writeCloseTag();

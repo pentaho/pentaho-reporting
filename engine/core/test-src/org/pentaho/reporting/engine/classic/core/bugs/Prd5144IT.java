@@ -70,9 +70,8 @@ public class Prd5144IT {
       entries += 1;
     }
     // IntelliJ bug: Does not detect update within While loop.
-    //noinspection ConstantConditions
+    // noinspection ConstantConditions
     Assert.assertTrue( entries > 0 );
   }
-
 
 }

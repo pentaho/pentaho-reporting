@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.model.context;
 
@@ -373,12 +373,12 @@ public final class BoxDefinition {
     return true;
   }
 
-
   /**
    * Split the box definition for the given major axis. A horizontal axis will perform vertical splits (resulting in a
    * left and right box definition) and a given vertical axis will split the box into a top and bottom box.
    *
-   * @param axis the axis on which to split the box.
+   * @param axis
+   *          the axis on which to split the box.
    * @return the two new box definitions, never null.
    */
   public BoxDefinition[] split( final int axis ) {
@@ -399,7 +399,7 @@ public final class BoxDefinition {
     first.paddingTop = paddingTop;
     first.paddingLeft = paddingLeft;
     first.paddingRight = 0;
-    first.border = borders[ 0 ];
+    first.border = borders[0];
     first.preferredHeight = preferredHeight;
     first.preferredWidth = preferredWidth;
     first.minimumHeight = minimumHeight;
@@ -417,7 +417,7 @@ public final class BoxDefinition {
     second.paddingTop = paddingTop;
     second.paddingLeft = 0;
     second.paddingRight = paddingRight;
-    second.border = borders[ 1 ];
+    second.border = borders[1];
     second.preferredHeight = preferredHeight;
     second.preferredWidth = preferredWidth;
     second.minimumHeight = minimumHeight;
@@ -426,9 +426,9 @@ public final class BoxDefinition {
     second.maximumWidth = maximumWidth;
     second.fixedPosition = RenderLength.AUTO;
 
-    final BoxDefinition[] boxes = new BoxDefinition[ 2 ];
-    boxes[ 0 ] = first;
-    boxes[ 1 ] = second;
+    final BoxDefinition[] boxes = new BoxDefinition[2];
+    boxes[0] = first;
+    boxes[1] = second;
     return boxes;
   }
 
@@ -444,7 +444,7 @@ public final class BoxDefinition {
     first.paddingTop = paddingTop;
     first.paddingLeft = paddingLeft;
     first.paddingRight = paddingRight;
-    first.border = borders[ 0 ];
+    first.border = borders[0];
     first.preferredHeight = preferredHeight;
     first.preferredWidth = preferredWidth;
     first.minimumHeight = minimumHeight;
@@ -462,7 +462,7 @@ public final class BoxDefinition {
     second.paddingTop = 0;
     second.paddingLeft = paddingLeft;
     second.paddingRight = paddingRight;
-    second.border = borders[ 1 ];
+    second.border = borders[1];
     second.preferredHeight = preferredHeight;
     second.preferredWidth = preferredWidth;
     second.minimumHeight = minimumHeight;
@@ -471,30 +471,18 @@ public final class BoxDefinition {
     second.maximumWidth = maximumWidth;
     second.fixedPosition = fixedPosition;
 
-    final BoxDefinition[] boxes = new BoxDefinition[ 2 ];
-    boxes[ 0 ] = first;
-    boxes[ 1 ] = second;
+    final BoxDefinition[] boxes = new BoxDefinition[2];
+    boxes[0] = first;
+    boxes[1] = second;
     return boxes;
   }
 
-
   public String toString() {
-    return "BoxDefinition{" +
-      "minimumHeight=" + minimumHeight +
-      ", minimumWidth=" + minimumWidth +
-      ", preferredHeight=" + preferredHeight +
-      ", preferredWidth=" + preferredWidth +
-      ", maximumHeight=" + maximumHeight +
-      ", maximumWidth=" + maximumWidth +
-      ", marginTop=" + marginTop +
-      ", marginBottom=" + marginBottom +
-      ", marginLeft=" + marginLeft +
-      ", marginRight=" + marginRight +
-      ", paddingTop=" + paddingTop +
-      ", paddingLeft=" + paddingLeft +
-      ", paddingBottom=" + paddingBottom +
-      ", paddingRight=" + paddingRight +
-      ", border=" + border +
-      '}';
+    return "BoxDefinition{" + "minimumHeight=" + minimumHeight + ", minimumWidth=" + minimumWidth
+        + ", preferredHeight=" + preferredHeight + ", preferredWidth=" + preferredWidth + ", maximumHeight="
+        + maximumHeight + ", maximumWidth=" + maximumWidth + ", marginTop=" + marginTop + ", marginBottom="
+        + marginBottom + ", marginLeft=" + marginLeft + ", marginRight=" + marginRight + ", paddingTop=" + paddingTop
+        + ", paddingLeft=" + paddingLeft + ", paddingBottom=" + paddingBottom + ", paddingRight=" + paddingRight
+        + ", border=" + border + '}';
   }
 }

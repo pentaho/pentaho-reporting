@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 
@@ -97,8 +97,8 @@ public final class CrosstabOutputHelper {
     return node.findNodeById( id );
   }
 
-  public static Element createTableCell( final int colSpan, final int rowSpan,
-                                         final boolean pagebreakBefore, final boolean pagebreakAfter ) {
+  public static Element createTableCell( final int colSpan, final int rowSpan, final boolean pagebreakBefore,
+      final boolean pagebreakAfter ) {
     final CrosstabTableCell b = new CrosstabTableCell( colSpan, rowSpan );
     b.getStyle().setStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE, pagebreakBefore );
     b.getStyle().setStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, pagebreakAfter );
@@ -160,28 +160,28 @@ public final class CrosstabOutputHelper {
     return false;
   }
 
-  public static void printCrosstabSummary( final DefaultOutputFunction outputFunction,
-                                           final ReportEvent event ) throws ReportProcessingException {
+  public static void printCrosstabSummary( final DefaultOutputFunction outputFunction, final ReportEvent event )
+    throws ReportProcessingException {
     // column summary is delayed by one level. So when we receive a group-finished for the inner most col-group,
     // we do not print a summary footer. The summary header for the inner most col-group is printed when the
     // previous group has finished.
     //
     // Example: A crosstab with one column group and one row group.
     //
-    // Row   Col   Data
+    // Row Col Data
     // ----------------
-    // R0    C0    1
-    // R0    C1    2
-    // R1    C0    3
-    // R1    C1    4
+    // R0 C0 1
+    // R0 C1 2
+    // R1 C0 3
+    // R1 C1 4
     //
     // Both groups have summaries printed. The expected output would be:
     //
-    //       C0    C1   CSum
-    //  -------------------
-    //  R0   1     2    3
-    //  R1   3     4    7
-    // RSum  4     6    10
+    // C0 C1 CSum
+    // -------------------
+    // R0 1 2 3
+    // R1 3 4 7
+    // RSum 4 6 10
     //
     // The contents of a single cell can consist of multiple data entries. The (classical) footer
     // printing does not happen for detail level group.
@@ -229,8 +229,8 @@ public final class CrosstabOutputHelper {
       if ( crosstabLayout.isGenerateColumnTitleHeaders() ) {
         layoutModelBuilder.startSubFlow( crosstabLayout.getColumnTitleHeaderSubflowId( gidx ) );
         createAutomaticCell( layoutModelBuilder );
-        crosstabLayout.setColumnTitleHeaderCellId( gidx - crosstabLayout.getFirstColGroupIndex(),
-          layoutModelBuilder.dangerousRawAccess().getInstanceId() );
+        crosstabLayout.setColumnTitleHeaderCellId( gidx - crosstabLayout.getFirstColGroupIndex(), layoutModelBuilder
+            .dangerousRawAccess().getInstanceId() );
         outputFunction.getRenderer().add( group.getTitleHeader(), outputFunction.getRuntime() );
         layoutModelBuilder.finishBox();
         layoutModelBuilder.suspendSubFlow();
@@ -238,8 +238,8 @@ public final class CrosstabOutputHelper {
 
       layoutModelBuilder.startSubFlow( crosstabLayout.getColumnHeaderSubflowId( gidx ) );
       createAutomaticCell( layoutModelBuilder );
-      crosstabLayout.setColumnHeaderCellId( gidx - crosstabLayout.getFirstColGroupIndex(),
-        layoutModelBuilder.dangerousRawAccess().getInstanceId() );
+      crosstabLayout.setColumnHeaderCellId( gidx - crosstabLayout.getFirstColGroupIndex(), layoutModelBuilder
+          .dangerousRawAccess().getInstanceId() );
       outputFunction.getRenderer().add( group.getSummaryHeader(), outputFunction.getRuntime() );
       layoutModelBuilder.finishBox();
       layoutModelBuilder.suspendSubFlow();
@@ -265,43 +265,40 @@ public final class CrosstabOutputHelper {
   }
 
   public static void expandColumnHeaderSpan( final RenderedCrosstabLayout crosstabLayout,
-                                             final LayoutModelBuilder layoutModelBuilder, final int gidx ) {
+      final LayoutModelBuilder layoutModelBuilder, final int gidx ) {
     final TableSectionRenderBox section =
-      CrosstabOutputHelper.findTableHeaderSection( layoutModelBuilder.dangerousRawAccess() );
+        CrosstabOutputHelper.findTableHeaderSection( layoutModelBuilder.dangerousRawAccess() );
 
     for ( int i = crosstabLayout.getFirstColGroupIndex(), count = 0; i < gidx; i += 1, count += 1 ) {
       if ( crosstabLayout.isGenerateColumnTitleHeaders() ) {
         final InstanceID columnTitleHeaderId =
-          crosstabLayout.getColumnTitleHeaderCellId( i - crosstabLayout.getFirstColGroupIndex() );
+            crosstabLayout.getColumnTitleHeaderCellId( i - crosstabLayout.getFirstColGroupIndex() );
         final RenderNode columnTitleHeaderCell = CrosstabOutputHelper.findNode( section, columnTitleHeaderId );
         if ( columnTitleHeaderCell instanceof TableCellRenderBox ) {
           final TableCellRenderBox cellBox = (TableCellRenderBox) columnTitleHeaderCell;
           cellBox.update( cellBox.getRowSpan(), cellBox.getColSpan() + 1 );
         } else {
           throw new IllegalStateException(
-            "Unable to find node for previous column title header. Aborting report processing." );
+              "Unable to find node for previous column title header. Aborting report processing." );
         }
       }
 
       final InstanceID columnHeaderId =
-        crosstabLayout.getColumnHeaderCellId( i - crosstabLayout.getFirstColGroupIndex() );
+          crosstabLayout.getColumnHeaderCellId( i - crosstabLayout.getFirstColGroupIndex() );
       final RenderNode columnHeaderCell = CrosstabOutputHelper.findNode( section, columnHeaderId );
       if ( columnHeaderCell instanceof TableCellRenderBox ) {
         final TableCellRenderBox cellBox = (TableCellRenderBox) columnHeaderCell;
         cellBox.update( cellBox.getRowSpan(), cellBox.getColSpan() + 1 );
       } else {
         throw new IllegalStateException(
-          "Unable to find node for previous column title header. Aborting report processing." );
+            "Unable to find node for previous column title header. Aborting report processing." );
       }
     }
   }
 
-  public static void createAutomaticCell( final LayoutModelBuilder layoutModelBuilder,
-                                          final int colSpan,
-                                          final int rowSpan,
-                                          final Element element ) {
-    final boolean pagebreakBefore =
-      element.getComputedStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE );
+  public static void createAutomaticCell( final LayoutModelBuilder layoutModelBuilder, final int colSpan,
+      final int rowSpan, final Element element ) {
+    final boolean pagebreakBefore = element.getComputedStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE );
     final boolean pagebreakAfter = element.getComputedStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER );
     createAutomaticCell( layoutModelBuilder, colSpan, rowSpan, pagebreakBefore, pagebreakAfter );
   }
@@ -310,17 +307,13 @@ public final class CrosstabOutputHelper {
     createAutomaticCell( layoutModelBuilder, 1, 1, false, false );
   }
 
-  public static void createAutomaticCell( final LayoutModelBuilder layoutModelBuilder,
-                                          final int colSpan,
-                                          final int rowSpan ) {
+  public static void createAutomaticCell( final LayoutModelBuilder layoutModelBuilder, final int colSpan,
+      final int rowSpan ) {
     createAutomaticCell( layoutModelBuilder, colSpan, rowSpan, false, false );
   }
 
-  private static void createAutomaticCell( final LayoutModelBuilder layoutModelBuilder,
-                                           final int colSpan,
-                                           final int rowSpan,
-                                           final boolean pagebreakBefore,
-                                           final boolean pagebreakAfter ) {
+  private static void createAutomaticCell( final LayoutModelBuilder layoutModelBuilder, final int colSpan,
+      final int rowSpan, final boolean pagebreakBefore, final boolean pagebreakAfter ) {
     final Element tableCell = createTableCell( colSpan, rowSpan, pagebreakBefore, pagebreakAfter );
     layoutModelBuilder.startBox( tableCell );
 

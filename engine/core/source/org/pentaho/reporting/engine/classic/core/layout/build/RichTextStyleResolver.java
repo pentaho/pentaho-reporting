@@ -52,5 +52,4 @@ public class RichTextStyleResolver extends AbstractStructureVisitor {
     richTextStyleResolver.resolve( section );
   }
 
-
 }

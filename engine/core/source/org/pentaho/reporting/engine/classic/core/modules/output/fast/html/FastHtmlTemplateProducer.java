@@ -52,16 +52,16 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer {
   private FastGridLayout gridLayout;
   private Recorder recorder;
 
-  public FastHtmlTemplateProducer( final OutputProcessorMetaData metaData,
-                                   final SheetLayout sheetLayout,
-                                   final FastHtmlPrinter htmlPrinter ) {
+  public FastHtmlTemplateProducer( final OutputProcessorMetaData metaData, final SheetLayout sheetLayout,
+      final FastHtmlPrinter htmlPrinter ) {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
     this.htmlPrinter = htmlPrinter;
     this.recorder = new Recorder();
-    this.cellBackgroundProducer = new CellBackgroundProducer
-      ( metaData.isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ),
-        metaData.isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
+    this.cellBackgroundProducer =
+        new CellBackgroundProducer( metaData
+            .isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ), metaData
+            .isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
   }
 
   public FormattedDataBuilder createDataBuilder() {
@@ -70,7 +70,7 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer {
 
   public void produceTemplate( final LogicalPageBox pageBox ) {
     TableContentProducer contentProducer =
-      TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData );
+        TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData );
     final SheetLayout sheetLayout = contentProducer.getSheetLayout();
     final int columnCount = contentProducer.getColumnCount();
     final int startRow = contentProducer.getFinishedRows();
@@ -89,8 +89,9 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer {
           final RenderBox backgroundBox = contentProducer.getBackground( row, col );
           final CellBackground background;
           if ( backgroundBox != null ) {
-            background = cellBackgroundProducer.getBackgroundForBox
-              ( pageBox, sheetLayout, col, row, 1, 1, true, sectionType, backgroundBox );
+            background =
+                cellBackgroundProducer.getBackgroundForBox( pageBox, sheetLayout, col, row, 1, 1, true, sectionType,
+                    backgroundBox );
           } else {
             background = cellBackgroundProducer.getBackgroundAt( pageBox, sheetLayout, col, row, true, sectionType );
           }
@@ -107,16 +108,17 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer {
         }
 
         final long contentOffset = contentProducer.getContentOffset( row, col );
-        final TableRectangle rect = sheetLayout.getTableBounds
-          ( content.getX(), content.getY() + contentOffset,
-            content.getWidth(), content.getHeight(), null );
+        final TableRectangle rect =
+            sheetLayout.getTableBounds( content.getX(), content.getY() + contentOffset, content.getWidth(), content
+                .getHeight(), null );
         if ( rect.isOrigin( col, row ) == false ) {
           // A spanned cell ..
           continue;
         }
 
-        final CellBackground bg = cellBackgroundProducer.getBackgroundForBox( pageBox, sheetLayout,
-          rect.getX1(), rect.getY1(), rect.getColumnSpan(), rect.getRowSpan(), false, sectionType, content );
+        final CellBackground bg =
+            cellBackgroundProducer.getBackgroundForBox( pageBox, sheetLayout, rect.getX1(), rect.getY1(), rect
+                .getColumnSpan(), rect.getRowSpan(), false, sectionType, content );
 
         recordInlineImageDimensions( content );
 
@@ -148,8 +150,9 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer {
     protected boolean startBox( final RenderBox node ) {
       if ( node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
         RenderableReplacedContentBox box = (RenderableReplacedContentBox) node;
-        final FastHtmlImageBounds cb = new FastHtmlImageBounds( node.getWidth(), node.getHeight(),
-          box.getContent().getContentWidth(), box.getContent().getContentHeight() );
+        final FastHtmlImageBounds cb =
+            new FastHtmlImageBounds( node.getWidth(), node.getHeight(), box.getContent().getContentWidth(), box
+                .getContent().getContentHeight() );
         recordedBounds.put( node.getInstanceId(), cb );
         return false;
       }
@@ -168,6 +171,5 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer {
       }
     }
   }
-
 
 }

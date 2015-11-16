@@ -71,7 +71,7 @@ public class TableSorter {
         logger.debug( "Sort constraint contained references invalid column '" + constraint.getField() + "'" );
       }
     }
-    return index.toArray( new Tuple[ index.size() ] );
+    return index.toArray( new Tuple[index.size()] );
   }
 
   private int findIndex( final String columnName ) {
@@ -105,26 +105,26 @@ public class TableSorter {
   }
 
   private int[] buildIdentityMapping() {
-    int[] raw = new int[ model.getRowCount() ];
+    int[] raw = new int[model.getRowCount()];
     for ( int i = 0; i < raw.length; i++ ) {
-      raw[ i ] = i;
+      raw[i] = i;
     }
     return raw;
   }
 
   private int[] buildRawIndex( final IndexElement[] sortableArray ) {
-    int[] raw = new int[ sortableArray.length ];
+    int[] raw = new int[sortableArray.length];
     for ( int i = 0; i < sortableArray.length; i++ ) {
-      IndexElement indexElement = sortableArray[ i ];
-      raw[ i ] = indexElement.getSourceRow();
+      IndexElement indexElement = sortableArray[i];
+      raw[i] = indexElement.getSourceRow();
     }
     return raw;
   }
 
   private IndexElement[] createSortableData() {
-    IndexElement[] indexElements = new IndexElement[ model.getRowCount() ];
+    IndexElement[] indexElements = new IndexElement[model.getRowCount()];
     for ( int i = 0; i < indexElements.length; i++ ) {
-      indexElements[ i ] = createIndexElement( i );
+      indexElements[i] = createIndexElement( i );
     }
     return indexElements;
   }
@@ -136,7 +136,6 @@ public class TableSorter {
   protected Comparator<Object> getComparator() {
     return GenericComparator.INSTANCE;
   }
-
 
   /**
    * Used to cheat Java's sort method to sort an int-array with a custom handler.
@@ -162,9 +161,9 @@ public class TableSorter {
       }
 
       Tuple[] sortData = getSortData();
-      Object[] row = new Object[ sortData.length ];
+      Object[] row = new Object[sortData.length];
       for ( int i = 0; i < row.length; i++ ) {
-        row[ i ] = getModel().getValueAt( getSourceRow(), sortData[ i ].columnIndex );
+        row[i] = getModel().getValueAt( getSourceRow(), sortData[i].columnIndex );
       }
 
       rowData = new WeakReference<Object[]>( row );
@@ -177,9 +176,9 @@ public class TableSorter {
       Tuple[] sortData = getSortData();
       Comparator<Object> comparator = getComparator();
       for ( int i = 0; i < sortData.length; i++ ) {
-        Tuple tuple = sortData[ i ];
-        Object rawMine = data[ i ];
-        Object rawTheirs = otherData[ i ];
+        Tuple tuple = sortData[i];
+        Object rawMine = data[i];
+        Object rawTheirs = otherData[i];
         int result = comparator.compare( rawMine, rawTheirs ) * tuple.sortOrder;
         if ( result != 0 ) {
           return result;

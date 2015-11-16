@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -69,8 +69,7 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
  *
  * @author Thomas Morgner
  */
-public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureProcessStep
-{
+public final class RevalidateAllAxisLayoutStep { // extends IterateSimpleStructureProcessStep
   private static class MergeContext {
     private RenderBox readContext;
     private RenderBox writeContext;
@@ -137,8 +136,8 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     final long insetBottom = blp.getBorderBottom() + boxDefinition.getPaddingBottom();
     final long insetTop = blp.getBorderTop() + boxDefinition.getPaddingTop();
 
-    final long childY2 = lastChildNode.getCachedY() + lastChildNode.getCachedHeight() +
-      lastChildNode.getEffectiveMarginBottom();
+    final long childY2 =
+        lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
     final long childY1 = box.getFirstChild().getCachedY();
     final long usedHeight = ( childY2 - childY1 );
 
@@ -165,13 +164,11 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       return;
     }
 
-
     final RenderNode lastLine = paragraph.getLastChild();
     if ( lastLine == null ) {
       // Empty paragraph, no need to do anything ...
       return;
     }
-
 
     // Process the direct childs of the paragraph
     // Each direct child represents a line ..
@@ -234,20 +231,20 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       return;
     }
 
-
     // Process the direct childs of the paragraph
     // Each direct child represents a line ..
     final long paragraphBottom = paragraph.getCachedY() + paragraph.getCachedHeight();
     if ( ( lastLine.getCachedY() + lastLine.getCachedHeight() ) <= paragraphBottom ) {
-      // Already perfectly aligned. 
+      // Already perfectly aligned.
       return;
     }
 
     final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
     RenderNode node = paragraph.getFirstChild();
     ParagraphPoolBox prev = null;
-    boolean first = metaData.isFeatureSupported
-      ( OutputProcessorFeature.BooleanOutputProcessorFeature.ALWAYS_PRINT_FIRST_LINE_OF_TEXT );
+    boolean first =
+        metaData
+            .isFeatureSupported( OutputProcessorFeature.BooleanOutputProcessorFeature.ALWAYS_PRINT_FIRST_LINE_OF_TEXT );
     while ( node != null ) {
       // all childs of the linebox container must be inline boxes. They
       // represent the lines in the paragraph. Any other element here is
@@ -467,8 +464,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     return leftProcessor;
   }
 
-  private ParagraphPoolBox rebuildLastLine( final ParagraphPoolBox lineBox,
-                                            final ParagraphPoolBox nextBox ) {
+  private ParagraphPoolBox rebuildLastLine( final ParagraphPoolBox lineBox, final ParagraphPoolBox nextBox ) {
     if ( lineBox == null ) {
       if ( nextBox == null ) {
         throw new NullPointerException( "Both Line- and Next-Line are null." );
@@ -561,8 +557,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       } else {
         if ( needToAddSpacing ) {
           final RenderNode lastChild = writeContext.getLastChild();
-          if ( spaceWidth > 0 && lastChild != null &&
-            ( lastChild.getNodeType() != LayoutNodeTypes.TYPE_NODE_SPACER ) ) {
+          if ( spaceWidth > 0 && lastChild != null && ( lastChild.getNodeType() != LayoutNodeTypes.TYPE_NODE_SPACER ) ) {
             // docmark: Used zero as new height
             final SpacerRenderNode spacer = new SpacerRenderNode( spaceWidth, 0, false, 1 );
             spacer.setVirtualNode( true );
@@ -578,7 +573,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       }
 
       while ( next == null && contextStack.isEmpty() == false ) {
-        //        Log.debug ("FINISH " + context.getReadContext());
+        // Log.debug ("FINISH " + context.getReadContext());
         next = context.getReadContext().getNext();
         context = contextStack.pop();
       }
@@ -587,8 +582,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     return rebuildLastLine( lineBox, (ParagraphPoolBox) nextBox.getNext() );
   }
 
-  private RenderBox rebuildLastLineComplex( final RenderBox lineBox,
-                                            final RenderBox nextBox ) {
+  private RenderBox rebuildLastLineComplex( final RenderBox lineBox, final RenderBox nextBox ) {
     if ( lineBox == null ) {
       throw new NullPointerException();
     }
@@ -599,8 +593,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     RenderNode child = nextBox.getFirstChild();
     while ( child != null ) {
       if ( child.isRenderBox() ) {
-        if ( lineBox.getLastChild().isRenderBox() &&
-          lineBox.getLastChild().getInstanceId() == child.getInstanceId() ) {
+        if ( lineBox.getLastChild().isRenderBox() && lineBox.getLastChild().getInstanceId() == child.getInstanceId() ) {
           rebuildLastLineComplex( (RenderBox) lineBox.getLastChild(), (RenderBox) child );
         } else {
           RenderBox lineBoxChild = (RenderBox) child.derive( false );

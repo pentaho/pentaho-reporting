@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.crosstab;
 
@@ -63,7 +63,8 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
   /**
    * Receives notification that a group has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     final ReportState state = event.getState();
@@ -79,8 +80,9 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
         final String[] rowSet = computeRows( crosstabGroup );
         final ReportStateKey processKey = state.getProcessKey();
 
-        final CrosstabNormalizationMode normalizationMode = (CrosstabNormalizationMode)
-          group.getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.NORMALIZATION_MODE );
+        final CrosstabNormalizationMode normalizationMode =
+            (CrosstabNormalizationMode) group.getAttribute( AttributeNames.Crosstab.NAMESPACE,
+                AttributeNames.Crosstab.NORMALIZATION_MODE );
         if ( CrosstabNormalizationMode.Insertation.equals( normalizationMode ) ) {
           processingStack.push( new OrderedMergeCrosstabSpecification( processKey, columnSet, rowSet ) );
         } else {
@@ -110,7 +112,8 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
   /**
    * Receives notification that a group has finished.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupFinished( final ReportEvent event ) {
     if ( processingStack == null || processingStack.isEmpty() ) {
@@ -177,7 +180,7 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
 
       break;
     }
-    return list.toArray( new String[ list.size() ] );
+    return list.toArray( new String[list.size()] );
   }
 
   private String[] computeRows( final CrosstabGroup crosstabGroup ) {
@@ -185,7 +188,7 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
     list.addAll( crosstabGroup.getPaddingFields() );
     collectRelationalFields( crosstabGroup.getParentSection(), list );
     collectCrosstabFields( crosstabGroup, list );
-    return list.toArray( new String[ list.size() ] );
+    return list.toArray( new String[list.size()] );
   }
 
   private void collectRelationalFields( Section section, final HashSet<String> list ) {
@@ -238,7 +241,8 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( event.getLevel() == getDependencyLevel() ) {
@@ -275,12 +279,14 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
   }
 
   /**
-   * Clones the expression.  The expression should be reinitialized after the cloning. <P> Expressions maintain no
-   * state, cloning is done at the beginning of the report processing to disconnect the expression from any other object
-   * space.
+   * Clones the expression. The expression should be reinitialized after the cloning.
+   * <P>
+   * Expressions maintain no state, cloning is done at the beginning of the report processing to disconnect the
+   * expression from any other object space.
    *
    * @return a clone of this expression.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
   public Object clone() throws CloneNotSupportedException {
     final CrosstabProcessorFunction cps = (CrosstabProcessorFunction) super.clone();

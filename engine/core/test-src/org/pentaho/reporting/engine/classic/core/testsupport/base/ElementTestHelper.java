@@ -77,7 +77,7 @@ public class ElementTestHelper {
 
   private static boolean validateCanInstantiate( final ElementMetaData metaData ) {
     try {
-      //noinspection UnusedDeclaration
+      // noinspection UnusedDeclaration
       final Object type = metaData.create();
     } catch ( InstantiationException e ) {
       logger.warn( "Failed to instantiate ElementType" );
@@ -86,8 +86,7 @@ public class ElementTestHelper {
     return false;
   }
 
-  private static void validateCoreMetaData( final ElementMetaData metaData,
-                                            final ArrayList<String> missingProperties ) {
+  private static void validateCoreMetaData( final ElementMetaData metaData, final ArrayList<String> missingProperties ) {
     final Locale locale = Locale.getDefault();
     final String typeName = metaData.getName();
 
@@ -108,13 +107,13 @@ public class ElementTestHelper {
   }
 
   private static void validateAttributeMetaData( final ElementMetaData metaData,
-                                                 final ArrayList<String> missingProperties ) {
+      final ArrayList<String> missingProperties ) {
     final Locale locale = Locale.getDefault();
     final String typeName = metaData.getName();
 
     final AttributeMetaData[] attributeMetaDatas = metaData.getAttributeDescriptions();
     for ( int j = 0; j < attributeMetaDatas.length; j++ ) {
-      final AttributeMetaData propertyMetaData = attributeMetaDatas[ j ];
+      final AttributeMetaData propertyMetaData = attributeMetaDatas[j];
       final String propertyDisplayName = propertyMetaData.getDisplayName( locale );
       if ( isValid( propertyDisplayName, propertyMetaData.getName(), missingProperties ) == false ) {
         logger.warn( "ElementType '" + typeName + ": Attr " + propertyMetaData.getName() + ": No DisplayName" );
@@ -127,21 +126,20 @@ public class ElementTestHelper {
       if ( propertyMetaData.isDeprecated() ) {
         final String deprecateMessage = propertyMetaData.getDeprecationMessage( locale );
         if ( isValid( deprecateMessage, "Deprecated", missingProperties ) == false ) {
-          logger.warn(
-            "ElementType '" + typeName + ": Attr " + propertyMetaData.getName() + ": No valid deprecate message" );
+          logger.warn( "ElementType '" + typeName + ": Attr " + propertyMetaData.getName()
+              + ": No valid deprecate message" );
         }
       }
     }
   }
 
-  private static void validateStyleMetaData( final ElementMetaData metaData,
-                                             final ArrayList<String> missingProperties ) {
+  private static void validateStyleMetaData( final ElementMetaData metaData, final ArrayList<String> missingProperties ) {
     final Locale locale = Locale.getDefault();
     final String typeName = metaData.getName();
 
     final StyleMetaData[] styleMetaDatas = metaData.getStyleDescriptions();
     for ( int j = 0; j < styleMetaDatas.length; j++ ) {
-      final StyleMetaData propertyMetaData = styleMetaDatas[ j ];
+      final StyleMetaData propertyMetaData = styleMetaDatas[j];
       final String propertyDisplayName = propertyMetaData.getDisplayName( locale );
       if ( isValid( propertyDisplayName, propertyMetaData.getName(), missingProperties ) == false ) {
         logger.warn( "ElementType '" + typeName + ": Style " + propertyMetaData.getName() + ": No DisplayName" );
@@ -154,8 +152,8 @@ public class ElementTestHelper {
       if ( propertyMetaData.isDeprecated() ) {
         final String deprecateMessage = propertyMetaData.getDeprecationMessage( locale );
         if ( isValid( deprecateMessage, "Deprecated", missingProperties ) == false ) {
-          logger.warn(
-            "ElementType '" + typeName + ": Style " + propertyMetaData.getName() + ": No valid deprecate message" );
+          logger.warn( "ElementType '" + typeName + ": Style " + propertyMetaData.getName()
+              + ": No valid deprecate message" );
         }
       }
     }
@@ -165,9 +163,8 @@ public class ElementTestHelper {
     if ( translation == null ) {
       return false;
     }
-    if ( translation.length() > 2 &&
-      translation.charAt( 0 ) == '!' &&
-      translation.charAt( translation.length() - 1 ) == '!' ) {
+    if ( translation.length() > 2 && translation.charAt( 0 ) == '!'
+        && translation.charAt( translation.length() - 1 ) == '!' ) {
       final String retval = translation.substring( 1, translation.length() - 1 );
       missingProperties.add( retval + "=" + displayName );
       return false;

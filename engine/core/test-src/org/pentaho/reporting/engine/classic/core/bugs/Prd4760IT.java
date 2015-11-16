@@ -52,8 +52,8 @@ public class Prd4760IT extends TestCase {
     b.setVisible( false );
 
     MasterReport report = new MasterReport();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
     reportHeader.addElement( b );
@@ -62,7 +62,7 @@ public class Prd4760IT extends TestCase {
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
 
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
     Assert.assertEquals( 0, elementsByNodeType.length );
   }
 
@@ -73,22 +73,22 @@ public class Prd4760IT extends TestCase {
     b.setVisible( false );
 
     MasterReport report = new MasterReport();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
     reportHeader.addElement( b );
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
     Assert.assertEquals( 1, elementsByNodeType.length );
   }
 
   public void testSimpleReport() throws ReportProcessingException, ContentProcessingException {
     MasterReport report = new MasterReport();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
     reportHeader.addElement( TableTestUtil.createDataItem( "Test" ) );
@@ -97,7 +97,7 @@ public class Prd4760IT extends TestCase {
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
     Assert.assertEquals( 0, elementsByNodeType.length );
   }
 
@@ -106,8 +106,8 @@ public class Prd4760IT extends TestCase {
     test.setVisible( false );
 
     MasterReport report = new MasterReport();
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
     reportHeader.addElement( test );
@@ -116,17 +116,17 @@ public class Prd4760IT extends TestCase {
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
     Assert.assertEquals( 0, elementsByNodeType.length );
   }
 
   public void testGoldenSample() throws Exception {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4760.prpt" );
-    report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY,
+        "false" );
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
     Assert.assertEquals( 4, elementsByNodeType.length );
     for ( RenderNode renderNode : elementsByNodeType ) {
       if ( renderNode.getX() != 0 && renderNode.getX() != StrictGeomUtility.toInternalValue( 100 ) ) {
@@ -138,10 +138,10 @@ public class Prd4760IT extends TestCase {
   public void testGoldenSampleComplex() throws Exception {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4760.prpt" );
     report.getReportConfiguration()
-      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     RenderNode[] elementsByNodeType =
-      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+        MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
     Assert.assertEquals( 4, elementsByNodeType.length );
     for ( RenderNode renderNode : elementsByNodeType ) {
       if ( renderNode.getX() != 0 && renderNode.getX() != StrictGeomUtility.toInternalValue( 100 ) ) {

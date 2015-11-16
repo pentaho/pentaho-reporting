@@ -1,21 +1,46 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.Scrollable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -58,16 +83,6 @@ import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentMetaData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 public class ParameterReportControllerPane extends JPanel {
   private boolean isUpdating;
@@ -164,11 +179,12 @@ public class ParameterReportControllerPane extends JPanel {
         this.resourceManager = report.getResourceManager();
         this.contentBase = report.getContentBase();
         final Object dataCacheEnabledRaw =
-          report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
+            report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
         final boolean dataCacheEnabled = Boolean.FALSE.equals( dataCacheEnabledRaw ) == false;
         this.dataFactory = new CachingDataFactory( report.getDataFactory().derive(), dataCacheEnabled );
-        this.resourceBundleFactory = MasterReport.computeAndInitResourceBundleFactory
-          ( report.getResourceBundleFactory(), report.getReportEnvironment() );
+        this.resourceBundleFactory =
+            MasterReport.computeAndInitResourceBundleFactory( report.getResourceBundleFactory(), report
+                .getReportEnvironment() );
         this.reportEnvironment = report.getReportEnvironment();
         this.configuration = report.getConfiguration();
         final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow( reportEnvironment );
@@ -279,8 +295,9 @@ public class ParameterReportControllerPane extends JPanel {
   private ArrayList<ParameterComponent> parameterComponents;
 
   public ParameterReportControllerPane() {
-    messages = new Messages( Locale.getDefault(), SwingPreviewModule.BUNDLE_NAME,
-      ObjectUtilities.getClassLoader( ParameterReportControllerPane.class ) );
+    messages =
+        new Messages( Locale.getDefault(), SwingPreviewModule.BUNDLE_NAME, ObjectUtilities
+            .getClassLoader( ParameterReportControllerPane.class ) );
     changeListeners = new ArrayList<ChangeListener>();
     internalChangeListeners = new ArrayList<ChangeListener>();
 
@@ -341,7 +358,7 @@ public class ParameterReportControllerPane extends JPanel {
   }
 
   public void setReport( final MasterReport report ) throws ReportProcessingException {
-    //   final MasterReport oldReport = this.report;
+    // final MasterReport oldReport = this.report;
     this.report = report;
     if ( !isUpdating ) {
       reinit();
@@ -368,15 +385,16 @@ public class ParameterReportControllerPane extends JPanel {
       return;
     }
 
-    final Object autoUpdate = report.getAttribute
-      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.AUTO_SUBMIT_PARAMETER );
+    final Object autoUpdate =
+        report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.AUTO_SUBMIT_PARAMETER );
     final boolean showAutoSubmitCheckbox;
     final boolean autoSubmitDefault;
 
     if ( autoUpdate == null ) {
       showAutoSubmitCheckbox = true;
-      autoSubmitDefault = Boolean.FALSE.equals( report.getAttribute
-        ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.AUTO_SUBMIT_DEFAULT ) ) == false;
+      autoSubmitDefault =
+          Boolean.FALSE.equals( report.getAttribute( AttributeNames.Core.NAMESPACE,
+              AttributeNames.Core.AUTO_SUBMIT_DEFAULT ) ) == false;
     } else {
       showAutoSubmitCheckbox = false;
       autoSubmitDefault = Boolean.TRUE.equals( autoUpdate );
@@ -400,7 +418,7 @@ public class ParameterReportControllerPane extends JPanel {
       try {
         final ReportParameterValidator reportParameterValidator = parameters.getValidator();
         final ValidationResult validationResult =
-          reportParameterValidator.validate( new ValidationResult(), parameters, parameterContext );
+            reportParameterValidator.validate( new ValidationResult(), parameters, parameterContext );
         // first compute the default values ...
         this.reportParameterValues = validationResult.getParameterValues();
       } finally {
@@ -421,13 +439,13 @@ public class ParameterReportControllerPane extends JPanel {
 
     final ParameterDefinitionEntry[] entries = parameterDefinition.getParameterDefinitions();
     for ( int i = 0; i < entries.length; i++ ) {
-      final ParameterDefinitionEntry entry = entries[ i ];
-      if ( "true".equals( entry.getParameterAttribute
-        ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) ) {
+      final ParameterDefinitionEntry entry = entries[i];
+      if ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+          ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) ) {
         continue;
       }
       final ParameterComponent parameterComponent =
-        parameterEditorFactory.create( entry, parameterContext, updateContext );
+          parameterEditorFactory.create( entry, parameterContext, updateContext );
       addToPanel( entry, 1 + i * 2, parameterComponent.getUIComponent() );
       parameterComponents.add( parameterComponent );
     }
@@ -435,9 +453,7 @@ public class ParameterReportControllerPane extends JPanel {
     validateParameter();
   }
 
-  private void addToPanel( final ParameterDefinitionEntry entry,
-                           final int gridY,
-                           final JComponent editor ) {
+  private void addToPanel( final ParameterDefinitionEntry entry, final int gridY, final JComponent editor ) {
     final JLabel label = new JLabel( computeLabel( entry ) );
     final JLabel errorLabel = new JLabel();
     errorLabels.put( entry.getName(), errorLabel );
@@ -450,7 +466,6 @@ public class ParameterReportControllerPane extends JPanel {
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.insets = new Insets( 5, 5, 0, 5 );
     carrierPanel.add( label, gbc );
-
 
     if ( entry.isMandatory() ) {
       gbc = new GridBagConstraints();
@@ -487,14 +502,16 @@ public class ParameterReportControllerPane extends JPanel {
   }
 
   private String computeLabel( final ParameterDefinitionEntry entry ) {
-    final String swingLabel = entry.getParameterAttribute
-      ( ParameterAttributeNames.Swing.NAMESPACE, ParameterAttributeNames.Swing.LABEL, parameterContext );
+    final String swingLabel =
+        entry.getParameterAttribute( ParameterAttributeNames.Swing.NAMESPACE, ParameterAttributeNames.Swing.LABEL,
+            parameterContext );
     if ( swingLabel != null ) {
       return swingLabel;
     }
 
-    final String coreLabel = entry.getParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, parameterContext );
+    final String coreLabel =
+        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL,
+            parameterContext );
     if ( coreLabel != null ) {
       return coreLabel;
     }
@@ -547,9 +564,8 @@ public class ParameterReportControllerPane extends JPanel {
         listener.stateChanged( event );
       }
     } catch ( ReportProcessingException e ) {
-      ExceptionDialog.showExceptionDialog( this,
-        messages.getString( "ParameterReportControllerPane.Error" ),
-        messages.getString( "ParameterReportControllerPane.ErrorWhileConfiguringParameterUI", e.getMessage() ), e );
+      ExceptionDialog.showExceptionDialog( this, messages.getString( "ParameterReportControllerPane.Error" ), messages
+          .getString( "ParameterReportControllerPane.ErrorWhileConfiguringParameterUI", e.getMessage() ), e );
     }
     isUpdating = false;
   }
@@ -581,15 +597,15 @@ public class ParameterReportControllerPane extends JPanel {
     boolean retval = true;
     if ( validator != null ) {
       try {
-        final ValidationResult validationResult = validator.validate
-          ( new ValidationResult(), report.getParameterDefinition(), parameterContext );
+        final ValidationResult validationResult =
+            validator.validate( new ValidationResult(), report.getParameterDefinition(), parameterContext );
 
         final ValidationMessage[] messages = validationResult.getErrors();
         globalErrorMessage.setText( formatMessages( messages ) );
 
         final String[] propertyNames = validationResult.getProperties();
         for ( int i = 0; i < propertyNames.length; i++ ) {
-          final String propertyName = propertyNames[ i ];
+          final String propertyName = propertyNames[i];
           final JLabel o = errorLabels.get( propertyName );
           final ValidationMessage[] validationMessages = validationResult.getErrors( propertyName );
           final String message = formatMessages( validationMessages );
@@ -622,9 +638,8 @@ public class ParameterReportControllerPane extends JPanel {
         }
       } catch ( Exception e ) {
         // mark the report as invalid or so ..
-        ExceptionDialog.showExceptionDialog( this,
-          messages.getString( "ParameterReportControllerPane.Error" ),
-          messages.getString( "ParameterReportControllerPane.ErrorWhileConfiguringParameterUI", e.getMessage() ), e );
+        ExceptionDialog.showExceptionDialog( this, messages.getString( "ParameterReportControllerPane.Error" ),
+            messages.getString( "ParameterReportControllerPane.ErrorWhileConfiguringParameterUI", e.getMessage() ), e );
         retval = false;
       }
     }
@@ -649,7 +664,7 @@ public class ParameterReportControllerPane extends JPanel {
       if ( j != 0 ) {
         message.append( '\n' );
       }
-      final ValidationMessage validationMessage = validationMessages[ j ];
+      final ValidationMessage validationMessage = validationMessages[j];
       message.append( validationMessage.getMessage() );
     }
     return message.toString();

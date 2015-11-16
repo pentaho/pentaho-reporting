@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.event;
 
@@ -110,7 +110,6 @@ public class ReportEvent extends EventObject {
   public static final int NO_PARENT_PASSING_EVENT = 0x8000000;
   public static final int ARTIFICIAL_EVENT_CODE = 0x80000000;
 
-
   /**
    * The event type for this event.
    */
@@ -125,8 +124,10 @@ public class ReportEvent extends EventObject {
   /**
    * Creates a new <code>ReportEvent</code>.
    *
-   * @param state the current state of the processed report (<code>null</code> not permmitted).
-   * @param type  the event type for this event object.
+   * @param state
+   *          the current state of the processed report (<code>null</code> not permmitted).
+   * @param type
+   *          the event type for this event object.
    */
   public ReportEvent( final ReportState state, final int type ) {
     super( state );
@@ -143,9 +144,12 @@ public class ReportEvent extends EventObject {
   /**
    * Creates a new <code>ReportEvent</code>.
    *
-   * @param state            the current state of the processed report (<code>null</code> not permmitted).
-   * @param originatingState the original state that generated the event.
-   * @param type             the event type for this event object.
+   * @param state
+   *          the current state of the processed report (<code>null</code> not permmitted).
+   * @param originatingState
+   *          the original state that generated the event.
+   * @param type
+   *          the event type for this event object.
    */
   public ReportEvent( final ReportState state, final ReportState originatingState, final int type ) {
     this( state, type );
@@ -185,8 +189,9 @@ public class ReportEvent extends EventObject {
   }
 
   /**
-   * Returns the report that generated the event. <P> This is a convenience method that extracts the report from the
-   * report state.
+   * Returns the report that generated the event.
+   * <P>
+   * This is a convenience method that extracts the report from the report state.
    *
    * @return the report.
    */
@@ -197,9 +202,9 @@ public class ReportEvent extends EventObject {
   /**
    * Returns the currently assigned dataRow for this event.
    * <p/>
-   * The {@link DataRow} is used to access the fields of the {@link org.pentaho.reporting.engine.classic.core.filter
-   * .DataSource}
-   * and other functions and expressions within the current row of the report.
+   * The {@link DataRow} is used to access the fields of the
+   * {@link org.pentaho.reporting.engine.classic.core.filter .DataSource} and other functions and expressions within the
+   * current row of the report.
    *
    * @return the data row.
    */
@@ -223,8 +228,7 @@ public class ReportEvent extends EventObject {
    * @return true, if this is a deep-traversing element, false otherwise.
    */
   public boolean isDeepTraversing() {
-    return ( type & ReportEvent.DEEP_TRAVERSING_EVENT ) ==
-      ReportEvent.DEEP_TRAVERSING_EVENT;
+    return ( type & ReportEvent.DEEP_TRAVERSING_EVENT ) == ReportEvent.DEEP_TRAVERSING_EVENT;
   }
 
   /**

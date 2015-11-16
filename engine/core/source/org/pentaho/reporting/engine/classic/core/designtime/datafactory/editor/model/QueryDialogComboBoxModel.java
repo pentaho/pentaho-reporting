@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model;
 
-import javax.swing.*;
+import javax.swing.ComboBoxModel;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
@@ -32,18 +32,18 @@ public class QueryDialogComboBoxModel<T> implements ComboBoxModel {
     }
 
     public void queryAdded( final QueryDialogModelEvent<T> event ) {
-      fireIntervalAddedEvent( new ListDataEvent
-        ( this, ListDataEvent.INTERVAL_ADDED, event.getNewIndex(), event.getNewIndex() ) );
+      fireIntervalAddedEvent( new ListDataEvent( this, ListDataEvent.INTERVAL_ADDED, event.getNewIndex(), event
+          .getNewIndex() ) );
     }
 
     public void queryRemoved( final QueryDialogModelEvent<T> event ) {
-      fireIntervalRemovedEvent( new ListDataEvent
-        ( this, ListDataEvent.INTERVAL_REMOVED, event.getOldIndex(), event.getOldIndex() ) );
+      fireIntervalRemovedEvent( new ListDataEvent( this, ListDataEvent.INTERVAL_REMOVED, event.getOldIndex(), event
+          .getOldIndex() ) );
     }
 
     public void queryUpdated( final QueryDialogModelEvent<T> event ) {
-      fireContentsChangedEvent( new ListDataEvent
-        ( this, ListDataEvent.CONTENTS_CHANGED, event.getNewIndex(), event.getNewIndex() ) );
+      fireContentsChangedEvent( new ListDataEvent( this, ListDataEvent.CONTENTS_CHANGED, event.getNewIndex(), event
+          .getNewIndex() ) );
     }
 
     public void queryDataChanged( final QueryDialogModelEvent<T> event ) {
@@ -92,7 +92,7 @@ public class QueryDialogComboBoxModel<T> implements ComboBoxModel {
   protected void fireContentsChangedEvent( ListDataEvent event ) {
     ListDataListener[] listeners1 = listeners.getListeners( ListDataListener.class );
     for ( int i = listeners1.length - 1; i >= 0; i -= 1 ) {
-      ListDataListener l = listeners1[ i ];
+      ListDataListener l = listeners1[i];
       l.contentsChanged( event );
     }
   }
@@ -100,7 +100,7 @@ public class QueryDialogComboBoxModel<T> implements ComboBoxModel {
   protected void fireIntervalRemovedEvent( ListDataEvent event ) {
     ListDataListener[] listeners1 = listeners.getListeners( ListDataListener.class );
     for ( int i = listeners1.length - 1; i >= 0; i -= 1 ) {
-      ListDataListener l = listeners1[ i ];
+      ListDataListener l = listeners1[i];
       l.intervalRemoved( event );
     }
   }
@@ -108,7 +108,7 @@ public class QueryDialogComboBoxModel<T> implements ComboBoxModel {
   protected void fireIntervalAddedEvent( ListDataEvent event ) {
     ListDataListener[] listeners1 = listeners.getListeners( ListDataListener.class );
     for ( int i = listeners1.length - 1; i >= 0; i -= 1 ) {
-      ListDataListener l = listeners1[ i ];
+      ListDataListener l = listeners1[i];
       l.intervalAdded( event );
     }
   }

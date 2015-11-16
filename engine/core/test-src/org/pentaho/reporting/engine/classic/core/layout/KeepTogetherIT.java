@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -82,11 +82,11 @@ public class KeepTogetherIT extends TestCase {
     group1.getHeader().addElement( createDataItem( "inner-header-field", 100, 20 ) );
     group1.getFooter().addElement( createDataItem( "inner-footer-field", 100, 20 ) );
     report.getItemBand().addElement( createFieldItem( "detail-field", 100, 20 ) );
-    report.getItemBand().getParentSection().getStyle()
-      .setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE );
+    report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE,
+        Boolean.TRUE );
     group1.getStyle().setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE );
 
-    //PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
+    // PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
     List<LogicalPageBox> pages = DebugReportRunner.layoutPages( report, 0, 1, 2, 3, 4, 5, 6, 7 );
 
     final LogicalPageBox page1 = pages.get( 0 );
@@ -134,7 +134,7 @@ public class KeepTogetherIT extends TestCase {
     assertElementExists( "inner-footer-field", page8 );
     assertElementExists( "outer-footer-field", page8 );
 
-    //    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Keep-Together-0.prpt");
+    // BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Keep-Together-0.prpt");
   }
 
   public void testSubReport2() throws Exception {
@@ -173,17 +173,17 @@ public class KeepTogetherIT extends TestCase {
     group1.getHeader().addElement( createDataItem( "inner-header-field", 100, 20 ) );
     group1.getFooter().addElement( createDataItem( "inner-footer-field", 100, 20 ) );
     report.getItemBand().addElement( createFieldItem( "detail-field", 100, 20 ) );
-    report.getItemBand().getParentSection().getStyle()
-      .setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE );
+    report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE,
+        Boolean.TRUE );
     group0.getStyle().setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE );
 
     final MasterReport master = new MasterReport();
     master.setPageDefinition( new SimplePageDefinition( new PageSize( 500, 100 ) ) );
     master.getReportHeader().addElement( report );
 
-    //    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Keep-Together-2.prpt");
-    //    PdfReportUtil.createPDF(master, "/tmp/KeepTogetherTest5.pdf");
-    //    DebugReportRunner.createPDF(master);
+    // BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Keep-Together-2.prpt");
+    // PdfReportUtil.createPDF(master, "/tmp/KeepTogetherTest5.pdf");
+    // DebugReportRunner.createPDF(master);
     DebugReportRunner.createPDF( master );
   }
 
@@ -221,12 +221,12 @@ public class KeepTogetherIT extends TestCase {
     group1.getHeader().addElement( createDataItem( "inner-header-field", 100, 20 ) );
     group1.getFooter().addElement( createDataItem( "inner-footer-field", 100, 20 ) );
     report.getItemBand().addElement( createFieldItem( "detail-field", 100, 20 ) );
-    report.getItemBand().getParentSection().getStyle()
-      .setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE );
+    report.getItemBand().getParentSection().getStyle().setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE,
+        Boolean.TRUE );
     group0.getStyle().setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE );
 
     DebugReportRunner.createPDF( report );
-    //    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Keep-Together-1.prpt");
+    // BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Keep-Together-1.prpt");
   }
 
   public static Element createDataItem( final String text, final float width, final float height ) {

@@ -1,32 +1,32 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
+
+import java.awt.Image;
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.URL;
 
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
-
-import java.awt.*;
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.URL;
 
 /**
  * An DefaultImageReference encapsulates the source of an image together with a <code>java.awt.Image</code>. The source
@@ -40,8 +40,7 @@ import java.net.URL;
  *
  * @author Thomas Morgner
  */
-public class DefaultImageReference
-  implements Serializable, URLImageContainer, LocalImageContainer {
+public class DefaultImageReference implements Serializable, URLImageContainer, LocalImageContainer {
   /**
    * A unique identifier for long term persistance.
    */
@@ -82,12 +81,14 @@ public class DefaultImageReference
    * Creates a new ImageReference without an assigned URL for the Image. This image reference will not be loadable and
    * cannot be used to embedd the original rawdata of the image into the generated content.
    *
-   * @param img the image for this reference.
-   * @throws NullPointerException if the image is null.
-   * @throws java.io.IOException  if an IOError occured while loading the image.
+   * @param img
+   *          the image for this reference.
+   * @throws NullPointerException
+   *           if the image is null.
+   * @throws java.io.IOException
+   *           if an IOError occured while loading the image.
    */
-  public DefaultImageReference( final Image img )
-    throws IOException {
+  public DefaultImageReference( final Image img ) throws IOException {
     if ( img == null ) {
       throw new NullPointerException();
     }
@@ -101,8 +102,7 @@ public class DefaultImageReference
     this.height = image.getHeight( null );
   }
 
-  public DefaultImageReference( final Resource imageResource )
-    throws ResourceException {
+  public DefaultImageReference( final Resource imageResource ) throws ResourceException {
     if ( imageResource == null ) {
       throw new NullPointerException();
     }
@@ -126,13 +126,14 @@ public class DefaultImageReference
     this.height = image.getHeight( null );
   }
 
-
   /**
    * Creates a new image reference without assigning either an Image or an URL. This DefaultImageReference will act as
    * place holder to reserve space during the layouting, no content will be generated.
    *
-   * @param w the width of the unscaled image.
-   * @param h the height of the unscaled image.
+   * @param w
+   *          the width of the unscaled image.
+   * @param h
+   *          the height of the unscaled image.
    */
   public DefaultImageReference( final int w, final int h ) {
     this.width = w;
@@ -142,7 +143,8 @@ public class DefaultImageReference
   /**
    * Copies the contents of the given DefaultImageReference.
    *
-   * @param parent the parent.
+   * @param parent
+   *          the parent.
    */
   public DefaultImageReference( final DefaultImageReference parent ) {
     if ( parent == null ) {
@@ -186,7 +188,7 @@ public class DefaultImageReference
   }
 
   /**
-   * Returns a String representing this object.  Useful for debugging.
+   * Returns a String representing this object. Useful for debugging.
    *
    * @return The string.
    */
@@ -219,7 +221,8 @@ public class DefaultImageReference
   /**
    * Checks for equality.
    *
-   * @param obj the object to test.
+   * @param obj
+   *          the object to test.
    * @return true if the specified object is equal to this one.
    */
   public boolean equals( final Object obj ) {
@@ -267,10 +270,10 @@ public class DefaultImageReference
    * Clones this Element.
    *
    * @return a clone of this element.
-   * @throws CloneNotSupportedException this should never be thrown.
+   * @throws CloneNotSupportedException
+   *           this should never be thrown.
    */
-  public Object clone()
-    throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
@@ -328,8 +331,7 @@ public class DefaultImageReference
   }
 
   /**
-   * Checks whether this image has a assigned identity. Two identities should be equal, if the image contents are
-   * equal.
+   * Checks whether this image has a assigned identity. Two identities should be equal, if the image contents are equal.
    *
    * @return true, if that image contains contains identity information, false otherwise.
    */
@@ -361,8 +363,10 @@ public class DefaultImageReference
    * If your image has a higher resolution than 72dpi, this factor should be a value lower than 1 (the image will be
    * scaled down).
    *
-   * @param sx the scale factor.
-   * @param sy the scale factor.
+   * @param sx
+   *          the scale factor.
+   * @param sy
+   *          the scale factor.
    */
   public void setScale( final float sx, final float sy ) {
     this.scaleX = sx;

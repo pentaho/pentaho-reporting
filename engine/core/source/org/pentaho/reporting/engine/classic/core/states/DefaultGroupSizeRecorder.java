@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states;
 
@@ -45,7 +45,7 @@ public class DefaultGroupSizeRecorder implements GroupSizeRecorder {
       sb.append( "{keys=" );
       for ( int i = 0; i < keys.length; ++i ) {
         sb.append( i == 0 ? "" : ", " );
-        sb.append( keys[ i ] );
+        sb.append( keys[i] );
       }
       sb.append( '}' );
       return sb.toString();
@@ -97,7 +97,7 @@ public class DefaultGroupSizeRecorder implements GroupSizeRecorder {
 
   public Object clone() {
     try {
-      //logger.debug("g.clone()");
+      // logger.debug("g.clone()");
       final DefaultGroupSizeRecorder rec = (DefaultGroupSizeRecorder) super.clone();
       rec.groupCounts = (IntList) groupCounts.clone();
       rec.keys = (FastStack<GroupKey>) keys.clone();
@@ -113,7 +113,7 @@ public class DefaultGroupSizeRecorder implements GroupSizeRecorder {
 
     final GroupKey key = new GroupKey( groupCounts.toArray(), false );
     keys.push( key );
-    //    logger.debug("g.enterGroup(); // " + key);
+    // logger.debug("g.enterGroup(); // " + key);
 
     groupCounts.add( 0 );
   }
@@ -123,7 +123,7 @@ public class DefaultGroupSizeRecorder implements GroupSizeRecorder {
   }
 
   public void advanceItems() {
-    //    logger.debug("g.advanceItems()");
+    // logger.debug("g.advanceItems()");
     groupCounts.set( currentGroupIndex, groupCounts.get( currentGroupIndex ) + 1 );
   }
 
@@ -132,7 +132,7 @@ public class DefaultGroupSizeRecorder implements GroupSizeRecorder {
   }
 
   public void leaveGroup() {
-    //    logger.debug("g.leaveGroup()");
+    // logger.debug("g.leaveGroup()");
     final Integer i = groupCounts.pop();
     GroupKey k = keys.pop();
 
@@ -141,7 +141,7 @@ public class DefaultGroupSizeRecorder implements GroupSizeRecorder {
   }
 
   public void reset() {
-    //logger.debug("g.reset()");
+    // logger.debug("g.reset()");
     groupCounts.clear();
     keys.clear();
     groupCounts.add( 0 );

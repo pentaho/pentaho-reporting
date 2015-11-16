@@ -59,15 +59,17 @@ public abstract class AbstractScriptableDataFactory extends AbstractDataFactory 
   /**
    * Sets a query that uses no scripting for customization.
    *
-   * @param name        the logical name
-   * @param queryString the SQL string that will be executed.
+   * @param name
+   *          the logical name
+   * @param queryString
+   *          the SQL string that will be executed.
    */
   public void setQuery( final String name, final String queryString ) {
     setQuery( name, queryString, null, null );
   }
 
-  public void setQuery( final String name, final String queryString,
-                        final String queryScriptLanguage, final String queryScript ) {
+  public void setQuery( final String name, final String queryString, final String queryScriptLanguage,
+      final String queryScript ) {
     if ( name == null ) {
       throw new NullPointerException();
     }
@@ -116,8 +118,7 @@ public abstract class AbstractScriptableDataFactory extends AbstractDataFactory 
     scriptingSupport.initialize( this, dataFactoryContext );
   }
 
-  public final String[] getReferencedFields( final String query,
-                                             final DataRow parameter ) {
+  public final String[] getReferencedFields( final String query, final DataRow parameter ) {
     try {
       final String[] additionalFields = scriptingSupport.computeAdditionalQueryFields( query, parameter );
       if ( additionalFields == null ) {
@@ -137,15 +138,15 @@ public abstract class AbstractScriptableDataFactory extends AbstractDataFactory 
       final LinkedHashSet<String> fields = new LinkedHashSet<String>();
       fields.addAll( Arrays.asList( referencedFieldsInternal ) );
       fields.addAll( Arrays.asList( additionalFields ) );
-      return fields.toArray( new String[ fields.size() ] );
+      return fields.toArray( new String[fields.size()] );
     } catch ( final ReportDataFactoryException rx ) {
       logger.debug( "Failed to compute referenced fields", rx ); // NON-NLS
       return null;
     }
   }
 
-  protected abstract String[] getReferencedFieldsInternal( final String query,
-                                                           final DataRow parameters ) throws ReportDataFactoryException;
+  protected abstract String[] getReferencedFieldsInternal( final String query, final DataRow parameters )
+    throws ReportDataFactoryException;
 
   public final Object getQueryHash( final String query, final DataRow parameter ) {
     try {
@@ -171,8 +172,7 @@ public abstract class AbstractScriptableDataFactory extends AbstractDataFactory 
     }
   }
 
-  protected abstract Object getQueryHashInternal( final String realQuery,
-                                                  final DataRow parameter ) throws ReportDataFactoryException;
-
+  protected abstract Object getQueryHashInternal( final String realQuery, final DataRow parameter )
+    throws ReportDataFactoryException;
 
 }

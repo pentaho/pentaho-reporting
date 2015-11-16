@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.util.geom;
 
@@ -48,8 +48,10 @@ public class StrictPoint implements Serializable, Cloneable {
   /**
    * Creates a StrictBounds object with the given coordinates, width and height.
    *
-   * @param x the x-coordinate
-   * @param y the y-coordinate
+   * @param x
+   *          the x-coordinate
+   * @param y
+   *          the y-coordinate
    */
   public StrictPoint( final long x, final long y ) {
     this.x = x;
@@ -57,7 +59,7 @@ public class StrictPoint implements Serializable, Cloneable {
   }
 
   /**
-   * Returns the X coordinate of this <code>StrictPoint</code>  in micro points.
+   * Returns the X coordinate of this <code>StrictPoint</code> in micro points.
    *
    * @return the X coordinate of this <code>StrictPoint</code>.
    */
@@ -77,8 +79,10 @@ public class StrictPoint implements Serializable, Cloneable {
   /**
    * Sets the location of this <code>StrictPoint</code> to the specified coordinates.
    *
-   * @param x the coordinates of this <code>StrictPoint</code>
-   * @param y the coordinates of this <code>StrictPoint</code>
+   * @param x
+   *          the coordinates of this <code>StrictPoint</code>
+   * @param y
+   *          the coordinates of this <code>StrictPoint</code>
    */
   public void setLocation( final long x, final long y ) {
     if ( locked ) {
@@ -97,7 +101,6 @@ public class StrictPoint implements Serializable, Cloneable {
   public boolean isLocked() {
     return locked;
   }
-
 
   /**
    * Returns a copy of this bounds object which cannot be modified anymore.
@@ -138,23 +141,20 @@ public class StrictPoint implements Serializable, Cloneable {
     }
   }
 
-
   /**
    * Returns a string representation of these bounds.
    *
    * @return the string representing this object.
    */
   public String toString() {
-    return "org.pentaho.reporting.engine.classic.core.util.geom.StrictPoint{" +
-      "x=" + x +
-      ", y=" + y +
-      '}';
+    return "org.pentaho.reporting.engine.classic.core.util.geom.StrictPoint{" + "x=" + x + ", y=" + y + '}';
   }
 
   /**
    * Checks whether the given object is a StrictPoint instance sharing the same coordinates as this point.
    *
-   * @param o the other object.
+   * @param o
+   *          the other object.
    * @return true, if the other object is equal to this object, false otherwise.
    */
   public boolean equals( final Object o ) {

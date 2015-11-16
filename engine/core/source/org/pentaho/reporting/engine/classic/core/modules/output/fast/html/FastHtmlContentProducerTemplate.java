@@ -34,25 +34,21 @@ public class FastHtmlContentProducerTemplate extends AbstractContentProducerTemp
   private FastHtmlContentItems contentItems;
   private FastHtmlPrinter htmlPrinter;
 
-  public FastHtmlContentProducerTemplate( final SheetLayout sheetLayout,
-                                          final FastHtmlContentItems contentItems ) {
+  public FastHtmlContentProducerTemplate( final SheetLayout sheetLayout, final FastHtmlContentItems contentItems ) {
     super( sheetLayout );
     this.contentItems = contentItems;
   }
 
-  public void initialize( final ReportDefinition report,
-                          final ExpressionRuntime runtime,
-                          final boolean pagination ) {
+  public void initialize( final ReportDefinition report, final ExpressionRuntime runtime, final boolean pagination ) {
     super.initialize( report, runtime, pagination );
-    this.htmlPrinter = new FastHtmlPrinter( getSharedSheetLayout(),
-      runtime.getProcessingContext().getResourceManager(), contentItems );
+    this.htmlPrinter =
+        new FastHtmlPrinter( getSharedSheetLayout(), runtime.getProcessingContext().getResourceManager(), contentItems );
     this.htmlPrinter.init( getMetaData(), report );
   }
 
-  protected void writeContent( final Band band,
-                               final ExpressionRuntime runtime,
-                               final FormattedDataBuilder messageFormatSupport )
-    throws IOException, ReportProcessingException, ContentProcessingException {
+  protected void writeContent( final Band band, final ExpressionRuntime runtime,
+      final FormattedDataBuilder messageFormatSupport ) throws IOException, ReportProcessingException,
+    ContentProcessingException {
     messageFormatSupport.compute( band, runtime, null );
   }
 

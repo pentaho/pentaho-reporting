@@ -55,8 +55,9 @@ public class SortOrderReportPreProcessorTest extends PreProcessorTestBase {
     report.setAutoSort( Boolean.TRUE );
     ReportPreProcessor reportPreProcessor = create();
     MasterReport materialized = materializePreData( report, reportPreProcessor );
-    Object attribute = materialized.getAttribute
-      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
+    Object attribute =
+        materialized
+            .getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
     Assert.assertTrue( attribute instanceof List );
     List<SortConstraint> sc = (List<SortConstraint>) attribute;
     Assert.assertEquals( 3, sc.size() );
@@ -81,8 +82,9 @@ public class SortOrderReportPreProcessorTest extends PreProcessorTestBase {
     report.setAutoSort( Boolean.TRUE );
     ReportPreProcessor reportPreProcessor = create();
     MasterReport materialized = materializePreData( report, reportPreProcessor );
-    Object attribute = materialized.getAttribute
-      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
+    Object attribute =
+        materialized
+            .getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
     Assert.assertTrue( attribute instanceof List );
     List<SortConstraint> sc = (List<SortConstraint>) attribute;
     Assert.assertEquals( 6, sc.size() );

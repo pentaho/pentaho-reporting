@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -70,16 +70,20 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
   private String field;
 
   /**
-   * Constructs an unnamed function. <P> Make sure to set the function name before it is used, or function
-   * initialisation will fail.
+   * Constructs an unnamed function.
+   * <P>
+   * Make sure to set the function name before it is used, or function initialisation will fail.
    */
   public ItemHideFunction() {
   }
 
   /**
-   * Constructs a named function. <P> The field must be defined before using the function.
+   * Constructs a named function.
+   * <P>
+   * The field must be defined before using the function.
    *
-   * @param name The function name.
+   * @param name
+   *          The function name.
    */
   public ItemHideFunction( final String name ) {
     this();
@@ -98,7 +102,8 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
   /**
    * Defines whether a group start resets the visiblity of the element.
    *
-   * @param ignoreGroupBreaks false, if group breaks reset the visiblity, true otherwise.
+   * @param ignoreGroupBreaks
+   *          false, if group breaks reset the visiblity, true otherwise.
    */
   public void setIgnoreGroupBreaks( final boolean ignoreGroupBreaks ) {
     this.ignoreGroupBreaks = ignoreGroupBreaks;
@@ -116,7 +121,8 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
   /**
    * Returns whether a page start resets the visiblity of the element.
    *
-   * @param ignorePageBreaks false, if page breaks reset the visiblity, true otherwise.
+   * @param ignorePageBreaks
+   *          false, if page breaks reset the visiblity, true otherwise.
    */
   public void setIgnorePageBreaks( final boolean ignorePageBreaks ) {
     this.ignorePageBreaks = ignorePageBreaks;
@@ -134,7 +140,8 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
   /**
    * Sets the name of the element in the item band that should be set visible/invisible.
    *
-   * @param name the element name (must not be null).
+   * @param name
+   *          the element name (must not be null).
    */
   public void setElement( final String name ) {
     this.element = name;
@@ -152,18 +159,20 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field the field name.
+   * @param field
+   *          the field name.
    */
   public void setField( final String field ) {
     this.field = field;
   }
 
   /**
-   * Receives notification that a row of data is being processed.  Reads the data from the field defined for this
+   * Receives notification that a row of data is being processed. Reads the data from the field defined for this
    * function and hides the field if the value is equal to the last value and the this is not the first row of the item
    * group.
    *
-   * @param event Information about the event.
+   * @param event
+   *          Information about the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     final Object fieldValue = event.getDataRow().get( getField() );
@@ -180,11 +189,11 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
     applyVisible( event );
   }
 
-
   /**
    * Resets the state of the function when a new ItemGroup has started.
    *
-   * @param event the report event.
+   * @param event
+   *          the report event.
    */
   public void itemsStarted( final ReportEvent event ) {
     if ( ignoreGroupBreaks == false ) {
@@ -208,7 +217,8 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
   /**
    * Receives notification that a page is completed.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void pageFinished( final ReportEvent event ) {
   }
@@ -216,7 +226,8 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
   /**
    * Receives notification that a new page is being started.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void pageStarted( final ReportEvent event ) {
     if ( ignorePageBreaks ) {
@@ -243,7 +254,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
 
     final Element[] elements = FunctionUtilities.findAllElements( itemBand, getElement() );
     for ( int i = 0; i < elements.length; i++ ) {
-      final Element e = elements[ i ];
+      final Element e = elements[i];
       e.setVisible( visible );
     }
   }
@@ -263,7 +274,8 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
   /**
    * Receives notification that the report has started.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     lastObject = null;

@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
@@ -70,8 +70,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
   private CellMarker.SectionType sectionType;
   private OutputProcessorMetaData metaData;
 
-  public TableContentProducer( final SheetLayout sheetLayout,
-                               final OutputProcessorMetaData metaData ) {
+  public TableContentProducer( final SheetLayout sheetLayout, final OutputProcessorMetaData metaData ) {
     if ( metaData == null ) {
       throw new NullPointerException();
     }
@@ -86,20 +85,32 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
     this.ellipseAsBackground = metaData.isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE );
     updateSheetLayout( sheetLayout );
 
-    //    DebugLog.log("Table-Size: " +  sheetLayout.getRowCount() + " " + sheetLayout.getColumnCount());
+    // DebugLog.log("Table-Size: " + sheetLayout.getRowCount() + " " + sheetLayout.getColumnCount());
     final Configuration config = metaData.getConfiguration();
     final boolean designTime = metaData.isFeatureSupported( OutputProcessorFeature.DESIGNTIME );
     if ( designTime == false ) {
-      this.debugReportLayout = "true".equals( config.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.DebugReportLayout" ) );
-      this.verboseCellMarkers = "true".equals( config.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkers" ) );
-      this.verboseCellMarkersThreshold = ParserUtil.parseInt( config.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkerThreshold" ), 5000 );
-      this.reportCellConflicts = "true".equals( config.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.ReportCellConflicts" ) );
-      this.failOnCellConflicts = "true".equals( config.getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts" ) );
+      this.debugReportLayout =
+          "true"
+              .equals( config
+                  .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.DebugReportLayout" ) );
+      this.verboseCellMarkers =
+          "true"
+              .equals( config
+                  .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkers" ) );
+      this.verboseCellMarkersThreshold =
+          ParserUtil
+              .parseInt(
+                  config
+                      .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkerThreshold" ),
+                  5000 );
+      this.reportCellConflicts =
+          "true"
+              .equals( config
+                  .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.ReportCellConflicts" ) );
+      this.failOnCellConflicts =
+          "true"
+              .equals( config
+                  .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts" ) );
     }
   }
 
@@ -120,8 +131,9 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
     this.maximumHeight = sheetLayout.getMaxHeight();
     this.maximumWidth = sheetLayout.getMaxWidth();
     if ( this.contentBackend == null ) {
-      this.contentBackend = new GenericObjectTable<CellMarker>
-        ( Math.max( 1, sheetLayout.getRowCount() ), Math.max( 1, sheetLayout.getColumnCount() ) );
+      this.contentBackend =
+          new GenericObjectTable<CellMarker>( Math.max( 1, sheetLayout.getRowCount() ), Math.max( 1, sheetLayout
+              .getColumnCount() ) );
     }
     this.contentBackend.ensureCapacity( sheetLayout.getRowCount(), sheetLayout.getColumnCount() );
   }
@@ -134,11 +146,10 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
     return sectionType;
   }
 
-  public void compute( final LogicalPageBox logicalPage,
-                       final boolean iterativeUpdate ) {
+  public void compute( final LogicalPageBox logicalPage, final boolean iterativeUpdate ) {
     // this.iterativeUpdate = iterativeUpdate;
-    //    ModelPrinter.print(logicalPage);
-    //    this.performOutput = performOutput;
+    // ModelPrinter.print(logicalPage);
+    // this.performOutput = performOutput;
     this.sheetName = null;
     if ( unalignedPagebands == false ) {
       // The page-header and footer area are aligned/shifted within the logical pagebox so that all areas
@@ -146,7 +157,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
       pageOffset = 0;
       effectiveHeaderSize = 0;
       pageEndPosition = logicalPage.getPageEnd();
-      //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
+      // Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
       sectionType = CellMarker.SectionType.TYPE_INVALID;
       if ( startBox( logicalPage ) ) {
         if ( headerProcessed == false ) {
@@ -173,13 +184,13 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
       }
       sectionType = CellMarker.SectionType.TYPE_INVALID;
       finishBox( logicalPage );
-      //ModelPrinter.print(logicalPage);
+      // ModelPrinter.print(logicalPage);
     } else {
       // The page-header and footer area are not aligned/shifted within the logical pagebox.
       // All areas have their own coordinate system starting at (0,0). We apply a manual shift here
       // so that we dont have to modify the nodes (which invalidates the cache, and therefore is ugly)
 
-      //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
+      // Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
       effectiveHeaderSize = 0;
       pageOffset = logicalPage.getPageOffset();
       pageEndPosition = ( logicalPage.getPageEnd() );
@@ -230,17 +241,17 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
       }
       sectionType = CellMarker.SectionType.TYPE_INVALID;
       finishBox( logicalPage );
-      //ModelPrinter.print(logicalPage);
+      // ModelPrinter.print(logicalPage);
     }
 
     if ( iterativeUpdate ) {
-      //      DebugLog.log("iterative: Computing commited rows: " + sheetLayout.getRowCount() + " vs. " +
+      // DebugLog.log("iterative: Computing commited rows: " + sheetLayout.getRowCount() + " vs. " +
       // contentBackend.getRowCount());
       updateFilledRows();
     } else {
-      //      Log.debug("Non-iterative: Assuming all rows are commited: " + sheetLayout.getRowCount() + " vs. " +
+      // Log.debug("Non-iterative: Assuming all rows are commited: " + sheetLayout.getRowCount() + " vs. " +
       // contentBackend.getRowCount());
-      //      updateFilledRows();
+      // updateFilledRows();
       filledRows = getRowCount();
     }
 
@@ -341,8 +352,8 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
 
     final long height = box.getHeight();
     //
-    //    DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
-    //    DebugLog.log ("Processing Box " + box);
+    // DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
+    // DebugLog.log ("Processing Box " + box);
 
     if ( height > 0 ) {
       if ( ( box.getY() + height ) <= pageOffset ) {
@@ -376,10 +387,11 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
       // once a box is marked as content, then there is no need to check further ..
       isContentBox = contentBoxHint.booleanValue();
     } else {
-      if ( ( box.getNodeType() & LayoutNodeTypes.TYPE_BOX_CONTENT ) == LayoutNodeTypes.TYPE_BOX_CONTENT ||
-        box.getStaticBoxLayoutProperties().isPlaceholderBox() ) {
-        isContentBox = ProcessUtility.isContent( box, ellipseAsBackground, shapesAsContent ) ||
-          metaData.isExtraContentElement( box.getStyleSheet(), box.getAttributes() );
+      if ( ( box.getNodeType() & LayoutNodeTypes.TYPE_BOX_CONTENT ) == LayoutNodeTypes.TYPE_BOX_CONTENT
+          || box.getStaticBoxLayoutProperties().isPlaceholderBox() ) {
+        isContentBox =
+            ProcessUtility.isContent( box, ellipseAsBackground, shapesAsContent )
+                || metaData.isExtraContentElement( box.getStyleSheet(), box.getAttributes() );
         if ( isContentBox ) {
           box.setContentBox( Boolean.TRUE );
         } else {
@@ -394,8 +406,9 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
           isContentBox = contentBoxHint.booleanValue();
         } else {
           // once the element has a
-          isContentBox = ProcessUtility.isContent( box, ellipseAsBackground, shapesAsContent ) ||
-            metaData.isExtraContentElement( box.getStyleSheet(), box.getAttributes() );
+          isContentBox =
+              ProcessUtility.isContent( box, ellipseAsBackground, shapesAsContent )
+                  || metaData.isExtraContentElement( box.getStyleSheet(), box.getAttributes() );
           if ( isContentBox ) {
             box.setContentBox( Boolean.TRUE );
           } else {
@@ -419,11 +432,11 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
         if ( box.isCommited() == false ) {
           throw new IllegalStateException();
         }
-        //Log.debug("Processing box-cell with bounds (" + x1 + ", " + y1 + ")(" + x2 + ", " + y2 + ")");
-        //if (rectY2 < finishedRows)
-        //{
-        //  // this is a repeated encounter, ignore it ..
-        //}
+        // Log.debug("Processing box-cell with bounds (" + x1 + ", " + y1 + ")(" + x2 + ", " + y2 + ")");
+        // if (rectY2 < finishedRows)
+        // {
+        // // this is a repeated encounter, ignore it ..
+        // }
         contentBackend.ensureCapacity( rectY2, rectX2 );
 
         final BandMarker bandMarker = new BandMarker( box, sectionType, sectionDepth );
@@ -441,14 +454,14 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
 
     if ( box.isCommited() == false ) {
       // content-box is not finished yet.
-      //      if (iterativeUpdate == false)
-      //      {
-      //        Log.debug("Still Skipping content-cell with bounds (" + x1 + ", " + y1 + ")(" + x2 + ", " + y2 + ")");
-      //      }
+      // if (iterativeUpdate == false)
+      // {
+      // Log.debug("Still Skipping content-cell with bounds (" + x1 + ", " + y1 + ")(" + x2 + ", " + y2 + ")");
+      // }
       return false;
     }
 
-    //Log.debug("Processing content-cell with bounds (" + x1 + ", " + y1 + ")(" + x2 + ", " + y2 + ")");
+    // Log.debug("Processing content-cell with bounds (" + x1 + ", " + y1 + ")(" + x2 + ", " + y2 + ")");
     collectSheetStyleData( box );
 
     if ( isCellSpaceOccupied( lookupRectangle ) == false ) {
@@ -532,8 +545,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
           final Object object = contentBackend.getObject( r, c );
           if ( object != null && object instanceof BandMarker == false ) {
             if ( reportCellConflicts ) {
-              logger.debug(
-                "Cell (" + c + ", " + r + ") already filled: Content in cell: " + object );
+              logger.debug( "Cell (" + c + ", " + r + ") already filled: Content in cell: " + object );
             }
             return true;
           }
@@ -576,8 +588,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
         final boolean b = o.isFinished();
         if ( b == false ) {
           if ( debugReportLayout ) {
-            logger.debug(
-              "Cannot clear row: Cell (" + column + ", " + row + ") is not finished: " + o );
+            logger.debug( "Cannot clear row: Cell (" + column + ", " + row + ") is not finished: " + o );
           }
           return;
         } else {
@@ -590,7 +601,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
       // we can only clear rows when there is at least some content. Otherwise we will also clear the
       // markers for the cell-background on the BandMarker. This sadly eats slightly more memory, but
       // luckily it will only become an issue if your report is a large assortation of bands with not
-      // a single element of real content. 
+      // a single element of real content.
       if ( rowHasContent ) {
         atleastOneRowHasContent = true;
         finishedRows = row + 1;

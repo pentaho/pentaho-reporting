@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-
 /**
  * The PatchRtfRow wraps one Row for a PatchRtfTable. INTERNAL USE ONLY
  *
@@ -157,10 +156,14 @@ public class PatchRtfRow extends RtfElement {
   /**
    * Constructs a PatchRtfRow for a Row.
    *
-   * @param doc           The RtfDocument this PatchRtfRow belongs to
-   * @param PatchRtfTable The PatchRtfTable this PatchRtfRow belongs to
-   * @param row           The Row this PatchRtfRow is based on
-   * @param rowNumber     The number of this row
+   * @param doc
+   *          The RtfDocument this PatchRtfRow belongs to
+   * @param PatchRtfTable
+   *          The PatchRtfTable this PatchRtfRow belongs to
+   * @param row
+   *          The Row this PatchRtfRow is based on
+   * @param rowNumber
+   *          The number of this row
    */
   protected PatchRtfRow( RtfDocument doc, PatchRtfTable PatchRtfTable, Row row, int rowNumber ) {
     super( doc );
@@ -172,10 +175,14 @@ public class PatchRtfRow extends RtfElement {
   /**
    * Constructs a PatchRtfRow for a Row.
    *
-   * @param doc           The RtfDocument this PatchRtfRow belongs to
-   * @param PatchRtfTable The PatchRtfTable this PatchRtfRow belongs to
-   * @param row           The Row this PatchRtfRow is based on
-   * @param rowNumber     The number of this row
+   * @param doc
+   *          The RtfDocument this PatchRtfRow belongs to
+   * @param PatchRtfTable
+   *          The PatchRtfTable this PatchRtfRow belongs to
+   * @param row
+   *          The Row this PatchRtfRow is based on
+   * @param rowNumber
+   *          The number of this row
    * @since 2.1.3
    */
   protected PatchRtfRow( RtfDocument doc, PatchRtfTable PatchRtfTable, PdfPRow row, int rowNumber ) {
@@ -185,22 +192,24 @@ public class PatchRtfRow extends RtfElement {
     importRow( row );
   }
 
-
   /**
    * Imports a Row and copies all settings
    *
-   * @param row The Row to import
+   * @param row
+   *          The Row to import
    */
   private void importRow( Row row ) {
     this.cells = new ArrayList<PatchRtfCell>();
-    this.width = this.document.getDocumentHeader().getPageSetting().getPageWidth() - this.document.getDocumentHeader()
-      .getPageSetting().getMarginLeft() - this.document.getDocumentHeader().getPageSetting().getMarginRight();
+    this.width =
+        this.document.getDocumentHeader().getPageSetting().getPageWidth()
+            - this.document.getDocumentHeader().getPageSetting().getMarginLeft()
+            - this.document.getDocumentHeader().getPageSetting().getMarginRight();
     this.width = (int) ( this.width * this.parentTable.getTableWidthPercent() / 100 );
 
     int cellRight = 0;
     int cellWidth = 0;
     for ( int i = 0; i < row.getColumns(); i++ ) {
-      cellWidth = (int) ( this.width * this.parentTable.getProportionalWidths()[ i ] / 100 );
+      cellWidth = (int) ( this.width * this.parentTable.getProportionalWidths()[i] / 100 );
       cellRight = cellRight + cellWidth;
 
       Cell cell = (Cell) row.getCell( i );
@@ -214,23 +223,26 @@ public class PatchRtfRow extends RtfElement {
   /**
    * Imports a PdfPRow and copies all settings
    *
-   * @param row The PdfPRow to import
+   * @param row
+   *          The PdfPRow to import
    * @since 2.1.3
    */
   private void importRow( PdfPRow row ) {
     this.cells = new ArrayList<PatchRtfCell>();
-    this.width = this.document.getDocumentHeader().getPageSetting().getPageWidth() - this.document.getDocumentHeader()
-      .getPageSetting().getMarginLeft() - this.document.getDocumentHeader().getPageSetting().getMarginRight();
+    this.width =
+        this.document.getDocumentHeader().getPageSetting().getPageWidth()
+            - this.document.getDocumentHeader().getPageSetting().getMarginLeft()
+            - this.document.getDocumentHeader().getPageSetting().getMarginRight();
     this.width = (int) ( this.width * this.parentTable.getTableWidthPercent() / 100 );
 
     int cellRight = 0;
     int cellWidth = 0;
     PdfPCell[] cells = row.getCells();
     for ( int i = 0; i < cells.length; i++ ) {
-      cellWidth = (int) ( this.width * this.parentTable.getProportionalWidths()[ i ] / 100 );
+      cellWidth = (int) ( this.width * this.parentTable.getProportionalWidths()[i] / 100 );
       cellRight = cellRight + cellWidth;
 
-      PdfPCell cell = cells[ i ];
+      PdfPCell cell = cells[i];
       PatchRtfCell rtfCell = new PatchRtfCell( this.document, this, cell );
       rtfCell.setCellRight( cellRight );
       rtfCell.setCellWidth( cellWidth );
@@ -294,7 +306,8 @@ public class PatchRtfRow extends RtfElement {
   /**
    * Writes the row definition/settings.
    *
-   * @param result The <code>OutputStream</code> to write the definitions to.
+   * @param result
+   *          The <code>OutputStream</code> to write the definitions to.
    */
   private void writeRowDefinition( final OutputStream result ) throws IOException {
     result.write( ROW_BEGIN );
@@ -317,7 +330,7 @@ public class PatchRtfRow extends RtfElement {
     if ( this.rowNumber <= this.parentTable.getHeaderRows() ) {
       result.write( ROW_HEADER_ROW );
     }
-    switch( this.parentTable.getAlignment() ) {
+    switch ( this.parentTable.getAlignment() ) {
       case Element.ALIGN_LEFT:
         result.write( ROW_ALIGN_LEFT );
         break;

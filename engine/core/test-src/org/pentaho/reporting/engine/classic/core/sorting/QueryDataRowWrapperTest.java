@@ -38,7 +38,6 @@ public class QueryDataRowWrapperTest {
     ClassicEngineBoot.getInstance().start();
   }
 
-
   private List<SortConstraint> sortConstraintList;
 
   @Before

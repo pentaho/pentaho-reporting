@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -57,11 +57,12 @@ public class ReportFormulaContext implements FormulaContext {
   /**
    * Creates a new ReportFormulaContext using the given FormulaContext as backend. All data is read from the data-row.
    *
-   * @param backend the formula-context backend.
-   * @param runtime the ExpressionRuntime
+   * @param backend
+   *          the formula-context backend.
+   * @param runtime
+   *          the ExpressionRuntime
    */
-  public ReportFormulaContext( final FormulaContext backend,
-                               final ExpressionRuntime runtime ) {
+  public ReportFormulaContext( final FormulaContext backend, final ExpressionRuntime runtime ) {
     if ( runtime == null ) {
       throw new NullPointerException( "Runtime is null." );
     }
@@ -131,9 +132,11 @@ public class ReportFormulaContext implements FormulaContext {
    * Checks whether the external object referenced by <code>name</code> has changed. This forwards the call to the
    * data-row and checks, whether the value has changed since the last call to advance().
    *
-   * @param name the name that identifies the reference.
+   * @param name
+   *          the name that identifies the reference.
    * @return true, if the reference has changed, false otherwise.
-   * @throws EvaluationException if an error occurs.
+   * @throws EvaluationException
+   *           if an error occurs.
    */
   public boolean isReferenceDirty( final Object name ) throws EvaluationException {
     return runtime.getDataRow().isChanged( (String) name );
@@ -143,7 +146,8 @@ public class ReportFormulaContext implements FormulaContext {
    * Resolves the given reference. How the name is interpreted by the outside system is an implementation detail. This
    * method always returns AnyType, as we do not interpret the values returned from the data-row.
    *
-   * @param name the name that identifies the reference.
+   * @param name
+   *          the name that identifies the reference.
    * @return the resolved object.
    */
   public Type resolveReferenceType( final Object name ) {
@@ -155,9 +159,11 @@ public class ReportFormulaContext implements FormulaContext {
    * detail. This return a LibFormula type object matching the type of the object that would be returned by
    * resolveReference.
    *
-   * @param name the name that identifies the reference.
+   * @param name
+   *          the name that identifies the reference.
    * @return the type of the resolved object.
-   * @throws EvaluationException if an error occurs.
+   * @throws EvaluationException
+   *           if an error occurs.
    */
   public Object resolveReference( final Object name ) throws EvaluationException {
     if ( name == null ) {

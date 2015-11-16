@@ -23,9 +23,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public interface CellStyleProducer {
-  CellStyle createCellStyle( InstanceID id,
-                             StyleSheet element,
-                             CellBackground bg );
+  CellStyle createCellStyle( InstanceID id, StyleSheet element, CellBackground bg );
 
   ExcelFontFactory getFontFactory();
 

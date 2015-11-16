@@ -40,7 +40,7 @@ public class Prd4579IT {
   @Test
   public void testParameterLoadSave() throws Exception {
     DefaultListParameter param =
-      new DefaultListParameter( "dummy-query", "", "", "parameter", false, false, String.class );
+        new DefaultListParameter( "dummy-query", "", "", "parameter", false, false, String.class );
     DefaultParameterDefinition pdef = new DefaultParameterDefinition();
     pdef.addParameterDefinition( param );
 

@@ -1,24 +1,21 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -31,6 +28,9 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * An object-description for a bean object. This object description is very dangerous, if the bean contains properties
@@ -50,7 +50,8 @@ public class BeanObjectDescription extends AbstractObjectDescription {
   /**
    * Creates a new object description.
    *
-   * @param className the class.
+   * @param className
+   *          the class.
    */
   public BeanObjectDescription( final Class className ) {
     this( className, true );
@@ -59,9 +60,11 @@ public class BeanObjectDescription extends AbstractObjectDescription {
   /**
    * Creates a new object description.
    *
-   * @param className the class.
-   * @param init      set to true, to autmaoticly initialise the object description. If set to false, the initialisation
-   *                  is elsewhere.
+   * @param className
+   *          the class.
+   * @param init
+   *          set to true, to autmaoticly initialise the object description. If set to false, the initialisation is
+   *          elsewhere.
    */
   public BeanObjectDescription( final Class className, final boolean init ) {
     super( className );
@@ -106,9 +109,7 @@ public class BeanObjectDescription extends AbstractObjectDescription {
 
         final Method method = findSetMethod( name );
         final Object parameterValue = getParameter( name );
-        if ( parameterValue == null ) {
-          // Log.debug ("Parameter: " + name + " is null");
-        } else {
+        if ( parameterValue != null ) {
           method.invoke( o, new Object[] { parameterValue } );
         }
       }
@@ -122,42 +123,42 @@ public class BeanObjectDescription extends AbstractObjectDescription {
   /**
    * Finds a set method in the bean.
    *
-   * @param parameterName the parameter name.
+   * @param parameterName
+   *          the parameter name.
    * @return The method.
    */
   private Method findSetMethod( final String parameterName ) {
-    final PropertyDescriptor descriptor
-      = (PropertyDescriptor) this.properties.get( parameterName );
+    final PropertyDescriptor descriptor = (PropertyDescriptor) this.properties.get( parameterName );
     return descriptor.getWriteMethod();
   }
 
   /**
    * Finds a get method in the bean.
    *
-   * @param parameterName the paramater name.
+   * @param parameterName
+   *          the paramater name.
    * @return The method.
    */
   private Method findGetMethod( final String parameterName ) {
-    final PropertyDescriptor descriptor
-      = (PropertyDescriptor) this.properties.get( parameterName );
+    final PropertyDescriptor descriptor = (PropertyDescriptor) this.properties.get( parameterName );
     return descriptor.getReadMethod();
   }
 
   /**
    * Sets the parameters in the description to match the supplied object.
    *
-   * @param o the object (<code>null</code> not allowed).
-   * @throws ObjectFactoryException if there is a problem.
+   * @param o
+   *          the object (<code>null</code> not allowed).
+   * @throws ObjectFactoryException
+   *           if there is a problem.
    */
-  public void setParameterFromObject( final Object o )
-    throws ObjectFactoryException {
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
     if ( o == null ) {
       throw new NullPointerException( "Given object is null" );
     }
     final Class c = getObjectClass();
     if ( !c.isInstance( o ) ) {
-      throw new ObjectFactoryException( "Object is no instance of " + c
-        + "(is " + o.getClass() + ')' );
+      throw new ObjectFactoryException( "Object is no instance of " + c + "(is " + o.getClass() + ')' );
     }
 
     final Iterator it = getParameterNames();
@@ -184,7 +185,8 @@ public class BeanObjectDescription extends AbstractObjectDescription {
   /**
    * Adds a parameter to the ignored parameters.
    *
-   * @param parameter the parameter.
+   * @param parameter
+   *          the parameter.
    */
   protected void ignoreParameter( final String parameter ) {
     this.ignoredParameters.add( parameter );
@@ -193,15 +195,15 @@ public class BeanObjectDescription extends AbstractObjectDescription {
   /**
    * Returns a flag that indicates whether or not the specified parameter is ignored.
    *
-   * @param parameter the parameter.
+   * @param parameter
+   *          the parameter.
    * @return The flag.
    */
   protected boolean isParameterIgnored( final String parameter ) {
     return this.ignoredParameters.contains( parameter );
   }
 
-  private void readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     readBeanDescription( getObjectClass(), false );
   }
@@ -211,18 +213,16 @@ public class BeanObjectDescription extends AbstractObjectDescription {
       this.properties = new HashMap();
 
       final BeanInfo bi = Introspector.getBeanInfo( className );
-      final PropertyDescriptor[] propertyDescriptors
-        = bi.getPropertyDescriptors();
+      final PropertyDescriptor[] propertyDescriptors = bi.getPropertyDescriptors();
       for ( int i = 0; i < propertyDescriptors.length; i++ ) {
-        final PropertyDescriptor propertyDescriptor = propertyDescriptors[ i ];
+        final PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
         final Method readMethod = propertyDescriptor.getReadMethod();
         final Method writeMethod = propertyDescriptor.getWriteMethod();
         if ( isValidMethod( readMethod, 0 ) && isValidMethod( writeMethod, 1 ) ) {
           final String name = propertyDescriptor.getName();
           this.properties.put( name, propertyDescriptor );
           if ( init ) {
-            super.setParameterDefinition( name,
-              propertyDescriptor.getPropertyType() );
+            super.setParameterDefinition( name, propertyDescriptor.getPropertyType() );
           }
         }
       }

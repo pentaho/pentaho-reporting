@@ -1,20 +1,20 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
-* All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
+ * All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -43,12 +43,10 @@ public class GoldSaveLoadIT extends GoldTestBase {
     final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
     BundleWriter.writeReportToZipStream( originalReport, bout );
     assertTrue( bout.getLength() > 0 );
-/*
-    final File f = File.createTempFile("test-output-", ".prpt", new File ("test-output"));
-    final FileOutputStream outputStream = new FileOutputStream(f);
-    outputStream.write(bout.toByteArray());
-    outputStream.close();
-*/
+    /*
+     * final File f = File.createTempFile("test-output-", ".prpt", new File ("test-output")); final FileOutputStream
+     * outputStream = new FileOutputStream(f); outputStream.write(bout.toByteArray()); outputStream.close();
+     */
     final ResourceManager mgr = new ResourceManager();
     final Resource reportRes = mgr.createDirectly( bout.toByteArray(), MasterReport.class );
     return (MasterReport) reportRes.getResource();
@@ -68,8 +66,7 @@ public class GoldSaveLoadIT extends GoldTestBase {
    * @return
    */
   protected FilesystemFilter createReportFilter() {
-    return new FilesystemFilter
-      ( new String[] { ".prpt" }, "Reports", false );
+    return new FilesystemFilter( new String[] { ".prpt" }, "Reports", false );
   }
 
   @Test
@@ -78,19 +75,18 @@ public class GoldSaveLoadIT extends GoldTestBase {
       return;
     }
     final boolean[] error = { false };
-    final ExecutorService threadPool = new ThreadPoolExecutor( 3, 3,
-      0L, TimeUnit.MILLISECONDS,
-      new LinkedBlockingQueue<Runnable>(),
-      new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy() );
+    final ExecutorService threadPool =
+        new ThreadPoolExecutor( 3, 3, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(),
+            new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy() );
     for ( int i = 0; i < 20; i++ ) {
       threadPool.execute( new Runnable() {
         public void run() {
           try {
             runSingleGoldReport( "Prd-3931.prpt", ReportProcessingMode.current );
-            //runSingleGoldReport("Crashing-crosstab.prpt", ReportProcessingMode.current);
+            // runSingleGoldReport("Crashing-crosstab.prpt", ReportProcessingMode.current);
           } catch ( Exception e ) {
             e.printStackTrace();
-            error[ 0 ] = true;
+            error[0] = true;
           }
         }
       } );
@@ -100,7 +96,7 @@ public class GoldSaveLoadIT extends GoldTestBase {
       threadPool.awaitTermination( 5, TimeUnit.MINUTES );
     }
 
-    assertFalse( error[ 0 ] );
+    assertFalse( error[0] );
 
   }
 }

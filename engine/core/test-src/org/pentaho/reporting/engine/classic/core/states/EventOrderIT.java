@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states;
 
@@ -53,33 +53,33 @@ public class EventOrderIT extends TestCase {
 
   private MasterReport getReport() throws Exception {
     final MasterReport report = new MasterReport();
-    report.getReportHeader().addElement( LabelElementFactory.createLabelElement
-      ( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
-        ElementAlignment.LEFT, null, "Text" ) );
+    report.getReportHeader().addElement(
+        LabelElementFactory.createLabelElement( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
+            ElementAlignment.LEFT, null, "Text" ) );
 
-    report.getReportFooter().addElement( LabelElementFactory.createLabelElement
-      ( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
-        ElementAlignment.LEFT, null, "Text" ) );
+    report.getReportFooter().addElement(
+        LabelElementFactory.createLabelElement( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
+            ElementAlignment.LEFT, null, "Text" ) );
 
-    report.getPageHeader().addElement( LabelElementFactory.createLabelElement
-      ( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
-        ElementAlignment.LEFT, null, "Text" ) );
+    report.getPageHeader().addElement(
+        LabelElementFactory.createLabelElement( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
+            ElementAlignment.LEFT, null, "Text" ) );
 
-    report.getPageFooter().addElement( LabelElementFactory.createLabelElement
-      ( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
-        ElementAlignment.LEFT, null, "Text" ) );
+    report.getPageFooter().addElement(
+        LabelElementFactory.createLabelElement( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
+            ElementAlignment.LEFT, null, "Text" ) );
 
-    report.getItemBand().addElement( LabelElementFactory.createLabelElement
-      ( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
-        ElementAlignment.LEFT, null, "Text" ) );
+    report.getItemBand().addElement(
+        LabelElementFactory.createLabelElement( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
+            ElementAlignment.LEFT, null, "Text" ) );
 
-    report.getRelationalGroup( 0 ).getHeader().addElement( LabelElementFactory.createLabelElement
-      ( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
-        ElementAlignment.LEFT, null, "Text" ) );
+    report.getRelationalGroup( 0 ).getHeader().addElement(
+        LabelElementFactory.createLabelElement( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
+            ElementAlignment.LEFT, null, "Text" ) );
 
-    report.getRelationalGroup( 0 ).getFooter().addElement( LabelElementFactory.createLabelElement
-      ( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
-        ElementAlignment.LEFT, null, "Text" ) );
+    report.getRelationalGroup( 0 ).getFooter().addElement(
+        LabelElementFactory.createLabelElement( null, new Rectangle2D.Float( 0, 0, 150, 20 ), null,
+            ElementAlignment.LEFT, null, "Text" ) );
 
     report.addExpression( new EventOrderFunction( "event-order" ) );
     report.addExpression( new EventMonitorFunction( "event-monitor" ) );
@@ -91,8 +91,7 @@ public class EventOrderIT extends TestCase {
     final DefaultTableModel model = new DefaultTableModel( 2, 1 );
     model.setValueAt( "0-0", 0, 0 );
     model.setValueAt( "0-1", 1, 0 );
-    report.setDataFactory( new TableDataFactory
-      ( "default", model ) );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
 
     DebugReportRunner.executeAll( report );
   }

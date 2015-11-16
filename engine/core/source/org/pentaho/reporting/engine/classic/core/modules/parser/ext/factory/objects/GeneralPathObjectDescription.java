@@ -1,31 +1,30 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects;
 
-import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.AbstractObjectDescription;
-import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException;
-
-import java.awt.*;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 
+import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.AbstractObjectDescription;
+import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException;
 
 /**
  * An Object Description for general shapes and the GeneralPath-class.
@@ -69,7 +68,8 @@ public class GeneralPathObjectDescription extends AbstractObjectDescription {
    * Creates a new GeneralPathObjectDescription. The given class must be an instance of an shape, the generated objects
    * will be general path objects.
    *
-   * @param c the registered base class, an instance of shape.
+   * @param c
+   *          the registered base class, an instance of shape.
    */
   public GeneralPathObjectDescription( final Class c ) {
     super( c );
@@ -92,8 +92,8 @@ public class GeneralPathObjectDescription extends AbstractObjectDescription {
       return null;
     }
 
-    final PathIteratorSegment[] segments = (PathIteratorSegment[]) getParameter(
-      GeneralPathObjectDescription.SEGMENTS_NAME );
+    final PathIteratorSegment[] segments =
+        (PathIteratorSegment[]) getParameter( GeneralPathObjectDescription.SEGMENTS_NAME );
     if ( segments == null ) {
       return null;
     }
@@ -101,29 +101,27 @@ public class GeneralPathObjectDescription extends AbstractObjectDescription {
     final GeneralPath path = new GeneralPath();
     path.setWindingRule( wRule );
     for ( int i = 0; i < segments.length; i++ ) {
-      final int segmentType = segments[ i ].getSegmentType();
-      switch( segmentType ) {
+      final int segmentType = segments[i].getSegmentType();
+      switch ( segmentType ) {
         case PathIterator.SEG_CLOSE: {
           path.closePath();
           break;
         }
         case PathIterator.SEG_CUBICTO: {
-          path.curveTo( segments[ i ].getX1(), segments[ i ].getY1(),
-            segments[ i ].getX2(), segments[ i ].getY2(),
-            segments[ i ].getX3(), segments[ i ].getY3() );
+          path.curveTo( segments[i].getX1(), segments[i].getY1(), segments[i].getX2(), segments[i].getY2(), segments[i]
+              .getX3(), segments[i].getY3() );
           break;
         }
         case PathIterator.SEG_LINETO: {
-          path.lineTo( segments[ i ].getX1(), segments[ i ].getY1() );
+          path.lineTo( segments[i].getX1(), segments[i].getY1() );
           break;
         }
         case PathIterator.SEG_MOVETO: {
-          path.moveTo( segments[ i ].getX1(), segments[ i ].getY1() );
+          path.moveTo( segments[i].getX1(), segments[i].getY1() );
           break;
         }
         case PathIterator.SEG_QUADTO: {
-          path.quadTo( segments[ i ].getX1(), segments[ i ].getY1(),
-            segments[ i ].getX2(), segments[ i ].getY2() );
+          path.quadTo( segments[i].getX1(), segments[i].getY1(), segments[i].getX2(), segments[i].getY2() );
           break;
         }
         default:
@@ -155,11 +153,12 @@ public class GeneralPathObjectDescription extends AbstractObjectDescription {
   /**
    * Sets the parameters of this description object to match the supplied object.
    *
-   * @param o the object (should be an instance of <code>FontDefinition</code>).
-   * @throws ObjectFactoryException if the object is not an instance of <code>Float</code>.
+   * @param o
+   *          the object (should be an instance of <code>FontDefinition</code>).
+   * @throws ObjectFactoryException
+   *           if the object is not an instance of <code>Float</code>.
    */
-  public void setParameterFromObject( final Object o )
-    throws ObjectFactoryException {
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
     if ( getObjectClass().isAssignableFrom( o.getClass() ) == false ) {
       throw new ObjectFactoryException( "Class is not assignable" );
     }
@@ -167,51 +166,49 @@ public class GeneralPathObjectDescription extends AbstractObjectDescription {
     final Shape s = (Shape) o;
     final PathIterator pi = s.getPathIterator( AffineTransform.getTranslateInstance( 0, 0 ) );
     if ( pi.getWindingRule() == PathIterator.WIND_EVEN_ODD ) {
-      setParameter( GeneralPathObjectDescription.WINDING_RULE_NAME,
-        GeneralPathObjectDescription.WINDING_RULE_EVEN_ODD );
+      setParameter( GeneralPathObjectDescription.WINDING_RULE_NAME, GeneralPathObjectDescription.WINDING_RULE_EVEN_ODD );
     } else {
-      setParameter( GeneralPathObjectDescription.WINDING_RULE_NAME,
-        GeneralPathObjectDescription.WINDING_RULE_NON_ZERO );
+      setParameter( GeneralPathObjectDescription.WINDING_RULE_NAME, GeneralPathObjectDescription.WINDING_RULE_NON_ZERO );
     }
 
-    final float[] points = new float[ GeneralPathObjectDescription.MAX_POINTS ];
+    final float[] points = new float[GeneralPathObjectDescription.MAX_POINTS];
     final ArrayList segments = new ArrayList();
     while ( pi.isDone() == false ) {
       final int type = pi.currentSegment( points );
       final PathIteratorSegment seg = new PathIteratorSegment();
-      switch( type ) {
+      switch ( type ) {
         case PathIterator.SEG_CLOSE: {
           seg.setSegmentType( PathIterator.SEG_CLOSE );
           break;
         }
         case PathIterator.SEG_CUBICTO: {
           seg.setSegmentType( PathIterator.SEG_CUBICTO );
-          seg.setX1( points[ 0 ] );
-          seg.setY1( points[ 1 ] );
-          seg.setX2( points[ 2 ] );
-          seg.setY2( points[ 3 ] );
-          seg.setX3( points[ 4 ] );
-          seg.setY3( points[ 5 ] );
+          seg.setX1( points[0] );
+          seg.setY1( points[1] );
+          seg.setX2( points[2] );
+          seg.setY2( points[3] );
+          seg.setX3( points[4] );
+          seg.setY3( points[5] );
           break;
         }
         case PathIterator.SEG_LINETO: {
           seg.setSegmentType( PathIterator.SEG_LINETO );
-          seg.setX1( points[ 0 ] );
-          seg.setY1( points[ 1 ] );
+          seg.setX1( points[0] );
+          seg.setY1( points[1] );
           break;
         }
         case PathIterator.SEG_MOVETO: {
           seg.setSegmentType( PathIterator.SEG_MOVETO );
-          seg.setX1( points[ 0 ] );
-          seg.setY1( points[ 1 ] );
+          seg.setX1( points[0] );
+          seg.setY1( points[1] );
           break;
         }
         case PathIterator.SEG_QUADTO: {
           seg.setSegmentType( PathIterator.SEG_QUADTO );
-          seg.setX1( points[ 0 ] );
-          seg.setY1( points[ 1 ] );
-          seg.setX2( points[ 2 ] );
-          seg.setY2( points[ 3 ] );
+          seg.setX1( points[0] );
+          seg.setY1( points[1] );
+          seg.setX2( points[2] );
+          seg.setY2( points[3] );
           break;
         }
         default:
@@ -221,7 +218,7 @@ public class GeneralPathObjectDescription extends AbstractObjectDescription {
       pi.next();
     }
 
-    setParameter( GeneralPathObjectDescription.SEGMENTS_NAME, segments.toArray(
-      new PathIteratorSegment[ segments.size() ] ) );
+    setParameter( GeneralPathObjectDescription.SEGMENTS_NAME, segments
+        .toArray( new PathIteratorSegment[segments.size()] ) );
   }
 }

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.cache;
 
@@ -40,11 +40,8 @@ public class IndexedTableModel implements CloseableTableModel, MetaTableModel {
     private Class type;
     private String label;
 
-    public ColumnIndexDataAttributes( final DataAttributes backend,
-                                      final Boolean indexColumn,
-                                      final String name,
-                                      final Class type,
-                                      final String label ) {
+    public ColumnIndexDataAttributes( final DataAttributes backend, final Boolean indexColumn, final String name,
+        final Class type, final String label ) {
       this.backend = backend;
       this.indexColumn = indexColumn;
       this.name = name;
@@ -61,12 +58,12 @@ public class IndexedTableModel implements CloseableTableModel, MetaTableModel {
       namespaces.addAll( Arrays.asList( backend.getMetaAttributeDomains() ) );
       namespaces.add( MetaAttributeNames.Core.NAMESPACE );
       namespaces.add( MetaAttributeNames.Formatting.NAMESPACE );
-      return namespaces.toArray( new String[ namespaces.size() ] );
+      return namespaces.toArray( new String[namespaces.size()] );
     }
 
     public String[] getMetaAttributeNames( final String domainName ) {
-      if ( MetaAttributeNames.Core.NAMESPACE.equals( domainName ) == false &&
-        MetaAttributeNames.Formatting.NAMESPACE.equals( domainName ) == false ) {
+      if ( MetaAttributeNames.Core.NAMESPACE.equals( domainName ) == false
+          && MetaAttributeNames.Formatting.NAMESPACE.equals( domainName ) == false ) {
         return backend.getMetaAttributeNames( domainName );
       }
 
@@ -81,36 +78,40 @@ public class IndexedTableModel implements CloseableTableModel, MetaTableModel {
       if ( MetaAttributeNames.Formatting.NAMESPACE.equals( domainName ) ) {
         names.add( MetaAttributeNames.Formatting.LABEL );
       }
-      return names.toArray( new String[ names.size() ] );
+      return names.toArray( new String[names.size()] );
     }
 
     /**
-     * @param domain  never null.
-     * @param name    never null.
-     * @param type    can be null.
-     * @param context never null.
+     * @param domain
+     *          never null.
+     * @param name
+     *          never null.
+     * @param type
+     *          can be null.
+     * @param context
+     *          never null.
      * @return
      */
-    public Object getMetaAttribute( final String domain,
-                                    final String name,
-                                    final Class type,
-                                    final DataAttributeContext context ) {
+    public Object getMetaAttribute( final String domain, final String name, final Class type,
+        final DataAttributeContext context ) {
       return getMetaAttribute( domain, name, type, context, null );
     }
 
     /**
-     * @param domain       never null.
-     * @param name         never null.
-     * @param type         can be null.
-     * @param context      never null.
-     * @param defaultValue can be null
+     * @param domain
+     *          never null.
+     * @param name
+     *          never null.
+     * @param type
+     *          can be null.
+     * @param context
+     *          never null.
+     * @param defaultValue
+     *          can be null
      * @return
      */
-    public Object getMetaAttribute( final String domain,
-                                    final String name,
-                                    final Class type,
-                                    final DataAttributeContext context,
-                                    final Object defaultValue ) {
+    public Object getMetaAttribute( final String domain, final String name, final Class type,
+        final DataAttributeContext context, final Object defaultValue ) {
       final Object retval = backend.getMetaAttribute( domain, name, type, context, defaultValue );
       if ( retval != null ) {
         return retval;
@@ -126,8 +127,7 @@ public class IndexedTableModel implements CloseableTableModel, MetaTableModel {
           return convert( DefaultConceptQueryMapper.INSTANCE, context, this.type, type );
         }
         if ( MetaAttributeNames.Core.SOURCE.equals( name ) ) {
-          return convert( DefaultConceptQueryMapper.INSTANCE, context, MetaAttributeNames.Core.SOURCE_VALUE_TABLE,
-            type );
+          return convert( DefaultConceptQueryMapper.INSTANCE, context, MetaAttributeNames.Core.SOURCE_VALUE_TABLE, type );
         }
       }
       if ( MetaAttributeNames.Formatting.NAMESPACE.equals( domain ) ) {
@@ -138,10 +138,8 @@ public class IndexedTableModel implements CloseableTableModel, MetaTableModel {
       return defaultValue;
     }
 
-    private Object convert( final ConceptQueryMapper mapper,
-                            final DataAttributeContext context,
-                            final Object value,
-                            final Class type ) {
+    private Object convert( final ConceptQueryMapper mapper, final DataAttributeContext context, final Object value,
+        final Class type ) {
       return mapper.getValue( value, type, context );
     }
 
@@ -270,8 +268,10 @@ public class IndexedTableModel implements CloseableTableModel, MetaTableModel {
    * Be aware that cell-level attributes do not make it into the designtime dataschema, as this dataschema only looks at
    * the structural metadata available and does not contain any data references.
    *
-   * @param row    the row of the cell for which the meta-data is queried.
-   * @param column the index of the column for which the meta-data is queried.
+   * @param row
+   *          the row of the cell for which the meta-data is queried.
+   * @param column
+   *          the index of the column for which the meta-data is queried.
    * @return the meta-data object.
    */
   public DataAttributes getCellDataAttributes( final int row, final int column ) {
@@ -290,16 +290,17 @@ public class IndexedTableModel implements CloseableTableModel, MetaTableModel {
   /**
    * Returns the column-level attributes for the given column.
    *
-   * @param column the column.
+   * @param column
+   *          the column.
    * @return data-attributes, never null.
    */
   public DataAttributes getColumnAttributes( final int column ) {
     if ( column < backend.getColumnCount() ) {
-      return new ColumnIndexDataAttributes( null, Boolean.FALSE,
-        getColumnName( column ), getColumnClass( column ), getColumnName( column ) );
+      return new ColumnIndexDataAttributes( null, Boolean.FALSE, getColumnName( column ), getColumnClass( column ),
+          getColumnName( column ) );
     } else {
-      return new ColumnIndexDataAttributes( null, Boolean.TRUE,
-        getColumnName( column ), getColumnClass( column ), getColumnName( column - backend.getColumnCount() ) );
+      return new ColumnIndexDataAttributes( null, Boolean.TRUE, getColumnName( column ), getColumnClass( column ),
+          getColumnName( column - backend.getColumnCount() ) );
     }
   }
 

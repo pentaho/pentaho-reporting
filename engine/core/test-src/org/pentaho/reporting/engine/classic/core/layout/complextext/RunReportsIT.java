@@ -42,8 +42,8 @@ public class RunReportsIT extends TestCase {
 
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-3529.prpt" );
     // to enable the complex-processing mode, set this configuration option to true
-    report.getReportConfiguration().setConfigProperty
-      ( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    report.getReportConfiguration()
+        .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
 
     ReportHeader reportHeader = report.getReportHeader();
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
@@ -54,7 +54,7 @@ public class RunReportsIT extends TestCase {
     // use the MatchFactory to quickly locate elements inside the layout model
     RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType( logicalPageBox, MessageType.INSTANCE );
     for ( int i = 0; i < elementsByElementType.length; i++ ) {
-      RenderNode renderNode = elementsByElementType[ i ];
+      RenderNode renderNode = elementsByElementType[i];
       ModelPrinter.INSTANCE.print( renderNode );
     }
   }

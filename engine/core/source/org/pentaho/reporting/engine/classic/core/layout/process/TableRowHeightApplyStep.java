@@ -19,9 +19,7 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep {
     private BoxContext() {
     }
 
-    public void reuse( final BoxContextPool pool,
-                       final BoxContext parent,
-                       final RenderBox box ) {
+    public void reuse( final BoxContextPool pool, final BoxContext parent, final RenderBox box ) {
       this.pool = pool;
       this.parent = parent;
       this.boxContextStart = box.getCachedY();
@@ -53,8 +51,7 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep {
       return new BoxContext();
     }
 
-    public BoxContext get( final BoxContext parent,
-                           final RenderBox box ) {
+    public BoxContext get( final BoxContext parent, final RenderBox box ) {
       BoxContext boxContext = super.get();
       boxContext.reuse( this, parent, box );
       return boxContext;
@@ -96,8 +93,8 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep {
     final long position = context.getBoxCursor();
     final long shift = position - oldPosition;
     if ( shift < 0 ) {
-      throw new IllegalStateException( String.format
-        ( "Shift-back is not allowed: shift=%d: old=%d -> new=%d (%s)", shift, oldPosition, position, box ) );
+      throw new IllegalStateException( String.format( "Shift-back is not allowed: shift=%d: old=%d -> new=%d (%s)",
+          shift, oldPosition, position, box ) );
     }
 
     CacheBoxShifter.shiftBox( box, shift );

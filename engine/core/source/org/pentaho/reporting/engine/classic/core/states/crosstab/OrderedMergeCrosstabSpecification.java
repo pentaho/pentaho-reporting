@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.states.crosstab;
 
@@ -48,9 +48,8 @@ public class OrderedMergeCrosstabSpecification implements CrosstabSpecification 
   private String[] rowSet;
   private ReportStateKey key;
 
-  public OrderedMergeCrosstabSpecification( final ReportStateKey key,
-                                            final String[] dimensionColumnSet,
-                                            final String[] rowDimensionSet ) {
+  public OrderedMergeCrosstabSpecification( final ReportStateKey key, final String[] dimensionColumnSet,
+      final String[] rowDimensionSet ) {
     if ( key == null ) {
       throw new NullPointerException();
     }
@@ -107,17 +106,17 @@ public class OrderedMergeCrosstabSpecification implements CrosstabSpecification 
   }
 
   public void add( final DataRow dataRow ) {
-    final Object[] newKey = new Object[ columnSet.length ];
+    final Object[] newKey = new Object[columnSet.length];
     for ( int i = 0; i < columnSet.length; i++ ) {
-      final String columnName = columnSet[ i ];
-      newKey[ i ] = dataRow.get( columnName );
+      final String columnName = columnSet[i];
+      newKey[i] = dataRow.get( columnName );
     }
 
     final int insertPosition = findInserationPoint( newKey, 0 );
     if ( insertPosition != -1 ) {
       if ( insertPosition < insertationCursor ) {
-        throw new InvalidReportStateException( "Conflicting data in crosstab. " +
-          "Cannot use insertion-order as base for normalization. Use a SortedMerge-Specification instead." );
+        throw new InvalidReportStateException( "Conflicting data in crosstab. "
+            + "Cannot use insertion-order as base for normalization. Use a SortedMerge-Specification instead." );
       }
       final Object[] existingKey = entries.get( insertPosition );
       if ( ObjectUtilities.equalArray( existingKey, newKey ) ) {
@@ -139,7 +138,7 @@ public class OrderedMergeCrosstabSpecification implements CrosstabSpecification 
       if ( i > 0 ) {
         s.append( ',' );
       }
-      s.append( data[ i ] );
+      s.append( data[i] );
     }
     return s.append( '}' ).toString();
   }
@@ -163,24 +162,24 @@ public class OrderedMergeCrosstabSpecification implements CrosstabSpecification 
     return data.clone();
   }
   //
-  //  public static void main(String[] args)
-  //  {
-  //    final String[] NAMES = {"Product", "Year"};
-  //    final DataRow r1 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2004)});
-  //    final DataRow r2 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2005)});
-  //    final DataRow r3 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2001)});
-  //    final DataRow r4 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2002)});
-  //    final DataRow r5 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2003)});
+  // public static void main(String[] args)
+  // {
+  // final String[] NAMES = {"Product", "Year"};
+  // final DataRow r1 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2004)});
+  // final DataRow r2 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2005)});
+  // final DataRow r3 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2001)});
+  // final DataRow r4 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2002)});
+  // final DataRow r5 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2003)});
   //
-  //    CrosstabSpecification cs = new CrosstabSpecification(NAMES);
-  //    cs.startRow();
-  //    cs.add(r1);
-  //    cs.add(r2);
-  //    cs.endRow();
-  //    cs.startRow();
-  //    cs.add(r3);
-  //    cs.add(r4);
-  //    cs.add(r5);
-  //    cs.endRow();
-  //  }
+  // CrosstabSpecification cs = new CrosstabSpecification(NAMES);
+  // cs.startRow();
+  // cs.add(r1);
+  // cs.add(r2);
+  // cs.endRow();
+  // cs.startRow();
+  // cs.add(r3);
+  // cs.add(r4);
+  // cs.add(r5);
+  // cs.endRow();
+  // }
 }

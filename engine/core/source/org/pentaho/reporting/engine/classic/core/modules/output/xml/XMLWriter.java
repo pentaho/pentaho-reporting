@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.xml;
 
@@ -67,7 +67,7 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
    * the XMLEntity parser used to encode the xml characters.
    */
   private final CharacterEntityParser entityParser;
-  private static final InlineSubreportMarker[] EMPTY_SUBREPORTS = new InlineSubreportMarker[ 0 ];
+  private static final InlineSubreportMarker[] EMPTY_SUBREPORTS = new InlineSubreportMarker[0];
 
   /**
    * Creates a new XMLWriter function. The Writer gets a dependency level of -1.
@@ -89,7 +89,8 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   /**
    * Defines the writer for the XML-output.
    *
-   * @param w the writer.
+   * @param w
+   *          the writer.
    */
   public void setWriter( final Writer w ) {
     this.w = w;
@@ -98,15 +99,16 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the band's elements into the assigned Writer.
    *
-   * @param b the band that should be written.
-   * @throws IOException if an IO-Error occurs.
+   * @param b
+   *          the band that should be written.
+   * @throws IOException
+   *           if an IO-Error occurs.
    */
-  private void writeBand( final Band b )
-    throws IOException {
+  private void writeBand( final Band b ) throws IOException {
     final Element[] elementBuffer = b.unsafeGetElementArray();
     final int elementCount = elementBuffer.length;
     for ( int i = 0; i < elementCount; i++ ) {
-      final Element e = elementBuffer[ i ];
+      final Element e = elementBuffer[i];
       if ( e instanceof Band ) {
         w.write( "<band>" );
         writeBand( (Band) e );
@@ -126,7 +128,8 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the report header.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportStarted( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -145,7 +148,8 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the report footer.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void reportFinished( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -165,7 +169,8 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the header of the current group.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -189,7 +194,8 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the footer of the current group.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void groupFinished( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -213,7 +219,8 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   /**
    * Writes the itemband.
    *
-   * @param event the event.
+   * @param event
+   *          the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -232,10 +239,12 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   }
 
   /**
-   * Starts the itembands section. <P> The next events will be itemsAdvanced events until the itemsFinished event is
-   * raised.
+   * Starts the itembands section.
+   * <P>
+   * The next events will be itemsAdvanced events until the itemsFinished event is raised.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void itemsStarted( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -264,9 +273,12 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   }
 
   /**
-   * Closes the itemband section. <P> The itemBand is finished, the report starts to close open groups.
+   * Closes the itemband section.
+   * <P>
+   * The itemBand is finished, the report starts to close open groups.
    *
-   * @param event The event.
+   * @param event
+   *          The event.
    */
   public void itemsFinished( final ReportEvent event ) {
     if ( event.getState().isPrepareRun() ) {
@@ -311,12 +323,12 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   /**
    * Overrides the depency level. Should be lower than any other function depency.
    *
-   * @param deplevel the new depency level.
+   * @param deplevel
+   *          the new depency level.
    */
   public void setDependencyLevel( final int deplevel ) {
     this.depLevel = deplevel;
   }
-
 
   /**
    * This method simply clones the function. The XMLWriter does not maintain large internal states and therefore need
@@ -347,18 +359,19 @@ public class XMLWriter extends AbstractFunction implements OutputFunction {
   }
 
   /**
-   * Clones the expression.  The expression should be reinitialized after the cloning. <P> Expressions maintain no
-   * state, cloning is done at the beginning of the report processing to disconnect the expression from any other object
-   * space.
+   * Clones the expression. The expression should be reinitialized after the cloning.
+   * <P>
+   * Expressions maintain no state, cloning is done at the beginning of the report processing to disconnect the
+   * expression from any other object space.
    *
    * @return a clone of this expression.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
   public Object clone() throws CloneNotSupportedException {
     final XMLWriter o = (XMLWriter) super.clone();
     return o;
   }
-
 
   public InlineSubreportMarker[] getInlineSubreports() {
     return EMPTY_SUBREPORTS;

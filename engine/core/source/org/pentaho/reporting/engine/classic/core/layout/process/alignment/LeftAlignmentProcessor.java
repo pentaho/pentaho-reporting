@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.layout.process.alignment;
 
@@ -24,7 +24,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.SplittableRenderNo
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineBoxSequenceElement;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineSequenceElement;
 import org.pentaho.reporting.engine.classic.core.util.LongList;
-
 
 /**
  * Performs the left-alignment computations.
@@ -91,8 +90,10 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
   /**
    * Handle the next input chunk.
    *
-   * @param start the start index
-   * @param count the number of elements in the sequence
+   * @param start
+   *          the start index
+   * @param count
+   *          the number of elements in the sequence
    * @return the index of the last element that will fit on the current line.
    */
   protected int handleElement( final int start, final int count ) {
@@ -108,8 +109,8 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
     InlineSequenceElement contentElement = null;
     int contentIndex = start;
     for ( int i = start; i < endIndex; i++ ) {
-      final InlineSequenceElement element = sequenceElements[ i ];
-      final RenderNode node = nodes[ i ];
+      final InlineSequenceElement element = sequenceElements[i];
+      final RenderNode node = nodes[i];
       if ( isBorderMarker( element ) ) {
         width += element.getMaximumWidth( node );
         continue;
@@ -130,17 +131,17 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
       // we have to fallback ..
       long position = getPosition();
       for ( int i = start; i < endIndex; i++ ) {
-        final InlineSequenceElement element = sequenceElements[ i ];
-        final RenderNode node = nodes[ i ];
-        elementPositions[ i ] = position;
+        final InlineSequenceElement element = sequenceElements[i];
+        final RenderNode node = nodes[i];
+        elementPositions[i] = position;
         final long elementWidth = element.getMaximumWidth( node );
-        elementDimensions[ i ] = elementWidth;
+        elementDimensions[i] = elementWidth;
         position += elementWidth;
       }
 
       // we cross a pagebreak. Stop working on it - we bail out here.
 
-      if ( nodes[ contentIndex ] instanceof SplittableRenderNode ) {
+      if ( nodes[contentIndex] instanceof SplittableRenderNode ) {
         // the element may be splittable. Test, and if so, give a hint to the
         // outside world ..
         setSkipIndex( endIndex );
@@ -152,16 +153,16 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
       // This is the first element and it still does not fit. How evil.
       if ( start == 0 ) {
         if ( contentElement instanceof InlineBoxSequenceElement ) {
-          final RenderNode node = nodes[ contentIndex ];
+          final RenderNode node = nodes[contentIndex];
           if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
             // OK, limit the size of the box to the maximum line width and
             // revalidate it.
-            final long contentPosition = elementPositions[ contentIndex ];
+            final long contentPosition = elementPositions[contentIndex];
             final RenderBox box = (RenderBox) node;
             final long maxWidth = ( getEndOfLine() - contentPosition );
             computeInlineBlock( box, contentPosition, maxWidth );
 
-            elementDimensions[ endIndex - 1 ] = node.getCachedWidth();
+            elementDimensions[endIndex - 1] = node.getCachedWidth();
           }
         }
         setSkipIndex( endIndex );
@@ -177,16 +178,15 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
       setPageSegment( getPageSegment() + 1 );
     }
 
-
     // No, it is an ordinary advance ..
     // Check, whether we hit an item-sequence element
     if ( contentElement instanceof InlineBoxSequenceElement == false ) {
       for ( int i = start; i < endIndex; i++ ) {
-        final RenderNode node = nodes[ i ];
-        final InlineSequenceElement element = sequenceElements[ i ];
-        elementPositions[ i ] = getPosition();
+        final RenderNode node = nodes[i];
+        final InlineSequenceElement element = sequenceElements[i];
+        elementPositions[i] = getPosition();
         final long elementWidth = element.getMaximumWidth( node );
-        elementDimensions[ i ] = elementWidth;
+        elementDimensions[i] = elementWidth;
         addPosition( elementWidth );
       }
       return endIndex;
@@ -197,13 +197,13 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
     // This is a bit more complicated. So we encountered an inline-block
     // element here. That means, the element will try to occuppy its
     // maximum-content-width.
-    //    Log.debug("Advance block at index " + contentIndex);
-    //    final long ceWidth = contentElement.getMinimumWidth();
-    //    final long extraSpace = contentElement.getMaximumWidth();
-    //    Log.debug("Advance block: Min " + ceWidth);
-    //    Log.debug("Advance block: Max " + extraSpace);
+    // Log.debug("Advance block at index " + contentIndex);
+    // final long ceWidth = contentElement.getMinimumWidth();
+    // final long extraSpace = contentElement.getMaximumWidth();
+    // Log.debug("Advance block: Min " + ceWidth);
+    // Log.debug("Advance block: Max " + extraSpace);
 
-    final RenderNode contentNode = nodes[ contentIndex ];
+    final RenderNode contentNode = nodes[contentIndex];
     final long itemElementWidth = contentElement.getMaximumWidth( contentNode );
 
     if ( ( contentNode.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
@@ -231,24 +231,24 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
     }
 
     for ( int i = start; i < contentIndex; i++ ) {
-      final InlineSequenceElement element = sequenceElements[ i ];
-      final RenderNode node = nodes[ contentIndex ];
+      final InlineSequenceElement element = sequenceElements[i];
+      final RenderNode node = nodes[contentIndex];
       final long elementWidth = element.getMaximumWidth( node );
-      elementPositions[ i ] = getPosition();
-      elementDimensions[ i ] = elementWidth;
+      elementPositions[i] = getPosition();
+      elementDimensions[i] = elementWidth;
       addPosition( elementWidth );
     }
 
-    elementPositions[ contentIndex ] = getPosition();
-    elementDimensions[ contentIndex ] = itemElementWidth;
+    elementPositions[contentIndex] = getPosition();
+    elementDimensions[contentIndex] = itemElementWidth;
     setPosition( preferredEndingPos );
 
     for ( int i = contentIndex + 1; i < endIndex; i++ ) {
-      final InlineSequenceElement element = sequenceElements[ i ];
-      final RenderNode node = nodes[ contentIndex ];
+      final InlineSequenceElement element = sequenceElements[i];
+      final RenderNode node = nodes[contentIndex];
       final long elementWidth = element.getMaximumWidth( node );
-      elementPositions[ i ] = getPosition();
-      elementDimensions[ i ] = elementWidth;
+      elementPositions[i] = getPosition();
+      elementDimensions[i] = elementWidth;
       addPosition( elementWidth );
     }
 
@@ -259,7 +259,6 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
     // this is a NO-OP method, as the skip-alignment is simply a left-alignment ...
   }
 
-
   protected void updateBreaksForLastLineAlignment() {
     final long[] horizontalBreaks = getPageGrid().getHorizontalBreaks();
     final int breakCount = horizontalBreaks.length;
@@ -267,7 +266,7 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
     final long endOfLine = getEndOfLine();
     final long startOfLine = getStartOfLine();
     for ( int i = 0; i < breakCount; i++ ) {
-      final long pos = horizontalBreaks[ i ];
+      final long pos = horizontalBreaks[i];
       if ( pos <= startOfLine ) {
         // skip ..
         continue;
@@ -277,7 +276,7 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
       }
       pageLongList.add( pos );
     }
-    //pageLongList.add(endOfLine);
+    // pageLongList.add(endOfLine);
     pageLongList.add( Long.MAX_VALUE );
 
     final long[] pagebreaks = getPageBreaks();

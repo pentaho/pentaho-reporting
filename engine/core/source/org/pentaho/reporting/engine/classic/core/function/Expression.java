@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -46,7 +46,8 @@ public interface Expression extends Cloneable, Serializable {
    * The name must not be null and must be unique within the expressions of the report, if you intend to use this as a
    * global expression. Expressions for style-expressions or attribute-expressions can work without a name.
    *
-   * @param name the name.
+   * @param name
+   *          the name.
    */
   public void setName( String name );
 
@@ -83,10 +84,10 @@ public interface Expression extends Cloneable, Serializable {
    * expression from any other object space.
    *
    * @return A clone of this expression.
-   * @throws CloneNotSupportedException this should never happen.
+   * @throws CloneNotSupportedException
+   *           this should never happen.
    */
-  public Object clone()
-    throws CloneNotSupportedException;
+  public Object clone() throws CloneNotSupportedException;
 
   /**
    * The dependency level defines the level of execution for this function. Higher dependency functions are executed
@@ -104,7 +105,8 @@ public interface Expression extends Cloneable, Serializable {
   /**
    * Sets the dependency level for the expression.
    *
-   * @param level the level.
+   * @param level
+   *          the level.
    */
   public void setDependencyLevel( int level );
 
@@ -135,7 +137,8 @@ public interface Expression extends Cloneable, Serializable {
    * Defines the DataRow used in this expression. The dataRow is set when the report processing starts and can be used
    * to access the values of functions, expressions and the reports datasource.
    *
-   * @param runtime the runtime information for the expression
+   * @param runtime
+   *          the runtime information for the expression
    */
   public void setRuntime( ExpressionRuntime runtime );
 

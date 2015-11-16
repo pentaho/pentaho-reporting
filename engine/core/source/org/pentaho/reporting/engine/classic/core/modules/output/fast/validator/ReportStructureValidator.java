@@ -90,10 +90,10 @@ public class ReportStructureValidator extends AbstractStructureVisitor {
       return;
     }
 
-    if ( element.getStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE ) ||
-        element.getStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER ) ||
-        element.getStyleExpression( BandStyleKeys.PAGEBREAK_BEFORE ) != null ||
-        element.getStyleExpression( BandStyleKeys.PAGEBREAK_AFTER ) != null) {
+    if ( element.getStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE )
+        || element.getStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER )
+        || element.getStyleExpression( BandStyleKeys.PAGEBREAK_BEFORE ) != null
+        || element.getStyleExpression( BandStyleKeys.PAGEBREAK_AFTER ) != null ) {
       valid = false;
       return;
     }
