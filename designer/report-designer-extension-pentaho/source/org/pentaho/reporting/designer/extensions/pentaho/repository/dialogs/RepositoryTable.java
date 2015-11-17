@@ -22,9 +22,12 @@ import org.pentaho.reporting.designer.extensions.pentaho.repository.model.Reposi
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.RepositoryEntryCellRenderer;
 import org.pentaho.reporting.libraries.designtime.swing.GenericCellRenderer;
 
-import javax.swing.*;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
+
+import java.awt.Component;
+import java.awt.Dimension;
 import java.text.DateFormat;
 import java.util.Date;
 

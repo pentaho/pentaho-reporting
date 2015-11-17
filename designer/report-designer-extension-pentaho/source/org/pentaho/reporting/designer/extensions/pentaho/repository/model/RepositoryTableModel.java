@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.model;
 
@@ -35,7 +35,7 @@ public class RepositoryTableModel extends AbstractTableModel {
   private boolean showHiddenFiles;
 
   public RepositoryTableModel() {
-    this.filters = new String[ 0 ];
+    this.filters = new String[0];
   }
 
   public boolean isShowHiddenFiles() {
@@ -82,7 +82,7 @@ public class RepositoryTableModel extends AbstractTableModel {
       final FileObject[] children = selectedPath.getChildren();
       int count = 0;
       for ( int i = 0; i < children.length; i++ ) {
-        final FileObject child = children[ i ];
+        final FileObject child = children[i];
         if ( isShowHiddenFiles() == false && child.isHidden() ) {
           continue;
         }
@@ -102,7 +102,7 @@ public class RepositoryTableModel extends AbstractTableModel {
   }
 
   public String getColumnName( final int col ) {
-    switch( col ) {
+    switch ( col ) {
       case 0:
         return Messages.getInstance().getString( "SolutionRepositoryTableView.Title" );
       case 1:
@@ -128,7 +128,7 @@ public class RepositoryTableModel extends AbstractTableModel {
       final FileObject[] children = selectedPath.getChildren();
       int count = 0;
       for ( int i = 0; i < children.length; i++ ) {
-        final FileObject child = children[ i ];
+        final FileObject child = children[i];
         if ( isShowHiddenFiles() == false && child.isHidden() ) {
           continue;
         }
@@ -154,7 +154,7 @@ public class RepositoryTableModel extends AbstractTableModel {
     final FileObject node1 = getElementForRow( row );
 
     try {
-      switch( column ) {
+      switch ( column ) {
         case 0:
           return node1.getContent().getAttribute( "localized-name" );
         case 1:

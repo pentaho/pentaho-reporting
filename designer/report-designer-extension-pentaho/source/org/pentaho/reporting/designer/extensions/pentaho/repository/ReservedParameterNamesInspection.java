@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository;
 
@@ -70,9 +70,8 @@ public class ReservedParameterNamesInspection implements Inspection {
     return true;
   }
 
-  public void inspect( final ReportDesignerContext designerContext,
-                       final ReportDocumentContext reportRenderContext,
-                       final InspectionResultListener resultHandler ) throws ReportDataFactoryException {
+  public void inspect( final ReportDesignerContext designerContext, final ReportDocumentContext reportRenderContext,
+      final InspectionResultListener resultHandler ) throws ReportDataFactoryException {
     final AbstractReportDefinition abstractReportDefinition = reportRenderContext.getReportDefinition();
     if ( abstractReportDefinition instanceof MasterReport == false ) {
       return;
@@ -82,12 +81,11 @@ public class ReservedParameterNamesInspection implements Inspection {
     final ReportParameterDefinition definition = report.getParameterDefinition();
     final ParameterDefinitionEntry[] parameterDefinitionEntries = definition.getParameterDefinitions();
     for ( int i = 0; i < parameterDefinitionEntries.length; i++ ) {
-      final ParameterDefinitionEntry definitionEntry = parameterDefinitionEntries[ i ];
+      final ParameterDefinitionEntry definitionEntry = parameterDefinitionEntries[i];
       if ( reservedParameterNames.contains( definitionEntry.getName() ) ) {
-        resultHandler.notifyInspectionResult( new InspectionResult( this, InspectionResult.Severity.WARNING,
-          Messages.getInstance().formatMessage
-            ( "ReservedParameterNamesInspection.ReservedParameterNameUsed", definitionEntry.getName() ),
-          new ParameterLocationInfo( definitionEntry ) ) );
+        resultHandler.notifyInspectionResult( new InspectionResult( this, InspectionResult.Severity.WARNING, Messages
+            .getInstance().formatMessage( "ReservedParameterNamesInspection.ReservedParameterNameUsed",
+                definitionEntry.getName() ), new ParameterLocationInfo( definitionEntry ) ) );
       }
     }
   }

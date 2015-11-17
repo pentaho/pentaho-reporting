@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
@@ -45,7 +45,7 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
     client.getParams().setSoTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 );
     client.getParams().setAuthenticationPreemptive( true );
     client.getState().setCredentials( AuthScope.ANY,
-      AuthenticationHelper.getCredentials( loginData.getUsername(), loginData.getPassword() ) );
+        AuthenticationHelper.getCredentials( loginData.getUsername(), loginData.getPassword() ) );
     return client;
   }
 
@@ -64,11 +64,11 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
   public void run() {
     HttpClient client = createHttpClient();
     final GetMethod reservedCharactersMethod =
-      new GetMethod( loginData.getUrl() + "/api/repo/files/reservedCharacters" );
+        new GetMethod( loginData.getUrl() + "/api/repo/files/reservedCharacters" );
     reservedCharactersMethod.setFollowRedirects( false );
 
     final GetMethod reservedCharactersDisplayMethod =
-      new GetMethod( loginData.getUrl() + "/api/repo/files/reservedCharactersDisplay" );
+        new GetMethod( loginData.getUrl() + "/api/repo/files/reservedCharactersDisplay" );
     reservedCharactersDisplayMethod.setFollowRedirects( false );
 
     try {

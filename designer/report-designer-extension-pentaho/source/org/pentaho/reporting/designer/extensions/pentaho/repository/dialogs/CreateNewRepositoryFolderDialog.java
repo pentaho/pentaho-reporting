@@ -1,27 +1,34 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class CreateNewRepositoryFolderDialog extends CommonDialog {
   private JTextField nameTextField;
@@ -76,7 +83,7 @@ public class CreateNewRepositoryFolderDialog extends CommonDialog {
     c.weightx = 0.0;
     c.insets = new Insets( 5, 10, 0, 10 );
     contentPane
-      .add( new JLabel( Messages.getInstance().getString( "CreateNewRepositoryFolderDialog.Description" ) ), c );
+        .add( new JLabel( Messages.getInstance().getString( "CreateNewRepositoryFolderDialog.Description" ) ), c );
 
     c.gridx = 0;
     c.gridy = 3;

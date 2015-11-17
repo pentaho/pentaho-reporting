@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
@@ -30,10 +30,26 @@ import org.pentaho.reporting.designer.extensions.pentaho.repository.util.Publish
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 public class RepositoryLoginDialog extends CommonDialog {
   private class URLChangeHandler implements ActionListener {
@@ -60,14 +76,12 @@ public class RepositoryLoginDialog extends CommonDialog {
   private DefaultComboBoxModel urlModel;
   private boolean loginForPublish;
 
-  public RepositoryLoginDialog( final Dialog owner,
-                                final boolean loginForPublish ) throws HeadlessException {
+  public RepositoryLoginDialog( final Dialog owner, final boolean loginForPublish ) throws HeadlessException {
     super( owner );
     init( loginForPublish );
   }
 
-  public RepositoryLoginDialog( final Frame parent,
-                                final boolean loginForPublish ) {
+  public RepositoryLoginDialog( final Frame parent, final boolean loginForPublish ) {
     super( parent );
     init( loginForPublish );
   }
@@ -86,12 +100,15 @@ public class RepositoryLoginDialog extends CommonDialog {
       }
     }
 
-    final String user = ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.designer.extensions.pentaho.repository.ServerUser" );
-    final String pass = ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.designer.extensions.pentaho.repository.ServerPassword" );
-    final String url = ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty
-      ( "org.pentaho.reporting.designer.extensions.pentaho.repository.PublishLocation" );
+    final String user =
+        ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.designer.extensions.pentaho.repository.ServerUser" );
+    final String pass =
+        ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.designer.extensions.pentaho.repository.ServerPassword" );
+    final String url =
+        ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.designer.extensions.pentaho.repository.PublishLocation" );
 
     if ( StringUtils.isEmpty( url ) ) {
       return null;
@@ -99,8 +116,7 @@ public class RepositoryLoginDialog extends CommonDialog {
     return new AuthenticationData( url, user, pass, WorkspaceSettings.getInstance().getConnectionTimeout() );
   }
 
-  public static AuthenticationData getStoredLoginData( final String baseUrl,
-                                                       final ReportDesignerContext context ) {
+  public static AuthenticationData getStoredLoginData( final String baseUrl, final ReportDesignerContext context ) {
     final ReportDocumentContext reportRenderContext = context.getActiveContext();
     final AuthenticationStore authStore;
     if ( reportRenderContext == null ) {
@@ -116,8 +132,7 @@ public class RepositoryLoginDialog extends CommonDialog {
     return data;
   }
 
-  public AuthenticationData performLogin( final ReportDesignerContext context,
-                                          AuthenticationData config ) {
+  public AuthenticationData performLogin( final ReportDesignerContext context, AuthenticationData config ) {
     if ( context == null ) {
       throw new NullPointerException();
     }
@@ -136,7 +151,7 @@ public class RepositoryLoginDialog extends CommonDialog {
       urls = reportRenderContext.getAuthenticationStore().getKnownURLs();
     }
     for ( int i = 0; i < urls.length; i++ ) {
-      urlModel.addElement( urls[ i ] );
+      urlModel.addElement( urls[i] );
     }
 
     rememberSettings.setSelected( PublishSettings.getInstance().isRememberSettings() );
@@ -189,7 +204,7 @@ public class RepositoryLoginDialog extends CommonDialog {
     timeoutField.setEditor( new JSpinner.NumberEditor( timeoutField, "#####" ) );
 
     rememberSettings =
-      new JCheckBox( Messages.getInstance().getString( "RepositoryLoginDialog.RememberTheseSettings" ), true );
+        new JCheckBox( Messages.getInstance().getString( "RepositoryLoginDialog.RememberTheseSettings" ), true );
 
     urlCombo.setEditable( true );
     urlCombo.addActionListener( new URLChangeHandler() );
@@ -255,15 +270,15 @@ public class RepositoryLoginDialog extends CommonDialog {
     c.weightx = 1.0;
     serverPanel.add( timeoutField, c );
 
-    serverPanel.setBorder(
-      BorderFactory.createTitledBorder( Messages.getInstance().getString( "RepositoryLoginDialog.Server" ) ) );
+    serverPanel.setBorder( BorderFactory.createTitledBorder( Messages.getInstance().getString(
+        "RepositoryLoginDialog.Server" ) ) );
     return serverPanel;
   }
 
   private JPanel buildUserPanel() {
     final JPanel userPanel = new JPanel( new GridBagLayout() );
-    userPanel.setBorder( BorderFactory
-      .createTitledBorder( Messages.getInstance().getString( "RepositoryLoginDialog.PentahoCredentials" ) ) );
+    userPanel.setBorder( BorderFactory.createTitledBorder( Messages.getInstance().getString(
+        "RepositoryLoginDialog.PentahoCredentials" ) ) );
     final JLabel userLabel = new JLabel( Messages.getInstance().getString( "RepositoryLoginDialog.User" ) );
     final JLabel passwordLabel = new JLabel( Messages.getInstance().getString( "RepositoryLoginDialog.Password" ) );
 

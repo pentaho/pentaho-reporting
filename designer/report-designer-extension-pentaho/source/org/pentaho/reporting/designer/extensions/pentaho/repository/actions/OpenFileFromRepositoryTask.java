@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
+import java.awt.Component;
+
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
@@ -24,8 +26,6 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
-
-import java.awt.*;
 
 public class OpenFileFromRepositoryTask implements AuthenticatedServerTask {
   private AuthenticationData loginData;

@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
 
@@ -61,7 +61,7 @@ public class PublishUtil {
   public static final String SERVER_VERSION = "server-version";
   public static final int SERVER_VERSION_SUGAR = 5;
   public static final int SERVER_VERSION_LEGACY = 4;
-  private static final int HTTP_RESPONSE_FAIL = 504; //RepresentS an unknown rest failure as this code
+  private static final int HTTP_RESPONSE_FAIL = 504; // RepresentS an unknown rest failure as this code
   private static final int HTTP_RESPONSE_OK = 200;
 
   private static final String TIMEOUT = "timeout";
@@ -76,15 +76,14 @@ public class PublishUtil {
   }
 
   public static ReportRenderContext openReport( final ReportDesignerContext context,
-                                                final AuthenticationData loginData,
-                                                final String path )
-    throws IOException, ReportDataFactoryException, ResourceException {
+      final AuthenticationData loginData, final String path ) throws IOException, ReportDataFactoryException,
+    ResourceException {
     if ( StringUtils.isEmpty( path ) ) {
       throw new IOException( "Path is empty." );
     }
 
     final String urlPath =
-      path.replaceAll( "%", "%25" ).replaceAll( "%2B", "+" ).replaceAll( "\\!", "%21" ).replaceAll( ":", "%3A" );
+        path.replaceAll( "%", "%25" ).replaceAll( "%2B", "+" ).replaceAll( "\\!", "%21" ).replaceAll( ":", "%3A" );
     final FileObject connection = createVFSConnection( loginData );
     final FileObject object = connection.resolveFile( urlPath );
     if ( object.exists() == false ) {
@@ -94,7 +93,7 @@ public class PublishUtil {
     final InputStream inputStream = object.getContent().getInputStream();
     try {
       final ByteArrayOutputStream out =
-        new ByteArrayOutputStream( Math.max( 8192, (int) object.getContent().getSize() ) );
+          new ByteArrayOutputStream( Math.max( 8192, (int) object.getContent().getSize() ) );
       IOUtils.getInstance().copyStreams( inputStream, out );
       final MasterReport report = loadReport( out.toByteArray(), path );
       final int index = context.addMasterReport( report );
@@ -104,8 +103,8 @@ public class PublishUtil {
     }
   }
 
-  private static MasterReport loadReport( final byte[] data, final String fileName ) throws
-    IOException, ResourceException {
+  private static MasterReport loadReport( final byte[] data, final String fileName ) throws IOException,
+    ResourceException {
     if ( data == null ) {
       throw new NullPointerException();
     }
@@ -122,11 +121,12 @@ public class PublishUtil {
     }
 
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
-    final String urlMessage = config.getConfigProperty
-      ( "org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport" );
+    final String urlMessage =
+        config.getConfigProperty( "org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport" );
 
-    final String fullRepoViewerPath = MessageFormat
-      .format( urlMessage, URLEncoder.encode( RepositoryPathEncoder.encodeRepositoryPath( path ), "UTF-8" ) );
+    final String fullRepoViewerPath =
+        MessageFormat.format( urlMessage, URLEncoder.encode( RepositoryPathEncoder.encodeRepositoryPath( path ),
+            "UTF-8" ) );
     final String url = baseUrl + fullRepoViewerPath;
 
     ExternalToolLauncher.openURL( url );
@@ -144,9 +144,7 @@ public class PublishUtil {
     }
   }
 
-  public static int publish( final byte[] data,
-                             final String path,
-                             final AuthenticationData loginData )
+  public static int publish( final byte[] data, final String path, final AuthenticationData loginData )
     throws IOException {
     int responseCode = HTTP_RESPONSE_FAIL;
     final String versionText = loginData.getOption( SERVER_VERSION );
@@ -154,7 +152,7 @@ public class PublishUtil {
 
     if ( SERVER_VERSION_SUGAR == version ) {
       PublishRestUtil publishRestUtil =
-        new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
+          new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
       responseCode = publishRestUtil.publishFile( path, data, true );
 
     } else {
@@ -176,7 +174,7 @@ public class PublishUtil {
       return true;
     }
     for ( int i = 0; i < filters.length; i++ ) {
-      if ( name.endsWith( filters[ i ] ) ) {
+      if ( name.endsWith( filters[i] ) ) {
         return true;
       }
     }
@@ -188,7 +186,7 @@ public class PublishUtil {
   }
 
   public static FileObject createVFSConnection( final FileSystemManager fileSystemManager,
-                                                final AuthenticationData loginData ) throws FileSystemException {
+      final AuthenticationData loginData ) throws FileSystemException {
     if ( fileSystemManager == null ) {
       throw new NullPointerException();
     }
@@ -203,8 +201,8 @@ public class PublishUtil {
     final FileSystemOptions fileSystemOptions = new FileSystemOptions();
     final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
     configBuilder.setTimeOut( fileSystemOptions, getTimeout( loginData ) * 1000 );
-    configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl,
-      loginData.getUsername(), loginData.getPassword() ) );
+    configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl, loginData
+        .getUsername(), loginData.getPassword() ) );
     return fileSystemManager.resolveFile( normalizedUrl, fileSystemOptions );
   }
 
@@ -220,30 +218,26 @@ public class PublishUtil {
     final StringBuilder prefix = new StringBuilder( 100 );
     final String url2;
     if ( version == SERVER_VERSION_LEGACY ) {
-      if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "http://" ) ) // NON-NLS
-      {
-        url2 = baseURL.substring( "http://".length() );// NON-NLS
+      if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "http://" ) ) {  // NON-NLS   
+        url2 = baseURL.substring( "http://".length() ); // NON-NLS
         prefix.append( WEB_SOLUTION_PREFIX );
-        prefix.append( "http://" );// NON-NLS
-      } else if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "https://" ) )// NON-NLS
-      {
-        url2 = baseURL.substring( "https://".length() );// NON-NLS
+        prefix.append( "http://" ); // NON-NLS
+      } else if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "https://" ) ) {  // NON-NLS     
+        url2 = baseURL.substring( "https://".length() );  // NON-NLS
         prefix.append( WEB_SOLUTION_PREFIX );
-        prefix.append( "https://" );// NON-NLS
+        prefix.append( "https://" );  // NON-NLS
       } else {
         throw new IllegalArgumentException( "Not a expected URL" );
       }
     } else {
-      if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "http://" ) ) // NON-NLS
-      {
-        url2 = baseURL.substring( "http://".length() );// NON-NLS
+      if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "http://" ) ) {  // NON-NLS
+        url2 = baseURL.substring( "http://".length() ); // NON-NLS
         prefix.append( JCR_SOLUTION_PREFIX );
-        prefix.append( "http://" );// NON-NLS
-      } else if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "https://" ) )// NON-NLS
-      {
-        url2 = baseURL.substring( "https://".length() );// NON-NLS
+        prefix.append( "http://" ); // NON-NLS
+      } else if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "https://" ) ) {  // NON-NLS     
+        url2 = baseURL.substring( "https://".length() );  // NON-NLS
         prefix.append( JCR_SOLUTION_PREFIX );
-        prefix.append( "https://" );// NON-NLS
+        prefix.append( "https://" );  // NON-NLS
       } else {
         throw new IllegalArgumentException( "Not a expected URL" );
       }
@@ -267,11 +261,10 @@ public class PublishUtil {
    * Checks for presence of black listed chars as well as illegal permutations of legal chars.
    */
   public static boolean validateName( final String name ) {
-    return !StringUtils.isEmpty( name, true ) &&
-      name.trim().equals( name ) && // no leading or trailing whitespace
-      !containsReservedCharsPattern.matcher( name ).matches() && // no reserved characters
-      !".".equals( name ) && // no . //$NON-NLS-1$
-      !"..".equals( name );  // no .. //$NON-NLS-1$
+    return !StringUtils.isEmpty( name, true ) && name.trim().equals( name ) && // no leading or trailing whitespace
+        !containsReservedCharsPattern.matcher( name ).matches() && // no reserved characters
+        !".".equals( name ) && // no . //$NON-NLS-1$
+        !"..".equals( name ); // no .. //$NON-NLS-1$
   }
 
   public static void setReservedChars( String reservedChars ) {
@@ -289,6 +282,5 @@ public class PublishUtil {
   public static void setReservedCharsDisplay( String reservedCharsDisplay ) {
     PublishUtil.reservedCharsDisplay = reservedCharsDisplay;
   }
-
 
 }
