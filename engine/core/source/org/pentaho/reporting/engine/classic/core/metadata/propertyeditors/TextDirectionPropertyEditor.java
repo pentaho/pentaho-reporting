@@ -25,7 +25,6 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyEditor;
 
 import org.pentaho.reporting.engine.classic.core.style.TextDirection;
-import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.TextDirectionValueConverter;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -127,7 +126,7 @@ public class TextDirectionPropertyEditor implements PropertyEditor {
     if ( TextDirection.LTR.equals( value ) ) {
       return TextDirection.class.getName() + ".LTR";
     } else if ( TextDirection.RTL.equals( value ) ) {
-      return TextWrap.class.getName() + ".RTL";
+      return TextDirection.class.getName() + ".RTL";
     } else {
       return "null";
     }

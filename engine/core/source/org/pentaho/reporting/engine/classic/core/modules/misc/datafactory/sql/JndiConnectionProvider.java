@@ -17,19 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DataSourceService;
 import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DatasourceServiceException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class JndiConnectionProvider implements ConnectionProvider {
   private transient DataSourceService dataSourceService;
@@ -101,7 +102,7 @@ public class JndiConnectionProvider implements ConnectionProvider {
       } else {
         realUser = user;
       }
-      if ( StringUtils.isEmpty( password ) == false ) {
+      if ( StringUtils.isEmpty( this.password ) == false ) {
         realPassword = this.password;
       } else {
         realPassword = password;

@@ -15,16 +15,16 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.meta;
+package org.pentaho.reporting.engine.classic.core.metadata;
+
+import java.io.ByteArrayOutputStream;
 
 import junit.framework.TestCase;
+
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessTask;
 import org.pentaho.reporting.engine.classic.core.ReportProcessTaskUtil;
-import org.pentaho.reporting.engine.classic.core.metadata.ReportProcessTaskRegistry;
-
-import java.io.ByteArrayOutputStream;
 
 public class ReportProcessTaskRegistryTest extends TestCase {
   public ReportProcessTaskRegistryTest() {
