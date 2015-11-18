@@ -21,7 +21,10 @@ import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs.RepositoryOpenDialog;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.Window;
 import java.io.IOException;
 
 public class SelectFileFromRepositoryTask {

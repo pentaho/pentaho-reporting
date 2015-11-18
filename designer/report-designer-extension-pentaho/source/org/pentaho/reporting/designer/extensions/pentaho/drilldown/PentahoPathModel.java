@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown;
 
@@ -110,10 +110,8 @@ public class PentahoPathModel implements XulEventSource {
     extensionMap = new HashMap<String, ExtensionMapping>();
   }
 
-  public void registerExtension( final String extension,
-                                 final boolean local,
-                                 final boolean noParameter,
-                                 final String profileName ) {
+  public void registerExtension( final String extension, final boolean local, final boolean noParameter,
+      final String profileName ) {
     ExtensionMapping mapping = extensionMap.get( extension );
     if ( mapping == null ) {
       mapping = new ExtensionMapping( extension );
@@ -198,18 +196,14 @@ public class PentahoPathModel implements XulEventSource {
     String localPath = null;
 
     for ( int i = 0; i < params.length; i++ ) {
-      final DrillDownParameter drillDownParameter = params[ i ];
-      if ( "solution".equals( drillDownParameter.getName() ) ) // NON-NLS
-      {
+      final DrillDownParameter drillDownParameter = params[i];
+      if ( "solution".equals( drillDownParameter.getName() ) ) { // NON-NLS
         solution = FormulaUtil.extractStaticTextFromFormulaFragment( drillDownParameter.getFormulaFragment() );
-      } else if ( "path".equals( drillDownParameter.getName() ) ) // NON-NLS
-      {
+      } else if ( "path".equals( drillDownParameter.getName() ) ) { // NON-NLS
         path = FormulaUtil.extractStaticTextFromFormulaFragment( drillDownParameter.getFormulaFragment() );
-      } else if ( "name".equals( drillDownParameter.getName() ) ) // NON-NLS
-      {
+      } else if ( "name".equals( drillDownParameter.getName() ) ) { // NON-NLS
         name = FormulaUtil.extractStaticTextFromFormulaFragment( drillDownParameter.getFormulaFragment() );
-      } else if ( "::pentaho-path".equals( drillDownParameter.getName() ) ) // NON-NLS
-      {
+      } else if ( "::pentaho-path".equals( drillDownParameter.getName() ) ) { // NON-NLS
         localPath = FormulaUtil.extractStaticTextFromFormulaFragment( drillDownParameter.getFormulaFragment() );
       }
     }
@@ -250,7 +244,7 @@ public class PentahoPathModel implements XulEventSource {
         b.append( '/' );
       }
 
-      final String pathElement = path[ i ];
+      final String pathElement = path[i];
       b.append( pathElement );
     }
     return b.toString();
@@ -263,7 +257,7 @@ public class PentahoPathModel implements XulEventSource {
     final String normalizedPath = localPath.replace( '\\', '/' );
     final String[] path = StringUtils.split( normalizedPath, "/" );
     if ( path.length > 1 ) {
-      return path[ path.length - 1 ];
+      return path[path.length - 1];
     }
     return null;
   }
@@ -275,7 +269,7 @@ public class PentahoPathModel implements XulEventSource {
     final String normalizedPath = localPath.replace( '\\', '/' );
     final String[] path = StringUtils.split( normalizedPath, "/" );
     if ( path.length > 0 ) {
-      return path[ 0 ];
+      return path[0];
     }
     return null;
   }
@@ -315,6 +309,16 @@ public class PentahoPathModel implements XulEventSource {
   }
 
   public String[] getExtensions() {
-    return extensionMap.keySet().toArray( new String[ extensionMap.size() ] );
+    return extensionMap.keySet().toArray( new String[extensionMap.size()] );
   }
+
+  /**
+   * @return PropertyChangeSupport
+   * 
+   *         added to facilitate unit testing
+   */
+  PropertyChangeSupport getChangeListeners() {
+    return propertyChangeSupport;
+  }
+
 }

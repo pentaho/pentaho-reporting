@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.model;
 
@@ -53,7 +53,7 @@ public class RepositoryTreeModel implements TreeModel {
   private boolean showFoldersOnly;
   private boolean showHiddenFiles;
   private RepositoryTreeRoot root;
-  private static final String[] EMPTY_FILTER = new String[ 0 ];
+  private static final String[] EMPTY_FILTER = new String[0];
 
   public RepositoryTreeModel() {
     this.listenerList = new EventListenerList();
@@ -62,9 +62,7 @@ public class RepositoryTreeModel implements TreeModel {
     this.root = new RepositoryTreeRoot();
   }
 
-  public RepositoryTreeModel( final FileObject repositoryRoot,
-                              final String[] filters,
-                              final boolean showFoldersOnly ) {
+  public RepositoryTreeModel( final FileObject repositoryRoot, final String[] filters, final boolean showFoldersOnly ) {
     this();
     this.filters = filters.clone();
     this.showFoldersOnly = showFoldersOnly;
@@ -108,7 +106,7 @@ public class RepositoryTreeModel implements TreeModel {
   }
 
   /**
-   * Returns the root of the tree.  Returns <code>null</code> only if the tree has no nodes.
+   * Returns the root of the tree. Returns <code>null</code> only if the tree has no nodes.
    *
    * @return the root of the tree
    */
@@ -122,7 +120,8 @@ public class RepositoryTreeModel implements TreeModel {
    * <code>null</code> if <code>index</code> is a valid index for <code>parent</code> (that is <code>index >= 0 && index
    * < getChildCount(parent</code>)).
    *
-   * @param parent a node in the tree, obtained from this data source
+   * @param parent
+   *          a node in the tree, obtained from this data source
    * @return the child of <code>parent</code> at index <code>index</code>
    */
   public Object getChild( Object parent, final int index ) {
@@ -139,15 +138,15 @@ public class RepositoryTreeModel implements TreeModel {
       final FileObject[] children = parElement.getChildren();
       int count = 0;
       for ( int i = 0; i < children.length; i++ ) {
-        final FileObject child = children[ i ];
+        final FileObject child = children[i];
         if ( isShowFoldersOnly() && child.getType() != FileType.FOLDER ) {
           continue;
         }
         if ( isShowHiddenFiles() == false && child.isHidden() ) {
           continue;
         }
-        if ( child.getType() != FileType.FOLDER &&
-          PublishUtil.acceptFilter( filters, child.getName().getBaseName() ) == false ) {
+        if ( child.getType() != FileType.FOLDER
+            && PublishUtil.acceptFilter( filters, child.getName().getBaseName() ) == false ) {
           continue;
         }
 
@@ -157,7 +156,7 @@ public class RepositoryTreeModel implements TreeModel {
 
         count += 1;
       }
-      return children[ index ];
+      return children[index];
     } catch ( FileSystemException fse ) {
       logger.debug( "Failed", fse );
       return null;
@@ -168,7 +167,8 @@ public class RepositoryTreeModel implements TreeModel {
    * Returns the number of children of <code>parent</code>. Returns 0 if the node is a leaf or if it has no children.
    * <code>parent</code> must be a node previously obtained from this data source.
    *
-   * @param parent a node in the tree, obtained from this data source
+   * @param parent
+   *          a node in the tree, obtained from this data source
    * @return the number of children of the node <code>parent</code>
    */
   public int getChildCount( Object parent ) {
@@ -188,15 +188,15 @@ public class RepositoryTreeModel implements TreeModel {
       final FileObject[] children = parElement.getChildren();
       int count = 0;
       for ( int i = 0; i < children.length; i++ ) {
-        final FileObject child = children[ i ];
+        final FileObject child = children[i];
         if ( isShowFoldersOnly() && child.getType() != FileType.FOLDER ) {
           continue;
         }
         if ( isShowHiddenFiles() == false && child.isHidden() ) {
           continue;
         }
-        if ( child.getType() != FileType.FOLDER &&
-          PublishUtil.acceptFilter( filters, child.getName().getBaseName() ) == false ) {
+        if ( child.getType() != FileType.FOLDER
+            && PublishUtil.acceptFilter( filters, child.getName().getBaseName() ) == false ) {
           continue;
         }
 
@@ -214,7 +214,8 @@ public class RepositoryTreeModel implements TreeModel {
    * <code>false</code> even if <code>node</code> has no children. A directory in a filesystem, for example, may contain
    * no files; the node representing the directory is not a leaf, but it also has no children.
    *
-   * @param node a node in the tree, obtained from this data source
+   * @param node
+   *          a node in the tree, obtained from this data source
    * @return true if <code>node</code> is a leaf
    */
   public boolean isLeaf( final Object node ) {
@@ -235,21 +236,25 @@ public class RepositoryTreeModel implements TreeModel {
    * Messaged when the user has altered the value for the item identified by <code>path</code> to <code>newValue</code>.
    * If <code>newValue</code> signifies a truly new value the model should post a <code>treeNodesChanged</code> event.
    *
-   * @param path     path to the node that the user has altered
-   * @param newValue the new value from the TreeCellEditor
+   * @param path
+   *          path to the node that the user has altered
+   * @param newValue
+   *          the new value from the TreeCellEditor
    */
   public void valueForPathChanged( final TreePath path, final Object newValue ) {
 
   }
 
   /**
-   * Returns the index of child in parent.  If either <code>parent</code> or <code>child</code> is <code>null</code>,
+   * Returns the index of child in parent. If either <code>parent</code> or <code>child</code> is <code>null</code>,
    * returns -1. If either <code>parent</code> or <code>child</code> don't belong to this tree model, returns -1.
    *
-   * @param parent    a note in the tree, obtained from this data source
-   * @param childNode the node we are interested in
+   * @param parent
+   *          a note in the tree, obtained from this data source
+   * @param childNode
+   *          the node we are interested in
    * @return the index of the child in the parent, or -1 if either <code>child</code> or <code>parent</code> are
-   * <code>null</code> or don't belong to this tree model
+   *         <code>null</code> or don't belong to this tree model
    */
   public int getIndexOfChild( Object parent, final Object childNode ) {
     if ( parent instanceof RepositoryTreeRoot ) {
@@ -266,15 +271,15 @@ public class RepositoryTreeModel implements TreeModel {
       final FileObject[] childs = parElement.getChildren();
       int count = 0;
       for ( int i = 0; i < childs.length; i++ ) {
-        final FileObject child = childs[ i ];
+        final FileObject child = childs[i];
         if ( isShowFoldersOnly() && child.getType() != FileType.FOLDER ) {
           continue;
         }
         if ( isShowHiddenFiles() == false && child.isHidden() ) {
           continue;
         }
-        if ( child.getType() != FileType.FOLDER &&
-          PublishUtil.acceptFilter( filters, child.getName().getBaseName() ) == false ) {
+        if ( child.getType() != FileType.FOLDER
+            && PublishUtil.acceptFilter( filters, child.getName().getBaseName() ) == false ) {
           continue;
         }
 
@@ -295,7 +300,8 @@ public class RepositoryTreeModel implements TreeModel {
   /**
    * Adds a listener for the <code>TreeModelEvent</code> posted after the tree changes.
    *
-   * @param l the listener to add
+   * @param l
+   *          the listener to add
    * @see #removeTreeModelListener
    */
   public void addTreeModelListener( final TreeModelListener l ) {
@@ -305,7 +311,8 @@ public class RepositoryTreeModel implements TreeModel {
   /**
    * Removes a listener previously added with <code>addTreeModelListener</code>.
    *
-   * @param l the listener to remove
+   * @param l
+   *          the listener to remove
    * @see #addTreeModelListener
    */
   public void removeTreeModelListener( final TreeModelListener l ) {
@@ -316,7 +323,7 @@ public class RepositoryTreeModel implements TreeModel {
     final TreeModelEvent event = new TreeModelEvent( this, new TreePath( root ) );
     final TreeModelListener[] modelListeners = listenerList.getListeners( TreeModelListener.class );
     for ( int i = 0; i < modelListeners.length; i++ ) {
-      final TreeModelListener modelListener = modelListeners[ i ];
+      final TreeModelListener modelListener = modelListeners[i];
       modelListener.treeStructureChanged( event );
     }
   }
@@ -356,6 +363,5 @@ public class RepositoryTreeModel implements TreeModel {
     }
     return child;
   }
-
 
 }

@@ -17,13 +17,15 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
 
+import java.awt.Component;
+
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileType;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import java.awt.*;
 
 public class RepositoryTreeCellRenderer extends DefaultTreeCellRenderer {
   public RepositoryTreeCellRenderer() {

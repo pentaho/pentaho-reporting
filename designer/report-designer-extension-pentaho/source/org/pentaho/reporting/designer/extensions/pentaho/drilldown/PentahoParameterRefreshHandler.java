@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown;
 
@@ -55,12 +55,13 @@ import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.SwingUtilities;
 
 public class PentahoParameterRefreshHandler implements DrillDownParameterRefreshListener {
   private class UpdateRequestParamsTask implements AuthenticatedServerTask {
@@ -70,8 +71,7 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
     private DrillDownParameter[] existingParameters;
 
     private UpdateRequestParamsTask( final RequestParamsFromServerTask requestParamsFromServerTask,
-                                     final Component uiContext,
-                                     final DrillDownParameterRefreshEvent event ) {
+        final Component uiContext, final DrillDownParameterRefreshEvent event ) {
       this.requestParamsFromServerTask = requestParamsFromServerTask;
       this.uiContext = uiContext;
       this.existingParameters = event.getParameter();
@@ -107,8 +107,8 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
       loginThread.setPriority( Thread.MIN_PRIORITY );
 
       final GenericCancelHandler cancelHandler = new GenericCancelHandler( loginThread );
-      BackgroundCancellableProcessHelper.executeProcessWithCancelDialog
-        ( loginThread, cancelHandler, uiContext, "Requesting Parameter Information .." );
+      BackgroundCancellableProcessHelper.executeProcessWithCancelDialog( loginThread, cancelHandler, uiContext,
+          "Requesting Parameter Information .." );
       if ( cancelHandler.isCancelled() ) {
         return;
       }
@@ -130,18 +130,18 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
       final HashMap<String, DrillDownParameter> parameterFromServer = new HashMap<String, DrillDownParameter>();
       final ArrayList<DrillDownParameter> drillDownParameters = new ArrayList<DrillDownParameter>();
       for ( int i = 0; i < parameters.length; i++ ) {
-        final Parameter parameter = parameters[ i ];
+        final Parameter parameter = parameters[i];
         final DrillDownParameter drillDownParameter = new DrillDownParameter( parameter.getName() );
-        if ( "system".equals( parameter.getAttribute( ParameterAttributeNames.Core.PARAMETER_GROUP ) ) ||
-          "subscription".equals( parameter.getAttribute( ParameterAttributeNames.Core.PARAMETER_GROUP ) ) ||
-          "output-target".equals( parameter.getName() ) ) {
+        if ( "system".equals( parameter.getAttribute( ParameterAttributeNames.Core.PARAMETER_GROUP ) )
+            || "subscription".equals( parameter.getAttribute( ParameterAttributeNames.Core.PARAMETER_GROUP ) )
+            || "output-target".equals( parameter.getName() ) ) {
           drillDownParameter.setType( DrillDownParameter.Type.SYSTEM );
         } else {
           drillDownParameter.setType( DrillDownParameter.Type.PREDEFINED );
         }
 
-        if ( "false".equals( parameter.getAttribute
-          ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.PREFERRED ) ) ) {
+        if ( "false".equals( parameter.getAttribute( ParameterAttributeNames.Core.NAMESPACE,
+            ParameterAttributeNames.Core.PREFERRED ) ) ) {
           drillDownParameter.setPreferred( false );
         } else {
           drillDownParameter.setPreferred( true );
@@ -152,18 +152,18 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
       }
 
       for ( int i = 0; i < existingParameters.length; i++ ) {
-        final DrillDownParameter parameter = existingParameters[ i ];
+        final DrillDownParameter parameter = existingParameters[i];
         if ( parameterFromServer.containsKey( parameter.getName() ) ) {
           // this parameter also exists in the listing from the server, so rescue its contents
           final DrillDownParameter existingOne = parameterFromServer.get( parameter.getName() );
           existingOne.setFormulaFragment( parameter.getFormulaFragment() );
-          existingParameters[ i ] = null;
+          existingParameters[i] = null;
         }
       }
 
       // finally add all left-over parameters as manual parameters.
       for ( int i = 0; i < existingParameters.length; i++ ) {
-        final DrillDownParameter parameter = existingParameters[ i ];
+        final DrillDownParameter parameter = existingParameters[i];
         if ( parameter == null ) {
           continue;
         }
@@ -173,8 +173,8 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
         drillDownParameters.add( parameter );
       }
 
-      final DrillDownParameter[] computedSet = drillDownParameters.toArray
-        ( new DrillDownParameter[ drillDownParameters.size() ] );
+      final DrillDownParameter[] computedSet =
+          drillDownParameters.toArray( new DrillDownParameter[drillDownParameters.size()] );
       if ( parameterTable != null ) {
         parameterTable.setDrillDownParameter( computedSet );
       }
@@ -187,7 +187,7 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
     client.getParams().setSoTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 );
     client.getParams().setAuthenticationPreemptive( true );
     client.getState().setCredentials( AuthScope.ANY,
-      AuthenticationHelper.getCredentials( loginData.getUsername(), loginData.getPassword() ) );
+        AuthenticationHelper.getCredentials( loginData.getUsername(), loginData.getPassword() ) );
     return client;
   }
 
@@ -201,8 +201,7 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
       this.pathModel = pathModel;
     }
 
-    public void setLoginData( final AuthenticationData loginData,
-                              final boolean storeUpdates ) {
+    public void setLoginData( final AuthenticationData loginData, final boolean storeUpdates ) {
       this.loginData = loginData;
     }
 
@@ -238,9 +237,8 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
 
         final int result = httpClient.executeMethod( method );
         if ( result != HttpStatus.SC_OK ) {
-          if ( result == HttpStatus.SC_MOVED_TEMPORARILY ||
-            result == HttpStatus.SC_FORBIDDEN ||
-            result == HttpStatus.SC_UNAUTHORIZED ) {
+          if ( result == HttpStatus.SC_MOVED_TEMPORARILY || result == HttpStatus.SC_FORBIDDEN
+              || result == HttpStatus.SC_UNAUTHORIZED ) {
             // notify the world that the login data is no longer valid
             throw new PublishException( PublishException.ERROR_INVALID_USERNAME_OR_PASSWORD );
           } else {
@@ -267,8 +265,7 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
   private Component component;
 
   public PentahoParameterRefreshHandler( final PentahoPathModel pentahoPathWrapper,
-                                         final ReportDesignerContext reportDesignerContext,
-                                         final Component component ) {
+      final ReportDesignerContext reportDesignerContext, final Component component ) {
     if ( pentahoPathWrapper == null ) {
       throw new NullPointerException();
     }
@@ -295,8 +292,7 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
     this.parameterTable = parameterTable;
   }
 
-  private static String getParameterServicePath( final AuthenticationData loginData,
-                                                 final PentahoPathModel pathModel ) {
+  private static String getParameterServicePath( final AuthenticationData loginData, final PentahoPathModel pathModel ) {
     try {
       final FileObject fileSystemRoot = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
       final FileSystem fileSystem = fileSystemRoot.getFileSystem();
@@ -343,8 +339,8 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
         final String path = pathModel.getPath();
         final String solution = pathModel.getSolution();
 
-        final FastMessageFormat messageFormat = new FastMessageFormat
-          ( "/content/reporting/?renderMode=XML&amp;solution={0}&amp;path={1}&amp;name={2}" );
+        final FastMessageFormat messageFormat =
+            new FastMessageFormat( "/content/reporting/?renderMode=XML&amp;solution={0}&amp;path={1}&amp;name={2}" );
         messageFormat.setNullString( "" );
         return loginData.getUrl() + messageFormat.format( new Object[] { solution, path, name } );
       }
@@ -365,10 +361,10 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
 
     try {
       final RequestParamsFromServerTask requestParamsFromServerTask = new RequestParamsFromServerTask( pathModel );
-      final LoginTask loginTask = new LoginTask( reportDesignerContext, component,
-        new UpdateRequestParamsTask( requestParamsFromServerTask, component, event ), pathModel.getLoginData() );
+      final LoginTask loginTask =
+          new LoginTask( reportDesignerContext, component, new UpdateRequestParamsTask( requestParamsFromServerTask,
+              component, event ), pathModel.getLoginData() );
       SwingUtilities.invokeLater( loginTask );
-
 
     } catch ( Exception e ) {
       UncaughtExceptionsModel.getInstance().addException( e );

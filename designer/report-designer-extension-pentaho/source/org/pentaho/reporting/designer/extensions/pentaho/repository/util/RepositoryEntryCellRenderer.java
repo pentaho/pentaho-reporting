@@ -17,14 +17,19 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
 
+import java.awt.Component;
+
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileType;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.model.RepositoryTableModel;
 
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
 
 public class RepositoryEntryCellRenderer extends DefaultTableCellRenderer {
   private Icon leafIcon;

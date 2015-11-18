@@ -1,4 +1,27 @@
+/*!
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
+ */
+
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
+
+import java.awt.Component;
+import java.awt.Cursor;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,9 +39,6 @@ import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
 import org.pentaho.reporting.libraries.pensol.JCRSolutionFileSystem;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class PublishToServerTask implements AuthenticatedServerTask {
   private static final Log logger = LogFactory.getLog( PublishToServerTask.class );
 
@@ -27,8 +47,7 @@ public class PublishToServerTask implements AuthenticatedServerTask {
   private AuthenticationData loginData;
   private boolean storeUpdates;
 
-  public PublishToServerTask( final ReportDesignerContext reportDesignerContext,
-                              final Component uiContext ) {
+  public PublishToServerTask( final ReportDesignerContext reportDesignerContext, final Component uiContext ) {
 
     this.reportDesignerContext = reportDesignerContext;
     this.uiContext = uiContext;
@@ -77,18 +96,16 @@ public class PublishToServerTask implements AuthenticatedServerTask {
           glassPane.setVisible( false );
           glassPane.setCursor( new Cursor( Cursor.DEFAULT_CURSOR ) );
         }
-        if ( JOptionPane.showConfirmDialog( uiContext,
-          Messages.getInstance().getString( "PublishToServerAction.Successful.LaunchNow" ),
-          Messages.getInstance().getString( "PublishToServerAction.Successful.LaunchTitle" ),
-          JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION ) {
+        if ( JOptionPane.showConfirmDialog( uiContext, Messages.getInstance().getString(
+            "PublishToServerAction.Successful.LaunchNow" ), Messages.getInstance().getString(
+            "PublishToServerAction.Successful.LaunchTitle" ), JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION ) {
           PublishUtil.launchReportOnServer( loginData.getUrl(), selectedReport );
         }
       } else if ( responseCode == 403 ) {
         logger.error( "Publish failed. Server responded with status-code " + responseCode );
-        JOptionPane.showMessageDialog( uiContext,
-          Messages.getInstance().getString( "PublishToServerAction.FailedAccess" ),
-          Messages.getInstance().getString( "PublishToServerAction.FailedAccessTitle" ),
-          JOptionPane.ERROR_MESSAGE );
+        JOptionPane.showMessageDialog( uiContext, Messages.getInstance().getString(
+            "PublishToServerAction.FailedAccess" ), Messages.getInstance().getString(
+            "PublishToServerAction.FailedAccessTitle" ), JOptionPane.ERROR_MESSAGE );
       } else {
         logger.error( "Publish failed. Server responded with status-code " + responseCode );
         showErrorMessage();
@@ -100,8 +117,8 @@ public class PublishToServerTask implements AuthenticatedServerTask {
   }
 
   private String extractLastFileName( final MasterReport report ) {
-    final Object lastFilenameAttr = report.getAttribute
-      ( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME );
+    final Object lastFilenameAttr =
+        report.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME );
     final String oldName;
     if ( lastFilenameAttr != null ) {
       oldName = (String) lastFilenameAttr;
@@ -112,16 +129,19 @@ public class PublishToServerTask implements AuthenticatedServerTask {
   }
 
   private void readBundleMetaData( final MasterReport report, final DocumentMetaData metaData,
-                                   final SelectFileForPublishTask selectFileForPublishTask ) {
-    final String oldDescription = (String) metaData.getBundleAttribute
-      ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.DESCRIPTION );
-    final String oldTitle = (String) metaData.getBundleAttribute
-      ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE );
+      final SelectFileForPublishTask selectFileForPublishTask ) {
+    final String oldDescription =
+        (String) metaData.getBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
+            ODFMetaAttributeNames.DublinCore.DESCRIPTION );
+    final String oldTitle =
+        (String) metaData.getBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
+            ODFMetaAttributeNames.DublinCore.TITLE );
 
-    final boolean oldLockOutput = Boolean.TRUE.equals
-      ( report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE ) );
-    final String oldExportType = (String) report.getAttribute
-      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE );
+    final boolean oldLockOutput =
+        Boolean.TRUE.equals( report.getAttribute( AttributeNames.Core.NAMESPACE,
+            AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE ) );
+    final String oldExportType =
+        (String) report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE );
 
     selectFileForPublishTask.setDescription( oldDescription );
     selectFileForPublishTask.setReportTitle( oldTitle );
@@ -129,33 +149,27 @@ public class PublishToServerTask implements AuthenticatedServerTask {
     selectFileForPublishTask.setExportType( oldExportType );
   }
 
-  private void storeBundleMetaData( final MasterReport report,
-                                    final String selectedReport,
-                                    final SelectFileForPublishTask selectFileForPublishTask ) {
+  private void storeBundleMetaData( final MasterReport report, final String selectedReport,
+      final SelectFileForPublishTask selectFileForPublishTask ) {
     final DocumentMetaData metaData = report.getBundle().getMetaData();
-    report.setAttribute
-      ( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME, selectedReport );
+    report.setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME, selectedReport );
 
     if ( metaData instanceof WriteableDocumentMetaData ) {
       final WriteableDocumentMetaData writeableDocumentMetaData = (WriteableDocumentMetaData) metaData;
-      writeableDocumentMetaData.setBundleAttribute
-        ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.DESCRIPTION,
-          selectFileForPublishTask.getDescription() );
-      writeableDocumentMetaData.setBundleAttribute
-        ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE,
-          selectFileForPublishTask.getReportTitle() );
+      writeableDocumentMetaData.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
+          ODFMetaAttributeNames.DublinCore.DESCRIPTION, selectFileForPublishTask.getDescription() );
+      writeableDocumentMetaData.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
+          ODFMetaAttributeNames.DublinCore.TITLE, selectFileForPublishTask.getReportTitle() );
     }
 
-    report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE,
-      Boolean.valueOf( selectFileForPublishTask.isLockOutputType() ) );
+    report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE, Boolean
+        .valueOf( selectFileForPublishTask.isLockOutputType() ) );
     report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE,
-      selectFileForPublishTask.getExportType() );
+        selectFileForPublishTask.getExportType() );
   }
 
   private void showErrorMessage() {
-    JOptionPane.showMessageDialog( uiContext,
-      Messages.getInstance().getString( "PublishToServerAction.Failed" ),
-      Messages.getInstance().getString( "PublishToServerAction.FailedTitle" ),
-      JOptionPane.ERROR_MESSAGE );
+    JOptionPane.showMessageDialog( uiContext, Messages.getInstance().getString( "PublishToServerAction.Failed" ),
+        Messages.getInstance().getString( "PublishToServerAction.FailedTitle" ), JOptionPane.ERROR_MESSAGE );
   }
 }

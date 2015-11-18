@@ -1,21 +1,28 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
+
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.Window;
+
+import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
@@ -29,9 +36,6 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.background.BackgroundCancellableProcessHelper;
 import org.pentaho.reporting.libraries.designtime.swing.background.GenericCancelHandler;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class LoginTask implements Runnable {
   private final ReportDesignerContext designerContext;
   private final Component uiContext;
@@ -41,24 +45,18 @@ public class LoginTask implements Runnable {
   private RepositoryLoginDialog loginDialog;
   private AuthenticationData loginData;
 
-  public LoginTask( final ReportDesignerContext designerContext,
-                    final Component uiContext,
-                    final AuthenticatedServerTask followUpTask ) {
+  public LoginTask( final ReportDesignerContext designerContext, final Component uiContext,
+      final AuthenticatedServerTask followUpTask ) {
     this( designerContext, uiContext, followUpTask, null, false );
   }
 
-  public LoginTask( final ReportDesignerContext designerContext,
-                    final Component uiContext,
-                    final AuthenticatedServerTask followUpTask,
-                    final AuthenticationData loginData ) {
+  public LoginTask( final ReportDesignerContext designerContext, final Component uiContext,
+      final AuthenticatedServerTask followUpTask, final AuthenticationData loginData ) {
     this( designerContext, uiContext, followUpTask, loginData, false );
   }
 
-  public LoginTask( final ReportDesignerContext designerContext,
-                    final Component uiContext,
-                    final AuthenticatedServerTask followUpTask,
-                    final AuthenticationData loginData,
-                    final boolean loginForPublish ) {
+  public LoginTask( final ReportDesignerContext designerContext, final Component uiContext,
+      final AuthenticatedServerTask followUpTask, final AuthenticationData loginData, final boolean loginForPublish ) {
     if ( designerContext == null ) {
       throw new NullPointerException();
     }
@@ -87,7 +85,6 @@ public class LoginTask implements Runnable {
       this.skipFirstShowDialog = false;
     }
   }
-
 
   /**
    * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
@@ -126,24 +123,22 @@ public class LoginTask implements Runnable {
       loginThread.setPriority( Thread.MIN_PRIORITY );
 
       final GenericCancelHandler cancelHandler = new GenericCancelHandler( loginThread );
-      BackgroundCancellableProcessHelper.executeProcessWithCancelDialog
-        ( loginThread, cancelHandler, uiContext, Messages.getInstance().getString( "LoginTask.ValidateLoginMessage" ) );
+      BackgroundCancellableProcessHelper.executeProcessWithCancelDialog( loginThread, cancelHandler, uiContext,
+          Messages.getInstance().getString( "LoginTask.ValidateLoginMessage" ) );
       if ( cancelHandler.isCancelled() ) {
         return;
       }
 
       if ( validateLoginTask.getException() != null ) {
         final Exception exception = validateLoginTask.getException();
-        ExceptionDialog.showExceptionDialog( uiContext,
-          Messages.getInstance().getString( "LoadReportFromRepositoryAction.LoginError.Title" ),
-          Messages.getInstance().formatMessage( "LoadReportFromRepositoryAction.LoginError.Message",
-            exception.getMessage() ), exception );
+        ExceptionDialog.showExceptionDialog( uiContext, Messages.getInstance().getString(
+            "LoadReportFromRepositoryAction.LoginError.Title" ), Messages.getInstance().formatMessage(
+            "LoadReportFromRepositoryAction.LoginError.Message", exception.getMessage() ), exception );
         loginComplete = false;
       } else {
         loginComplete = validateLoginTask.isLoginComplete();
       }
-    }
-    while ( loginComplete == false );
+    } while ( loginComplete == false );
 
     if ( loginDialog != null && loginDialog.isRememberSettings() ) {
       final ReportDocumentContext reportRenderContext = designerContext.getActiveContext();

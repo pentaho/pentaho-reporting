@@ -45,7 +45,7 @@ public class PentahoRemoteDrillDownController extends PentahoDrillDownController
         list.add( new DrillDownParameter( "name", FormulaUtil.quoteString( pentahoPathWrapper.getName() ) ) );
         nameAdded = true;
       } else if ( "::pentaho-path".equals( drillDownParameter.getName() ) ) {
-        // ignore
+        assert true;  // No-op to satisfy checkstyle
       } else {
         list.add( drillDownParameter );
       }

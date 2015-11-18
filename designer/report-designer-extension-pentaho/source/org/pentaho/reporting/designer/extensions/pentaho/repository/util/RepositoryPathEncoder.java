@@ -25,7 +25,8 @@ public class RepositoryPathEncoder {
   /**
    * Use this function to escape the "colonized" path for addition to a url.
    *
-   * @param value The colonized string (eg: ":public:Steel Wheels:File::WithColon")
+   * @param value
+   *          The colonized string (eg: ":public:Steel Wheels:File::WithColon")
    * @return Escaped version of value (eg: "%3Apublic%3ASteel%20Wheels%3AFile%3A%3AWithColon")
    */
   public static String encode( String value ) {
@@ -36,17 +37,18 @@ public class RepositoryPathEncoder {
   /**
    * Encodes a string using the equivalent of a javascript's <code>encodeURIComponent</code>
    *
-   * @param value The String to be encoded
+   * @param value
+   *          The String to be encoded
    * @return the encoded String
    */
   public static String encodeURIComponent( String value ) {
     String encoded = null;
     try {
       encoded =
-        URLEncoder.encode( value, "UTF-8" ).replaceAll( "\\+", "%20" ).replaceAll( "\\%21", "!" ).replaceAll(
-          "\\%27", "'" ).replaceAll( "\\%28", "(" ).replaceAll( "\\%29", ")" ).replaceAll( "\\%7E", "~" );
+          URLEncoder.encode( value, "UTF-8" ).replaceAll( "\\+", "%20" ).replaceAll( "\\%21", "!" ).replaceAll(
+              "\\%27", "'" ).replaceAll( "\\%28", "(" ).replaceAll( "\\%29", ")" ).replaceAll( "\\%7E", "~" );
     } catch ( UnsupportedEncodingException e ) {
-      //Should not happen
+      // Should not happen
       encoded = value;
     }
     return encoded;

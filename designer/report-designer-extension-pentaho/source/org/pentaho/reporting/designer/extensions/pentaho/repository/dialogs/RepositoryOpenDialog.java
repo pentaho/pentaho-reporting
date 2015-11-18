@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
@@ -37,12 +37,31 @@ import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHand
 import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -62,10 +81,11 @@ public class RepositoryOpenDialog extends CommonDialog {
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
     public LevelUpAction() {
-      putValue( Action.SHORT_DESCRIPTION,
-        Messages.getInstance().getString( "RepositoryPublishDialog.LevelUpAction.Description" ) );
-      final URL location = RepositoryOpenDialog.class.getResource
-        ( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/upOneFolder.png" ); // NON-NLS
+      putValue( Action.SHORT_DESCRIPTION, Messages.getInstance().getString(
+          "RepositoryPublishDialog.LevelUpAction.Description" ) );
+      final URL location =
+          RepositoryOpenDialog.class
+              .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/upOneFolder.png" ); // NON-NLS
       if ( location != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( location ) );
       } else {
@@ -91,21 +111,20 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
   }
 
-
   protected class BrowseRepositoryAction extends AbstractAction {
     /**
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
     public BrowseRepositoryAction() {
-      putValue( Action.SHORT_DESCRIPTION,
-        Messages.getInstance().getString( "RepositoryPublishDialog.BrowseRepositoryAction.Description" ) );
-      final URL location = RepositoryOpenDialog.class.getResource
-        ( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/exploreSolution.png" ); // NON-NLS
+      putValue( Action.SHORT_DESCRIPTION, Messages.getInstance().getString(
+          "RepositoryPublishDialog.BrowseRepositoryAction.Description" ) );
+      final URL location =
+          RepositoryOpenDialog.class
+              .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/exploreSolution.png" ); // NON-NLS
       if ( location != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( location ) );
       } else {
-        putValue( Action.NAME,
-          Messages.getInstance().getString( "RepositoryPublishDialog.BrowseRepositoryAction.Name" ) );
+        putValue( Action.NAME, Messages.getInstance().getString( "RepositoryPublishDialog.BrowseRepositoryAction.Name" ) );
       }
     }
 
@@ -118,7 +137,7 @@ public class RepositoryOpenDialog extends CommonDialog {
       }
 
       final RepositoryTreeDialog treeDialog =
-        new RepositoryTreeDialog( RepositoryOpenDialog.this, isCreateFolderAllowed() );
+          new RepositoryTreeDialog( RepositoryOpenDialog.this, isCreateFolderAllowed() );
       try {
         final FileObject newLocation = treeDialog.performSelectLocation( fileSystemRoot, getFilters(), selectedView );
         if ( newLocation != null ) {
@@ -221,7 +240,8 @@ public class RepositoryOpenDialog extends CommonDialog {
     /**
      * Called whenever the value of the selection changes.
      *
-     * @param e the event that characterizes the change.
+     * @param e
+     *          the event that characterizes the change.
      */
     public void valueChanged( final ListSelectionEvent e ) {
       final int selectedRowRaw = table.getSelectedRow();
@@ -236,8 +256,8 @@ public class RepositoryOpenDialog extends CommonDialog {
 
       try {
         if ( selectedFileObject.getType() == FileType.FILE ) {
-          fileNameTextField.setText(
-            URLDecoder.decode( selectedFileObject.getName().getBaseName().replaceAll( "\\+", "%2B" ), "UTF-8" ) );
+          fileNameTextField.setText( URLDecoder.decode( selectedFileObject.getName().getBaseName().replaceAll( "\\+",
+              "%2B" ), "UTF-8" ) );
         }
       } catch ( FileSystemException e1 ) {
         // ignore ..
@@ -251,11 +271,8 @@ public class RepositoryOpenDialog extends CommonDialog {
     private FileObjectRenderer() {
     }
 
-    public Component getListCellRendererComponent( final JList list,
-                                                   final Object value,
-                                                   final int index,
-                                                   final boolean isSelected,
-                                                   final boolean cellHasFocus ) {
+    public Component getListCellRendererComponent( final JList list, final Object value, final int index,
+        final boolean isSelected, final boolean cellHasFocus ) {
       if ( value instanceof WebSolutionFileObject ) {
         final WebSolutionFileObject fo = (WebSolutionFileObject) value;
         final FileName fileName = fo.getName();
@@ -268,7 +285,6 @@ public class RepositoryOpenDialog extends CommonDialog {
       return super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
     }
   }
-
 
   private class FileNameValidator extends DocumentChangeHandler {
     private FileNameValidator() {
@@ -430,8 +446,8 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
   }
 
-  public String performOpen( final AuthenticationData loginData,
-                             final String previousSelection ) throws FileSystemException, UnsupportedEncodingException {
+  public String performOpen( final AuthenticationData loginData, final String previousSelection )
+    throws FileSystemException, UnsupportedEncodingException {
     fileSystemRoot = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
     if ( previousSelection == null ) {
       setSelectedView( fileSystemRoot );
@@ -464,8 +480,7 @@ public class RepositoryOpenDialog extends CommonDialog {
     return getSelectedFile();
   }
 
-  protected String getSelectedFile()
-    throws FileSystemException, UnsupportedEncodingException {
+  protected String getSelectedFile() throws FileSystemException, UnsupportedEncodingException {
     if ( StringUtils.isEmpty( fileNameTextField.getText() ) ) {
       return null;
     }
@@ -474,8 +489,9 @@ public class RepositoryOpenDialog extends CommonDialog {
       selectedView = selectedView.getParent();
     }
 
-    final FileObject targetFile = selectedView.resolveFile(
-      fileNameTextField.getText().replaceAll( "\\%", "%25" ).replaceAll( "\\!", "%21" ).replaceAll( ":", "%3A" ) );
+    final FileObject targetFile =
+        selectedView.resolveFile( fileNameTextField.getText().replaceAll( "\\%", "%25" ).replaceAll( "\\!", "%21" )
+            .replaceAll( ":", "%3A" ) );
     return targetFile.getName().getPathDecoded();
   }
 
@@ -583,6 +599,5 @@ public class RepositoryOpenDialog extends CommonDialog {
     fileSystem.getLocalFileModel().refresh();
     table.refresh();
   }
-
 
 }

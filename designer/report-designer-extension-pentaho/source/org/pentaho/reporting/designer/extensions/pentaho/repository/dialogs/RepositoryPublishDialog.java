@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
@@ -35,10 +35,28 @@ import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -50,13 +68,13 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
     private NewFolderAction() {
-      final URL location = RepositoryTreeDialog.class.getResource
-        ( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/newfolder.png" );
+      final URL location =
+          RepositoryTreeDialog.class
+              .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/newfolder.png" );
       if ( location != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( location ) );
       } else {
-        putValue( Action.NAME,
-          Messages.getInstance().getString( "SolutionRepositoryTreeDialog.NewFolderAction.Name" ) );
+        putValue( Action.NAME, Messages.getInstance().getString( "SolutionRepositoryTreeDialog.NewFolderAction.Name" ) );
       }
     }
 
@@ -65,7 +83,7 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
      */
     public void actionPerformed( final ActionEvent e ) {
       final CreateNewRepositoryFolderDialog newFolderDialog =
-        new CreateNewRepositoryFolderDialog( RepositoryPublishDialog.this );
+          new CreateNewRepositoryFolderDialog( RepositoryPublishDialog.this );
 
       if ( !newFolderDialog.performEdit() ) {
         return;
@@ -77,10 +95,10 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
       }
 
       while ( !PublishUtil.validateName( newFolderDialog.getFolderName() ) ) {
-        JOptionPane.showMessageDialog( RepositoryPublishDialog.this,
-          Messages.getInstance().formatMessage( "PublishToServerAction.IllegalName", newFolderDialog.getFolderName(),
-            PublishUtil.getReservedCharsDisplay() ),
-          Messages.getInstance().getString( "PublishToServerAction.Error.Title" ), JOptionPane.ERROR_MESSAGE );
+        JOptionPane.showMessageDialog( RepositoryPublishDialog.this, Messages.getInstance()
+            .formatMessage( "PublishToServerAction.IllegalName", newFolderDialog.getFolderName(),
+                PublishUtil.getReservedCharsDisplay() ), Messages.getInstance().getString(
+            "PublishToServerAction.Error.Title" ), JOptionPane.ERROR_MESSAGE );
         if ( !newFolderDialog.performEdit() ) {
           return;
         }
@@ -91,7 +109,8 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
         glassPane.setVisible( true );
         glassPane.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
         final FileObject child =
-          treeNode.resolveFile( newFolderDialog.getFolderName().replaceAll( "\\%", "%25" ).replaceAll( "\\!", "%21" ) );
+            treeNode
+                .resolveFile( newFolderDialog.getFolderName().replaceAll( "\\%", "%25" ).replaceAll( "\\!", "%21" ) );
         child.createFolder();
         if ( child instanceof WebSolutionFileObject ) {
           final WebSolutionFileObject webSolutionFileObject = (WebSolutionFileObject) child;
@@ -112,7 +131,8 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
     /**
      * Called whenever the value of the selection changes.
      *
-     * @param e the event that characterizes the change.
+     * @param e
+     *          the event that characterizes the change.
      */
     public void valueChanged( final ListSelectionEvent e ) {
       final int selectedRow = getTable().getSelectedRow();
@@ -183,8 +203,7 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
     c.gridy = 2;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.insets = new Insets( 5, 5, 5, 5 );
-    publishHeaderPanel
-      .add( new JLabel( Messages.getInstance().getString( "RepositoryPublishDialog.ReportTitle" ) ), c );
+    publishHeaderPanel.add( new JLabel( Messages.getInstance().getString( "RepositoryPublishDialog.ReportTitle" ) ), c );
 
     c.gridy = 3;
     c.insets = new Insets( 2, 5, 0, 5 );
@@ -193,8 +212,8 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
     c.gridy = 4;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.insets = new Insets( 5, 5, 5, 5 );
-    publishHeaderPanel
-      .add( new JLabel( Messages.getInstance().getString( "RepositoryPublishDialog.ReportDescription" ) ), c );
+    publishHeaderPanel.add(
+        new JLabel( Messages.getInstance().getString( "RepositoryPublishDialog.ReportDescription" ) ), c );
 
     c.gridy = 5;
     c.insets = new Insets( 2, 5, 0, 5 );
@@ -214,7 +233,6 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
     publishHeaderPanel.add( createLocationFieldPanel(), c );
     return publishHeaderPanel;
   }
-
 
   protected JPanel createLocationFieldPanel() {
     final GridBagConstraints c = new GridBagConstraints();
@@ -255,22 +273,22 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
   private KeyedComboBoxModel<String, String> createExportTypeModel() {
     final KeyedComboBoxModel<String, String> keyedComboBoxModel = new KeyedComboBoxModel<String, String>();
     keyedComboBoxModel.add( null, null );
-    keyedComboBoxModel.add( PdfPageableModule.PDF_EXPORT_TYPE,
-      Messages.getInstance().getString( "RepositoryPublishDialog.ExportType.PDF" ) );
-    keyedComboBoxModel.add( HtmlTableModule.TABLE_HTML_STREAM_EXPORT_TYPE,
-      Messages.getInstance().getString( "RepositoryPublishDialog.ExportType.HTMLStream" ) );
-    keyedComboBoxModel.add( CSVTableModule.TABLE_CSV_STREAM_EXPORT_TYPE,
-      Messages.getInstance().getString( "RepositoryPublishDialog.ExportType.CSV" ) );
-    keyedComboBoxModel.add( ExcelTableModule.XLSX_FLOW_EXPORT_TYPE,
-      Messages.getInstance().getString( "RepositoryPublishDialog.ExportType.XLSX" ) );
-    keyedComboBoxModel.add( ExcelTableModule.EXCEL_FLOW_EXPORT_TYPE,
-      Messages.getInstance().getString( "RepositoryPublishDialog.ExportType.XLS" ) );
-    keyedComboBoxModel.add( RTFTableModule.TABLE_RTF_FLOW_EXPORT_TYPE,
-      Messages.getInstance().getString( "RepositoryPublishDialog.ExportType.RTF" ) );
-    keyedComboBoxModel.add( PlainTextPageableModule.PLAINTEXT_EXPORT_TYPE,
-      Messages.getInstance().getString( "RepositoryPublishDialog.ExportType.TEXT" ) );
-    keyedComboBoxModel.add( HtmlTableModule.TABLE_HTML_PAGE_EXPORT_TYPE,
-      Messages.getInstance().getString( "RepositoryPublishDialog.ExportType.HTMLPage" ) );
+    keyedComboBoxModel.add( PdfPageableModule.PDF_EXPORT_TYPE, Messages.getInstance().getString(
+        "RepositoryPublishDialog.ExportType.PDF" ) );
+    keyedComboBoxModel.add( HtmlTableModule.TABLE_HTML_STREAM_EXPORT_TYPE, Messages.getInstance().getString(
+        "RepositoryPublishDialog.ExportType.HTMLStream" ) );
+    keyedComboBoxModel.add( CSVTableModule.TABLE_CSV_STREAM_EXPORT_TYPE, Messages.getInstance().getString(
+        "RepositoryPublishDialog.ExportType.CSV" ) );
+    keyedComboBoxModel.add( ExcelTableModule.XLSX_FLOW_EXPORT_TYPE, Messages.getInstance().getString(
+        "RepositoryPublishDialog.ExportType.XLSX" ) );
+    keyedComboBoxModel.add( ExcelTableModule.EXCEL_FLOW_EXPORT_TYPE, Messages.getInstance().getString(
+        "RepositoryPublishDialog.ExportType.XLS" ) );
+    keyedComboBoxModel.add( RTFTableModule.TABLE_RTF_FLOW_EXPORT_TYPE, Messages.getInstance().getString(
+        "RepositoryPublishDialog.ExportType.RTF" ) );
+    keyedComboBoxModel.add( PlainTextPageableModule.PLAINTEXT_EXPORT_TYPE, Messages.getInstance().getString(
+        "RepositoryPublishDialog.ExportType.TEXT" ) );
+    keyedComboBoxModel.add( HtmlTableModule.TABLE_HTML_PAGE_EXPORT_TYPE, Messages.getInstance().getString(
+        "RepositoryPublishDialog.ExportType.HTMLPage" ) );
     return keyedComboBoxModel;
   }
 
@@ -287,7 +305,7 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
     c.fill = GridBagConstraints.HORIZONTAL;
     c.anchor = GridBagConstraints.WEST;
     publishSettingsPanel
-      .add( new JLabel( Messages.getInstance().getString( "RepositoryPublishDialog.OutputType" ) ), c );
+        .add( new JLabel( Messages.getInstance().getString( "RepositoryPublishDialog.OutputType" ) ), c );
 
     c.insets = new Insets( 5, 5, 5, 0 );
     c.gridwidth = 1;
@@ -362,8 +380,7 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
     }
 
     final String reportName = getFileNameTextField().getText();
-    if ( StringUtils.isEmpty( reportName ) == false &&
-      reportName.endsWith( REPORT_BUNDLE_EXTENSION ) == false ) {
+    if ( StringUtils.isEmpty( reportName ) == false && reportName.endsWith( REPORT_BUNDLE_EXTENSION ) == false ) {
       final String safeReportName = reportName + REPORT_BUNDLE_EXTENSION;
       getFileNameTextField().setText( safeReportName );
     }
@@ -377,25 +394,24 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
 
       String filename = getFileNameTextField().getText();
       if ( !PublishUtil.validateName( filename ) ) {
-        JOptionPane.showMessageDialog( RepositoryPublishDialog.this,
-          Messages.getInstance()
-            .formatMessage( "PublishToServerAction.IllegalName", filename, PublishUtil.getReservedCharsDisplay() ),
-          Messages.getInstance().getString( "PublishToServerAction.Error.Title" ), JOptionPane.ERROR_MESSAGE );
+        JOptionPane.showMessageDialog( RepositoryPublishDialog.this, Messages.getInstance().formatMessage(
+            "PublishToServerAction.IllegalName", filename, PublishUtil.getReservedCharsDisplay() ), Messages
+            .getInstance().getString( "PublishToServerAction.Error.Title" ), JOptionPane.ERROR_MESSAGE );
         return false;
       }
 
-
-      final FileObject targetFile = selectedView.resolveFile(
-        URLEncoder.encodeUTF8( getFileNameTextField().getText() ).replaceAll( ":", "%3A" ).replaceAll( "\\+", "%2B" )
-          .replaceAll( "\\!", "%21" ) );
+      final FileObject targetFile =
+          selectedView.resolveFile( URLEncoder.encodeUTF8( getFileNameTextField().getText() ).replaceAll( ":", "%3A" )
+              .replaceAll( "\\+", "%2B" ).replaceAll( "\\!", "%21" ) );
       final FileObject fileObject = selectedView.getFileSystem().resolveFile( targetFile.getName() );
       if ( fileObject.getType() == FileType.IMAGINARY ) {
         return true;
       }
 
-      final int result = JOptionPane.showConfirmDialog( this,
-        Messages.getInstance().formatMessage( "PublishToServerAction.FileExistsOverride", validateName ),
-        Messages.getInstance().getString( "PublishToServerAction.Information.Title" ), JOptionPane.YES_NO_OPTION );
+      final int result =
+          JOptionPane.showConfirmDialog( this, Messages.getInstance().formatMessage(
+              "PublishToServerAction.FileExistsOverride", validateName ), Messages.getInstance().getString(
+              "PublishToServerAction.Information.Title" ), JOptionPane.YES_NO_OPTION );
       return result == JOptionPane.YES_OPTION;
     } catch ( FileSystemException fse ) {
       UncaughtExceptionsModel.getInstance().addException( fse );

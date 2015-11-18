@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
@@ -28,9 +28,28 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -76,8 +95,7 @@ public class RepositoryTreeDialog extends CommonDialog {
         final Object o = repositoryBrowser.getLastSelectedPathComponent();
         if ( o instanceof FileObject ) {
           final FileObject treeNode = (FileObject) o;
-          if ( repositoryBrowser.isExpanded( selectionPath ) &&
-            treeNode.getType() == FileType.FOLDER ) {
+          if ( repositoryBrowser.isExpanded( selectionPath ) && treeNode.getType() == FileType.FOLDER ) {
             setSelectedPath( treeNode );
             setConfirmed( true );
             setVisible( false );
@@ -94,11 +112,12 @@ public class RepositoryTreeDialog extends CommonDialog {
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
     private NewFolderAction() {
-      final URL location = RepositoryTreeDialog.class.getResource
-        ( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/newfolder.png" );
+      final URL location =
+          RepositoryTreeDialog.class
+              .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/newfolder.png" );
       putValue( Action.SMALL_ICON, new ImageIcon( location ) );
-      putValue( Action.SHORT_DESCRIPTION,
-        Messages.getInstance().getString( "SolutionRepositoryTreeDialog.NewFolderAction.Name" ) );
+      putValue( Action.SHORT_DESCRIPTION, Messages.getInstance().getString(
+          "SolutionRepositoryTreeDialog.NewFolderAction.Name" ) );
     }
 
     /**
@@ -106,7 +125,7 @@ public class RepositoryTreeDialog extends CommonDialog {
      */
     public void actionPerformed( final ActionEvent e ) {
       final CreateNewRepositoryFolderDialog newFolderDialog =
-        new CreateNewRepositoryFolderDialog( RepositoryTreeDialog.this );
+          new CreateNewRepositoryFolderDialog( RepositoryTreeDialog.this );
 
       if ( !newFolderDialog.performEdit() ) {
         return;
@@ -147,8 +166,7 @@ public class RepositoryTreeDialog extends CommonDialog {
   private boolean dirty;
   private boolean addNewButtonPanel;
 
-  public RepositoryTreeDialog( final JDialog dialog,
-                               final boolean addNewButtonPanel ) {
+  public RepositoryTreeDialog( final JDialog dialog, final boolean addNewButtonPanel ) {
     super( dialog );
     init( addNewButtonPanel );
   }
@@ -157,8 +175,7 @@ public class RepositoryTreeDialog extends CommonDialog {
     init( addNewButtonPanel );
   }
 
-  public RepositoryTreeDialog( final Frame owner,
-                               final boolean addNewButtonPanel ) {
+  public RepositoryTreeDialog( final Frame owner, final boolean addNewButtonPanel ) {
     super( owner );
     init( addNewButtonPanel );
   }
@@ -198,7 +215,6 @@ public class RepositoryTreeDialog extends CommonDialog {
     return null;
   }
 
-
   public void setSelectedPath( final FileObject path ) throws FileSystemException {
     final TreePath path1 = repositoryTreeModel.getTreePathForSelection( path, null );
     if ( path1 != null ) {
@@ -209,14 +225,13 @@ public class RepositoryTreeDialog extends CommonDialog {
     }
   }
 
-  public FileObject performSelectLocation( final FileObject fileSystemRoot,
-                                           final String[] filter,
-                                           final FileObject publishLocation ) throws FileSystemException {
+  public FileObject performSelectLocation( final FileObject fileSystemRoot, final String[] filter,
+      final FileObject publishLocation ) throws FileSystemException {
     repositoryTreeModel.setShowFoldersOnly( true );
     repositoryTreeModel.setFileSystemRoot( fileSystemRoot );
     repositoryTreeModel.setFilters( filter );
-    //    repositoryBrowser.setModel(null);
-    //    repositoryBrowser.setModel(repositoryTreeModel);
+    // repositoryBrowser.setModel(null);
+    // repositoryBrowser.setModel(repositoryTreeModel);
     repositoryTreeModel.fireTreeDataChanged();
 
     dirty = false;
@@ -249,7 +264,7 @@ public class RepositoryTreeDialog extends CommonDialog {
       final JButton newFolder = new JButton( new NewFolderAction() );
       newFolder.setBorder( BorderFactory.createEmptyBorder() );
       final JLabel label =
-        new JLabel( Messages.getInstance().getString( "SolutionRepositoryTreeDialog.SelectLocation" ) );
+          new JLabel( Messages.getInstance().getString( "SolutionRepositoryTreeDialog.SelectLocation" ) );
       label.setBorder( BorderFactory.createEmptyBorder( 0, 0, 0, 80 ) );
       newFolderButtonPanel.add( label, BorderLayout.CENTER );
       newFolderButtonPanel.add( newFolder, BorderLayout.EAST );
@@ -271,7 +286,6 @@ public class RepositoryTreeDialog extends CommonDialog {
     c.weighty = 1.0;
     panel.add( treeView, c );
 
-
     c = new GridBagConstraints();
     c.anchor = GridBagConstraints.WEST;
     c.insets = new Insets( 0, 10, 5, 10 );
@@ -281,6 +295,5 @@ public class RepositoryTreeDialog extends CommonDialog {
     panel.add( new JCheckBox( new ShowHiddenFilesAction() ) );
     return panel;
   }
-
 
 }
