@@ -137,7 +137,8 @@ public class ImageMapWriterTest {
     expectedValue.append( MAP_ENTRY_VALUE );
     expectedValue.append( "\" shape=\"" );
     expectedValue.append( DEFAULT_SHAPE );
-    expectedValue.append( "\" coords=\"5.0,10.0,20.0,50.0\" /></map>\r\n" );
+    expectedValue.append( "\" coords=\"5.0,10.0,20.0,50.0\" /></map>" );
+    expectedValue.append( org.pentaho.reporting.libraries.base.util.StringUtils.getLineSeparator() );
 
     String result = ImageMapWriter.writeImageMapAsString( imageMap );
     assertThat( result, is( equalTo( expectedValue.toString() ) ) );
