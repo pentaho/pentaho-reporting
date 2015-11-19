@@ -27,11 +27,15 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.awt.Color;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JTextArea;
 import javax.swing.JViewport;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.lang3.StringUtils;
@@ -103,13 +107,25 @@ public class TextAreaParameterComponentTest {
 
   @Test
   public void testInitializeErrorFormattedValue() throws Exception {
+    final CountDownLatch latch = new CountDownLatch( 1 );
     doReturn( "error value" ).when( updateContext ).getParameterValue( ENTRY_NAME );
 
     comp.initialize();
 
+    SwingUtilities.invokeLater( new Runnable() {
+
+      @Override
+      public void run() {
+        latch.countDown();
+      }
+    } );
+
+    latch.await( 100, TimeUnit.MILLISECONDS );
+
     JTextArea textArea = findTextArea( comp );
     assertThat( textArea, is( notNullValue() ) );
     assertThat( textArea.getText(), is( equalTo( "error value" ) ) );
+    assertThat( textArea.getBackground(), is( equalTo( Color.RED ) ) );
     assertThat( comp.getBackground(), is( equalTo( ParameterReportControllerPane.ERROR_COLOR ) ) );
   }
 
