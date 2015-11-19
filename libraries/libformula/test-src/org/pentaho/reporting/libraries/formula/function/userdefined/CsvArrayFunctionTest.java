@@ -25,12 +25,11 @@ public class CsvArrayFunctionTest extends FormulaTestBase {
   }
 
   public Object[][] createDataTest() {
-    return new Object[][]
-      {
-        { "CSVARRAY(\"1,2,3\"; TRUE(); \",\"; \"'\")" , new String[]{"1","2","3"}},
-        { "CSVARRAY(\"1,2,3\"; FALSE(); \",\"; \"'\")" , new String[]{"1","2","3"}},
-        //{ "CSVARRAY(\"'1,2',3\"; TRUE(); \",\"; \"'\")" , new String[]{"1,2","3"}}
-      };
+    return new Object[][] {
+      { "CSVARRAY(\"1,2,3\"; TRUE(); \",\"; \"'\")", new String[] { "1", "2", "3" } },
+      { "CSVARRAY(\"1,2,3\"; FALSE(); \",\"; \"'\")", new String[] { "1", "2", "3" } },
+      { "CSVARRAY(\"'1,2',3\"; TRUE(); \",\"; \"'\")", new String[] { "1,2", "3" } }
+    };
   }
 
 }
