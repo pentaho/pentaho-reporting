@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -29,14 +28,16 @@ import static org.mockito.Mockito.verify;
 import java.awt.Color;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
-import org.pentaho.reporting.engine.classic.core.modules.gui.base.ParameterReportControllerPane;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
@@ -95,11 +96,21 @@ public class TextFieldParameterComponentTest {
 
   @Test
   public void testInitializeErrorFormattedValue() throws Exception {
+    final CountDownLatch latch = new CountDownLatch( 1 );
     doReturn( "error value" ).when( updateContext ).getParameterValue( ENTRY_NAME );
-
     comp.initialize();
 
+    SwingUtilities.invokeLater( new Runnable() {
+
+      @Override
+      public void run() {
+        latch.countDown();
+      }
+    } );
+
+    latch.await( 100, TimeUnit.MILLISECONDS );
+
     assertThat( comp.getText(), is( equalTo( "error value" ) ) );
-    assertThat( comp.getBackground(), anyOf( is( Color.RED ), is( ParameterReportControllerPane.ERROR_COLOR ) ) );
+    assertThat( comp.getBackground(), is( equalTo( Color.RED ) ) ); // should set value from TextComponentEditHandler
   }
 }
