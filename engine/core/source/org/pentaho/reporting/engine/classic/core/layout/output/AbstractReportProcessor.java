@@ -776,7 +776,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
                 AbstractReportProcessor.logger.debug( "Paginate:    Position in event chain              : "
                     + restoreState.getSequenceCounter() );
               }
-              if ( lastVisibleStateKey.getSequenceCounter() < restoreStateProcessKey.getSequenceCounter() ) {
+              if ( lastVisibleStateKey.getSequenceCounter() <= restoreStateProcessKey.getSequenceCounter() ) {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
                   AbstractReportProcessor.logger.debug( "Paginate: Fall back to start of page              : "
                       + globalState.getProcessKey() );
@@ -1226,7 +1226,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
                     + restoreState.getSequenceCounter() );
               }
 
-              if ( lastVisibleStateKey.getSequenceCounter() < restoreStateProcessKey.getSequenceCounter() ) {
+              if ( lastVisibleStateKey.getSequenceCounter() <= restoreStateProcessKey.getSequenceCounter() ) {
                 if ( AbstractReportProcessor.SHOW_ROLLBACKS ) {
                   AbstractReportProcessor.logger.debug( "Print: Fall back to start of page              : "
                       + globalState.getProcessKey() );
