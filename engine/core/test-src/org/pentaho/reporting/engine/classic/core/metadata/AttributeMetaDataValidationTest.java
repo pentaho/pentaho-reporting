@@ -15,20 +15,16 @@
  * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.meta;
+package org.pentaho.reporting.engine.classic.core.metadata;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
-import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
-import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.testsupport.base.MetaDataValidationTestBase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings( "HardCodedStringLiteral" )
 public class AttributeMetaDataValidationTest extends MetaDataValidationTestBase<ElementMetaData> {

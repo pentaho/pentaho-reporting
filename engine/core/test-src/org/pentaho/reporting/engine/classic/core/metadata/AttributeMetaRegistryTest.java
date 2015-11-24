@@ -15,16 +15,12 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.meta;
+package org.pentaho.reporting.engine.classic.core.metadata;
 
 import junit.framework.TestCase;
+
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
-import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.AttributeRegistry;
-import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 
 public class AttributeMetaRegistryTest extends TestCase {
 

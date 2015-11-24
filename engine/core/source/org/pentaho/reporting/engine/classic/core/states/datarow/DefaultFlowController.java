@@ -17,6 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.table.TableModel;
+
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactoryDesignTimeSupport;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -43,12 +49,7 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.base.util.FormattedMessage;
 import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
-import javax.swing.table.TableModel;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public final class DefaultFlowController {
+public class DefaultFlowController {
   private static class ReportDataContext {
     private boolean advanceRequested;
 

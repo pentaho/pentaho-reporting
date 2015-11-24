@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.base.util.SqlScriptUtils;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -31,6 +25,12 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.SqlScriptUtils;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class DriverConnectionProvider implements ConnectionProvider {
   private static final Log logger = LogFactory.getLog( DriverConnectionProvider.class );
@@ -169,7 +169,7 @@ public class DriverConnectionProvider implements ConnectionProvider {
     if ( driver != null ? !driver.equals( that.driver ) : that.driver != null ) {
       return false;
     }
-    if ( properties.equals( that.properties ) ) {
+    if ( !properties.equals( that.properties ) ) {
       return false;
     }
     if ( url != null ? !url.equals( that.url ) : that.url != null ) {
