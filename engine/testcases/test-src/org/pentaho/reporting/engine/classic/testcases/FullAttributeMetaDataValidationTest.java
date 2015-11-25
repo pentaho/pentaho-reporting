@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.testcases;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
-import org.pentaho.reporting.engine.classic.core.meta.AttributeMetaDataValidationTest;
+import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaDataValidationTest;
 
 @SuppressWarnings( "HardCodedStringLiteral" )
 public class FullAttributeMetaDataValidationTest extends AttributeMetaDataValidationTest {
