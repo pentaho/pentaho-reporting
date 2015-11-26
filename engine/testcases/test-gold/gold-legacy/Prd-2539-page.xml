@@ -5175,7 +5175,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="574.32" y="262.0" width="16.68" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="574.32" y="262.0" width="16.68" height="10.0">119</text>
+                    <text x="574.32" y="262.0" width="16.68" height="10.0">118</text>
                   </line>
                 </p>
               </row>

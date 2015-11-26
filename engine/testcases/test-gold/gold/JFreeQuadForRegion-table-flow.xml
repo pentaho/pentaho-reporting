@@ -186,11 +186,14 @@
       </empty-cell>
       <empty-cell background-color="#ff6600">
       </empty-cell>
-      <cell background-color="#ff6600" row-span="1" col-span="1">
+      <cell row-span="3" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Variance"/>
-        <line type="ParagraphPoolBox" x="475.2" y="45.5" width="39.45" height="10.0" color="white" font-face="Arial" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="475.2" y="45.5" width="39.45" height="10.0">Variance</text>
+        <line type="ParagraphPoolBox" x="479.11" y="43.0" width="33.89" height="10.0" color="white" font-face="Arial" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="479.11" y="43.0" width="33.89" height="10.0">Varianc</text>
+        </line>
+        <line type="ParagraphPoolBox" x="507.44" y="53.0" width="5.56" height="10.0" color="white" font-face="Arial" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="507.44" y="53.0" width="5.56" height="10.0">e</text>
         </line>
       </cell>
     </row>
@@ -207,27 +210,24 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
+      <spanned-cell/>
     </row>
     <row height="15">
-      <cell row-span="1" col-span="13">
+      <empty-cell>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(DEPARTMENT)"/>
-        <line type="ParagraphPoolBox" x="0.0" y="59.0" width="32.664" height="12.0" color="black" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="0.0" y="59.0" width="32.664" height="12.0">&lt;null&gt;</text>
-        </line>
-      </cell>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
       <spanned-cell/>
     </row>
     <row height="14">

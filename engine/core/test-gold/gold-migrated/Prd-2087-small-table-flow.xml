@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="6" row-count="3445">
+  <table col-count="6" row-count="3446">
     <cols>
       <column width="2"/>
       <column width="23.277"/>
@@ -24,14 +24,20 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <cell row-span="1" col-span="1">
+      <cell row-span="3" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Hbjhrrlxk Wnghbk"/>
-        <line type="ParagraphPoolBox" x="486.002" y="27.399" width="31.305" height="9.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="486.002" y="27.399" width="35.496" height="9.0">Hbjhrrlxk</text>
+        <line type="ParagraphPoolBox" x="486.311" y="27.399" width="30.996" height="9.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="486.311" y="27.399" width="30.996" height="9.0">Hbjhrrlx</text>
         </line>
-        <line type="ParagraphPoolBox" x="486.002" y="36.399" width="33.003" height="9.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="486.002" y="36.399" width="33.003" height="9.0">Wnghbk</text>
+        <line type="ParagraphPoolBox" x="512.807" y="36.399" width="4.5" height="9.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="512.807" y="36.399" width="4.5" height="9.0">k</text>
+        </line>
+        <line type="ParagraphPoolBox" x="488.804" y="45.399" width="28.503" height="9.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="488.804" y="45.399" width="28.503" height="9.0">Wnghb</text>
+        </line>
+        <line type="ParagraphPoolBox" x="512.807" y="54.399" width="4.5" height="9.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="512.807" y="54.399" width="4.5" height="9.0">k</text>
         </line>
       </cell>
       <empty-cell/>
@@ -45,8 +51,15 @@
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
       </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
-      </empty-cell>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="9.738">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
       <empty-cell/>
     </row>
     <row height="4">

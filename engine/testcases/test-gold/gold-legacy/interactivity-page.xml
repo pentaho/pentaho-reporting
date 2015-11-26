@@ -710,8 +710,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="390.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="390.0" width="21.09" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="390.0" width="21.09" height="10.0">EOE</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="390.0" width="100.01" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="390.0" width="44.45" height="10.0">Corporate</text>
+                          <spacer width="2.77" height="0.0" preserve="true"/>
+                          <text x="66.22" y="390.0" width="52.79" height="10.0">Compliance</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="390.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -719,7 +721,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="390.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="390.0" width="41.69" height="10.0">$530,207</text>
+                          <text x="302.31" y="390.0" width="41.69" height="10.0">$530,473</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="390.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -727,7 +729,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="390.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="390.0" width="41.69" height="10.0">$538,380</text>
+                          <text x="400.31" y="390.0" width="41.69" height="10.0">$538,570</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="390.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -736,7 +738,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
                         <line type="ParagraphPoolBox" x="509.43" y="390.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="509.43" y="390.0" width="30.57" height="10.0">$8,173</text>
+                          <text x="509.43" y="390.0" width="30.57" height="10.0">$8,097</text>
                         </line>
                       </p>
                     </canvas>
@@ -747,10 +749,8 @@
                       <p type="ParagraphRenderBox" x="19.0" y="402.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="402.0" width="67.76" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="402.0" width="14.44" height="10.0">HR</text>
-                          <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="36.21" y="402.0" width="50.55" height="10.0">Generalists</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="402.0" width="21.09" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="402.0" width="21.09" height="10.0">EOE</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="402.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -758,7 +758,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="402.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="402.0" width="41.69" height="10.0">$856,190</text>
+                          <text x="302.31" y="402.0" width="41.69" height="10.0">$530,207</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="402.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -766,16 +766,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="402.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="402.0" width="41.69" height="10.0">$771,225</text>
+                          <text x="400.31" y="402.0" width="41.69" height="10.0">$538,380</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="402.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="402.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="500.54" y="402.0" width="39.46" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="500.54" y="402.0" width="39.46" height="10.0">-$84,965</text>
+                        <line type="ParagraphPoolBox" x="509.43" y="402.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="509.43" y="402.0" width="30.57" height="10.0">$8,173</text>
                         </line>
                       </p>
                     </canvas>
@@ -786,10 +786,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="414.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="414.0" width="53.32" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                        <line type="ParagraphPoolBox" x="19.0" y="414.0" width="67.76" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                           <text x="19.0" y="414.0" width="14.44" height="10.0">HR</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="36.21" y="414.0" width="36.11" height="10.0">Training</text>
+                          <text x="36.21" y="414.0" width="50.55" height="10.0">Generalists</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="414.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -797,7 +797,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="414.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="414.0" width="41.69" height="10.0">$397,473</text>
+                          <text x="302.31" y="414.0" width="41.69" height="10.0">$856,190</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="414.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -805,16 +805,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="414.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="414.0" width="41.69" height="10.0">$443,570</text>
+                          <text x="400.31" y="414.0" width="41.69" height="10.0">$771,225</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="414.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="414.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="503.87" y="414.0" width="36.13" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="503.87" y="414.0" width="36.13" height="10.0">$46,097</text>
+                        <line type="ParagraphPoolBox" x="500.54" y="414.0" width="39.46" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="500.54" y="414.0" width="39.46" height="10.0">-$84,965</text>
                         </line>
                       </p>
                     </canvas>
@@ -825,10 +825,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="426.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="426.0" width="37.19" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="426.0" width="19.98" height="10.0">SVP</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="426.0" width="53.32" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="426.0" width="14.44" height="10.0">HR</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="41.75" y="426.0" width="14.44" height="10.0">HR</text>
+                          <text x="36.21" y="426.0" width="36.11" height="10.0">Training</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="426.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -836,7 +836,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="426.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="426.0" width="41.69" height="10.0">$574,895</text>
+                          <text x="302.31" y="426.0" width="41.69" height="10.0">$397,473</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="426.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -844,16 +844,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="426.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="426.0" width="41.69" height="10.0">$570,300</text>
+                          <text x="400.31" y="426.0" width="41.69" height="10.0">$443,570</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="426.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="426.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="506.1" y="426.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="506.1" y="426.0" width="33.9" height="10.0">-$4,595</text>
+                        <line type="ParagraphPoolBox" x="503.87" y="426.0" width="36.13" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="503.87" y="426.0" width="36.13" height="10.0">$46,097</text>
                         </line>
                       </p>
                     </canvas>
@@ -864,10 +864,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="438.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="438.0" width="87.22" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="438.0" width="30.56" height="10.0">Sexual</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="438.0" width="37.19" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="438.0" width="19.98" height="10.0">SVP</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="52.33" y="438.0" width="53.89" height="10.0">Harassment</text>
+                          <text x="41.75" y="438.0" width="14.44" height="10.0">HR</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="438.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -875,7 +875,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="438.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="438.0" width="41.69" height="10.0">$530,473</text>
+                          <text x="302.31" y="438.0" width="41.69" height="10.0">$574,895</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="438.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -883,16 +883,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="438.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="438.0" width="41.69" height="10.0">$538,570</text>
+                          <text x="400.31" y="438.0" width="41.69" height="10.0">$570,300</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="438.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="438.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="509.43" y="438.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="509.43" y="438.0" width="30.57" height="10.0">$8,097</text>
+                        <line type="ParagraphPoolBox" x="506.1" y="438.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="506.1" y="438.0" width="33.9" height="10.0">-$4,595</text>
                         </line>
                       </p>
                     </canvas>
@@ -3033,8 +3033,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="340.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="340.0" width="21.09" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="340.0" width="21.09" height="10.0">EOE</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="340.0" width="100.01" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="340.0" width="44.45" height="10.0">Corporate</text>
+                          <spacer width="2.77" height="0.0" preserve="true"/>
+                          <text x="66.22" y="340.0" width="52.79" height="10.0">Compliance</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="340.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3042,7 +3044,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="340.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="340.0" width="41.69" height="10.0">$470,800</text>
+                          <text x="302.31" y="340.0" width="41.69" height="10.0">$471,200</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="340.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3050,7 +3052,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="340.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="340.0" width="41.69" height="10.0">$470,791</text>
+                          <text x="400.31" y="340.0" width="41.69" height="10.0">$471,174</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="340.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3058,8 +3060,8 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="525.55" y="340.0" width="14.45" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="525.55" y="340.0" width="14.45" height="10.0">-$9</text>
+                        <line type="ParagraphPoolBox" x="519.99" y="340.0" width="20.01" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="519.99" y="340.0" width="20.01" height="10.0">-$26</text>
                         </line>
                       </p>
                     </canvas>
@@ -3070,10 +3072,8 @@
                       <p type="ParagraphRenderBox" x="19.0" y="352.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="352.0" width="67.76" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="352.0" width="14.44" height="10.0">HR</text>
-                          <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="36.21" y="352.0" width="50.55" height="10.0">Generalists</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="352.0" width="21.09" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="352.0" width="21.09" height="10.0">EOE</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="352.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3081,7 +3081,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="352.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="352.0" width="41.69" height="10.0">$961,000</text>
+                          <text x="302.31" y="352.0" width="41.69" height="10.0">$470,800</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="352.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3089,7 +3089,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="352.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="352.0" width="41.69" height="10.0">$940,158</text>
+                          <text x="400.31" y="352.0" width="41.69" height="10.0">$470,791</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="352.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3097,8 +3097,8 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="500.54" y="352.0" width="39.46" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="500.54" y="352.0" width="39.46" height="10.0">-$20,842</text>
+                        <line type="ParagraphPoolBox" x="525.55" y="352.0" width="14.45" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="525.55" y="352.0" width="14.45" height="10.0">-$9</text>
                         </line>
                       </p>
                     </canvas>
@@ -3109,10 +3109,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="364.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="364.0" width="53.32" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                        <line type="ParagraphPoolBox" x="19.0" y="364.0" width="67.76" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                           <text x="19.0" y="364.0" width="14.44" height="10.0">HR</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="36.21" y="364.0" width="36.11" height="10.0">Training</text>
+                          <text x="36.21" y="364.0" width="50.55" height="10.0">Generalists</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3120,7 +3120,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="364.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="364.0" width="41.69" height="10.0">$271,200</text>
+                          <text x="302.31" y="364.0" width="41.69" height="10.0">$961,000</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3128,16 +3128,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="364.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="364.0" width="41.69" height="10.0">$279,674</text>
+                          <text x="400.31" y="364.0" width="41.69" height="10.0">$940,158</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="364.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="509.43" y="364.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="509.43" y="364.0" width="30.57" height="10.0">$8,474</text>
+                        <line type="ParagraphPoolBox" x="500.54" y="364.0" width="39.46" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="500.54" y="364.0" width="39.46" height="10.0">-$20,842</text>
                         </line>
                       </p>
                     </canvas>
@@ -3148,10 +3148,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="376.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="376.0" width="37.19" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="376.0" width="19.98" height="10.0">SVP</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="376.0" width="53.32" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="376.0" width="14.44" height="10.0">HR</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="41.75" y="376.0" width="14.44" height="10.0">HR</text>
+                          <text x="36.21" y="376.0" width="36.11" height="10.0">Training</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3159,7 +3159,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="376.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="376.0" width="41.69" height="10.0">$538,000</text>
+                          <text x="302.31" y="376.0" width="41.69" height="10.0">$271,200</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3167,16 +3167,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="376.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="376.0" width="41.69" height="10.0">$535,135</text>
+                          <text x="400.31" y="376.0" width="41.69" height="10.0">$279,674</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="376.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="506.1" y="376.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="506.1" y="376.0" width="33.9" height="10.0">-$2,865</text>
+                        <line type="ParagraphPoolBox" x="509.43" y="376.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="509.43" y="376.0" width="30.57" height="10.0">$8,474</text>
                         </line>
                       </p>
                     </canvas>
@@ -3187,10 +3187,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="388.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="388.0" width="87.22" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="388.0" width="30.56" height="10.0">Sexual</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="388.0" width="37.19" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="388.0" width="19.98" height="10.0">SVP</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="52.33" y="388.0" width="53.89" height="10.0">Harassment</text>
+                          <text x="41.75" y="388.0" width="14.44" height="10.0">HR</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="388.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3198,7 +3198,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="388.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="388.0" width="41.69" height="10.0">$471,200</text>
+                          <text x="302.31" y="388.0" width="41.69" height="10.0">$538,000</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="388.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3206,7 +3206,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="388.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="388.0" width="41.69" height="10.0">$471,174</text>
+                          <text x="400.31" y="388.0" width="41.69" height="10.0">$535,135</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="388.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3214,8 +3214,8 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="519.99" y="388.0" width="20.01" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="519.99" y="388.0" width="20.01" height="10.0">-$26</text>
+                        <line type="ParagraphPoolBox" x="506.1" y="388.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="506.1" y="388.0" width="33.9" height="10.0">-$2,865</text>
                         </line>
                       </p>
                     </canvas>
@@ -5348,8 +5348,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="340.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="340.0" width="21.09" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="340.0" width="21.09" height="10.0">EOE</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="340.0" width="100.01" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="340.0" width="44.45" height="10.0">Corporate</text>
+                          <spacer width="2.77" height="0.0" preserve="true"/>
+                          <text x="66.22" y="340.0" width="52.79" height="10.0">Compliance</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="340.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5357,7 +5359,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="340.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="340.0" width="41.69" height="10.0">$470,800</text>
+                          <text x="302.31" y="340.0" width="41.69" height="10.0">$471,200</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="340.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5365,7 +5367,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="340.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="340.0" width="41.69" height="10.0">$470,791</text>
+                          <text x="400.31" y="340.0" width="41.69" height="10.0">$471,174</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="340.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5373,8 +5375,8 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="525.55" y="340.0" width="14.45" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="525.55" y="340.0" width="14.45" height="10.0">-$9</text>
+                        <line type="ParagraphPoolBox" x="519.99" y="340.0" width="20.01" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="519.99" y="340.0" width="20.01" height="10.0">-$26</text>
                         </line>
                       </p>
                     </canvas>
@@ -5385,10 +5387,8 @@
                       <p type="ParagraphRenderBox" x="19.0" y="352.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="352.0" width="67.76" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="352.0" width="14.44" height="10.0">HR</text>
-                          <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="36.21" y="352.0" width="50.55" height="10.0">Generalists</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="352.0" width="21.09" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="352.0" width="21.09" height="10.0">EOE</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="352.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5396,7 +5396,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="352.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="352.0" width="41.69" height="10.0">$961,000</text>
+                          <text x="302.31" y="352.0" width="41.69" height="10.0">$470,800</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="352.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5404,7 +5404,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="352.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="352.0" width="41.69" height="10.0">$940,158</text>
+                          <text x="400.31" y="352.0" width="41.69" height="10.0">$470,791</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="352.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5412,8 +5412,8 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="500.54" y="352.0" width="39.46" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="500.54" y="352.0" width="39.46" height="10.0">-$20,842</text>
+                        <line type="ParagraphPoolBox" x="525.55" y="352.0" width="14.45" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="525.55" y="352.0" width="14.45" height="10.0">-$9</text>
                         </line>
                       </p>
                     </canvas>
@@ -5424,10 +5424,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="364.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="364.0" width="53.32" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                        <line type="ParagraphPoolBox" x="19.0" y="364.0" width="67.76" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                           <text x="19.0" y="364.0" width="14.44" height="10.0">HR</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="36.21" y="364.0" width="36.11" height="10.0">Training</text>
+                          <text x="36.21" y="364.0" width="50.55" height="10.0">Generalists</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5435,7 +5435,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="364.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="364.0" width="41.69" height="10.0">$271,200</text>
+                          <text x="302.31" y="364.0" width="41.69" height="10.0">$961,000</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5443,16 +5443,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="364.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="364.0" width="41.69" height="10.0">$279,674</text>
+                          <text x="400.31" y="364.0" width="41.69" height="10.0">$940,158</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="364.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="509.43" y="364.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="509.43" y="364.0" width="30.57" height="10.0">$8,474</text>
+                        <line type="ParagraphPoolBox" x="500.54" y="364.0" width="39.46" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="500.54" y="364.0" width="39.46" height="10.0">-$20,842</text>
                         </line>
                       </p>
                     </canvas>
@@ -5463,10 +5463,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="376.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="376.0" width="37.19" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="376.0" width="19.98" height="10.0">SVP</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="376.0" width="53.32" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="376.0" width="14.44" height="10.0">HR</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="41.75" y="376.0" width="14.44" height="10.0">HR</text>
+                          <text x="36.21" y="376.0" width="36.11" height="10.0">Training</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5474,7 +5474,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="376.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="376.0" width="41.69" height="10.0">$538,000</text>
+                          <text x="302.31" y="376.0" width="41.69" height="10.0">$271,200</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5482,16 +5482,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="376.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="376.0" width="41.69" height="10.0">$535,135</text>
+                          <text x="400.31" y="376.0" width="41.69" height="10.0">$279,674</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="376.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="506.1" y="376.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="506.1" y="376.0" width="33.9" height="10.0">-$2,865</text>
+                        <line type="ParagraphPoolBox" x="509.43" y="376.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="509.43" y="376.0" width="30.57" height="10.0">$8,474</text>
                         </line>
                       </p>
                     </canvas>
@@ -5502,10 +5502,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="388.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="388.0" width="87.22" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="388.0" width="30.56" height="10.0">Sexual</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="388.0" width="37.19" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="388.0" width="19.98" height="10.0">SVP</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="52.33" y="388.0" width="53.89" height="10.0">Harassment</text>
+                          <text x="41.75" y="388.0" width="14.44" height="10.0">HR</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="388.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5513,7 +5513,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="388.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="388.0" width="41.69" height="10.0">$471,200</text>
+                          <text x="302.31" y="388.0" width="41.69" height="10.0">$538,000</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="388.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5521,7 +5521,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="388.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="388.0" width="41.69" height="10.0">$471,174</text>
+                          <text x="400.31" y="388.0" width="41.69" height="10.0">$535,135</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="388.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5529,8 +5529,8 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="519.99" y="388.0" width="20.01" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="519.99" y="388.0" width="20.01" height="10.0">-$26</text>
+                        <line type="ParagraphPoolBox" x="506.1" y="388.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="506.1" y="388.0" width="33.9" height="10.0">-$2,865</text>
                         </line>
                       </p>
                     </canvas>
@@ -7663,8 +7663,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="340.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="340.0" width="21.09" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="340.0" width="21.09" height="10.0">EOE</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="340.0" width="100.01" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="340.0" width="44.45" height="10.0">Corporate</text>
+                          <spacer width="2.77" height="0.0" preserve="true"/>
+                          <text x="66.22" y="340.0" width="52.79" height="10.0">Compliance</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="340.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7672,7 +7674,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="340.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="340.0" width="41.69" height="10.0">$470,800</text>
+                          <text x="302.31" y="340.0" width="41.69" height="10.0">$471,200</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="340.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7680,7 +7682,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="340.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="340.0" width="41.69" height="10.0">$468,791</text>
+                          <text x="400.31" y="340.0" width="41.69" height="10.0">$469,174</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="340.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7689,7 +7691,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
                         <line type="ParagraphPoolBox" x="506.1" y="340.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="506.1" y="340.0" width="33.9" height="10.0">-$2,009</text>
+                          <text x="506.1" y="340.0" width="33.9" height="10.0">-$2,026</text>
                         </line>
                       </p>
                     </canvas>
@@ -7700,10 +7702,8 @@
                       <p type="ParagraphRenderBox" x="19.0" y="352.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="352.0" width="67.76" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="352.0" width="14.44" height="10.0">HR</text>
-                          <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="36.21" y="352.0" width="50.55" height="10.0">Generalists</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="352.0" width="21.09" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="352.0" width="21.09" height="10.0">EOE</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="352.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7711,7 +7711,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="352.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="352.0" width="41.69" height="10.0">$961,000</text>
+                          <text x="302.31" y="352.0" width="41.69" height="10.0">$470,800</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="352.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7719,7 +7719,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="352.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="352.0" width="41.69" height="10.0">$938,158</text>
+                          <text x="400.31" y="352.0" width="41.69" height="10.0">$468,791</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="352.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7727,8 +7727,8 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="500.54" y="352.0" width="39.46" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="500.54" y="352.0" width="39.46" height="10.0">-$22,842</text>
+                        <line type="ParagraphPoolBox" x="506.1" y="352.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="506.1" y="352.0" width="33.9" height="10.0">-$2,009</text>
                         </line>
                       </p>
                     </canvas>
@@ -7739,10 +7739,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="364.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="364.0" width="53.32" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                        <line type="ParagraphPoolBox" x="19.0" y="364.0" width="67.76" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                           <text x="19.0" y="364.0" width="14.44" height="10.0">HR</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="36.21" y="364.0" width="36.11" height="10.0">Training</text>
+                          <text x="36.21" y="364.0" width="50.55" height="10.0">Generalists</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7750,7 +7750,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="364.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="364.0" width="41.69" height="10.0">$271,200</text>
+                          <text x="302.31" y="364.0" width="41.69" height="10.0">$961,000</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7758,16 +7758,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="364.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="364.0" width="41.69" height="10.0">$277,674</text>
+                          <text x="400.31" y="364.0" width="41.69" height="10.0">$938,158</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="364.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="364.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="509.43" y="364.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="509.43" y="364.0" width="30.57" height="10.0">$6,474</text>
+                        <line type="ParagraphPoolBox" x="500.54" y="364.0" width="39.46" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="500.54" y="364.0" width="39.46" height="10.0">-$22,842</text>
                         </line>
                       </p>
                     </canvas>
@@ -7778,10 +7778,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="376.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="376.0" width="37.19" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="376.0" width="19.98" height="10.0">SVP</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="376.0" width="53.32" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="376.0" width="14.44" height="10.0">HR</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="41.75" y="376.0" width="14.44" height="10.0">HR</text>
+                          <text x="36.21" y="376.0" width="36.11" height="10.0">Training</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7789,7 +7789,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="376.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="376.0" width="41.69" height="10.0">$538,000</text>
+                          <text x="302.31" y="376.0" width="41.69" height="10.0">$271,200</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7797,16 +7797,16 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="376.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="376.0" width="41.69" height="10.0">$533,135</text>
+                          <text x="400.31" y="376.0" width="41.69" height="10.0">$277,674</text>
                         </line>
                       </p>
-                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="376.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="376.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VARIANCE"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
-                        <line type="ParagraphPoolBox" x="506.1" y="376.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="506.1" y="376.0" width="33.9" height="10.0">-$4,865</text>
+                        <line type="ParagraphPoolBox" x="509.43" y="376.0" width="30.57" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="509.43" y="376.0" width="30.57" height="10.0">$6,474</text>
                         </line>
                       </p>
                     </canvas>
@@ -7817,10 +7817,10 @@
                       <p type="ParagraphRenderBox" x="19.0" y="388.0" width="227.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="POSITIONTITLE"/>
-                        <line type="ParagraphPoolBox" x="19.0" y="388.0" width="87.22" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="19.0" y="388.0" width="30.56" height="10.0">Sexual</text>
+                        <line type="ParagraphPoolBox" x="19.0" y="388.0" width="37.19" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                          <text x="19.0" y="388.0" width="19.98" height="10.0">SVP</text>
                           <spacer width="2.77" height="0.0" preserve="true"/>
-                          <text x="52.33" y="388.0" width="53.89" height="10.0">Harassment</text>
+                          <text x="41.75" y="388.0" width="14.44" height="10.0">HR</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="246.0" y="388.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7828,7 +7828,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ACTUAL"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="302.31" y="388.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="302.31" y="388.0" width="41.69" height="10.0">$471,200</text>
+                          <text x="302.31" y="388.0" width="41.69" height="10.0">$538,000</text>
                         </line>
                       </p>
                       <p type="ParagraphRenderBox" x="344.0" y="388.0" width="98.0" height="12.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7836,7 +7836,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="BUDGET"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <line type="ParagraphPoolBox" x="400.31" y="388.0" width="41.69" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="400.31" y="388.0" width="41.69" height="10.0">$469,174</text>
+                          <text x="400.31" y="388.0" width="41.69" height="10.0">$533,135</text>
                         </line>
                       </p>
                       <p name="Variance Field" type="ParagraphRenderBox" x="442.0" y="388.0" width="98.0" height="12.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7845,7 +7845,7 @@
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Field"/>
                         <line type="ParagraphPoolBox" x="506.1" y="388.0" width="33.9" height="10.0" color="red" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                          <text x="506.1" y="388.0" width="33.9" height="10.0">-$2,026</text>
+                          <text x="506.1" y="388.0" width="33.9" height="10.0">-$4,865</text>
                         </line>
                       </p>
                     </canvas>
