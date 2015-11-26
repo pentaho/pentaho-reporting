@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystemException;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.pensol.SolutionFileModel;
 import org.xml.sax.InputSource;
@@ -216,6 +217,8 @@ public abstract class XmlSolutionFileModel implements SolutionFileModel {
   }
 
   protected FileInfo performParse( final InputStream postResult ) throws IOException {
+    ArgumentNullException.validate("postResult", postResult);
+
     try {
       final FileInfoParser contentHandler = new FileInfoParser();
       final SAXParserFactory factory = SAXParserFactory.newInstance();

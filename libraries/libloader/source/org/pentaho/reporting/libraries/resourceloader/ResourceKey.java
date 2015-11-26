@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -62,7 +62,7 @@ public final class ResourceKey implements Serializable {
     this.identifier = identifier;
     if ( factoryParameters != null ) {
       this.factoryParameters =
-        Collections.unmodifiableMap( new HashMap<ParameterKey, Object>( factoryParameters ) );
+        Collections.unmodifiableMap( new LinkedHashMap<ParameterKey, Object>( factoryParameters ) );
     } else {
       this.factoryParameters = EMPTY_MAP;
     }

@@ -27,6 +27,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ClassloaderResourceLoaderTest extends TestCase {
@@ -99,7 +100,7 @@ public class ClassloaderResourceLoaderTest extends TestCase {
       serKey2.endsWith( ";res://org/pentaho/reporting/libraries/resourceloader/test2.properties" ) );
 
     // Serialize a key with factory parameters
-    final Map<ParameterKey, Object> factoryParams = new HashMap<ParameterKey, Object>();
+    final Map<ParameterKey, Object> factoryParams = new LinkedHashMap<ParameterKey, Object>();
     factoryParams.put( new FactoryParameterKey( "this" ), "that" );
     factoryParams.put( new FactoryParameterKey( "null" ), null );
     final ResourceKey key3 = manager.createKey( key1source, factoryParams );
