@@ -837,7 +837,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="324.224" y="213.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="324.224" y="213.0" width="28.576" height="8.0">$129.26</text>
+          <text x="324.224" y="213.0" width="28.576" height="8.0">$129.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -853,7 +853,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="213.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="213.0" width="35.352" height="8.0">$4,524.10</text>
+          <text x="443.448" y="213.0" width="35.352" height="8.0">$4,515.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -892,7 +892,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="328.584" y="225.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="328.584" y="225.0" width="24.216" height="8.0">$50.95</text>
+          <text x="328.584" y="225.0" width="24.216" height="8.0">$51.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -908,7 +908,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="225.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="225.0" width="35.352" height="8.0">$1,681.35</text>
+          <text x="443.448" y="225.0" width="35.352" height="8.0">$1,683.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -947,7 +947,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="324.224" y="237.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="324.224" y="237.0" width="28.576" height="8.0">$121.83</text>
+          <text x="324.224" y="237.0" width="28.576" height="8.0">$122.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -963,7 +963,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="237.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="237.0" width="35.352" height="8.0">$2,802.09</text>
+          <text x="443.448" y="237.0" width="35.352" height="8.0">$2,806.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -998,7 +998,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="328.584" y="249.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="328.584" y="249.0" width="24.216" height="8.0">$65.31</text>
+          <text x="328.584" y="249.0" width="24.216" height="8.0">$65.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -1014,7 +1014,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="249.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="249.0" width="35.352" height="8.0">$1,632.75</text>
+          <text x="443.448" y="249.0" width="35.352" height="8.0">$1,625.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -1041,8 +1041,8 @@
       <empty-cell/>
       <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
-        <line type="ParagraphPoolBox" x="434.124" y="262.0" width="44.676" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="434.124" y="262.0" width="44.676" height="9.0">$10,640.29</text>
+        <line type="ParagraphPoolBox" x="446.652" y="262.0" width="32.148" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="446.652" y="262.0" width="32.148" height="9.0">$10,629</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -2684,7 +2684,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="324.224" y="213.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="324.224" y="213.0" width="28.576" height="8.0">$158.54</text>
+          <text x="324.224" y="213.0" width="28.576" height="8.0">$159.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -2700,7 +2700,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="213.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="213.0" width="35.352" height="8.0">$6,817.22</text>
+          <text x="443.448" y="213.0" width="35.352" height="8.0">$6,837.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -2735,7 +2735,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="328.584" y="225.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="328.584" y="225.0" width="24.216" height="8.0">$44.78</text>
+          <text x="328.584" y="225.0" width="24.216" height="8.0">$45.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -2751,7 +2751,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="225.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="225.0" width="35.352" height="8.0">$2,194.22</text>
+          <text x="443.448" y="225.0" width="35.352" height="8.0">$2,205.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -2788,7 +2788,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="328.584" y="237.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="328.584" y="237.0" width="24.216" height="8.0">$93.34</text>
+          <text x="328.584" y="237.0" width="24.216" height="8.0">$93.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -2804,7 +2804,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="237.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="237.0" width="35.352" height="8.0">$4,480.32</text>
+          <text x="443.448" y="237.0" width="35.352" height="8.0">$4,464.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -2841,7 +2841,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="324.224" y="249.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="324.224" y="249.0" width="28.576" height="8.0">$235.73</text>
+          <text x="324.224" y="249.0" width="28.576" height="8.0">$236.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -2857,7 +2857,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="249.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="249.0" width="35.352" height="8.0">$8,014.82</text>
+          <text x="443.448" y="249.0" width="35.352" height="8.0">$8,024.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -2896,7 +2896,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="324.224" y="261.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="324.224" y="261.0" width="28.576" height="8.0">$121.57</text>
+          <text x="324.224" y="261.0" width="28.576" height="8.0">$122.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -2912,7 +2912,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="261.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="261.0" width="35.352" height="8.0">$5,592.22</text>
+          <text x="443.448" y="261.0" width="35.352" height="8.0">$5,612.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -2939,8 +2939,8 @@
       <empty-cell/>
       <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
-        <line type="ParagraphPoolBox" x="439.029" y="274.0" width="39.771" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="439.029" y="274.0" width="39.771" height="9.0">$27,098.8</text>
+        <line type="ParagraphPoolBox" x="446.652" y="274.0" width="32.148" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="446.652" y="274.0" width="32.148" height="9.0">$27,142</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -4585,7 +4585,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="324.224" y="213.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="324.224" y="213.0" width="28.576" height="8.0">$174.29</text>
+          <text x="324.224" y="213.0" width="28.576" height="8.0">$174.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -4601,7 +4601,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="213.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="213.0" width="35.352" height="8.0">$3,834.38</text>
+          <text x="443.448" y="213.0" width="35.352" height="8.0">$3,828.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -4634,7 +4634,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="328.584" y="225.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="328.584" y="225.0" width="24.216" height="8.0">$69.27</text>
+          <text x="328.584" y="225.0" width="24.216" height="8.0">$69.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -4650,7 +4650,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="225.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="225.0" width="35.352" height="8.0">$2,909.34</text>
+          <text x="443.448" y="225.0" width="35.352" height="8.0">$2,898.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -4689,7 +4689,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="328.584" y="237.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="328.584" y="237.0" width="24.216" height="8.0">$94.10</text>
+          <text x="328.584" y="237.0" width="24.216" height="8.0">$94.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -4705,7 +4705,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="237.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="237.0" width="35.352" height="8.0">$4,328.60</text>
+          <text x="443.448" y="237.0" width="35.352" height="8.0">$4,324.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -4744,7 +4744,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="328.584" y="249.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="328.584" y="249.0" width="24.216" height="8.0">$53.30</text>
+          <text x="328.584" y="249.0" width="24.216" height="8.0">$53.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -4760,7 +4760,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="249.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="249.0" width="35.352" height="8.0">$1,172.60</text>
+          <text x="443.448" y="249.0" width="35.352" height="8.0">$1,166.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -4797,7 +4797,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="324.224" y="261.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="324.224" y="261.0" width="28.576" height="8.0">$135.59</text>
+          <text x="324.224" y="261.0" width="28.576" height="8.0">$136.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -4813,7 +4813,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="261.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="261.0" width="35.352" height="8.0">$5,288.01</text>
+          <text x="443.448" y="261.0" width="35.352" height="8.0">$5,304.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -4852,7 +4852,7 @@
       <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="324.224" y="273.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="324.224" y="273.0" width="28.576" height="8.0">$110.45</text>
+          <text x="324.224" y="273.0" width="28.576" height="8.0">$110.00</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -4868,7 +4868,7 @@
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="443.448" y="273.0" width="35.352" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="443.448" y="273.0" width="35.352" height="8.0">$4,197.10</text>
+          <text x="443.448" y="273.0" width="35.352" height="8.0">$4,180.00</text>
         </line>
       </cell>
       <empty-cell/>
@@ -4895,8 +4895,8 @@
       <empty-cell/>
       <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
-        <line type="ParagraphPoolBox" x="434.124" y="286.0" width="44.676" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="434.124" y="286.0" width="44.676" height="9.0">$21,730.03</text>
+        <line type="ParagraphPoolBox" x="446.652" y="286.0" width="32.148" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="446.652" y="286.0" width="32.148" height="9.0">$21,700</text>
         </line>
       </cell>
       <spanned-cell/>

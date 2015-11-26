@@ -194,7 +194,7 @@
                 <text x="425.885" y="122.583" width="13.88" height="10.0">NV</text>
               </line>
             </p>
-            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="70.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(POSTALCODE)"/>
               <line type="ParagraphPoolBox" x="448.547" y="122.583" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -206,14 +206,17 @@
               <line type="ParagraphPoolBox" x="456.877" y="142.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <text x="456.877" y="142.583" width="11.12" height="10.0">28</text>
               </line>
-              <line type="ParagraphPoolBox" x="439.765" y="152.583" width="28.232" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="439.765" y="152.583" width="38.9" height="10.0">23:00:00</text>
+              <line type="ParagraphPoolBox" x="440.217" y="152.583" width="27.78" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="440.217" y="152.583" width="27.78" height="10.0">23:00:</text>
               </line>
-              <line type="ParagraphPoolBox" x="447.457" y="162.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="447.457" y="162.583" width="20.54" height="10.0">UTC</text>
+              <line type="ParagraphPoolBox" x="456.877" y="162.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="456.877" y="162.583" width="11.12" height="10.0">00</text>
               </line>
-              <line type="ParagraphPoolBox" x="445.757" y="172.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="445.757" y="172.583" width="22.24" height="10.0">2127</text>
+              <line type="ParagraphPoolBox" x="447.457" y="172.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="447.457" y="172.583" width="20.54" height="10.0">UTC</text>
+              </line>
+              <line type="ParagraphPoolBox" x="445.757" y="182.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="445.757" y="182.583" width="22.24" height="10.0">2127</text>
               </line>
             </p>
             <p type="ParagraphRenderBox" x="320.101" y="96.067" width="147.897" height="13.258" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -432,7 +435,7 @@
                 <text x="425.885" y="122.583" width="13.88" height="10.0">CA</text>
               </line>
             </p>
-            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="70.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(POSTALCODE)"/>
               <line type="ParagraphPoolBox" x="450.777" y="122.583" width="17.22" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -444,14 +447,17 @@
               <line type="ParagraphPoolBox" x="456.877" y="142.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <text x="456.877" y="142.583" width="11.12" height="10.0">10</text>
               </line>
-              <line type="ParagraphPoolBox" x="439.765" y="152.583" width="28.232" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="439.765" y="152.583" width="38.9" height="10.0">00:00:00</text>
+              <line type="ParagraphPoolBox" x="440.217" y="152.583" width="27.78" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="440.217" y="152.583" width="27.78" height="10.0">00:00:</text>
               </line>
-              <line type="ParagraphPoolBox" x="447.457" y="162.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="447.457" y="162.583" width="20.54" height="10.0">UTC</text>
+              <line type="ParagraphPoolBox" x="456.877" y="162.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="456.877" y="162.583" width="11.12" height="10.0">00</text>
               </line>
-              <line type="ParagraphPoolBox" x="445.757" y="172.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="445.757" y="172.583" width="22.24" height="10.0">2167</text>
+              <line type="ParagraphPoolBox" x="447.457" y="172.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="447.457" y="172.583" width="20.54" height="10.0">UTC</text>
+              </line>
+              <line type="ParagraphPoolBox" x="445.757" y="182.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="445.757" y="182.583" width="22.24" height="10.0">2167</text>
               </line>
             </p>
             <p type="ParagraphRenderBox" x="320.101" y="96.067" width="147.897" height="13.258" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -673,7 +679,7 @@
                 <text x="425.885" y="122.583" width="13.88" height="10.0">CA</text>
               </line>
             </p>
-            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="70.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(POSTALCODE)"/>
               <line type="ParagraphPoolBox" x="447.447" y="122.583" width="20.55" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -685,14 +691,17 @@
               <line type="ParagraphPoolBox" x="456.877" y="142.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <text x="456.877" y="142.583" width="11.12" height="10.0">14</text>
               </line>
-              <line type="ParagraphPoolBox" x="439.765" y="152.583" width="28.232" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="439.765" y="152.583" width="38.9" height="10.0">00:00:00</text>
+              <line type="ParagraphPoolBox" x="440.217" y="152.583" width="27.78" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="440.217" y="152.583" width="27.78" height="10.0">00:00:</text>
               </line>
-              <line type="ParagraphPoolBox" x="447.457" y="162.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="447.457" y="162.583" width="20.54" height="10.0">UTC</text>
+              <line type="ParagraphPoolBox" x="456.877" y="162.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="456.877" y="162.583" width="11.12" height="10.0">00</text>
               </line>
-              <line type="ParagraphPoolBox" x="445.757" y="172.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="445.757" y="172.583" width="22.24" height="10.0">2157</text>
+              <line type="ParagraphPoolBox" x="447.457" y="172.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="447.457" y="172.583" width="20.54" height="10.0">UTC</text>
+              </line>
+              <line type="ParagraphPoolBox" x="445.757" y="182.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="445.757" y="182.583" width="22.24" height="10.0">2157</text>
               </line>
             </p>
             <p type="ParagraphRenderBox" x="320.101" y="96.067" width="147.897" height="13.258" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -911,7 +920,7 @@
                 <text x="425.885" y="122.583" width="13.88" height="10.0">NY</text>
               </line>
             </p>
-            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="70.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(POSTALCODE)"/>
               <line type="ParagraphPoolBox" x="447.447" y="122.583" width="20.55" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -923,14 +932,17 @@
               <line type="ParagraphPoolBox" x="456.877" y="142.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <text x="456.877" y="142.583" width="11.12" height="10.0">08</text>
               </line>
-              <line type="ParagraphPoolBox" x="439.765" y="152.583" width="28.232" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="439.765" y="152.583" width="38.9" height="10.0">23:00:00</text>
+              <line type="ParagraphPoolBox" x="440.217" y="152.583" width="27.78" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="440.217" y="152.583" width="27.78" height="10.0">23:00:</text>
               </line>
-              <line type="ParagraphPoolBox" x="447.457" y="162.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="447.457" y="162.583" width="20.54" height="10.0">UTC</text>
+              <line type="ParagraphPoolBox" x="456.877" y="162.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="456.877" y="162.583" width="11.12" height="10.0">00</text>
               </line>
-              <line type="ParagraphPoolBox" x="445.757" y="172.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="445.757" y="172.583" width="22.24" height="10.0">1927</text>
+              <line type="ParagraphPoolBox" x="447.457" y="172.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="447.457" y="172.583" width="20.54" height="10.0">UTC</text>
+              </line>
+              <line type="ParagraphPoolBox" x="445.757" y="182.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="445.757" y="182.583" width="22.24" height="10.0">1927</text>
               </line>
             </p>
             <p type="ParagraphRenderBox" x="320.101" y="96.067" width="147.897" height="13.258" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1147,7 +1159,7 @@
                 <text x="425.885" y="122.583" width="13.88" height="10.0">NY</text>
               </line>
             </p>
-            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <p type="ParagraphRenderBox" x="439.765" y="122.583" width="28.232" height="70.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(POSTALCODE)"/>
               <line type="ParagraphPoolBox" x="447.447" y="122.583" width="20.55" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1159,14 +1171,17 @@
               <line type="ParagraphPoolBox" x="456.877" y="142.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <text x="456.877" y="142.583" width="11.12" height="10.0">08</text>
               </line>
-              <line type="ParagraphPoolBox" x="439.765" y="152.583" width="28.232" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="439.765" y="152.583" width="38.9" height="10.0">23:00:00</text>
+              <line type="ParagraphPoolBox" x="440.217" y="152.583" width="27.78" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="440.217" y="152.583" width="27.78" height="10.0">23:00:</text>
               </line>
-              <line type="ParagraphPoolBox" x="447.457" y="162.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="447.457" y="162.583" width="20.54" height="10.0">UTC</text>
+              <line type="ParagraphPoolBox" x="456.877" y="162.583" width="11.12" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="456.877" y="162.583" width="11.12" height="10.0">00</text>
               </line>
-              <line type="ParagraphPoolBox" x="445.757" y="172.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="445.757" y="172.583" width="22.24" height="10.0">1927</text>
+              <line type="ParagraphPoolBox" x="447.457" y="172.583" width="20.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="447.457" y="172.583" width="20.54" height="10.0">UTC</text>
+              </line>
+              <line type="ParagraphPoolBox" x="445.757" y="182.583" width="22.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="445.757" y="182.583" width="22.24" height="10.0">1927</text>
               </line>
             </p>
             <p type="ParagraphRenderBox" x="320.101" y="96.067" width="147.897" height="13.258" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">

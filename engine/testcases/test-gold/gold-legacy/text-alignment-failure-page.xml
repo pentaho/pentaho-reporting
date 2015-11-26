@@ -53,64 +53,94 @@
               <p type="ParagraphRenderBox" x="0.0" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_PRODUCTCODE"/>
-                <line type="ParagraphPoolBox" x="0.0" y="5.0" width="167.892" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="0.0" y="5.0" width="167.892" height="12.0">PRODUCTS_PRODUCTCODE</text>
+                <line type="ParagraphPoolBox" x="0.0" y="5.0" width="174.54" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="5.0" width="81.948" height="12.0">PRODUCTS_P</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="85.272" y="5.0" width="77.952" height="12.0">RODUCTCOD</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="166.548" y="5.0" width="7.992" height="12.0">E</text>
                 </line>
               </p>
               <p type="ParagraphRenderBox" x="85.77769" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_PRODUCTNAME"/>
-                <line type="ParagraphPoolBox" x="85.77769" y="5.0" width="167.892" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="85.77769" y="5.0" width="167.892" height="12.0">PRODUCTS_PRODUCTNAME</text>
+                <line type="ParagraphPoolBox" x="85.77769" y="5.0" width="174.54" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="85.77769" y="5.0" width="81.948" height="12.0">PRODUCTS_P</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="171.04969" y="5.0" width="77.952" height="12.0">RODUCTNAM</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="252.32569" y="5.0" width="7.992" height="12.0">E</text>
                 </line>
               </p>
               <p type="ParagraphRenderBox" x="171.55538" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_PRODUCTLINE"/>
-                <line type="ParagraphPoolBox" x="171.55538" y="5.0" width="159.9" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="171.55538" y="5.0" width="159.9" height="12.0">PRODUCTS_PRODUCTLINE</text>
+                <line type="ParagraphPoolBox" x="171.55538" y="5.0" width="163.224" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="171.55538" y="5.0" width="81.948" height="12.0">PRODUCTS_P</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="256.82738" y="5.0" width="77.952" height="12.0">RODUCTLINE</text>
                 </line>
               </p>
               <p type="ParagraphRenderBox" x="257.33308" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_PRODUCTSCALE"/>
-                <line type="ParagraphPoolBox" x="257.33308" y="5.0" width="172.56" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="257.33308" y="5.0" width="172.56" height="12.0">PRODUCTS_PRODUCTSCALE</text>
+                <line type="ParagraphPoolBox" x="257.33308" y="5.0" width="179.208" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="257.33308" y="5.0" width="81.948" height="12.0">PRODUCTS_P</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="342.60508" y="5.0" width="82.62" height="12.0">RODUCTSCAL</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="428.54908" y="5.0" width="7.992" height="12.0">E</text>
                 </line>
               </p>
               <p type="ParagraphRenderBox" x="343.11077" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_PRODUCTVENDOR"/>
-                <line type="ParagraphPoolBox" x="343.11077" y="5.0" width="184.548" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="343.11077" y="5.0" width="184.548" height="12.0">PRODUCTS_PRODUCTVENDOR</text>
+                <line type="ParagraphPoolBox" x="343.11077" y="5.0" width="191.196" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="343.11077" y="5.0" width="81.948" height="12.0">PRODUCTS_P</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="428.38277" y="5.0" width="84.612" height="12.0">RODUCTVEND</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="516.31877" y="5.0" width="17.988" height="12.0">OR</text>
                 </line>
               </p>
               <p type="ParagraphRenderBox" x="428.88923" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_PRODUCTDESCRIPTION"/>
-                <line type="ParagraphPoolBox" x="428.88923" y="5.0" width="215.172" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="428.88923" y="5.0" width="215.172" height="12.0">PRODUCTS_PRODUCTDESCRIPTION</text>
+                <line type="ParagraphPoolBox" x="428.88923" y="5.0" width="221.82" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="428.88923" y="5.0" width="81.948" height="12.0">PRODUCTS_P</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="514.16123" y="5.0" width="84.612" height="12.0">RODUCTDESC</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="602.09723" y="5.0" width="48.612" height="12.0">RIPTION</text>
                 </line>
               </p>
               <p type="ParagraphRenderBox" x="514.66692" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_QUANTITYINSTOCK"/>
-                <line type="ParagraphPoolBox" x="514.66692" y="5.0" width="187.836" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="514.66692" y="5.0" width="187.836" height="12.0">PRODUCTS_QUANTITYINSTOCK</text>
+                <line type="ParagraphPoolBox" x="514.66692" y="5.0" width="194.484" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="514.66692" y="5.0" width="83.28" height="12.0">PRODUCTS_Q</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="601.27092" y="5.0" width="78.576" height="12.0">UANTITYINST</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="683.17092" y="5.0" width="25.98" height="12.0">OCK</text>
                 </line>
               </p>
               <p type="ParagraphRenderBox" x="600.44462" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_BUYPRICE"/>
-                <line type="ParagraphPoolBox" x="600.44462" y="5.0" width="135.24" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="600.44462" y="5.0" width="135.24" height="12.0">PRODUCTS_BUYPRICE</text>
+                <line type="ParagraphPoolBox" x="600.44462" y="5.0" width="138.564" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="600.44462" y="5.0" width="81.948" height="12.0">PRODUCTS_B</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="685.71662" y="5.0" width="53.292" height="12.0">UYPRICE</text>
                 </line>
               </p>
               <p type="ParagraphRenderBox" x="686.22231" y="2.0" width="85.77769" height="18.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PRODUCTS_MSRP"/>
-                <line type="ParagraphPoolBox" x="686.22231" y="5.0" width="108.6" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="686.22231" y="5.0" width="108.6" height="12.0">PRODUCTS_MSRP</text>
+                <line type="ParagraphPoolBox" x="686.22231" y="5.0" width="111.924" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="686.22231" y="5.0" width="83.952" height="12.0">PRODUCTS_M</text>
+                  <spacer width="3.324" height="0.0" preserve="false"/>
+                  <text x="773.49831" y="5.0" width="24.648" height="12.0">SRP</text>
                 </line>
               </p>
             </canvas>

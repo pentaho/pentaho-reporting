@@ -30,6 +30,19 @@
       </library>
     </orderEntry>
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/test-lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/test-lib" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
     <orderEntry type="module" module-name="libdocbundle" exported="" />
     <orderEntry type="module" module-name="libfonts" exported="" />
     <orderEntry type="module" module-name="libformat" exported="" />
@@ -52,19 +65,6 @@
           <root url="jar://$MODULE_DIR$/../../../../archive/sources/poi-ooxml-3.10-FINAL-sources.jar!/" />
         </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="" scope="TEST">
-      <library>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/test-lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/test-lib" />
-        </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
     <orderEntry type="library" name="jdbc" level="application" />

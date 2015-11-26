@@ -120,8 +120,10 @@
                     <p type="ParagraphRenderBox" x="475.2" y="75.0" width="37.8" height="15.0" color="white" font-face="Arial" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Variance"/>
-                      <line type="ParagraphPoolBox" x="475.2" y="77.5" width="39.45" height="10.0" color="white" font-face="Arial" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                        <text x="475.2" y="77.5" width="39.45" height="10.0">Variance</text>
+                      <line type="ParagraphPoolBox" x="475.2" y="77.5" width="42.22" height="10.0" color="white" font-face="Arial" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                        <text x="475.2" y="77.5" width="33.89" height="10.0">Varianc</text>
+                        <spacer width="2.77" height="0.0" preserve="false"/>
+                        <text x="511.86" y="77.5" width="5.56" height="10.0">e</text>
                       </line>
                     </p>
                     <p type="ParagraphRenderBox" x="0.0" y="91.0" width="540.0" height="15.0" color="black" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
