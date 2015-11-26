@@ -20,6 +20,7 @@ package org.pentaho.reporting.libraries.resourceloader;
 import junit.framework.TestCase;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -105,14 +106,14 @@ public class ResourceKeyUtilsTest extends TestCase {
     manager.registerDefaults();
     ResourceKey key = null;
     String stringParameters = null;
-    Map<ParameterKey, Object> factoryParameters = new HashMap<ParameterKey, Object>();
+    Map<ParameterKey, Object> factoryParameters = new LinkedHashMap<ParameterKey, Object>();
 
     // Test with multiple parameters (and one has a null value)
     factoryParameters.clear();
+    factoryParameters.put( new FactoryParameterKey( manager.getClass().getName() ), new Integer( 10 ) );
+    factoryParameters.put( new FactoryParameterKey( "this-one_null" ), null );
     factoryParameters.put( new FactoryParameterKey( "this" ), "that" );
     factoryParameters.put( new FactoryParameterKey( "test with spaces" ), " spaces should be preserved " );
-    factoryParameters.put( new FactoryParameterKey( "this-one_null" ), null );
-    factoryParameters.put( new FactoryParameterKey( manager.getClass().getName() ), new Integer( 10 ) );
     key =
       manager.createKey( "res://org/pentaho/reporting/libraries/resourceloader/test1.properties", factoryParameters );
     assertNotNull( key );

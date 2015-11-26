@@ -28,6 +28,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class URLResourceLoaderTest extends TestCase {
@@ -55,7 +56,7 @@ public class URLResourceLoaderTest extends TestCase {
     final ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
     ResourceKey key = null;
-    Map<ParameterKey, Object> factoryParameters = new HashMap<ParameterKey, Object>();
+    Map<ParameterKey, Object> factoryParameters = new LinkedHashMap<ParameterKey, Object>();
     String serializedVersion = null;
 
     // Test with null parameter
