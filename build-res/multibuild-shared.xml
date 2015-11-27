@@ -318,5 +318,13 @@ This is the build file for the collection of Shims modules to provide support
     </for>
   </target>
 
+  <!-- Runs "integration-test" on the modules defined in the property "modules" -->
+  <target name="integration-test" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="integration-test"/>
+      </sequential>
+    </for>
+  </target>
 
 </project>
