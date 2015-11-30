@@ -38,6 +38,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.engine.classic.core.modules.gui.base.ParameterReportControllerPane;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
@@ -111,6 +112,6 @@ public class TextFieldParameterComponentTest {
     latch.await( 100, TimeUnit.MILLISECONDS );
 
     assertThat( comp.getText(), is( equalTo( "error value" ) ) );
-    assertThat( comp.getBackground(), is( equalTo( Color.RED ) ) ); // should set value from TextComponentEditHandler
+    assertThat( comp.getBackground(), is( equalTo( ParameterReportControllerPane.ERROR_COLOR ) ) ); // should set value from TextComponentEditHandler
   }
 }
