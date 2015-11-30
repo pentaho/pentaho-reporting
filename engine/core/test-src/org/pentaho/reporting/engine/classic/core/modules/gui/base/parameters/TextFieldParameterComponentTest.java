@@ -124,6 +124,6 @@ public class TextFieldParameterComponentTest {
     latch.await( 100, TimeUnit.MILLISECONDS );
 
     assertThat( comp.getText(), is( equalTo( "error value" ) ) );
-    assertThat( comp.getBackground(), is( equalTo( ParameterReportControllerPane.ERROR_COLOR ) ) ); // should set value from TextComponentEditHandler
+    assertThat( comp.getBackground(), is( equalTo( Color.RED ) ) ); // should set value from TextComponentEditHandler
   }
 }
