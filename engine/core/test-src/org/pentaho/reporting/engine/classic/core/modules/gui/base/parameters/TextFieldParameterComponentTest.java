@@ -99,13 +99,25 @@ public class TextFieldParameterComponentTest {
   public void testInitializeErrorFormattedValue() throws Exception {
     final CountDownLatch latch = new CountDownLatch( 1 );
     doReturn( "error value" ).when( updateContext ).getParameterValue( ENTRY_NAME );
-    comp.initialize();
 
+    // initialize() will change the document, which invokes "handler", which uses "SwingUtils.invokeLater(..)" to
+    // do it work. The logic in init() depends on being able to finish configuring the text-component before
+    // the handler kicks in. If init() is not called from within the AWT-EDT, then we get a race condition.
     SwingUtilities.invokeLater( new Runnable() {
 
       @Override
       public void run() {
-        latch.countDown();
+        // this schedules tasks via "runLater(..)"
+        comp.initialize();
+
+        // Let all scheduled tasks run first, then signal that the test is finished.
+        SwingUtilities.invokeLater( new Runnable() {
+
+          @Override
+          public void run() {
+            latch.countDown();
+          }
+        } );
       }
     } );
 
