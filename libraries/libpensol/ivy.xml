@@ -23,7 +23,8 @@
 		<dependency org="org.apache.commons" name="commons-vfs2" rev="2.1-20150824" transitive="false" changing="false" conf="default_external->default"/>
 		<dependency org="commons-httpclient" name="commons-httpclient" rev="3.0.1" transitive="false" changing="false" conf="default_external->default"/>
 		<dependency org="commons-codec" name="commons-codec" rev="1.9" transitive="false" changing="false" conf="default_external->default"/>
-
+                <dependency org="commons-logging" name="commons-logging" rev="1.2"/>
+    
     <dependency org="pentaho" name="pentaho-platform-repository" rev="${dependency.pentaho.platform.revision}" changing="true" transitive="false" conf="default_external->default"/>
     <dependency org="pentaho" name="pentaho-platform-extensions" rev="${dependency.pentaho.platform.revision}" changing="true" transitive="false" conf="default_external->default"/>
     <dependency org="pentaho" name="pentaho-platform-core" rev="${dependency.pentaho.platform.revision}" changing="true" transitive="false" conf="default_external->default"/>
