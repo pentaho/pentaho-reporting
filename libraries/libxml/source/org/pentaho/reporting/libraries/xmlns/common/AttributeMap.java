@@ -18,15 +18,16 @@
 package org.pentaho.reporting.libraries.xmlns.common;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * A attribute map holding &lt;namspace;name&gt;-value pairs.
+ * A attribute map holding &lt;namespace;name&gt;-value pairs.
  *
  * @author Thomas Morgner
  */
@@ -83,7 +84,7 @@ public class AttributeMap<T> implements Serializable, Cloneable {
   }
 
   /**
-   * Creates a new attibute map using the given parameter as source for the initial values.
+   * Creates a new attribute map using the given parameter as source for the initial values.
    *
    * @param copy the attribute map that should be copied.
    * @noinspection unchecked
@@ -193,7 +194,7 @@ public class AttributeMap<T> implements Serializable, Cloneable {
   }
 
   /**
-   * Returns all attributes of the given namespace as unmodifable map.
+   * Returns all attributes of the given namespace as unmodifiable map.
    *
    * @param namespace the namespace for which the attributes should be returned.
    * @return the map, never null.
@@ -204,12 +205,13 @@ public class AttributeMap<T> implements Serializable, Cloneable {
     }
 
     if ( content == null ) {
-      return null;
+      return Collections.emptyMap();
     }
     LinkedHashMap<String, T> entries = new LinkedHashMap<String, T>();
     for ( final Map.Entry<DualKey, T> entry : content.entrySet() ) {
-      if ( namespace.equals( entry.getKey().namespace ) ) {
-        entries.put( entry.getKey().name, entry.getValue() );
+      DualKey key = entry.getKey();
+      if ( namespace.equals( key.namespace ) ) {
+        entries.put( key.name, entry.getValue() );
       }
     }
     return Collections.unmodifiableMap( entries );
@@ -230,14 +232,15 @@ public class AttributeMap<T> implements Serializable, Cloneable {
       return AttributeMap.EMPTY_NAMESPACES;
     }
 
-    LinkedHashSet<String> entries = new LinkedHashSet<String>();
+    List<String> entries = new ArrayList<String>();
     for ( final Map.Entry<DualKey, T> entry : content.entrySet() ) {
-      if ( namespace.equals( entry.getKey().namespace ) ) {
-        entries.add( entry.getKey().name );
+      DualKey key = entry.getKey();
+      if ( namespace.equals( key.namespace ) ) {
+        entries.add( key.name );
       }
     }
 
-    return entries.toArray( new String[entries.size()] );
+    return entries.toArray( new String[ entries.size() ] );
   }
 
   public Set<DualKey> keySet() {

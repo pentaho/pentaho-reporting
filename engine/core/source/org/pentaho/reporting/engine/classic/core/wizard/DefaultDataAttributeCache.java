@@ -24,9 +24,9 @@ import org.pentaho.reporting.libraries.base.util.LFUMap;
 @SingletonHint
 public class DefaultDataAttributeCache implements DataAttributeCache {
   private static class CacheKey {
-    private String locale;
-    private String outputType;
-    private ImmutableDataAttributes attrs;
+    private final String locale;
+    private final String outputType;
+    private final ImmutableDataAttributes attrs;
 
     private CacheKey( final DataAttributeContext context,
                       final ImmutableDataAttributes attrs ) {

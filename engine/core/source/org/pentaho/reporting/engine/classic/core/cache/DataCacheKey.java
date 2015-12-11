@@ -77,15 +77,19 @@ public class DataCacheKey {
   public void makeReadOnly() {
     // Make the following maps immutable. This method should be called after
     // the parameters & attributes have been seeded.
-    if (parameter.isEmpty()) {
-      parameter = Collections.emptyMap();
-    } else {
-      parameter = Collections.unmodifiableMap( parameter );
-    }
-    if (attributes.isEmpty()) {
-      attributes = Collections.emptyMap();
-    } else {
-      attributes = Collections.unmodifiableMap( attributes );
+    parameter = toImmutable( parameter );
+    attributes = toImmutable( attributes );
+  }
+
+  private static Map<String, Object> toImmutable( Map<String, Object> map ) {
+    switch ( map.size() ) {
+      case 0:
+        return Collections.emptyMap();
+      case 1:
+        Map.Entry<String, Object> entry = map.entrySet().iterator().next();
+        return Collections.singletonMap( entry.getKey(), entry.getValue() );
+      default:
+        return Collections.unmodifiableMap( map );
     }
   }
 

@@ -28,17 +28,18 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
  * @author Thomas Morgner
  */
 public class ReportAttributeMap<T> extends AttributeMap<T> {
-  public static final ReportAttributeMap EMPTY_MAP = new ReportAttributeMap().createUnmodifiableMap();
   private static final Log logger = LogFactory.getLog( ReportAttributeMap.class );
-  private long changeTracker;
-  private boolean readOnly;
+
+  public static final ReportAttributeMap EMPTY_MAP = new ReportAttributeMap().createUnmodifiableMap();
 
   public static <T> ReportAttributeMap<T> emptyMap() {
     return (ReportAttributeMap<T>) EMPTY_MAP;
   }
 
+  private long changeTracker;
+
   public ReportAttributeMap() {
-    this.changeTracker = 0;
+    this( 0 );
   }
 
   public ReportAttributeMap( final long changeTracker ) {
@@ -51,15 +52,7 @@ public class ReportAttributeMap<T> extends AttributeMap<T> {
   }
 
   public ReportAttributeMap<T> createUnmodifiableMap() {
-    try {
-      // noinspection unchecked
-      final ReportAttributeMap<T> o = (ReportAttributeMap<T>) super.clone();
-      o.readOnly = true;
-      return o;
-    } catch ( Exception e ) {
-      logger.error( "Clone failed for ReportAttributeMap.createUnmodifiableMap", e );
-      throw new IllegalStateException( "Clone failed for ReportAttributeMap.createUnmodifiableMap" );
-    }
+    return new Immutable<>( this );
   }
 
   public ReportAttributeMap<T> clone() {
@@ -80,9 +73,6 @@ public class ReportAttributeMap<T> extends AttributeMap<T> {
 
   @Override
   public T setAttribute( final String namespace, final String attribute, final T value ) {
-    if ( readOnly ) {
-      throw new UnsupportedOperationException( "This collection is marked as read-only" );
-    }
     final T oldValue = super.setAttribute( namespace, attribute, value );
     if ( oldValue == value ) {
       return oldValue;
@@ -95,15 +85,40 @@ public class ReportAttributeMap<T> extends AttributeMap<T> {
   }
 
   public boolean isReadOnly() {
-    return readOnly;
+    return false;
   }
 
   @Override
   public void putAll( final AttributeMap<T> attributeMap ) {
-    if ( isReadOnly() ) {
-      throw new UnsupportedOperationException( "This collection is marked as read-only" );
-    }
     super.putAll( attributeMap );
     changeTracker += 1;
+  }
+
+  private static class Immutable<T> extends ReportAttributeMap<T> {
+
+    public Immutable( ReportAttributeMap<T> map ) {
+      super( map );
+    }
+
+    public final boolean isReadOnly() {
+      return true;
+    }
+
+    public final T setAttribute( final String namespace, final String attribute, final T value ) {
+      throw exception();
+    }
+
+    public final void putAll( final AttributeMap<T> attributeMap ) {
+      throw exception();
+    }
+
+    private UnsupportedOperationException exception() {
+      return new UnsupportedOperationException( "This collection is marked as read-only" );
+    }
+
+    public ReportAttributeMap<T> clone() {
+      // okay, since this instance is immutable
+      return this;
+    }
   }
 }
