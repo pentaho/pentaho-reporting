@@ -48,7 +48,7 @@ public class DefaultDataAttributes implements DataAttributes {
     if ( domain == null ) {
       throw new NullPointerException();
     }
-    backend.setAttribute( domain, name, new Entry(conceptMapper, value));
+    backend.setAttribute( domain, name, new Entry( conceptMapper, value ) );
   }
 
   public String[] getMetaAttributeDomains() {
@@ -138,7 +138,7 @@ public class DefaultDataAttributes implements DataAttributes {
         final Object value = attributes.getMetaAttribute( domain, name, null, context );
         if ( value != null ) {
           ConceptQueryMapper mapper = attributes.getMetaAttributeMapper( domain, name );
-          backend.setAttribute( domain, name, new Entry(mapper, value) );
+          backend.setAttribute( domain, name, new Entry( mapper, value ) );
         }
       }
     }
@@ -162,7 +162,7 @@ public class DefaultDataAttributes implements DataAttributes {
         final Object value = ref.resolve( this, context );
         if ( value != null ) {
           ConceptQueryMapper conceptQueryMapper = ref.resolveMapper( this );
-          backend.setAttribute( domain, name, new Entry(conceptQueryMapper, value ));
+          backend.setAttribute( domain, name, new Entry( conceptQueryMapper, value ) );
         }
       }
     }

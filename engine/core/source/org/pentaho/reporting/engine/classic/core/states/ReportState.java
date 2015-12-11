@@ -33,11 +33,11 @@ public interface ReportState extends Cloneable {
   /**
    * A row number that is 'before' the first row.
    */
-  public static final int BEFORE_FIRST_ROW = -1;
+  int BEFORE_FIRST_ROW = -1;
   /**
    * A group number that is 'before' the first group.
    */
-  public static final int BEFORE_FIRST_GROUP = -1;
+  int BEFORE_FIRST_GROUP = -1;
 
   int getNumberOfRows();
 
@@ -82,49 +82,49 @@ public interface ReportState extends Cloneable {
    */
   int getEventCode();
 
-  public Object clone() throws CloneNotSupportedException;
+  Object clone() throws CloneNotSupportedException;
 
-  public DefaultFlowController getFlowController();
+  DefaultFlowController getFlowController();
 
-  public boolean isSubReportEvent();
+  boolean isSubReportEvent();
 
-  public void setErrorHandler( ReportProcessingErrorHandler errorHandler );
+  void setErrorHandler( ReportProcessingErrorHandler errorHandler );
 
-  public InlineSubreportMarker getCurrentSubReportMarker();
+  InlineSubreportMarker getCurrentSubReportMarker();
 
-  public ReportProcessingErrorHandler getErrorHandler();
+  ReportProcessingErrorHandler getErrorHandler();
 
-  public LayoutProcess getLayoutProcess();
+  LayoutProcess getLayoutProcess();
 
-  public void firePageFinishedEvent( final boolean noParentPassing );
+  void firePageFinishedEvent( final boolean noParentPassing );
 
-  public void firePageStartedEvent( final int eventCode );
+  void firePageStartedEvent( final int eventCode );
 
-  public ReportState getParentState();
+  ReportState getParentState();
 
-  public ReportState getParentSubReportState();
+  ReportState getParentSubReportState();
 
-  public ReportStateKey getProcessKey();
+  ReportStateKey getProcessKey();
 
-  public boolean isInItemGroup();
+  boolean isInItemGroup();
 
-  public boolean isInlineProcess();
+  boolean isInlineProcess();
 
-  public ResourceBundleFactory getResourceBundleFactory();
+  ResourceBundleFactory getResourceBundleFactory();
 
-  public GroupingState createGroupingState();
+  GroupingState createGroupingState();
 
-  public Integer getPredictedStateCount();
+  Integer getPredictedStateCount();
 
-  public boolean isStructuralPreprocessingNeeded();
+  boolean isStructuralPreprocessingNeeded();
 
-  public boolean isCrosstabActive();
+  boolean isCrosstabActive();
 
-  public long getGroupSequenceCounter( final int groupIndex );
+  long getGroupSequenceCounter( final int groupIndex );
 
-  public long getCrosstabColumnSequenceCounter( final int groupIndex );
+  long getCrosstabColumnSequenceCounter( final int groupIndex );
 
-  public PerformanceMonitorContext getPerformanceMonitorContext();
+  PerformanceMonitorContext getPerformanceMonitorContext();
 
-  public ReportProcessStore getProcessStore();
+  ReportProcessStore getProcessStore();
 }

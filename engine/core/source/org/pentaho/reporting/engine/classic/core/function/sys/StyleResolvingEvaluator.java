@@ -43,7 +43,6 @@ import org.pentaho.reporting.engine.classic.core.style.css.CSSStyleResolver;
 import org.pentaho.reporting.engine.classic.core.style.resolver.StyleResolver;
 import org.pentaho.reporting.engine.classic.core.util.DoubleKeyedCounter;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.ExtendedConfiguration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -238,22 +237,22 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
 
   protected void recordCacheHit( final ReportElement e ) {
     super.recordCacheHit( e );
-    if (collectDetailedStatistics) {
+    if ( collectDetailedStatistics ) {
       statisticsHit.increaseCounter( e.getElementType().getMetaData().getName(), e.getChangeTracker() );
     }
   }
 
   protected void recordCacheMiss( final ReportElement e ) {
     super.recordCacheMiss( e );
-    if (collectDetailedStatistics) {
+    if ( collectDetailedStatistics ) {
       statisticsMiss.increaseCounter( e.getElementType().getMetaData().getName(), e.getChangeTracker() );
     }
   }
 
   protected void reportCachePerformance() {
     super.reportCachePerformance();
-    if (collectDetailedStatistics) {
-      logger.debug(statisticsHit.printStatistic() + "\n" + statisticsMiss.printStatistic());
+    if ( collectDetailedStatistics ) {
+      logger.debug( statisticsHit.printStatistic() + "\n" + statisticsMiss.printStatistic() );
     }
   }
 

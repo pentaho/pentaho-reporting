@@ -92,10 +92,10 @@ public class DefaultStyleCache implements StyleCache {
     }
 
     public String toString() {
-      return "CacheKey{" +
-        "instanceId=" + instanceId +
-        ", styleClass='" + styleClass + '\'' +
-        '}';
+      return "CacheKey{"
+        + "instanceId=" + instanceId
+        + ", styleClass='" + styleClass + '\''
+        + '}';
     }
   }
 
@@ -182,16 +182,16 @@ public class DefaultStyleCache implements StyleCache {
         continue;
       }
 
-      throw new InvalidReportStateException( "Cache-Failure on " + s1.getId() + " " + validateKey + " " +
-        o1 + " vs " + o2 + " [" + s1.getChangeTracker() + "; " + s2.getChangeTracker() + "]" );
+      throw new InvalidReportStateException( "Cache-Failure on " + s1.getId() + " " + validateKey + " "
+        + o1 + " vs " + o2 + " [" + s1.getChangeTracker() + "; " + s2.getChangeTracker() + "]" );
     }
   }
 
   public String printPerformanceStats() {
     final int total = cacheHits + cacheMiss;
-    return ( "StyleCache: " + name + " " +
-      "Total=" + total +
-      " Hits=" + cacheHits + " (" + ( 100f * cacheHits / Math.max( 1, total ) ) + "%)" +
-      " Miss=" + cacheMiss + " (" + ( 100f * cacheMiss / Math.max( 1, total ) ) + "%)" );
+    return ( "StyleCache: " + name + " "
+      + "Total=" + total
+      + " Hits=" + cacheHits + " (" + ( 100f * cacheHits / Math.max( 1, total ) ) + "%)"
+      + " Miss=" + cacheMiss + " (" + ( 100f * cacheMiss / Math.max( 1, total ) ) + "%)" );
   }
 }

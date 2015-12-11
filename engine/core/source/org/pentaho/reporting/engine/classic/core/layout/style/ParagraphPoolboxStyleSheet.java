@@ -63,7 +63,7 @@ public class ParagraphPoolboxStyleSheet extends AbstractStyleSheet {
 
   public Object[] toArray() {
     final Object[] objects = defaultStyleSheet.toArray();
-    final List<StyleKey> keys= StyleKey.getDefinedStyleKeysList();
+    final List<StyleKey> keys = StyleKey.getDefinedStyleKeysList();
     for ( int i = 0, len = keys.size(); i < len; i++ ) {
       final StyleKey key = keys.get( i );
       if ( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals( key ) ) {

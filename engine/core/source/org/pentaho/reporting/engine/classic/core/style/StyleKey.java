@@ -284,7 +284,7 @@ public final class StyleKey implements Serializable, Cloneable {
   }
 
   public static synchronized List<StyleKey> getDefinedStyleKeysList() {
-    if (definedKeysList != null) {
+    if ( definedKeysList != null ) {
       return definedKeysList;
     }
     definedKeysList = Collections.unmodifiableList( Arrays.asList( getDefinedStyleKeys() ) );

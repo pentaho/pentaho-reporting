@@ -112,8 +112,7 @@ public class AttributeMap<T> implements Serializable, Cloneable {
         map.content = (LinkedHashMap<DualKey, T>) content.clone();
       }
       return map;
-    }
-    catch ( final CloneNotSupportedException cne ) {
+    } catch ( final CloneNotSupportedException cne ) {
       // ignored
       throw new IllegalStateException( "Cannot happen: Clone not supported exception" );
     }
@@ -244,7 +243,7 @@ public class AttributeMap<T> implements Serializable, Cloneable {
   }
 
   public Set<DualKey> keySet() {
-    if (content == null) {
+    if ( content == null ) {
       return Collections.emptySet();
     }
     return content.keySet();

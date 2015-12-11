@@ -77,7 +77,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     this.styleChangeSupport = new StyleChangeSupport( this );
     this.propertyKeys = StyleKey.getDefinedStyleKeysList();
     if ( propertyKeys.isEmpty() || propertyKeys.get( 0 ) == null ) {
-      throw new IllegalStateException("ReportingEngine has not been initialized properly.");
+      throw new IllegalStateException( "ReportingEngine has not been initialized properly." );
     }
   }
 
@@ -123,7 +123,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     }
 
     for ( int i = 0; i < size; i++ ) {
-      final StyleKey key = keys.get(i);
+      final StyleKey key = keys.get( i );
       if ( key == null ) {
         throw new NullPointerException();
       }
@@ -374,7 +374,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
       throw new IOException(
         "Encountered a different style-system configuration. This report cannot be deserialized." );
     }
-    if ( propertyKeys.get(0) == null ) {
+    if ( propertyKeys.get( 0 ) == null ) {
       throw new IllegalStateException();
     }
     properties = new Object[ size ];
@@ -401,7 +401,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
    * @return the local copy of the style keys.
    */
   public StyleKey[] getPropertyKeys() {
-    return propertyKeys.toArray( new StyleKey[propertyKeys.size()] );
+    return propertyKeys.toArray( new StyleKey[ propertyKeys.size() ] );
   }
 
   public List<StyleKey> getPropertyKeyList() {
@@ -431,7 +431,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     ensurePropertiesReady();
 
     for ( int i = 0; i < source.length; i++ ) {
-      if ( propertyKeys.get(i).isInheritable() == false ) {
+      if ( propertyKeys.get( i ).isInheritable() == false ) {
         continue;
       }
       final byte sourceFlag = sourceStyleSheet.source[ i ];

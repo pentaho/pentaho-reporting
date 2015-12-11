@@ -36,13 +36,13 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
   private HashNMap<String, StyleKey> styleByElementName;
 
   public DynamicStyleRootBandAnalyzer( final HashNMap<String, StyleKey> styleByElementName,
-      final HashNMap<InstanceID, StyleKey> styleById ) {
+                                       final HashNMap<InstanceID, StyleKey> styleById ) {
     this.styleByElementName = styleByElementName;
     this.dynamicTemplateInfo = new HashNMap<InstanceID, StyleKey>();
 
-    for (final InstanceID id: styleById.keySet()) {
+    for ( final InstanceID id : styleById.keySet() ) {
       Iterator<StyleKey> it = styleById.getAll( id );
-      while (it.hasNext()) {
+      while ( it.hasNext() ) {
         this.dynamicTemplateInfo.put( id, it.next() );
       }
     }
@@ -78,7 +78,7 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
     String name = element.getName();
     if ( styleByElementName.containsKey( name ) ) {
       Iterator<StyleKey> it = styleByElementName.getAll( name );
-      while (it.hasNext()) {
+      while ( it.hasNext() ) {
         this.dynamicTemplateInfo.put( element.getObjectID(), it.next() );
       }
     }

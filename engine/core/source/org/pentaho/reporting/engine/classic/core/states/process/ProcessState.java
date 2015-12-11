@@ -234,8 +234,8 @@ public class ProcessState implements ReportState {
         final ValidationResult validationResult =
           reportParameterValidator.validate( new ValidationResult(), parameters, parameterContext );
         if ( validationResult.isEmpty() == false ) {
-          throw new ReportParameterValidationException
-            ( "The parameters provided for this report are not valid.", validationResult );
+          throw new ReportParameterValidationException( "The parameters provided for this report are not valid.",
+            validationResult );
         }
         parameterValues = validationResult.getParameterValues();
       } finally {
@@ -250,8 +250,8 @@ public class ProcessState implements ReportState {
     this.performanceMonitorContext = new InternalPerformanceMonitorContext( rawPerformanceMonitorContext );
     final InitialLayoutProcess layoutProcess = new InitialLayoutProcess( outputFunction, performanceMonitorContext );
 
-    this.reportInstancesShareConnection = "true".equals( processingContext.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.core.ReportInstancesShareConnections" ) );
+    this.reportInstancesShareConnection = "true".equals( processingContext.getConfiguration()
+      .getConfigProperty( "org.pentaho.reporting.engine.classic.core.ReportInstancesShareConnections" ) );
     this.processLevels = new HashSet<Integer>();
     this.groupStarts = new FastStack<GroupStartRecord>();
     this.errorHandler = IgnoreEverythingReportErrorHandler.INSTANCE;
@@ -263,8 +263,9 @@ public class ProcessState implements ReportState {
     this.functionStorage = new FunctionStorage();
     this.structureFunctionStorage = new FunctionStorage();
     this.sequenceCounter = 0;
-    this.processKey = new ReportStateKey
-      ( null, ReportState.BEFORE_FIRST_ROW, 0, ReportState.BEFORE_FIRST_GROUP, -1, sequenceCounter, false, false );
+    this.processKey =
+      new ReportStateKey( null, ReportState.BEFORE_FIRST_ROW, 0, ReportState.BEFORE_FIRST_GROUP, -1, sequenceCounter,
+        false, false );
     this.dataFactoryManager = new DataFactoryManager();
     this.subReportStorage = new SubReportStorage();
     this.processHandle = new InternalProcessHandle( dataFactoryManager, performanceMonitorContext );
@@ -313,8 +314,8 @@ public class ProcessState implements ReportState {
     this.queryLimit = (Integer) ConverterRegistry.convert( queryLimitRaw, Integer.class, queryLimitDefault );
     this.queryTimeout = (Integer) ConverterRegistry.convert( queryTimeoutRaw, Integer.class, queryTimeoutDefault );
 
-    DefaultFlowController postQueryFlowController = flowController.performQuery
-      ( dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
+    DefaultFlowController postQueryFlowController =
+      flowController.performQuery( dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
         processingContext.getResourceBundleFactory(), sortOrder );
 
     final MasterReportProcessPreprocessor postProcessor =
@@ -422,8 +423,8 @@ public class ProcessState implements ReportState {
   }
 
   private boolean isReportsShareConnections( final ReportDefinition report ) {
-    final Object attribute = report.getAttribute
-      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.SHARED_CONNECTIONS );
+    final Object attribute =
+      report.getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.SHARED_CONNECTIONS );
     if ( Boolean.TRUE.equals( attribute ) ) {
       return true;
     }
@@ -470,8 +471,8 @@ public class ProcessState implements ReportState {
       parentState.isInlineProcess() || currentSubReportMarker.getProcessType() == SubReportProcessType.INLINE;
 
     final SubReport subreportFromMarker = currentSubReportMarker.getSubreport();
-    final FunctionStorageKey functionStorageKey = FunctionStorageKey.createKey
-      ( parentSubReportState.getProcessKey(), subreportFromMarker );
+    final FunctionStorageKey functionStorageKey =
+      FunctionStorageKey.createKey( parentSubReportState.getProcessKey(), subreportFromMarker );
     final boolean needPreProcessing;
     final SubReport initialSubReport;
     if ( subReportStorage.contains( functionStorageKey ) ) {
@@ -496,8 +497,8 @@ public class ProcessState implements ReportState {
         subreportFromMarker.getParentSection() );
       this.flowController = parentStateFlowController.derive();
       this.advanceHandler = EndSubReportHandler.HANDLER;
-      this.layoutProcess = new SubLayoutProcess
-        ( parentState.layoutProcess, computeStructureFunctions( initialSubReport.getStructureFunctions(),
+      this.layoutProcess = new SubLayoutProcess( parentState.layoutProcess,
+        computeStructureFunctions( initialSubReport.getStructureFunctions(),
           flowController.getReportContext().getOutputProcessorMetaData() ), this.report.getObjectID() );
     } else {
       DataFactory dataFactory =
@@ -555,8 +556,8 @@ public class ProcessState implements ReportState {
       final List<SortConstraint> sortOrder = lookupSortOrder( preDataSubReport );
 
 
-      DefaultFlowController postQueryFlowController = flowController.performSubReportQuery
-        ( query, queryLimit.intValue(), queryTimeout.intValue(), exportMappings, sortOrder );
+      DefaultFlowController postQueryFlowController = flowController
+        .performSubReportQuery( query, queryLimit.intValue(), queryTimeout.intValue(), exportMappings, sortOrder );
       final ProxyDataSchemaDefinition schemaDefinition =
         new ProxyDataSchemaDefinition( preDataSubReport.getDataSchemaDefinition(),
           postQueryFlowController.getMasterRow().getDataSchemaDefinition() );
@@ -805,19 +806,20 @@ public class ProcessState implements ReportState {
       parentStateKey = parentState.getProcessKey();
     }
 
-    final CachingDataFactory dataFactory = state.dataFactoryManager.restore
-      ( FunctionStorageKey.createKey( parentStateKey, state.getReport() ), isReportsShareConnections( report ) );
+    final CachingDataFactory dataFactory = state.dataFactoryManager
+      .restore( FunctionStorageKey.createKey( parentStateKey, state.getReport() ),
+        isReportsShareConnections( report ) );
     if ( dataFactory == null ) {
       throw new ReportProcessingException( "No data factory on restart()? Somewhere we went wrong." );
     }
 
     final DefaultFlowController fc = state.getFlowController();
     final DefaultFlowController cfc = fc.restart();
-    final DefaultFlowController qfc = cfc.performQuery
-      ( dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
+    final DefaultFlowController qfc =
+      cfc.performQuery( dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
         fc.getMasterRow().getResourceBundleFactory(), lookupSortOrder( state.report ) );
-    final Expression[] expressions = getFunctionStorage().restore
-      ( FunctionStorageKey.createKey( null, state.getReport() ) );
+    final Expression[] expressions =
+      getFunctionStorage().restore( FunctionStorageKey.createKey( null, state.getReport() ) );
     final DefaultFlowController efc = qfc.activateExpressions( expressions, true );
     state.setFlowController( efc );
     state.sequenceCounter += 1;

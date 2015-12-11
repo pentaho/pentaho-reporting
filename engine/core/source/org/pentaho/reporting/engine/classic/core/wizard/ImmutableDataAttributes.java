@@ -66,24 +66,23 @@ public final class ImmutableDataAttributes implements DataAttributes {
     this.backend = new AttributeMap<Entry>();
   }
 
-  private ImmutableDataAttributes(DataAttributes source, DataAttributeContext context) {
+  private ImmutableDataAttributes( DataAttributes source, DataAttributeContext context ) {
     this.backend = new AttributeMap<Entry>();
     merge( source, context );
   }
 
-  public ImmutableDataAttributes(AttributeMap<Object> data) {
+  public ImmutableDataAttributes( AttributeMap<Object> data ) {
     this.backend = new AttributeMap<Entry>();
-    for (AttributeMap.DualKey k: data.keySet()) {
+    for ( AttributeMap.DualKey k : data.keySet() ) {
       final Object value = data.getAttribute( k.namespace, k.name );
       this.backend.setAttribute( k.namespace, k.name, new Entry( DefaultConceptQueryMapper.INSTANCE, value ) );
     }
   }
 
-  public static ImmutableDataAttributes create(DataAttributes source, DataAttributeContext context) {
-    if (source instanceof ImmutableDataAttributes) {
+  public static ImmutableDataAttributes create( DataAttributes source, DataAttributeContext context ) {
+    if ( source instanceof ImmutableDataAttributes ) {
       return (ImmutableDataAttributes) source;
-    }
-    else {
+    } else {
       return new ImmutableDataAttributes( source, context );
     }
   }
@@ -135,7 +134,7 @@ public final class ImmutableDataAttributes implements DataAttributes {
     if ( attribute == null ) {
       return defaultValue;
     }
-    if (attribute.value == null) {
+    if ( attribute.value == null ) {
       return defaultValue;
     }
     final ConceptQueryMapper mapper = attribute.mapper;
@@ -158,7 +157,7 @@ public final class ImmutableDataAttributes implements DataAttributes {
   }
 
   private void merge( final DataAttributes attributes,
-                     final DataAttributeContext context ) {
+                      final DataAttributeContext context ) {
     if ( attributes == null ) {
       throw new NullPointerException();
     }
@@ -175,7 +174,7 @@ public final class ImmutableDataAttributes implements DataAttributes {
         final Object value = attributes.getMetaAttribute( domain, name, null, context );
         if ( value != null ) {
           ConceptQueryMapper mapper = attributes.getMetaAttributeMapper( domain, name );
-          backend.setAttribute( domain, name, new Entry(mapper, value) );
+          backend.setAttribute( domain, name, new Entry( mapper, value ) );
         }
       }
     }
@@ -212,4 +211,3 @@ public final class ImmutableDataAttributes implements DataAttributes {
     return backend.hashCode();
   }
 }
-

@@ -22,13 +22,13 @@ import java.io.Serializable;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 
 public interface TableMetaData extends Serializable {
-  public DataAttributes getCellDataAttribute( final int row,
-                                              final int column );
+  DataAttributes getCellDataAttribute( final int row,
+                                       final int column );
 
-  public boolean isCellDataAttributesSupported();
+  boolean isCellDataAttributesSupported();
 
-  public DataAttributes getColumnAttribute( final int column );
+  DataAttributes getColumnAttribute( final int column );
 
-  public DataAttributes getTableAttribute();
+  DataAttributes getTableAttribute();
 
 }

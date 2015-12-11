@@ -141,7 +141,7 @@ public class TypeMapper {
     return types;
   }
 
-  public static Class<?> mapForColumn(ResultSetMetaData rsmd, int i) {
+  public static Class<?> mapForColumn( ResultSetMetaData rsmd, int i ) {
     try {
       final ClassLoader cl = ObjectUtilities.getClassLoader( TypeMapper.class );
       try {

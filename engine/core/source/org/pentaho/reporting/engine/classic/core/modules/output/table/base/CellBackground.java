@@ -23,7 +23,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class CellBackground {
@@ -73,7 +73,7 @@ public class CellBackground {
       throw new NullPointerException();
     }
 
-    for (final AttributeMap.DualKey key: attrs.keySet()) {
+    for ( final AttributeMap.DualKey key : attrs.keySet() ) {
       final String namespace = key.namespace;
       final String name = key.name;
       final Object value = attrs.getAttribute( namespace, name );

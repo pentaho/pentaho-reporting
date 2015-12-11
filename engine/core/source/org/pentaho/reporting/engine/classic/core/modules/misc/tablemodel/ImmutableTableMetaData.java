@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.ImmutableDataAttributes;

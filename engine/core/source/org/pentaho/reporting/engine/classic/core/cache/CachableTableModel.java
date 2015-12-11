@@ -64,18 +64,18 @@ public class CachableTableModel extends AbstractTableModel implements MetaTableM
     for ( int i = 0; i < columnCount; i++ ) {
       final DataAttributes originalColAttrs = metaTableModel.getColumnAttributes( i );
 
-      if (isSaneMetaData( metaTableModel, i )) {
-        columnAttributes.add( ImmutableDataAttributes.create( originalColAttrs, dataAttributeContext ));
+      if ( isSaneMetaData( metaTableModel, i ) ) {
+        columnAttributes.add( ImmutableDataAttributes.create( originalColAttrs, dataAttributeContext ) );
       } else {
         final String columnName = metaTableModel.getColumnName( i );
         final Class columnType = metaTableModel.getColumnClass( i );
         final DefaultDataAttributes attributes = new DefaultDataAttributes();
         attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
-                                     DefaultConceptQueryMapper.INSTANCE, columnName );
+          DefaultConceptQueryMapper.INSTANCE, columnName );
         attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
-                                     DefaultConceptQueryMapper.INSTANCE, columnType );
+          DefaultConceptQueryMapper.INSTANCE, columnType );
         attributes.merge( originalColAttrs, dataAttributeContext );
-        columnAttributes.add( ImmutableDataAttributes.create( attributes, dataAttributeContext ));
+        columnAttributes.add( ImmutableDataAttributes.create( attributes, dataAttributeContext ) );
       }
     }
 
@@ -101,19 +101,17 @@ public class CachableTableModel extends AbstractTableModel implements MetaTableM
     final DataAttributes originalColAttrs = metaTableModel.getColumnAttributes( i );
 
     final String nameFromMeta =
-      (String) originalColAttrs.getMetaAttribute
-                         ( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
-                           String.class, dataAttributeContext );
+      (String) originalColAttrs.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
+        String.class, dataAttributeContext );
     if ( !ObjectUtilities.equal( columnName, nameFromMeta ) ) {
       return false;
     }
 
     final Class colTypeFromMeta =
-      (Class<?>) originalColAttrs.getMetaAttribute
-                         ( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
-                           Class.class, dataAttributeContext );
+      (Class<?>) originalColAttrs.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
+        Class.class, dataAttributeContext );
 
-    if ( !ObjectUtilities.equal( columnType, colTypeFromMeta) ) {
+    if ( !ObjectUtilities.equal( columnType, colTypeFromMeta ) ) {
       return false;
     }
     return true;

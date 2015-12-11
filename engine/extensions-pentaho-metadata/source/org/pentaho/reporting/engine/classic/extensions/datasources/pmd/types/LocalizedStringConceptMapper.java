@@ -62,8 +62,8 @@ public class LocalizedStringConceptMapper implements ConceptQueryMapper {
     final String localeAsText = locale.toString();
     final Object o = settings.getLocalizedString( localeAsText );
     if ( o == null ) {
-      logger.warn( "Unable to translate localized-string property for locale [" + locale + "]. " +
-        "The localization does not contain a translation for this locale and does not provide a fallback." );
+      logger.warn( "Unable to translate localized-string property for locale [" + locale + "]. "
+        + "The localization does not contain a translation for this locale and does not provide a fallback." );
     }
     return o;
   }

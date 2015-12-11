@@ -69,7 +69,7 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-import java.awt.*;
+import java.awt.Color;
 import java.beans.PropertyEditor;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -237,7 +237,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep {
     final ElementType type = element.getElementType();
 
     final Set<AttributeMap.DualKey> collection = attributes.keySet();
-    final AttributeMap.DualKey[] attributeNames = collection.toArray(new AttributeMap.DualKey[collection.size()]);
+    final AttributeMap.DualKey[] attributeNames = collection.toArray( new AttributeMap.DualKey[ collection.size() ] );
     Arrays.sort( attributeNames, new DualKeySorter() );
 
     for ( int j = 0; j < attributeNames.length; j++ ) {
@@ -251,8 +251,8 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep {
         continue;
       }
 
-      if ( metaData.isFeatureSupported( XmlPageOutputProcessorMetaData.WRITE_RESOURCEKEYS ) == false &&
-        value instanceof ResourceKey ) {
+      if ( metaData.isFeatureSupported( XmlPageOutputProcessorMetaData.WRITE_RESOURCEKEYS ) == false
+        && value instanceof ResourceKey ) {
         continue;
       }
 
@@ -269,8 +269,8 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep {
           continue;
         }
 
-        if ( xmlWriter.isNamespaceDefined( namespace ) == false &&
-          attList.isNamespaceUriDefined( namespace ) == false ) {
+        if ( xmlWriter.isNamespaceDefined( namespace ) == false
+          && attList.isNamespaceUriDefined( namespace ) == false ) {
           attList.addNamespaceDeclaration( "autoGenNs", namespace );
         }
 
@@ -282,8 +282,8 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep {
         continue;
       }
 
-      if ( xmlWriter.isNamespaceDefined( namespace ) == false &&
-        attList.isNamespaceUriDefined( namespace ) == false ) {
+      if ( xmlWriter.isNamespaceDefined( namespace ) == false
+        && attList.isNamespaceUriDefined( namespace ) == false ) {
         attList.addNamespaceDeclaration( "autoGenNs", namespace );
       }
 
@@ -765,17 +765,17 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep {
 
   private static class DualKeySorter implements Comparator<AttributeMap.DualKey> {
     public int compare( final AttributeMap.DualKey o1, final AttributeMap.DualKey o2 ) {
-      if (o1 == null && o2 == null) {
+      if ( o1 == null && o2 == null ) {
         return 0;
       }
-      if (o1 == null) {
+      if ( o1 == null ) {
         return -1;
       }
-      if (o2 == null) {
+      if ( o2 == null ) {
         return 1;
       }
       int ns = o1.namespace.compareTo( o2.namespace );
-      if (ns != 0) {
+      if ( ns != 0 ) {
         return ns;
       }
       return o1.name.compareTo( o2.name );

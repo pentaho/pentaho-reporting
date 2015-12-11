@@ -32,7 +32,6 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeCache;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
-import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.ImmutableDataAttributes;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -278,12 +277,12 @@ public final class ResultSetTableModelFactory {
           }
         }
 
-        columnMeta[columnIndex] = ResultSetTableModelFactory.collectData( rsmd, columnIndex, header[columnIndex]);
+        columnMeta[ columnIndex ] = ResultSetTableModelFactory.collectData( rsmd, columnIndex, header[ columnIndex ] );
       }
 
       final Object[][] rowMap = produceData( rs, colcount );
       ImmutableTableMetaData metaData = new ImmutableTableMetaData( ImmutableDataAttributes.EMPTY,
-                                                                    map(columnMeta) );
+        map( columnMeta ) );
       return new CloseableDefaultTableModel( rowMap, header, colTypes, metaData );
     } finally {
       Statement statement = null;
@@ -310,16 +309,16 @@ public final class ResultSetTableModelFactory {
     }
   }
 
-  public static ImmutableDataAttributes[] map(AttributeMap[] data) {
+  public static ImmutableDataAttributes[] map( AttributeMap[] data ) {
     DataAttributeCache cache = ClassicEngineBoot.getInstance().getObjectFactory().get( DataAttributeCache.class );
     DataAttributeContext ctx = new DefaultDataAttributeContext();
-    ImmutableDataAttributes[] retval = new ImmutableDataAttributes[data.length];
+    ImmutableDataAttributes[] retval = new ImmutableDataAttributes[ data.length ];
     for ( int i = 0; i < data.length; i++ ) {
-      AttributeMap<Object> map = data[i];
-      if (cache != null) {
-        retval[i] = cache.normalize( new ImmutableDataAttributes( map ), ctx);
+      AttributeMap<Object> map = data[ i ];
+      if ( cache != null ) {
+        retval[ i ] = cache.normalize( new ImmutableDataAttributes( map ), ctx );
       } else {
-        retval[i] = new ImmutableDataAttributes( map );
+        retval[ i ] = new ImmutableDataAttributes( map );
       }
     }
     return retval;
@@ -347,7 +346,7 @@ public final class ResultSetTableModelFactory {
       rows.add( column );
     }
 
-    return rows.toArray(new Object[ rows.size() ][] );
+    return rows.toArray( new Object[ rows.size() ][] );
   }
 
   public static AttributeMap<Object> collectData(final ResultSetMetaData rsmd,

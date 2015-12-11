@@ -66,11 +66,10 @@ public class DefaultDataAttributeCache implements DataAttributeCache {
     }
 
     public String toString() {
-      return "CacheKey{" +
-               "locale='" + locale + '\'' +
-               ", outputType='" + outputType + '\'' +
-               ", attrs=" + attrs +
-               '}';
+      return "CacheKey{"
+        + "locale='" + locale + '\''
+        + ", outputType='" + outputType + '\''
+        + ", attrs=" + attrs + '}';
     }
   }
 

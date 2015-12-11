@@ -201,8 +201,7 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
       } else {
         rowCount = 0;
       }
-    }
-    catch ( SQLException sqle ) {
+    } catch ( SQLException sqle ) {
       //Log.debug ("GetRowCount failed, returning 0 rows", sqle);
       throw new DataTableException( "Accessing the result set failed: ", sqle );
     }
@@ -224,8 +223,7 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
     if ( dbmd != null ) {
       try {
         return dbmd.getColumnCount();
-      }
-      catch ( SQLException e ) {
+      } catch ( SQLException e ) {
         //Log.debug ("GetColumnCount failed", e);
         throw new DataTableException( "Accessing the result set failed: ", e );
       }

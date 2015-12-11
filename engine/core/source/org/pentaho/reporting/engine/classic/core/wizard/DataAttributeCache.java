@@ -18,5 +18,5 @@
 package org.pentaho.reporting.engine.classic.core.wizard;
 
 public interface DataAttributeCache {
-  public ImmutableDataAttributes normalize( DataAttributes attrs, DataAttributeContext context  );
+  ImmutableDataAttributes normalize( DataAttributes attrs, DataAttributeContext context  );
 }

@@ -33,7 +33,7 @@ public class ReportDynamicStyleAnalyzerPreProcessor extends AbstractReportPrePro
                                             final DefaultFlowController flowController )
     throws ReportProcessingException {
     OutputProcessorMetaData meta = flowController.getReportContext().getOutputProcessorMetaData();
-    if ( meta.isFeatureSupported( OutputProcessorFeature.FAST_EXPORT )) {
+    if ( meta.isFeatureSupported( OutputProcessorFeature.FAST_EXPORT ) ) {
       DynamicReportStyleAnalyzer analyzer = new DynamicReportStyleAnalyzer();
       analyzer.compute( definition );
     }
@@ -43,7 +43,7 @@ public class ReportDynamicStyleAnalyzerPreProcessor extends AbstractReportPrePro
   public SubReport performPreProcessing( final SubReport definition,
                                          final DefaultFlowController flowController ) throws ReportProcessingException {
     OutputProcessorMetaData meta = flowController.getReportContext().getOutputProcessorMetaData();
-    if ( meta.isFeatureSupported( OutputProcessorFeature.FAST_EXPORT )) {
+    if ( meta.isFeatureSupported( OutputProcessorFeature.FAST_EXPORT ) ) {
       DynamicReportStyleAnalyzer analyzer = new DynamicReportStyleAnalyzer();
       analyzer.compute( definition );
     }

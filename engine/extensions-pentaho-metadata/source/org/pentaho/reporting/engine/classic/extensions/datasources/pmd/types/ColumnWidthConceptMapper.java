@@ -69,8 +69,7 @@ public class ColumnWidthConceptMapper implements ConceptQueryMapper {
       final double resolution = data.getNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION );
       final double deviceScaleFactor = ( 72.0 / resolution );
       rawWidth = (float) ( widthValue * deviceScaleFactor );
-    } else // if (widthType == ColumnWidth.POINTS
-    {
+    } else {// if (widthType == ColumnWidth.POINTS
       rawWidth = Math.max( 0, widthValue );
     }
 
