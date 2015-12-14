@@ -1599,6 +1599,8 @@ ValueAt (121, 9) is in a typed column and is of type class java.lang.String
 ValueAt (121, 10) is in a typed column and is of type class java.lang.String
 ValueAt (121, 11) is in a typed column and is of type class java.lang.Integer
 ValueAt (121, 12) is in a typed column and is of type class java.math.BigDecimal
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=CUSTOMERNUMBER
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.Integer
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1608,6 +1610,8 @@ ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=32
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=true
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=CUSTOMERNAME
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1617,6 +1621,8 @@ ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=CONTACTLASTNAME
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1626,6 +1632,8 @@ ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=CONTACTFIRSTNAME
+ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1635,6 +1643,8 @@ ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=PHONE
+ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1644,6 +1654,8 @@ ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=ADDRESSLINE1
+ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1653,6 +1665,8 @@ ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=ADDRESSLINE2
+ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1662,6 +1676,8 @@ ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=CITY
+ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1671,6 +1687,8 @@ ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=STATE
+ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1680,6 +1698,8 @@ ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=POSTALCODE
+ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1689,6 +1709,8 @@ ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=15
 ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=COUNTRY
+ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1698,6 +1720,8 @@ ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=50
 ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=false
+ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=SALESREPEMPLOYEENUMBER
+ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.Integer
 ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS
@@ -1707,6 +1731,8 @@ ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:precision]=32
 ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:scale]=0
 ColumnAttribute(11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric:signed]=true
+ColumnAttribute(12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=CREDITLIMIT
+ColumnAttribute(12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.math.BigDecimal
 ColumnAttribute(12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=CUSTOMERS

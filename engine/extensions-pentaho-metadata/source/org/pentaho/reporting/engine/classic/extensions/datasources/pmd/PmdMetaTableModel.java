@@ -59,7 +59,7 @@ public class PmdMetaTableModel implements MetaTableModel, CloseableTableModel {
 
   public DataAttributes getCellDataAttributes( final int row, final int column ) {
     return new PentahoMetaDataAttributes( parentTableModel.getCellDataAttributes( row, column ),
-      selections[ column ].getLogicalColumn() );
+      selections[ column ].getLogicalColumn(), getColumnName( column ) );
   }
 
   public boolean isCellDataAttributesSupported() {
@@ -68,7 +68,7 @@ public class PmdMetaTableModel implements MetaTableModel, CloseableTableModel {
 
   public DataAttributes getColumnAttributes( final int column ) {
     return new PentahoMetaDataAttributes( parentTableModel.getColumnAttributes( column ),
-      selections[ column ].getLogicalColumn() );
+      selections[ column ].getLogicalColumn(), getColumnName( column )  );
   }
 
   public DataAttributes getTableAttributes() {

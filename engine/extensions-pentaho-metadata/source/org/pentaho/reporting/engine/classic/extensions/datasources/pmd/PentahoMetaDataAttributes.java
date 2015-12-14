@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
 
 import org.pentaho.metadata.model.concept.IConcept;
+import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
@@ -50,15 +51,24 @@ public class PentahoMetaDataAttributes implements DataAttributes {
   private IConcept concept;
   private ArrayList<ConceptQueryMapper> conceptMappers;
   private LinkedHashMap<String, Object> properties;
+  private String columnName;
 
+  @Deprecated
   public PentahoMetaDataAttributes( final DataAttributes backend,
                                     final IConcept concept ) {
+    this(backend, concept, null);
+  }
+
+  public PentahoMetaDataAttributes( final DataAttributes backend,
+                                    final IConcept concept,
+                                    final String columnName ) {
     if ( concept == null ) {
       throw new NullPointerException();
     }
     if ( backend == null ) {
       throw new NullPointerException();
     }
+    this.columnName = columnName;
     this.concept = concept;
     this.properties = new LinkedHashMap<String, Object>( concept.getProperties() );
 
@@ -123,7 +133,13 @@ public class PentahoMetaDataAttributes implements DataAttributes {
       // We cant solve the problem here, so all we can do is hope and pray.
       return convertFromPmd( value, type, defaultValue, context );
     }
-
+    if ( MetaAttributeNames.Core.NAMESPACE.equals( domain ) &&
+         MetaAttributeNames.Core.NAME.equals( name )) {
+      ConceptQueryMapper metaAttributeMapper = backend.getMetaAttributeMapper( domain, name );
+      if ( metaAttributeMapper != null ) {
+        return metaAttributeMapper.getValue( columnName, type, context );
+      }
+    }
     return backend.getMetaAttribute( domain, name, type, context, defaultValue );
   }
 
