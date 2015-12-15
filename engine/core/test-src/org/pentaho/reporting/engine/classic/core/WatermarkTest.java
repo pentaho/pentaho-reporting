@@ -27,17 +27,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.WatermarkType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 
 public class WatermarkTest {
 
   @BeforeClass
   public static void init() {
-    StyleKey.registerClass( ElementStyleKeys.class );
-    StyleKey.registerClass( BandStyleKeys.class );
-    StyleKey.registerClass( TextStyleKeys.class );
+    ClassicEngineBoot.getInstance().start();
   }
 
   @Test
@@ -84,7 +79,7 @@ public class WatermarkTest {
   @Test
   public void testGetSubReports() {
     Watermark watermark = new Watermark();
-    assertThat( watermark.getSubReports(), is( equalTo( new SubReport[] {} ) ) );
+    assertThat( watermark.getSubReports(), is( equalTo( new SubReport[]{ } ) ) );
   }
 
   @Test

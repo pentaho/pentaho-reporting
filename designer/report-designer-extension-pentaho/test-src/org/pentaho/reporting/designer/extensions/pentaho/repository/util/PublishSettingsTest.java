@@ -20,8 +20,10 @@ package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore("We cannot test PublishSettns as it is using the preferences-API and thus is not independent.")
 public class PublishSettingsTest {
 
   @Before

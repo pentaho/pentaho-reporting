@@ -28,16 +28,12 @@ import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsHeaderType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 
 public class DetailsHeaderTest {
 
   @BeforeClass
   public static void init() {
-    StyleKey.registerClass( BandStyleKeys.class );
-    StyleKey.registerClass( ElementStyleKeys.class );
-    StyleKey.registerClass( TextStyleKeys.class );
+    ClassicEngineBoot.getInstance().start();
   }
 
   @Test
@@ -93,7 +89,7 @@ public class DetailsHeaderTest {
   @Test
   public void testGetSubReports() {
     DetailsHeader header = new DetailsHeader();
-    assertThat( header.getSubReports(), is( equalTo( new SubReport[] {} ) ) );
+    assertThat( header.getSubReports(), is( equalTo( new SubReport[]{ } ) ) );
   }
 
   @Test
