@@ -260,5 +260,6 @@
 
 	</target>
 
+  <target name="integration-test"/>
 
 </project>

@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
 public class FontSizeConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new FontSizeConceptMapper();
   public FontSizeConceptMapper() {
   }
 

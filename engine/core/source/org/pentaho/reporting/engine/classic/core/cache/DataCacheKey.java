@@ -45,7 +45,7 @@ public class DataCacheKey {
     if ( key == null ) {
       throw new NullPointerException();
     }
-    parameter.put( key, value );
+    attributes.put( key, value );
   }
 
   public boolean equals( final Object o ) {
@@ -77,8 +77,20 @@ public class DataCacheKey {
   public void makeReadOnly() {
     // Make the following maps immutable. This method should be called after
     // the parameters & attributes have been seeded.
-    parameter = Collections.unmodifiableMap( parameter );
-    attributes = Collections.unmodifiableMap( attributes );
+    parameter = toImmutable( parameter );
+    attributes = toImmutable( attributes );
+  }
+
+  private static Map<String, Object> toImmutable( Map<String, Object> map ) {
+    switch ( map.size() ) {
+      case 0:
+        return Collections.emptyMap();
+      case 1:
+        Map.Entry<String, Object> entry = map.entrySet().iterator().next();
+        return Collections.singletonMap( entry.getKey(), entry.getValue() );
+      default:
+        return Collections.unmodifiableMap( map );
+    }
   }
 
   private boolean equalsMap( final Map<String, Object> values, final Map<String, Object> otherValues ) {

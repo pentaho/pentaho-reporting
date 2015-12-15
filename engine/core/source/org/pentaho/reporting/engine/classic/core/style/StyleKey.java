@@ -27,8 +27,11 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * A style key represents a (key, class) pair. Style keys are used to access style attributes defined in a
@@ -49,6 +52,7 @@ public final class StyleKey implements Serializable, Cloneable {
   private static HashMap definedKeys;
   private static int definedKeySize;
   private static StyleKey[] definedKeysArray;
+  private static List<StyleKey> definedKeysList;
   private static boolean locked;
 
   /**
@@ -117,7 +121,7 @@ public final class StyleKey implements Serializable, Cloneable {
    *
    * @return the class.
    */
-  public Class getValueType() {
+  public Class<?> getValueType() {
     return valueType;
   }
 
@@ -165,6 +169,7 @@ public final class StyleKey implements Serializable, Cloneable {
       definedKeys.put( name, key );
       definedKeySize = definedKeys.size();
       definedKeysArray = null;
+      definedKeysList = null;
     }
     return key;
   }
@@ -276,6 +281,14 @@ public final class StyleKey implements Serializable, Cloneable {
 
   public static int getDefinedStyleKeyCount() {
     return definedKeySize;
+  }
+
+  public static synchronized List<StyleKey> getDefinedStyleKeysList() {
+    if ( definedKeysList != null ) {
+      return definedKeysList;
+    }
+    definedKeysList = Collections.unmodifiableList( Arrays.asList( getDefinedStyleKeys() ) );
+    return definedKeysList;
   }
 
   public static synchronized StyleKey[] getDefinedStyleKeys() {

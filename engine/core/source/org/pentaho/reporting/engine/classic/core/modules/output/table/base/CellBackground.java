@@ -17,13 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderCorner;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
+
+import java.awt.Color;
+import java.util.ArrayList;
 
 public class CellBackground {
   private ReportAttributeMap<Object> attributes;
@@ -43,7 +44,7 @@ public class CellBackground {
   private boolean origin;
   private ElementType elementType;
   private transient Integer hashCode;
-  private static final String[] EMPTY_ANCHORS = new String[0];
+  private static final String[] EMPTY_ANCHORS = new String[ 0 ];
 
   public CellBackground() {
     this.top = BorderEdge.EMPTY;
@@ -72,16 +73,12 @@ public class CellBackground {
       throw new NullPointerException();
     }
 
-    final String[] namespaces = attrs.getNameSpaces();
-    for ( int i = 0; i < namespaces.length; i++ ) {
-      final String namespace = namespaces[i];
-      final String[] names = attrs.getNames( namespace );
-      for ( int j = 0; j < names.length; j++ ) {
-        final String name = names[j];
-        final Object value = attrs.getAttribute( namespace, name );
-        if ( value != null ) {
-          this.attributes.setAttribute( namespace, name, value );
-        }
+    for ( final AttributeMap.DualKey key : attrs.keySet() ) {
+      final String namespace = key.namespace;
+      final String name = key.name;
+      final Object value = attrs.getAttribute( namespace, name );
+      if ( value != null ) {
+        this.attributes.setAttribute( namespace, name, value );
       }
     }
     this.hashCode = null;
@@ -155,10 +152,8 @@ public class CellBackground {
   /**
    * Adds two colors, the result is the mixed color of the base color and the paint color.
    *
-   * @param base
-   *          the base color
-   * @param paint
-   *          the overlay color
+   * @param base  the base color
+   * @param paint the overlay color
    * @return the merged colors.
    */
   private static Color addColor( final Color base, final Color paint ) {
@@ -291,7 +286,7 @@ public class CellBackground {
     if ( anchors == null ) {
       return EMPTY_ANCHORS;
     }
-    return anchors.toArray( new String[anchors.size()] );
+    return anchors.toArray( new String[ anchors.size() ] );
   }
 
   public void addElementType( final ElementType type ) {

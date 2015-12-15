@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.style;
 
+import java.util.List;
+
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
@@ -90,7 +92,10 @@ public class DefaultStyleCache implements StyleCache {
     }
 
     public String toString() {
-      return "CacheKey{" + "instanceId=" + instanceId + ", styleClass='" + styleClass + '\'' + '}';
+      return "CacheKey{"
+        + "instanceId=" + instanceId
+        + ", styleClass='" + styleClass + '\''
+        + '}';
     }
   }
 
@@ -114,7 +119,7 @@ public class DefaultStyleCache implements StyleCache {
 
   private LFUMap<CacheKey, CacheCarrier> cache;
   private CacheKey lookupKey;
-  private StyleKey[] validateKeys;
+  private List<StyleKey> validateKeys;
   private boolean validateCache;
   private int cacheHits;
   private int cacheMiss;
@@ -167,26 +172,26 @@ public class DefaultStyleCache implements StyleCache {
     }
 
     if ( validateKeys == null ) {
-      validateKeys = StyleKey.getDefinedStyleKeys();
+      validateKeys = StyleKey.getDefinedStyleKeysList();
     }
 
-    for ( int i = 0; i < validateKeys.length; i++ ) {
-      final StyleKey validateKey = validateKeys[i];
+    for ( final StyleKey validateKey : validateKeys ) {
       final Object o1 = s1.getStyleProperty( validateKey );
       final Object o2 = s2.getStyleProperty( validateKey );
       if ( ObjectUtilities.equal( o1, o2 ) ) {
         continue;
       }
 
-      throw new InvalidReportStateException( "Cache-Failure on " + s1.getId() + " " + validateKey + " " + o1 + " vs "
-          + o2 + " [" + s1.getChangeTracker() + "; " + s2.getChangeTracker() + "]" );
+      throw new InvalidReportStateException( "Cache-Failure on " + s1.getId() + " " + validateKey + " "
+        + o1 + " vs " + o2 + " [" + s1.getChangeTracker() + "; " + s2.getChangeTracker() + "]" );
     }
   }
 
   public String printPerformanceStats() {
     final int total = cacheHits + cacheMiss;
-    return ( "StyleCache: " + name + " " + "Total=" + total + " Hits=" + cacheHits + " ("
-        + ( 100f * cacheHits / Math.max( 1, total ) ) + "%)" + " Miss=" + cacheMiss + " ("
-        + ( 100f * cacheMiss / Math.max( 1, total ) ) + "%)" );
+    return ( "StyleCache: " + name + " "
+      + "Total=" + total
+      + " Hits=" + cacheHits + " (" + ( 100f * cacheHits / Math.max( 1, total ) ) + "%)"
+      + " Miss=" + cacheMiss + " (" + ( 100f * cacheMiss / Math.max( 1, total ) ) + "%)" );
   }
 }

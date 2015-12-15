@@ -119,7 +119,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
       }
 
       final Element element = process( doc.getDefaultRootElement() );
-      return RichTextConverterUtilities.convertToBand( StyleKey.getDefinedStyleKeys(), source, element );
+      return RichTextConverterUtilities.convertToBand( StyleKey.getDefinedStyleKeysList(), source, element );
     } catch ( Exception e ) {
       return value;
     }

@@ -24,6 +24,8 @@ import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
 public class AlignmentConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new AlignmentConceptMapper();
+
   private ElementAlignmentValueConverter alignmentValueConverter;
 
   public AlignmentConceptMapper() {
@@ -48,7 +50,7 @@ public class AlignmentConceptMapper implements ConceptQueryMapper {
       return value;
     }
 
-    if ( type == null || Object.class.equals( type ) || Alignment.class.equals( type ) ) {
+    if ( type == null || Object.class.equals( type ) ) {
       return value;
     }
 

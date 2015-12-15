@@ -22,7 +22,6 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -34,9 +33,12 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMappe
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
+import org.pentaho.reporting.engine.classic.core.wizard.ImmutableDataAttributes;
 import org.pentaho.reporting.libraries.base.util.GenericObjectTable;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class CachableTableModel extends AbstractTableModel implements MetaTableModel {
+
   private GenericObjectTable<DefaultDataAttributes> cellAttributes;
   private GenericObjectTable<Object> cellValues;
   private ArrayList<DataAttributes> columnAttributes;
@@ -48,66 +50,107 @@ public class CachableTableModel extends AbstractTableModel implements MetaTableM
     columnAttributes = new ArrayList<DataAttributes>();
     if ( model instanceof MetaTableModel ) {
       final MetaTableModel metaTableModel = (MetaTableModel) model;
-      for ( int i = 0; i < model.getColumnCount(); i++ ) {
-        final String columnName = model.getColumnName( i );
-        final Class columnType = model.getColumnClass( i );
-        final DefaultDataAttributes attributes = new DefaultDataAttributes();
-        attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
-            new DefaultConceptQueryMapper(), columnName );
-        attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
-            new DefaultConceptQueryMapper(), columnType );
-        attributes.merge( metaTableModel.getColumnAttributes( i ), dataAttributeContext );
-        columnAttributes.add( attributes );
-      }
-
-      if ( metaTableModel.isCellDataAttributesSupported() ) {
-        cellAttributes = new GenericObjectTable<DefaultDataAttributes>( model.getRowCount(), model.getColumnCount() );
-        for ( int row = 0; row < model.getRowCount(); row += 1 ) {
-          for ( int columns = 0; columns < model.getColumnCount(); columns += 1 ) {
-            final DefaultDataAttributes attributes = new DefaultDataAttributes();
-            attributes.merge( metaTableModel.getCellDataAttributes( row, columns ), dataAttributeContext );
-            cellAttributes.setObject( row, columns, attributes );
-          }
-        }
-      }
-
-      final DefaultDataAttributes attributes = new DefaultDataAttributes();
-      attributes.merge( metaTableModel.getTableAttributes(), dataAttributeContext );
-      tableAttributes = attributes;
+      initFromMetaModel( metaTableModel );
     } else {
-      for ( int i = 0; i < model.getColumnCount(); i++ ) {
-        final String columnName = model.getColumnName( i );
-        final Class columnType = model.getColumnClass( i );
-        final DefaultDataAttributes attributes = new DefaultDataAttributes();
-        attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
-            new DefaultConceptQueryMapper(), columnName );
-        attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
-            new DefaultConceptQueryMapper(), columnType );
-        columnAttributes.add( attributes );
-      }
-      tableAttributes = EmptyDataAttributes.INSTANCE;
+      initDefaultMetaData( model );
     }
 
+    initData( model );
+
+  }
+
+  protected void initFromMetaModel( final MetaTableModel metaTableModel ) {
+    final int columnCount = metaTableModel.getColumnCount();
+    for ( int i = 0; i < columnCount; i++ ) {
+      final DataAttributes originalColAttrs = metaTableModel.getColumnAttributes( i );
+
+      if ( isSaneMetaData( metaTableModel, i ) ) {
+        columnAttributes.add( ImmutableDataAttributes.create( originalColAttrs, dataAttributeContext ) );
+      } else {
+        final String columnName = metaTableModel.getColumnName( i );
+        final Class columnType = metaTableModel.getColumnClass( i );
+        final DefaultDataAttributes attributes = new DefaultDataAttributes();
+        attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
+          DefaultConceptQueryMapper.INSTANCE, columnName );
+        attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
+          DefaultConceptQueryMapper.INSTANCE, columnType );
+        attributes.merge( originalColAttrs, dataAttributeContext );
+        columnAttributes.add( ImmutableDataAttributes.create( attributes, dataAttributeContext ) );
+      }
+    }
+
+    if ( metaTableModel.isCellDataAttributesSupported() ) {
+      cellAttributes = new GenericObjectTable<DefaultDataAttributes>( metaTableModel.getRowCount(), columnCount );
+      for ( int row = 0; row < metaTableModel.getRowCount(); row += 1 ) {
+        for ( int columns = 0; columns < columnCount; columns += 1 ) {
+          final DefaultDataAttributes attributes = new DefaultDataAttributes();
+          attributes.merge( metaTableModel.getCellDataAttributes( row, columns ), dataAttributeContext );
+          cellAttributes.setObject( row, columns, attributes );
+        }
+      }
+    }
+
+    final DefaultDataAttributes attributes = new DefaultDataAttributes();
+    attributes.merge( metaTableModel.getTableAttributes(), dataAttributeContext );
+    tableAttributes = attributes;
+  }
+
+  private boolean isSaneMetaData( final MetaTableModel metaTableModel, int i ) {
+    final String columnName = metaTableModel.getColumnName( i );
+    final Class columnType = metaTableModel.getColumnClass( i );
+    final DataAttributes originalColAttrs = metaTableModel.getColumnAttributes( i );
+
+    final String nameFromMeta =
+      (String) originalColAttrs.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
+        String.class, dataAttributeContext );
+    if ( !ObjectUtilities.equal( columnName, nameFromMeta ) ) {
+      return false;
+    }
+
+    final Class colTypeFromMeta =
+      (Class<?>) originalColAttrs.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
+        Class.class, dataAttributeContext );
+
+    if ( !ObjectUtilities.equal( columnType, colTypeFromMeta ) ) {
+      return false;
+    }
+    return true;
+  }
+
+  protected void initData( final TableModel model ) {
     cellValues =
-        new GenericObjectTable<Object>( Math.max( 1, model.getRowCount() ), Math.max( 1, model.getColumnCount() ) );
+      new GenericObjectTable<Object>( Math.max( 1, model.getRowCount() ), Math.max( 1, model.getColumnCount() ) );
     for ( int row = 0; row < model.getRowCount(); row += 1 ) {
       for ( int columns = 0; columns < model.getColumnCount(); columns += 1 ) {
         cellValues.setObject( row, columns, model.getValueAt( row, columns ) );
       }
     }
+  }
 
+  protected void initDefaultMetaData( final TableModel model ) {
+    for ( int i = 0; i < model.getColumnCount(); i++ ) {
+      final String columnName = model.getColumnName( i );
+      final Class columnType = model.getColumnClass( i );
+      final DefaultDataAttributes attributes = new DefaultDataAttributes();
+      attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
+                                   DefaultConceptQueryMapper.INSTANCE, columnName );
+      attributes.setMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
+                                   DefaultConceptQueryMapper.INSTANCE, columnType );
+      columnAttributes.add( attributes );
+    }
+    tableAttributes = EmptyDataAttributes.INSTANCE;
   }
 
   public String getColumnName( final int column ) {
     final DataAttributes attributes = columnAttributes.get( column );
-    return (String) attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.NAME,
-        String.class, dataAttributeContext );
+    return (String) attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE,
+                                                 MetaAttributeNames.Core.NAME, String.class, dataAttributeContext );
   }
 
   public Class getColumnClass( final int columnIndex ) {
     final DataAttributes attributes = columnAttributes.get( columnIndex );
-    return (Class) attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE,
-        Class.class, dataAttributeContext );
+    return (Class) attributes.getMetaAttribute( MetaAttributeNames.Core.NAMESPACE,
+                                                MetaAttributeNames.Core.TYPE, Class.class, dataAttributeContext );
   }
 
   public DataAttributes getCellDataAttributes( final int row, final int column ) {

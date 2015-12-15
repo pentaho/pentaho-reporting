@@ -26,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import java.util.Locale;
 
 public class LocalizedStringConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new LocalizedStringConceptMapper();
   private static final Log logger = LogFactory.getLog( LocalizedStringConceptMapper.class );
 
   public LocalizedStringConceptMapper() {
@@ -61,8 +62,8 @@ public class LocalizedStringConceptMapper implements ConceptQueryMapper {
     final String localeAsText = locale.toString();
     final Object o = settings.getLocalizedString( localeAsText );
     if ( o == null ) {
-      logger.warn( "Unable to translate localized-string property for locale [" + locale + "]. " +
-        "The localization does not contain a translation for this locale and does not provide a fallback." );
+      logger.warn( "Unable to translate localized-string property for locale [" + locale + "]. "
+        + "The localization does not contain a translation for this locale and does not provide a fallback." );
     }
     return o;
   }

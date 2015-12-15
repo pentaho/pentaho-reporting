@@ -95,4 +95,6 @@
   		<fileset dir="${basedir}/WebContent"/>
   	</war>
   </target>
+
+  <target name="integration-test"/>
 </project>

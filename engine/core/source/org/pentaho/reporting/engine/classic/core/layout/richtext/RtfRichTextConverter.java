@@ -67,7 +67,7 @@ public class RtfRichTextConverter implements RichTextConverter {
       }
 
       final Element element = process( doc.getDefaultRootElement() );
-      final Band band = RichTextConverterUtilities.convertToBand( StyleKey.getDefinedStyleKeys(), source, element );
+      final Band band = RichTextConverterUtilities.convertToBand( StyleKey.getDefinedStyleKeysList(), source, element );
       band.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "inline" );
       return band;
     } catch ( Exception e ) {

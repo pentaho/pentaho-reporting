@@ -25,9 +25,11 @@ import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputPro
 import org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.FastExportOutputFunction;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.helper.CSVOutputProcessorMetaData;
+import org.pentaho.reporting.libraries.base.config.Configuration;
 
 import java.io.OutputStream;
 
@@ -36,7 +38,12 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
     private OutputProcessorMetaData metaData;
 
     private CSVDataOutputProcessor() {
-      metaData = new CSVOutputProcessorMetaData( CSVOutputProcessorMetaData.PAGINATION_NONE );
+      metaData = new CSVOutputProcessorMetaData( CSVOutputProcessorMetaData.PAGINATION_NONE ) {
+        public void initialize( final Configuration configuration ) {
+          super.initialize( configuration );
+          addFeature( OutputProcessorFeature.FAST_EXPORT );
+        }
+      };
     }
 
     protected void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )

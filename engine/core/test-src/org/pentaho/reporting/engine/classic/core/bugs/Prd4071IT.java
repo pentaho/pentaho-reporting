@@ -67,7 +67,7 @@ public class Prd4071IT extends TestCase {
     assertEquals( 71700000, logicalPageBox.getPageEnd() );
     final RenderNode[] elementsByElementType =
         MatchFactory.findElementsByElementType( logicalPageBox, ItemBandType.INSTANCE );
-    assertEquals( 23, elementsByElementType.length );
+    assertEquals( 22, elementsByElementType.length );
     // The second page is not empty even though a break-marker box exists at the beginning.
     // This break-marker is ignored as its validity range is wrong for the page it is on.
     // If it were NOT ingnored, there would be no itembands on that page.
@@ -90,7 +90,7 @@ public class Prd4071IT extends TestCase {
     assertEquals( 21, elementsByElementType.length ); // 21
     final RenderNode lastChild = elementsByElementType[20];
     // important part is that the y2 is less than the page-end
-    assertEquals( 68447100, lastChild.getY() + lastChild.getHeight() );
+    assertEquals( 69420900, lastChild.getY() + lastChild.getHeight() );
 
   }
 
@@ -107,10 +107,10 @@ public class Prd4071IT extends TestCase {
     assertEquals( 71700000, logicalPageBox.getPageEnd() );
     final RenderNode[] elementsByElementType =
         MatchFactory.findElementsByElementType( logicalPageBox, ItemBandType.INSTANCE );
-    assertEquals( 22, elementsByElementType.length ); // 22
-    final RenderNode lastChild = elementsByElementType[21];
+    assertEquals( 9, elementsByElementType.length ); // 22
+    final RenderNode lastChild = elementsByElementType[elementsByElementType.length - 1];
     // important part is that the y2 is less than the page-end
-    assertEquals( 68097100, lastChild.getY() + lastChild.getHeight() );
+    assertTrue( lastChild.getY() + lastChild.getHeight() < logicalPageBox.getPageEnd() );
   }
 
 }

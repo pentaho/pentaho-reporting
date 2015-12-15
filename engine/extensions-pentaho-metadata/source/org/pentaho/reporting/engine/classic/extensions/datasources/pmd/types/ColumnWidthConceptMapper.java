@@ -27,6 +27,8 @@ import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 
 public class ColumnWidthConceptMapper implements ConceptQueryMapper {
+  public static final ConceptQueryMapper INSTANCE = new ColumnWidthConceptMapper();
+
   public ColumnWidthConceptMapper() {
   }
 
@@ -67,8 +69,7 @@ public class ColumnWidthConceptMapper implements ConceptQueryMapper {
       final double resolution = data.getNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION );
       final double deviceScaleFactor = ( 72.0 / resolution );
       rawWidth = (float) ( widthValue * deviceScaleFactor );
-    } else // if (widthType == ColumnWidth.POINTS
-    {
+    } else {// if (widthType == ColumnWidth.POINTS
       rawWidth = Math.max( 0, widthValue );
     }
 

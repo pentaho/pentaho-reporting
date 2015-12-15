@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
 
 import org.pentaho.metadata.model.concept.IConcept;
+import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
@@ -44,42 +45,50 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class PentahoMetaDataAttributes implements DataAttributes {
-  private static final String[] NAMESPACES = new String[]
-    { PmdDataFactoryModule.META_DOMAIN };
+  private static final String[] NAMESPACES = new String[] { PmdDataFactoryModule.META_DOMAIN };
 
   private DataAttributes backend;
   private IConcept concept;
   private ArrayList<ConceptQueryMapper> conceptMappers;
   private LinkedHashMap<String, Object> properties;
+  private String columnName;
 
+  @Deprecated
   public PentahoMetaDataAttributes( final DataAttributes backend,
                                     final IConcept concept ) {
+    this(backend, concept, null);
+  }
+
+  public PentahoMetaDataAttributes( final DataAttributes backend,
+                                    final IConcept concept,
+                                    final String columnName ) {
     if ( concept == null ) {
       throw new NullPointerException();
     }
     if ( backend == null ) {
       throw new NullPointerException();
     }
+    this.columnName = columnName;
     this.concept = concept;
     this.properties = new LinkedHashMap<String, Object>( concept.getProperties() );
 
     this.backend = backend;
     this.conceptMappers = new ArrayList<ConceptQueryMapper>();
-    this.conceptMappers.add( new AggregationConceptMapper() );
-    this.conceptMappers.add( new AlignmentConceptMapper() );
-    this.conceptMappers.add( new BooleanConceptMapper() );
-    this.conceptMappers.add( new ColorConceptMapper() );
-    this.conceptMappers.add( new ColumnWidthConceptMapper() );
-    this.conceptMappers.add( new DataTypeConceptMapper() );
-    this.conceptMappers.add( new DateConceptMapper() );
-    this.conceptMappers.add( new FieldTypeConceptMapper() );
-    this.conceptMappers.add( new FontSettingsConceptMapper() );
-    this.conceptMappers.add( new NumberConceptMapper() );
-    this.conceptMappers.add( new LocalizedStringConceptMapper() );
-    this.conceptMappers.add( new TableTypeConceptMapper() );
-    this.conceptMappers.add( new URLConceptMapper() );
-    this.conceptMappers.add( new StringConceptMapper() );
-    this.conceptMappers.add( new SecurityConceptMapper() );
+    this.conceptMappers.add( AggregationConceptMapper.INSTANCE );
+    this.conceptMappers.add( AlignmentConceptMapper.INSTANCE );
+    this.conceptMappers.add( BooleanConceptMapper.INSTANCE );
+    this.conceptMappers.add( ColorConceptMapper.INSTANCE );
+    this.conceptMappers.add( ColumnWidthConceptMapper.INSTANCE );
+    this.conceptMappers.add( DataTypeConceptMapper.INSTANCE );
+    this.conceptMappers.add( DateConceptMapper.INSTANCE );
+    this.conceptMappers.add( FieldTypeConceptMapper.INSTANCE );
+    this.conceptMappers.add( FontSettingsConceptMapper.INSTANCE );
+    this.conceptMappers.add( NumberConceptMapper.INSTANCE );
+    this.conceptMappers.add( LocalizedStringConceptMapper.INSTANCE );
+    this.conceptMappers.add( TableTypeConceptMapper.INSTANCE );
+    this.conceptMappers.add( URLConceptMapper.INSTANCE );
+    this.conceptMappers.add( StringConceptMapper.INSTANCE );
+    this.conceptMappers.add( SecurityConceptMapper.INSTANCE );
   }
 
   public String[] getMetaAttributeDomains() {
@@ -124,7 +133,13 @@ public class PentahoMetaDataAttributes implements DataAttributes {
       // We cant solve the problem here, so all we can do is hope and pray.
       return convertFromPmd( value, type, defaultValue, context );
     }
-
+    if ( MetaAttributeNames.Core.NAMESPACE.equals( domain ) &&
+         MetaAttributeNames.Core.NAME.equals( name )) {
+      ConceptQueryMapper metaAttributeMapper = backend.getMetaAttributeMapper( domain, name );
+      if ( metaAttributeMapper != null ) {
+        return metaAttributeMapper.getValue( columnName, type, context );
+      }
+    }
     return backend.getMetaAttribute( domain, name, type, context, defaultValue );
   }
 

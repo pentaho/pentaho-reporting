@@ -96,6 +96,8 @@ ValueAt (22, 0) is in a typed column and is of type class java.lang.String
 ValueAt (22, 1) is in a typed column and is of type class java.lang.String
 ValueAt (22, 2) is in a typed column and is of type class java.lang.Integer
 ValueAt (22, 3) is in a typed column and is of type class java.lang.String
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=BC_EMPLOYEES_FIRSTNAME
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=EMPLOYEES
@@ -116,6 +118,8 @@ ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:security]=SecurityWrapper{ownerAclMap={{class=SecurityOwner, ownerType=ROLE, ownerName=Admin}=31}}
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column]=FIRSTNAME
 ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column_type]=COLUMN_NAME
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=BC_EMPLOYEES_LASTNAME
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=EMPLOYEES
@@ -136,6 +140,8 @@ ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:security]=SecurityWrapper{ownerAclMap={{class=SecurityOwner, ownerType=ROLE, ownerName=Admin}=31}}
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column]=LASTNAME
 ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column_type]=COLUMN_NAME
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=BC_EMPLOYEES_EMPLOYEENUMBER
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.Integer
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=EMPLOYEES
@@ -156,6 +162,8 @@ ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:security]=SecurityWrapper{ownerAclMap={{class=SecurityOwner, ownerType=ROLE, ownerName=Admin}=31}}
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column]=EMPLOYEENUMBER
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column_type]=COLUMN_NAME
+ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:name]=BC_EMPLOYEES_EMAIL
+ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:value-type]=class java.lang.String
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:catalog]=PUBLIC
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:schema]=PUBLIC
 ColumnAttribute(3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/database:table]=EMPLOYEES

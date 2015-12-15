@@ -17,6 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.richtext;
 
+import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.EditorKit;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,24 +35,14 @@ import java.io.StringReader;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.SQLException;
-
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.EditorKit;
-
-import org.pentaho.reporting.engine.classic.core.Band;
-import org.pentaho.reporting.engine.classic.core.Element;
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+import java.util.List;
 
 public class RichTextConverterUtilities {
   private RichTextConverterUtilities() {
   }
 
-  public static Document parseDocument( final EditorKit editorKit, final Object value ) throws IOException,
-    BadLocationException {
+  public static Document parseDocument( final EditorKit editorKit, final Object value )
+    throws IOException, BadLocationException {
     if ( value instanceof Document ) {
       return (Document) value;
     }
@@ -128,24 +128,21 @@ public class RichTextConverterUtilities {
     return null;
   }
 
-  public static Band
-    convertToBand( final StyleKey[] definedStyleKeys, final ReportElement element, final Element child ) {
+  public static Band convertToBand( final List<StyleKey> definedStyleKeys,
+                                    final ReportElement element, final Element child ) {
     final Band b = new Band( element.getObjectID() );
     final ElementStyleSheet targetStyle = b.getStyle();
     final ElementStyleSheet sourceStyle = element.getStyle();
-    for ( int i = 0; i < definedStyleKeys.length; i++ ) {
-      // copy all, even the inherited styles, as we do not add the element/band to the real parent. All we do
-      // is virtual ..
-      final StyleKey key = definedStyleKeys[i];
+    for ( StyleKey key : definedStyleKeys ) {
       targetStyle.setStyleProperty( key, sourceStyle.getStyleProperty( key ) );
     }
 
     final String[] attrNs = element.getAttributeNamespaces();
     for ( int i = 0; i < attrNs.length; i++ ) {
-      final String attrNamespace = attrNs[i];
+      final String attrNamespace = attrNs[ i ];
       final String[] attrNames = element.getAttributeNames( attrNamespace );
       for ( int j = 0; j < attrNames.length; j++ ) {
-        final String attrName = attrNames[j];
+        final String attrName = attrNames[ j ];
         final Object attrValue = element.getAttribute( attrNamespace, attrName );
         b.setAttribute( attrNamespace, attrName, attrValue );
       }

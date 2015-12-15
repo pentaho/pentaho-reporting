@@ -26,14 +26,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 
 /**
- * An element style-sheet contains zero, one or many attributes that affect the appearance of report elements. For each
+ * An element style-sheet contains zero, one or many attributes that affect the appearance of report elements.  For each
  * attribute, there is a predefined key that can be used to access that attribute in the style sheet.
  * <p/>
  * Every report element has an associated style-sheet.
  * <p/>
- * A style-sheet maintains a list of parent style-sheets. If an attribute is not defined in a style-sheet, the code
+ * A style-sheet maintains a list of parent style-sheets.  If an attribute is not defined in a style-sheet, the code
  * refers to the parent style-sheets to see if the attribute is defined there.
  * <p/>
  * All StyleSheet entries are checked against the StyleKeyDefinition for validity.
@@ -47,7 +48,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   /**
    * The keys for the properties that have been explicitly set on the element.
    */
-  private StyleKey[] propertyKeys;
+  private List<StyleKey> propertyKeys;
 
   /**
    * The properties that have been explicitly set on the element.
@@ -66,7 +67,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
 
   private long modificationCount;
   private long changeTrackerHash;
-  private static final StyleKey[] EMPTY_KEYS = new StyleKey[0];
+  private static final StyleKey[] EMPTY_KEYS = new StyleKey[ 0 ];
 
   /**
    * Creates a new element style-sheet. The style-sheet initially contains no attributes, and has no parent
@@ -74,9 +75,9 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
    */
   public ElementStyleSheet() {
     this.styleChangeSupport = new StyleChangeSupport( this );
-    this.propertyKeys = StyleKey.getDefinedStyleKeys();
-    if ( propertyKeys[0] == null ) {
-      throw new IllegalStateException();
+    this.propertyKeys = StyleKey.getDefinedStyleKeysList();
+    if ( propertyKeys.isEmpty() || propertyKeys.get( 0 ) == null ) {
+      throw new IllegalStateException( "ReportingEngine has not been initialized properly." );
     }
   }
 
@@ -87,8 +88,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   /**
    * Returns true, if the given key is locally defined, false otherwise.
    *
-   * @param key
-   *          the key to test
+   * @param key the key to test
    * @return true, if the key is local, false otherwise.
    */
   public boolean isLocalKey( final StyleKey key ) {
@@ -99,53 +99,52 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     if ( source.length <= identifier ) {
       return false;
     }
-    return source[identifier] == SOURCE_DIRECT;
+    return source[ identifier ] == SOURCE_DIRECT;
   }
 
   private void pruneCachedEntries() {
     if ( source != null && properties != null ) {
       for ( int i = 0; i < source.length; i++ ) {
-        if ( source[i] == SOURCE_FROM_PARENT ) {
-          source[i] = SOURCE_UNDEFINED;
-          properties[i] = null;
+        if ( source[ i ] == SOURCE_FROM_PARENT ) {
+          source[ i ] = SOURCE_UNDEFINED;
+          properties[ i ] = null;
         }
       }
     }
   }
 
   public final Object[] toArray() {
-    final StyleKey[] keys = propertyKeys;
-    final Object[] data = new Object[keys.length];
+    final List<StyleKey> keys = propertyKeys;
+    final int size = keys.size();
+    final Object[] data = new Object[ size ];
     if ( source == null ) {
-      source = new byte[keys.length];
-      properties = new Object[keys.length];
+      source = new byte[ size ];
+      properties = new Object[ size ];
     }
 
-    for ( int i = 0; i < keys.length; i++ ) {
-      final StyleKey key = keys[i];
+    for ( int i = 0; i < size; i++ ) {
+      final StyleKey key = keys.get( i );
       if ( key == null ) {
         throw new NullPointerException();
       }
       final int identifier = key.identifier;
-      final byte sourceHint = source[identifier];
+      final byte sourceHint = source[ identifier ];
       if ( sourceHint == SOURCE_UNDEFINED ) {
-        data[identifier] = getStyleProperty( key );
+        data[ identifier ] = getStyleProperty( key );
       } else {
-        data[identifier] = properties[identifier];
+        data[ identifier ] = properties[ identifier ];
       }
     }
     return data;
   }
 
   /**
-   * Returns the value of a style. If the style is not found in this style-sheet, the code looks in the parent
-   * style-sheets. If the style is not found in any of the parent style-sheets, then the default value (possibly
+   * Returns the value of a style.  If the style is not found in this style-sheet, the code looks in the parent
+   * style-sheets.  If the style is not found in any of the parent style-sheets, then the default value (possibly
    * <code>null</code>) is returned.
    *
-   * @param key
-   *          the style key.
-   * @param defaultValue
-   *          the default value (<code>null</code> permitted).
+   * @param key          the style key.
+   * @param defaultValue the default value (<code>null</code> permitted).
    * @return the value.
    */
   public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
@@ -155,9 +154,9 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
         throw new IllegalStateException();
       }
 
-      final byte source = this.source[identifier];
+      final byte source = this.source[ identifier ];
       if ( source != SOURCE_UNDEFINED ) {
-        final Object value = properties[identifier];
+        final Object value = properties[ identifier ];
         if ( value == null ) {
           return defaultValue;
         }
@@ -172,30 +171,24 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   /**
    * Puts an object into the cache (if caching is enabled).
    *
-   * @param key
-   *          the stylekey for that object
-   * @param value
-   *          the object.
+   * @param key   the stylekey for that object
+   * @param value the object.
    */
   private void putInCache( final StyleKey key, final Object value, final byte sourceHint ) {
     ensurePropertiesReady();
 
     final int identifier = key.identifier;
-    properties[identifier] = value;
-    source[identifier] = sourceHint;
+    properties[ identifier ] = value;
+    source[ identifier ] = sourceHint;
   }
 
   /**
    * Sets a boolean style property.
    *
-   * @param key
-   *          the style key (<code>null</code> not permitted).
-   * @param value
-   *          the value.
-   * @throws NullPointerException
-   *           if the given key is null.
-   * @throws ClassCastException
-   *           if the value cannot be assigned with the given key.
+   * @param key   the style key (<code>null</code> not permitted).
+   * @param value the value.
+   * @throws NullPointerException if the given key is null.
+   * @throws ClassCastException   if the value cannot be assigned with the given key.
    */
   public void setBooleanStyleProperty( final StyleKey key, final boolean value ) {
     if ( value ) {
@@ -208,14 +201,10 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   /**
    * Sets a style property (or removes the style if the value is <code>null</code>).
    *
-   * @param key
-   *          the style key (<code>null</code> not permitted).
-   * @param value
-   *          the value.
-   * @throws NullPointerException
-   *           if the given key is null.
-   * @throws ClassCastException
-   *           if the value cannot be assigned with the given key.
+   * @param key   the style key (<code>null</code> not permitted).
+   * @param value the value.
+   * @throws NullPointerException if the given key is null.
+   * @throws ClassCastException   if the value cannot be assigned with the given key.
    */
   public void setStyleProperty( final StyleKey key, final Object value ) {
     if ( key == null ) {
@@ -225,26 +214,27 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     final int identifier = key.identifier;
     if ( value == null ) {
       if ( properties != null ) {
-        if ( properties[identifier] == null ) {
+        if ( properties[ identifier ] == null ) {
           return;
         }
 
         // invalidate the cache ..
         putInCache( key, null, SOURCE_UNDEFINED );
         updateChangeTracker( key, null );
-        properties[identifier] = null;
+        properties[ identifier ] = null;
         styleChangeSupport.fireStyleRemoved( key );
       }
       return;
     }
 
     if ( key.getValueType().isAssignableFrom( value.getClass() ) == false ) {
-      throw new ClassCastException( "Value for key " + key.getName() + " is not assignable: " + value.getClass()
-          + " is not assignable from " + key.getValueType() );
+      throw new ClassCastException( "Value for key " + key.getName()
+        + " is not assignable: " + value.getClass()
+        + " is not assignable from " + key.getValueType() );
     }
     ensurePropertiesReady();
 
-    if ( ObjectUtilities.equal( properties[identifier], value ) ) {
+    if ( ObjectUtilities.equal( properties[ identifier ], value ) ) {
       // no need to change anything ..
       return;
     }
@@ -258,9 +248,9 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
 
   private void ensurePropertiesReady() {
     if ( properties == null ) {
-      final int definedStyleKeyCount = propertyKeys.length;
-      properties = new Object[definedStyleKeyCount];
-      source = new byte[definedStyleKeyCount];
+      final int definedStyleKeyCount = propertyKeys.size();
+      properties = new Object[ definedStyleKeyCount ];
+      source = new byte[ definedStyleKeyCount ];
     }
   }
 
@@ -304,10 +294,10 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
       return ElementStyleSheet.EMPTY_KEYS;
     }
 
-    final StyleKey[] retval = propertyKeys.clone();
+    final StyleKey[] retval = propertyKeys.toArray( new StyleKey[ propertyKeys.size() ] );
     for ( int i = 0; i < source.length; i++ ) {
-      if ( source[i] != SOURCE_DIRECT ) {
-        retval[i] = null;
+      if ( source[ i ] != SOURCE_DIRECT ) {
+        retval[ i ] = null;
       }
     }
     return retval;
@@ -316,8 +306,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   /**
    * Adds a {@link StyleChangeListener}.
    *
-   * @param l
-   *          the listener.
+   * @param l the listener.
    */
   public void addListener( final StyleChangeListener l ) {
     styleChangeSupport.addListener( l );
@@ -326,8 +315,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   /**
    * Removes a {@link StyleChangeListener}.
    *
-   * @param l
-   *          the listener.
+   * @param l the listener.
    */
   public void removeListener( final StyleChangeListener l ) {
     styleChangeSupport.removeListener( l );
@@ -346,10 +334,8 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   /**
    * Helper method for serialization.
    *
-   * @param out
-   *          the output stream where to write the object.
-   * @throws IOException
-   *           if errors occur while writing the stream.
+   * @param out the output stream where to write the object.
+   * @throws IOException if errors occur while writing the stream.
    */
   private void writeObject( final ObjectOutputStream out ) throws IOException {
     out.defaultWriteObject();
@@ -359,7 +345,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
       final int size = properties.length;
       out.writeInt( size );
       for ( int i = 0; i < size; i++ ) {
-        final Object value = properties[i];
+        final Object value = properties[ i ];
         SerializerHelper.getInstance().writeObject( value, out );
       }
     }
@@ -368,18 +354,15 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   /**
    * Helper method for serialization.
    *
-   * @param in
-   *          the input stream from where to read the serialized object.
-   * @throws IOException
-   *           when reading the stream fails.
-   * @throws ClassNotFoundException
-   *           if a class definition for a serialized object could not be found.
+   * @param in the input stream from where to read the serialized object.
+   * @throws IOException            when reading the stream fails.
+   * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
    */
   private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     final int size = in.readInt();
 
-    propertyKeys = StyleKey.getDefinedStyleKeys();
+    propertyKeys = StyleKey.getDefinedStyleKeysList();
     styleChangeSupport = new StyleChangeSupport( this );
 
     if ( size == 0 ) {
@@ -387,25 +370,26 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
       return;
     }
 
-    if ( size != propertyKeys.length ) {
-      throw new IOException( "Encountered a different style-system configuration. This report cannot be deserialized." );
+    if ( size != propertyKeys.size() ) {
+      throw new IOException(
+        "Encountered a different style-system configuration. This report cannot be deserialized." );
     }
-    if ( propertyKeys[0] == null ) {
+    if ( propertyKeys.get( 0 ) == null ) {
       throw new IllegalStateException();
     }
-    properties = new Object[size];
+    properties = new Object[ size ];
 
-    final Object[] values = new Object[size];
+    final Object[] values = new Object[ size ];
     final SerializerHelper serHelper = SerializerHelper.getInstance();
     for ( int i = 0; i < size; i++ ) {
-      values[i] = serHelper.readObject( in );
+      values[ i ] = serHelper.readObject( in );
     }
 
     for ( int i = 0; i < size; i++ ) {
-      final StyleKey key = propertyKeys[i];
+      final StyleKey key = propertyKeys.get( i );
       if ( key != null ) {
         final int identifier = key.identifier;
-        properties[identifier] = values[i];
+        properties[ identifier ] = values[ i ];
       }
     }
   }
@@ -417,7 +401,11 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
    * @return the local copy of the style keys.
    */
   public StyleKey[] getPropertyKeys() {
-    return propertyKeys.clone();
+    return propertyKeys.toArray( new StyleKey[ propertyKeys.size() ] );
+  }
+
+  public List<StyleKey> getPropertyKeyList() {
+    return propertyKeys;
   }
 
   public void addAll( final ElementStyleSheet sourceStyleSheet ) {
@@ -428,10 +416,10 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     ensurePropertiesReady();
 
     for ( int i = 0; i < sourceStyleSheet.source.length; i++ ) {
-      final byte sourceFlag = sourceStyleSheet.source[i];
+      final byte sourceFlag = sourceStyleSheet.source[ i ];
       if ( sourceFlag == SOURCE_DIRECT ) {
-        properties[i] = sourceStyleSheet.properties[i];
-        source[i] = sourceFlag;
+        properties[ i ] = sourceStyleSheet.properties[ i ];
+        source[ i ] = sourceFlag;
       }
     }
   }
@@ -443,13 +431,13 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     ensurePropertiesReady();
 
     for ( int i = 0; i < source.length; i++ ) {
-      if ( propertyKeys[i].isInheritable() == false ) {
+      if ( propertyKeys.get( i ).isInheritable() == false ) {
         continue;
       }
-      final byte sourceFlag = sourceStyleSheet.source[i];
+      final byte sourceFlag = sourceStyleSheet.source[ i ];
       if ( sourceFlag == SOURCE_DIRECT ) {
-        properties[i] = sourceStyleSheet.properties[i];
-        source[i] = SOURCE_FROM_PARENT;
+        properties[ i ] = sourceStyleSheet.properties[ i ];
+        source[ i ] = SOURCE_FROM_PARENT;
       }
     }
   }
@@ -458,12 +446,13 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     ensurePropertiesReady();
 
     for ( int i = 0; i < source.length; i++ ) {
-      if ( propertyKeys[i].isInheritable() == false ) {
+      StyleKey styleKey = propertyKeys.get( i );
+      if ( styleKey.isInheritable() == false ) {
         continue;
       }
 
-      properties[i] = sourceStyleSheet.getStyleProperty( propertyKeys[i], null );
-      source[i] = SOURCE_FROM_PARENT;
+      properties[ i ] = sourceStyleSheet.getStyleProperty( styleKey, null );
+      source[ i ] = SOURCE_FROM_PARENT;
     }
   }
 
@@ -474,10 +463,10 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     ensurePropertiesReady();
 
     for ( int i = 0; i < source.length; i++ ) {
-      final byte sourceFlag = sourceStyleSheet.source[i];
-      if ( sourceFlag == SOURCE_DIRECT && source[i] == SOURCE_UNDEFINED ) {
-        properties[i] = sourceStyleSheet.properties[i];
-        source[i] = sourceFlag;
+      final byte sourceFlag = sourceStyleSheet.source[ i ];
+      if ( sourceFlag == SOURCE_DIRECT && source[ i ] == SOURCE_UNDEFINED ) {
+        properties[ i ] = sourceStyleSheet.properties[ i ];
+        source[ i ] = sourceFlag;
       }
     }
   }
@@ -513,7 +502,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   public void copyFrom( final ElementStyleSheet style ) {
     this.changeTrackerHash = style.changeTrackerHash;
     this.modificationCount = style.modificationCount;
-    this.propertyKeys = style.propertyKeys.clone();
+    this.propertyKeys = style.propertyKeys;
     if ( style.source != null ) {
       this.source = style.source.clone();
     } else if ( this.source != null ) {
