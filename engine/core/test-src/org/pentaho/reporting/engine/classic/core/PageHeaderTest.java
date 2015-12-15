@@ -27,13 +27,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.PageHeaderType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
 public class PageHeaderTest {
 
   @BeforeClass
   public static void init() {
-    StyleKey.registerClass( BandStyleKeys.class );
+    ClassicEngineBoot.getInstance().start();
   }
 
   @Test
@@ -76,7 +75,7 @@ public class PageHeaderTest {
   @Test
   public void testGetSubReports() {
     PageHeader header = new PageHeader();
-    assertThat( header.getSubReports(), is( equalTo( new SubReport[] {} ) ) );
+    assertThat( header.getSubReports(), is( equalTo( new SubReport[]{ } ) ) );
   }
 
   @Test

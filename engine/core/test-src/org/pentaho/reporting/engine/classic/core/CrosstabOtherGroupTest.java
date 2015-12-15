@@ -33,14 +33,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabOtherGroupType;
 import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
 public class CrosstabOtherGroupTest {
 
   @BeforeClass
   public static void init() {
-    StyleKey.registerClass( ElementStyleKeys.class );
+    ClassicEngineBoot.getInstance().start();
   }
 
   @Test

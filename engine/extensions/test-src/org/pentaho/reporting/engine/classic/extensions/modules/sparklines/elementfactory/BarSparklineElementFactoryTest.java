@@ -37,9 +37,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.BarSparklineType;
@@ -52,7 +52,7 @@ public class BarSparklineElementFactoryTest {
 
   @BeforeClass
   public static void init() {
-    StyleKey.registerClass( ElementStyleKeys.class );
+    ClassicEngineBoot.getInstance().start();
   }
 
   @Before

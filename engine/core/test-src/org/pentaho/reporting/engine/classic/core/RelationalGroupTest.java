@@ -35,8 +35,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.RelationalGroupType;
 import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
 public class RelationalGroupTest {
 
@@ -44,7 +42,7 @@ public class RelationalGroupTest {
 
   @BeforeClass
   public static void init() {
-    StyleKey.registerClass( ElementStyleKeys.class );
+    ClassicEngineBoot.getInstance().start();
   }
 
   @Before
@@ -115,7 +113,7 @@ public class RelationalGroupTest {
     group.setFields( fields );
     group.clearFields();
     assertThat( (String[]) group.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS ),
-        is( equalTo( new String[] {} ) ) );
+        is( equalTo( new String[] { } ) ) );
   }
 
   @Test
@@ -178,11 +176,11 @@ public class RelationalGroupTest {
     group.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, "str" );
     assertThat( group.isGroupChange( dataRow ), is( equalTo( false ) ) );
 
-    group.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, new String[] {} );
+    group.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, new String[] { } );
     assertThat( group.isGroupChange( dataRow ), is( equalTo( false ) ) );
 
     group.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, new String[] { "field_0",
-      null, "field_1" } );
+        null, "field_1" } );
     doReturn( false ).when( dataRow ).isChanged( "field_0" );
     doReturn( true ).when( dataRow ).isChanged( "field_1" );
     assertThat( group.isGroupChange( dataRow ), is( equalTo( true ) ) );

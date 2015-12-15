@@ -29,14 +29,12 @@ import static org.mockito.Mockito.mock;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabOtherGroupBodyType;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
 public class CrosstabOtherGroupBodyTest {
 
   @BeforeClass
   public static void init() {
-    StyleKey.registerClass( ElementStyleKeys.class );
+    ClassicEngineBoot.getInstance().start();
   }
 
   @Test

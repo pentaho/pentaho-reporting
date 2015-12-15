@@ -30,10 +30,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupDataBodyType;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 
 public class GroupDataBodyTest {
 
@@ -41,9 +37,7 @@ public class GroupDataBodyTest {
 
   @BeforeClass
   public static void init() {
-    StyleKey.registerClass( ElementStyleKeys.class );
-    StyleKey.registerClass( BandStyleKeys.class );
-    StyleKey.registerClass( TextStyleKeys.class );
+    ClassicEngineBoot.getInstance().start();
   }
 
   @Before
