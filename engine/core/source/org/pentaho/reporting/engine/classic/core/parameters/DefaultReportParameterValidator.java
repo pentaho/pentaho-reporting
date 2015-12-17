@@ -146,6 +146,11 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
     if ( untrustedValue == null ) {
       // compute the default value
       defaultValue = parameterDefinitionEntry.getDefaultValue( trustedParameterContext );
+      if ( parameterDefinitionEntry instanceof ListParameter == true ) {
+        if ( ( (ListParameter) parameterDefinitionEntry ).isAllowMultiSelection() && defaultValue instanceof String ) {
+          defaultValue = computeValidArrayValue( defaultValue );
+        }
+      }
       untrustedValue = defaultValue;
     }
 
@@ -291,6 +296,12 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
       }
     }
     return null;
+  }
+
+  private Object computeValidArrayValue( final Object defaultValue ) {
+    String s = (String) defaultValue;
+    String[] result = s.split( "," );
+    return result;
   }
 
   private boolean isValueMissingForMandatoryParameterCheck( final ParameterDefinitionEntry entry,
