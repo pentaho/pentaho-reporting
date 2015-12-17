@@ -66,4 +66,30 @@ public class DefaultReportParameterValidatorTest extends TestCase {
     assertTrue( result.isEmpty() );
 
   }
+
+  public void testSelectArrayDefault() throws ReportProcessingException
+  {
+    final DefaultTableModel tableModel = new DefaultTableModel(new String[]{"key", "value"}, 1);
+    tableModel.setValueAt("key-entry", 0, 0);
+    tableModel.setValueAt("value-entry", 0, 1);
+
+    final DefaultListParameter listParameter =
+        new DefaultListParameter("test", "key", "value", "name", true, true, String.class);
+    listParameter.setParameterAutoSelectFirstValue(true);
+    listParameter.setMandatory(true);
+    listParameter.setDefaultValue("test");
+
+    final DefaultParameterDefinition definition = new DefaultParameterDefinition();
+    definition.addParameterDefinition(listParameter);
+
+    final MasterReport report = new MasterReport();
+    report.setParameterDefinition(definition);
+    report.setDataFactory(new TableDataFactory("test", tableModel));
+
+    final DefaultParameterContext paramContext = new DefaultParameterContext(report);
+
+    final DefaultReportParameterValidator validator = new DefaultReportParameterValidator();
+    final ValidationResult result = validator.validate(new ValidationResult(), definition, paramContext);
+    assertFalse( "name => This prompt value is not an array.".equals(result.toMessageList()[0])) ;
+  }
 }
