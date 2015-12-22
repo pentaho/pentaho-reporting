@@ -48,7 +48,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
-import java.awt.*;
+import java.awt.Font;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
@@ -472,8 +472,8 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
           new SimpleDateFormat( categoricalLabelDateFormat, getRuntime().getResourceBundleFactory().getLocale() ) );
       } else {
         final DecimalFormat formatter = new DecimalFormat();
-        formatter.setDecimalFormatSymbols
-          ( new DecimalFormatSymbols( getRuntime().getResourceBundleFactory().getLocale() ) );
+        formatter.setDecimalFormatSymbols(
+            new DecimalFormatSymbols( getRuntime().getResourceBundleFactory().getLocale() ) );
         scilg = new StandardCategoryItemLabelGenerator( categoricalLabelFormat, formatter );
       }
       renderer.setBaseItemLabelGenerator( scilg );
@@ -486,26 +486,26 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     if ( categoricalItemLabelRotation != null ) {
       final ItemLabelPosition orgPosItemLabelPos = renderer.getBasePositiveItemLabelPosition();
       if ( orgPosItemLabelPos == null ) {
-        final ItemLabelPosition pos2 = new ItemLabelPosition
-          ( ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER,
+        final ItemLabelPosition pos2 = new ItemLabelPosition(
+            ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER,
             TextAnchor.CENTER, categoricalItemLabelRotation.doubleValue() );
         renderer.setBasePositiveItemLabelPosition( pos2 );
       } else {
-        final ItemLabelPosition pos2 = new ItemLabelPosition
-          ( orgPosItemLabelPos.getItemLabelAnchor(), orgPosItemLabelPos.getTextAnchor(),
+        final ItemLabelPosition pos2 = new ItemLabelPosition(
+            orgPosItemLabelPos.getItemLabelAnchor(), orgPosItemLabelPos.getTextAnchor(),
             orgPosItemLabelPos.getRotationAnchor(), categoricalItemLabelRotation.doubleValue() );
         renderer.setBasePositiveItemLabelPosition( pos2 );
       }
 
       final ItemLabelPosition orgNegItemLabelPos = renderer.getBaseNegativeItemLabelPosition();
       if ( orgNegItemLabelPos == null ) {
-        final ItemLabelPosition pos2 = new ItemLabelPosition
-          ( ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER,
+        final ItemLabelPosition pos2 = new ItemLabelPosition(
+            ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER,
             TextAnchor.CENTER, categoricalItemLabelRotation.doubleValue() );
         renderer.setBaseNegativeItemLabelPosition( pos2 );
       } else {
-        final ItemLabelPosition neg2 = new ItemLabelPosition
-          ( orgNegItemLabelPos.getItemLabelAnchor(), orgNegItemLabelPos.getTextAnchor(),
+        final ItemLabelPosition neg2 = new ItemLabelPosition(
+            orgNegItemLabelPos.getItemLabelAnchor(), orgNegItemLabelPos.getTextAnchor(),
             orgNegItemLabelPos.getRotationAnchor(), categoricalItemLabelRotation.doubleValue() );
         renderer.setBaseNegativeItemLabelPosition( neg2 );
       }
@@ -529,8 +529,8 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     }
     cpl.setDomainGridlinesVisible( showGridlines );
     if ( labelRotation != null ) {
-      categoryAxis.setCategoryLabelPositions
-        ( CategoryLabelPositions.createUpRotationLabelPositions( labelRotation.doubleValue() ) );
+      categoryAxis.setCategoryLabelPositions(
+          CategoryLabelPositions.createUpRotationLabelPositions( labelRotation.doubleValue() ) );
     }
 
     final String[] colors = getSeriesColor();
@@ -563,8 +563,8 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
         if ( getRangeTickFormat() != null ) {
           numberAxis.setTickUnit( new NumberTickUnit( getRangePeriodCount(), getRangeTickFormat() ) );
         } else if ( getRangeTickFormatString() != null ) {
-          final FastDecimalFormat formatter = new FastDecimalFormat
-            ( getRangeTickFormatString(), getResourceBundleFactory().getLocale() );
+          final FastDecimalFormat formatter = new FastDecimalFormat(
+              getRangeTickFormatString(), getResourceBundleFactory().getLocale() );
           numberAxis.setTickUnit( new FastNumberTickUnit( getRangePeriodCount(), formatter ) );
         } else {
           numberAxis.setTickUnit( new FastNumberTickUnit( getRangePeriodCount() ) );
@@ -573,8 +573,8 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
         if ( getRangeTickFormat() != null ) {
           numberAxis.setNumberFormatOverride( getRangeTickFormat() );
         } else if ( getRangeTickFormatString() != null ) {
-          final DecimalFormat formatter = new DecimalFormat
-            ( getRangeTickFormatString(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          final DecimalFormat formatter = new DecimalFormat(
+              getRangeTickFormatString(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
           numberAxis.setNumberFormatOverride( formatter );
         }
       }
@@ -583,17 +583,17 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
 
       if ( getRangePeriodCount() > 0 && getRangeTimePeriod() != null ) {
         if ( getRangeTickFormatString() != null ) {
-          final SimpleDateFormat formatter = new SimpleDateFormat
-            ( getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
-          numberAxis.setTickUnit
-            ( new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount(), formatter ) );
+          final SimpleDateFormat formatter = new SimpleDateFormat(
+              getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          numberAxis.setTickUnit(
+              new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount(), formatter ) );
         } else {
-          numberAxis.setTickUnit
-            ( new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount() ) );
+          numberAxis.setTickUnit(
+              new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount() ) );
         }
       } else if ( getRangeTickFormatString() != null ) {
-        final SimpleDateFormat formatter = new SimpleDateFormat
-          ( getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
+        final SimpleDateFormat formatter = new SimpleDateFormat(
+            getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
         numberAxis.setDateFormatOverride( formatter );
       }
 

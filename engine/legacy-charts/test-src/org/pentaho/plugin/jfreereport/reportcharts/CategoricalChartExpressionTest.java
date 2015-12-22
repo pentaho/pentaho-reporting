@@ -17,18 +17,17 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
+import java.awt.Font;
+
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CategoryPlot;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
-
-import java.awt.*;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Andrey Khayrutdinov
@@ -58,9 +57,9 @@ public class CategoricalChartExpressionTest {
 
     expression.configureRangeAxis( createCategoryPlotWith( axis ), createFont() );
 
-    assertTrue( axis.getLowerBound() < lower );
-    assertTrue( axis.getLowerBound() > 0 );
-    assertTrue( axis.getUpperBound() > upper );
+    Assert.assertTrue( axis.getLowerBound() < lower );
+    Assert.assertTrue( axis.getLowerBound() > 0 );
+    Assert.assertTrue( axis.getUpperBound() > upper );
   }
 
   @Test
@@ -72,9 +71,9 @@ public class CategoricalChartExpressionTest {
 
     expression.configureRangeAxis( createCategoryPlotWith( axis ), createFont() );
 
-    assertTrue( axis.getLowerBound() < lower );
-    assertTrue( axis.getUpperBound() > upper );
-    assertTrue( axis.getUpperBound() < 0 );
+    Assert.assertTrue( axis.getLowerBound() < lower );
+    Assert.assertTrue( axis.getUpperBound() > upper );
+    Assert.assertTrue( axis.getUpperBound() < 0 );
   }
 
   @Test
@@ -86,8 +85,8 @@ public class CategoricalChartExpressionTest {
 
     expression.configureRangeAxis( createCategoryPlotWith( axis ), createFont() );
 
-    assertTrue( axis.getLowerBound() < lower );
-    assertTrue( axis.getUpperBound() > upper );
+    Assert.assertTrue( axis.getLowerBound() < lower );
+    Assert.assertTrue( axis.getUpperBound() > upper );
   }
 
 
