@@ -12,14 +12,16 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPosition;
 import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.CategoryLabelWidthType;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.LogarithmicAxis;
@@ -40,6 +42,8 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.Year;
+import org.jfree.text.TextBlockAnchor;
+import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.TextAnchor;
 import org.pentaho.plugin.jfreereport.reportcharts.backport.FastNumberTickUnit;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -48,7 +52,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
-import java.awt.*;
+import java.awt.Font;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
@@ -100,6 +104,97 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
   private Double lowerMargin;
   private Double upperMargin;
   private Double categoryMargin;
+
+  /**
+   * Local utility enum.
+   * Used to calculate ahchors.
+   *
+   */
+  static enum PlaneDirection {
+    RIGHT, TOP_RIGHT, TOP, TOP_LEFT, LEFT, BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT;
+    private static final int COUNT = values().length;
+
+    public static PlaneDirection byUnlimitedIndex( int unlimitedIndex ) {
+      return values()[( unlimitedIndex % COUNT + COUNT ) % COUNT];
+    }
+
+    public PlaneDirection opposite() {
+      return byUnlimitedIndex( this.ordinal() + COUNT / 2 );
+    }
+
+    public RectangleAnchor asRectangleAnchor() {
+      switch ( this ) {
+        case RIGHT:
+          return RectangleAnchor.RIGHT;
+        case TOP_RIGHT:
+          return RectangleAnchor.TOP_RIGHT;
+        case TOP:
+          return RectangleAnchor.TOP;
+        case TOP_LEFT:
+          return RectangleAnchor.TOP_LEFT;
+        case LEFT:
+          return RectangleAnchor.LEFT;
+        case BOTTOM_LEFT:
+          return RectangleAnchor.BOTTOM_LEFT;
+        case BOTTOM:
+          return RectangleAnchor.BOTTOM;
+        case BOTTOM_RIGHT:
+          return RectangleAnchor.BOTTOM_RIGHT;
+        default:
+          return null;
+      }
+    }
+
+    public TextBlockAnchor asTextBlockAnchor() {
+      switch ( this ) {
+        case RIGHT:
+          return TextBlockAnchor.CENTER_RIGHT;
+        case TOP_RIGHT:
+          return TextBlockAnchor.TOP_RIGHT;
+        case TOP:
+          return TextBlockAnchor.TOP_CENTER;
+        case TOP_LEFT:
+          return TextBlockAnchor.TOP_LEFT;
+        case LEFT:
+          return TextBlockAnchor.CENTER_LEFT;
+        case BOTTOM_LEFT:
+          return TextBlockAnchor.BOTTOM_LEFT;
+        case BOTTOM:
+          return TextBlockAnchor.BOTTOM_CENTER;
+        case BOTTOM_RIGHT:
+          return TextBlockAnchor.BOTTOM_RIGHT;
+        default:
+          return null;
+      }
+    }
+
+    public TextAnchor asTextAnchor() {
+      switch ( this ) {
+        case RIGHT:
+          return TextAnchor.CENTER_RIGHT;
+        case TOP_RIGHT:
+          return TextAnchor.TOP_RIGHT;
+        case TOP:
+          return TextAnchor.TOP_CENTER;
+        case TOP_LEFT:
+          return TextAnchor.TOP_LEFT;
+        case LEFT:
+          return TextAnchor.CENTER_LEFT;
+        case BOTTOM_LEFT:
+          return TextAnchor.BOTTOM_LEFT;
+        case BOTTOM:
+          return TextAnchor.BOTTOM_CENTER;
+        case BOTTOM_RIGHT:
+          return TextAnchor.BOTTOM_RIGHT;
+        default:
+          return null;
+      }
+    }
+
+    public double asAngle() {
+      return this.ordinal() * 0.25 * Math.PI;
+    }
+  }
 
   protected CategoricalChartExpression() {
     categoricalAxisMessageFormat = "{0}";
@@ -472,8 +567,8 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
           new SimpleDateFormat( categoricalLabelDateFormat, getRuntime().getResourceBundleFactory().getLocale() ) );
       } else {
         final DecimalFormat formatter = new DecimalFormat();
-        formatter.setDecimalFormatSymbols
-          ( new DecimalFormatSymbols( getRuntime().getResourceBundleFactory().getLocale() ) );
+        formatter.setDecimalFormatSymbols(
+            new DecimalFormatSymbols( getRuntime().getResourceBundleFactory().getLocale() ) );
         scilg = new StandardCategoryItemLabelGenerator( categoricalLabelFormat, formatter );
       }
       renderer.setBaseItemLabelGenerator( scilg );
@@ -486,26 +581,26 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     if ( categoricalItemLabelRotation != null ) {
       final ItemLabelPosition orgPosItemLabelPos = renderer.getBasePositiveItemLabelPosition();
       if ( orgPosItemLabelPos == null ) {
-        final ItemLabelPosition pos2 = new ItemLabelPosition
-          ( ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER,
+        final ItemLabelPosition pos2 = new ItemLabelPosition(
+            ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER,
             TextAnchor.CENTER, categoricalItemLabelRotation.doubleValue() );
         renderer.setBasePositiveItemLabelPosition( pos2 );
       } else {
-        final ItemLabelPosition pos2 = new ItemLabelPosition
-          ( orgPosItemLabelPos.getItemLabelAnchor(), orgPosItemLabelPos.getTextAnchor(),
+        final ItemLabelPosition pos2 = new ItemLabelPosition(
+            orgPosItemLabelPos.getItemLabelAnchor(), orgPosItemLabelPos.getTextAnchor(),
             orgPosItemLabelPos.getRotationAnchor(), categoricalItemLabelRotation.doubleValue() );
         renderer.setBasePositiveItemLabelPosition( pos2 );
       }
 
       final ItemLabelPosition orgNegItemLabelPos = renderer.getBaseNegativeItemLabelPosition();
       if ( orgNegItemLabelPos == null ) {
-        final ItemLabelPosition pos2 = new ItemLabelPosition
-          ( ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER,
+        final ItemLabelPosition pos2 = new ItemLabelPosition(
+            ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER,
             TextAnchor.CENTER, categoricalItemLabelRotation.doubleValue() );
         renderer.setBaseNegativeItemLabelPosition( pos2 );
       } else {
-        final ItemLabelPosition neg2 = new ItemLabelPosition
-          ( orgNegItemLabelPos.getItemLabelAnchor(), orgNegItemLabelPos.getTextAnchor(),
+        final ItemLabelPosition neg2 = new ItemLabelPosition(
+            orgNegItemLabelPos.getItemLabelAnchor(), orgNegItemLabelPos.getTextAnchor(),
             orgNegItemLabelPos.getRotationAnchor(), categoricalItemLabelRotation.doubleValue() );
         renderer.setBaseNegativeItemLabelPosition( neg2 );
       }
@@ -529,8 +624,13 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     }
     cpl.setDomainGridlinesVisible( showGridlines );
     if ( labelRotation != null ) {
-      categoryAxis.setCategoryLabelPositions
-        ( CategoryLabelPositions.createUpRotationLabelPositions( labelRotation.doubleValue() ) );
+      double angle = labelRotation.doubleValue();
+      CategoryLabelPosition top = createUpRotationCategoryLabelPosition( PlaneDirection.TOP, angle );
+      CategoryLabelPosition bottom = createUpRotationCategoryLabelPosition( PlaneDirection.BOTTOM, angle );
+      CategoryLabelPosition left = createUpRotationCategoryLabelPosition( PlaneDirection.LEFT, angle );
+      CategoryLabelPosition right = createUpRotationCategoryLabelPosition( PlaneDirection.RIGHT, angle );
+      CategoryLabelPositions rotationLabelPositions = new CategoryLabelPositions( top, bottom, left, right );
+      categoryAxis.setCategoryLabelPositions( rotationLabelPositions );
     }
 
     final String[] colors = getSeriesColor();
@@ -563,8 +663,8 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
         if ( getRangeTickFormat() != null ) {
           numberAxis.setTickUnit( new NumberTickUnit( getRangePeriodCount(), getRangeTickFormat() ) );
         } else if ( getRangeTickFormatString() != null ) {
-          final FastDecimalFormat formatter = new FastDecimalFormat
-            ( getRangeTickFormatString(), getResourceBundleFactory().getLocale() );
+          final FastDecimalFormat formatter = new FastDecimalFormat(
+              getRangeTickFormatString(), getResourceBundleFactory().getLocale() );
           numberAxis.setTickUnit( new FastNumberTickUnit( getRangePeriodCount(), formatter ) );
         } else {
           numberAxis.setTickUnit( new FastNumberTickUnit( getRangePeriodCount() ) );
@@ -573,8 +673,8 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
         if ( getRangeTickFormat() != null ) {
           numberAxis.setNumberFormatOverride( getRangeTickFormat() );
         } else if ( getRangeTickFormatString() != null ) {
-          final DecimalFormat formatter = new DecimalFormat
-            ( getRangeTickFormatString(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          final DecimalFormat formatter = new DecimalFormat(
+              getRangeTickFormatString(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
           numberAxis.setNumberFormatOverride( formatter );
         }
       }
@@ -583,17 +683,17 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
 
       if ( getRangePeriodCount() > 0 && getRangeTimePeriod() != null ) {
         if ( getRangeTickFormatString() != null ) {
-          final SimpleDateFormat formatter = new SimpleDateFormat
-            ( getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
-          numberAxis.setTickUnit
-            ( new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount(), formatter ) );
+          final SimpleDateFormat formatter = new SimpleDateFormat(
+              getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          numberAxis.setTickUnit(
+              new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount(), formatter ) );
         } else {
-          numberAxis.setTickUnit
-            ( new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount() ) );
+          numberAxis.setTickUnit(
+              new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount() ) );
         }
       } else if ( getRangeTickFormatString() != null ) {
-        final SimpleDateFormat formatter = new SimpleDateFormat
-          ( getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
+        final SimpleDateFormat formatter = new SimpleDateFormat(
+            getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
         numberAxis.setDateFormatOverride( formatter );
       }
 
@@ -731,4 +831,55 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
       setAutoRange( getRangeMinimum() == 0 && getRangeMaximum() == 1 );
     }
   }
+
+  /**
+   * Used instead of <code>org.jfree.chart.axis.CategoryLabelPosition.createUpRotationLabelPositions</code>.
+   * 
+   * It additionally takes into consideration the axis position.
+   * 
+   * @param axisPosition
+   * @param labelAngle
+   * @return
+   */
+  protected CategoryLabelPosition createUpRotationCategoryLabelPosition( PlaneDirection axisPosition, double labelAngle ) {
+    RectangleAnchor categoryAnchor = axisPosition.opposite().asRectangleAnchor();
+    double labelAnchorDirectionAngle = axisPosition.opposite().asAngle() - labelAngle;
+    PlaneDirection labelAnchorDirection = getTextAnchorDirectionOfAngle( labelAnchorDirectionAngle );
+    TextBlockAnchor labelAnchor = labelAnchorDirection.asTextBlockAnchor();
+    TextAnchor rotationAnchor = labelAnchorDirection.asTextAnchor();
+    return new CategoryLabelPosition( categoryAnchor, labelAnchor, rotationAnchor, -labelAngle,
+        CategoryLabelWidthType.RANGE, 0.50f );
+  }
+
+  /**
+   * Chooses a proper anchor for a text label at a chart axis tick.
+   * 
+   * E.g.
+   * 
+   * Axis position is LEFT, label rotation = 0. So angle = 0.
+   * 
+   * Axis position is BOTTOM, label rotation = 90. So angle = 0.
+   * 
+   * Axis position is BOTTOM, label rotation = 0. So angle = pi/2 (90 degrees).
+   * 
+   * @param angle
+   *          can be assumed as the label-relative direction to the axis.
+   * @return
+   */
+  protected PlaneDirection getTextAnchorDirectionOfAngle( double angle ) {
+    //Divide to 32 sectors (0..31). Counterclockwise from RIGHT.
+    int sectorIndex = ( (int) ( ( ( ( angle * 16 / Math.PI ) ) % 32 ) + 32 ) ) % 32;
+    switch ( sectorIndex ) {
+      case 5: case 6: return PlaneDirection.TOP_RIGHT;
+      case 7: case 8: return PlaneDirection.TOP;
+      case 9: case 10: return PlaneDirection.TOP_LEFT;
+      case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: return PlaneDirection.LEFT;
+      case 21: case 22: return PlaneDirection.BOTTOM_LEFT;
+      case 23: case 24: return PlaneDirection.BOTTOM;
+      case 25: case 26: return PlaneDirection.BOTTOM_RIGHT;
+      case 27: case 28: case 29: case 30: case 31: case 0: case 1: case 2: case 3: case 4: 
+      default: return PlaneDirection.RIGHT;
+    }
+  }
+
 }
