@@ -199,10 +199,10 @@ public final class OpenReportAction extends AbstractDesignerContextAction {
     final MasterReport reportDefinition = loadReport( selectedFile, resourceManager );
     try {
       reportDefinition.setAttribute
-        ( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", selectedFile.getCanonicalPath() ); // NON-NLS
+        ( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME, selectedFile.getCanonicalPath() ); // NON-NLS
     } catch ( IOException ioe ) {
       reportDefinition.setAttribute
-        ( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", selectedFile.getAbsolutePath() ); // NON-NLS
+        ( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME, selectedFile.getAbsolutePath() ); // NON-NLS
     }
 
     return reportDefinition;

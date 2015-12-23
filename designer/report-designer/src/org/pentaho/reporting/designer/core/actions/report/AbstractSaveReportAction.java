@@ -69,18 +69,21 @@ public abstract class AbstractSaveReportAction extends AbstractReportContextActi
     }
 
     // if no name has been set for the report, default to the name of the file
+    String attPath;
     try {
-      report.setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path",
-        target.getCanonicalPath() ); // NON-NLS
+      attPath = target.getCanonicalPath();
     } catch ( IOException ioe ) {
       // then let's not set the save path attribute to the *canonical path*
-      report
-        .setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", target.getAbsolutePath() ); // NON-NLS
+      attPath = target.getAbsolutePath();
     }
 
     // Write the report to the filename
     if ( SaveReportUtilities.saveReport( context, activeContext, target ) ) {
       try {
+        // change report save path only in case save success. see PRD-5567
+        report
+          .setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME, attPath );
+
         // Update the definition source to be the location from which the file is saved
         final ResourceManager resourceManager = report.getResourceManager();
         final Resource bundleResource = resourceManager.createDirectly( target, DocumentBundle.class );
