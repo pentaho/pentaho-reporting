@@ -18,7 +18,10 @@
 package org.pentaho.reporting.libraries.formula.util;
 
 import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import org.pentaho.reporting.libraries.formula.parser.ParseException;
 
 public class FormulaUtilTest {
   @Test
@@ -38,10 +41,21 @@ public class FormulaUtilTest {
       if ( strings[ 0 ] == null ) {
         Assert.assertFalse( "Failure in " + v, (Boolean) objects[ 1 ] );
       } else {
-        Assert.assertTrue( "Failure in " + v, (Boolean) objects[ 1 ] );
-        Assert.assertEquals( "Failure in " + v, strings[ 0 ], objects[ 2 ] );
-        Assert.assertEquals( "Failure in " + v, strings[ 1 ], objects[ 3 ] );
+        assertTrue( "Failure in " + v, (Boolean) objects[ 1 ] );
+        assertEquals( "Failure in " + v, strings[ 0 ], objects[ 2 ] );
+        assertEquals( "Failure in " + v, strings[ 1 ], objects[ 3 ] );
       }
     }
+  }
+
+  /**
+   * See PRD-5511 for details.
+   * @throws ParseException
+   */
+  @Test
+  public void getReferencesTest() throws ParseException {
+    String[] references = FormulaUtil.getReferences( "=CSVTEXT([parmTerritory];FALSE();\",\";\"'\")" );
+    assertTrue("References list is not empty", references.length > 0);
+    assertEquals("Fromula has one reference to paramTerritory", "parmTerritory", references[0]);
   }
 }
