@@ -102,7 +102,7 @@ public class ReportRenderContext implements ReportDocumentContext {
       }
 
       final String theSavePath =
-        (String) report.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path" );// NON-NLS
+        (String) report.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME );// NON-NLS
       if ( !StringUtils.isEmpty( theSavePath ) ) {
         final String fileName = IOUtils.getInstance().getFileName( theSavePath );
         return IOUtils.getInstance().stripFileExtension( fileName );
@@ -425,7 +425,7 @@ public class ReportRenderContext implements ReportDocumentContext {
   }
 
   public String getDocumentFile() {
-    return (String) masterReportElement.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path" );
+    return (String) masterReportElement.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME );
   }
 
   public void removePropertyChangeListener( final String propertyName, final PropertyChangeListener listener ) {
