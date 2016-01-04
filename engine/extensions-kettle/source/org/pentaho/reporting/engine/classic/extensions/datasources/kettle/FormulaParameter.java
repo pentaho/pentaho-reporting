@@ -59,9 +59,10 @@ public class FormulaParameter implements Serializable {
       FormulaParameter arg = args[ i ];
       try {
         String[] references = FormulaUtil.getReferences( arg.getFormula() );
-        if ( references.length > 0 ) {
-          textList.add( new ParameterMapping( references[ 0 ], arg.getName() ) );
-        }
+        // some functions can have no references at all like '=FALSE()'
+        // but it still be correct function.
+        textList.add( new ParameterMapping( references.length > 0 ? references[ 0 ] : "",
+                                            arg.getName() ) );
       } catch ( ParseException e ) {
         //
       }

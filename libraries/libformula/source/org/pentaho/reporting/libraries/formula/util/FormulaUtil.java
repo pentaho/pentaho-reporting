@@ -23,6 +23,7 @@ import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
 import org.pentaho.reporting.libraries.formula.Formula;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.lvalues.ContextLookup;
+import org.pentaho.reporting.libraries.formula.lvalues.FormulaFunction;
 import org.pentaho.reporting.libraries.formula.lvalues.LValue;
 import org.pentaho.reporting.libraries.formula.lvalues.StaticValue;
 import org.pentaho.reporting.libraries.formula.lvalues.Term;
@@ -115,6 +116,12 @@ public class FormulaUtil {
     } else if ( lval instanceof ContextLookup ) {
       final ContextLookup cl = (ContextLookup) lval;
       map.put( cl.getName(), Boolean.TRUE );
+    } else if ( lval instanceof FormulaFunction ){
+      FormulaFunction ff = FormulaFunction.class.cast(lval);
+      LValue[] lvals = ff.getChildValues();
+      for (int i = 0; i < lvals.length; i++) {
+        collectReferences( lvals[i], map );
+      }
     }
   }
 
