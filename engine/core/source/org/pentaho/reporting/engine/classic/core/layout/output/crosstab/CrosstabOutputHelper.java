@@ -57,6 +57,12 @@ public final class CrosstabOutputHelper {
       }
       node = node.getParent();
     }
+
+    return getTableSectionRenderBox( tableBox );
+  }
+
+  public static TableSectionRenderBox getTableSectionRenderBox( final RenderBox tableBox ) {
+
     if ( tableBox == null ) {
       return null;
     }
