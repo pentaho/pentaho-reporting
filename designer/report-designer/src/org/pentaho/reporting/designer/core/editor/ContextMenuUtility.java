@@ -69,8 +69,9 @@ public class ContextMenuUtility {
       return view.getPopupMenu( "popup-ReportDefinition" ); // NON-NLS
     }
     final ReportDesignerDocumentContext activeContext = context.getActiveContext();
+    ReportRenderContext doc = null;
     if ( activeContext instanceof ReportRenderContext ) {
-      ReportRenderContext doc = (ReportRenderContext) activeContext;
+      doc = (ReportRenderContext) activeContext;
       if ( selectedElement == doc.getReportDefinition() ) {
         if ( selectedElement instanceof CrosstabElement ) {
           return view.getPopupMenu( "popup-CrosstabElement" );// NON-NLS
@@ -92,10 +93,15 @@ public class ContextMenuUtility {
     }
     if ( selectedElement instanceof ReportQueryNode ) {
       final ReportQueryNode rqn = (ReportQueryNode) selectedElement;
+      JPopupMenu popupMenu;
       if ( rqn.isAllowEdit() ) {
-        return view.getPopupMenu( "popup-Query" );// NON-NLS
+        popupMenu = view.getPopupMenu( "popup-Query" );// NON-NLS
+      } else {
+        popupMenu = view.getPopupMenu( "popup-Inherited-Query" );// NON-NLS
       }
-      return view.getPopupMenu( "popup-Inherited-Query" );// NON-NLS
+      final MenuElement activationItem = popupMenu.getSubElements()[ 0 ];
+      toggleActivationItem( doc, rqn, activationItem );
+      return popupMenu;
     }
     if ( selectedElement instanceof Expression ) {
       return view.getPopupMenu( "popup-Expression" );// NON-NLS
@@ -225,5 +231,41 @@ public class ContextMenuUtility {
         insertDataSourcesMenu.add( new JMenuItem( action ) );
       }
     }
+  }
+
+  protected static void toggleActivationItem( final ReportRenderContext doc,
+                                              final ReportQueryNode rqn,
+                                              final MenuElement activationItem ) {
+    if( activationItem instanceof JMenuItem && doc != null ){
+      final DataFactory dataFactory = doc.getContextRoot().getDataFactory();
+      boolean disabled = false;
+      if( dataFactory instanceof CompoundDataFactory ) {
+        final CompoundDataFactory compound = (CompoundDataFactory) dataFactory;
+        int count = countQueriesWithName( rqn.getQueryName(), compound );
+        disabled = count > 1;
+      }
+      if( disabled) {
+        ( (JMenuItem) activationItem ).setEnabled( false );
+      } else {
+        ( (JMenuItem) activationItem ).setEnabled( true );
+      }
+    }
+  }
+
+  private static int countQueriesWithName( final String queryName, final CompoundDataFactory compound ) {
+    int count = 0;
+    if ( compound.size() > 1 ) {
+      for ( int i = 0; i < compound.size(); i++ ) {
+        final DataFactory innerFactory = compound.get( i );
+        final String[] queryNames = innerFactory.getQueryNames();
+        for ( int j = 0; j < queryNames.length; j++ ) {
+          if( ObjectUtilities.equal( queryName, queryNames[j] ) ){
+            count++;
+            break;
+          }
+        }
+      }
+    }
+    return count;
   }
 }
