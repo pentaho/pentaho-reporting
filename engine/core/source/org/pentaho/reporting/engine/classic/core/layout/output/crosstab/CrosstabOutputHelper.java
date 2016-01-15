@@ -57,10 +57,13 @@ public final class CrosstabOutputHelper {
       }
       node = node.getParent();
     }
+    return getTableSectionRenderBox( tableBox );
+  }
+
+  public static TableSectionRenderBox getTableSectionRenderBox( final RenderBox tableBox ) {
     if ( tableBox == null ) {
       return null;
     }
-
     final RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator( tableBox );
     while ( it.hasNext() ) {
       final RenderNode next = it.next();
@@ -71,7 +74,6 @@ public final class CrosstabOutputHelper {
         }
       }
     }
-
     return null;
   }
 
