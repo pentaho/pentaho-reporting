@@ -50,7 +50,11 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.MenuElement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -62,10 +66,8 @@ public class ContextMenuUtility {
 
   public static JPopupMenu getMenu( final ReportDesignerContext context, final Object selectedElement ) {
     ReportDesignerView view = context.getView();
-    if ( selectedElement == null
-      || selectedElement instanceof MasterReport )  // This check assumes that we've click on a report band see JIRA
+    if ( selectedElement == null || selectedElement instanceof MasterReport ) { // This check assumes that we've click on a report band see JIRA
       // PRD-1076
-    {
       return view.getPopupMenu( "popup-ReportDefinition" ); // NON-NLS
     }
     final ReportDesignerDocumentContext activeContext = context.getActiveContext();
@@ -74,84 +76,84 @@ public class ContextMenuUtility {
       doc = (ReportRenderContext) activeContext;
       if ( selectedElement == doc.getReportDefinition() ) {
         if ( selectedElement instanceof CrosstabElement ) {
-          return view.getPopupMenu( "popup-CrosstabElement" );// NON-NLS
+          return view.getPopupMenu( "popup-CrosstabElement" ); // NON-NLS
         }
-        return view.getPopupMenu( "popup-ReportDefinition" );// NON-NLS
+        return view.getPopupMenu( "popup-ReportDefinition" ); // NON-NLS
       }
     }
     if ( selectedElement instanceof SubReport ) {
-      return view.getPopupMenu( "popup-SubReport" );// NON-NLS
+      return view.getPopupMenu( "popup-SubReport" ); // NON-NLS
     }
     if ( selectedElement instanceof CompoundDataFactory ) {
       return createDataSourcePopup( context );
     }
     if ( selectedElement instanceof DataFactory ) {
-      return view.getPopupMenu( "popup-DataSource" );// NON-NLS
+      return view.getPopupMenu( "popup-DataSource" ); // NON-NLS
     }
     if ( selectedElement instanceof ReportFunctionNode ) {
-      return view.getPopupMenu( "popup-Expressions" );// NON-NLS
+      return view.getPopupMenu( "popup-Expressions" ); // NON-NLS
     }
     if ( selectedElement instanceof ReportQueryNode ) {
       final ReportQueryNode rqn = (ReportQueryNode) selectedElement;
       JPopupMenu popupMenu;
       if ( rqn.isAllowEdit() ) {
-        popupMenu = view.getPopupMenu( "popup-Query" );// NON-NLS
+        popupMenu = view.getPopupMenu( "popup-Query" ); // NON-NLS
       } else {
-        popupMenu = view.getPopupMenu( "popup-Inherited-Query" );// NON-NLS
+        popupMenu = view.getPopupMenu( "popup-Inherited-Query" ); // NON-NLS
       }
-      final MenuElement activationItem = popupMenu.getSubElements()[ 0 ];
+      final MenuElement activationItem = popupMenu.getSubElements()[0];
       toggleActivationItem( doc, rqn, activationItem );
       return popupMenu;
     }
     if ( selectedElement instanceof Expression ) {
-      return view.getPopupMenu( "popup-Expression" );// NON-NLS
+      return view.getPopupMenu( "popup-Expression" ); // NON-NLS
     }
     if ( selectedElement instanceof RootLevelBand ) {
-      return view.getPopupMenu( "popup-RootLevelBand" );// NON-NLS
+      return view.getPopupMenu( "popup-RootLevelBand" ); // NON-NLS
     }
     if ( selectedElement instanceof RelationalGroup ) {
-      return view.getPopupMenu( "popup-RelationalGroup" );// NON-NLS
+      return view.getPopupMenu( "popup-RelationalGroup" ); // NON-NLS
     }
     if ( selectedElement instanceof CrosstabGroup ) {
-      return view.getPopupMenu( "popup-CrosstabGroup" );// NON-NLS
+      return view.getPopupMenu( "popup-CrosstabGroup" ); // NON-NLS
     }
     if ( selectedElement instanceof CrosstabOtherGroup ) {
-      return view.getPopupMenu( "popup-CrosstabOtherGroup" );// NON-NLS
+      return view.getPopupMenu( "popup-CrosstabOtherGroup" ); // NON-NLS
     }
     if ( selectedElement instanceof CrosstabRowGroup ) {
-      return view.getPopupMenu( "popup-CrosstabRowGroup" );// NON-NLS
+      return view.getPopupMenu( "popup-CrosstabRowGroup" ); // NON-NLS
     }
     if ( selectedElement instanceof CrosstabColumnGroup ) {
-      return view.getPopupMenu( "popup-CrosstabColumnGroup" );// NON-NLS
+      return view.getPopupMenu( "popup-CrosstabColumnGroup" ); // NON-NLS
     }
     if ( selectedElement instanceof CrosstabCellBody ) {
-      return view.getPopupMenu( "popup-CrosstabCellBody" );// NON-NLS
+      return view.getPopupMenu( "popup-CrosstabCellBody" ); // NON-NLS
     }
     if ( selectedElement instanceof Group ) {
-      return view.getPopupMenu( "popup-Group" );// NON-NLS
+      return view.getPopupMenu( "popup-Group" ); // NON-NLS
     }
     if ( selectedElement instanceof Band ) {
-      return view.getPopupMenu( "popup-Band" );// NON-NLS
+      return view.getPopupMenu( "popup-Band" ); // NON-NLS
     }
     if ( selectedElement instanceof Element ) {
       final Element element = (Element) selectedElement;
-      final JPopupMenu popup = view.getPopupMenu( "popup-" + element.getElementTypeName() );// NON-NLS
+      final JPopupMenu popup = view.getPopupMenu( "popup-" + element.getElementTypeName() ); // NON-NLS
       if ( popup != null ) {
         return popup;
       }
-      return view.getPopupMenu( "popup-Element" );// NON-NLS
+      return view.getPopupMenu( "popup-Element" ); // NON-NLS
     }
     if ( selectedElement instanceof ReportParameterDefinition ) {
-      return view.getPopupMenu( "popup-Parameters" );// NON-NLS
+      return view.getPopupMenu( "popup-Parameters" ); // NON-NLS
     }
     if ( selectedElement instanceof ParameterDefinitionEntry ) {
-      return view.getPopupMenu( "popup-Parameter" );// NON-NLS
+      return view.getPopupMenu( "popup-Parameter" ); // NON-NLS
     }
     if ( selectedElement instanceof ReportParametersNode ) {
-      return view.getPopupMenu( "popup-Parameters" );// NON-NLS
+      return view.getPopupMenu( "popup-Parameters" ); // NON-NLS
     }
     if ( selectedElement instanceof SubReportParametersNode ) {
-      return view.getPopupMenu( "popup-SubReportParameters" );// NON-NLS
+      return view.getPopupMenu( "popup-SubReportParameters" ); // NON-NLS
     }
     return null;
   }
@@ -170,10 +172,10 @@ public class ContextMenuUtility {
                                            final JComponent insertDataSourcesMenu ) {
     JMenu subMenu = null;
 
-    final Map<String, Boolean> groupingMap = new HashMap<String, Boolean>();
+    final Map<String, Boolean> groupingMap = new HashMap<>();
     final DataFactoryMetaData[] datas = DataFactoryRegistry.getInstance().getAll();
     for ( int i = 0; i < datas.length; i++ ) {
-      final DataFactoryMetaData data = datas[ i ];
+      final DataFactoryMetaData data = datas[i];
       if ( data.isHidden() ) {
         continue;
       }
@@ -192,7 +194,7 @@ public class ContextMenuUtility {
     Object grouping = null;
     boolean firstElement = true;
     for ( int i = 0; i < datas.length; i++ ) {
-      final DataFactoryMetaData data = datas[ i ];
+      final DataFactoryMetaData data = datas[i];
       if ( data.isHidden() ) {
         continue;
       }
@@ -236,15 +238,15 @@ public class ContextMenuUtility {
   protected static void toggleActivationItem( final ReportRenderContext doc,
                                               final ReportQueryNode rqn,
                                               final MenuElement activationItem ) {
-    if( activationItem instanceof JMenuItem && doc != null ){
+    if ( activationItem instanceof JMenuItem && doc != null ) {
       final DataFactory dataFactory = doc.getContextRoot().getDataFactory();
       boolean disabled = false;
-      if( dataFactory instanceof CompoundDataFactory ) {
+      if ( dataFactory instanceof CompoundDataFactory ) {
         final CompoundDataFactory compound = (CompoundDataFactory) dataFactory;
         int count = countQueriesWithName( rqn.getQueryName(), compound );
         disabled = count > 1;
       }
-      if( disabled) {
+      if ( disabled ) {
         ( (JMenuItem) activationItem ).setEnabled( false );
       } else {
         ( (JMenuItem) activationItem ).setEnabled( true );
@@ -259,7 +261,7 @@ public class ContextMenuUtility {
         final DataFactory innerFactory = compound.get( i );
         final String[] queryNames = innerFactory.getQueryNames();
         for ( int j = 0; j < queryNames.length; j++ ) {
-          if( ObjectUtilities.equal( queryName, queryNames[j] ) ){
+          if ( ObjectUtilities.equal( queryName, queryNames[j] ) ) {
             count++;
             break;
           }

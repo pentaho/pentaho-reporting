@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.designer.core.editor;
 
+import javax.swing.JMenuItem;
+import javax.swing.table.DefaultTableModel;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,13 +28,6 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
-import java.io.File;
-
-import static org.junit.Assert.*;
 
 public class ContextMenuUtilityTest {
 
@@ -50,11 +46,11 @@ public class ContextMenuUtilityTest {
     compoundDataFactory.add( tableDataFactory );
     masterReport.setDataFactory( compoundDataFactory );
 
-    final ReportRenderContext doc = new ReportRenderContext( masterReport  );
-    final JMenuItem item= new JMenuItem(  );
+    final ReportRenderContext doc = new ReportRenderContext( masterReport );
+    final JMenuItem item = new JMenuItem();
     final ReportQueryNode reportQueryNode = new ReportQueryNode( compoundDataFactory, "default", true );
 
-    ContextMenuUtility.toggleActivationItem(doc, reportQueryNode, item  );
+    ContextMenuUtility.toggleActivationItem( doc, reportQueryNode, item );
 
     Assert.assertTrue( item.isEnabled() );
 
@@ -62,7 +58,7 @@ public class ContextMenuUtilityTest {
     tableDataFactory2.addTable( "default", new DefaultTableModel() );
     compoundDataFactory.add( tableDataFactory2 );
 
-    ContextMenuUtility.toggleActivationItem(doc, reportQueryNode, item  );
+    ContextMenuUtility.toggleActivationItem( doc, reportQueryNode, item );
 
     Assert.assertFalse( item.isEnabled() );
   }
