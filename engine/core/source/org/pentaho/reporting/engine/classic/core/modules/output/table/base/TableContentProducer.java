@@ -611,15 +611,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
           if ( debugReportLayout ) {
             logger.debug( "#Cleared row: " + clearRowNr + '.' );
           }
-          if ( verboseCellMarkers && filledRows < verboseCellMarkersThreshold ) {
-            for ( int column = 0; column < columnCount; column++ ) {
-              final Object o = contentBackend.getObject( clearRowNr, column );
-              final FinishedMarker finishedMarker = new FinishedMarker( String.valueOf( o ) );
-              contentBackend.setObject( clearRowNr, column, finishedMarker );
-            }
-          } else {
-            contentBackend.clearRow( clearRowNr );
-          }
+          doClear( columnCount, clearRowNr );
         }
         lastRowCleared = row;
       }
@@ -635,17 +627,21 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
         if ( debugReportLayout ) {
           logger.debug( "*Cleared row: " + clearRowNr + '.' );
         }
-        if ( verboseCellMarkers && filledRows < verboseCellMarkersThreshold ) {
-          for ( int column = 0; column < columnCount; column++ ) {
-            final Object o = contentBackend.getObject( clearRowNr, column );
-            final FinishedMarker finishedMarker = new FinishedMarker( String.valueOf( o ) );
-            contentBackend.setObject( clearRowNr, column, finishedMarker );
-          }
-        } else {
-          contentBackend.clearRow( clearRowNr );
-        }
+        doClear( columnCount, clearRowNr );
         clearedRows = clearRowNr;
       }
+    }
+  }
+
+  private void doClear( final int columnCount, final int clearRowNr ) {
+    if ( verboseCellMarkers && filledRows < verboseCellMarkersThreshold ) {
+      for ( int column = 0; column < columnCount; column++ ) {
+        final Object o = contentBackend.getObject( clearRowNr, column );
+        final FinishedMarker finishedMarker = new FinishedMarker( String.valueOf( o ) );
+        contentBackend.setObject( clearRowNr, column, finishedMarker );
+      }
+    } else {
+      contentBackend.clearRow( clearRowNr );
     }
   }
 
