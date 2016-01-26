@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
@@ -255,7 +255,8 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep {
       filledRows = getRowCount();
     }
 
-    logicalPage.setProcessedTableOffset( sheetLayout.getYPosition( filledRows ) );
+    //Set global table offset
+    logicalPage.setProcessedTableOffset( logicalPage.getPageOffset() + sheetLayout.getYPosition( filledRows ) );
 
     if ( iterativeUpdate == false ) {
       headerProcessed = false;
