@@ -371,4 +371,30 @@ public final class StyleKey implements Serializable, Cloneable {
     }
   }
 
+  @Deprecated // for tests only!
+  static synchronized StyleKey addTestKey(String name, Class valueType, boolean trans, boolean inheritable) {
+    boolean wasLocked = locked;
+    try {
+      locked = false;
+      return getStyleKey( name, valueType, trans, inheritable );
+    } finally {
+      locked = wasLocked;
+      definedKeysArray = null;
+      definedKeysList = null;
+    }
+  }
+
+  @Deprecated // for tests only!
+  static synchronized void removeTestKey( String name ) {
+    try {
+      if ( definedKeys != null ) {
+        definedKeys.remove( name );
+      }
+      definedKeySize = definedKeys.size();
+    } finally {
+      definedKeysArray = null;
+      definedKeysList = null;
+    }
+  }
+
 }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
@@ -57,10 +57,13 @@ public final class CrosstabOutputHelper {
       }
       node = node.getParent();
     }
+    return getTableSectionRenderBox( tableBox );
+  }
+
+  public static TableSectionRenderBox getTableSectionRenderBox( final RenderBox tableBox ) {
     if ( tableBox == null ) {
       return null;
     }
-
     final RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator( tableBox );
     while ( it.hasNext() ) {
       final RenderNode next = it.next();
@@ -71,7 +74,6 @@ public final class CrosstabOutputHelper {
         }
       }
     }
-
     return null;
   }
 

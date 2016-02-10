@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
@@ -31,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.crosstab.CrosstabOutputHelper;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.BoxShifter;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.InitialPaginationShiftState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
@@ -110,6 +111,12 @@ public final class PaginationStep extends IterateVisualProcessStep {
 
       // now process all the other content (excluding the header and footer area)
       if ( startBlockLevelBox( pageBox ) ) {
+        final TableSectionRenderBox tableHeader = findTableHeader( pageBox );
+        if ( tableHeader != null ) {
+          if ( tableHeader.getHeight() >= lastBreakLocal ) {
+            throw new InvalidReportStateException( "Table header consume the whole page. No space left for normal-flow." );
+          }
+        }
         processBoxChilds( pageBox );
       }
       finishBlockLevelBox( pageBox );
@@ -729,5 +736,24 @@ public final class PaginationStep extends IterateVisualProcessStep {
       return;
     }
     paginationTableState = paginationTableState.pop();
+  }
+
+
+  private TableSectionRenderBox findTableHeader( final LogicalPageBox pageBox ) {
+    RenderNode node = pageBox.getFirstChild();
+    RenderBox tableBox = null;
+    while ( node != null ) {
+      if ( node instanceof RenderBox ) {
+        if ( node.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE ) {
+          tableBox = (RenderBox) node;
+          break;
+        } else {
+          node = ( (RenderBox) node ).getFirstChild();
+        }
+      } else {
+        node = node.getNext();
+      }
+    }
+    return CrosstabOutputHelper.getTableSectionRenderBox( tableBox );
   }
 }

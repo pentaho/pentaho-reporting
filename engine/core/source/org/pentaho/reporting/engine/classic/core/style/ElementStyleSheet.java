@@ -54,6 +54,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
    * The properties that have been explicitly set on the element.
    */
   private transient Object[] properties;
+  // todo Khayrutdinov : describe the approach
   private byte[] source;
 
   private static final byte SOURCE_UNDEFINED = 0;
@@ -85,6 +86,19 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     return ( changeTrackerHash << 16 ) | modificationCount;
   }
 
+  private byte getFlag( int index ) {
+    final int packedByte = index >> 2;
+    final int shift = ( index & 3 ) << 1;
+    return (byte) ( ( source[packedByte] >> shift ) & 3 );
+  }
+
+  private void setFlag( int index, byte value ) {
+    final int packedByte = index >> 2;
+    final int shift = ( index & 3 ) << 1;
+    final int cleared = source[packedByte] & ~( 3 << shift );
+    source[packedByte] = (byte) ( cleared | ( value << shift ) );
+  }
+
   /**
    * Returns true, if the given key is locally defined, false otherwise.
    *
@@ -96,17 +110,17 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
       return false;
     }
     final int identifier = key.identifier;
-    if ( source.length <= identifier ) {
+    if ( properties.length <= identifier ) {
       return false;
     }
-    return source[ identifier ] == SOURCE_DIRECT;
+    return getFlag(identifier) == SOURCE_DIRECT;
   }
 
   private void pruneCachedEntries() {
     if ( source != null && properties != null ) {
-      for ( int i = 0; i < source.length; i++ ) {
-        if ( source[ i ] == SOURCE_FROM_PARENT ) {
-          source[ i ] = SOURCE_UNDEFINED;
+      for ( int i = 0, len = properties.length; i < len; i++ ) {
+        if ( getFlag( i ) == SOURCE_FROM_PARENT ) {
+          setFlag( i, SOURCE_UNDEFINED );
           properties[ i ] = null;
         }
       }
@@ -118,7 +132,8 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     final int size = keys.size();
     final Object[] data = new Object[ size ];
     if ( source == null ) {
-      source = new byte[ size ];
+      // todo Khayrutdinov : size < 4
+      source = new byte[ (size + 3) >> 2 ];
       properties = new Object[ size ];
     }
 
@@ -128,7 +143,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
         throw new NullPointerException();
       }
       final int identifier = key.identifier;
-      final byte sourceHint = source[ identifier ];
+      final byte sourceHint = getFlag( identifier );
       if ( sourceHint == SOURCE_UNDEFINED ) {
         data[ identifier ] = getStyleProperty( key );
       } else {
@@ -154,7 +169,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
         throw new IllegalStateException();
       }
 
-      final byte source = this.source[ identifier ];
+      final byte source = getFlag( identifier );
       if ( source != SOURCE_UNDEFINED ) {
         final Object value = properties[ identifier ];
         if ( value == null ) {
@@ -179,7 +194,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
 
     final int identifier = key.identifier;
     properties[ identifier ] = value;
-    source[ identifier ] = sourceHint;
+    setFlag( identifier, sourceHint );
   }
 
   /**
@@ -221,7 +236,6 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
         // invalidate the cache ..
         putInCache( key, null, SOURCE_UNDEFINED );
         updateChangeTracker( key, null );
-        properties[ identifier ] = null;
         styleChangeSupport.fireStyleRemoved( key );
       }
       return;
@@ -250,7 +264,8 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     if ( properties == null ) {
       final int definedStyleKeyCount = propertyKeys.size();
       properties = new Object[ definedStyleKeyCount ];
-      source = new byte[ definedStyleKeyCount ];
+      // todo Khayrutdinov : < 4 ?
+      source = new byte[ (definedStyleKeyCount + 3) >> 2 ];
     }
   }
 
@@ -295,8 +310,8 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     }
 
     final StyleKey[] retval = propertyKeys.toArray( new StyleKey[ propertyKeys.size() ] );
-    for ( int i = 0; i < source.length; i++ ) {
-      if ( source[ i ] != SOURCE_DIRECT ) {
+    for ( int i = 0, len = retval.length; i < len; i++ ) {
+      if ( getFlag( i ) != SOURCE_DIRECT ) {
         retval[ i ] = null;
       }
     }
@@ -344,9 +359,10 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     } else {
       final int size = properties.length;
       out.writeInt( size );
+      SerializerHelper helper = SerializerHelper.getInstance();
       for ( int i = 0; i < size; i++ ) {
         final Object value = properties[ i ];
-        SerializerHelper.getInstance().writeObject( value, out );
+        helper.writeObject( value, out );
       }
     }
   }
@@ -415,11 +431,11 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
 
     ensurePropertiesReady();
 
-    for ( int i = 0; i < sourceStyleSheet.source.length; i++ ) {
-      final byte sourceFlag = sourceStyleSheet.source[ i ];
+    for ( int i = 0, len = sourceStyleSheet.properties.length; i < len; i++ ) {
+      final byte sourceFlag = sourceStyleSheet.getFlag( i );
       if ( sourceFlag == SOURCE_DIRECT ) {
         properties[ i ] = sourceStyleSheet.properties[ i ];
-        source[ i ] = sourceFlag;
+        setFlag( i, sourceFlag );
       }
     }
   }
@@ -430,14 +446,14 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     }
     ensurePropertiesReady();
 
-    for ( int i = 0; i < source.length; i++ ) {
+    for ( int i = 0, len = properties.length; i < len; i++ ) {
       if ( propertyKeys.get( i ).isInheritable() == false ) {
         continue;
       }
-      final byte sourceFlag = sourceStyleSheet.source[ i ];
+      final byte sourceFlag = sourceStyleSheet.getFlag( i );
       if ( sourceFlag == SOURCE_DIRECT ) {
         properties[ i ] = sourceStyleSheet.properties[ i ];
-        source[ i ] = SOURCE_FROM_PARENT;
+        setFlag( i, SOURCE_FROM_PARENT );
       }
     }
   }
@@ -445,14 +461,14 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
   public void addInherited( final SimpleStyleSheet sourceStyleSheet ) {
     ensurePropertiesReady();
 
-    for ( int i = 0; i < source.length; i++ ) {
+    for ( int i = 0, len = properties.length; i < len; i++ ) {
       StyleKey styleKey = propertyKeys.get( i );
       if ( styleKey.isInheritable() == false ) {
         continue;
       }
 
       properties[ i ] = sourceStyleSheet.getStyleProperty( styleKey, null );
-      source[ i ] = SOURCE_FROM_PARENT;
+      setFlag( i, SOURCE_FROM_PARENT );
     }
   }
 
@@ -462,11 +478,11 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     }
     ensurePropertiesReady();
 
-    for ( int i = 0; i < source.length; i++ ) {
-      final byte sourceFlag = sourceStyleSheet.source[ i ];
-      if ( sourceFlag == SOURCE_DIRECT && source[ i ] == SOURCE_UNDEFINED ) {
+    for ( int i = 0, len = properties.length; i < len; i++ ) {
+      final byte sourceFlag = sourceStyleSheet.getFlag( i );
+      if ( sourceFlag == SOURCE_DIRECT && getFlag( i ) == SOURCE_UNDEFINED ) {
         properties[ i ] = sourceStyleSheet.properties[ i ];
-        source[ i ] = sourceFlag;
+        setFlag( i, SOURCE_DIRECT );
       }
     }
   }
@@ -480,6 +496,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     modificationCount = 0;
 
     Arrays.fill( properties, null );
+    // todo Khayrutdinov : explain, why it is OK here
     Arrays.fill( source, SOURCE_UNDEFINED );
   }
 
@@ -506,7 +523,8 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     if ( style.source != null ) {
       this.source = style.source.clone();
     } else if ( this.source != null ) {
-      Arrays.fill( source, SOURCE_UNDEFINED );
+      // todo Khayrutdinov : explain, why this is OK
+      Arrays.fill( this.source, SOURCE_UNDEFINED );
     }
     if ( style.properties != null ) {
       this.properties = style.properties.clone();

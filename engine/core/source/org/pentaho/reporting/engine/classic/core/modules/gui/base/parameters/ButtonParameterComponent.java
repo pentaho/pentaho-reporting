@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
@@ -25,10 +25,13 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 
 public class ButtonParameterComponent extends ListParameterComponent {
   public ButtonParameterComponent( final ListParameter listParameter, final ParameterUpdateContext updateContext,
-      final ParameterContext parameterContext ) {
+                                   final ParameterContext parameterContext ) {
     super( listParameter, updateContext, parameterContext );
     getList().setOpaque( false );
     getList().setBorder( null );
     getList().setCellRenderer( new ComponentListCellRenderer( JToggleButton.class ) );
+    //Allow JList to handle scrolls
+    getList().setPreferredSize( null );
+    setHorizontalScrollBarPolicy( HORIZONTAL_SCROLLBAR_AS_NEEDED );
   }
 }
