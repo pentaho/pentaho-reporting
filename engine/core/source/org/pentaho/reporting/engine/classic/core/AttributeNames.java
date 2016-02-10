@@ -275,5 +275,6 @@ public class AttributeNames {
     public static final String VISIBLE = "visible";
     public static final String STAGING_MODE = "staging-mode";
     public static final String REPORT_CACHE = "report-cache";
+    public static final String DYNAMIC_REPORT_CACHE = "dynamic-report-cache";
   }
 }
