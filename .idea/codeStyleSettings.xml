@@ -56,6 +56,9 @@
         <option name="DOWHILE_BRACE_FORCE" value="3" />
         <option name="WHILE_BRACE_FORCE" value="3" />
         <option name="FOR_BRACE_FORCE" value="3" />
+        <JavaCodeStyleSettings>
+          <option name="SPACES_WITHIN_ANGLE_BRACKETS" value="true" />
+        </JavaCodeStyleSettings>
         <XML>
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>
@@ -114,8 +117,6 @@
         </codeStyleSettings>
         <codeStyleSettings language="JAVA">
           <option name="WHILE_ON_NEW_LINE" value="true" />
-          <option name="CATCH_ON_NEW_LINE" value="true" />
-          <option name="FINALLY_ON_NEW_LINE" value="true" />
           <option name="SPACE_WITHIN_PARENTHESES" value="true" />
           <option name="SPACE_WITHIN_METHOD_CALL_PARENTHESES" value="true" />
           <option name="SPACE_WITHIN_METHOD_PARENTHESES" value="true" />
@@ -126,6 +127,8 @@
           <option name="SPACE_WITHIN_CATCH_PARENTHESES" value="true" />
           <option name="SPACE_WITHIN_SWITCH_PARENTHESES" value="true" />
           <option name="SPACE_WITHIN_SYNCHRONIZED_PARENTHESES" value="true" />
+          <option name="SPACE_WITHIN_BRACKETS" value="true" />
+          <option name="SPACE_WITHIN_ARRAY_INITIALIZER_BRACES" value="true" />
           <option name="METHOD_PARAMETERS_WRAP" value="5" />
           <option name="EXTENDS_KEYWORD_WRAP" value="1" />
           <option name="IF_BRACE_FORCE" value="3" />
@@ -135,9 +138,8 @@
           <option name="PARENT_SETTINGS_INSTALLED" value="true" />
           <indentOptions>
             <option name="INDENT_SIZE" value="2" />
-            <option name="CONTINUATION_INDENT_SIZE" value="2" />
+            <option name="CONTINUATION_INDENT_SIZE" value="4" />
             <option name="TAB_SIZE" value="2" />
-            <option name="USE_RELATIVE_INDENTS" value="true" />
           </indentOptions>
           <arrangement>
             <rules>
