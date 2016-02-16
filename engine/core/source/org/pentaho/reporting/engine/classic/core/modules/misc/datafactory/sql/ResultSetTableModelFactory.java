@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
@@ -314,7 +314,7 @@ public final class ResultSetTableModelFactory {
     DataAttributeContext ctx = new DefaultDataAttributeContext();
     ImmutableDataAttributes[] retval = new ImmutableDataAttributes[ data.length ];
     for ( int i = 0; i < data.length; i++ ) {
-      AttributeMap< Object > map = data[ i ];
+      AttributeMap<Object> map = data[ i ];
       if ( cache != null ) {
         retval[ i ] = cache.normalize( new ImmutableDataAttributes( map ), ctx );
       } else {
@@ -325,7 +325,7 @@ public final class ResultSetTableModelFactory {
   }
 
   protected Object[][] produceData( final ResultSet rs, final int colcount ) throws SQLException {
-    final ArrayList< Object[] > rows = new ArrayList< Object[] >();
+    final ArrayList<Object[]> rows = new ArrayList<Object[]>();
     while ( rs.next() ) {
       final Object[] column = new Object[ colcount ];
       for ( int i = 0; i < colcount; i++ ) {
@@ -349,11 +349,11 @@ public final class ResultSetTableModelFactory {
     return rows.toArray( new Object[ rows.size() ][] );
   }
 
-  public static AttributeMap< Object > collectData( final ResultSetMetaData rsmd,
+  public static AttributeMap<Object> collectData( final ResultSetMetaData rsmd,
                                                     final int column,
                                                     final String name )
       throws SQLException {
-    AttributeMap< Object > metaData = new AttributeMap< Object >();
+    AttributeMap<Object> metaData = new AttributeMap<Object>();
     metaData.setAttribute( MetaAttributeNames.Core.NAMESPACE,
         MetaAttributeNames.Core.TYPE, TypeMapper.mapForColumn( rsmd, column ) );
     metaData.setAttribute( MetaAttributeNames.Core.NAMESPACE,

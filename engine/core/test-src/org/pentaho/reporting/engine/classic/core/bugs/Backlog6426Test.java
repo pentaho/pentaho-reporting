@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
@@ -49,7 +49,7 @@ public class Backlog6426Test {
     doThrow( new SQLException() ).when( mock ).getScale( 0 );
     doThrow( new SQLException() ).when( mock ).isCurrency( 0 );
     doThrow( new SQLException() ).when( mock ).isSigned( 0 );
-    AttributeMap< Object > name = ResultSetTableModelFactory.collectData( mock, 0, "name" );
+    AttributeMap<Object> name = ResultSetTableModelFactory.collectData( mock, 0, "name" );
     // we are more interested in ensuring that this method does not throw exceptions than the contents ..
     Assert.assertNotNull( name );
   }
