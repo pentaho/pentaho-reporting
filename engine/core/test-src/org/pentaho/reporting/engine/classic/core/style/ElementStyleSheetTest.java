@@ -58,7 +58,7 @@ public class ElementStyleSheetTest {
 
     List<StyleKey> systemKeys = StyleKey.getDefinedStyleKeysList();
     if ( systemKeys.size() < 2 ) {
-      assertTrue( "This test set needs at least 2 keys. Ignoring all cases.", false );
+      assumeTrue( "This test set needs at least 2 keys. Ignoring all cases.", false );
     }
 
     defaultValues = new HashMap<>();
@@ -204,7 +204,7 @@ public class ElementStyleSheetTest {
   }
 
 
-  @Test(expected = NullPointerException.class)
+  @Test( expected = NullPointerException.class )
   public void setStyleProperty_RejectsNullKeys() {
     ElementStyleSheet sheet = new ElementStyleSheet();
     sheet.setStyleProperty( null, "" );
@@ -497,6 +497,4 @@ public class ElementStyleSheetTest {
       assertEquals( String.format( "Key[%d]: %s", i, key.name ), expected, property );
     }
   }
-
-  // todo Khayrutdinov : assuming as a rule?
 }
