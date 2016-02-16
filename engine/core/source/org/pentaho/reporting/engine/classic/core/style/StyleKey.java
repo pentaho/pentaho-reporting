@@ -372,7 +372,7 @@ public final class StyleKey implements Serializable, Cloneable {
   }
 
   @Deprecated // for tests only!
-  static synchronized StyleKey addTestKey(String name, Class valueType, boolean trans, boolean inheritable) {
+  static synchronized StyleKey addTestKey( String name, Class valueType, boolean trans, boolean inheritable ) {
     boolean wasLocked = locked;
     try {
       locked = false;

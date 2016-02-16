@@ -54,7 +54,16 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
    * The properties that have been explicitly set on the element.
    */
   private transient Object[] properties;
-  // todo Khayrutdinov : describe the approach
+  /*
+   * In source, properties' flags are stored.
+   * Since there are only three possible flag values (SOURCE_UNDEFINED, SOURCE_FROM_PARENT, SOURCE_DIRECT),
+   * we can use only two bits for each flag instead of full byte.
+   *
+   * Therefore, to address a byte, where a pair of bits related to a property is put,
+   * it is necessary to divide the property's index by 4. Division by 4 is the same as right shifting by 2.
+   * After the byte's index has been computed, the pair's "internal" position can be shifted to the lowest bits,
+   * and these bits give the flag's value.
+   */
   private byte[] source;
 
   private static final byte SOURCE_UNDEFINED = 0;
@@ -113,7 +122,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     if ( properties.length <= identifier ) {
       return false;
     }
-    return getFlag(identifier) == SOURCE_DIRECT;
+    return getFlag( identifier ) == SOURCE_DIRECT;
   }
 
   private void pruneCachedEntries() {
@@ -132,8 +141,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     final int size = keys.size();
     final Object[] data = new Object[ size ];
     if ( source == null ) {
-      // todo Khayrutdinov : size < 4
-      source = new byte[ (size + 3) >> 2 ];
+      source = new byte[ ( size + 3 ) >> 2 ];
       properties = new Object[ size ];
     }
 
@@ -264,8 +272,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     if ( properties == null ) {
       final int definedStyleKeyCount = propertyKeys.size();
       properties = new Object[ definedStyleKeyCount ];
-      // todo Khayrutdinov : < 4 ?
-      source = new byte[ (definedStyleKeyCount + 3) >> 2 ];
+      source = new byte[ ( definedStyleKeyCount + 3 ) >> 2 ];
     }
   }
 
@@ -496,7 +503,7 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     modificationCount = 0;
 
     Arrays.fill( properties, null );
-    // todo Khayrutdinov : explain, why it is OK here
+    // SOURCE_UNDEFINED is 0, hence it can be used for clearing all four flags
     Arrays.fill( source, SOURCE_UNDEFINED );
   }
 
@@ -523,7 +530,6 @@ public class ElementStyleSheet extends AbstractStyleSheet implements Serializabl
     if ( style.source != null ) {
       this.source = style.source.clone();
     } else if ( this.source != null ) {
-      // todo Khayrutdinov : explain, why this is OK
       Arrays.fill( this.source, SOURCE_UNDEFINED );
     }
     if ( style.properties != null ) {
