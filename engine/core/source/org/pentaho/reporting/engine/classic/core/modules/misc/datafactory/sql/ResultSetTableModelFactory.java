@@ -12,10 +12,20 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
+
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,16 +48,6 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 
-import javax.swing.table.DefaultTableModel;
-import java.io.IOException;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-
 /**
  * Creates a <code>TableModel</code> which is backed up by a <code>ResultSet</code>. If the <code>ResultSet</code> is
  * scrollable, a {@link ScrollableResultSetTableModel} is created, otherwise all data is copied from the
@@ -65,13 +65,13 @@ public final class ResultSetTableModelFactory {
    * The configuration key defining how to map column names to column indices.
    */
   public static final String COLUMN_NAME_MAPPING_KEY =
-    "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode"; //$NON-NLS-1$
 
   /**
    * The 'ResultSet factory mode'.
    */
   public static final String RESULTSET_FACTORY_MODE
-    = "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableFactoryMode"; //$NON-NLS-1$
+      = "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableFactoryMode"; //$NON-NLS-1$
 
   /**
    * Singleton instance of the factory.
@@ -104,7 +104,7 @@ public final class ResultSetTableModelFactory {
   public CloseableTableModel createTableModel( final ResultSet rs,
                                                final boolean columnNameMapping,
                                                final boolean closeStatement )
-    throws SQLException {
+      throws SQLException {
     // Allow for override, some jdbc drivers are buggy :(
     final String prop =
         ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
@@ -119,7 +119,7 @@ public final class ResultSetTableModelFactory {
       resultSetType = rs.getType();
     } catch ( SQLException sqle ) {
       ResultSetTableModelFactory.logger.info(
-        "ResultSet type could not be determined, assuming default table model." ); //$NON-NLS-1$
+          "ResultSet type could not be determined, assuming default table model." ); //$NON-NLS-1$
     }
     if ( resultSetType == ResultSet.TYPE_FORWARD_ONLY ) {
       return generateDefaultTableModel( rs, columnNameMapping );
@@ -132,7 +132,7 @@ public final class ResultSetTableModelFactory {
    * A DefaultTableModel that implements the CloseableTableModel interface.
    */
   private static final class CloseableDefaultTableModel extends DefaultTableModel
-    implements CloseableTableModel, MetaTableModel {
+      implements CloseableTableModel, MetaTableModel {
     private TableMetaData metaData;
     private Class[] columnTypes;
 
@@ -235,7 +235,7 @@ public final class ResultSetTableModelFactory {
    * @throws SQLException if there is a problem with the result set.
    */
   public CloseableTableModel generateDefaultTableModel( final ResultSet rs, final boolean columnNameMapping )
-    throws SQLException {
+      throws SQLException {
     try {
       final ResultSetMetaData rsmd = rs.getMetaData();
       final int colcount = rsmd.getColumnCount();
@@ -253,10 +253,10 @@ public final class ResultSetTableModelFactory {
       // any interpretation or interpolation.
       final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
       final boolean useLegacyColumnMapping =
-        "legacy".equalsIgnoreCase(                                                                            // NON-NLS
-          globalConfig.getConfigProperty(
-            "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode",
-            "legacy" ) );  // NON-NLS
+          "legacy".equalsIgnoreCase(                                                                            // NON-NLS
+              globalConfig.getConfigProperty(
+                  "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode",
+                  "legacy" ) );  // NON-NLS
 
       final String[] header = new String[ colcount ];
       final AttributeMap[] columnMeta = new AttributeMap[ colcount ];
@@ -282,7 +282,7 @@ public final class ResultSetTableModelFactory {
 
       final Object[][] rowMap = produceData( rs, colcount );
       ImmutableTableMetaData metaData = new ImmutableTableMetaData( ImmutableDataAttributes.EMPTY,
-        map( columnMeta ) );
+          map( columnMeta ) );
       return new CloseableDefaultTableModel( rowMap, header, colTypes, metaData );
     } finally {
       Statement statement = null;
@@ -349,58 +349,101 @@ public final class ResultSetTableModelFactory {
     return rows.toArray( new Object[ rows.size() ][] );
   }
 
-  public static AttributeMap<Object> collectData(final ResultSetMetaData rsmd,
-                                                  final int column,
-                                                  final String name)
-    throws SQLException {
+  public static AttributeMap<Object> collectData( final ResultSetMetaData rsmd,
+                                                    final int column,
+                                                    final String name )
+      throws SQLException {
     AttributeMap<Object> metaData = new AttributeMap<Object>();
     metaData.setAttribute( MetaAttributeNames.Core.NAMESPACE,
-                           MetaAttributeNames.Core.TYPE, TypeMapper.mapForColumn( rsmd, column ) );
+        MetaAttributeNames.Core.TYPE, TypeMapper.mapForColumn( rsmd, column ) );
     metaData.setAttribute( MetaAttributeNames.Core.NAMESPACE,
-                           MetaAttributeNames.Core.NAME, name );
-    if ( rsmd.isCurrency( column + 1 ) ) {
-      metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.CURRENCY, Boolean.TRUE );
-    } else {
-      metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.CURRENCY, Boolean.FALSE );
+        MetaAttributeNames.Core.NAME, name );
+    try {
+      if ( rsmd.isCurrency( column + 1 ) ) {
+        metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.CURRENCY, Boolean.TRUE );
+      } else {
+        metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.CURRENCY, Boolean.FALSE );
+      }
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#isCurrency. Driver does not implement the JDBC specs correctly. ", e );
+    }
+    try {
+
+      if ( rsmd.isSigned( column + 1 ) ) {
+        metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.SIGNED, Boolean.TRUE );
+      } else {
+        metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.SIGNED, Boolean.FALSE );
+      }
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#isSigned. Driver does not implement the JDBC specs correctly. ", e );
     }
 
-    if ( rsmd.isSigned( column + 1 ) ) {
-      metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.SIGNED, Boolean.TRUE );
-    } else {
-      metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.SIGNED, Boolean.FALSE );
+    try {
+      final String tableName = rsmd.getTableName( column + 1 );
+      if ( tableName != null ) {
+        metaData.setAttribute( MetaAttributeNames.Database.NAMESPACE, MetaAttributeNames.Database.TABLE, tableName );
+      }
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#getTableName. Driver does not implement the JDBC specs correctly. ", e );
     }
 
-    final String tableName = rsmd.getTableName( column + 1 );
-    if ( tableName != null ) {
-      metaData.setAttribute( MetaAttributeNames.Database.NAMESPACE, MetaAttributeNames.Database.TABLE, tableName );
+    try {
+      final String schemaName = rsmd.getSchemaName( column + 1 );
+      if ( schemaName != null ) {
+        metaData.setAttribute( MetaAttributeNames.Database.NAMESPACE, MetaAttributeNames.Database.SCHEMA, schemaName );
+      }
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#getSchemaName. Driver does not implement the JDBC specs correctly. ", e );
     }
-    final String schemaName = rsmd.getSchemaName( column + 1 );
-    if ( schemaName != null ) {
-      metaData.setAttribute( MetaAttributeNames.Database.NAMESPACE, MetaAttributeNames.Database.SCHEMA, schemaName );
-    }
-    final String catalogName = rsmd.getCatalogName( column + 1 );
-    if ( catalogName != null ) {
-      metaData.setAttribute( MetaAttributeNames.Database.NAMESPACE, MetaAttributeNames.Database.CATALOG, catalogName );
-    }
-    final String label = rsmd.getColumnLabel( column + 1 );
-    if ( label != null ) {
-      metaData.setAttribute( MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL, label );
-    }
-    final int displaySize = rsmd.getColumnDisplaySize( column + 1 );
-    metaData.setAttribute( MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.DISPLAY_SIZE,
-                           IntegerCache.getInteger( displaySize ) );
 
-    final int precision = rsmd.getPrecision( column + 1 );
-    metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.PRECISION,
-                           IntegerCache.getInteger( precision ) );
-    final int scale = rsmd.getScale( column + 1 );
-    metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.SCALE,
-                           IntegerCache.getInteger( scale ) );
+
+    try {
+      final String catalogName = rsmd.getCatalogName( column + 1 );
+      if ( catalogName != null ) {
+        metaData.setAttribute( MetaAttributeNames.Database.NAMESPACE, MetaAttributeNames.Database.CATALOG, catalogName );
+      }
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#getTableName. Driver does not implement the JDBC specs correctly. ", e );
+    }
+
+    try {
+      final String label = rsmd.getColumnLabel( column + 1 );
+      if ( label != null ) {
+        metaData.setAttribute( MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL, label );
+      }
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#getTableName. Driver does not implement the JDBC specs correctly. ", e );
+    }
+
+    try {
+      final int displaySize = rsmd.getColumnDisplaySize( column + 1 );
+      metaData.setAttribute( MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.DISPLAY_SIZE,
+          IntegerCache.getInteger( displaySize ) );
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#getTableName. Driver does not implement the JDBC specs correctly. ", e );
+    }
+
+    try {
+      final int precision = rsmd.getPrecision( column + 1 );
+      metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.PRECISION,
+          IntegerCache.getInteger( precision ) );
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#getTableName. Driver does not implement the JDBC specs correctly. ", e );
+    }
+
+    try {
+      final int scale = rsmd.getScale( column + 1 );
+      metaData.setAttribute( MetaAttributeNames.Numeric.NAMESPACE, MetaAttributeNames.Numeric.SCALE,
+          IntegerCache.getInteger( scale ) );
+    } catch ( SQLException e ) {
+      logger.debug( "Error on ResultSetMetaData#getTableName. Driver does not implement the JDBC specs correctly. ", e );
+    }
     return metaData;
   }
 
   /**
    * No longer used.
+   *
    * @param rsmd
    * @param metaData
    * @param column
