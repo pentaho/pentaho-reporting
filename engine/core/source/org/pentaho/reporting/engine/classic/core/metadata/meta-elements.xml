@@ -285,6 +285,17 @@
                value-type="java.lang.Boolean"
                value-role="Value"/>
 
+<attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/pentaho"
+               name="content-cache-key"
+               mandatory="false"
+               expert="true"
+               hidden="true"
+               design-time-value="false"
+               computed="true"
+               transient="true"
+               value-type="java.lang.String"
+               value-role="Value"/>
+
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="data-cache"
                mandatory="false"
