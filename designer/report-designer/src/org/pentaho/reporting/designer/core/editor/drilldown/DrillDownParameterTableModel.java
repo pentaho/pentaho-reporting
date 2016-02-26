@@ -158,9 +158,9 @@ public class DrillDownParameterTableModel extends AbstractTableModel
    */
   public String getColumnName( final int column ) {
     if ( column == 0 ) {
-      return "Name";
+      return Messages.getString( "DrillDownDialog.ParameterTable.ParameterName" );
     }
-    return "Value";
+    return Messages.getString( "DrillDownDialog.ParameterTable.ParameterValue" );
   }
 
 

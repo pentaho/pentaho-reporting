@@ -69,7 +69,7 @@ public class DrillDownEditor extends JPanel {
     final JPanel cardHolder = new JPanel();
     cardHolder.setLayout( new CardLayout() );
     cardHolder.add( "2", editorContainer );
-    cardHolder.add( "1", Box.createRigidArea( new Dimension( 450, 500 ) ) );
+    cardHolder.add( "1", Box.createRigidArea( new Dimension( 450, 250 ) ) );
 
     setLayout( new BorderLayout() );
     setBorder( BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) );
