@@ -35,6 +35,7 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.SwingUtilities;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -130,6 +131,13 @@ public class SwingSelfDrillDownUi implements DrillDownUi {
     this.reportDesignerContext = reportDesignerContext;
     this.wrapper = new DrillDownModelWrapper( model );
     model.setDrillDownConfig( SwingSelfDrillDownUiProfile.NAME );
+
+    SwingUtilities.invokeLater( new Runnable() {
+      @Override
+      public void run() {
+        getTable().refreshParameterData();
+      }
+    } );
   }
 
   /**
