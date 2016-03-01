@@ -60,9 +60,9 @@
 
     <!-- OSGI Support -->
     <dependency org="pentaho" name="pdi-osgi-bridge-core" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" transitive="false" />
-    <dependency org="pentaho" name="pentaho-capability-manager" rev="${project.revision}" changing="true" />
-    <dependency org="pentaho" name="pentaho-service-coordinator" rev="${project.revision}" changing="true" />
-    <dependency org="pentaho" name="pentaho-osgi-utils-api" rev="${project.revision}" changing="true" />
+    <dependency org="pentaho" name="pentaho-capability-manager" rev="${dependency.pentaho-capability-manager.revision}" changing="true" />
+    <dependency org="pentaho" name="pentaho-service-coordinator" rev="${dependency.pentaho-service-coordinator.revision}" changing="true" />
+    <dependency org="pentaho" name="pentaho-osgi-utils-api" rev="${dependency.pentaho-osgi-utils-api.revision}" changing="true" />
     <dependency org="org.springframework.security" name="spring-security-core" rev="${dependency.spring.security.revision}" />
     <dependency org="javax.servlet" name="javax.servlet-api" rev="3.0.1"/>
     <dependency org="org.apache.felix" name="org.apache.felix.framework" rev="4.4.1"/>
