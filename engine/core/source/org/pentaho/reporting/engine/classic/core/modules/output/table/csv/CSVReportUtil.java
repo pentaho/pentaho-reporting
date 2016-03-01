@@ -12,13 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.csv;
 
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
@@ -70,6 +71,53 @@ public final class CSVReportUtil {
     final StreamReportProcessor reportProcessor = new StreamReportProcessor( report, target );
     reportProcessor.processReport();
     reportProcessor.close();
+    outputStream.flush();
+  }
+
+
+
+  /**
+   * Saves a report to CSV format.
+   *
+   * @param report
+   *          the report.
+   * @param outputStream
+   *          the output stream.
+   * @param encoding
+   *          the encoding for the output stream (can be null).
+   *
+   * @param listener listener
+   * @throws ReportProcessingException
+   *           if the report processing failed.
+   * @throws IOException
+   *           if an IO related error occured.
+   */
+  public static void createCSV( final MasterReport report, final OutputStream outputStream, final String encoding, final ReportProgressListener listener )
+          throws ReportProcessingException, IOException {
+    if ( report == null ) {
+      throw new NullPointerException();
+    }
+    if ( outputStream == null ) {
+      throw new NullPointerException();
+    }
+
+    final StreamCSVOutputProcessor target = new StreamCSVOutputProcessor( outputStream );
+    if ( encoding != null ) {
+      target.setEncoding( encoding );
+    }
+
+    final StreamReportProcessor reportProcessor = new StreamReportProcessor( report, target );
+    if ( listener != null ) {
+      reportProcessor.addReportProgressListener( listener );
+    }
+    try {
+      reportProcessor.processReport();
+    } finally {
+      if ( listener != null ) {
+        reportProcessor.removeReportProgressListener( listener );
+      }
+      reportProcessor.close();
+    }
     outputStream.flush();
   }
 
