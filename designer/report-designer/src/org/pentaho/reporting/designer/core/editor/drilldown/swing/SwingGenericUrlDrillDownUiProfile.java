@@ -25,33 +25,33 @@ import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfil
 import java.util.Locale;
 
 /**
- * Implementation of DrillDownUiProfile for Swing version of self-drilldown.xul dialog.
+ * Implementation of DrillDownUiProfile for Swing version of generic-url-drilldown.xul dialog.
  *
  * @author Aleksandr Kozlov
  */
-public class SwingSelfDrillDownUiProfile implements DrillDownUiProfile {
+public class SwingGenericUrlDrillDownUiProfile implements DrillDownUiProfile {
 
   /** Drill down meta data. */
   private DrillDownProfile drillDownProfile;
 
-  /** The name of profile for SwingSelfDrillDownUi. */
-  public static final String[] NAMES = { "self" };
+  /** The name of profile for SwingGenericUrlDrillDownUi. */
+  public static final String[] NAMES = { "generic-url", "local-url" };
 
   /**
-   * Create an implementation of DrillDownUiProfile for Swing version of self-drilldown.xul dialog.
+   * Create an implementation of DrillDownUiProfile for Swing version of generic-url-drilldown.xul dialog.
    */
-  public SwingSelfDrillDownUiProfile() {
+  public SwingGenericUrlDrillDownUiProfile() {
     drillDownProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( NAMES[0] );
   }
 
   /**
-   * Create an instance of DrillDownUi for Swing version of self-drilldown.xul dialog.
+   * Create an instance of DrillDownUi for Swing version of generic-url-drilldown.xul dialog.
    *
-   * @return an instance of SwingSelfDrillDownUi
+   * @return an instance of SwingGenericUrlDrillDownUi
    */
   @Override
   public DrillDownUi createUI() {
-    return new SwingSelfDrillDownUi();
+    return new SwingGenericUrlDrillDownUi();
   }
 
   /**

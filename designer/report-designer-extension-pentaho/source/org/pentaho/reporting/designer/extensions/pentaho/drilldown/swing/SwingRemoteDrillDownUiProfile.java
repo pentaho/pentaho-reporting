@@ -15,7 +15,7 @@
  *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.core.editor.drilldown.swing;
+package org.pentaho.reporting.designer.extensions.pentaho.drilldown.swing;
 
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownUi;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownUiProfile;
@@ -25,37 +25,37 @@ import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfil
 import java.util.Locale;
 
 /**
- * Implementation of DrillDownUiProfile for Swing version of self-drilldown.xul dialog.
+ * Profile of the Swing analog for sugar-xaction-drilldown.xul dialog.
  *
  * @author Aleksandr Kozlov
  */
-public class SwingSelfDrillDownUiProfile implements DrillDownUiProfile {
+public class SwingRemoteDrillDownUiProfile implements DrillDownUiProfile {
 
   /** Drill down meta data. */
   private DrillDownProfile drillDownProfile;
 
-  /** The name of profile for SwingSelfDrillDownUi. */
-  public static final String[] NAMES = { "self" };
+  /** The name of profile for SwingRemoteDrillDownUi. */
+  public static final String[] NAMES = { "remote-sugar" };
 
   /**
-   * Create an implementation of DrillDownUiProfile for Swing version of self-drilldown.xul dialog.
+   * Create an implementation of SwingRemoteDrillDownUiProfile for Swing version of sugar-xaction-drilldown.xul dialog.
    */
-  public SwingSelfDrillDownUiProfile() {
+  public SwingRemoteDrillDownUiProfile() {
     drillDownProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( NAMES[0] );
   }
 
   /**
-   * Create an instance of DrillDownUi for Swing version of self-drilldown.xul dialog.
+   * Create an instance of DrillDownUi for Swing version of the sugar-xaction-drilldown.xul dialog.
    *
-   * @return an instance of SwingSelfDrillDownUi
+   * @return an instance of SwingRemoteDrillDownUi
    */
   @Override
   public DrillDownUi createUI() {
-    return new SwingSelfDrillDownUi();
+    return new SwingRemoteDrillDownUi();
   }
 
   /**
-   * Get name of the DrillDownUi to display.
+   * Get a name of the DrillDownUi to display.
    *
    * @return name for display.
    */
@@ -83,6 +83,6 @@ public class SwingSelfDrillDownUiProfile implements DrillDownUiProfile {
    */
   @Override
   public int getOrderKey() {
-    return 500;
+    return 3000;
   }
 }
