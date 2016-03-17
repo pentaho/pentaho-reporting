@@ -150,7 +150,7 @@ public class SwingGenericUrlDrillDownUi implements DrillDownUi {
   ) throws DrillDownUiException {
     this.reportDesignerContext = reportDesignerContext;
     wrapper = new DrillDownModelWrapper( model );
-    model.setDrillDownConfig( SwingGenericUrlDrillDownUiProfile.NAMES[0] );
+    model.setDrillDownConfig( SwingGenericUrlDrillDownUiProfile.NAME_DEFAULT );
     pathHandler = new PathChangeHandler();
     getModel().addPropertyChangeListener( DrillDownModel.DRILL_DOWN_PATH_PROPERTY, pathHandler );
 

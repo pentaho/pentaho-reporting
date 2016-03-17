@@ -128,7 +128,7 @@ public class SwingSelfDrillDownUi implements DrillDownUi {
   ) throws DrillDownUiException {
     this.reportDesignerContext = reportDesignerContext;
     this.wrapper = new DrillDownModelWrapper( model );
-    model.setDrillDownConfig( SwingSelfDrillDownUiProfile.NAMES[0] );
+    model.setDrillDownConfig( SwingSelfDrillDownUiProfile.NAME_DEFAULT );
 
     SwingUtilities.invokeLater( new Runnable() {
       @Override

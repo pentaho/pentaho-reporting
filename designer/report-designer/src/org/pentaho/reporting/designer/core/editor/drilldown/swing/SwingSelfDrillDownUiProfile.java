@@ -34,14 +34,17 @@ public class SwingSelfDrillDownUiProfile implements DrillDownUiProfile {
   /** Drill down meta data. */
   private DrillDownProfile drillDownProfile;
 
-  /** The name of profile for SwingSelfDrillDownUi. */
-  public static final String[] NAMES = { "self" };
+  /** The names that SwingSelfDrillDownUi are able to handle. */
+  private static final String[] NAMES_HANDLE = { "self" };
+
+  /** Default name of the profile. */
+  public static final String NAME_DEFAULT = NAMES_HANDLE[ 0 ];
 
   /**
    * Create an implementation of DrillDownUiProfile for Swing version of self-drilldown.xul dialog.
    */
   public SwingSelfDrillDownUiProfile() {
-    drillDownProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( NAMES[0] );
+    drillDownProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( NAME_DEFAULT );
   }
 
   /**
@@ -69,8 +72,8 @@ public class SwingSelfDrillDownUiProfile implements DrillDownUiProfile {
    */
   @Override
   public boolean canHandle( String profileName ) {
-    for ( int i = 0; i < NAMES.length; i++ ) {
-      final String name = NAMES[ i ];
+    for (int i = 0; i < NAMES_HANDLE.length; i++ ) {
+      final String name = NAMES_HANDLE[ i ];
       if ( name.equals( profileName ) ) {
         return true;
       }
