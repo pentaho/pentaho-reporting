@@ -63,7 +63,7 @@ public class FastExcelReportUtil {
     IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
     if ( validator.isValidForFastProcessing( report ) == false ) {
-      ExcelReportUtil.createXLS( report, out );
+      ExcelReportUtil.createXLS( report, out, listener );
       return;
     }
 
@@ -86,7 +86,7 @@ public class FastExcelReportUtil {
     IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
     if ( validator.isValidForFastProcessing( report ) == false ) {
-      ExcelReportUtil.createXLSX( report, out );
+      ExcelReportUtil.createXLSX( report, out, listener );
       return;
     }
 

@@ -47,7 +47,7 @@ public class FastCsvReportUtil {
   public static void process( MasterReport report, OutputStream out, final ReportProgressListener listener ) throws ReportProcessingException, IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
     if ( validator.isValidForFastProcessing( report ) == false ) {
-      CSVReportUtil.createCSV( report, out, null );
+      CSVReportUtil.createCSV( report, out, null, listener );
       return;
     }
 

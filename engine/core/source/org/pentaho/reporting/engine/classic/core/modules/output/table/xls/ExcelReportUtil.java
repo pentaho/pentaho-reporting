@@ -12,13 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls;
 
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
 
 import java.io.BufferedOutputStream;
@@ -41,14 +42,10 @@ public final class ExcelReportUtil {
   /**
    * Saves a report to Excel format.
    *
-   * @param report
-   *          the report.
-   * @param filename
-   *          target file name.
-   * @throws ReportProcessingException
-   *           if the report processing failed.
-   * @throws IOException
-   *           if there was an IOerror while processing the report.
+   * @param report   the report.
+   * @param filename target file name.
+   * @throws ReportProcessingException if the report processing failed.
+   * @throws IOException               if there was an IOerror while processing the report.
    */
   public static void createXLSX( final MasterReport report, final String filename ) throws IOException,
     ReportProcessingException {
@@ -62,7 +59,7 @@ public final class ExcelReportUtil {
     OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
     try {
       final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
+        new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
       target.setUseXlsxFormat( true );
       final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
       reportProcessor.processReport();
@@ -83,16 +80,11 @@ public final class ExcelReportUtil {
   /**
    * Saves a report to Excel format.
    *
-   * @param report
-   *          the report.
-   * @param filename
-   *          target file name.
-   * @param strict
-   *          defines whether the strict layout mode should be activated.
-   * @throws ReportProcessingException
-   *           if the report processing failed.
-   * @throws IOException
-   *           if there was an IOerror while processing the report.
+   * @param report   the report.
+   * @param filename target file name.
+   * @param strict   defines whether the strict layout mode should be activated.
+   * @throws ReportProcessingException if the report processing failed.
+   * @throws IOException               if there was an IOerror while processing the report.
    */
   public static void createXLSX( final MasterReport report, final String filename, final boolean strict )
     throws IOException, ReportProcessingException {
@@ -104,12 +96,12 @@ public final class ExcelReportUtil {
     }
 
     report.getReportConfiguration().setConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout", String.valueOf( strict ) );
+      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout", String.valueOf( strict ) );
 
     OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
     try {
       final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
+        new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
       target.setUseXlsxFormat( true );
       final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
       reportProcessor.processReport();
@@ -137,7 +129,7 @@ public final class ExcelReportUtil {
     }
 
     final FlowExcelOutputProcessor target =
-        new FlowExcelOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
+      new FlowExcelOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
     target.setUseXlsxFormat( true );
     final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
     reportProcessor.processReport();
@@ -147,14 +139,10 @@ public final class ExcelReportUtil {
   /**
    * Saves a report to Excel format.
    *
-   * @param report
-   *          the report.
-   * @param filename
-   *          target file name.
-   * @throws ReportProcessingException
-   *           if the report processing failed.
-   * @throws IOException
-   *           if there was an IOerror while processing the report.
+   * @param report   the report.
+   * @param filename target file name.
+   * @throws ReportProcessingException if the report processing failed.
+   * @throws IOException               if there was an IOerror while processing the report.
    */
   public static void createXLS( final MasterReport report, final String filename ) throws IOException,
     ReportProcessingException {
@@ -168,7 +156,7 @@ public final class ExcelReportUtil {
     OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
     try {
       final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
+        new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
       target.setUseXlsxFormat( false );
       final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
       reportProcessor.processReport();
@@ -189,16 +177,11 @@ public final class ExcelReportUtil {
   /**
    * Saves a report to Excel format.
    *
-   * @param report
-   *          the report.
-   * @param filename
-   *          target file name.
-   * @param strict
-   *          defines whether the strict layout mode should be activated.
-   * @throws ReportProcessingException
-   *           if the report processing failed.
-   * @throws IOException
-   *           if there was an IOerror while processing the report.
+   * @param report   the report.
+   * @param filename target file name.
+   * @param strict   defines whether the strict layout mode should be activated.
+   * @throws ReportProcessingException if the report processing failed.
+   * @throws IOException               if there was an IOerror while processing the report.
    */
   public static void createXLS( final MasterReport report, final String filename, final boolean strict )
     throws IOException, ReportProcessingException {
@@ -210,12 +193,12 @@ public final class ExcelReportUtil {
     }
 
     report.getReportConfiguration().setConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout", String.valueOf( strict ) );
+      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout", String.valueOf( strict ) );
 
     OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
     try {
       final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
+        new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
       target.setUseXlsxFormat( false );
       final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
       reportProcessor.processReport();
@@ -243,10 +226,65 @@ public final class ExcelReportUtil {
     }
 
     final FlowExcelOutputProcessor target =
-        new FlowExcelOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
+      new FlowExcelOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
     target.setUseXlsxFormat( false );
     final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
     reportProcessor.processReport();
     reportProcessor.close();
+  }
+
+
+  public static void createXLS( final MasterReport report, final OutputStream outputStream,
+                                final ReportProgressListener listener )
+    throws ReportProcessingException {
+    if ( report == null ) {
+      throw new NullPointerException();
+    }
+    if ( outputStream == null ) {
+      throw new NullPointerException();
+    }
+
+    final FlowExcelOutputProcessor target =
+      new FlowExcelOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
+    target.setUseXlsxFormat( false );
+    final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
+    if ( listener != null ) {
+      reportProcessor.addReportProgressListener( listener );
+    }
+    try {
+      reportProcessor.processReport();
+    } finally {
+      if ( listener != null ) {
+        reportProcessor.removeReportProgressListener( listener );
+      }
+      reportProcessor.close();
+    }
+  }
+
+  public static void createXLSX( final MasterReport report, final OutputStream outputStream,
+                                 final ReportProgressListener listener )
+    throws ReportProcessingException {
+    if ( report == null ) {
+      throw new NullPointerException();
+    }
+    if ( outputStream == null ) {
+      throw new NullPointerException();
+    }
+
+    final FlowExcelOutputProcessor target =
+      new FlowExcelOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
+    target.setUseXlsxFormat( true );
+    final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
+    if ( listener != null ) {
+      reportProcessor.addReportProgressListener( listener );
+    }
+    try {
+      reportProcessor.processReport();
+    } finally {
+      if ( listener != null ) {
+        reportProcessor.removeReportProgressListener( listener );
+      }
+      reportProcessor.close();
+    }
   }
 }
