@@ -1444,6 +1444,13 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
         }
       } catch ( EmptyReportException re ) {
         throw re;
+      } catch( ReportInterruptedException interrupt ) {
+        // log interruption stacktrace in case of debug level only
+        // since interruption is ok.
+        if ( AbstractReportProcessor.logger.isDebugEnabled() ) {
+          AbstractReportProcessor.logger.debug( "Report processing interrupted: " + this.getClass().getName(), interrupt );
+        }
+        throw interrupt;
       } catch ( ReportProcessingException re ) {
         AbstractReportProcessor.logger.error( System.identityHashCode( Thread.currentThread() )
             + ": Report processing failed.", re );
