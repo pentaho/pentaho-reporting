@@ -33,7 +33,7 @@ import java.net.URL;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-public class Backlog7181Test {
+public class Backlog7181IT {
 
   @Before
   public void setUp() throws Exception {
