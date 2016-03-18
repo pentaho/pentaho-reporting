@@ -61,7 +61,7 @@ public class Backlog7181Test {
     MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
     org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner.createTestOutputFile();
     final ReportProgressListener mock = mock( ReportProgressListener.class );
-    try ( FileOutputStream stream = new FileOutputStream( "test-output/Backlog-7181.xls" ) ) {
+    try ( FileOutputStream stream = new FileOutputStream( "test-output/Backlog-7181.xlsx" ) ) {
       FastExcelReportUtil.processXlsx( report, stream, mock );
     }
     verify( mock, times( 1 ) ).reportProcessingStarted( any( ReportProgressEvent.class ) );
@@ -76,7 +76,7 @@ public class Backlog7181Test {
     MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
     org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner.createTestOutputFile();
     final ReportProgressListener mock = mock( ReportProgressListener.class );
-    try ( FileOutputStream stream = new FileOutputStream( "test-output/Backlog-7181.xls" ) ) {
+    try ( FileOutputStream stream = new FileOutputStream( "test-output/Backlog-7181.csv" ) ) {
       FastCsvReportUtil.process( report, stream, mock );
     }
     verify( mock, times( 1 ) ).reportProcessingStarted( any( ReportProgressEvent.class ) );
