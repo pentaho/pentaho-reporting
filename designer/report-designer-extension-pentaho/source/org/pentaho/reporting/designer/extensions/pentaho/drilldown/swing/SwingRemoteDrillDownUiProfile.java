@@ -34,14 +34,17 @@ public class SwingRemoteDrillDownUiProfile implements DrillDownUiProfile {
   /** Drill down meta data. */
   private DrillDownProfile drillDownProfile;
 
-  /** The name of profile for SwingRemoteDrillDownUi. */
-  public static final String[] NAMES = { "remote-sugar" };
+  /** The names that SwingRemoteDrillDownUi is able to handle. */
+  private static final String[] NAMES_HANDLE = { "remote-sugar" };
+
+  /** Default name of the profile. */
+  public static final String NAME_DEFAULT = NAMES_HANDLE[ 0 ];
 
   /**
    * Create an implementation of SwingRemoteDrillDownUiProfile for Swing version of sugar-xaction-drilldown.xul dialog.
    */
   public SwingRemoteDrillDownUiProfile() {
-    drillDownProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( NAMES[0] );
+    drillDownProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( NAME_DEFAULT );
   }
 
   /**
@@ -69,8 +72,8 @@ public class SwingRemoteDrillDownUiProfile implements DrillDownUiProfile {
    */
   @Override
   public boolean canHandle( String profileName ) {
-    for ( int i = 0; i < NAMES.length; i++ ) {
-      final String name = NAMES[ i ];
+    for ( int i = 0; i < NAMES_HANDLE.length; i++ ) {
+      final String name = NAMES_HANDLE[ i ];
       if ( name.equals( profileName ) ) {
         return true;
       }

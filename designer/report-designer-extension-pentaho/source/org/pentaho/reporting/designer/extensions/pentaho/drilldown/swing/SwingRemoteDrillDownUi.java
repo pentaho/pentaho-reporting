@@ -294,7 +294,7 @@ public class SwingRemoteDrillDownUi implements DrillDownUi {
   ) throws DrillDownUiException {
     this.reportDesignerContext = reportDesignerContext;
     this.wrapper = new DrillDownModelWrapper( model );
-    model.setDrillDownConfig( SwingRemoteDrillDownUiProfile.NAMES[0] );
+    model.setDrillDownConfig( SwingRemoteDrillDownUiProfile.NAME_DEFAULT );
 
     controller = new SwingRemoteDrillDownController( this, reportDesignerContext, wrapper );
     controller.init();
