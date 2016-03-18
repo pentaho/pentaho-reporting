@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.drilldown.swing;
 
+import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterRefreshEvent;
@@ -32,7 +33,9 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
 import java.awt.Component;
@@ -42,9 +45,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Swing version of the self-drilldown.xul dialog.
+ * Swing version of the generic-url-drilldown.xul dialog.
  */
-public class SwingSelfDrillDownUi implements DrillDownUi {
+public class SwingGenericUrlDrillDownUi implements DrillDownUi {
 
   /** Main panel of the dialog. */
   private JPanel editor;
@@ -58,15 +61,35 @@ public class SwingSelfDrillDownUi implements DrillDownUi {
   /** Current active render-context holder. */
   private ReportDesignerContext reportDesignerContext;
 
+  private PathChangeHandler pathHandler;
+
   /**
-   * Create Swing version of the self-drilldown.xul dialog.
+   * Create Swing version of the generic-url-drilldown.xul dialog.
    */
-  public SwingSelfDrillDownUi() {
+  public SwingGenericUrlDrillDownUi() {
     SpringLayout layout = new SpringLayout();
     final int layoutIndent = 0;
 
     editor = new JPanel();
     editor.setLayout( layout );
+
+    JLabel pathLabel = new JLabel( Messages.getString( "DrillDownDialog.PathInput.Label" ) );
+    editor.add( pathLabel );
+    layout.putConstraint( SpringLayout.NORTH, pathLabel, layoutIndent, SpringLayout.NORTH, editor );
+    layout.putConstraint( SpringLayout.EAST, pathLabel, layoutIndent, SpringLayout.EAST, editor );
+    layout.putConstraint( SpringLayout.WEST, pathLabel, layoutIndent, SpringLayout.WEST, editor );
+
+    JTextField pathField = new JTextField();
+    pathField.getDocument().addDocumentListener( new DocumentBindingListener() {
+      @Override
+      protected void setData( String data ) {
+        getModel().setDrillDownPath( data );
+      }
+    } );
+    editor.add( pathField );
+    layout.putConstraint( SpringLayout.NORTH, pathField, layoutIndent, SpringLayout.SOUTH, pathLabel );
+    layout.putConstraint( SpringLayout.EAST, pathField, layoutIndent, SpringLayout.EAST, editor );
+    layout.putConstraint( SpringLayout.WEST, pathField, layoutIndent, SpringLayout.WEST, editor );
 
     table = new DrillDownParameterTable();
     table.setShowRefreshButton( false );
@@ -75,9 +98,8 @@ public class SwingSelfDrillDownUi implements DrillDownUi {
     table.setShowHideParameterUiCheckbox( false );
     table.addDrillDownParameterRefreshListener( new UpdateParametersHandler() );
     table.addPropertyChangeListener( DrillDownParameterTable.DRILL_DOWN_PARAMETER_PROPERTY, new TableModelBinding() );
-
     editor.add( table );
-    layout.putConstraint( SpringLayout.NORTH, table, layoutIndent, SpringLayout.NORTH, editor );
+    layout.putConstraint( SpringLayout.NORTH, table, layoutIndent, SpringLayout.SOUTH, pathField );
     layout.putConstraint( SpringLayout.EAST, table, layoutIndent, SpringLayout.EAST, editor );
     layout.putConstraint( SpringLayout.SOUTH, table, layoutIndent, SpringLayout.SOUTH, editor );
     layout.putConstraint( SpringLayout.WEST, table, layoutIndent, SpringLayout.WEST, editor );
@@ -127,8 +149,10 @@ public class SwingSelfDrillDownUi implements DrillDownUi {
                     String[] extraFields
   ) throws DrillDownUiException {
     this.reportDesignerContext = reportDesignerContext;
-    this.wrapper = new DrillDownModelWrapper( model );
-    model.setDrillDownConfig( SwingSelfDrillDownUiProfile.NAME_DEFAULT );
+    wrapper = new DrillDownModelWrapper( model );
+    model.setDrillDownConfig( SwingGenericUrlDrillDownUiProfile.NAME_DEFAULT );
+    pathHandler = new PathChangeHandler();
+    getModel().addPropertyChangeListener( DrillDownModel.DRILL_DOWN_PATH_PROPERTY, pathHandler );
 
     SwingUtilities.invokeLater( new Runnable() {
       @Override
@@ -143,7 +167,7 @@ public class SwingSelfDrillDownUi implements DrillDownUi {
    */
   @Override
   public void deactivate() {
-    // Nothing to deactivate --Kaa
+    getModel().removePropertyChangeListener( DrillDownModel.DRILL_DOWN_PATH_PROPERTY, pathHandler );
   }
 
   /**
@@ -220,4 +244,23 @@ public class SwingSelfDrillDownUi implements DrillDownUi {
       getTable().setDrillDownParameter( parameters );
     }
   }
+
+  private class PathChangeHandler implements PropertyChangeListener {
+
+    /**
+     * {@inheritDoc}
+     */
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      final String path = getModel().getDrillDownPath();
+      if ( StringUtils.isEmpty( path ) ) {
+        return;
+      }
+      if ( path.matches( "\\w+\\://.*" ) ) { //NON-NLS
+        getModel().setDrillDownConfig( "generic-url" ); //NON-NLS
+      } else {
+        getModel().setDrillDownConfig( "local-url" ); //NON-NLS
+      }
+    }
+  }
+
 }

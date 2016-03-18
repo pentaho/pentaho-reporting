@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.editor.drilldown;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownParameter;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTableModel;
 import org.pentaho.reporting.designer.core.util.table.GroupedName;
@@ -158,9 +159,9 @@ public class DrillDownParameterTableModel extends AbstractTableModel
    */
   public String getColumnName( final int column ) {
     if ( column == 0 ) {
-      return Messages.getString( "DrillDownDialog.ParameterTable.ParameterName" );
+      return Messages.getString( "DrillDownParameterTable.ParameterName" );
     }
-    return Messages.getString( "DrillDownDialog.ParameterTable.ParameterValue" );
+    return Messages.getString( "DrillDownParameterTable.ParameterValue" );
   }
 
 
