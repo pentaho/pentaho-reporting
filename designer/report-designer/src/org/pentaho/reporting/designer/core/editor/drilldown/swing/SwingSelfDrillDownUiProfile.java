@@ -72,7 +72,7 @@ public class SwingSelfDrillDownUiProfile implements DrillDownUiProfile {
    */
   @Override
   public boolean canHandle( String profileName ) {
-    for (int i = 0; i < NAMES_HANDLE.length; i++ ) {
+    for ( int i = 0; i < NAMES_HANDLE.length; i++ ) {
       final String name = NAMES_HANDLE[ i ];
       if ( name.equals( profileName ) ) {
         return true;
