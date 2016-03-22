@@ -75,8 +75,6 @@ public class LogCategoryItemLabelGenerator extends StandardCategoryItemLabelGene
       return NumberFormat.getNumberInstance().format( rawValue / 1000.0 ) + "K";
     } else if ( value < 1000000000.0 ) {
       return NumberFormat.getNumberInstance().format( rawValue / 1000000.0 ) + "M";
-    } else if ( value < 1000000000.0 ) {
-      return NumberFormat.getNumberInstance().format( rawValue / 1000000.0 ) + "M";
     } else if ( value < 1000000000000.0 ) {
       return NumberFormat.getNumberInstance().format( rawValue / 1000000000.0 ) + "B";
     } else {
