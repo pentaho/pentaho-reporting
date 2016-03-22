@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
@@ -1071,7 +1071,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
         if ( lastRow != state.getCurrentRow() ) {
           lastRow = state.getCurrentRow();
           if ( eventCount == 0 ) {
-            repaginationState.reuse( ReportProgressEvent.GENERATING_CONTENT, state, calculatePageCount( state ) );
+            repaginationState.reuse( ReportProgressEvent.GENERATING_CONTENT, state, calculatePageCount( state ), getLogicalPageCount() );
             fireStateUpdate( repaginationState );
             eventCount += 1;
           } else {
@@ -1444,7 +1444,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
         }
       } catch ( EmptyReportException re ) {
         throw re;
-      } catch( ReportInterruptedException interrupt ) {
+      } catch ( ReportInterruptedException interrupt ) {
         // log interruption stacktrace in case of debug level only
         // since interruption is ok.
         if ( AbstractReportProcessor.logger.isDebugEnabled() ) {
@@ -1460,7 +1460,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
             + ": Report processing failed.", e );
         throw new ReportProcessingException( "Failed to process the report", e );
       }
-      fireProcessingFinished( new ReportProgressEvent( this, getPhysicalPageCount() ) );
+      fireProcessingFinished( new ReportProgressEvent( this, getLogicalPageCount(), getLogicalPageCount() ) );
       if ( AbstractReportProcessor.logger.isDebugEnabled() ) {
         AbstractReportProcessor.logger.debug( System.identityHashCode( Thread.currentThread() )
             + ": Report processing finished." );
