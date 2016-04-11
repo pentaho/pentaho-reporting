@@ -352,7 +352,7 @@
               result="java.lang.Number" expert="false" hidden="false" preferred="false">
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
-    <property name="field" mandatory="true" preferred="true" value-role="Value" expert="false" hidden="false"/>
+    <property name="field" mandatory="true" preferred="true" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
               hidden="false"/>
