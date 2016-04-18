@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.event;
@@ -51,6 +51,8 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
    */
   public static final int GENERATING_CONTENT = 3;
 
+  private static final int DEFAULT_VALUE = -1;
+
   /**
    * The progress level is an indicator for the current processing level.
    */
@@ -81,20 +83,9 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
   private int page;
 
   /**
-   * Creates a new even without any properties defined. Use this to create a reusable event object.
-   *
-   * @param source
-   *          the report processor that generated this event.
+   * Total number of pages in the report
    */
-  public ReportProgressEvent( final Object source ) {
-    super( source );
-    this.maximumLevel = -1;
-    this.level = -1;
-    this.maximumRow = -1;
-    this.page = -1;
-    this.activity = COMPUTING_LAYOUT;
-    this.row = -1;
-  }
+  private int totalPages;
 
   /**
    * Creates a new even without any properties defined. Use this to create a reusable event object.
@@ -102,14 +93,48 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
    * @param source
    *          the report processor that generated this event.
    */
+  public ReportProgressEvent( final Object source ) {
+    super( source );
+    this.maximumLevel = DEFAULT_VALUE;
+    this.level = DEFAULT_VALUE;
+    this.maximumRow = DEFAULT_VALUE;
+    this.page = DEFAULT_VALUE;
+    this.totalPages = DEFAULT_VALUE;
+    this.activity = COMPUTING_LAYOUT;
+    this.row = DEFAULT_VALUE;
+  }
+
+  /**
+   * Creates a new even without any properties defined. Use this to create a reusable event object.
+   *
+   * @param source
+   *          the report processor that generated this event.
+   * @deprecated Use constructor with total pages instead
+   */
+  @Deprecated
   public ReportProgressEvent( final Object source, final int page ) {
     super( source );
-    this.maximumLevel = -1;
-    this.level = -1;
-    this.maximumRow = -1;
+    this.maximumLevel = DEFAULT_VALUE;
+    this.level = DEFAULT_VALUE;
+    this.maximumRow = DEFAULT_VALUE;
     this.page = page;
+    this.totalPages = DEFAULT_VALUE;
     this.activity = COMPUTING_LAYOUT;
-    this.row = -1;
+    this.row = DEFAULT_VALUE;
+  }
+
+
+  /**
+   * Creates a new even without any properties defined. Use this to create a reusable event object.
+   *
+   * @param source
+   *          the report processor that generated this event.
+   * @param totalPages
+   *          total pages in the report
+   */
+  public ReportProgressEvent( final Object source, final int page, final int totalPages ) {
+    this( source, page );
+    this.totalPages = totalPages;
   }
 
   /**
@@ -129,7 +154,9 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
    *          the current processing level.
    * @param maximumLevel
    *          the maximum processing level.
+   * @deprecated Use constructor with total pages instead
    */
+  @Deprecated
   public ReportProgressEvent( final Object source, final int activity, final int row, final int maximumRow,
       final int page, final int level, final int maximumLevel ) {
     super( source );
@@ -137,8 +164,36 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
     this.level = level;
     this.maximumRow = maximumRow;
     this.page = page;
+    this.totalPages = DEFAULT_VALUE;
     this.activity = activity;
     this.row = row;
+  }
+
+
+  /**
+   * Creates a new report-progress event.
+   *
+   * @param source
+   *          the report processor that generated this event.
+   * @param activity
+   *          the current activity.
+   * @param row
+   *          the currently processed row.
+   * @param maximumRow
+   *          the number of rows in this local report.
+   * @param page
+   *          the current page that is being processed.
+   * @param totalPages
+   *          total pages in the report
+   * @param level
+   *          the current processing level.
+   * @param maximumLevel
+   *          the maximum processing level.
+   */
+  public ReportProgressEvent( final Object source, final int activity, final int row, final int maximumRow,
+                              final int page, final int totalPages, final int level, final int maximumLevel ) {
+    this( source, activity, row, maximumRow, page, level, maximumLevel );
+    this.totalPages = totalPages;
   }
 
   /**
@@ -151,6 +206,7 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
         + ", row=" + row //$NON-NLS-1$
         + ", maximumRow=" + maximumRow //$NON-NLS-1$
         + ", page=" + page //$NON-NLS-1$
+        + ", totalPages=" + totalPages //$NON-NLS-1$
         + ", level=" + level //$NON-NLS-1$
         + ", maximumLevel=" + maximumLevel + ']'; //$NON-NLS-1$ //$NON-NLS-2$
   }
@@ -187,6 +243,15 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
   }
 
   /**
+   * Returns total number pages in the report
+   *
+   * @return total number pages in the report
+   */
+  public int getTotalPages() {
+    return totalPages;
+  }
+
+  /**
    * Returns the total number of rows contained in this report's datasource.
    *
    * @return the number of rows.
@@ -215,12 +280,17 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
   }
 
   public void reuse( final int activity, final ReportState rawState, final int pageCount ) {
+    reuse( activity, rawState, pageCount, this.totalPages );
+  }
+
+
+  public void reuse( final int activity, final ReportState rawState, final int pageCount, final int totalPages ) {
     ReportState state = rawState;
     while ( state.getParentState() != null ) {
       state = state.getParentState();
     }
-    reuse( activity, state.getCurrentRow(), state.getNumberOfRows(), pageCount, state.getProgressLevel(), state
-        .getProgressLevelCount() );
+    reuse( activity, state.getCurrentRow(), state.getNumberOfRows(), pageCount, totalPages, state.getProgressLevel(), state
+      .getProgressLevelCount() );
   }
 
   /**
@@ -250,6 +320,32 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
     this.level = level;
   }
 
+
+  /**
+   * Reuses the report event by updating the internal properties. This is used as simple mean to reduce the number of
+   * objects generated in the system and should not be used elsewhere.
+   *
+   * @param activity
+   *          the activity as constant.
+   * @param row
+   *          the current row.
+   * @param maximumRow
+   *          the total rows in the datasource.
+   * @param page
+   *          the current page.
+   * @param totalPages
+   *          total pages in the report
+   * @param level
+   *          the current processing level.
+   * @param maximumLevel
+   *          the maximum processing level.
+   */
+  public void reuse( final int activity, final int row, final int maximumRow, final int page, final int totalPages, final int level,
+                     final int maximumLevel ) {
+    reuse( activity, row, maximumRow, page, level, maximumLevel );
+    this.totalPages = totalPages;
+  }
+
   /**
    * Creats a copy of the current instance of this object.
    *
@@ -258,7 +354,7 @@ public class ReportProgressEvent extends EventObject implements Cloneable {
   public Object clone() {
     try {
       return super.clone();
-    } catch ( CloneNotSupportedException e ) {
+    } catch ( final CloneNotSupportedException e ) {
       throw new IllegalStateException( "Cloning not successful." );
     }
   }

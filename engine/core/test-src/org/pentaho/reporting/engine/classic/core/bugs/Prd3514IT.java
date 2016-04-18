@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
@@ -169,6 +169,7 @@ public class Prd3514IT extends TestCase {
   }
 
   public void testWeirdTocLayout() throws ReportProcessingException, ContentProcessingException {
+
     Element textField = new Element();
     textField.setName( "textField" );
     textField.getStyle().setStyleProperty( TextStyleKeys.FONT, "Arial" );
@@ -235,6 +236,11 @@ public class Prd3514IT extends TestCase {
   }
 
   public void testWeirdTocLayoutComplex() throws ReportProcessingException, ContentProcessingException {
+
+    if ( !DebugReportRunner.isSafeToTestComplexText() ) {
+      return;
+    }
+
     Element textField = new Element();
     textField.setName( "textField" );
     textField.getStyle().setStyleProperty( TextStyleKeys.FONT, "Arial" );
