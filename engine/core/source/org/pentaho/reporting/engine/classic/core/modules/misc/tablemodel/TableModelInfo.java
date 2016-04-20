@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
@@ -186,7 +186,7 @@ public final class TableModelInfo {
 
   private static String format( final Object value ) {
     if ( value instanceof Float || value instanceof Double ) {
-      final DecimalFormat fmt = new DecimalFormat( "#0.0###", new DecimalFormatSymbols( Locale.US ) );
+      final DecimalFormat fmt = new DecimalFormat( "#0.000", new DecimalFormatSymbols( Locale.US ) );
       return fmt.format( value );
     }
     return String.valueOf( value );

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
@@ -46,21 +46,21 @@ public class DataFactoryScriptSupportIT extends TestCase {
       + "} \n" + "\n";
 
   private String queryScript = "var localScopeVariable = 'local'; \n" + "function initQuery ()  \n" + "{ \n"
-      + "  println ('Init ');\n" + "  if (localScopeVariable == null) throw 'error';  \n"
+      + "  print ('Init ');\n" + "  if (localScopeVariable == null) throw 'error';  \n"
       + "  if (globalScopeVariable == null) throw 'error';  \n" + "  if (resourceManager == null) throw 'error';  \n"
       + "  if (dataFactory == null) throw 'error';  \n" + "  if (configuration == null) throw 'error'; \n"
       + "  if (contextKey == null) throw 'error';  \n" + "  if (resourceBundleFactory == null) throw 'error';  \n"
       + "} \n" + "\n" + "function computeQueryFields (query, queryName)  \n" + "{ \n"
-      + "  println ('computeQueryFields ' + query);\n" + "  if (localScopeVariable == null) throw 'error';  \n"
+      + "  print ('computeQueryFields ' + query);\n" + "  if (localScopeVariable == null) throw 'error';  \n"
       + "  if (globalScopeVariable == null) throw 'error';  \n" + "  if (resourceManager == null) throw 'error';  \n"
       + "  if (dataFactory == null) throw 'error';  \n" + "  if (configuration == null) throw 'error'; \n"
       + "  if (contextKey == null) throw 'error';  \n" + "  if (resourceBundleFactory == null) throw 'error'; \n"
       + "  return ['one', 'two'];\n" + "} \n" + "\n" + "function computeQuery (query, queryName, dataRow)  \n" + "{ \n"
-      + "  println ('computeQuery ' + query);" + "  if (localScopeVariable == null) throw 'error';  \n"
+      + "  print ('computeQuery ' + query);" + "  if (localScopeVariable == null) throw 'error';  \n"
       + "  if (globalScopeVariable == null) throw 'error';  \n" + "  if (resourceManager == null) throw 'error';  \n"
       + "  if (dataFactory == null) throw 'error';  \n" + "  if (configuration == null) throw 'error'; \n"
       + "  if (contextKey == null) throw 'error';  \n" + "  if (resourceBundleFactory == null) throw 'error'; \n"
-      + "  return 'result'; \n" + "} \n" + "\n" + "function shutdown ()  \n" + "{ \n" + "  println ('shutdown ');"
+      + "  return 'result'; \n" + "} \n" + "\n" + "function shutdown ()  \n" + "{ \n" + "  print ('shutdown ');"
       + "  if (localScopeVariable == null) throw 'error';  \n"
       + "  if (globalScopeVariable == null) throw 'error';  \n" + "  if (resourceManager == null) throw 'error';  \n"
       + "  if (dataFactory == null) throw 'error';  \n" + "  if (configuration == null) throw 'error'; \n"
@@ -68,24 +68,32 @@ public class DataFactoryScriptSupportIT extends TestCase {
       + "} \n" + "\n";
 
   private String queryScript2 = "var localScopeVariable = 'local'; \n" + "function initQuery ()  \n" + "{ \n"
-      + "  println ('Init ');\n" + "  if (localScopeVariable == null) throw 'error';  \n"
+      + "  print ('Init ');\n" + "  if (localScopeVariable == null) throw 'error';  \n"
       + "  if (resourceManager == null) throw 'error';  \n" + "  if (dataFactory == null) throw 'error';  \n"
       + "  if (configuration == null) throw 'error'; \n" + "  if (contextKey == null) throw 'error';  \n"
       + "  if (resourceBundleFactory == null) throw 'error';  \n" + "} \n" + "\n"
-      + "function computeQueryFields (query, queryName)  \n" + "{ \n" + "  println ('computeQueryFields ' + query);\n"
+      + "function computeQueryFields (query, queryName)  \n" + "{ \n" + "  print ('computeQueryFields ' + query);\n"
       + "  if (localScopeVariable == null) throw 'error';  \n" + "  if (resourceManager == null) throw 'error';  \n"
       + "  if (dataFactory == null) throw 'error';  \n" + "  if (configuration == null) throw 'error'; \n"
       + "  if (contextKey == null) throw 'error';  \n" + "  if (resourceBundleFactory == null) throw 'error'; \n"
       + "  return ['one', 'two'];\n" + "} \n" + "\n" + "function computeQuery (query, queryName, dataRow)  \n" + "{ \n"
-      + "  println ('computeQuery ' + query);" + "  if (localScopeVariable == null) throw 'error';  \n"
+      + "  print ('computeQuery ' + query);" + "  if (localScopeVariable == null) throw 'error';  \n"
       + "  if (resourceManager == null) throw 'error';  \n" + "  if (dataFactory == null) throw 'error';  \n"
       + "  if (configuration == null) throw 'error'; \n" + "  if (contextKey == null) throw 'error';  \n"
       + "  if (resourceBundleFactory == null) throw 'error'; \n" + "  return 'result'; \n" + "} \n" + "\n"
-      + "function shutdown ()  \n" + "{ \n" + "  println ('shutdown ');"
+      + "function shutdown ()  \n" + "{ \n" + "  print ('shutdown ');"
       + "  if (localScopeVariable == null) throw 'error';  \n" + "  if (resourceManager == null) throw 'error';  \n"
       + "  if (dataFactory == null) throw 'error';  \n" + "  if (configuration == null) throw 'error'; \n"
       + "  if (contextKey == null) throw 'error';  \n" + "  if (resourceBundleFactory == null) throw 'error'; \n"
       + "} \n" + "\n";
+
+  private String queryScript3 = " var globalScopeVariable = 'override';\n"
+    + "    function initQuery (){\n"
+    + "      if(globalScopeVariable!='override'){\n"
+    + "        throw 'error';\n"
+    + "      }\n"
+    + "    }";
+
 
   public DataFactoryScriptSupportIT() {
   }
@@ -174,6 +182,26 @@ public class DataFactoryScriptSupportIT extends TestCase {
     } finally {
       sqlReportDataFactory.close();
     }
+  }
+
+
+  public void testOverrideGlobal() throws ReportDataFactoryException {
+    final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
+
+    final DataFactoryScriptingSupport support = new DataFactoryScriptingSupport();
+    support.setGlobalScriptLanguage( "JavaScript" );
+    support.setGlobalScript( globalScript );
+    support.initialize( new TableDataFactory(),
+      new DesignTimeDataFactoryContext( ClassicEngineBoot.getInstance().getGlobalConfig(), mgr, new ResourceKey(
+        "dummy", "dummy", new HashMap() ), new DefaultResourceBundleFactory() ) );
+    support.setQuery( "test", "test-query", null, null );
+    support.setQuery( "test-script", "test-query-3", "JavaScript", queryScript3 );
+
+
+    support.computeQuery( "test-script", new ParameterDataRow() );
+
+    support.shutdown();
   }
 
   private void assertEqualsArray( final String[] o, final String[] strings ) {

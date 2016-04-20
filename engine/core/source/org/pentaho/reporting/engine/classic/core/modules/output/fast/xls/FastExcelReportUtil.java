@@ -12,13 +12,14 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
 
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
 
@@ -31,29 +32,58 @@ public class FastExcelReportUtil {
 
   public static void processXls( final MasterReport report, final OutputStream out ) throws ReportProcessingException,
     IOException {
-    ReportStructureValidator validator = new ReportStructureValidator();
-    if ( validator.isValidForFastProcessing( report ) == false ) {
-      ExcelReportUtil.createXLS( report, out );
-      return;
-    }
-
-    final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor( report, out, false );
-    reportProcessor.processReport();
-    reportProcessor.close();
-    out.flush();
+    processXls( report, out, null );
   }
 
   public static void processXlsx( final MasterReport report, final OutputStream out ) throws ReportProcessingException,
     IOException {
+    processXlsx( report, out, null );
+  }
+
+
+  public static void processXls( final MasterReport report, final OutputStream out,
+                                 final ReportProgressListener listener ) throws ReportProcessingException,
+    IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
     if ( validator.isValidForFastProcessing( report ) == false ) {
-      ExcelReportUtil.createXLSX( report, out );
+      ExcelReportUtil.createXLS( report, out, listener );
+      return;
+    }
+
+    final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor( report, out, false );
+    if ( listener != null ) {
+      reportProcessor.addReportProgressListener( listener );
+    }
+    doProcess( listener, reportProcessor );
+    out.flush();
+  }
+
+  public static void processXlsx( final MasterReport report, final OutputStream out,
+                                  final ReportProgressListener listener ) throws ReportProcessingException,
+    IOException {
+    ReportStructureValidator validator = new ReportStructureValidator();
+    if ( validator.isValidForFastProcessing( report ) == false ) {
+      ExcelReportUtil.createXLSX( report, out, listener );
       return;
     }
 
     final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor( report, out, true );
-    reportProcessor.processReport();
-    reportProcessor.close();
+    if ( listener != null ) {
+      reportProcessor.addReportProgressListener( listener );
+    }
+    doProcess( listener, reportProcessor );
     out.flush();
+  }
+
+  private static void doProcess( final ReportProgressListener listener, final FastExcelExportProcessor reportProcessor )
+    throws ReportProcessingException {
+    try {
+      reportProcessor.processReport();
+    } finally {
+      if ( listener != null ) {
+        reportProcessor.removeReportProgressListener( listener );
+      }
+      reportProcessor.close();
+    }
   }
 }
