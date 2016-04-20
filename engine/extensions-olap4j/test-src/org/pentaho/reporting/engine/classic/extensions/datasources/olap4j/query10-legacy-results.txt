@@ -33,7 +33,7 @@ CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=36439.0
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=36439.000
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -49,7 +49,7 @@ CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3677384.0
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3677384.000
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -65,7 +65,7 @@ CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=49417.0
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=49417.000
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -81,7 +81,7 @@ CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=4987739.84
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=4987739.840
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -97,7 +97,7 @@ CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=19475.0
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=19475.000
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -113,7 +113,7 @@ CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1980825.34
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1980825.340
 Tablemodel contains 3 rows.
 Column: 0 Name=Time; DataType=class java.lang.String
 Column: 1 Name=Time{1}; DataType=class java.lang.String
@@ -122,13 +122,13 @@ Column: 3 Name=Sales/Measures; DataType=class java.lang.Double
 Checking the data inside
 ValueAt (0, 0) is '2003'
 ValueAt (0, 1) is 'Time'
-ValueAt (0, 2) is '36439.0'
-ValueAt (0, 3) is '3677384.0'
+ValueAt (0, 2) is '36439.000'
+ValueAt (0, 3) is '3677384.000'
 ValueAt (1, 0) is '2004'
 ValueAt (1, 1) is 'Time'
-ValueAt (1, 2) is '49417.0'
-ValueAt (1, 3) is '4987739.84'
+ValueAt (1, 2) is '49417.000'
+ValueAt (1, 3) is '4987739.840'
 ValueAt (2, 0) is '2005'
 ValueAt (2, 1) is 'Time'
-ValueAt (2, 2) is '19475.0'
-ValueAt (2, 3) is '1980825.34'
+ValueAt (2, 2) is '19475.000'
+ValueAt (2, 3) is '1980825.340'

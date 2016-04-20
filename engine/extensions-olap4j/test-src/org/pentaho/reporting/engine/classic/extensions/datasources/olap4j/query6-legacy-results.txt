@@ -299,7 +299,7 @@ CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1052.0
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1052.000
 CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -315,7 +315,7 @@ CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=5853.0
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=5853.000
 CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -331,7 +331,7 @@ CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=898.0
+CellAttribute(0, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=898.000
 CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -347,7 +347,7 @@ CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=4959.0
+CellAttribute(0, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=4959.000
 CellAttribute(0, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -379,7 +379,7 @@ CellAttribute(0, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=654.0
+CellAttribute(0, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=654.000
 CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -395,7 +395,7 @@ CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1428.0
+CellAttribute(0, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1428.000
 CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -411,7 +411,7 @@ CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=205.0
+CellAttribute(0, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=205.000
 CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -427,7 +427,7 @@ CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1744.0
+CellAttribute(0, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1744.000
 CellAttribute(0, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -459,7 +459,7 @@ CellAttribute(0, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=456.0
+CellAttribute(0, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=456.000
 CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -475,7 +475,7 @@ CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1723.0
+CellAttribute(0, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1723.000
 CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -491,7 +491,7 @@ CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=677.0
+CellAttribute(0, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=677.000
 CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -507,7 +507,7 @@ CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=977.0
+CellAttribute(0, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=977.000
 CellAttribute(0, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -555,7 +555,7 @@ CellAttribute(0, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1968.0
+CellAttribute(0, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1968.000
 CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -571,7 +571,7 @@ CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=174.0
+CellAttribute(0, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=174.000
 CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -587,7 +587,7 @@ CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=702.0
+CellAttribute(0, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=702.000
 CellAttribute(0, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -619,7 +619,7 @@ CellAttribute(0, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=33.0
+CellAttribute(0, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=33.000
 CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -635,7 +635,7 @@ CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=384.0
+CellAttribute(0, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=384.000
 CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -651,7 +651,7 @@ CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=174.0
+CellAttribute(0, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=174.000
 CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -667,7 +667,7 @@ CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=409.0
+CellAttribute(0, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=409.000
 CellAttribute(0, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -699,7 +699,7 @@ CellAttribute(0, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=91.0
+CellAttribute(0, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=91.000
 CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -715,7 +715,7 @@ CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2261.0
+CellAttribute(0, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2261.000
 CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -731,7 +731,7 @@ CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=415.0
+CellAttribute(0, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=415.000
 CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -747,7 +747,7 @@ CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1289.0
+CellAttribute(0, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1289.000
 CellAttribute(0, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -779,7 +779,7 @@ CellAttribute(0, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1243.0
+CellAttribute(0, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1243.000
 CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -795,7 +795,7 @@ CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3094.0
+CellAttribute(0, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3094.000
 CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -811,7 +811,7 @@ CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=308.0
+CellAttribute(0, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=308.000
 CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -827,7 +827,7 @@ CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3268.0
+CellAttribute(0, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3268.000
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -859,7 +859,7 @@ CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1785.0
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1785.000
 CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -875,7 +875,7 @@ CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=8976.0
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=8976.000
 CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -891,7 +891,7 @@ CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=307.0
+CellAttribute(1, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=307.000
 CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -907,7 +907,7 @@ CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=5017.0
+CellAttribute(1, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=5017.000
 CellAttribute(1, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -939,7 +939,7 @@ CellAttribute(1, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=540.0
+CellAttribute(1, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=540.000
 CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -955,7 +955,7 @@ CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2177.0
+CellAttribute(1, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2177.000
 CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -971,7 +971,7 @@ CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=380.0
+CellAttribute(1, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=380.000
 CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -987,7 +987,7 @@ CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2809.0
+CellAttribute(1, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2809.000
 CellAttribute(1, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1019,7 +1019,7 @@ CellAttribute(1, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=723.0
+CellAttribute(1, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=723.000
 CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1035,7 +1035,7 @@ CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2326.0
+CellAttribute(1, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2326.000
 CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1051,7 +1051,7 @@ CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=547.0
+CellAttribute(1, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=547.000
 CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1067,7 +1067,7 @@ CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2224.0
+CellAttribute(1, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2224.000
 CellAttribute(1, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1099,7 +1099,7 @@ CellAttribute(1, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=396.0
+CellAttribute(1, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=396.000
 CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1115,7 +1115,7 @@ CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2144.0
+CellAttribute(1, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2144.000
 CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1131,7 +1131,7 @@ CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=127.0
+CellAttribute(1, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=127.000
 CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1147,7 +1147,7 @@ CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1642.0
+CellAttribute(1, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1642.000
 CellAttribute(1, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1179,7 +1179,7 @@ CellAttribute(1, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=106.0
+CellAttribute(1, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=106.000
 CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1195,7 +1195,7 @@ CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=977.0
+CellAttribute(1, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=977.000
 CellAttribute(1, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1227,7 +1227,7 @@ CellAttribute(1, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=326.0
+CellAttribute(1, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=326.000
 CellAttribute(1, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1259,7 +1259,7 @@ CellAttribute(1, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=801.0
+CellAttribute(1, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=801.000
 CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1275,7 +1275,7 @@ CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1558.0
+CellAttribute(1, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1558.000
 CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1291,7 +1291,7 @@ CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=102.0
+CellAttribute(1, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=102.000
 CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1307,7 +1307,7 @@ CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2563.0
+CellAttribute(1, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2563.000
 CellAttribute(1, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1339,7 +1339,7 @@ CellAttribute(1, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1587.0
+CellAttribute(1, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1587.000
 CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1355,7 +1355,7 @@ CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=5472.0
+CellAttribute(1, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=5472.000
 CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1371,7 +1371,7 @@ CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=229.0
+CellAttribute(1, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=229.000
 CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1387,7 +1387,7 @@ CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3576.0
+CellAttribute(1, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3576.000
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1419,7 +1419,7 @@ CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1015.0
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1015.000
 CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1435,7 +1435,7 @@ CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3463.0
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3463.000
 CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1451,7 +1451,7 @@ CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=122.0
+CellAttribute(2, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=122.000
 CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1467,7 +1467,7 @@ CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2105.0
+CellAttribute(2, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2105.000
 CellAttribute(2, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1499,7 +1499,7 @@ CellAttribute(2, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=658.0
+CellAttribute(2, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=658.000
 CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1515,7 +1515,7 @@ CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1501.0
+CellAttribute(2, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1501.000
 CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1531,7 +1531,7 @@ CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=44.0
+CellAttribute(2, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=44.000
 CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1547,7 +1547,7 @@ CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=568.0
+CellAttribute(2, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=568.000
 CellAttribute(2, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1579,7 +1579,7 @@ CellAttribute(2, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=151.0
+CellAttribute(2, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=151.000
 CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1595,7 +1595,7 @@ CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1464.0
+CellAttribute(2, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1464.000
 CellAttribute(2, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1627,7 +1627,7 @@ CellAttribute(2, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=592.0
+CellAttribute(2, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=592.000
 CellAttribute(2, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1659,7 +1659,7 @@ CellAttribute(2, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=32.0
+CellAttribute(2, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=32.000
 CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1675,7 +1675,7 @@ CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=696.0
+CellAttribute(2, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=696.000
 CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1691,7 +1691,7 @@ CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=81.0
+CellAttribute(2, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=81.000
 CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1707,7 +1707,7 @@ CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=537.0
+CellAttribute(2, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=537.000
 CellAttribute(2, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1755,7 +1755,7 @@ CellAttribute(2, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=183.0
+CellAttribute(2, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=183.000
 CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1771,7 +1771,7 @@ CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=49.0
+CellAttribute(2, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=49.000
 CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1787,7 +1787,7 @@ CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=177.0
+CellAttribute(2, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=177.000
 CellAttribute(2, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1819,7 +1819,7 @@ CellAttribute(2, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=488.0
+CellAttribute(2, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=488.000
 CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1835,7 +1835,7 @@ CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=836.0
+CellAttribute(2, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=836.000
 CellAttribute(2, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1867,7 +1867,7 @@ CellAttribute(2, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=597.0
+CellAttribute(2, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=597.000
 CellAttribute(2, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1899,7 +1899,7 @@ CellAttribute(2, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1067.0
+CellAttribute(2, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1067.000
 CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1915,7 +1915,7 @@ CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1094.0
+CellAttribute(2, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1094.000
 CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1931,7 +1931,7 @@ CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=84.0
+CellAttribute(2, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=84.000
 CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1947,7 +1947,7 @@ CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1871.0
+CellAttribute(2, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1871.000
 CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1979,7 +1979,7 @@ CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=115010.77
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=115010.770
 CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -1995,7 +1995,7 @@ CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=691272.59
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=691272.590
 CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2011,7 +2011,7 @@ CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=120695.9
+CellAttribute(3, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=120695.900
 CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2027,7 +2027,7 @@ CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=587428.16
+CellAttribute(3, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=587428.160
 CellAttribute(3, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2059,7 +2059,7 @@ CellAttribute(3, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=60789.45
+CellAttribute(3, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=60789.450
 CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2075,7 +2075,7 @@ CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=141836.36
+CellAttribute(3, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=141836.360
 CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2091,7 +2091,7 @@ CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=16484.95
+CellAttribute(3, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=16484.950
 CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2107,7 +2107,7 @@ CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=178108.95
+CellAttribute(3, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=178108.950
 CellAttribute(3, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2139,7 +2139,7 @@ CellAttribute(3, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=42663.21
+CellAttribute(3, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=42663.210
 CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2155,7 +2155,7 @@ CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=154519.18
+CellAttribute(3, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=154519.180
 CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2171,7 +2171,7 @@ CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=60556.18
+CellAttribute(3, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=60556.180
 CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2187,7 +2187,7 @@ CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=90016.44
+CellAttribute(3, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=90016.440
 CellAttribute(3, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2235,7 +2235,7 @@ CellAttribute(3, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=172427.98
+CellAttribute(3, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=172427.980
 CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2251,7 +2251,7 @@ CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=14155.52
+CellAttribute(3, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=14155.520
 CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2267,7 +2267,7 @@ CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=58237.59
+CellAttribute(3, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=58237.590
 CellAttribute(3, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2299,7 +2299,7 @@ CellAttribute(3, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1681.35
+CellAttribute(3, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1681.350
 CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2315,7 +2315,7 @@ CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=29538.1
+CellAttribute(3, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=29538.100
 CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2331,7 +2331,7 @@ CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=13278.71
+CellAttribute(3, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=13278.710
 CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2347,7 +2347,7 @@ CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=28304.13
+CellAttribute(3, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=28304.130
 CellAttribute(3, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2379,7 +2379,7 @@ CellAttribute(3, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=11297.54
+CellAttribute(3, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=11297.540
 CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2395,7 +2395,7 @@ CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=228698.65
+CellAttribute(3, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=228698.650
 CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2411,7 +2411,7 @@ CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=44498.22
+CellAttribute(3, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=44498.220
 CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2427,7 +2427,7 @@ CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=135935.52
+CellAttribute(3, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=135935.520
 CellAttribute(3, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2459,7 +2459,7 @@ CellAttribute(3, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=111639.3
+CellAttribute(3, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=111639.300
 CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2475,7 +2475,7 @@ CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=263694.6
+CellAttribute(3, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=263694.600
 CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2491,7 +2491,7 @@ CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=22888.06
+CellAttribute(3, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=22888.060
 CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2507,7 +2507,7 @@ CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=281726.59
+CellAttribute(3, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=281726.590
 CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2539,7 +2539,7 @@ CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=199371.69
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=199371.690
 CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2555,7 +2555,7 @@ CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1015789.94
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1015789.940
 CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2571,7 +2571,7 @@ CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=42070.57
+CellAttribute(4, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=42070.570
 CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2587,7 +2587,7 @@ CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=581042.65
+CellAttribute(4, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=581042.650
 CellAttribute(4, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2619,7 +2619,7 @@ CellAttribute(4, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(4, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=63158.99
+CellAttribute(4, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=63158.990
 CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2635,7 +2635,7 @@ CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=204041.74
+CellAttribute(4, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=204041.740
 CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2651,7 +2651,7 @@ CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=31958.94
+CellAttribute(4, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=31958.940
 CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2667,7 +2667,7 @@ CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=291420.58
+CellAttribute(4, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=291420.580
 CellAttribute(4, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2699,7 +2699,7 @@ CellAttribute(4, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=67681.21
+CellAttribute(4, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=67681.210
 CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2715,7 +2715,7 @@ CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=209127.94
+CellAttribute(4, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=209127.940
 CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2731,7 +2731,7 @@ CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=49176.96
+CellAttribute(4, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=49176.960
 CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2747,7 +2747,7 @@ CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=202941.83
+CellAttribute(4, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=202941.830
 CellAttribute(4, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2779,7 +2779,7 @@ CellAttribute(4, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=35323.08
+CellAttribute(4, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=35323.080
 CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2795,7 +2795,7 @@ CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=186991.91
+CellAttribute(4, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=186991.910
 CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2811,7 +2811,7 @@ CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=10452.69
+CellAttribute(4, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=10452.690
 CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2827,7 +2827,7 @@ CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=142904.01
+CellAttribute(4, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=142904.010
 CellAttribute(4, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2859,7 +2859,7 @@ CellAttribute(4, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=8225.72
+CellAttribute(4, 24) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=8225.720
 CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2875,7 +2875,7 @@ CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=90972.79
+CellAttribute(4, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=90972.790
 CellAttribute(4, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2907,7 +2907,7 @@ CellAttribute(4, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=25551.06
+CellAttribute(4, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=25551.060
 CellAttribute(4, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2939,7 +2939,7 @@ CellAttribute(4, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=80633.55
+CellAttribute(4, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=80633.550
 CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2955,7 +2955,7 @@ CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=185421.17
+CellAttribute(4, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=185421.170
 CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2971,7 +2971,7 @@ CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=13349.44
+CellAttribute(4, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=13349.440
 CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -2987,7 +2987,7 @@ CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=252571.73
+CellAttribute(4, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=252571.730
 CellAttribute(4, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3019,7 +3019,7 @@ CellAttribute(4, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=147211.85
+CellAttribute(4, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=147211.850
 CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3035,7 +3035,7 @@ CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=504062.38
+CellAttribute(4, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=504062.380
 CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3051,7 +3051,7 @@ CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=21470.5
+CellAttribute(4, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=21470.500
 CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3067,7 +3067,7 @@ CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=324814.92
+CellAttribute(4, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=324814.920
 CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3099,7 +3099,7 @@ CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=97573.84
+CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=97573.840
 CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3115,7 +3115,7 @@ CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=384538.11
+CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=384538.110
 CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3131,7 +3131,7 @@ CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=18835.02
+CellAttribute(5, 6) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=18835.020
 CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3147,7 +3147,7 @@ CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=237790.63
+CellAttribute(5, 7) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=237790.630
 CellAttribute(5, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 8) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3179,7 +3179,7 @@ CellAttribute(5, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=65869.79
+CellAttribute(5, 9) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=65869.790
 CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3195,7 +3195,7 @@ CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=161260.18
+CellAttribute(5, 10) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=161260.180
 CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3211,7 +3211,7 @@ CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=4175.6
+CellAttribute(5, 11) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=4175.600
 CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3227,7 +3227,7 @@ CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=55019.66
+CellAttribute(5, 12) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=55019.660
 CellAttribute(5, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 13) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3259,7 +3259,7 @@ CellAttribute(5, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=11081.78
+CellAttribute(5, 14) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=11081.780
 CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3275,7 +3275,7 @@ CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=128007.7
+CellAttribute(5, 15) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=128007.700
 CellAttribute(5, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 16) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3307,7 +3307,7 @@ CellAttribute(5, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=60984.69
+CellAttribute(5, 17) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=60984.690
 CellAttribute(5, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 18) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3339,7 +3339,7 @@ CellAttribute(5, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3070.4
+CellAttribute(5, 19) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3070.400
 CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3355,7 +3355,7 @@ CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=67844.79
+CellAttribute(5, 20) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=67844.790
 CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3371,7 +3371,7 @@ CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=8407.33
+CellAttribute(5, 21) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=8407.330
 CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3387,7 +3387,7 @@ CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=48855.55
+CellAttribute(5, 22) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=48855.550
 CellAttribute(5, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 23) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3435,7 +3435,7 @@ CellAttribute(5, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=17995.29
+CellAttribute(5, 25) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=17995.290
 CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3451,7 +3451,7 @@ CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3523.67
+CellAttribute(5, 26) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3523.670
 CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3467,7 +3467,7 @@ CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=15398.37
+CellAttribute(5, 27) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=15398.370
 CellAttribute(5, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 28) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3499,7 +3499,7 @@ CellAttribute(5, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=53734.6
+CellAttribute(5, 29) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=53734.600
 CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3515,7 +3515,7 @@ CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=86859.0
+CellAttribute(5, 30) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=86859.000
 CellAttribute(5, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 31) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3547,7 +3547,7 @@ CellAttribute(5, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=61281.15
+CellAttribute(5, 32) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=61281.150
 CellAttribute(5, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 33) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3579,7 +3579,7 @@ CellAttribute(5, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=105687.77
+CellAttribute(5, 34) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=105687.770
 CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3595,7 +3595,7 @@ CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=83323.92
+CellAttribute(5, 35) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=83323.920
 CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3611,7 +3611,7 @@ CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=7979.32
+CellAttribute(5, 36) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=7979.320
 CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
 CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
@@ -3627,7 +3627,7 @@ CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=191727.18
+CellAttribute(5, 37) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=191727.180
 Tablemodel contains 6 rows.
 Column: 0 Name=Measures; DataType=class java.lang.String
 Column: 1 Name=Time; DataType=class java.lang.String
@@ -3672,227 +3672,227 @@ ValueAt (0, 0) is 'Quantity'
 ValueAt (0, 1) is '2003'
 ValueAt (0, 2) is 'Time'
 ValueAt (0, 3) is 'null'
-ValueAt (0, 4) is '1052.0'
-ValueAt (0, 5) is '5853.0'
-ValueAt (0, 6) is '898.0'
-ValueAt (0, 7) is '4959.0'
+ValueAt (0, 4) is '1052.000'
+ValueAt (0, 5) is '5853.000'
+ValueAt (0, 6) is '898.000'
+ValueAt (0, 7) is '4959.000'
 ValueAt (0, 8) is 'null'
-ValueAt (0, 9) is '654.0'
-ValueAt (0, 10) is '1428.0'
-ValueAt (0, 11) is '205.0'
-ValueAt (0, 12) is '1744.0'
+ValueAt (0, 9) is '654.000'
+ValueAt (0, 10) is '1428.000'
+ValueAt (0, 11) is '205.000'
+ValueAt (0, 12) is '1744.000'
 ValueAt (0, 13) is 'null'
-ValueAt (0, 14) is '456.0'
-ValueAt (0, 15) is '1723.0'
-ValueAt (0, 16) is '677.0'
-ValueAt (0, 17) is '977.0'
+ValueAt (0, 14) is '456.000'
+ValueAt (0, 15) is '1723.000'
+ValueAt (0, 16) is '677.000'
+ValueAt (0, 17) is '977.000'
 ValueAt (0, 18) is 'null'
 ValueAt (0, 19) is 'null'
-ValueAt (0, 20) is '1968.0'
-ValueAt (0, 21) is '174.0'
-ValueAt (0, 22) is '702.0'
+ValueAt (0, 20) is '1968.000'
+ValueAt (0, 21) is '174.000'
+ValueAt (0, 22) is '702.000'
 ValueAt (0, 23) is 'null'
-ValueAt (0, 24) is '33.0'
-ValueAt (0, 25) is '384.0'
-ValueAt (0, 26) is '174.0'
-ValueAt (0, 27) is '409.0'
+ValueAt (0, 24) is '33.000'
+ValueAt (0, 25) is '384.000'
+ValueAt (0, 26) is '174.000'
+ValueAt (0, 27) is '409.000'
 ValueAt (0, 28) is 'null'
-ValueAt (0, 29) is '91.0'
-ValueAt (0, 30) is '2261.0'
-ValueAt (0, 31) is '415.0'
-ValueAt (0, 32) is '1289.0'
+ValueAt (0, 29) is '91.000'
+ValueAt (0, 30) is '2261.000'
+ValueAt (0, 31) is '415.000'
+ValueAt (0, 32) is '1289.000'
 ValueAt (0, 33) is 'null'
-ValueAt (0, 34) is '1243.0'
-ValueAt (0, 35) is '3094.0'
-ValueAt (0, 36) is '308.0'
-ValueAt (0, 37) is '3268.0'
+ValueAt (0, 34) is '1243.000'
+ValueAt (0, 35) is '3094.000'
+ValueAt (0, 36) is '308.000'
+ValueAt (0, 37) is '3268.000'
 ValueAt (1, 0) is 'Quantity'
 ValueAt (1, 1) is '2004'
 ValueAt (1, 2) is 'Time'
 ValueAt (1, 3) is 'null'
-ValueAt (1, 4) is '1785.0'
-ValueAt (1, 5) is '8976.0'
-ValueAt (1, 6) is '307.0'
-ValueAt (1, 7) is '5017.0'
+ValueAt (1, 4) is '1785.000'
+ValueAt (1, 5) is '8976.000'
+ValueAt (1, 6) is '307.000'
+ValueAt (1, 7) is '5017.000'
 ValueAt (1, 8) is 'null'
-ValueAt (1, 9) is '540.0'
-ValueAt (1, 10) is '2177.0'
-ValueAt (1, 11) is '380.0'
-ValueAt (1, 12) is '2809.0'
+ValueAt (1, 9) is '540.000'
+ValueAt (1, 10) is '2177.000'
+ValueAt (1, 11) is '380.000'
+ValueAt (1, 12) is '2809.000'
 ValueAt (1, 13) is 'null'
-ValueAt (1, 14) is '723.0'
-ValueAt (1, 15) is '2326.0'
-ValueAt (1, 16) is '547.0'
-ValueAt (1, 17) is '2224.0'
+ValueAt (1, 14) is '723.000'
+ValueAt (1, 15) is '2326.000'
+ValueAt (1, 16) is '547.000'
+ValueAt (1, 17) is '2224.000'
 ValueAt (1, 18) is 'null'
-ValueAt (1, 19) is '396.0'
-ValueAt (1, 20) is '2144.0'
-ValueAt (1, 21) is '127.0'
-ValueAt (1, 22) is '1642.0'
+ValueAt (1, 19) is '396.000'
+ValueAt (1, 20) is '2144.000'
+ValueAt (1, 21) is '127.000'
+ValueAt (1, 22) is '1642.000'
 ValueAt (1, 23) is 'null'
-ValueAt (1, 24) is '106.0'
-ValueAt (1, 25) is '977.0'
+ValueAt (1, 24) is '106.000'
+ValueAt (1, 25) is '977.000'
 ValueAt (1, 26) is 'null'
-ValueAt (1, 27) is '326.0'
+ValueAt (1, 27) is '326.000'
 ValueAt (1, 28) is 'null'
-ValueAt (1, 29) is '801.0'
-ValueAt (1, 30) is '1558.0'
-ValueAt (1, 31) is '102.0'
-ValueAt (1, 32) is '2563.0'
+ValueAt (1, 29) is '801.000'
+ValueAt (1, 30) is '1558.000'
+ValueAt (1, 31) is '102.000'
+ValueAt (1, 32) is '2563.000'
 ValueAt (1, 33) is 'null'
-ValueAt (1, 34) is '1587.0'
-ValueAt (1, 35) is '5472.0'
-ValueAt (1, 36) is '229.0'
-ValueAt (1, 37) is '3576.0'
+ValueAt (1, 34) is '1587.000'
+ValueAt (1, 35) is '5472.000'
+ValueAt (1, 36) is '229.000'
+ValueAt (1, 37) is '3576.000'
 ValueAt (2, 0) is 'Quantity'
 ValueAt (2, 1) is '2005'
 ValueAt (2, 2) is 'Time'
 ValueAt (2, 3) is 'null'
-ValueAt (2, 4) is '1015.0'
-ValueAt (2, 5) is '3463.0'
-ValueAt (2, 6) is '122.0'
-ValueAt (2, 7) is '2105.0'
+ValueAt (2, 4) is '1015.000'
+ValueAt (2, 5) is '3463.000'
+ValueAt (2, 6) is '122.000'
+ValueAt (2, 7) is '2105.000'
 ValueAt (2, 8) is 'null'
-ValueAt (2, 9) is '658.0'
-ValueAt (2, 10) is '1501.0'
-ValueAt (2, 11) is '44.0'
-ValueAt (2, 12) is '568.0'
+ValueAt (2, 9) is '658.000'
+ValueAt (2, 10) is '1501.000'
+ValueAt (2, 11) is '44.000'
+ValueAt (2, 12) is '568.000'
 ValueAt (2, 13) is 'null'
-ValueAt (2, 14) is '151.0'
-ValueAt (2, 15) is '1464.0'
+ValueAt (2, 14) is '151.000'
+ValueAt (2, 15) is '1464.000'
 ValueAt (2, 16) is 'null'
-ValueAt (2, 17) is '592.0'
+ValueAt (2, 17) is '592.000'
 ValueAt (2, 18) is 'null'
-ValueAt (2, 19) is '32.0'
-ValueAt (2, 20) is '696.0'
-ValueAt (2, 21) is '81.0'
-ValueAt (2, 22) is '537.0'
+ValueAt (2, 19) is '32.000'
+ValueAt (2, 20) is '696.000'
+ValueAt (2, 21) is '81.000'
+ValueAt (2, 22) is '537.000'
 ValueAt (2, 23) is 'null'
 ValueAt (2, 24) is 'null'
-ValueAt (2, 25) is '183.0'
-ValueAt (2, 26) is '49.0'
-ValueAt (2, 27) is '177.0'
+ValueAt (2, 25) is '183.000'
+ValueAt (2, 26) is '49.000'
+ValueAt (2, 27) is '177.000'
 ValueAt (2, 28) is 'null'
-ValueAt (2, 29) is '488.0'
-ValueAt (2, 30) is '836.0'
+ValueAt (2, 29) is '488.000'
+ValueAt (2, 30) is '836.000'
 ValueAt (2, 31) is 'null'
-ValueAt (2, 32) is '597.0'
+ValueAt (2, 32) is '597.000'
 ValueAt (2, 33) is 'null'
-ValueAt (2, 34) is '1067.0'
-ValueAt (2, 35) is '1094.0'
-ValueAt (2, 36) is '84.0'
-ValueAt (2, 37) is '1871.0'
+ValueAt (2, 34) is '1067.000'
+ValueAt (2, 35) is '1094.000'
+ValueAt (2, 36) is '84.000'
+ValueAt (2, 37) is '1871.000'
 ValueAt (3, 0) is 'Sales'
 ValueAt (3, 1) is '2003'
 ValueAt (3, 2) is 'Time'
 ValueAt (3, 3) is 'null'
-ValueAt (3, 4) is '115010.77'
-ValueAt (3, 5) is '691272.59'
-ValueAt (3, 6) is '120695.9'
-ValueAt (3, 7) is '587428.16'
+ValueAt (3, 4) is '115010.770'
+ValueAt (3, 5) is '691272.590'
+ValueAt (3, 6) is '120695.900'
+ValueAt (3, 7) is '587428.160'
 ValueAt (3, 8) is 'null'
-ValueAt (3, 9) is '60789.45'
-ValueAt (3, 10) is '141836.36'
-ValueAt (3, 11) is '16484.95'
-ValueAt (3, 12) is '178108.95'
+ValueAt (3, 9) is '60789.450'
+ValueAt (3, 10) is '141836.360'
+ValueAt (3, 11) is '16484.950'
+ValueAt (3, 12) is '178108.950'
 ValueAt (3, 13) is 'null'
-ValueAt (3, 14) is '42663.21'
-ValueAt (3, 15) is '154519.18'
-ValueAt (3, 16) is '60556.18'
-ValueAt (3, 17) is '90016.44'
+ValueAt (3, 14) is '42663.210'
+ValueAt (3, 15) is '154519.180'
+ValueAt (3, 16) is '60556.180'
+ValueAt (3, 17) is '90016.440'
 ValueAt (3, 18) is 'null'
 ValueAt (3, 19) is 'null'
-ValueAt (3, 20) is '172427.98'
-ValueAt (3, 21) is '14155.52'
-ValueAt (3, 22) is '58237.59'
+ValueAt (3, 20) is '172427.980'
+ValueAt (3, 21) is '14155.520'
+ValueAt (3, 22) is '58237.590'
 ValueAt (3, 23) is 'null'
-ValueAt (3, 24) is '1681.35'
-ValueAt (3, 25) is '29538.1'
-ValueAt (3, 26) is '13278.71'
-ValueAt (3, 27) is '28304.13'
+ValueAt (3, 24) is '1681.350'
+ValueAt (3, 25) is '29538.100'
+ValueAt (3, 26) is '13278.710'
+ValueAt (3, 27) is '28304.130'
 ValueAt (3, 28) is 'null'
-ValueAt (3, 29) is '11297.54'
-ValueAt (3, 30) is '228698.65'
-ValueAt (3, 31) is '44498.22'
-ValueAt (3, 32) is '135935.52'
+ValueAt (3, 29) is '11297.540'
+ValueAt (3, 30) is '228698.650'
+ValueAt (3, 31) is '44498.220'
+ValueAt (3, 32) is '135935.520'
 ValueAt (3, 33) is 'null'
-ValueAt (3, 34) is '111639.3'
-ValueAt (3, 35) is '263694.6'
-ValueAt (3, 36) is '22888.06'
-ValueAt (3, 37) is '281726.59'
+ValueAt (3, 34) is '111639.300'
+ValueAt (3, 35) is '263694.600'
+ValueAt (3, 36) is '22888.060'
+ValueAt (3, 37) is '281726.590'
 ValueAt (4, 0) is 'Sales'
 ValueAt (4, 1) is '2004'
 ValueAt (4, 2) is 'Time'
 ValueAt (4, 3) is 'null'
-ValueAt (4, 4) is '199371.69'
-ValueAt (4, 5) is '1015789.94'
-ValueAt (4, 6) is '42070.57'
-ValueAt (4, 7) is '581042.65'
+ValueAt (4, 4) is '199371.690'
+ValueAt (4, 5) is '1015789.940'
+ValueAt (4, 6) is '42070.570'
+ValueAt (4, 7) is '581042.650'
 ValueAt (4, 8) is 'null'
-ValueAt (4, 9) is '63158.99'
-ValueAt (4, 10) is '204041.74'
-ValueAt (4, 11) is '31958.94'
-ValueAt (4, 12) is '291420.58'
+ValueAt (4, 9) is '63158.990'
+ValueAt (4, 10) is '204041.740'
+ValueAt (4, 11) is '31958.940'
+ValueAt (4, 12) is '291420.580'
 ValueAt (4, 13) is 'null'
-ValueAt (4, 14) is '67681.21'
-ValueAt (4, 15) is '209127.94'
-ValueAt (4, 16) is '49176.96'
-ValueAt (4, 17) is '202941.83'
+ValueAt (4, 14) is '67681.210'
+ValueAt (4, 15) is '209127.940'
+ValueAt (4, 16) is '49176.960'
+ValueAt (4, 17) is '202941.830'
 ValueAt (4, 18) is 'null'
-ValueAt (4, 19) is '35323.08'
-ValueAt (4, 20) is '186991.91'
-ValueAt (4, 21) is '10452.69'
-ValueAt (4, 22) is '142904.01'
+ValueAt (4, 19) is '35323.080'
+ValueAt (4, 20) is '186991.910'
+ValueAt (4, 21) is '10452.690'
+ValueAt (4, 22) is '142904.010'
 ValueAt (4, 23) is 'null'
-ValueAt (4, 24) is '8225.72'
-ValueAt (4, 25) is '90972.79'
+ValueAt (4, 24) is '8225.720'
+ValueAt (4, 25) is '90972.790'
 ValueAt (4, 26) is 'null'
-ValueAt (4, 27) is '25551.06'
+ValueAt (4, 27) is '25551.060'
 ValueAt (4, 28) is 'null'
-ValueAt (4, 29) is '80633.55'
-ValueAt (4, 30) is '185421.17'
-ValueAt (4, 31) is '13349.44'
-ValueAt (4, 32) is '252571.73'
+ValueAt (4, 29) is '80633.550'
+ValueAt (4, 30) is '185421.170'
+ValueAt (4, 31) is '13349.440'
+ValueAt (4, 32) is '252571.730'
 ValueAt (4, 33) is 'null'
-ValueAt (4, 34) is '147211.85'
-ValueAt (4, 35) is '504062.38'
-ValueAt (4, 36) is '21470.5'
-ValueAt (4, 37) is '324814.92'
+ValueAt (4, 34) is '147211.850'
+ValueAt (4, 35) is '504062.380'
+ValueAt (4, 36) is '21470.500'
+ValueAt (4, 37) is '324814.920'
 ValueAt (5, 0) is 'Sales'
 ValueAt (5, 1) is '2005'
 ValueAt (5, 2) is 'Time'
 ValueAt (5, 3) is 'null'
-ValueAt (5, 4) is '97573.84'
-ValueAt (5, 5) is '384538.11'
-ValueAt (5, 6) is '18835.02'
-ValueAt (5, 7) is '237790.63'
+ValueAt (5, 4) is '97573.840'
+ValueAt (5, 5) is '384538.110'
+ValueAt (5, 6) is '18835.020'
+ValueAt (5, 7) is '237790.630'
 ValueAt (5, 8) is 'null'
-ValueAt (5, 9) is '65869.79'
-ValueAt (5, 10) is '161260.18'
-ValueAt (5, 11) is '4175.6'
-ValueAt (5, 12) is '55019.66'
+ValueAt (5, 9) is '65869.790'
+ValueAt (5, 10) is '161260.180'
+ValueAt (5, 11) is '4175.600'
+ValueAt (5, 12) is '55019.660'
 ValueAt (5, 13) is 'null'
-ValueAt (5, 14) is '11081.78'
-ValueAt (5, 15) is '128007.7'
+ValueAt (5, 14) is '11081.780'
+ValueAt (5, 15) is '128007.700'
 ValueAt (5, 16) is 'null'
-ValueAt (5, 17) is '60984.69'
+ValueAt (5, 17) is '60984.690'
 ValueAt (5, 18) is 'null'
-ValueAt (5, 19) is '3070.4'
-ValueAt (5, 20) is '67844.79'
-ValueAt (5, 21) is '8407.33'
-ValueAt (5, 22) is '48855.55'
+ValueAt (5, 19) is '3070.400'
+ValueAt (5, 20) is '67844.790'
+ValueAt (5, 21) is '8407.330'
+ValueAt (5, 22) is '48855.550'
 ValueAt (5, 23) is 'null'
 ValueAt (5, 24) is 'null'
-ValueAt (5, 25) is '17995.29'
-ValueAt (5, 26) is '3523.67'
-ValueAt (5, 27) is '15398.37'
+ValueAt (5, 25) is '17995.290'
+ValueAt (5, 26) is '3523.670'
+ValueAt (5, 27) is '15398.370'
 ValueAt (5, 28) is 'null'
-ValueAt (5, 29) is '53734.6'
-ValueAt (5, 30) is '86859.0'
+ValueAt (5, 29) is '53734.600'
+ValueAt (5, 30) is '86859.000'
 ValueAt (5, 31) is 'null'
-ValueAt (5, 32) is '61281.15'
+ValueAt (5, 32) is '61281.150'
 ValueAt (5, 33) is 'null'
-ValueAt (5, 34) is '105687.77'
-ValueAt (5, 35) is '83323.92'
-ValueAt (5, 36) is '7979.32'
-ValueAt (5, 37) is '191727.18'
+ValueAt (5, 34) is '105687.770'
+ValueAt (5, 35) is '83323.920'
+ValueAt (5, 36) is '7979.320'
+ValueAt (5, 37) is '191727.180'

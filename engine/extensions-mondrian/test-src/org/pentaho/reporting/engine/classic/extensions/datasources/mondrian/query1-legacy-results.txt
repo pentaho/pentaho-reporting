@@ -14,4 +14,4 @@ CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 Tablemodel contains 1 rows.
 Column: 0 Name=Measure; DataType=class java.lang.Double
 Checking the data inside
-ValueAt (0, 0) is '105331.0'
+ValueAt (0, 0) is '105331.000'
