@@ -75,10 +75,10 @@ Column: 4 Name=[Product].[All Products].[Trains]; DataType=class java.lang.Doubl
 Column: 5 Name=[Product].[All Products].[Trucks and Buses]; DataType=class java.lang.Double
 Column: 6 Name=[Product].[All Products].[Vintage Cars]; DataType=class java.lang.Double
 Checking the data inside
-ValueAt (0, 0) is '35552.0'
-ValueAt (0, 1) is '12708.0'
-ValueAt (0, 2) is '11860.0'
-ValueAt (0, 3) is '8499.0'
-ValueAt (0, 4) is '2818.0'
-ValueAt (0, 5) is '11001.0'
-ValueAt (0, 6) is '22893.0'
+ValueAt (0, 0) is '35552.000'
+ValueAt (0, 1) is '12708.000'
+ValueAt (0, 2) is '11860.000'
+ValueAt (0, 3) is '8499.000'
+ValueAt (0, 4) is '2818.000'
+ValueAt (0, 5) is '11001.000'
+ValueAt (0, 6) is '22893.000'

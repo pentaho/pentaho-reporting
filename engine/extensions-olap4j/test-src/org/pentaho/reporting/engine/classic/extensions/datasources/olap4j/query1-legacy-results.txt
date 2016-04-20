@@ -19,8 +19,8 @@ CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=105331.0
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=105331.000
 Tablemodel contains 1 rows.
 Column: 0 Name=Measure; DataType=class java.lang.Double
 Checking the data inside
-ValueAt (0, 0) is '105331.0'
+ValueAt (0, 0) is '105331.000'

@@ -157,7 +157,7 @@ CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=36439.0
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=36439.000
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
@@ -284,7 +284,7 @@ CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3677384.0
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=3677384.000
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
@@ -411,7 +411,7 @@ CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=49417.0
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=49417.000
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
@@ -538,7 +538,7 @@ CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=4987739.84
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=4987739.840
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
@@ -665,7 +665,7 @@ CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=19475.0
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=19475.000
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
@@ -792,7 +792,7 @@ CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
 CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1980825.34
+CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1980825.340
 Tablemodel contains 6 rows.
 Column: 0 Name=[Time].[(All)]; DataType=class java.lang.String
 Column: 1 Name=[Time].[Years]; DataType=class java.lang.String
@@ -802,24 +802,24 @@ Checking the data inside
 ValueAt (0, 0) is 'All Years'
 ValueAt (0, 1) is '2003'
 ValueAt (0, 2) is 'Quantity'
-ValueAt (0, 3) is '36439.0'
+ValueAt (0, 3) is '36439.000'
 ValueAt (1, 0) is 'All Years'
 ValueAt (1, 1) is '2003'
 ValueAt (1, 2) is 'Sales'
-ValueAt (1, 3) is '3677384.0'
+ValueAt (1, 3) is '3677384.000'
 ValueAt (2, 0) is 'All Years'
 ValueAt (2, 1) is '2004'
 ValueAt (2, 2) is 'Quantity'
-ValueAt (2, 3) is '49417.0'
+ValueAt (2, 3) is '49417.000'
 ValueAt (3, 0) is 'All Years'
 ValueAt (3, 1) is '2004'
 ValueAt (3, 2) is 'Sales'
-ValueAt (3, 3) is '4987739.84'
+ValueAt (3, 3) is '4987739.840'
 ValueAt (4, 0) is 'All Years'
 ValueAt (4, 1) is '2005'
 ValueAt (4, 2) is 'Quantity'
-ValueAt (4, 3) is '19475.0'
+ValueAt (4, 3) is '19475.000'
 ValueAt (5, 0) is 'All Years'
 ValueAt (5, 1) is '2005'
 ValueAt (5, 2) is 'Sales'
-ValueAt (5, 3) is '1980825.34'
+ValueAt (5, 3) is '1980825.340'
