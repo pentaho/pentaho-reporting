@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2016 Pentaho Corporation and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.repository.stream;
@@ -59,7 +59,7 @@ public class WrappedOutputStream extends OutputStream {
   public void close()
     throws IOException {
     closed = true;
-    stream.close();
+    stream.flush();
   }
 
   public boolean isClosed() {
