@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
@@ -46,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.Si
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.engine.classic.core.util.TypedMetaTableModel;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 
 import javax.swing.table.TableModel;
 import java.sql.Connection;
@@ -651,8 +652,19 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
     retval.add( translateQuery( queryName ) );
     retval.add( domainId );
     retval.add( xmiFile );
-    retval.add( getContextKey() );
+    retval.add( getContextKeyParentIdentifier() );
     retval.add( connectionProvider.getClass() );
     return retval;
+  }
+
+  protected Object getContextKeyParentIdentifier() {
+    ResourceKey bundleKey = getContextKey();
+    if( bundleKey != null ) {
+      while( bundleKey.getParent() != null ) {
+        bundleKey = bundleKey.getParent();
+      }
+      return bundleKey.getIdentifier();
+    }
+    return bundleKey;
   }
 }
