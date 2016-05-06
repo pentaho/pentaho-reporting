@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
@@ -46,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.Si
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.engine.classic.core.util.TypedMetaTableModel;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 
 import javax.swing.table.TableModel;
 import java.sql.Connection;
@@ -169,13 +170,13 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
   }
 
   protected Query parseQuery( final String query ) throws ReportDataFactoryException {
-    final String xmlHelperClass = getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.engine.classic.extensions.datasources.pmd.XmlHelperClass" );
+    final String xmlHelperClass = getConfiguration()
+      .getConfigProperty( "org.pentaho.reporting.engine.classic.extensions.datasources.pmd.XmlHelperClass" );
 
     final QueryXmlHelper helper =
       ObjectUtilities.loadAndInstantiate( xmlHelperClass, SimplePmdDataFactory.class, QueryXmlHelper.class );
     if ( helper == null ) {
-      throw new ReportDataFactoryException( "Failed to create XmlHelper: " + xmlHelperClass );//$NON-NLS-1$
+      throw new ReportDataFactoryException( "Failed to create XmlHelper: " + xmlHelperClass ); //$NON-NLS-1$
     }
 
     try {
@@ -185,7 +186,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
       throw e;
     } catch ( final Exception e ) {
       logger.error( "error", e ); //$NON-NLS-1$
-      throw new ReportDataFactoryException( "Failed to parse query", e );//$NON-NLS-1$
+      throw new ReportDataFactoryException( "Failed to parse query", e ); //$NON-NLS-1$
     }
   }
 
@@ -203,14 +204,14 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
                                    final DatabaseMeta databaseMeta,
                                    final DataRow parameters ) throws ReportDataFactoryException {
     try {
-      final String sqlGeneratorClass = getConfiguration().getConfigProperty
-        ( "org.pentaho.reporting.engine.classic.extensions.datasources.pmd.SqlGeneratorClass" );
-      final SqlGenerator sqlGenerator = ObjectUtilities.loadAndInstantiate
-        ( sqlGeneratorClass, SimplePmdDataFactory.class, SqlGenerator.class );
+      final String sqlGeneratorClass = getConfiguration()
+        .getConfigProperty( "org.pentaho.reporting.engine.classic.extensions.datasources.pmd.SqlGeneratorClass" );
+      final SqlGenerator sqlGenerator =
+        ObjectUtilities.loadAndInstantiate( sqlGeneratorClass, SimplePmdDataFactory.class, SqlGenerator.class );
       if ( sqlGenerator == null ) {
         logger.error( "Default SqlGenerator class " + sqlGeneratorClass + " not found." ); //$NON-NLS-1$
         throw new ReportDataFactoryException(
-          "Failed to generate SQL. No valid SqlGenerator class found." );//$NON-NLS-1$
+          "Failed to generate SQL. No valid SqlGenerator class found." ); //$NON-NLS-1$
       }
 
       final Map<String, Object> parameterMap = convertDataRowToMap( parameters );
@@ -221,7 +222,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
     } catch ( final ReportDataFactoryException e ) {
       throw e;
     } catch ( final Exception e ) {
-      throw new ReportDataFactoryException( e.getMessage(), e );//$NON-NLS-1$
+      throw new ReportDataFactoryException( e.getMessage(), e ); //$NON-NLS-1$
     }
   }
 
@@ -287,9 +288,8 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
       // cast is safe, as the SQL-Datasource is guaranteed to return a
       // MetaTableModel
       return new PmdMetaTableModel( (MetaTableModel) tableModel, queryObject.getSelections() );
-    }
-    //it catch exception only for java 1.6 and jdbc 4
-    catch ( final SQLTimeoutException e ) {
+    } catch ( final SQLTimeoutException e ) {
+      //it catch exception only for java 1.6 and jdbc 4
       throw new ReportDataFactoryQueryTimeoutException();
     } catch ( final SQLException e ) {
       //it catch other exception end timeout for jdbc3, so add message from jdbc driver to message
@@ -361,9 +361,9 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
   private void computeQueryLimit( final Query queryObject, final ReportParameterValues computedParameterSet ) {
     try {
       Object existingQueryLimitObj = computedParameterSet.get( DataFactory.QUERY_LIMIT );
-      if ( ( existingQueryLimitObj == null ) ||
-        ( ( existingQueryLimitObj instanceof Number ) && ( ( (Number) existingQueryLimitObj ).intValue()
-          == -1 ) ) ) { // If null, or if default of -1
+      if ( ( existingQueryLimitObj == null )
+        || ( ( existingQueryLimitObj instanceof Number ) && ( ( (Number) existingQueryLimitObj ).intValue()
+        == -1 ) ) ) { // If null, or if default of -1
         // Limit isn't in the parameters - check the model and see if it's defined.
         Object maxRowsProperty = queryObject.getLogicalModel().getProperty( "max_rows" ); //$NON-NLS-1$
         if ( maxRowsProperty != null && maxRowsProperty instanceof Number ) {
@@ -381,9 +381,9 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
   private void computeQueryTimeout( final Query queryObject, final ReportParameterValues computedParameterSet ) {
     try {
       Object existingQueryTimeoutObj = computedParameterSet.get( DataFactory.QUERY_TIMEOUT );
-      if ( ( existingQueryTimeoutObj == null ) ||
-        ( ( existingQueryTimeoutObj instanceof Number ) && ( ( (Number) existingQueryTimeoutObj ).intValue()
-          == 0 ) ) ) { // If null, or if default of 0
+      if ( ( existingQueryTimeoutObj == null )
+        || ( ( existingQueryTimeoutObj instanceof Number ) && ( ( (Number) existingQueryTimeoutObj ).intValue()
+        == 0 ) ) ) { // If null, or if default of 0
         // Timeout isn't in the parameters - check the model and see if it's defined.
         Object timeoutProperty = queryObject.getLogicalModel().getProperty( "timeout" ); //$NON-NLS-1$
         if ( timeoutProperty != null && timeoutProperty instanceof Number ) {
@@ -460,7 +460,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
         throw e;
       } catch ( final Exception e ) {
         logger.error( "error", e ); //$NON-NLS-1$
-        throw new ReportDataFactoryException( "Failed to perform query", e );//$NON-NLS-1$
+        throw new ReportDataFactoryException( "Failed to perform query", e ); //$NON-NLS-1$
       }
     } else {
       // broker the execution of this query to the connection provider
@@ -483,7 +483,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
   }
 
   private Class<?> mapDataType( final DataType dataType ) {
-    switch( dataType ) {
+    switch ( dataType ) {
       case UNKNOWN:
         return Object.class;
       case STRING:
@@ -651,8 +651,19 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
     retval.add( translateQuery( queryName ) );
     retval.add( domainId );
     retval.add( xmiFile );
-    retval.add( getContextKey() );
+    retval.add( getContextKeyParentIdentifier() );
     retval.add( connectionProvider.getClass() );
     return retval;
+  }
+
+  protected Object getContextKeyParentIdentifier() {
+    ResourceKey bundleKey = getContextKey();
+    if ( bundleKey != null ) {
+      while ( bundleKey.getParent() != null ) {
+        bundleKey = bundleKey.getParent();
+      }
+      return bundleKey.getIdentifier();
+    }
+    return bundleKey;
   }
 }
