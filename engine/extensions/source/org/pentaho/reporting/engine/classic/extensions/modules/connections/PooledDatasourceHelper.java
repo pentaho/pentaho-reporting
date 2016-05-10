@@ -12,18 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  * 
- * Copyright 2005 - 2008 Pentaho Corporation.  All rights reserved.
+ * Copyright 2005 - 2016 Pentaho Corporation.  All rights reserved.
  *  
  * @created Jul 07, 2008 
  * @author rmansoor
  */
 package org.pentaho.reporting.engine.classic.extensions.modules.connections;
-
-import java.sql.Driver;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.ConnectionFactory;
@@ -35,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.pentaho.database.DatabaseDialectException;
 import org.pentaho.database.IDatabaseDialect;
+import org.pentaho.database.IDriverLocator;
 import org.pentaho.database.dialect.GenericDatabaseDialect;
 import org.pentaho.database.model.IDatabaseConnection;
 import org.pentaho.database.service.IDatabaseDialectService;
@@ -44,6 +39,11 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.connections.Dataso
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+
+import javax.sql.DataSource;
+import java.sql.Driver;
+import java.util.Map;
+import java.util.Properties;
 
 public class PooledDatasourceHelper {
   private static final Log logger = LogFactory.getLog( PooledDatasourceHelper.class );
@@ -62,8 +62,7 @@ public class PooledDatasourceHelper {
       final IDatabaseDialect dialect = databaseDialectService.getDialect( databaseConnection );
 
       final String driverClass;
-      if ( GENERIC.equals( databaseConnection.getDatabaseType().getShortName() ) ) //$NON-NLS-1$
-      {
+      if ( GENERIC.equals( databaseConnection.getDatabaseType().getShortName() ) ) { //$NON-NLS-1$
         driverClass = databaseConnection.getAttributes().get( GenericDatabaseDialect.ATTRIBUTE_CUSTOM_DRIVER_CLASS );
       } else {
         driverClass = dialect.getNativeDriver();
@@ -124,8 +123,6 @@ public class PooledDatasourceHelper {
       }
 
       final PoolingDataSource poolingDataSource = new PoolingDataSource();
-      final Driver driver =
-          ObjectUtilities.loadAndInstantiate( driverClass, PooledDatasourceHelper.class, Driver.class );
 
       // As the name says, this is a generic pool; it returns basic Object-class objects.
       final GenericObjectPool pool = new GenericObjectPool( null );
@@ -147,7 +144,8 @@ public class PooledDatasourceHelper {
       final Properties properties = new Properties();
       properties.setProperty( "user", databaseConnection.getUsername() );
       properties.setProperty( "password", databaseConnection.getPassword() );
-      final ConnectionFactory factory = new DriverConnectionFactory( driver, url, properties );
+      final ConnectionFactory factory =
+        new DriverConnectionFactory( getDriver( dialect, driverClass, url ), url, properties );
 
       /*
        * Puts pool-specific wrappers on factory connections. For clarification: "[PoolableConnection]Factory," not
@@ -188,6 +186,14 @@ public class PooledDatasourceHelper {
     }
   }
 
+  static Driver getDriver( IDatabaseDialect dialect, String driverClass, String url ) {
+    if ( dialect instanceof IDriverLocator ) {
+      return ( (IDriverLocator) dialect ).getDriver( url );
+    } else {
+      return ObjectUtilities.loadAndInstantiate( driverClass, PooledDatasourceHelper.class, Driver.class );
+    }
+  }
+
   private static String getSystemSetting( final String key ) {
     final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
     return config.getConfigProperty( "org.pentaho.reporting.engine.classic.core." + key );
@@ -198,8 +204,7 @@ public class PooledDatasourceHelper {
     final IDatabaseDialectService databaseDialectService =
         ClassicEngineBoot.getInstance().getObjectFactory().get( IDatabaseDialectService.class );
     final IDatabaseDialect dialect = databaseDialectService.getDialect( databaseConnection );
-    if ( "GENERIC".equals( databaseConnection.getDatabaseType().getShortName() ) )//$NON-NLS-1$
-    {
+    if ( "GENERIC".equals( databaseConnection.getDatabaseType().getShortName() ) ) { //$NON-NLS-1$
       basicDatasource.setDriverClassName( databaseConnection.getAttributes().get(
           GenericDatabaseDialect.ATTRIBUTE_CUSTOM_DRIVER_CLASS ) );
     } else {
