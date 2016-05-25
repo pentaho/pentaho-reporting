@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.core.editor.drilldown.swing;
@@ -39,6 +39,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
 import java.awt.Component;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -51,6 +53,12 @@ public class SwingGenericUrlDrillDownUi implements DrillDownUi {
 
   /** Main panel of the dialog. */
   private JPanel editor;
+
+  /** Tooltip and Target panel. */
+  private TooltipAndTargetPanel tatPanel;
+
+  /** Path field. */
+  JTextField pathField;
 
   /** Table for parameters input. */
   private DrillDownParameterTable table;
@@ -68,18 +76,20 @@ public class SwingGenericUrlDrillDownUi implements DrillDownUi {
    */
   public SwingGenericUrlDrillDownUi() {
     SpringLayout layout = new SpringLayout();
-    final int layoutIndent = 0;
+    final int layoutIndent = 2;
 
     editor = new JPanel();
     editor.setLayout( layout );
 
+    /** "Path:" label */
     JLabel pathLabel = new JLabel( Messages.getString( "DrillDownDialog.PathInput.Label" ) );
     editor.add( pathLabel );
     layout.putConstraint( SpringLayout.NORTH, pathLabel, layoutIndent, SpringLayout.NORTH, editor );
     layout.putConstraint( SpringLayout.EAST, pathLabel, layoutIndent, SpringLayout.EAST, editor );
     layout.putConstraint( SpringLayout.WEST, pathLabel, layoutIndent, SpringLayout.WEST, editor );
 
-    JTextField pathField = new JTextField();
+    /** "Path:" input field */
+    pathField = new JTextField();
     pathField.getDocument().addDocumentListener( new DocumentBindingListener() {
       @Override
       protected void setData( String data ) {
@@ -88,9 +98,27 @@ public class SwingGenericUrlDrillDownUi implements DrillDownUi {
     } );
     editor.add( pathField );
     layout.putConstraint( SpringLayout.NORTH, pathField, layoutIndent, SpringLayout.SOUTH, pathLabel );
-    layout.putConstraint( SpringLayout.EAST, pathField, layoutIndent, SpringLayout.EAST, editor );
+    layout.putConstraint( SpringLayout.EAST, pathField, 0, SpringLayout.EAST, editor );
     layout.putConstraint( SpringLayout.WEST, pathField, layoutIndent, SpringLayout.WEST, editor );
 
+    /** "Target:" and "Tooltip:" input fields */
+    tatPanel = new TooltipAndTargetPanel();
+    tatPanel.getTargetComboBox().addItemListener( new ItemListener() {
+      public void itemStateChanged( final ItemEvent e ) {
+        getModel().setTargetFormula( e.getItem().toString() );
+      }
+    } );
+    tatPanel.getTooltipPanel().addPropertyChangeListener( "formula", new PropertyChangeListener() {
+      public void propertyChange( final PropertyChangeEvent evt ) {
+        getModel().setTooltipFormula( evt.getNewValue().toString() );
+      }
+    } );
+    editor.add( tatPanel );
+    layout.putConstraint( SpringLayout.NORTH, tatPanel, layoutIndent, SpringLayout.SOUTH, pathField );
+    layout.putConstraint( SpringLayout.EAST, tatPanel, 0, SpringLayout.EAST, editor );
+    layout.putConstraint( SpringLayout.WEST, tatPanel, layoutIndent, SpringLayout.WEST, editor );
+
+    /** "Parameter:" input table */
     table = new DrillDownParameterTable();
     table.setShowRefreshButton( false );
     table.setAllowCustomParameter( true );
@@ -99,9 +127,9 @@ public class SwingGenericUrlDrillDownUi implements DrillDownUi {
     table.addDrillDownParameterRefreshListener( new UpdateParametersHandler() );
     table.addPropertyChangeListener( DrillDownParameterTable.DRILL_DOWN_PARAMETER_PROPERTY, new TableModelBinding() );
     editor.add( table );
-    layout.putConstraint( SpringLayout.NORTH, table, layoutIndent, SpringLayout.SOUTH, pathField );
-    layout.putConstraint( SpringLayout.EAST, table, layoutIndent, SpringLayout.EAST, editor );
-    layout.putConstraint( SpringLayout.SOUTH, table, layoutIndent, SpringLayout.SOUTH, editor );
+    layout.putConstraint( SpringLayout.NORTH, table, layoutIndent, SpringLayout.SOUTH, tatPanel );
+    layout.putConstraint( SpringLayout.EAST, table, -layoutIndent, SpringLayout.EAST, editor );
+    layout.putConstraint( SpringLayout.SOUTH, table, -layoutIndent, SpringLayout.SOUTH, editor );
     layout.putConstraint( SpringLayout.WEST, table, layoutIndent, SpringLayout.WEST, editor );
   }
 
@@ -153,6 +181,20 @@ public class SwingGenericUrlDrillDownUi implements DrillDownUi {
     model.setDrillDownConfig( SwingGenericUrlDrillDownUiProfile.NAME_DEFAULT );
     pathHandler = new PathChangeHandler();
     getModel().addPropertyChangeListener( DrillDownModel.DRILL_DOWN_PATH_PROPERTY, pathHandler );
+
+    // Check model and init default values
+    if ( getModel().isLimitedEditor() ) {
+      tatPanel.hideContent();
+    }
+    if ( getModel().getTooltipFormula() != null ) {
+      tatPanel.getTooltipPanel().setFormula( getModel().getTooltipFormula() );
+    }
+    if ( getModel().getTargetFormula() != null ) {
+      tatPanel.getTargetComboBox().setSelectedItem( getModel().getTargetFormula() );
+    }
+    if ( getModel().getDrillDownPath() != null ) {
+      pathField.setText( getModel().getDrillDownPath() );
+    }
 
     SwingUtilities.invokeLater( new Runnable() {
       @Override
