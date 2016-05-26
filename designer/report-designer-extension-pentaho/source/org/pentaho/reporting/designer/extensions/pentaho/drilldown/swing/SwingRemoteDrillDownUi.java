@@ -62,10 +62,10 @@ public class SwingRemoteDrillDownUi implements DrillDownUi {
   private JPanel editor;
 
   /** Server URL input field. */
-  JTextField serverUrlField;
+  private JTextField serverUrlField;
 
   /** Path input field. */
-  JTextField pathField;
+  private JTextField pathField;
 
   /** Tooltip and Target panel. */
   private TooltipAndTargetPanel tatPanel;

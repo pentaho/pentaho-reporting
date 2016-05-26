@@ -58,7 +58,7 @@ public class SwingGenericUrlDrillDownUi implements DrillDownUi {
   private TooltipAndTargetPanel tatPanel;
 
   /** Path field. */
-  JTextField pathField;
+  private JTextField pathField;
 
   /** Table for parameters input. */
   private DrillDownParameterTable table;
