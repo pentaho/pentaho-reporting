@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.drilldown;
@@ -31,13 +31,27 @@ import org.pentaho.reporting.designer.core.util.table.GroupedTableModel;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -123,8 +137,8 @@ public class DrillDownParameterTable extends JComponent {
         if ( parameter == null ) {
           continue;
         }
-        if ( listSelectionModel.isSelectedIndex( model.mapFromModel( i ) ) == false ||
-          parameter.getType() != DrillDownParameter.Type.MANUAL ) {
+        if ( listSelectionModel.isSelectedIndex( model.mapFromModel( i ) ) == false
+            || parameter.getType() != DrillDownParameter.Type.MANUAL ) {
           result.add( data[ i ] );
         }
       }
@@ -260,23 +274,23 @@ public class DrillDownParameterTable extends JComponent {
     systemParameterTable.setFormulaFragment( true );
     systemParameterTable.setDefaultEditor( GroupedName.class, new GroupedNameCellEditor() );
     systemParameterTable.setDefaultRenderer( String.class, new FormulaFragmentCellRenderer() );
-    systemParameterTable.setModel
-      ( new FilteringParameterTableModel( DrillDownParameter.Type.SYSTEM, parameterTableModel, true ) );
+    systemParameterTable.setModel(
+        new FilteringParameterTableModel( DrillDownParameter.Type.SYSTEM, parameterTableModel, true ) );
 
     manualParameterTable = new ElementMetaDataTable();
     manualParameterTable.setFormulaFragment( true );
     manualParameterTable.setDefaultEditor( GroupedName.class, new GroupedNameCellEditor() );
     manualParameterTable.setDefaultRenderer( String.class, new FormulaFragmentCellRenderer() );
-    manualParameterTable.setModel
-      ( new FilteringParameterTableModel( DrillDownParameter.Type.MANUAL, parameterTableModel ) );
+    manualParameterTable.setModel(
+        new FilteringParameterTableModel( DrillDownParameter.Type.MANUAL, parameterTableModel ) );
     manualParameterRemoveAction = new RemoveParameterAction( manualParameterTable );
 
     predefinedParameterTable = new ElementMetaDataTable();
     predefinedParameterTable.setFormulaFragment( true );
     predefinedParameterTable.setDefaultEditor( GroupedName.class, new GroupedNameCellEditor() );
     predefinedParameterTable.setDefaultRenderer( String.class, new FormulaFragmentCellRenderer() );
-    predefinedParameterTable.setModel
-      ( new FilteringParameterTableModel( DrillDownParameter.Type.PREDEFINED, parameterTableModel ) );
+    predefinedParameterTable.setModel(
+        new FilteringParameterTableModel( DrillDownParameter.Type.PREDEFINED, parameterTableModel ) );
 
     hideParameterUiCheckbox = new JCheckBox( Messages.getString( "DrillDownParameterTable.HideParameterUI" ) );
     hideParameterUiCheckbox.addItemListener( new HideParamUiSelectionListener() );
@@ -316,7 +330,7 @@ public class DrillDownParameterTable extends JComponent {
 
       final JPanel centralPanel = new JPanel();
       centralPanel.setLayout( new BorderLayout() );
-      centralPanel.setBorder( new EmptyBorder( 5, 5, 5, 5 ) );
+      //centralPanel.setBorder( new EmptyBorder( 5, 5, 5, 5 ) ); // Better layout --Kaa
       centralPanel.add( headerPanel, BorderLayout.NORTH );
       centralPanel.add( tablePanel, BorderLayout.CENTER );
       add( centralPanel, BorderLayout.CENTER );

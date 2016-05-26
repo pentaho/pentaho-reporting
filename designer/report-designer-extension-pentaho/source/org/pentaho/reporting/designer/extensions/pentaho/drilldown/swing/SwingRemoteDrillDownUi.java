@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown.swing;
@@ -24,6 +24,7 @@ import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownUi;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownUiException;
 import org.pentaho.reporting.designer.core.editor.drilldown.basic.DrillDownModelWrapper;
 import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownModel;
+import org.pentaho.reporting.designer.core.editor.drilldown.swing.TooltipAndTargetPanel;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -33,6 +34,10 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
 /**
@@ -55,6 +60,15 @@ public class SwingRemoteDrillDownUi implements DrillDownUi {
 
   /** Top=level components container. */
   private JPanel editor;
+
+  /** Server URL input field. */
+  private JTextField serverUrlField;
+
+  /** Path input field. */
+  private JTextField pathField;
+
+  /** Tooltip and Target panel. */
+  private TooltipAndTargetPanel tatPanel;
 
   /** Wrapper for drill down model. */
   private DrillDownModelWrapper wrapper;
@@ -99,9 +113,9 @@ public class SwingRemoteDrillDownUi implements DrillDownUi {
     JButton loginButton = createLoginButton();
     editor.add( loginButton );
     layout.putConstraint( SpringLayout.NORTH, loginButton, layoutIndent, SpringLayout.SOUTH, serverUrlLabel );
-    layout.putConstraint( SpringLayout.EAST, loginButton, -layoutIndent, SpringLayout.EAST, editor );
+    layout.putConstraint( SpringLayout.EAST, loginButton, 0, SpringLayout.EAST, editor );
 
-    JTextField serverUrlField = createServerUrlField();
+    serverUrlField = createServerUrlField();
     editor.add( serverUrlField );
     layout.putConstraint( SpringLayout.NORTH, serverUrlField, layoutIndent, SpringLayout.SOUTH, serverUrlLabel );
     layout.putConstraint( SpringLayout.EAST, serverUrlField, -layoutIndent, SpringLayout.WEST, loginButton );
@@ -118,19 +132,36 @@ public class SwingRemoteDrillDownUi implements DrillDownUi {
     JButton browseButton = createBrowseButton();
     editor.add( browseButton );
     layout.putConstraint( SpringLayout.NORTH, browseButton, layoutIndent, SpringLayout.SOUTH, pathLabel );
-    layout.putConstraint( SpringLayout.EAST, browseButton, -layoutIndent, SpringLayout.EAST, editor );
+    layout.putConstraint( SpringLayout.EAST, browseButton, 0, SpringLayout.EAST, editor );
 
-    JTextField pathField = createPathField();
+    pathField = createPathField();
     editor.add( pathField );
     layout.putConstraint( SpringLayout.NORTH, pathField, layoutIndent, SpringLayout.SOUTH, pathLabel );
     layout.putConstraint( SpringLayout.EAST, pathField, -layoutIndent, SpringLayout.WEST, browseButton );
     layout.putConstraint( SpringLayout.SOUTH, pathField, 0, SpringLayout.SOUTH, browseButton );
     layout.putConstraint( SpringLayout.WEST, pathField, layoutIndent, SpringLayout.WEST, editor );
 
+    /** "Target:" and "Tooltip:" input fields */
+    tatPanel = new TooltipAndTargetPanel();
+    tatPanel.getTargetComboBox().addItemListener( new ItemListener() {
+      public void itemStateChanged( final ItemEvent e ) {
+        getModel().setTargetFormula( e.getItem().toString() );
+      }
+    } );
+    tatPanel.getTooltipPanel().addPropertyChangeListener( "formula", new PropertyChangeListener() {
+      public void propertyChange( final PropertyChangeEvent evt ) {
+        getModel().setTooltipFormula( evt.getNewValue().toString() );
+      }
+    } );
+    editor.add( tatPanel );
+    layout.putConstraint( SpringLayout.NORTH, tatPanel, layoutIndent, SpringLayout.SOUTH, pathField );
+    layout.putConstraint( SpringLayout.EAST, tatPanel, 0, SpringLayout.EAST, editor );
+    layout.putConstraint( SpringLayout.WEST, tatPanel, layoutIndent, SpringLayout.WEST, editor );
+
     // "Parameter table" section
     DrillDownParameterTable table = createParameterTable();
     editor.add( table );
-    layout.putConstraint( SpringLayout.NORTH, table, layoutIndent, SpringLayout.SOUTH, pathField );
+    layout.putConstraint( SpringLayout.NORTH, table, layoutIndent, SpringLayout.SOUTH, tatPanel );
     layout.putConstraint( SpringLayout.EAST, table, layoutIndent, SpringLayout.EAST, editor );
     layout.putConstraint( SpringLayout.SOUTH, table, layoutIndent, SpringLayout.SOUTH, editor );
     layout.putConstraint( SpringLayout.WEST, table, layoutIndent, SpringLayout.WEST, editor );
@@ -295,6 +326,20 @@ public class SwingRemoteDrillDownUi implements DrillDownUi {
     this.reportDesignerContext = reportDesignerContext;
     this.wrapper = new DrillDownModelWrapper( model );
     model.setDrillDownConfig( SwingRemoteDrillDownUiProfile.NAME_DEFAULT );
+
+    // Check model and init default values
+    if ( getModel().isLimitedEditor() ) {
+      tatPanel.hideContent();
+    }
+    if ( getModel().getTooltipFormula() != null ) {
+      tatPanel.getTooltipPanel().setFormula( getModel().getTooltipFormula() );
+    }
+    if ( getModel().getTargetFormula() != null ) {
+      tatPanel.getTargetComboBox().setSelectedItem( getModel().getTargetFormula() );
+    }
+    if ( getModel().getDrillDownPath() != null ) {
+      pathField.setText( getModel().getDrillDownPath() );
+    }
 
     controller = new SwingRemoteDrillDownController( this, reportDesignerContext, wrapper );
     controller.init();
