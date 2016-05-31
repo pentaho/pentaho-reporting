@@ -28,10 +28,8 @@ public class MinuteFunctionTest extends FormulaTestBase {
   public Object[][] createDataTest() {
     return new Object[][]
       {
-        { "MINUTE(1/(24*60))", new BigDecimal( 1 ) },
-        // Changed as a result of PRD-5734 - should be the same as =MINUTE("00:01:00")
-        { "MINUTE(TODAY()+1/(24*60))", new BigDecimal( 1 ) },
-        // Changed as a result of PRD-5734 - should be the same as =MINUTE("00:01:00")
+        { "MINUTE(1/(24*60))", new BigDecimal( 1 ) }, // Changed as a result of PRD-5734 - should be the same as =MINUTE("00:01:00")
+        { "MINUTE(TODAY()+1/(24*60))", new BigDecimal( 1 ) }, // Changed as a result of PRD-5734 - should be the same as =MINUTE("00:01:00")
         { "MINUTE(1/24)", new BigDecimal( 0 ) },
         { "MINUTE(TIME(11;37;05))", new BigDecimal( 37 ) },
         { "MINUTE(TIME(11;37;52))", new BigDecimal( 37 ) }, // No rounding ... PRD-5499
