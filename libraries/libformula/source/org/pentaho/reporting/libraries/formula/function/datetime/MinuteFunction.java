@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2016 Pentaho Corporation and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
@@ -71,7 +71,7 @@ public class MinuteFunction implements Function {
     final BigDecimal minutes = minutesFraction.multiply( MINUTES );
     // Fix for PRD-5499, contributed by Lionel Elie Mamane
     // final BigDecimal minutesAsInt = minutes.setScale( 0, BigDecimal.ROUND_HALF_UP );
-    final BigDecimal minutesAsInt = NumberUtil.performIntRounding(minutes);
+    final BigDecimal minutesAsInt = NumberUtil.performMinuteRounding( minutes );
     return new TypeValuePair( NumberType.GENERIC_NUMBER, minutesAsInt );
   }
 }

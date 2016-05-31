@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2016 Pentaho Corporation and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.util;
@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 
 public class NumberUtil {
   public static final BigDecimal DELTA = new BigDecimal( "0.000000000000000000000000000000000000005" );
+  public static final BigDecimal MINUTE_ROUNDING_DELTA = new BigDecimal( "0.00000000000000000000000000000000000009" );
   public static final BigDecimal INT_TEST_DELTA = new BigDecimal( "0.00000000000000000000000000000000005" );
   private static final int ROUND_SCALE = LibFormulaBoot.GLOBAL_SCALE - 6;
 
@@ -67,6 +68,26 @@ public class NumberUtil {
       round = n.setScale( 1, BigDecimal.ROUND_DOWN );
       return round.setScale( 0, BigDecimal.ROUND_DOWN );
     }
+  }
+
+  /**
+   * Performs a rounding to get a more reliable (int) cast for minute function {@link
+   * org.pentaho.reporting.libraries.formula.function.datetime.MinuteFunction}. See {@link
+   * org.pentaho.reporting.libraries.formula.util.NumberUtilTest#testPerformMinuteRounding()} for more information.
+   *
+   * @param n value of the {@code BigDecimal} to be rounded
+   * @return a {@code BigDecimal} rounded value
+   * @see org.pentaho.reporting.libraries.formula.function.datetime.MinuteFunctionTest.java
+   */
+  public static BigDecimal performMinuteRounding( BigDecimal n ) {
+    try {
+      // no need to go further if the value is already an integer
+      return n.setScale( 0 );
+    } catch ( ArithmeticException e ) {
+      //ignore and continue
+    }
+    n = n.add( MINUTE_ROUNDING_DELTA );
+    return n.setScale( 0, BigDecimal.ROUND_DOWN );
   }
 
   public static BigDecimal performTuneRounding( BigDecimal n ) {
