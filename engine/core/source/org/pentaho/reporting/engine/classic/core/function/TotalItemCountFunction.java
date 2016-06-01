@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -23,8 +23,6 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A report function that counts the total number of items contained in groups in a report. If no groupname is given,
@@ -44,7 +42,7 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   /**
    * A map of results, keyed by the process-key.
    */
-  private transient HashMap<ReportStateKey, Sequence<Integer>> results;
+
   private transient int lastGroupSequenceNumber;
 
   /**
@@ -68,28 +66,33 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
 
   private String crosstabFilterGroup;
 
+  private StateSequence<Integer> stateSequence;
+
   /**
    * Default constructor.
    */
   public TotalItemCountFunction() {
-    results = new HashMap<ReportStateKey, Sequence<Integer>>();
+    stateSequence = new StateSequence<>();
   }
 
   /**
    * Receives notification that the report has started.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     globalStateKey = event.getState().getProcessKey();
     if ( isPrepareRunLevel( event ) ) {
-      result = new Sequence<Integer>();
-      results.clear();
-      results.put( globalStateKey, result );
+      result = new Sequence<>();
+      stateSequence.clear();
+      stateSequence.add( globalStateKey, result );
       lastGroupSequenceNumber = 0;
     } else {
-      result = results.get( globalStateKey );
+      if ( stateSequence.resultExists() ) {
+        result = stateSequence.getResult( 0 );
+      } else {
+        result = null;
+      }
       lastGroupSequenceNumber = 0;
     }
   }
@@ -101,8 +104,7 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   /**
    * Receives notification that a group has started.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
@@ -110,11 +112,18 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
       if ( isPrepareRunLevel( event ) ) {
         clear();
 
-        results.put( globalStateKey, result );
-        results.put( currentGroupKey, result );
+        stateSequence.add( globalStateKey, result );
+        stateSequence.add( currentGroupKey, result );
+
+
       } else {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get( currentGroupKey );
+        int found = this.stateSequence.getKeyIndex( currentGroupKey );
+        if ( found < 0 ) {
+          result = null;
+        } else {
+          result = stateSequence.getResult( found );
+        }
       }
     }
 
@@ -132,8 +141,7 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( isPrepareRunLevel( event ) == false ) {
@@ -150,23 +158,22 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
 
   public Object clone() throws CloneNotSupportedException {
     final TotalItemCountFunction o = (TotalItemCountFunction) super.clone();
-    o.results = (HashMap<ReportStateKey, Sequence<Integer>>) results.clone();
-
-    // Clone saved group results.
-    // The currently active result needs to be handled
-    // separately from this loop, since the globalStateKey
-    // and currentGroupKey both need to be mapped to it.
-    for ( final Map.Entry<ReportStateKey, Sequence<Integer>> entry : results.entrySet() ) {
-      if ( entry.getKey() != globalStateKey && entry.getKey() != currentGroupKey ) {
-        o.results.put( entry.getKey(), entry.getValue().clone() );
-      }
-    }
+    o.stateSequence = new StateSequence<>( stateSequence.getKeys().size() );
 
     if ( result != null ) {
       o.result = result.clone();
-      o.results.put( globalStateKey, o.result );
-      o.results.put( currentGroupKey, o.result );
     }
+
+    for ( int i = 0; i < stateSequence.getKeys().size(); i++ ) {
+      final ReportStateKey reportStateKey = stateSequence.getKeys().get( i );
+      if ( reportStateKey.equals( globalStateKey ) || reportStateKey.equals( currentGroupKey ) ) {
+        o.stateSequence.add( reportStateKey, o.result );
+      } else {
+        o.stateSequence.add( reportStateKey, stateSequence.getResult( i ) );
+      }
+
+    }
+
     return o;
   }
 
@@ -189,8 +196,7 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   /**
    * Defines the name of the group to be totalled. If the name is null, all groups are totalled.
    *
-   * @param group
-   *          the group name.
+   * @param group the group name.
    */
   public void setGroup( final String group ) {
     this.group = group;
@@ -222,23 +228,20 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
    */
   public Expression getInstance() {
     final TotalItemCountFunction function = (TotalItemCountFunction) super.getInstance();
-    function.results = new HashMap<ReportStateKey, Sequence<Integer>>();
+    function.stateSequence = new StateSequence<>();
     return function;
   }
 
   /**
    * Helper function for the serialization.
    *
-   * @param in
-   *          the input stream.
-   * @throws IOException
-   *           if an IO error occured.
-   * @throws ClassNotFoundException
-   *           if a required class could not be found.
+   * @param in the input stream.
+   * @throws IOException            if an IO error occured.
+   * @throws ClassNotFoundException if a required class could not be found.
    */
   private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    results = new HashMap<ReportStateKey, Sequence<Integer>>();
+    stateSequence = new StateSequence<>();
   }
 
   public String getCrosstabFilterGroup() {

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -25,7 +25,6 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.HashMap;
 
 /**
  * A report function that pre-computes the largest item in a group. The Items must be mutually comparable among each
@@ -42,11 +41,11 @@ import java.util.HashMap;
  */
 public class TotalItemMaxFunction extends AbstractFunction implements FieldAggregationFunction {
   private static final Log logger = LogFactory.getLog( TotalItemMaxFunction.class );
-  /**
-   * A map of results, keyed by the process-key.
-   */
-  private transient HashMap<ReportStateKey, Sequence<Comparable>> results;
+  public static final int ZERO_I = 0;
+
   private transient int lastGroupSequenceNumber;
+
+  private StateSequence<Comparable> stateSequence;
 
   /**
    * The name of the group on which to reset.
@@ -73,7 +72,7 @@ public class TotalItemMaxFunction extends AbstractFunction implements FieldAggre
    * Default constructor.
    */
   public TotalItemMaxFunction() {
-    results = new HashMap<ReportStateKey, Sequence<Comparable>>();
+    stateSequence = new StateSequence<>();
   }
 
   /**
@@ -88,8 +87,7 @@ public class TotalItemMaxFunction extends AbstractFunction implements FieldAggre
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field
-   *          the field name.
+   * @param field the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -98,40 +96,51 @@ public class TotalItemMaxFunction extends AbstractFunction implements FieldAggre
   /**
    * Receives notification that the report has started.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     globalStateKey = event.getState().getProcessKey();
     if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
-      result = new Sequence<Comparable>();
-      results.clear();
-      results.put( globalStateKey, result );
-      lastGroupSequenceNumber = 0;
+      result = new Sequence<>();
+
+      stateSequence.clear();
+
+      stateSequence.add( globalStateKey, result );
+
+      lastGroupSequenceNumber = ZERO_I;
     } else {
-      result = results.get( globalStateKey );
-      lastGroupSequenceNumber = 0;
+      if ( stateSequence.resultExists() ) {
+        result = stateSequence.getResult( ZERO_I );
+      } else {
+        result = null;
+      }
+      lastGroupSequenceNumber = ZERO_I;
     }
   }
 
   /**
    * Receives notification that a group has started.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       final ReportStateKey groupStateKey = event.getState().getProcessKey();
       if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
-        result = new Sequence<Comparable>();
-        lastGroupSequenceNumber = 0;
+        result = new Sequence<>();
+        lastGroupSequenceNumber = ZERO_I;
 
-        results.put( globalStateKey, result );
-        results.put( groupStateKey, result );
+        stateSequence.add( globalStateKey, result );
+        stateSequence.add( groupStateKey, result );
+
       } else {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get( groupStateKey );
+        int found = this.stateSequence.getKeyIndex( groupStateKey );
+        if ( found < ZERO_I ) {
+          result = null;
+        } else {
+          result = stateSequence.getResult( found );
+        }
       }
     }
 
@@ -144,8 +153,7 @@ public class TotalItemMaxFunction extends AbstractFunction implements FieldAggre
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( field == null ) {
@@ -165,7 +173,7 @@ public class TotalItemMaxFunction extends AbstractFunction implements FieldAggre
       final Comparable compare = (Comparable) fieldValue;
 
       final Comparable oldValue = result.get( lastGroupSequenceNumber );
-      if ( oldValue == null || oldValue.compareTo( compare ) < 0 ) {
+      if ( oldValue == null || oldValue.compareTo( compare ) < ZERO_I ) {
         result.set( lastGroupSequenceNumber, compare );
       }
     } catch ( Exception e ) {
@@ -192,8 +200,7 @@ public class TotalItemMaxFunction extends AbstractFunction implements FieldAggre
   /**
    * Defines the name of the group to be totalled. If the name is null, the minimum for the whole report is computed.
    *
-   * @param group
-   *          the group name.
+   * @param group the group name.
    */
   public void setGroup( final String group ) {
     this.group = group;
@@ -220,23 +227,20 @@ public class TotalItemMaxFunction extends AbstractFunction implements FieldAggre
    */
   public Expression getInstance() {
     final TotalItemMaxFunction function = (TotalItemMaxFunction) super.getInstance();
-    function.results = new HashMap<ReportStateKey, Sequence<Comparable>>();
+    function.stateSequence = new StateSequence<>();
     return function;
   }
 
   /**
    * Helper function for the serialization.
    *
-   * @param in
-   *          the input stream.
-   * @throws IOException
-   *           if an IO error occured.
-   * @throws ClassNotFoundException
-   *           if a required class could not be found.
+   * @param in the input stream.
+   * @throws IOException            if an IO error occured.
+   * @throws ClassNotFoundException if a required class could not be found.
    */
   private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    results = new HashMap<ReportStateKey, Sequence<Comparable>>();
+    stateSequence = new StateSequence<>();
   }
 
   public String getCrosstabFilterGroup() {
