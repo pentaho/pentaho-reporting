@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -24,21 +24,15 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A report function that calculates the sum of one field (column) from the Data-Row. This function produces a global
  * total. The total sum of the group is known when the group processing starts and the report is not performing a
  * prepare-run. The sum is calculated in the prepare run and recalled in the printing run.
  * <p/>
- * The function can be used in two ways:
- * <ul>
- * <li>to calculate a sum for the entire report;</li>
- * <li>to calculate a sum within a particular group;</li>
- * </ul>
- * This function expects its input values to be either java.lang.Number instances or Strings that can be parsed to
- * java.lang.Number instances using a java.text.DecimalFormat.
+ * The function can be used in two ways: <ul> <li>to calculate a sum for the entire report;</li> <li>to calculate a sum
+ * within a particular group;</li> </ul> This function expects its input values to be either java.lang.Number instances
+ * or Strings that can be parsed to java.lang.Number instances using a java.text.DecimalFormat.
  * <p/>
  * The function understands two parameters, the <code>field</code> parameter is required and denotes the name of an
  * ItemBand-field which gets summed up.
@@ -53,10 +47,11 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    * A useful constant representing zero.
    */
   protected static final BigDecimal ZERO = new BigDecimal( 0.0 );
-  /**
-   * A map of results, keyed by the process-key.
-   */
-  private transient HashMap<ReportStateKey, Sequence<BigDecimal>> results;
+
+  private static final int ZERO_I = 0;
+
+  private StateSequence<BigDecimal> stateSequence;
+
   private transient int lastGroupSequenceNumber;
 
   /**
@@ -86,29 +81,37 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
 
   /**
    * Constructs a new function.
-   * <P>
+   * <p>
    * Initially the function has no name...be sure to assign one before using the function.
    */
   public TotalGroupSumFunction() {
-    results = new HashMap<ReportStateKey, Sequence<BigDecimal>>();
+    stateSequence = new StateSequence<>();
   }
 
   /**
    * Receives notification that the report has started.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void reportInitialized( final ReportEvent event ) {
     globalStateKey = event.getState().getProcessKey();
     if ( isPrepareRunLevel( event ) ) {
-      result = new Sequence<BigDecimal>();
-      results.clear();
-      results.put( globalStateKey, result );
-      lastGroupSequenceNumber = 0;
+      result = new Sequence<>();
+
+      stateSequence.clear();
+
+      stateSequence.add( globalStateKey, result );
+
+      lastGroupSequenceNumber = ZERO_I;
     } else {
-      result = results.get( globalStateKey );
-      lastGroupSequenceNumber = 0;
+
+      if ( stateSequence.resultExists() ) {
+        result = stateSequence.getResult( ZERO_I );
+      } else {
+        result = null;
+      }
+
+      lastGroupSequenceNumber = ZERO_I;
     }
   }
 
@@ -119,20 +122,33 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
   /**
    * Receives notification that a group has started.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void groupStarted( final ReportEvent event ) {
     if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       currentGroupKey = event.getState().getProcessKey();
+
+
       if ( isPrepareRunLevel( event ) ) {
         clear();
 
-        results.put( globalStateKey, result );
-        results.put( currentGroupKey, result );
+
+        int pos = this.stateSequence.getKeyIndex( currentGroupKey );
+        if ( pos == -1 ) {
+          this.stateSequence.add( currentGroupKey, result );
+        } else {
+          stateSequence.updateResult( pos, result );
+        }
+
       } else {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get( currentGroupKey );
+
+        int found = this.stateSequence.getKeyIndex( currentGroupKey );
+        if ( found < ZERO_I ) {
+          result = null;
+        } else {
+          result = stateSequence.getResult( found );
+        }
       }
     }
 
@@ -143,15 +159,14 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
   }
 
   protected void clear() {
-    result = new Sequence<BigDecimal>();
-    lastGroupSequenceNumber = 0;
+    result = new Sequence<>();
+    lastGroupSequenceNumber = ZERO_I;
   }
 
   /**
    * Receives notification that a row of data is being processed.
    *
-   * @param event
-   *          the event.
+   * @param event the event.
    */
   public void itemsAdvanced( final ReportEvent event ) {
     if ( field == null ) {
@@ -177,23 +192,22 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
 
   public Object clone() throws CloneNotSupportedException {
     final TotalGroupSumFunction o = (TotalGroupSumFunction) super.clone();
-    o.results = (HashMap<ReportStateKey, Sequence<BigDecimal>>) results.clone();
-
-    // Clone saved group results.
-    // The currently active result needs to be handled
-    // separately from this loop, since the globalStateKey
-    // and currentGroupKey both need to be mapped to it.
-    for ( final Map.Entry<ReportStateKey, Sequence<BigDecimal>> entry : results.entrySet() ) {
-      if ( entry.getKey() != globalStateKey && entry.getKey() != currentGroupKey ) {
-        o.results.put( entry.getKey(), entry.getValue().clone() );
-      }
-    }
+    o.stateSequence = new StateSequence<>( stateSequence.getKeys().size() );
 
     if ( result != null ) {
       o.result = result.clone();
-      o.results.put( globalStateKey, o.result );
-      o.results.put( currentGroupKey, o.result );
     }
+
+    for ( int i = 0; i < stateSequence.getKeys().size(); i++ ) {
+      final ReportStateKey reportStateKey = stateSequence.getKeys().get( i );
+      if ( reportStateKey.equals( globalStateKey ) || reportStateKey.equals( currentGroupKey ) ) {
+        o.stateSequence.add( reportStateKey, o.result );
+      } else {
+        o.stateSequence.add( reportStateKey, stateSequence.getResult( i ) );
+      }
+
+    }
+
     return o;
   }
 
@@ -216,8 +230,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
   /**
    * Defines the name of the group to be totalled. If the name is null, all groups are totalled.
    *
-   * @param group
-   *          the group name.
+   * @param group the group name.
    */
   public void setGroup( final String group ) {
     this.group = group;
@@ -225,7 +238,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
 
   /**
    * Return the current function value.
-   * <P>
+   * <p>
    * The value depends (obviously) on the function implementation. For example, a page counting function will return the
    * current page number.
    *
@@ -255,8 +268,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
   /**
    * Sets the field name for the function. The field name corresponds to a column name in the report's data-row.
    *
-   * @param field
-   *          the field name.
+   * @param field the field name.
    */
   public void setField( final String field ) {
     this.field = field;
@@ -271,24 +283,23 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
   public Expression getInstance() {
     final TotalGroupSumFunction function = (TotalGroupSumFunction) super.getInstance();
     function.result = null;
-    function.results = new HashMap<ReportStateKey, Sequence<BigDecimal>>();
+    function.stateSequence = new StateSequence<>();
+
     return function;
   }
 
   /**
    * Helper function for the serialization.
    *
-   * @param in
-   *          the input stream.
-   * @throws IOException
-   *           if an IO error occured.
-   * @throws ClassNotFoundException
-   *           if a required class could not be found.
+   * @param in the input stream.
+   * @throws IOException            if an IO error occured.
+   * @throws ClassNotFoundException if a required class could not be found.
    */
   private void readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    this.results = new HashMap<ReportStateKey, Sequence<BigDecimal>>();
     this.result = null;
+
+    this.stateSequence = new StateSequence<>();
   }
 
   public String getCrosstabFilterGroup() {
