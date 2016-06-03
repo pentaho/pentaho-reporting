@@ -21,10 +21,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.testsupport.dummyoutput.DummyReportProcessor;
+
+import javax.swing.table.DefaultTableModel;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -100,6 +103,60 @@ public class AbstractReportProcessorTest {
     verify( mock, times( 1 ) ).reportProcessingStarted( state );
     verify( mock, times( 1 ) ).reportProcessingUpdate( state );
     verify( mock, times( 1 ) ).reportProcessingFinished( state );
+  }
+
+  @Test
+  public void testIsQueryLimitNotReachedForUnlimitedQueryLimit() throws Exception {
+    final MasterReport report = new MasterReport();
+    final DefaultTableModel model = new DefaultTableModel( 500, 10 );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    report.setQueryLimit( -1 );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), false );
+  }
+
+  @Test
+  public void testIsQueryLimitNotReachedForUnsetQueryLimit() throws Exception {
+    final MasterReport report = new MasterReport();
+    final DefaultTableModel model = new DefaultTableModel( 500, 10 );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), false );
+  }
+
+  @Test
+  public void testIsQueryLimitReachedForNumberOfRowsGreaterQueryLimit() throws Exception {
+    final MasterReport report = new MasterReport();
+    final DefaultTableModel model = new DefaultTableModel( 501, 10 );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    report.setQueryLimit( 500 );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), true );
+  }
+
+  @Test
+  public void testIsQueryLimitNotReachedForNumberOfRowsEqualQueryLimit() throws Exception {
+    final MasterReport report = new MasterReport();
+    final DefaultTableModel model = new DefaultTableModel( 500, 10 );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    report.setQueryLimit( 500 );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), false );
+  }
+
+  @Test
+  public void testIsQueryLimitNotReachedForNumberOfRowsLessQueryLimit() throws Exception {
+    final MasterReport report = new MasterReport();
+    final DefaultTableModel model = new DefaultTableModel( 499, 10 );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    report.setQueryLimit( 500 );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), false );
   }
 
 

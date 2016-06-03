@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.core.states.process;
@@ -211,7 +211,7 @@ public class ProcessState implements ReportState {
 
   }
 
-  public void initializeForMasterReport( final MasterReport report,
+  public boolean initializeForMasterReport( final MasterReport report,
                                          final ProcessingContext processingContext,
                                          final OutputFunction outputFunction )
     throws ReportProcessingException {
@@ -354,11 +354,12 @@ public class ProcessState implements ReportState {
       this.recorder = new EmptyGroupSizeRecorder();
     }
     this.processKey = createKey();
+
+    return flowController.isQueryLimitReached();
   }
 
   private List<SortConstraint> lookupSortOrder( final ReportDefinition report ) {
-    Object attribute = report.getAttribute
-      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
+    Object attribute = report.getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
     if ( attribute instanceof List<?> ) {
       return (List<SortConstraint>) attribute;
     }
@@ -535,8 +536,7 @@ public class ProcessState implements ReportState {
       final ParameterMapping[] exportMappings = preDataSubReport.getExportMappings();
 
       // eval query, query-limit and query-timeout
-      this.flowController = postPreProcessingFlowController.performInitSubreport
-        ( dataFactory, inputMappings, resourceBundleFactory );
+      this.flowController = postPreProcessingFlowController.performInitSubreport( dataFactory, inputMappings, resourceBundleFactory );
       final Integer queryLimitDefault = IntegerCache.getInteger( preDataSubReport.getQueryLimit() );
       final Integer queryTimeoutDefault = IntegerCache.getInteger( preDataSubReport.getQueryTimeout() );
 

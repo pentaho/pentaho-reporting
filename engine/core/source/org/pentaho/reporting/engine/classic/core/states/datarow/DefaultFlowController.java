@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
@@ -71,6 +71,7 @@ public class DefaultFlowController {
   private ReportParameterValues parameters;
   private boolean storedAdvanceRequested;
   private PerformanceMonitorContext performanceMonitorContext;
+  private boolean isQueryLimitReached;
 
   public DefaultFlowController( final ProcessingContext reportContext, final DataSchemaDefinition schemaDefinition,
       final ReportParameterValues parameters, final PerformanceMonitorContext performanceMonitorContext )
@@ -248,7 +249,8 @@ public class DefaultFlowController {
         reportData = dataFactory.queryData( query, params );
       }
 
-      if ( queryLimit > 0 && reportData.getRowCount() > queryLimit ) {
+      if ( queryLimit > 0 && reportData.getRowCount() >= queryLimit + 1 ) {
+        setQueryLimitReached( true );
         return new LengthLimitingTableModel( reportData, queryLimit );
       }
       return reportData;
@@ -507,5 +509,13 @@ public class DefaultFlowController {
     final DefaultFlowController flowController = new DefaultFlowController( this, dataRow );
     flowController.advanceRequested = storedAdvanceRequested;
     return flowController;
+  }
+
+  public boolean isQueryLimitReached() {
+    return isQueryLimitReached;
+  }
+
+  public void setQueryLimitReached( boolean queryLimitReached ) {
+    isQueryLimitReached = queryLimitReached;
   }
 }
