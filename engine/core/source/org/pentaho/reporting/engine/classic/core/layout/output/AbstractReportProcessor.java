@@ -102,6 +102,11 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
    */
   private boolean pagebreaksSupported;
 
+  /**
+   * A flag controlling whether query limit reached.
+   */
+  private boolean isQueryLimitReached;
+
   protected AbstractReportProcessor( final MasterReport report, final OutputProcessor outputProcessor )
     throws ReportProcessingException {
     if ( report == null ) {
@@ -422,7 +427,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
 
       final ProcessState startState = new ProcessState();
       try {
-        startState.initializeForMasterReport( report, processingContext, (OutputFunction) lm.getInstance() );
+        boolean isQueryLimitReached = startState.initializeForMasterReport( report, processingContext, (OutputFunction) lm.getInstance() );
+        setQueryLimitReached( isQueryLimitReached );
       } finally {
         activeDataFactory = startState.getProcessHandle();
       }
@@ -1497,5 +1503,13 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
    */
   private boolean isPagebreaksSupported() {
     return pagebreaksSupported;
+  }
+
+  public boolean isQueryLimitReached() {
+    return isQueryLimitReached;
+  }
+
+  public void setQueryLimitReached( boolean queryLimitReached ) {
+    isQueryLimitReached = queryLimitReached;
   }
 }
