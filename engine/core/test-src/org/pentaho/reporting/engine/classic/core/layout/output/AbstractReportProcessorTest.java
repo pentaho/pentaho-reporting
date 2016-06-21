@@ -26,10 +26,14 @@ import org.pentaho.reporting.engine.classic.core.event.ReportProgressEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.testsupport.dummyoutput.DummyReportProcessor;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 import javax.swing.table.DefaultTableModel;
+import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class AbstractReportProcessorTest {
@@ -127,6 +131,17 @@ public class AbstractReportProcessorTest {
   }
 
   @Test
+  public void testIsQueryLimitNotReachedForZeroQueryLimit() throws Exception {
+    final MasterReport report = new MasterReport();
+    final DefaultTableModel model = new DefaultTableModel( 500, 10 );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    report.setQueryLimit( 0 );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), false );
+  }
+
+  @Test
   public void testIsQueryLimitReachedForNumberOfRowsGreaterQueryLimit() throws Exception {
     final MasterReport report = new MasterReport();
     final DefaultTableModel model = new DefaultTableModel( 501, 10 );
@@ -159,5 +174,52 @@ public class AbstractReportProcessorTest {
     assertEquals( reportProcessor.isQueryLimitReached(), false );
   }
 
+  @Test
+  public void testIsLimitReachedForNumberOfRowsGreaterQueryLimit() throws Exception {
+    //When data source enforce limit itself
+    // report with 148 rows
+    final URL url = getClass().getResource( "report1.prpt" );
+    assertNotNull( url );
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
+    final MasterReport report = (MasterReport) directly.getResource();
+    report.setQueryLimit( 147 );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), true );
+  }
+
+  @Test
+  public void testIsLimitNotReachedForNumberOfRowsEqualQueryLimit() throws Exception {
+    //When data source enforce limit itself
+    // report with 148 rows
+    final URL url = getClass().getResource( "report1.prpt" );
+    assertNotNull( url );
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
+    final MasterReport report = (MasterReport) directly.getResource();
+    report.setQueryLimit( 148 );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), false );
+  }
+
+  @Test
+  public void testIsLimitNotReachedForNumberOfRowsLessQueryLimit() throws Exception {
+    //When data source enforce limit itself
+    // report with 148 rows
+    final URL url = getClass().getResource( "report1.prpt" );
+    assertNotNull( url );
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
+    final MasterReport report = (MasterReport) directly.getResource();
+    report.setQueryLimit( 149 );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.prepareReportProcessing();
+    assertEquals( reportProcessor.isQueryLimitReached(), false );
+  }
 
 }
