@@ -240,7 +240,9 @@ public class DefaultFlowController {
         performanceMonitorContext.createStopWatch( PerformanceTags.REPORT_QUERY, new FormattedMessage( "query={%s}",
             query ) );
     try {
-      DataRow params = new QueryDataRowWrapper( parameters, queryTimeout, queryLimit, sortConstraints );
+      // increasedQueryLimit for reports where queryLimit set. To handle the situation when reportData.getRowCount() == queryLimit
+      int increasedQueryLimit = queryLimit > 0 ? queryLimit + 1 : queryLimit;
+      DataRow params = new QueryDataRowWrapper( parameters, queryTimeout, increasedQueryLimit, sortConstraints );
       TableModel reportData;
       if ( designTime && dataFactory instanceof DataFactoryDesignTimeSupport ) {
         DataFactoryDesignTimeSupport designTimeSupport = (DataFactoryDesignTimeSupport) dataFactory;
