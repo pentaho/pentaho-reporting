@@ -522,7 +522,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
     try {
 
       // if the connection type is not of the current dialect, regenerate the query
-      final DatabaseInterface di = getDatabaseInterface( connection );
+      final DatabaseInterface di = getDatabaseInterface( connection, databaseMeta );
 
       if ( ( di != null ) && !databaseMeta.getPluginId().equals( di.getPluginId() ) ) {
         // we need to reinitialize our mqlQuery object and reset the query.
@@ -579,10 +579,10 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
     return password;
   }
 
-  private DatabaseInterface getDatabaseInterface( final Connection conn ) {
+  private DatabaseInterface getDatabaseInterface( final Connection conn, final DatabaseMeta databaseMeta ) {
     try {
       final String prod = conn.getMetaData().getDatabaseProductName();
-      final DatabaseInterface di = DatabaseMetaUtil.getDatabaseInterface( prod );
+      final DatabaseInterface di = DatabaseMetaUtil.getDatabaseInterface( prod, databaseMeta );
       if ( prod != null && di == null ) {
         logger.warn( "dialect not detected" ); //$NON-NLS-1$
       }
