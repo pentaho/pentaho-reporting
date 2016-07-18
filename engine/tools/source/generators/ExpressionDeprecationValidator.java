@@ -12,24 +12,19 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package generators;
 
-import org.apache.bcel.classfile.Attribute;
-import org.apache.bcel.classfile.ClassParser;
-import org.apache.bcel.classfile.Deprecated;
-import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.util.Locale;
 
 public class ExpressionDeprecationValidator {
@@ -64,31 +59,14 @@ public class ExpressionDeprecationValidator {
 
   }
 
-  private static boolean isDeprecated( final ExpressionMetaData expression )
-    throws IOException {
-    try {
-      final Class type = expression.getExpressionType();
-      final String resourcePath = type.getName().replace( '.', '/' );
-      final InputStream classStream = ObjectUtilities.getResourceAsStream
-        ( resourcePath + ".class", ExpressionDeprecationValidator.class );
-      try {
-        final ClassParser parser = new ClassParser( classStream, resourcePath );
-        final JavaClass javaClass = parser.parse();
-        final Attribute[] attributes = javaClass.getAttributes();
-        for ( int j = 0; j < attributes.length; j++ ) {
-          if ( attributes[ j ] instanceof Deprecated ) {
-            return true;
-          }
+  private static boolean isDeprecated( final ExpressionMetaData expression ) {
 
-        }
-        return false;
-      } finally {
-        classStream.close();
-      }
-    } catch ( Throwable e ) {
-      e.printStackTrace();
-      return false;
+    final Class type = expression.getExpressionType();
+    final Annotation annotation = type.getAnnotation( Deprecated.class );
+    if (annotation != null) {
+      return true;
     }
+    return false;
   }
 
 }

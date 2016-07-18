@@ -26,4 +26,5 @@ build-res/module-scripts/
 .idea/inspectionProfiles/
 *.lck
 target
+checkstyle/
 
