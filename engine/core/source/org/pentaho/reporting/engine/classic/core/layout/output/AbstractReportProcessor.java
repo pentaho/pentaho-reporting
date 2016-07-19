@@ -107,6 +107,12 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
    */
   private boolean isQueryLimitReached;
 
+  /**
+   * A flag controlling report interruption
+   * Represents custom interruption mechanism not affected by switching thread interrupted flag
+   */
+  private boolean manuallyInterrupted;
+
   protected AbstractReportProcessor( final MasterReport report, final OutputProcessor outputProcessor )
     throws ReportProcessingException {
     if ( report == null ) {
@@ -153,6 +159,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
 
     final boolean designtime = outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.DESIGNTIME );
     this.report = report.derive( designtime );
+    ReportProcessorThreadHolder.setProcessor( this );
   }
 
   protected ProcessStateHandle getProcessStateHandle() {
@@ -302,7 +309,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
    */
   protected final void checkInterrupted() throws ReportInterruptedException {
     if ( isHandleInterruptedState() ) {
-      if ( Thread.currentThread().isInterrupted() ) {
+      if ( manuallyInterrupted || Thread.currentThread().isInterrupted() ) {
         throw new ReportInterruptedException( "Current thread [" + Thread.currentThread().getName()
             + "]is interrupted. Returning." );
       }
@@ -317,6 +324,11 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
       this.physicalMapping = null;
       this.logicalMapping = null;
     }
+    ReportProcessorThreadHolder.clear();
+  }
+
+  public synchronized void cancel() {
+    manuallyInterrupted = true;
   }
 
   public Configuration getConfiguration() {

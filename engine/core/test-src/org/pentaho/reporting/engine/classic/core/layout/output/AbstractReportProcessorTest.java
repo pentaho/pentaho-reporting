@@ -19,8 +19,12 @@ package org.pentaho.reporting.engine.classic.core.layout.output;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
@@ -31,9 +35,11 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 import javax.swing.table.DefaultTableModel;
 import java.net.URL;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class AbstractReportProcessorTest {
@@ -220,6 +226,74 @@ public class AbstractReportProcessorTest {
     final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
     reportProcessor.prepareReportProcessing();
     assertEquals( reportProcessor.isQueryLimitReached(), false );
+  }
+
+  @Test
+  public void testConstructionAndClose() throws ReportProcessingException {
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( new MasterReport() );
+    assertEquals( reportProcessor, ReportProcessorThreadHolder.getProcessor() );
+    reportProcessor.close();
+    assertNull( ReportProcessorThreadHolder.getProcessor() );
+  }
+
+  @Test
+  public void testInterruptedOld() throws Exception {
+    final boolean[] fired = { false };
+    try {
+
+      final MasterReport report = new MasterReport();
+      final DefaultTableModel model = new DefaultTableModel( 500, 10 );
+      report.setDataFactory( new TableDataFactory( "default", model ) );
+      final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+
+      final ReportProgressListener reportProgressListener = mock( ReportProgressListener.class );
+      doAnswer( new Answer() {
+        @Override public Object answer( final InvocationOnMock invocation ) throws Throwable {
+          Thread.currentThread().interrupt();
+          return null;
+        }
+      } ).when( reportProgressListener ).reportProcessingUpdate( any( ReportProgressEvent.class ) );
+      reportProcessor.addReportProgressListener( reportProgressListener );
+
+      final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+      final CountDownLatch latch = new CountDownLatch( 1 );
+      executorService.execute( new Runnable() {
+        @Override public void run() {
+          try {
+            reportProcessor.processReport();
+          } catch ( final ReportProcessingException e ) {
+            fired[ 0 ] = true;
+          }
+          latch.countDown();
+        }
+      } );
+
+      latch.await();
+    } finally {
+      assertTrue( fired[ 0 ] );
+    }
+  }
+
+
+  @Test( expected = ReportInterruptedException.class )
+  public void testInterruptedNew() throws Exception {
+
+    final MasterReport report = new MasterReport();
+    final DefaultTableModel model = new DefaultTableModel( 500, 10 );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+
+    final ReportProgressListener reportProgressListener = mock( ReportProgressListener.class );
+    doAnswer( new Answer() {
+      @Override public Object answer( final InvocationOnMock invocation ) throws Throwable {
+        reportProcessor.cancel();
+        return null;
+      }
+    } ).when( reportProgressListener ).reportProcessingUpdate( any( ReportProgressEvent.class ) );
+    reportProcessor.addReportProgressListener( reportProgressListener );
+
+    reportProcessor.processReport();
   }
 
 }
