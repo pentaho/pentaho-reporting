@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
@@ -1013,14 +1013,11 @@ public class PreviewPane extends JPanel implements ReportEventSource {
 
   private void prepareShutdown() {
     synchronized ( this ) {
-      if ( paginationWorker != null ) {
-        // noinspection SynchronizeOnNonFinalField
-        synchronized ( paginationWorker ) {
-          paginationWorker.finish();
-        }
-        paginationWorker = null;
-      }
+
+      paginationWorker = null;
+
       if ( printReportProcessor != null ) {
+        printReportProcessor.cancel();
         printReportProcessor.close();
         printReportProcessor = null;
       }
@@ -1457,12 +1454,16 @@ public class PreviewPane extends JPanel implements ReportEventSource {
   }
 
   private void killThePaginationWorker() {
+
+    if ( printReportProcessor != null ) {
+      printReportProcessor.cancel();
+    }
+
     if ( paginationWorker != null ) {
       // make sure that old pagination handler does not run longer than
       // necessary..
       // noinspection SynchronizeOnNonFinalField
       final Worker paginationWorker = this.paginationWorker;
-      paginationWorker.finish();
 
       while ( paginationWorker.isAvailable() == false && paginationWorker.isFinish() == false ) {
         try {
