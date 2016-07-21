@@ -12,10 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.xls;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,12 +39,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowR
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.FlowExcelOutputProcessor;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * An export task implementation, which writes a given report into an Excel file.
@@ -98,6 +98,7 @@ public class XSSFExcelExportTask implements Runnable {
   /**
    * Exports the report into an Excel file.
    */
+  @Override
   public void run() {
     OutputStream out = null;
     File file = null;
@@ -160,7 +161,7 @@ public class XSSFExcelExportTask implements Runnable {
     } catch ( Exception re ) {
       XSSFExcelExportTask.logger.error( "Excel export failed", re ); //$NON-NLS-1$
       if ( statusListener != null ) {
-        statusListener.setStatus( StatusType.WARNING, messages.getString( "ExcelExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
+        statusListener.setStatus( StatusType.ERROR, messages.getString( "ExcelExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
       }
     } finally {
       try {
