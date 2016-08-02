@@ -24,6 +24,10 @@
       <exclude org="xml-apis" module="xml-apis"/>
       <exclude org="junit" module="junit"/>
     </dependency>
+     <!-- Explicit ws-common-util because tranisitivity from xmlrpc-client not working in approved repo routing chain -->
+    <dependency org="org.apache.ws.commons.util" name ="ws-commons-util" rev="1.0.2" conf="default_external->default" transitive="false"/>
+
+
     <dependency org="com.debortoliwines.openerp" name="openerp-java-api" rev="1.1.0"  conf="default_external->default"/>
     <dependency org="openerp" name="openerp-java-report-helper" rev="0.10.0"  conf="default_external->default"/>
 
