@@ -31,4 +31,12 @@
                 configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
     <alias>html+zip</alias>
   </process-task>
+
+  <process-task name="mime-message/text/html"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
+    <alias>html+email</alias>
+  </process-task>
 </meta-data>

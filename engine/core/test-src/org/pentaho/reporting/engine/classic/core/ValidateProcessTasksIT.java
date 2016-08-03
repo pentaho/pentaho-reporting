@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -43,7 +43,7 @@ public class ValidateProcessTasksIT extends TestCase {
       System.out.println( exportType );
     }
 
-    assertEquals( 20, exportTypes.length );
+    assertEquals( 21, exportTypes.length );
     ReportProcessTaskRegistry.getInstance().createProcessTask( ExcelTableModule.EXCEL_FLOW_EXPORT_TYPE );
   }
 }
