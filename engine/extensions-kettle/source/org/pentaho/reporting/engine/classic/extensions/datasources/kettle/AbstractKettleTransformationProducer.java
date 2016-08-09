@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
@@ -30,7 +30,6 @@ import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.StepInterface;
 import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.trans.step.StepMetaDataCombi;
-import org.pentaho.di.trans.steps.metainject.MetaInjectMeta;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -206,7 +205,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
   private boolean isDynamicTransformation( final TransMeta transMeta ) {
     List<StepMeta> steps = transMeta.getSteps();
     for ( final StepMeta step : steps ) {
-      if ( step.getStepMetaInterface() instanceof MetaInjectMeta ) {
+      if ( step.isEtlMetaInject() ) {
         return true;
       }
     }
@@ -263,8 +262,9 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
       currentlyRunningTransformation = null;
     }
     if ( trans.getErrors() != 0 && isStopOnError() ) {
-      throw new ReportDataFactoryException( String.format
-        ( "Transformation reported %d records with errors and stop-on-error is true. Aborting.", trans.getErrors() ) );
+      throw new ReportDataFactoryException( String
+        .format( "Transformation reported %d records with errors and stop-on-error is true. Aborting.",
+          trans.getErrors() ) );
     }
 
     return tableProducer.getTableModel();
