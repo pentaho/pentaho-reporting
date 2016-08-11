@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -28,7 +28,7 @@ import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
 import java.util.Locale;
 
-public class NumberFieldType extends AbstractElementType implements RawDataSource {
+public class NumberFieldType extends AbstractElementType implements RawDataSource, RotatableText {
   public static final NumberFieldType INSTANCE = new NumberFieldType();
 
   private static final String DECIMALFORMAT_DEFAULT_PATTERN =
@@ -61,12 +61,12 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
         final Locale locale = runtime.getResourceBundleFactory().getLocale();
         final FastDecimalFormat decimalFormat = new FastDecimalFormat( String.valueOf( formatStringRaw ), locale );
 
-        return decimalFormat.format( staticValue );
+        return rotate( element, decimalFormat.format( staticValue ) );
       } catch ( Exception e ) {
         // ignore .. fallback to show the fieldname
       }
     }
-    return ElementTypeUtils.queryFieldName( element );
+    return rotate( element, ElementTypeUtils.queryFieldName( element ) );
   }
 
   /**
@@ -151,7 +151,7 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
 
     final Object retval = ElementTypeUtils.queryFieldOrValue( runtime, element );
     if ( retval instanceof Number == false ) {
-      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
     }
 
     Object formatStringRaw = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
@@ -176,9 +176,9 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
         }
       }
 
-      return context.decimalFormat.format( retval );
+      return rotate( element, context.decimalFormat.format( retval ) );
     } catch ( Exception e ) {
-      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
     }
   }
 }

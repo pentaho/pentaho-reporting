@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -27,7 +27,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MessageType extends AbstractElementType {
+public class MessageType extends AbstractElementType implements RotatableText {
   public static final MessageType INSTANCE = new MessageType();
 
   public static class MessageTypeContext {
@@ -63,7 +63,7 @@ public class MessageType extends AbstractElementType {
     final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     final Object message = ElementTypeUtils.queryStaticValue( element );
     if ( message == null ) {
-      return nullValue;
+      return rotate( element, nullValue );
     }
 
     final MessageTypeContext context = element.getElementContext( MessageTypeContext.class );
@@ -93,17 +93,17 @@ public class MessageType extends AbstractElementType {
 
     final Object value = messageFormatFilter.performFormat( runtime.getDataRow() );
     if ( value == null ) {
-      return nullValue;
+      return rotate( element, nullValue );
     }
-    return String.valueOf( value );
+    return rotate( element, value );
   }
 
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object message = ElementTypeUtils.queryStaticValue( element );
     if ( message == null || String.valueOf( message ).length() == 0 ) {
-      return element.getElementType().getMetaData().getName();
+      return rotate( element, element.getElementType().getMetaData().getName() );
     }
-    return message;
+    return rotate( element, message );
   }
 
   public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {

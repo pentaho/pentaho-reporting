@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -24,7 +24,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
 import javax.swing.text.Document;
 
-public class TextFieldType extends AbstractElementType {
+public class TextFieldType extends AbstractElementType implements RotatableText {
   public static final ElementType INSTANCE = new TextFieldType();
 
   public TextFieldType() {
@@ -34,9 +34,9 @@ public class TextFieldType extends AbstractElementType {
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object staticValue = ElementTypeUtils.queryStaticValue( element );
     if ( staticValue != null ) {
-      return staticValue;
+      return rotate( element, staticValue );
     }
-    return ElementTypeUtils.queryFieldName( element );
+    return rotate( element, ElementTypeUtils.queryFieldName( element ) );
   }
 
   /**
@@ -59,13 +59,13 @@ public class TextFieldType extends AbstractElementType {
 
     final Object o = ElementTypeUtils.queryFieldOrValue( runtime, element );
     if ( o instanceof Document ) {
-      return o;
+      return rotate( element, o );
     }
 
     final String retval = ElementTypeUtils.toString( o );
     if ( retval == null ) {
-      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
     }
-    return retval;
+    return rotate( element, retval );
   }
 }

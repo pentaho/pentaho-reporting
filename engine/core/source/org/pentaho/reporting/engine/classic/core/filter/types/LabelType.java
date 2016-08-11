@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -27,7 +27,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeCont
 
 import java.util.Locale;
 
-public class LabelType extends AbstractElementType {
+public class LabelType extends AbstractElementType implements RotatableText {
   public static final ElementType INSTANCE = new LabelType();
 
   public LabelType() {
@@ -53,9 +53,9 @@ public class LabelType extends AbstractElementType {
 
     final Object retval = ElementTypeUtils.queryStaticValue( element );
     if ( retval == null ) {
-      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
     }
-    return String.valueOf( retval );
+    return rotate( element, retval );
   }
 
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
@@ -73,7 +73,7 @@ public class LabelType extends AbstractElementType {
               attributes.getMetaAttribute( MetaAttributeNames.Formatting.NAMESPACE,
                   MetaAttributeNames.Formatting.LABEL, String.class, context );
           if ( o != null ) {
-            return o;
+            return rotate( element, o );
           }
         }
       }
@@ -81,9 +81,9 @@ public class LabelType extends AbstractElementType {
 
     final Object retval = ElementTypeUtils.queryStaticValue( element );
     if ( retval == null ) {
-      return "Label";
+      return rotate( element, "Label" );
     }
-    return String.valueOf( retval );
+    return rotate( element,  retval );
   }
 
   public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {

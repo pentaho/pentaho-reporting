@@ -1,7 +1,21 @@
-package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ *  terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ *  Foundation.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License along with this
+ *  program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ *  or from the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *  See the GNU Lesser General Public License for more details.
+ *
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
+ */
 
-import java.io.IOException;
-import java.text.NumberFormat;
+package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -18,6 +32,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlP
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.engine.classic.core.util.RotatedTextDrawable;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
@@ -28,6 +43,9 @@ import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableW
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
+
+import java.io.IOException;
+import java.text.NumberFormat;
 
 public class HtmlTextExtractorHelper {
   private static final String DIV_TAG = "div";
@@ -305,11 +323,30 @@ public class HtmlTextExtractorHelper {
       return false;
     }
 
+    final RotatedTextDrawable rotatedTextDrawable = RotatedTextDrawable.extract( rawObject );
+
+    if ( rotatedTextDrawable != null ) {
+      return tryHandleRotatedText( rotatedTextDrawable );
+    }
+
     if ( rawObject instanceof DrawableWrapper ) {
       return tryHandleDrawable( attrs, width, height, contentWidth, contentHeight, styleSheet,
-          (DrawableWrapper) rawObject );
+        (DrawableWrapper) rawObject );
     }
     return false;
+  }
+
+  private boolean tryHandleRotatedText( final RotatedTextDrawable rotatedTextDrawable )
+    throws IOException {
+
+    AttributeList attributeList = new AttributeList();
+    attributeList.setAttribute( HtmlPrinter.XHTML_NAMESPACE, "style", rotatedTextDrawable.getRotation().getCss() );
+
+    xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attributeList, XmlWriter.OPEN );
+    xmlWriter.writeText( rotatedTextDrawable.getText() );
+    xmlWriter.writeCloseTag();
+
+    return true;
   }
 
   private boolean tryHandleDrawable( final ReportAttributeMap attrs, final long width, final long height,

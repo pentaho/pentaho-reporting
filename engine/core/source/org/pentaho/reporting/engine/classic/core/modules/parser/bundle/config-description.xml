@@ -176,6 +176,11 @@
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.bundle.style-factory.tag.style.rotation-styles"
+       global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
   <key
       name="org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.data-factory-handler.org.pentaho.reporting.engine.classic.core.CompoundDataFactory"
       global="true" hidden="true">

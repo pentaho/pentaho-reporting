@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class DateFieldType extends AbstractElementType implements RawDataSource {
+public class DateFieldType extends AbstractElementType implements RawDataSource, RotatableText {
   public static class DateFieldTypeContext {
     public transient FastDateFormat dateFormat;
     public transient Locale locale;
@@ -59,9 +59,9 @@ public class DateFieldType extends AbstractElementType implements RawDataSource 
       final SimpleDateFormat dateFormat = new SimpleDateFormat( String.valueOf( formatStringRaw ), locale );
       dateFormat.setDateFormatSymbols( new DateFormatSymbols( locale ) );
       dateFormat.setTimeZone( timeZone );
-      return dateFormat.format( staticValue );
+      return rotate( element, dateFormat.format( staticValue ) );
     }
-    return ElementTypeUtils.queryFieldName( element );
+    return rotate( element, ElementTypeUtils.queryFieldName( element ) );
   }
 
   /**
@@ -110,7 +110,7 @@ public class DateFieldType extends AbstractElementType implements RawDataSource 
     }
 
     final Object formatStringRaw =
-        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
+      element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
 
     if ( formatStringRaw == null ) {
       // return the default to-string behavior of java.util.Date
@@ -141,7 +141,7 @@ public class DateFieldType extends AbstractElementType implements RawDataSource 
 
     final Object retval = ElementTypeUtils.queryFieldOrValue( runtime, element );
     if ( retval instanceof Date == false ) {
-      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
     }
 
     Object formatStringRaw = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
@@ -170,9 +170,9 @@ public class DateFieldType extends AbstractElementType implements RawDataSource 
         }
       }
 
-      return context.dateFormat.format( retval );
+      return rotate( element, context.dateFormat.format( retval ) );
     } catch ( final Exception e ) {
-      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
     }
   }
 }

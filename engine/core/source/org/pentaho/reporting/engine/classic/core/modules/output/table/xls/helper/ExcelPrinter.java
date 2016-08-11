@@ -12,22 +12,15 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
-
-import java.awt.Image;
-import java.awt.Shape;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -52,10 +45,16 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Table
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.util.RotatedTextDrawable;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
+
+import java.awt.Image;
+import java.awt.Shape;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class ExcelPrinter extends ExcelPrinterBase {
   private static final Log logger = LogFactory.getLog( ExcelPrinter.class );
@@ -256,9 +255,11 @@ public class ExcelPrinter extends ExcelPrinterBase {
     final String linkTarget = (String) content.getStyleSheet().getStyleProperty( ElementStyleKeys.HREF_TARGET );
     if ( linkTarget != null ) {
       // this may be wrong if we have quotes inside. We should escape them ..
+      final RotatedTextDrawable extracted = RotatedTextDrawable.extract( value );
+      final String linkText = extracted == null ? textExtractor.getText() : extracted.getText();
       final String formula =
           "HYPERLINK(" + splitAndQuoteExcelFormula( linkTarget ) + ","
-              + splitAndQuoteExcelFormula( textExtractor.getText() ) + ")";
+              + splitAndQuoteExcelFormula( linkText ) + ")";
       if ( formula.length() < 1024 ) {
         cell.setCellFormula( formula );
         return true;
@@ -280,29 +281,21 @@ public class ExcelPrinter extends ExcelPrinterBase {
       ExcelPrinter.logger
           .warn( "Excel-Cells cannot contain formulas longer than 1023 characters. Converting excel formula into plain text" );
     }
-
-    if ( value instanceof RichTextString ) {
-      cell.setCellValue( (RichTextString) value );
-    } else if ( value instanceof Date ) {
-      cell.setCellValue( (Date) value );
-    } else if ( value instanceof Number ) {
-      final Number number = (Number) value;
-      cell.setCellValue( number.doubleValue() );
-    } else if ( value instanceof Boolean ) {
-      cell.setCellValue( Boolean.TRUE.equals( value ) );
-    } else { // Something we can't handle.
-      if ( value == null ) {
-        cell.setCellType( Cell.CELL_TYPE_BLANK );
-      } else {
-        cell.setCellValue( String.valueOf( value ) );
-
-      }
-    }
+    handleValueType( cell, value, workbook );
     return true;
   }
 
   private boolean handleImageValues( final RenderBox content, final SheetLayout sheetLayout,
       final TableRectangle rectangle, final long contentOffset, final Object value ) {
+
+    if ( value instanceof RotatedTextDrawable ) {
+      return false;
+    }
+
+    if ( value instanceof DrawableWrapper && ( (DrawableWrapper) value ).getBackend() instanceof RotatedTextDrawable ) {
+      return false;
+    }
+
     if ( value instanceof Image ) {
       try {
         final ImageContainer imageContainer = new DefaultImageReference( (Image) value );

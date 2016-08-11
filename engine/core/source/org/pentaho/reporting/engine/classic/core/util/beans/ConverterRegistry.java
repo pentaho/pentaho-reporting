@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
@@ -35,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.BoxSizing;
 import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
 import org.pentaho.reporting.engine.classic.core.style.TextDirection;
+import org.pentaho.reporting.engine.classic.core.style.TextRotation;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
@@ -93,6 +94,7 @@ public final class ConverterRegistry {
     registeredClasses.put( Timestamp.class, new SQLTimestampValueConverter() );
     registeredClasses.put( StagingMode.class, new StagingModeValueConverter() );
     registeredClasses.put( BasicStroke.class, new BasicStrokeValueConverter() );
+    registeredClasses.put( TextRotation.class, new TextRotationValueConverter() );
   }
 
   public ValueConverter getValueConverter( final Class c ) {
