@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
@@ -62,6 +62,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
 public class RepositoryPublishDialog extends RepositoryOpenDialog {
+
+  private static final String MIME_MESSAGE_TEXT_HTML = "mime-message/text/html";
 
   private class NewFolderAction extends AbstractAction {
     /**
@@ -289,6 +291,8 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
         "RepositoryPublishDialog.ExportType.TEXT" ) );
     keyedComboBoxModel.add( HtmlTableModule.TABLE_HTML_PAGE_EXPORT_TYPE, Messages.getInstance().getString(
         "RepositoryPublishDialog.ExportType.HTMLPage" ) );
+    keyedComboBoxModel.add( MIME_MESSAGE_TEXT_HTML, Messages.getInstance().getString(
+      "RepositoryPublishDialog.ExportType.HTMLEmail" ) );
     return keyedComboBoxModel;
   }
 
