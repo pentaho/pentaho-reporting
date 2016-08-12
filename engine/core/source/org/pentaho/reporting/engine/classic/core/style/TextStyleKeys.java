@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.style;
@@ -124,4 +124,6 @@ public class TextStyleKeys {
   public static final StyleKey FIRST_LINE_INDENT = StyleKey.getStyleKey( "first-line-indent", Float.class );
 
   public static final StyleKey DIRECTION = StyleKey.getStyleKey( "direction", TextDirection.class );
+
+  public static final StyleKey TEXT_ROTATION = StyleKey.getStyleKey( "rotation", TextRotation.class );
 }

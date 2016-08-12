@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
@@ -41,6 +41,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helpe
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.engine.classic.core.util.RotatedTextDrawable;
 import org.pentaho.reporting.engine.classic.core.util.ShapeDrawable;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
@@ -149,7 +150,7 @@ public class FastHtmlTextExtractor extends FastTextExtractor {
 
     if ( value instanceof Shape ) {
       handleShape( element, (Shape) value );
-    } else if ( value instanceof ImageContainer || value instanceof DrawableWrapper ) {
+    } else if ( value instanceof ImageContainer || value instanceof DrawableWrapper || value instanceof RotatedTextDrawable ) {
       handleImage( element, value );
     } else {
       handleText( element, String.valueOf( value ) );

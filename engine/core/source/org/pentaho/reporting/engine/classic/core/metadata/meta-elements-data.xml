@@ -17,6 +17,7 @@
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
+    <style-group-ref ref="rotation"/>
     <style-group-ref ref="layout"/>
   </element>
 
@@ -37,6 +38,7 @@
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
+    <style-group-ref ref="rotation"/>
     <style-group-ref ref="layout"/>
   </element>
 
@@ -56,6 +58,7 @@
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
+    <style-group-ref ref="rotation"/>
     <style-group-ref ref="layout"/>
   </element>
 
@@ -75,6 +78,7 @@
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
+    <style-group-ref ref="rotation"/>
     <style-group-ref ref="layout"/>
   </element>
 
@@ -94,6 +98,7 @@
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
+    <style-group-ref ref="rotation"/>
     <style-group-ref ref="layout"/>
   </element>
 
@@ -113,6 +118,7 @@
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
+    <style-group-ref ref="rotation"/>
     <style-group-ref ref="layout"/>
   </element>
 
@@ -132,6 +138,7 @@
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
+    <style-group-ref ref="rotation"/>
     <style-group-ref ref="layout"/>
   </element>
 
@@ -151,6 +158,7 @@
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
+    <style-group-ref ref="rotation"/>
     <style-group-ref ref="layout"/>
   </element>
 

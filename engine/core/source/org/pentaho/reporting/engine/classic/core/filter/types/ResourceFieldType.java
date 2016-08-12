@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -26,7 +26,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
 import java.util.ResourceBundle;
 
-public class ResourceFieldType extends AbstractElementType {
+public class ResourceFieldType extends AbstractElementType implements RotatableText {
   public static final ResourceFieldType INSTANCE = new ResourceFieldType();
   private static final Log logger = LogFactory.getLog( ResourceFieldType.class );
 
@@ -38,10 +38,10 @@ public class ResourceFieldType extends AbstractElementType {
 
     final Object resourceKeyRaw = ElementTypeUtils.queryFieldName( element );
     if ( resourceKeyRaw == null ) {
-      return "<null>";
+      return rotate( element, "<null>" );
     }
 
-    return resourceKeyRaw.toString();
+    return rotate( element, resourceKeyRaw.toString() );
   }
 
   /**
@@ -64,27 +64,27 @@ public class ResourceFieldType extends AbstractElementType {
 
     final Object resourceKeyRaw = ElementTypeUtils.queryFieldOrValue( runtime, element );
     if ( resourceKeyRaw == null ) {
-      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
     }
 
     final String resourceKey = String.valueOf( resourceKeyRaw );
     final String resourceId = ElementTypeUtils.queryResourceId( runtime, element );
     if ( resourceId == null ) {
-      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
     }
 
     try {
       final ResourceBundleFactory resourceBundleFactory = runtime.getResourceBundleFactory();
       final ResourceBundle bundle = resourceBundleFactory.getResourceBundle( resourceId );
       if ( bundle != null ) {
-        return bundle.getString( resourceKey );
+        return rotate( element, bundle.getString( resourceKey ) );
       }
     } catch ( Exception e ) {
       // on errors return null.
       ResourceFieldType.logger.warn( "Failed to retrieve a value for key " + resourceId );
     }
 
-    return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+    return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
 
   }
 }

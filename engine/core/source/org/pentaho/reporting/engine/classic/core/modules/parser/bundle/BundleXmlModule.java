@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle;
@@ -78,6 +78,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.El
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.ElementStyleDefinitionXmlResourceFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.LayoutDefinitionXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.PageBandStyleReadHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.RotationStyleReadHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.SpatialStyleReadHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.StyleDefinitionXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.SubReportReadHandler;
@@ -116,6 +117,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.st
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles.CommonStyleSetWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles.ContentStyleSetWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles.PageBandStyleSetWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles.RotationStyleSetWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles.SpatialStyleSetWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles.TextStyleSetWriteHandler;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
@@ -159,9 +161,11 @@ public class BundleXmlModule extends AbstractModule {
     BundleStyleRegistry.getInstance().register( PageBandStyleSetWriteHandler.class );
     BundleStyleRegistry.getInstance().register( SpatialStyleSetWriteHandler.class );
     BundleStyleRegistry.getInstance().register( TextStyleSetWriteHandler.class );
+    BundleStyleRegistry.getInstance().register( RotationStyleSetWriteHandler.class );
 
     BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "band-styles", BandStyleReadHandler.class );
     BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "text-styles", TextStyleReadHandler.class );
+    BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "rotation-styles", RotationStyleReadHandler.class );
     BundleStyleRegistry.getInstance()
         .register( BundleNamespaces.STYLE, "spatial-styles", SpatialStyleReadHandler.class );
     BundleStyleRegistry.getInstance().register( BundleNamespaces.STYLE, "common-styles", CommonStyleReadHandler.class );

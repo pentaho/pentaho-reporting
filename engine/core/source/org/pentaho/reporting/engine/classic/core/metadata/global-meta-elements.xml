@@ -1415,4 +1415,9 @@
     <style name="invisible-consumes-space" expert="true" hidden="false" mandatory="false" deprecated="false"/>
   </style-group>
 
+  <style-group name="rotation" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
+    <style name="rotation" expert="true" hidden="false" mandatory="false"
+           propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.RotationPropertyEditor"/>
+  </style-group>
+
 </meta-data>

@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -24,6 +24,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.PrintSetup;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -36,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SlimS
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
+import org.pentaho.reporting.engine.classic.core.util.RotatedTextDrawable;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -44,6 +46,7 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 
 public abstract class ExcelPrinterBase {
@@ -423,6 +426,28 @@ public abstract class ExcelPrinterBase {
   protected void createImageCell( final StyleSheet rawSource, final ImageContainer imageContainer,
       final SlimSheetLayout sheetLayout, final TableRectangle rectangle, final StrictBounds contentBounds ) {
     imageHandler.createImageCell( rawSource, imageContainer, sheetLayout, rectangle, contentBounds );
+  }
+
+  protected void handleValueType( final Cell cell, final Object value, final Workbook workbook ) {
+    if ( value instanceof RichTextString ) {
+      cell.setCellValue( (RichTextString) value );
+    } else if ( value instanceof Date ) {
+      cell.setCellValue( (Date) value );
+    } else if ( value instanceof Number ) {
+      final Number number = (Number) value;
+      cell.setCellValue( number.doubleValue() );
+    } else if ( value instanceof Boolean ) {
+      cell.setCellValue( Boolean.TRUE.equals( value ) );
+    } else if ( RotatedTextDrawable.extract( value ) != null ) {
+      final RotatedTextDrawable rotatedTextDrawable = RotatedTextDrawable.extract( value );
+      cell.setCellValue( rotatedTextDrawable.getText() );
+    } else { // Something we can't handle.
+      if ( value == null ) {
+        cell.setCellType( Cell.CELL_TYPE_BLANK );
+      } else {
+        cell.setCellValue( String.valueOf( value ) );
+      }
+    }
   }
 
 }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -24,7 +24,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
-public class ResourceMessageType extends AbstractElementType {
+public class ResourceMessageType extends AbstractElementType implements RotatableText {
   private transient ElementMetaData elementType;
 
   public static final ElementType INSTANCE = new ResourceMessageType();
@@ -36,9 +36,9 @@ public class ResourceMessageType extends AbstractElementType {
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object resourceMessageRaw = ElementTypeUtils.queryStaticValue( element );
     if ( resourceMessageRaw == null ) {
-      return "<null>";
+      return rotate( element, "<null>" );
     }
-    return resourceMessageRaw.toString();
+    return rotate( element, resourceMessageRaw.toString() );
   }
 
   /**
@@ -62,13 +62,13 @@ public class ResourceMessageType extends AbstractElementType {
     final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     final Object message = ElementTypeUtils.queryStaticValue( element );
     if ( message == null ) {
-      return nullValue;
+      return rotate( element, nullValue );
     }
 
     final Object resourceId =
         element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER );
     if ( resourceId == null ) {
-      return nullValue;
+      return rotate( element, nullValue );
     }
 
     final ResourceMessageFormatFilter messageFormatFilter =
@@ -88,8 +88,8 @@ public class ResourceMessageType extends AbstractElementType {
 
     final Object value = messageFormatFilter.getValue( runtime, element );
     if ( value == null ) {
-      return nullValue;
+      return rotate( element, nullValue );
     }
-    return String.valueOf( value );
+    return rotate( element, value );
   }
 }

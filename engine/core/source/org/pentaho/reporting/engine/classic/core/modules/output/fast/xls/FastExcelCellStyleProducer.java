@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
@@ -22,6 +22,8 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellB
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.CellStyleProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelFontFactory;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextRotation;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 
@@ -30,11 +32,14 @@ public class FastExcelCellStyleProducer implements CellStyleProducer {
     private final InstanceID id;
     private final CellBackground background;
     private final InstanceID styleSheetId;
+    private final TextRotation textRotation;
 
-    private CacheKey( final InstanceID id, final CellBackground background, final InstanceID styleSheetId ) {
+    private CacheKey( final InstanceID id, final CellBackground background, final InstanceID styleSheetId,
+                      final TextRotation textRotation ) {
       this.id = id;
       this.background = background;
       this.styleSheetId = styleSheetId;
+      this.textRotation = textRotation;
     }
 
     public boolean equals( final Object o ) {
@@ -56,6 +61,9 @@ public class FastExcelCellStyleProducer implements CellStyleProducer {
       if ( styleSheetId != null ? !styleSheetId.equals( cacheKey.styleSheetId ) : cacheKey.styleSheetId != null ) {
         return false;
       }
+      if ( textRotation != null ? !textRotation.equals( cacheKey.textRotation ) : cacheKey.textRotation != null ) {
+        return false;
+      }
 
       return true;
     }
@@ -64,6 +72,7 @@ public class FastExcelCellStyleProducer implements CellStyleProducer {
       int result = id != null ? id.hashCode() : 0;
       result = 31 * result + ( background != null ? background.hashCode() : 0 );
       result = 31 * result + ( styleSheetId != null ? styleSheetId.hashCode() : 0 );
+      result = 31 * result + ( textRotation != null ? textRotation.hashCode() : 0 );
       return result;
     }
   }
@@ -88,7 +97,8 @@ public class FastExcelCellStyleProducer implements CellStyleProducer {
         return cellStyle;
       }
     } else {
-      CellStyle cellStyle = contentCache.get( new CacheKey( id, bg, element.getId() ) );
+      CellStyle cellStyle = contentCache.get( new CacheKey( id, bg, element.getId(),
+        (TextRotation) element.getStyleProperty( TextStyleKeys.TEXT_ROTATION, null ) ) );
       if ( cellStyle != null ) {
         return cellStyle;
       }
@@ -101,7 +111,7 @@ public class FastExcelCellStyleProducer implements CellStyleProducer {
     if ( id == null ) {
       backgroundCache.put( bg, cellStyle );
     } else {
-      contentCache.put( new CacheKey( id, bg, element.getId() ), cellStyle );
+      contentCache.put( new CacheKey( id, bg, element.getId(), (TextRotation) element.getStyleProperty( TextStyleKeys.TEXT_ROTATION, null ) ), cellStyle );
     }
     return cellStyle;
   }

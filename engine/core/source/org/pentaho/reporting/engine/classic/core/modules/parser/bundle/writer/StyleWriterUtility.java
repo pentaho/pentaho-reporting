@@ -12,15 +12,10 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
-
-import java.awt.Color;
-import java.awt.Stroke;
-import java.io.IOException;
-import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,6 +39,11 @@ import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
+
+import java.awt.Color;
+import java.awt.Stroke;
+import java.io.IOException;
+import java.util.Locale;
 
 /**
  * @noinspection HardCodedStringLiteral
@@ -760,6 +760,23 @@ public class StyleWriterUtility {
     }
     if ( bandStyleAtts.isEmpty() == false ) {
       writer.writeTag( BundleNamespaces.STYLE, "band-styles", bandStyleAtts, XmlWriterSupport.CLOSE );
+    }
+  }
+
+  public static void writeRotationStyles( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
+    if ( writer == null ) {
+      throw new NullPointerException();
+    }
+    if ( style == null ) {
+      throw new NullPointerException();
+    }
+    final AttributeList bandStyleAtts = new AttributeList();
+    if ( style.isLocalKey( TextStyleKeys.TEXT_ROTATION ) ) {
+      final Object value = style.getStyleProperty( TextStyleKeys.TEXT_ROTATION );
+      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "rotation", value.toString() );
+    }
+    if ( bandStyleAtts.isEmpty() == false ) {
+      writer.writeTag( BundleNamespaces.STYLE, "rotation-styles", bandStyleAtts, XmlWriterSupport.CLOSE );
     }
   }
 }
