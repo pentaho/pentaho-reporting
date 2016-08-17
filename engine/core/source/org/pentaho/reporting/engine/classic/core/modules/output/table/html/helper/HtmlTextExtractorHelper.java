@@ -27,6 +27,7 @@ import org.pentaho.reporting.engine.classic.core.imagemap.parser.ImageMapWriter;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.AbstractTableOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlContentGenerator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -323,10 +324,12 @@ public class HtmlTextExtractorHelper {
       return false;
     }
 
-    final RotatedTextDrawable rotatedTextDrawable = RotatedTextDrawable.extract( rawObject );
+    if ( !metaData.isFeatureSupported( AbstractTableOutputProcessor.ROTATED_TEXT_AS_IMAGES ) ) {
+      final RotatedTextDrawable rotatedTextDrawable = RotatedTextDrawable.extract( rawObject );
 
-    if ( rotatedTextDrawable != null ) {
-      return tryHandleRotatedText( rotatedTextDrawable );
+      if ( rotatedTextDrawable != null ) {
+        return tryHandleRotatedText( rotatedTextDrawable );
+      }
     }
 
     if ( rawObject instanceof DrawableWrapper ) {

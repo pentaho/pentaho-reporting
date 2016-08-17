@@ -336,4 +336,13 @@
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.RotatedTextAsImages" global="false"
+       hidden="false">
+    <description>Defines, whether the rotated text should be exported as images in HTML.
+    </description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
 </config-description>

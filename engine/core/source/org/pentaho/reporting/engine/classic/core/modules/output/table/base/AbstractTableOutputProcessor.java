@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
@@ -47,6 +47,8 @@ public abstract class AbstractTableOutputProcessor extends AbstractOutputProcess
       new OutputProcessorFeature.BooleanOutputProcessorFeature( "treat-ellipse-as-rectangle" );
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature SHAPES_CONTENT =
       new OutputProcessorFeature.BooleanOutputProcessorFeature( "shape-content" );
+  public static final OutputProcessorFeature.BooleanOutputProcessorFeature ROTATED_TEXT_AS_IMAGES =
+    new OutputProcessorFeature.BooleanOutputProcessorFeature( "rotated-text-as-images" );
 
   private ArrayList<TableLayoutProducer> sheetLayouts;
   private TableLayoutProducer currentLayout;
