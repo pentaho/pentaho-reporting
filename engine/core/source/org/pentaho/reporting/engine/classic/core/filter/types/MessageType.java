@@ -101,7 +101,8 @@ public class MessageType extends AbstractElementType implements RotatableText {
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object message = ElementTypeUtils.queryStaticValue( element );
     if ( message == null || String.valueOf( message ).length() == 0 ) {
-      return rotate( element, element.getElementType().getMetaData().getName() );
+      final String value = element.getElementType().getMetaData().getName();
+      return rotate( element, value != null ? value : getId() );
     }
     return rotate( element, message );
   }

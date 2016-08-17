@@ -69,10 +69,14 @@ public class RotationTest {
       final Row next = rowIterator.next();
       assertNotNull( next );
       int k = 1;
-      for ( int i = 0; i < 8; i++, k = -k ) {
+      for ( int i = 0; i < 5; i++, k = -k ) {
         final Cell cell = next.getCell( i );
         assertNotNull( cell );
         assertTrue( cell.getCellStyle().getRotation() == k * 90 );
+      }
+      for ( int i = 6; i < 9; i++, k = -k ) {
+        final Cell cell = next.getCell( i );
+        assertNull( cell );
       }
     } catch ( IOException | ReportProcessingException e ) {
       fail();
@@ -99,10 +103,14 @@ public class RotationTest {
       final Row next = rowIterator.next();
       assertNotNull( next );
       int k = 1;
-      for ( int i = 0; i < 8; i++, k = -k ) {
+      for ( int i = 0; i < 5; i++, k = -k ) {
         final Cell cell = next.getCell( i );
         assertNotNull( cell );
         assertTrue( cell.getCellStyle().getRotation() == ( k > 0 ? 90 : 180 ) );
+      }
+      for ( int i = 6; i < 9; i++, k = -k ) {
+        final Cell cell = next.getCell( i );
+        assertNull( cell );
       }
     } catch ( IOException | ReportProcessingException e ) {
       fail();
@@ -124,7 +132,7 @@ public class RotationTest {
 
       final String html = new String( stream.toByteArray(), "UTF-8" );
       int k = 1;
-      for ( int i = 1; i < 9; i++, k = -k ) {
+      for ( int i = 1; i < 5; i++, k = -k ) {
         final Pattern pattern = Pattern.compile( "(.*id=\"test" + i + "\".*style=\")(.*)(\".*)" );
         final Matcher matcher = pattern.matcher( html );
         if ( matcher.find() ) {
