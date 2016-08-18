@@ -61,7 +61,8 @@ public class DateFieldType extends AbstractElementType implements RawDataSource,
       dateFormat.setTimeZone( timeZone );
       return rotate( element, dateFormat.format( staticValue ) );
     }
-    return rotate( element, ElementTypeUtils.queryFieldName( element ) );
+    final Object value = ElementTypeUtils.queryFieldName( element );
+    return rotate( element, value != null ? value : getId() );
   }
 
   /**

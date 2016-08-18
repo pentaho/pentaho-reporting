@@ -36,7 +36,8 @@ public class TextFieldType extends AbstractElementType implements RotatableText 
     if ( staticValue != null ) {
       return rotate( element, staticValue );
     }
-    return rotate( element, ElementTypeUtils.queryFieldName( element ) );
+    final Object value = ElementTypeUtils.queryFieldName( element );
+    return rotate( element, value != null ? value : getId() );
   }
 
   /**

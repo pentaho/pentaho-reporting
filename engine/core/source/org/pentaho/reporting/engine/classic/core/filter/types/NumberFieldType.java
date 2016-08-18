@@ -66,7 +66,8 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
         // ignore .. fallback to show the fieldname
       }
     }
-    return rotate( element, ElementTypeUtils.queryFieldName( element ) );
+    final Object value = ElementTypeUtils.queryFieldName( element );
+    return rotate( element, value != null ? value : getId() );
   }
 
   /**

@@ -26,10 +26,12 @@ public interface RotatableText {
 
   default Object rotate( final ReportElement element, final Object value ) {
 
-    final TextRotation rotation =
-      (TextRotation) element.getStyle().getStyleProperty( TextStyleKeys.TEXT_ROTATION, null );
-    if ( rotation != null ) {
-      return new RotatedTextDrawable( String.valueOf( value ), rotation );
+    if ( value != null ) {
+      final TextRotation rotation =
+        (TextRotation) element.getStyle().getStyleProperty( TextStyleKeys.TEXT_ROTATION, null );
+      if ( rotation != null ) {
+        return new RotatedTextDrawable( String.valueOf( value ), rotation );
+      }
     }
 
     return value;
