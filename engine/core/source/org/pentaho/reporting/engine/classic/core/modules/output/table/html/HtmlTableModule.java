@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
@@ -116,6 +116,11 @@ public class HtmlTableModule extends AbstractModule {
    * Key for specifying the Keywords in the HTML header
    */
   public static final String KEYWORDS = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Keywords";
+
+  /**
+   * Key for specifying that all pages should be packaged in single file for TABLE_HTML_PAGE_EXPORT_TYPE
+   */
+  public static final String FORCE_ALL_PAGES = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ForceAllPages";
 
   public static final String TABLE_HTML_STREAM_EXPORT_TYPE = "table/html;page-mode=stream";
   public static final String TABLE_HTML_FLOW_EXPORT_TYPE = "table/html;page-mode=flow";
