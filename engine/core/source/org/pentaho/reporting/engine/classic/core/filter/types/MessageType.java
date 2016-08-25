@@ -63,7 +63,7 @@ public class MessageType extends AbstractElementType implements RotatableText {
     final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     final Object message = ElementTypeUtils.queryStaticValue( element );
     if ( message == null ) {
-      return rotate( element, nullValue );
+      return rotate( element, nullValue, runtime );
     }
 
     final MessageTypeContext context = element.getElementContext( MessageTypeContext.class );
@@ -93,18 +93,18 @@ public class MessageType extends AbstractElementType implements RotatableText {
 
     final Object value = messageFormatFilter.performFormat( runtime.getDataRow() );
     if ( value == null ) {
-      return rotate( element, nullValue );
+      return rotate( element, nullValue, runtime );
     }
-    return rotate( element, value );
+    return rotate( element, value, runtime );
   }
 
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object message = ElementTypeUtils.queryStaticValue( element );
     if ( message == null || String.valueOf( message ).length() == 0 ) {
       final String value = element.getElementType().getMetaData().getName();
-      return rotate( element, value != null ? value : getId() );
+      return rotate( element, value != null ? value : getId(), runtime );
     }
-    return rotate( element, message );
+    return rotate( element, message, runtime );
   }
 
   public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {

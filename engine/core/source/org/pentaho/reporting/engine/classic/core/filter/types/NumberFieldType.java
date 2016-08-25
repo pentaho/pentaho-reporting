@@ -61,13 +61,13 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
         final Locale locale = runtime.getResourceBundleFactory().getLocale();
         final FastDecimalFormat decimalFormat = new FastDecimalFormat( String.valueOf( formatStringRaw ), locale );
 
-        return rotate( element, decimalFormat.format( staticValue ) );
+        return rotate( element, decimalFormat.format( staticValue ), runtime );
       } catch ( Exception e ) {
         // ignore .. fallback to show the fieldname
       }
     }
     final Object value = ElementTypeUtils.queryFieldName( element );
-    return rotate( element, value != null ? value : getId() );
+    return rotate( element, value != null ? value : getId(), runtime );
   }
 
   /**
@@ -152,7 +152,7 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
 
     final Object retval = ElementTypeUtils.queryFieldOrValue( runtime, element );
     if ( retval instanceof Number == false ) {
-      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
 
     Object formatStringRaw = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
@@ -177,9 +177,9 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
         }
       }
 
-      return rotate( element, context.decimalFormat.format( retval ) );
+      return rotate( element, context.decimalFormat.format( retval ), runtime );
     } catch ( Exception e ) {
-      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
   }
 }

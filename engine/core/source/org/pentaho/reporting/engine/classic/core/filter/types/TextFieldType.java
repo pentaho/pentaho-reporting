@@ -34,10 +34,10 @@ public class TextFieldType extends AbstractElementType implements RotatableText 
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object staticValue = ElementTypeUtils.queryStaticValue( element );
     if ( staticValue != null ) {
-      return rotate( element, staticValue );
+      return rotate( element, staticValue, runtime );
     }
     final Object value = ElementTypeUtils.queryFieldName( element );
-    return rotate( element, value != null ? value : getId() );
+    return rotate( element, value != null ? value : getId(), runtime );
   }
 
   /**
@@ -60,13 +60,13 @@ public class TextFieldType extends AbstractElementType implements RotatableText 
 
     final Object o = ElementTypeUtils.queryFieldOrValue( runtime, element );
     if ( o instanceof Document ) {
-      return rotate( element, o );
+      return rotate( element, o, runtime );
     }
 
     final String retval = ElementTypeUtils.toString( o );
     if ( retval == null ) {
-      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
-    return rotate( element, retval );
+    return rotate( element, retval, runtime );
   }
 }

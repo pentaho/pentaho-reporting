@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
@@ -167,6 +167,8 @@ public abstract class OutputProcessorFeature implements Serializable {
     new BooleanOutputProcessorFeature( "watermark-print-on-top" );
   public static final BooleanOutputProcessorFeature FAST_EXPORT =
     new BooleanOutputProcessorFeature( "fast-export" );
+  public static final BooleanOutputProcessorFeature IGNORE_ROTATION =
+    new BooleanOutputProcessorFeature( "ignore-rotation" );
 
   private String name;
   private int hashCode;
