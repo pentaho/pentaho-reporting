@@ -36,9 +36,9 @@ public class ResourceMessageType extends AbstractElementType implements Rotatabl
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object resourceMessageRaw = ElementTypeUtils.queryStaticValue( element );
     if ( resourceMessageRaw == null ) {
-      return rotate( element, "<null>" );
+      return rotate( element, "<null>", runtime );
     }
-    return rotate( element, resourceMessageRaw.toString() );
+    return rotate( element, resourceMessageRaw.toString(), runtime );
   }
 
   /**
@@ -62,13 +62,13 @@ public class ResourceMessageType extends AbstractElementType implements Rotatabl
     final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     final Object message = ElementTypeUtils.queryStaticValue( element );
     if ( message == null ) {
-      return rotate( element, nullValue );
+      return rotate( element, nullValue, runtime );
     }
 
     final Object resourceId =
         element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER );
     if ( resourceId == null ) {
-      return rotate( element, nullValue );
+      return rotate( element, nullValue, runtime );
     }
 
     final ResourceMessageFormatFilter messageFormatFilter =
@@ -88,8 +88,8 @@ public class ResourceMessageType extends AbstractElementType implements Rotatabl
 
     final Object value = messageFormatFilter.getValue( runtime, element );
     if ( value == null ) {
-      return rotate( element, nullValue );
+      return rotate( element, nullValue, runtime );
     }
-    return rotate( element, value );
+    return rotate( element, value, runtime );
   }
 }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.csv.helper;
@@ -86,6 +86,7 @@ public class CSVOutputProcessorMetaData extends AbstractOutputProcessorMetaData 
         .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.AssumeOverflowY" ) ) ) {
       addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
     }
+    addFeature( OutputProcessorFeature.IGNORE_ROTATION );
   }
 
   public boolean isContentSupported( final Object content ) {

@@ -59,10 +59,10 @@ public class DateFieldType extends AbstractElementType implements RawDataSource,
       final SimpleDateFormat dateFormat = new SimpleDateFormat( String.valueOf( formatStringRaw ), locale );
       dateFormat.setDateFormatSymbols( new DateFormatSymbols( locale ) );
       dateFormat.setTimeZone( timeZone );
-      return rotate( element, dateFormat.format( staticValue ) );
+      return rotate( element, dateFormat.format( staticValue ), runtime );
     }
     final Object value = ElementTypeUtils.queryFieldName( element );
-    return rotate( element, value != null ? value : getId() );
+    return rotate( element, value != null ? value : getId(), runtime );
   }
 
   /**
@@ -142,7 +142,7 @@ public class DateFieldType extends AbstractElementType implements RawDataSource,
 
     final Object retval = ElementTypeUtils.queryFieldOrValue( runtime, element );
     if ( retval instanceof Date == false ) {
-      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
 
     Object formatStringRaw = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
@@ -171,9 +171,9 @@ public class DateFieldType extends AbstractElementType implements RawDataSource,
         }
       }
 
-      return rotate( element, context.dateFormat.format( retval ) );
+      return rotate( element, context.dateFormat.format( retval ), runtime );
     } catch ( final Exception e ) {
-      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
   }
 }

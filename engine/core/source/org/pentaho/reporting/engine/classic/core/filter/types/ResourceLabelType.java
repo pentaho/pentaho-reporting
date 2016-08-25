@@ -37,9 +37,9 @@ public class ResourceLabelType extends AbstractElementType implements RotatableT
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Object resourceKeyRaw = ElementTypeUtils.queryStaticValue( element );
     if ( resourceKeyRaw == null ) {
-      return rotate( element, "<null>" );
+      return rotate( element, "<null>", runtime );
     }
-    return rotate( element, resourceKeyRaw.toString() );
+    return rotate( element, resourceKeyRaw.toString(), runtime );
   }
 
   /**
@@ -62,20 +62,20 @@ public class ResourceLabelType extends AbstractElementType implements RotatableT
 
     final Object resourceKeyRaw = ElementTypeUtils.queryStaticValue( element );
     if ( resourceKeyRaw == null ) {
-      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
 
     final String resourceKey = String.valueOf( resourceKeyRaw );
     final String resourceId = ElementTypeUtils.queryResourceId( runtime, element );
     if ( resourceId == null ) {
-      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
 
     try {
       final ResourceBundleFactory resourceBundleFactory = runtime.getResourceBundleFactory();
       final ResourceBundle bundle = resourceBundleFactory.getResourceBundle( resourceId );
       if ( bundle != null ) {
-        return rotate( element, bundle.getString( resourceKey ) );
+        return rotate( element, bundle.getString( resourceKey ), runtime );
       }
     } catch ( Exception e ) {
       // on errors return null.
@@ -83,6 +83,6 @@ public class ResourceLabelType extends AbstractElementType implements RotatableT
           + resourceKey );
     }
 
-    return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+    return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
   }
 }

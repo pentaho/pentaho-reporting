@@ -53,9 +53,9 @@ public class LabelType extends AbstractElementType implements RotatableText {
 
     final Object retval = ElementTypeUtils.queryStaticValue( element );
     if ( retval == null ) {
-      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ) );
+      return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
-    return rotate( element, retval );
+    return rotate( element, retval, runtime );
   }
 
   public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
@@ -73,7 +73,7 @@ public class LabelType extends AbstractElementType implements RotatableText {
               attributes.getMetaAttribute( MetaAttributeNames.Formatting.NAMESPACE,
                   MetaAttributeNames.Formatting.LABEL, String.class, context );
           if ( o != null ) {
-            return rotate( element, o );
+            return rotate( element, o, runtime );
           }
         }
       }
@@ -81,9 +81,9 @@ public class LabelType extends AbstractElementType implements RotatableText {
 
     final Object retval = ElementTypeUtils.queryStaticValue( element );
     if ( retval == null ) {
-      return rotate( element, "Label" );
+      return rotate( element, "Label", runtime );
     }
-    return rotate( element,  retval );
+    return rotate( element,  retval, runtime );
   }
 
   public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {
