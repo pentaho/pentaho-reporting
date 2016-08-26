@@ -140,14 +140,6 @@ conf="pentaho-system->default">
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-cassandra-plugin" type="zip"/>
     </dependency>
-    <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
-                conf="plugin->default" changing="true" transitive="false">
-      <artifact name="pdi-spark-plugin" type="zip"/>
-    </dependency>
-    <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
-                conf="plugin->default" changing="true" transitive="false">
-      <artifact name="pdi-spark-plugin" type="zip"/>
-    </dependency>
     <dependency org="pentaho" name="pdi-dataservice-client-plugin" rev="${dependency.pdi-dataservice-client-plugin.revision}"
                 conf="drivers->default" changing="true" transitive="false"/>
 
