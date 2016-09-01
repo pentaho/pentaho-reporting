@@ -69,7 +69,7 @@
     <dependency org="org.apache.axis2" name="axis2-adb" rev="1.4.1" transitive="false" conf="default_external->default"/>
     <dependency org="org.apache.axis2" name="axis2-kernel" rev="1.4.1" transitive="false" conf="default_external->default"/>
 
-    <dependency org="javassist"        name="javassist"    rev="3.12.1.GA" transitive="false" conf="default_external->default"/>
+    <dependency org="org.javassist"        name="javassist"    rev="${dependency.javassist.revision}" transitive="false" conf="default_external->default"/>
     <dependency org="org.scannotation" name="scannotation" rev="1.0.2"  transitive="false" conf="default_external->default"/>
 
     <dependency org="org.codehaus.woodstox" name="wstx-asl" rev="3.2.4" transitive="true" conf="default_external->default"/>
