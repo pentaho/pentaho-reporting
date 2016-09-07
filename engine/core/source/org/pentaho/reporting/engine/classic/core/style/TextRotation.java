@@ -27,7 +27,13 @@ public class TextRotation implements Serializable {
   public static final TextRotation D_90 = new TextRotation( "90" );
   public static final TextRotation D_270 = new TextRotation( "-90" );
   private static final String CSS =
-    "transform: rotate({0}deg); -ms-transform: rotate({0}deg); -webkit-transform: rotate({0}deg);";
+    "transform: rotate({0}deg); -ms-transform: rotate({0}deg); -webkit-transform: rotate({0}deg); {1}";
+  private static final String CSS_POS = "white-space: nowrap; {0}";
+
+  private static final String CSS_90 = "transform-origin: right bottom;";
+  private static final String CSS_270 = "transform-origin: left bottom;";
+
+
   private String type;
 
   private TextRotation( final String type ) {
@@ -81,7 +87,8 @@ public class TextRotation implements Serializable {
   }
 
   public String getCss() {
-    return MessageFormat.format( CSS, String.valueOf( -this.getNumericValue() ) );
+    return MessageFormat.format( CSS, -this.getNumericValue(),
+      MessageFormat.format( CSS_POS, getNumericValue() > 0 ? CSS_90 : CSS_270 ) );
   }
 
   /**
