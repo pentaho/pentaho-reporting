@@ -18,7 +18,9 @@
 package org.pentaho.reporting.engine.classic.core.style;
 
 import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
+import org.pentaho.reporting.engine.classic.core.util.RotatedTextDrawable;
 
+import java.awt.Dimension;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -27,7 +29,8 @@ public class TextRotation implements Serializable {
   public static final TextRotation D_90 = new TextRotation( "90" );
   public static final TextRotation D_270 = new TextRotation( "-90" );
   private static final String CSS =
-    "transform: rotate({0}deg); -ms-transform: rotate({0}deg); -webkit-transform: rotate({0}deg);";
+    "transform: rotate({0}deg); -ms-transform: rotate({0}deg); -webkit-transform: rotate({0}deg); {1}";
+  private static final String CSS_POS = "white-space: nowrap;";
   private String type;
 
   private TextRotation( final String type ) {
@@ -81,7 +84,7 @@ public class TextRotation implements Serializable {
   }
 
   public String getCss() {
-    return MessageFormat.format( CSS, String.valueOf( -this.getNumericValue() ) );
+    return MessageFormat.format( CSS, -this.getNumericValue(), CSS_POS );
   }
 
   /**

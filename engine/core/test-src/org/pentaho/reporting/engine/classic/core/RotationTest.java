@@ -170,9 +170,9 @@ public class RotationTest {
   @Test
   public void testCss() {
     assertEquals( TextRotation.D_90.getCss(),
-      "transform: rotate(-90deg); -ms-transform: rotate(-90deg); -webkit-transform: rotate(-90deg);" );
+      "transform: rotate(-90deg); -ms-transform: rotate(-90deg); -webkit-transform: rotate(-90deg); white-space: nowrap;" );
     assertEquals( TextRotation.D_270.getCss(),
-      "transform: rotate(90deg); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg);" );
+      "transform: rotate(90deg); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); white-space: nowrap;" );
   }
 
   @Test
