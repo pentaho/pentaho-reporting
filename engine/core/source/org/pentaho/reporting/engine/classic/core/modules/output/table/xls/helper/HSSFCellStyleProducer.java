@@ -53,7 +53,7 @@ import java.util.HashMap;
 public class HSSFCellStyleProducer implements CellStyleProducer {
   private static final Log logger = LogFactory.getLog( HSSFCellStyleProducer.class );
 
-  private static class HSSFCellStyleKey {
+  static class HSSFCellStyleKey {
     /**
      * The cell background color.
      */
@@ -590,9 +590,28 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       }
     }
 
-    final CellStyle hssfCellStyle = workbook.createCellStyle();
-    TextRotation rotation = null;
-    if ( element != null ) {
+    ExcelCellStyleBuilder builder = new ExcelCellStyleBuilder( this.workbook );
+
+    builder.withRotation( (TextRotation) element.getStyleProperty( TextStyleKeys.TEXT_ROTATION, null ) );
+    builder.withElementStyle( element, styleKey );
+    builder.withBackgroundStyle( bg, styleKey );
+
+    final CellStyle hssfCellStyle = builder.build();
+
+    /*final CellStyle hssfCellStyle = workbook.createCellStyle();
+    final boolean isXlsx = hssfCellStyle instanceof XSSFCellStyle;
+
+    TextRotation rotation = (TextRotation) element.getStyleProperty( TextStyleKeys.TEXT_ROTATION, null );
+    if ( rotation != null ) {
+      if ( isXlsx ) {
+        hssfCellStyle.setRotation( rotation.getNumericValue() );
+      } else {
+        final short numericValue = rotation.getNumericValue();
+        hssfCellStyle.setRotation( numericValue < 0 ? (short) ( 90 - numericValue ) : numericValue );
+      }
+    }*/
+
+    /*if ( element != null ) {
       hssfCellStyle.setAlignment( styleKey.getHorizontalAlignment() );
       hssfCellStyle.setVerticalAlignment( styleKey.getVerticalAlignment() );
       hssfCellStyle.setFont( workbook.getFontAt( styleKey.getFont() ) );
@@ -601,10 +620,10 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       if ( styleKey.getDataStyle() >= 0 ) {
         hssfCellStyle.setDataFormat( styleKey.getDataStyle() );
       }
-      rotation = (TextRotation) element.getStyleProperty( TextStyleKeys.TEXT_ROTATION, null );
-    }
-    if ( bg != null ) {
-      if ( hssfCellStyle instanceof XSSFCellStyle ) {
+    }*/
+
+    /*if ( bg != null ) {
+      if ( isXlsx ) {
         final XSSFCellStyle xssfCellStyle = (XSSFCellStyle) hssfCellStyle;
         if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
           hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
@@ -630,11 +649,6 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
           xssfCellStyle.setFillForegroundColor( createXSSFColor( styleKey.getExtendedColor() ) );
           hssfCellStyle.setFillPattern( HSSFCellStyle.SOLID_FOREGROUND );
         }
-        if ( rotation != null ) {
-          //xlsx has different rotation degree boundaries
-          final short numericValue = rotation.getNumericValue();
-          hssfCellStyle.setRotation( numericValue < 0 ? (short) ( 90 - numericValue ) : numericValue );
-        }
       } else {
         if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
           hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
@@ -656,11 +670,8 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
           hssfCellStyle.setFillForegroundColor( styleKey.getColor() );
           hssfCellStyle.setFillPattern( HSSFCellStyle.SOLID_FOREGROUND );
         }
-        if ( rotation != null ) {
-          hssfCellStyle.setRotation( rotation.getNumericValue() );
-        }
       }
-    }
+    }*/
 
     styleCache.put( styleKey, hssfCellStyle );
     return hssfCellStyle;
