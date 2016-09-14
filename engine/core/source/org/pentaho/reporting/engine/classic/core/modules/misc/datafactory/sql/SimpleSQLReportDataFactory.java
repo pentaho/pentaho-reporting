@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
@@ -31,6 +31,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
 
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetFactory;
+import javax.sql.rowset.RowSetProvider;
 import javax.swing.table.TableModel;
 
 import org.apache.commons.logging.Log;
@@ -43,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 
 /**
  * @noinspection AssignmentToCollectionOrArrayFieldFromParameter
@@ -302,6 +306,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
 
     // Track the currently running statement - just in case someone needs to cancel it
     final ResultSet res;
+    final RowSetFactory aFactory = RowSetProvider.newFactory();
+    final CachedRowSet rowset = aFactory.createCachedRowSet();
     try {
       currentRunningStatement = statement;
       if ( preparedParameterNames.length == 0 ) {
@@ -310,6 +316,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         final PreparedStatement pstmt = (PreparedStatement) statement;
         res = pstmt.executeQuery();
       }
+      rowset.populate( res );
+      res.close();
     } finally {
       currentRunningStatement = null;
     }
@@ -319,9 +327,9 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ); //$NON-NLS-1$
 
     if ( simpleMode ) {
-      return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( res, columnNameMapping );
+      return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( rowset, columnNameMapping );
     }
-    return ResultSetTableModelFactory.getInstance().createTableModel( res, columnNameMapping, true );
+    return ResultSetTableModelFactory.getInstance().createTableModel( rowset, columnNameMapping, true );
   }
 
   private void parametrize( final DataRow parameters, final String[] params, final PreparedStatement pstmt,
