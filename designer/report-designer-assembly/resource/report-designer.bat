@@ -4,7 +4,10 @@
 @REM
 setlocal
 cd /D %~dp0
-set PENTAHO_JAVA=javaw.exe
+
+REM Special console/debug options when called from report-designer.bat or report-designer-debug.bat
+if "%CONSOLE%"=="1" set PENTAHO_JAVA=java
+if not "%CONSOLE%"=="1" set PENTAHO_JAVA=javaw
 
 if "%_PENTAHO_JAVA_HOME%" == "" goto callSetEnv
 set PENTAHO_JAVA_HOME=%_PENTAHO_JAVA_HOME%

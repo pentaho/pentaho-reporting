@@ -75,6 +75,12 @@ conf="pentaho-system->default">
       <artifact name="pentaho-karaf-assembly" type="zip" m:classifier="prd"/>
     </dependency>
 
+	<!-- SWT it required to compile any version of any architecture will work -->
+	<dependency org="org.eclipse.swt"       name="swt-linux-x86_64"    rev="4.3.2"                 transitive="false" />
+	<dependency org="org.eclipse"           name="jface"               rev="3.3.0-I20070606-0010"  transitive="false" conf="default->default"/>
+	<dependency org="org.eclipse.core"      name="commands"            rev="3.3.0-I20070605-0010"  transitive="false"/>
+	<dependency org="org.eclipse.equinox"   name="common"              rev="3.3.0-v20070426"       transitive="false"/>
+	
     <!-- launcher -->
     <dependency org="pentaho" name="pentaho-application-launcher" rev="${dependency.launcher.revision}"
                 transitive="true" changing="true" conf="runtime->default"/>
