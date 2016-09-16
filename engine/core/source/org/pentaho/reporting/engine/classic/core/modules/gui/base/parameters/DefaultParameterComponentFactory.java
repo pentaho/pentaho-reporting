@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.parameters.ListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterUtils;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterValues;
 import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 
@@ -92,10 +93,18 @@ public class DefaultParameterComponentFactory implements ParameterComponentFacto
     final int count = paramValues.getRowCount();
     final Object[] keys = new Object[count];
     final Object[] values = new Object[count];
+
+    boolean translateDisplayNames = Boolean.valueOf( parameter.getParameterAttribute(
+      ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.TRANSLATE_DISPLAY_NAMES,
+      parameterContext ) );
+
     for ( int i = 0; i < count; i++ ) {
       final Object key = paramValues.getKeyValue( i );
       keys[i] = key;
-      values[i] = paramValues.getTextValue( i );
+      values[i] = translateDisplayNames
+        ? ParameterUtils.getResourceKeyValue( String.valueOf( paramValues.getTextValue( i ) ), parameter, parameterContext )
+        : paramValues.getTextValue( i );
     }
 
     final KeyedComboBoxModel<Object, Object> model = new KeyedComboBoxModel<Object, Object>();

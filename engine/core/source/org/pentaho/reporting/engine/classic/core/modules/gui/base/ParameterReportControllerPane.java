@@ -69,6 +69,7 @@ import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterCont
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterUtils;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterValidator;
 import org.pentaho.reporting.engine.classic.core.parameters.ValidationMessage;
@@ -501,22 +502,15 @@ public class ParameterReportControllerPane extends JPanel {
     carrierPanel.add( errorLabel, gbc );
   }
 
-  private String computeLabel( final ParameterDefinitionEntry entry ) {
+  String computeLabel( final ParameterDefinitionEntry entry ) {
     final String swingLabel =
         entry.getParameterAttribute( ParameterAttributeNames.Swing.NAMESPACE, ParameterAttributeNames.Swing.LABEL,
             parameterContext );
     if ( swingLabel != null ) {
       return swingLabel;
     }
-
-    final String coreLabel =
-        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL,
-            parameterContext );
-    if ( coreLabel != null ) {
-      return coreLabel;
-    }
-
-    return entry.getName();
+    String coreLabel = ParameterUtils.getTranslatedLabel( entry, parameterContext );
+    return coreLabel == null ? entry.getName() : coreLabel;
   }
 
   public ReportParameterValues getReportParameterValues() {
