@@ -61,7 +61,6 @@ import static org.mockito.Mockito.when;
 
 public class RotationTest {
 
-
   @Before
   public void setUp() throws IOException {
     ClassicEngineBoot.getInstance().start();
@@ -170,9 +169,11 @@ public class RotationTest {
   @Test
   public void testCss() {
     assertEquals( TextRotation.D_90.getCss(),
-      "transform: rotate(-90deg); -ms-transform: rotate(-90deg); -webkit-transform: rotate(-90deg);" );
+      "transform: rotate(-90deg); -ms-transform: rotate(-90deg); -webkit-transform: rotate(-90deg); white-space: "
+        + "nowrap; transform-origin: right bottom;" );
     assertEquals( TextRotation.D_270.getCss(),
-      "transform: rotate(90deg); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg);" );
+      "transform: rotate(90deg); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); white-space: nowrap;"
+        + " transform-origin: left bottom;" );
   }
 
   @Test
@@ -224,20 +225,20 @@ public class RotationTest {
     assertFalse( RotatableText.isRotationSupported( runtime ) );
     when( metaData.isFeatureSupported( eq( OutputProcessorFeature.IGNORE_ROTATION ) ) ).thenReturn( false );
     assertTrue( RotatableText.isRotationSupported( runtime ) );
-    assertNull( new RotatableText() { }.rotate( null, null, null ) );
+    RotatableText rt = new RotatableText() {
+    };
+    assertNull( rt.rotate( null, null, null ) );
     final UUID uuid = UUID.randomUUID();
-    assertEquals( uuid, new RotatableText() { }.rotate( null, uuid, null ) );
+    assertEquals( uuid, rt.rotate( null, uuid, null ) );
     final ReportElement reportElement = mock( ReportElement.class );
-    assertEquals( uuid, new RotatableText() { }.rotate( reportElement, uuid, null ) );
-    assertEquals( uuid, new RotatableText() { }.rotate( reportElement, uuid, runtime ) );
+    assertEquals( uuid, rt.rotate( reportElement, uuid, null ) );
+    assertEquals( uuid, rt.rotate( reportElement, uuid, runtime ) );
     final ElementStyleSheet sheet = mock( ElementStyleSheet.class );
     when( reportElement.getStyle() ).thenReturn( sheet );
-    assertEquals( uuid, new RotatableText() { }.rotate( reportElement, uuid, runtime ) );
+    assertEquals( uuid, rt.rotate( reportElement, uuid, runtime ) );
     when( sheet.getStyleProperty( eq( TextStyleKeys.TEXT_ROTATION ), isNull() ) ).thenReturn( "blabla" );
-    assertEquals( uuid, new RotatableText() { }.rotate( reportElement, uuid, runtime ) );
+    assertEquals( uuid, rt.rotate( reportElement, uuid, runtime ) );
     when( sheet.getStyleProperty( eq( TextStyleKeys.TEXT_ROTATION ), isNull() ) ).thenReturn( TextRotation.D_90 );
-    assertTrue( new RotatableText() { }.rotate( reportElement, uuid, runtime ) instanceof RotatedTextDrawable );
+    assertTrue( rt.rotate( reportElement, uuid, runtime ) instanceof RotatedTextDrawable );
   }
-
-
 }
