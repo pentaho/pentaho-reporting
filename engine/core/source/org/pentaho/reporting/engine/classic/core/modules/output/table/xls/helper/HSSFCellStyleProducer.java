@@ -28,7 +28,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
@@ -53,7 +52,7 @@ import java.util.HashMap;
 public class HSSFCellStyleProducer implements CellStyleProducer {
   private static final Log logger = LogFactory.getLog( HSSFCellStyleProducer.class );
 
-  private static class HSSFCellStyleKey {
+  static class HSSFCellStyleKey {
     /**
      * The cell background color.
      */
@@ -590,85 +589,16 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       }
     }
 
-    final CellStyle hssfCellStyle = workbook.createCellStyle();
-    TextRotation rotation = null;
-    if ( element != null ) {
-      hssfCellStyle.setAlignment( styleKey.getHorizontalAlignment() );
-      hssfCellStyle.setVerticalAlignment( styleKey.getVerticalAlignment() );
-      hssfCellStyle.setFont( workbook.getFontAt( styleKey.getFont() ) );
-      hssfCellStyle.setWrapText( styleKey.isWrapText() );
-      hssfCellStyle.setIndention( styleKey.getIndention() );
-      if ( styleKey.getDataStyle() >= 0 ) {
-        hssfCellStyle.setDataFormat( styleKey.getDataStyle() );
-      }
-      rotation = (TextRotation) element.getStyleProperty( TextStyleKeys.TEXT_ROTATION, null );
-    }
-    if ( bg != null ) {
-      if ( hssfCellStyle instanceof XSSFCellStyle ) {
-        final XSSFCellStyle xssfCellStyle = (XSSFCellStyle) hssfCellStyle;
-        if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
-          hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
-          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.BOTTOM, createXSSFColor( styleKey
-            .getExtendedColorBottom() ) );
-        }
-        if ( BorderStyle.NONE.equals( bg.getTop().getBorderStyle() ) == false ) {
-          hssfCellStyle.setBorderTop( styleKey.getBorderStrokeTop() );
-          xssfCellStyle
-            .setBorderColor( XSSFCellBorder.BorderSide.TOP, createXSSFColor( styleKey.getExtendedColorTop() ) );
-        }
-        if ( BorderStyle.NONE.equals( bg.getLeft().getBorderStyle() ) == false ) {
-          hssfCellStyle.setBorderLeft( styleKey.getBorderStrokeLeft() );
-          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.LEFT, createXSSFColor( styleKey
-            .getExtendedColorLeft() ) );
-        }
-        if ( BorderStyle.NONE.equals( bg.getRight().getBorderStyle() ) == false ) {
-          hssfCellStyle.setBorderRight( styleKey.getBorderStrokeRight() );
-          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.RIGHT, createXSSFColor( styleKey
-            .getExtendedColorRight() ) );
-        }
-        if ( bg.getBackgroundColor() != null ) {
-          xssfCellStyle.setFillForegroundColor( createXSSFColor( styleKey.getExtendedColor() ) );
-          hssfCellStyle.setFillPattern( HSSFCellStyle.SOLID_FOREGROUND );
-        }
-        if ( rotation != null ) {
-          //xlsx has different rotation degree boundaries
-          final short numericValue = rotation.getNumericValue();
-          hssfCellStyle.setRotation( numericValue < 0 ? (short) ( 90 - numericValue ) : numericValue );
-        }
-      } else {
-        if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
-          hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
-          hssfCellStyle.setBottomBorderColor( styleKey.getColorBottom() );
-        }
-        if ( BorderStyle.NONE.equals( bg.getTop().getBorderStyle() ) == false ) {
-          hssfCellStyle.setBorderTop( styleKey.getBorderStrokeTop() );
-          hssfCellStyle.setTopBorderColor( styleKey.getColorTop() );
-        }
-        if ( BorderStyle.NONE.equals( bg.getLeft().getBorderStyle() ) == false ) {
-          hssfCellStyle.setBorderLeft( styleKey.getBorderStrokeLeft() );
-          hssfCellStyle.setLeftBorderColor( styleKey.getColorLeft() );
-        }
-        if ( BorderStyle.NONE.equals( bg.getRight().getBorderStyle() ) == false ) {
-          hssfCellStyle.setBorderRight( styleKey.getBorderStrokeRight() );
-          hssfCellStyle.setRightBorderColor( styleKey.getColorRight() );
-        }
-        if ( bg.getBackgroundColor() != null ) {
-          hssfCellStyle.setFillForegroundColor( styleKey.getColor() );
-          hssfCellStyle.setFillPattern( HSSFCellStyle.SOLID_FOREGROUND );
-        }
-        if ( rotation != null ) {
-          hssfCellStyle.setRotation( rotation.getNumericValue() );
-        }
-      }
-    }
+    ExcelCellStyleBuilder builder = new ExcelCellStyleBuilder( this.workbook );
+
+    builder.withRotation( element );
+    builder.withElementStyle( element, styleKey );
+    builder.withBackgroundStyle( bg, styleKey );
+
+    final CellStyle hssfCellStyle = builder.build();
 
     styleCache.put( styleKey, hssfCellStyle );
     return hssfCellStyle;
-  }
-
-  private XSSFColor createXSSFColor( final Color clr ) {
-    byte[] rgb = { (byte) 255, (byte) clr.getRed(), (byte) clr.getGreen(), (byte) clr.getBlue() };
-    return new XSSFColor( rgb );
   }
 
   /**
