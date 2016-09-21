@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -492,7 +492,7 @@ public class Element implements DataTarget, ReportElement {
           final Map<String, Expression> attrsNs = attributeExpressions.getAttributes( namespace );
           for ( final Map.Entry<String, Expression> entry : attrsNs.entrySet() ) {
             final Expression exp = entry.getValue();
-            e.attributeExpressions.setAttribute( namespace, entry.getKey(), (Expression) exp.clone() );
+            e.attributeExpressions.setAttribute( namespace, entry.getKey(), exp == null ? null : (Expression) exp.clone() );
           }
         }
       } else {
@@ -588,7 +588,7 @@ public class Element implements DataTarget, ReportElement {
           while ( it.hasNext() ) {
             final Map.Entry entry = (Map.Entry) it.next();
             final Expression exp = (Expression) entry.getValue();
-            e.attributeExpressions.setAttribute( namespace, (String) entry.getKey(), exp.getInstance() );
+            e.attributeExpressions.setAttribute( namespace, (String) entry.getKey(), exp == null ? null : exp.getInstance() );
           }
         }
       }
