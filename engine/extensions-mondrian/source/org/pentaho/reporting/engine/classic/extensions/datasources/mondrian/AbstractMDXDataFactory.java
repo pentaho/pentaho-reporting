@@ -962,6 +962,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory {
 
   public String[] getReferencedFields( final String queryName,
                                        final DataRow parameters ) throws ReportDataFactoryException {
+    final boolean isNewConnection = connection == null;
     try {
       if ( connection == null ) {
         connection = mondrianConnectionProvider.createConnection
@@ -1003,6 +1004,10 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory {
       return parameter.toArray( new String[ parameter.size() ] );
     } catch ( MondrianException e ) {
       throw new ReportDataFactoryException( "Failed to create datasource:" + e.getLocalizedMessage(), e );
+    } finally {
+      if ( isNewConnection ) {
+        close();
+      }
     }
   }
 
