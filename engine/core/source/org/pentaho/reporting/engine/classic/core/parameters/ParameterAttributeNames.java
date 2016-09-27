@@ -63,6 +63,13 @@ public final class ParameterAttributeNames {
     public static final String LAYOUT_HORIZONTAL = "horizontal";
     public static final String LAYOUT_VERTICAL = "vertical";
 
+    public static final String TRANSLATE_LABEL = "translate_label";
+    public static final String TRANSLATE_DATA_FORMAT = "translate_data_format";
+    public static final String TRANSLATE_DISPLAY_NAMES = "translate_values";
+    public static final String TRANSLATE_ERROR_MESSAGE = "translate_error_message";
+    public static final String TRANSLATE_RESOURCE_ID = "translate_resource_id";
+    public static final String ERROR_MESSAGE = "error_message";
+
     public static final String TYPE = "parameter-render-type";
     public static final String TYPE_DROPDOWN = "dropdown";
     public static final String TYPE_LIST = "list";

@@ -31,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.base.ParameterRepor
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterUtils;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 
 public class TextAreaParameterComponent extends JScrollPane implements ParameterComponent {
@@ -53,9 +54,7 @@ public class TextAreaParameterComponent extends JScrollPane implements Parameter
       final ParameterUpdateContext updateContext ) {
     this.updateContext = updateContext;
 
-    final String formatString =
-        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
-            parameterContext );
+    final String formatString = ParameterUtils.getTranslatedDateFormat( entry, parameterContext );
     final String timeZoneSpec =
         entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
             parameterContext );

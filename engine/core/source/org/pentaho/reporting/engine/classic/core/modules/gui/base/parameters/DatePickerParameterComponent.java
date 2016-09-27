@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.util.TimeZone;
 
 import javax.swing.AbstractAction;
@@ -45,9 +47,11 @@ import javax.swing.event.ChangeListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterUtils;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.libraries.designtime.swing.date.DateChooserPanel;
 import org.pentaho.reporting.libraries.designtime.swing.date.DateChooserPopupMenu;
@@ -159,9 +163,8 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
       this.dateType = this.dateType.getComponentType();
     }
 
-    final String formatString =
-        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
-            parameterContext );
+    String formatString = ParameterUtils.getTranslatedDateFormat( entry, parameterContext );
+
     final String timeZoneSpec =
         entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
             parameterContext );

@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.base.ParameterRepor
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterUtils;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 
 public class TextFieldParameterComponent extends JTextField implements ParameterComponent {
@@ -52,9 +53,7 @@ public class TextFieldParameterComponent extends JTextField implements Parameter
     this.updateContext = updateContext;
     this.parameterName = entry.getName();
 
-    final String formatString =
-        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
-            parameterContext );
+    final String formatString = ParameterUtils.getTranslatedDateFormat( entry, parameterContext );
     final String timeZoneSpec =
         entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
             parameterContext );
