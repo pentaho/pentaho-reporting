@@ -12,39 +12,10 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2015 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2016 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
-import static org.hamcrest.Matchers.emptyArray;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-
-import javax.swing.table.TableModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,6 +25,24 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import javax.swing.table.TableModel;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
+import static org.hamcrest.Matchers.emptyArray;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class SimpleSQLReportDataFactoryTest {
 
@@ -376,5 +365,21 @@ public class SimpleSQLReportDataFactoryTest {
     assertThat( (String) list.get( 0 ), is( equalTo( factory.getClass().getName() ) ) );
     assertThat( (String) list.get( 1 ), is( equalTo( QUERY ) ) );
     assertThat( (String) list.get( 2 ), is( equalTo( "test_hash" ) ) );
+  }
+
+  @Test
+  public void testGetReferencedFieldsCloseItsConnection() throws ReportDataFactoryException, SQLException {
+    DataRow parameters = mock( DataRow.class );
+    this.connection = null;
+    String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
+    verify(factory, times(1)).close();
+  }
+
+  @Test
+  public void testGetReferencedFieldsDoNotCloseExistConnection() throws ReportDataFactoryException, SQLException {
+    DataRow parameters = mock( DataRow.class );
+    this.connection = factory.getConnection( parameters );
+    String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
+    verify(factory, times(0)).close();
   }
 }

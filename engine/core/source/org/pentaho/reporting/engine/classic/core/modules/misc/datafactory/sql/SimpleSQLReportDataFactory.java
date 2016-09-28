@@ -17,6 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
+import javax.swing.table.TableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,21 +44,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
-
-import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetProvider;
-import javax.swing.table.TableModel;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
-import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 
 /**
@@ -209,6 +208,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
   }
 
   public String[] getReferencedFields( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+
+    final boolean isNewConnection = connection == null;
     try {
       final ParametrizationProviderFactory factory = createParametrizationProviderFactory();
       final Connection connection = getConnection( parameters );
@@ -224,13 +225,17 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         list.add( passwordField );
       }
       list.add( DataFactory.QUERY_LIMIT );
-      return list.toArray( new String[list.size()] );
+      return list.toArray( new String[ list.size() ] );
     } catch ( ReportDataFactoryException e ) {
       logger.warn( "Unable to perform cache preparation", e );
       throw e;
     } catch ( SQLException e ) {
       logger.warn( "Unable to perform cache preparation", e );
       throw new ReportDataFactoryException( "Unable to perform cache preparation", e );
+    } finally {
+      if ( isNewConnection ) {
+        close();
+      }
     }
   }
 

@@ -404,6 +404,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory {
 
   public String[] getReferencedFields( final String queryName,
                                        final DataRow parameter ) throws ReportDataFactoryException {
+    final boolean isNewConnection = connection == null;
     try {
       if ( connection == null ) {
         connection =
@@ -442,6 +443,10 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory {
       return params.toArray( new String[ params.size() ] );
     } catch ( final Throwable e ) {
       throw new ReportDataFactoryException( "Failed to obtain a connection", e );
+    } finally {
+      if ( isNewConnection ) {
+        close();
+      }
     }
   }
 
