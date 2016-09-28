@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
@@ -63,6 +63,7 @@ public final class ParameterAttributeNames {
     public static final String LAYOUT_HORIZONTAL = "horizontal";
     public static final String LAYOUT_VERTICAL = "vertical";
 
+    public static final String TRANSLATE_RESOURCE_ID = "translate-resource-id";
     public static final String TYPE = "parameter-render-type";
     public static final String TYPE_DROPDOWN = "dropdown";
     public static final String TYPE_LIST = "list";

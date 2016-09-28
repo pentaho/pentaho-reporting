@@ -12,33 +12,27 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2015 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2016 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 import java.awt.Color;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
-
 import org.apache.commons.lang3.StringUtils;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
-import org.pentaho.reporting.engine.classic.core.modules.gui.base.ParameterReportControllerPane;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
@@ -61,9 +55,11 @@ public class TextFieldParameterComponentTest {
     doReturn( ENTRY_NAME ).when( entry ).getName();
     doReturn( Number.class ).when( entry ).getValueType();
     doReturn( "#,###,##0.00" ).when( entry ).getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
+      ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
+    doReturn( "#,###,##0.00" ).when( entry ).getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
     doReturn( "utc" ).when( entry ).getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.TIMEZONE, parameterContext );
+      ParameterAttributeNames.Core.TIMEZONE, parameterContext );
 
     doReturn( resourceBundleFactory ).when( parameterContext ).getResourceBundleFactory();
     doReturn( locale ).when( resourceBundleFactory ).getLocale();
@@ -103,22 +99,12 @@ public class TextFieldParameterComponentTest {
     // initialize() will change the document, which invokes "handler", which uses "SwingUtils.invokeLater(..)" to
     // do it work. The logic in init() depends on being able to finish configuring the text-component before
     // the handler kicks in. If init() is not called from within the AWT-EDT, then we get a race condition.
-    SwingUtilities.invokeLater( new Runnable() {
+    SwingUtilities.invokeLater( () -> {
+      // this schedules tasks via "runLater(..)"
+      comp.initialize();
 
-      @Override
-      public void run() {
-        // this schedules tasks via "runLater(..)"
-        comp.initialize();
-
-        // Let all scheduled tasks run first, then signal that the test is finished.
-        SwingUtilities.invokeLater( new Runnable() {
-
-          @Override
-          public void run() {
-            latch.countDown();
-          }
-        } );
-      }
+      // Let all scheduled tasks run first, then signal that the test is finished.
+      SwingUtilities.invokeLater( () -> latch.countDown() );
     } );
 
     latch.await( 100, TimeUnit.MILLISECONDS );

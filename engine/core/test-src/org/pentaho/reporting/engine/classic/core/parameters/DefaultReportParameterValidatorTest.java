@@ -12,23 +12,17 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.parameter;
+package org.pentaho.reporting.engine.classic.core.parameters;
 
+import javax.swing.table.DefaultTableModel;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
-import org.pentaho.reporting.engine.classic.core.parameters.DefaultListParameter;
-import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterContext;
-import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterDefinition;
-import org.pentaho.reporting.engine.classic.core.parameters.DefaultReportParameterValidator;
-import org.pentaho.reporting.engine.classic.core.parameters.ValidationResult;
-
-import javax.swing.table.DefaultTableModel;
 
 public class DefaultReportParameterValidatorTest extends TestCase {
   public DefaultReportParameterValidatorTest() {
@@ -48,7 +42,7 @@ public class DefaultReportParameterValidatorTest extends TestCase {
     tableModel.setValueAt( "value-entry", 0, 1 );
 
     final DefaultListParameter listParameter =
-        new DefaultListParameter( "test", "key", "value", "name", false, true, String.class );
+      new DefaultListParameter( "test", "key", "value", "name", false, true, String.class );
     listParameter.setParameterAutoSelectFirstValue( true );
     listParameter.setMandatory( true );
 

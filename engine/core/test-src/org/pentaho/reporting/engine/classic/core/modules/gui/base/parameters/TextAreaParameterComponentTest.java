@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2015 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2016 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
@@ -66,6 +66,8 @@ public class TextAreaParameterComponentTest {
     doReturn( Number.class ).when( entry ).getValueType();
     doReturn( "#,###,##0.00" ).when( entry ).getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
         ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
+    doReturn( "#,###,##0.00" ).when( entry ).getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
     doReturn( "utc" ).when( entry ).getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
         ParameterAttributeNames.Core.TIMEZONE, parameterContext );
 
