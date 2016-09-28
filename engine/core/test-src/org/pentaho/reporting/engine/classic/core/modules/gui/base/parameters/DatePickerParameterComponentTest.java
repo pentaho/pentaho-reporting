@@ -63,6 +63,8 @@ public class DatePickerParameterComponentTest {
     doReturn( Date.class ).when( entry ).getValueType();
     doReturn( "dd.MM.yyyy" ).when( entry ).getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
         ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
+    doReturn( "dd.MM.yyyy" ).when( entry ).getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
     doReturn( "utc" ).when( entry ).getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
         ParameterAttributeNames.Core.TIMEZONE, parameterContext );
 
