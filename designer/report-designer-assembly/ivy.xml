@@ -151,6 +151,14 @@
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pdi-spark-plugin" type="zip"/>
     </dependency>
+    <dependency org="pentaho-kettle" name="kettle-json-plugin" rev="${dependency.kettle-json-plugin.revision}"
+                conf="plugin->default" changing="true" transitive="false">
+      <artifact name="kettle-json-plugin" type="zip"/>
+    </dependency>
+    <dependency org="pentaho-kettle" name="kettle-xml-plugin" rev="${dependency.kettle-xml-plugin.revision}"
+                conf="plugin->default" changing="true" transitive="false">
+      <artifact name="kettle-xml-plugin" type="zip"/>
+    </dependency>
     <dependency org="pentaho" name="pdi-dataservice-client-plugin" rev="${dependency.pdi-dataservice-client-plugin.revision}"
                 conf="drivers->default" changing="true" transitive="false"/>
 
