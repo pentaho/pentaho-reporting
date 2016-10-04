@@ -12,11 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
 import java.io.Serializable;
@@ -70,5 +72,28 @@ public interface ParameterDefinitionEntry extends Serializable, Cloneable {
 
   public Object getDefaultValue( final ParameterContext context ) throws ReportDataFactoryException;
 
-  public Object clone() throws CloneNotSupportedException;
+  Object clone() throws CloneNotSupportedException;
+
+  default String getTranslatedParameterAttribute( final String namespace,
+                                                 final String name,
+                                                 final ParameterContext parameterContext ) {
+    final String translateId = getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.TRANSLATE_RESOURCE_ID,
+      parameterContext );
+    final String parameterAttribute = getParameterAttribute( namespace, name, parameterContext );
+    if ( translateId == null ) {
+      return parameterAttribute;
+    }
+
+    try {
+      final ResourceBundle resourceBundle =
+        parameterContext.getResourceBundleFactory().getResourceBundle( translateId );
+      if ( resourceBundle.containsKey( parameterAttribute ) ) {
+        return resourceBundle.getString( parameterAttribute );
+      }
+      return parameterAttribute;
+    } catch ( MissingResourceException | ClassCastException e ) {
+      return parameterAttribute;
+    }
+  }
 }
