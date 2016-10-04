@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
@@ -105,7 +105,8 @@ public interface StyleBuilder {
         "border-top-right-radius" ), BORDER_BOTTOM_LEFT_RADIUS( "border-bottom-left-radius" ), BORDER_BOTTOM_RIGHT_RADIUS(
         "border-bottom-right-radius" ),
 
-    BACKGROUND_COLOR( "background-color", true ), OVERFLOW( "overflow" ), WIDTH( "width" ), HEIGHT( "height" );
+    BACKGROUND_COLOR( "background-color", true ), OVERFLOW( "overflow" ), WIDTH( "width" ), HEIGHT( "height" ),
+    TRANSFORM_ORIGIN( "transform-origin" ), TRANSFORM( "transform" ), DIRECTION( "direction" );
 
     private String cssName;
     private boolean inherit;

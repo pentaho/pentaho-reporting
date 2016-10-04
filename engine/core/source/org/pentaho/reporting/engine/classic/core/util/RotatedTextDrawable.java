@@ -196,4 +196,12 @@ public class RotatedTextDrawable implements ReportDrawable {
     }
     return null;
   }
+
+  public ElementAlignment gethAlign() {
+    return hAlign;
+  }
+
+  public ElementAlignment getvAlign() {
+    return vAlign;
+  }
 }
