@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
@@ -95,17 +95,17 @@ public class DataDefinitionFileWriter implements BundleWriterHandler {
       dataSourceAtts.setAttribute( BundleNamespaces.DATADEFINITION, "report-query", query ); // NON-NLS
     }
     dataSourceAtts.setAttribute( BundleNamespaces.DATADEFINITION, "limit", String.valueOf( queryLimit ) ); // NON-NLS
-    dataSourceAtts.setAttribute( BundleNamespaces.DATADEFINITION, "timout", String.valueOf( timeout ) ); // NON-NLS
+    dataSourceAtts.setAttribute( BundleNamespaces.DATADEFINITION, "timeout", String.valueOf( timeout ) ); // NON-NLS
     if ( report instanceof MasterReport ) {
       final MasterReport masterReport = (MasterReport) report;
-      final String dataSourceDefFile = writeDataFactory( bundle, contentState, masterReport.getDataFactory() );
+      final String dataSourceDefFile = writeDataFactoryWrapper( bundle, contentState, masterReport.getDataFactory() );
       final String relativePath =
           IOUtils.getInstance().createRelativePath( dataSourceDefFile, contentState.getFileName() );
       dataSourceAtts.setAttribute( BundleNamespaces.DATADEFINITION, "ref", relativePath ); // NON-NLS
     } else if ( report instanceof SubReport ) {
       final SubReport subreport = (SubReport) report;
       if ( subreport.getDataFactory() != null ) {
-        final String dataSourceDefFile = writeDataFactory( bundle, contentState, subreport.getDataFactory() );
+        final String dataSourceDefFile = writeDataFactoryWrapper( bundle, contentState, subreport.getDataFactory() );
         final String relativePath =
             IOUtils.getInstance().createRelativePath( dataSourceDefFile, contentState.getFileName() );
         dataSourceAtts.setAttribute( BundleNamespaces.DATADEFINITION, "ref", relativePath ); // NON-NLS
@@ -293,6 +293,12 @@ public class DataDefinitionFileWriter implements BundleWriterHandler {
       }
       writer.writeCloseTag();
     }
+  }
+
+  //package-level visibility for testing purposes
+  String writeDataFactoryWrapper( final WriteableDocumentBundle bundle, final BundleWriterState state,
+      final DataFactory df ) throws IOException, BundleWriterException {
+    return writeDataFactory( bundle, state, df );
   }
 
   public static String writeDataFactory( final WriteableDocumentBundle bundle, final BundleWriterState state,
