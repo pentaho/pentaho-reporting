@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
@@ -501,22 +501,16 @@ public class ParameterReportControllerPane extends JPanel {
     carrierPanel.add( errorLabel, gbc );
   }
 
-  private String computeLabel( final ParameterDefinitionEntry entry ) {
+  String computeLabel( final ParameterDefinitionEntry entry ) {
     final String swingLabel =
         entry.getParameterAttribute( ParameterAttributeNames.Swing.NAMESPACE, ParameterAttributeNames.Swing.LABEL,
             parameterContext );
     if ( swingLabel != null ) {
       return swingLabel;
     }
-
-    final String coreLabel =
-        entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL,
-            parameterContext );
-    if ( coreLabel != null ) {
-      return coreLabel;
-    }
-
-    return entry.getName();
+    String coreLabel = entry.getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.LABEL, parameterContext );
+    return coreLabel == null ? entry.getName() : coreLabel;
   }
 
   public ReportParameterValues getReportParameterValues() {

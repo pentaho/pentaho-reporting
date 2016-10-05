@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
@@ -41,15 +41,15 @@ public class Prd3174IT extends TestCase {
     final TypedTableModel model = new TypedTableModel();
     model.addColumn( "key", String.class );
     model.addColumn( "value", String.class );
-    model.addRow( new String[] { "K1", "V1" } );
-    model.addRow( new String[] { "K2", "V2" } );
-    model.addRow( new String[] { "K3", "V3" } );
+    model.addRow( "K1", "V1" );
+    model.addRow( "K2", "V2" );
+    model.addRow( "K3", "V3" );
 
     final TableDataFactory dataFactory = new TableDataFactory();
     dataFactory.addTable( "query", model );
 
     final DefaultListParameter listParameter =
-        new DefaultListParameter( "query", "key", "value", "parameter", true, false, String.class );
+      new DefaultListParameter( "query", "key", "value", "parameter", true, false, String.class );
 
     final DefaultParameterDefinition parameterDefinition = new DefaultParameterDefinition();
     parameterDefinition.addParameterDefinition( listParameter );
@@ -75,15 +75,15 @@ public class Prd3174IT extends TestCase {
     final TypedTableModel model = new TypedTableModel();
     model.addColumn( "key", String.class );
     model.addColumn( "value", String.class );
-    model.addRow( new String[] { "K1", "V1" } );
-    model.addRow( new String[] { "K2", "V2" } );
-    model.addRow( new String[] { "K3", "V3" } );
+    model.addRow( "K1", "V1" );
+    model.addRow( "K2", "V2" );
+    model.addRow( "K3", "V3" );
 
     final TableDataFactory dataFactory = new TableDataFactory();
     dataFactory.addTable( "query", model );
 
     final DefaultListParameter listParameter =
-        new DefaultListParameter( "query", "key", "value", "parameter", true, true, String.class );
+      new DefaultListParameter( "query", "key", "value", "parameter", true, true, String.class );
 
     final DefaultParameterDefinition parameterDefinition = new DefaultParameterDefinition();
     parameterDefinition.addParameterDefinition( listParameter );
