@@ -12,11 +12,52 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.TimeZone;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.TableModel;
+import javax.swing.tree.TreePath;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.ui.ValidationMessage;
@@ -63,27 +104,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.TreeModelEvent;
-import javax.swing.event.TreeModelListener;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.table.TableModel;
-import javax.swing.tree.TreePath;
-import java.awt.*;
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.TimeZone;
-
 /*
  * @author Ezequiel Cuellar
  */
@@ -91,339 +111,6 @@ import java.util.TimeZone;
 public class ParameterDialog extends CommonDialog implements FormulaEditorDataModel {
   private static final ValidationMessage.Severity[] ALL_SEVERITIES = new ValidationMessage.Severity[] {
     ValidationMessage.Severity.WARN, ValidationMessage.Severity.ERROR };
-
-  private class TypeListener implements ListDataListener {
-    public void intervalAdded( final ListDataEvent e ) {
-
-    }
-
-    public void intervalRemoved( final ListDataEvent e ) {
-
-    }
-
-    public void contentsChanged( final ListDataEvent e ) {
-      final ParameterType type = (ParameterType) parameterTypeModel.getSelectedItem();
-      final boolean visible = ( type != null ) && type.isHasVisibleItems();
-
-      visibleItemsTextField.setVisible( visible );
-      visibleItemsLabel.setVisible( visible );
-
-      final boolean displayFormulaVisible = ( type != null ) && type.isQueryOptional() == false;
-      displayFormulaField.setVisible( displayFormulaVisible );
-      displayFormulaLabel.setVisible( displayFormulaVisible );
-      displayValueLabel.setVisible( displayFormulaVisible );
-      displayValueComboBox.setVisible( displayFormulaVisible );
-
-      final String selectedQuery = (String) queryComboBoxModel.getSelectedItem();
-      final boolean querySelected = StringUtils.isEmpty( selectedQuery, false ) == false;
-      strictValuesCheckBox.setVisible( querySelected );
-      reevaluateOnInvalidStrictParamCheckBox.setVisible( querySelected );
-      autofillSelectionCheckBox.setVisible( querySelected );
-    }
-  }
-
-  private class DataSetQueryUpdateHandler implements TreeModelListener {
-
-    private DataSetQueryUpdateHandler() {
-    }
-
-    /**
-     * <p>Invoked after a node (or a set of siblings) has changed in some way. The node(s) have not changed locations in
-     * the tree or altered their children arrays, but other attributes have changed and may affect presentation.
-     * Example: the name of a file has changed, but it is in the same location in the file system.</p> <p>To indicate
-     * the root has changed, childIndices and children will be null. </p> <p/> <p>Use <code>e.getPath()</code> to get
-     * the parent of the changed node(s). <code>e.getChildIndices()</code> returns the index(es) of the changed
-     * node(s).</p>
-     */
-    public void treeNodesChanged( final TreeModelEvent e ) {
-      valueChanged();
-    }
-
-    /**
-     * <p>Invoked after nodes have been inserted into the tree.</p> <p/> <p>Use <code>e.getPath()</code> to get the
-     * parent of the new node(s). <code>e.getChildIndices()</code> returns the index(es) of the new node(s) in ascending
-     * order.</p>
-     */
-    public void treeNodesInserted( final TreeModelEvent e ) {
-      valueChanged();
-    }
-
-    /**
-     * <p>Invoked after nodes have been removed from the tree.  Note that if a subtree is removed from the tree, this
-     * method may only be invoked once for the root of the removed subtree, not once for each individual set of siblings
-     * removed.</p> <p/> <p>Use <code>e.getPath()</code> to get the former parent of the deleted node(s).
-     * <code>e.getChildIndices()</code> returns, in ascending order, the index(es) the node(s) had before being
-     * deleted.</p>
-     */
-    public void treeNodesRemoved( final TreeModelEvent e ) {
-      valueChanged();
-    }
-
-    /**
-     * <p>Invoked after the tree has drastically changed structure from a given node down.  If the path returned by
-     * e.getPath() is of length one and the first element does not identify the current root node the first element
-     * should become the new root of the tree.<p> <p/> <p>Use <code>e.getPath()</code> to get the path to the node.
-     * <code>e.getChildIndices()</code> returns null.</p>
-     */
-    public void treeStructureChanged( final TreeModelEvent e ) {
-      valueChanged();
-    }
-
-    private void valueChanged() {
-      final int count = availableDataSourcesModel.size();
-      final LinkedHashSet<String> set = new LinkedHashSet<String>();
-      for ( int i = 0; i < count; i++ ) {
-        final DataFactoryWrapper factoryWrapper = availableDataSourcesModel.get( i );
-        if ( factoryWrapper.isRemoved() ) {
-          continue;
-        }
-        final String[] strings = factoryWrapper.getEditedDataFactory().getQueryNames();
-        set.addAll( Arrays.asList( strings ) );
-      }
-
-      queryComboBoxModel.setValues( set.toArray( new String[ set.size() ] ) );
-      final TreePath selectionPath = availableDataSources.getSelectionPath();
-      if ( selectionPath == null ) {
-        setSelectedQuery( null );
-        idComboBox.setModel( new DefaultComboBoxModel() );
-        displayValueComboBox.setModel( new DefaultComboBoxModel() );
-        return;
-      }
-
-      final Object maybeQuery = selectionPath.getLastPathComponent();
-      if ( maybeQuery instanceof String ) {
-        setSelectedQuery( (String) maybeQuery );
-      }
-    }
-  }
-
-
-  private class QuerySelectionHandler implements ListDataListener, TreeSelectionListener {
-    private QuerySelectionHandler() {
-    }
-
-    /**
-     * Called whenever the value of the selection changes.
-     *
-     * @param e the event that characterizes the change.
-     */
-    public void valueChanged( final TreeSelectionEvent e ) {
-      if ( e.getPath() == null ) {
-        return;
-      }
-      final Object o = e.getPath().getLastPathComponent();
-      if ( o instanceof String ) {
-        queryComboBoxModel.setSelectedItem( o );
-      }
-    }
-
-    public void intervalAdded( final ListDataEvent e ) {
-
-    }
-
-    public void intervalRemoved( final ListDataEvent e ) {
-
-    }
-
-    public void contentsChanged( final ListDataEvent e ) {
-      final String[] cols = getDataFields();
-      idComboBox.setModel( new DefaultComboBoxModel( cols ) );
-      displayValueComboBox.setModel( new DefaultComboBoxModel( cols ) );
-
-      final String selectedQuery = (String) queryComboBoxModel.getSelectedItem();
-      final boolean querySelected = StringUtils.isEmpty( selectedQuery, false ) == false;
-      strictValuesCheckBox.setVisible( querySelected );
-      reevaluateOnInvalidStrictParamCheckBox.setVisible( querySelected );
-      autofillSelectionCheckBox.setVisible( querySelected );
-    }
-  }
-
-  private class EditorParameterContext implements ParameterContext {
-    private ReportEnvironment defaultEnvironment;
-    private DocumentMetaData defaultDocumentMetaData;
-    private DataRow dataRow;
-    private ResourceBundleFactory resourceBundleFactory;
-    private ResourceManager resourceManager;
-
-    private EditorParameterContext() {
-      resourceManager = new ResourceManager();
-      resourceBundleFactory = new DefaultResourceBundleFactory();
-      defaultEnvironment = new DefaultReportEnvironment( ClassicEngineBoot.getInstance().getGlobalConfig() );
-      defaultDocumentMetaData = new MemoryDocumentMetaData();
-
-      final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow( defaultEnvironment );
-      dataRow = new CompoundDataRow( envDataRow, new StaticDataRow() );
-    }
-
-    public PerformanceMonitorContext getPerformanceMonitorContext() {
-      return new NoOpPerformanceMonitorContext();
-    }
-
-    public DataRow getParameterData() {
-      return dataRow;
-    }
-
-    public DataFactory getDataFactory() {
-      return provisionDataSourcePanel.getSelectedDataSource();
-    }
-
-    public ResourceManager getResourceManager() {
-      if ( reportDesignerContext == null ) {
-        return resourceManager;
-      }
-      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
-      if ( activeContext == null ) {
-        return resourceManager;
-      }
-      return activeContext.getContextRoot().getResourceManager();
-    }
-
-    public ResourceBundleFactory getResourceBundleFactory() {
-      if ( reportDesignerContext == null ) {
-        return resourceBundleFactory;
-      }
-      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
-      if ( activeContext == null ) {
-        return resourceBundleFactory;
-      }
-      final MasterReport report = activeContext.getContextRoot();
-      return MasterReport.computeAndInitResourceBundleFactory
-        ( report.getResourceBundleFactory(), report.getReportEnvironment() );
-    }
-
-    public Configuration getConfiguration() {
-      if ( reportDesignerContext == null ) {
-        return ClassicEngineBoot.getInstance().getGlobalConfig();
-      }
-      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
-      if ( activeContext == null ) {
-        return ClassicEngineBoot.getInstance().getGlobalConfig();
-      }
-      return activeContext.getContextRoot().getConfiguration();
-    }
-
-    public ResourceKey getContentBase() {
-      if ( reportDesignerContext == null ) {
-        return null;
-      }
-      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
-      if ( activeContext == null ) {
-        return null;
-      }
-      return activeContext.getContextRoot().getContentBase();
-    }
-
-    /**
-     * the document metadata of the report. Can be null, if the report does not have a bundle associated or if this
-     * context is not part of a report-processing.
-     *
-     * @return the document metadata.
-     */
-    public DocumentMetaData getDocumentMetaData() {
-      if ( reportDesignerContext == null ) {
-        return defaultDocumentMetaData;
-      }
-      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
-      if ( activeContext == null ) {
-        return defaultDocumentMetaData;
-      }
-      return activeContext.getContextRoot().getBundle().getMetaData();
-    }
-
-    public ReportEnvironment getReportEnvironment() {
-      if ( reportDesignerContext == null ) {
-        return defaultEnvironment;
-      }
-      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
-      if ( activeContext == null ) {
-        return defaultEnvironment;
-      }
-      return activeContext.getContextRoot().getReportEnvironment();
-    }
-
-    public void close() throws ReportDataFactoryException {
-    }
-  }
-
-  public static class ParameterEditResult {
-    private DataFactoryWrapper[] wrappers;
-    private ParameterDefinitionEntry parameter;
-
-    public ParameterEditResult( final DataFactoryWrapper[] wrappers, final ParameterDefinitionEntry entries ) {
-      this.wrappers = wrappers;
-      this.parameter = entries;
-    }
-
-    public DataFactoryWrapper[] getWrappers() {
-      return wrappers;
-    }
-
-    public ParameterDefinitionEntry getParameter() {
-      return parameter;
-    }
-  }
-
-
-  private class TypeSelectionHandler extends DocumentChangeHandler implements ListDataListener {
-    private DefaultValueEditorPanel valueEditorPanel;
-
-    private TypeSelectionHandler( final DefaultValueEditorPanel valueEditorPanel ) {
-      this.valueEditorPanel = valueEditorPanel;
-    }
-
-    /**
-     * Sent after the indices in the index0,index1 interval have been inserted in the data model. The new interval
-     * includes both index0 and index1.
-     *
-     * @param e a <code>ListDataEvent</code> encapsulating the event information
-     */
-    public void intervalAdded( final ListDataEvent e ) {
-      // ignorable, model is static
-    }
-
-    /**
-     * Sent after the indices in the index0,index1 interval have been removed from the data model.  The interval
-     * includes both index0 and index1.
-     *
-     * @param e a <code>ListDataEvent</code> encapsulating the event information
-     */
-    public void intervalRemoved( final ListDataEvent e ) {
-      // ignorable, model is static
-    }
-
-    /**
-     * Sent when the contents of the list has changed in a way that's too complex to characterize with the previous
-     * methods. For example, this is sent when an item has been replaced. Index0 and index1 bracket the change.
-     *
-     * @param event a <code>ListDataEvent</code> encapsulating the event information
-     */
-    public void contentsChanged( final ListDataEvent event ) {
-      final Object o = valueTypeComboBox.getSelectedItem();
-      if ( o instanceof Class == false ) {
-        timeZoneLabel.setVisible( false );
-        timeZoneBox.setVisible( false );
-        valueEditorPanel.setValueType( String.class, null, TimeZone.getDefault() );
-        return;
-      }
-
-      final Class selectedClass = (Class) o;
-      final ParameterType parameterType = getSelectedParameterType();
-      final Class type;
-      if ( parameterType == null || parameterType.isMultiSelection() == false ) {
-        type = selectedClass;
-      } else {
-        type = Array.newInstance( selectedClass, 0 ).getClass();
-      }
-      timeZoneLabel.setVisible( Date.class.isAssignableFrom( selectedClass ) );
-      timeZoneBox.setVisible( Date.class.isAssignableFrom( selectedClass ) );
-      valueEditorPanel.setValueType( type, dataFormatField.getText(), getSelectedTimeZone() );
-    }
-
-    protected void handleChange( final DocumentEvent e ) {
-      contentsChanged( null );
-    }
-  }
-
   private static final Class[] DEFAULT_CLASSES = { String.class,
     Boolean.class,
     Number.class,
@@ -442,10 +129,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     TableModel.class,
     Object.class
   };
-
   private ReportDesignerContext reportDesignerContext;
   private ProvisionDataSourcePanel provisionDataSourcePanel;
-
   private JTextField nameTextField;
   private JTextField labelTextField;
   private DefaultValueEditorPanel defaultValueTextField;
@@ -459,16 +144,12 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   private JCheckBox strictValuesCheckBox;
   private JCheckBox autofillSelectionCheckBox;
   private JCheckBox reevaluateOnInvalidStrictParamCheckBox;
-
   private JLabel displayFormulaLabel;
-
   private FormulaEditorPanel postProcessingFormulaField;
   private FormulaEditorPanel displayFormulaField;
   private FormulaEditorPanel defaultValueFormulaField;
-
   private JSpinner visibleItemsTextField;
   private JLabel visibleItemsLabel;
-
   private ComboBoxModel parameterTypeModel;
   private JTree availableDataSources;
   private StaticTextComboBoxModel queryComboBoxModel;
@@ -539,11 +220,11 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     parameterTypeModel.addListDataListener( new TypeListener() );
     parameterTypeModel.addListDataListener( typeSelectionHandler );
 
-    timeZoneModel = new KeyedComboBoxModel<String, String>();
+    timeZoneModel = new KeyedComboBoxModel<>();
     timeZoneModel.setAllowOtherValue( true );
-    timeZoneModel.add( "utc", Messages.getString( "ParameterDialog.UseUniversalTime" ) );//NON-NLS
-    timeZoneModel.add( "server", Messages.getString( "ParameterDialog.UseServerTimezone" ) );//NON-NLS
-    timeZoneModel.add( "client", Messages.getString( "ParameterDialog.UseClientTimezone" ) );//NON-NLS
+    timeZoneModel.add( "utc", Messages.getString( "ParameterDialog.UseUniversalTime" ) );
+    timeZoneModel.add( "server", Messages.getString( "ParameterDialog.UseServerTimezone" ) );
+    timeZoneModel.add( "client", Messages.getString( "ParameterDialog.UseClientTimezone" ) );
     final String[] timeZoneId = TimeZone.getAvailableIDs();
     Arrays.sort( timeZoneId );
     for ( int i = 0; i < timeZoneId.length; i++ ) {
@@ -865,7 +546,6 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     return pane;
   }
 
-
   private void updateFromParameter( final ParameterDefinitionEntry p ) {
     if ( p == null ) {
       dataFormatField.setText( null );
@@ -897,24 +577,24 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       final DataFactory factoryForQuery = findDataFactoryForQuery( queryName );
       if ( factoryForQuery != null ) {
         final int idx = availableDataSourcesModel.indexOf( factoryForQuery );
-        availableDataSources.setSelectionPath( new TreePath
-          ( new Object[] { availableDataSourcesModel.getRoot(), availableDataSourcesModel.get( idx ), queryName } ) );
+        availableDataSources.setSelectionPath( new TreePath( new Object[] {
+          availableDataSourcesModel.getRoot(), availableDataSourcesModel.get( idx ), queryName } ) );
       } else {
         setSelectedQuery( queryName );
       }
 
-      autofillSelectionCheckBox.setSelected( "true".equals
-        ( parameter.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      autofillSelectionCheckBox.setSelected( "true".equals(
+        parameter.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
           ParameterAttributeNames.Core.AUTOFILL_SELECTION, parameterContext ) ) );
-      reevaluateOnInvalidStrictParamCheckBox.setSelected( "true".equals
-        ( parameter.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      reevaluateOnInvalidStrictParamCheckBox.setSelected( "true".equals(
+        parameter.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
           ParameterAttributeNames.Core.RE_EVALUATE_ON_FAILED_VALUES, parameterContext ) ) );
       strictValuesCheckBox.setSelected( parameter.isStrictValueCheck() );
       displayValueComboBox.setSelectedItem( parameter.getTextColumn() );
       idComboBox.setSelectedItem( parameter.getKeyColumn() );
       final int visibleItems =
-        ParserUtil.parseInt( parameter.getParameterAttribute
-          ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.VISIBLE_ITEMS ), 0 );
+        ParserUtil.parseInt( parameter.getParameterAttribute(
+          ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.VISIBLE_ITEMS ), 0 );
       visibleItemsTextField.setValue( visibleItems );
     } else {
       autofillSelectionCheckBox.setSelected( false );
@@ -929,19 +609,20 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     }
 
     final Class theType = p.getValueType();
-    dataFormatField.setText( p.getParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext ) );
+    dataFormatField.setText( p.getParameterAttribute(
+      ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext ) );
     valueTypeComboBox.setSelectedItem( multiSelection ? theType.getComponentType() : theType );
     nameTextField.setText( p.getName() );
-    labelTextField.setText( p.getParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, parameterContext ) );
+    labelTextField.setText(
+      p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL,
+        parameterContext ) );
     mandatoryCheckBox.setSelected( p.isMandatory() );
-    postProcessingFormulaField.setFormula( p.getParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
-        parameterContext ) );
-    displayFormulaField.setFormula( p.getParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA,
-        parameterContext ) );
+    postProcessingFormulaField.setFormula( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
+      parameterContext ) );
+    displayFormulaField.setFormula( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA,
+      parameterContext ) );
 
     final String hiddenValue =
       p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
@@ -962,8 +643,9 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     timeZoneModel.setSelectedKey( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.TIMEZONE, parameterContext ) );
 
-    final String type = p.getParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE, parameterContext );
+    final String type =
+      p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE,
+        parameterContext );
     if ( type != null ) {
       final int size = parameterTypeModel.getSize();
       for ( int i = 0; i < size; i++ ) {
@@ -1055,9 +737,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
         .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, label );
     }
     parameter.setMandatory( isMandatory );
-    parameter.setParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
-        String.valueOf( hiddenCheckBox.isSelected() ) );
+    parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
+      String.valueOf( hiddenCheckBox.isSelected() ) );
 
 
     parameter.setDefaultValue( rawDefaultValue );
@@ -1065,30 +746,29 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     if ( hasVisibleItems ) {
       final Number visibleItemsInput = (Number) visibleItemsTextField.getValue();
       if ( visibleItemsInput != null && visibleItemsInput.intValue() > 0 ) {
-        parameter.setParameterAttribute
-          ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.VISIBLE_ITEMS,
+        parameter
+          .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.VISIBLE_ITEMS,
             String.valueOf( visibleItemsInput ) );
       }
     }
 
     if ( StringUtils.isEmpty( dataFormat ) == false ) {
-      parameter.setParameterAttribute
-        ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, dataFormat );
+      parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
+        dataFormat );
     }
     if ( queryIsOptional == false ) {
-      parameter.setParameterAttribute
-        ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA,
-          displayFormulaField.getFormula() );
+      parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+        ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA,
+        displayFormulaField.getFormula() );
     }
-    parameter.setParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA,
-        defaultValueFormulaField.getFormula() );
-    parameter.setParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
-        postProcessingFormulaField.getFormula() );
-    parameter.setParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
-        timeZoneModel.getSelectedKey() );
+    parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA,
+      defaultValueFormulaField.getFormula() );
+    parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
+      postProcessingFormulaField.getFormula() );
+    parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
+      timeZoneModel.getSelectedKey() );
 
     return parameter;
   }
@@ -1111,31 +791,30 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       parameter = new StaticListParameter( name, true, false, valueType );
     }
     if ( type != null ) {
-      parameter.setParameterAttribute
-        ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE, type.getInternalName() );
+      parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE,
+        type.getInternalName() );
     }
     if ( StringUtils.isEmpty( label ) == false ) {
-      parameter.setParameterAttribute
-        ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, label );
+      parameter
+        .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, label );
     }
     parameter.setDefaultValue( rawDefaultValue );
     parameter.setMandatory( mandatory );
-    parameter.setParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
-        String.valueOf( hiddenCheckBox.isSelected() ) );
+    parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
+      String.valueOf( hiddenCheckBox.isSelected() ) );
     if ( StringUtils.isEmpty( dataFormat ) == false ) {
-      parameter.setParameterAttribute
-        ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, dataFormat );
+      parameter.setParameterAttribute(
+        ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, dataFormat );
     }
-    parameter.setParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA,
-        defaultValueFormulaField.getFormula() );
-    parameter.setParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
-        postProcessingFormulaField.getFormula() );
-    parameter.setParameterAttribute
-      ( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
-        timeZoneModel.getSelectedKey() );
+    parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA,
+      defaultValueFormulaField.getFormula() );
+    parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
+      postProcessingFormulaField.getFormula() );
+    parameter.setParameterAttribute(
+      ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
+      timeZoneModel.getSelectedKey() );
     return parameter;
   }
 
@@ -1203,7 +882,6 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     }
   }
 
-
   public String[] getDataFields() {
     final String queryName = getSelectedQuery();
     if ( queryName == null ) {
@@ -1223,8 +901,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
         dataFactory.initialize( new DesignTimeDataFactoryContext( reportDefinition ) );
       }
 
-      final TableModel tableModel = dataFactory.queryData
-        ( queryName, new QueryDataRowWrapper( new ReportParameterValues(), 1, 0 ) );
+      final TableModel tableModel =
+        dataFactory.queryData( queryName, new QueryDataRowWrapper( new ReportParameterValues(), 1, 0 ) );
 
       final int colCount = tableModel.getColumnCount();
       final String[] cols = new String[ colCount ];
@@ -1272,6 +950,336 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
         .getString( "ParameterDialog.ValueMustBeSetMessage", nameCaption ) ) );
     }
     return validationResult;
+  }
+
+  public static class ParameterEditResult {
+    private DataFactoryWrapper[] wrappers;
+    private ParameterDefinitionEntry parameter;
+
+    public ParameterEditResult( final DataFactoryWrapper[] wrappers, final ParameterDefinitionEntry entries ) {
+      this.wrappers = wrappers;
+      this.parameter = entries;
+    }
+
+    public DataFactoryWrapper[] getWrappers() {
+      return wrappers;
+    }
+
+    public ParameterDefinitionEntry getParameter() {
+      return parameter;
+    }
+  }
+
+  private class TypeListener implements ListDataListener {
+    public void intervalAdded( final ListDataEvent e ) {
+
+    }
+
+    public void intervalRemoved( final ListDataEvent e ) {
+
+    }
+
+    public void contentsChanged( final ListDataEvent e ) {
+      final ParameterType type = (ParameterType) parameterTypeModel.getSelectedItem();
+      final boolean visible = ( type != null ) && type.isHasVisibleItems();
+
+      visibleItemsTextField.setVisible( visible );
+      visibleItemsLabel.setVisible( visible );
+
+      final boolean displayFormulaVisible = ( type != null ) && type.isQueryOptional() == false;
+      displayFormulaField.setVisible( displayFormulaVisible );
+      displayFormulaLabel.setVisible( displayFormulaVisible );
+      displayValueLabel.setVisible( displayFormulaVisible );
+      displayValueComboBox.setVisible( displayFormulaVisible );
+
+      final String selectedQuery = (String) queryComboBoxModel.getSelectedItem();
+      final boolean querySelected = StringUtils.isEmpty( selectedQuery, false ) == false;
+      strictValuesCheckBox.setVisible( querySelected );
+      reevaluateOnInvalidStrictParamCheckBox.setVisible( querySelected );
+      autofillSelectionCheckBox.setVisible( querySelected );
+    }
+  }
+
+  private class DataSetQueryUpdateHandler implements TreeModelListener {
+
+    private DataSetQueryUpdateHandler() {
+    }
+
+    /**
+     * <p>Invoked after a node (or a set of siblings) has changed in some way. The node(s) have not changed locations in
+     * the tree or altered their children arrays, but other attributes have changed and may affect presentation.
+     * Example: the name of a file has changed, but it is in the same location in the file system.</p> <p>To indicate
+     * the root has changed, childIndices and children will be null. </p> <p/> <p>Use <code>e.getPath()</code> to get
+     * the parent of the changed node(s). <code>e.getChildIndices()</code> returns the index(es) of the changed
+     * node(s).</p>
+     */
+    public void treeNodesChanged( final TreeModelEvent e ) {
+      valueChanged();
+    }
+
+    /**
+     * <p>Invoked after nodes have been inserted into the tree.</p> <p/> <p>Use <code>e.getPath()</code> to get the
+     * parent of the new node(s). <code>e.getChildIndices()</code> returns the index(es) of the new node(s) in ascending
+     * order.</p>
+     */
+    public void treeNodesInserted( final TreeModelEvent e ) {
+      valueChanged();
+    }
+
+    /**
+     * <p>Invoked after nodes have been removed from the tree.  Note that if a subtree is removed from the tree, this
+     * method may only be invoked once for the root of the removed subtree, not once for each individual set of siblings
+     * removed.</p> <p/> <p>Use <code>e.getPath()</code> to get the former parent of the deleted node(s).
+     * <code>e.getChildIndices()</code> returns, in ascending order, the index(es) the node(s) had before being
+     * deleted.</p>
+     */
+    public void treeNodesRemoved( final TreeModelEvent e ) {
+      valueChanged();
+    }
+
+    /**
+     * <p>Invoked after the tree has drastically changed structure from a given node down.  If the path returned by
+     * e.getPath() is of length one and the first element does not identify the current root node the first element
+     * should become the new root of the tree.<p> <p/> <p>Use <code>e.getPath()</code> to get the path to the node.
+     * <code>e.getChildIndices()</code> returns null.</p>
+     */
+    public void treeStructureChanged( final TreeModelEvent e ) {
+      valueChanged();
+    }
+
+    private void valueChanged() {
+      final int count = availableDataSourcesModel.size();
+      final LinkedHashSet<String> set = new LinkedHashSet<>();
+      for ( int i = 0; i < count; i++ ) {
+        final DataFactoryWrapper factoryWrapper = availableDataSourcesModel.get( i );
+        if ( factoryWrapper.isRemoved() ) {
+          continue;
+        }
+        final String[] strings = factoryWrapper.getEditedDataFactory().getQueryNames();
+        set.addAll( Arrays.asList( strings ) );
+      }
+
+      queryComboBoxModel.setValues( set.toArray( new String[ set.size() ] ) );
+      final TreePath selectionPath = availableDataSources.getSelectionPath();
+      if ( selectionPath == null ) {
+        setSelectedQuery( null );
+        idComboBox.setModel( new DefaultComboBoxModel() );
+        displayValueComboBox.setModel( new DefaultComboBoxModel() );
+        return;
+      }
+
+      final Object maybeQuery = selectionPath.getLastPathComponent();
+      if ( maybeQuery instanceof String ) {
+        setSelectedQuery( (String) maybeQuery );
+      }
+    }
+  }
+
+  private class QuerySelectionHandler implements ListDataListener, TreeSelectionListener {
+    private QuerySelectionHandler() {
+    }
+
+    /**
+     * Called whenever the value of the selection changes.
+     *
+     * @param e the event that characterizes the change.
+     */
+    public void valueChanged( final TreeSelectionEvent e ) {
+      if ( e.getPath() == null ) {
+        return;
+      }
+      final Object o = e.getPath().getLastPathComponent();
+      if ( o instanceof String ) {
+        queryComboBoxModel.setSelectedItem( o );
+      }
+    }
+
+    public void intervalAdded( final ListDataEvent e ) {
+
+    }
+
+    public void intervalRemoved( final ListDataEvent e ) {
+
+    }
+
+    public void contentsChanged( final ListDataEvent e ) {
+      final String[] cols = getDataFields();
+      idComboBox.setModel( new DefaultComboBoxModel( cols ) );
+      displayValueComboBox.setModel( new DefaultComboBoxModel( cols ) );
+
+      final String selectedQuery = (String) queryComboBoxModel.getSelectedItem();
+      final boolean querySelected = StringUtils.isEmpty( selectedQuery, false ) == false;
+      strictValuesCheckBox.setVisible( querySelected );
+      reevaluateOnInvalidStrictParamCheckBox.setVisible( querySelected );
+      autofillSelectionCheckBox.setVisible( querySelected );
+    }
+  }
+
+  private class EditorParameterContext implements ParameterContext {
+    private ReportEnvironment defaultEnvironment;
+    private DocumentMetaData defaultDocumentMetaData;
+    private DataRow dataRow;
+    private ResourceBundleFactory resourceBundleFactory;
+    private ResourceManager resourceManager;
+
+    private EditorParameterContext() {
+      resourceManager = new ResourceManager();
+      resourceBundleFactory = new DefaultResourceBundleFactory();
+      defaultEnvironment = new DefaultReportEnvironment( ClassicEngineBoot.getInstance().getGlobalConfig() );
+      defaultDocumentMetaData = new MemoryDocumentMetaData();
+
+      final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow( defaultEnvironment );
+      dataRow = new CompoundDataRow( envDataRow, new StaticDataRow() );
+    }
+
+    public PerformanceMonitorContext getPerformanceMonitorContext() {
+      return new NoOpPerformanceMonitorContext();
+    }
+
+    public DataRow getParameterData() {
+      return dataRow;
+    }
+
+    public DataFactory getDataFactory() {
+      return provisionDataSourcePanel.getSelectedDataSource();
+    }
+
+    public ResourceManager getResourceManager() {
+      if ( reportDesignerContext == null ) {
+        return resourceManager;
+      }
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
+      if ( activeContext == null ) {
+        return resourceManager;
+      }
+      return activeContext.getContextRoot().getResourceManager();
+    }
+
+    public ResourceBundleFactory getResourceBundleFactory() {
+      if ( reportDesignerContext == null ) {
+        return resourceBundleFactory;
+      }
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
+      if ( activeContext == null ) {
+        return resourceBundleFactory;
+      }
+      final MasterReport report = activeContext.getContextRoot();
+      return MasterReport
+        .computeAndInitResourceBundleFactory( report.getResourceBundleFactory(), report.getReportEnvironment() );
+    }
+
+    public Configuration getConfiguration() {
+      if ( reportDesignerContext == null ) {
+        return ClassicEngineBoot.getInstance().getGlobalConfig();
+      }
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
+      if ( activeContext == null ) {
+        return ClassicEngineBoot.getInstance().getGlobalConfig();
+      }
+      return activeContext.getContextRoot().getConfiguration();
+    }
+
+    public ResourceKey getContentBase() {
+      if ( reportDesignerContext == null ) {
+        return null;
+      }
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
+      if ( activeContext == null ) {
+        return null;
+      }
+      return activeContext.getContextRoot().getContentBase();
+    }
+
+    /**
+     * the document metadata of the report. Can be null, if the report does not have a bundle associated or if this
+     * context is not part of a report-processing.
+     *
+     * @return the document metadata.
+     */
+    public DocumentMetaData getDocumentMetaData() {
+      if ( reportDesignerContext == null ) {
+        return defaultDocumentMetaData;
+      }
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
+      if ( activeContext == null ) {
+        return defaultDocumentMetaData;
+      }
+      return activeContext.getContextRoot().getBundle().getMetaData();
+    }
+
+    public ReportEnvironment getReportEnvironment() {
+      if ( reportDesignerContext == null ) {
+        return defaultEnvironment;
+      }
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
+      if ( activeContext == null ) {
+        return defaultEnvironment;
+      }
+      return activeContext.getContextRoot().getReportEnvironment();
+    }
+
+    public void close() throws ReportDataFactoryException {
+    }
+  }
+
+  private class TypeSelectionHandler extends DocumentChangeHandler implements ListDataListener {
+    private DefaultValueEditorPanel valueEditorPanel;
+
+    private TypeSelectionHandler( final DefaultValueEditorPanel valueEditorPanel ) {
+      this.valueEditorPanel = valueEditorPanel;
+    }
+
+    /**
+     * Sent after the indices in the index0,index1 interval have been inserted in the data model. The new interval
+     * includes both index0 and index1.
+     *
+     * @param e a <code>ListDataEvent</code> encapsulating the event information
+     */
+    public void intervalAdded( final ListDataEvent e ) {
+      // ignorable, model is static
+    }
+
+    /**
+     * Sent after the indices in the index0,index1 interval have been removed from the data model.  The interval
+     * includes both index0 and index1.
+     *
+     * @param e a <code>ListDataEvent</code> encapsulating the event information
+     */
+    public void intervalRemoved( final ListDataEvent e ) {
+      // ignorable, model is static
+    }
+
+    /**
+     * Sent when the contents of the list has changed in a way that's too complex to characterize with the previous
+     * methods. For example, this is sent when an item has been replaced. Index0 and index1 bracket the change.
+     *
+     * @param event a <code>ListDataEvent</code> encapsulating the event information
+     */
+    public void contentsChanged( final ListDataEvent event ) {
+      final Object o = valueTypeComboBox.getSelectedItem();
+      if ( o instanceof Class == false ) {
+        timeZoneLabel.setVisible( false );
+        timeZoneBox.setVisible( false );
+        valueEditorPanel.setValueType( String.class, null, TimeZone.getDefault() );
+        return;
+      }
+
+      final Class selectedClass = (Class) o;
+      final ParameterType parameterType = getSelectedParameterType();
+      final Class type;
+      if ( parameterType == null || parameterType.isMultiSelection() == false ) {
+        type = selectedClass;
+      } else {
+        type = Array.newInstance( selectedClass, 0 ).getClass();
+      }
+      timeZoneLabel.setVisible( Date.class.isAssignableFrom( selectedClass ) );
+      timeZoneBox.setVisible( Date.class.isAssignableFrom( selectedClass ) );
+      valueEditorPanel.setValueType( type, dataFormatField.getText(), getSelectedTimeZone() );
+    }
+
+    protected void handleChange( final DocumentEvent e ) {
+      contentsChanged( null );
+    }
   }
 
 }
