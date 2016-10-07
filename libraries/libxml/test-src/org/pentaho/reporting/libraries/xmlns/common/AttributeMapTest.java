@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns.common;
@@ -109,6 +109,19 @@ public class AttributeMapTest extends TestCase {
 
     final ObjectInputStream oin = new ObjectInputStream( new ByteArrayInputStream( bo.toByteArray() ) );
     return (AttributeMap<T>) oin.readObject();
+  }
+
+  public void testSetAttribute() {
+    final AttributeMap<String> e = new AttributeMap<String>();
+    String s1 = e.setAttribute( "Namespace1", "Attr1", "value1" );
+    assertEquals( null, s1 );
+    assertEquals( e.keySet().size(), 1 );
+    s1 = e.setAttribute( "Namespace1", "Attr1", null );
+    assertEquals( "value1", s1 );
+    assertEquals( e.keySet().size(), 0 );
+    s1 = e.setAttribute( "Namespace1", "Attr1", null );
+    assertEquals( null, s1 );
+    assertEquals( e.keySet().size(), 0 );
   }
 
 }
