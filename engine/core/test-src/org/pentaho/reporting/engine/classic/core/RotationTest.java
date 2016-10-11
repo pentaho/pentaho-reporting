@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.PlainTextReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlTableModule;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextRotation;
@@ -41,14 +42,22 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.RotatedTextDrawable;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -241,4 +250,50 @@ public class RotationTest {
     when( sheet.getStyleProperty( eq( TextStyleKeys.TEXT_ROTATION ), isNull() ) ).thenReturn( TextRotation.D_90 );
     assertTrue( rt.rotate( reportElement, uuid, runtime ) instanceof RotatedTextDrawable );
   }
+
+  @Test
+  public void testHandleRotatedTextHTML() throws Exception {
+    URL url = getClass().getResource( "BACKLOG-10064.prpt" );
+    MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
+    report.getReportConfiguration().setConfigProperty( HtmlTableModule.INLINE_STYLE, "true" );
+
+    List<String> elementsIdList = Arrays.asList("topLeft90","topCenter90","topRight90","topJustify90",
+                                                "topLeft-90","topCenter-90","topRight-90","topJustify-90",
+                                                "middleLeft90","middleCenter90","middleRight90","middleJustify90",
+                                                "middleLeft-90","middleCenter-90","middleRight-90","middleJustify-90",
+                                                "bottomLeft90","bottomCenter90","bottomRight90","bottomJustify90",
+                                                "bottomLeft-90","bottomCenter-90","bottomRight-90","bottomJustify-90");
+
+    XPathFactory xpathFactory = XPathFactory.newInstance();
+    try ( ByteArrayOutputStream stream = new ByteArrayOutputStream() ) {
+      HtmlReportUtil.createStreamHTML( report, stream );
+      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      factory.setNamespaceAware( true );
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      Document document = builder.parse( new ByteArrayInputStream( stream.toByteArray() ) );
+
+      for ( String elementId : elementsIdList ) {
+        org.w3c.dom.Element element = document.getElementById( elementId );
+        Node rotatedTextStyle = element.getFirstChild().getAttributes().getNamedItem( "style" );
+        Node trSryle = element.getParentNode().getParentNode().getAttributes().getNamedItem( "style" );
+        assertTrue( isStyleValid( rotatedTextStyle.getNodeValue(), trSryle.getNodeValue(), elementId.contains( "middle" ) ) );
+      }
+    } catch ( final IOException | ReportProcessingException e ) {
+      fail();
+    }
+
+  }
+
+  private boolean isStyleValid( String rotatedTextStyle, String trSryle, boolean isMiddleAlign ) {
+    String rotatedTextHeight;
+    if ( isMiddleAlign ) {
+      rotatedTextHeight = rotatedTextStyle.substring( rotatedTextStyle.indexOf( "height: " ) + 8, rotatedTextStyle.indexOf( "pt" ) );
+    } else {
+      rotatedTextHeight = rotatedTextStyle.substring( rotatedTextStyle.indexOf( "width: " ) + 7, rotatedTextStyle.indexOf( "pt" ) );
+    }
+    String trHeight = trSryle.substring( trSryle.indexOf( "height: " ) + 8, trSryle.indexOf( "pt" ) );
+
+    return rotatedTextHeight.equals( trHeight );
+  }
+
 }

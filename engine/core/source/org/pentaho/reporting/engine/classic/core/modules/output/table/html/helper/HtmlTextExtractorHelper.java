@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.html.help
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.URLImageContainer;
@@ -32,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlC
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextRotation;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.RotatedTextDrawable;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
@@ -328,7 +330,7 @@ public class HtmlTextExtractorHelper {
       final RotatedTextDrawable rotatedTextDrawable = RotatedTextDrawable.extract( rawObject );
 
       if ( rotatedTextDrawable != null ) {
-        return tryHandleRotatedText( rotatedTextDrawable );
+        return tryHandleRotatedText( rotatedTextDrawable, styleSheet, width, height, contentWidth, contentHeight );
       }
     }
 
@@ -339,15 +341,156 @@ public class HtmlTextExtractorHelper {
     return false;
   }
 
-  private boolean tryHandleRotatedText( final RotatedTextDrawable rotatedTextDrawable )
+  private String formatLength( long length ) {
+    final StyleBuilder styleBuilder = tagHelper.getStyleBuilder();
+    final NumberFormat pointConverter = styleBuilder.getPointConverter();
+    StyleBuilderFactory sbf = tagHelper.getStyleBuilderFactory();
+    return pointConverter.format( sbf.fixLengthForSafari( StrictGeomUtility.toExternalValue( length ) ) );
+  }
+
+  private boolean tryHandleRotatedText( final RotatedTextDrawable rotatedTextDrawable,
+                                        final StyleSheet styleSheet, long width, long height, long contentWidth,
+                                        long contentHeight )
     throws IOException {
 
-    AttributeList attributeList = new AttributeList();
-    attributeList.setAttribute( HtmlPrinter.XHTML_NAMESPACE, "style", rotatedTextDrawable.getRotation().getCss() );
+    boolean isMiddleVAlign = false;
 
-    xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attributeList, XmlWriter.OPEN );
-    xmlWriter.writeText( rotatedTextDrawable.getText() );
-    xmlWriter.writeCloseTag();
+    final StyleBuilder styleBuilder = tagHelper.getStyleBuilder();
+    StyleBuilderFactory sbf = tagHelper.getStyleBuilderFactory();
+    final StyleBuilder style = sbf.produceTextStyle( styleBuilder, styleSheet, null, false, processStack.getStyle() );
+    style.append( StyleBuilder.CSSKeys.WHITE_SPACE, "nowrap" );
+    style.append( StyleBuilder.CSSKeys.OVERFLOW, "hidden" );
+    style.append( StyleBuilder.CSSKeys.TRANSFORM_ORIGIN, "0 0" );
+    style.append( StyleBuilder.CSSKeys.WIDTH, formatLength( height ), PT_UNIT );
+    //  Rotation +90
+    if ( rotatedTextDrawable.getRotation() == TextRotation.D_270 ) {
+      // TOP
+      if ( rotatedTextDrawable.getvAlign().equals( ElementAlignment.TOP ) ) {
+        if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.LEFT ) || rotatedTextDrawable.gethAlign()
+          .equals( ElementAlignment.JUSTIFY ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,0pt) rotate(90deg)", formatLength( contentWidth ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.CENTER ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,0pt) rotate(90deg)", formatLength( width / 2 + contentWidth / 2 ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.RIGHT ) ) {
+          style.append( StyleBuilder.CSSKeys.TEXT_ALIGN, "left" );
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,0pt) rotate(90deg)", formatLength( width ) ) );
+        }
+        // MIDDLE
+      } else if ( rotatedTextDrawable.getvAlign().equals( ElementAlignment.MIDDLE ) ) {
+        isMiddleVAlign = true;
+        style.append( StyleBuilder.CSSKeys.WIDTH, formatLength( contentHeight ), PT_UNIT );
+        if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.LEFT ) || rotatedTextDrawable.gethAlign()
+          .equals( ElementAlignment.JUSTIFY ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,-%spt) rotate(90deg)", formatLength( contentWidth ),
+              formatLength( ( contentHeight - height ) / 2 ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.CENTER ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,-%spt) rotate(90deg)", formatLength( width / 2 + contentWidth / 2 ),
+              formatLength( ( contentHeight - height ) / 2 ) ) );
+          style.append( StyleBuilder.CSSKeys.TEXT_ALIGN, "left" );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.RIGHT ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,-%spt) rotate(90deg)", formatLength( width ),
+              formatLength( ( contentHeight - height ) / 2 ) ) );
+          style.append( StyleBuilder.CSSKeys.TEXT_ALIGN, "left" );
+        }
+        // BOTTOM
+      } else if ( rotatedTextDrawable.getvAlign().equals( ElementAlignment.BOTTOM ) ) {
+        style.append( StyleBuilder.CSSKeys.DIRECTION, "rtl" );
+        if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.LEFT ) || rotatedTextDrawable.gethAlign()
+          .equals( ElementAlignment.JUSTIFY ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,-%spt) rotate(90deg)", formatLength( contentWidth ),
+              formatLength( height - contentWidth ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.CENTER ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,-%spt) rotate(90deg)", formatLength( width / 2 + contentWidth / 2 ),
+              formatLength( height - contentWidth ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.RIGHT ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,-%spt) rotate(90deg)", formatLength( width ),
+              formatLength( height - contentWidth ) ) );
+        }
+      }
+      //  Rotation -90
+    } else if ( rotatedTextDrawable.getRotation() == TextRotation.D_90 ) {
+      // TOP
+      if ( rotatedTextDrawable.getvAlign().equals( ElementAlignment.TOP ) ) {
+        style.append( StyleBuilder.CSSKeys.DIRECTION, "rtl" );
+        if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.LEFT ) || rotatedTextDrawable.gethAlign()
+          .equals( ElementAlignment.JUSTIFY ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(0pt,%spt) rotate(-90deg)", formatLength( height ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.CENTER ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM, String.format( "translate(%spt,%spt) rotate(-90deg)",
+            formatLength( width / 2 - contentWidth / 2 ), formatLength( height ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.RIGHT ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,%spt) rotate(-90deg)", formatLength( width - contentWidth ),
+              formatLength( height ) ) );
+        }
+        // MIDDLE
+      } else if ( rotatedTextDrawable.getvAlign().equals( ElementAlignment.MIDDLE ) ) {
+        isMiddleVAlign = true;
+        style.append( StyleBuilder.CSSKeys.WIDTH, formatLength( contentHeight ), PT_UNIT );
+        if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.LEFT ) || rotatedTextDrawable.gethAlign()
+          .equals( ElementAlignment.JUSTIFY ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(0pt, %spt) rotate(-90deg)", formatLength( height + ( contentHeight - height ) / 2 ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.CENTER ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt, %spt) rotate(-90deg)", formatLength( width / 2 - contentWidth / 2 ),
+              formatLength( height + ( contentHeight - height ) / 2 ) ) );
+          style.append( StyleBuilder.CSSKeys.TEXT_ALIGN, "left" );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.RIGHT ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt, %spt) rotate(-90deg)", formatLength( width - contentWidth ),
+              formatLength( height + ( contentHeight - height ) / 2 ) ) );
+          style.append( StyleBuilder.CSSKeys.TEXT_ALIGN, "left" );
+        }
+        // BOTTOM
+      } else if ( rotatedTextDrawable.getvAlign().equals( ElementAlignment.BOTTOM ) ) {
+        if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.LEFT ) || rotatedTextDrawable.gethAlign()
+          .equals( ElementAlignment.JUSTIFY ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(0pt,%spt) rotate(-90deg)", formatLength( contentWidth ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.CENTER ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM, String.format( "translate(%spt,%spt) rotate(-90deg)",
+            formatLength( width / 2 - contentWidth / 2 ), formatLength( contentWidth ) ) );
+        } else if ( rotatedTextDrawable.gethAlign().equals( ElementAlignment.RIGHT ) ) {
+          style.append( StyleBuilder.CSSKeys.TRANSFORM,
+            String.format( "translate(%spt,%spt) rotate(-90deg)", formatLength( width - contentWidth ),
+              formatLength( contentWidth ) ) );
+        }
+      }
+    }
+
+    AttributeList attributeList = new AttributeList();
+    tagHelper.getStyleManager().updateStyle( style, attributeList );
+
+
+    if ( isMiddleVAlign ) {
+      AttributeList extDivAttributeList = new AttributeList();
+      final StyleBuilder extDivStyle =
+        sbf.produceTextStyle( styleBuilder, styleSheet, null, false, processStack.getStyle() );
+      extDivStyle.append( StyleBuilder.CSSKeys.OVERFLOW, "hidden" );
+      extDivStyle.append( StyleBuilder.CSSKeys.HEIGHT, formatLength( height ), PT_UNIT );
+      tagHelper.getStyleManager().updateStyle( extDivStyle, extDivAttributeList );
+
+      xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, extDivAttributeList, XmlWriter.OPEN );
+      xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attributeList, XmlWriter.OPEN );
+      xmlWriter.writeText( rotatedTextDrawable.getText() );
+      xmlWriter.writeCloseTag();
+      xmlWriter.writeCloseTag();
+    } else {
+      xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attributeList, XmlWriter.OPEN );
+      xmlWriter.writeText( rotatedTextDrawable.getText() );
+      xmlWriter.writeCloseTag();
+    }
 
     return true;
   }
