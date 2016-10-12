@@ -54,7 +54,6 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.MenuElement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -101,8 +100,6 @@ public class ContextMenuUtility {
       } else {
         popupMenu = view.getPopupMenu( "popup-Inherited-Query" ); // NON-NLS
       }
-      final MenuElement activationItem = popupMenu.getSubElements()[0];
-      toggleActivationItem( doc, rqn, activationItem );
       return popupMenu;
     }
     if ( selectedElement instanceof Expression ) {
@@ -233,41 +230,5 @@ public class ContextMenuUtility {
         insertDataSourcesMenu.add( new JMenuItem( action ) );
       }
     }
-  }
-
-  protected static void toggleActivationItem( final ReportRenderContext doc,
-                                              final ReportQueryNode rqn,
-                                              final MenuElement activationItem ) {
-    if ( activationItem instanceof JMenuItem && doc != null ) {
-      final DataFactory dataFactory = doc.getContextRoot().getDataFactory();
-      boolean disabled = false;
-      if ( dataFactory instanceof CompoundDataFactory ) {
-        final CompoundDataFactory compound = (CompoundDataFactory) dataFactory;
-        int count = countQueriesWithName( rqn.getQueryName(), compound );
-        disabled = count > 1;
-      }
-      if ( disabled ) {
-        ( (JMenuItem) activationItem ).setEnabled( false );
-      } else {
-        ( (JMenuItem) activationItem ).setEnabled( true );
-      }
-    }
-  }
-
-  private static int countQueriesWithName( final String queryName, final CompoundDataFactory compound ) {
-    int count = 0;
-    if ( compound.size() > 1 ) {
-      for ( int i = 0; i < compound.size(); i++ ) {
-        final DataFactory innerFactory = compound.get( i );
-        final String[] queryNames = innerFactory.getQueryNames();
-        for ( int j = 0; j < queryNames.length; j++ ) {
-          if ( ObjectUtilities.equal( queryName, queryNames[j] ) ) {
-            count++;
-            break;
-          }
-        }
-      }
-    }
-    return count;
   }
 }

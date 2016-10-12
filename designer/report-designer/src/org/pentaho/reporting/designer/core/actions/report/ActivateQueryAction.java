@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.actions.report;
@@ -22,11 +22,16 @@ import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportQueryNode;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-import javax.swing.*;
+import javax.swing.Action;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivateQueryAction extends AbstractElementSelectionAction implements ToggleStateAction {
   public ActivateQueryAction() {
@@ -80,9 +85,48 @@ public class ActivateQueryAction extends AbstractElementSelectionAction implemen
       final Object selectedElement = selectedElements[ i ];
       if ( selectedElement instanceof ReportQueryNode ) {
         final ReportQueryNode node = (ReportQueryNode) selectedElement;
-        getActiveContext().getReportDefinition().setQuery( node.getQueryName() );
+        final AbstractReportDefinition reportDefinition = getActiveContext().getReportDefinition();
+        final DataFactory dataFactory = reportDefinition.getDataFactory();
+
+        //check for duplicated names
+        if ( dataFactory instanceof CompoundDataFactory ) {
+          final CompoundDataFactory compoundDataFactory = (CompoundDataFactory) dataFactory;
+          final List<Integer> factoryIndices = getFactoryIndidces( node.getQueryName(), compoundDataFactory );
+          if ( factoryIndices.size() > 1 ) {
+            //move data factory with selected query forward or it won't be selected and expanded
+            for ( int j = 1; j < compoundDataFactory.size(); j++ ) {
+              final DataFactory inner = compoundDataFactory.getReference( j );
+              if ( inner.equals( node.getDataFactory() ) ) {
+                compoundDataFactory.remove( inner );
+                compoundDataFactory.add( factoryIndices.get( 0 ), inner );
+                reportDefinition
+                  .fireModelLayoutChanged( reportDefinition, ReportModelEvent.NODE_STRUCTURE_CHANGED, dataFactory );
+              }
+            }
+          }
+        }
+
+        reportDefinition.setQuery( node.getQueryName() );
+
         return;
       }
     }
+  }
+
+  private static List<Integer> getFactoryIndidces( final String queryName, final CompoundDataFactory compound ) {
+    List<Integer> indices = new ArrayList<>();
+    if ( compound.size() > 1 ) {
+      for ( int i = 0; i < compound.size(); i++ ) {
+        final DataFactory innerFactory = compound.get( i );
+        final String[] queryNames = innerFactory.getQueryNames();
+        for ( int j = 0; j < queryNames.length; j++ ) {
+          if ( ObjectUtilities.equal( queryName, queryNames[ j ] ) ) {
+            indices.add( i );
+            break;
+          }
+        }
+      }
+    }
+    return indices;
   }
 }
