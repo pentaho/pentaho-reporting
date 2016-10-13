@@ -12,10 +12,24 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
+
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import javax.swing.table.TableModel;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -30,19 +44,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
-
-import javax.swing.table.TableModel;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
-import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * @noinspection AssignmentToCollectionOrArrayFieldFromParameter
@@ -206,6 +207,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
   }
 
   public String[] getReferencedFields( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    final boolean isNewConnection = connection == null;
     try {
       final ParametrizationProviderFactory factory = createParametrizationProviderFactory();
       final Connection connection = getConnection( parameters );
@@ -221,13 +223,17 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         list.add( passwordField );
       }
       list.add( DataFactory.QUERY_LIMIT );
-      return list.toArray( new String[list.size()] );
+      return list.toArray( new String[ list.size() ] );
     } catch ( ReportDataFactoryException e ) {
       logger.warn( "Unable to perform cache preparation", e );
       throw e;
     } catch ( SQLException e ) {
       logger.warn( "Unable to perform cache preparation", e );
       throw new ReportDataFactoryException( "Unable to perform cache preparation", e );
+    } finally {
+      if ( isNewConnection ) {
+        close();
+      }
     }
   }
 
@@ -254,8 +260,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     } else {
       if ( callableStatementUsed ) {
         final CallableStatement pstmt =
-            getConnection( parameters ).prepareCall( translatedQuery, getBestResultSetType( parameters ),
-                ResultSet.CONCUR_READ_ONLY );
+          getConnection( parameters ).prepareCall( translatedQuery, getBestResultSetType( parameters ),
+              ResultSet.CONCUR_READ_ONLY );
         if ( isCallableStatementQuery( translatedQuery ) ) {
           pstmt.registerOutParameter( 1, Types.OTHER );
           parametrize( parameters, preparedParameterNames, pstmt, false, 1 );
@@ -265,8 +271,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         statement = pstmt;
       } else {
         final PreparedStatement pstmt =
-            getConnection( parameters ).prepareStatement( translatedQuery, getBestResultSetType( parameters ),
-                ResultSet.CONCUR_READ_ONLY );
+          getConnection( parameters ).prepareStatement( translatedQuery, getBestResultSetType( parameters ),
+              ResultSet.CONCUR_READ_ONLY );
         parametrize( parameters, preparedParameterNames, pstmt, isExpandArrays(), 0 );
         statement = pstmt;
       }
@@ -282,9 +288,9 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         }
       }
     } catch ( SQLException sqle ) {
-      // this fails for MySQL as their driver is buggy. We will not add workarounds here, as
-      // all drivers are buggy and this is a race we cannot win. Put pressure on the driver
-      // manufacturer instead.
+    // this fails for MySQL as their driver is buggy. We will not add workarounds here, as
+    // all drivers are buggy and this is a race we cannot win. Put pressure on the driver
+    // manufacturer instead.
       logger.warn( "Driver indicated error: Failed to set query-limit: " + queryLimit, sqle );
     }
     final Object queryTimeout = parameters.get( DataFactory.QUERY_TIMEOUT );
@@ -316,7 +322,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
 
     // equalsIgnore, as this is what the ResultSetTableModelFactory uses.
     final boolean simpleMode = "simple".equalsIgnoreCase( getConfiguration().getConfigProperty( //$NON-NLS-1$
-        ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ); //$NON-NLS-1$
+      ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ); //$NON-NLS-1$
 
     if ( simpleMode ) {
       return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( res, columnNameMapping );
