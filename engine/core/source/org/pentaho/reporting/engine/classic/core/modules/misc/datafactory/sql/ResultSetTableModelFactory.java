@@ -124,6 +124,12 @@ public final class ResultSetTableModelFactory {
     if ( resultSetType == ResultSet.TYPE_FORWARD_ONLY ) {
       return generateDefaultTableModel( rs, columnNameMapping );
     } else {
+      rs.last();
+      int rowCount = rs.getRow();
+      rs.beforeFirst();
+      if ( rowCount < 500 ) {
+        return generateDefaultTableModel( rs, columnNameMapping );
+      }
       return new ScrollableResultSetTableModel( rs, columnNameMapping, closeStatement );
     }
   }
