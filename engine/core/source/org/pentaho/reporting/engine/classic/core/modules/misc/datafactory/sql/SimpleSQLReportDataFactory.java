@@ -28,8 +28,6 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutEx
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetProvider;
 import javax.swing.table.TableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -255,68 +253,10 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       final String[] preparedParameterNames ) throws SQLException {
     final boolean callableStatementQuery = isCallableStatementQuery( translatedQuery );
     final boolean callableStatementUsed = callableStatementQuery || isCallableStatement( translatedQuery );
-    final Statement statement = initStatement( parameters, translatedQuery, preparedParameterNames, callableStatementUsed );
-    try {
-      final Object queryLimit = parameters.get( DataFactory.QUERY_LIMIT );
-      try {
-        if ( queryLimit instanceof Number ) {
-          final Number i = (Number) queryLimit;
-          final int max = i.intValue();
-          if ( max > 0 ) {
-            statement.setMaxRows( max );
-          }
-        }
-      } catch ( SQLException sqle ) {
-      // this fails for MySQL as their driver is buggy. We will not add workarounds here, as
-      // all drivers are buggy and this is a race we cannot win. Put pressure on the driver
-      // manufacturer instead.
-        logger.warn( "Driver indicated error: Failed to set query-limit: " + queryLimit, sqle );
-      }
-      final Object queryTimeout = parameters.get( DataFactory.QUERY_TIMEOUT );
-      try {
-        if ( queryTimeout instanceof Number ) {
-          final Number i = (Number) queryTimeout;
-          final int seconds = i.intValue();
-          if ( seconds > 0 ) {
-            statement.setQueryTimeout( seconds );
-          }
-        }
-      } catch ( SQLException sqle ) {
-        logger.warn( "Driver indicated error: Failed to set query-timeout: " + queryTimeout, sqle );
-      }
-
-      // Track the currently running statement - just in case someone needs to cancel it
-
-      final ResultSet res = executeQuery( translatedQuery, preparedParameterNames, statement );
-      final CachedRowSet rowset = RowSetProvider.newFactory().createCachedRowSet();
-      try {
-        rowset.populate( res );
-      } finally {
-        if ( res != null ) {
-          res.close();
-        }
-      }
-
-      // equalsIgnore, as this is what the ResultSetTableModelFactory uses.
-      final boolean simpleMode = "simple".equalsIgnoreCase( getConfiguration().getConfigProperty( //$NON-NLS-1$
-        ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ); //$NON-NLS-1$
-
-      if ( simpleMode ) {
-        return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( rowset, columnNameMapping );
-      }
-      return ResultSetTableModelFactory.getInstance().createTableModel( rowset, columnNameMapping, true );
-    } finally {
-      if ( statement != null ) {
-        statement.close();
-      }
-    }
-  }
-
-  private Statement initStatement( final DataRow parameters, final String translatedQuery,
-      final String[] preparedParameterNames, boolean callableStatementUsed ) throws SQLException {
-    Statement _statement;
+    final Statement statement;
     if ( preparedParameterNames.length == 0 ) {
-      _statement = getConnection( parameters ).createStatement( getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
+      statement =
+          getConnection( parameters ).createStatement( getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
     } else {
       if ( callableStatementUsed ) {
         final CallableStatement pstmt =
@@ -328,31 +268,66 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
         } else {
           parametrize( parameters, preparedParameterNames, pstmt, false, 0 );
         }
-        _statement = pstmt;
+        statement = pstmt;
       } else {
         final PreparedStatement pstmt =
           getConnection( parameters ).prepareStatement( translatedQuery, getBestResultSetType( parameters ),
               ResultSet.CONCUR_READ_ONLY );
         parametrize( parameters, preparedParameterNames, pstmt, isExpandArrays(), 0 );
-        _statement = pstmt;
+        statement = pstmt;
       }
     }
-    return _statement;
-  }
 
-  private ResultSet executeQuery( final String translatedQuery, final String[] preparedParameterNames,
-       final Statement statement ) throws SQLException {
+    final Object queryLimit = parameters.get( DataFactory.QUERY_LIMIT );
+    try {
+      if ( queryLimit instanceof Number ) {
+        final Number i = (Number) queryLimit;
+        final int max = i.intValue();
+        if ( max > 0 ) {
+          statement.setMaxRows( max );
+        }
+      }
+    } catch ( SQLException sqle ) {
+    // this fails for MySQL as their driver is buggy. We will not add workarounds here, as
+    // all drivers are buggy and this is a race we cannot win. Put pressure on the driver
+    // manufacturer instead.
+      logger.warn( "Driver indicated error: Failed to set query-limit: " + queryLimit, sqle );
+    }
+    final Object queryTimeout = parameters.get( DataFactory.QUERY_TIMEOUT );
+    try {
+      if ( queryTimeout instanceof Number ) {
+        final Number i = (Number) queryTimeout;
+        final int seconds = i.intValue();
+        if ( seconds > 0 ) {
+          statement.setQueryTimeout( seconds );
+        }
+      }
+    } catch ( SQLException sqle ) {
+      logger.warn( "Driver indicated error: Failed to set query-timeout: " + queryTimeout, sqle );
+    }
+
+    // Track the currently running statement - just in case someone needs to cancel it
+    final ResultSet res;
     try {
       currentRunningStatement = statement;
       if ( preparedParameterNames.length == 0 ) {
-        return statement.executeQuery( translatedQuery );
+        res = statement.executeQuery( translatedQuery );
       } else {
         final PreparedStatement pstmt = (PreparedStatement) statement;
-        return pstmt.executeQuery();
+        res = pstmt.executeQuery();
       }
     } finally {
       currentRunningStatement = null;
     }
+
+    // equalsIgnore, as this is what the ResultSetTableModelFactory uses.
+    final boolean simpleMode = "simple".equalsIgnoreCase( getConfiguration().getConfigProperty( //$NON-NLS-1$
+      ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ); //$NON-NLS-1$
+
+    if ( simpleMode ) {
+      return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( res, columnNameMapping );
+    }
+    return ResultSetTableModelFactory.getInstance().createTableModel( res, columnNameMapping, true );
   }
 
   private void parametrize( final DataRow parameters, final String[] params, final PreparedStatement pstmt,
