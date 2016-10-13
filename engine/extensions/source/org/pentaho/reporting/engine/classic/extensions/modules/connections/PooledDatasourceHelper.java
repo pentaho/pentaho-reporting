@@ -19,7 +19,6 @@
  */
 package org.pentaho.reporting.engine.classic.extensions.modules.connections;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
@@ -40,7 +39,6 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-import javax.sql.DataSource;
 import java.sql.Driver;
 import java.util.Map;
 import java.util.Properties;
@@ -197,42 +195,5 @@ public class PooledDatasourceHelper {
   private static String getSystemSetting( final String key ) {
     final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
     return config.getConfigProperty( "org.pentaho.reporting.engine.classic.core." + key );
-  }
-
-  public static DataSource convert( final IDatabaseConnection databaseConnection ) {
-    final BasicDataSource basicDatasource = new BasicDataSource();
-    final IDatabaseDialectService databaseDialectService =
-        ClassicEngineBoot.getInstance().getObjectFactory().get( IDatabaseDialectService.class );
-    final IDatabaseDialect dialect = databaseDialectService.getDialect( databaseConnection );
-    if ( "GENERIC".equals( databaseConnection.getDatabaseType().getShortName() ) ) { //$NON-NLS-1$
-      basicDatasource.setDriverClassName( databaseConnection.getAttributes().get(
-          GenericDatabaseDialect.ATTRIBUTE_CUSTOM_DRIVER_CLASS ) );
-    } else {
-      basicDatasource.setDriverClassName( dialect.getNativeDriver() );
-    }
-    try {
-      basicDatasource.setUrl( dialect.getURLWithExtraOptions( databaseConnection ) );
-    } catch ( DatabaseDialectException e ) {
-      basicDatasource.setUrl( null );
-    }
-    basicDatasource.setUsername( databaseConnection.getUsername() );
-    basicDatasource.setPassword( databaseConnection.getPassword() );
-    final Map<String, String> attributes = databaseConnection.getAttributes();
-    if ( attributes.containsKey( DataBaseConnectionAttributes.MAX_ACTIVE_KEY ) ) {
-      final String value = attributes.get( DataBaseConnectionAttributes.MAX_ACTIVE_KEY );
-      basicDatasource.setMaxActive( Integer.parseInt( value ) );
-    }
-    if ( attributes.containsKey( DataBaseConnectionAttributes.MAX_WAIT_KEY ) ) {
-      final String value = attributes.get( DataBaseConnectionAttributes.MAX_WAIT_KEY );
-      basicDatasource.setMaxWait( Integer.parseInt( value ) );
-    }
-    if ( attributes.containsKey( DataBaseConnectionAttributes.MAX_IDLE_KEY ) ) {
-      final String value = attributes.get( DataBaseConnectionAttributes.MAX_IDLE_KEY );
-      basicDatasource.setMaxIdle( Integer.parseInt( value ) );
-    }
-    if ( attributes.containsKey( DataBaseConnectionAttributes.QUERY_KEY ) ) {
-      basicDatasource.setValidationQuery( attributes.get( DataBaseConnectionAttributes.QUERY_KEY ) );
-    }
-    return basicDatasource;
   }
 }
