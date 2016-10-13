@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.connections;
@@ -21,17 +21,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.PoolingDataSource;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.pool.impl.GenericObjectPool;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.database.model.DatabaseConnection;
@@ -80,43 +76,5 @@ public class PooledDatasourceHelperIT {
     DataSource ds = cacheManager.getDataSourceCache().get( con.getName() );
     assertThat( ds, is( instanceOf( PoolingDataSource.class ) ) );
     assertThat( (PoolingDataSource) ds, is( equalTo( poolingDataSource ) ) );
-  }
-
-  @Test
-  public void testConvert() throws Exception {
-    DatabaseConnection con = ConnectionUtil.createConnection();
-
-    DataSource ds = PooledDatasourceHelper.convert( con );
-
-    assertThat( ds, is( notNullValue() ) );
-    assertThat( ds, is( instanceOf( BasicDataSource.class ) ) );
-    BasicDataSource basicDs = (BasicDataSource) ds;
-    assertThat( basicDs.getDriverClassName(), is( nullValue() ) );
-    assertThat( basicDs.getUrl(), is( equalTo( StringUtils.EMPTY ) ) );
-    assertThat( basicDs.getUsername(), is( equalTo( ConnectionUtil.USER_NAME ) ) );
-    assertThat( basicDs.getPassword(), is( equalTo( ConnectionUtil.USER_PASSWORD ) ) );
-    assertThat( basicDs.getMaxActive(), is( equalTo( GenericObjectPool.DEFAULT_MAX_ACTIVE ) ) );
-    assertThat( basicDs.getMaxWait(), is( equalTo( GenericObjectPool.DEFAULT_MAX_WAIT ) ) );
-    assertThat( basicDs.getMaxIdle(), is( equalTo( GenericObjectPool.DEFAULT_MAX_IDLE ) ) );
-    assertThat( basicDs.getValidationQuery(), is( nullValue() ) );
-  }
-
-  @Test
-  public void testConvertWithAttrs() throws Exception {
-    DatabaseConnection con = ConnectionUtil.createConnectionWithAttrs();
-
-    DataSource ds = PooledDatasourceHelper.convert( con );
-
-    assertThat( ds, is( notNullValue() ) );
-    assertThat( ds, is( instanceOf( BasicDataSource.class ) ) );
-    BasicDataSource basicDs = (BasicDataSource) ds;
-    assertThat( basicDs.getDriverClassName(), is( equalTo( ConnectionUtil.DRIVER_CLASS ) ) );
-    assertThat( basicDs.getUrl(), is( equalTo( ConnectionUtil.CON_URL ) ) );
-    assertThat( basicDs.getUsername(), is( equalTo( ConnectionUtil.USER_NAME ) ) );
-    assertThat( basicDs.getPassword(), is( equalTo( ConnectionUtil.USER_PASSWORD ) ) );
-    assertThat( basicDs.getMaxActive(), is( equalTo( 10 ) ) );
-    assertThat( basicDs.getMaxWait(), is( equalTo( 5l ) ) );
-    assertThat( basicDs.getMaxIdle(), is( equalTo( 9 ) ) );
-    assertThat( basicDs.getValidationQuery(), is( equalTo( "select" ) ) );
   }
 }
