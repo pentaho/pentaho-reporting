@@ -21,6 +21,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 import org.pentaho.reporting.engine.classic.core.parameters.AbstractParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
@@ -57,10 +63,23 @@ public class ParameterReportControllerPaneTest {
 
   @Test
   public void computeTranslatedTest() {
-    entry.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.TRANSLATE_RESOURCE_ID, "translations" );
+    AbstractParameter entry = mock( AbstractParameter.class );
+
+    when( entry.getParameterAttribute(
+      anyString(),
+      eq( ParameterAttributeNames.Swing.LABEL ),
+      any()
+    ) ).thenReturn( null );
+
+    when( entry.getTranslatedParameterAttribute(
+      anyString(),
+      eq( ParameterAttributeNames.Core.LABEL ),
+      any()
+    ) ).thenReturn( "label" );
 
     String label = pane.computeLabel( entry );
+
     assertNotNull( label );
+    assertEquals( "label", label );
   }
 }

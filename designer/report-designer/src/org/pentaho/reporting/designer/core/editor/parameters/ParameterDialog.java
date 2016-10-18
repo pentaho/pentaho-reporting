@@ -148,6 +148,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   private FormulaEditorPanel postProcessingFormulaField;
   private FormulaEditorPanel displayFormulaField;
   private FormulaEditorPanel defaultValueFormulaField;
+  private FormulaEditorPanel labelFormula;
+  private FormulaEditorPanel dataFormatFormula;
   private JSpinner visibleItemsTextField;
   private JLabel visibleItemsLabel;
   private ComboBoxModel parameterTypeModel;
@@ -159,7 +161,6 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   private KeyedComboBoxModel<String, String> timeZoneModel;
   private JLabel timeZoneLabel;
   private String parameter;
-  private JTextField resourceTextField;
 
   public ParameterDialog( final ReportDesignerContext context ) {
     this.reportDesignerContext = context;
@@ -200,7 +201,6 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     dataFormatField.getDocument().addDocumentListener( typeSelectionHandler );
     nameTextField = new JTextField();
     labelTextField = new JTextField();
-    resourceTextField = new JTextField();
 
     mandatoryCheckBox = new JCheckBox( Messages.getString( "ParameterDialog.Mandatory" ) );
     mandatoryCheckBox.setBorder( BorderFactory.createEmptyBorder( 3, 0, 0, 0 ) );
@@ -275,6 +275,13 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     defaultValueFormulaField.setEditorDataModel( this );
     defaultValueFormulaField.setLimitFields( true );
 
+    labelFormula = new FormulaEditorPanel();
+    labelFormula.setEditorDataModel( this );
+    labelFormula.setLimitFields( true );
+
+    dataFormatFormula = new FormulaEditorPanel();
+    dataFormatFormula.setEditorDataModel( this );
+    dataFormatFormula.setLimitFields( true );
 
     super.init();
 
@@ -361,7 +368,19 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
+    gbc.weightx = 0.0;
     gbc.gridy = 2;
+    gbc.gridx = 0;
+    detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.LabelFormula" ) ), gbc );
+
+    gbc.gridwidth = GridBagConstraints.REMAINDER;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.gridx = 1;
+    detailsPanel.add( labelFormula, gbc );
+
+    gbc.gridwidth = 1;
+    gbc.fill = GridBagConstraints.NONE;
+    gbc.gridy = 3;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.ValueType" ) ), gbc );
 
@@ -372,7 +391,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 3;
+    gbc.gridy = 4;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.DataFormat" ) ), gbc );
 
@@ -383,7 +402,18 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 4;
+    gbc.gridy = 5;
+    gbc.gridx = 0;
+    detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.DataFormatFormula" ) ), gbc );
+
+    gbc.gridwidth = GridBagConstraints.REMAINDER;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.gridx = 1;
+    detailsPanel.add( dataFormatFormula, gbc );
+
+    gbc.gridwidth = 1;
+    gbc.fill = GridBagConstraints.NONE;
+    gbc.gridy = 6;
     gbc.gridx = 0;
     detailsPanel.add( timeZoneLabel, gbc );
 
@@ -394,7 +424,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 5;
+    gbc.gridy = 7;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.DefaultValue" ) ), gbc );
 
@@ -405,7 +435,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 6;
+    gbc.gridy = 8;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.DefaultValueFormula" ) ), gbc );
 
@@ -416,7 +446,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 7;
+    gbc.gridy = 9;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.PostProcessingFormula" ) ), gbc );
 
@@ -427,36 +457,25 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 8;
-    gbc.gridx = 0;
-    detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.ResourceId" ) ), gbc );
-
-    gbc.gridwidth = GridBagConstraints.REMAINDER;
-    gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.gridx = 1;
-    detailsPanel.add( resourceTextField, gbc );
-
-    gbc.gridwidth = 1;
-    gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 9;
+    gbc.gridy = 10;
     gbc.gridx = 1;
     detailsPanel.add( mandatoryCheckBox, gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 10;
+    gbc.gridy = 11;
     gbc.gridx = 1;
     detailsPanel.add( hiddenCheckBox, gbc );
 
     gbc.gridwidth = GridBagConstraints.REMAINDER;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.gridy = 11;
+    gbc.gridy = 12;
     gbc.gridx = 0;
     detailsPanel.add( createPromptPanel(), gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 12;
+    gbc.gridy = 13;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Type" ) ), gbc );
 
@@ -467,7 +486,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 13;
+    gbc.gridy = 14;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Query" ) ), gbc );
 
@@ -478,7 +497,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 14;
+    gbc.gridy = 15;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Id" ) ), gbc );
 
@@ -489,7 +508,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 15;
+    gbc.gridy = 16;
     gbc.gridx = 0;
     detailsPanel.add( displayValueLabel, gbc );
 
@@ -500,7 +519,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 16;
+    gbc.gridy = 17;
     gbc.gridx = 0;
     detailsPanel.add( displayFormulaLabel, gbc );
 
@@ -511,7 +530,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 17;
+    gbc.gridy = 18;
     gbc.gridx = 0;
     detailsPanel.add( visibleItemsLabel, gbc );
 
@@ -522,19 +541,19 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 18;
+    gbc.gridy = 19;
     gbc.gridx = 1;
     detailsPanel.add( strictValuesCheckBox, gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 19;
+    gbc.gridy = 20;
     gbc.gridx = 1;
     detailsPanel.add( reevaluateOnInvalidStrictParamCheckBox, gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 20;
+    gbc.gridy = 21;
     gbc.gridx = 1;
     detailsPanel.add( autofillSelectionCheckBox, gbc );
 
@@ -655,8 +674,10 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA, parameterContext ) );
     timeZoneModel.setSelectedKey( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.TIMEZONE, parameterContext ) );
-    resourceTextField.setText( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.TRANSLATE_RESOURCE_ID, parameterContext ) );
+    labelFormula.setFormula( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.LABEL_FORMULA, parameterContext ) );
+    dataFormatFormula.setFormula( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DATA_FORMAT_FORMULA, parameterContext ) );
 
     final String type =
       p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE,
@@ -785,10 +806,16 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
       timeZoneModel.getSelectedKey() );
 
-    if ( !StringUtils.isEmpty( resourceTextField.getText() ) ) {
+    if ( !StringUtils.isEmpty( labelFormula.getFormula() ) ) {
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.TRANSLATE_RESOURCE_ID,
-        resourceTextField.getText() );
+        ParameterAttributeNames.Core.LABEL_FORMULA,
+        labelFormula.getFormula() );
+    }
+
+    if ( !StringUtils.isEmpty( dataFormatFormula.getFormula() ) ) {
+      parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+        ParameterAttributeNames.Core.DATA_FORMAT_FORMULA,
+        dataFormatFormula.getFormula() );
     }
 
     return parameter;
@@ -837,10 +864,15 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
       timeZoneModel.getSelectedKey() );
 
-    if ( !StringUtils.isEmpty( resourceTextField.getText() ) ) {
+    if ( !StringUtils.isEmpty( labelFormula.getFormula() ) ) {
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.TRANSLATE_RESOURCE_ID,
-        resourceTextField.getText() );
+        ParameterAttributeNames.Core.LABEL_FORMULA,
+        labelFormula.getFormula() );
+    }
+    if ( !StringUtils.isEmpty( dataFormatFormula.getFormula() ) ) {
+      parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+        ParameterAttributeNames.Core.DATA_FORMAT_FORMULA,
+        dataFormatFormula.getFormula() );
     }
 
     return parameter;
