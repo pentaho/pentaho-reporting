@@ -12,16 +12,18 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.xpath;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
+import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.GenericObjectTable;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
@@ -29,11 +31,16 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.swing.table.AbstractTableModel;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPathVariableResolver;
@@ -50,6 +57,7 @@ import java.util.StringTokenizer;
 
 public class LegacyXPathTableModel extends AbstractTableModel {
   private static final Log logger = LogFactory.getLog( LegacyXPathTableModel.class );
+  private static final String DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl";
 
   private static class InternalXPathVariableResolver implements XPathVariableResolver {
     private final DataRow parameters;
@@ -96,12 +104,20 @@ public class LegacyXPathTableModel extends AbstractTableModel {
       columnTypes = new ArrayList<Class>();
       columnNames = new ArrayList<String>();
 
+      DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
+      final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
+      if ( !"true".equals( configuration
+              .getConfigProperty( "org.pentaho.reporting.engine.classic.extensions.datasources.xpath.EnableDTDs" ) ) ) {
+        df.setFeature( DISALLOW_DOCTYPE_DECL, true );
+      }
+      DocumentBuilder builder = df.newDocumentBuilder();
+
       final XPath xPath = XPathFactory.newInstance().newXPath();
       xPath.setXPathVariableResolver( new InternalXPathVariableResolver( parameters ) );
 
       // load metadata (number of rows, row names, row types)
 
-      final String nodeValue = computeColDeclaration( xmlResource, resourceManager, xPath );
+      final String nodeValue = computeColDeclaration( xmlResource, resourceManager, xPath, builder );
       if ( nodeValue != null ) {
         final StringTokenizer stringTokenizer = new StringTokenizer( nodeValue, "," );
         while ( stringTokenizer.hasMoreTokens() ) {
@@ -196,16 +212,20 @@ public class LegacyXPathTableModel extends AbstractTableModel {
 
   private String computeColDeclaration( final ResourceData xmlResource,
                                         final ResourceManager resourceManager,
-                                        final XPath xPath )
-    throws XPathExpressionException, ResourceLoadingException, IOException {
-    final Node pi = evaluateNode( xPath, "/processing-instruction('pentaho-dataset')", xmlResource, resourceManager );
+                                        final XPath xPath, final DocumentBuilder builder )
+          throws XPathExpressionException, ResourceLoadingException, IOException, ParserConfigurationException, SAXException {
+
+
+
+
+    final Node pi = evaluateNode( xPath.compile( "/processing-instruction('pentaho-dataset')" ), xmlResource, resourceManager, builder );
     if ( pi != null ) {
       final String text = pi.getNodeValue();
       if ( text.length() > 0 ) {
         return text;
       }
     }
-    final Node types = evaluateNode( xPath, "/comment()", xmlResource, resourceManager );
+    final Node types = evaluateNode( xPath.compile( "/comment()" ), xmlResource, resourceManager, builder );
     if ( types != null ) {
       final String text = types.getNodeValue();
       if ( text.length() > 0 ) {
@@ -213,7 +233,7 @@ public class LegacyXPathTableModel extends AbstractTableModel {
       }
     }
 
-    final Node resultsetComment = evaluateNode( xPath, "/result-set/comment()", xmlResource, resourceManager );
+    final Node resultsetComment = evaluateNode( xPath.compile( "/result-set/comment()" ), xmlResource, resourceManager, builder );
     if ( resultsetComment != null ) {
       final String text = resultsetComment.getNodeValue();
       if ( text.length() > 0 ) {
@@ -247,12 +267,13 @@ public class LegacyXPathTableModel extends AbstractTableModel {
     }
   }
 
-  private Node evaluateNode( final XPath xpath, final String xpathQuery,
-                             final ResourceData xmlResourceData, final ResourceManager resourceManager )
-    throws XPathExpressionException, ResourceLoadingException, IOException {
+  private Node evaluateNode( final XPathExpression xPathExpression,
+                            final ResourceData xmlResourceData, final ResourceManager resourceManager, final DocumentBuilder builder )
+          throws XPathExpressionException, ResourceLoadingException, IOException, SAXException {
     final InputStream stream = xmlResourceData.getResourceAsStream( resourceManager );
     try {
-      return (Node) xpath.evaluate( xpathQuery, new InputSource( stream ), XPathConstants.NODE );
+      return (Node) xPathExpression.evaluate( builder.parse( new InputSource( stream ) ), XPathConstants.NODE );
+
     } finally {
       stream.close();
     }
