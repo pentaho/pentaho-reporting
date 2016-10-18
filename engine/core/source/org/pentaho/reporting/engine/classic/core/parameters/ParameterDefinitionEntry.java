@@ -17,11 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
+import java.io.Serializable;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-
-import java.io.Serializable;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 /**
  * Contains the definition of a single parameter, along with means to validate the parameter on the server side and
@@ -41,15 +43,13 @@ public interface ParameterDefinitionEntry extends Serializable, Cloneable {
   /**
    * Returns the parameter label. This is optional, but provides a sensible default for auto-generated parameter pages.
    *
-   * @param domain
-   *          the parameter domain (namespace)
-   * @param name
-   *          the name of the parameter attribute
-   * @param parameterContext
-   *          the context from where to aquire the locale for the label.
+   * @param domain           the parameter domain (namespace)
+   * @param name             the name of the parameter attribute
+   * @param parameterContext the context from where to aquire the locale for the label.
    * @return the label.
    */
-  public String getParameterAttribute( final String domain, final String name, final ParameterContext parameterContext );
+  public String getParameterAttribute( final String domain, final String name,
+                                       final ParameterContext parameterContext );
 
   public String[] getParameterAttributeNamespaces();
 
@@ -75,25 +75,25 @@ public interface ParameterDefinitionEntry extends Serializable, Cloneable {
   Object clone() throws CloneNotSupportedException;
 
   default String getTranslatedParameterAttribute( final String namespace,
-                                                 final String name,
-                                                 final ParameterContext parameterContext ) {
-    final String translateId = getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.TRANSLATE_RESOURCE_ID,
-      parameterContext );
-    final String parameterAttribute = getParameterAttribute( namespace, name, parameterContext );
-    if ( translateId == null ) {
-      return parameterAttribute;
-    }
+                                                  final String name,
+                                                  final ParameterContext context ) {
+    final String formulaName = name + "-formula";
+    final String formula = getParameterAttribute( namespace, formulaName, context );
+    if ( StringUtils.isEmpty( formula, true ) ) {
+      return getParameterAttribute( namespace, name, context );
+    } else {
+      try {
+        ParameterExpressionRuntime runtime = new ParameterExpressionRuntime( context,
+          context.getParameterData() );
+        final FormulaExpression fe = new FormulaExpression();
+        fe.setFormula( formula );
+        fe.setRuntime( runtime );
+        final Object res = fe.getValue();
 
-    try {
-      final ResourceBundle resourceBundle =
-        parameterContext.getResourceBundleFactory().getResourceBundle( translateId );
-      if ( resourceBundle.containsKey( parameterAttribute ) ) {
-        return resourceBundle.getString( parameterAttribute );
+        return String.valueOf( res );
+      } catch ( ReportProcessingException e ) {
+        return getParameterAttribute( namespace, name, context );
       }
-      return parameterAttribute;
-    } catch ( MissingResourceException | ClassCastException e ) {
-      return parameterAttribute;
     }
   }
 }

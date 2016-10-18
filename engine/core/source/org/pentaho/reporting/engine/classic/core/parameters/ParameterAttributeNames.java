@@ -58,12 +58,12 @@ public final class ParameterAttributeNames {
   public static class Core {
     public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/engine/parameter-attributes/core";
     public static final String LABEL = "label";
+    public static final String LABEL_FORMULA = "label-formula";
     public static final String HIDDEN = "hidden";
     public static final String LAYOUT = "parameter-layout";
     public static final String LAYOUT_HORIZONTAL = "horizontal";
     public static final String LAYOUT_VERTICAL = "vertical";
 
-    public static final String TRANSLATE_RESOURCE_ID = "translate-resource-id";
     public static final String TYPE = "parameter-render-type";
     public static final String TYPE_DROPDOWN = "dropdown";
     public static final String TYPE_LIST = "list";
@@ -76,6 +76,7 @@ public final class ParameterAttributeNames {
 
     public static final String VISIBLE_ITEMS = "parameter-visible-items";
     public static final String DATA_FORMAT = "data-format";
+    public static final String DATA_FORMAT_FORMULA = "data-format-formula";
 
     public static final String POST_PROCESSOR_FORMULA = "post-processor-formula";
     public static final String DISPLAY_VALUE_FORMULA = "display-value-formula";
