@@ -45,6 +45,7 @@ public class SplashScreen extends JWindow {
   private static final int LICENSE_HEIGHT = 30;
   private static final int COPYRIGHT_HEIGHT = 180;
   private static final Color TRANSPARENT = new Color( 0, 0, 0, 0 );
+  private static final Color WHITE = new Color( 255, 255, 255, 0 );
   private static final EmptyBorder BORDER = new EmptyBorder( 0, 0, 0, 0 );
 
   private class HideOnClickHandler extends MouseAdapter {
@@ -105,6 +106,7 @@ public class SplashScreen extends JWindow {
     versionLabel.setFont( new Font( Font.SANS_SERIF, Font.PLAIN, 14 ) );
     versionLabel.setOpaque( false );
     versionLabel.setBackground( TRANSPARENT );
+    versionLabel.setForeground( WHITE );
     versionLabel.setBorder( BORDER );
     versionLabel.setBounds( XLOC, YLOC + 40, TEXT_WIDTH, versionLabel.getPreferredSize().height );
 
@@ -119,6 +121,7 @@ public class SplashScreen extends JWindow {
     copyrightArea.setFont( LICENSE_FONT );
     copyrightArea.setEnabled( false );
     copyrightArea.setBackground( TRANSPARENT );
+    copyrightArea.setForeground( WHITE );
     copyrightArea.setBorder( BORDER );
     copyrightArea.setDisabledTextColor( copyrightArea.getForeground() );
 
