@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.util.beans.LocaleValueConverter
 import org.pentaho.reporting.engine.classic.core.util.beans.TimeZoneValueConverter;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -72,6 +73,16 @@ public class DefaultReportEnvironment implements ReportEnvironment {
       return ClassicEngineInfo.getInstance().getProductId();
     } else if ( "engine.name".equals( key ) ) {
       return ClassicEngineInfo.getInstance().getName();
+    } else if ( "locale".equals( key ) ) {
+      return getLocale().toString();
+    } else if ( "locale-short".equals( key ) ) {
+      Locale l = getLocale();
+      if ( StringUtils.isEmpty( l.getCountry() ) ) {
+        return l.getLanguage();
+      }
+      return l.getLanguage() + "_" + l.getCountry();
+    } else if ( "locale-language".equals( key ) ) {
+      return getLocale().getLanguage();
     }
 
     final String configProperty = configuration.getConfigProperty( ENVIRONMENT_KEY + key );
