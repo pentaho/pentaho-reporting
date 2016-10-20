@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.splash;
@@ -22,9 +22,21 @@ import org.pentaho.reporting.designer.core.ReportDesignerInfo;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingUtil;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JWindow;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -45,7 +57,7 @@ public class SplashScreen extends JWindow {
   private static final int LICENSE_HEIGHT = 30;
   private static final int COPYRIGHT_HEIGHT = 180;
   private static final Color TRANSPARENT = new Color( 0, 0, 0, 0 );
-  private static final Color WHITE = new Color( 255, 255, 255, 0 );
+  private static final Color WHITE = new Color( 255, 255, 255 );
   private static final EmptyBorder BORDER = new EmptyBorder( 0, 0, 0, 0 );
 
   private class HideOnClickHandler extends MouseAdapter {
@@ -64,6 +76,7 @@ public class SplashScreen extends JWindow {
     statusLabel.setFont( LICENSE_FONT );
     statusLabel.setHorizontalAlignment( SwingConstants.LEADING );
     statusLabel.setOpaque( false );
+    statusLabel.setForeground( WHITE );
 
     final JPanel statusVersionPanel = new JPanel( new GridBagLayout() );
     final GridBagConstraints c = new GridBagConstraints();
