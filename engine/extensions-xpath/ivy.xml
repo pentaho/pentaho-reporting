@@ -22,6 +22,7 @@
 
         <!--  testing dependencies -->
         <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
+        <dependency org="org.mockito"         name="mockito-all"   rev="1.9.5"   conf="test->default" transitive="false" />
         <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core-test"
                     rev="${project.revision}" transitive="false" changing="true" conf="test->default"/>
     </dependencies>
