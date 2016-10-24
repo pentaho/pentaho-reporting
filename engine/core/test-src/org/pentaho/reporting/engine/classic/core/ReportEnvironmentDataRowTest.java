@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -36,7 +36,7 @@ public class ReportEnvironmentDataRowTest {
     DefaultReportEnvironment re = new DefaultReportEnvironment( ClassicEngineBoot.getInstance().getGlobalConfig() );
     ReportEnvironmentDataRow dr = new ReportEnvironmentDataRow( re );
     Assert.assertThat( Arrays.asList( dr.getColumnNames() ),
-        hasItems( "env::locale", "env::locale-language", "env::locale-short" ));
+        hasItems( "env::locale", "env::locale-language", "env::locale-short" ) );
     Assert.assertEquals( "en_US", dr.get( "env::locale" ) );
     Assert.assertEquals( "en_US", dr.get( "env::locale-short" ) );
     Assert.assertEquals( "en", dr.get( "env::locale-language" ) );
