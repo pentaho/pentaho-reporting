@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.util;
@@ -86,6 +86,14 @@ public class CSVTokenizerTest extends TestCase {
     assertEquals( "", tokeniser.nextToken() );
     assertEquals( "", tokeniser.nextToken() );
     assertEquals( "", tokeniser.nextToken() );
+
+    tokeniser = new CSVTokenizer( "", "",
+      CSVTokenizer.DOUBLE_QUATE );
+    assertTrue( "Should have no more tokens.", ( !tokeniser.hasMoreTokens() ) );
+
+    tokeniser = new CSVTokenizer( "A;B", "",
+      CSVTokenizer.DOUBLE_QUATE );
+    assertTrue( "Should have no more tokens.", ( !tokeniser.hasMoreTokens() ) );
   }
 
   public void testNextToken() {
