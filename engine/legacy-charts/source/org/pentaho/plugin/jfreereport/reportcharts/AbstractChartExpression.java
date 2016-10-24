@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
@@ -43,7 +43,11 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Stroke;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -276,6 +280,13 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
 
   public void setDataSource( final String dataSource ) {
     this.dataSource = dataSource;
+  }
+
+  @Override public String[] getHyperlinkFormulas() {
+    if ( !StringUtils.isEmpty( this.urlFormula ) ) {
+      return new String[] { this.urlFormula };
+    }
+    return new String[] {};
   }
 
   public String getTitleField() {
@@ -521,8 +532,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
       interpreter.declareBean( "chart", originalChart, JFreeChart.class ); //$NON-NLS-1$
       interpreter.declareBean( "runtime", runtimeWrapper, ExpressionRuntime.class ); //$NON-NLS-1$
       interpreter.declareBean( "dataRow", legacyDataRowWrapper, DataRow.class ); //$NON-NLS-1$
-      final Object o = interpreter.eval
-        ( postProcessingLanguage, "expression", 1, 1, postProcessingScript ); //$NON-NLS-1$
+      final Object o = interpreter.eval( postProcessingLanguage, "expression", 1, 1, postProcessingScript ); //$NON-NLS-1$
       if ( o instanceof JFreeChart ) {
         return (JFreeChart) o;
       }
@@ -573,9 +583,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     //remove legend if showLegend = false
     if ( !isShowLegend() ) {
       chart.removeLegend();
-    }
-    //if true format legend
-    else {
+    } else { //if true format legend
       final LegendTitle chLegend = chart.getLegend();
       if ( chLegend != null ) {
         final RectangleEdge loc = translateEdge( legendLocation.toLowerCase() );
