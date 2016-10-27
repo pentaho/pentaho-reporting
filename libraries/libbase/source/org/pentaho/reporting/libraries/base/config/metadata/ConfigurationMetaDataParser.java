@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.config.metadata;
@@ -20,6 +20,7 @@ package org.pentaho.reporting.libraries.base.config.metadata;
 import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
 import org.pentaho.reporting.libraries.base.boot.Module;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -44,7 +45,7 @@ public class ConfigurationMetaDataParser {
    */
   private static Document parseInputStream( final InputStream instream )
     throws ParserConfigurationException, SAXException, IOException {
-    final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    final DocumentBuilderFactory dbf = XMLParserFactoryProducer.createSecureDocBuilderFactory();
     final DocumentBuilder db = dbf.newDocumentBuilder();
     return db.parse( new InputSource( instream ) );
   }

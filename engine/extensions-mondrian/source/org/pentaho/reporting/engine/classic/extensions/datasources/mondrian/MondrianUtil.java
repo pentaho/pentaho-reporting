@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
@@ -24,6 +24,7 @@ import mondrian.olap.Util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.pentaho.reporting.libraries.resourceloader.ResourceCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -66,8 +67,9 @@ public class MondrianUtil {
     return null;
   }
 
-  private static String parseXmlDocument( final InputStream stream ) throws ResourceCreationException {
-    final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+  private static String parseXmlDocument( final InputStream stream ) throws ResourceCreationException,
+      ParserConfigurationException {
+    final DocumentBuilderFactory dbf = XMLParserFactoryProducer.createSecureDocBuilderFactory();
     dbf.setNamespaceAware( true );
     dbf.setValidating( false );
 
@@ -78,8 +80,7 @@ public class MondrianUtil {
       final InputSource input = new InputSource( stream );
       final Document document = db.parse( input );
       final Element documentElement = document.getDocumentElement();
-      if ( "Schema".equals( documentElement.getTagName() ) )// NON-NLS
-      {
+      if ( "Schema".equals( documentElement.getTagName() ) ) { // NON-NLS
         return documentElement.getAttribute( "name" );
       }
       return null;
