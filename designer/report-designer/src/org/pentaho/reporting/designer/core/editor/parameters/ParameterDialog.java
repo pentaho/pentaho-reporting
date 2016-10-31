@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
+import com.google.common.annotations.VisibleForTesting;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -33,6 +34,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.TimeZone;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -132,9 +134,11 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   private ReportDesignerContext reportDesignerContext;
   private ProvisionDataSourcePanel provisionDataSourcePanel;
   private JTextField nameTextField;
-  private JTextField labelTextField;
+  @VisibleForTesting
+  JTextField labelTextField;
   private DefaultValueEditorPanel defaultValueTextField;
-  private JTextField dataFormatField;
+  @VisibleForTesting
+  JTextField dataFormatField;
   private DataFactoryTreeModel availableDataSourcesModel;
   private JComboBox idComboBox;
   private JComboBox displayValueComboBox;
@@ -148,8 +152,10 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   private FormulaEditorPanel postProcessingFormulaField;
   private FormulaEditorPanel displayFormulaField;
   private FormulaEditorPanel defaultValueFormulaField;
-  private FormulaEditorPanel labelFormula;
-  private FormulaEditorPanel dataFormatFormula;
+  @VisibleForTesting
+  FormulaEditorPanel labelFormula;
+  @VisibleForTesting
+  FormulaEditorPanel dataFormatFormula;
   private JSpinner visibleItemsTextField;
   private JLabel visibleItemsLabel;
   private ComboBoxModel parameterTypeModel;
@@ -578,7 +584,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     return pane;
   }
 
-  private void updateFromParameter( final ParameterDefinitionEntry p ) {
+  @VisibleForTesting
+  void updateFromParameter( final ParameterDefinitionEntry p ) {
     if ( p == null ) {
       dataFormatField.setText( null );
       labelTextField.setText( null );
@@ -641,13 +648,28 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     }
 
     final Class theType = p.getValueType();
-    dataFormatField.setText( p.getParameterAttribute(
-      ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext ) );
+
     valueTypeComboBox.setSelectedItem( multiSelection ? theType.getComponentType() : theType );
     nameTextField.setText( p.getName() );
-    labelTextField.setText(
-      p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL,
-        parameterContext ) );
+
+    // do not show formula in label text.
+    // if label will be empty but label formula is not,
+    // we will set formula text to label.
+    final String labelText = p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL,
+      parameterContext );
+    final String labelFormulaText = p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.LABEL_FORMULA, parameterContext );
+    labelTextField.setText( Objects.equals( labelText, labelFormulaText ) ? "" : labelText );
+    labelFormula.setFormula( labelFormulaText );
+
+    // same approach for data format text.
+    final String dataFormatText = p.getParameterAttribute(
+      ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
+    final String dataFormatFormulaText = p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DATA_FORMAT_FORMULA, parameterContext );
+    dataFormatField.setText( Objects.equals( dataFormatText, dataFormatFormulaText ) ? "" : dataFormatText );
+    dataFormatFormula.setFormula( dataFormatFormulaText );
+
     mandatoryCheckBox.setSelected( p.isMandatory() );
     postProcessingFormulaField.setFormula( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
@@ -674,10 +696,6 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA, parameterContext ) );
     timeZoneModel.setSelectedKey( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.TIMEZONE, parameterContext ) );
-    labelFormula.setFormula( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.LABEL_FORMULA, parameterContext ) );
-    dataFormatFormula.setFormula( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-      ParameterAttributeNames.Core.DATA_FORMAT_FORMULA, parameterContext ) );
 
     final String type =
       p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE,
@@ -768,9 +786,13 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     parameter
       .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.AUTOFILL_SELECTION,
         String.valueOf( autofillSelectionCheckBox.isSelected() ) );
-    if ( StringUtils.isEmpty( label ) == false ) {
+    if ( !StringUtils.isEmpty( label ) ) {
       parameter
         .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, label );
+    } else if ( !StringUtils.isEmpty( labelFormula.getFormula() ) ) {
+      parameter
+        .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL,
+          labelFormula.getFormula() );
     }
     parameter.setMandatory( isMandatory );
     parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
@@ -788,9 +810,13 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       }
     }
 
-    if ( StringUtils.isEmpty( dataFormat ) == false ) {
+    if ( !StringUtils.isEmpty( dataFormat ) ) {
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
         dataFormat );
+    } else if ( !StringUtils.isEmpty( dataFormatFormula.getFormula() ) ) {
+      // copy formula to a data format to have data format applied.
+      parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
+        dataFormatFormula.getFormula() );
     }
     if ( queryIsOptional == false ) {
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
@@ -821,7 +847,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     return parameter;
   }
 
-  private ParameterDefinitionEntry createQuerylessParameter( final String name,
+  @VisibleForTesting
+  ParameterDefinitionEntry createQuerylessParameter( final String name,
                                                              final String label,
                                                              final Object rawDefaultValue,
                                                              final String dataFormat,
@@ -842,17 +869,25 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE,
         type.getInternalName() );
     }
-    if ( StringUtils.isEmpty( label ) == false ) {
+    if ( !StringUtils.isEmpty( label ) ) {
       parameter
         .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, label );
+    } else if ( !StringUtils.isEmpty( labelFormula.getFormula() ) ) {
+      parameter
+        .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL,
+          labelFormula.getFormula() );
     }
     parameter.setDefaultValue( rawDefaultValue );
     parameter.setMandatory( mandatory );
     parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
       String.valueOf( hiddenCheckBox.isSelected() ) );
-    if ( StringUtils.isEmpty( dataFormat ) == false ) {
+    if ( !StringUtils.isEmpty( dataFormat ) ) {
       parameter.setParameterAttribute(
         ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, dataFormat );
+    } else if ( !StringUtils.isEmpty( dataFormatFormula.getFormula() ) ) {
+      // copy formula to a data format to have data format applied.
+      parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
+        dataFormatFormula.getFormula() );
     }
     parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA,
