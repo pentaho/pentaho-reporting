@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
@@ -296,22 +296,22 @@ public class StyleWriterUtility {
     } else {
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-width", absoluteLengthFormat
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-radius-width", absoluteLengthFormat
             .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-width", absoluteLengthFormat
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-radius-width", absoluteLengthFormat
             .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-width", absoluteLengthFormat
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-radius-width", absoluteLengthFormat
             .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-width", absoluteLengthFormat
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-radius-width", absoluteLengthFormat
             .format( value ) );
       }
     }
@@ -340,22 +340,22 @@ public class StyleWriterUtility {
     } else {
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-height", absoluteLengthFormat
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-left-radius-height", absoluteLengthFormat
             .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-height", absoluteLengthFormat
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-top-right-radius-height", absoluteLengthFormat
             .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-height", absoluteLengthFormat
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-left-radius-height", absoluteLengthFormat
             .format( value ) );
       }
       if ( style.isLocalKey( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT ) ) {
         final double value = style.getDoubleStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, 0 );
-        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-height", absoluteLengthFormat
+        bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "border-bottom-right-radius-height", absoluteLengthFormat
             .format( value ) );
       }
     }
