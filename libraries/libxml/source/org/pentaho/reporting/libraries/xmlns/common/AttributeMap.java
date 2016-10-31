@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns.common;
@@ -137,13 +137,13 @@ public class AttributeMap<T> implements Serializable, Cloneable {
     }
 
     if ( content == null ) {
-      if ( value != null ) {
-        content = new LinkedHashMap<DualKey, T>();
-        content.put( new DualKey( namespace, attribute ), value );
-      }
-      return null;
+      content = new LinkedHashMap<DualKey, T>();
     }
-    return content.put( new DualKey( namespace, attribute ), value );
+    if ( value != null ) {
+      return content.put( new DualKey( namespace, attribute ), value );
+    } else {
+      return content.remove( new DualKey( namespace, attribute ) );
+    }
   }
 
   /**
