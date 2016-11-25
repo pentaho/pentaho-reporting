@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns.writer;
@@ -23,6 +23,7 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
@@ -173,9 +174,6 @@ public class XmlWriterSupport {
   private boolean writeFinalLinebreak;
   private boolean htmlCompatiblityMode;
   private String lineSeparator;
-  private StringBuffer normalizeBuffer;
-  private String encoding;
-  private boolean encodingvalid;
   private CharsetEncoder charsetEncoder;
 
   /**
@@ -218,7 +216,6 @@ public class XmlWriterSupport {
       throw new NullPointerException( "LineSeparator must not be null" );
     }
 
-    this.normalizeBuffer = new StringBuffer( 128 );
     this.safeTags = safeTags;
     this.openTags = new FastStack();
     this.indentString = indentString;
@@ -325,9 +322,6 @@ public class XmlWriterSupport {
   }
 
   public void setEncoding( final String encoding ) {
-    this.encoding = encoding;
-    this.encodingvalid = true;
-
     final Charset charset = Charset.forName( encoding );
     this.charsetEncoder = charset.newEncoder();
   }
@@ -655,8 +649,7 @@ public class XmlWriterSupport {
       }
     } else {
       final ElementLevel level = (ElementLevel) openTags.peek();
-      if ( getTagDescription().hasCData
-        ( level.getNamespace(), level.getTagName() ) == false ) {
+      if ( getTagDescription().hasCData( level.getNamespace(), level.getTagName() ) == false ) {
         writeNewLine( w );
       }
     }
@@ -679,8 +672,7 @@ public class XmlWriterSupport {
     final String name = entry.getName();
     final String namespaceUri = entry.getNamespace();
 
-    if ( isAlwaysAddNamespace() == false &&
-      ObjectUtilities.equal( currentElement.getNamespace(), namespaceUri ) ) {
+    if ( isAlwaysAddNamespace() == false && ObjectUtilities.equal( currentElement.getNamespace(), namespaceUri ) ) {
       writer.write( name );
       return;
     }
@@ -720,64 +712,8 @@ public class XmlWriterSupport {
    * @return the transformed string.
    */
   public String normalizeLocal( final String s,
-                                final boolean transformNewLine ) {
-    if ( s == null ) {
-      return "";
-    }
-    normalizeBuffer.delete( 0, normalizeBuffer.length() );
-
-    final int len = s.length();
-    for ( int i = 0; i < len; i++ ) {
-      final char ch = s.charAt( i );
-
-      switch( ch ) {
-        case '<': {
-          normalizeBuffer.append( "&lt;" );
-          break;
-        }
-        case '>': {
-          normalizeBuffer.append( "&gt;" );
-          break;
-        }
-        case '&': {
-          normalizeBuffer.append( "&amp;" );
-          break;
-        }
-        case '"': {
-          normalizeBuffer.append( "&quot;" );
-          break;
-        }
-        case '\n': {
-          if ( transformNewLine ) {
-            normalizeBuffer.append( "&#x000a;" );
-          } else {
-            normalizeBuffer.append( '\n' );
-          }
-          break;
-        }
-        case '\r': {
-          if ( transformNewLine ) {
-            normalizeBuffer.append( "&#x000d;" );
-          } else {
-            normalizeBuffer.append( '\r' );
-          }
-          break;
-        }
-        case 0x09: {
-          normalizeBuffer.append( ch );
-          break;
-        }
-        default: {
-          if ( ch >= 0x20 ) {
-            normalizeBuffer.append( ch );
-          }
-        }
-      }
-    }
-
-    final String retval = normalizeBuffer.toString();
-    normalizeBuffer.delete( 0, normalizeBuffer.length() );
-    return retval;
+                                final boolean transformNewLine ) throws IOException {
+    return normalize( s, transformNewLine );
   }
 
 
@@ -789,130 +725,65 @@ public class XmlWriterSupport {
    * @param transformNewLine a flag controling whether to transform newlines into character-entities.
    * @throws IOException if writing to the stream failed.
    */
-  public void writeTextNormalized( final Writer writer,
-                                   final String s,
-                                   final boolean transformNewLine ) throws IOException {
+  public void writeTextNormalized( final Writer writer, final String s, final boolean transformNewLine )
+      throws IOException {
+
     if ( s == null ) {
       return;
     }
 
-    final char[] data = s.toCharArray();
-    final int len = data.length;
-    int startIdx = 0;
-    int length = 0;
-    for ( int i = 0; i < len; i++ ) {
-      final char ch = data[ i ];
+    StringBuilder strB = new StringBuilder( s.length() );
+    for ( int offset = 0; offset < s.length(); ) {
+      final int cp = s.codePointAt( offset );
 
-      switch( ch ) {
-        case '<': {
-          if ( length != 0 ) {
-            writer.write( data, startIdx, length );
-            length = 0;
-          }
-          writer.write( "&lt;" );
-          startIdx = i + 1;
-          continue;
-        }
-        case '>': {
-          if ( length != 0 ) {
-            writer.write( data, startIdx, length );
-            length = 0;
-          }
-          writer.write( "&gt;" );
-          startIdx = i + 1;
-          continue;
-        }
-        case '&': {
-          if ( length != 0 ) {
-            writer.write( data, startIdx, length );
-            length = 0;
-          }
-          writer.write( "&amp;" );
-          startIdx = i + 1;
-          continue;
-        }
-        case '"': {
-          if ( length != 0 ) {
-            writer.write( data, startIdx, length );
-            length = 0;
-          }
-          writer.write( "&quot;" );
-          startIdx = i + 1;
-          continue;
-        }
-        case '\n': {
+      switch ( cp ) {
+        case 9 : // \t
+          strB.appendCodePoint( cp );
+          break;
+        case 10 : // \n
           if ( transformNewLine ) {
-            if ( length != 0 ) {
-              writer.write( data, startIdx, length );
-              length = 0;
-            }
-            writer.write( "&#x000a;" );
-            startIdx = i + 1;
-            continue;
-          }
-          break;
-        }
-        case '\r': {
-          if ( transformNewLine ) {
-            if ( length != 0 ) {
-              writer.write( data, startIdx, length );
-              length = 0;
-            }
-            writer.write( "&#x000d;" );
-            startIdx = i + 1;
-            continue;
-          }
-          break;
-        }
-        case 0x09: // tab
-        {
-          break;
-        }
-        default: {
-          if ( this.encodingvalid && this.encoding != null ) {
-            try {
-              if ( charsetEncoder.canEncode( ch ) == false ) {
-                if ( length != 0 ) {
-                  writer.write( data, startIdx, length );
-                  length = 0;
-                }
-
-                writer.write( "&#x" );
-                final String charEncoded = Integer.toHexString( ch & 0x00ffffff );
-                final int fillUp = 4 - charEncoded.length();
-                for ( int x = 0; x < fillUp; x++ ) {
-                  writer.write( '0' );
-                }
-                writer.write( charEncoded.toUpperCase() );
-                writer.write( ";" );
-                startIdx = i + 1;
-                continue;
-              }
-            } catch ( IOException t ) {
-              throw t;
-            } catch ( Throwable t ) {
-              // ignore all other errors ..
-            }
-          }
-          if ( ch >= 0x20 ) {
-            // anything above the control-character range is ok.
+            strB.append( "&#10;" );
             break;
           }
-          // skip ..
-          if ( length != 0 ) {
-            writer.write( data, startIdx, length );
-            length = 0;
+          strB.appendCodePoint( cp );
+          break;
+        case 13 : // \r
+          if ( transformNewLine ) {
+            strB.append( "&#13;" );
+            break;
           }
-          startIdx = i + 1;
-          continue;
-        }
+          strB.appendCodePoint( cp );
+          break;
+        case 60 : // <
+          strB.append( "&lt;" );
+          break;
+        case 62 : // >
+          strB.append( "&gt;" );
+          break;
+        case 34 : // "
+          strB.append( "&quot;" );
+          break;
+        case 38 : // &
+          strB.append( "&amp;" );
+          break;
+        case 39 : // '
+          strB.append( "&apos;" );
+          break;
+        default :
+          if ( cp >= 0x20 ) {
+            String cpStr = new String( new int[] { cp }, 0, 1 );
+            if ( charsetEncoder != null && !charsetEncoder.canEncode( cpStr ) ) {
+              strB.append( "&#x" + Integer.toHexString( cp ) );
+            } else {
+              strB.appendCodePoint( cp );
+            }
+          }
       }
-      length += 1;
+
+      offset += Character.charCount( cp );
     }
 
-    if ( length != 0 ) {
-      writer.write( data, startIdx, length );
-    }
+    writer.write( strB.toString() );
   }
 
   /**
@@ -923,63 +794,15 @@ public class XmlWriterSupport {
    * @param transformNewLine true, if a newline in the string should be converted into a character entity.
    * @return the normalised string.
    */
-  public static String normalize( final String s,
-                                  final boolean transformNewLine ) {
+  public String normalize( final String s, final boolean transformNewLine ) throws IOException {
     if ( s == null ) {
       return "";
     }
-    final int len = s.length();
-    final StringBuffer str = new StringBuffer( len );
 
-    for ( int i = 0; i < len; i++ ) {
-      final char ch = s.charAt( i );
+    StringWriter writer = new StringWriter( s.length() );
 
-      switch( ch ) {
-        case '<': {
-          str.append( "&lt;" );
-          break;
-        }
-        case '>': {
-          str.append( "&gt;" );
-          break;
-        }
-        case '&': {
-          str.append( "&amp;" );
-          break;
-        }
-        case '"': {
-          str.append( "&quot;" );
-          break;
-        }
-        case '\n': {
-          if ( transformNewLine ) {
-            str.append( "&#x000a;" );
-          } else {
-            str.append( '\n' );
-          }
-          break;
-        }
-        case '\r': {
-          if ( transformNewLine ) {
-            str.append( "&#x000d;" );
-          } else {
-            str.append( '\r' );
-          }
-          break;
-        }
-        case 0x09: // tab
-        {
-          str.append( (char) 0x09 );
-        }
-        default: {
-          if ( ch >= 0x20 ) {
-            str.append( ch );
-          }
-        }
-      }
-    }
-
-    return ( str.toString() );
+    writeTextNormalized( writer, s, transformNewLine );
+    return writer.toString();
   }
 
   /**
@@ -1061,8 +884,7 @@ public class XmlWriterSupport {
     throws IOException {
     if ( openTags.isEmpty() == false ) {
       final ElementLevel level = (ElementLevel) openTags.peek();
-      if ( getTagDescription().hasCData
-        ( level.getNamespace(), level.getTagName() ) == false ) {
+      if ( getTagDescription().hasCData( level.getNamespace(), level.getTagName() ) == false ) {
         indent( writer );
       }
     }
