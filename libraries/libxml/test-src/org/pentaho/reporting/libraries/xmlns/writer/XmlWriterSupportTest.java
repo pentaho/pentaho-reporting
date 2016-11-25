@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns.writer;
@@ -23,36 +23,34 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 public class XmlWriterSupportTest extends TestCase {
+
+  private final XmlWriterSupport support = new XmlWriterSupport( new DefaultTagDescription(), "" );
+
   public XmlWriterSupportTest() {
   }
 
-  public XmlWriterSupportTest( final String s ) {
-    super( s );
+  public void testEncodings() throws IOException {
+    testEncoding( "Some text to make me happy", "Some text to make me happy" );
+    testEncoding( "Some <text> &to; make me happy", "Some &lt;text&gt; &amp;to; make me happy" );
+    testEncoding( "Some <<text to >>make me happy", "Some &lt;&lt;text to &gt;&gt;make me happy" );
+    testEncoding( "Some \n>text to <\rmake me happy\t\0", "Some \n&gt;text to &lt;\rmake me happy\t" );
+    testEncoding( "Some \\d>text to \\windows\\path <\rmake me happy",
+        "Some \\d&gt;text to \\windows\\path &lt;&#13;make me happy", true );
+
+    testEncoding( "\uD842\uDFB7", "\uD842\uDFB7" );
+
+    support.setEncoding( "cp1251" );
+    testEncoding( "\uD842\uDFB7", "&#x20bb7" );
   }
 
-  public void testEncoding() throws IOException {
-    final StringWriter writer1 = new StringWriter();
-    final StringWriter writer2 = new StringWriter();
-    final StringWriter writer3 = new StringWriter();
-    final StringWriter writer4 = new StringWriter();
-    final StringWriter writer5 = new StringWriter();
-    final StringWriter writer6 = new StringWriter();
+  private void testEncoding( final String before, final String after ) throws IOException {
+    testEncoding( before, after, false );
+  }
 
-    final XmlWriterSupport support = new XmlWriterSupport( new DefaultTagDescription(), "" );
-    support.writeTextNormalized( writer1, "Some text to make me happy", false );
-    support.writeTextNormalized( writer2, "Some <text> &to; make me happy", false );
-    support.writeTextNormalized( writer3, "Some <<text to >>make me happy", false );
-    support.writeTextNormalized( writer4, "Some \n>text to <\rmake me happy", false );
-    support.writeTextNormalized( writer5, "Some \n>text to <\rmake me happy", true );
-    support.writeTextNormalized( writer6, "Some \\d>text to \\windows\\path <\rmake me happy", true );
-
-    assertEquals( writer1.toString(), "Some text to make me happy" );
-    assertEquals( writer2.toString(), "Some &lt;text&gt; &amp;to; make me happy" );
-    assertEquals( writer3.toString(), "Some &lt;&lt;text to &gt;&gt;make me happy" );
-    assertEquals( writer4.toString(), "Some \n" +
-      "&gt;text to &lt;\r" +
-      "make me happy" );
-    assertEquals( writer5.toString(), "Some &#x000a;&gt;text to &lt;&#x000d;make me happy" );
-    assertEquals( writer6.toString(), "Some \\d&gt;text to \\windows\\path &lt;&#x000d;make me happy" );
+  private void testEncoding( final String before, final String after, final boolean transformNewLine )
+      throws IOException {
+    final StringWriter writer = new StringWriter();
+    support.writeTextNormalized( writer, before, transformNewLine );
+    assertEquals( after, writer.toString() );
   }
 }
