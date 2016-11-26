@@ -46,6 +46,8 @@
         <xs:attribute type="xs:boolean" name="computed" use="optional"/>
         <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
         <xs:attribute type="xs:string" name="impl" use="optional"/>
+        <xs:attribute type="xs:string" name="readHandler" use="optional"/>
+        <xs:attribute type="xs:string" name="writeHandler" use="optional"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>

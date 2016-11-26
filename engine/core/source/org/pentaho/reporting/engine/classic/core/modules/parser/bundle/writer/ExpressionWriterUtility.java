@@ -19,6 +19,8 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
 
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionCollection;
@@ -28,7 +30,10 @@ import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.ResourceReference;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.DefaultExpressionPropertyWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionPropertyWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
+import org.pentaho.reporting.engine.classic.core.modules.parser.ext.ExtParserModule;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
@@ -44,6 +49,8 @@ import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
 public class ExpressionWriterUtility {
+  private static final Log logger = LogFactory.getLog( ExpressionWriterUtility.class );
+
   private ExpressionWriterUtility() {
   }
 
@@ -316,7 +323,7 @@ public class ExpressionWriterUtility {
           }
 
           copyStaticResources( bundle, state, expression, bu, expressionProperties );
-          writeExpressionParameter( writer, bu, propertyName, namespaceUri );
+          writeExpressionParameter( bundle, state, writer, expression, bu, propertyName, namespaceUri );
         }
 
         if ( propertiesOpen ) {
@@ -341,7 +348,7 @@ public class ExpressionWriterUtility {
             continue;
           }
 
-          writeExpressionParameter( writer, beanUtility, key, namespaceUri );
+          writeExpressionParameter( bundle, state, writer, expression, beanUtility, key, namespaceUri );
         }
       }
     } catch ( IOException ioe ) {
@@ -390,24 +397,39 @@ public class ExpressionWriterUtility {
    * @throws BeanException
    *           if a bean error occured.
    */
-  private static void writeExpressionParameter( final XmlWriter writer, final BeanUtility beanUtility,
-      final String propertyName, final String namespaceUri ) throws IOException, BeanException {
+  private static void writeExpressionParameter( final WriteableDocumentBundle bundle,
+                                                final BundleWriterState state,
+                                                final XmlWriter writer,
+                                                final Expression e,
+                                                final BeanUtility beanUtility,
+                                                final String propertyName,
+                                                final String namespaceUri ) throws IOException, BeanException {
     // filter some of the standard properties. These are system-properties
     // and are set elsewhere
 
-    final Object property = beanUtility.getProperty( propertyName );
-    final Class propertyType = beanUtility.getPropertyType( propertyName );
-    final String value = beanUtility.getPropertyAsString( propertyName );
-    if ( value != null && property != null ) {
-      final AttributeList attList = new AttributeList();
-      attList.setAttribute( namespaceUri, "name", propertyName );
-      if ( BeanUtility.isSameType( propertyType, property.getClass() ) == false ) {
-        attList.setAttribute( namespaceUri, "class", property.getClass().getName() );
-      }
-      writer.writeTag( namespaceUri, "property", attList, XmlWriterSupport.OPEN );
-      writer.writeTextNormalized( value, false );
-      writer.writeCloseTag();
+    final ExpressionPropertyWriteHandler writeHandler = createWriteHandler( e, propertyName );
+    if (writeHandler instanceof BundleExpressionPropertyWriteHandler) {
+      BundleExpressionPropertyWriteHandler bw = (BundleExpressionPropertyWriteHandler) writeHandler;
+      bw.initBundleContext( bundle, state );
     }
+    writeHandler.writeExpressionParameter(writer, beanUtility, propertyName, namespaceUri);
+  }
+
+
+  private static ExpressionPropertyWriteHandler createWriteHandler( Expression e, String key ) {
+    try {
+      final ExpressionMetaData expressionMetaData =
+          ExpressionRegistry.getInstance().getExpressionMetaData( e.getClass().getName() );
+      final ExpressionPropertyMetaData propertyDescription = expressionMetaData.getPropertyDescription( key );
+      final Class<? extends ExpressionPropertyWriteHandler> writeHandlerRef = propertyDescription.getPropertyWriteHandler();
+      if ( writeHandlerRef != null ) {
+        return writeHandlerRef.newInstance();
+      }
+    }
+    catch ( Exception ex ) {
+      logger.info( "No valid property metadata defined for " + e.getClass() + " on property " + key);
+    }
+    return new DefaultExpressionPropertyWriteHandler();
   }
 
   public static void copyStaticResources( final WriteableDocumentBundle bundle, final BundleWriterState state,

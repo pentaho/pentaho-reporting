@@ -23,6 +23,8 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.builder.ExpressionPropertyMetaDataBuilder;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.SharedPropertyDescriptorProxy;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionPropertyWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.UserDefinedExpressionPropertyReadHandler;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -39,6 +41,8 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
   private boolean computed;
   private ExpressionPropertyCore expressionPropertyCore;
   private SharedPropertyDescriptorProxy propertyDescriptor;
+  private Class<? extends UserDefinedExpressionPropertyReadHandler> propertyReadHandler;
+  private Class<? extends ExpressionPropertyWriteHandler> propertyWriteHandler;
 
   @Deprecated
   public DefaultExpressionPropertyMetaData( final String name, final String bundleLocation, final boolean expert,
@@ -69,6 +73,8 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
     this.propertyEditorClass = builder.getEditor();
     this.mandatory = builder.isMandatory();
     this.propertyRole = builder.getValueRole();
+    this.propertyReadHandler = builder.getPropertyReadHandler();
+    this.propertyWriteHandler = builder.getPropertyWriteHandler();
 
     ArgumentNullException.validate( "propertyRole", propertyRole );
     ArgumentNullException.validate( "propertyDescriptor", propertyDescriptor );
@@ -127,5 +133,15 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
 
   public String[] getExtraCalculationFields() {
     return expressionPropertyCore.getExtraCalculationFields( this );
+  }
+
+  @Override
+  public Class<? extends UserDefinedExpressionPropertyReadHandler> getPropertyReadHandler() {
+    return propertyReadHandler;
+  }
+
+  @Override
+  public Class<? extends ExpressionPropertyWriteHandler> getPropertyWriteHandler() {
+    return propertyWriteHandler;
   }
 }

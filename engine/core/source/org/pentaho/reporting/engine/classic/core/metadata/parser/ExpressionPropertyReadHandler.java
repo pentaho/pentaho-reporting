@@ -26,6 +26,8 @@ import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyCore
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.SharedBeanInfo;
 import org.pentaho.reporting.engine.classic.core.metadata.builder.ExpressionPropertyMetaDataBuilder;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionPropertyWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.UserDefinedExpressionPropertyReadHandler;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
@@ -66,6 +68,8 @@ public class ExpressionPropertyReadHandler extends AbstractMetaDataReadHandler {
     getBuilder().computed( "true".equals( attrs.getValue( getUri(), "computed" ) ) ); // NON-NLS
     getBuilder().valueRole( parseValueRole( attrs ) );
     getBuilder().editor( parsePropertyEditor( attrs ) );
+    getBuilder().readHandler( parseReadHandler( attrs ) );
+    getBuilder().writeHandler( parseWriteHandler( attrs ) );
     getBuilder().core( parsePropertyCore( attrs ) );
     getBuilder().bundle( getEffectiveBundle(), "property." );
     getBuilder().descriptorFromParent( beanInfo.getBeanClass() );
@@ -99,6 +103,18 @@ public class ExpressionPropertyReadHandler extends AbstractMetaDataReadHandler {
     String propertyEditorClass = attrs.getValue( getUri(), "propertyEditor" ); // NON-NLS
     return ObjectUtilities.loadAndValidate( propertyEditorClass, ExpressionPropertyReadHandler.class,
         PropertyEditor.class );
+  }
+
+  private Class<? extends UserDefinedExpressionPropertyReadHandler> parseReadHandler( final Attributes attrs ) {
+    String propertyEditorClass = attrs.getValue( getUri(), "readHandler" ); // NON-NLS
+    return ObjectUtilities.loadAndValidate( propertyEditorClass, ExpressionPropertyReadHandler.class,
+        UserDefinedExpressionPropertyReadHandler.class );
+  }
+
+  private Class<? extends ExpressionPropertyWriteHandler> parseWriteHandler( final Attributes attrs ) {
+    String propertyEditorClass = attrs.getValue( getUri(), "writeHandler" ); // NON-NLS
+    return ObjectUtilities.loadAndValidate( propertyEditorClass, ExpressionPropertyReadHandler.class,
+        ExpressionPropertyWriteHandler.class );
   }
 
   private String parseValueRole( final Attributes attrs ) {
