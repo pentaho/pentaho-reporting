@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal;
@@ -186,6 +186,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#draw(Shape)
    */
+  @Override
   public void draw( final Shape s ) {
     followPath( s, PdfGraphics2D.STROKE );
   }
@@ -193,6 +194,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#drawImage(Image, AffineTransform, ImageObserver)
    */
+  @Override
   public boolean drawImage( final Image img, final AffineTransform xform, final ImageObserver obs ) {
     return drawImage( img, null, xform, null, obs );
   }
@@ -200,6 +202,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#drawImage(BufferedImage, BufferedImageOp, int, int)
    */
+  @Override
   public void drawImage( final BufferedImage img, final BufferedImageOp op, final int x, final int y ) {
     BufferedImage result = img;
     if ( op != null ) {
@@ -213,6 +216,7 @@ public class PdfGraphics2D extends Graphics2D {
    * @noinspection UseOfObsoleteCollectionType
    * @see Graphics2D#drawRenderedImage(RenderedImage, AffineTransform)
    */
+  @Override
   public void drawRenderedImage( final RenderedImage img, final AffineTransform xform ) {
     final BufferedImage image;
     if ( img instanceof BufferedImage ) {
@@ -241,6 +245,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#drawRenderableImage(RenderableImage, AffineTransform)
    */
+  @Override
   public void drawRenderableImage( final RenderableImage img, final AffineTransform xform ) {
     drawRenderedImage( img.createDefaultRendering(), xform );
   }
@@ -248,6 +253,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawString(String, int, int)
    */
+  @Override
   public void drawString( final String s, final int x, final int y ) {
     drawString( s, (float) x, (float) y );
   }
@@ -262,7 +268,7 @@ public class PdfGraphics2D extends Graphics2D {
    * @return position and/or stroke thickness depending on the font size
    */
   private static double asPoints( final double d, final int i ) {
-    return ( d * (double) i ) / (double) AFM_DIVISOR;
+    return ( d * i ) / AFM_DIVISOR;
   }
 
   /**
@@ -316,6 +322,7 @@ public class PdfGraphics2D extends Graphics2D {
     }
   }
 
+  @Override
   public void drawString( final String s, final float x, float y ) {
     if ( s.length() == 0 ) {
       return;
@@ -386,10 +393,10 @@ public class PdfGraphics2D extends Graphics2D {
       // int UnderlinePosition = -100;
       final int UnderlineThickness = 50;
       //
-      final double d = PdfGraphics2D.asPoints( (double) UnderlineThickness, (int) fontSize );
+      final double d = PdfGraphics2D.asPoints( UnderlineThickness, (int) fontSize );
       setStroke( new BasicStroke( (float) d ) );
-      y = (float) ( (double) ( y ) + PdfGraphics2D.asPoints( (double) ( UnderlineThickness ), (int) fontSize ) );
-      final Line2D line = new Line2D.Double( (double) x, (double) y, ( width + x ), (double) y );
+      y = (float) ( ( y ) + PdfGraphics2D.asPoints( ( UnderlineThickness ), (int) fontSize ) );
+      final Line2D line = new Line2D.Double( x, y, ( width + x ), y );
       draw( line );
     }
   }
@@ -397,6 +404,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawString(AttributedCharacterIterator, int, int)
    */
+  @Override
   public void drawString( final AttributedCharacterIterator iterator, final int x, final int y ) {
     drawString( iterator, (float) x, (float) y );
   }
@@ -404,6 +412,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#drawString(AttributedCharacterIterator, float, float)
    */
+  @Override
   public void drawString( final AttributedCharacterIterator iter, float x, final float y ) {
     /*
      * StringBuffer sb = new StringBuffer(); for(char c = iter.first(); c != AttributedCharacterIterator.DONE; c =
@@ -415,7 +424,7 @@ public class PdfGraphics2D extends Graphics2D {
         if ( stringbuffer.length() > 0 ) {
           drawString( stringbuffer.toString(), x, y );
           final FontMetrics fontmetrics = getFontMetrics();
-          x = (float) ( (double) x + fontmetrics.getStringBounds( stringbuffer.toString(), this ).getWidth() );
+          x = (float) ( x + fontmetrics.getStringBounds( stringbuffer.toString(), this ).getWidth() );
           stringbuffer.delete( 0, stringbuffer.length() );
         }
         doAttributes( iter );
@@ -430,6 +439,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#drawGlyphVector(GlyphVector, float, float)
    */
+  @Override
   public void drawGlyphVector( final GlyphVector g, final float x, final float y ) {
     final Shape s = g.getOutline( x, y );
     fill( s );
@@ -438,6 +448,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#fill(Shape)
    */
+  @Override
   public void fill( final Shape s ) {
     followPath( s, PdfGraphics2D.FILL );
   }
@@ -445,6 +456,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#hit(Rectangle, Shape, boolean)
    */
+  @Override
   public boolean hit( final Rectangle rect, Shape s, final boolean onStroke ) {
     if ( onStroke ) {
       s = stroke.createStrokedShape( s );
@@ -460,6 +472,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#getDeviceConfiguration()
    */
+  @Override
   public GraphicsConfiguration getDeviceConfiguration() {
     return dg2.getDeviceConfiguration();
   }
@@ -469,6 +482,7 @@ public class PdfGraphics2D extends Graphics2D {
    *
    * @see Graphics2D#setComposite(Composite)
    */
+  @Override
   public void setComposite( final Composite comp ) {
 
     if ( comp instanceof AlphaComposite ) {
@@ -483,7 +497,7 @@ public class PdfGraphics2D extends Graphics2D {
         if ( realPaint != null && ( realPaint instanceof Color ) ) {
 
           final Color c = (Color) realPaint;
-          paint = new Color( c.getRed(), c.getGreen(), c.getBlue(), (int) ( (float) c.getAlpha() * alpha ) );
+          paint = new Color( c.getRed(), c.getGreen(), c.getBlue(), (int) ( c.getAlpha() * alpha ) );
         }
         return;
       }
@@ -499,6 +513,7 @@ public class PdfGraphics2D extends Graphics2D {
    *
    * @see Graphics2D#setPaint(Paint)
    */
+  @Override
   public void setPaint( final Paint paint ) {
     if ( paint == null ) {
       return;
@@ -512,7 +527,7 @@ public class PdfGraphics2D extends Graphics2D {
 
       if ( co.getRule() == 3 ) {
         final Color c = (Color) paint;
-        this.paint = new Color( c.getRed(), c.getGreen(), c.getBlue(), (int) ( (float) c.getAlpha() * alpha ) );
+        this.paint = new Color( c.getRed(), c.getGreen(), c.getBlue(), (int) ( c.getAlpha() * alpha ) );
         realPaint = paint;
       }
     }
@@ -619,6 +634,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#setStroke(Stroke)
    */
+  @Override
   public void setStroke( final Stroke s ) {
     originalStroke = s;
     this.stroke = transformStroke( s );
@@ -630,6 +646,7 @@ public class PdfGraphics2D extends Graphics2D {
    * @param arg0
    * @param arg1
    */
+  @Override
   public void setRenderingHint( final RenderingHints.Key arg0, final Object arg1 ) {
     rhints.put( arg0, arg1 );
   }
@@ -639,6 +656,7 @@ public class PdfGraphics2D extends Graphics2D {
    *          a key
    * @return the rendering hint
    */
+  @Override
   public Object getRenderingHint( final RenderingHints.Key arg0 ) {
     return rhints.get( arg0 );
   }
@@ -646,6 +664,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#setRenderingHints(Map)
    */
+  @Override
   public void setRenderingHints( final Map hints ) {
     rhints.clear();
     rhints.putAll( hints );
@@ -654,6 +673,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#addRenderingHints(Map)
    */
+  @Override
   public void addRenderingHints( final Map hints ) {
     rhints.putAll( hints );
   }
@@ -661,6 +681,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#getRenderingHints()
    */
+  @Override
   public RenderingHints getRenderingHints() {
     return rhints;
   }
@@ -668,6 +689,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#translate(int, int)
    */
+  @Override
   public void translate( final int x, final int y ) {
     translate( (double) x, (double) y );
   }
@@ -675,6 +697,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#translate(double, double)
    */
+  @Override
   public void translate( final double tx, final double ty ) {
     transform.translate( tx, ty );
   }
@@ -682,6 +705,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#rotate(double)
    */
+  @Override
   public void rotate( final double theta ) {
     transform.rotate( theta );
   }
@@ -689,6 +713,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#rotate(double, double, double)
    */
+  @Override
   public void rotate( final double theta, final double x, final double y ) {
     transform.rotate( theta, x, y );
   }
@@ -696,6 +721,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#scale(double, double)
    */
+  @Override
   public void scale( final double sx, final double sy ) {
     transform.scale( sx, sy );
     this.stroke = transformStroke( originalStroke );
@@ -704,6 +730,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#shear(double, double)
    */
+  @Override
   public void shear( final double shx, final double shy ) {
     transform.shear( shx, shy );
   }
@@ -711,6 +738,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#transform(AffineTransform)
    */
+  @Override
   public void transform( final AffineTransform tx ) {
     transform.concatenate( tx );
     this.stroke = transformStroke( originalStroke );
@@ -719,6 +747,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#setTransform(AffineTransform)
    */
+  @Override
   public void setTransform( final AffineTransform t ) {
     transform = new AffineTransform( t );
     this.stroke = transformStroke( originalStroke );
@@ -727,6 +756,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#getTransform()
    */
+  @Override
   public AffineTransform getTransform() {
     return new AffineTransform( transform );
   }
@@ -736,6 +766,7 @@ public class PdfGraphics2D extends Graphics2D {
    *
    * @see Graphics2D#getPaint()
    */
+  @Override
   public Paint getPaint() {
     if ( realPaint != null ) {
       return realPaint;
@@ -747,6 +778,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#getComposite()
    */
+  @Override
   public Composite getComposite() {
     return null;
   }
@@ -754,6 +786,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#setBackground(Color)
    */
+  @Override
   public void setBackground( final Color color ) {
     background = color;
   }
@@ -761,6 +794,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#getBackground()
    */
+  @Override
   public Color getBackground() {
     return background;
   }
@@ -768,6 +802,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#getStroke()
    */
+  @Override
   public Stroke getStroke() {
     return originalStroke;
   }
@@ -775,6 +810,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#getFontRenderContext()
    */
+  @Override
   public FontRenderContext getFontRenderContext() {
     final boolean antialias =
         RenderingHints.VALUE_TEXT_ANTIALIAS_ON.equals( getRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING ) );
@@ -786,6 +822,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#create()
    */
+  @Override
   public Graphics create() {
     final PdfGraphics2D g2 = new PdfGraphics2D();
     g2.transform = new AffineTransform( this.transform );
@@ -831,6 +868,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#getColor()
    */
+  @Override
   public Color getColor() {
     if ( paint instanceof Color ) {
       return (Color) paint;
@@ -842,6 +880,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#setColor(Color)
    */
+  @Override
   public void setColor( final Color color ) {
     setPaint( color );
   }
@@ -849,12 +888,14 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#setPaintMode()
    */
+  @Override
   public void setPaintMode() {
   }
 
   /**
    * @see Graphics#setXORMode(Color)
    */
+  @Override
   public void setXORMode( final Color c1 ) {
 
   }
@@ -862,6 +903,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#getFont()
    */
+  @Override
   public Font getFont() {
     return font;
   }
@@ -872,6 +914,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * Sets the current font.
    */
+  @Override
   public void setFont( final Font f ) {
     if ( f == null ) {
       return;
@@ -889,6 +932,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#getFontMetrics(Font)
    */
+  @Override
   public FontMetrics getFontMetrics( final Font f ) {
     return dg2.getFontMetrics( f );
   }
@@ -896,6 +940,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#getClipBounds()
    */
+  @Override
   public Rectangle getClipBounds() {
     if ( clip == null ) {
       return null;
@@ -906,6 +951,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#clipRect(int, int, int, int)
    */
+  @Override
   public void clipRect( final int x, final int y, final int width, final int height ) {
     final Rectangle2D rect = new Rectangle2D.Double( x, y, width, height );
     clip( rect );
@@ -914,6 +960,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#setClip(int, int, int, int)
    */
+  @Override
   public void setClip( final int x, final int y, final int width, final int height ) {
     final Rectangle2D rect = new Rectangle2D.Double( x, y, width, height );
     setClip( rect );
@@ -922,6 +969,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics2D#clip(Shape)
    */
+  @Override
   public void clip( Shape s ) {
     if ( s == null ) {
       setClip( null );
@@ -939,6 +987,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#getClip()
    */
+  @Override
   public Shape getClip() {
     if ( clip == null ) {
       return null;
@@ -954,6 +1003,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#setClip(Shape)
    */
+  @Override
   public void setClip( Shape s ) {
     cb.restoreState();
     cb.saveState();
@@ -976,6 +1026,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#copyArea(int, int, int, int, int, int)
    */
+  @Override
   public void copyArea( final int x, final int y, final int width, final int height, final int dx, final int dy ) {
 
   }
@@ -983,14 +1034,16 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawLine(int, int, int, int)
    */
+  @Override
   public void drawLine( final int x1, final int y1, final int x2, final int y2 ) {
-    final Line2D line = new Line2D.Double( (double) x1, (double) y1, (double) x2, (double) y2 );
+    final Line2D line = new Line2D.Double( x1, y1, x2, y2 );
     draw( line );
   }
 
   /**
    * @see Graphics#fillRect(int, int, int, int)
    */
+  @Override
   public void drawRect( final int x, final int y, final int width, final int height ) {
     draw( new Rectangle( x, y, width, height ) );
   }
@@ -998,6 +1051,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#fillRect(int, int, int, int)
    */
+  @Override
   public void fillRect( final int x, final int y, final int width, final int height ) {
     fill( new Rectangle( x, y, width, height ) );
   }
@@ -1005,6 +1059,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#clearRect(int, int, int, int)
    */
+  @Override
   public void clearRect( final int x, final int y, final int width, final int height ) {
     final Paint temp = paint;
     setPaint( background );
@@ -1015,6 +1070,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawRoundRect(int, int, int, int, int, int)
    */
+  @Override
   public void drawRoundRect( final int x, final int y, final int width, final int height, final int arcWidth,
       final int arcHeight ) {
     final RoundRectangle2D rect = new RoundRectangle2D.Double( x, y, width, height, arcWidth, arcHeight );
@@ -1024,6 +1080,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#fillRoundRect(int, int, int, int, int, int)
    */
+  @Override
   public void fillRoundRect( final int x, final int y, final int width, final int height, final int arcWidth,
       final int arcHeight ) {
     final RoundRectangle2D rect = new RoundRectangle2D.Double( x, y, width, height, arcWidth, arcHeight );
@@ -1033,22 +1090,25 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawOval(int, int, int, int)
    */
+  @Override
   public void drawOval( final int x, final int y, final int width, final int height ) {
-    final Ellipse2D oval = new Ellipse2D.Float( (float) x, (float) y, (float) width, (float) height );
+    final Ellipse2D oval = new Ellipse2D.Float( x, y, width, height );
     draw( oval );
   }
 
   /**
    * @see Graphics#fillOval(int, int, int, int)
    */
+  @Override
   public void fillOval( final int x, final int y, final int width, final int height ) {
-    final Ellipse2D oval = new Ellipse2D.Float( (float) x, (float) y, (float) width, (float) height );
+    final Ellipse2D oval = new Ellipse2D.Float( x, y, width, height );
     fill( oval );
   }
 
   /**
    * @see Graphics#drawArc(int, int, int, int, int, int)
    */
+  @Override
   public void drawArc( final int x, final int y, final int width, final int height, final int startAngle,
       final int arcAngle ) {
     final Arc2D arc = new Arc2D.Double( x, y, width, height, startAngle, arcAngle, Arc2D.OPEN );
@@ -1059,6 +1119,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#fillArc(int, int, int, int, int, int)
    */
+  @Override
   public void fillArc( final int x, final int y, final int width, final int height, final int startAngle,
       final int arcAngle ) {
     final Arc2D arc = new Arc2D.Double( x, y, width, height, startAngle, arcAngle, Arc2D.PIE );
@@ -1068,6 +1129,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawPolyline(int[], int[], int)
    */
+  @Override
   public void drawPolyline( final int[] x, final int[] y, final int nPoints ) {
     final Line2D line = new Line2D.Double( x[0], y[0], x[0], y[0] );
     for ( int i = 1; i < nPoints; i++ ) {
@@ -1079,6 +1141,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawPolygon(int[], int[], int)
    */
+  @Override
   public void drawPolygon( final int[] xPoints, final int[] yPoints, final int nPoints ) {
     final Polygon poly = new Polygon();
     for ( int i = 0; i < nPoints; i++ ) {
@@ -1090,6 +1153,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#fillPolygon(int[], int[], int)
    */
+  @Override
   public void fillPolygon( final int[] xPoints, final int[] yPoints, final int nPoints ) {
     final Polygon poly = new Polygon();
     for ( int i = 0; i < nPoints; i++ ) {
@@ -1101,6 +1165,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, ImageObserver)
    */
+  @Override
   public boolean drawImage( final Image img, final int x, final int y, final ImageObserver observer ) {
     return drawImage( img, x, y, null, observer );
   }
@@ -1108,6 +1173,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, int, int, ImageObserver)
    */
+  @Override
   public boolean drawImage( final Image img, final int x, final int y, final int width, final int height,
       final ImageObserver observer ) {
     return drawImage( img, x, y, width, height, null, observer );
@@ -1116,6 +1182,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, Color, ImageObserver)
    */
+  @Override
   public boolean
     drawImage( final Image img, final int x, final int y, final Color bgcolor, final ImageObserver observer ) {
     waitForImage( img );
@@ -1125,6 +1192,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, int, int, Color, ImageObserver)
    */
+  @Override
   public boolean drawImage( final Image img, final int x, final int y, final int width, final int height,
       final Color bgcolor, final ImageObserver observer ) {
     waitForImage( img );
@@ -1138,6 +1206,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, int, int, int, int, int, int, ImageObserver)
    */
+  @Override
   public boolean drawImage( final Image img, final int dx1, final int dy1, final int dx2, final int dy2, final int sx1,
       final int sy1, final int sx2, final int sy2, final ImageObserver observer ) {
     return drawImage( img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null, observer );
@@ -1146,6 +1215,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#drawImage(Image, int, int, int, int, int, int, int, int, Color, ImageObserver)
    */
+  @Override
   public boolean drawImage( final Image img, final int dx1, final int dy1, final int dx2, final int dy2, final int sx1,
       final int sy1, final int sx2, final int sy2, final Color bgcolor, final ImageObserver observer ) {
     waitForImage( img );
@@ -1179,6 +1249,7 @@ public class PdfGraphics2D extends Graphics2D {
   /**
    * @see Graphics#dispose()
    */
+  @Override
   public void dispose() {
 
     if ( !disposeCalled ) {
@@ -1338,10 +1409,8 @@ public class PdfGraphics2D extends Graphics2D {
       final ImageObserver obs ) {
     try {
       final com.lowagie.text.Image image = com.lowagie.text.Image.getInstance( img, bgColor );
-      image.setDeflated( true );
       if ( mask != null ) {
         final com.lowagie.text.Image msk = com.lowagie.text.Image.getInstance( mask, null, true );
-        msk.setDeflated( true );
         msk.makeMask();
         msk.setInverted( true );
         image.setImageMask( msk );
@@ -1432,7 +1501,7 @@ public class PdfGraphics2D extends Graphics2D {
           PdfGState gs = fillGState[alpha];
           if ( gs == null ) {
             gs = new PdfGState();
-            gs.setFillOpacity( (float) alpha / 255.00f );
+            gs.setFillOpacity( alpha / 255.00f );
             fillGState[alpha] = gs;
           }
           cb.setGState( gs );
@@ -1444,7 +1513,7 @@ public class PdfGraphics2D extends Graphics2D {
           PdfGState gs = strokeGState[alpha];
           if ( gs == null ) {
             gs = new PdfGState();
-            gs.setStrokeOpacity( (float) alpha / 255.0f );
+            gs.setStrokeOpacity( alpha / 255.0f );
             strokeGState[alpha] = gs;
           }
           cb.setGState( gs );
