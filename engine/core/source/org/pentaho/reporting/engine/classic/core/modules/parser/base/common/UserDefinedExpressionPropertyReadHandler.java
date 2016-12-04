@@ -22,5 +22,5 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
 public interface UserDefinedExpressionPropertyReadHandler extends XmlReadHandler {
   public void init( final BeanUtility expression, final String originalExpressionClass,
-                    final String expressionClass, final String expressionName);
+                    final String expressionClass, final String expressionName );
 }

@@ -66,6 +66,7 @@ public class ExpressionPropertyReadHandler extends AbstractMetaDataReadHandler {
 
     getBuilder().mandatory( "true".equals( attrs.getValue( getUri(), "mandatory" ) ) ); // NON-NLS
     getBuilder().computed( "true".equals( attrs.getValue( getUri(), "computed" ) ) ); // NON-NLS
+    getBuilder().designTime( "true".equals( attrs.getValue( getUri(), "designTimeProperty" ) ) ); // NON-NLS
     getBuilder().valueRole( parseValueRole( attrs ) );
     getBuilder().editor( parsePropertyEditor( attrs ) );
     getBuilder().readHandler( parseReadHandler( attrs ) );

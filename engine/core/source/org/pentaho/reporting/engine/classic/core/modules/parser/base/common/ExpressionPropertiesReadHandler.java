@@ -21,6 +21,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
+import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
@@ -65,20 +66,26 @@ public class ExpressionPropertiesReadHandler extends AbstractPropertyXmlReadHand
     return null;
   }
 
-  private XmlReadHandler createReadHandler(String propertyName) throws ParseException {
+  private XmlReadHandler createReadHandler( String propertyName ) throws ParseException {
     try {
       final ExpressionMetaData expressionMetaData = ExpressionRegistry.getInstance().getExpressionMetaData( expressionClass );
       final ExpressionPropertyMetaData propertyDescription = expressionMetaData.getPropertyDescription( propertyName );
-      final Class<? extends UserDefinedExpressionPropertyReadHandler> propertyReadHandler = propertyDescription.getPropertyReadHandler();
-      if (propertyReadHandler != null){
-        final UserDefinedExpressionPropertyReadHandler xmlReadHandler = propertyReadHandler.newInstance();
-        xmlReadHandler.init( beanUtility, originalExpressionClass, expressionClass, expression.getName());
-        return xmlReadHandler;
+      if ( propertyDescription != null ) {
+        final Class<? extends UserDefinedExpressionPropertyReadHandler> propertyReadHandler = propertyDescription.getPropertyReadHandler();
+        if ( propertyReadHandler != null ) {
+          final UserDefinedExpressionPropertyReadHandler xmlReadHandler = propertyReadHandler.newInstance();
+          xmlReadHandler.init( beanUtility, originalExpressionClass, expressionClass, expression.getName() );
+          return xmlReadHandler;
+        }
       }
       return new ExpressionPropertyReadHandler( beanUtility, originalExpressionClass,
           expressionClass, expression.getName() );
     }
-    catch (Exception e) {
+    catch ( MetaDataLookupException e ) {
+      return new ExpressionPropertyReadHandler( beanUtility, originalExpressionClass,
+          expressionClass, expression.getName() );
+    }
+    catch ( Exception e ) {
       throw new ParseException( "Unable to read metadata for property '" + propertyName + "'.", getLocator());
     }
 

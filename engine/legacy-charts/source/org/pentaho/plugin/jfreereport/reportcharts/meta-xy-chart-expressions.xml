@@ -5,53 +5,57 @@
               result="org.jfree.chart.JFreeChart"
               expert="false" hidden="false" preferred="false">
     <property name="domainAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="rangeAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="legendTextColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="legendBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotForegroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="domainPeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="rangePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
     <property name="rangeTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="titlePositionText" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
-    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="backgroundImage" mandatory="false" preferred="false" value-role="Resource" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="borderColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
-              propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
+              designTimeProperty="false" 
+			  propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="borderPaint" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="true"
               deprecated="true"/>
     <property name="borderVisible" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
@@ -62,7 +66,7 @@
               deprecated="true"/>
     <property name="chartHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartSectionOutline" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="chartUrlMask" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
@@ -70,85 +74,105 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="domainIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
-    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="domainTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainVerticalTickLabels" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="drawLegendBorder" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="labelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendLocation" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
     <property name="lineStyle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LineStylePropertyEditor"/>
-    <property name="lineWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="lineWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="markersVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="noDataMessage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundPaint" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="rangeIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
-    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="returnFileNameOnly" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="returnImageReference" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
-    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="titlePosition" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true" computed="true"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
-              expert="false" hidden="false"/>
+              expert="false" hidden="false" designTimeProperty="false"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
     <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+              designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
     <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
+    <property name="expressionMap" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              readHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyReadHandler"
+              writeHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyWriteHandler"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.ScatterPlotChartExpression"
@@ -156,52 +180,56 @@
               result="org.jfree.chart.JFreeChart"
               expert="false" hidden="false" preferred="false">
     <property name="domainAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="rangeAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="legendTextColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="legendBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotForegroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="domainPeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="rangePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
     <property name="rangeTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="titlePositionText" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
-    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="backgroundImage" mandatory="false" preferred="false" value-role="Resource" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="borderColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="borderPaint" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="true"
               deprecated="true"/>
@@ -213,7 +241,7 @@
               deprecated="true"/>
     <property name="chartHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartSectionOutline" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="chartUrlMask" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
@@ -221,82 +249,102 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="domainIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
-    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="domainTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainVerticalTickLabels" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="dotHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="dotWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="dotHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="dotWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="drawLegendBorder" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="labelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendLocation" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="noDataMessage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundPaint" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="rangeIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+   <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
-    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="returnFileNameOnly" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="returnImageReference" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
-    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="titlePosition" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true" computed="true"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              designTimeProperty="false" hidden="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
-              expert="false" hidden="false"/>
+              expert="false" hidden="false" designTimeProperty="false"/>
     <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
     <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+              designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
     <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
+    <property name="expressionMap" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              readHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyReadHandler"
+              writeHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyWriteHandler"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.XYBarChartExpression"
@@ -304,54 +352,58 @@
               result="org.jfree.chart.JFreeChart"
               expert="false" hidden="false" preferred="false">
     <property name="domainAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="rangeAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="margin" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true"/>
     <property name="legendTextColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="legendBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotForegroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="domainPeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="rangePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
     <property name="rangeTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="titlePositionText" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
-    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="backgroundImage" mandatory="false" preferred="false" value-role="Resource" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="borderColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="borderPaint" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="true"
               deprecated="true"/>
@@ -363,7 +415,7 @@
               deprecated="true"/>
     <property name="chartHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartSectionOutline" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="chartUrlMask" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
@@ -371,90 +423,108 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="domainIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="true" computed="true"/>
-    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="true" designTimeProperty="false" computed="true"/>
+    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="domainTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainVerticalTickLabels" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="drawBarOutline" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="drawLegendBorder" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="labelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendLocation" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="noDataMessage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundPaint" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="rangeIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
-    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="returnFileNameOnly" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="returnImageReference" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
-    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="renderPercentages" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="titlePosition" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true" computed="true"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
-              expert="false" hidden="false"/>
+              expert="false" hidden="false" designTimeProperty="false"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
     <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+              designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
     <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
     <property name="shadowVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="shadowXOffset" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="shadowYOffset" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="expressionMap" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              readHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyReadHandler"
+              writeHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyWriteHandler"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.XYAreaChartExpression"
@@ -462,52 +532,56 @@
               result="org.jfree.chart.JFreeChart"
               expert="false" hidden="false" preferred="false">
     <property name="domainAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="rangeAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="legendTextColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="legendBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotForegroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="domainPeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="rangePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
     <property name="rangeTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="titlePositionText" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
-    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="backgroundImage" mandatory="false" preferred="false" value-role="Resource" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="borderColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="borderPaint" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="true"
               deprecated="true"/>
@@ -519,7 +593,7 @@
               deprecated="true"/>
     <property name="chartHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartSectionOutline" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="chartUrlMask" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
@@ -527,85 +601,105 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="domainIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
-    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="domainTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainVerticalTickLabels" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="drawLegendBorder" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="labelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendLocation" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
     <property name="lineStyle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LineStylePropertyEditor"/>
-    <property name="lineWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="lineWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="markersVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="noDataMessage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundPaint" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="rangeIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
-    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="returnFileNameOnly" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="returnImageReference" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
-    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="titlePosition" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true" computed="true"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
-              expert="false" hidden="false"/>
+              expert="false" hidden="false" designTimeProperty="false"/>
     <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
     <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+              designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
     <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
+    <property name="expressionMap" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              readHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyReadHandler"
+              writeHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyWriteHandler"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.BubbleChartExpression"
@@ -613,57 +707,61 @@
               result="org.jfree.chart.JFreeChart"
               expert="false" hidden="false" preferred="false">
     <property name="domainAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="rangeAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="legendTextColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="legendBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotForegroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="domainPeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="rangePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
     <property name="rangeTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="titlePositionText" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
-    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="bubbleLabelContent" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true"/>
     <property name="XFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="YFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="ZFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
-    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="backgroundImage" mandatory="false" preferred="false" value-role="Resource" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="borderColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="borderPaint" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="true"
               deprecated="true"/>
@@ -675,7 +773,7 @@
               deprecated="true"/>
     <property name="chartHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartSectionOutline" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="chartUrlMask" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
@@ -683,82 +781,99 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="domainIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
-    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="domainTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainVerticalTickLabels" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="drawLegendBorder" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="labelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendLocation" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
     <property name="maxBubbleSize" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="noDataMessage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundPaint" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="rangeIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
-    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
-              expert="false" hidden="false"/>
+              expert="false" hidden="false" designTimeProperty="false"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="returnFileNameOnly" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="returnImageReference" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
-    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
-    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="titlePosition" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true" computed="true"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
     <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
     <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+              designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
     <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
+    <property name="expressionMap" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              readHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyReadHandler"
+              writeHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyWriteHandler"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.ExtendedXYLineChartExpression"
@@ -766,52 +881,56 @@
               result="org.jfree.chart.JFreeChart"
               expert="false" hidden="false" preferred="false">
     <property name="domainAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="rangeAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="legendTextColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="legendBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotForegroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="domainPeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="rangePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
     <property name="rangeTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="titlePositionText" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
-    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="backgroundImage" mandatory="false" preferred="false" value-role="Resource" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="borderColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="borderPaint" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="true"
               deprecated="true"/>
@@ -823,8 +942,9 @@
               deprecated="true"/>
     <property name="chartHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartSectionOutline" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="chartType" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ExtendedXYLineChartTypePropertyEditor"/>
     <property name="chartUrlMask" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
@@ -833,85 +953,105 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="domainIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
-    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="domainTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainVerticalTickLabels" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="drawLegendBorder" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="labelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendLocation" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
     <property name="lineStyle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LineStylePropertyEditor"/>
-    <property name="lineWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="lineWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="markersVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="noDataMessage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundPaint" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="rangeIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
-    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="returnFileNameOnly" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="returnImageReference" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
-    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="titlePosition" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true" computed="true"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
-              expert="false" hidden="false"/>
+              expert="false" hidden="false" designTimeProperty="false"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
     <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+              designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
     <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
+    <property name="expressionMap" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              readHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyReadHandler"
+              writeHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyWriteHandler"/>
   </expression>
 
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.XYAreaLineChartExpression"
@@ -919,58 +1059,62 @@
               result="org.jfree.chart.JFreeChart"
               expert="false" hidden="false" preferred="false">
     <property name="lineAxisIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="lineAxisStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="lineAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="domainAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="rangeAxisAutoRange" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false" compatibility-level="3.9.0"/>
+              hidden="false" designTimeProperty="false" compatibility-level="3.9.0"/>
     <property name="legendTextColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="legendBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotForegroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundAlpha" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="domainPeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
     <property name="rangePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
 
     <property name="domainTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
     <property name="rangeTickFormatString" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="titlePositionText" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
-    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="antiAlias" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="backgroundImage" mandatory="false" preferred="false" value-role="Resource" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="borderColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="borderPaint" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="true"
               deprecated="true"/>
@@ -982,7 +1126,7 @@
               deprecated="true"/>
     <property name="chartHeight" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartSectionOutline" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="chartUrlMask" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="chartWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
@@ -990,111 +1134,133 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="domainIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" computed="true"/>
-    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="domainTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="domainTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="domainVerticalTickLabels" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="drawLegendBorder" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="horizontal" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="labelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="legendLocation" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LegendLocationPropertyEditor"/>
     <property name="lineStyle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.LineStylePropertyEditor"/>
-    <property name="lineWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="lineWidth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="markersVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="noDataMessage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="plotBackgroundPaint" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="rangeIncludesZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               computed="true"/>
-    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rangeTitle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="rangeTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="returnFileNameOnly" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="returnImageReference" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="true" deprecated="true"/>
     <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
-    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="stacked" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
+    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="titlePosition" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true" computed="true"/>
     <property name="useDrawable" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               deprecated="true"/>
     <property name="logarithmicAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="humanReadableLogarithmicFormat" mandatory="false" preferred="false" value-role="Value"
-              expert="false" hidden="false"/>
+              expert="false" hidden="false" designTimeProperty="false"/>
     <property name="lineTimePeriod" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.DateTimeUnitPropertyEditor"/>
 
     <property name="secondValueAxisLabel" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="lineSeriesColor" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="linesLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="lineTicksLabelFormat" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
-    <property name="lineTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
+    <property name="lineTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              designTimeProperty="false"/>
 
     <property name="linePeriodCount" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="lineRangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="lineRangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="lineTitleFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="linesTickLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="secondaryDataSet" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="sharedRangeAxis" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
     <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"/>
+              hidden="false" designTimeProperty="false"/>
     <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
+              designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
     <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false"
-              hidden="false"
+              hidden="false" designTimeProperty="true"
               impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.XYZChartFormulaExpressionPropertyCore"/>
+    <property name="expressionMap" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+              readHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyReadHandler"
+              writeHandler="org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionMapPropertyWriteHandler"/>
   </expression>
 </meta-data>

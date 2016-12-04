@@ -408,11 +408,11 @@ public class ExpressionWriterUtility {
     // and are set elsewhere
 
     final ExpressionPropertyWriteHandler writeHandler = createWriteHandler( e, propertyName );
-    if (writeHandler instanceof BundleExpressionPropertyWriteHandler) {
-      BundleExpressionPropertyWriteHandler bw = (BundleExpressionPropertyWriteHandler) writeHandler;
+    if ( writeHandler instanceof BundleExpressionPropertyWriteHandler ) {
+      BundleExpressionPropertyWriteHandler bw = ( BundleExpressionPropertyWriteHandler ) writeHandler;
       bw.initBundleContext( bundle, state );
     }
-    writeHandler.writeExpressionParameter(writer, beanUtility, propertyName, namespaceUri);
+    writeHandler.writeExpressionParameter( writer, beanUtility, propertyName, namespaceUri );
   }
 
 
@@ -427,7 +427,7 @@ public class ExpressionWriterUtility {
       }
     }
     catch ( Exception ex ) {
-      logger.info( "No valid property metadata defined for " + e.getClass() + " on property " + key);
+      logger.info( "No valid property metadata defined for " + e.getClass() + " on property " + key );
     }
     return new DefaultExpressionPropertyWriteHandler();
   }

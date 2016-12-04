@@ -45,6 +45,8 @@ public interface ExpressionPropertyMetaData extends MetaData {
 
   public boolean isMandatory();
 
+  public boolean isDesignTimeProperty();
+
   public PropertyDescriptor getBeanDescriptor();
 
   public PropertyEditor getEditor();

@@ -66,9 +66,9 @@ public class Backlog6746Test {
     MasterReport r2 = saveAndLoad( r );
     final Expression test = r2.getExpressions().get( "test" );
     Backlog6746Expression testCast = (Backlog6746Expression) test;
-    // that fails, as expressions dont implement equals. Needs a more manual validation here ..
-    // But the error shows that the expressions are there, and that parsing and writing works.
-    Assert.assertEquals( testCast.getExpressionMap(), e.getExpressionMap() );
+    FormulaExpression fe1 = (FormulaExpression) testCast.getExpressionMap().get("my-property");
+    FormulaExpression fe2 = (FormulaExpression) e.getExpressionMap().get("my-property");
+    Assert.assertEquals( fe1.getFormulaExpression(), fe2.getFormulaExpression() );
   }
 
   private MasterReport saveAndLoad( final MasterReport originalReport ) throws Exception {

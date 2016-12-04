@@ -43,13 +43,14 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
   private SharedPropertyDescriptorProxy propertyDescriptor;
   private Class<? extends UserDefinedExpressionPropertyReadHandler> propertyReadHandler;
   private Class<? extends ExpressionPropertyWriteHandler> propertyWriteHandler;
+  private boolean designTimeProperty;
 
   @Deprecated
   public DefaultExpressionPropertyMetaData( final String name, final String bundleLocation, final boolean expert,
       final boolean preferred, final boolean hidden, final boolean deprecated, final boolean mandatory,
       final boolean computed, final String propertyRole, final SharedBeanInfo beanInfo,
       final String propertyEditorClass, final ExpressionPropertyCore expressionPropertyCore,
-      final MaturityLevel maturityLevel, final int compatibilityLevel ) {
+      final MaturityLevel maturityLevel, final int compatibilityLevel, boolean  designTimeProperty ) {
     super( name, bundleLocation, "property.", expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel );
     ArgumentNullException.validate( "propertyRole", propertyRole );
     ArgumentNullException.validate( "beanInfo", beanInfo );
@@ -63,6 +64,7 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
             PropertyEditor.class );
     this.mandatory = mandatory;
     this.propertyRole = propertyRole;
+    this.designTimeProperty = designTimeProperty;
   }
 
   public DefaultExpressionPropertyMetaData( final ExpressionPropertyMetaDataBuilder builder ) {
@@ -75,6 +77,7 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
     this.propertyRole = builder.getValueRole();
     this.propertyReadHandler = builder.getPropertyReadHandler();
     this.propertyWriteHandler = builder.getPropertyWriteHandler();
+    this.designTimeProperty = builder.isDesignTime();
 
     ArgumentNullException.validate( "propertyRole", propertyRole );
     ArgumentNullException.validate( "propertyDescriptor", propertyDescriptor );
@@ -143,5 +146,9 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
   @Override
   public Class<? extends ExpressionPropertyWriteHandler> getPropertyWriteHandler() {
     return propertyWriteHandler;
+  }
+
+  public boolean isDesignTimeProperty() {
+    return designTimeProperty;
   }
 }
