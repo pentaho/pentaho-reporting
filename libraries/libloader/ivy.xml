@@ -23,19 +23,20 @@
 		<dependency org="${ivy.artifact.group}" name="libpixie" rev="${project.revision}" transitive="true" changing="true" />
 
 		<!--  external 'optional' dependencies -->
-		<dependency org="org.apache.xmlgraphics" name="batik-anim" rev="1.7" conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-awt-util" rev="1.7" conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-bridge" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-css" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-dom" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-ext" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-gui-util" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-gvt" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-parser" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-script" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-svg-dom" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-util" rev="1.7"  conf="default_external->default" transitive="false"/>
-		<dependency org="org.apache.xmlgraphics" name="batik-xml" rev="1.7"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-anim" rev="${dependency.batik.revision}" conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-awt-util" rev="${dependency.batik.revision}" conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-bridge" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-css" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-dom" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-ext" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-gui-util" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-gvt" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-parser" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-script" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-svg-dom" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-util" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="batik-xml" rev="${dependency.batik.revision}"  conf="default_external->default" transitive="false"/>
+		<dependency org="org.apache.xmlgraphics" name="xmlgraphics-commons" rev="1.5"  conf="default_external->default" transitive="false"/>
         <dependency org="xml-apis" name="xml-apis-ext" rev="1.3.04" conf="default_external->default" transitive="false"/>
 
         <dependency org="rhino" name="js" rev="1.7R1" conf="default_external->default"/>
