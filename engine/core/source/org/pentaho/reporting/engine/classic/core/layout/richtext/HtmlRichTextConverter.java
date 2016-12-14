@@ -152,6 +152,10 @@ public class HtmlRichTextConverter implements RichTextConverter {
             final AttributeSet attr = (AttributeSet) o;
             if ( attr.getAttribute( HTML.Attribute.HREF ) == null ) {
               continue;
+            } else {
+              SimpleAttributeSet hrefAttributeSet = new SimpleAttributeSet();
+              hrefAttributeSet.addAttribute(HTML.Attribute.HREF, attr.getAttribute( HTML.Attribute.HREF ));
+              muxList.add(hrefAttributeSet);
             }
           }
         }
@@ -435,6 +439,11 @@ public class HtmlRichTextConverter implements RichTextConverter {
     final Object titleAttribute = attr.getAttribute( HTML.Attribute.TITLE );
     if ( titleAttribute != null ) {
       result.setAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.TITLE, String.valueOf( titleAttribute ) );
+    }
+
+    final Object hrefAttribute = attr.getAttribute( HTML.Attribute.HREF);
+    if (hrefAttribute != null ) {
+      result.getStyle().setStyleProperty( ElementStyleKeys.HREF_TARGET, String.valueOf(hrefAttribute));
     }
 
     final Object textIndentStyle = attr.getAttribute( CSS.Attribute.TEXT_INDENT );
