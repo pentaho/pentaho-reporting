@@ -220,6 +220,7 @@ public class PatchRtfTable extends RtfElement {
       RtfElement re = this.rows.get( i );
       // .result.write(re.write());
       re.writeContent( result );
+      this.rows.remove( i );
     }
 
     result.write( RtfParagraph.PARAGRAPH_DEFAULTS );
