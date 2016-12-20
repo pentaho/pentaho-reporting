@@ -21,6 +21,8 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultExpressionPropertyCore;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyCore;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.SharedPropertyDescriptorProxy;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionPropertyWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.UserDefinedExpressionPropertyReadHandler;
 
 import java.beans.PropertyEditor;
 
@@ -32,6 +34,9 @@ public class ExpressionPropertyMetaDataBuilder extends MetaDataBuilder<Expressio
   private ExpressionPropertyCore core;
   private SharedPropertyDescriptorProxy descriptor;
   private Class<? extends Expression> expression;
+  private Class<? extends UserDefinedExpressionPropertyReadHandler> propertyReadHandler;
+  private Class<? extends ExpressionPropertyWriteHandler> propertyWriteHandler;
+  private boolean designTime;
 
   public ExpressionPropertyMetaDataBuilder() {
     this.core = new DefaultExpressionPropertyCore();
@@ -39,6 +44,16 @@ public class ExpressionPropertyMetaDataBuilder extends MetaDataBuilder<Expressio
 
   protected ExpressionPropertyMetaDataBuilder self() {
     return this;
+  }
+
+  public ExpressionPropertyMetaDataBuilder readHandler( Class<? extends UserDefinedExpressionPropertyReadHandler> handler ) {
+    this.propertyReadHandler = handler;
+    return self();
+  }
+
+  public ExpressionPropertyMetaDataBuilder writeHandler( Class<? extends ExpressionPropertyWriteHandler> handler ) {
+    this.propertyWriteHandler = handler;
+    return self();
   }
 
   public ExpressionPropertyMetaDataBuilder descriptor( SharedPropertyDescriptorProxy descriptor ) {
@@ -76,6 +91,11 @@ public class ExpressionPropertyMetaDataBuilder extends MetaDataBuilder<Expressio
     return self();
   }
 
+  public ExpressionPropertyMetaDataBuilder designTime( boolean v ) {
+    this.designTime = v;
+    return self();
+  }
+
   public boolean isMandatory() {
     return mandatory;
   }
@@ -86,6 +106,10 @@ public class ExpressionPropertyMetaDataBuilder extends MetaDataBuilder<Expressio
 
   public String getValueRole() {
     return valueRole;
+  }
+
+  public boolean isDesignTime() {
+    return designTime;
   }
 
   public Class<? extends PropertyEditor> getEditor() {
@@ -104,5 +128,13 @@ public class ExpressionPropertyMetaDataBuilder extends MetaDataBuilder<Expressio
       return new SharedPropertyDescriptorProxy( expression, getName() );
     }
     return null;
+  }
+
+  public Class<? extends UserDefinedExpressionPropertyReadHandler> getPropertyReadHandler() {
+    return propertyReadHandler;
+  }
+
+  public Class<? extends ExpressionPropertyWriteHandler> getPropertyWriteHandler() {
+    return propertyWriteHandler;
   }
 }

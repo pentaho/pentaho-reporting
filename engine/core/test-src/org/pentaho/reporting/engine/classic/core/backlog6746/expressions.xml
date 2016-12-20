@@ -1,0 +1,33 @@
+<!--
+  ~ This program is free software; you can redistribute it and/or modify it under the
+  ~  terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+  ~  Foundation.
+  ~
+  ~  You should have received a copy of the GNU Lesser General Public License along with this
+  ~  program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+  ~  or from the Free Software Foundation, Inc.,
+  ~  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~  See the GNU Lesser General Public License for more details.
+  ~
+  ~  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
+  -->
+
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+    <expression class="org.pentaho.reporting.engine.classic.core.backlog6746.Backlog6746Expression"
+                bundle-name="org.pentaho.reporting.engine.classic.core.backlog6746.Backlog6746ExpressionBundle"
+                result="java.lang.Object"
+                expert="false" hidden="true" preferred="false" deprecated="true">
+        <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+                  hidden="false"/>
+        <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+        <property name="expressionMap" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
+                  readHandler="org.pentaho.reporting.engine.classic.core.backlog6746.ExpressionMapPropertyReadHandler"
+                  writeHandler="org.pentaho.reporting.engine.classic.core.backlog6746.ExpressionMapPropertyWriteHandler"
+        />
+    </expression>
+
+</meta-data>

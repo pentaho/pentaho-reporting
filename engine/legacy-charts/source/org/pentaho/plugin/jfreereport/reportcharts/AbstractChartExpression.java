@@ -29,14 +29,19 @@ import org.jfree.chart.title.TextTitle;
 import org.jfree.data.general.Dataset;
 import org.jfree.ui.RectangleEdge;
 import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.DynamicExpression;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.function.WrapperExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionPropertyReadHandler;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
 import org.pentaho.reporting.engine.classic.core.states.LegacyDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.util.StrokeUtility;
+import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
@@ -55,13 +60,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @noinspection UnusedDeclaration, JavaDoc
  */
-public abstract class AbstractChartExpression extends AbstractExpression implements ChartExpression {
+public abstract class AbstractChartExpression extends AbstractExpression implements ChartExpression, DynamicExpression {
   public static final String LINE_STYLE_SOLID_STR = "solid"; //$NON-NLS-1$
   public static final String LINE_STYLE_DASH_STR = "dash"; //$NON-NLS-1$
   public static final String LINE_STYLE_DOT_STR = "dot"; //$NON-NLS-1$
@@ -123,6 +130,8 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
 
   private String tooltipFormula;
   private String urlFormula;
+  
+  private LinkedHashMap<String, Expression> expressionMap;
 
   protected AbstractChartExpression() {
     seriesColors = new ArrayList<String>();
@@ -168,6 +177,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     chartCache = new HashMap<Object, JFreeChart>();
     plotBackgroundAlpha = 1;
     plotForegroundAlpha = 1;
+    expressionMap = new LinkedHashMap<>();
   }
 
   public Font getItemLabelFont() {
@@ -427,6 +437,25 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     this.seriesColors.addAll( Arrays.asList( fields ) );
   }
 
+  @Override
+  public Map<String,Expression> getExpressionMap() {
+    return new LinkedHashMap<>( expressionMap );
+  }
+
+  @Override
+  public void setExpressionMap( Map<String,Expression> values ) {
+    expressionMap.clear();
+    expressionMap.putAll( values );
+  }
+
+  public void addExpression( String property, Expression e ){
+    expressionMap.put( property, e );
+  }
+
+  public void removeExpression( String property ) {
+    expressionMap.remove( property );
+  }
+
   protected void storeChartInCache( final Object key, final JFreeChart chart ) {
     if ( key == null ) {
       return;
@@ -461,11 +490,28 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     instance.chartCache.clear();
     instance.seriesColors = (ArrayList<String>) seriesColors.clone();
     instance.plotImageCache = null;
+    instance.expressionMap = ( LinkedHashMap<String, Expression> ) expressionMap.clone();
+    for ( Map.Entry<String, Expression> entry : expressionMap.entrySet() ) {
+      entry.setValue( entry.getValue().getInstance() );
+    }
     return instance;
   }
 
   public Object getValue() {
     try {
+
+      Iterator it = expressionMap.entrySet().iterator();
+      while ( it.hasNext() ) {
+        Map.Entry pair = ( Map.Entry ) it.next();
+        FormulaExpression formulaExpression = ( FormulaExpression ) pair.getValue();
+        formulaExpression.setRuntime( getRuntime() );
+        final Object o = formulaExpression.getValue();
+
+        BeanUtility beanUtility = new BeanUtility( this );
+        Class propertyType = beanUtility.getPropertyType( (String) pair.getKey() );
+        beanUtility.setPropertyAsString( (String) pair.getKey(), propertyType, String.valueOf( o ) );
+      }
+
       final Object maybeCollector = getDataRow().get( getDataSource() );
       final Dataset dataset;
       final Object cacheKey;

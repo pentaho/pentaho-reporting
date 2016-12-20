@@ -128,7 +128,7 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
    *
    * @return the object.
    */
-  public Object getObject() {
+  public Expression getObject() {
     return expression;
   }
 }

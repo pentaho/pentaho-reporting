@@ -18,6 +18,7 @@
 package org.pentaho.reporting.designer.extensions.legacycharts;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.expressions.DynamicExpressionTableModel;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionPropertiesTableModel;
 import org.pentaho.reporting.designer.core.util.ActionToggleButton;
 import org.pentaho.reporting.designer.core.util.ExpressionListCellRenderer;
@@ -250,7 +251,7 @@ public class LegacyChartEditorDialog extends CommonDialog {
       new SecondaryDataSourceChangeHandler() );
 
     chartTable = new ElementMetaDataTable();
-    chartPropertiesTableModel = new ChartExpressionPropertiesTableModel();
+    chartPropertiesTableModel = new DynamicExpressionTableModel();
 
     primaryDataSourceTable = new ElementMetaDataTable();
     primaryDataSourcePropertiesTableModel = new ExpressionPropertiesTableModel();

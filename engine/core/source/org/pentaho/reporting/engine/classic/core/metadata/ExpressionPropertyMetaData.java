@@ -19,7 +19,10 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionPropertyWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.UserDefinedExpressionPropertyReadHandler;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
@@ -42,6 +45,8 @@ public interface ExpressionPropertyMetaData extends MetaData {
 
   public boolean isMandatory();
 
+  public boolean isDesignTimeProperty();
+
   public PropertyDescriptor getBeanDescriptor();
 
   public PropertyEditor getEditor();
@@ -58,4 +63,12 @@ public interface ExpressionPropertyMetaData extends MetaData {
   public boolean isComputed();
 
   public String[] getExtraCalculationFields();
+
+  default public Class<? extends UserDefinedExpressionPropertyReadHandler> getPropertyReadHandler() {
+    return null;
+  }
+
+  default public Class<? extends ExpressionPropertyWriteHandler> getPropertyWriteHandler() {
+    return null;
+  }
 }
