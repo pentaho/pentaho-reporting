@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.ui.datasources.pmd;
@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.pmd.PmdDataFa
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
@@ -54,7 +55,29 @@ import org.xml.sax.InputSource;
 
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
-import javax.swing.*;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionEvent;
@@ -65,7 +88,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -153,8 +180,8 @@ public class PmdDataSourceEditor extends CommonDialog {
 
   private class AddQueryAction extends AbstractAction {
     public AddQueryAction() {
-      final URL resource = PmdDataSourceEditor.class.getResource
-        ( "/org/pentaho/reporting/ui/datasources/pmd/resources/Add.png" ); // NON-NLS
+      final URL resource = PmdDataSourceEditor.class.getResource(
+        "/org/pentaho/reporting/ui/datasources/pmd/resources/Add.png" ); // NON-NLS
       if ( resource != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( resource ) );
       } else {
@@ -218,8 +245,8 @@ public class PmdDataSourceEditor extends CommonDialog {
 
   private class QueryDesignerAction extends AbstractAction {
     public QueryDesignerAction() {
-      final URL resource = PmdDataSourceModule.class.getResource
-        ( "/org/pentaho/reporting/ui/datasources/pmd/resources/Edit.png" ); // NON-NLS
+      final URL resource = PmdDataSourceModule.class.getResource(
+        "/org/pentaho/reporting/ui/datasources/pmd/resources/Edit.png" ); // NON-NLS
       if ( resource != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( resource ) );
       } else {
@@ -238,8 +265,8 @@ public class PmdDataSourceEditor extends CommonDialog {
 
   private class RemoveQueryAction extends AbstractAction {
     public RemoveQueryAction() {
-      final URL resource = PmdDataSourceEditor.class.getResource
-        ( "/org/pentaho/reporting/ui/datasources/pmd/resources/Remove.png" ); // NON-NLS
+      final URL resource = PmdDataSourceEditor.class.getResource(
+        "/org/pentaho/reporting/ui/datasources/pmd/resources/Remove.png" ); // NON-NLS
       if ( resource != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( resource ) );
       } else {
@@ -822,8 +849,8 @@ public class PmdDataSourceEditor extends CommonDialog {
     queryDesignerButton.setEnabled( hasDomain && querySelected && isFileSelected );
     queryAddButton.setEnabled( true );
 
-    globalScriptTextArea.setSyntaxEditingStyle( mapLanguageToSyntaxHighlighting
-      ( (ScriptEngineFactory) globalLanguageField.getSelectedItem() ) );
+    globalScriptTextArea.setSyntaxEditingStyle( mapLanguageToSyntaxHighlighting(
+      (ScriptEngineFactory) globalLanguageField.getSelectedItem() ) );
 
     final ScriptEngineFactory queryScriptLanguage = (ScriptEngineFactory) queryLanguageField.getSelectedItem();
     if ( queryScriptLanguage == null ) {
@@ -850,10 +877,10 @@ public class PmdDataSourceEditor extends CommonDialog {
     }
 
     final String language = script.getLanguageName();
-    if ( "ECMAScript".equalsIgnoreCase( language ) ||
-      "js".equalsIgnoreCase( language ) ||
-      "rhino".equalsIgnoreCase( language ) ||
-      "javascript".equalsIgnoreCase( language ) ) {
+    if ( "ECMAScript".equalsIgnoreCase( language )
+       || "js".equalsIgnoreCase( language )
+       || "rhino".equalsIgnoreCase( language )
+       || "javascript".equalsIgnoreCase( language ) ) {
       return SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT;
     }
     if ( "groovy".equalsIgnoreCase( language ) ) {
@@ -864,7 +891,7 @@ public class PmdDataSourceEditor extends CommonDialog {
 
   protected void updateQueries() {
     try {
-      final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      final DocumentBuilderFactory factory = XMLParserFactoryProducer.createSecureDocBuilderFactory();
       final DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 
       final DataSetQuery[] objects = queries.values().toArray( new DataSetQuery[ queries.size() ] );

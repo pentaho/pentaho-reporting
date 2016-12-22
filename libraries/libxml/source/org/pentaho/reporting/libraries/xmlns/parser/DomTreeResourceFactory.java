@@ -12,13 +12,14 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns.parser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
@@ -69,12 +70,11 @@ public class DomTreeResourceFactory implements ResourceFactory {
   public Resource create( final ResourceManager manager,
                           final ResourceData data,
                           final ResourceKey context ) throws ResourceCreationException, ResourceLoadingException {
-
-    final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-    dbf.setNamespaceAware( true );
-    dbf.setValidating( false );
-
+    final DocumentBuilderFactory dbf;
     try {
+      dbf = XMLParserFactoryProducer.createSecureDocBuilderFactory();
+      dbf.setNamespaceAware( true );
+      dbf.setValidating( false );
       final DocumentBuilder db = dbf.newDocumentBuilder();
       db.setEntityResolver( ParserEntityResolver.getDefaultResolver() );
       db.setErrorHandler( new LoggingErrorHandler() );

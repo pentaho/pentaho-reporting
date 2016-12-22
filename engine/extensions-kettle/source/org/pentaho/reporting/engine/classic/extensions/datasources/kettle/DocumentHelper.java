@@ -12,13 +12,14 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
 import org.pentaho.di.core.exception.KettlePluginException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.pentaho.reporting.libraries.xmlns.parser.LoggingErrorHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParserEntityResolver;
 import org.w3c.dom.Document;
@@ -52,7 +53,7 @@ public class DocumentHelper {
 
   public static Document loadDocument( final InputStream in ) throws KettlePluginException {
     try {
-      final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+      final DocumentBuilderFactory dbf = XMLParserFactoryProducer.createSecureDocBuilderFactory();
       dbf.setNamespaceAware( true );
       dbf.setValidating( false );
 

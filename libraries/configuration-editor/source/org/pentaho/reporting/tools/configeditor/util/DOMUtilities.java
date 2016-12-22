@@ -12,11 +12,12 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.tools.configeditor.util;
 
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -61,7 +62,7 @@ public final class DOMUtilities {
    */
   public static Document parseInputStream( final InputStream instream )
     throws ParserConfigurationException, SAXException, IOException {
-    final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    final DocumentBuilderFactory dbf = XMLParserFactoryProducer.createSecureDocBuilderFactory();
     final DocumentBuilder db = dbf.newDocumentBuilder();
     return db.parse( new InputSource( instream ) );
   }
