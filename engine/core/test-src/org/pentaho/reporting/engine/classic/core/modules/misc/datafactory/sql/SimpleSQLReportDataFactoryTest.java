@@ -12,11 +12,43 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2016 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2017 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
+import static org.hamcrest.Matchers.emptyArray;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.table.TableModel;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -26,25 +58,7 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-import javax.swing.table.TableModel;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
-import static org.hamcrest.Matchers.emptyArray;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-
-public class SimpleSQLReportDataFactoryTest {
+public class SimpleSQLReportDataFactoryTest extends Assert {
 
   private static final String QUERY = "test_query";
 
@@ -56,9 +70,9 @@ public class SimpleSQLReportDataFactoryTest {
     connection = mock( Connection.class );
     factory = spy( new SimpleSQLReportDataFactory( connection ) );
 
-    DataFactoryContext dataFactoryContext = mock( DataFactoryContext.class );
-    Configuration conf = mock( Configuration.class );
-    ResourceBundleFactory resourceBundleFactory = mock( ResourceBundleFactory.class );
+    final DataFactoryContext dataFactoryContext = mock( DataFactoryContext.class );
+    final Configuration conf = mock( Configuration.class );
+    final ResourceBundleFactory resourceBundleFactory = mock( ResourceBundleFactory.class );
     doReturn( conf ).when( dataFactoryContext ).getConfiguration();
     doReturn( resourceBundleFactory ).when( dataFactoryContext ).getResourceBundleFactory();
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
@@ -67,81 +81,81 @@ public class SimpleSQLReportDataFactoryTest {
 
   @Test( expected = NullPointerException.class )
   public void testCreateFactoryWithNullProvider() {
-    ConnectionProvider connectionProvider = null;
+    final ConnectionProvider connectionProvider = null;
     new SimpleSQLReportDataFactory( connectionProvider );
   }
 
   @Test( expected = SQLException.class )
   public void testGetNullConnection() throws SQLException {
     factory = new SimpleSQLReportDataFactory( mock( JndiConnectionProvider.class ) );
-    DataRow dataRow = mock( DataRow.class );
+    final DataRow dataRow = mock( DataRow.class );
     factory.getConnection( dataRow );
   }
 
   @Test
   public void testGetConnection() throws SQLException {
-    DataRow dataRow = mock( DataRow.class );
-    Connection con = factory.getConnection( dataRow );
+    final DataRow dataRow = mock( DataRow.class );
+    final Connection con = factory.getConnection( dataRow );
     assertThat( con, is( equalTo( connection ) ) );
   }
 
   @Test
   public void testGetConnectionWithoutCredentials() throws SQLException {
-    DataRow dataRow = mock( DataRow.class );
+    final DataRow dataRow = mock( DataRow.class );
     factory.setUserField( "userField" );
     factory.setPasswordField( "passwordField" );
 
-    Connection con = factory.getConnection( dataRow );
+    final Connection con = factory.getConnection( dataRow );
     assertThat( con, is( equalTo( connection ) ) );
   }
 
   @Test
   public void testGetConnectionWithCredentials() throws SQLException {
-    DataRow dataRow = mock( DataRow.class );
+    final DataRow dataRow = mock( DataRow.class );
     factory.setUserField( "userField" );
     factory.setPasswordField( "passwordField" );
     doReturn( "user" ).when( dataRow ).get( "userField" );
     doReturn( "password" ).when( dataRow ).get( "passwordField" );
 
-    Connection con = factory.getConnection( dataRow );
+    final Connection con = factory.getConnection( dataRow );
     assertThat( con, is( equalTo( connection ) ) );
   }
 
   @Test( expected = ReportDataFactoryException.class )
   public void testQueryDataWithSqlException() throws ReportDataFactoryException, SQLException {
-    DataRow parameters = mock( DataRow.class );
-    String[] preparedParameterNames = new String[] {};
+    final DataRow parameters = mock( DataRow.class );
+    final String[] preparedParameterNames = new String[] {};
     doThrow( SQLException.class ).when( factory ).parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
     factory.queryData( QUERY, parameters );
   }
 
   @Test
   public void testQueryData() throws ReportDataFactoryException, SQLException {
-    DataRow parameters = mock( DataRow.class );
-    TableModel model = mock( TableModel.class );
-    String[] preparedParameterNames = new String[] {};
+    final DataRow parameters = mock( DataRow.class );
+    final TableModel model = mock( TableModel.class );
+    final String[] preparedParameterNames = new String[] {};
     doReturn( model ).when( factory ).parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
-    TableModel result = factory.queryData( QUERY, parameters );
+    final TableModel result = factory.queryData( QUERY, parameters );
     assertThat( result, is( equalTo( model ) ) );
   }
 
   @Test( expected = ReportDataFactoryException.class )
   public void testGetReferencedFieldsComputedQueryException() throws ReportDataFactoryException, SQLException {
-    DataRow parameters = mock( DataRow.class );
+    final DataRow parameters = mock( DataRow.class );
     doThrow( ReportDataFactoryException.class ).when( factory ).computedQuery( QUERY + "${param}", parameters );
     factory.getReferencedFields( QUERY + "${param}", parameters );
   }
 
   @Test( expected = ReportDataFactoryException.class )
   public void testGetReferencedFieldsSqlException() throws ReportDataFactoryException, SQLException {
-    DataRow parameters = mock( DataRow.class );
+    final DataRow parameters = mock( DataRow.class );
     doThrow( SQLException.class ).when( factory ).getConnection( parameters );
     factory.getReferencedFields( QUERY + "${param}", parameters );
   }
 
   @Test
   public void testGetReferencedFields() throws ReportDataFactoryException, SQLException {
-    DataRow parameters = mock( DataRow.class );
+    final DataRow parameters = mock( DataRow.class );
     String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
     assertThat( result, arrayContainingInAnyOrder( "param", DataFactory.QUERY_LIMIT ) );
 
@@ -158,7 +172,7 @@ public class SimpleSQLReportDataFactoryTest {
 
   @Test
   public void testComputedQuery() throws ReportDataFactoryException {
-    DataRow parameters = mock( DataRow.class );
+    final DataRow parameters = mock( DataRow.class );
     assertThat( factory.computedQuery( QUERY, parameters ), is( equalTo( QUERY ) ) );
   }
 
@@ -171,12 +185,12 @@ public class SimpleSQLReportDataFactoryTest {
 
   @Test
   public void testParametrizeAndQuery() throws SQLException {
-    DataRow parameters = mock( DataRow.class );
-    String[] preparedParameterNames = new String[] {};
-    Connection con = mock( Connection.class );
-    PreparedStatement statement = mock( PreparedStatement.class );
-    ResultSet res = mock( ResultSet.class );
-    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    final DataRow parameters = mock( DataRow.class );
+    final String[] preparedParameterNames = new String[] {};
+    final Connection con = mock( Connection.class );
+    final PreparedStatement statement = mock( PreparedStatement.class );
+    final ResultSet res = mock( ResultSet.class );
+    final ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
 
     doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
     doReturn( 20 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
@@ -192,7 +206,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( true ).doReturn( false ).when( res ).next();
     doReturn( "test_val" ).when( res ).getObject( 1 );
 
-    TableModel result = factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
+    final TableModel result = factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
 
     verify( con ).createStatement( ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY );
     verify( statement ).setMaxRows( 10 );
@@ -204,20 +218,24 @@ public class SimpleSQLReportDataFactoryTest {
     assertThat( result.getColumnCount(), is( equalTo( 1 ) ) );
     assertThat( result.getColumnName( 0 ), is( equalTo( "test_column_label" ) ) );
     assertThat( (String) result.getValueAt( 0, 0 ), is( equalTo( "test_val" ) ) );
+
+    final String format = "SELECT * FROM table WHERE field = ? AND field2 {0} ? AND field3 = NULL";
+    final String query = factory.fixQuery( MessageFormat.format( format, "=" ), Arrays.asList( "VALUE", null ) );
+    assertEquals( MessageFormat.format( format, "is" ), query );
   }
 
   @Test
   public void testParametrizeAndQueryWithCallableStatement() throws SQLException {
-    String query = "{?=call}";
-    DataRow parameters = mock( DataRow.class );
-    String[] preparedParameterNames = new String[] { "param_0", "param_1", "param_2", "param_3" };
-    Connection con = mock( Connection.class );
-    CallableStatement statement = mock( CallableStatement.class );
-    ResultSet res = mock( ResultSet.class );
-    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    final String query = "{?=call}";
+    final DataRow parameters = mock( DataRow.class );
+    final String[] preparedParameterNames = new String[] { "param_0", "param_1", "param_2", "param_3" };
+    final Connection con = mock( Connection.class );
+    final CallableStatement statement = mock( CallableStatement.class );
+    final ResultSet res = mock( ResultSet.class );
+    final ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
 
-    Date currentDate = new Date();
-    java.sql.Date sqlDate = new java.sql.Date( currentDate.getTime() );
+    final Date currentDate = new Date();
+    final java.sql.Date sqlDate = new java.sql.Date( currentDate.getTime() );
     doReturn( null ).when( parameters ).get( "param_0" );
     doReturn( sqlDate ).when( parameters ).get( "param_1" );
     doReturn( currentDate ).when( parameters ).get( "param_2" );
@@ -234,7 +252,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( true ).doReturn( false ).when( res ).next();
     doReturn( "test_val" ).when( res ).getObject( 1 );
 
-    TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
+    final TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
 
     verify( con, never() ).createStatement( ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY );
     verify( statement, never() ).setMaxRows( 10 );
@@ -256,16 +274,16 @@ public class SimpleSQLReportDataFactoryTest {
 
   @Test
   public void testParametrizeAndQueryWithArrays() throws SQLException {
-    String query = "{ca}";
-    DataRow parameters = mock( DataRow.class );
-    String[] preparedParameterNames = new String[] { "param_0", "param_1", "param_2", "param_3" };
-    Connection con = mock( Connection.class );
-    CallableStatement statement = mock( CallableStatement.class );
-    ResultSet res = mock( ResultSet.class );
-    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    final String query = "{ca}";
+    final DataRow parameters = mock( DataRow.class );
+    final String[] preparedParameterNames = new String[] { "param_0", "param_1", "param_2", "param_3" };
+    final Connection con = mock( Connection.class );
+    final CallableStatement statement = mock( CallableStatement.class );
+    final ResultSet res = mock( ResultSet.class );
+    final ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
 
-    Date currentDate = new Date();
-    java.sql.Date sqlDate = new java.sql.Date( currentDate.getTime() );
+    final Date currentDate = new Date();
+    final java.sql.Date sqlDate = new java.sql.Date( currentDate.getTime() );
     doReturn( new Object[] {} ).when( parameters ).get( "param_0" );
     doReturn( new Object[] { sqlDate, currentDate, "val_3" } ).when( parameters ).get( "param_1" );
 
@@ -279,7 +297,8 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( true ).doReturn( false ).when( res ).next();
     doReturn( "test_val" ).when( res ).getObject( 1 );
 
-    TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
+    doReturn( con ).when( statement ).getConnection();
+    final TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
 
     verify( con, never() ).createStatement( ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY );
     verify( statement, never() ).setMaxRows( 10 );
@@ -316,27 +335,27 @@ public class SimpleSQLReportDataFactoryTest {
 
   @Test
   public void testClone() {
-    SimpleSQLReportDataFactory result = factory.clone();
+    final SimpleSQLReportDataFactory result = factory.clone();
     assertThat( result, is( not( sameInstance( factory ) ) ) );
     assertThat( result.getConnectionProvider(), is( equalTo( factory.getConnectionProvider() ) ) );
   }
 
   @Test( expected = NullPointerException.class )
   public void testSetConnectionProviderWithoutProvider() {
-    ConnectionProvider connectionProvider = null;
+    final ConnectionProvider connectionProvider = null;
     factory.setConnectionProvider( connectionProvider );
   }
 
   @Test( expected = IllegalStateException.class )
   public void testSetConnectionProviderWithConnection() throws SQLException {
     factory.getConnection( mock( DataRow.class ) );
-    ConnectionProvider connectionProvider = mock( ConnectionProvider.class );
+    final ConnectionProvider connectionProvider = mock( ConnectionProvider.class );
     factory.setConnectionProvider( connectionProvider );
   }
 
   @Test
   public void testSetConnectionProvide() {
-    ConnectionProvider connectionProvider = mock( ConnectionProvider.class );
+    final ConnectionProvider connectionProvider = mock( ConnectionProvider.class );
     factory.setConnectionProvider( connectionProvider );
     assertThat( factory.getConnectionProvider(), is( equalTo( connectionProvider ) ) );
   }
@@ -354,13 +373,13 @@ public class SimpleSQLReportDataFactoryTest {
   @SuppressWarnings( "unchecked" )
   @Test
   public void testGetConnectionHash() {
-    StaticConnectionProvider provider = mock( StaticConnectionProvider.class );
+    final StaticConnectionProvider provider = mock( StaticConnectionProvider.class );
     doReturn( "test_hash" ).when( provider ).getConnectionHash();
     doReturn( provider ).when( factory ).getConnectionProvider();
 
-    Object result = factory.getQueryHash( QUERY, null );
+    final Object result = factory.getQueryHash( QUERY, null );
     assertThat( result, is( instanceOf( List.class ) ) );
-    List<Object> list = (List<Object>) result;
+    final List<Object> list = (List<Object>) result;
     assertThat( list.size(), is( equalTo( 3 ) ) );
     assertThat( (String) list.get( 0 ), is( equalTo( factory.getClass().getName() ) ) );
     assertThat( (String) list.get( 1 ), is( equalTo( QUERY ) ) );
@@ -369,17 +388,17 @@ public class SimpleSQLReportDataFactoryTest {
 
   @Test
   public void testGetReferencedFieldsCloseItsConnection() throws ReportDataFactoryException, SQLException {
-    DataRow parameters = mock( DataRow.class );
-    this.connection = null;
-    String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
-    verify(factory, times(1)).close();
+    final DataRow parameters = mock( DataRow.class );
+    connection = null;
+    final String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
+    verify( factory, times( 1 ) ).close();
   }
 
   @Test
   public void testGetReferencedFieldsDoNotCloseExistConnection() throws ReportDataFactoryException, SQLException {
-    DataRow parameters = mock( DataRow.class );
-    this.connection = factory.getConnection( parameters );
-    String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
-    verify(factory, times(0)).close();
+    final DataRow parameters = mock( DataRow.class );
+    connection = factory.getConnection( parameters );
+    final String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
+    verify( factory, times( 0 ) ).close();
   }
 }
