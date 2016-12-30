@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.libraries.xmlns.writer;
 
-import org.pentaho.reporting.libraries.base.util.FastStack;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -30,20 +25,31 @@ import java.nio.charset.CharsetEncoder;
 import java.util.HashMap;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.FastStack;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
+import org.pentaho.reporting.libraries.xmlns.common.AttributeList.AttributeEntry;
+
 /**
  * A support class for writing XML files.
  *
  * @author Thomas Morgner
  */
 public class XmlWriterSupport {
+
+  private static final Log LOGGER = LogFactory.getLog( XmlWriterSupport.class );
+
   /**
    * An internal state-management class containing the state for nested tags.
    */
   private static class ElementLevel {
     private String namespace;
     private String prefix;
-    private String tagName;
-    private DeclaredNamespaces namespaces;
+    private final String tagName;
+    private final DeclaredNamespaces namespaces;
 
     /**
      * Creates a new ElementLevel object.
@@ -153,17 +159,17 @@ public class XmlWriterSupport {
   /**
    * A list of safe tags.
    */
-  private TagDescription safeTags;
+  private final TagDescription safeTags;
 
   /**
    * The indent level for that writer.
    */
-  private FastStack openTags;
+  private final FastStack openTags;
 
   /**
    * The indent string.
    */
-  private String indentString;
+  private final String indentString;
 
   private boolean lineEmpty;
   private int additionalIndent;
@@ -173,7 +179,7 @@ public class XmlWriterSupport {
   private HashMap impliedNamespaces;
   private boolean writeFinalLinebreak;
   private boolean htmlCompatiblityMode;
-  private String lineSeparator;
+  private final String lineSeparator;
   private CharsetEncoder charsetEncoder;
 
   /**
@@ -217,11 +223,11 @@ public class XmlWriterSupport {
     }
 
     this.safeTags = safeTags;
-    this.openTags = new FastStack();
+    openTags = new FastStack();
     this.indentString = indentString;
-    this.lineEmpty = true;
-    this.writeFinalLinebreak = true;
-    this.lineSeparator = lineseparator;
+    lineEmpty = true;
+    writeFinalLinebreak = true;
+    lineSeparator = lineseparator;
 
     addImpliedNamespace( "http://www.w3.org/XML/1998/namespace", "xml" );
   }
@@ -323,7 +329,7 @@ public class XmlWriterSupport {
 
   public void setEncoding( final String encoding ) {
     final Charset charset = Charset.forName( encoding );
-    this.charsetEncoder = charset.newEncoder();
+    charsetEncoder = charset.newEncoder();
   }
 
   /**
@@ -607,8 +613,7 @@ public class XmlWriterSupport {
 
     if ( attributes != null ) {
       final AttributeList.AttributeEntry[] entries = attributes.toArray();
-      for ( int i = 0; i < entries.length; i++ ) {
-        final AttributeList.AttributeEntry entry = entries[ i ];
+      for ( final AttributeEntry entry : entries ) {
         w.write( " " );
 
         buildAttributeName( entry, namespaces, w );
@@ -672,7 +677,7 @@ public class XmlWriterSupport {
     final String name = entry.getName();
     final String namespaceUri = entry.getNamespace();
 
-    if ( isAlwaysAddNamespace() == false && ObjectUtilities.equal( currentElement.getNamespace(), namespaceUri ) ) {
+    if ( ( isAlwaysAddNamespace() == false ) && ObjectUtilities.equal( currentElement.getNamespace(), namespaceUri ) ) {
       writer.write( name );
       return;
     }
@@ -695,7 +700,7 @@ public class XmlWriterSupport {
     }
 
     final String namespacePrefix = namespaces.getPrefix( namespaceUri );
-    if ( namespacePrefix != null && "".equals( namespacePrefix ) == false ) {
+    if ( ( namespacePrefix != null ) && ( "".equals( namespacePrefix ) == false ) ) {
       writer.write( namespacePrefix );
       writer.write( ':' );
       writer.write( name );
@@ -711,8 +716,7 @@ public class XmlWriterSupport {
    * @param transformNewLine a flag controling whether to transform newlines into character-entities.
    * @return the transformed string.
    */
-  public String normalizeLocal( final String s,
-                                final boolean transformNewLine ) throws IOException {
+  public String normalizeLocal( final String s, final boolean transformNewLine ) throws IOException {
     return normalize( s, transformNewLine );
   }
 
@@ -726,53 +730,58 @@ public class XmlWriterSupport {
    * @throws IOException if writing to the stream failed.
    */
   public void writeTextNormalized( final Writer writer, final String s, final boolean transformNewLine )
-      throws IOException {
+    throws IOException {
+    writeTextNormalized( writer, s, charsetEncoder, transformNewLine );
+  }
+
+  private static void writeTextNormalized( final Writer writer, final String s, final CharsetEncoder encoder,
+      final boolean transformNewLine ) throws IOException {
 
     if ( s == null ) {
       return;
     }
 
-    StringBuilder strB = new StringBuilder( s.length() );
+    final StringBuilder strB = new StringBuilder( s.length() );
     for ( int offset = 0; offset < s.length(); ) {
       final int cp = s.codePointAt( offset );
 
       switch ( cp ) {
-        case 9 : // \t
+        case 9: // \t
           strB.appendCodePoint( cp );
           break;
-        case 10 : // \n
+        case 10: // \n
           if ( transformNewLine ) {
             strB.append( "&#10;" );
             break;
           }
           strB.appendCodePoint( cp );
           break;
-        case 13 : // \r
+        case 13: // \r
           if ( transformNewLine ) {
             strB.append( "&#13;" );
             break;
           }
           strB.appendCodePoint( cp );
           break;
-        case 60 : // <
+        case 60: // <
           strB.append( "&lt;" );
           break;
-        case 62 : // >
+        case 62: // >
           strB.append( "&gt;" );
           break;
-        case 34 : // "
+        case 34: // "
           strB.append( "&quot;" );
           break;
-        case 38 : // &
+        case 38: // &
           strB.append( "&amp;" );
           break;
-        case 39 : // '
+        case 39: // '
           strB.append( "&apos;" );
           break;
-        default :
+        default:
           if ( cp >= 0x20 ) {
-            String cpStr = new String( new int[] { cp }, 0, 1 );
-            if ( charsetEncoder != null && !charsetEncoder.canEncode( cpStr ) ) {
+            final String cpStr = new String( new int[] { cp }, 0, 1 );
+            if ( ( encoder != null ) && !encoder.canEncode( cpStr ) ) {
               strB.append( "&#x" + Integer.toHexString( cp ) );
             } else {
               strB.appendCodePoint( cp );
@@ -794,14 +803,19 @@ public class XmlWriterSupport {
    * @param transformNewLine true, if a newline in the string should be converted into a character entity.
    * @return the normalised string.
    */
-  public String normalize( final String s, final boolean transformNewLine ) throws IOException {
+  public static String normalize( final String s, final boolean transformNewLine ) {
     if ( s == null ) {
       return "";
     }
 
-    StringWriter writer = new StringWriter( s.length() );
+    final StringWriter writer = new StringWriter( s.length() );
 
-    writeTextNormalized( writer, s, transformNewLine );
+    try {
+      writeTextNormalized( writer, s, null, transformNewLine );
+    } catch ( final IOException e ) {
+      LOGGER.error( e );
+      return s;
+    }
     return writer.toString();
   }
 
@@ -815,7 +829,7 @@ public class XmlWriterSupport {
     throws IOException {
     if ( openTags.isEmpty() ) {
       for ( int i = 0; i < additionalIndent; i++ ) {
-        writer.write( this.indentString );
+        writer.write( indentString );
       }
       return;
     }
@@ -825,12 +839,12 @@ public class XmlWriterSupport {
       level.getTagName() ) == false ) {
       doEndOfLine( writer );
 
-      for ( int i = 0; i < this.openTags.size(); i++ ) {
-        writer.write( this.indentString );
+      for ( int i = 0; i < openTags.size(); i++ ) {
+        writer.write( indentString );
       }
 
       for ( int i = 0; i < additionalIndent; i++ ) {
-        writer.write( this.indentString );
+        writer.write( indentString );
       }
     }
   }
@@ -845,7 +859,7 @@ public class XmlWriterSupport {
     throws IOException {
     if ( openTags.isEmpty() ) {
       for ( int i = 0; i < additionalIndent; i++ ) {
-        writer.write( this.indentString );
+        writer.write( indentString );
       }
       return;
     }
@@ -855,11 +869,11 @@ public class XmlWriterSupport {
       level.getTagName() ) == false ) {
       doEndOfLine( writer );
 
-      for ( int i = 1; i < this.openTags.size(); i++ ) {
-        writer.write( this.indentString );
+      for ( int i = 1; i < openTags.size(); i++ ) {
+        writer.write( indentString );
       }
       for ( int i = 0; i < additionalIndent; i++ ) {
-        writer.write( this.indentString );
+        writer.write( indentString );
       }
     }
   }
@@ -870,7 +884,7 @@ public class XmlWriterSupport {
    * @return The list.
    */
   public TagDescription getTagDescription() {
-    return this.safeTags;
+    return safeTags;
   }
 
   /**
