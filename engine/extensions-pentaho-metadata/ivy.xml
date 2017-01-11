@@ -50,6 +50,7 @@
     </dependency>
 
     <dependency org="log4j" name="log4j" rev="1.2.14" transitive="false" conf="default_external->default"/>
+    <dependency org="pentaho-kettle" name="kettle-engine" rev="${dependency.kettle.revision}" transitive="false" conf="default_external->default"/>
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core-test"
                 rev="${project.revision}" transitive="false" changing="true" conf="test->default"/>
 
