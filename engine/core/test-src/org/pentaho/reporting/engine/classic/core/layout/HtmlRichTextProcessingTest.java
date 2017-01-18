@@ -12,19 +12,50 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.layout.richtext.HtmlRichTextConverter;
 
 public class HtmlRichTextProcessingTest extends TestCase {
+  private static final String LISTTEXT =
+      "<p>An ordered list:</p>"
+        +  "<ol>"
+        +  "  <li>Coffee</li>"
+        +  "  <li>"
+        +  "      <ul>"
+        +  "      <li>bean1</li>"
+        +  "      <li>bean2</li>"
+        +  "      </ul>"
+        +  "  </li>"
+        +  "  <li>Order List"
+        +  "    <ol>"
+        +  "          <li>Jokey</li>"
+        +  "      <li>"
+        +  "          <ul> "
+        +  "        <li>man</li>"
+        +  "        <li>horse</li>"
+        +  "          </ul>"
+        +  "         </li>"
+        +  "         <li>Milk</li>"
+        +  "  </ol>"
+        +  "  </li>"
+        +  "</ol>"
+        +  "<p>An unordered list:</p>"
+        +  "<ul>"
+        +  "  <li>Coffee</li>"
+        +  "  <li>Tea</li>"
+        +  "  <li>Milk</li>"
+        +  "</ul>";
   private static final String RICHTEXT =
       "<HTML><head><title></title></head><BODY>"
           + "<form id=\"SMSFormEN\" action=\"https://heavensgate/sms/aformhandle\" method=\"post\">"
@@ -91,6 +122,13 @@ public class HtmlRichTextProcessingTest extends TestCase {
     element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, RICHTEXT );
     element.setElementType( new LabelType() );
     final Object o = richTextConverter.convert( element, RICHTEXT );
+    final Element elementlist = new Element();
+    elementlist.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, RICHTEXT );
+    elementlist.setElementType( new LabelType() );
+    final Band o2 = (Band) richTextConverter.convert( elementlist, LISTTEXT );
+    ReportElement[] re = o2.getChildElementsByName( "point" );
+    assertTrue( re.length == 13 );
+    System.out.println( re.length );
     System.out.println( o );
   }
 }
