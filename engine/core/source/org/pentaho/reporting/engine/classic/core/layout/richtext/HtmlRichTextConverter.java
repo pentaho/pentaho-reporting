@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.richtext;
@@ -118,7 +118,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
         return value;
       }
 
-      final Element element = process( doc.getDefaultRootElement() );
+      final Element element = process( doc.getDefaultRootElement(), null );
       return RichTextConverterUtilities.convertToBand( StyleKey.getDefinedStyleKeysList(), source, element );
     } catch ( Exception e ) {
       return value;
@@ -154,8 +154,8 @@ public class HtmlRichTextConverter implements RichTextConverter {
               continue;
             } else {
               SimpleAttributeSet hrefAttributeSet = new SimpleAttributeSet();
-              hrefAttributeSet.addAttribute(HTML.Attribute.HREF, attr.getAttribute( HTML.Attribute.HREF ));
-              muxList.add(hrefAttributeSet);
+              hrefAttributeSet.addAttribute( HTML.Attribute.HREF, attr.getAttribute( HTML.Attribute.HREF ) );
+              muxList.add( hrefAttributeSet );
             }
           }
         }
@@ -190,7 +190,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
     }
   }
 
-  private Element process( final javax.swing.text.Element textElement ) throws BadLocationException {
+  private Element process( final javax.swing.text.Element textElement, final String liNum ) throws BadLocationException {
     if ( isInvisible( textElement ) ) {
       return null;
     }
@@ -238,6 +238,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
       final int endOffset = textElement.getEndOffset();
       final int startOffset = textElement.getStartOffset();
       final String text = textElement.getDocument().getText( startOffset, endOffset - startOffset );
+
       if ( parent != null ) {
         final HTML.Tag tag = findTag( parent.getAttributes() );
         if ( "\n".equals( text ) ) {
@@ -267,18 +268,45 @@ public class HtmlRichTextConverter implements RichTextConverter {
     // we need to intercept for <UL> and <OL> here
 
     final Band band = new Band();
+
     configureStyle( textElement, band );
     configureBand( textElement, band );
     final boolean bandIsInline = isInlineElement( band );
     final int size = textElement.getElementCount();
     Band inlineContainer = null;
     for ( int i = 0; i < size; i++ ) {
-      final Element element = process( textElement.getElement( i ) );
+
+      String listSign = liNum;
+      if ( HTML.Tag.OL.equals( textElement.getAttributes().getAttribute( StyleConstants.NameAttribute ) ) ) {
+        listSign = Integer.toString( i + 1 ) + ". ";
+      }
+      if ( HTML.Tag.UL.equals( textElement.getAttributes().getAttribute( StyleConstants.NameAttribute ) ) ) {
+        listSign = "\u00B7";
+      }
+
+      final Element element = process( textElement.getElement( i ), listSign );
       if ( element == null ) {
         continue;
       }
 
+      if ( "li".equals(  textElement.getElement( i ).getName() ) ) {
+        band.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "block" );
+        Band elemlistband = new Band();
+        elemlistband.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "block" );
+        elemlistband.getStyle().setStyleProperty( ElementStyleKeys.PADDING_LEFT, 10f );
+        elemlistband.addElement( element );
+        band.addElement( elemlistband );
+        continue;
+      }
+
       if ( isInlineElement( element ) == bandIsInline ) {
+        if ( "li".equals( textElement.getName() ) ) {
+          if ( textElement.getElementCount() == 1
+              && ( ( HTML.Tag.OL.equals( textElement.getElement( 0 ).getAttributes().getAttribute( StyleConstants.NameAttribute ) )
+                  || ( HTML.Tag.UL.equals( textElement.getElement( 0 ).getAttributes().getAttribute( StyleConstants.NameAttribute ) ) ) ) ) ) {
+            band.addElement( createLiNumElement( liNum ) );
+          }
+        }
         band.addElement( element );
         continue;
       }
@@ -286,6 +314,9 @@ public class HtmlRichTextConverter implements RichTextConverter {
       if ( band.getElementCount() == 0 ) {
         inlineContainer = new Band();
         inlineContainer.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "inline" );
+        if ( "li".equals( textElement.getParentElement().getName() ) ) {
+          inlineContainer.addElement( createLiNumElement( liNum ) );
+        }
         inlineContainer.addElement( element );
         band.addElement( inlineContainer );
         continue;
@@ -305,6 +336,14 @@ public class HtmlRichTextConverter implements RichTextConverter {
       band.addElement( inlineContainer );
     }
     return band;
+  }
+
+  private Element createLiNumElement( final String _liNum ) {
+    final Element linum = new Element();
+    linum.setName( "point" );
+    linum.setElementType( LabelType.INSTANCE );
+    linum.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, _liNum );
+    return linum;
   }
 
   private boolean isInlineElement( final Element element ) {
@@ -441,9 +480,9 @@ public class HtmlRichTextConverter implements RichTextConverter {
       result.setAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.TITLE, String.valueOf( titleAttribute ) );
     }
 
-    final Object hrefAttribute = attr.getAttribute( HTML.Attribute.HREF);
-    if (hrefAttribute != null ) {
-      result.getStyle().setStyleProperty( ElementStyleKeys.HREF_TARGET, String.valueOf(hrefAttribute));
+    final Object hrefAttribute = attr.getAttribute( HTML.Attribute.HREF );
+    if ( hrefAttribute != null ) {
+      result.getStyle().setStyleProperty( ElementStyleKeys.HREF_TARGET, String.valueOf( hrefAttribute ) );
     }
 
     final Object textIndentStyle = attr.getAttribute( CSS.Attribute.TEXT_INDENT );
