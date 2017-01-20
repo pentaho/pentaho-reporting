@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2000 - 2017 Pentaho Corporation and Contributors...
+* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
 * All rights reserved.
 */
 
@@ -21,9 +21,8 @@ package org.pentaho.reporting.libraries.base.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.swing.UIManager;
-import java.awt.Toolkit;
-import java.awt.GraphicsEnvironment;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -36,17 +35,9 @@ public class SystemInformation {
   public SystemInformation() {
   }
 
-  protected Log getLogger() {
-    return logger;
-  }
-
   public void logSystemInformation() {
     if ( logger.isInfoEnabled() ) {
       logger.info( getSystemInformation() );
-    } else {
-      // Must get called otherwise "win.menu.font" property won't be set
-      // and the menu front in Windows becomes bold. JIRA: PRD-5563
-      getOtherProperties();
     }
   }
 
@@ -68,7 +59,7 @@ public class SystemInformation {
 
     //other
     sb.append( "Other Properties\n" );
-    sb.append( "----------------\n" ); //NON-NLS
+    sb.append( "----------------\n" );//NON-NLS
     printMapAsTable( sb, getOtherProperties() );
     sb.append( "\n" );
     sb.append( "\n" );
@@ -86,12 +77,12 @@ public class SystemInformation {
 
   private String formatLongPathList( String value ) {
     if ( value != null ) {
-      value = value.replace( "\n", "\\n" ); //NON-NLS
-      value = value.replace( "\f", "\\f" ); //NON-NLS
-      value = value.replace( "\r", "\\r" ); //NON-NLS
+      value = value.replace( "\n", "\\n" );//NON-NLS
+      value = value.replace( "\f", "\\f" );//NON-NLS
+      value = value.replace( "\r", "\\r" );//NON-NLS
       if ( value.length() > 80 ) {
-        value = value.replace( File.pathSeparator, File.pathSeparator
-                + "\n                                        " ); //NON-NLS
+        value = value.replace( File.pathSeparator, File.pathSeparator +
+          "\n                                        " );//NON-NLS
       }
     }
     return value;
@@ -100,86 +91,86 @@ public class SystemInformation {
 
   public static Map<String, String> getOtherProperties() {
     final LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-    map.put( "File.CurrentDirAbs", new File( "." ).getAbsolutePath() ); //NON-NLS
+    map.put( "File.CurrentDirAbs", new File( "." ).getAbsolutePath() );//NON-NLS
     try {
-      map.put( "File.CurrentDirCanonical", new File( "." ).getCanonicalPath() ); //NON-NLS
+      map.put( "File.CurrentDirCanonical", new File( "." ).getCanonicalPath() );//NON-NLS
     } catch ( IOException e ) {
-      // ignore
+      // ignore 
     }
-    map.put( "UIManager.LookAndFeel", UIManager.getLookAndFeel().getClass().getName() ); //NON-NLS
-    map.put( "Toolkit", Toolkit.getDefaultToolkit().getClass().getName() ); //NON-NLS
+    map.put( "UIManager.LookAndFeel", UIManager.getLookAndFeel().getClass().getName() );//NON-NLS
+    map.put( "Toolkit", Toolkit.getDefaultToolkit().getClass().getName() );//NON-NLS
     if ( GraphicsEnvironment.isHeadless() == false ) {
-      map.put( "Toolkit.MenuShortcutKeyMask",  //NON-NLS
-              String.valueOf( Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() ) ); //NON-NLS
+      map.put( "Toolkit.MenuShortcutKeyMask", //NON-NLS
+        String.valueOf( Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() ) );//NON-NLS
       map.put( "Toolkit.ScreenResolution",
-              String.valueOf( Toolkit.getDefaultToolkit().getScreenResolution() ) ); //NON-NLS
-      map.put( "Toolkit.ScreenSize", String.valueOf( Toolkit.getDefaultToolkit().getScreenSize() ) ); //NON-NLS
+        String.valueOf( Toolkit.getDefaultToolkit().getScreenResolution() ) );//NON-NLS
+      map.put( "Toolkit.ScreenSize", String.valueOf( Toolkit.getDefaultToolkit().getScreenSize() ) );//NON-NLS
     }
-    map.put( "Runtime.availableProcessors", String.valueOf( Runtime.getRuntime().availableProcessors() ) ); //NON-NLS
-    map.put( "Runtime.maximumMemory", String.valueOf( Runtime.getRuntime().maxMemory() ) ); //NON-NLS
+    map.put( "Runtime.availableProcessors", String.valueOf( Runtime.getRuntime().availableProcessors() ) );//NON-NLS
+    map.put( "Runtime.maximumMemory", String.valueOf( Runtime.getRuntime().maxMemory() ) );//NON-NLS
 
-    addDesktopProperty( map, "awt.mouse.numButtons" ); //NON-NLS
-    addDesktopProperty( map, "awt.multiClickInterval" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Autoscroll.cursorHysteresis" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Autoscroll.initialDelay" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Autoscroll.interval" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Cursor.CopyDrop" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Cursor.CopyNoDrop" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Cursor.LinkDrop" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Cursor.LinkNoDrop" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Cursor.MoveDrop" ); //NON-NLS
-    addDesktopProperty( map, "DnD.Cursor.MoveNoDrop" ); //NON-NLS
-    addDesktopProperty( map, "DnD.gestureMotionThreshold" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/CanChangeAccels" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/CursorThemeName" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/CursorThemeSize" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/FileChooserBackend" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/FontName" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/IMPreeditStyle" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/IMStatusStyle" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/KeyThemeName" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/MenuBarAccel" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/MenuImages" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/ShowInputMethodMenu" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/ShowUnicodeMenu" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Gtk/ToolbarStyle" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Net/CursorBlink" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Net/CursorBlinkTime" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Net/DndDragThreshold" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Net/DoubleClickTime" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Net/FallbackIconTheme" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Net/IconThemeName" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Net/ThemeName" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Xft/Antialias" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Xft/DPI" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Xft/Hinting" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Xft/HintStyle" ); //NON-NLS
-    addDesktopProperty( map, "gnome.Xft/RGBA" ); //NON-NLS
-    addDesktopProperty( map, "Shell.shellFolderManager" ); //NON-NLS
-    addDesktopProperty( map, "win.3d.backgroundColor" ); //NON-NLS
-    addDesktopProperty( map, "win.3d.darkShadowColor" ); //NON-NLS
-    addDesktopProperty( map, "win.3d.highlightColor" ); //NON-NLS
-    addDesktopProperty( map, "win.3d.lightColor" ); //NON-NLS
-    addDesktopProperty( map, "win.3d.shadowColor" ); //NON-NLS
-    addDesktopProperty( map, "win.ansiFixed.font" ); //NON-NLS
-    addDesktopProperty( map, "win.button.textColor" ); //NON-NLS
-    addDesktopProperty( map, "win.defaultGUI.font" ); //NON-NLS
-    addDesktopProperty( map, "win.frame.backgroundColor" ); //NON-NLS
-    addDesktopProperty( map, "win.frame.textColor" ); //NON-NLS
-    addDesktopProperty( map, "win.item.highlightColor" ); //NON-NLS
-    addDesktopProperty( map, "win.item.highlightTextColor" ); //NON-NLS
-    addDesktopProperty( map, "win.menu.backgroundColor" ); //NON-NLS
-    addDesktopProperty( map, "win.menubar.backgroundColor" ); //NON-NLS
-    addDesktopProperty( map, "win.menu.font" ); //NON-NLS
-    addDesktopProperty( map, "win.menu.keyboardCuesOn" ); //NON-NLS
-    addDesktopProperty( map, "win.menu.textColor" ); //NON-NLS
-    addDesktopProperty( map, "win.scrollbar.backgroundColor" ); //NON-NLS
-    addDesktopProperty( map, "win.scrollbar.width" ); //NON-NLS
-    addDesktopProperty( map, "win.text.grayedTextColor" ); //NON-NLS
-    addDesktopProperty( map, "win.xpstyle.colorName" ); //NON-NLS
-    addDesktopProperty( map, "win.xpstyle.dllName" ); //NON-NLS
-    addDesktopProperty( map, "win.xpstyle.sizeName" ); //NON-NLS
-    addDesktopProperty( map, "win.xpstyle.themeActive" ); //NON-NLS
+    addDesktopProperty( map, "awt.mouse.numButtons" );//NON-NLS
+    addDesktopProperty( map, "awt.multiClickInterval" );//NON-NLS
+    addDesktopProperty( map, "DnD.Autoscroll.cursorHysteresis" );//NON-NLS
+    addDesktopProperty( map, "DnD.Autoscroll.initialDelay" );//NON-NLS
+    addDesktopProperty( map, "DnD.Autoscroll.interval" );//NON-NLS
+    addDesktopProperty( map, "DnD.Cursor.CopyDrop" );//NON-NLS
+    addDesktopProperty( map, "DnD.Cursor.CopyNoDrop" );//NON-NLS
+    addDesktopProperty( map, "DnD.Cursor.LinkDrop" );//NON-NLS
+    addDesktopProperty( map, "DnD.Cursor.LinkNoDrop" );//NON-NLS
+    addDesktopProperty( map, "DnD.Cursor.MoveDrop" );//NON-NLS
+    addDesktopProperty( map, "DnD.Cursor.MoveNoDrop" );//NON-NLS
+    addDesktopProperty( map, "DnD.gestureMotionThreshold" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/CanChangeAccels" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/CursorThemeName" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/CursorThemeSize" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/FileChooserBackend" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/FontName" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/IMPreeditStyle" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/IMStatusStyle" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/KeyThemeName" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/MenuBarAccel" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/MenuImages" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/ShowInputMethodMenu" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/ShowUnicodeMenu" );//NON-NLS
+    addDesktopProperty( map, "gnome.Gtk/ToolbarStyle" );//NON-NLS
+    addDesktopProperty( map, "gnome.Net/CursorBlink" );//NON-NLS
+    addDesktopProperty( map, "gnome.Net/CursorBlinkTime" );//NON-NLS
+    addDesktopProperty( map, "gnome.Net/DndDragThreshold" );//NON-NLS
+    addDesktopProperty( map, "gnome.Net/DoubleClickTime" );//NON-NLS
+    addDesktopProperty( map, "gnome.Net/FallbackIconTheme" );//NON-NLS
+    addDesktopProperty( map, "gnome.Net/IconThemeName" );//NON-NLS
+    addDesktopProperty( map, "gnome.Net/ThemeName" );//NON-NLS
+    addDesktopProperty( map, "gnome.Xft/Antialias" );//NON-NLS
+    addDesktopProperty( map, "gnome.Xft/DPI" );//NON-NLS
+    addDesktopProperty( map, "gnome.Xft/Hinting" );//NON-NLS
+    addDesktopProperty( map, "gnome.Xft/HintStyle" );//NON-NLS
+    addDesktopProperty( map, "gnome.Xft/RGBA" );//NON-NLS
+    addDesktopProperty( map, "Shell.shellFolderManager" );//NON-NLS
+    addDesktopProperty( map, "win.3d.backgroundColor" );//NON-NLS
+    addDesktopProperty( map, "win.3d.darkShadowColor" );//NON-NLS
+    addDesktopProperty( map, "win.3d.highlightColor" );//NON-NLS
+    addDesktopProperty( map, "win.3d.lightColor" );//NON-NLS
+    addDesktopProperty( map, "win.3d.shadowColor" );//NON-NLS
+    addDesktopProperty( map, "win.ansiFixed.font" );//NON-NLS
+    addDesktopProperty( map, "win.button.textColor" );//NON-NLS
+    addDesktopProperty( map, "win.defaultGUI.font" );//NON-NLS
+    addDesktopProperty( map, "win.frame.backgroundColor" );//NON-NLS
+    addDesktopProperty( map, "win.frame.textColor" );//NON-NLS
+    addDesktopProperty( map, "win.item.highlightColor" );//NON-NLS
+    addDesktopProperty( map, "win.item.highlightTextColor" );//NON-NLS
+    addDesktopProperty( map, "win.menu.backgroundColor" );//NON-NLS
+    addDesktopProperty( map, "win.menubar.backgroundColor" );//NON-NLS
+    addDesktopProperty( map, "win.menu.font" );//NON-NLS
+    addDesktopProperty( map, "win.menu.keyboardCuesOn" );//NON-NLS
+    addDesktopProperty( map, "win.menu.textColor" );//NON-NLS
+    addDesktopProperty( map, "win.scrollbar.backgroundColor" );//NON-NLS
+    addDesktopProperty( map, "win.scrollbar.width" );//NON-NLS
+    addDesktopProperty( map, "win.text.grayedTextColor" );//NON-NLS
+    addDesktopProperty( map, "win.xpstyle.colorName" );//NON-NLS
+    addDesktopProperty( map, "win.xpstyle.dllName" );//NON-NLS
+    addDesktopProperty( map, "win.xpstyle.sizeName" );//NON-NLS
+    addDesktopProperty( map, "win.xpstyle.themeActive" );//NON-NLS
     return map;
   }
 
