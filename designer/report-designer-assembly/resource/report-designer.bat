@@ -15,4 +15,4 @@ set PENTAHO_JAVA_HOME=%_PENTAHO_JAVA_HOME%
 :callSetEnv
 call "%~dp0set-pentaho-env.bat"
 
-start "Pentaho Report Designer" "%_PENTAHO_JAVA%" -Xms1024m -Xmx2048m -XX:MaxPermSize=256m -jar "%~dp0launcher.jar" %*
+start "Pentaho Report Designer" "%_PENTAHO_JAVA%" -Dswing.useSystemFontSettings=false -Xms1024m -Xmx2048m -XX:MaxPermSize=256m -jar "%~dp0launcher.jar" %*
