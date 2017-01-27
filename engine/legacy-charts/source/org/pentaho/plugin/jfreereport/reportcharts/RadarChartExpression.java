@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
@@ -27,7 +27,12 @@ import org.jfree.data.general.Dataset;
 import org.jfree.util.TableOrder;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -164,6 +169,19 @@ public class RadarChartExpression extends AbstractChartExpression {
 
     //Instantiate a spiderwebplot
     final ExtendedSpiderWebPlot plot = new ExtendedSpiderWebPlot( defaultDataset );
+    for ( int i = 0; i < this.getSeriesColor().length; i++ ) {
+      Color seriesColor;
+      String colorDef = this.getSeriesColor( i );
+      if ( colorDef == null ) {
+        seriesColor = Color.RED;
+      } else {
+        seriesColor = ColorHelper.lookupColor( colorDef );
+        if ( seriesColor == null ) {
+          seriesColor = Color.decode( colorDef );
+        }
+      }
+      plot.setSeriesPaint( i, seriesColor );
+    }
     //Instantiate a JFreeChart using the plot from above
     return new JFreeChart( computeTitle(), JFreeChart.DEFAULT_TITLE_FONT, plot, isShowLegend() );
   }
@@ -207,8 +225,7 @@ public class RadarChartExpression extends AbstractChartExpression {
         final String gridLineText = format.format( gridline );
         final GridCategoryItem rowKey = new GridCategoryItem( gridLineText );
         for ( int i = 0; i < columns; i++ ) {
-          defaultDataset.addValue
-            ( gridline, rowKey, defaultDataset.getColumnKey( i ) );
+          defaultDataset.addValue( gridline, rowKey, defaultDataset.getColumnKey( i ) );
         }
       }
 
