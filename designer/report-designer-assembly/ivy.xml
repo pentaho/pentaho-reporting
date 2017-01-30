@@ -173,5 +173,7 @@ conf="pentaho-system->default">
     <exclude org="stax" module="stax-api"/>
     <exclude org="junit"/>
     <exclude org="xml-apis" module="xml-apis"/>
+    <exclude org="javassist" module="javassist" />
+    <exclude org="xalan" module="xalan" />
   </dependencies>
 </ivy-module>
