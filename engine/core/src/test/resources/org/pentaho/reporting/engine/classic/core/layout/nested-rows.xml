@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Nested Rows" pageformat="A4" topmargin="25" leftmargin="25" bottommargin="25" rightmargin="25">
+
+  <reportheader name="ReportHeader" fontsize="30" layout="canvas">
+    <band layout="canvas">
+      <label name="label4" x="0" y="0" width="100" height="10">Label4</label>
+
+      <band name="outer-row" layout="row">
+        <label name="label1" x="0" y="0" width="100" height="10">Label1</label>
+        <band name="inner-row" layout="row">
+          <label name="label2" x="0" y="0" width="100" height="10">Label2</label>
+          <label name="label3" x="0" y="0" width="100" height="10">Label3</label>
+        </band>
+        <label name="label4" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+
+    </band>
+  </reportheader>
+</report>

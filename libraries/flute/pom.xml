@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>pentaho-reporting-library-parent-pom</artifactId>
+    <groupId>pentaho-library</groupId>
+    <version>7.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>flute</artifactId>
+  <packaging>jar</packaging>
+  <name>Flute</name>
+  <description>a derivative work of http://www.w3.org/Style/CSS/SAC/Overview.en.html
+
+    The grammar of the parser has been changed to be a little bit more suitable
+    for CSS3.
+
+    The @page-rule grammer given in the CSS3-Page module was funny, but unusable.
+    Therefore it has been replaced by a simplicistic approach. The margin-rules
+    now have to follow the property declarations - mixing margins and property
+    declarations is no longer valid.
+
+    The margin-box rules get forwarded to the 'ignorableAtRule' method of the
+    Handler class - we have to maintain API level compatibility for BIRT and other
+    projects, which may depend on that parser.
+
+    The selector syntax is also upgraded to CSS3 - especially the pseudo-elements
+    were not parsed and caused trouble here. As this did not work before,
+    stylesheets of other programms should not be affected by this change - if they
+    specified things which were known not to work and start dying if it works -
+    well, that's bad luck, I guess.</description>
+  <organization>
+    <name>Pentaho Corporation</name>
+  </organization>
+  <licenses>
+    <license>
+      <name>W3C License</name>
+      <url>http://www.w3.org/Consortium/Legal/</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>org.w3c.css</groupId>
+      <artifactId>sac</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

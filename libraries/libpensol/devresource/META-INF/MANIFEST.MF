@@ -1,6 +1,0 @@
-Implementation-Title: libpensol
-Implementation-Vendor: Pentaho Corporation
-Release-Major-Number: 1
-Release-Minor-Number: 0
-Release-Milestone-Number: 0
-Release-Candidate-Token: dev

@@ -1,0 +1,86 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<!--
+  Testcase: Search for bugs in the round-rectangle border-handling.
+
+ -->
+<test-sequence mode="strict" page-width="500" xmlns="http://jfreereport.sourceforge.net/namespaces/testcases/tables">
+  <source>
+    <band id="band1" x="0" y="0" width="500" height="500">
+
+      <round-rectangle id="round-rect1" arc-width="5" arc-height="5" x="50" width="150" y="100" height="200" draw="true"
+                       color="green"/>
+      <round-rectangle id="round-rect2" arc-width="5" arc-height="5" x="100" width="200" y="50" height="150" draw="true"
+                       color="red"/>
+      <round-rectangle id="round-rect3" arc-width="5" arc-height="5" x="300" width="100" y="100" height="200"
+                       draw="true" color="yellow"/>
+
+    </band>
+
+  </source>
+  <result>
+    <row>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row>
+      <empty-cell/>
+      <empty-cell/>
+      <cell content-idref="round-rect2" border-top-color="red" border-top-width="1.0" border-top-style="solid"
+            border-left-color="red" border-left-width="1.0" border-left-style="solid" border-top-left-x="5.0"
+            border-top-left-y="5.0"/>
+      <cell border-top-color="red" border-top-width="1.0" border-top-style="solid" border-right-color="red"
+            border-right-width="1.0" border-right-style="solid" border-top-right-x="5.0" border-top-right-y="5.0"/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row>
+      <empty-cell/>
+      <cell content-idref="round-rect1" border-top-color="green" border-top-width="1.0" border-top-style="solid"
+            border-left-color="green" border-left-width="1.0" border-left-style="solid" border-top-left-x="5.0"
+            border-top-left-y="5.0"/>
+      <cell border-top-color="green" border-top-width="1.0" border-top-style="solid" border-left-color="red"
+            border-left-width="1.0" border-left-style="solid" border-bottom-color="red" border-bottom-width="1.0"
+            border-bottom-style="solid" border-right-color="green" border-right-width="1.0" border-right-style="solid"
+            border-top-right-x="5.0" border-top-right-y="5.0" border-bottom-left-x="5.0" border-bottom-left-y="5.0"/>
+      <cell border-bottom-color="red" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="red"
+            border-right-width="1.0" border-right-style="solid" border-bottom-right-x="5.0"
+            border-bottom-right-y="5.0"/>
+      <cell content-idref="round-rect3" border-top-color="yellow" border-top-width="1.0" border-top-style="solid"
+            border-left-color="yellow" border-left-width="1.0" border-left-style="solid" border-right-color="yellow"
+            border-right-width="1.0" border-right-style="solid" border-top-left-x="5.0" border-top-left-y="5.0"
+            border-top-right-x="5.0" border-top-right-y="5.0"/>
+      <empty-cell/>
+    </row>
+    <row>
+      <empty-cell/>
+      <cell border-left-color="green" border-left-width="1.0" border-left-style="solid" border-bottom-color="green"
+            border-bottom-width="1.0" border-bottom-style="solid" border-bottom-left-x="5.0"
+            border-bottom-left-y="5.0"/>
+      <cell border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="green"
+            border-right-width="1.0" border-right-style="solid" border-bottom-right-x="5.0"
+            border-bottom-right-y="5.0"/>
+      <empty-cell/>
+      <cell border-left-color="yellow" border-left-width="1.0" border-left-style="solid" border-bottom-color="yellow"
+            border-bottom-width="1.0" border-bottom-style="solid" border-right-color="yellow" border-right-width="1.0"
+            border-right-style="solid" border-bottom-left-x="5.0" border-bottom-left-y="5.0" border-bottom-right-x="5.0"
+            border-bottom-right-y="5.0"/>
+      <empty-cell/>
+    </row>
+    <row>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </result>
+</test-sequence>
+

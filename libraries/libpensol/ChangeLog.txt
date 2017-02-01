@@ -1,8 +1,0 @@
----------------
-1.  WHAT's NEW
----------------
-
-A list of changes in recent versions:
-
-1.2.0:
-        * Initial version.
