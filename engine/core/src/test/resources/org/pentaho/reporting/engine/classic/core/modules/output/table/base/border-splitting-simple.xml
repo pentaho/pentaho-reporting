@@ -1,0 +1,120 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<!--
+  Testcase: Search for bugs in the border-creation.
+
+  In this case, the band defines a border and adding the element splits the border into
+  several cells.
+ -->
+<test-sequence mode="strict" page-width="500" xmlns="http://jfreereport.sourceforge.net/namespaces/testcases/tables">
+  <source>
+    <band id="band1"
+          border-top-color="blue" border-top-width="1" border-top-style="solid"
+          border-left-color="blue" border-left-width="1" border-left-style="solid"
+          border-bottom-color="blue" border-bottom-width="1" border-bottom-style="solid"
+          border-right-color="blue" border-right-width="1" border-right-style="solid"
+          border-break-color="blue" border-break-width="1" border-break-style="solid"
+          padding-top="0" padding-left="0" padding-bottom="0" padding-right="0"
+          border-top-left-radius-width="0" border-top-left-radius-height="0"
+          border-top-right-radius-width="0" border-top-right-radius-height="0"
+          border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+          border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"
+          x="0" y="0" width="500" height="50">
+
+      <element id="elementX" x="5" y="5" width="200" height="40"/>
+    </band>
+
+  </source>
+  <result>
+    <row>
+      <cell rowspan="1" colspan="1"
+            content-idref="band1"
+            border-top-color="blue" border-top-width="1" border-top-style="solid"
+            border-left-color="blue" border-left-width="1" border-left-style="solid"
+            border-bottom-color="black" border-bottom-width="0" border-bottom-style="none"
+            border-right-color="black" border-right-width="0" border-right-style="none"
+            border-top-left-radius-width="0" border-top-left-radius-height="0"
+            border-top-right-radius-width="0" border-top-right-radius-height="0"
+            border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+            border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"/>
+      <cell rowspan="1" colspan="1"
+            content-idref="band1"
+            border-top-color="blue" border-top-width="1" border-top-style="solid"
+            border-left-color="black" border-left-width="0" border-left-style="none"
+            border-bottom-color="black" border-bottom-width="0" border-bottom-style="none"
+            border-right-color="black" border-right-width="0" border-right-style="none"
+            border-top-left-radius-width="0" border-top-left-radius-height="0"
+            border-top-right-radius-width="0" border-top-right-radius-height="0"
+            border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+            border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"/>
+      <cell rowspan="1" colspan="1"
+            content-idref="band1"
+            border-top-color="blue" border-top-width="1" border-top-style="solid"
+            border-left-color="black" border-left-width="0" border-left-style="none"
+            border-bottom-color="black" border-bottom-width="0" border-bottom-style="none"
+            border-right-color="blue" border-right-width="1" border-right-style="solid"
+            border-top-left-radius-width="0" border-top-left-radius-height="0"
+            border-top-right-radius-width="0" border-top-right-radius-height="0"
+            border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+            border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"/>
+    </row>
+    <row>
+      <cell rowspan="1" colspan="1"
+            content-idref="band1"
+            border-top-color="black" border-top-width="0" border-top-style="none"
+            border-left-color="blue" border-left-width="1" border-left-style="solid"
+            border-bottom-color="black" border-bottom-width="0" border-bottom-style="none"
+            border-right-color="black" border-right-width="0" border-right-style="none"
+            border-top-left-radius-width="0" border-top-left-radius-height="0"
+            border-top-right-radius-width="0" border-top-right-radius-height="0"
+            border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+            border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"/>
+      <empty-cell/>
+      <cell rowspan="1" colspan="1"
+            content-idref="band1"
+            border-top-color="black" border-top-width="0" border-top-style="none"
+            border-left-color="black" border-left-width="0" border-left-style="none"
+            border-bottom-color="black" border-bottom-width="0" border-bottom-style="none"
+            border-right-color="blue" border-right-width="1" border-right-style="solid"
+            border-top-left-radius-width="0" border-top-left-radius-height="0"
+            border-top-right-radius-width="0" border-top-right-radius-height="0"
+            border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+            border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"/>
+    </row>
+    <row>
+      <cell rowspan="1" colspan="1"
+            content-idref="band1"
+            border-top-color="black" border-top-width="0" border-top-style="none"
+            border-left-color="blue" border-left-width="1" border-left-style="solid"
+            border-bottom-color="blue" border-bottom-width="1" border-bottom-style="solid"
+            border-right-color="black" border-right-width="0" border-right-style="none"
+            border-top-left-radius-width="0" border-top-left-radius-height="0"
+            border-top-right-radius-width="0" border-top-right-radius-height="0"
+            border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+            border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"/>
+      <cell rowspan="1" colspan="1"
+            content-idref="band1"
+            border-top-color="black" border-top-width="0" border-top-style="none"
+            border-left-color="black" border-left-width="0" border-left-style="none"
+            border-bottom-color="blue" border-bottom-width="1" border-bottom-style="solid"
+            border-right-color="black" border-right-width="0" border-right-style="none"
+            border-top-left-radius-width="0" border-top-left-radius-height="0"
+            border-top-right-radius-width="0" border-top-right-radius-height="0"
+            border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+            border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"/>
+      <cell rowspan="1" colspan="1"
+            content-idref="band1"
+            border-top-color="black" border-top-width="0" border-top-style="none"
+            border-left-color="black" border-left-width="0" border-left-style="none"
+            border-bottom-color="blue" border-bottom-width="1" border-bottom-style="solid"
+            border-right-color="blue" border-right-width="1" border-right-style="solid"
+            border-top-left-radius-width="0" border-top-left-radius-height="0"
+            border-top-right-radius-width="0" border-top-right-radius-height="0"
+            border-bottom-left-radius-width="0" border-bottom-left-radius-height="0"
+            border-bottom-right-radius-width="0" border-bottom-right-radius-height="0"/>
+    </row>
+  </result>
+</test-sequence>
+

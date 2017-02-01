@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="Pentaho-Sources" pattern="src[group:datasource-editors]:*..*||src[configuration-editor]:*..*||src[libbase]:*..*||src[libdocbundle]:*..*||src[libfonts]:*..*||src[libformat]:*..*||src[libformula]:*..*||src[libformula-ui]:*..*||src[libloader]:*..*||src[libpensol]:*..*||src[libpixie]:*..*||src[librepository]:*..*||src[libserializer]:*..*||src[libsparkline]:*..*||src[libswing]:*..*||src[libxml]:*..*||src[group:engine]:*..*||src[group:designer]:*..*||src[scratchpad]:*..*||test:*..*" />
-</component>

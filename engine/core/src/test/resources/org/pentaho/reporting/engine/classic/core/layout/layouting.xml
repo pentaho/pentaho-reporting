@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="SportsCouncil" pageformat="A4" topmargin="25" leftmargin="25" bottommargin="25" rightmargin="25">
+  <configuration>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H</property>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts">true</property>
+  </configuration>
+
+  <reportheader name="ReportHeader" fontsize="30" layout="block">
+
+    <band name="RH-01" width="100%" height="100%">
+      <rectangle name="RH-01-A" x="0" y="0" width="100%" height="100%" fill="true" color="#AF8FAF"/>
+
+      <band name="RH-01-B" y="25%" width="50%" height="50%">
+        <rectangle name="RH-01-B-01" x="0" y="0" width="100%" height="100%" fill="true" color="#efef55"/>
+      </band>
+
+      <band name="RH-01-C" x="0" y="50%" width="50%" height="50%">
+        <rectangle name="RH-01-C-01" x="0" y="0" width="100%" height="100%" fill="true" color="orange"/>
+        <label name="RH-01-C-02" x="100" y="0" width="300" height="20" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+
+      <rectangle name="RH-01-D" x="0" y="0" width="100%" height="300" fill="false" draw="true" color="#EF8FAF"/>
+      <rectangle name="RH-01-E" x="0" y="150" width="100%" height="150" fill="false" draw="true" color="green"/>
+
+    </band>
+
+    <band name="RH-02" width="100%" y="35">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="20" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+
+    <band name="RH-00" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+
+    <band name="RH-01" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+
+    <band name="RH-02" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+    <band name="RH-03" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+    <band name="RH-04" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+    <band name="RH-05" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+    <band name="RH-06" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+    <band name="RH-07" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+    <band name="RH-08" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+    <band name="RH-09" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+    <band name="RH-10" width="100%" y="0">
+      <band name="RH-02-A" width="100%">
+        <label name="RH-02-A-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+          LOGO
+        </label>
+      </band>
+    </band>
+
+  </reportheader>
+
+  <pageheader>
+    <label name="HEADER-LABEL-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+      HEADER LABEL
+    </label>
+  </pageheader>
+
+  <pagefooter>
+    <label name="FOOTER-LABEL-01" x="100" y="10" width="300" height="70" alignment="center" vertical-alignment="middle">
+      FOOTER LABEL
+    </label>
+  </pagefooter>
+</report>

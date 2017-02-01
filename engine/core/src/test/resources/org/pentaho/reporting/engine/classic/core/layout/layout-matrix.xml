@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Nested Rows" pageformat="A4" topmargin="25" leftmargin="25" bottommargin="25" rightmargin="25"
+    use-min-chunkwidth="true">
+  <configuration>
+    <property name="org.pentaho.reporting.engine.classic.core.layout.UseMinChunkWidth">true</property>
+  </configuration>
+
+  <!--
+  This report is used in both the width-computation test and the height-computation test.
+  Do not change anything unless you are willing to re-verify the tests as well.
+  -->
+  <reportheader name="ReportHeader" fontsize="30" layout="block">
+
+    <band name="test-cc" layout="canvas">
+      <band name="canvas-cc" layout="canvas">
+        <label name="label-cc" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-cb" layout="canvas">
+      <band name="canvas-cb" layout="block">
+        <label name="label-cb" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-ci" layout="canvas">
+      <band name="canvas-ci" layout="inline">
+        <label name="label-ci" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-cr" layout="canvas">
+      <band name="canvas-cr" layout="row">
+        <label name="label-cr" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+
+    <band name="test-bb" layout="block">
+      <band name="canvas-bb" layout="block">
+        <label name="label-bb" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-bi" layout="block">
+      <band name="canvas-bi" layout="inline">
+        <label name="label-bi" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-bc" layout="block">
+      <band name="canvas-bc" layout="canvas">
+        <label name="label-bc" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-br" layout="block">
+      <band name="canvas-br" layout="row">
+        <label name="label-br" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+
+    <band name="test-rb" layout="row">
+      <band name="canvas-rb" layout="block">
+        <label name="label-rb" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-ri" layout="row">
+      <band name="canvas-ri" layout="inline">
+        <label name="label-ri" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-rc" layout="row">
+      <band name="canvas-rc" layout="canvas">
+        <label name="label-rc" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-rr" layout="row">
+      <band name="canvas-rr" layout="row">
+        <label name="label-rr" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+
+    <band name="test-ib" layout="inline">
+      <band name="canvas-ib" layout="block">
+        <label name="label-ib" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-ii" layout="inline">
+      <band name="canvas-ii" layout="inline">
+        <label name="label-ii" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-ic" layout="inline">
+      <band name="canvas-ic" layout="canvas">
+        <label name="label-ic" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+    <band name="test-ir" layout="inline">
+      <band name="canvas-ir" layout="row">
+        <label name="label-ir" x="0" y="0" width="100" height="10">Label4</label>
+      </band>
+    </band>
+
+  </reportheader>
+</report>

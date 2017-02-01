@@ -1,7 +1,0 @@
-Implementation-Title: LibFonts
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: libfonts
-Release-Major-Number: 1
-Release-Minor-Number: 0
-Release-Milestone-Number: 0
-Release-Candidate-Token: dev

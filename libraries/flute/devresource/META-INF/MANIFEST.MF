@@ -1,9 +1,0 @@
-Specification-Title: flute
-Specification-Vendor: The World-Wide-Web Consortium
-Implementation-Title: flute
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: flute
-Release-Major-Number: 1
-Release-Minor-Number: 3
-Release-Milestone-Number: 0
-Release-Candidate-Token: dev

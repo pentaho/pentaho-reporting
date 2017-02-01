@@ -1,4 +1,0 @@
-Implementation-Title: Pentaho Report Designer
-Implementation-ProductID: PRD
-Implementation-Version: DEVELOPMENT
-Implementation-Vendor: Pentaho Corporation

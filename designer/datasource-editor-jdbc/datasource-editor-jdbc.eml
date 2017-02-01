@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component inherit-compiler-output="true">
-	<output-test url="file://$MODULE_DIR$/../../../out/test/datasource-editor-jdbc"/>
-	<exclude-output/>
-	<contentEntry url="file://$MODULE_DIR$"/>
-	<lib name="external" scope="COMPILE">
-		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/designer/datasource-editor-jdbc/lib/external"/>
-	</lib>
-</component>

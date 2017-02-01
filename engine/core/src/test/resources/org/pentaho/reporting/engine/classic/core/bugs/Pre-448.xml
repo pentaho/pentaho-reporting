@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        name="Pre-422" orientation="landscape" pageformat="A4"
+        bottommargin="72" leftmargin="72" rightmargin="72" topmargin="72">
+
+  <reportheader>
+    <!-- Do NOT change the order or the layout or the tests will start failing -->
+
+    <band border-top-color="black" border-top-style="solid" border-top-width="1"
+          border-left-color="black" border-left-style="solid" border-left-width="1"
+          border-right-color="black" border-right-style="solid" border-right-width="1"
+          name="reportheader">
+      <band name="test-01" height="70" width="555">
+        <rectangle width="555" height="70" padding-top="10" padding-left="10" padding-right="10"
+                   draw="true" fill="true" name="rect"/>
+      </band>
+    </band>
+
+    <band border-top-color="black" border-top-style="solid" border-top-width="1"
+          border-left-color="black" border-left-style="solid" border-left-width="1"
+          border-right-color="black" border-right-style="solid" border-right-width="1"
+          name="reportheader" layout="block">
+      <band name="test-01" height="70" width="555" layout="block">
+        <rectangle width="555" height="70" padding-top="10" padding-left="10" padding-right="10"
+                   draw="true" fill="true" name="rect"/>
+      </band>
+    </band>
+
+
+    <band border-top-color="black" border-top-style="solid" border-top-width="1"
+          border-left-color="black" border-left-style="solid" border-left-width="1"
+          border-right-color="black" border-right-style="solid" border-right-width="1"
+          name="reportheader">
+      <band name="test-01" height="70" width="555">
+        <label width="555" height="70" padding-top="10" padding-left="10" padding-right="10"
+               name="rect">Test
+        </label>
+      </band>
+    </band>
+
+    <band border-top-color="black" border-top-style="solid" border-top-width="1"
+          border-left-color="black" border-left-style="solid" border-left-width="1"
+          border-right-color="black" border-right-style="solid" border-right-width="1"
+          name="reportheader" layout="block">
+      <band name="test-01" height="70" width="555" layout="block">
+        <label width="555" height="70" padding-top="10" padding-left="10" padding-right="10"
+               name="rect">Test
+        </label>
+      </band>
+    </band>
+
+  </reportheader>
+
+
+</report>

@@ -1,3 +1,0 @@
-Implementation-Title: pentaho-reporting-engine-wizard-core
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: pentaho-reporting-engine-wizard-core

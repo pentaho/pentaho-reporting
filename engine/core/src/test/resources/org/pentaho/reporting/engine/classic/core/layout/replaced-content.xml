@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Nested Rows" pageformat="A4" topmargin="25" leftmargin="25" bottommargin="25" rightmargin="25">
+
+  <!--
+  This report is used in both the width-computation test and the height-computation test.
+  Do not change anything unless you are willing to re-verify the tests as well.
+  -->
+  <reportheader name="ReportHeader" fontsize="30" layout="block">
+
+    <band name="test-cc" layout="canvas">
+      <band name="canvas-cc" layout="canvas">
+        <rectangle name="rect-cc" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-cb" layout="canvas">
+      <band name="canvas-cb" layout="block">
+        <rectangle name="rect-cb" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-ci" layout="canvas">
+      <band name="canvas-ci" layout="inline">
+        <rectangle name="rect-ci" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-cr" layout="canvas">
+      <band name="canvas-cr" layout="row">
+        <rectangle name="rect-cr" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+
+    <band name="test-bb" layout="block">
+      <band name="canvas-bb" layout="block">
+        <rectangle name="rect-bb" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-bi" layout="block">
+      <band name="canvas-bi" layout="inline">
+        <rectangle name="rect-bi" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-bc" layout="block">
+      <band name="canvas-bc" layout="canvas">
+        <rectangle name="rect-bc" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-br" layout="block">
+      <band name="canvas-br" layout="row">
+        <rectangle name="rect-br" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+
+    <band name="test-rb" layout="row">
+      <band name="canvas-rb" layout="block">
+        <rectangle name="rect-rb" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-ri" layout="row">
+      <band name="canvas-ri" layout="inline">
+        <rectangle name="rect-ri" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-rc" layout="row">
+      <band name="canvas-rc" layout="canvas">
+        <rectangle name="rect-rc" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-rr" layout="row">
+      <band name="canvas-rr" layout="row">
+        <rectangle name="rect-rr" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+
+    <band name="test-ib" layout="inline">
+      <band name="canvas-ib" layout="block">
+        <rectangle name="rect-ib" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-ii" layout="inline">
+      <band name="canvas-ii" layout="inline">
+        <rectangle name="rect-ii" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-ic" layout="inline">
+      <band name="canvas-ic" layout="canvas">
+        <rectangle name="rect-ic" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+    <band name="test-ir" layout="inline">
+      <band name="canvas-ir" layout="row">
+        <rectangle name="rect-ir" width="100" height="10" draw="true"/>
+      </band>
+    </band>
+
+  </reportheader>
+</report>

@@ -1,3 +1,0 @@
-Implementation-Title: pentaho-reporting-engine-classic-extensions-mondrian
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: pentaho-reporting-engine-classic-extensions-mondrian

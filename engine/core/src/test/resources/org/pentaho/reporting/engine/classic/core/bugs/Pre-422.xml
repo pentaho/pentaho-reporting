@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        name="Pre-422" orientation="landscape" pageformat="A4"
+        bottommargin="72" leftmargin="72" rightmargin="72" topmargin="72">
+  <reportheader>
+    <band name="test" y="10%" height="100%" width="10%">
+      <label width="100" height="12">Test</label>
+    </band>
+
+    <!-- Forces the total height to be 100pt without explicityl declaring it on the report-header itself. -->
+    <label y="88" width="100" height="12">Test</label>
+
+  </reportheader>
+</report>

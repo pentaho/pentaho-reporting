@@ -1,6 +1,0 @@
-Implementation-Title: pentaho-reporting-engine-classic-extensions-drill-linking
-Implementation-Vendor: Pentaho Corporation
-Release-Major-Number: 3
-Release-Minor-Number: 6
-Release-Milestone-Number: 0
-Release-Candidate-Token: dev
