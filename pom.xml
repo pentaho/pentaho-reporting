@@ -3110,10 +3110,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <argLine>-Duser.timezone=UTC -Djava.awt.headless=true</argLine>
-          <forkCount>1</forkCount>
-          <reuseForks>false</reuseForks>
-          <systemProperties>
+          <systemPropertyVariables>
             <user.language>en</user.language>
             <user.region>US</user.region>
             <user.timezone>UTC</user.timezone>
@@ -3121,17 +3118,14 @@
             <org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest>${test.long}</org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest>
             <org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest>${test.performance}</org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest>
             <org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads>${test.workers}</org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads>
-          </systemProperties>
+          </systemPropertyVariables>
       </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
-          <argLine>-Duser.timezone=UTC -Djava.awt.headless=true</argLine>
-          <forkCount>1</forkCount>
-          <reuseForks>false</reuseForks>
-          <systemProperties>
+          <systemPropertyVariables>
             <user.language>en</user.language>
             <user.region>US</user.region>
             <user.timezone>UTC</user.timezone>
@@ -3139,7 +3133,7 @@
             <org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest>${test.long}</org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest>
             <org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest>${test.performance}</org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest>
             <org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads>${test.workers}</org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads>
-          </systemProperties>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
       <plugin>
