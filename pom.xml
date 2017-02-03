@@ -5,14 +5,17 @@
     <groupId>org.pentaho</groupId>
     <version>7.1-SNAPSHOT</version>
   </parent>
+  
   <groupId>org.pentaho.reporting</groupId>
   <artifactId>pentaho-reporting-parent-pom</artifactId>
   <version>7.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  
   <name>Pentaho Reporting Parent Pom</name>
   <organization>
     <name>Pentaho Corporation</name>
   </organization>
+  
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -20,12 +23,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <modules>
-    <module>libraries</module>
-    <module>engine</module>
-    <module>designer</module>
-    <module>assemblies</module>
-  </modules>
+
   <scm>
     <connection>scm:git:git@github.com:pentaho/pentaho-reporting.git</connection>
     <developerConnection>scm:git:git@github.com:pentaho/pentaho-reporting.git</developerConnection>
@@ -36,6 +34,7 @@
     <system>JIRA</system>
     <url>http://jira.pentaho.com/browse/PRD</url>
   </issueManagement>
+  
   <properties>
     <akka.version>2.3.3</akka.version>
     <antlr.version>3.5.2</antlr.version>
@@ -3094,7 +3093,8 @@
       </dependency>
       <dependency>
         <groupId>pentaho-library</groupId>
-        <artifactId>libformula-test</artifactId>
+        <artifactId>libformula</artifactId>
+        <classifier>tests</classifier>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -3198,4 +3198,66 @@
       </plugin>
     </plugins>
   </build>
+  
+  <profiles>
+    <profile>
+      <id>all</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>libraries</module>
+        <module>engine</module>
+        <module>designer</module>
+        <module>assemblies</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>libraries</id>
+      <activation>
+        <property>
+          <name>libraries</name>
+        </property>
+      </activation>
+      <modules>
+        <module>libraries</module>
+        <module>engine</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>engine</id>
+      <activation>
+        <property>
+          <name>engine</name>
+        </property>
+      </activation>
+      <modules>
+        <module>engine</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>specials</id>
+      <activation>
+        <property>
+          <name>specials</name>
+        </property>
+      </activation>
+      <modules>
+        <module>libraries</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>designer</id>
+       <activation>
+        <property>
+          <name>designer</name>
+        </property>
+      </activation>
+      <modules>
+        <module>designer</module>
+        <module>assemblies</module>
+      </modules>
+    </profile>
+  </profiles>
+  
 </project>

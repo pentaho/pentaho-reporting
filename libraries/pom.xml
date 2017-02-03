@@ -7,43 +7,51 @@
     <version>7.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
+  
   <groupId>pentaho-library</groupId>
   <artifactId>pentaho-reporting-library-parent-pom</artifactId>
   <packaging>pom</packaging>
+  
   <name>Pentaho Reporting Library Build Aggregator</name>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License, version 2.1</name>
-      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <modules>
-    <module>configuration-editor</module>
-    <module>flute</module>
-    <module>libbase</module>
-    <module>libcss</module>
-    <module>libloader</module>
-    <module>libdocbundle</module>
-    <module>libfonts</module>
-    <module>libformula</module>
-    <module>libformula-ui</module>
-    <module>libformat</module>
-    <module>libpensol</module>
-    <module>libpixie</module>
-    <module>librepository</module>
-    <module>libswing</module>
-    <module>libsparkline</module>
-    <module>libserializer</module>
-    <module>libxml</module>
-  </modules>
-  <scm>
-    <connection>scm:git:git@github.com:pentaho/pentaho-reporting.git</connection>
-    <developerConnection>scm:git:git@github.com:pentaho/pentaho-reporting.git</developerConnection>
-    <tag>HEAD</tag>
-    <url>scm:git:git@github.com:pentaho/pentaho-reporting.git</url>
-  </scm>
+  
+  <profiles>
+    <profile>
+      <id>libraries</id>
+      <activation>
+        <property>
+          <name>!specials</name>
+        </property>
+      </activation>
+      <modules>
+        <module>configuration-editor</module>
+        <module>flute</module>
+        <module>libbase</module>
+        <module>libcss</module>
+        <module>libloader</module>
+        <module>libdocbundle</module>
+        <module>libfonts</module>
+        <module>libformula</module>
+        <module>libformula-ui</module>
+        <module>libformat</module>
+        <module>libpixie</module>
+        <module>librepository</module>
+        <module>libswing</module>
+        <module>libsparkline</module>
+        <module>libserializer</module>
+        <module>libxml</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>specials</id>
+      <activation>
+        <property>
+          <name>!libraries</name>
+        </property>
+      </activation>
+      <modules>
+        <module>libpensol</module>
+      </modules>
+    </profile>
+  </profiles>
+  
 </project>

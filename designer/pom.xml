@@ -7,20 +7,13 @@
     <version>7.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
+  
   <groupId>pentaho-report-designer</groupId>
   <artifactId>pentaho-report-designer-parent-pom</artifactId>
   <packaging>pom</packaging>
+  
   <name>Pentaho Reporting Designer Build Aggregator</name>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License, version 2.1</name>
-      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+  
   <modules>
     <module>report-designer</module>
     <module>wizard-xul</module>
@@ -42,12 +35,7 @@
     <module>report-designer-extension-connectioneditor</module>
     <module>report-designer-extension-wizard</module>   
   </modules>
-  <scm>
-    <connection>scm:git:git@github.com:pentaho/pentaho-reporting.git</connection>
-    <developerConnection>scm:git:git@github.com:pentaho/pentaho-reporting.git</developerConnection>
-    <tag>HEAD</tag>
-    <url>scm:git:git@github.com:pentaho/pentaho-reporting.git</url>
-  </scm>
+
   <properties>
     <junit.sysprop.java.awt.headless>true</junit.sysprop.java.awt.headless>
   </properties>

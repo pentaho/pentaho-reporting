@@ -25,7 +25,8 @@
     </dependency>
     <dependency>
       <groupId>pentaho-library</groupId>
-      <artifactId>libformula-test</artifactId>
+      <artifactId>libformula</artifactId>
+      <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
