@@ -7,20 +7,13 @@
     <version>7.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
+  
   <groupId>pentaho-report-designer</groupId>
   <artifactId>assemblies-parent-pom</artifactId>
   <packaging>pom</packaging>
+  
   <name>Pentaho Reporting Designer Assemblies</name>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License, version 2.1</name>
-      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+
   <profiles>
     <profile>
       <id>default</id>
