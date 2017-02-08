@@ -3,22 +3,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>pentaho-reporting-library-parent-pom</artifactId>
-        <groupId>pentaho-library</groupId>
+        <groupId>org.pentaho.reporting</groupId>
+        <artifactId>pentaho-reporting-library</artifactId>
         <version>7.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
+
+    <groupId>pentaho-library</groupId>
     <artifactId>libloader</artifactId>
     <packaging>jar</packaging>
+
     <name>LibLoader</name>
     <description>LibLoader is a general purpose resource loading framework. It has been
         designed to allow to load resources from any physical location and to
         allow the processing of that content data in a generic way, totally
         transparent to the user of that library.
     </description>
-    <organization>
-        <name>Pentaho Corporation</name>
-    </organization>
+
     <licenses>
         <license>
             <name>GNU Lesser General Public License, version 2.1</name>
@@ -26,6 +26,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
