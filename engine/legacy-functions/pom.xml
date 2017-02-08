@@ -2,15 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-reporting-engine-parent-pom</artifactId>
-    <groupId>pentaho-reporting-engine</groupId>
+    <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting-engine</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
+
+  <groupId>pentaho-reporting-engine</groupId>
   <artifactId>pentaho-reporting-engine-legacy-functions</artifactId>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
+
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -18,6 +17,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>

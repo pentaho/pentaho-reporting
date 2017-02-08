@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-ce-jar-parent-pom</artifactId>
     <groupId>org.pentaho</groupId>
+    <artifactId>pentaho-ce-jar-parent-pom</artifactId>
     <version>7.1-SNAPSHOT</version>
   </parent>
   
   <groupId>org.pentaho.reporting</groupId>
-  <artifactId>pentaho-reporting-parent-pom</artifactId>
+  <artifactId>pentaho-reporting</artifactId>
   <version>7.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   
-  <name>Pentaho Reporting Parent Pom</name>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
-  
+  <name>Pentaho Reporting</name>
+
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -211,6 +208,7 @@
     <library.group>pentaho-library</library.group>
     <javacc-maven-plugin.version>2.6</javacc-maven-plugin.version>
   </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -3104,6 +3102,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <build>
     <plugins>
       <plugin>

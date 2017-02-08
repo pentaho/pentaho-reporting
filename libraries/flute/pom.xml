@@ -2,13 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-reporting-library-parent-pom</artifactId>
-    <groupId>pentaho-library</groupId>
+    <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting-library</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
+
+  <groupId>pentaho-library</groupId>
   <artifactId>flute</artifactId>
   <packaging>jar</packaging>
+
   <name>Flute</name>
   <description>a derivative work of http://www.w3.org/Style/CSS/SAC/Overview.en.html
 
@@ -29,9 +31,7 @@
     stylesheets of other programms should not be affected by this change - if they
     specified things which were known not to work and start dying if it works -
     well, that's bad luck, I guess.</description>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
+
   <licenses>
     <license>
       <name>W3C License</name>
@@ -39,6 +39,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <dependencies>
     <dependency>
       <groupId>org.w3c.css</groupId>

@@ -2,18 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-reporting-parent-pom</artifactId>
     <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  
-  <groupId>pentaho-report-designer</groupId>
-  <artifactId>pentaho-report-designer-parent-pom</artifactId>
+
+  <groupId>org.pentaho.reporting</groupId>
+  <artifactId>pentaho-reporting-designer</artifactId>
   <packaging>pom</packaging>
   
-  <name>Pentaho Reporting Designer Build Aggregator</name>
+  <name>Pentaho Reporting Designer Modules</name>
   
+  <properties>
+    <junit.sysprop.java.awt.headless>true</junit.sysprop.java.awt.headless>
+  </properties>
+
   <modules>
     <module>report-designer</module>
     <module>wizard-xul</module>
@@ -36,7 +39,4 @@
     <module>report-designer-extension-wizard</module>   
   </modules>
 
-  <properties>
-    <junit.sysprop.java.awt.headless>true</junit.sysprop.java.awt.headless>
-  </properties>
 </project>

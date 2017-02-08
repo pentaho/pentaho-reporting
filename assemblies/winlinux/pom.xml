@@ -2,16 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>assemblies-parent-pom</artifactId>
-    <groupId>pentaho-report-designer</groupId>
+    <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting-assemblies</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <packaging>pom</packaging>
+
   <artifactId>prd-ce</artifactId>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
+  <packaging>pom</packaging>
+
+  <name>Pentaho Report Designer CE Assembly</name>
+
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -19,10 +19,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <properties>
     <dist.name>prd-ce-${project.version}</dist.name>
     <dist.name.mac>prd-ce-mac-${project.version}</dist.name.mac>
   </properties>
+
   <profiles>
     <profile>
       <id>winlinux</id>
