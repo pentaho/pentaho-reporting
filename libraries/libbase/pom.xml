@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting-library</artifactId>
+    <version>7.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>pentaho-library</groupId>
+  <artifactId>libbase</artifactId>
+  <packaging>jar</packaging>
+
+  <name>LibBase</name>
+  <description>LibBase is a library developed to provide base services like
+    logging, configuration and initialization to all other libraries
+    and applications. The library is the root library for all other
+    Pentaho-Reporting projects.</description>
+
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License, version 2.1</name>
+      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
+              <Implementation-Title>LibBase</Implementation-Title>
+              <Release-Major-Number>1</Release-Major-Number>
+              <Release-Minor-Number>0</Release-Minor-Number>
+              <Implementation-ProductID>libbase</Implementation-ProductID>
+              <Release-Milestone-Number>0</Release-Milestone-Number>
+              <Release-Candidate-Token>GA</Release-Candidate-Token>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

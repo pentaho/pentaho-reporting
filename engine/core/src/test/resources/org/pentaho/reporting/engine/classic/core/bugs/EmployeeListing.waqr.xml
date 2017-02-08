@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report bottommargin="10" topmargin="10" rightmargin="10" leftmargin="10"
+        pageformat="LETTER" orientation="landscape" name="EmployeeListing.waqr.xreportspec">
+  <parser-config>
+    <property name="reportheader"/>
+    <property name="reportfooter"/>
+    <property name="pageheader"/>
+    <property name="pagefooter"/>
+  </parser-config>
+  <reportheader color="#DE6118" fontname="Arial" fontsize="16">
+    <message-field alignment="left" height="24" vertical-alignment="middle" width="100%" x="0%"
+                   y="0">${reportheader}
+    </message-field>
+  </reportheader>
+  <reportfooter color="#DE6118" fontname="Arial" fontsize="16">
+    <message-field alignment="left" height="24" vertical-alignment="middle" width="100%" x="0%"
+                   y="0">${reportfooter}
+    </message-field>
+  </reportfooter>
+  <pageheader color="#2F2C35" fontname="Arial" fontsize="8">
+    <round-rectangle height="18" arc-height="6" arc-width="6" color="#FDDE85" width="100%" x="0%" y="0" fill="true"
+                     draw="true" dynamic="false" layout-cachable="false"/>
+    <message-field alignment="left" height="18" vertical-alignment="middle" width="50%" x="0%"
+                   y="0">${pageheader}
+    </message-field>
+    <message-field alignment="right" height="18" vertical-alignment="middle" width="50%" x="50%" y="0">$(report.date,
+      date, MMMM dd, yyyy @ hh:mm )
+    </message-field>
+    <line color="#1A7439" height="3" weight="3" width="100%" x1="0%" x2="100%" y1="18" y2="18"/>
+  </pageheader>
+  <pagefooter color="#2F2C35" fontname="Arial" fontsize="8">
+    <round-rectangle height="18" arc-height="6" arc-width="6" color="#FDDE85" width="100%" x="0%" y="0" fill="true"
+                     draw="true" dynamic="false" layout-cachable="false"/>
+    <line color="#1A7439" height="3" weight="3" width="100%" x1="0%" x2="100%" y1="0" y2="0"/>
+    <message-field alignment="left" height="18" width="50%" x="0" y="0">${pagefooter}</message-field>
+    <message-field alignment="right" height="18" width="50%" x="50%" y="0">Page $(PageofPages)</message-field>
+  </pagefooter>
+  <functions>
+    <property-ref name="report.date"/>
+    <function class="org.pentaho.reporting.engine.classic.core.function.PageOfPagesFunction" name="PageofPages"/>
+    <function name="backgroundTrigger"
+              class="org.pentaho.reporting.engine.classic.core.function.ElementVisibilitySwitchFunction">
+      <properties>
+        <property name="element">rowBandingElement</property>
+        <property name="numberOfElements">1</property>
+        <property name="initialState">true</property>
+      </properties>
+    </function>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.HideElementIfDataAvailableExpression"
+                name="noDataLabelElementHideIfNullTrigger">
+      <properties>
+        <property name="element">noDataLabelElement</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression"
+                name="dummyGroupFooterHideIfNullTrigger">
+      <properties>
+        <property name="element">dummyGroupFooter</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression"
+                name="BC_OFFICES_TERRITORYGroupHeaderHideIfNullTrigger">
+      <properties>
+        <property name="element">BC_OFFICES_TERRITORYGroupHeader</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression"
+                name="BC_OFFICES_TERRITORYGroupFooterHideIfNullTrigger">
+      <properties>
+        <property name="element">BC_OFFICES_TERRITORYGroupFooter</property>
+      </properties>
+    </expression>
+  </functions>
+  <items color="#4F383C" fontname="Arial" fontsize="10" fontstyle="plain">
+    <rectangle name="rowBandingElement" color="#F9F9EC" draw="false" fill="true" height="12" x="0%" width="100%" y="0"/>
+    <number-field name="BC_EMPLOYEES_EMPLOYEENUMBERElement" nullstring="-" fieldname="BC_EMPLOYEES_EMPLOYEENUMBER"
+                  format="#" vertical-alignment="middle" alignment="left" width="12.5%" x="0.0%" y="0" height="12"
+                  color="#4F383C" fontname="Arial" fontsize="10" fontstyle="plain"/>
+    <string-field name="BC_EMPLOYEES_LASTNAMEElement" nullstring="-" fieldname="BC_EMPLOYEES_LASTNAME"
+                  vertical-alignment="middle" alignment="left" width="12.5%" x="12.5%" y="0" height="12" color="#4F383C"
+                  fontname="Arial" fontsize="10"/>
+    <string-field name="BC_EMPLOYEES_FIRSTNAMEElement" nullstring="-" fieldname="BC_EMPLOYEES_FIRSTNAME"
+                  vertical-alignment="middle" alignment="left" width="12.5%" x="25.0%" y="0" height="12" color="#4F383C"
+                  fontname="Arial" fontsize="10"/>
+    <string-field name="BC_EMPLOYEES_JOBTITLEElement" nullstring="-" fieldname="BC_EMPLOYEES_JOBTITLE"
+                  vertical-alignment="middle" alignment="left" width="12.5%" x="37.5%" y="0" height="12" color="#4F383C"
+                  fontname="Arial" fontsize="10"/>
+    <number-field name="BC_EMPLOYEES_REPORTSTOElement" nullstring="-" fieldname="BC_EMPLOYEES_REPORTSTO"
+                  vertical-alignment="middle" alignment="right" width="12.5%" x="50.0%" y="0" height="12"
+                  color="#4F383C" fontname="Arial" fontsize="10"/>
+    <string-field name="BC_OFFICES_PHONEElement" nullstring="-" fieldname="BC_OFFICES_PHONE" vertical-alignment="middle"
+                  alignment="left" width="12.5%" x="62.5%" y="0" height="12" color="#4F383C" fontname="Arial"
+                  fontsize="10"/>
+    <string-field name="BC_EMPLOYEES_EXTENSIONElement" nullstring="-" fieldname="BC_EMPLOYEES_EXTENSION"
+                  vertical-alignment="middle" alignment="left" width="12.5%" x="75.0%" y="0" height="12" color="#4F383C"
+                  fontname="Arial" fontsize="10"/>
+    <string-field name="BC_EMPLOYEES_EMAILElement" nullstring="-" fieldname="BC_EMPLOYEES_EMAIL"
+                  vertical-alignment="middle" alignment="left" width="12.5%" x="87.5%" y="0" height="12" color="#4F383C"
+                  fontname="Arial" fontsize="10"/>
+    <line color="#AED163" weight=".5" x1="0.0%" y1="0" x2="0.0%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="12.5%" y1="0" x2="12.5%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="25.0%" y1="0" x2="25.0%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="37.5%" y1="0" x2="37.5%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="50.0%" y1="0" x2="50.0%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="62.5%" y1="0" x2="62.5%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="75.0%" y1="0" x2="75.0%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="87.5%" y1="0" x2="87.5%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="100%" y1="0" x2="100%" y2="12"/>
+    <line color="#AED163" weight=".5" x1="0%" y1="0" x2="100%" y2="0"/>
+    <line color="#AED163" weight=".5" x1="0%" y1="12" x2="100%" y2="12"/>
+  </items>
+  <groups>
+    <group name="dummy">
+      <groupheader name="dummyGroupHeader" color="#1A7439" fontname="Arial" fontsize="12" fontstyle="bold"
+                   repeat="false">
+        <label name="noDataLabelElement" height="12" vertical-alignment="middle" alignment="left" width="100%" x="0%"
+               y="0" visible="false">No Data Available
+        </label>
+      </groupheader>
+      <groupfooter name="dummyGroupFooter" color="#1A7439" fontname="Arial" fontsize="12" fontstyle="bold"/>
+    </group>
+    <group name="BC_OFFICES_TERRITORY">
+      <fields>
+        <field>BC_OFFICES_TERRITORY</field>
+      </fields>
+      <groupheader name="BC_OFFICES_TERRITORYGroupHeader" repeat="false" pagebreak-before-print="false"
+                   pagebreak-after-print="false" color="#1A7439" fontname="Arial" fontsize="12" fontstyle="bold"
+                   height="43">
+        <rectangle color="#FFFFFF" draw="false" fill="false" height="17" width="100%" x="0%" y="0"/>
+        <string-field fieldname="BC_OFFICES_TERRITORY" height="17" vertical-alignment="top" alignment="left"
+                      width="100%" x="0%" y="0" nullstring="-">Territory: $(BC_OFFICES_TERRITORY)
+        </string-field>
+        <rectangle color="#F98F13" draw="false" fill="true" height="18" width="100%" x="0%" y="19"/>
+        <rectangle draw="false" fill="false" height="2" width="100%" x="0%" y="17"/>
+        <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
+               alignment="left" width="12.5%" x="0.0%" y="19">Employee ID
+        </label>
+        <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
+               alignment="left" width="12.5%" x="12.5%" y="19">Last Name
+        </label>
+        <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
+               alignment="left" width="12.5%" x="25.0%" y="19">First Name
+        </label>
+        <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
+               alignment="left" width="12.5%" x="37.5%" y="19">Job Title
+        </label>
+        <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
+               alignment="right" width="12.5%" x="50.0%" y="19">Manager
+        </label>
+        <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
+               alignment="left" width="12.5%" x="62.5%" y="19">Phone Number
+        </label>
+        <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
+               alignment="left" width="12.5%" x="75.0%" y="19">Extension
+        </label>
+        <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
+               alignment="left" width="12.5%" x="87.5%" y="19">Email
+        </label>
+      </groupheader>
+      <groupfooter name="BC_OFFICES_TERRITORYGroupFooter" color="#1A7439" fontname="Arial" fontsize="12"
+                   fontstyle="bold" pagebreak-before-print="false" pagebreak-after-print="false"/>
+    </group>
+  </groups>
+</report>

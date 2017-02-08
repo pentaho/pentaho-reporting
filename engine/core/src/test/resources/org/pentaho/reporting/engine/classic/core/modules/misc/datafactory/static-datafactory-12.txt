@@ -1,0 +1,18 @@
+Tablemodel contains 1 rows.
+Column: 0 Name=Call; DataType=class java.lang.String
+Column: 1 Name=ConstructorParam1; DataType=class java.lang.String
+Column: 2 Name=ConstructorParam2; DataType=class java.lang.Integer
+Checking the data inside
+ValueAt (0, 0) is in a typed column and is of type class java.lang.String
+ValueAt (0, 1) is in a typed column and is of type class java.lang.String
+ValueAt (0, 2) is in a typed column and is of type class java.lang.Integer
+TableModel has no meta-data.
+TableModel has no meta-data.
+Tablemodel contains 1 rows.
+Column: 0 Name=Call; DataType=class java.lang.String
+Column: 1 Name=ConstructorParam1; DataType=class java.lang.String
+Column: 2 Name=ConstructorParam2; DataType=class java.lang.Integer
+Checking the data inside
+ValueAt (0, 0) is 'StaticDataSourceFactoryTestSupport#createSimpleTableModel'
+ValueAt (0, 1) is 'test'
+ValueAt (0, 2) is '5'

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+    "http://jfreereport.sourceforge.net/report-085.dtd">
+<!--
+SELECT
+     PRODUCTS."PRODUCTCODE" AS PRODUCTS_PRODUCTCODE,
+     PRODUCTS."PRODUCTNAME" AS PRODUCTS_PRODUCTNAME,
+     PRODUCTS."PRODUCTLINE" AS PRODUCTS_PRODUCTLINE,
+     PRODUCTS."PRODUCTSCALE" AS PRODUCTS_PRODUCTSCALE,
+     PRODUCTS."PRODUCTVENDOR" AS PRODUCTS_PRODUCTVENDOR,
+     PRODUCTS."PRODUCTDESCRIPTION" AS PRODUCTS_PRODUCTDESCRIPTION,
+     PRODUCTS."QUANTITYINSTOCK" AS PRODUCTS_QUANTITYINSTOCK,
+     PRODUCTS."BUYPRICE" AS PRODUCTS_BUYPRICE,
+     PRODUCTS."MSRP" AS PRODUCTS_MSRP
+FROM
+     "PUBLIC"."PRODUCTS" PRODUCTS
+ -->
+<report name="JFreeReport-WizardReport" orientation="landscape" pageformat="LETTER" leftmargin="10" rightmargin="10"
+        topmargin="10" bottommargin="10">
+  <parser-config/>
+  <reportheader/>
+  <groups>
+    <group name="dummy">
+      <groupheader repeat="true" height="20" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold">
+        <band name="DummyGroupNoDataBandElement">
+          <label height="11" vertical-alignment="middle" alignment="left" width="100%" x="0%"
+                 y="0">No Data Available
+          </label>
+        </band>
+        <band name="DummyGroupDataBandElement" y="2" height="20">
+          <rectangle color="#C0C0C0" draw="false" fill="true" height="18" width="100%" x="0%" y="0"/>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="0.0%" y="0">
+            PRODUCTS_PRODUCTCODE
+          </label>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="11.11111111111111%" y="0">
+            PRODUCTS_PRODUCTNAME
+          </label>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="22.22222222222222%" y="0">
+            PRODUCTS_PRODUCTLINE
+          </label>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="33.33333333333333%" y="0">
+            PRODUCTS_PRODUCTSCALE
+          </label>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="44.44444444444444%" y="0">
+            PRODUCTS_PRODUCTVENDOR
+          </label>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="55.55555555555556%" y="0">
+            PRODUCTS_PRODUCTDESCRIPTION
+          </label>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="right" width="11.11111111111111%" x="66.66666666666667%" y="0">
+            PRODUCTS_QUANTITYINSTOCK
+          </label>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="right" width="11.11111111111111%" x="77.77777777777779%" y="0">
+            PRODUCTS_BUYPRICE
+          </label>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
+                 vertical-alignment="middle" alignment="right" width="11.1111111111111%" x="88.8888888888889%" y="0">
+            PRODUCTS_MSRP
+          </label>
+        </band>
+      </groupheader>
+      <groupfooter name="dummyGroupFooter" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold">
+        <rectangle color="#e0d0c0" draw="false" fill="true" height="16" width="100%" y="1" x="0%"/>
+        <number-field fieldname="Summary_PRODUCTS_QUANTITYINSTOCKExpression" height="15" vertical-alignment="middle"
+                      alignment="right" width="11.11111111111111%" x="66.66666666666667%" y="2"/>
+        <number-field fieldname="Summary_PRODUCTS_BUYPRICEExpression" height="15" vertical-alignment="middle"
+                      alignment="right" width="11.11111111111111%" x="77.77777777777779%" y="2"/>
+        <number-field fieldname="Summary_PRODUCTS_MSRPExpression" height="15" vertical-alignment="middle"
+                      alignment="right" width="11.1111111111111%" x="88.8888888888889%" y="2"/>
+        <message-field height="15" x="0%" width="66.66666666666667%" y="2" alignment="left" vertical-alignment="middle">
+          Grand Total
+        </message-field>
+      </groupfooter>
+    </group>
+  </groups>
+  <items color="#000000" fontname="SansSerif" fontsize="9" fontstyle="bold">
+    <rectangle name="rowBandingElement" color="#E0E0E0" draw="false" fill="true" height="11" x="0%" width="100%" y="0"/>
+    <string-field name="PRODUCTS_PRODUCTCODEElement" nullstring="-" fieldname="PRODUCTS_PRODUCTCODE"
+                  vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="0.0%" y="0" height="11"
+                  color="#000000" fontname="SansSerif" fontsize="9"/>
+    <string-field name="PRODUCTS_PRODUCTNAMEElement" nullstring="-" fieldname="PRODUCTS_PRODUCTNAME"
+                  vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="11.11111111111111%" y="0"
+                  height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <string-field name="PRODUCTS_PRODUCTLINEElement" nullstring="-" fieldname="PRODUCTS_PRODUCTLINE"
+                  vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="22.22222222222222%" y="0"
+                  height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <string-field name="PRODUCTS_PRODUCTSCALEElement" nullstring="-" fieldname="PRODUCTS_PRODUCTSCALE"
+                  vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="33.33333333333333%" y="0"
+                  height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <string-field name="PRODUCTS_PRODUCTVENDORElement" nullstring="-" fieldname="PRODUCTS_PRODUCTVENDOR"
+                  vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="44.44444444444444%" y="0"
+                  height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <string-field name="PRODUCTS_PRODUCTDESCRIPTIONElement" nullstring="-" fieldname="PRODUCTS_PRODUCTDESCRIPTION"
+                  vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="55.55555555555556%" y="0"
+                  height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="PRODUCTS_QUANTITYINSTOCKElement" nullstring="-" fieldname="PRODUCTS_QUANTITYINSTOCK"
+                  vertical-alignment="middle" alignment="right" width="11.11111111111111%" x="66.66666666666667%" y="0"
+                  height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="PRODUCTS_BUYPRICEElement" nullstring="-" fieldname="PRODUCTS_BUYPRICE"
+                  vertical-alignment="middle" alignment="right" width="11.11111111111111%" x="77.77777777777779%" y="0"
+                  height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="PRODUCTS_MSRPElement" nullstring="-" fieldname="PRODUCTS_MSRP" vertical-alignment="middle"
+                  alignment="right" width="11.1111111111111%" x="88.8888888888889%" y="0" height="11" color="#000000"
+                  fontname="SansSerif" fontsize="9"/>
+  </items>
+  <functions>
+    <function name="backgroundTrigger"
+              class="org.pentaho.reporting.engine.classic.core.function.ElementVisibilitySwitchFunction">
+      <properties>
+        <property name="element">rowBandingElement</property>
+        <property name="numberOfElements">1</property>
+        <property name="initialState">true</property>
+      </properties>
+    </function>
+    <!--
+    <expression class="org.pentaho.reporting.engine.classic.core.function.HideElementIfDataAvailableExpression" name="DummyGroupNoDataBandElementHideIfNullTrigger">
+      <properties>
+        <property name="element">DummyGroupNoDataBandElement</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="DummyGroupDataBandElementHideIfNullTrigger">
+      <properties>
+        <property name="element">DummyGroupDataBandElement</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="dummyGroupFooterHideIfNullTrigger">
+      <properties>
+        <property name="element">dummyGroupFooter</property>
+      </properties>
+    </expression>
+    -->
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction"
+                name="Summary_PRODUCTS_QUANTITYINSTOCKExpression">
+      <properties>
+        <property name="field">PRODUCTS_QUANTITYINSTOCK</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction"
+                name="Summary_PRODUCTS_BUYPRICEExpression">
+      <properties>
+        <property name="field">PRODUCTS_BUYPRICE</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction"
+                name="Summary_PRODUCTS_MSRPExpression">
+      <properties>
+        <property name="field">PRODUCTS_MSRP</property>
+      </properties>
+    </expression>
+  </functions>
+</report>
+
+

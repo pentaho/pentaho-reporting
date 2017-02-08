@@ -1,3 +1,0 @@
-Implementation-Title: pentaho-report-wizard-xul
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: pentaho-report-wizard-xul

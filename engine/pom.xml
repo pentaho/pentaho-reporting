@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting</artifactId>
+    <version>7.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.pentaho.reporting</groupId>
+  <artifactId>pentaho-reporting-engine</artifactId>
+  <packaging>pom</packaging>
+  
+  <name>Pentaho Reporting Engine Modules</name>
+
+  <properties>
+    <junit.sysprop.java.awt.headless>true</junit.sysprop.java.awt.headless>
+  </properties>
+  
+  <profiles>
+    <profile>
+      <id>libraries</id>
+      <activation>
+        <property>
+          <name>!engine</name>
+        </property>
+      </activation>
+      <modules>
+        <module>core</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>engine</id>
+      <activation>
+        <property>
+          <name>!libraries</name>
+        </property>
+      </activation>
+      <modules>
+        <module>extensions</module>
+        <module>extensions-cda</module>
+        <module>extensions-docsupport</module>
+        <module>extensions-drilldown</module>
+        <module>extensions-kettle</module>
+        <module>extensions-mondrian</module>
+        <module>extensions-olap4j</module>
+        <module>extensions-openerp</module>
+        <module>extensions-pentaho-metadata</module>
+        <module>legacy-charts</module>
+        <module>extensions-xpath</module>
+        <module>extensions-reportdesigner-parser</module>
+        <module>extensions-sampledata</module>
+        <module>extensions-scripting</module>
+        <module>extensions-charting</module>
+        <module>extensions-toc</module>
+        <module>legacy-functions</module>
+        <module>wizard-core</module>
+        <module>demo</module>
+        <module>testcases</module>
+        <module>samples</module>
+        <module>sdk</module>
+        <module>tools</module>
+      </modules>
+    </profile>
+  </profiles>
+  
+</project>

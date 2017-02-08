@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting-library</artifactId>
+    <version>7.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>pentaho-library</groupId>
+  <artifactId>libpixie</artifactId>
+  <packaging>jar</packaging>
+
+  <name>LibPixie</name>
+  <description>Pixie is a WMF-File reading library originally written by David R. Harris as
+    converter for the Pixie-ImageViewer. Pixie was long time dead and is now
+    resurrected as WMF-Reader and ImageProducer for Java 1.2.2 or higher.</description>
+
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License, version 2.1</name>
+      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>libbase</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
+              <Implementation-Title>LibPixie</Implementation-Title>
+              <Release-Major-Number>1</Release-Major-Number>
+              <Release-Minor-Number>0</Release-Minor-Number>
+              <Implementation-ProductID>libpixie</Implementation-ProductID>
+              <Release-Milestone-Number>0</Release-Milestone-Number>
+              <Release-Candidate-Token>dev</Release-Candidate-Token>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,3 +1,0 @@
-Implementation-Title: legacy-charts
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: pentaho-reporting-engine-classic-legacy-charts

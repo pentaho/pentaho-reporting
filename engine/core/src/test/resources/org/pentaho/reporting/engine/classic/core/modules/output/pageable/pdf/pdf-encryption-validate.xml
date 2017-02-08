@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        name="PDF Security Demo" orientation="portrait" pageformat="LETTER"
+        topmargin="10" leftmargin="10" bottommargin="10" rightmargin="10">
+
+  <!--
+    The configuration tag can be used to define initial values for the report configuration.
+    The report configuration defines several keys, which are read during the report
+    processing.
+    -->
+  <configuration>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">utf-8</property>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Darkwing Duck
+    </property>
+
+    <!-- These properties make sure that the pdf file is encoded by default. -->
+    <!-- We dont allow anything else. For a complete description of the available PDF -->
+    <!-- Properties have a look at hte PDF-Output Module -->
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encryption">128bit</property>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.UserPassword">Darkwing
+    </property>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.OwnerPassword">Duck</property>
+    <!--
+      Enabling the following lines would limit the size of the PreviewDialog.
+      This does not affect the report itself, just the dialog's behaviour.
+      -->
+    <!--
+        <property name="org.pentaho.reporting.engine.classic.core.modules.gui.base.PreferredWidth">640</property>
+        <property name="org.pentaho.reporting.engine.classic.core.modules.gui.base.PreferredHeight">480</property>
+        <property name="org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumWidth">800</property>
+        <property name="org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumHeight">600</property>
+    -->
+  </configuration>
+
+  <reportheader height="90" fontname="Arial Unicode MS" fontstyle="bold" fontsize="18">
+
+    <label x="0" y="0" width="100%" height="18" fsunderline="true" vertical-alignment="top" alignment="center">LIST OF
+      COUNTRIES BY CONTINENT
+    </label>
+    <label x="0" y="18" width="100%" height="30" vertical-alignment="bottom" alignment="center">Sample Thai chars:
+      &#3648;&#3614;&#3636;&#3656;&#3617;, &#3621;&#3641;&#3585;&#3588;&#3657;&#3634;</label>
+  </reportheader>
+
+  <reportfooter height="48" fontname="Serif" fontstyle="bold" fontsize="16">
+    <label x="0" y="0" width="100%" height="24" alignment="center">*** &gt; END OF REPORT &lt; ***</label>
+  </reportfooter>
+
+  <pageheader height="18" fontname="Serif" fontstyle="plain" fontsize="10" onfirstpage="true">
+    <rectangle x="0" y="0" width="100%" height="100%" color="#AFAFAF" weight="0"/>
+    <date-field x="0" y="0" width="100%" height="14" alignment="right" format="d-MMM-yyyy" fieldname="report.date"/>
+    <line x1="0" y1="18" x2="100%" y2="18" color="#CFCFCF" weight="2.0"/>
+  </pageheader>
+
+  <pagefooter height="18">
+    <rectangle x="0" y="0" width="100%" height="100%" color="#AFAFAF" weight="0" draw="false" fill="true"/>
+  </pagefooter>
+
+  <groups>
+    <group name="Continent Group">
+      <groupheader height="18" fontname="Monospaced" fontstyle="bold" fontsize="9" vertical-alignment="middle">
+        <label x="0" y="1" width="100" height="9" alignment="left">CONTINENT:</label>
+        <string-field x="100" y="1" width="250" height="9" alignment="left" fieldname="Continent"/>
+        <line x1="0" y1="10" x2="100%" y2="10" weight="0.5"/>
+      </groupheader>
+      <groupfooter height="18" fontname="Monospaced" fontstyle="bold" fontsize="9">
+        <label x="0" y="0" width="220" height="12" alignment="left">Population:</label>
+        <number-field x="220" y="0" width="116" height="12" alignment="right" format="#,##0" fieldname="sum"/>
+      </groupfooter>
+      <fields>
+        <field>Continent</field>
+      </fields>
+    </group>
+  </groups>
+
+  <items height="10" fontname="Monospaced" fontstyle="plain" fontsize="8" vertical-alignment="middle">
+    <!-- the rectangle is named as it is referenced later in the function section -->
+    <rectangle name="background" x="0" y="0" width="100%" height="100%" color="#DFDFDF" weight="0"/>
+    <line x1="0" y1="10" x2="100%" y2="10" color="#0FDFDF" weight="0.1"/>
+    <line x1="0" y1="0" x2="100%" y2="0" color="#FF0FFF" weight="0.1"/>
+    <string-field x="0" y="0" width="176" height="10" alignment="left" fieldname="Country"/>
+    <string-field x="180" y="0" width="50" height="10" alignment="left" fieldname="ISO Code"/>
+    <number-field x="240" y="0" width="76" height="10" alignment="right" format="#,##0" fieldname="Population"/>
+    <string-field x="330" y="0" width="56" height="10" alignment="right" fieldname="expression"/>
+    <number-field x="390" y="0" width="76" height="10" alignment="right" format="#,##0.00 '%'" fieldname="percent"/>
+  </items>
+
+  <functions>
+    <property-ref name="report.date"/>
+    <expression name="expression"
+                class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression">
+      <properties>
+        <property name="expression">
+
+          // This declaration is important. The script-method getValue is called by the
+          // BSHExpression to evaluate the expression. We override the default implementation
+          // and perform own calculations here ...
+          Object getValue()
+          {
+          if (dataRow == null)
+          {
+          return null;
+          }
+
+          Number population = (Number) dataRow.get ("Population");
+          if (population == null)
+          {
+          return null;
+          }
+          long popK = (long)(population.longValue() / 1000);
+
+          // return a string with the number of people in 1000'er
+          return ("" + popK + " thousand people");
+          }
+        </property>
+      </properties>
+    </expression>
+    <function name="percent" class="org.pentaho.reporting.engine.classic.core.function.ItemPercentageFunction">
+      <properties>
+        <property name="field">Population</property>
+        <property name="group">Continent Group</property>
+      </properties>
+    </function>
+
+    <function name="sum" class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction">
+      <properties>
+        <property name="field">Population</property>
+        <property name="group">Continent Group</property>
+      </properties>
+    </function>
+
+    <function name="backgroundTrigger"
+              class="org.pentaho.reporting.engine.classic.core.function.ElementVisibilitySwitchFunction">
+      <properties>
+        <property name="element">background</property>
+      </properties>
+    </function>
+
+    <!--    <function name="eventMonitor" class="org.pentaho.reporting.engine.classic.core.function.EventMonitorFunction"/> -->
+  </functions>
+</report>

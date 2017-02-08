@@ -1,0 +1,1 @@
+The tests must be executed in locale en_US with timezone UTC or some of them will fail.

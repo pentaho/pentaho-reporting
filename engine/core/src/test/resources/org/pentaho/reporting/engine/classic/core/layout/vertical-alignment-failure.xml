@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report pageformat="A4" name="Invalid alignment .."
+        xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple">
+  <!--
+    <reportheader>
+      <rectangle x="0" y="0" width="300" height="100%" draw="true" fill="false" color="green" />
+      <label x="0" y="0" width="300" height="110" fontsize="40" fontname="Serif" vertical-alignment="middle">Some large text that will be guaranteed to span at least two lines or more. Well, I wont stop typing until I know what's going on in the vertical alignment step.</label>
+    </reportheader>
+  -->
+  <reportfooter>
+    <rectangle x="0" y="0" width="300" height="100%" draw="true" fill="false" color="blue"/>
+    <!--    <label x="0" y="0" width="300" height="110" fontsize="40" fontname="Serif" vertical-alignment="middle">Some large text that will be guaranteed to span at least two lines or more. Well, I wont stop typing until I know what's going on in the vertical alignment step.</label> -->
+    <label x="300" y="0" width="50" height="110" fontsize="40" fontname="Serif" vertical-alignment="top">T</label>
+    <label x="350" y="0" width="50" height="110" fontsize="40" fontname="Serif" vertical-alignment="middle">M</label>
+    <label x="400" y="0" width="50" height="110" fontsize="40" fontname="Serif" vertical-alignment="bottom">B</label>
+  </reportfooter>
+</report>

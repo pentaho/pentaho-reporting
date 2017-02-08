@@ -1,0 +1,45 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<!--
+  Testcase: Search for bugs in the border-creation.
+
+  In this case, the band, the rectangle and the element all define borders.
+
+  Contrary to the borders defined by rectangles, native borders never overlap. A border
+  shinks the content-area, so a element nested in a band with borders will never overlap
+  the border of the band.
+ -->
+<test-sequence mode="strict" page-width="500" xmlns="http://jfreereport.sourceforge.net/namespaces/testcases/tables">
+  <source>
+    <band id="band1" x="0" y="0" width="500" height="500">
+
+      <horizontal-line id="line1" x="100" y="100" width="300" height="0" color="green"/>
+      <horizontal-line id="line2" x="100" y="400" width="300" height="0" color="green"/>
+      <vertical-line id="line3" x="100" y="100" width="0" height="300" color="green"/>
+      <vertical-line id="line4" x="400" y="100" width="0" height="300" color="green"/>
+
+    </band>
+
+  </source>
+  <result>
+    <row>
+      <cell content-idref="band1"/>
+      <cell/>
+      <empty-cell/>
+    </row>
+    <row>
+      <cell/>
+      <cell border-top-color="green" border-top-width="1.0" border-top-style="solid" border-left-color="green"
+            border-left-width="1.0" border-left-style="solid"/>
+      <cell border-left-color="green" border-left-width="1.0" border-left-style="solid"/>
+    </row>
+    <row>
+      <empty-cell/>
+      <cell border-top-color="green" border-top-width="1.0" border-top-style="solid"/>
+      <empty-cell/>
+    </row>
+  </result>
+</test-sequence>
+

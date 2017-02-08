@@ -1,0 +1,47 @@
+Tablemodel contains 0 rows.
+Column: 0 Name=BC_CUSTOMER_W_TER_TERRITORY; DataType=class java.lang.String
+Column: 1 Name=BC_ORDERDETAILS_QUANTITYORDERED; DataType=class java.lang.Number
+Column: 2 Name=BC_ORDERDETAILS_QUANTITYORDERED:AVERAGE; DataType=class java.lang.Number
+Checking the data inside
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:aggregation]=NONE
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:datatype]=STRING
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:description]=LocalizedStringWrapper{localeStringMap={}}
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:fieldtype]=DIMENSION
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:font]=Arial-48-bold
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:foreground_color]={class=Color, red=167, green=43, blue=255}
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:hidden]=false
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:mask]=
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:name]=LocalizedStringWrapper{localeStringMap={en_US=Territory}}
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:security]=SecurityWrapper{ownerAclMap={{class=SecurityOwner, ownerType=ROLE, ownerName=Administrator}=31, {class=SecurityOwner, ownerType=USER, ownerName=suzy}=31}}
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column]=TERRITORY
+ColumnAttribute(0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column_type]=COLUMN_NAME
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:aggregation]=SUM
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:aggregation_list]=[SUM, AVERAGE]
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:datatype]=NUMERIC
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:description]=LocalizedStringWrapper{localeStringMap={}}
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:fieldtype]=DIMENSION
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:font]=Arial-10
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:hidden]=false
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:mask]=#,###.##
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:name]=LocalizedStringWrapper{localeStringMap={en_US=Quantity Ordered}}
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:security]=SecurityWrapper{ownerAclMap={{class=SecurityOwner, ownerType=ROLE, ownerName=Administrator}=31, {class=SecurityOwner, ownerType=USER, ownerName=suzy}=31}}
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column]=QUANTITYORDERED
+ColumnAttribute(1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column_type]=COLUMN_NAME
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:aggregation]=SUM
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:aggregation_list]=[SUM, AVERAGE]
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:datatype]=NUMERIC
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:description]=LocalizedStringWrapper{localeStringMap={}}
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:fieldtype]=DIMENSION
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:font]=Arial-10
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:hidden]=false
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:mask]=#,###.##
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:name]=LocalizedStringWrapper{localeStringMap={en_US=Quantity Ordered}}
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:security]=SecurityWrapper{ownerAclMap={{class=SecurityOwner, ownerType=ROLE, ownerName=Administrator}=31, {class=SecurityOwner, ownerType=USER, ownerName=suzy}=31}}
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column]=QUANTITYORDERED
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column_type]=COLUMN_NAME
+TableModel has no cell-meta-data.
+Tablemodel contains 0 rows.
+Column: 0 Name=BC_CUSTOMER_W_TER_TERRITORY; DataType=class java.lang.String
+Column: 1 Name=BC_ORDERDETAILS_QUANTITYORDERED; DataType=class java.lang.Number
+Column: 2 Name=BC_ORDERDETAILS_QUANTITYORDERED:AVERAGE; DataType=class java.lang.Number
+Checking the data inside
