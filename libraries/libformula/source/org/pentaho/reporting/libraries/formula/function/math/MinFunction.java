@@ -48,7 +48,7 @@ public class MinFunction implements Function {
     final int parameterCount = parameters.getParameterCount();
 
     if ( parameterCount == 0 ) {
-      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
+      return new TypeValuePair( NumberType.GENERIC_NUMBER, ZERO );
     }
 
     final TypeRegistry typeRegistry = context.getTypeRegistry();
