@@ -2,25 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-reporting-parent-pom</artifactId>
     <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <groupId>pentaho-report-designer</groupId>
-  <artifactId>pentaho-report-designer-parent-pom</artifactId>
+
+  <groupId>org.pentaho.reporting.designer</groupId>
+  <artifactId>reporting-designer</artifactId>
   <packaging>pom</packaging>
-  <name>Pentaho Reporting Designer Build Aggregator</name>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License, version 2.1</name>
-      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+  
+  <name>Pentaho Reporting Designer Modules</name>
+  
+  <properties>
+    <junit.sysprop.java.awt.headless>true</junit.sysprop.java.awt.headless>
+  </properties>
+
   <modules>
     <module>report-designer</module>
     <module>wizard-xul</module>
@@ -42,13 +38,111 @@
     <module>report-designer-extension-connectioneditor</module>
     <module>report-designer-extension-wizard</module>   
   </modules>
-  <scm>
-    <connection>scm:git:git@github.com:pentaho/pentaho-reporting.git</connection>
-    <developerConnection>scm:git:git@github.com:pentaho/pentaho-reporting.git</developerConnection>
-    <tag>HEAD</tag>
-    <url>scm:git:git@github.com:pentaho/pentaho-reporting.git</url>
-  </scm>
-  <properties>
-    <junit.sysprop.java.awt.headless>true</junit.sysprop.java.awt.headless>
-  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-cda</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-reportdesigner-parser</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-drill-down</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-kettle</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-toc</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>legacy-charts</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-core</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-mondrian</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-olap4j</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-openerp</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>wizard-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-pmd</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-scripting</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.engine</groupId>
+        <artifactId>classic-extensions-xpath</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.library</groupId>
+        <artifactId>libformula-ui</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.library</groupId>
+        <artifactId>libpensol</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.library</groupId>
+        <artifactId>libswing</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pentaho.reporting.library</groupId>
+        <artifactId>configuration-editor</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
 </project>

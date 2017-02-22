@@ -2,15 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-report-designer-parent-pom</artifactId>
-    <groupId>pentaho-report-designer</groupId>
+    <groupId>org.pentaho.reporting.designer</groupId>
+    <artifactId>reporting-designer</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
+
   <artifactId>report-designer</artifactId>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
+
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -18,6 +16,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <properties>
     <Implementation-ProductID>PRD</Implementation-ProductID>
     <Implementation-Title>Pentaho Report Designer</Implementation-Title>
@@ -27,36 +26,36 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>report-designer-configuration-editor</artifactId>
+      <groupId>org.pentaho.reporting.library</groupId>
+      <artifactId>configuration-editor</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho-library</groupId>
+      <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libformula-ui</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho-library</groupId>
+      <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libswing</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-core</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-extensions</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-extensions</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-extensions-scripting</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-extensions-scripting</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-extensions-reportdesigner-parser</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-extensions-reportdesigner-parser</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-extensions-drill-down</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-extensions-drill-down</artifactId>
     </dependency>
     <dependency>
       <groupId>pentaho</groupId>
@@ -111,8 +110,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-core</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-core</artifactId>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

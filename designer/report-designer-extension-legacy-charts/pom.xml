@@ -2,15 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-report-designer-parent-pom</artifactId>
-    <groupId>pentaho-report-designer</groupId>
+    <groupId>org.pentaho.reporting.designer</groupId>
+    <artifactId>reporting-designer</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>report-designer-ext-legacy-charts</artifactId>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
+
+  <artifactId>ext-legacy-charts</artifactId>
+
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -18,14 +16,16 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>report-designer</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-legacy-charts</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>legacy-charts</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -73,8 +73,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-core</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-core</artifactId>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

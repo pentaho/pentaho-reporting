@@ -2,18 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-reporting-library-parent-pom</artifactId>
-    <groupId>pentaho-library</groupId>
+    <groupId>org.pentaho.reporting.library</groupId>
+    <artifactId>reporting-libraries</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
+
   <artifactId>libcss</artifactId>
   <packaging>jar</packaging>
+
   <name>LibCss</name>
   <description>LibCss is a CSS parsing and styling helper library. This library is deprecated.</description>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
+
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -21,15 +20,18 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libfonts</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>flute</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

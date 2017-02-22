@@ -2,25 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>pentaho-reporting-parent-pom</artifactId>
     <groupId>org.pentaho.reporting</groupId>
+    <artifactId>pentaho-reporting</artifactId>
     <version>7.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <groupId>pentaho-report-designer</groupId>
-  <artifactId>assemblies-parent-pom</artifactId>
+  
+  <artifactId>reporting-assemblies</artifactId>
   <packaging>pom</packaging>
-  <name>Pentaho Reporting Designer Assemblies</name>
-  <organization>
-    <name>Pentaho Corporation</name>
-  </organization>
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License, version 2.1</name>
-      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+  
+  <name>Pentaho Reporting Assemblies</name>
+
   <profiles>
     <profile>
       <id>default</id>
@@ -44,104 +35,125 @@
       </modules>
     </profile>
   </profiles>
+
   <properties>
-    <stage.dir>${project.build.directory}\stage</stage.dir>
-    <stage.dir.designer>${stage.dir}\report-designer</stage.dir.designer>
+    <stage.dir>${project.build.directory}/stage</stage.dir>
+    <stage.dir.designer>${stage.dir}/report-designer</stage.dir.designer>
   </properties>
+
   <dependencies>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-cda</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-cda</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-external</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-external</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-jdbc</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-jdbc</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-table</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-table</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-kettle</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-kettle</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-mondrian</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-mondrian</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-olap4j</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-olap4j</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-openerp</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-openerp</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-pmd</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-pmd</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-reflection</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-reflection</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-scriptable</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-scriptable</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-datasource-editor-xpath</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>datasource-editor-xpath</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-extensions-sampledata</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-extensions-sampledata</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-classic-extensions-kettle</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-extensions-kettle</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-reporting-engine</groupId>
-      <artifactId>pentaho-reporting-engine-legacy-functions</artifactId>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>legacy-functions</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-report-designer</groupId>
-      <artifactId>report-designer-ext-legacy-charts</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>ext-legacy-charts</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-report-designer</groupId>
-      <artifactId>report-designer-ext-pentaho</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>ext-pentaho</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-report-designer</groupId>
-      <artifactId>report-designer-ext-wizard</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>ext-wizard</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-report-designer</groupId>
-      <artifactId>report-designer-ext-toc</artifactId>
+      <groupId>org.pentaho.reporting.designer</groupId>
+      <artifactId>ext-toc</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -370,6 +382,7 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
+
   <build>
     <pluginManagement>
       <plugins>
@@ -378,7 +391,7 @@
           <executions>
             <execution>
               <id>unpack-oss</id>
-              <phase>package</phase>
+              <phase>generate-resources</phase>
               <goals>
                 <goal>unpack</goal>
               </goals>
@@ -397,7 +410,7 @@
             </execution>
             <execution>
               <id>unpack-karaf</id>
-              <phase>prepare-package</phase>
+              <phase>generate-resources</phase>
               <goals>
                 <goal>unpack</goal>
               </goals>
@@ -416,7 +429,7 @@
             </execution>
             <execution>
               <id>libs</id>
-              <phase>package</phase>
+              <phase>process-resources</phase>
               <goals>
                 <goal>copy-dependencies</goal>
               </goals>
@@ -429,7 +442,7 @@
             </execution>
             <execution>
               <id>drivers</id>
-              <phase>package</phase>
+              <phase>process-resources</phase>
               <goals>
                 <goal>copy-dependencies</goal>
               </goals>
@@ -440,7 +453,7 @@
             </execution>
             <execution>
               <id>unpack-plugins</id>
-              <phase>package</phase>
+              <phase>generate-resources</phase>
               <goals>
                 <goal>unpack-dependencies</goal>
               </goals>
@@ -457,7 +470,7 @@
           <executions>
             <execution>
               <id>copy-resources</id>
-              <phase>prepare-package</phase>
+              <phase>process-resources</phase>
               <goals>
                 <goal>copy-resources</goal>
               </goals>
@@ -472,7 +485,7 @@
             </execution>
             <execution>
               <id>copy-karaf</id>
-              <phase>prepare-package</phase>
+              <phase>process-resources</phase>
               <goals>
                 <goal>copy-resources</goal>
               </goals>
