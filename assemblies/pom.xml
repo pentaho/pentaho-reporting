@@ -319,6 +319,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.pentaho</groupId>
+      <artifactId>pdi-engine-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>pentaho</groupId>
       <artifactId>pentaho-big-data-plugin</artifactId>
       <type>zip</type>
