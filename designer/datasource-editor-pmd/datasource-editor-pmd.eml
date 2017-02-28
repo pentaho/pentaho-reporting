@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component inherit-compiler-output="true">
-	<output-test url="file://$MODULE_DIR$/../../../out/test/datasource-editor-pmd"/>
-	<exclude-output/>
-	<contentEntry url="file://$MODULE_DIR$"/>
-	<lib name="$MODULE_DIR$/lib/external/pentaho-mql-editor-TRUNK-SNAPSHOT.jar" scope="COMPILE">
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/datasource-editor-pmd/lib/external/pentaho-mql-editor-TRUNK-SNAPSHOT.jar!/"/>
-	</lib>
-</component>

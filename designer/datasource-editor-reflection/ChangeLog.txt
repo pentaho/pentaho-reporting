@@ -1,8 +1,0 @@
----------------
-1.  WHAT's NEW
----------------
-A list of changes in recent versions:
-
-
-2.0.0:
-       * A complete redesign of the Report-Designer

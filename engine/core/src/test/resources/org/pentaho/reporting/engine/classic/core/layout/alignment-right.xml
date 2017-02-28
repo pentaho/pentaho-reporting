@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Linebreak Test" pageformat="A4"
+    topmargin="36" leftmargin="36" bottommargin="36" rightmargin="36">
+
+  <items height="12" name="ItemBand" vertical-alignment="bottom" alignment="right">
+    <label name="A" x="485" y="30" width="85" height="20" fontsize="8">Average Response</label>
+    <label name="B" x="400" y="30" width="85" height="20" fontsize="8">Your Response</label>
+  </items>
+
+</report>

@@ -1,3 +1,0 @@
-Implementation-Title: pentaho-report-designer-wizard-integration
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: pentaho-report-designer-wizard-integration

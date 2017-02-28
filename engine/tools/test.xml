@@ -1,5 +1,0 @@
-<project basedir="." >
-
-  <import file="ant/build-all.xml"/>
-
-</project>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<!--  ###############################################################################  -->
+	<!--     DECK OPTIONS LIST: List that allows the selections and switching of the 
+			 database attributes panels - General, Advanced, Options, etc.                 
+			 
+			 NOTE: this overlay defines only the General and Options panels                -->
+	<!--  ###############################################################################  -->
+	<listitem id="advanced-item" removeelement="true" />
+	<listitem id="pooling-item" removeelement="true" />
+	<listitem id="cluster-item" removeelement="true" />
+	
+	<groupbox id="advanced-group-box" removeelement="true" />
+	<groupbox id="pooling-group" removeelement="true" />
+	<groupbox id="place-holder-box-2" removeelement="true" />
+</overlay>

@@ -20,11 +20,15 @@ build-res/module-scripts/
 *.jar
 *.war
 *.ear
-.idea/workspace.xml
-.idea/compiler.xml
-.idea/dictionaries/
-.idea/inspectionProfiles/
 *.lck
 target
 checkstyle/
+.project
+.classpath
+.settings
+target
+release.properties
+pom.xml.releaseBackup
+*.iml
+.idea
 

@@ -1,7 +1,0 @@
-Implementation-Title: LibFormula
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: libformula
-Release-Major-Number: 1
-Release-Minor-Number: 2
-Release-Milestone-Number: 0
-Release-Candidate-Token: GA

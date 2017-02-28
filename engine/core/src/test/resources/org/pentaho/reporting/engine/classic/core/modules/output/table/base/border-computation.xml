@@ -1,0 +1,81 @@
+<test-sequence mode="simplified" page-width="555"
+               xmlns="http://jfreereport.sourceforge.net/namespaces/testcases/tables">
+  <source>
+    <band id="band1" x="0" y="0" width="555" height="70"
+          border-top-color="yellow" border-top-width="1" border-top-style="solid"
+          border-left-color="yellow" border-left-width="1" border-left-style="solid"
+          border-bottom-color="yellow" border-bottom-width="1" border-bottom-style="solid"
+          border-right-color="yellow" border-right-width="1" border-right-style="solid"
+          border-break-color="yellow" border-break-width="1" border-break-style="solid">
+
+      <band id="band2" x="0" y="0" width="553" height="70">
+
+        <rectangle id="rect2" x="0" y="0" width="553" height="70" draw="false" fill="true" stroke="1" color="green"
+                   padding-top="10" padding-left="10" padding-right="10"/>
+        <rectangle id="rect" x="0" y="0" width="553" height="70" draw="true" stroke="1" color="blue"
+                   padding-top="10" padding-left="10" padding-right="10"/>
+        <element id="element1" x="25" y="50" width="120" height="16"/>
+        <element id="element2" x="155" y="50" width="100" height="16"/>
+        <element id="element3" x="255" y="50" width="100" height="16"/>
+        <element id="element4" x="375" y="50" width="95" height="16"/>
+        <element id="element5" x="485" y="50" width="60" height="16"/>
+
+      </band>
+    </band>
+  </source>
+
+  <result>
+    <row>
+      <cell content-idref="band1" border-top-color="yellow" border-top-width="1.0" border-top-style="solid"
+            border-left-color="yellow" border-left-width="1.0" border-left-style="solid"/>
+      <cell border-top-color="yellow" border-top-width="1.0" border-top-style="solid"/>
+      <cell border-top-color="yellow" border-top-width="1.0" border-top-style="solid"/>
+      <cell border-top-color="yellow" border-top-width="1.0" border-top-style="solid"/>
+      <cell border-top-color="yellow" border-top-width="1.0" border-top-style="solid"/>
+      <cell border-top-color="yellow" border-top-width="1.0" border-top-style="solid"/>
+      <cell border-top-color="yellow" border-top-width="1.0" border-top-style="solid"/>
+      <cell border-top-color="yellow" border-top-width="1.0" border-top-style="solid" border-right-color="yellow"
+            border-right-width="1.0" border-right-style="solid"/>
+    </row>
+    <row>
+      <cell border-left-color="yellow" border-left-width="1.0" border-left-style="solid"/>
+      <cell content-idref="band2" background-color="green" border-top-color="blue" border-top-width="1.0"
+            border-top-style="solid" border-left-color="blue" border-left-width="1.0" border-left-style="solid"/>
+      <cell background-color="green" border-top-color="blue" border-top-width="1.0" border-top-style="solid"/>
+      <cell background-color="green" border-top-color="blue" border-top-width="1.0" border-top-style="solid"/>
+      <cell background-color="green" border-top-color="blue" border-top-width="1.0" border-top-style="solid"/>
+      <cell background-color="green" border-top-color="blue" border-top-width="1.0" border-top-style="solid"/>
+      <cell background-color="green" border-top-color="blue" border-top-width="1.0" border-top-style="solid"
+            border-right-color="blue" border-right-width="1.0" border-right-style="solid"/>
+      <cell border-right-color="yellow" border-right-width="1.0" border-right-style="solid"/>
+    </row>
+    <row>
+      <cell border-left-color="yellow" border-left-width="1.0" border-left-style="solid"/>
+      <cell background-color="green" border-left-color="blue" border-left-width="1.0" border-left-style="solid"
+            border-bottom-color="blue" border-bottom-width="1.0" border-bottom-style="solid"/>
+      <cell content-idref="element1" background-color="green" border-bottom-color="blue" border-bottom-width="1.0"
+            border-bottom-style="solid"/>
+      <cell content-idref="element2" background-color="green" border-bottom-color="blue" border-bottom-width="1.0"
+            border-bottom-style="solid"/>
+      <cell content-idref="element3" background-color="green" border-bottom-color="blue" border-bottom-width="1.0"
+            border-bottom-style="solid"/>
+      <cell content-idref="element4" background-color="green" border-bottom-color="blue" border-bottom-width="1.0"
+            border-bottom-style="solid"/>
+      <cell content-idref="element5" background-color="green" border-bottom-color="blue" border-bottom-width="1.0"
+            border-bottom-style="solid" border-right-color="blue" border-right-width="1.0" border-right-style="solid"/>
+      <cell border-right-color="yellow" border-right-width="1.0" border-right-style="solid"/>
+    </row>
+    <row>
+      <cell border-left-color="yellow" border-left-width="1.0" border-left-style="solid" border-bottom-color="yellow"
+            border-bottom-width="1.0" border-bottom-style="solid"/>
+      <cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid"/>
+      <cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid"/>
+      <cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid"/>
+      <cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid"/>
+      <cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid"/>
+      <cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid"/>
+      <cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid"
+            border-right-color="yellow" border-right-width="1.0" border-right-style="solid"/>
+    </row>
+  </result>
+</test-sequence>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        name="SubReport" orientation="landscape" pageformat="A4"
+        bottommargin="72" leftmargin="72" rightmargin="72" topmargin="72">
+
+  <items>
+    <rectangle x="0" y="0" width="100%" height="100%" color="${ItemBackground}" fill="true" draw="false"/>
+    <string-field x="0" y="0" width="150" height="15" fieldname="Id Number"/>
+    <string-field x="150" y="0" width="100" height="15" fieldname="Cat"/>
+    <string-field x="250" y="0" width="200" height="15" fieldname="Fruit"/>
+  </items>
+
+</report>

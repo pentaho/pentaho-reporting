@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.extendb.connect.XDBDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.hp.t4jdbc.HPT4Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.ibm.as400.access.AS400JDBCDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.ibm.db2.jcc.DB2Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.ibm.u2.jdbc.UniJDBCDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.informix.jdbc.IfxDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.ingres.jdbc.IngresDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.intersys.jdbc.CacheDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.kingbase.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.mysql.jdbc.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.mysql.jdbc.NonRegisteringDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.ncr.teradata.TeraDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.sap.dbtech.jdbc.DriverSapDB" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.sybase.jdbc3.jdbc.SybDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.com.vertica.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.interbase.interclient.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.jdbc.gupta.sqlbase.SqlbaseDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.net.sourceforge.jtds.jdbc.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.nl.cwi.monetdb.jdbc.MonetDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.oracle.jdbc.driver.OracleDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.oracle.rdb.jdbc.rdbThin.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.apache.derby.jdbc.EmbeddedDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.firebirdsql.jdbc.FBDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.gjt.mm.mysql.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.h2.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.hsqldb.jdbcDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.netezza.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.postgresql.Driver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.sqlite.JDBC" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.sun.jdbc.odbc.JdbcOdbcDriver" global="true" hidden="true">
+    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
+    <text/>
+  </key>
+</config-description>
