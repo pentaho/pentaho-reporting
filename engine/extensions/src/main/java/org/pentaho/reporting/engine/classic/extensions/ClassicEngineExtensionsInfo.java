@@ -32,7 +32,7 @@ public class ClassicEngineExtensionsInfo extends ProjectInformation {
    * Constructs an empty project info object.
    */
   private ClassicEngineExtensionsInfo() {
-    super( "pentaho-reporting-engine-classic-ext", "Pentaho Reporting Classic Extensions" );
+    super( "classic-extensions", "Pentaho Reporting Classic Extensions" );
   }
 
   private void initialize() {

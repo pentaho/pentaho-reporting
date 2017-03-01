@@ -32,7 +32,7 @@ public class ConfigEditorInfo extends ProjectInformation {
   }
 
   public ConfigEditorInfo() {
-    super( "report-designer-configuration-editor", "Report Designer Configuration Editor" );
+    super( "configuration-editor", "Report Designer Configuration Editor" );
   }
 
   private void initialize() {
