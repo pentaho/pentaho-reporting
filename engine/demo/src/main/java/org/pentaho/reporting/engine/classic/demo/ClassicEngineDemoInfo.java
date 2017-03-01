@@ -34,7 +34,7 @@ public class ClassicEngineDemoInfo extends ProjectInformation
    */
   private ClassicEngineDemoInfo()
   {
-    super("pentaho-reporting-engine-classic-demo", "Pentaho Reporting Engine Demo");
+    super("classic-demo", "Pentaho Reporting Engine Demo");
   }
 
   private void initialize()

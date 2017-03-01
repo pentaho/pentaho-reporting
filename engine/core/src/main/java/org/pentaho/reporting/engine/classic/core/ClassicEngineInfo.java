@@ -56,7 +56,7 @@ public final class ClassicEngineInfo extends ProjectInformation {
    * Constructs an object containing information about the JFreeReport project.
    */
   private ClassicEngineInfo() {
-    super( "pentaho-reporting-engine-classic", "Pentaho Reporting Engine Classic" ); // NON-NLS
+    super( "classic-core", "Pentaho Reporting Engine Classic" ); // NON-NLS
   }
 
   private void initialize() {
