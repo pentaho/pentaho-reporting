@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2008 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
+* Copyright (c) 2008 - 2017 Pentaho Corporation and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.math;
@@ -41,6 +41,7 @@ public class MinFunctionTest extends FormulaTestBase {
         // TODO {"MIN(\"a\")", error}, this case should not yet be handled (inline != reference)
         //            {"MIN([.B3:.B5])", new BigDecimal(2)},
         { "MIN(\"5\";\"7\")", new BigDecimal( 5 ) },
+        { "MIN()", new BigDecimal( 0.0 ) },
       };
   }
 
