@@ -41,6 +41,10 @@ public class MinFunctionTest extends FormulaTestBase {
         // TODO {"MIN(\"a\")", error}, this case should not yet be handled (inline != reference)
         //            {"MIN([.B3:.B5])", new BigDecimal(2)},
         { "MIN(\"5\";\"7\")", new BigDecimal( 5 ) },
+        { "MIN(\"7\";\"5\")", new BigDecimal( 5 ) },
+        { "MIN(\"-5\";\"0\")", new BigDecimal( -5 ) },
+        { "MIN(\"0\";\"0.0\")", new BigDecimal( 0 ) },
+        { "MIN(\"0.25\";\"0.50\")", new BigDecimal( 0.25 ) },
         { "MIN()", new BigDecimal( 0.0 ) },
       };
   }
