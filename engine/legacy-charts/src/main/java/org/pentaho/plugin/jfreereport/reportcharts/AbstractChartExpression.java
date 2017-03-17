@@ -132,7 +132,6 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
 
   private String tooltipFormula;
   private String urlFormula;
-  
   private LinkedHashMap<String, Expression> expressionMap;
 
   protected AbstractChartExpression() {
@@ -294,11 +293,12 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     this.dataSource = dataSource;
   }
 
-  @Override public String[] getHyperlinkFormulas() {
+  @Override
+  public String[] getHyperlinkFormulas() {
     if ( !StringUtils.isEmpty( this.urlFormula ) ) {
-      return new String[] { this.urlFormula };
+      return new String[]{this.urlFormula};
     }
-    return new String[] {};
+    return new String[]{};
   }
 
   public String getTitleField() {
@@ -431,7 +431,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
   }
 
   public String[] getSeriesColor() {
-    return seriesColors.toArray( new String[ seriesColors.size() ] );
+    return seriesColors.toArray( new String[seriesColors.size()] );
   }
 
   public void setSeriesColor( final String[] fields ) {
@@ -440,17 +440,17 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
   }
 
   @Override
-  public Map<String,Expression> getExpressionMap() {
+  public Map<String, Expression> getExpressionMap() {
     return new LinkedHashMap<>( expressionMap );
   }
 
   @Override
-  public void setExpressionMap( Map<String,Expression> values ) {
+  public void setExpressionMap( Map<String, Expression> values ) {
     expressionMap.clear();
     expressionMap.putAll( values );
   }
 
-  public void addExpression( String property, Expression e ){
+  public void addExpression( String property, Expression e ) {
     expressionMap.put( property, e );
   }
 
@@ -492,7 +492,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     instance.chartCache.clear();
     instance.seriesColors = (ArrayList<String>) seriesColors.clone();
     instance.plotImageCache = null;
-    instance.expressionMap = ( LinkedHashMap<String, Expression> ) expressionMap.clone();
+    instance.expressionMap = (LinkedHashMap<String, Expression>) expressionMap.clone();
     for ( Map.Entry<String, Expression> entry : expressionMap.entrySet() ) {
       entry.setValue( entry.getValue().getInstance() );
     }
@@ -504,8 +504,8 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
 
       Iterator it = expressionMap.entrySet().iterator();
       while ( it.hasNext() ) {
-        Map.Entry pair = ( Map.Entry ) it.next();
-        FormulaExpression formulaExpression = ( FormulaExpression ) pair.getValue();
+        Map.Entry pair = (Map.Entry) it.next();
+        FormulaExpression formulaExpression = (FormulaExpression) pair.getValue();
         formulaExpression.setRuntime( getRuntime() );
         final Object o = formulaExpression.getValue();
 
@@ -558,7 +558,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
       configureChart( chart );
       postProcessChart( chart );
       return new JFreeChartReportDrawable( chart,
-        StringUtils.isEmpty( getUrlFormula() ) == false || StringUtils.isEmpty( getTooltipFormula() ) == false );
+          StringUtils.isEmpty( getUrlFormula() ) == false || StringUtils.isEmpty( getTooltipFormula() ) == false );
     } catch ( Exception e ) {
       logger.error( "Failed to configure chart", e );
       return null;
@@ -685,7 +685,6 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
       }
     }
   }
-
 
   private ResourceKey createKeyFromString( final ResourceManager resourceManager,
                                            final ResourceKey contextKey,
@@ -977,6 +976,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
 
   /**
    * Reduces standard tick unit array to meet  formatting  precision and avoid duplicated values (PRD-5821)
+   *
    * @return
    */
   protected void standardTickUnitsApplyFormat( NumberAxis numberAxis, NumberFormat format ) {
