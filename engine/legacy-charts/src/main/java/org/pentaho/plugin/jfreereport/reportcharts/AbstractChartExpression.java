@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
@@ -22,6 +22,9 @@ import org.apache.bsf.BSFManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.axis.TickUnits;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.title.LegendTitle;
@@ -36,12 +39,10 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.function.WrapperExpressionRuntime;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionPropertyReadHandler;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
 import org.pentaho.reporting.engine.classic.core.states.LegacyDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.util.StrokeUtility;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
@@ -56,6 +57,7 @@ import java.awt.Stroke;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -130,7 +132,6 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
 
   private String tooltipFormula;
   private String urlFormula;
-  
   private LinkedHashMap<String, Expression> expressionMap;
 
   protected AbstractChartExpression() {
@@ -292,11 +293,12 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     this.dataSource = dataSource;
   }
 
-  @Override public String[] getHyperlinkFormulas() {
+  @Override
+  public String[] getHyperlinkFormulas() {
     if ( !StringUtils.isEmpty( this.urlFormula ) ) {
-      return new String[] { this.urlFormula };
+      return new String[]{this.urlFormula};
     }
-    return new String[] {};
+    return new String[]{};
   }
 
   public String getTitleField() {
@@ -429,7 +431,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
   }
 
   public String[] getSeriesColor() {
-    return seriesColors.toArray( new String[ seriesColors.size() ] );
+    return seriesColors.toArray( new String[seriesColors.size()] );
   }
 
   public void setSeriesColor( final String[] fields ) {
@@ -438,17 +440,17 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
   }
 
   @Override
-  public Map<String,Expression> getExpressionMap() {
+  public Map<String, Expression> getExpressionMap() {
     return new LinkedHashMap<>( expressionMap );
   }
 
   @Override
-  public void setExpressionMap( Map<String,Expression> values ) {
+  public void setExpressionMap( Map<String, Expression> values ) {
     expressionMap.clear();
     expressionMap.putAll( values );
   }
 
-  public void addExpression( String property, Expression e ){
+  public void addExpression( String property, Expression e ) {
     expressionMap.put( property, e );
   }
 
@@ -490,7 +492,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     instance.chartCache.clear();
     instance.seriesColors = (ArrayList<String>) seriesColors.clone();
     instance.plotImageCache = null;
-    instance.expressionMap = ( LinkedHashMap<String, Expression> ) expressionMap.clone();
+    instance.expressionMap = (LinkedHashMap<String, Expression>) expressionMap.clone();
     for ( Map.Entry<String, Expression> entry : expressionMap.entrySet() ) {
       entry.setValue( entry.getValue().getInstance() );
     }
@@ -502,8 +504,8 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
 
       Iterator it = expressionMap.entrySet().iterator();
       while ( it.hasNext() ) {
-        Map.Entry pair = ( Map.Entry ) it.next();
-        FormulaExpression formulaExpression = ( FormulaExpression ) pair.getValue();
+        Map.Entry pair = (Map.Entry) it.next();
+        FormulaExpression formulaExpression = (FormulaExpression) pair.getValue();
         formulaExpression.setRuntime( getRuntime() );
         final Object o = formulaExpression.getValue();
 
@@ -556,7 +558,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
       configureChart( chart );
       postProcessChart( chart );
       return new JFreeChartReportDrawable( chart,
-        StringUtils.isEmpty( getUrlFormula() ) == false || StringUtils.isEmpty( getTooltipFormula() ) == false );
+          StringUtils.isEmpty( getUrlFormula() ) == false || StringUtils.isEmpty( getTooltipFormula() ) == false );
     } catch ( Exception e ) {
       logger.error( "Failed to configure chart", e );
       return null;
@@ -683,7 +685,6 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
       }
     }
   }
-
 
   private ResourceKey createKeyFromString( final ResourceManager resourceManager,
                                            final ResourceKey contextKey,
@@ -971,6 +972,23 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     } else {
       return lookupValue;
     }
+  }
+
+  /**
+   * Reduces standard tick unit array to meet  formatting  precision and avoid duplicated values (PRD-5821)
+   *
+   * @return
+   */
+  protected void standardTickUnitsApplyFormat( NumberAxis numberAxis, NumberFormat format ) {
+    final TickUnits standardTickUnits = (TickUnits) numberAxis.getStandardTickUnits();
+    TickUnits cutTickUnits = new TickUnits();
+    double formatterMinSize = 1 / Math.pow( 10, format.getMaximumFractionDigits() );
+    for ( int i = 0; i < standardTickUnits.size(); i++ ) {
+      if ( Double.compare( standardTickUnits.get( i ).getSize(), formatterMinSize ) >= 0 ) {
+        cutTickUnits.add( new NumberTickUnit( standardTickUnits.get( i ).getSize() ) );
+      }
+    }
+    numberAxis.setStandardTickUnits( cutTickUnits );
   }
 
   /**

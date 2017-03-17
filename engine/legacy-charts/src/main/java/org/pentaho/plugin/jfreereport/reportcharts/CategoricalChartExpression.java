@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
@@ -60,6 +60,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
+
 /**
  * This class allows you to embed categorical charts into JFreeReport XML definitions.
  *
@@ -104,97 +105,6 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
   private Double lowerMargin;
   private Double upperMargin;
   private Double categoryMargin;
-
-  /**
-   * Local utility enum.
-   * Used to calculate ahchors.
-   *
-   */
-  static enum PlaneDirection {
-    RIGHT, TOP_RIGHT, TOP, TOP_LEFT, LEFT, BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT;
-    private static final int COUNT = values().length;
-
-    public static PlaneDirection byUnlimitedIndex( int unlimitedIndex ) {
-      return values()[( unlimitedIndex % COUNT + COUNT ) % COUNT];
-    }
-
-    public PlaneDirection opposite() {
-      return byUnlimitedIndex( this.ordinal() + COUNT / 2 );
-    }
-
-    public RectangleAnchor asRectangleAnchor() {
-      switch ( this ) {
-        case RIGHT:
-          return RectangleAnchor.RIGHT;
-        case TOP_RIGHT:
-          return RectangleAnchor.TOP_RIGHT;
-        case TOP:
-          return RectangleAnchor.TOP;
-        case TOP_LEFT:
-          return RectangleAnchor.TOP_LEFT;
-        case LEFT:
-          return RectangleAnchor.LEFT;
-        case BOTTOM_LEFT:
-          return RectangleAnchor.BOTTOM_LEFT;
-        case BOTTOM:
-          return RectangleAnchor.BOTTOM;
-        case BOTTOM_RIGHT:
-          return RectangleAnchor.BOTTOM_RIGHT;
-        default:
-          return null;
-      }
-    }
-
-    public TextBlockAnchor asTextBlockAnchor() {
-      switch ( this ) {
-        case RIGHT:
-          return TextBlockAnchor.CENTER_RIGHT;
-        case TOP_RIGHT:
-          return TextBlockAnchor.TOP_RIGHT;
-        case TOP:
-          return TextBlockAnchor.TOP_CENTER;
-        case TOP_LEFT:
-          return TextBlockAnchor.TOP_LEFT;
-        case LEFT:
-          return TextBlockAnchor.CENTER_LEFT;
-        case BOTTOM_LEFT:
-          return TextBlockAnchor.BOTTOM_LEFT;
-        case BOTTOM:
-          return TextBlockAnchor.BOTTOM_CENTER;
-        case BOTTOM_RIGHT:
-          return TextBlockAnchor.BOTTOM_RIGHT;
-        default:
-          return null;
-      }
-    }
-
-    public TextAnchor asTextAnchor() {
-      switch ( this ) {
-        case RIGHT:
-          return TextAnchor.CENTER_RIGHT;
-        case TOP_RIGHT:
-          return TextAnchor.TOP_RIGHT;
-        case TOP:
-          return TextAnchor.TOP_CENTER;
-        case TOP_LEFT:
-          return TextAnchor.TOP_LEFT;
-        case LEFT:
-          return TextAnchor.CENTER_LEFT;
-        case BOTTOM_LEFT:
-          return TextAnchor.BOTTOM_LEFT;
-        case BOTTOM:
-          return TextAnchor.BOTTOM_CENTER;
-        case BOTTOM_RIGHT:
-          return TextAnchor.BOTTOM_RIGHT;
-        default:
-          return null;
-      }
-    }
-
-    public double asAngle() {
-      return this.ordinal() * 0.25 * Math.PI;
-    }
-  }
 
   protected CategoricalChartExpression() {
     categoricalAxisMessageFormat = "{0}";
@@ -559,12 +469,12 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
       final StandardCategoryItemLabelGenerator scilg;
       if ( categoricalLabelDecimalFormat != null ) {
         final DecimalFormat numFormat = new DecimalFormat( categoricalLabelDecimalFormat,
-          new DecimalFormatSymbols( getRuntime().getResourceBundleFactory().getLocale() ) );
+            new DecimalFormatSymbols( getRuntime().getResourceBundleFactory().getLocale() ) );
         numFormat.setRoundingMode( RoundingMode.HALF_UP );
         scilg = new StandardCategoryItemLabelGenerator( categoricalLabelFormat, numFormat );
       } else if ( categoricalLabelDateFormat != null ) {
         scilg = new StandardCategoryItemLabelGenerator( categoricalLabelFormat,
-          new SimpleDateFormat( categoricalLabelDateFormat, getRuntime().getResourceBundleFactory().getLocale() ) );
+            new SimpleDateFormat( categoricalLabelDateFormat, getRuntime().getResourceBundleFactory().getLocale() ) );
       } else {
         final DecimalFormat formatter = new DecimalFormat();
         formatter.setDecimalFormatSymbols(
@@ -635,7 +545,7 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
 
     final String[] colors = getSeriesColor();
     for ( int i = 0; i < colors.length; i++ ) {
-      renderer.setSeriesPaint( i, parseColorFromString( colors[ i ] ) );
+      renderer.setSeriesPaint( i, parseColorFromString( colors[i] ) );
     }
 
     if ( lowerMargin != null ) {
@@ -676,6 +586,7 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
           final DecimalFormat formatter = new DecimalFormat(
               getRangeTickFormatString(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
           numberAxis.setNumberFormatOverride( formatter );
+          standardTickUnitsApplyFormat( numberAxis, formatter );
         }
       }
     } else if ( rangeAxis instanceof DateAxis ) {
@@ -753,7 +664,6 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     }
   }
 
-
   protected void configureLogarithmicAxis( final CategoryPlot plot ) {
     if ( isLogarithmicAxis() ) {
       final LogarithmicAxis logarithmicAxis;
@@ -825,7 +735,6 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     return DateTickUnit.DAY;
   }
 
-
   public void reconfigureForCompatibility( final int versionTag ) {
     if ( ClassicEngineBoot.isEnforceCompatibilityFor( versionTag, 3, 8 ) ) {
       setAutoRange( getRangeMinimum() == 0 && getRangeMaximum() == 1 );
@@ -834,9 +743,9 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
 
   /**
    * Used instead of <code>org.jfree.chart.axis.CategoryLabelPosition.createUpRotationLabelPositions</code>.
-   * 
+   * <p>
    * It additionally takes into consideration the axis position.
-   * 
+   *
    * @param axisPosition
    * @param labelAngle
    * @return
@@ -853,32 +762,153 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
 
   /**
    * Chooses a proper anchor for a text label at a chart axis tick.
-   * 
+   * <p>
    * E.g.
-   * 
+   * <p>
    * Axis position is LEFT, label rotation = 0. So angle = 0.
-   * 
+   * <p>
    * Axis position is BOTTOM, label rotation = 90. So angle = 0.
-   * 
+   * <p>
    * Axis position is BOTTOM, label rotation = 0. So angle = pi/2 (90 degrees).
-   * 
-   * @param angle
-   *          can be assumed as the label-relative direction to the axis.
+   *
+   * @param angle can be assumed as the label-relative direction to the axis.
    * @return
    */
   protected PlaneDirection getTextAnchorDirectionOfAngle( double angle ) {
     //Divide to 32 sectors (0..31). Counterclockwise from RIGHT.
     int sectorIndex = ( (int) ( ( ( ( angle * 16 / Math.PI ) ) % 32 ) + 32 ) ) % 32;
     switch ( sectorIndex ) {
-      case 5: case 6: return PlaneDirection.TOP_RIGHT;
-      case 7: case 8: return PlaneDirection.TOP;
-      case 9: case 10: return PlaneDirection.TOP_LEFT;
-      case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: return PlaneDirection.LEFT;
-      case 21: case 22: return PlaneDirection.BOTTOM_LEFT;
-      case 23: case 24: return PlaneDirection.BOTTOM;
-      case 25: case 26: return PlaneDirection.BOTTOM_RIGHT;
-      case 27: case 28: case 29: case 30: case 31: case 0: case 1: case 2: case 3: case 4: 
-      default: return PlaneDirection.RIGHT;
+      case 5:
+      case 6:
+        return PlaneDirection.TOP_RIGHT;
+      case 7:
+      case 8:
+        return PlaneDirection.TOP;
+      case 9:
+      case 10:
+        return PlaneDirection.TOP_LEFT;
+      case 11:
+      case 12:
+      case 13:
+      case 14:
+      case 15:
+      case 16:
+      case 17:
+      case 18:
+      case 19:
+      case 20:
+        return PlaneDirection.LEFT;
+      case 21:
+      case 22:
+        return PlaneDirection.BOTTOM_LEFT;
+      case 23:
+      case 24:
+        return PlaneDirection.BOTTOM;
+      case 25:
+      case 26:
+        return PlaneDirection.BOTTOM_RIGHT;
+      case 27:
+      case 28:
+      case 29:
+      case 30:
+      case 31:
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+      default:
+        return PlaneDirection.RIGHT;
+    }
+  }
+
+  /**
+   * Local utility enum.
+   * Used to calculate ahchors.
+   */
+  static enum PlaneDirection {
+    RIGHT, TOP_RIGHT, TOP, TOP_LEFT, LEFT, BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT;
+    private static final int COUNT = values().length;
+
+    public static PlaneDirection byUnlimitedIndex( int unlimitedIndex ) {
+      return values()[( unlimitedIndex % COUNT + COUNT ) % COUNT];
+    }
+
+    public PlaneDirection opposite() {
+      return byUnlimitedIndex( this.ordinal() + COUNT / 2 );
+    }
+
+    public RectangleAnchor asRectangleAnchor() {
+      switch ( this ) {
+        case RIGHT:
+          return RectangleAnchor.RIGHT;
+        case TOP_RIGHT:
+          return RectangleAnchor.TOP_RIGHT;
+        case TOP:
+          return RectangleAnchor.TOP;
+        case TOP_LEFT:
+          return RectangleAnchor.TOP_LEFT;
+        case LEFT:
+          return RectangleAnchor.LEFT;
+        case BOTTOM_LEFT:
+          return RectangleAnchor.BOTTOM_LEFT;
+        case BOTTOM:
+          return RectangleAnchor.BOTTOM;
+        case BOTTOM_RIGHT:
+          return RectangleAnchor.BOTTOM_RIGHT;
+        default:
+          return null;
+      }
+    }
+
+    public TextBlockAnchor asTextBlockAnchor() {
+      switch ( this ) {
+        case RIGHT:
+          return TextBlockAnchor.CENTER_RIGHT;
+        case TOP_RIGHT:
+          return TextBlockAnchor.TOP_RIGHT;
+        case TOP:
+          return TextBlockAnchor.TOP_CENTER;
+        case TOP_LEFT:
+          return TextBlockAnchor.TOP_LEFT;
+        case LEFT:
+          return TextBlockAnchor.CENTER_LEFT;
+        case BOTTOM_LEFT:
+          return TextBlockAnchor.BOTTOM_LEFT;
+        case BOTTOM:
+          return TextBlockAnchor.BOTTOM_CENTER;
+        case BOTTOM_RIGHT:
+          return TextBlockAnchor.BOTTOM_RIGHT;
+        default:
+          return null;
+      }
+    }
+
+    public TextAnchor asTextAnchor() {
+      switch ( this ) {
+        case RIGHT:
+          return TextAnchor.CENTER_RIGHT;
+        case TOP_RIGHT:
+          return TextAnchor.TOP_RIGHT;
+        case TOP:
+          return TextAnchor.TOP_CENTER;
+        case TOP_LEFT:
+          return TextAnchor.TOP_LEFT;
+        case LEFT:
+          return TextAnchor.CENTER_LEFT;
+        case BOTTOM_LEFT:
+          return TextAnchor.BOTTOM_LEFT;
+        case BOTTOM:
+          return TextAnchor.BOTTOM_CENTER;
+        case BOTTOM_RIGHT:
+          return TextAnchor.BOTTOM_RIGHT;
+        default:
+          return null;
+      }
+    }
+
+    public double asAngle() {
+      return this.ordinal() * 0.25 * Math.PI;
     }
   }
 
