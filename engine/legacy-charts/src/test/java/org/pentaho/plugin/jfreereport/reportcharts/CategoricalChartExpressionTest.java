@@ -12,15 +12,19 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
 import java.awt.Font;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import org.jfree.chart.axis.CategoryLabelPosition;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.TickUnits;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.text.TextBlockAnchor;
@@ -245,6 +249,28 @@ public class CategoricalChartExpressionTest {
       Assert.assertEquals( TextBlockAnchor.TOP_CENTER, c.getLabelAnchor() );
       Assert.assertEquals( TextAnchor.TOP_CENTER, c.getRotationAnchor() );
     }
+  }
+
+  @Test
+  public void testStandardTickUnitsApplyFormat() throws Exception{
+    NumberAxis axis = new NumberAxis();
+    final TickUnits standardTickUnits = (TickUnits)axis.getStandardTickUnits();
+    final double initialFirstTickUnitSize = standardTickUnits.get( 0 ).getSize();
+    assertTickUnitSizeByPattern( "", initialFirstTickUnitSize);
+
+    assertTickUnitSizeByPattern( "#,###", 1.0 );
+    assertTickUnitSizeByPattern( "#", 1.0 );
+    assertTickUnitSizeByPattern( "#.#", 0.1 );
+    assertTickUnitSizeByPattern( "#.####", 1.0E-4 );
+  }
+
+  private void assertTickUnitSizeByPattern( String pattern, double tickUnitSize) {
+    NumberAxis axis = new NumberAxis();
+    DecimalFormat formatter = new DecimalFormat( pattern,  new DecimalFormatSymbols(new Locale( "en_US" ) ) );
+    expression.standardTickUnitsApplyFormat( axis, formatter );
+    final TickUnits standardTickUnits = (TickUnits)axis.getStandardTickUnits();
+    // first n standard tick unit elements should be removed
+    Assert.assertEquals( tickUnitSize, standardTickUnits.get( 0 ).getSize(), 0.0000000001 );
   }
 }
 
