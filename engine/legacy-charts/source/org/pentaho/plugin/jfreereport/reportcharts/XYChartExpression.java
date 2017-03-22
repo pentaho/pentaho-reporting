@@ -54,7 +54,9 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Paint;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -640,8 +642,8 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
         if ( getDomainTickFormat() != null ) {
           numberAxis.setTickUnit( new NumberTickUnit( getDomainPeriodCount(), getDomainTickFormat() ) );
         } else if ( getDomainTickFormatString() != null ) {
-          final FastDecimalFormat formatter = new FastDecimalFormat
-            ( getDomainTickFormatString(), getResourceBundleFactory().getLocale() );
+          final FastDecimalFormat formatter = new FastDecimalFormat( getDomainTickFormatString(),
+              getResourceBundleFactory().getLocale() );
           numberAxis.setTickUnit( new FastNumberTickUnit( getDomainPeriodCount(), formatter ) );
         } else {
           numberAxis.setTickUnit( new FastNumberTickUnit( getDomainPeriodCount() ) );
@@ -650,8 +652,8 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
         if ( getDomainTickFormat() != null ) {
           numberAxis.setNumberFormatOverride( getDomainTickFormat() );
         } else if ( getDomainTickFormatString() != null ) {
-          final DecimalFormat formatter = new DecimalFormat
-            ( getDomainTickFormatString(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          final DecimalFormat formatter = new DecimalFormat( getDomainTickFormatString(),
+              new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
           numberAxis.setNumberFormatOverride( formatter );
         }
       }
@@ -660,13 +662,13 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
 
       if ( getDomainPeriodCount() > 0 && getDomainTimePeriod() != null ) {
         if ( getDomainTickFormatString() != null ) {
-          final SimpleDateFormat formatter = new SimpleDateFormat
-            ( getDomainTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
-          numberAxis.setTickUnit
-            ( new DateTickUnit( getDateUnitAsInt( getDomainTimePeriod() ), (int) getDomainPeriodCount(), formatter ) );
+          final SimpleDateFormat formatter = new SimpleDateFormat( getDomainTickFormatString(),
+              new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          numberAxis.setTickUnit( new DateTickUnit( getDateUnitAsInt( getDomainTimePeriod() ),
+              (int) getDomainPeriodCount(), formatter ) );
         } else {
-          numberAxis.setTickUnit
-            ( new DateTickUnit( getDateUnitAsInt( getDomainTimePeriod() ), (int) getDomainPeriodCount() ) );
+          numberAxis.setTickUnit( new DateTickUnit( getDateUnitAsInt( getDomainTimePeriod() ),
+              (int) getDomainPeriodCount() ) );
         }
       }
     }
@@ -710,8 +712,8 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
         if ( getRangeTickFormat() != null ) {
           numberAxis.setTickUnit( new NumberTickUnit( getRangePeriodCount(), getRangeTickFormat() ) );
         } else if ( getRangeTickFormatString() != null ) {
-          final FastDecimalFormat formatter = new FastDecimalFormat
-            ( getRangeTickFormatString(), getResourceBundleFactory().getLocale() );
+          final FastDecimalFormat formatter = new FastDecimalFormat( getRangeTickFormatString(),
+              getResourceBundleFactory().getLocale() );
           numberAxis.setTickUnit( new FastNumberTickUnit( getRangePeriodCount(), formatter ) );
         } else {
           numberAxis.setTickUnit( new FastNumberTickUnit( getRangePeriodCount() ) );
@@ -720,8 +722,8 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
         if ( getRangeTickFormat() != null ) {
           numberAxis.setNumberFormatOverride( getRangeTickFormat() );
         } else if ( getRangeTickFormatString() != null ) {
-          final DecimalFormat formatter = new DecimalFormat
-            ( getRangeTickFormatString(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          final DecimalFormat formatter = new DecimalFormat( getRangeTickFormatString(),
+              new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
           numberAxis.setNumberFormatOverride( formatter );
           standardTickUnitsApplyFormat( numberAxis, formatter );
         }
@@ -731,18 +733,18 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
 
       if ( getRangePeriodCount() > 0 && getRangeTimePeriod() != null ) {
         if ( getRangeTickFormatString() != null ) {
-          final SimpleDateFormat formatter = new SimpleDateFormat
-            ( getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
-          numberAxis.setTickUnit
-            ( new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount(), formatter ) );
+          final SimpleDateFormat formatter = new SimpleDateFormat( getRangeTickFormatString(),
+              new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          numberAxis.setTickUnit( new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ),
+              (int) getRangePeriodCount(), formatter ) );
         } else {
-          numberAxis.setTickUnit
-            ( new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ), (int) getRangePeriodCount() ) );
+          numberAxis.setTickUnit( new DateTickUnit( getDateUnitAsInt( getRangeTimePeriod() ),
+              (int) getRangePeriodCount() ) );
         }
       } else {
         if ( getRangeTickFormatString() != null ) {
-          final SimpleDateFormat formatter = new SimpleDateFormat
-            ( getRangeTickFormatString(), new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
+          final SimpleDateFormat formatter = new SimpleDateFormat( getRangeTickFormatString(),
+              new DateFormatSymbols( getResourceBundleFactory().getLocale() ) );
           numberAxis.setDateFormatOverride( formatter );
         }
       }

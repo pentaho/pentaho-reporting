@@ -529,8 +529,8 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
       interpreter.declareBean( "chart", originalChart, JFreeChart.class ); //$NON-NLS-1$
       interpreter.declareBean( "runtime", runtimeWrapper, ExpressionRuntime.class ); //$NON-NLS-1$
       interpreter.declareBean( "dataRow", legacyDataRowWrapper, DataRow.class ); //$NON-NLS-1$
-      final Object o = interpreter.eval
-        ( postProcessingLanguage, "expression", 1, 1, postProcessingScript ); //$NON-NLS-1$
+      final Object o = interpreter.eval( postProcessingLanguage, "expression", 1, 1,
+          postProcessingScript ); //$NON-NLS-1$
       if ( o instanceof JFreeChart ) {
         return (JFreeChart) o;
       }
@@ -581,9 +581,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     //remove legend if showLegend = false
     if ( !isShowLegend() ) {
       chart.removeLegend();
-    }
-    //if true format legend
-    else {
+    } else {  //if true format legend
       final LegendTitle chLegend = chart.getLegend();
       if ( chLegend != null ) {
         final RectangleEdge loc = translateEdge( legendLocation.toLowerCase() );
