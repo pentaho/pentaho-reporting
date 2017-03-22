@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2008 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
+* Copyright (c) 2008 - 2017 Pentaho Corporation and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.math;
@@ -39,6 +39,7 @@ import java.math.BigDecimal;
  */
 public class MinFunction implements Function {
   private static final long serialVersionUID = 255618510939561419L;
+  private static final BigDecimal ZERO = new BigDecimal( 0.0 );
 
   public MinFunction() {
   }
@@ -48,7 +49,7 @@ public class MinFunction implements Function {
     final int parameterCount = parameters.getParameterCount();
 
     if ( parameterCount == 0 ) {
-      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
+      return new TypeValuePair( NumberType.GENERIC_NUMBER, ZERO );
     }
 
     final TypeRegistry typeRegistry = context.getTypeRegistry();
