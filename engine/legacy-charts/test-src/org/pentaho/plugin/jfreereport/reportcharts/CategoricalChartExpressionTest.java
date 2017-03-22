@@ -252,11 +252,11 @@ public class CategoricalChartExpressionTest {
   }
 
   @Test
-  public void testStandardTickUnitsApplyFormat() throws Exception{
+  public void testStandardTickUnitsApplyFormat() throws Exception {
     NumberAxis axis = new NumberAxis();
-    final TickUnits standardTickUnits = (TickUnits)axis.getStandardTickUnits();
+    final TickUnits standardTickUnits = (TickUnits) axis.getStandardTickUnits();
     final double initialFirstTickUnitSize = standardTickUnits.get( 0 ).getSize();
-    assertTickUnitSizeByPattern( "", initialFirstTickUnitSize);
+    assertTickUnitSizeByPattern( "", initialFirstTickUnitSize );
 
     assertTickUnitSizeByPattern( "#,###", 1.0 );
     assertTickUnitSizeByPattern( "#", 1.0 );
@@ -264,11 +264,11 @@ public class CategoricalChartExpressionTest {
     assertTickUnitSizeByPattern( "#.####", 1.0E-4 );
   }
 
-  private void assertTickUnitSizeByPattern( String pattern, double tickUnitSize) {
+  private void assertTickUnitSizeByPattern( String pattern, double tickUnitSize ) {
     NumberAxis axis = new NumberAxis();
-    DecimalFormat formatter = new DecimalFormat( pattern,  new DecimalFormatSymbols(new Locale( "en_US" ) ) );
+    DecimalFormat formatter = new DecimalFormat( pattern,  new DecimalFormatSymbols( new Locale( "en_US" ) ) );
     expression.standardTickUnitsApplyFormat( axis, formatter );
-    final TickUnits standardTickUnits = (TickUnits)axis.getStandardTickUnits();
+    final TickUnits standardTickUnits = (TickUnits) axis.getStandardTickUnits();
     // first n standard tick unit elements should be removed
     Assert.assertEquals( tickUnitSize, standardTickUnits.get( 0 ).getSize(), 0.0000000001 );
   }

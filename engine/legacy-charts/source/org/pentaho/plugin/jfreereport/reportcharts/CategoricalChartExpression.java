@@ -878,8 +878,9 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
       case 21: case 22: return PlaneDirection.BOTTOM_LEFT;
       case 23: case 24: return PlaneDirection.BOTTOM;
       case 25: case 26: return PlaneDirection.BOTTOM_RIGHT;
-      case 27: case 28: case 29: case 30: case 31: case 0: case 1: case 2: case 3: case 4: 
-      default: return PlaneDirection.RIGHT;
+      case 27: case 28: case 29: case 30: case 31: case 0: case 1: case 2: case 3: case 4:
+      default:
+        return PlaneDirection.RIGHT;
     }
   }
 
