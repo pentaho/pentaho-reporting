@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
@@ -22,6 +22,9 @@ import org.apache.bsf.BSFManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.axis.TickUnits;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.title.LegendTitle;
@@ -43,10 +46,15 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Stroke;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -917,6 +925,22 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     } else {
       return lookupValue;
     }
+  }
+
+  /**
+   * Reduces standard tick unit array to meet  formatting  precision and avoid duplicated values (PRD-5821)
+   * @return
+   */
+  protected void standardTickUnitsApplyFormat( NumberAxis numberAxis, NumberFormat format ) {
+    final TickUnits standardTickUnits = (TickUnits) numberAxis.getStandardTickUnits();
+    TickUnits cutTickUnits = new TickUnits();
+    double formatterMinSize = 1 / Math.pow( 10, format.getMaximumFractionDigits() );
+    for ( int i = 0; i < standardTickUnits.size(); i++ ) {
+      if ( Double.compare( standardTickUnits.get( i ).getSize(), formatterMinSize ) >= 0 ) {
+        cutTickUnits.add( new NumberTickUnit( standardTickUnits.get( i ).getSize() ) );
+      }
+    }
+    numberAxis.setStandardTickUnits( cutTickUnits );
   }
 
   /**
