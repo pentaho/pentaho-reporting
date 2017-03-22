@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer;
@@ -26,16 +26,22 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugJndiContextFactoryBuilder;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.StopWatch;
 
 import java.io.PrintStream;
 
+import javax.naming.spi.NamingManager;
+
 public class Prd4313Test extends TestCase {
-  public void setUp() {
+  public void setUp() throws Exception {
     final PrintStream out = System.out;
     final PrintStream err = System.err;
     ClassicEngineBoot.getInstance().start();
+    if ( NamingManager.hasInitialContextFactoryBuilder() == false ) {
+      NamingManager.setInitialContextFactoryBuilder( new DebugJndiContextFactoryBuilder() );
+    }
     System.setOut( out );
     System.setErr( err );
   }

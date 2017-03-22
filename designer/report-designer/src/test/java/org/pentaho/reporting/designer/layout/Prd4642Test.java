@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.layout;
@@ -23,11 +23,14 @@ import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugJndiContextFactoryBuilder;
 import org.pentaho.reporting.engine.classic.core.testsupport.graphics.TestGraphics2D;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
+
+import javax.naming.spi.NamingManager;
 
 public class Prd4642Test extends TestCase {
   public Prd4642Test() {
@@ -35,6 +38,9 @@ public class Prd4642Test extends TestCase {
 
   public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
+    if ( NamingManager.hasInitialContextFactoryBuilder() == false ) {
+      NamingManager.setInitialContextFactoryBuilder( new DebugJndiContextFactoryBuilder() );
+    }
   }
 
   public void testBug() throws Exception {

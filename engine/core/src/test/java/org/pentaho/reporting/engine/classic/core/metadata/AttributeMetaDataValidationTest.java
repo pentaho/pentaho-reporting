@@ -12,14 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
@@ -35,26 +34,21 @@ public class AttributeMetaDataValidationTest extends MetaDataValidationTestBase<
 
   @Test
   public void testMetaData() {
-
     final ElementTypeRegistry registry = ElementTypeRegistry.getInstance();
     final ElementMetaData[] elementMetaDatas = registry.getAllElementTypes();
-
     List<ElementMetaData> failedOnes = super.performTest( elementMetaDatas );
-
     Assert.assertEquals( new ArrayList<ElementMetaData>(), failedOnes );
   }
 
   protected void performTestOnElement( final ElementMetaData metaData ) {
     final String typeName = metaData.getName();
     logger.debug( "Processing " + typeName );
-
     try {
       final Object type = metaData.create();
     } catch ( InstantiationException e ) {
       Assert.fail( "metadata creation failed" );
 
     }
-
     validate( metaData );
 
     for ( StyleMetaData md : metaData.getStyleDescriptions() ) {
