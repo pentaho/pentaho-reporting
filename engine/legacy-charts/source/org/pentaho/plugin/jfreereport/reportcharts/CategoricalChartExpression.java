@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
@@ -676,6 +676,7 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
           final DecimalFormat formatter = new DecimalFormat(
               getRangeTickFormatString(), new DecimalFormatSymbols( getResourceBundleFactory().getLocale() ) );
           numberAxis.setNumberFormatOverride( formatter );
+          standardTickUnitsApplyFormat( numberAxis, formatter );
         }
       }
     } else if ( rangeAxis instanceof DateAxis ) {
@@ -877,8 +878,9 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
       case 21: case 22: return PlaneDirection.BOTTOM_LEFT;
       case 23: case 24: return PlaneDirection.BOTTOM;
       case 25: case 26: return PlaneDirection.BOTTOM_RIGHT;
-      case 27: case 28: case 29: case 30: case 31: case 0: case 1: case 2: case 3: case 4: 
-      default: return PlaneDirection.RIGHT;
+      case 27: case 28: case 29: case 30: case 31: case 0: case 1: case 2: case 3: case 4:
+      default:
+        return PlaneDirection.RIGHT;
     }
   }
 
