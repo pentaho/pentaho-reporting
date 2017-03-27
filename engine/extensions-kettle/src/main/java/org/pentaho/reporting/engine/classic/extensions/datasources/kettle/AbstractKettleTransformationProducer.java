@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
@@ -240,7 +240,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     }
   }
 
-  private TableModel performQueryOnTransformation( final DataRow parameters,
+  protected TableModel performQueryOnTransformation( final DataRow parameters,
                                                    final int queryLimit,
                                                    final DataFactoryContext context,
                                                    final TransMeta transMeta )
