@@ -168,9 +168,7 @@ public class AttributeMap<T> implements Serializable, Cloneable {
   }
 
   /**
-   * Looks up all namespaces and returns the value from the first namespace that has this attribute defined. As the
-   * order of the namespaces is not defined, this returns a random value and the namespace used is undefined if more
-   * than one namespace contains the same attribute.
+   * Looks up all namespaces and returns the value from the first namespace that has this attribute defined.
    *
    * @param attribute the the attribute name.
    * @return the object from the first namespace that carries this attribute or null, if none of the namespaces has such
