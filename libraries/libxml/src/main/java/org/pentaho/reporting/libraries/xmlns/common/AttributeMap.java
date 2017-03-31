@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns.common;
@@ -168,9 +168,7 @@ public class AttributeMap<T> implements Serializable, Cloneable {
   }
 
   /**
-   * Looks up all namespaces and returns the value from the first namespace that has this attribute defined. As the
-   * order of the namespaces is not defined, this returns a random value and the namespace used is undefined if more
-   * than one namespace contains the same attribute.
+   * Looks up all namespaces and returns the value from the first namespace that has this attribute defined.
    *
    * @param attribute the the attribute name.
    * @return the object from the first namespace that carries this attribute or null, if none of the namespaces has such
