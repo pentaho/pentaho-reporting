@@ -2749,6 +2749,7 @@
             <org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest>${test.performance}</org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest>
             <org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads>${test.workers}</org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads>
           </systemPropertyVariables>
+          <runOrder>alphabetical</runOrder>
       </configuration>
       </plugin>
       <plugin>
