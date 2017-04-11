@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.pdf;
@@ -54,6 +54,7 @@ public class PdfExportTask implements Runnable {
   private ReportProgressDialog progressListener;
   private StatusListener statusListener;
   private File targetFile;
+  private boolean createParentFolder;
 
   /**
    * Creates a new PDF export task.
@@ -90,6 +91,14 @@ public class PdfExportTask implements Runnable {
         throw new ReportProcessingException( messages.getErrorString( "PdfExportTask.ERROR_0001_TARGET_EXISTS" ) ); //$NON-NLS-1$
       }
     }
+
+    final String createParentFolder =
+      config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.CreateParentFolder" ); //$NON-NLS-1$
+    if ( createParentFolder == null ) {
+      this.createParentFolder = false;
+    } else {
+      this.createParentFolder = Boolean.parseBoolean( createParentFolder );
+    }
   }
 
   /**
@@ -104,6 +113,16 @@ public class PdfExportTask implements Runnable {
     PageableReportProcessor proc = null;
     OutputStream fout = null;
     try {
+      if ( createParentFolder ) {
+        final File directory = targetFile.getAbsoluteFile().getParentFile();
+        if ( directory != null ) {
+          if ( directory.exists() == false ) {
+            if ( directory.mkdirs() == false ) {
+              PdfExportTask.logger.warn( "Can't create directories." ); //$NON-NLS-1$
+            }
+          }
+        }
+      }
       fout = new BufferedOutputStream( new FileOutputStream( targetFile ) );
       final PdfOutputProcessor outputProcessor =
           new PdfOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
