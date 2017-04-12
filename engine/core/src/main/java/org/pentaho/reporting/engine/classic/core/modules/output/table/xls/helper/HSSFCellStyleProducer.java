@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -256,7 +256,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       if ( color == null ) {
         return null;
       }
-      final byte[] rgb = color.getRGB();
+      final byte[] rgb = color.getRgb();
       return new Color( 0xFF & rgb[0], 0xFF & rgb[1], 0xFF & rgb[2] );
     }
 
@@ -544,15 +544,15 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
 
     if ( workbook instanceof XSSFWorkbook ) {
       final XSSFWorkbook xssfWorkbook = (XSSFWorkbook) workbook;
-      final int predefinedStyles = workbook.getNumCellStyles();
-      for ( int i = 0; i < predefinedStyles; i++ ) {
+      final short predefinedStyles = workbook.getNumCellStyles();
+      for ( short i = 0; i < predefinedStyles; i++ ) {
         final XSSFCellStyle cellStyleAt = xssfWorkbook.getCellStyleAt( i );
         this.styleCache.put( new HSSFCellStyleKey( cellStyleAt ), cellStyleAt );
       }
     } else {
       // Read in the styles ...
-      final int predefinedStyles = workbook.getNumCellStyles();
-      for ( int i = 0; i < predefinedStyles; i++ ) {
+      final short predefinedStyles = workbook.getNumCellStyles();
+      for ( short i = 0; i < predefinedStyles; i++ ) {
         final CellStyle cellStyleAt = workbook.getCellStyleAt( i );
         this.styleCache.put( new HSSFCellStyleKey( cellStyleAt ), cellStyleAt );
       }
