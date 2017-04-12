@@ -60,6 +60,7 @@
     <commons-cli.version>1.2</commons-cli.version>
     <commons-codec.version>1.9</commons-codec.version>
     <commons-collections.version>3.2.2</commons-collections.version>
+    <commons-collections4.version>4.1</commons-collections4.version>
     <commons-compress.version>1.4.1</commons-compress.version>
     <commons-configuration.version>1.9</commons-configuration.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
@@ -166,7 +167,7 @@
     <plugin.enforcer.version>1.4.1</plugin.enforcer.version>
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <plugin.surefire.version>2.19.1</plugin.surefire.version>
-    <poi.version>3.12</poi.version>
+    <poi.version>3.15</poi.version>
     <postgresql.version>9.3-1102-jdbc4</postgresql.version>
     <rhino.version>1.7R3</rhino.version>
     <rome.version>1.0</rome.version>
@@ -1699,6 +1700,11 @@
         <groupId>commons-collections</groupId>
         <artifactId>commons-collections</artifactId>
         <version>${commons-collections.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>${commons-collections4.version}</version>
       </dependency>
       <dependency>
         <groupId>commons-lang</groupId>
