@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal;
@@ -742,6 +742,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   }
 
   protected void finishInlineBox( final InlineRenderBox box ) {
+    TextSpec textSpec = getTextSpec();
+    if ( textSpec != null ) {
+      textSpec.close();
+      setTextSpec( null );
+    }
     final RenderBox parent = box.getParent();
     if ( underline != null ) {
       if ( isStyleActive( TextStyleKeys.UNDERLINED, parent ) == false ) {
@@ -762,12 +767,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       }
     } else {
       underline = computeUnderline( box, null );
-    }
-
-    TextSpec textSpec = getTextSpec();
-    if ( textSpec != null ) {
-      textSpec.close();
-      setTextSpec( null );
     }
   }
 
