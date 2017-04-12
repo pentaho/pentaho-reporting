@@ -256,7 +256,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       if ( color == null ) {
         return null;
       }
-      final byte[] rgb = color.getRgb();
+      final byte[] rgb = color.getRGB();
       return new Color( 0xFF & rgb[0], 0xFF & rgb[1], 0xFF & rgb[2] );
     }
 
@@ -544,15 +544,15 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
 
     if ( workbook instanceof XSSFWorkbook ) {
       final XSSFWorkbook xssfWorkbook = (XSSFWorkbook) workbook;
-      final short predefinedStyles = workbook.getNumCellStyles();
-      for ( short i = 0; i < predefinedStyles; i++ ) {
+      final int predefinedStyles = workbook.getNumCellStyles();
+      for ( int i = 0; i < predefinedStyles; i++ ) {
         final XSSFCellStyle cellStyleAt = xssfWorkbook.getCellStyleAt( i );
         this.styleCache.put( new HSSFCellStyleKey( cellStyleAt ), cellStyleAt );
       }
     } else {
       // Read in the styles ...
-      final short predefinedStyles = workbook.getNumCellStyles();
-      for ( short i = 0; i < predefinedStyles; i++ ) {
+      final int predefinedStyles = workbook.getNumCellStyles();
+      for ( int i = 0; i < predefinedStyles; i++ ) {
         final CellStyle cellStyleAt = workbook.getCellStyleAt( i );
         this.styleCache.put( new HSSFCellStyleKey( cellStyleAt ), cellStyleAt );
       }
