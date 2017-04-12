@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j;
@@ -20,18 +20,17 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
-import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.JndiConnectionProvider;
+import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.DriverConnectionProvider;
 
-public class DenormalizedOlap4JJndiTest extends DataSourceTestBase {
+public class DenormalizedOlap4JDriverT extends DataSourceTestBase {
   private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray( "" );
 
-  public DenormalizedOlap4JJndiTest() {
+  public DenormalizedOlap4JDriverT() {
   }
 
-  public DenormalizedOlap4JJndiTest( final String s ) {
+  public DenormalizedOlap4JDriverT( final String s ) {
     super( s );
   }
-
 
   public void testSaveAndLoad() throws Exception {
     runSaveAndLoad( QUERIES_AND_RESULTS );
@@ -50,8 +49,15 @@ public class DenormalizedOlap4JJndiTest extends DataSourceTestBase {
   }
 
   protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
-    final JndiConnectionProvider provider = new JndiConnectionProvider();
-    provider.setConnectionPath( "SampleOlap4J" );
+    final DriverConnectionProvider provider = new DriverConnectionProvider();
+    provider.setDriver( "mondrian.olap4j.MondrianOlap4jDriver" );
+    provider.setProperty( "Catalog",
+      "src/test/resources/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels.mondrian.xml" );
+    provider.setProperty( "JdbcUser", "sa" );
+    provider.setProperty( "JdbcPassword", "" );
+    provider.setProperty( "Jdbc", "jdbc:hsqldb:mem:SampleData" );
+    provider.setProperty( "JdbcDrivers", "org.hsqldb.jdbcDriver" );
+    provider.setUrl( "jdbc:mondrian:" );
 
     final DenormalizedMDXDataFactory dataFactory = new DenormalizedMDXDataFactory( provider );
     dataFactory.setQuery( "default", query, null, null );
@@ -59,9 +65,8 @@ public class DenormalizedOlap4JJndiTest extends DataSourceTestBase {
     return dataFactory;
   }
 
-
   public static void _main( final String[] args ) throws Exception {
-    final DenormalizedOlap4JJndiTest test = new DenormalizedOlap4JJndiTest();
+    final DenormalizedOlap4JDriverT test = new DenormalizedOlap4JDriverT();
     test.setUp();
     test.runGenerate( QUERIES_AND_RESULTS );
   }

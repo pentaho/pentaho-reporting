@@ -23,7 +23,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTi
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.DriverConnectionProvider;
 
-public class BandedMDXTableModelTest extends DataSourceTestBase {
+public class BandedMDXTableModelT extends DataSourceTestBase {
 
   private static final String QUERY_BY_HIERARCHY =
     "SELECT {[Measures].[Quantity]} ON COLUMNS, TOPCOUNT(NONEMPTYCROSSJOIN([Markets].[Country].MEMBERS,[Markets.City]"
@@ -54,7 +54,7 @@ public class BandedMDXTableModelTest extends DataSourceTestBase {
   }
 
   public static void _main( String[] args ) throws Exception {
-    final BandedMDXTableModelTest test = new BandedMDXTableModelTest();
+    final BandedMDXTableModelT test = new BandedMDXTableModelT();
     test.setUp();
     test.runGenerate( QUERIES_AND_RESULTS );
   }

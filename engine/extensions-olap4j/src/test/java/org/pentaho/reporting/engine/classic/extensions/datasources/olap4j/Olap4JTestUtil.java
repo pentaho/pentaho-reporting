@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
+* Copyright (c) 2000 - 2017 Pentaho Corporation and Contributors...
 * All rights reserved.
 */
 
@@ -182,9 +182,9 @@ public class Olap4JTestUtil {
     Locale.setDefault( Locale.US );
     TimeZone.setDefault( TimeZone.getTimeZone( "UTC" ) );
 
-    BandedOlap4JDriverTest._main( args );
-    DenormalizedOlap4JDriverTest._main( args );
-    LegacyBandedOlap4JDriverTest._main( args );
-    BandedMDXTableModelTest._main( args );
+    BandedOlap4JDriverT._main( args );
+    DenormalizedOlap4JDriverT._main( args );
+    LegacyBandedOlap4JDriverT._main( args );
+    BandedMDXTableModelT._main( args );
   }
 }
