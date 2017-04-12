@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.itext;
@@ -216,11 +216,11 @@ public class PatchRtfTable extends RtfElement {
       result.write( RtfParagraph.PARAGRAPH );
     }
 
-    for ( int i = 0; i < this.rows.size(); i++ ) {
-      RtfElement re = this.rows.get( i );
-      // .result.write(re.write());
+    final Iterator<PatchRtfRow> iterator = this.rows.iterator();
+    while ( iterator.hasNext() ) {
+      final RtfElement re = iterator.next();
       re.writeContent( result );
-      this.rows.remove( i );
+      iterator.remove();
     }
 
     result.write( RtfParagraph.PARAGRAPH_DEFAULTS );
