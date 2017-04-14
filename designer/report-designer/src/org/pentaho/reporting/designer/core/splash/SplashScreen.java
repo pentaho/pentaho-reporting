@@ -76,7 +76,7 @@ public class SplashScreen extends JWindow {
     statusLabel.setFont( LICENSE_FONT );
     statusLabel.setHorizontalAlignment( SwingConstants.LEADING );
     statusLabel.setOpaque( false );
-    statusLabel.setForeground( WHITE );
+    // statusLabel.setForeground( WHITE ); default text foreground colour of black
 
     final JPanel statusVersionPanel = new JPanel( new GridBagLayout() );
     final GridBagConstraints c = new GridBagConstraints();
@@ -119,7 +119,7 @@ public class SplashScreen extends JWindow {
     versionLabel.setFont( new Font( Font.SANS_SERIF, Font.PLAIN, 14 ) );
     versionLabel.setOpaque( false );
     versionLabel.setBackground( TRANSPARENT );
-    versionLabel.setForeground( WHITE );
+    // versionLabel.setForeground( WHITE ); default text foreground colour of black
     versionLabel.setBorder( BORDER );
     versionLabel.setBounds( XLOC, YLOC + 40, TEXT_WIDTH, versionLabel.getPreferredSize().height );
 
@@ -134,7 +134,7 @@ public class SplashScreen extends JWindow {
     copyrightArea.setFont( LICENSE_FONT );
     copyrightArea.setEnabled( false );
     copyrightArea.setBackground( TRANSPARENT );
-    copyrightArea.setForeground( WHITE );
+    // copyrightArea.setForeground( WHITE ); default text foreground colour of black
     copyrightArea.setBorder( BORDER );
     copyrightArea.setDisabledTextColor( copyrightArea.getForeground() );
 
