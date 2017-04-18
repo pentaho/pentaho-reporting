@@ -22,13 +22,13 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.DriverConnectionProvider;
 
-public class DenormalizedOlap4JDriverTest extends DataSourceTestBase {
-  private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray( "" );
+public class LegacyBandedOlap4JDriverT extends DataSourceTestBase {
+  private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray( "-legacy" );
 
-  public DenormalizedOlap4JDriverTest() {
+  public LegacyBandedOlap4JDriverT() {
   }
 
-  public DenormalizedOlap4JDriverTest( final String s ) {
+  public LegacyBandedOlap4JDriverT( final String s ) {
     super( s );
   }
 
@@ -59,14 +59,14 @@ public class DenormalizedOlap4JDriverTest extends DataSourceTestBase {
     provider.setProperty( "JdbcDrivers", "org.hsqldb.jdbcDriver" );
     provider.setUrl( "jdbc:mondrian:" );
 
-    final DenormalizedMDXDataFactory dataFactory = new DenormalizedMDXDataFactory( provider );
+    final LegacyBandedMDXDataFactory dataFactory = new LegacyBandedMDXDataFactory( provider );
     dataFactory.setQuery( "default", query, null, null );
     initializeDataFactory( dataFactory );
     return dataFactory;
   }
 
   public static void _main( final String[] args ) throws Exception {
-    final DenormalizedOlap4JDriverTest test = new DenormalizedOlap4JDriverTest();
+    final LegacyBandedOlap4JDriverT test = new LegacyBandedOlap4JDriverT();
     test.setUp();
     test.runGenerate( QUERIES_AND_RESULTS );
   }

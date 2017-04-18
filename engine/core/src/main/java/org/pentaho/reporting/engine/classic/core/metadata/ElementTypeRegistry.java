@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
@@ -41,7 +41,7 @@ public final class ElementTypeRegistry {
     return instance;
   }
 
-  private ElementTypeRegistry() {
+  ElementTypeRegistry() {
     this.resourceManager = new ResourceManager();
     this.backend = new HashMap<String, DefaultElementMetaData>();
     this.namespaceMapping = new HashMap<String, String>();

@@ -20,17 +20,18 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
-import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.DriverConnectionProvider;
+import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.JndiConnectionProvider;
 
-public class BandedOlap4JDriverTest extends DataSourceTestBase {
+public class BandedOlap4JJndiT extends DataSourceTestBase {
   private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray( "-banded" );
 
-  public BandedOlap4JDriverTest() {
+  public BandedOlap4JJndiT() {
   }
 
-  public BandedOlap4JDriverTest( final String s ) {
+  public BandedOlap4JJndiT( final String s ) {
     super( s );
   }
+
 
   public void testSaveAndLoad() throws Exception {
     runSaveAndLoad( QUERIES_AND_RESULTS );
@@ -49,15 +50,8 @@ public class BandedOlap4JDriverTest extends DataSourceTestBase {
   }
 
   protected DataFactory createDataFactory( final String query ) throws ReportDataFactoryException {
-    final DriverConnectionProvider provider = new DriverConnectionProvider();
-    provider.setDriver( "mondrian.olap4j.MondrianOlap4jDriver" );
-    provider.setProperty( "Catalog",
-      "src/test/resources/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels.mondrian.xml" );
-    provider.setProperty( "JdbcUser", "sa" );
-    provider.setProperty( "JdbcPassword", "" );
-    provider.setProperty( "Jdbc", "jdbc:hsqldb:mem:SampleData" );
-    provider.setProperty( "JdbcDrivers", "org.hsqldb.jdbcDriver" );
-    provider.setUrl( "jdbc:mondrian:" );
+    final JndiConnectionProvider provider = new JndiConnectionProvider();
+    provider.setConnectionPath( "SampleOlap4J" );
 
     final BandedMDXDataFactory dataFactory = new BandedMDXDataFactory( provider );
     dataFactory.setQuery( "default", query, null, null );
@@ -65,8 +59,9 @@ public class BandedOlap4JDriverTest extends DataSourceTestBase {
     return dataFactory;
   }
 
+
   public static void _main( final String[] args ) throws Exception {
-    final BandedOlap4JDriverTest test = new BandedOlap4JDriverTest();
+    final BandedOlap4JJndiT test = new BandedOlap4JJndiT();
     test.setUp();
     test.runGenerate( QUERIES_AND_RESULTS );
   }

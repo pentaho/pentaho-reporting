@@ -31,7 +31,7 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connec
 import javax.naming.spi.NamingManager;
 import javax.swing.table.TableModel;
 
-public class Prd5276Test {
+public class Prd5276T {
   private static final String query = Olap4JTestUtil.QUERY_UNION_OK;
 
   private static final String queryFlipped = Olap4JTestUtil.QUERY_UNION_FLIPPED;

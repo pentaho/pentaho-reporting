@@ -12,29 +12,31 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2016 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2017 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import java.awt.Color;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeListener;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import org.junit.rules.Timeout;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+
+import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeListener;
+import java.awt.Color;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.concurrent.CountDownLatch;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 public class TextFieldParameterComponentTest {
 
@@ -42,6 +44,10 @@ public class TextFieldParameterComponentTest {
 
   private TextFieldParameterComponent comp;
   private ParameterUpdateContext updateContext;
+
+  @Rule
+  public Timeout globalTimeout = new Timeout( 10000 );
+
 
   @Before
   public void setUp() {
@@ -77,7 +83,7 @@ public class TextFieldParameterComponentTest {
     comp.initialize();
 
     assertEquals( comp.getText(), StringUtils.EMPTY );
-    assertEquals( comp.getBackground(),  Color.WHITE );
+    assertEquals( comp.getBackground(), Color.WHITE );
   }
 
   @Test
@@ -87,7 +93,7 @@ public class TextFieldParameterComponentTest {
     comp.initialize();
 
     assertEquals( comp.getText(), "512,000.90" );
-    assertEquals( comp.getBackground(),  Color.WHITE );
+    assertEquals( comp.getBackground(), Color.WHITE );
   }
 
   @Test
@@ -106,7 +112,7 @@ public class TextFieldParameterComponentTest {
       SwingUtilities.invokeLater( () -> latch.countDown() );
     } );
 
-    latch.await( 100, TimeUnit.MILLISECONDS );
+    latch.await();
 
     assertEquals( comp.getText(), "error value" );
     assertEquals( comp.getBackground(), Color.RED ); // should set value from TextComponentEditHandler

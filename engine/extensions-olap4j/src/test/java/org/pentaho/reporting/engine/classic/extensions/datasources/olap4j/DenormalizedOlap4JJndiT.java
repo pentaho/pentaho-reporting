@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j;
@@ -22,13 +22,13 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.JndiConnectionProvider;
 
-public class LegacyBandedOlap4JJndiTest extends DataSourceTestBase {
-  private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray( "-legacy" );
+public class DenormalizedOlap4JJndiT extends DataSourceTestBase {
+  private static final String[][] QUERIES_AND_RESULTS = Olap4JTestUtil.createQueryArray( "" );
 
-  public LegacyBandedOlap4JJndiTest() {
+  public DenormalizedOlap4JJndiT() {
   }
 
-  public LegacyBandedOlap4JJndiTest( final String s ) {
+  public DenormalizedOlap4JJndiT( final String s ) {
     super( s );
   }
 
@@ -53,7 +53,7 @@ public class LegacyBandedOlap4JJndiTest extends DataSourceTestBase {
     final JndiConnectionProvider provider = new JndiConnectionProvider();
     provider.setConnectionPath( "SampleOlap4J" );
 
-    final LegacyBandedMDXDataFactory dataFactory = new LegacyBandedMDXDataFactory( provider );
+    final DenormalizedMDXDataFactory dataFactory = new DenormalizedMDXDataFactory( provider );
     dataFactory.setQuery( "default", query, null, null );
     initializeDataFactory( dataFactory );
     return dataFactory;
@@ -61,7 +61,7 @@ public class LegacyBandedOlap4JJndiTest extends DataSourceTestBase {
 
 
   public static void _main( final String[] args ) throws Exception {
-    final LegacyBandedOlap4JJndiTest test = new LegacyBandedOlap4JJndiTest();
+    final DenormalizedOlap4JJndiT test = new DenormalizedOlap4JJndiT();
     test.setUp();
     test.runGenerate( QUERIES_AND_RESULTS );
   }
