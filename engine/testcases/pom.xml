@@ -96,6 +96,11 @@
       <artifactId>commons-compress</artifactId>
       <scope>test</scope>
     </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <scope>test</scope>
+      </dependency>
     <dependency>
       <groupId>secondstring</groupId>
       <artifactId>secondstring</artifactId>
