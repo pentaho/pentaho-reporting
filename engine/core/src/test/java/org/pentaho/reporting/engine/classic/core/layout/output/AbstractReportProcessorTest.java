@@ -12,20 +12,17 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.TableDataFactory;
+import org.pentaho.reporting.engine.classic.core.*;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
@@ -296,4 +293,22 @@ public class AbstractReportProcessorTest {
     reportProcessor.processReport();
   }
 
+  @Test
+  public void testProcessGroups() throws Exception {
+    final MasterReport report = new MasterReport();
+    for ( int i = 0; i < report.getGroupCount(); i++ ) {
+      Group g = report.getGroup( i );
+      g.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, new String[]{ "Group"+i} );
+    }
+    final AbstractReportProcessor reportProcessor = new DummyReportProcessor( report );
+    reportProcessor.processGroups( report );
+    for ( int i = 0; i < report.getGroupCount(); i++ ) {
+      Group g = report.getGroup( i );
+      String[] fields = ( String[] ) g.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS );
+      if ( fields != null && fields.length > 0 ) {
+        Assert.assertTrue( fields[0].equals( g.getName() ) );
+      }
+    }
+
+  }
 }

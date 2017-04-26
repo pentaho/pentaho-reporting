@@ -12,13 +12,15 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.EmptyReportException;
@@ -423,12 +425,22 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
 
   protected abstract OutputFunction createLayoutManager();
 
+  void processGroups( MasterReport report ) {
+    for ( int i = 0; i < report.getGroupCount(); i++ ) {
+      Group g = report.getGroup( i );
+      String[] fields = (String[]) g.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS );
+      if ( fields != null && fields.length > 0 ) {
+        g.setName( fields[0] );
+      }
+    }
+  }
+
   protected void prepareReportProcessing() throws ReportProcessingException {
     if ( stateList != null ) {
       // is already paginated.
       return;
     }
-
+    processGroups( this.report );
     PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch( PerformanceTags.REPORT_PREPARE );
     try {
       sw.start();
