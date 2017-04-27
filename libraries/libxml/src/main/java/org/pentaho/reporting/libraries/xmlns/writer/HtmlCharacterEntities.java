@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns.writer;
@@ -183,7 +183,7 @@ public class HtmlCharacterEntities extends Properties {
     setProperty( "or", "\u2228" );
     setProperty( "Ograve", "\u00d2" );
     setProperty( "ocirc", "\u00f4" );
-    setProperty( "plusm", "\u00b1" );
+    setProperty( "plusmn", "\u00b1" );
     setProperty( "Ouml", "\u00d6" );
     setProperty( "nabla", "\u2207" );
     setProperty( "psi", "\u03c8" );
