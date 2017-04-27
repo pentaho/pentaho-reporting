@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.util;
@@ -218,7 +218,7 @@ public class HtmlCharacterEntities extends Properties {
     setProperty( "otimes", "\u2297" );
     setProperty( "part", "\u2202" );
     setProperty( "perp", "\u22a5" );
-    setProperty( "plusm", "\u00b1" );
+    setProperty( "plusmn", "\u00b1" );
     setProperty( "prod", "\u220f" );
     setProperty( "radic", "\u221a" );
     setProperty( "rang", "\u232a" );
