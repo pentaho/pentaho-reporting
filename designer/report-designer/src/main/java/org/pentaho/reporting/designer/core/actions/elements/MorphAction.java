@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.actions.elements;
@@ -40,10 +40,10 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.Image;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
 import java.beans.BeanInfo;
 import java.text.DecimalFormat;
 import java.text.Format;
@@ -104,6 +104,10 @@ public final class MorphAction extends AbstractElementSelectionAction implements
         continue;
       }
       if ( ObjectUtilities.equal( visualElement.getElementTypeName(), targetElementType.getMetaData().getName() ) ) {
+        continue;
+      }
+      if ( targetMetaData.getReportElementType().equals( ElementMetaData.TypeClassification.SUBREPORT )
+        && !visualElement.getMetaData().getReportElementType().equals( ElementMetaData.TypeClassification.SUBREPORT ) ) {
         continue;
       }
 
