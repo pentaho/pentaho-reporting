@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
@@ -130,21 +130,31 @@ public final class HtmlReportUtil {
       throw new NullPointerException();
     }
     try {
-      final File targetFile = new File( targetFileName ).getCanonicalFile();
-      if ( targetFile.exists() ) {
-        // try to delete it ..
-        if ( targetFile.delete() == false ) {
-          throw new IOException( "Unable to remove the already existing target-file." );
-        }
+      boolean isCreateParentFolder;
+      final String createParentFolder =
+        report.getConfiguration().getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.paged.CreateParentFolder" ); //$NON-NLS-1$
+      if ( createParentFolder == null ) {
+        isCreateParentFolder = false;
+      } else {
+        isCreateParentFolder = Boolean.parseBoolean( createParentFolder );
       }
+
+      final File targetFile = new File( targetFileName ).getCanonicalFile();
 
       final File targetDirectory = targetFile.getParentFile();
-      if ( targetDirectory.exists() == false ) {
-        if ( targetDirectory.mkdirs() == false ) {
-          throw new IOException( "Unable to create the target-directory." );
+      if ( isCreateParentFolder ) {
+        if ( targetFile.exists() ) {
+          // try to delete it ..
+          if ( targetFile.delete() == false ) {
+            throw new IOException( "Unable to remove the already existing target-file." );
+          }
+        }
+        if ( targetDirectory.exists() == false ) {
+          if ( targetDirectory.mkdirs() == false ) {
+            throw new IOException( "Unable to create the target-directory." );
+          }
         }
       }
-
       final FileRepository targetRepository = new FileRepository( targetDirectory );
       final ContentLocation targetRoot = targetRepository.getRoot();
 

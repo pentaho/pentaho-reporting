@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.csv;
@@ -66,7 +66,7 @@ public class CSVTableExportTask implements Runnable {
    */
   private final MasterReport report;
   private StatusListener statusListener;
-
+  private boolean createParentFolder;
   /**
    * Creates a new CSV export task.
    *
@@ -92,6 +92,14 @@ public class CSVTableExportTask implements Runnable {
       throw new ReportProcessingException( "CSVTableExportTask(..): Configuration does not contain a valid filename" ); //$NON-NLS-1$
     }
 
+    final String createParentFolder =
+      report.getConfiguration().getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.csv.CreateParentFolder" ); //$NON-NLS-1$
+    if ( createParentFolder == null ) {
+      this.createParentFolder = false;
+    } else {
+      this.createParentFolder = Boolean.parseBoolean( createParentFolder );
+    }
+
     this.progressDialog = dialog;
     this.report = report;
     this.fileName = filename;
@@ -108,13 +116,16 @@ public class CSVTableExportTask implements Runnable {
    */
   public void run() {
     OutputStream out = null;
+
     final File file = new File( fileName );
     try {
-      final File directory = file.getAbsoluteFile().getParentFile();
-      if ( directory != null ) {
-        if ( directory.exists() == false ) {
-          if ( directory.mkdirs() == false ) {
-            CSVTableExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
+      if ( createParentFolder ) {
+        final File directory = file.getAbsoluteFile().getParentFile();
+        if ( directory != null ) {
+          if ( directory.exists() == false ) {
+            if ( directory.mkdirs() == false ) {
+              CSVTableExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
+            }
           }
         }
       }

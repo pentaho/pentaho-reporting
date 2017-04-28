@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.rtf;
@@ -60,7 +60,7 @@ public class RTFExportTask implements Runnable {
    */
   private final MasterReport report;
   private StatusListener statusListener;
-
+  private boolean createParentFolder;
   /**
    * Creates a new export task.
    *
@@ -96,6 +96,13 @@ public class RTFExportTask implements Runnable {
     this.fileName = filename;
     this.progressDialog = dialog;
     this.report = report;
+    final String createParentFolder =
+      report.getConfiguration().getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.rtf.CreateParentFolder" ); //$NON-NLS-1$
+    if ( createParentFolder == null ) {
+      this.createParentFolder = false;
+    } else {
+      this.createParentFolder = Boolean.parseBoolean( createParentFolder );
+    }
   }
 
   /**
@@ -106,12 +113,14 @@ public class RTFExportTask implements Runnable {
     OutputStream out = null;
     File file = null;
     try {
-      file = new File( fileName ).getCanonicalFile();
-      final File directory = file.getParentFile();
-      if ( directory != null ) {
-        if ( directory.exists() == false ) {
-          if ( directory.mkdirs() == false ) {
-            RTFExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
+      if ( createParentFolder ) {
+        file = new File( fileName ).getCanonicalFile();
+        final File directory = file.getParentFile();
+        if ( directory != null ) {
+          if ( directory.exists() == false ) {
+            if ( directory.mkdirs() == false ) {
+              RTFExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
+            }
           }
         }
       }

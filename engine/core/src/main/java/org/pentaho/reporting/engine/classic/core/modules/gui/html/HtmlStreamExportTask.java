@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.html;
@@ -73,7 +73,7 @@ public class HtmlStreamExportTask implements Runnable {
   private File targetDirectory;
   private String suffix;
   private String filename;
-
+  private boolean createParentFolder;
   /**
    * Creates a new html export task.
    *
@@ -107,7 +107,13 @@ public class HtmlStreamExportTask implements Runnable {
       if ( targetFileName == null ) {
         throw new ReportProcessingException( messages.getErrorString( "HtmlStreamExportTask.ERROR_0002_TARGET_NOT_SET" ) ); //$NON-NLS-1$
       }
-
+      final String createParentFolder =
+        config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.CreateParentFolder" ); //$NON-NLS-1$
+      if ( createParentFolder == null ) {
+        this.createParentFolder = false;
+      } else {
+        this.createParentFolder = Boolean.parseBoolean( createParentFolder );
+      }
       final File targetFile = new File( targetFileName ).getCanonicalFile();
       targetDirectory = targetFile.getParentFile();
 
@@ -139,6 +145,16 @@ public class HtmlStreamExportTask implements Runnable {
    */
   public void run() {
     try {
+      if ( createParentFolder ) {
+        final File directory = targetDirectory.getCanonicalFile();
+        if ( directory != null ) {
+          if ( directory.exists() == false ) {
+            if ( directory.mkdirs() == false ) {
+              HtmlStreamExportTask.logger.warn( "Can't create directories." ); //$NON-NLS-1$
+            }
+          }
+        }
+      }
       final FileRepository targetRepository = new FileRepository( targetDirectory );
       final ContentLocation targetRoot = targetRepository.getRoot();
 

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.xls;
@@ -65,7 +65,7 @@ public class XSSFExcelExportTask implements Runnable {
    */
   private final MasterReport report;
   private StatusListener statusListener;
-
+  private boolean createParentFolder;
   /**
    * Creates a new export task.
    *
@@ -93,6 +93,13 @@ public class XSSFExcelExportTask implements Runnable {
           new Messages( swingGuiContext.getLocale(), ExcelExportPlugin.BASE_RESOURCE_CLASS, ObjectUtilities
               .getClassLoader( ExcelExportPlugin.class ) );
     }
+    final String createParentFolder =
+      report.getConfiguration().getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.xls.CreateParentFolder" ); //$NON-NLS-1$
+    if ( createParentFolder == null ) {
+      this.createParentFolder = false;
+    } else {
+      this.createParentFolder = Boolean.parseBoolean( createParentFolder );
+    }
   }
 
   /**
@@ -104,11 +111,13 @@ public class XSSFExcelExportTask implements Runnable {
     File file = null;
     try {
       file = new File( fileName ).getCanonicalFile();
-      final File directory = file.getParentFile();
-      if ( directory != null ) {
-        if ( directory.exists() == false ) {
-          if ( directory.mkdirs() == false ) {
-            XSSFExcelExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
+      if ( createParentFolder ) {
+        final File directory = file.getParentFile();
+        if ( directory != null ) {
+          if ( directory.exists() == false ) {
+            if ( directory.mkdirs() == false ) {
+              XSSFExcelExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
+            }
           }
         }
       }
