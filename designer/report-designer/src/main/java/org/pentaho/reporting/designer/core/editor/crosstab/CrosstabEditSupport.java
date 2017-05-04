@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.core.editor.crosstab;
@@ -278,7 +278,7 @@ public final class CrosstabEditSupport {
     for ( final ReportElement e : elementsByAttribute ) {
       String field = (String) e.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD );
       Class agg = (Class) e.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE );
-      if ( !AggregationFunction.class.isAssignableFrom( agg ) ) {
+      if ( ( agg != null ) && !AggregationFunction.class.isAssignableFrom( agg ) ) {
         agg = null;
       }
       ReportElement[] labels = ReportStructureMatcher.findElementsByAttribute
