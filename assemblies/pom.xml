@@ -1,46 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>pentaho-reporting</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.1.0.0-12</version>
   </parent>
-  
   <artifactId>reporting-assemblies</artifactId>
+  <version>7.1.0.0-12</version>
   <packaging>pom</packaging>
-  
   <name>Pentaho Reporting Assemblies</name>
-
-  <profiles>
-    <profile>
-      <id>default</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <module>winlinux</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>mac</id>
-      <activation>
-        <property>
-          <name>mac.jre.path</name>
-        </property>
-      </activation>
-      <modules>
-        <module>winlinux</module>
-        <module>mac</module>
-      </modules>
-    </profile>
-  </profiles>
-
   <properties>
-    <stage.dir>${project.build.directory}/stage</stage.dir>
     <stage.dir.designer>${stage.dir}/report-designer</stage.dir.designer>
+    <stage.dir>${project.build.directory}/stage</stage.dir>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
@@ -387,7 +361,6 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -508,4 +481,26 @@
       </plugins>
     </pluginManagement>
   </build>
+  <profiles>
+    <profile>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>winlinux</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>mac</id>
+      <activation>
+        <property>
+          <name>mac.jre.path</name>
+        </property>
+      </activation>
+      <modules>
+        <module>winlinux</module>
+        <module>mac</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>
