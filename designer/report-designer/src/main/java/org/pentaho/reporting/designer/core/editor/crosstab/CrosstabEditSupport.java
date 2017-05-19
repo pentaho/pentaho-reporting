@@ -192,13 +192,11 @@ public final class CrosstabEditSupport {
       Element detailElement = value.getDetailElement();
       if ( detailElement != null ) {
         if ( allowMetaAttrs == null ) {
-          allowMetaAttrs = detailElement.getAttributeTyped
-            ( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, Boolean.class );
+          allowMetaAttrs = detailElement.getAttributeTyped( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, Boolean.class );
         }
 
         if ( allowMetaStyle == null ) {
-          allowMetaStyle = detailElement.getAttributeTyped
-            ( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.class );
+          allowMetaStyle = detailElement.getAttributeTyped( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.class );
         }
       }
     }
@@ -281,8 +279,7 @@ public final class CrosstabEditSupport {
       if ( ( agg != null ) && !AggregationFunction.class.isAssignableFrom( agg ) ) {
         agg = null;
       }
-      ReportElement[] labels = ReportStructureMatcher.findElementsByAttribute
-        ( header, AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, field );
+      ReportElement[] labels = ReportStructureMatcher.findElementsByAttribute( header, AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, field );
       Element label;
       if ( labels.length > 0 ) {
         label = (Element) labels[ 0 ];
