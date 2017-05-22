@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.core.editor.crosstab;
@@ -192,13 +192,11 @@ public final class CrosstabEditSupport {
       Element detailElement = value.getDetailElement();
       if ( detailElement != null ) {
         if ( allowMetaAttrs == null ) {
-          allowMetaAttrs = detailElement.getAttributeTyped
-            ( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, Boolean.class );
+          allowMetaAttrs = detailElement.getAttributeTyped( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, Boolean.class );
         }
 
         if ( allowMetaStyle == null ) {
-          allowMetaStyle = detailElement.getAttributeTyped
-            ( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.class );
+          allowMetaStyle = detailElement.getAttributeTyped( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.class );
         }
       }
     }
@@ -278,11 +276,10 @@ public final class CrosstabEditSupport {
     for ( final ReportElement e : elementsByAttribute ) {
       String field = (String) e.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD );
       Class agg = (Class) e.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE );
-      if ( !AggregationFunction.class.isAssignableFrom( agg ) ) {
+      if ( ( agg != null ) && !AggregationFunction.class.isAssignableFrom( agg ) ) {
         agg = null;
       }
-      ReportElement[] labels = ReportStructureMatcher.findElementsByAttribute
-        ( header, AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, field );
+      ReportElement[] labels = ReportStructureMatcher.findElementsByAttribute( header, AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, field );
       Element label;
       if ( labels.length > 0 ) {
         label = (Element) labels[ 0 ];
