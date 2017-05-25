@@ -12,17 +12,29 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.util;
 
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
-import javax.swing.*;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-import java.awt.*;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
+import java.awt.Insets;
 
 public class GridSizeDialog extends CommonDialog {
   private class UnitChangeListener implements ListDataListener {
@@ -164,7 +176,7 @@ public class GridSizeDialog extends CommonDialog {
       throw new NullPointerException();
     }
     final double gridSize = getGridSize();
-    final double gridDivision = getGridDivisionSize();
+    final int gridDivision = getGridDivisionSize();
 
     if ( newUnit != this.unitModel.getSelectedItem() ) {
       this.unitModel.setSelectedItem( newUnit );
@@ -179,7 +191,7 @@ public class GridSizeDialog extends CommonDialog {
     this.gridSizeSpinner.setValue( new Double( unit.convertFromPoints( gridSize ) ) );
   }
 
-  public void setGridDivisionSize( final double gridDivisionSize ) {
+  public void setGridDivisionSize( final int gridDivisionSize ) {
     this.gridDivisionSpinner.setValue( gridDivisionSize );
   }
 
