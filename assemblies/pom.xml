@@ -321,7 +321,7 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-kettle</groupId>
+      <groupId>org.pentaho.kettle.plugins</groupId>
       <artifactId>kettle-json-plugin</artifactId>
       <type>zip</type>
       <scope>compile</scope>
