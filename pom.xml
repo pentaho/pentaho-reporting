@@ -1398,7 +1398,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho-kettle</groupId>
+        <groupId>org.pentaho.kettle.plugins</groupId>
         <artifactId>kettle-json-plugin</artifactId>
         <version>${kettle-json-plugin.version}</version>
         <type>zip</type>
