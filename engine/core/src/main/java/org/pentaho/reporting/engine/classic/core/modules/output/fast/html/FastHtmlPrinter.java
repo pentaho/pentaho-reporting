@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
@@ -92,13 +92,14 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
   }
 
   public void close() throws IOException, ContentIOException {
-    performCloseFile( sheetName, reportAttributes, writer );
-
-    try {
-      writer.close();
-    } catch ( IOException e ) {
-      // ignored ..
-      logger.error( "Failed to close writer instance", e );
+    if ( writer != null ) {
+      performCloseFile( sheetName, reportAttributes, writer );
+      try {
+        writer.close();
+      } catch ( IOException e ) {
+        // ignored ..
+        logger.error( "Failed to close writer instance", e );
+      }
     }
     textExtractor = null;
     writer = null;
