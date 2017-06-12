@@ -288,8 +288,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-kettle</groupId>
-      <artifactId>kettle5-log4j-plugin</artifactId>
+      <groupId>org.pentaho.di.plugins</groupId>
+      <artifactId>kettle-log4j-core</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -321,7 +321,7 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.pentaho.kettle.plugins</groupId>
+      <groupId>org.pentaho.di.plugins</groupId>
       <artifactId>kettle-json-plugin</artifactId>
       <type>zip</type>
       <scope>compile</scope>
