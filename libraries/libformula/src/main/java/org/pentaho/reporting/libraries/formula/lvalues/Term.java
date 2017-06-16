@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2017 Pentaho Corporation and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.lvalues;
@@ -55,9 +55,25 @@ public class Term extends AbstractLValue {
     for ( int i = 0; i < operandsArray.length; i++ ) {
       final LValue value = operandsArray[ i ];
       final InfixOperator op = operatorArray[ i ];
+      if ( isSelfUrlPlusParameters( value, op ) ) {
+        result = new TypeValuePair( result.getType(), result.getValue() + "?" );
+      }
       result = op.evaluate( getContext(), result, value.evaluate() );
     }
     return result;
+  }
+
+  private boolean isSelfUrlPlusParameters( LValue value, InfixOperator op ) {
+    LValue[] items = optimizedHeadValue.getChildValues();
+    LValue first = items != null && items.length > 0 ? items[ 0 ] : null;
+    String headName = first != null && first instanceof StaticValue ? ( (StaticValue) first ).getValue() + "" : null;
+    String valueName = value != null && value instanceof ContextLookup ? ( (ContextLookup) value ).getName() : null;
+    String functionName = optimizedHeadValue instanceof FormulaFunction ? ( (FormulaFunction) optimizedHeadValue ).getFunctionName() : null;
+    boolean isSelf = "selfURL".equalsIgnoreCase( headName );
+    boolean isParameter = valueName != null ? valueName.contains( "parameter" ) : false;
+    boolean isEnv = "ENV".equals( functionName );
+    boolean isConcat = "&".equals( op + "" );
+    return isEnv && isConcat && isSelf && isParameter;
   }
 
   public void add( final InfixOperator operator, final LValue operand ) {
