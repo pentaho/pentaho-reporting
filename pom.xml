@@ -1386,8 +1386,8 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho-kettle</groupId>
-        <artifactId>kettle-xml-plugin</artifactId>
+        <groupId>org.pentaho.di.plugins</groupId>
+        <artifactId>pdi-xml-plugin</artifactId>
         <version>${kettle-xml-plugin.version}</version>
         <type>zip</type>
         <exclusions>
