@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
@@ -95,8 +95,13 @@ public class DefaultFlowController {
     this.advanceRequested = false;
     this.parameters = parameters;
 
-    this.dataRow =
-        GlobalMasterRow.createReportRow( reportContext, schemaDefinition, new ParameterDataRow( parameters ) );
+    this.dataRow = createDataRow( reportContext, schemaDefinition, parameters );
+
+  }
+
+  protected MasterDataRow createDataRow( ProcessingContext reportContext, DataSchemaDefinition schemaDefinition,
+                                         ReportParameterValues parameters ) {
+    return GlobalMasterRow.createReportRow( reportContext, schemaDefinition, new ParameterDataRow( parameters ) );
   }
 
   private DefaultFlowController( final DefaultFlowController fc, final MasterDataRow dataRow ) {
@@ -221,7 +226,7 @@ public class DefaultFlowController {
     return fc;
   }
 
-  private TableModel performQueryData( final DataFactory dataFactory, final String query, final int queryLimit,
+  protected TableModel performQueryData( final DataFactory dataFactory, final String query, final int queryLimit,
       final int queryTimeout, final DataRow parameters, final boolean designTime,
       final List<SortConstraint> sortConstraints ) throws ReportDataFactoryException {
     if ( dataFactory == null ) {
@@ -239,6 +244,8 @@ public class DefaultFlowController {
         performanceMonitorContext.createStopWatch( PerformanceTags.REPORT_QUERY, new FormattedMessage( "query={%s}",
             query ) );
     try {
+      sw.start();
+
       DataRow params = new QueryDataRowWrapper( parameters, queryTimeout, queryLimit, sortConstraints );
       TableModel reportData;
       if ( designTime && dataFactory instanceof DataFactoryDesignTimeSupport ) {
