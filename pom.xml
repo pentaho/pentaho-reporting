@@ -142,7 +142,7 @@
     <scannotation.version>1.0.2</scannotation.version>
     <slf4j.version>1.7.7</slf4j.version>
     <olap4j.version>1.2.0</olap4j.version>
-    <commons-httpclient.version>3.1</commons-httpclient.version>
+    <httpclient.version>4.5.3</httpclient.version>
     <ehcache-core.version>2.5.1</ehcache-core.version>
     <derby.version>10.2.1.6</derby.version>
     <equinox.version>3.3.0-v20070426</equinox.version>
@@ -2043,7 +2043,11 @@
           <exclusion>
             <artifactId>xmlParserAPIs</artifactId>
             <groupId>xerces</groupId>
-          </exclusion>
+          </exclusion>		  
+          <exclusion>
+            <artifactId>commons-httpclient</artifactId>
+            <groupId>commons-httpclient</groupId>
+          </exclusion>      
         </exclusions>
       </dependency>
       <dependency>
@@ -2663,9 +2667,9 @@
         <version>${ehcache-core.version}</version>
       </dependency>
       <dependency>
-        <groupId>commons-httpclient</groupId>
-        <artifactId>commons-httpclient</artifactId>
-        <version>${commons-httpclient.version}</version>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpclient.version}</version>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>

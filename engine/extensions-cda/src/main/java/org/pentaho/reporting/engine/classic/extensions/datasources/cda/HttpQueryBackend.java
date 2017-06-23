@@ -12,20 +12,23 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.cda;
 
-import org.apache.commons.httpclient.Credentials;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.NTCredentials;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.NTCredentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.util.HttpClientManager;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
@@ -45,7 +48,7 @@ public class HttpQueryBackend extends CdaQueryBackend {
   private static final char DOMAIN_SEPARATOR = '\\';
 
   private transient HttpClient client;
-  private transient volatile GetMethod httpCall;
+  private transient volatile HttpGet httpCall;
 
   public TypedTableModel fetchData( final DataRow dataRow,
                                     final String method,
@@ -56,15 +59,16 @@ public class HttpQueryBackend extends CdaQueryBackend {
     }
     final String url = createURL( method, extraParameter );
     try {
-      final GetMethod httpCall = new GetMethod( url );
+      final HttpGet httpCall = new HttpGet( url );
       this.httpCall = httpCall;
       final HttpClient client = getHttpClient();
-      final int status = client.executeMethod( httpCall );
-      if ( status != 200 ) {
-        throw new ReportDataFactoryException( "Failed to retrieve data: " + httpCall.getStatusLine() );
+      HttpResponse httpResponse = client.execute( httpCall );
+      final int status = httpResponse.getStatusLine().getStatusCode();
+      if ( status != HttpStatus.SC_OK ) {
+        throw new ReportDataFactoryException( "Failed to retrieve data: " + httpResponse.getStatusLine() );
       }
 
-      final InputStream responseBody = httpCall.getResponseBodyAsStream();
+      final InputStream responseBody = httpResponse.getEntity().getContent();
       return CdaResponseParser.performParse( responseBody );
     } catch ( UnsupportedEncodingException use ) {
       throw new ReportDataFactoryException( "Failed to encode parameter", use );
@@ -76,7 +80,7 @@ public class HttpQueryBackend extends CdaQueryBackend {
   }
 
   public void cancelRunningQuery() {
-    final GetMethod method = this.httpCall;
+    final HttpGet method = this.httpCall;
     if ( method != null ) {
       method.abort();
     }
@@ -84,10 +88,9 @@ public class HttpQueryBackend extends CdaQueryBackend {
 
   protected HttpClient getHttpClient() {
     if ( client == null ) {
-      client = new HttpClient();
-      client.getParams().setCookiePolicy( CookiePolicy.BROWSER_COMPATIBILITY );
-      client.getParams().setAuthenticationPreemptive( true );
-      client.getState().setCredentials( AuthScope.ANY, getCredentials( getUsername(), getPassword() ) );
+      HttpClientManager.HttpClientBuilderFacade clientBuilder = HttpClientManager.getInstance().createBuilder();
+      client = clientBuilder.setCredentials( getUsername(), getPassword() ).build();
+      client.getParams().setParameter( ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY );
     }
     return client;
   }

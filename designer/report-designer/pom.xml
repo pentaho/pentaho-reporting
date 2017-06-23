@@ -59,6 +59,12 @@
     <dependency>
       <groupId>pentaho</groupId>
       <artifactId>pentaho-versionchecker</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-httpclient</artifactId>
+          <groupId>commons-httpclient</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>pentaho</groupId>
@@ -128,6 +134,11 @@
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.3</version>
     </dependency>
   </dependencies>
 </project>

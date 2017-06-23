@@ -28,13 +28,19 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.pentaho.reporting.engine</groupId>
+      <artifactId>classic-core</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-vfs2</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>commons-httpclient</groupId>
-      <artifactId>commons-httpclient</artifactId>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
