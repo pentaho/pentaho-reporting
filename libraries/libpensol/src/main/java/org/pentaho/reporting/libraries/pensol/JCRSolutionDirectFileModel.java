@@ -12,17 +12,17 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2014 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystemException;
+import org.apache.http.HttpStatus;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.platform.web.http.api.resources.DirectoryResource;
@@ -202,7 +202,7 @@ public class JCRSolutionDirectFileModel implements SolutionFileModel {
 
   private void throwExceptionOnBadResponse( Response response ) throws FileSystemException {
     final int status = response.getStatus();
-    switch( status ) {
+    switch ( status ) {
       case HttpStatus.SC_OK:
         logger.debug( "OK" );
         // response OK => do not throw exception and continue execution

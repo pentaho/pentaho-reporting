@@ -25,6 +25,12 @@
     <dependency>
       <groupId>pentaho</groupId>
       <artifactId>pentaho-metadata</artifactId>
+	  <exclusions>
+        <exclusion>
+          <artifactId>commons-httpclient</artifactId>
+          <groupId>commons-httpclient</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
