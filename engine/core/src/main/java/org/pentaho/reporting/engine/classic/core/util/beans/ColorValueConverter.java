@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
@@ -43,8 +43,13 @@ public class ColorValueConverter implements ValueConverter {
           final String name = f.getName();
           final Object oColor = f.get( null );
           if ( oColor instanceof Color ) {
-            knownColorNamesByColor.put( oColor, name.toLowerCase() );
-            knownColorsByName.put( name.toLowerCase(), oColor );
+            if ( "green".equalsIgnoreCase( name ) ) {
+              knownColorNamesByColor.put( new Color( 0, 128, 0 ), name.toLowerCase() );
+              knownColorsByName.put( name.toLowerCase(), new Color( 0, 128, 0 ) );
+            } else {
+              knownColorNamesByColor.put( oColor, name.toLowerCase() );
+              knownColorsByName.put( name.toLowerCase(), oColor );
+            }
           }
         }
       }
@@ -90,7 +95,6 @@ public class ColorValueConverter implements ValueConverter {
     if ( value == null ) {
       throw new NullPointerException();
     }
-
     final Object o = ColorValueConverter.knownColorsByName.get( value.toLowerCase() );
     if ( o != null ) {
       return o;

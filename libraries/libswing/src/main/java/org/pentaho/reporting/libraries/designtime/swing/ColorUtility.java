@@ -12,12 +12,12 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.*;
+import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -43,7 +43,12 @@ public class ColorUtility {
           final String name = f.getName();
           final Object oColor = f.get( null );
           if ( oColor instanceof Color ) {
-            final Color c = (Color) oColor;
+            final Color c;
+            if ( "green".equalsIgnoreCase( name ) ) {
+              c = new Color( 0, 128, 0 );
+            } else {
+              c = (Color) oColor;
+            }
             knownColorNamesByColor.put( c, name.toLowerCase() );
             knownColorsByName.put( name.toLowerCase(), c );
           }
@@ -112,8 +117,7 @@ public class ColorUtility {
       return Color.decode( value.trim() );
     } catch ( NumberFormatException nfe ) {
       // if we can't decode lets try to get it by name
-      throw new IllegalArgumentException
-        ( "The color string '" + value + "' is not recognized." );
+      throw new IllegalArgumentException( "The color string '" + value + "' is not recognized." );
     }
   }
 
