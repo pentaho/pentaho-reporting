@@ -288,8 +288,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-kettle</groupId>
-      <artifactId>kettle5-log4j-plugin</artifactId>
+      <groupId>org.pentaho.di.plugins</groupId>
+      <artifactId>kettle-log4j-core</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -315,13 +315,13 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho-kettle</groupId>
-      <artifactId>kettle-xml-plugin</artifactId>
+      <groupId>org.pentaho.di.plugins</groupId>
+      <artifactId>pdi-xml-plugin</artifactId>
       <type>zip</type>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.pentaho.kettle.plugins</groupId>
+      <groupId>org.pentaho.di.plugins</groupId>
       <artifactId>kettle-json-plugin</artifactId>
       <type>zip</type>
       <scope>compile</scope>
@@ -436,7 +436,7 @@
                 <goal>unpack-dependencies</goal>
               </goals>
               <configuration>
-                <includeArtifactIds>pentaho-big-data-plugin,pentaho-cassandra-plugin,kettle-xml-plugin,kettle-json-plugin</includeArtifactIds>
+                <includeArtifactIds>pentaho-big-data-plugin,pentaho-cassandra-plugin,pdi-xml-plugin,kettle-json-plugin</includeArtifactIds>
                 <excludes>**/pentaho-mapreduce-libraries.zip</excludes>
                 <outputDirectory>${stage.dir.designer}/plugins</outputDirectory>
               </configuration>

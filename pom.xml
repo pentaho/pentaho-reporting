@@ -1340,8 +1340,8 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho-kettle</groupId>
-        <artifactId>kettle5-log4j-plugin</artifactId>
+        <groupId>org.pentaho.di.plugins</groupId>
+        <artifactId>kettle-log4j-core</artifactId>
         <version>${kettle.version}</version>
         <exclusions>
           <exclusion>
@@ -1386,8 +1386,8 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho-kettle</groupId>
-        <artifactId>kettle-xml-plugin</artifactId>
+        <groupId>org.pentaho.di.plugins</groupId>
+        <artifactId>pdi-xml-plugin</artifactId>
         <version>${kettle-xml-plugin.version}</version>
         <type>zip</type>
         <exclusions>
@@ -1398,7 +1398,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.pentaho.kettle.plugins</groupId>
+        <groupId>org.pentaho.di.plugins</groupId>
         <artifactId>kettle-json-plugin</artifactId>
         <version>${kettle-json-plugin.version}</version>
         <type>zip</type>
