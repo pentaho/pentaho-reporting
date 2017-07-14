@@ -12,15 +12,16 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 
 public class ColorHelper {
 
@@ -80,7 +81,12 @@ public class ColorHelper {
     colors.put( "gold", Color.decode( "#ffd700" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "goldenrod", Color.decode( "#daa520" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "gray", Color.decode( "#808080" ) ); //$NON-NLS-1$ //$NON-NLS-2$
-    colors.put( "green", Color.decode( "#008000" ) ); //$NON-NLS-1$ //$NON-NLS-2$
+    if ( !ClassicEngineBoot.getInstance().getExtendedConfig().
+      getBoolProperty( "org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyColorMode" ) ) {
+      colors.put( "green", Color.decode( "#00ff00" ) ); //$NON-NLS-1$ //$NON-NLS-2$
+    } else {
+      colors.put( "green", Color.decode( "#008000" ) ); //$NON-NLS-1$ //$NON-NLS-2$
+    }
     colors.put( "green yellow", Color.decode( "#adff2f" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "honeydew", Color.decode( "#f0fff0" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "hot pink", Color.decode( "#ff69b4" ) ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -92,6 +98,7 @@ public class ColorHelper {
     colors.put( "lavender blush", Color.decode( "#fff0f5" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "lawngreen", Color.decode( "#7cfc00" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "lemon chiffon", Color.decode( "#fffacd" ) ); //$NON-NLS-1$ //$NON-NLS-2$
+    colors.put( "lime", Color.decode( "#00ff00" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "light blue", Color.decode( "#add8e6" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "light coral", Color.decode( "#f08080" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "light cyan", Color.decode( "#e0ffff" ) ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -105,7 +112,6 @@ public class ColorHelper {
     colors.put( "light slate gray", Color.decode( "#778899" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "light steel blue", Color.decode( "#b0c4de" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "light yellow", Color.decode( "#ffffe0" ) ); //$NON-NLS-1$ //$NON-NLS-2$
-    colors.put( "lime", Color.decode( "#00ff00" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "lime green", Color.decode( "#32cd32" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "linen", Color.decode( "#faf0e6" ) ); //$NON-NLS-1$ //$NON-NLS-2$
     colors.put( "magenta", Color.decode( "#ff00ff" ) ); //$NON-NLS-1$ //$NON-NLS-2$
