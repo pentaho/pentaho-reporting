@@ -6,12 +6,12 @@
     <artifactId>pentaho-ce-jar-parent-pom</artifactId>
     <version>7.1-SNAPSHOT</version>
   </parent>
-  
+
   <groupId>org.pentaho.reporting</groupId>
   <artifactId>pentaho-reporting</artifactId>
   <version>7.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  
+
   <name>Pentaho Reporting</name>
 
   <licenses>
@@ -32,7 +32,7 @@
     <system>JIRA</system>
     <url>http://jira.pentaho.com/browse/PRD</url>
   </issueManagement>
-  
+
   <properties>
     <checkstyle.source.directory>${basedir}/src/main/java</checkstyle.source.directory>
     <license.header.file>license/templates/licenseHeader.txt</license.header.file>
@@ -648,11 +648,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>secondstring</groupId>
-        <artifactId>secondstring</artifactId>
-        <version>${secondstring.version}</version>
       </dependency>
       <dependency>
         <groupId>org.syslog4j</groupId>
@@ -2823,7 +2818,7 @@
       </plugin>
     </plugins>
   </build>
-  
+
   <profiles>
     <profile>
       <id>all</id>
@@ -2884,6 +2879,6 @@
       </modules>
     </profile>
   </profiles>
-  
+
 </project>
 
