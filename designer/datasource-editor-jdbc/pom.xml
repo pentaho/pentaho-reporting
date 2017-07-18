@@ -212,10 +212,6 @@
       <artifactId>secondstring</artifactId>
     </dependency>
     <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.syslog4j</groupId>
       <artifactId>syslog4j</artifactId>
     </dependency>

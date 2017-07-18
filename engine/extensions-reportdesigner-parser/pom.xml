@@ -51,10 +51,6 @@
       <artifactId>secondstring</artifactId>
     </dependency>
     <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-    </dependency>
-    <dependency>
       <groupId>jcifs</groupId>
       <artifactId>jcifs</artifactId>
     </dependency>
