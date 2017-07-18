@@ -108,7 +108,6 @@
     <javax.mail.version>1.4.7</javax.mail.version>
     <xmlunit.version>1.3</xmlunit.version>
     <karaf.vesrion>3.0.3</karaf.vesrion>
-    <secondstring.version>20060615</secondstring.version>
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <jetty.version>8.1.15.v20140411</jetty.version>
     <ehcache.version>2.5.1</ehcache.version>
@@ -640,11 +639,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>secondstring</groupId>
-        <artifactId>secondstring</artifactId>
-        <version>${secondstring.version}</version>
       </dependency>
       <dependency>
         <groupId>org.syslog4j</groupId>

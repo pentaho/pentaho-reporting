@@ -107,10 +107,6 @@
       <artifactId>xercesImpl</artifactId>
     </dependency>
     <dependency>
-      <groupId>secondstring</groupId>
-      <artifactId>secondstring</artifactId>
-    </dependency>
-    <dependency>
       <groupId>jcifs</groupId>
       <artifactId>jcifs</artifactId>
     </dependency>
