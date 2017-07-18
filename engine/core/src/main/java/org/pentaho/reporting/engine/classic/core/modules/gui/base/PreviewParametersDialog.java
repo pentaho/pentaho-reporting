@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
@@ -35,7 +35,9 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -155,7 +157,7 @@ public class PreviewParametersDialog extends JDialog {
     return buttonsPanel;
   }
 
-  private JPanel createParametersPanel() {
+  private JScrollPane createParametersPanel() {
     parametersPanel = new ParameterReportControllerPane();
     try {
       parametersPanel.setReport( masterReport );
@@ -168,7 +170,10 @@ public class PreviewParametersDialog extends JDialog {
     final JPanel carrierPanel = new JPanel( new BorderLayout() );
     carrierPanel.setBorder( BorderFactory.createEmptyBorder( 10, 10, 10, 10 ) );
     carrierPanel.add( parametersPanel, BorderLayout.NORTH );
-    return carrierPanel;
+
+    final JScrollPane result = new JScrollPane( carrierPanel );
+    result.setVerticalScrollBarPolicy( ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED );
+    return result;
   }
 
   public boolean isConfirmed() {
