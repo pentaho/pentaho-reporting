@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.1.0.2-43</version>
   </parent>
-
   <artifactId>libbase</artifactId>
-  <packaging>jar</packaging>
-
+  <version>7.1.0.2-43</version>
   <name>LibBase</name>
   <description>LibBase is a library developed to provide base services like
     logging, configuration and initialization to all other libraries
     and applications. The library is the root library for all other
     Pentaho-Reporting projects.</description>
-
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -23,7 +21,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <dependencies>
     <dependency>
       <groupId>commons-logging</groupId>
