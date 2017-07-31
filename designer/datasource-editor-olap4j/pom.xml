@@ -140,10 +140,6 @@
       <artifactId>jcifs</artifactId>
     </dependency>
     <dependency>
-      <groupId>secondstring</groupId>
-      <artifactId>secondstring</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.eobjects.sassyreader</groupId>
       <artifactId>SassyReader</artifactId>
     </dependency>
