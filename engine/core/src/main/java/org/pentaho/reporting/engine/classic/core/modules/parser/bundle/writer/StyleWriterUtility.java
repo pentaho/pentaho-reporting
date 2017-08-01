@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
@@ -497,6 +497,10 @@ public class StyleWriterUtility {
     if ( style.isLocalKey( TextStyleKeys.TEXT_WRAP ) ) {
       final Object value = style.getStyleProperty( TextStyleKeys.TEXT_WRAP );
       bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "text-wrap", value.toString() );
+    }
+    if ( style.isLocalKey( TextStyleKeys.WORDBREAK ) ) {
+      final Object value = style.getStyleProperty( TextStyleKeys.WORDBREAK );
+      bandStyleAtts.setAttribute( BundleNamespaces.STYLE, "word-break", value.toString() );
     }
     if ( style.isLocalKey( TextStyleKeys.DIRECTION ) ) {
       final Object value = style.getStyleProperty( TextStyleKeys.DIRECTION );
