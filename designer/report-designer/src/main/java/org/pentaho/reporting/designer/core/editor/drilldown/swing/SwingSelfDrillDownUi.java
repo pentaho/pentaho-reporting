@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.core.editor.drilldown.swing;
@@ -30,7 +30,6 @@ import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownParam
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -40,7 +39,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -198,22 +196,8 @@ public class SwingSelfDrillDownUi implements DrillDownUi {
      * {@inheritDoc}
      */
     public void propertyChange( final PropertyChangeEvent evt ) {
-      wrapper.setDrillDownParameter( filterParameter( table.getDrillDownParameter() ) );
+      wrapper.setDrillDownParameter( table.getDrillDownParameter() );
     }
-
-    private DrillDownParameter[] filterParameter( final DrillDownParameter[] parameter ) {
-      final ArrayList<DrillDownParameter> list = new ArrayList<DrillDownParameter>( parameter.length );
-      for ( int i = 0; i < parameter.length; i++ ) {
-        final DrillDownParameter downParameter = parameter[ i ];
-        if ( StringUtils.isEmpty( downParameter.getFormulaFragment() ) ) {
-          continue;
-        }
-
-        list.add( downParameter );
-      }
-      return list.toArray( new DrillDownParameter[ list.size() ] );
-    }
-
   }
 
   /**

@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown.swing;
@@ -39,7 +39,6 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
 import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfile;
 import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfileMetaData;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -49,7 +48,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -248,55 +246,6 @@ public class SwingRemoteDrillDownController {
   }
 
   /**
-   * Filter parameters of the drilldown parameter table.
-   * (Copied from superclass)
-   *
-   * @param parameters parameters array.
-   * @return filtered parameters array.
-   */
-  private DrillDownParameter[] filterParameterSuper( final DrillDownParameter[] parameters ) {
-    final ArrayList<DrillDownParameter> list = new ArrayList<DrillDownParameter>( parameters.length );
-    for ( int i = 0; i < parameters.length; i++ ) {
-      final DrillDownParameter downParameter = parameters[ i ];
-      if ( StringUtils.isEmpty( downParameter.getFormulaFragment() ) ) {
-        continue;
-      }
-      list.add( downParameter );
-    }
-    return list.toArray( new DrillDownParameter[ list.size() ] );
-  }
-
-  /**
-   * Filter parameters of the drilldown parameter table.
-   *
-   * @param parameters parameters array.
-   * @return filtered parameters array.
-   */
-  protected DrillDownParameter[] filterParameter( final DrillDownParameter[] parameters ) {
-    // modify the parameter model.
-    final ArrayList<DrillDownParameter> list = new ArrayList<DrillDownParameter>();
-    boolean pathAdded = false;
-    for ( int i = 0; i < parameters.length; i++ ) {
-      final DrillDownParameter drillDownParameter = parameters[i];
-      if ( "::pentaho-path".equals( drillDownParameter.getName() ) && pathAdded == false ) {
-        list.add( new DrillDownParameter( "::pentaho-path", FormulaUtil.quoteString( pentahoPathWrapper.getLocalPath() ) ) );
-        pathAdded = true;
-      } else {
-        if ( !( "solution".equals( drillDownParameter.getName() ) || "path".equals( drillDownParameter.getName() ) || "name"
-                .equals( drillDownParameter.getName() ) ) ) {
-          list.add( drillDownParameter );
-        }
-      }
-    }
-    if ( pathAdded == false ) {
-      list.add( 0, new DrillDownParameter( "::pentaho-path", FormulaUtil
-              .quoteString( pentahoPathWrapper.getLocalPath() ) ) );
-    }
-    return filterParameterSuper( list.toArray( new DrillDownParameter[list.size()] ) );
-
-  }
-
-  /**
    * Service task to perform after BI-server authentication.
    */
   private class LoginCompleteTask implements AuthenticatedServerTask {
@@ -381,7 +330,7 @@ public class SwingRemoteDrillDownController {
 
     public void propertyChange( final PropertyChangeEvent evt ) {
       if ( PentahoPathModel.LOCAL_PATH_PROPERTY.equals( evt.getPropertyName() ) ) {
-        modelWrapper.setDrillDownParameter( filterParameter( modelWrapper.getDrillDownParameter() ) );
+        modelWrapper.setDrillDownParameter( modelWrapper.getDrillDownParameter() );
         modelWrapper.setDrillDownConfig( pentahoPathWrapper.getDrillDownProfile() );
       } else if ( PentahoPathModel.USE_REMOTE_SERVER_PROPERTY.equals( evt.getPropertyName() ) ) {
         modelWrapper.setDrillDownConfig( pentahoPathWrapper.getDrillDownProfile() );
@@ -411,9 +360,9 @@ public class SwingRemoteDrillDownController {
      * {@inheritDoc}
      */
     public void propertyChange( final PropertyChangeEvent evt ) {
-      modelWrapper.setDrillDownParameter( filterParameter( ( drillDownUi.<DrillDownParameterTable>getComponent(
+      modelWrapper.setDrillDownParameter( ( drillDownUi.<DrillDownParameterTable>getComponent(
           SwingRemoteDrillDownUi.ComponentLookup.PARAMETER_TABLE
-      ) ).getDrillDownParameter() ) );
+      ) ).getDrillDownParameter() );
     }
   }
 

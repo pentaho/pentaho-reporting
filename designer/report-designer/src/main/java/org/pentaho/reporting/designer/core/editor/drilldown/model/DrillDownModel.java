@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.drilldown.model;
@@ -160,19 +160,18 @@ public class DrillDownModel {
         final LValue value = parser.parse( formula );
         if ( value instanceof FormulaFunction ) {
           final FormulaFunction function = (FormulaFunction) value;
-          if ( "DRILLDOWN".equals( function.getFunctionName() ) ) // NON-NLS
-          {
+          if ( "DRILLDOWN".equals( function.getFunctionName() ) ) { // NON-NLS
             updateModelFromFunction( function );
             return true;
           }
         }
-        DebugLog.log( "Fall through on formula " + formula );//NON-NLS
+        DebugLog.log( "Fall through on formula " + formula ); //NON-NLS
       } catch ( Exception e ) {
         // plain value ..
-        DebugLog.log( "Failed with formula " + formulaWithPrefix, e );//NON-NLS
+        DebugLog.log( "Failed with formula " + formulaWithPrefix, e ); //NON-NLS
       }
     } else {
-      DebugLog.log( "formula is empty " + formulaWithPrefix );//NON-NLS
+      DebugLog.log( "formula is empty " + formulaWithPrefix ); //NON-NLS
     }
     return false;
   }
@@ -194,8 +193,7 @@ public class DrillDownModel {
     }
 
     final DrillDownParameter[] downParameters = getDrillDownParameter();
-    if ( StringUtils.isEmpty( getDrillDownPath() ) &&
-      downParameters.length == 0 ) {
+    if ( StringUtils.isEmpty( getDrillDownPath() ) && downParameters.length == 0 ) {
       return null;
     }
 
@@ -225,6 +223,7 @@ public class DrillDownModel {
       builder.append( "; " ); // NON-NLS
       final String formulaFragment = downParameter.getFormulaFragment();
       if ( StringUtils.isEmpty( formulaFragment ) ) {
+        builder.append( "NA()" );
         continue;
       }
 
