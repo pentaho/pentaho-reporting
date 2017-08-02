@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown;
@@ -184,6 +184,9 @@ public class PentahoPathModel implements XulEventSource {
   }
 
   public void setLocalPath( final String localPath ) {
+    if ( ObjectUtilities.equal( localPath, this.localPath ) ) {
+      return;
+    }
     final String oldValue = this.localPath;
     this.localPath = localPath;
     this.propertyChangeSupport.firePropertyChange( LOCAL_PATH_PROPERTY, oldValue, localPath );

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.drilldown;
@@ -25,11 +25,13 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.ReportDesignerFunctionParameterEditor;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -56,7 +58,7 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
           eventListenerList.getListeners( ParameterUpdateListener.class );
         String formula = editor.getDrillDownFormula();
         if ( formula == null ) {
-          formula = "=DRILLDOWN(\"Text\"; \"Text\"; Any)";  // NON-NLS
+          formula = "DRILLDOWN(\"Text\"; \"Text\"; \"Any\")";  // NON-NLS
         }
         for ( int i = 0; i < parameterUpdateListeners.length; i++ ) {
           final ParameterUpdateListener listener = parameterUpdateListeners[ i ];
@@ -121,8 +123,8 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
     editor.setEditFormulaFragment( true );
     editor.setLimitedEditor( true );
     editor.addPropertyChangeListener( "drillDownFormula", new DrillDownUpdateListener() );
-    editor.addPropertyChangeListener
-      ( DrillDownEditor.DRILL_DOWN_UI_PROFILE_PROPERTY, new DrillDownProfileChangeHandler() );
+    editor.addPropertyChangeListener( DrillDownEditor.DRILL_DOWN_UI_PROFILE_PROPERTY,
+            new DrillDownProfileChangeHandler() );
 
     eventListenerList = new EventListenerList();
 
@@ -175,8 +177,8 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
     if ( activeContext == null ) {
       return new String[ 0 ];
     }
-    final HashSet<String> columnNames = new HashSet<String>
-      ( Arrays.asList( activeContext.getReportDataSchemaModel().getColumnNames() ) );
+    final HashSet<String> columnNames =
+            new HashSet<String>( Arrays.asList( activeContext.getReportDataSchemaModel().getColumnNames() ) );
     final ArrayList<String> retval = new ArrayList<String>();
     for ( int i = 0; i < fieldDefinitions.length; i++ ) {
       final FieldDefinition fieldDefinition = fieldDefinitions[ i ];

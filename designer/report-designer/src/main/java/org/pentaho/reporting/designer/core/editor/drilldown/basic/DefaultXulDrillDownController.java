@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.drilldown.basic;
@@ -29,7 +29,7 @@ import org.pentaho.ui.xul.binding.BindingFactory;
 import org.pentaho.ui.xul.binding.DefaultBindingFactory;
 import org.pentaho.ui.xul.dom.Document;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class DefaultXulDrillDownController implements XulDrillDownController {
      * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
     public void propertyChange( final PropertyChangeEvent evt ) {
-      wrapper.setDrillDownParameter( filterParameter( table.getDrillDownParameter() ) );
+      wrapper.setDrillDownParameter( table.getDrillDownParameter() );
     }
   }
 
@@ -129,34 +129,34 @@ public class DefaultXulDrillDownController implements XulDrillDownController {
     bindingFactory.setDocument( doc );
     bindingFactory.setBindingType( Binding.Type.BI_DIRECTIONAL );
     wrapper = new DrillDownModelWrapper( model );
-    final XulComponent pathElement = doc.getElementById( "path" );//NON-NLS
+    final XulComponent pathElement = doc.getElementById( "path" ); //NON-NLS
     if ( pathElement != null ) {
-      bindingFactory.createBinding( wrapper, DrillDownModel.DRILL_DOWN_PATH_PROPERTY, "path", "value" );//NON-NLS
+      bindingFactory.createBinding( wrapper, DrillDownModel.DRILL_DOWN_PATH_PROPERTY, "path", "value" ); //NON-NLS
     }
-    final XulComponent configElement = doc.getElementById( "config" );//NON-NLS
+    final XulComponent configElement = doc.getElementById( "config" ); //NON-NLS
     if ( configElement != null ) {
-      bindingFactory.createBinding( wrapper, DrillDownModel.DRILL_DOWN_CONFIG_PROPERTY, "config", "value" );//NON-NLS
+      bindingFactory.createBinding( wrapper, DrillDownModel.DRILL_DOWN_CONFIG_PROPERTY, "config", "value" ); //NON-NLS
     }
-    final XulComponent linkTargetElement = doc.getElementById( "link-target" );//NON-NLS
+    final XulComponent linkTargetElement = doc.getElementById( "link-target" ); //NON-NLS
     if ( linkTargetElement != null ) {
-      bindingFactory.createBinding( wrapper, DrillDownModel.TARGET_FORMULA_PROPERTY, "link-target", "value" );//NON-NLS
+      bindingFactory.createBinding( wrapper, DrillDownModel.TARGET_FORMULA_PROPERTY, "link-target", "value" ); //NON-NLS
     }
-    final XulComponent linkTooltipElement = doc.getElementById( "link-tooltip" );//NON-NLS
+    final XulComponent linkTooltipElement = doc.getElementById( "link-tooltip" ); //NON-NLS
     if ( linkTooltipElement != null ) {
       bindingFactory
-        .createBinding( wrapper, DrillDownModel.TOOLTIP_FORMULA_PROPERTY, "link-tooltip", "value" );//NON-NLS
+        .createBinding( wrapper, DrillDownModel.TOOLTIP_FORMULA_PROPERTY, "link-tooltip", "value" ); //NON-NLS
     }
-    final XulComponent previewElement = doc.getElementById( "preview" );//NON-NLS
+    final XulComponent previewElement = doc.getElementById( "preview" ); //NON-NLS
     if ( previewElement != null ) {
       final BindingFactory singleSourceBinding = new DefaultBindingFactory();
       singleSourceBinding.setBindingType( Binding.Type.ONE_WAY );
       singleSourceBinding.setDocument( doc );
-      singleSourceBinding.createBinding( wrapper, "preview", "preview", "value" );//NON-NLS
+      singleSourceBinding.createBinding( wrapper, "preview", "preview", "value" ); //NON-NLS
     }
 
     // we manage the binding between the table and the outside world manually
     wrapper.refresh();
-    final XulComponent paramTableElement = doc.getElementById( "parameter-table" );//NON-NLS
+    final XulComponent paramTableElement = doc.getElementById( "parameter-table" ); //NON-NLS
     if ( paramTableElement instanceof XulDrillDownParameterTable ) {
       final XulDrillDownParameterTable parameterTable = (XulDrillDownParameterTable) paramTableElement;
       table = parameterTable.getTable();
@@ -168,7 +168,7 @@ public class DefaultXulDrillDownController implements XulDrillDownController {
     }
 
     if ( model.isLimitedEditor() ) {
-      final XulComponent tooltipAndTargetElement = doc.getElementById( "tooltip-and-target-panel" );//NON-NLS
+      final XulComponent tooltipAndTargetElement = doc.getElementById( "tooltip-and-target-panel" ); //NON-NLS
       if ( tooltipAndTargetElement != null ) {
         tooltipAndTargetElement.setVisible( false );
       }
