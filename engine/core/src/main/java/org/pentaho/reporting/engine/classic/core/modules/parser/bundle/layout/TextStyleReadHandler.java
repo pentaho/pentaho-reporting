@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
@@ -142,7 +142,10 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
     if ( textWrap != null ) {
       styleSheet.setStyleProperty( TextStyleKeys.TEXT_WRAP, parseTextWrap( textWrap ) );
     }
-
+    final String wordBreak = attrs.getValue( getUri(), "word-break" );
+    if ( wordBreak != null ) {
+      styleSheet.setBooleanStyleProperty( TextStyleKeys.WORDBREAK, "true".equals( wordBreak ) );
+    }
     final String textDirection = attrs.getValue( getUri(), "direction" );
     if ( textDirection != null ) {
       styleSheet.setStyleProperty( TextStyleKeys.DIRECTION, parseTextDirection( textDirection ) );
