@@ -63,7 +63,7 @@
     <janino.version>2.5.16</janino.version>
     <sapdb.version>7.4.4</sapdb.version>
     <akka.version>2.3.3</akka.version>
-    <postgresql.version>9.3-1102-jdbc4</postgresql.version>
+    <postgresql.version>42.1.1</postgresql.version>
     <felix.version>4.4.1</felix.version>
     <json-simple.version>1.1</json-simple.version>
     <jface.version>3.3.0-I20070606-0010</jface.version>
