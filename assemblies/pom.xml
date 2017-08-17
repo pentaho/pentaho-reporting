@@ -14,6 +14,7 @@
   <properties>
     <stage.dir.designer>${stage.dir}/report-designer</stage.dir.designer>
     <stage.dir>${project.build.directory}/stage</stage.dir>
+    <dependency.hadoop-shims-api.revision>${project.version}</dependency.hadoop-shims-api.revision>
   </properties>
   <dependencies>
     <dependency>
@@ -139,6 +140,17 @@
       <groupId>pentaho</groupId>
       <artifactId>pentaho-capability-manager</artifactId>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.pentaho</groupId>
+      <artifactId>pentaho-hadoop-shims-api</artifactId>
+      <version>${dependency.hadoop-shims-api.revision}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>pentaho</groupId>
