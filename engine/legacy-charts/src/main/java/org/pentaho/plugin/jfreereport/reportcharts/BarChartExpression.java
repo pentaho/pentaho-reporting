@@ -12,23 +12,26 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.category.LayeredBarRenderer;
 import org.jfree.chart.renderer.category.StackedBarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.pentaho.plugin.jfreereport.reportcharts.backport.FormattedCategoryAxis;
 import org.pentaho.plugin.jfreereport.reportcharts.backport.FormattedCategoryAxis3D;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * This class is for backward compatibility with previous build of the expression. Instead of using this class, use
@@ -77,11 +80,14 @@ public class BarChartExpression extends StackedCategoricalChartExpression {
     final PlotOrientation orientation = computePlotOrientation();
 
     final JFreeChart chart;
+
+    final boolean isDiagonalMatrix = isDiagonalMatrix( categoryDataset );
+
     if ( isThreeD() ) {
       if ( isStacked() ) {
         chart = ChartFactory.createStackedBarChart3D( computeTitle(),
           getCategoryAxisLabel(), getValueAxisLabel(),
-          categoryDataset, orientation, isShowLegend(),
+                categoryDataset, orientation, isShowLegend(),
           false, false );
       } else {
         chart = ChartFactory.createBarChart3D( computeTitle(),
@@ -93,13 +99,18 @@ public class BarChartExpression extends StackedCategoricalChartExpression {
     } else {
       if ( isStacked() ) {
         chart = ChartFactory.createStackedBarChart( computeTitle(),
-          getCategoryAxisLabel(), getValueAxisLabel(),
-          categoryDataset, orientation, isShowLegend(),
-          false, false );
+                getCategoryAxisLabel(), getValueAxisLabel(), categoryDataset,
+                orientation, isShowLegend(), false, false );
       } else {
-        chart = ChartFactory.createBarChart( computeTitle(),
-          getCategoryAxisLabel(), getValueAxisLabel(), categoryDataset,
-          orientation, isShowLegend(), false, false );
+        if ( isDiagonalMatrix ) {
+          final CategoryPlot plot = new CategoryPlot( categoryDataset, new CategoryAxis( getCategoryAxisLabel() ),
+                  new NumberAxis( getValueAxisLabel() ), new LayeredBarRenderer() );
+          chart = new JFreeChart( computeTitle(), JFreeChart.DEFAULT_TITLE_FONT, plot, isShowLegend() );
+        } else {
+          chart = ChartFactory.createBarChart( computeTitle(),
+                  getCategoryAxisLabel(), getValueAxisLabel(), categoryDataset,
+                  orientation, isShowLegend(), false, false );
+        }
       }
       chart.getCategoryPlot().setDomainAxis( new FormattedCategoryAxis( getCategoryAxisLabel(),
         getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale() ) );
@@ -139,6 +150,19 @@ public class BarChartExpression extends StackedCategoricalChartExpression {
     }
     br.setShadowXOffset( shadowXOffset );
     br.setShadowYOffset( shadowYOffset );
+  }
+
+  private boolean isDiagonalMatrix( CategoryDataset ds ) {
+    if ( ds != null && ds.getColumnCount() == ds.getRowCount() ) {
+      for ( int i = 0; i < ds.getRowCount(); i++ ) {
+        for ( int j = 0; j < ds.getColumnCount(); j++ ) {
+          if ( i != j && ds.getValue( i, j ) != null && ds.getValue( j, i ) != null ) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 
   public boolean isShadowVisible() {
