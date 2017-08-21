@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.preview;
@@ -30,9 +30,16 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportP
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.EventQueue;
+import java.awt.Frame;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -58,16 +65,16 @@ public class ReportPreviewComponent extends JPanel {
       final String propertyName = evt.getPropertyName();
       if ( PreviewPane.ERROR_PROPERTY.equals( propertyName ) ) {
         final Throwable error = previewPane.getError();
-        if ( error != null &&
-          error instanceof ReportParameterValidationException == false &&
-          error instanceof ReportInterruptedException == false ) {
+        if ( error != null
+                && error instanceof ReportParameterValidationException == false
+                && error instanceof ReportInterruptedException == false ) {
           UncaughtExceptionsModel.getInstance().addException( error );
         }
         return;
       }
 
       if ( PreviewPane.STATUS_TEXT_PROPERTY.equals( propertyName )
-        || PreviewPane.STATUS_TYPE_PROPERTY.equals( propertyName ) ) {
+              || PreviewPane.STATUS_TYPE_PROPERTY.equals( propertyName ) ) {
         context.setStatusText( previewPane.getStatusText() );
         return;
       }
@@ -87,6 +94,7 @@ public class ReportPreviewComponent extends JPanel {
             LibSwingUtil.centerDialogInParent( progressDialog );
             progressDialog.setOnlyPagination( true );
             progressDialog.setVisible( true );
+            progressDialog.toFront();
           }
         } else {
           context.setStatusText( "" ); //$NON-NLS-1$
@@ -99,7 +107,7 @@ public class ReportPreviewComponent extends JPanel {
           if ( progressDialog != null ) {
             previewPane.removeReportProgressListener( progressDialog );
             progressDialog.setOnlyPagination( false );
-            progressDialog.setVisible( false );
+            progressDialog.dispose();
           }
         }
       }
