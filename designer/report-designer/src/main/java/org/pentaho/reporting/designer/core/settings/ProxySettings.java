@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.settings;
@@ -67,7 +67,7 @@ public class ProxySettings {
   private Preferences preferences;
 
   public ProxySettings() {
-    preferences = Preferences.userRoot().node( "org/pentaho/reporting/designer/core/settings/proxy-settings" );//NON-NLS
+    preferences = Preferences.userRoot().node( "org/pentaho/reporting/designer/core/settings/proxy-settings" ); //NON-NLS
   }
 
   public void installAuthenticator() {
@@ -169,12 +169,12 @@ public class ProxySettings {
 
   public void applySettings() {
     try {
-      System.setProperty( HTTP_DOT_PROXY_HOST, "" );
-      System.setProperty( HTTP_DOT_PROXY_PORT, "" );
-      System.setProperty( SOCKS_PROXY_HOST, "" );
-      System.setProperty( SOCKS_PROXY_PORT, "" );
+      System.setProperty( HTTP_DOT_PROXY_HOST, null );
+      System.setProperty( HTTP_DOT_PROXY_PORT, null );
+      System.setProperty( SOCKS_PROXY_HOST, null );
+      System.setProperty( SOCKS_PROXY_PORT, null );
 
-      switch( getProxyType() ) {
+      switch ( getProxyType() ) {
         case AUTO_DETECT_PROXY: {
           final String host = getWebstartHTTPProxyHost();
           boolean httpProxySet = false;
