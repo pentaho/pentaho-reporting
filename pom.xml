@@ -199,6 +199,8 @@
     <xerces.version>2.8.1</xerces.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <test.performance>false</test.performance>
+    <kafka-clients.version>0.10.2.1</kafka-clients.version>
+    <pentaho-metaverse.version>8.0-SNAPSHOT</pentaho-metaverse.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -2694,6 +2696,16 @@
         <groupId>commons-pool</groupId>
         <artifactId>commons-pool</artifactId>
         <version>${commons-pool.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>kafka-clients</artifactId>
+        <version>${kafka-clients.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>pentaho</groupId>
+        <artifactId>pentaho-metaverse-api</artifactId>
+        <version>${pentaho-metaverse.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
