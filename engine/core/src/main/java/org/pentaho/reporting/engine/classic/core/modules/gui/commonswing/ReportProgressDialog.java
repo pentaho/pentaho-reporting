@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
@@ -27,6 +27,7 @@ import java.awt.event.WindowEvent;
 import java.text.MessageFormat;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -242,6 +243,7 @@ public class ReportProgressDialog extends JDialog implements ReportProgressListe
     lastMaxRow = -1;
     lastPage = -1;
 
+    this.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
     pack();
     LibSwingUtil.centerDialogInParent( this );
   }
