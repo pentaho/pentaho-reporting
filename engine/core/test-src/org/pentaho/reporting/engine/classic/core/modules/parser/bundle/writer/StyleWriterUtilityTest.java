@@ -12,20 +12,25 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -36,6 +41,29 @@ import org.mockito.Mockito;
  * @author Andrei Abramov
  */
 public class StyleWriterUtilityTest {
+
+  @Before
+  public void setUp() throws Exception {
+    ClassicEngineBoot.getInstance().start();
+  }
+
+  @Test
+  public void testStartParsing() {
+    StringWriter stringWriter = new StringWriter();
+    XmlWriter writer = new XmlWriter( stringWriter );
+    writer.addImpliedNamespace( "http://reporting.pentaho.org/namespaces/engine/classic/bundle/style/1.0", "rep" );
+    ElementStyleSheet sheet = new ElementStyleSheet();
+    sheet.setBooleanStyleProperty( TextStyleKeys.WORDBREAK, false );
+    try {
+      StyleWriterUtility.writeTextStyles( writer, sheet );
+    } catch ( IOException e ) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+    String res = stringWriter.toString().replace( "\r", "" ).replace( "\n", "" );
+    Assert.assertEquals( "<rep:text-styles word-break=\"false\"/>", res );
+  }
+
   @Test
   public void writeBorderStyles() throws Exception {
 
