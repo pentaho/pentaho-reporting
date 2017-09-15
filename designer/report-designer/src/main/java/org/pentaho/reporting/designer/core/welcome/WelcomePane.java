@@ -242,7 +242,7 @@ public class WelcomePane extends JDialog {
       wizardBtn.addActionListener( newWizardActionListener );
       wizardBtn.addActionListener( closeActionListener );
       wizardBtn.setBorderPainted( true );
-      wizardBtn.setBounds( 120, 147, 90, 118 );
+      wizardBtn.setBounds( 117, 137, 100, 118 );
       buttonPane.add( wizardBtn );
 
       final JLabel wizardLabel =
@@ -265,7 +265,7 @@ public class WelcomePane extends JDialog {
     newReportBtn.addActionListener( newReportAction );
     newReportBtn.addActionListener( closeActionListener );
     newReportBtn.setBorderPainted( true );
-    newReportBtn.setBounds( 323, 147, 90, 118 );
+    newReportBtn.setBounds( 323, 137, 100, 118 );
     buttonPane.add( newReportBtn );
 
     final JLabel newReportLabel = new JLabel( Messages.getString( "WelcomePane.newReportLabel" ), JLabel.CENTER );
