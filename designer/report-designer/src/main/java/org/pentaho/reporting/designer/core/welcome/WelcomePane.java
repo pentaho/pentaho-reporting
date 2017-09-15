@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.welcome;
@@ -27,10 +27,27 @@ import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.widgets.HyperlinkHandler;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.AlphaComposite;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -242,7 +259,7 @@ public class WelcomePane extends JDialog {
       wizardBtn.addActionListener( newWizardActionListener );
       wizardBtn.addActionListener( closeActionListener );
       wizardBtn.setBorderPainted( true );
-      wizardBtn.setBounds( 120, 147, 90, 118 );
+      wizardBtn.setBounds( 117, 137, 100, 118 );
       buttonPane.add( wizardBtn );
 
       final JLabel wizardLabel =
@@ -265,7 +282,7 @@ public class WelcomePane extends JDialog {
     newReportBtn.addActionListener( newReportAction );
     newReportBtn.addActionListener( closeActionListener );
     newReportBtn.setBorderPainted( true );
-    newReportBtn.setBounds( 323, 147, 90, 118 );
+    newReportBtn.setBounds( 323, 137, 100, 118 );
     buttonPane.add( newReportBtn );
 
     final JLabel newReportLabel = new JLabel( Messages.getString( "WelcomePane.newReportLabel" ), JLabel.CENTER );
