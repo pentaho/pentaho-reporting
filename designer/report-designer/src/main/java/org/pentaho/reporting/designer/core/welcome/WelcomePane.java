@@ -131,7 +131,7 @@ public class WelcomePane extends JDialog {
       throw new NullPointerException();
     }
 
-    setTitle( Messages.getString( "WelcomePane.title" ) );// NON-NLS
+    setTitle( Messages.getString( "WelcomePane.title" ) ); // NON-NLS
     this.reportDesignerContext = reportDesignerContext;
 
     this.newReportAction = new NewReportAction();
@@ -139,12 +139,12 @@ public class WelcomePane extends JDialog {
 
     this.closeActionListener = new CloseActionListener();
 
-    showOnStartupCheckbox = new JCheckBox
-      ( Messages.getString( "WelcomePane.showAtStartup" ), WorkspaceSettings.getInstance().isShowLauncher() );// NON-NLS
+    showOnStartupCheckbox = new JCheckBox(
+      Messages.getString( "WelcomePane.showAtStartup" ), WorkspaceSettings.getInstance().isShowLauncher() ); // NON-NLS
     showOnStartupCheckbox.addActionListener( new TriggerShowWelcomePaneAction() );
 
-    backgroundImage = Toolkit.getDefaultToolkit().createImage
-      ( IconLoader.class.getResource( "/org/pentaho/reporting/designer/core/icons/WelcomeBackground.png" ) );// NON-NLS
+    backgroundImage = Toolkit.getDefaultToolkit().createImage(
+      IconLoader.class.getResource( "/org/pentaho/reporting/designer/core/icons/WelcomeBackground.png" ) ); // NON-NLS
 
     final WaitingImageObserver obs = new WaitingImageObserver( backgroundImage );
     obs.waitImageLoaded();
@@ -269,7 +269,7 @@ public class WelcomePane extends JDialog {
       buttonPane.add( wizardBtn );
 
       final JLabel wizardLabel =
-        new JLabel( newWizardActionListener.getValue( "WIZARD.BUTTON.TEXT" ).toString(), JLabel.CENTER );//NON-NLS
+        new JLabel( newWizardActionListener.getValue( "WIZARD.BUTTON.TEXT" ).toString(), JLabel.CENTER ); //NON-NLS
       wizardLabel.setBounds( 80, 273, 165, 56 );
       buttonPane.add( wizardLabel );
 
