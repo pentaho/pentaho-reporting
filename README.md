@@ -54,7 +54,7 @@ $ mvn clean install
 
 __Unit tests__
 
-This will run all tests in the project (and sub-modules).
+This will run all unit tests in the project (and sub-modules). To run integration tests as well, see Integration Tests below.
 ```
 $ mvn test
 ```
