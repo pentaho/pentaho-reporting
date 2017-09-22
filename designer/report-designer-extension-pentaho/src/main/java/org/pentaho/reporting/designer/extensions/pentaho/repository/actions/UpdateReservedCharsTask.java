@@ -12,23 +12,21 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
+import org.pentaho.reporting.designer.core.auth.AuthenticationHelper;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishException;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
-import org.pentaho.reporting.engine.classic.core.util.HttpClientManager;
-import org.pentaho.reporting.engine.classic.core.util.HttpClientUtil;
 
 public class UpdateReservedCharsTask implements AuthenticatedServerTask {
   private AuthenticationData loginData;
@@ -42,12 +40,12 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
   }
 
   private HttpClient createHttpClient() {
-    HttpClientManager.HttpClientBuilderFacade clientBuilder = HttpClientManager.getInstance().createBuilder();
-    HttpClient client =
-      clientBuilder.setSocketTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 )
-        .setCredentials( loginData.getUsername(), loginData.getPassword() ).build();
-
-    client.getParams().setParameter( ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY );
+    final HttpClient client = new HttpClient();
+    client.getParams().setCookiePolicy( CookiePolicy.BROWSER_COMPATIBILITY );
+    client.getParams().setSoTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 );
+    client.getParams().setAuthenticationPreemptive( true );
+    client.getState().setCredentials( AuthScope.ANY,
+        AuthenticationHelper.getCredentials( loginData.getUsername(), loginData.getPassword() ) );
     return client;
   }
 
@@ -65,30 +63,30 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
    */
   public void run() {
     HttpClient client = createHttpClient();
-    final HttpGet reservedCharactersMethod =
-      new HttpGet( loginData.getUrl() + "/api/repo/files/reservedCharacters" );
+    final GetMethod reservedCharactersMethod =
+        new GetMethod( loginData.getUrl() + "/api/repo/files/reservedCharacters" );
+    reservedCharactersMethod.setFollowRedirects( false );
 
-    final HttpGet reservedCharactersDisplayMethod =
-      new HttpGet( loginData.getUrl() + "/api/repo/files/reservedCharactersDisplay" );
+    final GetMethod reservedCharactersDisplayMethod =
+        new GetMethod( loginData.getUrl() + "/api/repo/files/reservedCharactersDisplay" );
+    reservedCharactersDisplayMethod.setFollowRedirects( false );
 
     try {
-      HttpResponse httpResponse = client.execute( reservedCharactersMethod );
-      final int result = httpResponse.getStatusLine().getStatusCode();
+      final int result = client.executeMethod( reservedCharactersMethod );
       if ( !checkResult( result ) ) {
         throw new PublishException( 1 );
       }
-      PublishUtil.setReservedChars( HttpClientUtil.responseToString( httpResponse ) );
+      PublishUtil.setReservedChars( reservedCharactersMethod.getResponseBodyAsString() );
     } catch ( Exception e ) {
       throw new RuntimeException( e );
     }
 
     try {
-      HttpResponse httpResponse = client.execute( reservedCharactersDisplayMethod );
-      final int result = httpResponse.getStatusLine().getStatusCode();
+      final int result = client.executeMethod( reservedCharactersDisplayMethod );
       if ( !checkResult( result ) ) {
         throw new PublishException( 1 );
       }
-      PublishUtil.setReservedCharsDisplay( HttpClientUtil.responseToString( httpResponse ) );
+      PublishUtil.setReservedCharsDisplay( reservedCharactersDisplayMethod.getResponseBodyAsString() );
     } catch ( Exception e ) {
       throw new RuntimeException( e );
     }
