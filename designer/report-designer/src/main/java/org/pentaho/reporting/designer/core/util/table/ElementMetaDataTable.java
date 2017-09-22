@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.util.table;
@@ -43,11 +43,13 @@ import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.Property
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.PropertyEditorCellRenderer;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 
-import javax.swing.*;
+import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import java.awt.*;
+
+import java.awt.SystemColor;
+import java.awt.Paint;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyEditor;
@@ -149,7 +151,7 @@ public class ElementMetaDataTable extends JTable implements DesignerContextCompo
     setDefaultEditor( BigDecimal.class, new GenericCellEditor( BigDecimal.class ) );
     setDefaultEditor( String.class, stringValueCellEditor );
     setDefaultEditor( Date.class, new DateCellEditor( Date.class ) );
-    setDefaultEditor( java.sql.Date.class, new DateCellEditor( Date.class ) );
+    setDefaultEditor( java.sql.Date.class, new DateCellEditor( java.sql.Date.class ) );
     setDefaultEditor( Time.class, new TimeCellEditor( Time.class ) );
     setDefaultEditor( Timestamp.class, new DateCellEditor( Timestamp.class ) );
 
@@ -165,10 +167,10 @@ public class ElementMetaDataTable extends JTable implements DesignerContextCompo
     final SimpleDateFormat isoDateFormat =
       new SimpleDateFormat( WorkspaceSettings.DATETIME_FORMAT_DEFAULT, Locale.ENGLISH );
     setDefaultRenderer( Date.class, new FormattingTableCellRenderer( isoDateFormat ) );
-    setDefaultRenderer( java.sql.Date.class, new FormattingTableCellRenderer
-      ( new SimpleDateFormat( WorkspaceSettings.DATE_FORMAT_DEFAULT, Locale.ENGLISH ) ) );
-    setDefaultRenderer( Time.class, new FormattingTableCellRenderer
-      ( new SimpleDateFormat( WorkspaceSettings.TIME_FORMAT_DEFAULT, Locale.ENGLISH ) ) );
+    setDefaultRenderer( java.sql.Date.class,
+      new FormattingTableCellRenderer( new SimpleDateFormat( WorkspaceSettings.DATE_FORMAT_DEFAULT, Locale.ENGLISH ) ) );
+    setDefaultRenderer( Time.class,
+      new FormattingTableCellRenderer( new SimpleDateFormat( WorkspaceSettings.TIME_FORMAT_DEFAULT, Locale.ENGLISH ) ) );
     setDefaultRenderer( Timestamp.class, new FormattingTableCellRenderer( isoDateFormat ) );
 
     WorkspaceSettings.getInstance().addSettingsListener( new LocaleSettingsListener() );
