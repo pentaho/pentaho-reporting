@@ -12,20 +12,28 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol.vfs;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystemException;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.AuthCache;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
+import org.pentaho.platform.util.StringUtil;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
@@ -33,6 +41,8 @@ import org.pentaho.reporting.libraries.pensol.LibPensolBoot;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
 
@@ -43,7 +53,9 @@ public class LocalFileModel extends XmlSolutionFileModel {
   private String username;
   private String password;
   private HttpClient client;
+  private HttpClientContext context;
 
+  @Deprecated
   public LocalFileModel( final String url,
                          final HttpClient client,
                          final String username,
@@ -55,30 +67,73 @@ public class LocalFileModel extends XmlSolutionFileModel {
     this.username = username;
     this.password = password;
     this.client = client;
-    this.client.getParams().setCookiePolicy( CookiePolicy.BROWSER_COMPATIBILITY );
-    this.client.getParams().setParameter( HttpClientParams.MAX_REDIRECTS, Integer.valueOf( 10 ) );
-    this.client.getParams().setParameter( HttpClientParams.ALLOW_CIRCULAR_REDIRECTS, Boolean.TRUE );
-    this.client.getParams().setParameter( HttpClientParams.REJECT_RELATIVE_REDIRECT, Boolean.FALSE );
+    this.client.getParams().setParameter( ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY );
+    this.client.getParams().setParameter( ClientPNames.MAX_REDIRECTS, Integer.valueOf( 10 ) );
+    this.client.getParams().setParameter( ClientPNames.ALLOW_CIRCULAR_REDIRECTS, Boolean.TRUE );
+    this.client.getParams().setParameter( ClientPNames.REJECT_RELATIVE_REDIRECT, Boolean.FALSE );
+    this.context = HttpClientContext.create();
+  }
+
+  public LocalFileModel( final String url,
+                         final HttpClient client,
+                         final String username,
+                         final String password,
+                         final String hostName,
+                         int port ) {
+    if ( url == null ) {
+      throw new NullPointerException();
+    }
+    this.url = url;
+    this.username = username;
+    this.password = password;
+    this.client = client;
+
+    this.context = HttpClientContext.create();
+    if ( !StringUtil.isEmpty( hostName ) ) {
+      // Preemptive Basic Authentication
+      HttpHost target = new HttpHost( hostName, port, "http" );
+      // Create AuthCache instance
+      AuthCache authCache = new BasicAuthCache();
+      // Generate BASIC scheme object and add it to the local
+      // auth cache
+      BasicScheme basicAuth = new BasicScheme();
+      authCache.put( target, basicAuth );
+      // Add AuthCache to the execution context
+      this.context.setAuthCache( authCache );
+    }
+    this.client.getParams().setParameter( ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY );
+    this.client.getParams().setParameter( ClientPNames.MAX_REDIRECTS, Integer.valueOf( 10 ) );
+    this.client.getParams().setParameter( ClientPNames.ALLOW_CIRCULAR_REDIRECTS, Boolean.TRUE );
+    this.client.getParams().setParameter( ClientPNames.REJECT_RELATIVE_REDIRECT, Boolean.FALSE );
   }
 
   public void refresh() throws IOException {
     getDescriptionEntries().clear();
 
     final Configuration configuration = LibPensolBoot.getInstance().getGlobalConfig();
-    final String service = configuration.getConfigProperty
-      ( "org.pentaho.reporting.libraries.pensol.web.LoadRepositoryDoc" );
+    final String service =
+      configuration.getConfigProperty( "org.pentaho.reporting.libraries.pensol.web.LoadRepositoryDoc" );
 
-    final PostMethod filePost = new PostMethod( url + service );
-    logger.debug( "Connecting to '" + url + service + '\'' );
-    filePost.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded; charset=utf-8" );
-    if ( username != null ) {
-      filePost.addParameter( "userid", username );
+    URI uri;
+    String baseUrl = url + service;
+    try {
+      URIBuilder builder = new URIBuilder( baseUrl );
+      logger.debug( "Connecting to '" + baseUrl + '\'' );
+      if ( username != null ) {
+        builder.setParameter( "userid", username );
+      }
+      if ( password != null ) {
+        builder.setParameter( "password", password );
+      }
+      uri = builder.build();
+    } catch ( URISyntaxException e ) {
+      throw new IOException( "Provided URL is invalid: " + baseUrl );
     }
-    if ( password != null ) {
-      filePost.addParameter( "password", password );
-    }
+    final HttpPost filePost = new HttpPost( uri );
+    filePost.setHeader( "Content-Type", "application/x-www-form-urlencoded; charset=utf-8" );
 
-    final int lastStatus = client.executeMethod( filePost );
+    HttpResponse httpResponse = client.execute( filePost, context );
+    final int lastStatus = httpResponse.getStatusLine().getStatusCode();
     if ( lastStatus == HttpStatus.SC_UNAUTHORIZED ) {
       throw new IOException( "401: User authentication failed." );
     } else if ( lastStatus == HttpStatus.SC_NOT_FOUND ) {
@@ -87,7 +142,7 @@ public class LocalFileModel extends XmlSolutionFileModel {
       throw new IOException( "Server error: HTTP lastStatus code " + lastStatus );
     }
 
-    final InputStream postResult = filePost.getResponseBodyAsStream();
+    final InputStream postResult = httpResponse.getEntity().getContent();
     try {
       setRoot( performParse( postResult ) );
     } finally {
@@ -99,17 +154,27 @@ public class LocalFileModel extends XmlSolutionFileModel {
    * @noinspection ThrowCaughtLocally
    */
   protected byte[] getDataInternally( final FileInfo fileInfo ) throws FileSystemException {
-    final PostMethod filePost = new PostMethod( fileInfo.getUrl() );
-    filePost.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded; charset=utf-8" );
-    if ( username != null ) {
-      filePost.addParameter( "userid", username );
+    URI uri;
+    String baseUrl = fileInfo.getUrl();
+    try {
+      URIBuilder builder = new URIBuilder( baseUrl );
+      logger.debug( "Connecting to '" + baseUrl + '\'' );
+      if ( username != null ) {
+        builder.setParameter( "userid", username );
+      }
+      if ( password != null ) {
+        builder.setParameter( "password", password );
+      }
+      uri = builder.build();
+    } catch ( URISyntaxException e ) {
+      throw new FileSystemException( "Provided URL is invalid: " + baseUrl );
     }
-    if ( password != null ) {
-      filePost.addParameter( "password", password );
-    }
+    final HttpPost filePost = new HttpPost( uri );
+    filePost.setHeader( "Content-Type", "application/x-www-form-urlencoded; charset=utf-8" );
 
     try {
-      final int lastStatus = client.executeMethod( filePost );
+      HttpResponse httpResponse = client.execute( filePost, context );
+      final int lastStatus = httpResponse.getStatusLine().getStatusCode();
       if ( lastStatus == HttpStatus.SC_UNAUTHORIZED ) {
         throw new FileSystemException( "401: User authentication failed." );
       } else if ( lastStatus == HttpStatus.SC_NOT_FOUND ) {
@@ -118,7 +183,7 @@ public class LocalFileModel extends XmlSolutionFileModel {
         throw new FileSystemException( "Server error: HTTP lastStatus code " + lastStatus );
       }
 
-      final InputStream postResult = filePost.getResponseBodyAsStream();
+      final InputStream postResult = httpResponse.getEntity().getContent();
       try {
         final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
         IOUtils.getInstance().copyStreams( postResult, bout );
@@ -165,16 +230,27 @@ public class LocalFileModel extends XmlSolutionFileModel {
         URLEncoder.encode( name, "UTF-8" ),
         URLEncoder.encode( description, "UTF-8" )
       } );
-      final PostMethod filePost = new PostMethod( url + fullpath );
-      if ( username != null ) {
-        filePost.addParameter( "user", username );
-      }
-      if ( password != null ) {
-        filePost.addParameter( "password", password );
-      }
-      filePost.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded; charset=utf-8" );
 
-      final int lastStatus = client.executeMethod( filePost );
+      URI uri;
+      String baseUrl = url + fullpath;
+      try {
+        URIBuilder builder = new URIBuilder( baseUrl );
+        logger.debug( "Connecting to '" + baseUrl + '\'' );
+        if ( username != null ) {
+          builder.setParameter( "user", username );
+        }
+        if ( password != null ) {
+          builder.setParameter( "password", password );
+        }
+        uri = builder.build();
+      } catch ( URISyntaxException e ) {
+        throw new FileSystemException( "Provided URL is invalid: " + baseUrl );
+      }
+      final HttpPost filePost = new HttpPost( uri );
+      filePost.setHeader( "Content-Type", "application/x-www-form-urlencoded; charset=utf-8" );
+
+      HttpResponse httpResponse = client.execute( filePost, context );
+      final int lastStatus = httpResponse.getStatusLine().getStatusCode();
       if ( lastStatus != HttpStatus.SC_OK ) {
         throw new FileSystemException( "Server error: HTTP status code " + lastStatus );
       }
