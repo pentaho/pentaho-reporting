@@ -12,12 +12,11 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2014 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
 
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.Capability;
@@ -30,10 +29,12 @@ import org.apache.commons.vfs2.provider.AbstractOriginatingFileProvider;
 import org.apache.commons.vfs2.provider.GenericFileName;
 import org.apache.commons.vfs2.provider.LayeredFileName;
 import org.apache.commons.vfs2.provider.LayeredFileNameParser;
-import org.apache.commons.vfs2.provider.http.HttpClientFactory;
 import org.apache.commons.vfs2.util.UserAuthenticatorUtils;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.pentaho.platform.api.engine.IPentahoSession;
 import org.pentaho.platform.engine.core.system.PentahoSessionHolder;
+import org.pentaho.platform.util.StringUtil;
+import org.pentaho.reporting.engine.classic.core.util.HttpClientManager;
 import org.pentaho.reporting.libraries.pensol.vfs.LocalFileModel;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 
@@ -46,8 +47,8 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
 
   private boolean bypassAuthentication = false;
 
-  public static final Collection capabilities = Collections.unmodifiableCollection( Arrays.asList
-    ( Capability.GET_TYPE,
+  public static final Collection capabilities = Collections.unmodifiableCollection( Arrays.asList(
+      Capability.GET_TYPE,
       Capability.GET_LAST_MODIFIED,
       Capability.LIST_CHILDREN,
       Capability.READ_CONTENT,
@@ -57,8 +58,7 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
       Capability.URI ) );
 
   public static final UserAuthenticationData.Type[] AUTHENTICATOR_TYPES = new UserAuthenticationData.Type[]
-    {
-      UserAuthenticationData.USERNAME, UserAuthenticationData.PASSWORD
+    { UserAuthenticationData.USERNAME, UserAuthenticationData.PASSWORD
       // future: Publish Password for write access ..
     };
 
@@ -111,11 +111,11 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
       authData = UserAuthenticatorUtils.authenticate( fileSystemOptions, AUTHENTICATOR_TYPES );
       final GenericFileName outerName = (GenericFileName) genericRootName.getOuterName();
 
-      final String username = UserAuthenticatorUtils.toString( UserAuthenticatorUtils.getData
-        ( authData, UserAuthenticationData.USERNAME, UserAuthenticatorUtils.toChar( outerName.getUserName() ) ) );
+      final String username = UserAuthenticatorUtils.toString( UserAuthenticatorUtils
+        .getData( authData, UserAuthenticationData.USERNAME, UserAuthenticatorUtils.toChar( outerName.getUserName() ) ) );
 
-      final String password = UserAuthenticatorUtils.toString( UserAuthenticatorUtils.getData
-        ( authData, UserAuthenticationData.PASSWORD, UserAuthenticatorUtils.toChar( outerName.getPassword() ) ) );
+      final String password = UserAuthenticatorUtils.toString( UserAuthenticatorUtils
+        .getData( authData, UserAuthenticationData.PASSWORD, UserAuthenticatorUtils.toChar( outerName.getPassword() ) ) );
       final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
       final int timeOut = configBuilder.getTimeOut( fileSystemOptions );
 
@@ -128,34 +128,29 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
 
   private FileSystem createWebFileSystem( final LayeredFileName genericRootName,
                                           final FileSystemOptions fileSystemOptions ) throws FileSystemException {
-    UserAuthenticationData authData = null;
-    try {
-      authData = UserAuthenticatorUtils.authenticate( fileSystemOptions, AUTHENTICATOR_TYPES );
-      final GenericFileName outerName = (GenericFileName) genericRootName.getOuterName();
+    final GenericFileName outerName = (GenericFileName) genericRootName.getOuterName();
+    String scheme = outerName.getScheme();
+    String hostName = outerName.getHostName();
+    int port = outerName.getPort();
+    String userName = outerName.getUserName();
+    String password = outerName.getPassword();
 
-      final HttpClient httpClient = HttpClientFactory.createConnection(
-        outerName.getScheme(),
-        outerName.getHostName(),
-        outerName.getPort(),
-        UserAuthenticatorUtils.toString( UserAuthenticatorUtils.getData
-          ( authData, UserAuthenticationData.USERNAME, UserAuthenticatorUtils.toChar( outerName.getUserName() ) ) ),
-        UserAuthenticatorUtils.toString( UserAuthenticatorUtils.getData
-          ( authData, UserAuthenticationData.PASSWORD, UserAuthenticatorUtils.toChar( outerName.getPassword() ) ) ),
-        fileSystemOptions
-      );
-
-      httpClient.getParams().setAuthenticationPreemptive( true );
-      final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
-      final int timeOut = configBuilder.getTimeOut( fileSystemOptions );
-      httpClient.getParams().setSoTimeout( Math.max( 0, timeOut ) );
-
-      return new WebSolutionFileSystem( genericRootName, fileSystemOptions,
-        new LocalFileModel( outerName.getURI(), httpClient,
-          outerName.getUserName(), outerName.getPassword() )
-      );
-    } finally {
-      UserAuthenticatorUtils.cleanup( authData );
+    HttpClientManager.HttpClientBuilderFacade clientBuilder = HttpClientManager.getInstance().createBuilder();
+    if ( !StringUtil.isEmpty( hostName ) ) {
+      clientBuilder.setProxy( hostName, port, scheme );
     }
+    if ( !StringUtil.isEmpty( userName ) ) {
+      clientBuilder.setCredentials( userName, password );
+    }
+    final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
+    final int timeOut = configBuilder.getTimeOut( fileSystemOptions );
+    clientBuilder.setSocketTimeout( Math.max( 0, timeOut ) );
+    CloseableHttpClient httpClient = clientBuilder.build();
+
+    return new WebSolutionFileSystem( genericRootName, fileSystemOptions,
+      new LocalFileModel( outerName.getURI(), httpClient,
+        userName, password, hostName, port )
+    );
   }
 
   /**
