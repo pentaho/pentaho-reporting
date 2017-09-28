@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.designtime.swing.date;
@@ -22,13 +22,20 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.JFormattedTextField;
+import javax.swing.JButton;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JTable;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.TableCellEditor;
 import javax.swing.text.DateFormatter;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -129,7 +136,9 @@ public class DateCellEditor extends JPanel implements TableCellEditor {
 
       dateField.addPropertyChangeListener( "value", new PropertyChangeListener() {
         public void propertyChange( final PropertyChangeEvent evt ) {
-          dateChooserPanel.setDate( (Date) evt.getNewValue(), false );
+          Date newValue = (Date) evt.getNewValue();
+          newValue = newValue == null ? null : DateConverter.convertToDateType( newValue, dateType );
+          dateChooserPanel.setDate( newValue, false );
           dateChooserPanel.setDateSelected( true );
         }
       } );
@@ -191,10 +200,10 @@ public class DateCellEditor extends JPanel implements TableCellEditor {
       }
     } else if ( value instanceof Date ) {
       final Date date = (Date) value;
-      dateField.setValue( date );
+      dateField.setValue( DateConverter.convertToDateType( date, dateType ) );
     } else {
-      logger.debug( "Date-parameter must be set either as normalized date-string or as date-object: " +
-        value + " [" + value.getClass() + "]" );
+      logger.debug( "Date-parameter must be set either as normalized date-string or as date-object: "
+        + value + " [" + value.getClass() + "]" );
     }
   }
 
