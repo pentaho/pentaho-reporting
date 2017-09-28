@@ -93,7 +93,7 @@ public class ProxySettings {
 
 
   public String getHTTPProxyHost() {
-    return preferences.get( HTTP_DOT_PROXY_HOST, System.getProperty( HTTP_DOT_PROXY_HOST ) );
+    return preferences.get( HTTP_DOT_PROXY_HOST, System.getProperty( HTTP_DOT_PROXY_HOST, "" ) );
   }
 
 
@@ -153,7 +153,7 @@ public class ProxySettings {
 
 
   public String getSocksProxyHost() {
-    return preferences.get( SOCKS_PROXY_HOST, System.getProperty( SOCKS_PROXY_HOST ) );
+    return preferences.get( SOCKS_PROXY_HOST, System.getProperty( SOCKS_PROXY_HOST, "" ) );
   }
 
 
@@ -169,10 +169,10 @@ public class ProxySettings {
 
   public void applySettings() {
     try {
-      System.setProperty( HTTP_DOT_PROXY_HOST, null );
-      System.setProperty( HTTP_DOT_PROXY_PORT, null );
-      System.setProperty( SOCKS_PROXY_HOST, null );
-      System.setProperty( SOCKS_PROXY_PORT, null );
+      System.clearProperty( HTTP_DOT_PROXY_HOST );
+      System.clearProperty( HTTP_DOT_PROXY_PORT );
+      System.clearProperty( SOCKS_PROXY_HOST );
+      System.clearProperty( SOCKS_PROXY_PORT );
 
       switch ( getProxyType() ) {
         case AUTO_DETECT_PROXY: {
@@ -205,8 +205,8 @@ public class ProxySettings {
         }
         case USER_PROXY: {
           if ( isUseSocksProxy() ) {
-            System.setProperty( HTTP_DOT_PROXY_HOST, "" );
-            System.setProperty( HTTP_DOT_PROXY_PORT, "" );
+            System.clearProperty( HTTP_DOT_PROXY_HOST );
+            System.clearProperty( HTTP_DOT_PROXY_PORT );
 
             final String host = getSocksProxyHost();
             if ( StringUtils.isEmpty( host ) == false ) {
@@ -226,8 +226,8 @@ public class ProxySettings {
             if ( port != -1 ) {
               System.setProperty( HTTP_DOT_PROXY_PORT, String.valueOf( port ) );
             }
-            System.setProperty( SOCKS_PROXY_HOST, "" );
-            System.setProperty( SOCKS_PROXY_PORT, "" );
+            System.clearProperty( SOCKS_PROXY_HOST );
+            System.clearProperty( SOCKS_PROXY_PORT );
           }
           break;
         }
