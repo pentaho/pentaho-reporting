@@ -33,11 +33,10 @@ release.
 __Build for nightly/release__
 
 All required profiles are activated by the presence of a property named "release".
-If you are going to build Mac OS distribution as well, additionally provide specify "mac.jre.path" property.
+If you are going to build Mac OS distribution as well activate the "mac" profile.
 
 ```
-$ mvn clean install -Drelease -Dmac.jre.path=YOUR_MAC_OS_JRE_PATH
- ( YOUR_MAC_OS_JRE_PATH example jre1.8.0_121.jre\Contents\Home)
+$ mvn clean install -Drelease -Pmac
 ```
 
 This will build, unit test, and package the whole project (all of the sub-modules). The artifact will be generated in: ```assemblies/winlinux(mac)/target```
