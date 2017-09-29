@@ -74,7 +74,6 @@
                   <target>
                     <taskdef classname="com.oracle.appbundler.AppBundlerTask" classpath="${project.basedir}/target/stage/bundler.jar" name="bundleapp"></taskdef>
                     <bundleapp identifier="org.pentaho.reporting.designer.ReportDesigner" displayname="Pentaho Report Designer" mainclassname="org.pentaho.commons.launcher.Launcher" icon="${project.basedir}/src/main/resources/mac/Contents/Resources/pentaho_reporting.icns" name="Pentaho Report Designer" outputdirectory="${project.basedir}/target/stage" shortversion="${project.version}">
-                      <runtime dir="${mac.jre.path}"></runtime>
                       <classpath file="${project.basedir}/target/stage/pentaho-application-launcher-${launcher.version}.jar"></classpath>
                       <option value="-Dapple.laf.useScreenMenuBar=true"></option>
                       <option value="-Dosx.app.root.dir=$APP_ROOT"></option>
