@@ -27,7 +27,7 @@ ValueAt (6, 2) is in a typed column and is of type class java.lang.Double
 TableAttribute [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:crosstab-mode]=normalized
 Tablemodel contains 7 rows.
 Checking the attributes inside
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=7
@@ -64,7 +64,7 @@ CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
-CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=13
@@ -117,7 +117,7 @@ CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
 CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=35552.000
-CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=7
@@ -154,7 +154,7 @@ CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels
 CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
-CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=10
@@ -207,7 +207,7 @@ CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=12708.000
-CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=7
@@ -244,7 +244,7 @@ CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels
 CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
-CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=9
@@ -297,7 +297,7 @@ CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
 CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=11860.000
-CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=7
@@ -334,7 +334,7 @@ CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels
 CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
-CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=7
@@ -387,7 +387,7 @@ CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=8499.000
-CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=7
@@ -424,7 +424,7 @@ CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels
 CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
-CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
@@ -477,7 +477,7 @@ CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
 CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=2818.000
-CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=7
@@ -514,7 +514,7 @@ CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels
 CellAttribute(5, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
-CellAttribute(5, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(5, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(5, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(5, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(5, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=10
@@ -567,7 +567,7 @@ CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=11001.000
-CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=7
@@ -604,7 +604,7 @@ CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
 CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels
 CellAttribute(6, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
-CellAttribute(6, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(6, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=true
 CellAttribute(6, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(6, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
 CellAttribute(6, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=13
