@@ -21,16 +21,11 @@
   <properties>
     <app.mac.dir>${stage.dir}/Pentaho Report Designer.app</app.mac.dir>
   </properties>
-  <profiles>
-    <profile>
-      <id>mac</id>
-      <activation>
-        <property>
-          <name>mac.jre.path</name>
-        </property>
-      </activation>
       <build>
         <plugins>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+          </plugin>
           <plugin>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
@@ -104,6 +99,4 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-  </profiles>
 </project>
