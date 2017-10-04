@@ -30,7 +30,6 @@ import org.apache.commons.vfs2.provider.GenericFileName;
 import org.apache.commons.vfs2.provider.LayeredFileName;
 import org.apache.commons.vfs2.provider.LayeredFileNameParser;
 import org.apache.commons.vfs2.util.UserAuthenticatorUtils;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.pentaho.platform.api.engine.IPentahoSession;
 import org.pentaho.platform.engine.core.system.PentahoSessionHolder;
 import org.pentaho.platform.util.StringUtil;
@@ -145,11 +144,9 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
     final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
     final int timeOut = configBuilder.getTimeOut( fileSystemOptions );
     clientBuilder.setSocketTimeout( Math.max( 0, timeOut ) );
-    CloseableHttpClient httpClient = clientBuilder.build();
 
     return new WebSolutionFileSystem( genericRootName, fileSystemOptions,
-      new LocalFileModel( outerName.getURI(), httpClient,
-        userName, password, hostName, port )
+      new LocalFileModel( outerName.getURI(), clientBuilder, userName, password, hostName, port )
     );
   }
 
