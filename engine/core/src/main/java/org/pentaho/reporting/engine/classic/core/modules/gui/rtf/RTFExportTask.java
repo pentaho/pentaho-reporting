@@ -39,7 +39,7 @@ import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
- * An export task implementation, which writes a given report into an Excel file.
+ * An export task implementation, which writes a given report into an RTF file.
  *
  * @author Thomas Morgner
  */
@@ -106,15 +106,15 @@ public class RTFExportTask implements Runnable {
   }
 
   /**
-   * Exports the report into an Excel file.
+   * Exports the report into an RTF file.
    */
   @Override
   public void run() {
     OutputStream out = null;
     File file = null;
     try {
+      file = new File( fileName ).getCanonicalFile();
       if ( createParentFolder ) {
-        file = new File( fileName ).getCanonicalFile();
         final File directory = file.getParentFile();
         if ( directory != null ) {
           if ( directory.exists() == false ) {

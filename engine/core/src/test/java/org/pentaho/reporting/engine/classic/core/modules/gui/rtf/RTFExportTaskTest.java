@@ -15,6 +15,7 @@
  * Copyright (c) 2017 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
  */
 package org.pentaho.reporting.engine.classic.core.modules.gui.rtf;
+
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.junit.Assert;
@@ -65,5 +66,21 @@ public class RTFExportTaskTest extends ExportTaskCommon {
     Assert.assertTrue( directory.exists() );
     file.delete();
     directory.delete();
+  }
+
+  @Test
+  public void testExportToRTFFile() throws Exception {
+    String filename = "./testfile.rtf";
+    MasterReport report = Mockito.mock( MasterReport.class );
+    ModifiableConfiguration conf = Mockito.spy( new DefaultConfiguration() );
+    conf.setConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.gui.rtf.FileName", filename );
+    Mockito.doReturn( conf ).when( report ).getConfiguration();
+    File file = new File( filename ).getCanonicalFile();
+    Assert.assertFalse( file.exists() );
+    RTFExportTask task = new RTFExportTask( report, null, null );
+    task.run();
+    Assert.assertTrue( file != null );
+    Assert.assertTrue( file.exists() );
+    file.delete();
   }
 }
