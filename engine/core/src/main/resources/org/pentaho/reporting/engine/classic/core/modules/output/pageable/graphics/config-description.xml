@@ -11,7 +11,7 @@
     <description>Defines in which resolution the generated images should be printed. If the image is not available in a
       suitable size for the given layouted output size, the image will be scaled to fit the specified device resolution.
 
-      For the sake of backward compatitibility, we define the device resolution to be 72 DPI. This way, a pixel equals a
+      For the sake of backward compatitibility, we define the device resolution to be 96 DPI. This way, a pixel equals a
       point in the rendering.
     </description>
     <text/>
