@@ -9,4 +9,4 @@ latest Changes.
 
 This extension module provides the following additional functionality:
 
- * A datasource to access Pentaho Analysis (Mondrian) OLAP Cubes.
+ * A datasource to access Hitachi Vantara Analysis (Mondrian) OLAP Cubes.

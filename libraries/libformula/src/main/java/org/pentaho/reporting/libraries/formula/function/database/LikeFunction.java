@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.database;
@@ -31,7 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This function is similar to the LIKE function in SQL, and is needed for the inline ETL implementation of Pentaho
+ * This function is similar to the LIKE function in SQL, and is needed for the inline ETL implementation of Hitachi Vantara
  * Metadata.
  *
  * @author Will Gorman (wgorman@pentaho.com)

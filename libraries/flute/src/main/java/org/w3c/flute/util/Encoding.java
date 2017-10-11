@@ -6,7 +6,7 @@
  *
  * $Id: Encoding.java 1830 2006-04-23 14:51:03Z taqua $
  * 
- * Copyright (c) 1999 - 2009 Pentaho Corporation, World Wide Web Consortium.  All rights reserved.
+ * Copyright (c) 1999 - 2017 Hitachi Vantara, World Wide Web Consortium.  All rights reserved.
  */
 
 package org.w3c.flute.util;

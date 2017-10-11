@@ -112,7 +112,7 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService {
       throw new IllegalArgumentException();
     }
     if ( ObjectUtilities.equal( id, databaseConnection.getId() ) == false ) {
-      // the Pentaho-datasources API is ill defined and allows bad behaviour.
+      // the Hitachi Vantara-datasources API is ill defined and allows bad behaviour.
       throw new IllegalArgumentException();
     }
     if ( deletedMembersById.contains( id ) ) {

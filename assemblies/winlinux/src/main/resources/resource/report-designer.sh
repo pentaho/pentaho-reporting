@@ -14,11 +14,11 @@
 # without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Lesser General Public License for more details.
 #
-# Copyright (c) 2013-2017 Pentaho Corporation..  All rights reserved.
+# Copyright (c) 2013-2017 Hitachi Vantara..  All rights reserved.
 # -----------------------------------------------------------------------------------------------
 
 #
-#  WARNING: Pentaho Report Designer needs JDK 1.7 or newer to run.
+#  WARNING: Hitachi Vantara Report Designer needs JDK 1.7 or newer to run.
 #
 
 DIR_REL=`dirname "$0"`

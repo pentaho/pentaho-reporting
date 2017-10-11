@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.samples;
@@ -112,7 +112,7 @@ public class Sample1 extends AbstractReportGenerator
 
   /**
    * Simple command line application that will generate a PDF version of the report. In this report,
-   * the report definition has already been created with the Pentaho Report Designer application and
+   * the report definition has already been created with the Hitachi Vantara Report Designer application and
    * it located in the same package as this class. The data query is located in that report definition
    * as well, and there are a few report-modifying parameters that will be passed to the engine at runtime.
    * <p/>
