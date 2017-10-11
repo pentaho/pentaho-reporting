@@ -25,7 +25,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 1999 - 2009 Pentaho Corporation, World Wide Web Consortium,.  All rights reserved.
+ * Copyright (c) 1999 - 2017 Hitachi Vantara, World Wide Web Consortium,.  All rights reserved.
  */
 
 package org.w3c.flute.parser;

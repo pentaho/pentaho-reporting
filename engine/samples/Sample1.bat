@@ -14,7 +14,7 @@ REM This program is distributed in the hope that it will be useful, but WITHOUT 
 REM without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 REM See the GNU Lesser General Public License for more details.
 REM
-REM Copyright (c) 2013-2017 Pentaho Corporation..  All rights reserved.
+REM Copyright (c) 2013-2017 Hitachi Vantara..  All rights reserved.
 REM -----------------------------------------------------------------------------------------------
 
 REM SET UP CLASSPATH

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts.backport;
@@ -215,7 +215,7 @@ public class StackedAreaRenderer extends AreaRenderer
       dataArea, plot.getDomainAxisEdge() );
 
     // This gets rid of the white lines between most category values
-    // Doug Moran - Pentaho
+    // Doug Moran - Hitachi Vantara
     xx0 = Math.round( xx0 );
     xx1 = Math.round( xx1 );
     xx2 = Math.round( xx2 );

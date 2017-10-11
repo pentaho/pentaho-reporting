@@ -9,5 +9,5 @@ latest Changes.
 
 This extension module provides the following additional functionality:
 
- * A datasource-editor-UI-plugin for the Pentaho Analysis datasource.
+ * A datasource-editor-UI-plugin for the Hitachi Vantara Analysis datasource.
 

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
@@ -69,7 +69,7 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * This data-factory operates in Legacy-Mode providing a preprocessed view on the mondrian result. It behaves exactly as
- * known from the Pentaho-Platform and the Pentaho-Report-Designer. This mode of operation breaks the structure of the
+ * known from the Pentaho-Platform and the Hitachi Vantara-Report-Designer. This mode of operation breaks the structure of the
  * resulting table as soon as new rows are returned by the server.
  *
  * @author Thomas Morgner

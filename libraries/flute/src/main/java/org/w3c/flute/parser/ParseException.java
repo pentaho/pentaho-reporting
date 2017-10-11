@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2009 Pentaho Corperation and Contributors.  All rights reserved.
+ * Copyright (c) 2006 - 2017 Hitachi Vantara Corperation and Contributors.  All rights reserved.
  */
 
 package org.w3c.flute.parser;

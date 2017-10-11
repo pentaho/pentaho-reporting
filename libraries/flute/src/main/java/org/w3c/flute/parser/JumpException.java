@@ -6,7 +6,7 @@
  *
  * $Id: JumpException.java 1830 2006-04-23 14:51:03Z taqua $
  *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
+ * Copyright (c) 2009 - 2017 Hitachi Vantara.  All rights reserved.
  */
 
 package org.w3c.flute.parser;

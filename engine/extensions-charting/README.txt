@@ -9,4 +9,4 @@ latest Changes.
 
 This extension module provides the following additional functionality:
 
- * Support for charting via the Pentaho ChartBeans project
+ * Support for charting via the Hitachi Vantara ChartBeans project

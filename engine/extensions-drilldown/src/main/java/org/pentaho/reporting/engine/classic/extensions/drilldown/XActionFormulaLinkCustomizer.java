@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.drilldown;
@@ -21,7 +21,7 @@ import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 
 /**
- * Pentaho dashboards violate the standard tripplet of "solution", "path", "action" and thus we have to map them
+ * Hitachi Vantara dashboards violate the standard tripplet of "solution", "path", "action" and thus we have to map them
  * manually into something sane.
  *
  * @author Thomas Morgner.
