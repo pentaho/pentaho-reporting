@@ -181,6 +181,8 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
         // we cannot safely guess columns from transformations that use Metadata-Injection.
         // So lets solve them the traditional way.
         return performQueryOnTransformation( parameter, 1, context, transMeta );
+      } else {
+        prepareTransformation( parameter, context, transMeta );
       }
 
       StepMeta step = transMeta.findStep( stepName );
