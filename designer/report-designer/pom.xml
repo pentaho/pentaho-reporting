@@ -16,13 +16,18 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <properties>
+    <!-- parsedVersion properties are dynamically created by the build-helper-maven-plugin:create-doc-version-property -->
+    <doc.version>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}</doc.version>
+
     <Implementation-Title>Pentaho Report Designer</Implementation-Title>
     <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
     <Implementation-ProductID>PRD</Implementation-ProductID>
     <Implementation-Version>DEVELOPMENT</Implementation-Version>
     <pentaho.group>pentaho</pentaho.group>
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
@@ -135,4 +140,21 @@
       <version>4.5.3</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create-doc-version-property</id>
+            <goals>
+              <goal>parse-version</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
