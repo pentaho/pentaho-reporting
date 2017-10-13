@@ -512,6 +512,7 @@
         <module>winlinux</module>
       </modules>
     </profile>
+    <!-- Enable this profile to create a OSX Bundle {BACKLOG-19411}
     <profile>
       <id>mac</id>
       <modules>
@@ -519,5 +520,6 @@
         <module>mac</module>
       </modules>
     </profile>
+    -->
   </profiles>
 </project>
