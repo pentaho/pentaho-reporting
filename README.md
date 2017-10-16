@@ -33,13 +33,12 @@ release.
 __Build for nightly/release__
 
 All required profiles are activated by the presence of a property named "release".
-If you are going to build Mac OS distribution as well activate the "mac" profile.
 
 ```
-$ mvn clean install -Drelease -Pmac
+$ mvn clean install -Drelease
 ```
 
-This will build, unit test, and package the whole project (all of the sub-modules). The artifact will be generated in: ```assemblies/winlinux(mac)/target```
+This will build, unit test, and package the whole project (all of the sub-modules). The artifact will be generated in: ```assemblies/winlinux/target```
 
 __Build for CI/dev__
 
@@ -191,10 +190,17 @@ B. Linux/Solaris/Unix
 
 C. MacOS
 
-   Download the Mac-OS specific ZIP file and extract it by double clicking
-   on it in the Finder. Move the extracted "Pentaho Report Designer"
-   application into your Applications folder.
+   Download either the ZIP or the TAR.GZ distribution.
 
+   The Pentaho Report Designer can be extracted into any directory.
+
+   Start the application by double clicking on the 
+
+	 report-designer.command file
+	
+   or
+   
+   	 executing './report-designer.sh' in a terminal window
 
 #### Documentation
 
