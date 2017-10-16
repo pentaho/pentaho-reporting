@@ -16,6 +16,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <properties>
     <Implementation-Title>Pentaho Report Designer</Implementation-Title>
     <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
@@ -23,6 +24,7 @@
     <Implementation-Version>DEVELOPMENT</Implementation-Version>
     <pentaho.group>pentaho</pentaho.group>
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
