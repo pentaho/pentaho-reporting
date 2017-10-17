@@ -72,6 +72,10 @@ public class HttpClientManager {
     private CredentialsProvider provider;
     private int connectionTimeout;
     private int socketTimeout;
+    private int maxRedirects;
+    private String cookieSpec;
+    private Boolean allowCircularRedirects = false;
+    private Boolean rejectRelativeRedirect = true;
     private HttpHost proxy;
 
     public HttpClientBuilderFacade setConnectionTimeout( int connectionTimeout ) {
@@ -81,6 +85,26 @@ public class HttpClientManager {
 
     public HttpClientBuilderFacade setSocketTimeout( int socketTimeout ) {
       this.socketTimeout = socketTimeout;
+      return this;
+    }
+
+    public HttpClientBuilderFacade allowCircularRedirects( ) {
+      this.allowCircularRedirects = true;
+      return this;
+    }
+
+    public HttpClientBuilderFacade allowRelativeRedirect( ) {
+      this.rejectRelativeRedirect = false;
+      return this;
+    }
+
+    public HttpClientBuilderFacade setMaxRedirects( int maxRedirects ) {
+      this.maxRedirects = maxRedirects;
+      return this;
+    }
+
+    public HttpClientBuilderFacade setCookieSpec( final String cookieSpec ) {
+      this.cookieSpec = cookieSpec;
       return this;
     }
 
@@ -125,6 +149,20 @@ public class HttpClientManager {
       if ( proxy != null ) {
         requestConfigBuilder.setProxy( proxy );
       }
+      if ( cookieSpec != null ) {
+        requestConfigBuilder.setCookieSpec( cookieSpec );
+      }
+      if ( maxRedirects > 0 ) {
+        requestConfigBuilder.setMaxRedirects( maxRedirects );
+      }
+      if ( allowCircularRedirects ) {
+        requestConfigBuilder.setCircularRedirectsAllowed( true );
+      }
+      if ( !rejectRelativeRedirect ) {
+        requestConfigBuilder.setRelativeRedirectsAllowed( true );
+      }
+
+      // RequestConfig built
       httpClientBuilder.setDefaultRequestConfig( requestConfigBuilder.build() );
 
       if ( provider != null ) {

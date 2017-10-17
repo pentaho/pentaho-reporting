@@ -26,6 +26,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
@@ -34,6 +35,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.pentaho.platform.util.StringUtil;
+import org.pentaho.reporting.engine.classic.core.util.HttpClientManager;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
@@ -74,6 +76,12 @@ public class LocalFileModel extends XmlSolutionFileModel {
     this.context = HttpClientContext.create();
   }
 
+  /**
+   * @deprecated use {@link LocalFileModel#LocalFileModel(java.lang.String,
+   * org.pentaho.reporting.engine.classic.core.util.HttpClientManager.HttpClientBuilderFacade,
+   * java.lang.String, java.lang.String, java.lang.String, int) }.
+   */
+  @Deprecated()
   public LocalFileModel( final String url,
                          final HttpClient client,
                          final String username,
@@ -105,6 +113,39 @@ public class LocalFileModel extends XmlSolutionFileModel {
     this.client.getParams().setParameter( ClientPNames.MAX_REDIRECTS, Integer.valueOf( 10 ) );
     this.client.getParams().setParameter( ClientPNames.ALLOW_CIRCULAR_REDIRECTS, Boolean.TRUE );
     this.client.getParams().setParameter( ClientPNames.REJECT_RELATIVE_REDIRECT, Boolean.FALSE );
+  }
+
+  public LocalFileModel( final String url,
+                         final HttpClientManager.HttpClientBuilderFacade clientBuilder,
+                         final String username,
+                         final String password,
+                         final String hostName,
+                         int port ) {
+
+    if ( url == null ) {
+      throw new NullPointerException();
+    }
+    this.url = url;
+    this.username = username;
+    this.password = password;
+
+    this.context = HttpClientContext.create();
+    if ( !StringUtil.isEmpty( hostName ) ) {
+      // Preemptive Basic Authentication
+      HttpHost target = new HttpHost( hostName, port, "http" );
+      // Create AuthCache instance
+      AuthCache authCache = new BasicAuthCache();
+      // Generate BASIC scheme object and add it to the local
+      // auth cache
+      BasicScheme basicAuth = new BasicScheme();
+      authCache.put( target, basicAuth );
+      // Add AuthCache to the execution context
+      this.context.setAuthCache( authCache );
+    }
+    clientBuilder.setCookieSpec( CookieSpecs.DEFAULT );
+    clientBuilder.setMaxRedirects( 10 );
+    clientBuilder.allowCircularRedirects();
+    clientBuilder.allowRelativeRedirect();
   }
 
   public void refresh() throws IOException {

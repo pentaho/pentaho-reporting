@@ -23,9 +23,8 @@ import org.apache.http.auth.Credentials;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.HttpClientManager;
@@ -89,8 +88,8 @@ public class HttpQueryBackend extends CdaQueryBackend {
   protected HttpClient getHttpClient() {
     if ( client == null ) {
       HttpClientManager.HttpClientBuilderFacade clientBuilder = HttpClientManager.getInstance().createBuilder();
-      client = clientBuilder.setCredentials( getUsername(), getPassword() ).build();
-      client.getParams().setParameter( ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY );
+      client = clientBuilder.setCredentials( getUsername(), getPassword() )
+        .setCookieSpec( CookieSpecs.DEFAULT ).build();
     }
     return client;
   }
