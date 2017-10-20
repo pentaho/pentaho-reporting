@@ -15,6 +15,7 @@
     <stage.dir.designer>${stage.dir}/report-designer</stage.dir.designer>
     <stage.dir>${project.build.directory}/stage</stage.dir>
     <dependency.hadoop-shims-api.revision>${project.version}</dependency.hadoop-shims-api.revision>
+    <dependency.oss-licenses.revision>${project.version}</dependency.oss-licenses.revision>
   </properties>
   <dependencies>
     <dependency>
@@ -376,6 +377,13 @@
       <groupId>pentaho</groupId>
       <artifactId>pentaho-metaverse-api</artifactId>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>pentaho</groupId>
+      <artifactId>oss-licenses</artifactId>
+      <version>${dependency.oss-licenses.revision}</version>
+      <type>zip</type>
+      <optional>true</optional>
     </dependency>
   </dependencies>
   <build>
