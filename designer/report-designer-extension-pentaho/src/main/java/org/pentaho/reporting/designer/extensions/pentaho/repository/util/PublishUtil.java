@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
@@ -37,7 +37,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.Bu
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.reporting.libraries.base.util.URLEncoder;
+import java.net.URLEncoder;
 import org.pentaho.reporting.libraries.pensol.PentahoSolutionsFileSystemConfigBuilder;
 import org.pentaho.reporting.libraries.pensol.PublishRestUtil;
 import org.pentaho.reporting.libraries.repository.ContentIOException;

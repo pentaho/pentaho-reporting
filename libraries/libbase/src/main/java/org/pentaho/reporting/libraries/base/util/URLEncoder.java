@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2017 Pentaho Corporation and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.util;
@@ -22,8 +22,10 @@ import java.io.UnsupportedEncodingException;
 /**
  * Creation-Date: Jan 22, 2007, 4:36:38 PM
  *
+ * Use {@link java.net.URLEncoder} instead
  * @author Thomas Morgner moved by Tyler Band
  */
+@Deprecated
 public class URLEncoder {
   private URLEncoder() {
   }
