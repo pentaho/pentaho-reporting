@@ -13,4 +13,18 @@
       <fileMode>0755</fileMode>
     </fileSet>
   </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>.</outputDirectory>
+      <includes>
+        <include>pentaho:oss-licenses:zip</include>
+      </includes>
+      <unpack>true</unpack>
+      <unpackOptions>
+        <includes>
+          <include>PentahoReporting_OSS_Licenses.html</include>
+        </includes>
+      </unpackOptions>
+    </dependencySet>
+  </dependencySets>
 </assembly>
