@@ -49,20 +49,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Implementation-Title>configuration-editor</Implementation-Title>
-              <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
-              <Implementation-ProductID>configuration-editor</Implementation-ProductID>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
