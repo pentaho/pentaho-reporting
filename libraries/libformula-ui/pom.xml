@@ -48,20 +48,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
-              <Implementation-Title>libformula-ui</Implementation-Title>
-              <Implementation-ProductID>libformula-ui</Implementation-ProductID>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

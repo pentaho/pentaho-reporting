@@ -42,20 +42,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
-              <Implementation-Title>LibCss</Implementation-Title>
-              <Implementation-ProductID>libcss</Implementation-ProductID>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

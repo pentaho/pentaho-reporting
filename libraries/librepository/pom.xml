@@ -42,24 +42,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
-              <Implementation-Title>LibRepository</Implementation-Title>
-              <Release-Major-Number>1</Release-Major-Number>
-              <Release-Minor-Number>0</Release-Minor-Number>
-              <Implementation-ProductID>librepository</Implementation-ProductID>
-              <Release-Milestone-Number>0</Release-Milestone-Number>
-              <Release-Candidate-Token>dev</Release-Candidate-Token>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
