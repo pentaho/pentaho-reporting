@@ -49,8 +49,8 @@
                       <groupId>pentaho</groupId>
                       <artifactId>pentaho-application-launcher</artifactId>
                       <overWrite>true</overWrite>
-                      <destFileName>pentaho-application-launcher-${launcher.version}.jar</destFileName>
-                      <outputDirectory>${stage.dir}</outputDirectory>
+                      <destFileName>launcher.jar</destFileName>
+                      <outputDirectory>${stage.dir.designer}</outputDirectory>
                     </artifactItem>
                   </artifactItems>
                 </configuration>
@@ -69,7 +69,7 @@
                   <target>
                     <taskdef classname="com.oracle.appbundler.AppBundlerTask" classpath="${project.basedir}/target/stage/bundler.jar" name="bundleapp"></taskdef>
                     <bundleapp identifier="org.pentaho.reporting.designer.ReportDesigner" displayname="Pentaho Report Designer" mainclassname="org.pentaho.commons.launcher.Launcher" icon="${project.basedir}/src/main/resources/mac/Contents/Resources/pentaho_reporting.icns" name="Pentaho Report Designer" outputdirectory="${project.basedir}/target/stage/report-designer" shortversion="${project.version}">
-                      <classpath file="${project.basedir}/target/stage/pentaho-application-launcher-${launcher.version}.jar"></classpath>
+                      <classpath file="${stage.dir.designer}/launcher.jar"></classpath>
                       <option value="-Dapple.laf.useScreenMenuBar=true"></option>
                       <option value="-Dosx.app.root.dir=$APP_ROOT"></option>
                       <option value="-Xms1024m"></option>
