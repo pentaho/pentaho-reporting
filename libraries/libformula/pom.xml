@@ -74,19 +74,6 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Implementation-Vendor>Pentaho Corporation</Implementation-Vendor>
-              <Implementation-Title>LibFormula</Implementation-Title>
-              <Release-Major-Number>1</Release-Major-Number>
-              <Release-Minor-Number>2</Release-Minor-Number>
-              <Implementation-ProductID>libformula</Implementation-ProductID>
-              <Release-Milestone-Number>0</Release-Milestone-Number>
-              <Release-Candidate-Token>GA</Release-Candidate-Token>
-            </manifestEntries>
-          </archive>
-        </configuration>
       </plugin>
     </plugins>
   </build>
