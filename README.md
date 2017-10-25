@@ -40,6 +40,7 @@ $ mvn clean install -Drelease
 
 This will build, unit test, and package the whole project (all of the sub-modules). The artifact will be generated in: ```assemblies/winlinux/target```
 
+
 __Build for CI/dev__
 
 The `release` builds will compile the source for production (meaning potential obfuscation and/or uglification). To build without that happening, just eliminate the `release` property.
@@ -190,17 +191,9 @@ B. Linux/Solaris/Unix
 
 C. MacOS
 
-   Download either the ZIP or the TAR.GZ distribution.
-
-   The Pentaho Report Designer can be extracted into any directory.
-
-   Start the application by double clicking on the 
-
-	 report-designer.command file
-	
-   or
-   
-   	 executing './report-designer.sh' in a terminal window
+   Download the distribution ZIP file and extract it by double clicking
+   on it in the Finder. Move the extracted "Pentaho Report Designer"
+   application into your Applications folder.
 
 #### Documentation
 
