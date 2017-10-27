@@ -33,13 +33,14 @@ release.
 __Build for nightly/release__
 
 All required profiles are activated by the presence of a property named "release".
+If you are going to build Mac OS distribution as well, additionally provide specify "mac.jre.path" property.
 
 ```
-$ mvn clean install -Drelease
+$ mvn clean install -Drelease -Dmac.jre.path=YOUR_MAC_OS_JRE_PATH
+ ( YOUR_MAC_OS_JRE_PATH example jre1.8.0_121.jre\Contents\Home)
 ```
 
-This will build, unit test, and package the whole project (all of the sub-modules). The artifact will be generated in: ```assemblies/winlinux/target```
-
+This will build, unit test, and package the whole project (all of the sub-modules). The artifact will be generated in: ```assemblies/winlinux(mac)/target```
 
 __Build for CI/dev__
 
@@ -53,7 +54,7 @@ $ mvn clean install
 
 __Unit tests__
 
-This will run all unit tests in the project (and sub-modules). To run integration tests as well, see Integration Tests below.
+This will run all tests in the project (and sub-modules).
 ```
 $ mvn test
 ```
@@ -191,9 +192,10 @@ B. Linux/Solaris/Unix
 
 C. MacOS
 
-   Download the distribution ZIP file and extract it by double clicking
+   Download the Mac-OS specific ZIP file and extract it by double clicking
    on it in the Finder. Move the extracted "Pentaho Report Designer"
    application into your Applications folder.
+
 
 #### Documentation
 

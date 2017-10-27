@@ -5,17 +5,17 @@
   <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>pentaho-reporting</artifactId>
-    <version>8.0-SNAPSHOT</version>
+    <version>8.1-SNAPSHOT</version>
   </parent>
   <artifactId>reporting-assemblies</artifactId>
-  <version>8.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <version>8.1-SNAPSHOT</version>
+  <packaging>pom</packaging>  
   <name>Pentaho Reporting Assemblies</name>
   <properties>
     <stage.dir.designer>${stage.dir}/report-designer</stage.dir.designer>
     <stage.dir>${project.build.directory}/stage</stage.dir>
-    <dependency.hadoop-shims-api.revision>${project.version}</dependency.hadoop-shims-api.revision>
-    <dependency.oss-licenses.revision>${project.version}</dependency.oss-licenses.revision>
+    <dependency.hadoop-shims-api.revision>8.1-SNAPSHOT</dependency.hadoop-shims-api.revision>
+    <dependency.oss-licenses.revision>8.1-SNAPSHOT</dependency.oss-licenses.revision>
   </properties>
   <dependencies>
     <dependency>
@@ -513,6 +513,18 @@
       </activation>
       <modules>
         <module>winlinux</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>mac</id>
+      <activation>
+        <property>
+          <name>mac.jre.path</name>
+        </property>
+      </activation>
+      <modules>
+        <module>winlinux</module>
+        <module>mac</module>
       </modules>
     </profile>
   </profiles>
