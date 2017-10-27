@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -182,7 +182,7 @@ public final class FormulaExpression extends AbstractExpression {
       try {
         compiledFormula.initialize( context );
         final Object evaluate = compiledFormula.evaluate();
-        if ( Boolean.TRUE.equals( failOnError ) ) {
+        if ( compiledFormula.failOnError() ) {
           if ( evaluate instanceof ErrorValue ) {
             throw new InvalidReportStateException( String.format(
                 "Failed to evaluate formula-expression with error %s", // NON-NLS
@@ -204,7 +204,7 @@ public final class FormulaExpression extends AbstractExpression {
           FormulaExpression.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']' );
         }
       }
-      if ( Boolean.TRUE.equals( failOnError ) ) {
+      if ( compiledFormula.failOnError() ) {
         throw new InvalidReportStateException( String.format( "Failed to evaluate formula-expression with error %s", // NON-NLS
             e.getMessage() ), e );
       }

@@ -39,6 +39,11 @@ public class SingleValueQueryFunction implements Function {
   public SingleValueQueryFunction() {
   }
 
+  @Override
+  public boolean failOnError() {
+    return true;
+  }
+
   public String getCanonicalName() {
     return "SINGLEVALUEQUERY";
   }
