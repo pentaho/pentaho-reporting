@@ -110,6 +110,10 @@ public class Formula implements Serializable, Cloneable {
     }
   }
 
+  public boolean failOnError() {
+    return rootReference.failOnError();
+  }
+
   public Object evaluate() {
     final TypeValuePair pair = evaluateTyped();
     final Object value = pair.getValue();

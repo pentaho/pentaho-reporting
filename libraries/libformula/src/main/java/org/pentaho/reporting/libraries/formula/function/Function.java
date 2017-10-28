@@ -37,4 +37,8 @@ public interface Function extends Serializable {
   public TypeValuePair evaluate( FormulaContext context,
                                  ParameterCallback parameters )
     throws EvaluationException;
+
+  default boolean failOnError() {
+    return false;
+  }
 }

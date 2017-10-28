@@ -45,6 +45,15 @@ import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 public class FormulaFunction extends AbstractLValue {
   private static final Log logger = LogFactory.getLog( FormulaFunction.class );
 
+  @Override
+  public boolean failOnError() {
+    if ( function != null ) {
+      return function.failOnError();
+    } else {
+      return false;
+    }
+  }
+
   private static class FormulaParameterCallback implements ParameterCallback {
     private TypeValuePair[] backend;
     private FormulaFunction function;

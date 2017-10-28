@@ -59,4 +59,8 @@ public interface LValue extends Serializable, Cloneable {
   public boolean isConstant();
 
   public ParsePosition getParsePosition();
+
+  default boolean failOnError() {
+    return false;
+  }
 }
