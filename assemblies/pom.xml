@@ -515,5 +515,17 @@
         <module>winlinux</module>
       </modules>
     </profile>
+    <profile>
+      <id>mac</id>
+      <activation>
+        <property>
+          <name>mac.jre.path</name>
+        </property>
+      </activation>
+      <modules>
+        <module>winlinux</module>
+        <module>mac</module>
+      </modules>
+    </profile>
   </profiles>
 </project>
