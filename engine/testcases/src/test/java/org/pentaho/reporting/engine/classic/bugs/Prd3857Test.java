@@ -18,11 +18,7 @@
 package org.pentaho.reporting.engine.classic.bugs;
 
 import junit.framework.TestCase;
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
-import org.pentaho.reporting.engine.classic.core.Band;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.*;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -139,7 +135,7 @@ public class Prd3857Test extends TestCase {
     mgr.registerDefaults();
     final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.STRICT_ERROR_HANDLING_KEY, "false" );
     //    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );

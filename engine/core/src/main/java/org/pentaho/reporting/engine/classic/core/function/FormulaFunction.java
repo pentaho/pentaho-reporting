@@ -12,13 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -246,7 +247,7 @@ public final class FormulaFunction extends AbstractFunction {
         try {
           initFormula.initialize( context );
           final Object evaluate = initFormula.evaluate();
-          if ( Boolean.TRUE.equals( failOnError ) ) {
+          if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
             if ( evaluate instanceof ErrorValue ) {
               throw new InvalidReportStateException( String.format(
                   "Failed to evaluate formula-expression with error %s", // NON-NLS
@@ -271,7 +272,7 @@ public final class FormulaFunction extends AbstractFunction {
           FormulaFunction.logger.debug( "Failed to compute the initial value [" + formulaExpression + ']' );
         }
       }
-      if ( Boolean.TRUE.equals( failOnError ) ) {
+      if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
         throw new InvalidReportStateException( String.format( "Failed to evaluate formula-function with error %s", // NON-NLS
             e.getMessage() ), e );
       }
@@ -286,7 +287,7 @@ public final class FormulaFunction extends AbstractFunction {
    */
   private Object computeRegularValue() {
     if ( formulaError != null ) {
-      if ( Boolean.TRUE.equals( failOnError ) ) {
+      if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
         throw new InvalidReportStateException( String.format(
             "Previously failed to evaluate formula-expression with error %s", // NON-NLS
             formulaError ) );
@@ -303,7 +304,7 @@ public final class FormulaFunction extends AbstractFunction {
       try {
         compiledFormula.initialize( context );
         final Object evaluate = compiledFormula.evaluate();
-        if ( Boolean.TRUE.equals( failOnError ) ) {
+        if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
           if ( evaluate instanceof ErrorValue ) {
             throw new InvalidReportStateException( String.format(
                 "Failed to evaluate formula-expression with error %s", // NON-NLS
@@ -325,7 +326,7 @@ public final class FormulaFunction extends AbstractFunction {
           FormulaFunction.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']' );
         }
       }
-      if ( Boolean.TRUE.equals( failOnError ) ) {
+      if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
         throw new InvalidReportStateException( String.format( "Failed to evaluate formula-function with error %s", // NON-NLS
             e.getMessage() ), e );
       }
@@ -379,5 +380,11 @@ public final class FormulaFunction extends AbstractFunction {
     instance.compiledFormula = null;
     instance.formulaError = null;
     return instance;
+  }
+
+  private Boolean getComputedFailOnError() {
+    return failOnError == null
+            ? "true".equals( getReportConfiguration().getConfigProperty( ClassicEngineCoreModule.STRICT_ERROR_HANDLING_KEY ) )
+            : failOnError;
   }
 }
