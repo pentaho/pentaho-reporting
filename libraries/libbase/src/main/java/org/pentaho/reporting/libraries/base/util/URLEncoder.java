@@ -22,8 +22,10 @@ import java.io.UnsupportedEncodingException;
 /**
  * Creation-Date: Jan 22, 2007, 4:36:38 PM
  *
+ * Use {@link java.net.URLEncoder} instead
  * @author Thomas Morgner moved by Tyler Band
  */
+@Deprecated
 public class URLEncoder {
   private URLEncoder() {
   }

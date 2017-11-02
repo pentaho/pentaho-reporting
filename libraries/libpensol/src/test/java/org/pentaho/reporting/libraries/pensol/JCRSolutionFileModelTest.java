@@ -22,7 +22,9 @@ import com.sun.jersey.api.client.WebResource;
 import org.junit.Test;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
-import org.pentaho.reporting.libraries.base.util.URLEncoder;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.ws.rs.core.MediaType;
 
@@ -53,9 +55,9 @@ public class JCRSolutionFileModelTest {
   }
 
   @Test
-  public void encodePathForRequest_NonAsciiChars() {
+  public void encodePathForRequest_NonAsciiChars() throws UnsupportedEncodingException {
     String encoded = encodePathForRequest( "/фыв апр" );
-    String expected = ":" + URLEncoder.encodeUTF8( "фыв" ) + "%20" + URLEncoder.encodeUTF8( "апр" );
+    String expected = ":" + URLEncoder.encode( "фыв", "UTF-8" ) + "%20" + URLEncoder.encode( "апр", "UTF-8" );
     assertEquals( expected, encoded );
   }
 
