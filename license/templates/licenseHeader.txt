@@ -11,4 +11,4 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 See the GNU Lesser General Public License for more details.
 
-Copyright (c) ${project.inceptionYear} - ${project.currentYear} Pentaho Corporation and Contributors.  All rights reserved.
+Copyright (c) ${project.inceptionYear} - ${project.currentYear} Hitachi Vantara and Contributors.  All rights reserved.
