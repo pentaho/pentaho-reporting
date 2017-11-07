@@ -297,7 +297,7 @@ org.pentaho.reporting.engine.classic.core.ParameterUiLayout=vertical
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.StrictErrorHandling" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.StrictErrorHandling" hidden="false">
     <description>Defines a stricter error handling, if set to &apos;true&apos;, then all errors that occur during the
       report processing will cause the report processing to fail. It is safe to set this to &apos;true&apos;, as valid
       reports never throw exceptions.

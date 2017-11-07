@@ -12,13 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
@@ -67,7 +68,9 @@ public final class FormulaExpression extends AbstractExpression {
   }
 
   public Boolean getFailOnError() {
-    return failOnError;
+    return failOnError == null
+            ? "true".equals( getReportConfiguration().getConfigProperty( ClassicEngineCoreModule.STRICT_ERROR_HANDLING_KEY ) )
+            : failOnError;
   }
 
   public void setFailOnError( final Boolean failOnError ) {
@@ -159,7 +162,7 @@ public final class FormulaExpression extends AbstractExpression {
    */
   private Object computeRegularValue() {
     if ( formulaError != null ) {
-      if ( Boolean.TRUE.equals( failOnError ) ) {
+      if ( Boolean.TRUE.equals( getFailOnError() ) ) {
         throw new InvalidReportStateException( String.format(
             "Previously failed to evaluate formula-expression with error %s", // NON-NLS
             formulaError ) );
@@ -182,7 +185,7 @@ public final class FormulaExpression extends AbstractExpression {
       try {
         compiledFormula.initialize( context );
         final Object evaluate = compiledFormula.evaluate();
-        if ( Boolean.TRUE.equals( failOnError ) ) {
+        if ( Boolean.TRUE.equals( getFailOnError() ) ) {
           if ( evaluate instanceof ErrorValue ) {
             throw new InvalidReportStateException( String.format(
                 "Failed to evaluate formula-expression with error %s", // NON-NLS
@@ -204,7 +207,7 @@ public final class FormulaExpression extends AbstractExpression {
           FormulaExpression.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']' );
         }
       }
-      if ( Boolean.TRUE.equals( failOnError ) ) {
+      if ( Boolean.TRUE.equals( getFailOnError() ) ) {
         throw new InvalidReportStateException( String.format( "Failed to evaluate formula-expression with error %s", // NON-NLS
             e.getMessage() ), e );
       }
