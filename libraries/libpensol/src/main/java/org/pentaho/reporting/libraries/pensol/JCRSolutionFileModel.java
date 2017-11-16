@@ -32,7 +32,7 @@ import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.platform.util.RepositoryPathEncoder;
 import org.pentaho.reporting.libraries.base.util.FastStack;
-import java.net.URLEncoder;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -159,7 +159,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
   public void createFolder( final FileName file ) throws FileSystemException {
     try {
       final String path = URLEncoder
-        .encode( URLDecoder.decode( normalizePath( file.getPath().replaceAll( "\\+", "%2B" ) ), "UTF-8" ), "UTF-8" )
+        .encodeUTF8( URLDecoder.decode( normalizePath( file.getPath().replaceAll( "\\+", "%2B" ) ), "UTF-8" ) )
         .replaceAll( "\\!", "%21" );
       final String service = MessageFormat.format( CREATE_FOLDER_SERVICE, path );
 
@@ -293,12 +293,8 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     }
 
     final String restName = normalizePath( file.getPath() );
-    try {
-      return MessageFormat
-        .format( urlService, URLEncoder.encode( restName, "UTF-8" ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" ) );
-    } catch ( UnsupportedEncodingException e ) {
-      throw new RuntimeException( e );
-    }
+    return MessageFormat
+      .format( urlService, URLEncoder.encodeUTF8( restName ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" ) );
   }
 
   public String getUrl( final FileName file ) throws FileSystemException {
@@ -395,10 +391,9 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     final String path = normalizePath( fileDto.getPath() );
     String urlPath = path;
     try {
-      urlPath = URLEncoder.encode( path, "UTF-8" ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" );
-    } catch ( UnsupportedEncodingException e ) {
-      throw new RuntimeException( e );
-    }
+      urlPath = URLEncoder.encodeUTF8( path ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" );
+    } catch ( Exception ex ) {
+    } //tcb
     final String service = MessageFormat.format( DOWNLOAD_SERVICE, urlPath );
 
     return client.resource( url + service ).accept( MediaType.APPLICATION_XML_TYPE ).get( byte[].class );
@@ -414,13 +409,8 @@ public class JCRSolutionFileModel implements SolutionFileModel {
       b.append( fileName[ i ] );
     }
 
-    String service = null;
-    try {
-      service = MessageFormat.format( UPLOAD_SERVICE,
-        URLEncoder.encode( normalizePath( b.toString() ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" ), "UTF-8" ) );
-    } catch ( UnsupportedEncodingException e ) {
-      throw new RuntimeException( e );
-    }
+    String service = MessageFormat.format( UPLOAD_SERVICE,
+      URLEncoder.encodeUTF8( normalizePath( b.toString() ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" ) ) );
     final WebResource resource = client.resource( url + service );
     final ByteArrayInputStream stream = new ByteArrayInputStream( data );
     final ClientResponse response = resource.put( ClientResponse.class, stream );
