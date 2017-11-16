@@ -37,7 +37,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.Bu
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-import java.net.URLEncoder;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.pensol.PentahoSolutionsFileSystemConfigBuilder;
 import org.pentaho.reporting.libraries.pensol.PublishRestUtil;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
