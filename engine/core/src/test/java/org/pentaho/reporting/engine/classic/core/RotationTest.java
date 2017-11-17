@@ -256,6 +256,7 @@ public class RotationTest {
     URL url = getClass().getResource( "BACKLOG-10064.prpt" );
     MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
     report.getReportConfiguration().setConfigProperty( HtmlTableModule.INLINE_STYLE, "true" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.STRICT_ERROR_HANDLING_KEY, "false" );
 
     List<String> elementsIdList = Arrays.asList("topLeft90","topCenter90","topRight90","topJustify90",
                                                 "topLeft-90","topCenter-90","topRight-90","topJustify-90",

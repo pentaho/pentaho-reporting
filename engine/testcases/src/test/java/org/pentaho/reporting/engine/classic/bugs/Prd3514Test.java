@@ -21,12 +21,7 @@ import junit.framework.TestCase;
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.env.EnvironmentFactory;
 import net.sourceforge.barbecue.env.HeadlessEnvironment;
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
-import org.pentaho.reporting.engine.classic.core.Band;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.Element;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.*;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -84,6 +79,7 @@ public class Prd3514Test extends TestCase {
 
   public void testWeirdTocLayout() throws Exception {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-3514.prpt" );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.STRICT_ERROR_HANDLING_KEY, "false" );
     SubReport toc = (SubReport) report.getReportHeader().getElement( 0 );
     Band paragraph = (Band) toc.getItemBand().getElement( 1 );
     paragraph.setName( "outer-box" );
