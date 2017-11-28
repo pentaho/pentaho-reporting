@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.DefaultImageReference;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
@@ -234,7 +235,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
           .warn( "Excel-Cells cannot contain formulas longer than 1023 characters. Converting excel formula into plain text" );
     }
 
-    handleValueType( cell, value, workbook );
+    handleValueType( cell, content instanceof Element && ( (Element) content ).isVisible() ? value : null, workbook );
     return true;
   }
 
