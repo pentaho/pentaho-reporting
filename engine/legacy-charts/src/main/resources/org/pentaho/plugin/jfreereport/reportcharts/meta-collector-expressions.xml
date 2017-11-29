@@ -250,13 +250,13 @@
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.collectors.IntervalXYSeriesCollectorBundle"
               result="org.jfree.data.xy.IntervalXYDataset"
               expert="false" hidden="false" preferred="false" deprecated="false">
-    <property name="xMinValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+    <property name="XMinValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
               hidden="false"/>
-    <property name="yMinValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+    <property name="YMinValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
               hidden="false"/>
-    <property name="xMaxValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+    <property name="XMaxValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
               hidden="false"/>
-    <property name="yMaxValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
+    <property name="YMaxValueColumn" mandatory="false" preferred="false" value-role="Field" expert="false"
               hidden="false"/>
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
