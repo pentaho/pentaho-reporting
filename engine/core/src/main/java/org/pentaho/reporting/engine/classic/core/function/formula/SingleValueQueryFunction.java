@@ -120,7 +120,7 @@ public class SingleValueQueryFunction implements Function {
     } catch ( EvaluationException e ) {
       throw e;
     } catch ( Exception e ) {
-      SingleValueQueryFunction.logger.warn( "SingleValueQueryFunction: Failed to perform query", e );
+      SingleValueQueryFunction.logger.error( "SingleValueQueryFunction: Failed to perform query", e );
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE );
     }
   }
