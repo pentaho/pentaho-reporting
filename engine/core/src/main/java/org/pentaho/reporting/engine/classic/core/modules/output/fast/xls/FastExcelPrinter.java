@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
+import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.CellLayoutInfo;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastSheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.SheetPropertyCollector;
@@ -235,8 +236,25 @@ public class FastExcelPrinter extends ExcelPrinterBase {
           .warn( "Excel-Cells cannot contain formulas longer than 1023 characters. Converting excel formula into plain text" );
     }
 
-    handleValueType( cell, content instanceof Element && ( (Element) content ).isVisible() ? value : null, workbook );
+    handleValueType( cell, getValueIfVisible( content, value ), workbook );
     return true;
+  }
+
+  /**
+   * Determines if the element is marked as hidden and returns either the original value or null if hidden. This happens
+   * when an element is hidden and consumes space.
+   *
+   * @return The original value or null if the element is marked as hidden.
+   */
+  protected Object getValueIfVisible( final ReportElement content, final Object value ) {
+    if ( content instanceof Element ) {
+      SimpleStyleSheet style = ( (Element) content ).getComputedStyle();
+      Boolean visible = (Boolean) style.getStyleProperty( ElementStyleKeys.VISIBLE, Boolean.TRUE );
+
+      return visible ? value : null;
+    }
+
+    return value;
   }
 
   private boolean handleImageValues( final ReportElement content, final TableRectangle rectangle, final Object value ) {
