@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>8.1-SNAPSHOT</version>
+    <version>8.1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>libloader</artifactId>
-  <version>8.1-SNAPSHOT</version>
+  <version>8.1.0.0-SNAPSHOT</version>
   <name>LibLoader</name>
   <description>LibLoader is a general purpose resource loading framework. It has been
     designed to allow to load resources from any physical location and to
@@ -107,6 +107,16 @@
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>batik-transcoder</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-constants</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-i18n</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
