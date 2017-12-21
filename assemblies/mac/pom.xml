@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>reporting-assemblies</artifactId>
-    <version>8.0-SNAPSHOT</version>
+    <version>8.0.0.1-99</version>
   </parent>
   <artifactId>prd-ce-mac</artifactId>
-  <version>8.0-SNAPSHOT</version>
+  <version>8.0.0.1-99</version>
   <packaging>pom</packaging>
   <name>Pentaho Report Designer CE Assembly (mac)</name>
   <licenses>

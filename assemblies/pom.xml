@@ -5,17 +5,17 @@
   <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>pentaho-reporting</artifactId>
-    <version>8.0-SNAPSHOT</version>
+    <version>8.0.0.1-99</version>
   </parent>
   <artifactId>reporting-assemblies</artifactId>
-  <version>8.0-SNAPSHOT</version>
+  <version>8.0.0.1-99</version>
   <packaging>pom</packaging>
   <name>Pentaho Reporting Assemblies</name>
   <properties>
     <stage.dir.designer>${stage.dir}/report-designer</stage.dir.designer>
     <stage.dir>${project.build.directory}/stage</stage.dir>
-    <dependency.hadoop-shims-api.revision>${project.version}</dependency.hadoop-shims-api.revision>
-    <dependency.oss-licenses.revision>${project.version}</dependency.oss-licenses.revision>
+    <dependency.hadoop-shims-api.revision>80.2017.10.00-28</dependency.hadoop-shims-api.revision>
+    <dependency.oss-licenses.revision>8.0.0.1-99</dependency.oss-licenses.revision>
   </properties>
   <dependencies>
     <dependency>
