@@ -92,7 +92,7 @@
     <commons-configuration.version>1.9</commons-configuration.version>
     <commons-collections.version>3.2.2</commons-collections.version>
     <joda.version>1.6</joda.version>
-    <xmlgraphics-commons.version>1.5</xmlgraphics-commons.version>
+    <xmlgraphics-commons.version>2.2</xmlgraphics-commons.version>
     <commons-io.version>2.2</commons-io.version>
     <sassy.version>0.5</sassy.version>
     <pentaho.platform.version>8.0-SNAPSHOT</pentaho.platform.version>
@@ -150,7 +150,7 @@
     <oss-licenses.version>8.0-SNAPSHOT</oss-licenses.version>
     <openerp.version>1.1.0</openerp.version>
     <pdi-dataservice-client-plugin.version>8.0-SNAPSHOT</pdi-dataservice-client-plugin.version>
-    <batik.version>1.8</batik.version>
+    <batik.version>1.9.1</batik.version>
     <itext.version>2.1.7</itext.version>
     <mondrian.version>8.0-SNAPSHOT</mondrian.version>
     <kettle-xml-plugin.version>8.0-SNAPSHOT</kettle-xml-plugin.version>
@@ -2277,6 +2277,28 @@
           <exclusion>
             <artifactId>*</artifactId>
             <groupId>*</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-constants</artifactId>
+        <version>${batik.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-i18n</artifactId>
+        <version>${batik.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
