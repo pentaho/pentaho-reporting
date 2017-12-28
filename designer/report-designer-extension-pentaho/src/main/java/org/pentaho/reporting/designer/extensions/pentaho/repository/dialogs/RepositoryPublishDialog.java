@@ -64,6 +64,8 @@ import java.net.URL;
 public class RepositoryPublishDialog extends RepositoryOpenDialog {
 
   private static final String MIME_MESSAGE_TEXT_HTML = "mime-message/text/html";
+  private static final String ROOT_DIRECTORY = "/";
+
 
   private class NewFolderAction extends AbstractAction {
     /**
@@ -407,6 +409,12 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
       final FileObject targetFile =
           selectedView.resolveFile( URLEncoder.encodeUTF8( getFileNameTextField().getText() ).replaceAll( ":", "%3A" )
               .replaceAll( "\\+", "%2B" ).replaceAll( "\\!", "%21" ) );
+      if ( ROOT_DIRECTORY.equals( targetFile.getName().getParent().getPath() ) ) {
+        JOptionPane.showMessageDialog( RepositoryPublishDialog.this, Messages.getInstance().formatMessage(
+                "PublishToServerAction.TargetDirectoryIsRootDirectory", filename, PublishUtil.getReservedCharsDisplay() ), Messages
+                .getInstance().getString( "PublishToServerAction.Error.Title" ), JOptionPane.ERROR_MESSAGE );
+        return false;
+      }
       final FileObject fileObject = selectedView.getFileSystem().resolveFile( targetFile.getName() );
       if ( fileObject.getType() == FileType.IMAGINARY ) {
         return true;
