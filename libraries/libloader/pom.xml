@@ -115,6 +115,16 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-constants</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-i18n</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis-ext</artifactId>
       <scope>compile</scope>
