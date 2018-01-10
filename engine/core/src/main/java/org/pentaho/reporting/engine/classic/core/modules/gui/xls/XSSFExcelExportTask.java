@@ -17,14 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.xls;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.vfs2.FileObject;
+import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -108,20 +107,13 @@ public class XSSFExcelExportTask implements Runnable {
   @Override
   public void run() {
     OutputStream out = null;
-    File file = null;
+    FileObject file = null;
     try {
-      file = new File( fileName ).getCanonicalFile();
+      file = KettleVFS.getFileObject( fileName );
       if ( createParentFolder ) {
-        final File directory = file.getParentFile();
-        if ( directory != null ) {
-          if ( directory.exists() == false ) {
-            if ( directory.mkdirs() == false ) {
-              XSSFExcelExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
-            }
-          }
-        }
+        file.getParent().createFolder();
       }
-      out = new BufferedOutputStream( new FileOutputStream( file ) );
+      out = file.getContent().getOutputStream();
 
       ReportStructureValidator validator = new ReportStructureValidator();
       ReportProcessor reportProcessor;

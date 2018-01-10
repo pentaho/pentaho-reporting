@@ -19,6 +19,8 @@ package org.pentaho.reporting.engine.classic.core.modules.gui.csv;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.vfs2.FileObject;
+import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -34,9 +36,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Stream
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -117,19 +116,13 @@ public class CSVTableExportTask implements Runnable {
   public void run() {
     OutputStream out = null;
 
-    final File file = new File( fileName );
+    FileObject file = null;
     try {
+      file = KettleVFS.getFileObject( fileName );
       if ( createParentFolder ) {
-        final File directory = file.getAbsoluteFile().getParentFile();
-        if ( directory != null ) {
-          if ( directory.exists() == false ) {
-            if ( directory.mkdirs() == false ) {
-              CSVTableExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
-            }
-          }
-        }
+        file.getParent().createFolder();
       }
-      out = new BufferedOutputStream( new FileOutputStream( file ) );
+      out = file.getContent().getOutputStream();
 
       ReportProcessor reportProcessor;
       ReportStructureValidator validator = new ReportStructureValidator();

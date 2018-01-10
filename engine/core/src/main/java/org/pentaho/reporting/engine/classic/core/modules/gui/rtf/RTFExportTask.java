@@ -18,14 +18,15 @@
 package org.pentaho.reporting.engine.classic.core.modules.gui.rtf;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.vfs2.FileObject;
+import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -111,20 +112,18 @@ public class RTFExportTask implements Runnable {
   @Override
   public void run() {
     OutputStream out = null;
-    File file = null;
+    FileObject file = null;
     try {
-      file = new File( fileName ).getCanonicalFile();
+      file = KettleVFS.getFileObject( fileName );
       if ( createParentFolder ) {
-        final File directory = file.getParentFile();
+        final FileObject directory = file.getParent();
         if ( directory != null ) {
           if ( directory.exists() == false ) {
-            if ( directory.mkdirs() == false ) {
-              RTFExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
-            }
+            directory.createFolder();
           }
         }
       }
-      out = new BufferedOutputStream( new FileOutputStream( file ) );
+      out = new BufferedOutputStream( file.getContent().getOutputStream() );
       final StreamRTFOutputProcessor target =
           new StreamRTFOutputProcessor( report.getConfiguration(), out, report.getResourceManager() );
       final StreamReportProcessor proc = new StreamReportProcessor( report, target );
