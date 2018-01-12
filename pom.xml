@@ -1362,8 +1362,8 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>pentaho-cassandra-plugin</artifactId>
+        <groupId>org.pentaho</groupId>
+        <artifactId>pentaho-cassandra-plugin-package</artifactId>
         <version>${pentaho-cassandra-plugin.version}</version>
         <type>zip</type>
         <exclusions>
