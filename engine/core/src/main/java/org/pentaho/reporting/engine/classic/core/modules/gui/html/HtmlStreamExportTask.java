@@ -17,8 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.html;
 
+import java.util.Locale;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.vfs2.FileObject;
+import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -42,11 +46,7 @@ import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
-import org.pentaho.reporting.libraries.repository.file.FileRepository;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+import org.pentaho.reporting.libraries.repository.fileobject.FileObjectRepository;
 
 /**
  * An export task implementation that exports the report into a single HTML file.
@@ -70,7 +70,7 @@ public class HtmlStreamExportTask implements Runnable {
    */
   private final MasterReport report;
   private StatusListener statusListener;
-  private File targetDirectory;
+  private FileObject targetDirectory;
   private String suffix;
   private String filename;
   private boolean createParentFolder;
@@ -114,20 +114,20 @@ public class HtmlStreamExportTask implements Runnable {
       } else {
         this.createParentFolder = Boolean.parseBoolean( createParentFolder );
       }
-      final File targetFile = new File( targetFileName ).getCanonicalFile();
-      targetDirectory = targetFile.getParentFile();
+      final FileObject targetFile = KettleVFS.getFileObject( targetFileName );
+      targetDirectory = targetFile.getParent();
 
       suffix = getSuffix( targetFileName );
-      filename = IOUtils.getInstance().stripFileExtension( targetFile.getName() );
+      filename = IOUtils.getInstance().stripFileExtension( targetFile.getName().getBaseName() );
 
       if ( targetFile.exists() ) {
         // lets try to delete it ..
         if ( targetFile.delete() == false ) {
           throw new ReportProcessingException( messages.getErrorString(
-              "HtmlStreamExportTask.ERROR_0003_TARGET_FILE_EXISTS", targetFile.getAbsolutePath() ) ); //$NON-NLS-1$
+              "HtmlStreamExportTask.ERROR_0003_TARGET_FILE_EXISTS", targetFile.toString() ) ); //$NON-NLS-1$
         }
       }
-    } catch ( IOException ioe ) {
+    } catch ( Exception ioe ) {
       throw new ReportProcessingException( "Failed to normalize directories.", ioe );
     }
   }
@@ -146,16 +146,9 @@ public class HtmlStreamExportTask implements Runnable {
   public void run() {
     try {
       if ( createParentFolder ) {
-        final File directory = targetDirectory.getCanonicalFile();
-        if ( directory != null ) {
-          if ( directory.exists() == false ) {
-            if ( directory.mkdirs() == false ) {
-              HtmlStreamExportTask.logger.warn( "Can't create directories." ); //$NON-NLS-1$
-            }
-          }
-        }
+        targetDirectory.createFolder();
       }
-      final FileRepository targetRepository = new FileRepository( targetDirectory );
+      final FileObjectRepository targetRepository = new FileObjectRepository( targetDirectory );
       final ContentLocation targetRoot = targetRepository.getRoot();
 
       // final DummyRepository dataRepository = new DummyRepository();

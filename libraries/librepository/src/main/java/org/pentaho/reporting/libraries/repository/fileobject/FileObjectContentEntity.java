@@ -15,27 +15,26 @@
 * Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
-package org.pentaho.reporting.libraries.repository.file;
+package org.pentaho.reporting.libraries.repository.fileobject;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
 import org.pentaho.reporting.libraries.repository.ContentEntity;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.LibRepositoryBoot;
 import org.pentaho.reporting.libraries.repository.Repository;
-
-import java.io.File;
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * A content-entity that uses a java.io.File as backend. The entity can read the {@link
  * LibRepositoryBoot#SIZE_ATTRIBUTE} and can read and write the {@link LibRepositoryBoot#VERSION_ATTRIBUTE}.
  *
  * @author Thomas Morgner
- * 
- * @deprecated use FileObject version for VFS access
  */
-public abstract class FileContentEntity implements ContentEntity, Serializable {
-  private File backend;
+public abstract class FileObjectContentEntity implements ContentEntity, Serializable {
+  private FileObject backend;
   private ContentLocation parent;
   private Repository repository;
   private static final long serialVersionUID = 3962114134995757847L;
@@ -46,7 +45,7 @@ public abstract class FileContentEntity implements ContentEntity, Serializable {
    * @param parent  the content location representing the parent directory.
    * @param backend the file representing this entity.
    */
-  protected FileContentEntity( final ContentLocation parent, final File backend ) {
+  protected FileObjectContentEntity( final ContentLocation parent, final FileObject backend ) {
     if ( backend == null ) {
       throw new NullPointerException( "Backend file must be given." );
     }
@@ -64,7 +63,7 @@ public abstract class FileContentEntity implements ContentEntity, Serializable {
    * @param repository the repository for which this entity is created.
    * @param backend    the file representing this entity.
    */
-  protected FileContentEntity( final Repository repository, final File backend ) {
+  protected FileObjectContentEntity( final Repository repository, final FileObject backend ) {
     if ( backend == null ) {
       throw new NullPointerException( "Backend file must be given." );
     }
@@ -90,7 +89,7 @@ public abstract class FileContentEntity implements ContentEntity, Serializable {
    * @return the name, never null.
    */
   public String getName() {
-    return backend.getName();
+    return backend.getPublicURIString();
   }
 
   /**
@@ -98,7 +97,7 @@ public abstract class FileContentEntity implements ContentEntity, Serializable {
    *
    * @return the file, never null.
    */
-  protected File getBackend() {
+  protected FileObject getBackend() {
     return backend;
   }
 
@@ -121,12 +120,16 @@ public abstract class FileContentEntity implements ContentEntity, Serializable {
    * @return the value or null, if the content-entity does not have a value for this attribute.
    */
   public Object getAttribute( final String domain, final String key ) {
-    if ( LibRepositoryBoot.REPOSITORY_DOMAIN.equals( domain ) ) {
-      if ( LibRepositoryBoot.SIZE_ATTRIBUTE.equals( key ) ) {
-        return new Long( backend.length() );
-      } else if ( LibRepositoryBoot.VERSION_ATTRIBUTE.equals( key ) ) {
-        return new Date( backend.lastModified() );
+    try {
+      if ( LibRepositoryBoot.REPOSITORY_DOMAIN.equals( domain ) ) {
+        if ( LibRepositoryBoot.SIZE_ATTRIBUTE.equals( key ) ) {
+          return new Long( backend.getContent().getSize() );
+        } else if ( LibRepositoryBoot.VERSION_ATTRIBUTE.equals( key ) ) {
+          return new Date( backend.getContent().getLastModifiedTime() );
+        }
       }
+    } catch ( FileSystemException ex ) {
+      throw new RuntimeException( ex );
     }
     return null;
   }
@@ -142,18 +145,24 @@ public abstract class FileContentEntity implements ContentEntity, Serializable {
    * @return true, if the update was successful, false otherwise.
    */
   public boolean setAttribute( final String domain, final String key, final Object value ) {
-    if ( LibRepositoryBoot.REPOSITORY_DOMAIN.equals( domain ) ) {
-      if ( LibRepositoryBoot.VERSION_ATTRIBUTE.equals( key ) ) {
-        if ( value instanceof Date ) {
-          final Date date = (Date) value;
-          return backend.setLastModified( date.getTime() );
-        } else if ( value instanceof Number ) {
-          final Number time = (Number) value;
-          return backend.setLastModified( time.longValue() );
+    try {
+      if ( LibRepositoryBoot.REPOSITORY_DOMAIN.equals( domain ) ) {
+        if ( LibRepositoryBoot.VERSION_ATTRIBUTE.equals( key ) ) {
+          if ( value instanceof Date ) {
+            final Date date = (Date) value;
+            backend.getContent().setLastModifiedTime( date.getTime() );
+            return true;
+          } else if ( value instanceof Number ) {
+            final Number time = (Number) value;
+            backend.getContent().setLastModifiedTime( time.longValue() );
+            return true;
+          }
         }
       }
+      return false;
+    } catch ( FileSystemException ex ) {
+      throw new RuntimeException( ex );
     }
-    return false;
   }
 
   /**
@@ -173,6 +182,11 @@ public abstract class FileContentEntity implements ContentEntity, Serializable {
    * @return true, if the entity was deleted and detached from the repository, false otherwise.
    */
   public boolean delete() {
-    return backend.delete();
+    try {
+      backend.delete();
+      return false;
+    } catch ( FileSystemException ex ) {
+      throw new RuntimeException( ex );
+    }
   }
 }

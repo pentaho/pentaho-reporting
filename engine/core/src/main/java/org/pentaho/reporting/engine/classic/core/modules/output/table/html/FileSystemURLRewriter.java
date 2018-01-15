@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
@@ -22,6 +22,7 @@ import org.pentaho.reporting.libraries.repository.ContentEntity;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.Repository;
 import org.pentaho.reporting.libraries.repository.UrlRepository;
+import org.pentaho.reporting.libraries.repository.fileobject.FileObjectRepository;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -47,6 +48,9 @@ public class FileSystemURLRewriter implements URLRewriter {
 
     final UrlRepository dataUrlRepo = (UrlRepository) dataRepository;
     final String dataPath = buildPath( dataEntity );
+    if ( dataRepository instanceof FileObjectRepository ) {
+      return dataPath;
+    }
     final URL dataItemUrl;
     try {
       dataItemUrl = new URL( dataUrlRepo.getURL(), dataPath );

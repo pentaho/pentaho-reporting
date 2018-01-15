@@ -15,22 +15,20 @@
 * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
 */
 
-package org.pentaho.reporting.libraries.repository.file;
+package org.pentaho.reporting.libraries.repository.fileobject;
 
+import java.io.IOException;
+import java.util.Random;
+
+import org.apache.commons.vfs2.FileObject;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.repository.MimeRegistry;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 
-import java.io.File;
-import java.io.IOException;
+public class TempFileObjectNameGenerator implements NameGenerator {
+  private FileObjectContentLocation fileContentLocation;
 
-/**
- * @deprecated use FileObject version for VFS access
- */
-public class TempFileNameGenerator implements NameGenerator {
-  private FileContentLocation fileContentLocation;
-
-  public TempFileNameGenerator( final FileContentLocation fileContentLocation ) {
+  public TempFileObjectNameGenerator( final FileObjectContentLocation fileContentLocation ) {
     if ( fileContentLocation == null ) {
       throw new NullPointerException();
     }
@@ -49,11 +47,11 @@ public class TempFileNameGenerator implements NameGenerator {
    */
   public String generateName( final String nameHint, final String mimeType ) throws ContentIOException {
     final MimeRegistry mimeRegistry = fileContentLocation.getRepository().getMimeRegistry();
-    final File targetDirectory = fileContentLocation.getBackend();
+    final FileObject targetDirectory = fileContentLocation.getBackend();
     final String suffix = mimeRegistry.getSuffix( mimeType );
     try {
-      final File tempFile = File.createTempFile( nameHint, "." + suffix, targetDirectory );
-      return tempFile.getName();
+      FileObject tempFile = targetDirectory.resolveFile( nameHint + new Random().nextLong() + "." + suffix );
+      return tempFile.getPublicURIString();
     } catch ( IOException e ) {
       throw new ContentIOException( "Unable to generate a name for the data file", e );
     }

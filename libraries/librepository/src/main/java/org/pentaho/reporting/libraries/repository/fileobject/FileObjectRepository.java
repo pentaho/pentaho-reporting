@@ -15,32 +15,36 @@
 * Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
-package org.pentaho.reporting.libraries.repository.file;
+package org.pentaho.reporting.libraries.repository.fileobject;
 
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultMimeRegistry;
 import org.pentaho.reporting.libraries.repository.MimeRegistry;
 import org.pentaho.reporting.libraries.repository.UrlRepository;
 
-import java.io.File;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * A file-repository uses a subset of the local filesystem to provide a repository view on top of it. This repository
- * type is the most commonly used repository, as most applications are allowed to access the local filsystem.
+ * type is the most commonly used repository, as most applications are allowed to access the local filesystem.
  *
  * @author Thomas Morgner
  * 
- * @deprecated use FileObject version for VFS access
+ * Implementation for VFS. Original implementation(FileRepository) should be removed after reporting will use VFS.
+ * 
+ * @author Alexander Buloichik
  */
-public class FileRepository implements UrlRepository, Serializable {
+public class FileObjectRepository implements UrlRepository, Serializable {
   private static final long serialVersionUID = -6221548332596506480L;
 
   private MimeRegistry mimeRegistry;
-  private FileContentLocation root;
+  private FileObjectContentLocation root;
 
   /**
    * Creates a new repository for the given file. The file must point to a directory. This constructor uses the default
@@ -49,7 +53,7 @@ public class FileRepository implements UrlRepository, Serializable {
    * @param file the directory, which should form the root of the repository.
    * @throws ContentIOException if an error prevents the repository creation.
    */
-  public FileRepository( final File file ) throws ContentIOException {
+  public FileObjectRepository( final FileObject file ) throws ContentIOException {
     this( file, new DefaultMimeRegistry() );
   }
 
@@ -60,7 +64,7 @@ public class FileRepository implements UrlRepository, Serializable {
    * @param mimeRegistry the mime registry to be used.
    * @throws ContentIOException if an error prevents the repository creation.
    */
-  public FileRepository( final File file, final MimeRegistry mimeRegistry ) throws ContentIOException {
+  public FileObjectRepository( final FileObject file, final MimeRegistry mimeRegistry ) throws ContentIOException {
     if ( mimeRegistry == null ) {
       throw new NullPointerException( "MimeRegistry must be given" );
     }
@@ -68,7 +72,7 @@ public class FileRepository implements UrlRepository, Serializable {
       throw new NullPointerException( "File must be given" );
     }
     this.mimeRegistry = mimeRegistry;
-    this.root = new FileContentLocation( this, file );
+    this.root = new FileObjectContentLocation( this, file );
   }
 
   /**
@@ -98,6 +102,10 @@ public class FileRepository implements UrlRepository, Serializable {
    * @throws MalformedURLException if the URL could not be computed.
    */
   public URL getURL() throws MalformedURLException {
-    return root.getBackend().toURI().toURL();
+    try {
+      return root.getBackend().getURL();
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
+    }
   }
 }
