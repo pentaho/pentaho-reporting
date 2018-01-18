@@ -317,8 +317,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>pentaho-cassandra-plugin</artifactId>
+      <groupId>org.pentaho</groupId>
+      <artifactId>pentaho-cassandra-plugin-package</artifactId>
       <type>zip</type>
       <scope>compile</scope>
     </dependency>
