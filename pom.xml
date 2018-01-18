@@ -117,7 +117,7 @@
     <jettyson.version>1.2</jettyson.version>
     <ldapjdk.version>20000524</ldapjdk.version>
     <jcifs.version>1.3.3</jcifs.version>
-    <pentaho-xul.version>8.1.0.0-SNAPSHOT</pentaho-xul.version>
+    <commons-xul.version>8.1.0.0-SNAPSHOT</commons-xul.version>
     <sqlite.version>3.7.2</sqlite.version>
     <big-data-plugin.version>8.1.0.0-SNAPSHOT</big-data-plugin.version>
     <avalon.version>4.1.5</avalon.version>
@@ -206,9 +206,9 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>pentaho-xul-core</artifactId>
-        <version>${pentaho-xul.version}</version>
+        <groupId>org.pentaho</groupId>
+        <artifactId>commons-xul-core</artifactId>
+        <version>${commons-xul.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
@@ -217,9 +217,9 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>pentaho-xul-swing</artifactId>
-        <version>${pentaho-xul.version}</version>
+        <groupId>org.pentaho</groupId>
+        <artifactId>commons-xul-swing</artifactId>
+        <version>${commons-xul.version}</version>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>
@@ -231,8 +231,8 @@
             <groupId>org.eclipse.swt</groupId>
           </exclusion>
           <exclusion>
-            <artifactId>pentaho-xul-swt</artifactId>
-            <groupId>pentaho</groupId>
+            <artifactId>commons-xul-swt</artifactId>
+            <groupId>org.pentaho</groupId>
           </exclusion>
           <exclusion>
             <artifactId>kettle-ui-swt</artifactId>
@@ -711,16 +711,16 @@
         <version>${pentaho-mql-editor.version}</version>
         <exclusions>
           <exclusion>
-            <artifactId>pentaho-xul-swt</artifactId>
-            <groupId>pentaho</groupId>
+            <artifactId>commons-xul-swt</artifactId>
+            <groupId>org.pentaho</groupId>
           </exclusion>
           <exclusion>
             <artifactId>*</artifactId>
             <groupId>org.pentaho.reporting.*</groupId>
           </exclusion>
           <exclusion>
-            <artifactId>pentaho-xul-gwt</artifactId>
-            <groupId>pentaho</groupId>
+            <artifactId>commons-xul-gwt-impl</artifactId>
+            <groupId>org.pentaho</groupId>
           </exclusion>
           <exclusion>
             <artifactId>*</artifactId>
@@ -771,8 +771,8 @@
             <groupId>pentaho</groupId>
           </exclusion>
           <exclusion>
-            <artifactId>pentaho-xul-core</artifactId>
-            <groupId>pentaho</groupId>
+            <artifactId>commons-xul-core</artifactId>
+            <groupId>org.pentaho</groupId>
           </exclusion>
           <exclusion>
             <artifactId>pentaho-cwm</artifactId>
@@ -831,8 +831,8 @@
             <groupId>org.eclipse.swt</groupId>
           </exclusion>
           <exclusion>
-            <artifactId>pentaho-xul-swt</artifactId>
-            <groupId>pentaho</groupId>
+            <artifactId>commons-xul-swt</artifactId>
+            <groupId>org.pentaho</groupId>
           </exclusion>
           <exclusion>
             <artifactId>kettle-ui-swt</artifactId>

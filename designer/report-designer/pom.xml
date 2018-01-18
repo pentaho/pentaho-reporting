@@ -55,8 +55,8 @@
       <artifactId>pentaho-versionchecker</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>pentaho-xul-swing</artifactId>
+      <groupId>org.pentaho</groupId>
+      <artifactId>commons-xul-swing</artifactId>
     </dependency>
     <dependency>
       <groupId>browserlauncher2</groupId>
