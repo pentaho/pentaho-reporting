@@ -15,27 +15,24 @@
 * Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
-package org.pentaho.reporting.libraries.repository.file;
+package org.pentaho.reporting.libraries.repository.fileobject;
 
-import org.pentaho.reporting.libraries.repository.ContentIOException;
-import org.pentaho.reporting.libraries.repository.ContentItem;
-import org.pentaho.reporting.libraries.repository.ContentLocation;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
+import org.pentaho.reporting.libraries.repository.ContentIOException;
+import org.pentaho.reporting.libraries.repository.ContentItem;
+import org.pentaho.reporting.libraries.repository.ContentLocation;
 
 /**
  * A content item wrapping a file.
  *
  * @author Thomas Morgner
- * 
- * @deprecated use FileObject version for VFS access
  */
-public class FileContentItem extends FileContentEntity implements ContentItem {
+public class FileObjectContentItem extends FileObjectContentEntity implements ContentItem {
   private static final long serialVersionUID = 5080072160607835550L;
 
   /**
@@ -44,29 +41,37 @@ public class FileContentItem extends FileContentEntity implements ContentItem {
    * @param parent  the parent.
    * @param backend the backend.
    */
-  public FileContentItem( final ContentLocation parent, final File backend ) {
+  public FileObjectContentItem( final ContentLocation parent, final FileObject backend ) {
     super( parent, backend );
   }
 
   public String getMimeType() throws ContentIOException {
-    final FileRepository fileRepository = (FileRepository) getRepository();
+    final FileObjectRepository fileRepository = (FileObjectRepository) getRepository();
     return fileRepository.getMimeRegistry().getMimeType( this );
   }
 
   public OutputStream getOutputStream() throws ContentIOException, IOException {
-    return new FileOutputStream( getBackend() );
+    return getBackend().getContent().getOutputStream();
   }
 
   public InputStream getInputStream()
     throws ContentIOException, IOException {
-    return new FileInputStream( getBackend() );
+    return getBackend().getContent().getInputStream();
   }
 
   public boolean isReadable() {
-    return getBackend().canRead();
+    try {
+      return getBackend().isReadable();
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
+    }
   }
 
   public boolean isWriteable() {
-    return getBackend().canWrite();
+    try {
+      return getBackend().isWriteable();
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
+    }
   }
 }

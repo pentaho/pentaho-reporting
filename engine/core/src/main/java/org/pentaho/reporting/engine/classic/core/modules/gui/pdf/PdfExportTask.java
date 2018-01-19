@@ -19,6 +19,8 @@ package org.pentaho.reporting.engine.classic.core.modules.gui.pdf;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.vfs2.FileObject;
+import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListener;
@@ -31,9 +33,6 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
@@ -53,7 +52,7 @@ public class PdfExportTask implements Runnable {
   private MasterReport report;
   private ReportProgressDialog progressListener;
   private StatusListener statusListener;
-  private File targetFile;
+  private FileObject targetFile;
   private boolean createParentFolder;
 
   /**
@@ -85,11 +84,15 @@ public class PdfExportTask implements Runnable {
       throw new NullPointerException( "TargetFileName must be set in the configuration." );
     }
 
-    targetFile = new File( targetFileName );
-    if ( targetFile.exists() ) {
-      if ( targetFile.delete() == false ) {
-        throw new ReportProcessingException( messages.getErrorString( "PdfExportTask.ERROR_0001_TARGET_EXISTS" ) ); //$NON-NLS-1$
+    try {
+      targetFile = KettleVFS.getFileObject( targetFileName );
+      if ( targetFile.exists() ) {
+        if ( targetFile.delete() == false ) {
+          throw new ReportProcessingException( messages.getErrorString( "PdfExportTask.ERROR_0001_TARGET_EXISTS" ) ); //$NON-NLS-1$
+        }
       }
+    } catch ( Exception ex ) {
+      throw new ReportProcessingException( ex );
     }
 
     final String createParentFolder =
@@ -114,16 +117,9 @@ public class PdfExportTask implements Runnable {
     OutputStream fout = null;
     try {
       if ( createParentFolder ) {
-        final File directory = targetFile.getAbsoluteFile().getParentFile();
-        if ( directory != null ) {
-          if ( directory.exists() == false ) {
-            if ( directory.mkdirs() == false ) {
-              PdfExportTask.logger.warn( "Can't create directories." ); //$NON-NLS-1$
-            }
-          }
-        }
+        targetFile.getParent().createFolder();
       }
-      fout = new BufferedOutputStream( new FileOutputStream( targetFile ) );
+      fout = targetFile.getContent().getOutputStream();
       final PdfOutputProcessor outputProcessor =
           new PdfOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
       proc = new PageableReportProcessor( report, outputProcessor );

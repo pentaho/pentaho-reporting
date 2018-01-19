@@ -15,9 +15,12 @@
 * Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
-package org.pentaho.reporting.libraries.repository.file;
+package org.pentaho.reporting.libraries.repository.fileobject;
 
-import org.pentaho.reporting.libraries.base.util.IOUtils;
+import java.io.IOException;
+
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
 import org.pentaho.reporting.libraries.repository.ContentCreationException;
 import org.pentaho.reporting.libraries.repository.ContentEntity;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
@@ -26,17 +29,12 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.Repository;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
 
-import java.io.File;
-import java.io.IOException;
-
 /**
  * A content-location that uses a directory as backend.
  *
  * @author Thomas Morgner
- * 
- * @deprecated use FileObject version for VFS access
  */
-public class FileContentLocation extends FileContentEntity implements ContentLocation {
+public class FileObjectContentLocation extends FileObjectContentEntity implements ContentLocation {
   private static final long serialVersionUID = -5452372293937107734L;
 
   /**
@@ -46,9 +44,15 @@ public class FileContentLocation extends FileContentEntity implements ContentLoc
    * @param backend the backend.
    * @throws ContentIOException if an error occured or the file did not point to a directory.
    */
-  public FileContentLocation( final ContentLocation parent, final File backend ) throws ContentIOException {
+  public FileObjectContentLocation( final ContentLocation parent, final FileObject backend ) throws ContentIOException {
     super( parent, backend );
-    if ( backend.exists() == false || backend.isDirectory() == false ) {
+    boolean error;
+    try {
+      error = backend.exists() == false || backend.isFolder() == false;
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
+    }
+    if ( error ) {
       throw new ContentIOException( "The given backend-file is not a directory." );
     }
   }
@@ -60,9 +64,15 @@ public class FileContentLocation extends FileContentEntity implements ContentLoc
    * @param backend    the backend.
    * @throws ContentIOException if an error occured or the file did not point to a directory.
    */
-  public FileContentLocation( final Repository repository, final File backend ) throws ContentIOException {
+  public FileObjectContentLocation( final Repository repository, final FileObject backend ) throws ContentIOException {
     super( repository, backend );
-    if ( backend.exists() == false || backend.isDirectory() == false ) {
+    boolean error;
+    try {
+      error = backend.exists() == false || backend.isFolder() == false;
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
+    }
+    if ( error ) {
       throw new ContentIOException( "The given backend-file is not a directory." );
     }
   }
@@ -75,22 +85,26 @@ public class FileContentLocation extends FileContentEntity implements ContentLoc
    * @throws ContentIOException if an repository error occured.
    */
   public ContentEntity[] listContents() throws ContentIOException {
-    final File file = getBackend();
-    final File[] files = file.listFiles();
-    final ContentEntity[] entities = new ContentEntity[ files.length ];
-    for ( int i = 0; i < files.length; i++ ) {
-      final File child = files[ i ];
-      if ( RepositoryUtilities.isInvalidPathName( child.getName() ) ) {
-        continue;
-      }
+    try {
+      final FileObject file = getBackend();
+      final FileObject[] files = file.getChildren();
+      final ContentEntity[] entities = new ContentEntity[files.length];
+      for ( int i = 0; i < files.length; i++ ) {
+        final FileObject child = files[i];
+        if ( RepositoryUtilities.isInvalidPathName( child.getPublicURIString() ) ) {
+          continue;
+        }
 
-      if ( child.isDirectory() ) {
-        entities[ i ] = new FileContentLocation( this, child );
-      } else if ( child.isFile() ) {
-        entities[ i ] = new FileContentLocation( this, child );
+        if ( child.isFolder() ) {
+          entities[i] = new FileObjectContentLocation( this, child );
+        } else if ( child.isFile() ) {
+          entities[i] = new FileObjectContentLocation( this, child );
+        }
       }
+      return entities;
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
     }
-    return entities;
   }
 
   /**
@@ -101,29 +115,26 @@ public class FileContentLocation extends FileContentEntity implements ContentLoc
    * @throws ContentIOException if an repository error occured.
    */
   public ContentEntity getEntry( final String name ) throws ContentIOException {
-    if ( RepositoryUtilities.isInvalidPathName( name ) ) {
-      throw new IllegalArgumentException( "The name given is not valid." );
-    }
-
-    final File file = getBackend();
-    final File child = new File( file, name );
-    if ( child.exists() == false ) {
-      throw new ContentIOException( "Not found:" + child );
-    }
     try {
-      if ( IOUtils.getInstance().isSubDirectory( file, child ) == false ) {
-        throw new ContentIOException( "The given entry does not point to a sub-directory of this content-location" );
+      if ( RepositoryUtilities.isInvalidPathName( name ) ) {
+        throw new IllegalArgumentException( "The name given is not valid." );
       }
-    } catch ( IOException e ) {
-      throw new ContentIOException( "IO Error.", e );
-    }
 
-    if ( child.isDirectory() ) {
-      return new FileContentLocation( this, child );
-    } else if ( child.isFile() ) {
-      return new FileContentItem( this, child );
-    } else {
-      throw new ContentIOException( "Not File nor directory." );
+      final FileObject file = getBackend();
+      final FileObject child = file.resolveFile( name );
+      if ( child.exists() == false ) {
+        throw new ContentIOException( "Not found:" + child );
+      }
+
+      if ( child.isFolder() ) {
+        return new FileObjectContentLocation( this, child );
+      } else if ( child.isFile() ) {
+        return new FileObjectContentItem( this, child );
+      } else {
+        throw new ContentIOException( "Not File nor directory." );
+      }
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
     }
   }
 
@@ -139,23 +150,24 @@ public class FileContentLocation extends FileContentEntity implements ContentLoc
     if ( RepositoryUtilities.isInvalidPathName( name ) ) {
       throw new IllegalArgumentException( "The name given is not valid." );
     }
-
-    final File file = getBackend();
-    final File child = new File( file, name );
-    if ( child.exists() ) {
-      if ( child.length() == 0 ) {
-        // probably one of the temp files created by the pentaho-system
-        return new FileContentItem( this, child );
-      }
-      throw new ContentCreationException( "File already exists: " + child );
-    }
     try {
-      if ( child.createNewFile() == false ) {
-        throw new ContentCreationException( "Unable to create the file." );
+      final FileObject file = getBackend();
+      final FileObject child = file.resolveFile( name );
+      if ( child.exists() ) {
+        if ( child.getContent().getSize() == 0 ) {
+          // probably one of the temp files created by the pentaho-system
+          return new FileObjectContentItem( this, child );
+        }
+        throw new ContentCreationException( "File already exists: " + child );
       }
-      return new FileContentItem( this, child );
-    } catch ( IOException e ) {
-      throw new ContentCreationException( "IOError while create", e );
+      try {
+        child.createFile();
+        return new FileObjectContentItem( this, child );
+      } catch ( IOException e ) {
+        throw new ContentCreationException( "IOError while create", e );
+      }
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
     }
   }
 
@@ -167,24 +179,24 @@ public class FileContentLocation extends FileContentEntity implements ContentLoc
    * @return the newly created entity, never null.
    * @throws ContentCreationException if the item could not be created.
    */
-  public ContentLocation createLocation( final String name )
-    throws ContentCreationException {
+  public ContentLocation createLocation( final String name ) throws ContentCreationException {
     if ( RepositoryUtilities.isInvalidPathName( name ) ) {
       throw new IllegalArgumentException( "The name given is not valid." );
     }
-
-    final File file = getBackend();
-    final File child = new File( file, name );
-    if ( child.exists() ) {
-      throw new ContentCreationException( "File already exists." );
-    }
-    if ( child.mkdir() == false ) {
-      throw new ContentCreationException( "Unable to create the directory" );
-    }
     try {
-      return new FileContentLocation( this, child );
-    } catch ( ContentIOException e ) {
-      throw new ContentCreationException( "Failed to create the content-location", e );
+      final FileObject file = getBackend();
+      final FileObject child = file.resolveFile( name );
+      if ( child.exists() ) {
+        throw new ContentCreationException( "File already exists." );
+      }
+      child.createFile();
+      try {
+        return new FileObjectContentLocation( this, child );
+      } catch ( ContentIOException e ) {
+        throw new ContentCreationException( "Failed to create the content-location", e );
+      }
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
     }
   }
 
@@ -199,9 +211,12 @@ public class FileContentLocation extends FileContentEntity implements ContentLoc
     if ( RepositoryUtilities.isInvalidPathName( name ) ) {
       return false;
     }
-
-    final File file = getBackend();
-    final File child = new File( file, name );
-    return ( child.exists() );
+    try {
+      final FileObject file = getBackend();
+      final FileObject child = file.resolveFile( name );
+      return child.exists();
+    } catch ( FileSystemException e ) {
+      throw new RuntimeException( e );
+    }
   }
 }

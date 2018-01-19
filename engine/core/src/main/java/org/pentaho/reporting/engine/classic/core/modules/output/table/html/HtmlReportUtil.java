@@ -17,26 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.vfs2.FileObject;
+import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
-import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
-import org.pentaho.reporting.libraries.repository.file.FileRepository;
+import org.pentaho.reporting.libraries.repository.fileobject.FileObjectRepository;
 import org.pentaho.reporting.libraries.repository.stream.StreamRepository;
 import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Utility class to provide an easy to use default implementation of html exports.
@@ -64,7 +64,7 @@ public final class HtmlReportUtil {
    * @throws java.io.IOException
    *           if there was an IOerror while processing the report.
    */
-  public static void createStreamHTML( final MasterReport report, final String filename ) throws IOException,
+  public static void createStreamHTML( final MasterReport report, final String filename ) throws Exception,
     ReportProcessingException {
     if ( report == null ) {
       throw new NullPointerException();
@@ -72,8 +72,8 @@ public final class HtmlReportUtil {
     if ( filename == null ) {
       throw new NullPointerException();
     }
-    final File file = new File( filename );
-    final OutputStream fout = new BufferedOutputStream( new FileOutputStream( file ) );
+    final FileObject file = KettleVFS.getFileObject( filename );
+    final OutputStream fout = new BufferedOutputStream( file.getContent().getOutputStream() );
     try {
       createStreamHTML( report, fout );
     } finally {
@@ -139,9 +139,9 @@ public final class HtmlReportUtil {
         isCreateParentFolder = Boolean.parseBoolean( createParentFolder );
       }
 
-      final File targetFile = new File( targetFileName ).getCanonicalFile();
+      final FileObject targetFile = KettleVFS.getFileObject( targetFileName );
 
-      final File targetDirectory = targetFile.getParentFile();
+      final FileObject targetDirectory = targetFile.getParent();
       if ( isCreateParentFolder ) {
         if ( targetFile.exists() ) {
           // try to delete it ..
@@ -149,17 +149,13 @@ public final class HtmlReportUtil {
             throw new IOException( "Unable to remove the already existing target-file." );
           }
         }
-        if ( targetDirectory.exists() == false ) {
-          if ( targetDirectory.mkdirs() == false ) {
-            throw new IOException( "Unable to create the target-directory." );
-          }
-        }
+        targetDirectory.createFolder();
       }
-      final FileRepository targetRepository = new FileRepository( targetDirectory );
+      final FileObjectRepository targetRepository = new FileObjectRepository( targetDirectory );
       final ContentLocation targetRoot = targetRepository.getRoot();
 
       final String suffix = getSuffix( targetFileName );
-      final String filename = IOUtils.getInstance().stripFileExtension( targetFile.getName() );
+      final String filename = IOUtils.getInstance().stripFileExtension( targetFile.getName().getBaseName() );
 
       final FlowHtmlOutputProcessor outputProcessor = new FlowHtmlOutputProcessor();
 
@@ -172,7 +168,7 @@ public final class HtmlReportUtil {
       final FlowReportProcessor sp = new FlowReportProcessor( report, outputProcessor );
       sp.processReport();
       sp.close();
-    } catch ( ContentIOException e ) {
+    } catch ( Exception e ) {
       throw new IOException( "Failed to get or create the repository-root." );
     }
   }
@@ -206,7 +202,7 @@ public final class HtmlReportUtil {
       throw new NullPointerException();
     }
     try {
-      final File targetFile = new File( targetFileName );
+      final FileObject targetFile = KettleVFS.getFileObject( targetFileName );
       if ( targetFile.exists() ) {
         // try to delete it ..
         if ( targetFile.delete() == false ) {
@@ -214,39 +210,30 @@ public final class HtmlReportUtil {
         }
       }
 
-      final File targetDirectory = targetFile.getParentFile().getCanonicalFile();
+      final FileObject targetDirectory = targetFile.getParent();
       if ( targetDirectory.exists() == false ) {
-        if ( targetDirectory.mkdirs() == false ) {
-          throw new IOException( "Unable to create the target-directory." );
-        }
+        targetDirectory.createFolder();
       }
 
-      final File tempDataDir = new File( dataDirectoryName ).getCanonicalFile();
-      File dataDirectory;
-      if ( tempDataDir.isAbsolute() ) {
-        dataDirectory = tempDataDir;
-      } else {
-        dataDirectory = new File( targetDirectory, dataDirectoryName ).getCanonicalFile();
-      }
-      if ( dataDirectory.exists() && dataDirectory.isDirectory() == false ) {
-        dataDirectory = dataDirectory.getParentFile();
-        if ( dataDirectory.isDirectory() == false ) {
+      final FileObject tempDataDir = KettleVFS.getFileObject( dataDirectoryName );
+      FileObject dataDirectory = tempDataDir;
+      if ( dataDirectory.exists() && dataDirectory.isFolder() == false ) {
+        dataDirectory = dataDirectory.getParent();
+        if ( dataDirectory.isFolder() == false ) {
           throw new ReportProcessingException( "DataDirectory is invalid: " + dataDirectory );
         }
       } else if ( dataDirectory.exists() == false ) {
-        if ( dataDirectory.mkdirs() == false ) {
-          throw new IOException( "Unable to create the data-directory." );
-        }
+        dataDirectory.createFolder();
       }
 
-      final FileRepository targetRepository = new FileRepository( targetDirectory );
+      final FileObjectRepository targetRepository = new FileObjectRepository( targetDirectory );
       final ContentLocation targetRoot = targetRepository.getRoot();
 
-      final FileRepository dataRepository = new FileRepository( dataDirectory );
+      final FileObjectRepository dataRepository = new FileObjectRepository( dataDirectory );
       final ContentLocation dataRoot = dataRepository.getRoot();
 
       final String suffix = getSuffix( targetFileName );
-      final String filename = IOUtils.getInstance().stripFileExtension( targetFile.getName() );
+      final String filename = IOUtils.getInstance().stripFileExtension( targetFile.getName().getBaseName() );
 
       final FlowHtmlOutputProcessor outputProcessor = new FlowHtmlOutputProcessor();
 
@@ -259,7 +246,7 @@ public final class HtmlReportUtil {
       final FlowReportProcessor sp = new FlowReportProcessor( report, outputProcessor );
       sp.processReport();
       sp.close();
-    } catch ( ContentIOException e ) {
+    } catch ( Exception e ) {
       throw new IOException( "Failed to get repository-root." );
     }
   }
