@@ -764,7 +764,7 @@
           </exclusion>
           <exclusion>
             <artifactId>pentaho-metadata</artifactId>
-            <groupId>pentaho</groupId>
+            <groupId>org.pentaho</groupId>
           </exclusion>
           <exclusion>
             <artifactId>pentaho-publisher</artifactId>
@@ -1932,7 +1932,7 @@
         <version>${openerp.report.version}</version>
       </dependency>
       <dependency>
-        <groupId>pentaho</groupId>
+        <groupId>org.pentaho</groupId>
         <artifactId>pentaho-metadata</artifactId>
         <version>${pentaho-metadata.version}</version>
         <exclusions>
