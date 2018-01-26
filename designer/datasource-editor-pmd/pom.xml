@@ -34,8 +34,8 @@
       <artifactId>commons-lang</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>pentaho-mql-editor</artifactId>
+      <groupId>org.pentaho</groupId>
+      <artifactId>pentaho-mql-editor-impl</artifactId>
     </dependency>
     <dependency>
       <groupId>cglib</groupId>

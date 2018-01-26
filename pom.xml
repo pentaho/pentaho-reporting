@@ -707,8 +707,8 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>pentaho-mql-editor</artifactId>
+        <groupId>org.pentaho</groupId>
+        <artifactId>pentaho-mql-editor-impl</artifactId>
         <version>${pentaho-mql-editor.version}</version>
         <exclusions>
           <exclusion>
