@@ -41,7 +41,7 @@
     <test.long>false</test.long>
     <test.performance>false</test.performance>
     <test.workers>1</test.workers>
-
+    <powermock.version>1.6.3</powermock.version>
     <akka.version>2.3.3</akka.version>
     <antlr.version>3.5.2</antlr.version>
     <asm.version>3.2</asm.version>
