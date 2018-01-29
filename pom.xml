@@ -39,6 +39,7 @@
     <hibernate.version>3.6.9.Final</hibernate.version>
     <groovy.version>2.4.7</groovy.version>
     <mockito.version>1.10.19</mockito.version>
+    <powermock.version>1.6.3</powermock.version>
     <commons-vfs2.version>2.1-20150824</commons-vfs2.version>
     <pentaho-cassandra-plugin.version>8.0-SNAPSHOT</pentaho-cassandra-plugin.version>
     <pentaho-osgi-bundles.version>8.0-SNAPSHOT</pentaho-osgi-bundles.version>
