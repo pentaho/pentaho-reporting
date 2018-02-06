@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor;
@@ -50,10 +50,11 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.Image;
 import java.beans.BeanInfo;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -80,8 +81,8 @@ public class ReportRenderContext implements ReportDocumentContext {
 
     public void nodeChanged( final ReportModelEvent event ) {
       AbstractReportDefinition report = context.getReportDefinition();
-      if ( event.getElement() == report &&
-        event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED ) {
+      if ( event.getElement() == report
+        && event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED ) {
         context.setTabName( computeTabName( report ) );
       }
     }
@@ -89,8 +90,8 @@ public class ReportRenderContext implements ReportDocumentContext {
     private String computeTabName( final AbstractReportDefinition report ) {
       if ( report instanceof MasterReport ) {
         final MasterReport mreport = (MasterReport) report;
-        final Object title = mreport.getBundle().getMetaData().getBundleAttribute
-          ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE );
+        final Object title = mreport.getBundle().getMetaData().getBundleAttribute(
+          ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE );
         if ( title instanceof String ) {
           return (String) title;
         }
@@ -102,18 +103,18 @@ public class ReportRenderContext implements ReportDocumentContext {
       }
 
       final String theSavePath =
-        (String) report.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME );// NON-NLS
+        (String) report.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME ); // NON-NLS
       if ( !StringUtils.isEmpty( theSavePath ) ) {
         final String fileName = IOUtils.getInstance().getFileName( theSavePath );
         return IOUtils.getInstance().stripFileExtension( fileName );
       }
 
       if ( report instanceof MasterReport ) {
-        return Messages.getString( "ReportDesignerFrame.TabName.UntitledReport" );// NON-NLS
+        return Messages.getString( "ReportDesignerFrame.TabName.UntitledReport" ); // NON-NLS
       } else if ( report instanceof CrosstabElement ) {
-        return Messages.getString( "ReportDesignerFrame.TabName.UntitledCrosstab" );// NON-NLS
+        return Messages.getString( "ReportDesignerFrame.TabName.UntitledCrosstab" ); // NON-NLS
       } else {
-        return Messages.getString( "ReportDesignerFrame.TabName.UntitledSubReport" );// NON-NLS
+        return Messages.getString( "ReportDesignerFrame.TabName.UntitledSubReport" ); // NON-NLS
       }
     }
   }
@@ -175,6 +176,7 @@ public class ReportRenderContext implements ReportDocumentContext {
   private final HashMap<String, Object> properties;
   private final DataSchemaManager dataSchemaManager;
   private final boolean bandedContext;
+  private final ReportDocumentContext parentContext;
   private final ArrayList<ReportDataChangeListener> dataChangeListeners;
   private String tabName;
   private Icon icon;
@@ -219,6 +221,7 @@ public class ReportRenderContext implements ReportDocumentContext {
     this.zoomModel.addZoomModelListener( new ZoomUpdateHandler() );
 
     this.bandedContext = computeBandedContext( parentContext );
+    this.parentContext = parentContext;
 
     this.dataSchemaManager = new AsynchronousDataSchemaManager( masterReportElement, report );
     this.dataSchemaManager.addChangeListener( new DataSchemaManagerUpdateHandler() );
@@ -250,6 +253,7 @@ public class ReportRenderContext implements ReportDocumentContext {
 
     prepareAuthenticationStore( globalAuthenticationStore );
     prepareIcon();
+    resetChangeTracker();
   }
 
   private UndoManager createUndoManager() {
@@ -364,11 +368,19 @@ public class ReportRenderContext implements ReportDocumentContext {
   }
 
   public boolean isChanged() {
-    return getMasterReportElement().getChangeTracker() != changeTracker;
+    if ( parentContext != null ) {
+      return parentContext.isChanged();
+    } else {
+      return getMasterReportElement().getChangeTracker() != changeTracker;
+    }
   }
 
   public void resetChangeTracker() {
-    this.changeTracker = getMasterReportElement().getChangeTracker();
+    if ( parentContext != null ) {
+      parentContext.resetChangeTracker();
+    } else {
+      changeTracker = getMasterReportElement().getChangeTracker();
+    }
   }
 
   public UndoManager getUndo() {
