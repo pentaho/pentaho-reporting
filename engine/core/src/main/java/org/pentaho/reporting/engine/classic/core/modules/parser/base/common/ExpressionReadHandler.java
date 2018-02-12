@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
@@ -57,6 +57,7 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
 
     final String className = attrs.getValue( getUri(), "class" );
     final String formula = attrs.getValue( getUri(), "formula" );
+    final String failOnError = attrs.getValue( getUri(), "failOnError" );
     if ( className == null ) {
       final String initial = attrs.getValue( getUri(), "initial" );
       if ( initial != null ) {
@@ -72,6 +73,9 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
       } else {
         final FormulaExpression expression = new FormulaExpression();
         expression.setFormula( formula );
+        if ( failOnError != null ) {
+          expression.setFailOnError( Boolean.getBoolean( failOnError ) );
+        }
         this.expression = expression;
         this.expression.setName( expressionName );
         this.expression.setDependencyLevel( depLevel );
