@@ -74,7 +74,7 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
         final FormulaExpression expression = new FormulaExpression();
         expression.setFormula( formula );
         if ( failOnError != null ) {
-          expression.setFailOnError( Boolean.getBoolean( failOnError ) );
+          expression.setFailOnError( Boolean.parseBoolean( failOnError ) );
         }
         this.expression = expression;
         this.expression.setName( expressionName );
