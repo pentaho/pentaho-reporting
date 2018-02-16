@@ -102,8 +102,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>pentaho-database-model</artifactId>
+      <groupId>org.pentaho</groupId>
+      <artifactId>commons-database-model</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>

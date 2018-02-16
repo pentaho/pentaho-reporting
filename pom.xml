@@ -50,7 +50,7 @@
     <pentaho.jndi.version>1.0.0</pentaho.jndi.version>
     <syslo4j.version>0.9.46</syslo4j.version>
     <jersey.version>1.19.1</jersey.version>
-    <pentaho-database-model.version>8.1.0.0-SNAPSHOT</pentaho-database-model.version>
+    <commons-database.version>8.1.0.0-SNAPSHOT</commons-database.version>
     <jaxen.version>1.1.1</jaxen.version>
     <wsdl4j.version>1.6.2</wsdl4j.version>
     <infobright.version>3.4</infobright.version>
@@ -1503,9 +1503,9 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>pentaho-database-model</artifactId>
-        <version>${pentaho-database-model.version}</version>
+        <groupId>org.pentaho</groupId>
+        <artifactId>commons-database-model</artifactId>
+        <version>${commons-database.version}</version>
       </dependency>
       <dependency>
         <groupId>bsf</groupId>
