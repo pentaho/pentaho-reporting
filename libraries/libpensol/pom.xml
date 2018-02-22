@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.1.0.9-101</version>
   </parent>
-
   <artifactId>libpensol</artifactId>
-  <packaging>jar</packaging>
-
+  <version>7.1.0.9-101</version>
   <name>LibPensol</name>
   <description>LibPensol is an access layer for accessing a remote Pentaho Solution Repository
     via an Apache-VFS filesystem. It handles all HTTP calls and the parsing of
     the XML file and all client-side state managements.</description>
-
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -22,7 +20,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
