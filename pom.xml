@@ -37,7 +37,7 @@
     <xalan.version>2.6.0</xalan.version>
     <ftp4che.version>0.7.1</ftp4che.version>
     <hibernate.version>3.6.9.Final</hibernate.version>
-    <groovy.version>2.4.7</groovy.version>
+    <groovy.version>2.4.8</groovy.version>
     <mockito.version>1.10.19</mockito.version>
     <powermock.version>1.6.3</powermock.version>
     <commons-vfs2.version>2.1-20150824</commons-vfs2.version>
