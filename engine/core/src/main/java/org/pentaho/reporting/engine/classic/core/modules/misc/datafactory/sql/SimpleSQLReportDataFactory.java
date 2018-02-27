@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
@@ -310,7 +310,12 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     final ResultSet res;
     try {
       currentRunningStatement = statement;
-      res = performQuery( statement, translatedQuery, preparedParameterNames );
+      if ( preparedParameterNames.length == 0 ) {
+        res = statement.executeQuery( translatedQuery );
+      } else {
+        final PreparedStatement pstmt = (PreparedStatement) statement;
+        res = pstmt.executeQuery();
+      }
     } finally {
       currentRunningStatement = null;
     }
@@ -323,18 +328,6 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( res, columnNameMapping );
     }
     return ResultSetTableModelFactory.getInstance().createTableModel( res, columnNameMapping, true );
-  }
-
-  public ResultSet performQuery( Statement statement, final String translatedQuery, final String[] preparedParameterNames )
-    throws SQLException {
-    final ResultSet res;
-    if ( preparedParameterNames.length == 0 ) {
-      res = statement.executeQuery( translatedQuery );
-    } else {
-      final PreparedStatement pstmt = (PreparedStatement) statement;
-      res = pstmt.executeQuery();
-    }
-    return res;
   }
 
   private void parametrize( final DataRow parameters, final String[] params, final PreparedStatement pstmt,
