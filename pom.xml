@@ -150,8 +150,7 @@
     <javax.ws.rs.version>1.1.1</javax.ws.rs.version>
     <oss-licenses.version>8.1.0.0-SNAPSHOT</oss-licenses.version>
     <openerp.version>1.1.0</openerp.version>
-    <pdi-dataservice-client-plugin.version>${project.version}</pdi-dataservice-client-plugin.version>
-    <pdi-dataservice-client-plugin.api.version>${project.version}</pdi-dataservice-client-plugin.api.version>
+    <pdi-dataservice-client-plugin.version>8.1.0.0-SNAPSHOT</pdi-dataservice-client-plugin.version>
     <batik.version>1.9.1</batik.version>
     <itext.version>2.1.7</itext.version>
     <mondrian.version>8.1.0.0-SNAPSHOT</mondrian.version>
@@ -1403,17 +1402,6 @@
         <groupId>pentaho</groupId>
         <artifactId>pdi-dataservice-client-plugin</artifactId>
         <version>${project.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>pdi-dataservice-client-plugin-api</artifactId>
-        <version>${pdi-dataservice-client-plugin.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
