@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function.formula;
@@ -120,7 +120,7 @@ public class SingleValueQueryFunction implements Function {
     } catch ( EvaluationException e ) {
       throw e;
     } catch ( Exception e ) {
-      SingleValueQueryFunction.logger.warn( "SingleValueQueryFunction: Failed to perform query", e );
+      SingleValueQueryFunction.logger.error( "SingleValueQueryFunction: Failed to perform query", e );
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE );
     }
   }

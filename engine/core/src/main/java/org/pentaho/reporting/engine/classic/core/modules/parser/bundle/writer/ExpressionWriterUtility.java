@@ -12,12 +12,10 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
-
-import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,7 +31,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ResourceReference;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.DefaultExpressionPropertyWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionPropertyWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
-import org.pentaho.reporting.engine.classic.core.modules.parser.ext.ExtParserModule;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
@@ -47,6 +44,8 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
+
+import java.io.IOException;
 
 public class ExpressionWriterUtility {
   private static final Log logger = LogFactory.getLog( ExpressionWriterUtility.class );
@@ -276,6 +275,9 @@ public class ExpressionWriterUtility {
         return;
       }
       expressionAttrList.setAttribute( namespaceUri, "formula", fe.getFormula() ); // NON-NLS
+      if ( fe.getFailOnError() != null ) {
+        expressionAttrList.setAttribute( namespaceUri, "failOnError", fe.getFailOnError().toString() ); // NON-NLS
+      }
       writer.writeTag( namespaceUri, expressionTag, expressionAttrList, XmlWriterSupport.CLOSE );
       return;
     }
@@ -409,7 +411,7 @@ public class ExpressionWriterUtility {
 
     final ExpressionPropertyWriteHandler writeHandler = createWriteHandler( e, propertyName );
     if ( writeHandler instanceof BundleExpressionPropertyWriteHandler ) {
-      BundleExpressionPropertyWriteHandler bw = ( BundleExpressionPropertyWriteHandler ) writeHandler;
+      BundleExpressionPropertyWriteHandler bw = (BundleExpressionPropertyWriteHandler) writeHandler;
       bw.initBundleContext( bundle, state );
     }
     writeHandler.writeExpressionParameter( writer, beanUtility, propertyName, namespaceUri );
@@ -425,8 +427,7 @@ public class ExpressionWriterUtility {
       if ( writeHandlerRef != null ) {
         return writeHandlerRef.newInstance();
       }
-    }
-    catch ( Exception ex ) {
+    } catch ( Exception ex ) {
       logger.info( "No valid property metadata defined for " + e.getClass() + " on property " + key );
     }
     return new DefaultExpressionPropertyWriteHandler();
