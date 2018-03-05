@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -153,7 +153,7 @@ public final class HSSFFontWrapper {
 
     fontName = normalizeFontName( font.getFontName() );
     fontHeight = font.getFontHeightInPoints();
-    bold = ( font.getBoldweight() == HSSFFont.BOLDWEIGHT_BOLD );
+    bold = font.getBold();
     italic = font.getItalic();
     underline = ( font.getUnderline() != HSSFFont.U_NONE );
     strikethrough = font.getStrikeout();
