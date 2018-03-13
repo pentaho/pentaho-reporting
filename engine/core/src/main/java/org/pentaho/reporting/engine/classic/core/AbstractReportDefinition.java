@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -743,6 +743,24 @@ public abstract class AbstractReportDefinition extends Section implements Report
   public void setQueryLimit( final int queryLimit ) {
     setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT, IntegerCache
         .getInteger( queryLimit ) );
+  }
+
+  public void setQueryLimitInheritance( final boolean queryLimitInheritance ) {
+    setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT_INHERITANCE, queryLimitInheritance );
+  }
+
+  public boolean isQueryLimitInherited() {
+    final Object queryLimitInheritanceText =  getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT_INHERITANCE );
+    if ( queryLimitInheritanceText instanceof Boolean ) {
+      return (Boolean) queryLimitInheritanceText;
+    } else {
+      final Object masterReportQueryLimitInheritanceText = getMasterReport()
+        .getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT_INHERITANCE );
+      if ( masterReportQueryLimitInheritanceText instanceof Boolean ) {
+        return (Boolean) masterReportQueryLimitInheritanceText;
+      }
+    }
+    return false;
   }
 
   public int getUserQueryLimit() {

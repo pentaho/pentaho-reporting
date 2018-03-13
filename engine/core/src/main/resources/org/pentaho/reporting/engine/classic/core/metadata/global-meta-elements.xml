@@ -430,6 +430,17 @@
                value-role="Value"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="query-limit-inheritance"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               computed="false"
+               transient="false"
+               design-time-value="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
                name="query-timeout"
                mandatory="false"
                expert="false"
