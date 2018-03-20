@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.openformula.ui;
@@ -31,13 +31,11 @@ public class FormulaEditorPanelTest extends TestCase {
   protected void tearDown() throws java.lang.Exception {
   }
 
-
-  // TODO: This test case fails randomly
   public void testNestedFunctionEditing() {
-    if ( true ) {
-      // disable the test as it is not testable in unit-tests at all (thanks to async requests on the EDT).
-      return;
-    }
+    // [PRD-4692] - This test already had problems in the past, but the problematic code doesn't exist anymore
+    //if ( true ) {
+    //  return;
+    //}
 
     final FormulaEditorPanel panel = new FormulaEditorPanel();
     //    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
