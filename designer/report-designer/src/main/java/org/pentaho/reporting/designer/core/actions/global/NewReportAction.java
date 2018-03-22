@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.actions.global;
@@ -29,7 +29,7 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.docbundle.BundleUtilities;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentBundle;
 
-import javax.swing.*;
+import javax.swing.Action;
 import java.awt.event.ActionEvent;
 import java.io.OutputStream;
 
@@ -69,6 +69,7 @@ public final class NewReportAction extends AbstractDesignerContextAction {
     report.setAutoSort( Boolean.TRUE );
     report.setDataFactory( new CompoundDataFactory() );
     report.setQuery( null );
+    report.setQueryLimitInheritance( Boolean.TRUE );
     report.getRelationalGroup( 0 ).getHeader()
       .setAttribute( ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,
         Boolean.TRUE );
@@ -92,11 +93,11 @@ public final class NewReportAction extends AbstractDesignerContextAction {
       final MemoryDocumentBundle bundle = (MemoryDocumentBundle) report.getBundle();
       if ( bundle.isEntryExists( TRANSLATIONS_PROPERTIES ) == false ) {
         final String defaultMessage = ActionMessages.getString( "Translations.DefaultContent" );
-        final OutputStream outputStream = bundle.createEntry( TRANSLATIONS_PROPERTIES, "text/plain" );// NON-NLS
-        outputStream.write( defaultMessage.getBytes( "ISO-8859-1" ) );// NON-NLS
+        final OutputStream outputStream = bundle.createEntry( TRANSLATIONS_PROPERTIES, "text/plain" ); // NON-NLS
+        outputStream.write( defaultMessage.getBytes( "ISO-8859-1" ) ); // NON-NLS
         outputStream.close();
         bundle.getWriteableDocumentMetaData()
-          .setEntryAttribute( TRANSLATIONS_PROPERTIES, BundleUtilities.STICKY_FLAG, "true" );// NON-NLS
+          .setEntryAttribute( TRANSLATIONS_PROPERTIES, BundleUtilities.STICKY_FLAG, "true" ); // NON-NLS
       }
     } catch ( Exception ex ) {
       // ignore, its not that important ..
