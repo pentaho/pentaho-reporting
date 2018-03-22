@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
@@ -199,8 +199,7 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
     this.updateContext.addChangeListener( new DateUpdateHandler( parameterName ) );
   }
 
-  private DateFormat
-    createDateFormat( final String parameterFormatString, final Locale locale, final TimeZone timeZone ) {
+  DateFormat createDateFormat( final String parameterFormatString, final Locale locale, final TimeZone timeZone ) {
     if ( parameterFormatString != null ) {
       try {
         final SimpleDateFormat dateFormat = new SimpleDateFormat( parameterFormatString, locale );
@@ -214,7 +213,11 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
       }
     }
 
-    return DateFormat.getDateTimeInstance( DateFormat.LONG, DateFormat.LONG, locale );
+    DateFormat dateTimeInstance = DateFormat.getDateTimeInstance( DateFormat.LONG, DateFormat.LONG, locale );
+    dateTimeInstance.setTimeZone( timeZone );
+    dateTimeInstance.setLenient( false );
+
+    return dateTimeInstance;
   }
 
   private void setDate( final Object value ) {

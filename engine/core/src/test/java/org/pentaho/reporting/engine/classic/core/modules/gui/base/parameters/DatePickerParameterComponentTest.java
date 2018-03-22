@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2016 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2018 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
@@ -21,12 +21,16 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -112,5 +116,25 @@ public class DatePickerParameterComponentTest {
       }
     }
     return field;
+  }
+
+  @Test
+  public void testCreateDateFormat_null() {
+    DateFormat dateFormat = comp.createDateFormat( null, Locale.getDefault(), TimeZone.getDefault() );
+    verifyCommonDateFormats( dateFormat );
+    assertThat( dateFormat, instanceOf( DateFormat.class ) );
+  }
+
+  @Test
+  public void testCreateDateFormat_ddMMyyyy() {
+    DateFormat dateFormat = comp.createDateFormat( "dd.MM.yyyy", Locale.getDefault(), TimeZone.getDefault() );
+    verifyCommonDateFormats( dateFormat );
+    assertThat( dateFormat, instanceOf( SimpleDateFormat.class ) );
+  }
+
+  private void verifyCommonDateFormats( DateFormat dateFormat ) {
+    assertThat( dateFormat, is( notNullValue() ) );
+    assertFalse( dateFormat.isLenient() );
+    assertEquals( TimeZone.getDefault(), dateFormat.getTimeZone() );
   }
 }
