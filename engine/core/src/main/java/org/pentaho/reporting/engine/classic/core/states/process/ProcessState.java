@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2016 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.core.states.process;
@@ -543,21 +543,27 @@ public class ProcessState implements ReportState {
       final Object queryRaw =
         evaluateExpression( preDataSubReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
           AttributeNames.Internal.QUERY ), preDataSubReport.getQuery() );
-      final Object queryLimitRaw =
-        evaluateExpression( preDataSubReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
-          AttributeNames.Internal.QUERY_LIMIT ), queryLimitDefault );
+      final String queryDefined = designtime ? "design-time-query" : preDataSubReport.getQuery();
+      this.query = (String) ConverterRegistry.convert( queryRaw, String.class, queryDefined );
+
+      if ( this.currentSubReportMarker.getSubreport().isQueryLimitInherited() && parentState.queryLimit != null ) {
+        this.queryLimit = parentState.queryLimit;
+      } else {
+        final Object queryLimitRaw =
+          evaluateExpression( preDataSubReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
+            AttributeNames.Internal.QUERY_LIMIT ), queryLimitDefault );
+        this.queryLimit = (Integer) ConverterRegistry.convert( queryLimitRaw, Integer.class, queryLimitDefault );
+      }
+
       final Object queryTimeoutRaw =
         evaluateExpression( preDataSubReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
           AttributeNames.Internal.QUERY_TIMEOUT ), queryTimeoutDefault );
-      final String queryDefined = designtime ? "design-time-query" : preDataSubReport.getQuery();
-      this.query = (String) ConverterRegistry.convert( queryRaw, String.class, queryDefined );
-      this.queryLimit = (Integer) ConverterRegistry.convert( queryLimitRaw, Integer.class, queryLimitDefault );
       this.queryTimeout = (Integer) ConverterRegistry.convert( queryTimeoutRaw, Integer.class, queryTimeoutDefault );
+
       final List<SortConstraint> sortOrder = lookupSortOrder( preDataSubReport );
 
-
       DefaultFlowController postQueryFlowController = flowController
-        .performSubReportQuery( query, queryLimit.intValue(), queryTimeout.intValue(), exportMappings, sortOrder );
+        .performSubReportQuery( query, queryLimit, queryTimeout, exportMappings, sortOrder );
       final ProxyDataSchemaDefinition schemaDefinition =
         new ProxyDataSchemaDefinition( preDataSubReport.getDataSchemaDefinition(),
           postQueryFlowController.getMasterRow().getDataSchemaDefinition() );
@@ -1315,5 +1321,9 @@ public class ProcessState implements ReportState {
 
   public PerformanceMonitorContext getPerformanceMonitorContext() {
     return performanceMonitorContext;
+  }
+
+  Integer getQueryLimit() {
+    return queryLimit;
   }
 }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -133,6 +133,7 @@ public class AttributeNames {
     public static final String EXCEL_CELL_FORMAT_AUTOCOMPUTE = "excel-cellformat-auto-compute";
     public static final String QUERY = "query";
     public static final String QUERY_LIMIT = "query-limit";
+    public static final String QUERY_LIMIT_INHERITANCE = "query-limit-inheritance";
     public static final String QUERY_LIMIT_USER = "query-limit-user";
     public static final String QUERY_TIMEOUT = "query-timeout";
     public static final String FILEFORMAT = "file-format";
