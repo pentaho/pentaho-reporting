@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
@@ -52,6 +52,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 public class PublishUtil {
@@ -76,14 +77,12 @@ public class PublishUtil {
   }
 
   public static ReportRenderContext openReport( final ReportDesignerContext context,
-      final AuthenticationData loginData, final String path ) throws IOException, ReportDataFactoryException,
-    ResourceException {
+      final AuthenticationData loginData, final String path ) throws IOException, ReportDataFactoryException, ResourceException {
     if ( StringUtils.isEmpty( path ) ) {
       throw new IOException( "Path is empty." );
     }
 
-    final String urlPath =
-        path.replaceAll( "%", "%25" ).replaceAll( "%2B", "+" ).replaceAll( "\\!", "%21" ).replaceAll( ":", "%3A" );
+    final String urlPath = path.replaceAll( "%", "%25" ).replaceAll( "%2B", "+" ).replaceAll( "\\!", "%21" ).replaceAll( ":", "%3A" );
     final FileObject connection = createVFSConnection( loginData );
     final FileObject object = connection.resolveFile( urlPath );
     if ( object.exists() == false ) {
@@ -92,8 +91,7 @@ public class PublishUtil {
 
     final InputStream inputStream = object.getContent().getInputStream();
     try {
-      final ByteArrayOutputStream out =
-          new ByteArrayOutputStream( Math.max( 8192, (int) object.getContent().getSize() ) );
+      final ByteArrayOutputStream out = new ByteArrayOutputStream( Math.max( 8192, (int) object.getContent().getSize() ) );
       IOUtils.getInstance().copyStreams( inputStream, out );
       final MasterReport report = loadReport( out.toByteArray(), path );
       final int index = context.addMasterReport( report );
@@ -121,12 +119,9 @@ public class PublishUtil {
     }
 
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
-    final String urlMessage =
-        config.getConfigProperty( "org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport" );
+    final String urlMessage = config.getConfigProperty( "org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport" );
 
-    final String fullRepoViewerPath =
-        MessageFormat.format( urlMessage, URLEncoder.encode( RepositoryPathEncoder.encodeRepositoryPath( path ),
-            "UTF-8" ) );
+    final String fullRepoViewerPath =  MessageFormat.format( urlMessage, URLEncoder.encode( RepositoryPathEncoder.encodeRepositoryPath( path ), "UTF-8" ) );
     final String url = baseUrl + fullRepoViewerPath;
 
     ExternalToolLauncher.openURL( url );
@@ -144,17 +139,21 @@ public class PublishUtil {
     }
   }
 
-  public static int publish( final byte[] data, final String path, final AuthenticationData loginData )
-    throws IOException {
+  public static int publish( final byte[] data, final String path, final AuthenticationData loginData, final Properties fileProperties ) throws IOException {
     int responseCode = HTTP_RESPONSE_FAIL;
     final String versionText = loginData.getOption( SERVER_VERSION );
     final int version = ParserUtil.parseInt( versionText, SERVER_VERSION_SUGAR );
 
     if ( SERVER_VERSION_SUGAR == version ) {
-      PublishRestUtil publishRestUtil =
-          new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
-      responseCode = publishRestUtil.publishFile( path, data, true );
+      Properties propertiesForPublish = fileProperties;
+      if ( propertiesForPublish == null ) {
+        propertiesForPublish = new Properties();
+      }
+      //Force overwrite flag here so that the server does not fail with an error in case the report already exists in the JCR
+      fileProperties.setProperty( PublishRestUtil.OVERWRITE_FILE_KEY, Boolean.TRUE.toString() );
 
+      PublishRestUtil publishRestUtil = new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
+      responseCode = publishRestUtil.publishFile( path, data, propertiesForPublish );
     } else {
       final FileObject connection = createVFSConnection( loginData );
       final FileObject object = connection.resolveFile( path );
@@ -167,6 +166,17 @@ public class PublishUtil {
       }
     }
     return responseCode;
+  }
+
+  /**
+   * We need to keep the options of report. please use {@link #publish(byte[], String, AuthenticationData, Properties)}
+   * We keep the method for backward compatibility 
+   * 
+   * @since pentaho 8.1
+   */
+  @Deprecated
+  public static int publish( final byte[] data, final String path, final AuthenticationData loginData ) throws IOException {
+    return publish( data, path, loginData, new Properties() );
   }
 
   public static boolean acceptFilter( final String[] filters, final String name ) {

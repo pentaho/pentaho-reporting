@@ -12,13 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
 import java.awt.Component;
 import java.awt.Cursor;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -38,6 +39,7 @@ import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
 import org.pentaho.reporting.libraries.pensol.JCRSolutionFileSystem;
+import org.pentaho.reporting.libraries.pensol.PublishRestUtil;
 
 public class PublishToServerTask implements AuthenticatedServerTask {
   private static final Log logger = LogFactory.getLog( PublishToServerTask.class );
@@ -78,8 +80,12 @@ public class PublishToServerTask implements AuthenticatedServerTask {
 
       reportDesignerContext.getActiveContext().getAuthenticationStore().add( loginData, storeUpdates );
 
+      //populate all properties from file which loaded in report designer before publish it to server
+      Properties fileProperties = new Properties();
+      fileProperties.setProperty( PublishRestUtil.REPORT_TITLE_KEY, selectFileForPublishTask.getReportTitle() );
+
       final byte[] data = PublishUtil.createBundleData( report );
-      int responseCode = PublishUtil.publish( data, selectedReport, loginData );
+      int responseCode = PublishUtil.publish( data, selectedReport, loginData, fileProperties );
 
       if ( responseCode == 200 ) {
         final Component glassPane = SwingUtilities.getRootPane( uiContext ).getGlassPane();
