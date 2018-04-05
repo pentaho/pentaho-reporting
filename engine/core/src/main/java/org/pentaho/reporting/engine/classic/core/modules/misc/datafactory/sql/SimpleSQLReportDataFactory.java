@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
@@ -31,6 +31,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import javax.swing.table.TableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -341,9 +342,19 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       final boolean expandArrays, final int parameterOffset ) throws SQLException {
     pstmt.clearParameters();
     int paramIndex = parameterOffset;
+    ParameterMetaData parameterMetaData = null;
+    try {
+      parameterMetaData = pstmt.getParameterMetaData();
+    } catch ( SQLException e ) {
+      logger.debug( "Parameter metadata fetching threw an exception:" + e.getMessage() );
+    }
     for ( int i = 0; i < params.length; i++ ) {
       final String param = params[i];
       final Object pvalue = parameters.get( param );
+      String typeClass = null;
+      if ( parameterMetaData != null ) {
+        typeClass = parameterMetaData.getParameterClassName( paramIndex + 1 );
+      }
       if ( pvalue == null ) {
         // this should work, but some driver are known to die here.
         // they should be fed with setNull(..) instead; something
@@ -364,6 +375,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
               // if problems come from this, we can create workaround them as discovered
               final Date d = (Date) ivalue;
               pstmt.setObject( paramIndex + 1, new Timestamp( d.getTime() ) );
+            } else if ( typeClass != null && typeClass.equals( "java.lang.String" ) ) {
+              pstmt.setObject( paramIndex + 1, String.valueOf( ivalue ) );
             } else {
               pstmt.setObject( paramIndex + 1, ivalue );
             }
@@ -382,6 +395,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
           // see comment above about java.util.Date/java.sql.Timestamp conversion
           final Date d = (Date) pvalue;
           pstmt.setObject( paramIndex + 1, new Timestamp( d.getTime() ) );
+        } else if ( typeClass != null && typeClass.equals( "java.lang.String" ) ) {
+          pstmt.setObject( paramIndex + 1, String.valueOf( pvalue ) );
         } else {
           pstmt.setObject( paramIndex + 1, pvalue );
         }
