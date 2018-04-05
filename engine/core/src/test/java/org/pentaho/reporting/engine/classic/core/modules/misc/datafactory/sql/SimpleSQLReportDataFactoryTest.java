@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2017 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2018 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
@@ -29,6 +29,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import javax.swing.table.TableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -36,13 +37,25 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 
 public class SimpleSQLReportDataFactoryTest {
 
@@ -204,6 +217,95 @@ public class SimpleSQLReportDataFactoryTest {
     assertThat( result.getColumnCount(), is( equalTo( 1 ) ) );
     assertThat( result.getColumnName( 0 ), is( equalTo( "test_column_label" ) ) );
     assertThat( (String) result.getValueAt( 0, 0 ), is( equalTo( "test_val" ) ) );
+  }
+
+  @Test
+  public void testParametrizeAndQueryWithStringParam() throws SQLException {
+    final String translatedQuery = "select city from offices where officecode in (?)";
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {"OfficeCode"};
+    Connection con = mock( Connection.class );
+    PreparedStatement statement = mock( PreparedStatement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    ParameterMetaData parameterMetaData = mock( ParameterMetaData.class );
+
+    doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+    doReturn( 20 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
+    doReturn( 1 ).when( parameters ).get( "OfficeCode" );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doNothing().when( statement ).clearParameters();
+    doReturn( res ).when( statement ).executeQuery( translatedQuery );
+    doReturn( res ).when( statement ).executeQuery();
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( parameterMetaData ).when( statement ).getParameterMetaData();
+    doReturn( "java.lang.String" ).when( parameterMetaData ).getParameterClassName( 1 );
+    doReturn( "test_column_label" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "test_column_name" ).when( rsmd ).getColumnName( 1 );
+    doReturn( true ).doReturn( false ).when( res ).next();
+    doReturn( "test_val" ).when( res ).getObject( 1 );
+
+    TableModel result = factory.parametrizeAndQuery( parameters, translatedQuery, preparedParameterNames );
+
+    verify( statement ).setMaxRows( 10 );
+    verify( statement ).setQueryTimeout( 20 );
+    verify( statement ).executeQuery();
+    verify( statement ).setObject( 1, "1" );
+
+    assertThat( result, is( notNullValue() ) );
+    assertThat( result.getRowCount(), is( equalTo( 1 ) ) );
+    assertThat( result.getColumnCount(), is( equalTo( 1 ) ) );
+    assertThat( result.getColumnName( 0 ), is( equalTo( "test_column_label" ) ) );
+    assertThat( result.getValueAt( 0, 0 ), is( equalTo( "test_val" ) ) );
+  }
+
+  @Test
+  public void testParametrizeAndQueryWithStringParams() throws SQLException {
+    final String translatedQuery = "select city from offices where officecode in (?,?)";
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {"OfficeCode"};
+    Connection con = mock( Connection.class );
+    PreparedStatement statement = mock( PreparedStatement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    ParameterMetaData parameterMetaData = mock( ParameterMetaData.class );
+
+    doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+    doReturn( 20 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
+    doReturn( new Object[]{1, 2} ).when( parameters ).get( "OfficeCode" );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doNothing().when( statement ).clearParameters();
+    doReturn( res ).when( statement ).executeQuery( translatedQuery );
+    doReturn( res ).when( statement ).executeQuery();
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( parameterMetaData ).when( statement ).getParameterMetaData();
+    doReturn( "java.lang.String" ).when( parameterMetaData ).getParameterClassName( 1 );
+    doReturn( "test_column_label" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "test_column_name" ).when( rsmd ).getColumnName( 1 );
+    doReturn( true ).doReturn( false ).when( res ).next();
+    doReturn( "test_val" ).when( res ).getObject( 1 );
+
+    TableModel result = factory.parametrizeAndQuery( parameters, translatedQuery, preparedParameterNames );
+
+    verify( statement ).setMaxRows( 10 );
+    verify( statement ).setQueryTimeout( 20 );
+    verify( statement ).executeQuery();
+    verify( statement ).setObject( 1, "1" );
+    verify( statement ).setObject( 2, "2" );
+
+    assertThat( result, is( notNullValue() ) );
+    assertThat( result.getRowCount(), is( equalTo( 1 ) ) );
+    assertThat( result.getColumnCount(), is( equalTo( 1 ) ) );
+    assertThat( result.getColumnName( 0 ), is( equalTo( "test_column_label" ) ) );
+    assertThat( result.getValueAt( 0, 0 ), is( equalTo( "test_val" ) ) );
   }
 
   @Test
@@ -372,7 +474,7 @@ public class SimpleSQLReportDataFactoryTest {
     DataRow parameters = mock( DataRow.class );
     this.connection = null;
     String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
-    verify(factory, times(1)).close();
+    verify( factory, times( 1 ) ).close();
   }
 
   @Test
@@ -380,6 +482,6 @@ public class SimpleSQLReportDataFactoryTest {
     DataRow parameters = mock( DataRow.class );
     this.connection = factory.getConnection( parameters );
     String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
-    verify(factory, times(0)).close();
+    verify( factory, times( 0 ) ).close();
   }
 }
