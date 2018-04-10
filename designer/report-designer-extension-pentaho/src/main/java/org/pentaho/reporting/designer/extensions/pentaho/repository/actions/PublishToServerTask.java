@@ -82,7 +82,10 @@ public class PublishToServerTask implements AuthenticatedServerTask {
 
       //populate all properties from file which loaded in report designer before publish it to server
       Properties fileProperties = new Properties();
-      fileProperties.setProperty( PublishRestUtil.REPORT_TITLE_KEY, selectFileForPublishTask.getReportTitle() );
+      String reportTitle = selectFileForPublishTask.getReportTitle();
+      if ( reportTitle != null ) {
+        fileProperties.setProperty( PublishRestUtil.REPORT_TITLE_KEY, reportTitle );
+      }
 
       final byte[] data = PublishUtil.createBundleData( report );
       int responseCode = PublishUtil.publish( data, selectedReport, loginData, fileProperties );
