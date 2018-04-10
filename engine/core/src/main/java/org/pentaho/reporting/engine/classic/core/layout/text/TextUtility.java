@@ -12,11 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.text;
 
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.fonts.registry.BaselineInfo;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
 
@@ -58,8 +59,19 @@ public class TextUtility {
     final int dominantBaseline = TextUtility.translateBaselines( baselineInfo.getDominantBaseline() );
     final long underlinePosition = fontMetrics.getUnderlinePosition();
     final long strikeThroughPosition = fontMetrics.getStrikeThroughPosition();
+
+    boolean dynamicHeightFontSize = "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.DynamicHeightFontSize" ) );
+    if ( dynamicHeightFontSize ) {
+      long declaredFontHeight = fontMetrics.getMaxHeight();
+      long baseLineFontHeight = baselineInfo.getBaseline( baselineInfo.getBaselines().length - 1 );
+      if ( declaredFontHeight <= baseLineFontHeight ) {
+        return new DefaultExtendedBaselineInfo( dominantBaseline, baselineInfo, 0, 0, baseLineFontHeight,
+                baseLineFontHeight, underlinePosition, strikeThroughPosition );
+      }
+    }
+
     return new DefaultExtendedBaselineInfo( dominantBaseline, baselineInfo, 0, 0, fontMetrics.getMaxHeight(),
         fontMetrics.getMaxHeight(), underlinePosition, strikeThroughPosition );
   }
-
 }
