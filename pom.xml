@@ -489,6 +489,12 @@
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-jaxrs</artifactId>
         <version>${jackson.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>*</artifactId>
+            <groupId>*</groupId>
+          </exclusion>
+      </exclusions>
       </dependency>
       <dependency>
         <groupId>javadbf</groupId>
