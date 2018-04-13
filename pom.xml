@@ -722,6 +722,10 @@
             <groupId>org.pentaho</groupId>
           </exclusion>
           <exclusion>
+            <artifactId>commons-gwt-widgets</artifactId>
+            <groupId>org.pentaho</groupId>
+          </exclusion>
+          <exclusion>
             <artifactId>*</artifactId>
             <groupId>org.pentaho.reporting.*</groupId>
           </exclusion>
