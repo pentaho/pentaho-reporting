@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>reporting-assemblies</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.1.0.11-122</version>
   </parent>
-
   <artifactId>prd-ce-mac</artifactId>
+  <version>7.1.0.11-122</version>
   <packaging>pom</packaging>
-
   <name>Pentaho Report Designer CE Assembly (mac)</name>
-
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -19,11 +18,9 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <properties>
     <app.mac.dir>${stage.dir}/Pentaho Report Designer.app</app.mac.dir>
   </properties>
-
   <profiles>
     <profile>
       <id>mac</id>
@@ -76,7 +73,7 @@
                 <configuration>
                   <target>
                     <taskdef classname="com.oracle.appbundler.AppBundlerTask" classpath="${project.basedir}/target/stage/bundler.jar" name="bundleapp"></taskdef>
-                    <bundleapp displayname="Pentaho Report Designer" icon="${project.basedir}/src/main/resources/mac/Contents/Resources/pentaho_reporting.icns" identifier="org.pentaho.reporting.designer.ReportDesigner" mainclassname="org.pentaho.commons.launcher.Launcher" name="Pentaho Report Designer" outputdirectory="${project.basedir}/target/stage" shortversion="${project.version}">
+                    <bundleapp identifier="org.pentaho.reporting.designer.ReportDesigner" displayname="Pentaho Report Designer" mainclassname="org.pentaho.commons.launcher.Launcher" icon="${project.basedir}/src/main/resources/mac/Contents/Resources/pentaho_reporting.icns" name="Pentaho Report Designer" outputdirectory="${project.basedir}/target/stage" shortversion="${project.version}">
                       <runtime dir="${mac.jre.path}"></runtime>
                       <classpath file="${project.basedir}/target/stage/pentaho-application-launcher-${launcher.version}.jar"></classpath>
                       <option value="-Dapple.laf.useScreenMenuBar=true"></option>
@@ -92,10 +89,7 @@
                       </fileset>
                     </copy>
                     <loadfile property="bundle.document.types" srcFile="${project.basedir}/src/main/resources/mac/Contents/BundleDocumentTypes.txt"></loadfile>
-                    <!-- this task adds additional key/values to the info.plist that can't be created with the
-                       bundleapp task -->
-                    <replaceregexp file="${stage.dir}/Pentaho Report Designer.app/Contents/Info.plist" match="&lt;/dict&gt;\s*&lt;/plist&gt;" replace="${bundle.document.types}"></replaceregexp>
-                    <!-- launcher.properties is different now.  It also need to go into the Java directory with the class that is going to be run from the stub -->
+                    <replaceregexp file="${stage.dir}/Pentaho Report Designer.app/Contents/Info.plist" match="&lt;/dict>\s*&lt;/plist>" replace="${bundle.document.types}"></replaceregexp>
                     <copy file="${project.basedir}/src/main/resources/mac/Contents/Resources/Java/launcher.properties" todir="${app.mac.dir}/Contents/Java/"></copy>
                   </target>
                 </configuration>
