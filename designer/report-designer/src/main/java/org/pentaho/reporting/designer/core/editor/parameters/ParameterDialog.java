@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.parameters;
@@ -1043,6 +1043,17 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       final String nameCaption = Messages.getString( "ParameterDialog.Name" );
       validationResult.addValidationMessage( new ValidationMessage( ValidationMessage.Severity.ERROR, Messages
         .getString( "ParameterDialog.ValueMustBeSetMessage", nameCaption ) ) );
+    }
+
+    //PRD-5977 - SimpleDateFormat issue with YYYY (year/week) pattern without the ww tag.
+    //On parsing SimpleDateFormat expects a matching set of values: year, month, day or day of week, week in year...
+    //the format YYYY-MM-dd (that is valid) supplied a week-year but did not supply day of week and week in year.
+    //SimpleDateFormat assume those values as 1, causing different dates to be saved.
+
+    if ( this.dataFormatField.getText().contains( "Y" ) && !this.dataFormatField.getText().contains( "ww" )  ) {
+      final String dataFormatCaption = Messages.getString( "ParameterDialog.DataFormat" );
+      validationResult.addValidationMessage( new ValidationMessage( ValidationMessage.Severity.ERROR, Messages
+        .getString( "ParameterDialog.InvalidDateFormatPattern", dataFormatCaption ) ) );
     }
     return validationResult;
   }
