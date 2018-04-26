@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 
-<dialog id="main_wizard_window" width="640" height="470" title="${WIZARD_TITLE}"
+<dialog id="main_wizard_window" width="645" height="480" title="${WIZARD_TITLE}"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:pen="http://www.pentaho.org/2008/xul"
         onload="wizard_controller.onLoad()"
