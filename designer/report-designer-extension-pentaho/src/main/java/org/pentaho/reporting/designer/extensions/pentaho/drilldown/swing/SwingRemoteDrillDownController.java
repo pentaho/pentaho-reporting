@@ -48,7 +48,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Controller of the Swing analog for sugar-xaction-drilldown.xul dialog.
@@ -119,10 +122,11 @@ public class SwingRemoteDrillDownController {
     // Server URL field
     JTextField serverUrlField =
         drillDownUi.getComponent( SwingRemoteDrillDownUi.ComponentLookup.SERVER_URL_FIELD );
+
     serverUrlField.getDocument().addDocumentListener( new DocumentBindingListener() {
       @Override
       protected void setData( String data ) {
-        pentahoPathWrapper.setLocalPath( data );
+        pentahoPathWrapper.setServerPath( data );
       }
     } );
 
@@ -140,11 +144,32 @@ public class SwingRemoteDrillDownController {
     // Path field
     JTextField pathField =
         drillDownUi.getComponent( SwingRemoteDrillDownUi.ComponentLookup.PATH_FIELD );
-    serverUrlField.getDocument().addDocumentListener( new DocumentBindingListener() {
+    pathField.getDocument().addDocumentListener( new DocumentBindingListener() {
       @Override
       protected void setData( String data ) {
-        pentahoPathWrapper.setServerPath( data );
-      }
+        if ( data == null || data.isEmpty() ) {
+          return;
+        }
+
+        DrillDownParameter parameterPath = new DrillDownParameter( "::pentaho-path", new String( "\"" + data + "\"" ) );
+
+        DrillDownParameter[] currentParams = modelWrapper.getDrillDownParameter();
+        ArrayList<DrillDownParameter> currentParamsList = new ArrayList<>( Arrays.asList( currentParams ) );
+
+        Optional<DrillDownParameter> lookupItem = currentParamsList.stream().
+                filter( a -> a.getName().equals( "::pentaho-path" ) ).findFirst();
+
+        if ( lookupItem.isPresent() ) {
+          lookupItem.get().setFormulaFragment( new String( "\"" + data + "\"" ) );
+        } else {
+          currentParamsList.add( parameterPath );
+        }
+
+        DrillDownParameter[] result = currentParamsList.toArray( new DrillDownParameter[currentParamsList.size()] );
+        ( drillDownUi.<DrillDownParameterTable>getComponent(
+                        SwingRemoteDrillDownUi.ComponentLookup.PARAMETER_TABLE
+                ) ).setDrillDownParameter( result );
+        }
     } );
 
     // Browse button
@@ -284,6 +309,7 @@ public class SwingRemoteDrillDownController {
    * PropertyChangeListener for model wrapper.
    */
   private class ModelWrapperUpdateHandler implements PropertyChangeListener {
+
     @Override
     public void propertyChange( PropertyChangeEvent evt ) {
       AuthenticationData loginData = pentahoPathWrapper.getLoginData();
@@ -362,9 +388,21 @@ public class SwingRemoteDrillDownController {
      * {@inheritDoc}
      */
     public void propertyChange( final PropertyChangeEvent evt ) {
-      modelWrapper.setDrillDownParameter( ( drillDownUi.<DrillDownParameterTable>getComponent(
-          SwingRemoteDrillDownUi.ComponentLookup.PARAMETER_TABLE
-      ) ).getDrillDownParameter() );
+      ArrayList<DrillDownParameter> filterParams = new ArrayList<>();
+      DrillDownParameter[] unfilterParams = ( drillDownUi.<DrillDownParameterTable>getComponent(
+              SwingRemoteDrillDownUi.ComponentLookup.PARAMETER_TABLE
+      ) ).getDrillDownParameter();
+
+      for ( DrillDownParameter param : unfilterParams ) {
+        if ( param.getType() == DrillDownParameter.Type.SYSTEM && param.getFormulaFragment() != null
+                && !param.getFormulaFragment().equals( "NA()" ) ) {
+          filterParams.add( param );
+        } else if ( param.getType() != DrillDownParameter.Type.SYSTEM ) {
+          filterParams.add( param );
+        }
+      }
+
+      modelWrapper.setDrillDownParameter( filterParams.toArray( new DrillDownParameter[filterParams.size()] ) );
     }
   }
 

@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown.swing;
@@ -325,7 +325,7 @@ public class SwingRemoteDrillDownUi implements DrillDownUi {
   ) throws DrillDownUiException {
     this.reportDesignerContext = reportDesignerContext;
     this.wrapper = new DrillDownModelWrapper( model );
-    model.setDrillDownConfig( SwingRemoteDrillDownUiProfile.NAME_DEFAULT );
+    model.setDrillDownConfig( SwingRemoteDrillDownUiProfile.DEFAULT_PROFILE );
 
     // Check model and init default values
     if ( getModel().isLimitedEditor() ) {
