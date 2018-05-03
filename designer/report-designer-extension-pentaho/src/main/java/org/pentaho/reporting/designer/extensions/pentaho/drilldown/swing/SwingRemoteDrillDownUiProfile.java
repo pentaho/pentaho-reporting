@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2015 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown.swing;
@@ -35,16 +35,32 @@ public class SwingRemoteDrillDownUiProfile implements DrillDownUiProfile {
   private DrillDownProfile drillDownProfile;
 
   /** The names that SwingRemoteDrillDownUi is able to handle. */
-  private static final String[] NAMES_HANDLE = { "remote-sugar" };
+  private String[] names_handler;
 
-  /** Default name of the profile. */
-  public static final String NAME_DEFAULT = NAMES_HANDLE[ 0 ];
+  public static final String DEFAULT_PROFILE = "remote-sugar";
 
   /**
    * Create an implementation of SwingRemoteDrillDownUiProfile for Swing version of sugar-xaction-drilldown.xul dialog.
    */
   public SwingRemoteDrillDownUiProfile() {
-    drillDownProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( NAME_DEFAULT );
+
+    final DrillDownProfile[] profiles =
+            DrillDownProfileMetaData.getInstance().getDrillDownProfileByGroup( "pentaho-sugar" );
+
+    names_handler = new String[ profiles.length ];
+    for ( int i = 0; i < names_handler.length; i++ ) {
+      names_handler[ i ] = profiles[ i ].getName();
+    }
+
+    if ( names_handler.length != 0 ) {
+      drillDownProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( names_handler[ 0 ] );
+    } else {
+      DrillDownProfile[] drillProfiles = DrillDownProfileMetaData.getInstance().getDrillDownProfiles();
+
+      if ( drillProfiles.length != 0 ) {
+        drillDownProfile = drillProfiles[ 0 ];
+      }
+    }
   }
 
   /**
@@ -72,8 +88,8 @@ public class SwingRemoteDrillDownUiProfile implements DrillDownUiProfile {
    */
   @Override
   public boolean canHandle( String profileName ) {
-    for ( int i = 0; i < NAMES_HANDLE.length; i++ ) {
-      final String name = NAMES_HANDLE[ i ];
+    for ( int i = 0; i < names_handler.length; i++ ) {
+      final String name = names_handler[ i ];
       if ( name.equals( profileName ) ) {
         return true;
       }
