@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
@@ -179,9 +179,19 @@ public final class DefaultStyleBuilder implements StyleBuilder {
 
     final String value =
         pointConverter.format( factory.fixLengthForSafari( StrictGeomUtility.toExternalValue( width ) ) ) + "pt "
-            + borderStyle.toString() + ' ' + HtmlColors.getColorString( edge.getColor() );
+            + mapStyleToHtmlAllowed( borderStyle.toString() ) + ' ' + HtmlColors.getColorString( edge.getColor() );
     cachedBorderStyle.put( edge, value );
     return value;
+  }
+
+  private String mapStyleToHtmlAllowed( String style ) {
+    if ( BorderStyle.DOT_DASH.toString().equals( style ) ) {
+      return BorderStyle.DASHED.toString();
+    } else if ( BorderStyle.DOT_DOT_DASH.toString().equals( style ) ) {
+      return BorderStyle.DOTTED.toString();
+    } else {
+      return style;
+    }
   }
 
   public String printCornerAsCSS( final BorderCorner edge ) {
