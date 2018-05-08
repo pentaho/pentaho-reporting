@@ -12,18 +12,20 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -31,7 +33,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
-import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextRotation;
@@ -62,22 +63,22 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
     /**
      * The top border's size.
      */
-    private short borderStrokeTop;
+    private BorderStyle borderStrokeTop;
 
     /**
      * The bottom border's size.
      */
-    private short borderStrokeBottom;
+    private BorderStyle borderStrokeBottom;
 
     /**
      * The left border's size.
      */
-    private short borderStrokeLeft;
+    private BorderStyle borderStrokeLeft;
 
     /**
      * The right border's size.
      */
-    private short borderStrokeRight;
+    private BorderStyle borderStrokeRight;
 
     /**
      * The top border's color.
@@ -111,12 +112,12 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
     /**
      * the horizontal text alignment.
      */
-    private short horizontalAlignment;
+    private HorizontalAlignment horizontalAlignment;
 
     /**
      * the vertical text alignment.
      */
-    private short verticalAlignment;
+    private VerticalAlignment verticalAlignment;
 
     /**
      * the font definition for the cell.
@@ -199,10 +200,10 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
 
         final ElementAlignment horizontal =
             (ElementAlignment) contentStyle.getStyleProperty( ElementStyleKeys.ALIGNMENT );
-        this.horizontalAlignment = HSSFCellStyleProducer.convertAlignment( horizontal );
+        this.horizontalAlignment = HSSFCellStyleProducer.convertHorizontalAlignment( horizontal );
         final ElementAlignment vertical =
             (ElementAlignment) contentStyle.getStyleProperty( ElementStyleKeys.VALIGNMENT );
-        this.verticalAlignment = HSSFCellStyleProducer.convertAlignment( vertical );
+        this.verticalAlignment = HSSFCellStyleProducer.convertVerticalAlignment( vertical );
         final String dataStyle = (String) contentStyle.getStyleProperty( ElementStyleKeys.EXCEL_DATA_FORMAT_STRING );
         if ( dataStyle != null ) {
           this.dataStyle = dataFormat.getFormat( dataStyle );
@@ -239,15 +240,15 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       this.xColorBottom = createColor( style.getBottomBorderXSSFColor() );
       this.xColorRight = createColor( style.getRightBorderXSSFColor() );
 
-      this.borderStrokeTop = style.getBorderTop();
-      this.borderStrokeLeft = style.getBorderLeft();
-      this.borderStrokeBottom = style.getBorderBottom();
-      this.borderStrokeRight = style.getBorderRight();
+      this.borderStrokeTop = style.getBorderTopEnum();
+      this.borderStrokeLeft = style.getBorderLeftEnum();
+      this.borderStrokeBottom = style.getBorderBottomEnum();
+      this.borderStrokeRight = style.getBorderRightEnum();
 
       this.dataStyle = style.getDataFormat();
       this.font = style.getFontIndex();
-      this.horizontalAlignment = style.getAlignment();
-      this.verticalAlignment = style.getVerticalAlignment();
+      this.horizontalAlignment = style.getAlignmentEnum();
+      this.verticalAlignment = style.getVerticalAlignmentEnum();
       this.wrapText = style.getWrapText();
       this.textRotation = TextRotation.getInstance( style.getRotation() );
     }
@@ -266,15 +267,15 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       this.colorLeft = style.getLeftBorderColor();
       this.colorBottom = style.getBottomBorderColor();
       this.colorRight = style.getRightBorderColor();
-      this.borderStrokeTop = style.getBorderTop();
-      this.borderStrokeLeft = style.getBorderLeft();
-      this.borderStrokeBottom = style.getBorderBottom();
-      this.borderStrokeRight = style.getBorderRight();
+      this.borderStrokeTop = style.getBorderTopEnum();
+      this.borderStrokeLeft = style.getBorderLeftEnum();
+      this.borderStrokeBottom = style.getBorderBottomEnum();
+      this.borderStrokeRight = style.getBorderRightEnum();
 
       this.dataStyle = style.getDataFormat();
       this.font = style.getFontIndex();
-      this.horizontalAlignment = style.getAlignment();
-      this.verticalAlignment = style.getVerticalAlignment();
+      this.horizontalAlignment = style.getAlignmentEnum();
+      this.verticalAlignment = style.getVerticalAlignmentEnum();
       this.wrapText = style.getWrapText();
       this.textRotation = TextRotation.getInstance( style.getRotation() );
     }
@@ -389,17 +390,17 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
     public int hashCode() {
       if ( hashCode == null ) {
         int result = (int) color;
-        result = 29 * result + (int) borderStrokeTop;
-        result = 29 * result + (int) borderStrokeBottom;
-        result = 29 * result + (int) borderStrokeLeft;
-        result = 29 * result + (int) borderStrokeRight;
+        result = 29 * result + ( ( borderStrokeTop == null ) ? 0 : borderStrokeTop.hashCode() );
+        result = 29 * result + ( ( borderStrokeBottom == null ) ? 0 : borderStrokeBottom.hashCode() );
+        result = 29 * result + ( ( borderStrokeLeft == null ) ? 0 : borderStrokeLeft.hashCode() );
+        result = 29 * result + ( ( borderStrokeRight == null ) ? 0 :  borderStrokeRight.hashCode() );
         result = 29 * result + (int) colorTop;
         result = 29 * result + (int) colorLeft;
         result = 29 * result + (int) colorBottom;
         result = 29 * result + (int) colorRight;
         result = 29 * result + ( wrapText ? 1 : 0 );
-        result = 29 * result + (int) horizontalAlignment;
-        result = 29 * result + (int) verticalAlignment;
+        result = 29 * result + ( ( horizontalAlignment == null ) ? 0 : horizontalAlignment.hashCode() );
+        result = 29 * result + ( ( verticalAlignment == null ) ? 0 :  verticalAlignment.hashCode() );
         result = 29 * result + (int) font;
         result = 29 * result + (int) dataStyle;
         result = 29 * result + (int) indention;
@@ -418,19 +419,19 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       return color;
     }
 
-    public short getBorderStrokeTop() {
+    public BorderStyle getBorderStrokeTop() {
       return borderStrokeTop;
     }
 
-    public short getBorderStrokeBottom() {
+    public BorderStyle getBorderStrokeBottom() {
       return borderStrokeBottom;
     }
 
-    public short getBorderStrokeLeft() {
+    public BorderStyle getBorderStrokeLeft() {
       return borderStrokeLeft;
     }
 
-    public short getBorderStrokeRight() {
+    public BorderStyle getBorderStrokeRight() {
       return borderStrokeRight;
     }
 
@@ -474,11 +475,11 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       return wrapText;
     }
 
-    public short getHorizontalAlignment() {
+    public HorizontalAlignment getHorizontalAlignment() {
       return horizontalAlignment;
     }
 
-    public short getVerticalAlignment() {
+    public VerticalAlignment getVerticalAlignment() {
       return verticalAlignment;
     }
 
@@ -602,33 +603,40 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
   }
 
   /**
-   * Converts the given element alignment into one of the HSSFCellStyle-constants.
+   * Converts the given element alignment into one of the HorizontalAlignment-constants.
    *
    * @param e the JFreeReport element alignment.
-   * @return the HSSFCellStyle-Alignment.
+   * @return the HorizontalAlignment-Alignment.
    * @throws IllegalArgumentException if an Unknown JFreeReport alignment is given.
    */
-  protected static short convertAlignment( final ElementAlignment e ) {
+  protected static HorizontalAlignment convertHorizontalAlignment( final ElementAlignment e ) {
     if ( ElementAlignment.LEFT.equals( e ) ) {
-      return HSSFCellStyle.ALIGN_LEFT;
+      return HorizontalAlignment.LEFT;
+    } else if ( ElementAlignment.RIGHT.equals( e ) ) {
+      return HorizontalAlignment.RIGHT;
+    } else if ( ElementAlignment.JUSTIFY.equals( e ) ) {
+      return HorizontalAlignment.JUSTIFY;
+    } else if ( ElementAlignment.CENTER.equals( e ) ) {
+      return HorizontalAlignment.CENTER;
     }
-    if ( ElementAlignment.RIGHT.equals( e ) ) {
-      return HSSFCellStyle.ALIGN_RIGHT;
-    }
-    if ( ElementAlignment.JUSTIFY.equals( e ) ) {
-      return HSSFCellStyle.ALIGN_JUSTIFY;
-    }
-    if ( ElementAlignment.CENTER.equals( e ) ) {
-      return HSSFCellStyle.ALIGN_CENTER;
-    }
+
+    throw new IllegalArgumentException( "Invalid alignment" );
+  }
+
+  /**
+   * Converts the given element alignment into one of the VerticalAlignment-constants.
+   *
+   * @param e the JFreeReport element alignment.
+   * @return the VerticalAlignment-Alignment.
+   * @throws IllegalArgumentException if an Unknown JFreeReport alignment is given.
+   */
+  protected static VerticalAlignment convertVerticalAlignment( final ElementAlignment e ) {
     if ( ElementAlignment.TOP.equals( e ) ) {
-      return HSSFCellStyle.VERTICAL_TOP;
-    }
-    if ( ElementAlignment.BOTTOM.equals( e ) ) {
-      return HSSFCellStyle.VERTICAL_BOTTOM;
-    }
-    if ( ElementAlignment.MIDDLE.equals( e ) ) {
-      return HSSFCellStyle.VERTICAL_CENTER;
+      return VerticalAlignment.TOP;
+    } else if ( ElementAlignment.BOTTOM.equals( e ) ) {
+      return VerticalAlignment.BOTTOM;
+    } else if ( ElementAlignment.MIDDLE.equals( e ) ) {
+      return VerticalAlignment.CENTER;
     }
 
     throw new IllegalArgumentException( "Invalid alignment" );
@@ -640,53 +648,31 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
    * @param widthRaw the AWT-Stroke-Width.
    * @return the translated excel border width.
    */
-  protected static short translateStroke( final BorderStyle borderStyle, final long widthRaw ) {
+  protected static org.apache.poi.ss.usermodel.BorderStyle translateStroke( final org.pentaho.reporting.engine.classic.core.style.BorderStyle borderStyle, final long widthRaw ) {
     final double width = StrictGeomUtility.toExternalValue( widthRaw );
-    if ( BorderStyle.NONE.equals( borderStyle ) ) {
-      return HSSFCellStyle.BORDER_NONE;
-    }
-    if ( BorderStyle.DASHED.equals( borderStyle ) ) {
-      if ( width <= 1.5 ) {
-        return HSSFCellStyle.BORDER_DASHED;
-      } else {
-        return HSSFCellStyle.BORDER_MEDIUM_DASHED;
-      }
-    }
-    if ( BorderStyle.DOT_DOT_DASH.equals( borderStyle ) ) {
-      if ( width <= 1.5 ) {
-        return HSSFCellStyle.BORDER_DASH_DOT_DOT;
-      } else {
-        return HSSFCellStyle.BORDER_MEDIUM_DASH_DOT_DOT;
-      }
-    }
-    if ( BorderStyle.DOT_DASH.equals( borderStyle ) ) {
-      if ( width <= 1.5 ) {
-        return HSSFCellStyle.BORDER_DASH_DOT;
-      } else {
-        return HSSFCellStyle.BORDER_MEDIUM_DASH_DOT;
-      }
-    }
-    if ( BorderStyle.DOTTED.equals( borderStyle ) ) {
-      return HSSFCellStyle.BORDER_DOTTED;
-    }
-    if ( BorderStyle.DOUBLE.equals( borderStyle ) ) {
-      return HSSFCellStyle.BORDER_DOUBLE;
-    }
 
-    if ( width == 0 ) {
-      return HSSFCellStyle.BORDER_NONE;
+    if ( org.pentaho.reporting.engine.classic.core.style.BorderStyle.NONE.equals( borderStyle ) ) {
+      return BorderStyle.NONE;
+    } else if ( org.pentaho.reporting.engine.classic.core.style.BorderStyle.DASHED.equals( borderStyle ) ) {
+      return width <= 1.5 ? BorderStyle.DASHED : BorderStyle.MEDIUM_DASHED;
+    } else if ( org.pentaho.reporting.engine.classic.core.style.BorderStyle.DOT_DOT_DASH.equals( borderStyle ) ) {
+      return width <= 1.5 ? BorderStyle.DASH_DOT_DOT : BorderStyle.MEDIUM_DASH_DOT_DOT;
+    } else if ( org.pentaho.reporting.engine.classic.core.style.BorderStyle.DOT_DASH.equals( borderStyle ) ) {
+      return width <= 1.5 ? BorderStyle.DASH_DOT : BorderStyle.MEDIUM_DASH_DOT;
+    } else if ( org.pentaho.reporting.engine.classic.core.style.BorderStyle.DOTTED.equals( borderStyle ) ) {
+      return BorderStyle.DOTTED;
+    } else if ( org.pentaho.reporting.engine.classic.core.style.BorderStyle.DOUBLE.equals( borderStyle ) ) {
+      return BorderStyle.DOUBLE;
+    } else if ( width == 0 ) {
+      return BorderStyle.NONE;
     } else if ( width <= 0.5 ) {
-      return HSSFCellStyle.BORDER_HAIR;
+      return BorderStyle.HAIR;
     } else if ( width <= 1 ) {
-      return HSSFCellStyle.BORDER_THIN;
+      return BorderStyle.THIN;
     } else if ( width <= 1.5 ) {
-      return HSSFCellStyle.BORDER_MEDIUM;
-      // }
-      // else if (width <= 2)
-      // {
-      // return HSSFCellStyle.BORDER_DOUBLE;
+      return BorderStyle.MEDIUM;
     } else {
-      return HSSFCellStyle.BORDER_THICK;
+      return BorderStyle.THICK;
     }
   }
 
