@@ -12,13 +12,13 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2016 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -28,9 +28,6 @@ import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextRotation;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
-
-import java.awt.Color;
-
 
 /**
  * Created by dima.prokopenko@gmail.com on 9/13/2016.
@@ -113,7 +110,7 @@ public class ExcelCellStyleBuilder {
     }
     if ( bg.getBackgroundColor() != null ) {
       hssfCellStyle.setFillForegroundColor( styleKey.getColor() );
-      hssfCellStyle.setFillPattern( HSSFCellStyle.SOLID_FOREGROUND );
+      hssfCellStyle.setFillPattern( FillPatternType.SOLID_FOREGROUND );
     }
   }
 
@@ -122,37 +119,31 @@ public class ExcelCellStyleBuilder {
     final XSSFCellStyle xssfCellStyle = (XSSFCellStyle) hssfCellStyle;
     if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
       hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
-      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.BOTTOM, createXSSFColor( styleKey
+      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.BOTTOM, new XSSFColor( styleKey
         .getExtendedColorBottom() ) );
     }
     if ( BorderStyle.NONE.equals( bg.getTop().getBorderStyle() ) == false ) {
       hssfCellStyle.setBorderTop( styleKey.getBorderStrokeTop() );
       xssfCellStyle
-        .setBorderColor( XSSFCellBorder.BorderSide.TOP, createXSSFColor( styleKey.getExtendedColorTop() ) );
+        .setBorderColor( XSSFCellBorder.BorderSide.TOP, new XSSFColor( styleKey.getExtendedColorTop() ) );
     }
     if ( BorderStyle.NONE.equals( bg.getLeft().getBorderStyle() ) == false ) {
       hssfCellStyle.setBorderLeft( styleKey.getBorderStrokeLeft() );
-      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.LEFT, createXSSFColor( styleKey
+      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.LEFT, new XSSFColor( styleKey
         .getExtendedColorLeft() ) );
     }
     if ( BorderStyle.NONE.equals( bg.getRight().getBorderStyle() ) == false ) {
       hssfCellStyle.setBorderRight( styleKey.getBorderStrokeRight() );
-      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.RIGHT, createXSSFColor( styleKey
+      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.RIGHT, new XSSFColor( styleKey
         .getExtendedColorRight() ) );
     }
     if ( bg.getBackgroundColor() != null ) {
-      xssfCellStyle.setFillForegroundColor( createXSSFColor( styleKey.getExtendedColor() ) );
-      hssfCellStyle.setFillPattern( HSSFCellStyle.SOLID_FOREGROUND );
+      xssfCellStyle.setFillForegroundColor( new XSSFColor( styleKey.getExtendedColor() ) );
+      hssfCellStyle.setFillPattern( FillPatternType.SOLID_FOREGROUND );
     }
   }
 
   public CellStyle build() {
     return this.hssfCellStyle;
-  }
-
-  // default visibility for testing purposes
-  XSSFColor createXSSFColor( final Color clr ) {
-    byte[] rgb = { (byte) 255, (byte) clr.getRed(), (byte) clr.getGreen(), (byte) clr.getBlue() };
-    return new XSSFColor( rgb );
   }
 }
