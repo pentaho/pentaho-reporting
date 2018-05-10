@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -107,11 +107,7 @@ public class ExcelFontFactory {
    */
   private Font createFont( final HSSFFontWrapper wrapper ) {
     final Font font = workbook.createFont();
-    if ( wrapper.isBold() ) {
-      font.setBoldweight( Font.BOLDWEIGHT_BOLD );
-    } else {
-      font.setBoldweight( Font.BOLDWEIGHT_NORMAL );
-    }
+    font.setBold( wrapper.isBold() );
     font.setColor( wrapper.getColorIndex() );
     font.setFontName( wrapper.getFontName() );
     font.setFontHeightInPoints( (short) wrapper.getFontHeight() );
