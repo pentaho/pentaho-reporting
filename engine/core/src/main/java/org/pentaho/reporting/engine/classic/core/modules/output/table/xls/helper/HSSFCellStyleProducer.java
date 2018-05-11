@@ -112,12 +112,12 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
     /**
      * the horizontal text alignment.
      */
-    private short horizontalAlignment;
+    private HorizontalAlignment horizontalAlignment;
 
     /**
      * the vertical text alignment.
      */
-    private short verticalAlignment;
+    private VerticalAlignment verticalAlignment;
 
     /**
      * the font definition for the cell.
