@@ -169,7 +169,6 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
     final TimeZone timeZone =
         TextComponentEditHandler.createTimeZone( timeZoneSpec, parameterContext.getResourceBundleFactory()
             .getTimeZone() );
-
     sdf = createDateFormat( formatString, locale, timeZone );
 
     final Calendar calendar = Calendar.getInstance();
