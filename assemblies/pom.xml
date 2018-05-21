@@ -464,7 +464,6 @@
               </goals>
               <configuration>
                 <includeArtifactIds>pentaho-big-data-plugin,pentaho-cassandra-plugin,kettle-xml-plugin,kettle-json-plugin</includeArtifactIds>
-                <excludes>**/pentaho-mapreduce-libraries.zip</excludes>
                 <outputDirectory>${stage.dir.designer}/plugins</outputDirectory>
               </configuration>
             </execution>
