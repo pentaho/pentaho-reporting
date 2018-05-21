@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
@@ -634,6 +634,10 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     return fm;
   }
 
+  protected boolean getAutoCorrectFontMetrics() {
+    return false;
+  }
+
   public ExtendedBaselineInfo getBaselineInfo( final int codePoint, final StyleSheet styleSheet ) {
     final FontMetrics fontMetrics = getFontMetrics( styleSheet );
     if ( fontMetrics.isUniformFontMetrics() ) {
@@ -669,7 +673,15 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
         return cached;
       }
     }
-    final ExtendedBaselineInfo baselineInfo = TextUtility.createBaselineInfo( 'x', fontMetrics, null );
+
+    ExtendedBaselineInfo baselineInfo = null;
+    // To Differentiate Excel calls - [PRD-5435]
+    if ( this.getAutoCorrectFontMetrics() ) {
+      baselineInfo = TextUtility.createPaddedBaselineInfo( 'x', fontMetrics, null );
+    } else {
+      baselineInfo = TextUtility.createBaselineInfo( 'x', fontMetrics, null );
+    }
+
     if ( fontMetrics.isUniformFontMetrics() ) {
       baselinesCache.put( new FontMetricsKey( lookupKey ), baselineInfo );
     }
