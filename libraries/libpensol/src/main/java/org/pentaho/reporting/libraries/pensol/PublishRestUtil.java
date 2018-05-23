@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -25,23 +25,33 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.impl.MultiPartWriter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.Properties;
 
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
 
 public class PublishRestUtil {
 
   private static final Log logger = LogFactory.getLog( PublishRestUtil.class );
 
+  public static final String REPORT_TITLE_KEY = "reportTitle";
+  public static final String OVERWRITE_FILE_KEY = "overwriteFile";
+  public static final String IMPORT_PATH_KEY = "importPath";
+
   public static final String REPO_FILES_IMPORT = "api/repo/publish/file";
+
+  private static final String REPO_FILES_IMPORT_WITH_OPTIONS = "api/repo/publish/fileWithOptions";
 
   private final String baseUrl;
   private final String username;
@@ -69,15 +79,10 @@ public class PublishRestUtil {
   }
 
   /**
-   * Uses /repos/publish/file service
-   *
-   * @param filePath
-   * @param data
-   * @param overwriteIfExists
-   * @return http response code
+   * @param filePath will be splitted into path and file name and then pass it to #publishFile(String, String, InputStream, Properties)
+   * @see #publishFile(String, String, InputStream, Properties)
    */
-  public int publishFile( String filePath, byte[] data, boolean overwriteIfExists ) throws IOException {
-
+  public int publishFile( String filePath, byte[] data, Properties fileProperties ) throws IOException {
     if ( filePath == null || data == null || data.length == 0 ) {
       throw new IOException( "missing file path and/or data" );
     }
@@ -89,9 +94,8 @@ public class PublishRestUtil {
       fileName = filePath.substring( fileNameIdx + 1 );
       path = filePath.substring( 0, fileNameIdx );
     }
-
     try {
-      return publishFile( path, fileName, new ByteArrayInputStream( data ), true );
+      return publishFile( path, fileName, new ByteArrayInputStream( data ), fileProperties );
     } catch ( Exception ex ) {
       logger.error( ex );
       throw new IOException( ex );
@@ -99,7 +103,7 @@ public class PublishRestUtil {
   }
 
   /**
-   * Uses {@code /repos/publish/file} service. Possible response codes are:
+   * Uses {@code /repos/publish/fileWithOptions} service. Possible response codes are:
    * <ul>
    *   <li>{@code 200} - upload was performed successfully</li>
    *   <li>{@code 401} - upload failed due to insufficient privileges</li>
@@ -109,32 +113,33 @@ public class PublishRestUtil {
    *
    * @param repositoryPath    repository folder where to upload the file; must be separated with /
    * @param fileName          uploaded file's name; must not contain prohibited symbols
+   * @param fileProperties    the properties which should be applied to the file on repository
    * @param fileInputStream   file's data stream
-   * @param overwriteIfExists flag indicating an existing file should be overwritten
    * @return http response code
    * @see org.pentaho.platform.web.http.api.resources.RepositoryPublishResource
    */
-  public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream,
-                          boolean overwriteIfExists ) throws IOException {
-
-    String url = baseUrl + REPO_FILES_IMPORT;
-
+  public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream, Properties fileProperties ) throws IOException {
+    String url = baseUrl + REPO_FILES_IMPORT_WITH_OPTIONS;
     WebResource resource = client.resource( url );
     int responseCode = 504;
-    try {
-      FormDataMultiPart part = new FormDataMultiPart();
+    try ( ByteArrayOutputStream baos = new ByteArrayOutputStream() ) {
+      FormDataMultiPart fdmp = new FormDataMultiPart();
 
       String pathEncoded = URLEncoder.encode( repositoryPath + "/" + fileName, "UTF-8" );
       String nameEncoded = URLEncoder.encode( fileName, "UTF-8" );
 
-      part.field( "importPath", pathEncoded, MULTIPART_FORM_DATA_TYPE );
-      part.field( "fileUpload", fileInputStream, MULTIPART_FORM_DATA_TYPE );
-      part.field( "overwriteFile", Boolean.toString( overwriteIfExists ), MULTIPART_FORM_DATA_TYPE );
-      part.getField( "fileUpload" )
-        .setContentDisposition( FormDataContentDisposition.name( "fileUpload" ).fileName( nameEncoded ).build() );
+      if ( fileProperties == null ) {
+        fileProperties = new Properties();
+      }
+      fileProperties.storeToXML( baos, "file properties", "UTF-8" );
+
+      fdmp.bodyPart( new FormDataBodyPart( "properties", baos.toString( "UTF-8"  ), APPLICATION_XML_TYPE ) );
+      fdmp.field( IMPORT_PATH_KEY, pathEncoded, MULTIPART_FORM_DATA_TYPE );
+      fdmp.field( "fileUpload", fileInputStream, MULTIPART_FORM_DATA_TYPE );
+      fdmp.getField( "fileUpload" ).setContentDisposition( FormDataContentDisposition.name( "fileUpload" ).fileName( nameEncoded ).build() );
 
       WebResource.Builder builder = resource.type( MULTIPART_FORM_DATA_TYPE );
-      ClientResponse response = builder.post( ClientResponse.class, part );
+      ClientResponse response = builder.post( ClientResponse.class, fdmp );
 
       if ( response != null ) {
         String message = response.getEntity( String.class );
@@ -146,5 +151,29 @@ public class PublishRestUtil {
       //throw new IOException(ex);
     }
     return responseCode;
+  }
+
+  /**
+   * We need to keep the options of report. please use {@link #publishFile(String, byte[], Properties)}
+   * We keep the method for backward compatibility
+   *
+   */
+  @Deprecated
+  public int publishFile( String filePath, byte[] data, boolean overwriteIfExists ) throws IOException {
+    Properties fileProperties =  new Properties();
+    fileProperties.setProperty( OVERWRITE_FILE_KEY, String.valueOf( overwriteIfExists ) );
+    return publishFile( filePath, data, fileProperties );
+  }
+
+  /**
+   * We need to keep the options of report. please use {@link #publishFile(String, String, InputStream, Properties)}
+   * We keep the method for backward compatibility
+   *
+   */
+  @Deprecated
+  public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream, boolean overwriteIfExists ) throws IOException {
+    Properties fileProperties = new Properties();
+    fileProperties.setProperty( OVERWRITE_FILE_KEY, String.valueOf( overwriteIfExists ) );
+    return publishFile( repositoryPath, fileName, fileInputStream, fileProperties );
   }
 }
