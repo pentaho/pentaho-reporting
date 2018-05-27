@@ -353,7 +353,11 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       final Object pvalue = parameters.get( param );
       String typeClass = null;
       if ( parameterMetaData != null ) {
-        typeClass = parameterMetaData.getParameterClassName( paramIndex + 1 );
+        try {
+          typeClass = parameterMetaData.getParameterClassName( paramIndex + 1 );
+        } catch ( SQLException e ) {
+          logger.debug( "Parameter metadata fetching threw an exception:" + e.getMessage() );
+        }
       }
       if ( pvalue == null ) {
         // this should work, but some driver are known to die here.
