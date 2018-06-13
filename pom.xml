@@ -111,7 +111,7 @@
     <karaf.vesrion>3.0.3</karaf.vesrion>
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <jetty.version>8.1.15.v20140411</jetty.version>
-    <ehcache.version>2.10.5</ehcache.version>
+    <ehcache.version>2.5.1</ehcache.version>
     <trilead-ssh2.version>build213</trilead-ssh2.version>
     <xmlbeans.version>2.6.0</xmlbeans.version>
     <jettyson.version>1.2</jettyson.version>
