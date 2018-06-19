@@ -80,10 +80,6 @@
       <artifactId>jackcess</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-jaxrs</artifactId>
-    </dependency>
-    <dependency>
       <groupId>javadbf</groupId>
       <artifactId>javadbf</artifactId>
     </dependency>
