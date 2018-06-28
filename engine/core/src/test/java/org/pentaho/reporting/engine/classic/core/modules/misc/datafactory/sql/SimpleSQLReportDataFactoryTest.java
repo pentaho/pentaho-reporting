@@ -195,6 +195,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( 20 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
 
     doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
     doReturn( res ).when( statement ).executeQuery( QUERY );
     doReturn( res ).when( statement ).executeQuery();
@@ -235,6 +236,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( 1 ).when( parameters ).get( "OfficeCode" );
 
     doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
     doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
     doNothing().when( statement ).clearParameters();
@@ -279,6 +281,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( new Object[]{1, 2} ).when( parameters ).get( "OfficeCode" );
 
     doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
     doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
     doNothing().when( statement ).clearParameters();
@@ -326,6 +329,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( "val_3" ).when( parameters ).get( "param_3" );
 
     doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
     doReturn( statement ).when( con ).prepareCall( anyString(), anyInt(), anyInt() );
     doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
     doReturn( res ).when( statement ).executeQuery();
@@ -372,6 +376,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( new Object[] { sqlDate, currentDate, "val_3" } ).when( parameters ).get( "param_1" );
 
     doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
     doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
     doReturn( res ).when( statement ).executeQuery();
     doReturn( rsmd ).when( res ).getMetaData();
