@@ -30,9 +30,11 @@ import nickyb.sqleonardo.querybuilder.QueryModel;
 import nickyb.sqleonardo.querybuilder.syntax.SQLParser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SimpleSQLReportDataFactory;
+import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
@@ -52,7 +54,15 @@ public class JdbcQueryDesignerDialog extends CommonDialog {
       try {
         final String query = getQuery();
         final DataPreviewDialog dialog = new DataPreviewDialog( JdbcQueryDesignerDialog.this );
-        dialog.showData( new JdbcPreviewWorker( new SimpleSQLReportDataFactory( getConnectionDefinition() ), query, 0, 0, null ) );
+
+        MasterReport report = (MasterReport) designTimeContext.getReport();
+        ReportParameterDefinition parameters = null;
+
+        if ( report != null ) {
+          parameters = report.getParameterDefinition();
+        }
+
+        dialog.showData( new JdbcPreviewWorker( new SimpleSQLReportDataFactory( getConnectionDefinition() ), query, 0, 0, parameters ) );
       } catch ( Exception e ) {
         log.warn( "QueryPanel.actionPerformed ", e );
         if ( designTimeContext != null ) {

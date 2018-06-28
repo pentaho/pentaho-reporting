@@ -62,10 +62,15 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
   private String userField;
   private String passwordField;
 
+  public static Configuration globalConfig;
+
   public SimpleSQLReportDataFactory() {
-    final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-    this.columnNameMapping = "Name".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
-        SimpleSQLReportDataFactory.COLUMN_NAME_MAPPING_KEY, "Name" ) ); //$NON-NLS-1$
+    globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
+
+    if ( globalConfig != null ) {
+      this.columnNameMapping = "Name".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
+              SimpleSQLReportDataFactory.COLUMN_NAME_MAPPING_KEY, "Name" ) ); //$NON-NLS-1$
+    }
   }
 
   public SimpleSQLReportDataFactory( final Connection connection ) {
@@ -130,9 +135,9 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     return connection;
   }
 
-  private int getBestResultSetType( final DataRow dataRow ) throws SQLException {
-    if ( "simple".equalsIgnoreCase( getConfiguration().getConfigProperty( //$NON-NLS-1$
-        ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ) ) { //$NON-NLS-1$
+  public int getBestResultSetType( final DataRow dataRow ) throws SQLException {
+    if ( globalConfig != null && "simple".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
+            ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ) ) { //$NON-NLS-1$
       return ResultSet.TYPE_FORWARD_ONLY;
     }
 
@@ -189,9 +194,13 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
 
   private ParametrizationProviderFactory createParametrizationProviderFactory() throws ReportDataFactoryException {
     final ParametrizationProviderFactory factory;
-    final String parametrizationProviderClassname =
-        getConfiguration().getConfigProperty(
-            "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ParametrizationProviderFactory" );
+
+    String parametrizationProviderClassname = null;
+    if ( globalConfig != null ) {
+      parametrizationProviderClassname = globalConfig.getConfigProperty(
+              "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ParametrizationProviderFactory" );
+    }
+
     if ( parametrizationProviderClassname == null ) {
       factory = new DefaultParametrizationProviderFactory();
     } else {
@@ -317,8 +326,11 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     }
 
     // equalsIgnore, as this is what the ResultSetTableModelFactory uses.
-    final boolean simpleMode = "simple".equalsIgnoreCase( getConfiguration().getConfigProperty( //$NON-NLS-1$
-      ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) ); //$NON-NLS-1$
+    boolean simpleMode = true;
+    if ( globalConfig != null ) {
+      simpleMode = "simple".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
+              ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) );
+    }
 
     if ( simpleMode ) {
       return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( res, columnNameMapping );
