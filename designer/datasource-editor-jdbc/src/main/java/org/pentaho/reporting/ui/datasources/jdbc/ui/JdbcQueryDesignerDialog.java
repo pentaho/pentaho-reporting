@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
+ * Copyright (c) 2008 - 2018 Hitachi Vantara, .  All rights reserved.
  */
 
 package org.pentaho.reporting.ui.datasources.jdbc.ui;
@@ -42,131 +42,105 @@ import org.pentaho.reporting.ui.datasources.jdbc.JdbcDataSourceModule;
 /**
  * @author David Kincade
  */
-public class JdbcQueryDesignerDialog extends CommonDialog
-{
-  private class PreviewButtonAction extends AbstractAction
-  {
-    private PreviewButtonAction()
-    {
-      putValue(Action.NAME, getBundleSupport().getString("JdbcDataSourceDialog.Preview"));
+public class JdbcQueryDesignerDialog extends CommonDialog {
+  private class PreviewButtonAction extends AbstractAction {
+    private PreviewButtonAction() {
+      putValue( Action.NAME, getBundleSupport().getString( "JdbcDataSourceDialog.Preview" ) );
     }
 
-    public void actionPerformed(final ActionEvent arg0)
-    {
-      try
-      {
+    public void actionPerformed( final ActionEvent arg0 ) {
+      try {
         final String query = getQuery();
-        final DataPreviewDialog dialog = new DataPreviewDialog(JdbcQueryDesignerDialog.this);
-        dialog.showData(new JdbcPreviewWorker(new SimpleSQLReportDataFactory(getConnectionDefinition()), query, 0, 0));
-      }
-      catch (Exception e)
-      {
-        log.warn("QueryPanel.actionPerformed ", e);
-        if (designTimeContext != null)
-        {
-          designTimeContext.userError(e);
+        final DataPreviewDialog dialog = new DataPreviewDialog( JdbcQueryDesignerDialog.this );
+        dialog.showData( new JdbcPreviewWorker( new SimpleSQLReportDataFactory( getConnectionDefinition() ), query, 0, 0, null ) );
+      } catch ( Exception e ) {
+        log.warn( "QueryPanel.actionPerformed ", e );
+        if ( designTimeContext != null ) {
+          designTimeContext.userError( e );
         }
       }
     }
   }
 
-  private static final Log log = LogFactory.getLog(JdbcQueryDesignerDialog.class);
+  private static final Log log = LogFactory.getLog( JdbcQueryDesignerDialog.class );
   private QueryBuilder queryBuilder;
   private ConnectionProvider connectionProvider;
   private ResourceBundleSupport bundleSupport;
   private DesignTimeContext designTimeContext;
 
-  public JdbcQueryDesignerDialog(final JDialog owner, final QueryBuilder queryBuilder)
-  {
-    super(owner);
+  public JdbcQueryDesignerDialog( final JDialog owner, final QueryBuilder queryBuilder ) {
+    super( owner );
 
-    if (queryBuilder == null)
-    {
+    if ( queryBuilder == null ) {
       throw new NullPointerException();
     }
 
-    setModal(true);
-    bundleSupport = new ResourceBundleSupport(Locale.getDefault(), JdbcDataSourceModule.MESSAGES,
-        ObjectUtilities.getClassLoader(JdbcDataSourceModule.class));
-    setTitle(bundleSupport.getString("JdbcDataSourceDialog.SQLLeonardoTitle"));
+    setModal( true );
+    bundleSupport = new ResourceBundleSupport( Locale.getDefault(), JdbcDataSourceModule.MESSAGES,
+        ObjectUtilities.getClassLoader( JdbcDataSourceModule.class ) );
+    setTitle( bundleSupport.getString( "JdbcDataSourceDialog.SQLLeonardoTitle" ) );
     this.queryBuilder = queryBuilder;
 
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 
     init();
   }
 
-  protected void performInitialResize()
-  {
-    setSize(800, 600);
-    setLocationRelativeTo(getParent());
+  protected void performInitialResize() {
+    setSize( 800, 600 );
+    setLocationRelativeTo( getParent() );
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "JdbcDataSourceEditor.QueryDesigner";
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     return queryBuilder;
   }
 
-  protected Action[] getExtraActions()
-  {
+  protected Action[] getExtraActions() {
     return new Action[]{new PreviewButtonAction()};
   }
 
-  public String designQuery(final DesignTimeContext designTimeContext,
+  public String designQuery( final DesignTimeContext designTimeContext,
                             final ConnectionProvider jndiSource,
-                            final String schema, final String query)
-  {
+                            final String schema, final String query ) {
     this.designTimeContext = designTimeContext;
     this.connectionProvider = jndiSource;
 
-    try
-    {
-      final QueryModel queryModel = SQLParser.toQueryModel(query);
-      queryBuilder.setQueryModel(queryModel);
-    }
-    catch (Exception e1)
-    {
-      log.warn("QueryPanel.actionPerformed ", e1);
+    try {
+      final QueryModel queryModel = SQLParser.toQueryModel( query );
+      queryBuilder.setQueryModel( queryModel );
+    } catch ( Exception e1 ) {
+      log.warn( "QueryPanel.actionPerformed ", e1 );
     }
 
-    try
-    {
-      if (schema != null)
-      {
+    try {
+      if ( schema != null ) {
         final QueryModel qm = queryBuilder.getQueryModel();
-        qm.setSchema(schema);
-        queryBuilder.setQueryModel(qm);
+        qm.setSchema( schema );
+        queryBuilder.setQueryModel( qm );
       }
-    }
-    catch (Exception e1)
-    {
-      log.warn("QueryPanel.actionPerformed ", e1);
+    } catch ( Exception e1 ) {
+      log.warn( "QueryPanel.actionPerformed ", e1 );
     }
 
-    if (performEdit())
-    {
+    if ( performEdit() ) {
       return getQuery();
     }
     return null;
   }
 
-  protected ConnectionProvider getConnectionDefinition()
-  {
+  protected ConnectionProvider getConnectionDefinition() {
     return connectionProvider;
   }
 
-  protected String getQuery()
-  {
-    return queryBuilder.getQueryModel().toString(true);
+  protected String getQuery() {
+    return queryBuilder.getQueryModel().toString( true );
   }
 
-  protected ResourceBundleSupport getBundleSupport()
-  {
+  protected ResourceBundleSupport getBundleSupport() {
     return bundleSupport;
   }
 }
