@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2016 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2018 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
@@ -36,13 +36,24 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 
 public class SimpleSQLReportDataFactoryTest {
 
@@ -182,6 +193,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( 20 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
 
     doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
     doReturn( res ).when( statement ).executeQuery( QUERY );
     doReturn( res ).when( statement ).executeQuery();
@@ -224,6 +236,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( "val_3" ).when( parameters ).get( "param_3" );
 
     doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
     doReturn( statement ).when( con ).prepareCall( anyString(), anyInt(), anyInt() );
     doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
     doReturn( res ).when( statement ).executeQuery();
@@ -270,6 +283,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( new Object[] { sqlDate, currentDate, "val_3" } ).when( parameters ).get( "param_1" );
 
     doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
     doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
     doReturn( res ).when( statement ).executeQuery();
     doReturn( rsmd ).when( res ).getMetaData();
@@ -372,7 +386,7 @@ public class SimpleSQLReportDataFactoryTest {
     DataRow parameters = mock( DataRow.class );
     this.connection = null;
     String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
-    verify(factory, times(1)).close();
+    verify( factory, times( 1 ) ).close();
   }
 
   @Test
@@ -380,6 +394,6 @@ public class SimpleSQLReportDataFactoryTest {
     DataRow parameters = mock( DataRow.class );
     this.connection = factory.getConnection( parameters );
     String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
-    verify(factory, times(0)).close();
+    verify( factory, times( 0 ) ).close();
   }
 }
