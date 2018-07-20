@@ -12,15 +12,17 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
+import org.pentaho.platform.util.messages.LocaleHelper;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Messages extends ResourceBundleSupport {
   private static Messages instance;
@@ -40,5 +42,25 @@ public class Messages extends ResourceBundleSupport {
   private Messages() {
     super( Locale.getDefault(), "org.pentaho.reporting.engine.classic.core.parameters.messages", ObjectUtilities
         .getClassLoader( Messages.class ) );
+  }
+
+  /**
+   * Refreshes the locale based on pentaho platform information and not from system default
+   * @return the refreshed locale
+   */
+  @Override
+  public Locale getLocale() {
+    Locale refreshedLocale = LocaleHelper.getLocale();
+    return ( refreshedLocale != null ) ? refreshedLocale : super.getLocale();
+  }
+
+  /**
+   * Retrieves and refreshes the resource information
+   * @return the resources
+   */
+  @Override
+  protected ResourceBundle getResources() {
+    ResourceBundle refreshedResources = ResourceBundle.getBundle( getResourceBase(), getLocale(), getSourceClassLoader() );
+    return refreshedResources != null ? refreshedResources : super.getResources();
   }
 }
