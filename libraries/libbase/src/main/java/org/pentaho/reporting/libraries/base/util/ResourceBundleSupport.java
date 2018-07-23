@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.util;
@@ -20,12 +20,8 @@ package org.pentaho.reporting.libraries.base.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JMenu;
-import javax.swing.KeyStroke;
-import java.awt.Image;
-import java.awt.Toolkit;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -155,14 +151,6 @@ public class ResourceBundleSupport {
   }
 
   /**
-   * The source class loader of the resource bundle.
-   * @return the resource bundle's source class loader.
-   */
-  protected final ClassLoader getSourceClassLoader() {
-    return this.sourceClassLoader;
-  }
-
-  /**
    * Gets a string for the given key from this resource bundle or one of its parents. If the key is a link, the link is
    * resolved and the referenced string is returned instead.
    *
@@ -175,11 +163,6 @@ public class ResourceBundleSupport {
   public synchronized String strictString( final String key ) {
     if ( key == null ) {
       throw new NullPointerException();
-    }
-
-    // locale might be changed in meanwhile
-    if ( locale != getLocale() ) {
-      cache.clear();
     }
 
     final String retval = this.cache.get( key );
@@ -203,18 +186,22 @@ public class ResourceBundleSupport {
     }
 
     if ( this.lookupPath.contains( key ) ) {
-      throw new MissingResourceException( "InfiniteLoop in resource lookup", getResourceBase(), this.lookupPath.toString() );
+      throw new MissingResourceException
+        ( "InfiniteLoop in resource lookup",
+          getResourceBase(), this.lookupPath.toString() );
     }
-    final String fromResBundle = this.getResources().getString( key );
+    final String fromResBundle = this.resources.getString( key );
     if ( fromResBundle.length() > 0 && fromResBundle.charAt( 0 ) == '@' ) {
       if ( fromResBundle.length() > 1 && fromResBundle.charAt( 1 ) == '@' ) {
         // global forward ...
         final int idx = fromResBundle.indexOf( '@', 2 );
         if ( idx == -1 ) {
-          throw new MissingResourceException( "Invalid format for global lookup key.", getResourceBase(), key );
+          throw new MissingResourceException
+            ( "Invalid format for global lookup key.", getResourceBase(), key );
         }
         try {
-          final ResourceBundle res = ResourceBundle.getBundle( fromResBundle.substring( 2, idx ), locale, sourceClassLoader );
+          final ResourceBundle res = ResourceBundle.getBundle
+            ( fromResBundle.substring( 2, idx ), locale, sourceClassLoader );
           return res.getString( fromResBundle.substring( idx + 1 ) );
         } catch ( Exception e ) {
           logger.error( "Error during global lookup", e );
@@ -594,7 +581,8 @@ public class ResourceBundleSupport {
       throw new IllegalArgumentException( "Key is empty." );
     }
     int character = keyString.charAt( 0 );
-    if ( keyString.startsWith( "VK_" ) ) { // NON-NLS
+    if ( keyString.startsWith( "VK_" ) ) // NON-NLS
+    {
       try {
         final Field f = KeyEvent.class.getField( keyString );
         final Integer keyCode = (Integer) f.get( null );
@@ -732,13 +720,5 @@ public class ResourceBundleSupport {
    */
   public Locale getLocale() {
     return locale;
-  }
-
-  /**
-   * Returns the resources for this resource bundle.
-   * @return the resources.
-   */
-  protected ResourceBundle getResources() {
-    return resources;
   }
 }
