@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2018 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -25,8 +25,8 @@ import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
-import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
-import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
+import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileDto;
+import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileTreeDto;
 
 /**
  * This class is a proxy for {@linkplain RepositoryFileTreeDto} needed to avoid loading full files' tree during the only

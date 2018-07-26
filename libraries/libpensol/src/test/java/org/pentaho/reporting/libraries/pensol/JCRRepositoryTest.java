@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -24,7 +24,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import junit.framework.TestCase;
 import org.apache.commons.vfs2.FileSystemException;
-import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
+import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileTreeDto;
 
 import javax.ws.rs.core.MediaType;
 import java.awt.*;
