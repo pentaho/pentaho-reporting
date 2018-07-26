@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
@@ -39,6 +39,9 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Locale;
+
+import static org.pentaho.reporting.engine.classic.core.parameters.ParameterUtils.getLocale;
 
 public class DefaultReportParameterValidator implements ReportParameterValidator {
   private static class TrustedParameterContext implements ParameterContext {
@@ -162,12 +165,14 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
         FormulaParameterEvaluator.computePostProcessingValue( result, trustedParameterContext, tempValue,
             parameterDefinitionEntry, untrustedValue, defaultValue );
 
+    final Locale locale = getLocale( trustedParameterContext.getReportEnvironment() );
+
     if ( isValueMissingForMandatoryParameterCheck( parameterDefinitionEntry, computedValue ) ) {
       // as the post processing expression failed or returned <null>, the computed value
       // must be <null> or an error. We report an error (which stops the report processing)
       // and set the default value as current value, so that the other parameters can continue.
       trustedParameterContext.getTrustedValues().put( parameterName, null );
-      result.addError( parameterName, new ValidationMessage( Messages.getInstance().getString(
+      result.addError( parameterName, new ValidationMessage( Messages.getInstance( locale ).getString(
           "DefaultReportParameterValidator.ParameterIsMandatory" ) ) );
       return;
     }
@@ -178,7 +183,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
         if ( parameterType.isInstance( computedValue ) == false ) {
           logger.warn( "Parameter validation error: Value cannot be matched due to invalid value type '"
               + parameterDefinitionEntry.getName() + "' with value '" + computedValue + "'" );
-          result.addError( parameterName, new ValidationMessage( Messages.getInstance().getString(
+          result.addError( parameterName, new ValidationMessage( Messages.getInstance( locale ).getString(
               "DefaultReportParameterValidator.ParameterIsInvalidType" ) ) );
           trustedParameterContext.getTrustedValues().put( parameterName, null );
           return;
@@ -207,7 +212,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
       }
 
       if ( computedValue instanceof Object[] == false ) {
-        result.addError( parameterName, new ValidationMessage( Messages.getInstance().getString(
+        result.addError( parameterName, new ValidationMessage( Messages.getInstance( locale ).getString(
             "DefaultReportParameterValidator.ParameterIsNotAnArray" ) ) );
         trustedParameterContext.getTrustedValues().put( parameterName, null );
         if ( logger.isDebugEnabled() ) {
@@ -230,7 +235,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
     }
 
     final ValidationMessage message =
-        computeValidListValue( listParameter, trustedParameterContext, parameterType, values );
+        computeValidListValue( listParameter, trustedParameterContext, parameterType, values, locale );
     if ( message != null ) {
       if ( reevaluatePossible
           && "true".equals( listParameter.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
@@ -254,7 +259,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
   }
 
   private ValidationMessage computeValidListValue( final ListParameter listParameter,
-      final ParameterContext parameterContext, final Class parameterType, final Object[] values )
+      final ParameterContext parameterContext, final Class parameterType, final Object[] values, final Locale locale )
     throws ReportDataFactoryException {
     for ( int i = 0; i < values.length; i++ ) {
       Object value = values[i];
@@ -264,7 +269,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
         } else if ( parameterType.isInstance( value ) == false ) {
           logger.warn( "Parameter validation error: Value cannot be matched due to invalid value type '"
               + listParameter.getName() + "' with value '" + value + "'" );
-          return new ValidationMessage( Messages.getInstance().getString(
+          return new ValidationMessage( Messages.getInstance( locale ).getString(
               "DefaultReportParameterValidator.ParameterIsInvalidType" ) );
         }
       }
@@ -279,7 +284,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
         if ( found == false ) {
           logger.warn( "Parameter validation error: No such value in the result for '" + listParameter.getName()
               + "' with value '" + value + "'" );
-          return new ValidationMessage( Messages.getInstance().getString(
+          return new ValidationMessage( Messages.getInstance( locale ).getString(
               "DefaultReportParameterValidator.ParameterIsInvalidValue" ) );
         }
       } catch ( ReportDataFactoryException e ) {
@@ -287,7 +292,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
       } catch ( Throwable e ) {
         logger.warn( "Unexpected Parameter validation error", e );
         // overly broad catch, I know, but some creepy code throws ClassNotDefErrors and such around ..
-        return new ValidationMessage( Messages.getInstance().getString( "DefaultReportParameterValidator.GlobalError" ) );
+        return new ValidationMessage( Messages.getInstance( locale ).getString( "DefaultReportParameterValidator.GlobalError" ) );
       }
     }
     return null;

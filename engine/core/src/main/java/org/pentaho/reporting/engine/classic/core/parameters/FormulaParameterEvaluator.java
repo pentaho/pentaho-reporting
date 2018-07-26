@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
@@ -31,6 +31,8 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formula.ErrorValue;
 
 import java.util.Locale;
+
+import static org.pentaho.reporting.engine.classic.core.parameters.ParameterUtils.getLocale;
 
 public class FormulaParameterEvaluator {
   private static final Log logger = LogFactory.getLog( FormulaParameterEvaluator.class );
@@ -64,7 +66,8 @@ public class FormulaParameterEvaluator {
           logger.debug( "Unable to compute default value for parameter '" + entry.getName() + "'", e );
         }
         if ( result != null ) {
-          result.addError( entry.getName(), new ValidationMessage( Messages.getInstance().formatMessage(
+          final Locale locale = getLocale( parameterContext.getReportEnvironment() );
+          result.addError( entry.getName(), new ValidationMessage( Messages.getInstance( locale ).formatMessage(
               "FormulaParameterEvaluator.PostProcessingInitFailed", e.getLocalizedMessage() ) ) );
         }
       }
@@ -97,11 +100,12 @@ public class FormulaParameterEvaluator {
     fe.setFormula( formula );
     fe.setRuntime( runtime );
     final Object value = fe.getValue();
+    final Locale locale = getLocale( runtime.getProcessingContext().getEnvironment() );
     if ( value == null ) {
       final Exception error = fe.getFormulaError();
       if ( error != null ) {
         if ( result != null ) {
-          result.addError( entry.getName(), new ValidationMessage( Messages.getInstance().formatMessage(
+          result.addError( entry.getName(), new ValidationMessage( Messages.getInstance( locale ).formatMessage(
               "FormulaParameterEvaluator.PostProcessingFormulaFailed", error.getLocalizedMessage() ) ) );
         }
 
@@ -120,7 +124,7 @@ public class FormulaParameterEvaluator {
       final ErrorValue errorValue = (ErrorValue) value;
       if ( result != null ) {
         result.addError( entry.getName(),
-            new ValidationMessage( Messages.getInstance().formatMessage(
+            new ValidationMessage( Messages.getInstance( locale ).formatMessage(
                 "FormulaParameterEvaluator.PostProcessingFormulaFailed",
                 errorValue.getErrorMessage( Locale.getDefault() ) ) ) );
       }
@@ -146,7 +150,7 @@ public class FormulaParameterEvaluator {
             logger.debug( "Unable to convert computed default value for parameter '" + entry.getName() + "'", e );
           }
           if ( result != null ) {
-            result.addError( entry.getName(), new ValidationMessage( Messages.getInstance().getString(
+            result.addError( entry.getName(), new ValidationMessage( Messages.getInstance( locale ).getString(
                 "FormulaParameterEvaluator.ErrorConvertingValue" ) ) );
             result.addError( entry.getName(), new ValidationMessage(
                 "The post-processing result cannot be converted into the target-type." ) );

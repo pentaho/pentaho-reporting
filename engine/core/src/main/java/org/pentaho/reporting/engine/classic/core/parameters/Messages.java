@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
@@ -23,22 +23,16 @@ import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import java.util.Locale;
 
 public class Messages extends ResourceBundleSupport {
-  private static Messages instance;
 
-  public static Messages getInstance() {
-    // its ok that this one is not synchronized. I dont care whether we have multiple instances of this
-    // beast sitting around, as this is a singleton for convinience reasons.
-    if ( instance == null ) {
-      instance = new Messages();
-    }
-    return instance;
+  public static Messages getInstance( Locale locale ) {
+    return new Messages( locale );
   }
 
   /**
-   * Creates a new instance.
+   * Creates a new instance based on locale.
    */
-  private Messages() {
-    super( Locale.getDefault(), "org.pentaho.reporting.engine.classic.core.parameters.messages", ObjectUtilities
-        .getClassLoader( Messages.class ) );
+  private Messages( Locale locale ) {
+    super( locale, "org.pentaho.reporting.engine.classic.core.parameters.messages", ObjectUtilities
+            .getClassLoader( Messages.class ) );
   }
 }
