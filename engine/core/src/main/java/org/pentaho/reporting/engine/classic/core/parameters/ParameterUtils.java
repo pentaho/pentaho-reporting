@@ -12,14 +12,17 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
+
+import java.util.Locale;
 
 public class ParameterUtils {
 
@@ -60,4 +63,8 @@ public class ParameterUtils {
     return parameters;
   }
 
+  static Locale getLocale( final ReportEnvironment environment ) {
+    final Locale locale = environment.getLocale();
+    return locale != null ? locale : Locale.getDefault();
+  }
 }
