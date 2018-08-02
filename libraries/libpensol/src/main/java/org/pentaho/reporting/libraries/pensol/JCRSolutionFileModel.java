@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -28,8 +28,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.http.HttpStatus;
-import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
-import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
+import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileDto;
+import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileTreeDto;
+import org.pentaho.platform.repository2.unified.webservices.RepositoryFileAdapter;
 import org.pentaho.platform.util.RepositoryPathEncoder;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
@@ -274,7 +275,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     if ( fileDto == null ) {
       throw new FileSystemException( BI_SERVER_NULL_OBJECT );
     }
-    final Date lastModifiedDate = fileDto.getLastModifiedDate();
+    final Date lastModifiedDate = RepositoryFileAdapter.unmarshalDate( fileDto.getLastModifiedDate() );
     if ( lastModifiedDate == null ) {
       logger.error( "Repository returned <null> for last-modified-date on file: " + file );
       return -1;

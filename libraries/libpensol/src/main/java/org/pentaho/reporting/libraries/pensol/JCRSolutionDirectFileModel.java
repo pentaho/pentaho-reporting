@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -23,11 +23,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.http.HttpStatus;
-import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
-import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
+import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileDto;
+import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.platform.web.http.api.resources.DirectoryResource;
 import org.pentaho.platform.web.http.api.resources.FileResource;
 import org.pentaho.platform.web.http.api.resources.RepositoryImportResource;
+import org.pentaho.platform.repository2.unified.webservices.RepositoryFileAdapter;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 import javax.ws.rs.core.Response;
@@ -271,7 +272,7 @@ public class JCRSolutionDirectFileModel implements SolutionFileModel {
 
   @Override
   public long getLastModifiedDate( final FileName fullName ) throws FileSystemException {
-    final Date lastModifiedDate = getFile( fullName ).getLastModifiedDate();
+    final Date lastModifiedDate = RepositoryFileAdapter.unmarshalDate( getFile( fullName ).getLastModifiedDate() );
     if ( lastModifiedDate == null ) {
       logger.error( NULL_MODIFIED_DATE + fullName );
       return -1;
