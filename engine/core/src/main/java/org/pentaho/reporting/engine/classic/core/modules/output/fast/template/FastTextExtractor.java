@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.template;
@@ -31,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 public class FastTextExtractor {
   private final StringBuilder textBuffer;
   private ExpressionRuntime runtime;
+  private RichTextStyleResolver styleResolver;
   private Object rawResult;
   private int inlineLayout;
 
@@ -39,7 +40,12 @@ public class FastTextExtractor {
   }
 
   public Object compute( final ReportElement content, final ExpressionRuntime runtime )
-    throws ContentProcessingException {
+          throws ContentProcessingException {
+
+    if ( styleResolver == null ) {
+      styleResolver = new RichTextStyleResolver( runtime.getProcessingContext(), content );
+    }
+
     this.runtime = runtime;
     this.rawResult = null;
     this.textBuffer.delete( 0, this.textBuffer.length() );
@@ -124,20 +130,20 @@ public class FastTextExtractor {
   }
 
   protected void inspectElement( final ReportElement element, final boolean inlineSection )
-    throws ContentProcessingException {
+          throws ContentProcessingException {
     if ( element instanceof Section ) {
       // subreports and so on ..
       return;
     }
 
     Object value =
-        AbstractFormattedDataBuilder.filterRichText( element, element.getElementType().getValue( runtime, element ) );
+            AbstractFormattedDataBuilder.filterRichText( element, element.getElementType().getValue( runtime, element ) );
     if ( value == null ) {
       return;
     }
     if ( value instanceof Section ) {
       Section section = (Section) value;
-      RichTextStyleResolver.resolveStyle( section );
+      styleResolver.resolveRichTextStyle( section );
       traverseSection( section );
       return;
     }
@@ -146,7 +152,7 @@ public class FastTextExtractor {
   }
 
   protected void handleValueContent( final ReportElement element, final Object value, final boolean inlineSection )
-    throws ContentProcessingException {
+          throws ContentProcessingException {
     if ( value instanceof String ) {
       textBuffer.append( value );
 

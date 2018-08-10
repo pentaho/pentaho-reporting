@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal;
@@ -766,7 +766,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         strikeThrough = null;
       }
     } else {
-      underline = computeUnderline( box, null );
+      strikeThrough = computeStrikeThrough( box, null );
     }
   }
 

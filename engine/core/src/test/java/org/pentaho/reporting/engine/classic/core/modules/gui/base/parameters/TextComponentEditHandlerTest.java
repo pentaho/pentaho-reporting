@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2017 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2018 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
@@ -40,9 +40,7 @@ import java.util.TimeZone;
 
 import javax.swing.text.JTextComponent;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 
 @SuppressWarnings( "rawtypes" )
@@ -127,7 +125,7 @@ public class TextComponentEditHandlerTest {
     verify( textComponent ).setBackground( Color.RED );
   }
 
-  @Test( expected = BeanException.class)
+  @Test( expected = BeanException.class )
   public void testConvertValueWithFormatter() throws BeanException {
     Class type = String.class;
     String keyName = "key";

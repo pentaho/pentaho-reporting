@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.basic;
@@ -33,6 +33,8 @@ import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessing
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugOutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.layout.build.RichTextStyleResolver;
 
 import java.util.ArrayList;
 
@@ -53,7 +55,10 @@ public class FooterLayoutModelBuilderTest extends TestCase {
     builder.setLimitedSubReports( true );
     builder.setCollapseProgressMarker( false );
 
-    final LayoutBuilderStrategy builderStrategy = new DefaultLayoutBuilderStrategy();
+    final RichTextStyleResolver resolver =
+            new RichTextStyleResolver( new DefaultProcessingContext(), new MasterReport() );
+
+    final LayoutBuilderStrategy builderStrategy = new DefaultLayoutBuilderStrategy( resolver );
     final DefaultRenderNodeFactory renderNodeFactory = new DefaultRenderNodeFactory();
     renderNodeFactory.initialize( new DebugOutputProcessorMetaData() );
 

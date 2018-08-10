@@ -12,13 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.richtext;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
@@ -48,6 +47,8 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.types.ContentType;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
+import org.pentaho.reporting.engine.classic.core.layout.richtext.html.RichTextHtmlStyleBuilderFactory;
+import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
@@ -114,9 +115,17 @@ public class HtmlRichTextConverter implements RichTextConverter {
   public Object convert( final ReportElement source, final Object value ) {
     try {
       final Document doc = RichTextConverterUtilities.parseDocument( editorKit, value );
-      if ( doc == null ) {
+      if ( !( doc instanceof HTMLDocument ) ) {
         return value;
       }
+
+      HTMLDocument docHTML = (HTMLDocument) doc;
+
+      SimpleStyleSheet simpleStyle = source.getComputedStyle();
+      RichTextHtmlStyleBuilderFactory richTextBuilder = new RichTextHtmlStyleBuilderFactory();
+      String codeCss = richTextBuilder.produceTextStyle( null, simpleStyle ).toString();
+
+      docHTML.getStyleSheet().addRule( "body { " + codeCss + ";}" );
 
       final Element element = process( doc.getDefaultRootElement(), null );
       return RichTextConverterUtilities.convertToBand( StyleKey.getDefinedStyleKeysList(), source, element );
@@ -382,15 +391,34 @@ public class HtmlRichTextConverter implements RichTextConverter {
     final HTMLDocument htmlDocument = (HTMLDocument) textElement.getDocument();
     final StyleSheet sheet = htmlDocument.getStyleSheet();
     final AttributeSet attr = computeStyle( textElement, sheet );
+
+    if ( attr instanceof SimpleAttributeSet && ( (SimpleAttributeSet) attr ).getAttributeCount() == 0 ) {
+      return;
+    }
+
     parseBorderAndBackgroundStyle( result, sheet, attr );
     parseBoxStyle( result, attr );
 
-    final Font font = sheet.getFont( attr );
-    if ( font != null ) {
-      result.getStyle().setStyleProperty( TextStyleKeys.FONT, font.getFamily() );
-      result.getStyle().setStyleProperty( TextStyleKeys.FONTSIZE, font.getSize() );
-      result.getStyle().setBooleanStyleProperty( TextStyleKeys.ITALIC, font.isItalic() );
-      result.getStyle().setBooleanStyleProperty( TextStyleKeys.BOLD, font.isBold() );
+    final Object fontFamily = attr.getAttribute( CSS.Attribute.FONT_FAMILY );
+    if ( fontFamily != null ) {
+      result.getStyle().setStyleProperty( TextStyleKeys.FONT, String.valueOf( fontFamily ) );
+    }
+
+    final Object fontSize = attr.getAttribute( CSS.Attribute.FONT_SIZE );
+    if ( fontSize != null ) {
+      result.getStyle().setStyleProperty( TextStyleKeys.FONTSIZE, Math.round( parseLength( String.valueOf( fontSize ) ) ) );
+    }
+
+    final Object fontWeight = attr.getAttribute( CSS.Attribute.FONT_WEIGHT );
+    if ( fontWeight != null ) {
+      String fontWeightStr = String.valueOf( fontWeight );
+      result.getStyle().setStyleProperty( TextStyleKeys.BOLD, fontWeightStr.toLowerCase().equals( "bold" ) );
+    }
+
+    final Object fontStyle = attr.getAttribute( CSS.Attribute.FONT_STYLE );
+    if ( fontStyle != null ) {
+      String fontStyleStr = String.valueOf( fontStyle );
+      result.getStyle().setStyleProperty( TextStyleKeys.ITALIC, fontStyleStr.toLowerCase().equals( "italic" ) );
     }
 
     final Object letterSpacing = attr.getAttribute( CSS.Attribute.LETTER_SPACING );
