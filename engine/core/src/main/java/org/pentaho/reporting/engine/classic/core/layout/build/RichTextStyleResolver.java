@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
@@ -21,35 +21,38 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
+import org.pentaho.reporting.engine.classic.core.style.css.CSSStyleResolver;
+import org.pentaho.reporting.engine.classic.core.style.resolver.StyleResolver;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
+import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 
 public class RichTextStyleResolver extends AbstractStructureVisitor {
-  private SimpleStyleResolver simpleStyleResolver;
-  private ResolverStyleSheet resolveStyleSheet;
+  private StyleResolver cssStyleResolver;
 
-  public RichTextStyleResolver() {
-    this.simpleStyleResolver = new SimpleStyleResolver();
-    this.resolveStyleSheet = new ResolverStyleSheet();
+  public RichTextStyleResolver( ProcessingContext runtime, ReportElement element ) {
+    cssStyleResolver = CSSStyleResolver.createDesignTimeResolver(
+              element.getReportDefinition(),
+              runtime.getResourceManager(),
+              runtime.getContentBase(),
+              false );
   }
 
   protected void traverseSection( final Section section ) {
     traverseSectionWithoutSubReports( section );
   }
 
-  public void resolve( final Section section ) {
+  private void resolveStyle( final Section section ) {
     inspectElement( section );
     traverseSection( section );
   }
 
   protected void inspectElement( final ReportElement element ) {
-    simpleStyleResolver.resolve( element, resolveStyleSheet );
+    ResolverStyleSheet resolveStyleSheet = new ResolverStyleSheet();
+    cssStyleResolver.resolve( element, resolveStyleSheet );
     element.setComputedStyle( new SimpleStyleSheet( resolveStyleSheet ) );
   }
 
-  public static void resolveStyle( final Section section ) {
-    final RichTextStyleResolver richTextStyleResolver = new RichTextStyleResolver();
-    richTextStyleResolver.resolve( section );
+  public void resolveRichTextStyle( Section section ) {
+    resolveStyle( section );
   }
-
 }

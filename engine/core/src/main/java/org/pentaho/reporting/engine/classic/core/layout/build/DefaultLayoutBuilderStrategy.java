@@ -12,19 +12,19 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.filter.DataSource;
 import org.pentaho.reporting.engine.classic.core.filter.RawDataSource;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
@@ -36,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.richtext.RichTextConvert
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,11 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
   private ExpressionRuntime runtime;
   private ArrayList<InlineSubreportMarker> collectedReports;
   private boolean designtime;
+  private final RichTextStyleResolver styleResolver;
 
-  public DefaultLayoutBuilderStrategy() {
+  public DefaultLayoutBuilderStrategy( RichTextStyleResolver styleResolver ) {
+    ArgumentNullException.validate( "styleResolver", styleResolver );
+    this.styleResolver = styleResolver;
     collectedReports = new ArrayList<InlineSubreportMarker>();
   }
 
@@ -168,7 +172,7 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy {
 
     if ( value instanceof Section ) {
       final Section section = (Section) value;
-      RichTextStyleResolver.resolveStyle( section );
+      styleResolver.resolveRichTextStyle( section );
       addBandInternal( section, builder, false );
       return;
     }

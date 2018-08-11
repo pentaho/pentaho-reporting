@@ -12,20 +12,32 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
+import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.layout.build.DefaultLayoutBuilderStrategy;
 import org.pentaho.reporting.engine.classic.core.layout.build.DefaultLayoutModelBuilder;
 import org.pentaho.reporting.engine.classic.core.layout.build.DefaultRenderNodeFactory;
 import org.pentaho.reporting.engine.classic.core.layout.build.LayoutBuilderStrategy;
 import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder;
 import org.pentaho.reporting.engine.classic.core.layout.build.RenderNodeFactory;
+import org.pentaho.reporting.engine.classic.core.layout.build.RichTextStyleResolver;
+import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 public class DefaultRenderComponentFactory implements RenderComponentFactory {
+  private RichTextStyleResolver resolver;
+
   public DefaultRenderComponentFactory() {
+    resolver = new RichTextStyleResolver( new DefaultProcessingContext(), new MasterReport() );
+  }
+
+  public DefaultRenderComponentFactory( RichTextStyleResolver resolver ) {
+    ArgumentNullException.validate( "resolver", resolver );
+    this.resolver = resolver;
   }
 
   public LayoutModelBuilder createLayoutModelBuilder( final String name ) {
@@ -37,6 +49,6 @@ public class DefaultRenderComponentFactory implements RenderComponentFactory {
   }
 
   public LayoutBuilderStrategy createLayoutBuilderStrategy() {
-    return new DefaultLayoutBuilderStrategy();
+    return new DefaultLayoutBuilderStrategy( resolver );
   }
 }
