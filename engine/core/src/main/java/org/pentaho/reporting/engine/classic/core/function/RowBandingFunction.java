@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -107,6 +107,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    * Default constructor.
    */
   public RowBandingFunction() {
+    super.setDependencyLevel( 1 );
     warned = false;
     numberOfElements = 1;
   }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -85,6 +85,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    * Initially the function has no name...be sure to assign one before using the function.
    */
   public TotalGroupSumFunction() {
+    super.setDependencyLevel( 1 );
     stateSequence = new StateSequence<>();
   }
 
@@ -192,6 +193,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
 
   public Object clone() throws CloneNotSupportedException {
     final TotalGroupSumFunction o = (TotalGroupSumFunction) super.clone();
+    o.setDependencyLevel( 1 );
     o.stateSequence = new StateSequence<>( stateSequence.getKeys().size() );
 
     if ( result != null ) {

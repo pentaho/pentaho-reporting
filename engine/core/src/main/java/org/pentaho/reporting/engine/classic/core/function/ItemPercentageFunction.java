@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -77,6 +77,7 @@ public class ItemPercentageFunction extends AbstractFunction {
    * Creates a new ItemPercentageFunction.
    */
   public ItemPercentageFunction() {
+    super.setDependencyLevel( 1 );
     totalSumFunction = new TotalGroupSumFunction();
     totalSumFunction.setName( "total" );
     scale = 14;
@@ -306,6 +307,7 @@ public class ItemPercentageFunction extends AbstractFunction {
    */
   public Object clone() throws CloneNotSupportedException {
     final ItemPercentageFunction clone = (ItemPercentageFunction) super.clone();
+    clone.setDependencyLevel( 1 );
     clone.totalSumFunction = (TotalGroupSumFunction) totalSumFunction.clone();
     return clone;
   }
