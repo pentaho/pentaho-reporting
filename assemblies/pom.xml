@@ -329,6 +329,12 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.pentaho.di.plugins</groupId>
+      <artifactId>kettle-json-plugin</artifactId>
+      <type>zip</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>pentaho</groupId>
       <artifactId>pdi-dataservice-client-plugin</artifactId>
       <scope>compile</scope>
@@ -460,7 +466,7 @@
                 <goal>unpack-dependencies</goal>
               </goals>
               <configuration>
-                <includeArtifactIds>pentaho-big-data-plugin,pentaho-cassandra-plugin,pdi-xml-plugin</includeArtifactIds>
+                <includeArtifactIds>pentaho-big-data-plugin,pentaho-cassandra-plugin,pdi-xml-plugin,kettle-json-plugin</includeArtifactIds>
                 <outputDirectory>${stage.dir.designer}/plugins</outputDirectory>
               </configuration>
             </execution>
