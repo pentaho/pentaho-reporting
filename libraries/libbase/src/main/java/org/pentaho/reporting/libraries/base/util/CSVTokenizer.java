@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.util;
@@ -216,7 +216,7 @@ public class CSVTokenizer implements Enumeration {
       beforeStart = false;
     }
 
-    if ( this.quate != null
+    if ( this.quate != null && !this.quate.isEmpty()
         && this.record.startsWith( this.quate, this.currentIndex ) ) {
       final int quateLength = this.quate.length();
       int startOffset = this.currentIndex + quateLength;
