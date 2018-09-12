@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.complextext;
@@ -189,7 +189,8 @@ public class RichTextRenderingIT {
     ExpressionRuntime runtime =
         new GenericExpressionRuntime( new DefaultTableModel(), 0, new DefaultProcessingContext( report ) );
 
-    RichTextStyleResolver.resolveStyle( report );
+    RichTextStyleResolver resolver = new RichTextStyleResolver( runtime.getProcessingContext(), report );
+    resolver.resolveRichTextStyle( report );
 
     XSSFWorkbook hssfWorkbook = new XSSFWorkbook();
     ExcelColorProducer colorProducer = new StaticExcelColorSupport();
@@ -245,7 +246,8 @@ public class RichTextRenderingIT {
     report.getReportHeader().getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, Color.YELLOW );
     report.getReportFooter().clear();
 
-    RichTextStyleResolver.resolveStyle( report );
+    RichTextStyleResolver resolver = new RichTextStyleResolver( new DefaultProcessingContext(), report );
+    resolver.resolveRichTextStyle( report );
 
     HtmlRenderingSetup setup = new HtmlRenderingSetup( report );
     FastHtmlTextExtractor te = setup.createFastExtractor();
