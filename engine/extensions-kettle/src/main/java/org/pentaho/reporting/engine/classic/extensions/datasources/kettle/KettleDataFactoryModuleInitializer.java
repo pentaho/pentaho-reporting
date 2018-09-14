@@ -30,8 +30,9 @@ public class KettleDataFactoryModuleInitializer implements ModuleInitializer {
     try {
       logger.debug( "DEFAULT_PLUGIN_BASE_FOLDERS=" + Const.DEFAULT_PLUGIN_BASE_FOLDERS );
 
-      // init kettle without simplejndi
-      if ( KettleEnvironment.isInitialized() == false ) {
+      // check if anybody already initialized Kettle
+      if ( !KettleEnvironment.isInitializing() && !KettleEnvironment.isInitialized() ) {
+        // init kettle without simplejndi
         KettleEnvironment.init( false );
 
         // Route logging from Kettle to Apache Commons Logging...
