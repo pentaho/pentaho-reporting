@@ -55,8 +55,9 @@ public class PmdDataFactoryModule extends AbstractModule {
    */
   public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     try {
-      // init kettle without simplejndi
-      if ( KettleEnvironment.isInitialized() == false ) {
+      // check if anybody already initialized Kettle
+      if ( !KettleEnvironment.isInitializing() && !KettleEnvironment.isInitialized() ) {
+        // init kettle without simplejndi
         KettleEnvironment.init( false );
       }
     } catch ( Throwable e ) {
