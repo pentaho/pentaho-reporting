@@ -51,7 +51,6 @@
     <syslo4j.version>0.9.46</syslo4j.version>
     <jersey.version>1.19.1</jersey.version>
     <commons-database.version>8.2.0.0-SNAPSHOT</commons-database.version>
-    <jaxen.version>1.1.1</jaxen.version>
     <wsdl4j.version>1.6.2</wsdl4j.version>
     <infobright.version>3.4</infobright.version>
     <mstor.version>0.9.13</mstor.version>
@@ -166,7 +165,6 @@
     <commons-collections4.version>4.1</commons-collections4.version>
     <servlet2.version>2.5</servlet2.version>
     <odfdom-java.version>0.8.6</odfdom-java.version>
-    <dom4j.version>1.6.1</dom4j.version>
     <commons-math.version>1.1</commons-math.version>
     <gwt.version>2.5.1</gwt.version>
     <javassist.version>3.20.0-GA</javassist.version>
@@ -648,17 +646,6 @@
         <version>${trilead-ssh2.version}</version>
       </dependency>
       <dependency>
-        <groupId>jaxen</groupId>
-        <artifactId>jaxen</artifactId>
-        <version>${jaxen.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
         <groupId>pentaho-kettle</groupId>
         <artifactId>kettle-ui-swt</artifactId>
         <version>${pdi.version}</version>
@@ -674,6 +661,10 @@
         <artifactId>hibernate-core</artifactId>
         <version>${hibernate.version}</version>
         <exclusions>
+          <exclusion>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+          </exclusion>
           <exclusion>
             <artifactId>antlr</artifactId>
             <groupId>antlr</groupId>
@@ -806,7 +797,7 @@
           </exclusion>
           <exclusion>
             <artifactId>*</artifactId>
-            <groupId>dom4j</groupId>
+            <groupId>org.dom4j</groupId>
           </exclusion>
           <exclusion>
             <artifactId>*</artifactId>
@@ -1760,17 +1751,6 @@
           <exclusion>
             <artifactId>*</artifactId>
             <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>dom4j</groupId>
-        <artifactId>dom4j</artifactId>
-        <version>${dom4j.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>xml-apis</artifactId>
-            <groupId>xml-apis</groupId>
           </exclusion>
         </exclusions>
       </dependency>
