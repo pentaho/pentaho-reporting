@@ -14,7 +14,7 @@
   <name>Pentaho Reporting Libraries</name>
   <profiles>
     <profile>
-      <id>libraries-lowdeps</id>
+      <id>lowdeps</id>
       <modules>
         <module>configuration-editor</module>
         <module>flute</module>
@@ -40,7 +40,7 @@
          when you do not yet have those snapshot libraries available yet.
     -->
     <profile>
-      <id>libraries-highdeps</id>
+      <id>highdeps</id>
       <modules>
         <module>libpensol</module>
       </modules>
