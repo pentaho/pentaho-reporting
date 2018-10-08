@@ -2813,45 +2813,18 @@
     </profile>
     <profile>
       <id>libraries</id>
-      <activation>
-        <property>
-          <name>libraries</name>
-        </property>
-      </activation>
       <modules>
         <module>libraries</module>
-        <module>engine</module>
       </modules>
     </profile>
     <profile>
       <id>engine</id>
-      <activation>
-        <property>
-          <name>engine</name>
-        </property>
-      </activation>
       <modules>
         <module>engine</module>
       </modules>
     </profile>
     <profile>
-      <id>specials</id>
-      <activation>
-        <property>
-          <name>specials</name>
-        </property>
-      </activation>
-      <modules>
-        <module>libraries</module>
-      </modules>
-    </profile>
-    <profile>
       <id>designer</id>
-      <activation>
-        <property>
-          <name>designer</name>
-        </property>
-      </activation>
       <modules>
         <module>designer</module>
         <module>assemblies</module>

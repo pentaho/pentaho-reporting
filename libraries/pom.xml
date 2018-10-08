@@ -14,12 +14,7 @@
   <name>Pentaho Reporting Libraries</name>
   <profiles>
     <profile>
-      <id>libraries</id>
-      <activation>
-        <property>
-          <name>!specials</name>
-        </property>
-      </activation>
+      <id>lowdeps</id>
       <modules>
         <module>configuration-editor</module>
         <module>flute</module>
@@ -39,14 +34,39 @@
         <module>libxml</module>
       </modules>
     </profile>
+    <!-- We need to split libpensol into a custom profile because it  has dependencies 
+         on the reporting engine and several Pentaho platform libraries.
+         It must be built later in the stack when building a Pentaho suite release or 
+         when you do not yet have those snapshot libraries available yet.
+    -->
     <profile>
-      <id>specials</id>
-      <activation>
-        <property>
-          <name>!libraries</name>
-        </property>
-      </activation>
+      <id>highdeps</id>
       <modules>
+        <module>libpensol</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>all</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>      
+      <modules>
+        <module>configuration-editor</module>
+        <module>flute</module>
+        <module>libbase</module>
+        <module>libcss</module>
+        <module>libloader</module>
+        <module>libdocbundle</module>
+        <module>libfonts</module>
+        <module>libformula</module>
+        <module>libformula-ui</module>
+        <module>libformat</module>
+        <module>libpixie</module>
+        <module>librepository</module>
+        <module>libswing</module>
+        <module>libsparkline</module>
+        <module>libserializer</module>
+        <module>libxml</module>
         <module>libpensol</module>
       </modules>
     </profile>
