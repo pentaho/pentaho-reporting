@@ -15,7 +15,6 @@
     <stage.dir.designer>${stage.dir}/report-designer</stage.dir.designer>
     <stage.dir>${project.build.directory}/stage</stage.dir>
     <pentaho-hadoop-shims-api.version>8.2.0.0-SNAPSHOT</pentaho-hadoop-shims-api.version>
-    <oss-licenses.version>8.2.0.0-SNAPSHOT</oss-licenses.version>
   </properties>
   <dependencies>
     <dependency>
@@ -350,12 +349,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>oss-licenses</artifactId>
-      <type>zip</type>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>commons-discovery</groupId>
       <artifactId>commons-discovery</artifactId>
     </dependency>
@@ -386,7 +379,6 @@
     <dependency>
       <groupId>pentaho</groupId>
       <artifactId>oss-licenses</artifactId>
-      <version>${oss-licenses.version}</version>
       <type>zip</type>
       <optional>true</optional>
     </dependency>
