@@ -163,11 +163,6 @@
       <artifactId>trilead-ssh2</artifactId>
     </dependency>
     <dependency>
-      <groupId>nickyb</groupId>
-      <artifactId>sqleonardo</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>pentaho-kettle</groupId>
       <artifactId>kettle-dbdialog</artifactId>
       <scope>compile</scope>

@@ -74,7 +74,7 @@
     <luciddb.version>0.9.4</luciddb.version>
     <pdi-osgi-bridge.version>8.2.0.0-SNAPSHOT</pdi-osgi-bridge.version>
     <antlr.version>3.5.2</antlr.version>
-    <sqleonardo.version>2009.03.rc1</sqleonardo.version>
+    <sqleonardo.version>2018.10</sqleonardo.version>
     <commons-validator.version>1.3.1</commons-validator.version>
     <pentaho-metadata.version>8.2.0.0-SNAPSHOT</pentaho-metadata.version>
     <pentaho.pentaho-versionchecker.version>${project.version}</pentaho.pentaho-versionchecker.version>
@@ -334,7 +334,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>nickyb</groupId>
+        <groupId>com.pentaho.sqleonardo</groupId>
         <artifactId>sqleonardo</artifactId>
         <version>${sqleonardo.version}</version>
         <exclusions>
