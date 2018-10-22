@@ -53,7 +53,7 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>nickyb</groupId>
+      <groupId>com.pentaho.sqleonardo</groupId>
       <artifactId>sqleonardo</artifactId>
       <scope>compile</scope>
     </dependency>

@@ -67,11 +67,6 @@
       <artifactId>ftp4che</artifactId>
     </dependency>
     <dependency>
-      <groupId>nickyb</groupId>
-      <artifactId>sqleonardo</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>org.ini4j</groupId>
       <artifactId>ini4j</artifactId>
     </dependency>
