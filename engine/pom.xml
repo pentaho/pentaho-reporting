@@ -115,8 +115,6 @@
         <module>wizard-core</module>
         <module>demo</module>
         <module>testcases</module>
-        <module>samples</module>
-        <module>sdk</module>
         <module>tools</module>
       </modules>
     </profile>
@@ -147,8 +145,6 @@
         <module>wizard-core</module>
         <module>demo</module>
         <module>testcases</module>
-        <module>samples</module>
-        <module>sdk</module>
         <module>tools</module>
       </modules>
     </profile>
