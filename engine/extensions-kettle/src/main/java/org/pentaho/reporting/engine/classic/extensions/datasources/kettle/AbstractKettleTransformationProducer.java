@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
@@ -306,11 +306,16 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
       final FormulaParameter mapping = this.parameter[ i ];
       final String sourceName = mapping.getName();
       final Object value = mapping.compute( formulaContext );
+      TransMeta transMeta = trans.getTransMeta();
       if ( value != null ) {
-        trans.setParameterValue( sourceName, String.valueOf( value ) );
+        String paramValue = String.valueOf( value );
+        trans.setParameterValue( sourceName, paramValue );
+        transMeta.setParameterValue( sourceName, paramValue );
       } else {
         trans.setParameterValue( sourceName, null );
+        transMeta.setParameterValue( sourceName, null );
       }
+      trans.setTransMeta( transMeta );
     }
   }
 
