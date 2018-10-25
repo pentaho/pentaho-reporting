@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting.designer</groupId>
     <artifactId>reporting-designer</artifactId>
-    <version>8.1.0.0-SNAPSHOT</version>
+    <version>8.1.0.5-646</version>
   </parent>
   <artifactId>datasource-editor-reflection</artifactId>
-  <version>8.1.0.0-SNAPSHOT</version>
+  <version>8.1.0.5-646</version>
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
