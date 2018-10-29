@@ -30,8 +30,6 @@ import org.pentaho.openformula.ui.model2.FormulaTextElement;
 
 import javax.swing.text.BadLocationException;
 
-import static org.pentaho.openformula.ui.model2.FormulaParser.parseText;
-
 public class FormulaDocumentTest extends TestCase {
   public FormulaDocumentTest() {
   }
