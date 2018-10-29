@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.openformula.ui.model2;
@@ -56,7 +56,7 @@ public class FormulaParser {
       buffer.append( c );
       position += 1;
       boolean inQuoting = ( '"' == c );
-      for (; position < data.length; position += 1 ) {
+      for ( ; position < data.length; position += 1 ) {
         final char c2 = data[ position ];
         if ( inQuoting == false && isToken( c2 ) ) {
           return buffer.toString();
@@ -175,8 +175,7 @@ public class FormulaParser {
             for ( int t = startElementIdx; t < i; t++ ) {
               buffer.append( elements[ t ].getText() );
             }
-            mergedList.add( new FormulaTextElement
-              ( document, document.getRootElement(), buffer.toString() ) );
+            mergedList.add( new FormulaTextElement( document, document.getRootElement(), buffer.toString() ) );
           }
           startElementIdx = -1;
         }
@@ -194,8 +193,7 @@ public class FormulaParser {
         for ( int t = startElementIdx; t < elements.length; t++ ) {
           buffer.append( elements[ t ].getText() );
         }
-        mergedList.add( new FormulaTextElement
-          ( document, document.getRootElement(), buffer.toString() ) );
+        mergedList.add( new FormulaTextElement( document, document.getRootElement(), buffer.toString() ) );
       }
     }
 
@@ -224,16 +222,17 @@ public class FormulaParser {
         final String text = buffer.substring( 0, startIdx );
         if ( text.trim().length() == 0 ) {
           // only leading and trailing whitespace wont cause us to create a new node.
-          mergedList.add( new FormulaFunctionElement
-            ( document, document.getRootElement(), buffer ) );
+          mergedList.add( new FormulaFunctionElement( document, document.getRootElement(), buffer ) );
           continue;
         }
 
-        mergedList.add( new FormulaTextElement
-          ( document, document.getRootElement(), text ) );
+        mergedList.add( new FormulaTextElement( document, document.getRootElement(), text ) );
       }
-      mergedList.add( new FormulaFunctionElement
-        ( document, document.getRootElement(), buffer.substring( startIdx ) ) );
+      if ( buffer.trim().equals( "(" ) ) {
+        mergedList.add( new FormulaOpenParenthesisElement( document, document.getRootElement() ) );
+      } else {
+        mergedList.add( new FormulaFunctionElement( document, document.getRootElement(), buffer.substring( startIdx ) ) );
+      }
     }
 
     mergedList.add( mergedValues[ mergedValues.length - 1 ] );
