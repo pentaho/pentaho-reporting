@@ -64,10 +64,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>dom4j</groupId>
-      <artifactId>dom4j</artifactId>
-    </dependency>
-    <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib-nodep</artifactId>
     </dependency>
@@ -219,10 +215,6 @@
     <dependency>
       <groupId>trilead-ssh2</groupId>
       <artifactId>trilead-ssh2</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jaxen</groupId>
-      <artifactId>jaxen</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
