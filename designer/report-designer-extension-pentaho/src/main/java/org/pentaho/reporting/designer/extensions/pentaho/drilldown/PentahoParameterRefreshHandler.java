@@ -290,8 +290,8 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
      */
     private HttpClientContext buildPreemptiveAuthRequestContext( final URI target, final AuthenticationData auth ) {
 
-      if ( target == null || auth == null ) {
-        return null; // nothing to do here
+      if ( target == null || auth == null || StringUtils.isEmpty( auth.getUsername() ) ) {
+        return null; // nothing to do here; if no credentials were passed, there's no need to create a preemptive auth Context
       }
 
       HttpHost targetHost = URIUtils.extractHost( target );
