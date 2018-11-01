@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown;
@@ -24,11 +24,21 @@ import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystem;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.VFS;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
@@ -59,6 +69,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import javax.swing.SwingUtilities;
 import java.awt.Component;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -233,7 +244,16 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
 
         final HttpGet method = new HttpGet( paramServiceText );
 
-        HttpResponse httpResponse = httpClient.execute( method );
+        /*
+         * With the work done for BISERVER-13648, the server no longer return an auth challenge to the issued request;
+         * ( when this used to be the case, the HttpClient lib would handle such a 401 response OOTB by issuing the credentials
+         * should any have been set in the HTTPContext ).
+         *
+         * Now ( i.e. post BISERVER-13648 ), the server returns a 302 REDIRECT to the server's /Login page.
+         * We can circumvent by defining an  HttpClientContext with preemptive authentication set.
+         */
+        HttpClientContext httpCtx = buildPreemptiveAuthRequestContext( new URI( paramServiceText ), loginData );
+        HttpResponse httpResponse = httpCtx != null ? httpClient.execute( method, httpCtx ) : httpClient.execute( method );
         final int result = httpResponse.getStatusLine().getStatusCode();
         if ( result != HttpStatus.SC_OK ) {
           if ( result == HttpStatus.SC_MOVED_TEMPORARILY || result == HttpStatus.SC_FORBIDDEN
@@ -252,6 +272,46 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
       } catch ( Exception e ) {
         error = e;
       }
+    }
+
+    /**
+     * HttpClient does not support preemptive authentication out of the box, because if misused or used incorrectly the
+     * preemptive authentication can lead to significant security issues, such as sending user credentials in clear text
+     * to an unauthorized third party. Therefore, users are expected to evaluate potential benefits of preemptive
+     * authentication versus security risks in the context of their specific application environment.
+     *
+     * Nonetheless one can configure HttpClient to authenticate preemptively by prepopulating the authentication data cache.
+     *
+     * @see https://hc.apache.org/httpcomponents-client-ga/tutorial/html/authentication.html
+     *
+     * @param target target URI
+     * @param auth login data
+     * @return
+     */
+    private HttpClientContext buildPreemptiveAuthRequestContext( final URI target, final AuthenticationData auth ) {
+
+      if ( target == null || auth == null || StringUtils.isEmpty( auth.getUsername() ) ) {
+        return null; // nothing to do here; if no credentials were passed, there's no need to create a preemptive auth Context
+      }
+
+      HttpHost targetHost = URIUtils.extractHost( target );
+
+      CredentialsProvider credsProvider = new BasicCredentialsProvider();
+      credsProvider.setCredentials( new AuthScope( targetHost.getHostName(), targetHost.getPort() ),
+          new UsernamePasswordCredentials( auth.getUsername(), auth.getPassword() ) );
+
+      // Create AuthCache instance
+      AuthCache authCache = new BasicAuthCache();
+
+      // Generate BASIC scheme object and add it to the local auth cache
+      BasicScheme basicAuth = new BasicScheme();
+      authCache.put( targetHost, basicAuth );
+
+      HttpClientContext context = HttpClientContext.create();
+      context.setCredentialsProvider( credsProvider );
+      context.setAuthCache( authCache );
+
+      return context;
     }
   }
 
