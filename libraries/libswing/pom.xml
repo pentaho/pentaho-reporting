@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.1.0.18-169</version>
   </parent>
-
   <artifactId>libswing</artifactId>
-  <packaging>jar</packaging>
-
+  <version>7.1.0.18-169</version>
   <name>LibSwing</name>
   <description>LibSwing is a common helper class storage for design-time elements,
     so that they dont have to move into the engine project, where they
     potentially bloat up the project due to third-party dependencies or
     a large amount of code.</description>
-
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -23,7 +21,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>

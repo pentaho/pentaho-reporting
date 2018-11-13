@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.1.0.18-169</version>
   </parent>
-
   <artifactId>libpixie</artifactId>
-  <packaging>jar</packaging>
-
+  <version>7.1.0.18-169</version>
   <name>LibPixie</name>
   <description>Pixie is a WMF-File reading library originally written by David R. Harris as
     converter for the Pixie-ImageViewer. Pixie was long time dead and is now
     resurrected as WMF-Reader and ImageProducer for Java 1.2.2 or higher.</description>
-
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -22,7 +20,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
