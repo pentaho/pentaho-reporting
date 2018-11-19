@@ -12,11 +12,11 @@
 
   <fileSets>
     <fileSet>
-      <directory>/src/main/java/</directory>
+      <directory>${basedir}/src/main/java/</directory>
       <outputDirectory>./source/</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>/src/main/resources</directory>
+      <directory>${basedir}/src/main/resources</directory>
       <outputDirectory>./source/</outputDirectory>
     </fileSet>
     <fileSet>
@@ -28,11 +28,11 @@
       </excludes>
     </fileSet>
     <fileSet>
-      <directory>/target/classes/</directory>
+      <directory>${basedir}/target/classes/</directory>
       <outputDirectory>./bin/</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>/target/lib/</directory>
+      <directory>${basedir}/target/lib/</directory>
       <outputDirectory>./lib/</outputDirectory>
     </fileSet>
   </fileSets>
