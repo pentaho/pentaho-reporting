@@ -17,11 +17,4 @@
 # Copyright (c) 2013-2018 Hitachi Vantara..  All rights reserved.
 # -----------------------------------------------------------------------------------------------
 
-cp=".;./bin/"
-for jar in `ls -1 lib/*.jar`
-do
-    cp=${cp};${jar}
-done
-
-java -cp ${cp} org.pentaho.reporting.engine.classic.samples.Sample1
-
+java -cp "./bin:./lib/*"  org.pentaho.reporting.engine.classic.samples.Sample1
