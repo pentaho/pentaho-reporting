@@ -43,10 +43,6 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-compress</artifactId>
-    </dependency>
-    <dependency>
       <groupId>jcifs</groupId>
       <artifactId>jcifs</artifactId>
     </dependency>
