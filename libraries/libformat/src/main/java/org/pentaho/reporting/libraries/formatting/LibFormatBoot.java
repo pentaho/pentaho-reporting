@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2008 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2008 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formatting;
@@ -30,18 +30,15 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  * @author Thomas Morgner
  */
 public class LibFormatBoot extends AbstractBoot {
-  private static LibFormatBoot instance;
+  private static final LibFormatBoot instance = new LibFormatBoot();
 
   /**
    * Returns the singleton instance of the boot-class.
    *
    * @return the singleton booter.
    */
-  public static synchronized LibFormatBoot getInstance() {
-    if ( LibFormatBoot.instance == null ) {
-      LibFormatBoot.instance = new LibFormatBoot();
-    }
-    return LibFormatBoot.instance;
+  public static LibFormatBoot getInstance() {
+    return instance;
   }
 
   /**
@@ -56,9 +53,7 @@ public class LibFormatBoot extends AbstractBoot {
    * @return The configuration.
    */
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/formatting/libformat.properties",
-        "/libformat.properties", true, LibFormatBoot.class );
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/libraries/formatting/libformat.properties", "/libformat.properties", true, LibFormatBoot.class );
   }
 
   /**

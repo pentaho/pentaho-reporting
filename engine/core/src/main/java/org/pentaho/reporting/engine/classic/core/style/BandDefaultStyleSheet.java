@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.style;
@@ -27,6 +27,7 @@ public class BandDefaultStyleSheet extends ElementDefaultStyleSheet {
    * A shared default style-sheet.
    */
   private static BandDefaultStyleSheet defaultStyle;
+  private static final byte[] syncLock = new byte[0];
 
   /**
    * Creates a new default style sheet.
@@ -46,9 +47,15 @@ public class BandDefaultStyleSheet extends ElementDefaultStyleSheet {
    *
    * @return the style-sheet.
    */
-  public static synchronized BandDefaultStyleSheet getBandDefaultStyle() {
+  public static BandDefaultStyleSheet getBandDefaultStyle() {
     if ( defaultStyle == null ) {
-      defaultStyle = new BandDefaultStyleSheet();
+      // Using synchronization lock in this way because certain unit test cases (notably the FastExcelPrinterTest and likely others)
+      // only partially initialize the system
+      synchronized ( syncLock ) {
+        if ( defaultStyle == null ) {
+          defaultStyle = new BandDefaultStyleSheet();
+        }
+      }
     }
     return defaultStyle;
   }

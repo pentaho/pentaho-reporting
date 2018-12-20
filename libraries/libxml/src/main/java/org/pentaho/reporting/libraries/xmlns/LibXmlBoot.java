@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns;
@@ -30,17 +30,14 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  * @author Thomas Morgner
  */
 public class LibXmlBoot extends AbstractBoot {
-  private static LibXmlBoot singleton;
+  private static final LibXmlBoot singleton = new LibXmlBoot();
 
   /**
    * Returns the singleton instance of the boot-class.
    *
    * @return the singleton booter.
    */
-  public static synchronized LibXmlBoot getInstance() {
-    if ( singleton == null ) {
-      singleton = new LibXmlBoot();
-    }
+  public static LibXmlBoot getInstance() {
     return singleton;
   }
 
@@ -65,9 +62,7 @@ public class LibXmlBoot extends AbstractBoot {
    * @return The configuration.
    */
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/xmlns/libxml.properties",
-        "/libxml.properties", true, LibXmlBoot.class );
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/libraries/xmlns/libxml.properties", "/libxml.properties", true, LibXmlBoot.class );
   }
 
   /**

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core;
@@ -43,7 +43,7 @@ public class ReportDesignerBoot extends AbstractBoot {
   /**
    * The singleton instance of the Boot class.
    */
-  private static ReportDesignerBoot instance;
+  private static final ReportDesignerBoot instance = new ReportDesignerBoot();
   /**
    * The project info contains all meta data about the project.
    */
@@ -61,10 +61,7 @@ public class ReportDesignerBoot extends AbstractBoot {
    *
    * @return the boot instance.
    */
-  public static synchronized ReportDesignerBoot getInstance() {
-    if ( instance == null ) {
-      instance = new ReportDesignerBoot();
-    }
+  public static ReportDesignerBoot getInstance() {
     return instance;
   }
 
@@ -90,15 +87,15 @@ public class ReportDesignerBoot extends AbstractBoot {
   }
 
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/designer/core/report-designer.properties",// NON-NLS
-        "/report-designer.properties", true, ReportDesignerBoot.class );// NON-NLS
+    return createDefaultHierarchicalConfiguration(
+        "/org/pentaho/reporting/designer/core/report-designer.properties", // NON-NLS
+        "/report-designer.properties", true, ReportDesignerBoot.class ); // NON-NLS
   }
 
   protected void performBoot() {
     final PackageManager packageManager = getPackageManager();
-    packageManager.load( "org.pentaho.reporting.designer.core." );// NON-NLS
-    packageManager.load( "org.pentaho.reporting.designer.modules." );// NON-NLS
+    packageManager.load( "org.pentaho.reporting.designer.core." ); // NON-NLS
+    packageManager.load( "org.pentaho.reporting.designer.modules." ); // NON-NLS
     packageManager.initializeModules();
 
     try {

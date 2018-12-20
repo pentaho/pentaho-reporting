@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.css.resolver.values;
@@ -48,11 +48,12 @@ public class ResolverFactory {
 
   private static ResolverFactory factory;
 
-  public static synchronized ResolverFactory getInstance() {
-    if ( factory == null ) {
-      factory = new ResolverFactory();
-      factory.registerDefaults();
-    }
+  static {
+    factory = new ResolverFactory();
+    factory.registerDefaults();
+  }
+
+  public static ResolverFactory getInstance() {
     return factory;
   }
 
@@ -84,8 +85,7 @@ public class ResolverFactory {
         percHandler ) );
     }
 
-    handlers = (ResolveHandlerModule[]) handlerList.toArray
-      ( new ResolveHandlerModule[ handlerList.size() ] );
+    handlers = (ResolveHandlerModule[]) handlerList.toArray( new ResolveHandlerModule[handlerList.size()] );
     handlers = ResolveHandlerSorter.sort( handlers );
     //    for (int i = 0; i < handlers.length; i++)
     //    {

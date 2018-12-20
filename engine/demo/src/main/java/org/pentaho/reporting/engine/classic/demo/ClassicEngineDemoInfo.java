@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.demo;
@@ -25,36 +25,31 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  *
  * @author Thomas Morgner
  */
-public class ClassicEngineDemoInfo extends ProjectInformation
-{
-  private static ClassicEngineDemoInfo info;
+public class ClassicEngineDemoInfo extends ProjectInformation {
+  private static final ClassicEngineDemoInfo info;
+
+  static {
+    info = new ClassicEngineDemoInfo();
+    info.initialize();
+  }
 
   /**
    * Constructs an empty project info object.
    */
-  private ClassicEngineDemoInfo()
-  {
-    super("classic-demo", "Pentaho Reporting Engine Demo");
+  private ClassicEngineDemoInfo() {
+    super( "classic-demo", "Pentaho Reporting Engine Demo" );
   }
 
-  private void initialize()
-  {
-    setInfo("http://reporting.pentaho.org");
-    setCopyright("(C)opyright 2000-2011, by Pentaho Corp. and Contributors");
+  private void initialize() {
+    setInfo( "http://reporting.pentaho.org" );
+    setCopyright( "(C)opyright 2000-2011, by Pentaho Corp. and Contributors" );
 
-    addLibrary(ClassicEngineInfo.getInstance());
+    addLibrary( ClassicEngineInfo.getInstance() );
 
-    setBootClass(ClassicEngineDemoBoot.class.getName());
+    setBootClass( ClassicEngineDemoBoot.class.getName() );
   }
 
-
-  public static synchronized ProjectInformation getInstance()
-  {
-    if (info == null)
-    {
-      info = new ClassicEngineDemoInfo();
-      info.initialize();
-    }
+  public static ProjectInformation getInstance() {
     return info;
   }
 }

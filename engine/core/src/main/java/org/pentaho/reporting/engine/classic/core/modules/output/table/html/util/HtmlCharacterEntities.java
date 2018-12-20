@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.util;
@@ -31,7 +31,7 @@ public class HtmlCharacterEntities extends Properties {
   /**
    * The singleton instance for this entity-parser implementation.
    */
-  private static CharacterEntityParser entityParser;
+  private static final CharacterEntityParser entityParser = new CharacterEntityParser( new HtmlCharacterEntities() );
 
   /**
    * Gets the character entity parser for HTML content. The CharacterEntity parser translates known characters into
@@ -39,10 +39,7 @@ public class HtmlCharacterEntities extends Properties {
    *
    * @return the character entity parser instance.
    */
-  public static synchronized CharacterEntityParser getEntityParser() {
-    if ( entityParser == null ) {
-      entityParser = new CharacterEntityParser( new HtmlCharacterEntities() );
-    }
+  public static CharacterEntityParser getEntityParser() {
     return entityParser;
   }
 

@@ -12,10 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.util;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.awt.Insets;
 import java.awt.print.PageFormat;
@@ -23,9 +26,6 @@ import java.awt.print.Paper;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * The PageFormatFactory is used to create PageFormats on a higher level. The Factory contains templates for all
@@ -56,7 +56,7 @@ public final class PageFormatFactory {
   /**
    * A single instance of the factory.
    */
-  private static PageFormatFactory singleton;
+  private static final PageFormatFactory singleton = new PageFormatFactory();
   private static final String[] EMPTY_PAGEFORMATS = new String[0];
 
   /**
@@ -70,10 +70,7 @@ public final class PageFormatFactory {
    *
    * @return an instance of a PageFormatFactory.
    */
-  public static synchronized PageFormatFactory getInstance() {
-    if ( singleton == null ) {
-      singleton = new PageFormatFactory();
-    }
+  public static PageFormatFactory getInstance() {
     return singleton;
   }
 

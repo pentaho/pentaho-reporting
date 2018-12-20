@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula;
@@ -26,12 +26,9 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  * @author Thomas Morgner
  */
 public class LibFormulaInfo extends ProjectInformation {
-  private static LibFormulaInfo instance;
+  private static final LibFormulaInfo instance = new LibFormulaInfo();
 
-  public static synchronized LibFormulaInfo getInstance() {
-    if ( instance == null ) {
-      instance = new LibFormulaInfo();
-    }
+  public static LibFormulaInfo getInstance() {
     return instance;
   }
 

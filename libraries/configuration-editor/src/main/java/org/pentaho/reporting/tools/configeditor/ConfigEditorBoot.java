@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.tools.configeditor;
@@ -27,12 +27,9 @@ public class ConfigEditorBoot extends AbstractBoot {
 
   public static final String BUNDLE_NAME = "org.pentaho.reporting.tools.configeditor.messages"; //$NON-NLS-1$
 
-  private static ConfigEditorBoot instance;
+  private static final ConfigEditorBoot instance = new ConfigEditorBoot();
 
-  public static synchronized ConfigEditorBoot getInstance() {
-    if ( instance == null ) {
-      instance = new ConfigEditorBoot();
-    }
+  public static ConfigEditorBoot getInstance() {
     return instance;
   }
 
@@ -40,8 +37,8 @@ public class ConfigEditorBoot extends AbstractBoot {
   }
 
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/tools/configeditor/config-editor.properties",
+    return createDefaultHierarchicalConfiguration(
+        "/org/pentaho/reporting/tools/configeditor/config-editor.properties",
         "/config-editor.properties", true, ConfigEditorBoot.class );
   }
 

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.richtext;
@@ -20,12 +20,9 @@ package org.pentaho.reporting.engine.classic.core.layout.richtext;
 import java.util.HashMap;
 
 public class RichTextConverterRegistry {
-  private static RichTextConverterRegistry registry;
+  private static RichTextConverterRegistry registry = new RichTextConverterRegistry();
 
-  public static synchronized RichTextConverterRegistry getRegistry() {
-    if ( registry == null ) {
-      registry = new RichTextConverterRegistry();
-    }
+  public static RichTextConverterRegistry getRegistry() {
     return registry;
   }
 

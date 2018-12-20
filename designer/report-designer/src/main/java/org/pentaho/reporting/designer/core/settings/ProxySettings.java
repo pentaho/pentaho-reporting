@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.settings;
@@ -51,16 +51,13 @@ public class ProxySettings {
   public static final String PROXY_HOST = "proxyHost";
 
   private static final Log logger = LogFactory.getLog( ProxySettings.class );
-  private static ProxySettings instance;
+  private static final ProxySettings instance = new ProxySettings();
   private static final String PROXY_TYPE_KEY = "ProxyType";
   private static final String PROXY_USER_KEY = "ProxyUser";
   private static final String PROXY_PASSWORD_KEY = "ProxyPassword";
   private static final String USE_SOCKS_PROXY_KEY = "UseSocksProxy";
 
-  public static synchronized ProxySettings getInstance() {
-    if ( instance == null ) {
-      instance = new ProxySettings();
-    }
+  public static ProxySettings getInstance() {
     return instance;
   }
 

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
@@ -31,12 +31,9 @@ import java.util.prefs.Preferences;
 public class PublishSettings {
   private static final Log LOG = LogFactory.getLog( PublishSettings.class );
 
-  private static PublishSettings instance;
+  private static final PublishSettings instance = new PublishSettings();
 
-  public static synchronized PublishSettings getInstance() {
-    if ( instance == null ) {
-      instance = new PublishSettings();
-    }
+  public static PublishSettings getInstance() {
     return instance;
   }
 

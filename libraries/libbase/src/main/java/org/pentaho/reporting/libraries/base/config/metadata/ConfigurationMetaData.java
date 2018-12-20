@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.config.metadata;
@@ -21,12 +21,9 @@ import java.util.HashMap;
 
 public class ConfigurationMetaData {
   private HashMap<String, ConfigurationDomain> domains;
-  private static ConfigurationMetaData instance;
+  private static final ConfigurationMetaData instance = new ConfigurationMetaData();
 
-  public static synchronized ConfigurationMetaData getInstance() {
-    if ( instance == null ) {
-      instance = new ConfigurationMetaData();
-    }
+  public static ConfigurationMetaData getInstance() {
     return instance;
   }
 

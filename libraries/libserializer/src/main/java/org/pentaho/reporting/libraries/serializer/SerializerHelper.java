@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.serializer;
@@ -30,7 +30,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
 /**
  * The SerializeHelper is used to make implementing custom serialization handlers easier. Handlers for certain object
  * types need to be added to this helper before this implementation is usable.
@@ -42,7 +41,12 @@ public class SerializerHelper {
   /**
    * The singleton instance of the serialize helper.
    */
-  private static SerializerHelper singleton;
+  private static final SerializerHelper singleton;
+
+  static {
+    singleton = LibSerializerBoot.getInstance().getObjectFactory().get( SerializerHelper.class );
+    singleton.registerMethods();
+  }
 
   /**
    * Returns or creates a new SerializerHelper. When a new instance is created by this method, all known
@@ -50,11 +54,7 @@ public class SerializerHelper {
    *
    * @return the SerializerHelper singleton instance.
    */
-  public static synchronized SerializerHelper getInstance() {
-    if ( singleton == null ) {
-      singleton = LibSerializerBoot.getInstance().getObjectFactory().get( SerializerHelper.class );
-      singleton.registerMethods();
-    }
+  public static SerializerHelper getInstance() {
     return singleton;
   }
 
@@ -95,8 +95,7 @@ public class SerializerHelper {
     while ( sit.hasNext() ) {
       final String configkey = (String) sit.next();
       final String c = config.getConfigProperty( configkey );
-      final SerializeMethod maybeModule = ObjectUtilities.loadAndInstantiate
-        ( c, SerializerHelper.class, SerializeMethod.class );
+      final SerializeMethod maybeModule = ObjectUtilities.loadAndInstantiate( c, SerializerHelper.class, SerializeMethod.class );
       if ( maybeModule != null ) {
         registerMethod( maybeModule );
       } else {
@@ -153,9 +152,7 @@ public class SerializerHelper {
    * @param d the class for which we want to lookup a serialize method.
    * @return the method or null, if there is no registered method for the class.
    */
-  @SuppressWarnings( "unchecked" )
-  protected SerializeMethod getSuperClassObjectDescription
-  ( final Class d ) {
+  @SuppressWarnings( "unchecked" ) protected SerializeMethod getSuperClassObjectDescription( final Class d ) {
     SerializeMethod knownSuperClass = null;
     final Iterator<Class> keys = methods.keySet().iterator();
     while ( keys.hasNext() ) {
@@ -165,10 +162,8 @@ public class SerializerHelper {
         if ( knownSuperClass == null ) {
           knownSuperClass = od;
         } else {
-          if ( comparator.isComparable
-            ( knownSuperClass.getObjectClass(), od.getObjectClass() ) ) {
-            if ( comparator.compare
-              ( knownSuperClass.getObjectClass(), od.getObjectClass() ) < 0 ) {
+          if ( comparator.isComparable( knownSuperClass.getObjectClass(), od.getObjectClass() ) ) {
+            if ( comparator.compare( knownSuperClass.getObjectClass(), od.getObjectClass() ) < 0 ) {
               knownSuperClass = od;
             }
           }
@@ -178,7 +173,6 @@ public class SerializerHelper {
     return knownSuperClass;
   }
 
-
   /**
    * Writes a serializable object description to the given object output stream. This method selects the best serialize
    * helper method for the given object.
@@ -187,9 +181,7 @@ public class SerializerHelper {
    * @param out the outputstream that should receive the object.
    * @throws IOException if an I/O error occured.
    */
-  public synchronized void writeObject( final Object o,
-                                        final ObjectOutputStream out )
-    throws IOException {
+  public synchronized void writeObject( final Object o, final ObjectOutputStream out ) throws IOException {
     try {
       if ( o == null ) {
         out.writeByte( 0 );
@@ -237,8 +229,7 @@ public class SerializerHelper {
    * @throws IOException            if reading the stream failed.
    * @throws ClassNotFoundException if serialized object class cannot be found.
    */
-  public synchronized Object readObject( final ObjectInputStream in )
-    throws IOException, ClassNotFoundException {
+  public synchronized Object readObject( final ObjectInputStream in ) throws IOException, ClassNotFoundException {
     final int type = in.readByte();
     if ( type == 0 ) {
       return null;

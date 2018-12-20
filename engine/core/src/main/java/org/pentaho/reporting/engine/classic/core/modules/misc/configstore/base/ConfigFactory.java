@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base;
@@ -32,7 +32,7 @@ public final class ConfigFactory {
   /**
    * The singleton instance of the config factory.
    */
-  private static ConfigFactory factory;
+  private static final ConfigFactory factory;
   /**
    * The user storage is used to store user dependend settings.
    */
@@ -42,17 +42,18 @@ public final class ConfigFactory {
    */
   private ConfigStorage systemStorage;
 
+  static {
+    factory = new ConfigFactory();
+    factory.defineSystemStorage( new NullConfigStorage() );
+    factory.defineUserStorage( new NullConfigStorage() );
+  }
+
   /**
    * Returns the singleton instance of the config factory.
    *
    * @return the config factory
    */
-  public static synchronized ConfigFactory getInstance() {
-    if ( factory == null ) {
-      factory = new ConfigFactory();
-      factory.defineSystemStorage( new NullConfigStorage() );
-      factory.defineUserStorage( new NullConfigStorage() );
-    }
+  public static ConfigFactory getInstance() {
     return factory;
   }
 

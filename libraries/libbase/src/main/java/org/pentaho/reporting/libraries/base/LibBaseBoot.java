@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base;
@@ -31,17 +31,14 @@ public class LibBaseBoot extends AbstractBoot {
   /**
    * A singleton variable for the booter.
    */
-  private static LibBaseBoot instance;
+  private static final LibBaseBoot instance = new LibBaseBoot();
 
   /**
    * Returns the singleton instance of LibBaseBoot.
    *
    * @return the boot class for Libbase.
    */
-  public static synchronized LibBaseBoot getInstance() {
-    if ( instance == null ) {
-      instance = new LibBaseBoot();
-    }
+  public static LibBaseBoot getInstance() {
     return instance;
   }
 
@@ -59,8 +56,8 @@ public class LibBaseBoot extends AbstractBoot {
    * @return The configuration.
    */
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/base/libbase.properties",
+    return createDefaultHierarchicalConfiguration(
+        "/org/pentaho/reporting/libraries/base/libbase.properties",
         "/libbase.properties", true, LibBaseBoot.class );
   }
 

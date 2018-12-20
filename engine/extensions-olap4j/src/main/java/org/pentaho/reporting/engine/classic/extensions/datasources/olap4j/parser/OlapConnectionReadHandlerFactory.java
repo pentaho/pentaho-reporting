@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.parser;
@@ -29,7 +29,12 @@ public class OlapConnectionReadHandlerFactory extends AbstractReadHandlerFactory
   private static final String PREFIX_SELECTOR =
     "org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connection-factory-prefix.";
 
-  private static OlapConnectionReadHandlerFactory readHandlerFactory;
+  private static final OlapConnectionReadHandlerFactory readHandlerFactory;
+
+  static {
+    readHandlerFactory = new OlapConnectionReadHandlerFactory();
+    readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
+  }
 
   public OlapConnectionReadHandlerFactory() {
   }
@@ -38,11 +43,7 @@ public class OlapConnectionReadHandlerFactory extends AbstractReadHandlerFactory
     return OlapConnectionReadHandler.class;
   }
 
-  public static synchronized OlapConnectionReadHandlerFactory getInstance() {
-    if ( readHandlerFactory == null ) {
-      readHandlerFactory = new OlapConnectionReadHandlerFactory();
-      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
-    }
+  public static OlapConnectionReadHandlerFactory getInstance() {
     return readHandlerFactory;
   }
 

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
@@ -28,7 +28,7 @@ import java.util.HashMap;
 
 public class PasswordEncryptionService {
   private static final Log logger = LogFactory.getLog( PasswordEncryptionService.class );
-  private static PasswordEncryptionService instance;
+  private static final PasswordEncryptionService instance = new PasswordEncryptionService();
   private PasswordEncryptionServiceProvider provider;
   private HashMap<String, PasswordEncryptionServiceProvider> services;
 
@@ -39,10 +39,7 @@ public class PasswordEncryptionService {
     logger.debug( "Selected " + provider.getClass() + " as default provider." );
   }
 
-  public static synchronized PasswordEncryptionService getInstance() {
-    if ( instance == null ) {
-      instance = new PasswordEncryptionService();
-    }
+  public static PasswordEncryptionService getInstance() {
     return instance;
   }
 

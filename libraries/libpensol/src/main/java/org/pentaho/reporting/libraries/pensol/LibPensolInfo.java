@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -21,18 +21,19 @@ import org.pentaho.reporting.libraries.base.LibBaseInfo;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 public class LibPensolInfo extends ProjectInformation {
-  private static LibPensolInfo instance;
+  private static final LibPensolInfo instance;
+
+  static {
+    instance = new LibPensolInfo();
+    instance.initialize();
+  }
 
   /**
    * Returns the singleton instance of the ProjectInformation-class.
    *
    * @return the singleton ProjectInformation.
    */
-  public static synchronized ProjectInformation getInstance() {
-    if ( instance == null ) {
-      instance = new LibPensolInfo();
-      instance.initialize();
-    }
+  public static ProjectInformation getInstance() {
     return instance;
   }
 

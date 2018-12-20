@@ -12,20 +12,10 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
-
-import java.io.IOException;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,6 +37,16 @@ import org.pentaho.reporting.engine.classic.core.wizard.ImmutableDataAttributes;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
+
+import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Creates a <code>TableModel</code> which is backed up by a <code>ResultSet</code>. If the <code>ResultSet</code> is
@@ -76,7 +76,7 @@ public final class ResultSetTableModelFactory {
   /**
    * Singleton instance of the factory.
    */
-  private static ResultSetTableModelFactory defaultInstance;
+  private static ResultSetTableModelFactory defaultInstance = new ResultSetTableModelFactory();
 
   /**
    * Default constructor. This is a Singleton, use getInstance().
@@ -516,10 +516,7 @@ public final class ResultSetTableModelFactory {
    *
    * @return an instance of this factory.
    */
-  public static synchronized ResultSetTableModelFactory getInstance() {
-    if ( defaultInstance == null ) {
-      defaultInstance = new ResultSetTableModelFactory();
-    }
+  public static ResultSetTableModelFactory getInstance() {
     return defaultInstance;
   }
 

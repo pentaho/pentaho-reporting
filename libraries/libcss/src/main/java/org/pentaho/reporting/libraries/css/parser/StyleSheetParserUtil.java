@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.css.parser;
@@ -40,16 +40,13 @@ import java.util.StringTokenizer;
  * @author Thomas Morgner
  */
 public final class StyleSheetParserUtil {
-  private static StyleSheetParserUtil singleton;
+  private static final StyleSheetParserUtil singleton = new StyleSheetParserUtil();
   private Parser parser;
 
   public StyleSheetParserUtil() {
   }
 
-  public static synchronized StyleSheetParserUtil getInstance() {
-    if ( singleton == null ) {
-      singleton = new StyleSheetParserUtil();
-    }
+  public static StyleSheetParserUtil getInstance() {
     return singleton;
   }
 
@@ -93,7 +90,7 @@ public final class StyleSheetParserUtil {
 
     try {
       final Parser parser = getParser();
-      synchronized( parser ) {
+      synchronized ( parser ) {
         final StyleSheetHandler handler = new StyleSheetHandler();
         setupNamespaces( namespaces, handler );
 
@@ -146,7 +143,7 @@ public final class StyleSheetParserUtil {
 
     try {
       final Parser parser = getParser();
-      synchronized( parser ) {
+      synchronized ( parser ) {
         final StyleSheetHandler handler = new StyleSheetHandler();
         setupNamespaces( namespaces, handler );
         handler.init( styleKeyRegistry, resourceManager, baseURL, -1, null );
@@ -221,7 +218,7 @@ public final class StyleSheetParserUtil {
 
     try {
       final Parser parser = getParser();
-      synchronized( parser ) {
+      synchronized ( parser ) {
         final StyleSheetHandler handler = new StyleSheetHandler();
         handler.init( styleKeyRegistry, resourceManager, baseURL, -1, null );
 

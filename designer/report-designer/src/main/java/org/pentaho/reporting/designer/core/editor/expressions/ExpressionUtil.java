@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.expressions;
@@ -33,12 +33,9 @@ import java.util.Collections;
  * @author Thomas Morgner
  */
 public class ExpressionUtil {
-  private static ExpressionUtil instance;
+  private static final ExpressionUtil instance = new ExpressionUtil();
 
-  public static synchronized ExpressionUtil getInstance() {
-    if ( instance == null ) {
-      instance = new ExpressionUtil();
-    }
+  public static ExpressionUtil getInstance() {
     return instance;
   }
 

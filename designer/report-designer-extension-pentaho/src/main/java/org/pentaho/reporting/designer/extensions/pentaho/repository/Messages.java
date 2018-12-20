@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository;
@@ -23,7 +23,7 @@ import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import java.util.Locale;
 
 public class Messages extends ResourceBundleSupport {
-  private static Messages instance;
+  private static final Messages instance = new Messages();
 
   /**
    * Creates a new instance.
@@ -33,10 +33,7 @@ public class Messages extends ResourceBundleSupport {
       ObjectUtilities.getClassLoader( Messages.class ) );
   }
 
-  public static synchronized Messages getInstance() {
-    if ( instance == null ) {
-      instance = new Messages();
-    }
+  public static Messages getInstance() {
     return instance;
   }
 }

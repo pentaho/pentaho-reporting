@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.util;
@@ -44,7 +44,7 @@ public class IOUtils {
   /**
    * the singleton instance of the utility package.
    */
-  private static IOUtils instance;
+  private static final IOUtils instance = new IOUtils();
   private static final Log logger = LogFactory.getLog( IOUtils.class );
 
   /**
@@ -58,10 +58,7 @@ public class IOUtils {
    *
    * @return the singleton instance.
    */
-  public static synchronized IOUtils getInstance() {
-    if ( instance == null ) {
-      instance = new IOUtils();
-    }
+  public static IOUtils getInstance() {
     return instance;
   }
 
@@ -644,8 +641,7 @@ public class IOUtils {
       return stripNavigationPaths( baseFile );
     }
 
-    if ( ( baseFile.length() > 0 &&
-      baseFile.charAt( baseFile.length() - 1 ) == '/' ) == false ) {
+    if ( ( baseFile.length() > 0 && baseFile.charAt( baseFile.length() - 1 ) == '/' ) == false ) {
       // trailing slashes indicate directory,
       // so remove last entry if the basefile name does not end with a slash (ie it points to a file)
       baseName.remove( baseName.size() - 1 );

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.wizard.ui.xul;
@@ -20,25 +20,18 @@ package org.pentaho.reporting.engine.classic.wizard.ui.xul;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Messages extends ResourceBundleSupport {
   private static final String BUNDLENAME = "org.pentaho.reporting.engine.classic.wizard.ui.xul.messages"; //$NON-NLS-1$
-  private static HashMap<Locale, Messages> locales;
+  private static final ConcurrentHashMap<Locale, Messages> locales = new ConcurrentHashMap<>();
 
   public static Messages getInstance() {
     return getInstance( Locale.getDefault() );
   }
 
-  public static synchronized Messages getInstance( final Locale locale ) {
-    if ( locales == null ) {
-      locales = new HashMap<Locale, Messages>();
-      final Messages retval = new Messages( locale, BUNDLENAME );
-      locales.put( locale, retval );
-      return retval;
-    }
-
+  public static Messages getInstance( final Locale locale ) {
     final Messages o = locales.get( locale );
     if ( o != null ) {
       return o;

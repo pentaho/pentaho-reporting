@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core;
@@ -31,18 +31,19 @@ public class ReportDesignerInfo extends ProjectInformation {
   /**
    * A singleton instance of the JFreeReportInfo class.
    */
-  private static ReportDesignerInfo info;
+  private static final ReportDesignerInfo info;
+
+  static {
+    info = new ReportDesignerInfo();
+    info.initialize();
+  }
 
   /**
    * Returns the singleton instance of the Info-Object.
    *
    * @return te info object for this library.
    */
-  public static synchronized ReportDesignerInfo getInstance() {
-    if ( info == null ) {
-      info = new ReportDesignerInfo();
-      info.initialize();
-    }
+  public static ReportDesignerInfo getInstance() {
     return info;
   }
 
@@ -50,14 +51,14 @@ public class ReportDesignerInfo extends ProjectInformation {
    * Constructs an object containing information about the JFreeReport project.
    */
   private ReportDesignerInfo() {
-    super( "report-designer", "Pentaho Report Designer" );// NON-NLS
+    super( "report-designer", "Pentaho Report Designer" ); // NON-NLS
   }
 
 
   private void initialize() {
-    setInfo( "http://reporting.pentaho.org/" );// NON-NLS
-    setCopyright( "(C)opyright 2000-2011, by Pentaho Corp. and Contributors" );// NON-NLS
-    setLicenseName( "LGPL" );// NON-NLS
+    setInfo( "http://reporting.pentaho.org/" ); // NON-NLS
+    setCopyright( "(C)opyright 2000-2011, by Pentaho Corp. and Contributors" ); // NON-NLS
+    setLicenseName( "LGPL" ); // NON-NLS
 
     addLibrary( ClassicEngineInfo.getInstance() );
     addLibrary( LibFormulaEditorInfo.getInstance() );
@@ -79,10 +80,10 @@ public class ReportDesignerInfo extends ProjectInformation {
     final ReportDesignerInfo info = new ReportDesignerInfo();
     info.initialize();
     System.out.println( info.getName() + ' ' + info.getVersion() );
-    System.out.println( "----------------------------------------------------------------" );// NON-NLS
+    System.out.println( "----------------------------------------------------------------" ); // NON-NLS
     System.out.println( info.getCopyright() );
     System.out.println( info.getInfo() );
-    System.out.println( "----------------------------------------------------------------" );// NON-NLS
+    System.out.println( "----------------------------------------------------------------" ); // NON-NLS
     System.out.println( "This project is licenced under the terms of the "// NON-NLS
       + info.getLicenseName() + '.' );
     System.exit( 0 );

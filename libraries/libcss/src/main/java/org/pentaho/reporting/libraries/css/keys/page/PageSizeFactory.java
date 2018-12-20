@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.css.keys.page;
@@ -28,13 +28,14 @@ import java.util.HashMap;
  * @author Thomas Morgner
  */
 public class PageSizeFactory {
-  private static PageSizeFactory factory;
+  private static final PageSizeFactory factory;
 
-  public static synchronized PageSizeFactory getInstance() {
-    if ( factory == null ) {
-      factory = new PageSizeFactory();
-      factory.registerKnownMedias();
-    }
+  static {
+    factory = new PageSizeFactory();
+    factory.registerKnownMedias();
+  }
+
+  public static PageSizeFactory getInstance() {
     return factory;
   }
 
@@ -57,8 +58,7 @@ public class PageSizeFactory {
     for ( int i = 0; i < fields.length; i++ ) {
       try {
         Field f = fields[ i ];
-        if ( Modifier.isPublic( f.getModifiers() ) == false ||
-          Modifier.isStatic( f.getModifiers() ) == false ) {
+        if ( Modifier.isPublic( f.getModifiers() ) == false || Modifier.isStatic( f.getModifiers() ) == false ) {
           continue;
         }
         final Object o = f.get( this );

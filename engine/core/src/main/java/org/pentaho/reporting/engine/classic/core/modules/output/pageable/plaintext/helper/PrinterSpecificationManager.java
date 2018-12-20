@@ -12,20 +12,20 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.helper;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver.PrinterDriver;
 import org.pentaho.reporting.libraries.base.config.DefaultConfiguration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 
 public class PrinterSpecificationManager {
   private static final Log logger = LogFactory.getLog( PrinterSpecificationManager.class );
@@ -85,7 +85,7 @@ public class PrinterSpecificationManager {
   }
 
   private HashMap printerModels;
-  private static PrinterSpecification generic;
+  private static final PrinterSpecification generic = new GenericPrinterSpecification();
 
   public PrinterSpecificationManager() {
     final PrinterSpecification generic = PrinterSpecificationManager.getGenericPrinter();
@@ -155,10 +155,7 @@ public class PrinterSpecificationManager {
     return (PrinterSpecification) printerModels.get( name );
   }
 
-  public static synchronized PrinterSpecification getGenericPrinter() {
-    if ( PrinterSpecificationManager.generic == null ) {
-      PrinterSpecificationManager.generic = new PrinterSpecificationManager.GenericPrinterSpecification();
-    }
-    return PrinterSpecificationManager.generic;
+  public static PrinterSpecification getGenericPrinter() {
+    return generic;
   }
 }

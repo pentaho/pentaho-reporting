@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -189,7 +189,7 @@ public class ClassicEngineBoot extends AbstractBoot {
   /**
    * The singleton instance of the Boot class.
    */
-  private static ClassicEngineBoot instance;
+  private static final ClassicEngineBoot instance = new ClassicEngineBoot();
   /**
    * The project info contains all meta data about the project.
    */
@@ -212,10 +212,7 @@ public class ClassicEngineBoot extends AbstractBoot {
    *
    * @return the boot instance.
    */
-  public static synchronized ClassicEngineBoot getInstance() {
-    if ( instance == null ) {
-      instance = new ClassicEngineBoot();
-    }
+  public static ClassicEngineBoot getInstance() {
     return instance;
   }
 

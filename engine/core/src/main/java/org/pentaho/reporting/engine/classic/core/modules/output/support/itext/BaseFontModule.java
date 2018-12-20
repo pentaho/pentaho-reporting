@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.support.itext;
@@ -28,7 +28,12 @@ import org.pentaho.reporting.libraries.fonts.itext.ITextFontRegistry;
  * @author Thomas Morgner
  */
 public class BaseFontModule extends AbstractModule {
-  private static ITextFontRegistry fontRegistry;
+  private static final ITextFontRegistry fontRegistry;
+
+  static {
+    fontRegistry = new ITextFontRegistry();
+    fontRegistry.initialize();
+  }
 
   /**
    * DefaultConstructor. Loads the module specification.
@@ -40,11 +45,7 @@ public class BaseFontModule extends AbstractModule {
     loadModuleInfo();
   }
 
-  public static synchronized ITextFontRegistry getFontRegistry() {
-    if ( fontRegistry == null ) {
-      fontRegistry = new ITextFontRegistry();
-      fontRegistry.initialize();
-    }
+  public static ITextFontRegistry getFontRegistry() {
     return fontRegistry;
   }
 

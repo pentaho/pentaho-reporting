@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
@@ -25,7 +25,12 @@ public class KettleTransformationProducerReadHandlerFactory
   private static final String PREFIX_SELECTOR =
     "org.pentaho.reporting.engine.classic.extensions.datasources.kettle.transformation-file-producer-prefix.";
 
-  private static KettleTransformationProducerReadHandlerFactory readHandlerFactory;
+  private static final KettleTransformationProducerReadHandlerFactory readHandlerFactory;
+
+  static {
+    readHandlerFactory = new KettleTransformationProducerReadHandlerFactory();
+    readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
+  }
 
   public KettleTransformationProducerReadHandlerFactory() {
   }
@@ -34,11 +39,7 @@ public class KettleTransformationProducerReadHandlerFactory
     return KettleTransformationProducerReadHandler.class;
   }
 
-  public static synchronized KettleTransformationProducerReadHandlerFactory getInstance() {
-    if ( readHandlerFactory == null ) {
-      readHandlerFactory = new KettleTransformationProducerReadHandlerFactory();
-      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
-    }
+  public static KettleTransformationProducerReadHandlerFactory getInstance() {
     return readHandlerFactory;
   }
 

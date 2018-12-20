@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.fonts.encoding.manual;
@@ -29,12 +29,9 @@ import java.util.Locale;
 
 public class Utf16LE implements ComplexEncoding {
   public static final int MAX_CHAR = 0x10FFFD;
-  private static Utf16LE instance;
+  private static final Utf16LE instance = new Utf16LE();
 
-  public static synchronized Utf16LE getInstance() {
-    if ( instance == null ) {
-      instance = new Utf16LE();
-    }
+  public static Utf16LE getInstance() {
     return instance;
   }
 
@@ -51,7 +48,7 @@ public class Utf16LE implements ComplexEncoding {
 
   public boolean isUnicodeCharacterSupported( final int c ) {
     return ( c > 0 ) && ( c < MAX_CHAR ) && // this is the maximum number of characters defined.
-      ( c & 0xFFFFF800 ) == 0xD800; // this is the replacement zone.
+        ( c & 0xFFFFF800 ) == 0xD800; // this is the replacement zone.
   }
 
   /**
@@ -73,7 +70,7 @@ public class Utf16LE implements ComplexEncoding {
     final int[] sourceArray = text.getData();
     final int endPos = text.getCursor();
     for ( int i = text.getOffset(); i < endPos; i++ ) {
-      final int sourceItem = sourceArray[ i ];
+      final int sourceItem = sourceArray[i];
       if ( sourceItem < 0 || sourceItem > MAX_CHAR ) {
         continue;
       }
@@ -111,7 +108,6 @@ public class Utf16LE implements ComplexEncoding {
       buffer.ensureSize( textLength / 2 );
     }
 
-
     final int[] targetData = buffer.getData();
     final ByteStream sourceBuffer = new ByteStream( text, 10 );
 
@@ -132,26 +128,25 @@ public class Utf16LE implements ComplexEncoding {
         final int highByteL = ( sourceBuffer.get() & 0xff );
         final int lowByteL = ( sourceBuffer.get() & 0xff );
 
-
         if ( ( highByteL & 0xFC ) == 0xDC ) {
           // decode the extended CodePoint ...
           int result = lowByteL;
           result |= ( highByteL & 0x03 ) << 8;
           result |= lowByte << 10;
           result |= ( highByte & 0x03 ) << 18;
-          targetData[ position ] = result + 0x10000;
+          targetData[position] = result + 0x10000;
           position += 1;
-        } else {
+        // } else {
           // this is an error condition.
           // Log.debug("error 1..");
         }
-      } else if ( ( highByte & 0xFC ) == 0xDC ) {
+      // } else if ( ( highByte & 0xFC ) == 0xDC ) {
         // this is an error condition ..
         // skip this word ..
         // Log.debug("error 2..");
       } else {
         // decode the simple mode ...
-        targetData[ position ] = ( highByte << 8 ) | lowByte;
+        targetData[position] = ( highByte << 8 ) | lowByte;
         position += 1;
       }
     }
@@ -159,17 +154,11 @@ public class Utf16LE implements ComplexEncoding {
     return buffer;
   }
 
-  public ByteBuffer encode( final CodePointBuffer text,
-                            final ByteBuffer buffer,
-                            final EncodingErrorType errorHandling )
-    throws EncodingException {
+  public ByteBuffer encode( final CodePointBuffer text, final ByteBuffer buffer, final EncodingErrorType errorHandling ) throws EncodingException {
     return encode( text, buffer );
   }
 
-  public CodePointBuffer decode( final ByteBuffer text,
-                                 final CodePointBuffer buffer,
-                                 final EncodingErrorType errorHandling )
-    throws EncodingException {
+  public CodePointBuffer decode( final ByteBuffer text, final CodePointBuffer buffer, final EncodingErrorType errorHandling ) throws EncodingException {
     return decode( text, buffer );
   }
 
@@ -198,16 +187,15 @@ public class Utf16LE implements ComplexEncoding {
     final CodePointStream cps = new CodePointStream( buffer, 10 );
     final int maxPos = offset + length;
     for ( int i = offset; i < maxPos; i++ ) {
-      final char c = chars[ i ];
+      final char c = chars[i];
       if ( ( c & 0xFC00 ) == 0xD800 ) {
         i += 1;
         if ( i < maxPos ) {
-          final char c2 = chars[ i ];
+          final char c2 = chars[i];
           if ( ( c2 & 0xFC00 ) == 0xDC00 ) {
-            final int codePoint = 0x10000 +
-              ( ( c2 & 0x3FF ) | ( ( c & 0x3FF ) << 10 ) );
+            final int codePoint = 0x10000 + ( ( c2 & 0x3FF ) | ( ( c & 0x3FF ) << 10 ) );
             cps.put( codePoint );
-          } else {
+          // } else {
             // Should not happen ..
           }
         } else {
@@ -229,7 +217,7 @@ public class Utf16LE implements ComplexEncoding {
     final int endPos = buffer.getCursor();
 
     for ( int i = buffer.getOffset(); i < endPos; i++ ) {
-      final int codePoint = data[ i ];
+      final int codePoint = data[i];
       if ( codePoint < 0x10000 ) {
         stringBuffer.append( (char) codePoint );
       } else {

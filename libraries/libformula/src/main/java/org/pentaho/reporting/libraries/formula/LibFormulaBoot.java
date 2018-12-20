@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula;
@@ -21,7 +21,6 @@ import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
-
 /**
  * Creation-Date: 31.10.2006, 12:30:43
  *
@@ -29,12 +28,9 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  */
 public class LibFormulaBoot extends AbstractBoot {
   public static final int GLOBAL_SCALE = 40;
-  private static LibFormulaBoot instance;
+  private static final LibFormulaBoot instance = new LibFormulaBoot();
 
-  public static synchronized LibFormulaBoot getInstance() {
-    if ( instance == null ) {
-      instance = new LibFormulaBoot();
-    }
+  public static LibFormulaBoot getInstance() {
     return instance;
   }
 
@@ -42,9 +38,7 @@ public class LibFormulaBoot extends AbstractBoot {
   }
 
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/formula/libformula.properties",
-        "/libformula.properties", true, LibFormulaBoot.class );
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/libraries/formula/libformula.properties", "/libformula.properties", true, LibFormulaBoot.class );
   }
 
   protected void performBoot() {

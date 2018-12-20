@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.style.css;
@@ -33,12 +33,9 @@ import org.w3c.css.sac.helpers.ParserFactory;
  * @author Thomas Morgner
  */
 public class CSSParserFactory {
-  private static CSSParserFactory parserFactory;
+  private static final CSSParserFactory parserFactory = new CSSParserFactory();
 
-  public static synchronized CSSParserFactory getInstance() {
-    if ( parserFactory == null ) {
-      parserFactory = new CSSParserFactory();
-    }
+  public static CSSParserFactory getInstance() {
     return parserFactory;
   }
 

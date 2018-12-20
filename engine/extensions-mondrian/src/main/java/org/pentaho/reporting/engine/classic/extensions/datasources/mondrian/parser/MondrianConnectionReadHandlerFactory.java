@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser;
@@ -26,6 +26,11 @@ public class MondrianConnectionReadHandlerFactory extends AbstractReadHandlerFac
 
   private static MondrianConnectionReadHandlerFactory readHandlerFactory;
 
+  static {
+    readHandlerFactory = new MondrianConnectionReadHandlerFactory();
+    readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
+  }
+
   public MondrianConnectionReadHandlerFactory() {
   }
 
@@ -33,11 +38,7 @@ public class MondrianConnectionReadHandlerFactory extends AbstractReadHandlerFac
     return CubeFileProviderReadHandler.class;
   }
 
-  public static synchronized MondrianConnectionReadHandlerFactory getInstance() {
-    if ( readHandlerFactory == null ) {
-      readHandlerFactory = new MondrianConnectionReadHandlerFactory();
-      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
-    }
+  public static MondrianConnectionReadHandlerFactory getInstance() {
     return readHandlerFactory;
   }
 

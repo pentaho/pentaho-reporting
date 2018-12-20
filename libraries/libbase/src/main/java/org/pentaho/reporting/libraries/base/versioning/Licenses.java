@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.versioning;
@@ -774,17 +774,14 @@ public class Licenses {
   /**
    * The singleton instance of this class.
    */
-  private static Licenses singleton;
+  private static final Licenses singleton = new Licenses();
 
   /**
    * Returns a reference to this class.
    *
    * @return the instance reference.
    */
-  public static synchronized Licenses getInstance() {
-    if ( singleton == null ) {
-      singleton = new Licenses();
-    }
+  public static Licenses getInstance() {
     return singleton;
   }
 

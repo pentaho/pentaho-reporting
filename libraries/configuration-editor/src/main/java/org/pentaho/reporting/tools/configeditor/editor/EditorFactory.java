@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.tools.configeditor.editor;
@@ -35,7 +35,7 @@ public final class EditorFactory {
   /**
    * The singleton instance of the factory.
    */
-  private static EditorFactory factory;
+  private static final EditorFactory factory = new EditorFactory();
   /**
    * A collection containing all defined modules and their priorities.
    */
@@ -60,10 +60,7 @@ public final class EditorFactory {
    *
    * @return the editor factory instance.
    */
-  public static synchronized EditorFactory getInstance() {
-    if ( factory == null ) {
-      factory = new EditorFactory();
-    }
+  public static EditorFactory getInstance() {
     return factory;
   }
 
@@ -89,9 +86,7 @@ public final class EditorFactory {
    * @param keyNames the configuration entries which should be edited within the module.
    * @return the module editor for the given module or null, if no editor is suitable for the given module.
    */
-  public ModuleEditor getModule
-  ( final Module module, final HierarchicalConfiguration config,
-    final ConfigDescriptionEntry[] keyNames ) {
+  public ModuleEditor getModule( final Module module, final HierarchicalConfiguration config, final ConfigDescriptionEntry[] keyNames ) {
     if ( module == null ) {
       throw new NullPointerException( messages.getString(
         "EditorFactory.ERROR_0002_MODULE_IS_NULL" ) ); //$NON-NLS-1$

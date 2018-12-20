@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2008 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2008 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.docbundle;
@@ -26,12 +26,9 @@ import org.pentaho.reporting.libraries.docbundle.metadata.parser.BundleMetaDataX
 import org.pentaho.reporting.libraries.docbundle.metadata.parser.BundleMetaDataXmlResourceFactory;
 
 public class LibDocBundleBoot extends AbstractBoot {
-  private static LibDocBundleBoot instance;
+  private static final LibDocBundleBoot instance = new LibDocBundleBoot();
 
-  public static synchronized LibDocBundleBoot getInstance() {
-    if ( LibDocBundleBoot.instance == null ) {
-      LibDocBundleBoot.instance = new LibDocBundleBoot();
-    }
+  public static LibDocBundleBoot getInstance() {
     return LibDocBundleBoot.instance;
   }
 
@@ -39,9 +36,7 @@ public class LibDocBundleBoot extends AbstractBoot {
   }
 
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/docbundle/libdocbundle.properties",
-        "/libdocbundle.properties", true, LibDocBundleBoot.class );
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/libraries/docbundle/libdocbundle.properties", "/libdocbundle.properties", true, LibDocBundleBoot.class );
   }
 
   protected void performBoot() {

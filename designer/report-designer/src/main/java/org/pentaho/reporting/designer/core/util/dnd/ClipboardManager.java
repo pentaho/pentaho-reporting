@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.util.dnd;
@@ -25,7 +25,7 @@ import org.pentaho.reporting.libraries.designtime.swing.GenericTransferable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.Transferable;
@@ -39,17 +39,15 @@ import java.io.IOException;
  */
 public class ClipboardManager implements ClipboardOwner {
 
-  public static synchronized ClipboardManager getManager() {
-    if ( manager == null ) {
-      manager = new ClipboardManager();
-    }
-    return manager;
-  }
 
   private EventListenerList listeners;
-  private static ClipboardManager manager;
+  private static final ClipboardManager manager = new ClipboardManager();
   private Clipboard clipboard;
   private static final Log logger = LogFactory.getLog( ClipboardManager.class );
+
+  public static ClipboardManager getManager() {
+    return manager;
+  }
 
   private ClipboardManager() {
     this.listeners = new EventListenerList();

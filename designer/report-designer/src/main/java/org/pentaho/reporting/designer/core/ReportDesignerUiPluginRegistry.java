@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core;
@@ -31,14 +31,15 @@ import java.util.Iterator;
 public class ReportDesignerUiPluginRegistry {
   private static final String PREFIX = "org.pentaho.reporting.designer.modules.ui-extensions.";
 
-  private static ReportDesignerUiPluginRegistry instance;
+  private static final ReportDesignerUiPluginRegistry instance;
   private ArrayList<ReportDesignerUiPlugin> factories;
 
-  public static synchronized ReportDesignerUiPluginRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new ReportDesignerUiPluginRegistry();
-      instance.register();
-    }
+  static {
+    instance = new ReportDesignerUiPluginRegistry();
+    instance.register();
+  }
+
+  public static ReportDesignerUiPluginRegistry getInstance() {
     return instance;
   }
 
@@ -51,8 +52,7 @@ public class ReportDesignerUiPluginRegistry {
     final Iterator keys = configuration.findPropertyKeys( PREFIX );
     while ( keys.hasNext() ) {
       final String key = (String) keys.next();
-      if ( key.endsWith( ".UiPlugin" ) )// NON-NLS
-      {
+      if ( key.endsWith( ".UiPlugin" ) ) { //NON-NLS
         final String className = configuration.getConfigProperty( key );
         final ReportDesignerUiPlugin plugin = (ReportDesignerUiPlugin)
           ObjectUtilities.loadAndInstantiate( className, ReportDesignerUiPluginRegistry.class,

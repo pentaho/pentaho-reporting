@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.designtime.swing.colorchooser;
@@ -23,12 +23,9 @@ import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import java.util.Locale;
 
 public class ColorChooserMessages extends ResourceBundleSupport {
-  private static ColorChooserMessages instance;
+  private static final ColorChooserMessages instance = new ColorChooserMessages( Locale.getDefault() );
 
-  public static synchronized ColorChooserMessages getInstance() {
-    if ( instance == null ) {
-      instance = new ColorChooserMessages( Locale.getDefault() );
-    }
+  public static ColorChooserMessages getInstance() {
     return instance;
   }
 

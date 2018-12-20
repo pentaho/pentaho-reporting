@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2008 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2008 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.docbundle.metadata.parser;
@@ -31,15 +31,16 @@ public class BundleMetaDataEntryReadHandlerFactory
   private static final String PREFIX_SELECTOR =
     "org.pentaho.reporting.libraries.docbundle.metadata.metadata-factory.";
 
-  private static BundleMetaDataEntryReadHandlerFactory readHandlerFactory;
+  private static final BundleMetaDataEntryReadHandlerFactory readHandlerFactory;
 
-  public static synchronized BundleMetaDataEntryReadHandlerFactory getInstance() {
-    if ( readHandlerFactory == null ) {
-      final Configuration config = LibDocBundleBoot.getInstance().getGlobalConfig();
+  static {
+    final Configuration config = LibDocBundleBoot.getInstance().getGlobalConfig();
 
-      readHandlerFactory = new BundleMetaDataEntryReadHandlerFactory();
-      readHandlerFactory.configure( config, BundleMetaDataEntryReadHandlerFactory.PREFIX_SELECTOR );
-    }
+    readHandlerFactory = new BundleMetaDataEntryReadHandlerFactory();
+    readHandlerFactory.configure( config, BundleMetaDataEntryReadHandlerFactory.PREFIX_SELECTOR );
+  }
+
+  public static BundleMetaDataEntryReadHandlerFactory getInstance() {
     return readHandlerFactory;
   }
 

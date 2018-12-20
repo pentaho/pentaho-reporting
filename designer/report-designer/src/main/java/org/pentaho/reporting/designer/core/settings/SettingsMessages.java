@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.settings;
@@ -30,20 +30,17 @@ import java.util.Locale;
  * @author Thomas Morgner.
  */
 public class SettingsMessages extends ResourceBundleSupport {
-  private static SettingsMessages instance;
+  private static final SettingsMessages instance = new SettingsMessages();
 
   /**
    * Creates a new instance.
    */
   private SettingsMessages() {
-    super( Locale.getDefault(), "org.pentaho.reporting.designer.core.settings.messages.messages",//NON-NLS
+    super( Locale.getDefault(), "org.pentaho.reporting.designer.core.settings.messages.messages", //NON-NLS
       ObjectUtilities.getClassLoader( SettingsMessages.class ) );
   }
 
-  public static synchronized SettingsMessages getInstance() {
-    if ( instance == null ) {
-      instance = new SettingsMessages();
-    }
+  public static SettingsMessages getInstance() {
     return instance;
   }
 }

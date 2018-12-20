@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser;
@@ -24,7 +24,12 @@ public class CubeFileProviderReadHandlerFactory extends AbstractReadHandlerFacto
   private static final String PREFIX_SELECTOR =
     "org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.cube-factory-prefix.";
 
-  private static CubeFileProviderReadHandlerFactory readHandlerFactory;
+  private static final CubeFileProviderReadHandlerFactory readHandlerFactory;
+
+  static {
+    readHandlerFactory = new CubeFileProviderReadHandlerFactory();
+    readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
+  }
 
   public CubeFileProviderReadHandlerFactory() {
   }
@@ -33,11 +38,7 @@ public class CubeFileProviderReadHandlerFactory extends AbstractReadHandlerFacto
     return CubeFileProviderReadHandler.class;
   }
 
-  public static synchronized CubeFileProviderReadHandlerFactory getInstance() {
-    if ( readHandlerFactory == null ) {
-      readHandlerFactory = new CubeFileProviderReadHandlerFactory();
-      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
-    }
+  public static CubeFileProviderReadHandlerFactory getInstance() {
     return readHandlerFactory;
   }
 

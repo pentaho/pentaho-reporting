@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
@@ -63,7 +63,7 @@ public class ReportGenerator {
   /**
    * The report generator.
    */
-  private static ReportGenerator generator;
+  private static final ReportGenerator generator = new ReportGenerator();
 
   private HashMap helperObjects;
   private boolean validateDTD;
@@ -342,10 +342,7 @@ public class ReportGenerator {
    *
    * @return The shared report generator.
    */
-  public static synchronized ReportGenerator getInstance() {
-    if ( generator == null ) {
-      generator = new ReportGenerator();
-    }
+  public static ReportGenerator getInstance() {
     return generator;
   }
 

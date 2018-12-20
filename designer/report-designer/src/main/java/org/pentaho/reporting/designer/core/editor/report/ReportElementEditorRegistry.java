@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.report;
@@ -33,14 +33,15 @@ public class ReportElementEditorRegistry {
   private static final String PREFIX = "org.pentaho.reporting.designer.core.report-element-editor.";
   private static final String DEFAULTEDITOR = "org.pentaho.reporting.designer.core.report-element-editor";
 
-  private static ReportElementEditorRegistry instance;
+  private static final ReportElementEditorRegistry instance;
   private HashMap<String, ReportElementEditor> factories;
 
-  public static synchronized ReportElementEditorRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new ReportElementEditorRegistry();
-      instance.register();
-    }
+  static {
+    instance = new ReportElementEditorRegistry();
+    instance.register();
+  }
+
+  public static ReportElementEditorRegistry getInstance() {
     return instance;
   }
 

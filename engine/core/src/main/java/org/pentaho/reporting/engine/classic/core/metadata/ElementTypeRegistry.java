@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
@@ -31,13 +31,10 @@ public final class ElementTypeRegistry {
   private static final Log logger = LogFactory.getLog( ElementTypeRegistry.class );
   private HashMap<String, String> namespaceMapping;
   private HashMap<String, DefaultElementMetaData> backend;
-  private static ElementTypeRegistry instance;
+  private static final ElementTypeRegistry instance = new ElementTypeRegistry();
   private ResourceManager resourceManager;
 
-  public static synchronized ElementTypeRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new ElementTypeRegistry();
-    }
+  public static ElementTypeRegistry getInstance() {
     return instance;
   }
 

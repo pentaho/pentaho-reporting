@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.repository;
@@ -27,18 +27,19 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  * @author Thomas Morgner
  */
 public class LibRepositoryInfo extends ProjectInformation {
-  private static LibRepositoryInfo instance;
+  private static final LibRepositoryInfo instance;
+
+  static {
+    instance = new LibRepositoryInfo();
+    instance.initialize();
+  }
 
   /**
    * Returns the singleton instance of the ProjectInformation-class.
    *
    * @return the singleton ProjectInformation.
    */
-  public static synchronized ProjectInformation getInstance() {
-    if ( instance == null ) {
-      instance = new LibRepositoryInfo();
-      instance.initialize();
-    }
+  public static ProjectInformation getInstance() {
     return instance;
   }
 

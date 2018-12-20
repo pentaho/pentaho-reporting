@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
@@ -26,7 +26,12 @@ import org.pentaho.reporting.libraries.fonts.registry.DefaultFontStorage;
 import org.pentaho.reporting.libraries.fonts.registry.FontStorage;
 
 public class DebugOutputProcessorMetaData extends AbstractOutputProcessorMetaData {
-  private static LocalFontRegistry localFontRegistry;
+  private static final LocalFontRegistry localFontRegistry;
+
+  static {
+    localFontRegistry = new LocalFontRegistry();
+    localFontRegistry.initialize();
+  }
 
   public DebugOutputProcessorMetaData() {
     this( getLocalFontStorage() );
@@ -68,11 +73,7 @@ public class DebugOutputProcessorMetaData extends AbstractOutputProcessorMetaDat
     return "pageable/debug";
   }
 
-  public static synchronized FontStorage getLocalFontStorage() {
-    if ( localFontRegistry == null ) {
-      localFontRegistry = new LocalFontRegistry();
-      localFontRegistry.initialize();
-    }
+  public static FontStorage getLocalFontStorage() {
     return new DefaultFontStorage( localFontRegistry );
   }
 }

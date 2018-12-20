@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.serializer;
@@ -28,18 +28,19 @@ public class LibSerializerInfo extends ProjectInformation {
   /**
    * The info singleton.
    */
-  private static LibSerializerInfo singleton;
+  private static final LibSerializerInfo singleton;
+
+  static {
+    singleton = new LibSerializerInfo();
+    singleton.initialize();
+  }
 
   /**
    * Returns the single instance of this class.
    *
    * @return The single instance of information about the JCommon library.
    */
-  public static synchronized LibSerializerInfo getInstance() {
-    if ( singleton == null ) {
-      singleton = new LibSerializerInfo();
-      singleton.initialize();
-    }
+  public static LibSerializerInfo getInstance() {
     return singleton;
   }
 

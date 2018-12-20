@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.repository;
@@ -82,17 +82,14 @@ public class LibRepositoryBoot extends AbstractBoot {
    */
   public static final String CONTENT_TYPE = "content-type";
 
-  private static LibRepositoryBoot instance;
+  private static final LibRepositoryBoot instance = new LibRepositoryBoot();
 
   /**
    * Returns the singleton instance of the boot-class.
    *
    * @return the singleton booter.
    */
-  public static synchronized LibRepositoryBoot getInstance() {
-    if ( instance == null ) {
-      instance = new LibRepositoryBoot();
-    }
+  public static LibRepositoryBoot getInstance() {
     return instance;
   }
 
@@ -108,9 +105,7 @@ public class LibRepositoryBoot extends AbstractBoot {
    * @return The configuration.
    */
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/repository/librepository.properties",
-        "/librepository.properties", true, LibRepositoryBoot.class );
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/libraries/repository/librepository.properties", "/librepository.properties", true, LibRepositoryBoot.class );
 
   }
 

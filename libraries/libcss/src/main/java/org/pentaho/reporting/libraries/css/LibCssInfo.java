@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.css;
@@ -27,7 +27,12 @@ import org.pentaho.reporting.libraries.resourceloader.LibLoaderInfo;
  * @author Thomas Morgner
  */
 public class LibCssInfo extends ProjectInformation {
-  private static LibCssInfo info;
+  private static final LibCssInfo info;
+
+  static {
+    info = new LibCssInfo();
+    info.initialize();
+  }
 
   /**
    * Constructs an empty project info object.
@@ -52,11 +57,7 @@ public class LibCssInfo extends ProjectInformation {
    *
    * @return the singleton booter.
    */
-  public static synchronized ProjectInformation getInstance() {
-    if ( info == null ) {
-      info = new LibCssInfo();
-      info.initialize();
-    }
+  public static ProjectInformation getInstance() {
     return info;
   }
 }

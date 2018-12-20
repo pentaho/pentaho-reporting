@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser;
@@ -24,7 +24,12 @@ public class DataSourceProviderReadHandlerFactory extends AbstractReadHandlerFac
   private static final String PREFIX_SELECTOR =
     "org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.datasource-factory-prefix.";
 
-  private static DataSourceProviderReadHandlerFactory readHandlerFactory;
+  private static final DataSourceProviderReadHandlerFactory readHandlerFactory;
+
+  static {
+    readHandlerFactory = new DataSourceProviderReadHandlerFactory();
+    readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
+  }
 
   public DataSourceProviderReadHandlerFactory() {
   }
@@ -33,11 +38,7 @@ public class DataSourceProviderReadHandlerFactory extends AbstractReadHandlerFac
     return DataSourceProviderReadHandler.class;
   }
 
-  public static synchronized DataSourceProviderReadHandlerFactory getInstance() {
-    if ( readHandlerFactory == null ) {
-      readHandlerFactory = new DataSourceProviderReadHandlerFactory();
-      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
-    }
+  public static DataSourceProviderReadHandlerFactory getInstance() {
     return readHandlerFactory;
   }
 

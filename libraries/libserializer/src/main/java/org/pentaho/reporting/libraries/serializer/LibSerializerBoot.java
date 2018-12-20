@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.serializer;
@@ -27,17 +27,14 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  * @author Thomas Morgner
  */
 public class LibSerializerBoot extends AbstractBoot {
-  private static LibSerializerBoot instance;
+  private static final LibSerializerBoot instance = new LibSerializerBoot();
 
   /**
    * Returns a singleton instance of the boot class.
    *
    * @return the singleton booter.
    */
-  public static synchronized LibSerializerBoot getInstance() {
-    if ( instance == null ) {
-      instance = new LibSerializerBoot();
-    }
+  public static LibSerializerBoot getInstance() {
     return instance;
   }
 
@@ -53,9 +50,7 @@ public class LibSerializerBoot extends AbstractBoot {
    * @return The configuration.
    */
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/serializer/libserializer.properties",
-        "/libserializer.properties", true, LibSerializerBoot.class );
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/libraries/serializer/libserializer.properties", "/libserializer.properties", true, LibSerializerBoot.class );
   }
 
   /**

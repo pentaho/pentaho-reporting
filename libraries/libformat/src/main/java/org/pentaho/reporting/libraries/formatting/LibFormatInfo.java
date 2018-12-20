@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2008 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2008 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formatting;
@@ -29,18 +29,19 @@ public class LibFormatInfo extends ProjectInformation {
   /**
    * A singleton instance of the Info class.
    */
-  private static LibFormatInfo instance;
+  private static final LibFormatInfo instance;
+
+  static {
+    instance = new LibFormatInfo();
+    instance.initialize();
+  }
 
   /**
    * Returns the singleton instance of the Info-Object.
    *
    * @return te info object for this library.
    */
-  public static synchronized ProjectInformation getInstance() {
-    if ( instance == null ) {
-      instance = new LibFormatInfo();
-      instance.initialize();
-    }
+  public static ProjectInformation getInstance() {
     return instance;
   }
 

@@ -12,16 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.style;
 
-import java.awt.BasicStroke;
+import org.pentaho.reporting.engine.classic.core.ElementAlignment;
+
 import java.awt.Color;
 import java.awt.Stroke;
-
-import org.pentaho.reporting.engine.classic.core.ElementAlignment;
+import java.awt.BasicStroke;
 
 /**
  * The default element style sheet. This style sheet defines default attribute values for all elements.
@@ -45,6 +45,8 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet {
    * a flag indicating the read-only state of this style sheet.
    */
   private boolean locked;
+
+  private static final byte[] syncLock = new byte[0];
 
   /**
    * Creates a new style sheet.
@@ -141,9 +143,15 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet {
    *
    * @return the style-sheet.
    */
-  public static synchronized ElementDefaultStyleSheet getDefaultStyle() {
+  public static ElementDefaultStyleSheet getDefaultStyle() {
     if ( defaultStyle == null ) {
-      defaultStyle = new ElementDefaultStyleSheet();
+      // Using synchronization lock in this way because certain unit test cases (notably the FastExcelPrinterTest and likely others)
+      // only partially initialize the system
+      synchronized ( syncLock ) {
+        if ( defaultStyle == null ) {
+          defaultStyle = new ElementDefaultStyleSheet();
+        }
+      }
     }
     return defaultStyle;
   }

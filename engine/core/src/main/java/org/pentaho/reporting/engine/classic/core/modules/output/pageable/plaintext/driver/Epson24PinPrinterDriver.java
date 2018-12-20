@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver;
@@ -33,7 +33,12 @@ public class Epson24PinPrinterDriver extends AbstractEpsonPrinterDriver {
   private static final String N_360TH_LINE_SPACING = "Epson24pin.n360inch-linespacing";
   private static final String SELECT_LINE_SCORE = "Epson24pin.select-line-score";
 
-  private static PrinterSpecificationManager printerSpecificationManager;
+  private static final PrinterSpecificationManager printerSpecificationManager;
+
+  static {
+    printerSpecificationManager = new PrinterSpecificationManager();
+    printerSpecificationManager.load( Epson24PinPrinterDriver.SPECIFICATION_RESOURCE );
+  }
 
   public Epson24PinPrinterDriver( final OutputStream out, final float charsPerInch, final float linesPerInch,
       final String printerModel ) {
@@ -151,12 +156,8 @@ public class Epson24PinPrinterDriver extends AbstractEpsonPrinterDriver {
     return Epson24PinPrinterDriver.loadSpecificationManager();
   }
 
-  public static synchronized PrinterSpecificationManager loadSpecificationManager() {
-    if ( Epson24PinPrinterDriver.printerSpecificationManager == null ) {
-      Epson24PinPrinterDriver.printerSpecificationManager = new PrinterSpecificationManager();
-      Epson24PinPrinterDriver.printerSpecificationManager.load( Epson24PinPrinterDriver.SPECIFICATION_RESOURCE );
-    }
-    return Epson24PinPrinterDriver.printerSpecificationManager;
+  public static PrinterSpecificationManager loadSpecificationManager() {
+    return printerSpecificationManager;
   }
 
   public static String getDefaultPrinter() {

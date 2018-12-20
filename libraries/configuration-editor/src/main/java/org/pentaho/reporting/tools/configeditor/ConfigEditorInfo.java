@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.tools.configeditor;
@@ -21,13 +21,14 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 import org.pentaho.reporting.libraries.xmlns.LibXmlInfo;
 
 public class ConfigEditorInfo extends ProjectInformation {
-  private static ConfigEditorInfo instance;
+  private static final ConfigEditorInfo instance;
 
-  public static synchronized ConfigEditorInfo getInstance() {
-    if ( instance == null ) {
-      instance = new ConfigEditorInfo();
-      instance.initialize();
-    }
+  static {
+    instance = new ConfigEditorInfo();
+    instance.initialize();
+  }
+
+  public static ConfigEditorInfo getInstance() {
     return instance;
   }
 

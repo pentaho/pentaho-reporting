@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -22,17 +22,14 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 public class LibPensolBoot extends AbstractBoot {
-  private static LibPensolBoot instance;
+  private static final LibPensolBoot instance = new LibPensolBoot();
 
   /**
    * Returns the singleton instance of the boot-class.
    *
    * @return the singleton booter.
    */
-  public static synchronized LibPensolBoot getInstance() {
-    if ( instance == null ) {
-      instance = new LibPensolBoot();
-    }
+  public static LibPensolBoot getInstance() {
     return instance;
   }
 
@@ -48,9 +45,7 @@ public class LibPensolBoot extends AbstractBoot {
    * @return The configuration.
    */
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/pensol/libpensol.properties",
-        "/libpensol.properties", true, LibPensolBoot.class );
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/libraries/pensol/libpensol.properties", "/libpensol.properties", true, LibPensolBoot.class );
 
   }
 

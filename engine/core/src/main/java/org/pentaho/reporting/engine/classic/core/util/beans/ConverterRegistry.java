@@ -12,22 +12,10 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
@@ -41,14 +29,23 @@ import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.StagingMode;
 
+import java.awt.Color;
+import java.awt.BasicStroke;
+import java.awt.Font;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
+
 public final class ConverterRegistry {
-  private static ConverterRegistry instance;
+  private static final ConverterRegistry instance = new ConverterRegistry();
   private HashMap<Class, ValueConverter> registeredClasses;
 
-  public static synchronized ConverterRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new ConverterRegistry();
-    }
+  public static ConverterRegistry getInstance() {
     return instance;
   }
 

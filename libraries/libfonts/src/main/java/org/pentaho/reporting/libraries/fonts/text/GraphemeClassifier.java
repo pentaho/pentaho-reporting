@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.fonts.text;
@@ -53,7 +53,7 @@ public final class GraphemeClassifier {
   public static final int LVT_OR_T_MASK = 0x48;
 
   private ByteTable classificationData;
-  private static GraphemeClassifier classifier;
+  private static final GraphemeClassifier classifier = new GraphemeClassifier();
 
   private GraphemeClassifier() {
     InputStream in = getClass()
@@ -93,10 +93,7 @@ public final class GraphemeClassifier {
     return OTHER;
   }
 
-  public static synchronized GraphemeClassifier getClassifier() {
-    if ( classifier == null ) {
-      classifier = new GraphemeClassifier();
-    }
+  public static GraphemeClassifier getClassifier() {
     return classifier;
   }
 }

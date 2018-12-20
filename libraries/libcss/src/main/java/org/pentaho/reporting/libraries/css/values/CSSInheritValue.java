@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.css.values;
@@ -23,12 +23,9 @@ package org.pentaho.reporting.libraries.css.values;
  * @author Thomas Morgner
  */
 public class CSSInheritValue implements CSSValue {
-  private static CSSInheritValue instance;
+  private static final CSSInheritValue instance = new CSSInheritValue();
 
-  public static synchronized CSSInheritValue getInstance() {
-    if ( instance == null ) {
-      instance = new CSSInheritValue();
-    }
+  public static CSSInheritValue getInstance() {
     return instance;
   }
 

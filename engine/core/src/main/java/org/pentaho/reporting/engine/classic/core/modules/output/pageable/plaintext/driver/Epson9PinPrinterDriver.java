@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver;
@@ -30,12 +30,17 @@ public class Epson9PinPrinterDriver extends AbstractEpsonPrinterDriver {
   private static final byte ITALICS = 0x40;
   private static final byte UNDERLINE = (byte) 0x80;
   private int masterselect;
-  private static PrinterSpecificationManager printerSpecificationManager;
+  private static final PrinterSpecificationManager printerSpecificationManager;
   private static final String SPECIFICATION_RESOURCE =
       "/org/pentaho/reporting/engine/classic/core/modules/output/pageable/plaintext/driver/epson-9pin-printer"
           + "-specifications.properties";
   public static final String EPSON_9PIN_PRINTER_TYPE =
       "org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.epson.9PinPrinterType";
+
+  static {
+    printerSpecificationManager = new PrinterSpecificationManager();
+    printerSpecificationManager.load( Epson9PinPrinterDriver.SPECIFICATION_RESOURCE );
+  }
 
   public Epson9PinPrinterDriver( final OutputStream out, final float charsPerInch, final float linesPerInch,
       final String printerModel ) {
@@ -196,11 +201,7 @@ public class Epson9PinPrinterDriver extends AbstractEpsonPrinterDriver {
     return Epson9PinPrinterDriver.loadSpecificationManager();
   }
 
-  public static synchronized PrinterSpecificationManager loadSpecificationManager() {
-    if ( Epson9PinPrinterDriver.printerSpecificationManager == null ) {
-      Epson9PinPrinterDriver.printerSpecificationManager = new PrinterSpecificationManager();
-      Epson9PinPrinterDriver.printerSpecificationManager.load( Epson9PinPrinterDriver.SPECIFICATION_RESOURCE );
-    }
+  public static PrinterSpecificationManager loadSpecificationManager() {
     return Epson9PinPrinterDriver.printerSpecificationManager;
   }
 

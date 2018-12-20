@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.designtime.swing;
@@ -24,22 +24,20 @@ import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.BooleanP
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor;
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.FontPropertyEditor;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
 import java.beans.PropertyEditorManager;
 
 public class LibSwingBoot extends AbstractBoot {
-  private static LibSwingBoot instance;
+  private static final LibSwingBoot instance = new LibSwingBoot();
 
   /**
    * Returns the singleton instance of the boot-class.
    *
    * @return the singleton booter.
    */
-  public static synchronized LibSwingBoot getInstance() {
-    if ( LibSwingBoot.instance == null ) {
-      LibSwingBoot.instance = new LibSwingBoot();
-    }
-    return LibSwingBoot.instance;
+  public static LibSwingBoot getInstance() {
+    return instance;
   }
 
   /**
@@ -54,9 +52,7 @@ public class LibSwingBoot extends AbstractBoot {
    * @return The configuration.
    */
   protected Configuration loadConfiguration() {
-    return createDefaultHierarchicalConfiguration
-      ( "/org/pentaho/reporting/libraries/designtime/swing/libswing.properties",
-        "/libswing.properties", true, LibSwingBoot.class );
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/libraries/designtime/swing/libswing.properties", "/libswing.properties", true, LibSwingBoot.class );
   }
 
   /**

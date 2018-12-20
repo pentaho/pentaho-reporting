@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base.encoder;
@@ -25,18 +25,19 @@ import java.util.HashMap;
 public class ImageEncoderRegistry {
   public static final String IMAGE_PNG = "image/png";
   public static final String IMAGE_JPEG = "image/jpeg";
-  private static ImageEncoderRegistry instance;
+  private static final ImageEncoderRegistry instance;
   private HashMap<String, String> encoders;
 
   private ImageEncoderRegistry() {
     encoders = new HashMap<String, String>();
   }
 
-  public static synchronized ImageEncoderRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new ImageEncoderRegistry();
-      instance.registerDefaults();
-    }
+  static {
+    instance = new ImageEncoderRegistry();
+    instance.registerDefaults();
+  }
+
+  public static ImageEncoderRegistry getInstance() {
     return instance;
   }
 

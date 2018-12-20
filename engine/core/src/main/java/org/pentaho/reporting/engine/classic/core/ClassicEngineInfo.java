@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -37,18 +37,19 @@ public final class ClassicEngineInfo extends ProjectInformation {
   /**
    * A singleton instance of the JFreeReportInfo class.
    */
-  private static ClassicEngineInfo info;
+  private static final ClassicEngineInfo info;
+
+  static {
+    info = new ClassicEngineInfo();
+    info.initialize();
+  }
 
   /**
    * Returns the singleton instance of the Info-Object.
    *
    * @return te info object for this library.
    */
-  public static synchronized ClassicEngineInfo getInstance() {
-    if ( info == null ) {
-      info = new ClassicEngineInfo();
-      info.initialize();
-    }
+  public static ClassicEngineInfo getInstance() {
     return info;
   }
 

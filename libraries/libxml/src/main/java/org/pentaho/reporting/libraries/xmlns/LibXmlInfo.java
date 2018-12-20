@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns;
@@ -38,7 +38,12 @@ public class LibXmlInfo extends ProjectInformation {
    */
   public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
 
-  private static LibXmlInfo info;
+  private static final LibXmlInfo info;
+
+  static {
+    info = new LibXmlInfo();
+    info.initialize();
+  }
 
   /**
    * Constructs an empty project info object.
@@ -66,11 +71,7 @@ public class LibXmlInfo extends ProjectInformation {
    *
    * @return the singleton info.
    */
-  public static synchronized ProjectInformation getInstance() {
-    if ( info == null ) {
-      info = new LibXmlInfo();
-      info.initialize();
-    }
+  public static ProjectInformation getInstance() {
     return info;
   }
 }

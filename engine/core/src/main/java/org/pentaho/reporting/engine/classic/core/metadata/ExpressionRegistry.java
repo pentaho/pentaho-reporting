@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
@@ -30,15 +30,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ExpressionRegistry {
   private static final Log logger = LogFactory.getLog( ExpressionRegistry.class );
-  private static ExpressionRegistry instance;
+  private static final ExpressionRegistry instance = new ExpressionRegistry();
 
   private ConcurrentHashMap<String, ExpressionMetaData> backend;
   private ResourceManager resourceManager;
 
-  public static synchronized ExpressionRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new ExpressionRegistry();
-    }
+  public static ExpressionRegistry getInstance() {
     return instance;
   }
 

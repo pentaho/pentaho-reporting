@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.fonts.encoding;
@@ -72,14 +72,15 @@ public final class EncodingRegistry {
   private HashMap aliases;
   private ResourceManager manager;
 
-  private static EncodingRegistry instance;
+  private static final EncodingRegistry instance;
   public static final String ENCODING_ALIAS_PREFIX = "org.pentaho.reporting.libraries.fonts.encoding.alias.";
 
-  public static synchronized EncodingRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new EncodingRegistry();
-      instance.registerDefaults();
-    }
+  static {
+    instance = new EncodingRegistry();
+    instance.registerDefaults();
+  }
+
+  public static EncodingRegistry getInstance() {
     return instance;
   }
 
@@ -104,8 +105,7 @@ public final class EncodingRegistry {
     while ( encodings.hasNext() ) {
       final String key = (String) encodings.next();
       final String encodingClass = config.getConfigProperty( key );
-      final Object maybeEncoding = ObjectUtilities.loadAndInstantiate
-        ( encodingClass, EncodingRegistry.class, Encoding.class );
+      final Object maybeEncoding = ObjectUtilities.loadAndInstantiate( encodingClass, EncodingRegistry.class, Encoding.class );
       if ( maybeEncoding != null ) {
         // ok, loaded perfectly ..
         final Encoding encoding = (Encoding) maybeEncoding;
@@ -115,8 +115,7 @@ public final class EncodingRegistry {
       }
     }
 
-    final Iterator generateDirs =
-      config.findPropertyKeys( "org.pentaho.reporting.libraries.fonts.encoding.generated." );
+    final Iterator generateDirs = config.findPropertyKeys( "org.pentaho.reporting.libraries.fonts.encoding.generated." );
     while ( generateDirs.hasNext() ) {
       final String key = (String) generateDirs.next();
       final String dataLocation = config.getConfigProperty( key );
@@ -139,8 +138,7 @@ public final class EncodingRegistry {
       }
     }
 
-    final Iterator aliasesIt = config.findPropertyKeys
-      ( ENCODING_ALIAS_PREFIX );
+    final Iterator aliasesIt = config.findPropertyKeys( ENCODING_ALIAS_PREFIX );
     while ( aliasesIt.hasNext() ) {
       final String key = (String) aliasesIt.next();
       final String alias = key.substring( ENCODING_ALIAS_PREFIX.length() );
@@ -201,7 +199,6 @@ public final class EncodingRegistry {
     }
   }
 
-
   /**
    * Helper method to read the platform default encoding from the VM's system properties.
    *
@@ -217,8 +214,7 @@ public final class EncodingRegistry {
     if ( manual != null ) {
       // we tested the instantiation during the initialization,
       // so we can be sure that no errors appear here
-      return (Encoding) ObjectUtilities.loadAndInstantiate
-        ( manual, EncodingRegistry.class, Encoding.class );
+      return (Encoding) ObjectUtilities.loadAndInstantiate( manual, EncodingRegistry.class, Encoding.class );
     }
 
     final ResourceKey generated = (ResourceKey) generatedMapping.get( key );

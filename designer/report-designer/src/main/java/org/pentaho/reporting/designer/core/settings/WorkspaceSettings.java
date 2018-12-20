@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.settings;
@@ -30,7 +30,8 @@ import org.pentaho.reporting.libraries.designtime.swing.WeakEventListenerList;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.prefs.BackingStoreException;
@@ -42,7 +43,7 @@ import java.util.prefs.Preferences;
 public class WorkspaceSettings implements LocaleSettings {
   private static final String SHOW_LAUNCHER_KEY = "ShowLauncher";
 
-  private static WorkspaceSettings instance;
+  private static final WorkspaceSettings instance = new WorkspaceSettings();
   private static final String GRID_DIVISIONS_KEY = "GridDivisions";
   private static final String USE_VERSION_CHECKER_KEY = "UseVersionChecker";
   private static final String REPORT_DESIGNER_BOUNDS_KEY = "ReportDesignerBounds";
@@ -93,10 +94,7 @@ public class WorkspaceSettings implements LocaleSettings {
   private static final Color ALIGNMENT_HINT_COLOR_DEFAULT = new Color( 228, 228, 228 );
   private static final Color OVERLAP_HINT_COLOR_DEFAULT = new Color( 255, 128, 128 );
 
-  public static synchronized WorkspaceSettings getInstance() {
-    if ( instance == null ) {
-      instance = new WorkspaceSettings();
-    }
+  public static WorkspaceSettings getInstance() {
     return instance;
   }
 
@@ -389,8 +387,7 @@ public class WorkspaceSettings implements LocaleSettings {
   public MaturityLevel getMaturityLevel() {
     MaturityLevel ml = MaturityLevel.Production;
     try {
-      final String matLevel = ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty
-        ( "org.pentaho.reporting.designer.core.settings.MaturityLevel" );
+      final String matLevel = ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty( "org.pentaho.reporting.designer.core.settings.MaturityLevel" );
       if ( matLevel != null ) {
         ml = MaturityLevel.valueOf( matLevel );
       }
@@ -399,8 +396,7 @@ public class WorkspaceSettings implements LocaleSettings {
       ml = MaturityLevel.Production;
     }
 
-    String defaultValue = properties.getBoolean( EXPERIMENTAL_FEATURES_KEY, false ) ?
-      MaturityLevel.Development.toString() : ml.toString();
+    String defaultValue = properties.getBoolean( EXPERIMENTAL_FEATURES_KEY, false ) ? MaturityLevel.Development.toString() : ml.toString();
 
     try {
       String s = properties.get( MATURITY_LEVEL_KEY, defaultValue );
@@ -515,7 +511,7 @@ public class WorkspaceSettings implements LocaleSettings {
   public String getDateFormatPattern() {
     final String s = getString( DATE_FORMAT_PATTERN );
     if ( StringUtils.isEmpty( s ) ) {
-      return DATE_FORMAT_DEFAULT;// NON-NLS
+      return DATE_FORMAT_DEFAULT; // NON-NLS
     }
     return s;
   }
@@ -539,7 +535,7 @@ public class WorkspaceSettings implements LocaleSettings {
   public String getDatetimeFormatPattern() {
     final String s = getString( DATETIME_FORMAT_PATTERN );
     if ( StringUtils.isEmpty( s ) ) {
-      return DATETIME_FORMAT_DEFAULT;// NON-NLS
+      return DATETIME_FORMAT_DEFAULT; // NON-NLS
     }
     return s;
   }

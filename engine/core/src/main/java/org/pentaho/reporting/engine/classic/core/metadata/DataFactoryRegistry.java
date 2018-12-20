@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
@@ -29,15 +29,12 @@ import java.util.LinkedHashMap;
 
 public class DataFactoryRegistry {
   private static final Log logger = LogFactory.getLog( DataFactoryRegistry.class );
-  private static DataFactoryRegistry instance;
+  private static final DataFactoryRegistry instance = new DataFactoryRegistry();
 
   private LinkedHashMap<String, DataFactoryMetaData> backend;
   private ResourceManager resourceManager;
 
-  public static synchronized DataFactoryRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new DataFactoryRegistry();
-    }
+  public static DataFactoryRegistry getInstance() {
     return instance;
   }
 

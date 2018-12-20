@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.style;
@@ -27,7 +27,7 @@ public final class ReportDefaultStyleSheet extends ElementDefaultStyleSheet {
   /**
    * A shared default style-sheet.
    */
-  private static ReportDefaultStyleSheet defaultStyle;
+  private static final ReportDefaultStyleSheet defaultStyle = new ReportDefaultStyleSheet();
 
   /**
    * Creates a new default style sheet.
@@ -50,10 +50,7 @@ public final class ReportDefaultStyleSheet extends ElementDefaultStyleSheet {
    *
    * @return the style-sheet.
    */
-  public static synchronized ReportDefaultStyleSheet getSectionDefault() {
-    if ( defaultStyle == null ) {
-      defaultStyle = new ReportDefaultStyleSheet();
-    }
+  public static ReportDefaultStyleSheet getSectionDefault() {
     return defaultStyle;
   }
 }

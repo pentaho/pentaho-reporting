@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd.parser;
@@ -27,7 +27,12 @@ public class PmdConfigReadHandlerFactory extends AbstractReadHandlerFactory<IPmd
   private static final String PREFIX_SELECTOR =
     "org.pentaho.reporting.engine.classic.core.modules.parser.data.pmd.config-factory-prefix.";
 
-  private static PmdConfigReadHandlerFactory readHandlerFactory;
+  private static final PmdConfigReadHandlerFactory readHandlerFactory;
+
+  static {
+    readHandlerFactory = new PmdConfigReadHandlerFactory();
+    readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
+  }
 
   public PmdConfigReadHandlerFactory() {
   }
@@ -36,11 +41,7 @@ public class PmdConfigReadHandlerFactory extends AbstractReadHandlerFactory<IPmd
     return IPmdConfigReadHandler.class;
   }
 
-  public static synchronized PmdConfigReadHandlerFactory getInstance() {
-    if ( readHandlerFactory == null ) {
-      readHandlerFactory = new PmdConfigReadHandlerFactory();
-      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
-    }
+  public static PmdConfigReadHandlerFactory getInstance() {
     return readHandlerFactory;
   }
 

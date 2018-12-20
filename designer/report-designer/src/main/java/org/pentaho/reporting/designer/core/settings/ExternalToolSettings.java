@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.settings;
@@ -24,7 +24,7 @@ import java.util.prefs.Preferences;
  * User: Martin Date: 28.05.2006 Time: 09:58:37
  */
 public class ExternalToolSettings {
-  private static ExternalToolSettings instance;
+  private static final ExternalToolSettings instance = new ExternalToolSettings();
   private static final String USE_DEFAULT_PDFVIEWER_KEY = "UseDefaultPDFViewer";
   private static final String CUSTOM_PDFVIEWER_EXECUTABLE_KEY = "CustomPDFViewerExecutable";
   private static final String CUSTOM_PDFVIEWER_PARAMETERS_KEY = "CustomPDFViewerParameters";
@@ -41,18 +41,14 @@ public class ExternalToolSettings {
   private static final String CUSTOM_BROWSER_EXECUTABLE_KEY = "CustomBrowserExecutable";
   private static final String CUSTOM_BROWSER_PARAMETERS_KEY = "CustomBrowserParameters";
 
-  public static synchronized ExternalToolSettings getInstance() {
-    if ( instance == null ) {
-      instance = new ExternalToolSettings();
-    }
+  public static ExternalToolSettings getInstance() {
     return instance;
   }
 
   private Preferences preferences;
 
   public ExternalToolSettings() {
-    preferences = Preferences.userRoot().node
-      ( "org/pentaho/reporting/designer/application-settings/external-tools-settings" ); // NON-NLS
+    preferences = Preferences.userRoot().node( "org/pentaho/reporting/designer/application-settings/external-tools-settings" ); // NON-NLS
   }
 
   public boolean isUseDefaultBrowser() {

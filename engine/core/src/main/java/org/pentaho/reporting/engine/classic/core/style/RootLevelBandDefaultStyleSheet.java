@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.style;
@@ -21,7 +21,7 @@ public class RootLevelBandDefaultStyleSheet extends BandDefaultStyleSheet {
   /**
    * A shared default style-sheet.
    */
-  private static RootLevelBandDefaultStyleSheet defaultStyle;
+  private static final RootLevelBandDefaultStyleSheet defaultStyle = new RootLevelBandDefaultStyleSheet();
 
   /**
    * Creates a new default style sheet.
@@ -38,10 +38,7 @@ public class RootLevelBandDefaultStyleSheet extends BandDefaultStyleSheet {
    *
    * @return the style-sheet.
    */
-  public static synchronized RootLevelBandDefaultStyleSheet getRootLevelBandDefaultStyle() {
-    if ( defaultStyle == null ) {
-      defaultStyle = new RootLevelBandDefaultStyleSheet();
-    }
+  public static RootLevelBandDefaultStyleSheet getRootLevelBandDefaultStyle() {
     return defaultStyle;
   }
 }

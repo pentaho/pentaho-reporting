@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.drilldown;
@@ -31,13 +31,10 @@ import java.util.HashMap;
 
 public class DrillDownProfileMetaData {
   private static final Log logger = LogFactory.getLog( DrillDownProfileMetaData.class );
-  private static DrillDownProfileMetaData instance;
+  private static final DrillDownProfileMetaData instance = new DrillDownProfileMetaData();
   private ResourceManager resourceManager;
 
-  public static synchronized DrillDownProfileMetaData getInstance() {
-    if ( instance == null ) {
-      instance = new DrillDownProfileMetaData();
-    }
+  public static DrillDownProfileMetaData getInstance() {
     return instance;
   }
 

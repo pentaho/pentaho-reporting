@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.auth;
@@ -31,12 +31,9 @@ import java.util.prefs.Preferences;
  * @author Thomas Morgner.
  */
 public class PasswordPolicyManager {
-  private static PasswordPolicyManager instance;
+  private static final PasswordPolicyManager instance = new PasswordPolicyManager();
 
-  public static synchronized PasswordPolicyManager getInstance() {
-    if ( instance == null ) {
-      instance = new PasswordPolicyManager();
-    }
+  public static PasswordPolicyManager getInstance() {
     return instance;
   }
 

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.welcome;
@@ -105,24 +105,21 @@ public class SamplesTreeBuilder {
   }
 
   private static final Log logger = LogFactory.getLog( SamplesTreeBuilder.class );
-  private static DefaultTreeModel sampleTreeModel;
+  private static final DefaultTreeModel sampleTreeModel = createModel();
   private static final DirectoryFileFilter DIRECTORY_FILTER = new DirectoryFileFilter();
   private static final FilesystemFilter REPORT_FILES_FILTER =
-    new FilesystemFilter( new String[] { ".report", ".prpt" }, "", false );// NON-NLS
+    new FilesystemFilter( new String[] { ".report", ".prpt" }, "", false ); // NON-NLS
 
   private SamplesTreeBuilder() {
   }
 
-  public static synchronized TreeModel getSampleTreeModel() {
-    if ( sampleTreeModel == null ) {
-      sampleTreeModel = createModel();
-    }
+  public static TreeModel getSampleTreeModel() {
     return sampleTreeModel;
   }
 
   private static DefaultTreeModel createModel() {
     final DefaultMutableTreeNode root =
-      new DefaultMutableTreeNode( Messages.getString( "WelcomePane.samples" ) );// NON-NLS
+      new DefaultMutableTreeNode( Messages.getString( "WelcomePane.samples" ) ); // NON-NLS
     final DefaultTreeModel model = new DefaultTreeModel( root );
 
     try {
@@ -131,7 +128,7 @@ public class SamplesTreeBuilder {
 
       final File installationDirectory = SettingsUtil.computeInstallationDirectory();
       if ( installationDirectory != null ) {
-        final File configTemplateDir = new File( installationDirectory, "samples" );// NON-NLS
+        final File configTemplateDir = new File( installationDirectory, "samples" ); // NON-NLS
         if ( configTemplateDir.exists() && configTemplateDir.isDirectory() ) {
           processDirectory( root, configTemplateDir, cache, resourceManager );
         }
@@ -187,7 +184,7 @@ public class SamplesTreeBuilder {
       }
 
     } catch ( Exception se ) {
-      logger.error( "Cannot access Application directory", se );// NON-NLS
+      logger.error( "Cannot access Application directory", se ); // NON-NLS
     }
   }
 
@@ -197,7 +194,7 @@ public class SamplesTreeBuilder {
     if ( location == null ) {
       return new HashMap();
     }
-    final File ttfCache = new File( location, "samples-cache.ser" );// NON-NLS
+    final File ttfCache = new File( location, "samples-cache.ser" ); // NON-NLS
     try {
       final ResourceKey resourceKey = resourceManager.createKey( ttfCache );
       final ResourceData data = resourceManager.load( resourceKey );
@@ -228,9 +225,9 @@ public class SamplesTreeBuilder {
     } catch ( final ClassNotFoundException cnfe ) {
       // ignore the exception.
       logger
-        .debug( "Failed to restore the cache: Cache was created by a different version of ReportDesigner" );// NON-NLS
+        .debug( "Failed to restore the cache: Cache was created by a different version of ReportDesigner" ); // NON-NLS
     } catch ( Exception e ) {
-      logger.debug( "Non-Fatal: Failed to restore the cache. The cache will be rebuilt.", e );// NON-NLS
+      logger.debug( "Non-Fatal: Failed to restore the cache. The cache will be rebuilt.", e ); // NON-NLS
     }
 
     return new HashMap();
@@ -246,7 +243,7 @@ public class SamplesTreeBuilder {
       return;
     }
 
-    final File ttfCache = new File( location, "samples-cache.ser" );// NON-NLS
+    final File ttfCache = new File( location, "samples-cache.ser" ); // NON-NLS
     try {
       final FileOutputStream fout = new FileOutputStream( ttfCache );
       try {
@@ -261,17 +258,17 @@ public class SamplesTreeBuilder {
           fout.close();
         } catch ( IOException e ) {
           // ignore ..
-          logger.debug( "Failed to store cached samples data", e );// NON-NLS
+          logger.debug( "Failed to store cached samples data", e ); // NON-NLS
         }
       }
     } catch ( IOException e ) {
       // should not happen
-      logger.debug( "Failed to store cached samples data", e );// NON-NLS
+      logger.debug( "Failed to store cached samples data", e ); // NON-NLS
     }
   }
 
   protected static File createStorageLocation() {
-    final String homeDirectory = safeSystemGetProperty( "user.home", null );// NON-NLS
+    final String homeDirectory = safeSystemGetProperty( "user.home", null ); // NON-NLS
     if ( homeDirectory == null ) {
       return null;
     }
@@ -279,7 +276,7 @@ public class SamplesTreeBuilder {
     if ( homeFile.isDirectory() == false ) {
       return null;
     }
-    return new File( homeFile, ".pentaho/caches/prd-samples" );// NON-NLS
+    return new File( homeFile, ".pentaho/caches/prd-samples" ); // NON-NLS
   }
 
 

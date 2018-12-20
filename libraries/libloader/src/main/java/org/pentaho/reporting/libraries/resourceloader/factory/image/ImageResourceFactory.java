@@ -12,14 +12,14 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.resourceloader.factory.image;
 
 import org.pentaho.reporting.libraries.resourceloader.factory.AbstractResourceFactory;
 
-import java.awt.*;
+import java.awt.Image;
 
 /**
  * Creation-Date: 05.04.2006, 17:59:50
@@ -27,16 +27,13 @@ import java.awt.*;
  * @author Thomas Morgner
  */
 public class ImageResourceFactory extends AbstractResourceFactory {
-  private static ImageResourceFactory instance;
+  private static final ImageResourceFactory instance = new ImageResourceFactory();
 
   public ImageResourceFactory() {
     super( Image.class );
   }
 
-  public static synchronized ImageResourceFactory getInstance() {
-    if ( instance == null ) {
-      instance = new ImageResourceFactory();
-    }
+  public static ImageResourceFactory getInstance() {
     return instance;
   }
 }

@@ -12,12 +12,10 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.demo;
-
-import java.net.URL;
 
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
@@ -26,27 +24,21 @@ import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
+import java.net.URL;
 
 /**
  * Creation-Date: 02.12.2006, 19:20:26
  *
  * @author Thomas Morgner
  */
-public class ClassicEngineDemoBoot extends AbstractBoot
-{
-  private static ClassicEngineDemoBoot singleton;
+public class ClassicEngineDemoBoot extends AbstractBoot {
+  private static final ClassicEngineDemoBoot singleton = new ClassicEngineDemoBoot();
 
-  public static synchronized ClassicEngineDemoBoot getInstance()
-  {
-    if (singleton == null)
-    {
-      singleton = new ClassicEngineDemoBoot();
-    }
+  public static ClassicEngineDemoBoot getInstance() {
     return singleton;
   }
 
-  private ClassicEngineDemoBoot()
-  {
+  private ClassicEngineDemoBoot() {
   }
 
   /**
@@ -54,8 +46,7 @@ public class ClassicEngineDemoBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return ClassicEngineDemoInfo.getInstance();
   }
 
@@ -64,11 +55,8 @@ public class ClassicEngineDemoBoot extends AbstractBoot
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration()
-  {
-    return createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/engine/classic/demo/demo.properties",
-            "/jfreereport-demo.properties", true, ClassicEngineDemoBoot.class);
+  protected Configuration loadConfiguration() {
+    return createDefaultHierarchicalConfiguration( "/org/pentaho/reporting/engine/classic/demo/demo.properties", "/jfreereport-demo.properties", true, ClassicEngineDemoBoot.class );
   }
 
   /**
@@ -79,29 +67,22 @@ public class ClassicEngineDemoBoot extends AbstractBoot
    *
    * @return the global config as modifiable configuration.
    */
-  public ModifiableConfiguration getEditableConfig()
-  {
+  public ModifiableConfiguration getEditableConfig() {
     return (ModifiableConfiguration) getGlobalConfig();
   }
 
   /**
    * Performs the boot.
    */
-  protected void performBoot()
-  {
-    final URL expressionMetaSource = ObjectUtilities.getResource
-        ("org/pentaho/reporting/engine/classic/demo/ancient/demo/meta-expressions.xml", ClassicEngineDemoBoot.class);
-    if (expressionMetaSource == null)
-    {
-      throw new IllegalStateException("Error: Could not find the expression meta-data description file");
+  protected void performBoot() {
+    final URL expressionMetaSource = ObjectUtilities.getResource( "org/pentaho/reporting/engine/classic/demo/ancient/demo/meta-expressions.xml", ClassicEngineDemoBoot.class );
+    if ( expressionMetaSource == null ) {
+      throw new IllegalStateException( "Error: Could not find the expression meta-data description file" );
     }
-    try
-    {
-      ExpressionRegistry.getInstance().registerFromXml(expressionMetaSource);
-    }
-    catch (Exception e)
-    {
-      throw new IllegalStateException("Error: Could not parse the element meta-data description file: " + e);
+    try {
+      ExpressionRegistry.getInstance().registerFromXml( expressionMetaSource );
+    } catch ( Exception e ) {
+      throw new IllegalStateException( "Error: Could not parse the element meta-data description file: " + e );
     }
 
   }

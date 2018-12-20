@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
@@ -29,13 +29,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ReportProcessTaskRegistry {
   private ConcurrentHashMap<String, ReportProcessTaskMetaData> exportTypes;
-  private static ReportProcessTaskRegistry processTaskRegistry;
+  private static final ReportProcessTaskRegistry processTaskRegistry = new ReportProcessTaskRegistry();
   private ResourceManager resourceManager;
 
-  public static synchronized ReportProcessTaskRegistry getInstance() {
-    if ( processTaskRegistry == null ) {
-      processTaskRegistry = new ReportProcessTaskRegistry();
-    }
+  public static ReportProcessTaskRegistry getInstance() {
     return processTaskRegistry;
   }
 

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.base;
@@ -29,18 +29,19 @@ public final class LibBaseInfo extends ProjectInformation {
   /**
    * A singleton variable for the info-class.
    */
-  private static LibBaseInfo info;
+  private static final LibBaseInfo info;
+
+  static {
+    info = new LibBaseInfo();
+    info.initialize();
+  }
 
   /**
    * Returns a singleton instance of the LibBase project information structure.
    *
    * @return the LibBase project information.
    */
-  public static synchronized ProjectInformation getInstance() {
-    if ( info == null ) {
-      info = new LibBaseInfo();
-      info.initialize();
-    }
+  public static ProjectInformation getInstance() {
     return info;
   }
 

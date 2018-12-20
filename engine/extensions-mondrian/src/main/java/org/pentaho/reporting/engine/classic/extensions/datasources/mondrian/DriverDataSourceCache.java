@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
@@ -27,6 +27,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Logger;
 
 /**
@@ -179,23 +180,31 @@ public class DriverDataSourceCache {
     }
   }
 
-  private static LFUMap cache;
+  private static final LFUMap cache = new LFUMap( 20 );
+  private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
   private DriverDataSourceCache() {
   }
 
-  public static synchronized DataSource createDataSource( final String jdbcUrl, final Properties properties ) {
-    if ( cache == null ) {
-      cache = new LFUMap( 20 );
-    }
+  public static DataSource createDataSource( final String jdbcUrl, final Properties properties ) {
 
     final DriverConnectionKey key = new DriverConnectionKey( jdbcUrl, properties );
-    final Object o = cache.get( key );
-    if ( o instanceof DataSource ) {
-      return (DataSource) o;
+    lock.readLock().lock();
+    try {
+      final Object o = cache.get( key );
+      if ( o instanceof DataSource ) {
+        return (DataSource) o;
+      }
+    } finally {
+      lock.readLock().unlock();
     }
     final DriverManagerDataSource managerDataSource = new DriverManagerDataSource( jdbcUrl, properties );
-    cache.put( key, managerDataSource );
+    lock.writeLock().lock();
+    try {
+      cache.put( key, managerDataSource );
+    } finally {
+      lock.writeLock().unlock();
+    }
     return managerDataSource;
   }
 }

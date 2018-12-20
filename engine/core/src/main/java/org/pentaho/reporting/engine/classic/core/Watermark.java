@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -57,17 +57,14 @@ public class Watermark extends Band implements RootLevelBand {
   /**
    * A shared default style sheet for shape elements.
    */
-  private static ElementDefaultStyleSheet defaultStyle;
+  private static final ElementDefaultStyleSheet defaultStyle = new WatermarkDefaultStyleSheet();
 
   /**
    * Returns the default style-sheet for shape elements.
    *
    * @return a default style sheet that can be shared among shape elements.
    */
-  public static synchronized ElementDefaultStyleSheet getDefaultStyle() {
-    if ( defaultStyle == null ) {
-      defaultStyle = new WatermarkDefaultStyleSheet();
-    }
+  public static ElementDefaultStyleSheet getDefaultStyle() {
     return defaultStyle;
   }
 

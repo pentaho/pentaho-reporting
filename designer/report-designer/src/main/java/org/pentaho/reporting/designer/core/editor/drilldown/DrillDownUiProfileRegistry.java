@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.drilldown;
@@ -33,15 +33,16 @@ import java.util.Iterator;
  * @author Thomas Morgner.
  */
 public class DrillDownUiProfileRegistry {
-  private static DrillDownUiProfileRegistry instance;
+  private static final DrillDownUiProfileRegistry instance;
   private HashMap<String, DrillDownUiProfile> registry;
   private static final String PREFIX = "org.pentaho.reporting.designer.core.editor.drilldown.profiles.";
 
-  public static synchronized DrillDownUiProfileRegistry getInstance() {
-    if ( instance == null ) {
-      instance = new DrillDownUiProfileRegistry();
-      instance.initialize();
-    }
+  static {
+    instance = new DrillDownUiProfileRegistry();
+    instance.initialize();
+  }
+
+  public static DrillDownUiProfileRegistry getInstance() {
     return instance;
   }
 
@@ -58,19 +59,18 @@ public class DrillDownUiProfileRegistry {
 
   public void initialize() {
     final Configuration configuration = ReportDesignerBoot.getInstance().getGlobalConfig();
-    final Iterator keys = configuration.findPropertyKeys( PREFIX );//NON-NLS
+    final Iterator keys = configuration.findPropertyKeys( PREFIX ); //NON-NLS
     while ( keys.hasNext() ) {
       final String key = (String) keys.next();
       final String name = key.substring( PREFIX.length() );
       final String className = configuration.getConfigProperty( key );
       if ( className == null ) {
-        DebugLog.log( "No such profile: " + key );//NON-NLS
+        DebugLog.log( "No such profile: " + key ); //NON-NLS
         continue;
       }
-      final DrillDownUiProfile profile = (DrillDownUiProfile) ObjectUtilities.loadAndInstantiate
-        ( className, DrillDownEditor.class, DrillDownUiProfile.class );
+      final DrillDownUiProfile profile = (DrillDownUiProfile) ObjectUtilities.loadAndInstantiate( className, DrillDownEditor.class, DrillDownUiProfile.class );
       if ( profile == null ) {
-        DebugLog.log( "Invalid profile: " + key );//NON-NLS
+        DebugLog.log( "Invalid profile: " + key ); //NON-NLS
         continue;
       }
       addProfile( name, profile );

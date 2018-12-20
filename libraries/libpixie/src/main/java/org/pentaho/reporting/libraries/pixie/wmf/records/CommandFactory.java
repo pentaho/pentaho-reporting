@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
@@ -23,12 +23,9 @@ import java.util.HashMap;
  * Manages the available WmfCommands and allows a generic command instantiation.
  */
 public class CommandFactory {
-  private static CommandFactory commandFactory;
+  private static final CommandFactory commandFactory = new CommandFactory();
 
-  public static synchronized CommandFactory getInstance() {
-    if ( commandFactory == null ) {
-      commandFactory = new CommandFactory();
-    }
+  public static CommandFactory getInstance() {
     return commandFactory;
   }
 

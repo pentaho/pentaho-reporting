@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.resourceloader.factory.drawable;
@@ -25,16 +25,13 @@ import org.pentaho.reporting.libraries.resourceloader.factory.AbstractResourceFa
  * @author Thomas Morgner
  */
 public class DrawableResourceFactory extends AbstractResourceFactory {
-  private static DrawableResourceFactory instance;
+  private static final DrawableResourceFactory instance = new DrawableResourceFactory();
 
   public DrawableResourceFactory() {
     super( DrawableWrapper.class );
   }
 
-  public static synchronized DrawableResourceFactory getInstance() {
-    if ( instance == null ) {
-      instance = new DrawableResourceFactory();
-    }
+  public static DrawableResourceFactory getInstance() {
     return instance;
   }
 }

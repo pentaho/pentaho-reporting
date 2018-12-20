@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.openformula.ui;
@@ -21,12 +21,9 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 import org.pentaho.reporting.libraries.formula.LibFormulaInfo;
 
 public class LibFormulaEditorInfo extends ProjectInformation {
-  private static LibFormulaEditorInfo instance;
+  private static final LibFormulaEditorInfo instance = new LibFormulaEditorInfo();
 
-  public static synchronized LibFormulaEditorInfo getInstance() {
-    if ( instance == null ) {
-      instance = new LibFormulaEditorInfo();
-    }
+  public static LibFormulaEditorInfo getInstance() {
     return instance;
   }
 

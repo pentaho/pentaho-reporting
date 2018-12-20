@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.css.model;
@@ -27,6 +27,7 @@ import org.pentaho.reporting.libraries.css.LibCssBoot;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Iterator;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * This class should not be static, or we might create a memory leak.
@@ -36,22 +37,37 @@ import java.util.Iterator;
 public class StyleKeyRegistry {
   private static final Log logger = LogFactory.getLog( StyleKeyRegistry.class );
   private static StyleKeyRegistry registry;
+  private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
-  public static synchronized StyleKeyRegistry getRegistry() {
-    if ( registry == null ) {
-      throw new IllegalStateException( "You have to boot LibCSS to make all style-keys known" );
+  public static StyleKeyRegistry getRegistry() {
+    lock.readLock().lock();
+    try {
+      if ( registry == null ) {
+        throw new IllegalStateException( "You have to boot LibCSS to make all style-keys known" );
+      }
+      return registry;
+    } finally {
+      lock.readLock().unlock();
     }
-    return registry;
   }
 
   public static void performBoot() {
-    if ( registry != null ) {
-      return;
+    lock.readLock().lock();
+    try {
+      if ( registry != null ) {
+        return;
+      }
+    } finally {
+      lock.readLock().unlock();
     }
-
-    registry = new StyleKeyRegistry();
-    registry.registerDefaults();
-    registry.locked = true;
+    lock.writeLock().lock();
+    try {
+      registry = new StyleKeyRegistry();
+      registry.registerDefaults();
+      registry.locked = true;
+    } finally {
+      lock.writeLock().unlock();
+    }
   }
 
   private LinkedMap knownStyleKeys;
@@ -71,8 +87,7 @@ public class StyleKeyRegistry {
 
   public synchronized void registerDefaults() {
     if ( locked ) {
-      throw new IllegalStateException
-        ( "All StyleKeys must be registered during the bootup. The registry is locked now." );
+      throw new IllegalStateException( "All StyleKeys must be registered during the bootup. The registry is locked now." );
     }
     final Configuration config = LibCssBoot.getInstance().getGlobalConfig();
     final Iterator it = config.findPropertyKeys( "org.pentaho.reporting.libraries.css.stylekeys." );
@@ -100,8 +115,7 @@ public class StyleKeyRegistry {
       for ( int i = 0; i < fields.length; i++ ) {
         final Field field = fields[ i ];
         final int modifiers = field.getModifiers();
-        if ( Modifier.isPublic( modifiers ) &&
-          Modifier.isStatic( modifiers ) ) {
+        if ( Modifier.isPublic( modifiers ) && Modifier.isStatic( modifiers ) ) {
           if ( Modifier.isFinal( modifiers ) == false ) {
             logger.warn( "Invalid implementation: StyleKeys should be 'public static final': " + c );
           }
@@ -131,12 +145,10 @@ public class StyleKeyRegistry {
     }
 
     if ( locked ) {
-      throw new IllegalStateException
-        ( "All StyleKeys must be registered during the bootup. The registry is locked now." );
+      throw new IllegalStateException( "All StyleKeys must be registered during the bootup. The registry is locked now." );
     }
 
-    final StyleKey createdKey = new StyleKey
-      ( name, trans, inherited, knownStyleKeys.size(), validity );
+    final StyleKey createdKey = new StyleKey( name, trans, inherited, knownStyleKeys.size(), validity );
     knownStyleKeys.put( name, createdKey );
     return createdKey;
   }

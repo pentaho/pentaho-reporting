@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.css.counter;
@@ -29,14 +29,15 @@ import java.util.Iterator;
 public class CounterStyleFactory {
   private static final CounterStyle DEFAULTCOUNTER = new DecimalCounterStyle();
 
-  private static CounterStyleFactory factory;
+  private static final CounterStyleFactory factory;
   public static final String PREFIX = "org.pentaho.reporting.libraries.css.counter.numbering.";
 
-  public static synchronized CounterStyleFactory getInstance() {
-    if ( factory == null ) {
-      factory = new CounterStyleFactory();
-      factory.registerDefaults();
-    }
+  static {
+    factory = new CounterStyleFactory();
+    factory.registerDefaults();
+  }
+
+  public static CounterStyleFactory getInstance() {
     return factory;
   }
 
@@ -55,8 +56,7 @@ public class CounterStyleFactory {
       if ( counterClass == null ) {
         continue;
       }
-      final Object o = ObjectUtilities.loadAndInstantiate
-        ( counterClass, CounterStyleFactory.class, CounterStyle.class );
+      final Object o = ObjectUtilities.loadAndInstantiate( counterClass, CounterStyleFactory.class, CounterStyle.class );
       if ( o instanceof CounterStyle ) {
         final String name = key.substring( PREFIX.length() );
         knownCounters.put( name, o );

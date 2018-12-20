@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.designtime.swing.filechooser;
@@ -29,15 +29,12 @@ public class FileChooserService {
     "org/pentaho/reporting/libraries/designtime/swing/CommonFileChooser/staticprefs";
 
   public static final String DEFAULT_KEY = "__default__";
-  private static FileChooserService instance;
+  private static final FileChooserService instance = new FileChooserService();
   private Preferences locationPolicy;
   private Preferences staticLocationMappings;
   private Preferences resourceLocationMappings;
 
-  public static synchronized FileChooserService getInstance() {
-    if ( instance == null ) {
-      instance = new FileChooserService();
-    }
+  public static FileChooserService getInstance() {
     return instance;
   }
 

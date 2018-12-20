@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pixie;
@@ -21,17 +21,14 @@ import org.pentaho.reporting.libraries.base.LibBaseInfo;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 public class PixieInfo extends ProjectInformation {
-  private static PixieInfo singleton;
+  private static final PixieInfo singleton = new PixieInfo();
 
   /**
    * Returns the single instance of this class.
    *
    * @return The single instance of information about the JCommon library.
    */
-  public static synchronized PixieInfo getInstance() {
-    if ( singleton == null ) {
-      singleton = new PixieInfo();
-    }
+  public static PixieInfo getInstance() {
     return singleton;
   }
 

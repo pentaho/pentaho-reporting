@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.css.values;
@@ -23,12 +23,9 @@ package org.pentaho.reporting.libraries.css.values;
  * @author Thomas Morgner
  */
 public final class CSSAutoValue implements CSSValue {
-  private static CSSAutoValue instance;
+  private static final CSSAutoValue instance = new CSSAutoValue();
 
-  public static synchronized CSSAutoValue getInstance() {
-    if ( instance == null ) {
-      instance = new CSSAutoValue();
-    }
+  public static CSSAutoValue getInstance() {
     return instance;
   }
 

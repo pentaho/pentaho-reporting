@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.extensions;
@@ -26,7 +26,12 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  * @author Thomas Morgner
  */
 public class ClassicEngineExtensionsInfo extends ProjectInformation {
-  private static ClassicEngineExtensionsInfo info;
+  private static final ClassicEngineExtensionsInfo info;
+
+  static {
+    info = new ClassicEngineExtensionsInfo();
+    info.initialize();
+  }
 
   /**
    * Constructs an empty project info object.
@@ -42,11 +47,7 @@ public class ClassicEngineExtensionsInfo extends ProjectInformation {
     addLibrary( ClassicEngineInfo.getInstance() );
   }
 
-  public static synchronized ProjectInformation getInstance() {
-    if ( info == null ) {
-      info = new ClassicEngineExtensionsInfo();
-      info.initialize();
-    }
+  public static ProjectInformation getInstance() {
     return info;
   }
 }

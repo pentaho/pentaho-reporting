@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
@@ -24,13 +24,14 @@ public class ReportElementReadHandlerFactory extends AbstractReadHandlerFactory<
   private static final String PREFIX_SELECTOR =
       "org.pentaho.reporting.engine.classic.core.modules.parser.report-element-factory-prefix.";
 
-  private static ReportElementReadHandlerFactory readHandlerFactory;
+  private static final ReportElementReadHandlerFactory readHandlerFactory;
 
-  public static synchronized ReportElementReadHandlerFactory getInstance() {
-    if ( readHandlerFactory == null ) {
-      readHandlerFactory = new ReportElementReadHandlerFactory();
-      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
-    }
+  static {
+    readHandlerFactory = new ReportElementReadHandlerFactory();
+    readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
+  }
+
+  public static ReportElementReadHandlerFactory getInstance() {
     return readHandlerFactory;
   }
 

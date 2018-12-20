@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2009 - 2017 Hitachi Vantara.  All rights reserved.
+ * Copyright (c) 2009 - 2018 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.connectioneditor;
@@ -20,8 +20,8 @@ package org.pentaho.reporting.designer.extensions.connectioneditor;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A translation bundle.
@@ -30,7 +30,7 @@ import java.util.Locale;
  */
 public class Messages extends ResourceBundleSupport {
   private static final String BUNDLENAME = "org.pentaho.reporting.designer.extensions.connectioneditor.messages";
-  private static HashMap<Locale, Messages> locales;
+  private static final ConcurrentHashMap<Locale, Messages> locales = new ConcurrentHashMap<>();
 
   /**
    * Returns a instance for the current default locale.
@@ -47,16 +47,9 @@ public class Messages extends ResourceBundleSupport {
    * @param locale the locale, never null.
    * @return the message bundle for this locale.
    */
-  public static synchronized Messages getInstance( final Locale locale ) {
+  public static Messages getInstance( final Locale locale ) {
     if ( locale == null ) {
       throw new NullPointerException();
-    }
-
-    if ( locales == null ) {
-      locales = new HashMap<Locale, Messages>();
-      final Messages retval = new Messages( locale, BUNDLENAME );
-      locales.put( locale, retval );
-      return retval;
     }
 
     final Messages o = locales.get( locale );

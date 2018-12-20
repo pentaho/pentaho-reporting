@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+* Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.xmlns.parser;
@@ -46,7 +46,7 @@ public final class ParserEntityResolver implements EntityResolver {
   /**
    * The singleton instance of this entity resolver.
    */
-  private static ParserEntityResolver singleton;
+  private static final ParserEntityResolver singleton = new ParserEntityResolver();
 
   /**
    * Creates a new, uninitialized ParserEntityResolver.
@@ -177,10 +177,7 @@ public final class ParserEntityResolver implements EntityResolver {
    *
    * @return the default entity resolver.
    */
-  public static synchronized ParserEntityResolver getDefaultResolver() {
-    if ( singleton == null ) {
-      singleton = new ParserEntityResolver();
-    }
+  public static ParserEntityResolver getDefaultResolver() {
     return singleton;
   }
 

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2018 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.fonts;
@@ -27,13 +27,14 @@ import org.pentaho.reporting.libraries.resourceloader.LibLoaderInfo;
  * @author Thomas Morgner
  */
 public class LibFontInfo extends ProjectInformation {
-  private static LibFontInfo instance;
+  private static final LibFontInfo instance;
 
-  public static synchronized LibFontInfo getInstance() {
-    if ( instance == null ) {
-      instance = new LibFontInfo();
-      instance.initialize();
-    }
+  static {
+    instance = new LibFontInfo();
+    instance.initialize();
+  }
+
+  public static LibFontInfo getInstance() {
     return instance;
   }
 
