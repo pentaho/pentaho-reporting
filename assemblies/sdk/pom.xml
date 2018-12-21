@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.pentaho.reporting</groupId>
+    <artifactId>reporting-assemblies</artifactId>
+    <version>7.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>pre-classic-sdk</artifactId>
+  <version>7.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name> Pentaho Reporting Classic SDK</name>
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License, version 2.1</name>
+      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <properties>
+    <pentaho-server.samples.directory>./PentahoReportingEngineSDK/</pentaho-server.samples.directory>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.pentaho.reporting</groupId>
+      <artifactId>classic-samples</artifactId>
+      <version>${project.version}</version>
+      <type>zip</type>
+    </dependency>
+  </dependencies>
+
+</project>
