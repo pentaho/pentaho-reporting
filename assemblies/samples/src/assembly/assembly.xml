@@ -12,27 +12,36 @@
 
   <fileSets>
     <fileSet>
-      <directory>/src/main/java/</directory>
+      <directory>${basedir}/src/main/java/</directory>
       <outputDirectory>./source/</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>/src/main/resources</directory>
+      <directory>${basedir}/src/main/resources</directory>
       <outputDirectory>./source/</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>.</directory>
       <outputDirectory>.</outputDirectory>
+      <includes>
+        <include>*.sh</include>
+      </includes>
+      <fileMode>0755</fileMode>
+    </fileSet>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory>.</outputDirectory>
       <excludes>
+        <exclude>*.sh</exclude>
         <exclude>/src/</exclude>
         <exclude>/target/</exclude>
       </excludes>
     </fileSet>
     <fileSet>
-      <directory>/target/classes/</directory>
+      <directory>${basedir}/target/classes/</directory>
       <outputDirectory>./bin/</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>/target/lib/</directory>
+      <directory>${basedir}/target/lib/</directory>
       <outputDirectory>./lib/</outputDirectory>
     </fileSet>
   </fileSets>
