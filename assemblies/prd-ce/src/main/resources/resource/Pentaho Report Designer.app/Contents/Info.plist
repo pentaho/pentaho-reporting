@@ -25,7 +25,7 @@
 <key>CFBundleVersion</key>
 <string>1</string>
 <key>NSHumanReadableCopyright</key>
-<string>Copyright (c) 2008 - 2018 Hitachi Vantara Corporation.  All rights reserved. This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software Foundation.</string>
+<string>Copyright (c) 2008 - 2019 Hitachi Vantara.  All rights reserved. This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software Foundation.</string>
 <key>JVMRuntime</key>
 <string>jre-8u111</string>
 <key>JVMMainClassName</key>
