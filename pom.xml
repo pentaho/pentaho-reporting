@@ -60,7 +60,6 @@
     <jaxrpc.version>1.1</jaxrpc.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <test.long>false</test.long>
-    <janino.version>2.5.16</janino.version>
     <sapdb.version>7.4.4</sapdb.version>
     <akka.version>2.3.3</akka.version>
     <postgresql.version>42.1.1</postgresql.version>
@@ -1839,11 +1838,6 @@
         <groupId>wsdl4j</groupId>
         <artifactId>wsdl4j-qname</artifactId>
         <version>${wsdl4j-qname.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>janino</groupId>
-        <artifactId>janino</artifactId>
-        <version>${janino.version}</version>
       </dependency>
       <dependency>
         <groupId>eigenbase</groupId>
