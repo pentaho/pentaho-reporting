@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2019 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.csv;
@@ -100,6 +100,11 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
                 .getHeight(), null );
         if ( rectangle.isOrigin( col, row ) == false ) {
           // A spanned cell ..
+          /* [PRD-5412] Since it is a spanned cell with no actual content within it, we need to print a separator here
+             so that we can accurately set the cells (this was previously a copy from the Excel Template producer, but
+             they handle spanned cells differently.
+          */
+          writer.print( quoter.getSeparator() );
           continue;
         }
 
