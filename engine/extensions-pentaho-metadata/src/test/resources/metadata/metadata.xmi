@@ -148,7 +148,7 @@
         <CWMMDB:Schema xmi.idref="a41"/>
       </CWM:Description.modelElement>
     </CWM:Description>
-    <CWM:Description body="&lt;security&gt;&#10;  &lt;owner-rights&gt;&#10;  &lt;owner&gt;&lt;type&gt;user&lt;/type&gt;&lt;name&gt;suzy&lt;/name&gt;&lt;/owner&gt; &lt;rights&gt;31&lt;/rights&gt;&#10;  &lt;/owner-rights&gt;&#10;  &lt;owner-rights&gt;&#10;  &lt;owner&gt;&lt;type&gt;user&lt;/type&gt;&lt;name&gt;joe&lt;/name&gt;&lt;/owner&gt; &lt;rights&gt;0&lt;/rights&gt;&#10;  &lt;/owner-rights&gt;&#10;  &lt;owner-rights&gt;&#10;  &lt;owner&gt;&lt;type&gt;role&lt;/type&gt;&lt;name&gt;Administrator&lt;/name&gt;&lt;/owner&gt; &lt;rights&gt;31&lt;/rights&gt;&#10;  &lt;/owner-rights&gt;&#10;&lt;/security&gt;&#10;" name="security" type="Security" xmi.id="a44">
+    <CWM:Description body="&lt;security&gt;&#10;  &lt;owner-rights&gt;&#10;  &lt;owner&gt;&lt;type&gt;user&lt;/type&gt;&lt;name&gt;suzy&lt;/name&gt;&lt;/owner&gt; &lt;rights&gt;31&lt;/rights&gt;&#10;  &lt;/owner-rights&gt;&#10;  &lt;owner-rights&gt;&#10;  &lt;owner&gt;&lt;type&gt;user&lt;/type&gt;&lt;name&gt;admin&lt;/name&gt;&lt;/owner&gt; &lt;rights&gt;0&lt;/rights&gt;&#10;  &lt;/owner-rights&gt;&#10;  &lt;owner-rights&gt;&#10;  &lt;owner&gt;&lt;type&gt;role&lt;/type&gt;&lt;name&gt;Administrator&lt;/name&gt;&lt;/owner&gt; &lt;rights&gt;31&lt;/rights&gt;&#10;  &lt;/owner-rights&gt;&#10;&lt;/security&gt;&#10;" name="security" type="Security" xmi.id="a44">
       <CWM:Description.modelElement>
         <CWM:Extent xmi.idref="a45"/>
       </CWM:Description.modelElement>
@@ -4956,7 +4956,7 @@
         <CWM:TaggedValue tag="SECURITY_PROXY_PORT" value="" xmi.id="a1146"/>
         <CWM:TaggedValue tag="SECURITY_PROXY_HOST" value="" xmi.id="a1147"/>
         <CWM:TaggedValue tag="SECURITY_PASSWORD" value="password" xmi.id="a1148"/>
-        <CWM:TaggedValue tag="SECURITY_USERNAME" value="joe" xmi.id="a1149"/>
+        <CWM:TaggedValue tag="SECURITY_USERNAME" value="admin" xmi.id="a1149"/>
         <CWM:TaggedValue tag="SECURITY_DETAIL_TYPE" value="All" xmi.id="a1150"/>
         <CWM:TaggedValue tag="SECURITY_DETAIL_NAME" value="details" xmi.id="a1151"/>
         <CWM:TaggedValue tag="SECURITY_DETAILS_NAME" value="SecurityDetails" xmi.id="a1152"/>
