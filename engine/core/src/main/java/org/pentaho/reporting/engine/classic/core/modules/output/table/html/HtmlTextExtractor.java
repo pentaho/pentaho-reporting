@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
@@ -174,7 +174,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
 
   protected void addEmptyBreak() {
     try {
-      xmlWriter.writeText( " " );
+      xmlWriter.writeText( "\u200B" );
     } catch ( final IOException e ) {
       throw new HtmlOutputProcessingException( "Failed to perform IO", e );
     }
