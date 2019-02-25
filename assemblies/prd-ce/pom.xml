@@ -176,19 +176,10 @@
       <scope>compile</scope>
     </dependency>
 
-    <!-- TODO: When replacing felix framework implementation for OSGi core specification 4.3.1 which is the spec
-         we aim at (see pentaho-parent-pom ) in our Karaf 3.0.3 assembly an error occurs:
-         ERROR: Bundle org.ops4j.pax.url.mvn [1] Error starting mvn:org.ops4j.pax.url/pax-url-aether/2.3.0
-         (java.lang.NoSuchMethodError: >org.osgi.framework.wiring.BundleWire.getProvider()
-
-         In this assembly we are using Felix Framework 4.2.1, which is partially OSGi 5.0 complaint. In particular,
-         it is complaint with the org.osgi.framework.wiring.BundleWire.getProvider() method.
-         For this reason we are explicitly overriding OSGi core to 5.0.0 here.
-         -->
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.core</artifactId>
-      <version>5.0.0</version>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>
