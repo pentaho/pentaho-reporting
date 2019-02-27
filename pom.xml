@@ -104,7 +104,6 @@
     <xml-apis.version>1.3.04</xml-apis.version>
     <javax.mail.version>1.4.7</javax.mail.version>
     <xmlunit.version>1.3</xmlunit.version>
-    <karaf.vesrion>3.0.3</karaf.vesrion>
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <jetty.version>8.1.15.v20140411</jetty.version>
     <ehcache.version>2.5.1</ehcache.version>
@@ -988,21 +987,6 @@
             <groupId>org.springframework</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.karaf</groupId>
-        <artifactId>org.apache.karaf.main</artifactId>
-        <version>${karaf.vesrion}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.karaf.jaas</groupId>
-        <artifactId>org.apache.karaf.jaas.boot</artifactId>
-        <version>${karaf.vesrion}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.karaf.jaas</groupId>
-        <artifactId>org.apache.karaf.jaas.config</artifactId>
-        <version>${karaf.vesrion}</version>
       </dependency>
       <dependency>
         <groupId>pentaho</groupId>
