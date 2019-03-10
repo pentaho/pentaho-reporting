@@ -51,6 +51,7 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 /**
@@ -189,9 +190,22 @@ public class PreviewParametersDialog extends JDialog {
         final ParameterDefinitionEntry[] entries = parameterDefinition.getParameterDefinitions();
         for ( int i = 0; i < entries.length; i++ ) {
           final ParameterDefinitionEntry entry = entries[i];
-          if ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+
+          final String hiddenFormulaString = entry.getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+            ParameterAttributeNames.Core.HIDDEN, parameterContext );
+
+          /* if the formula is not empty , only when the value is literally "true" the formula controls the parameter */
+          if ( !StringUtils.isEmpty( hiddenFormulaString ) ) {
+              if ( !"true".equals( hiddenFormulaString ) ) {
+                return false;
+              } else {
+                continue;
+              }
+          } else {
+            if ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
               ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) == false ) {
-            return false;
+              return false;
+            }
           }
         }
       } finally {
@@ -214,6 +228,7 @@ public class PreviewParametersDialog extends JDialog {
       return true;
     }
 
+    // if all parameters are hidden, then nothing to do
     if ( isAllParametersHidden( masterReport, parameterDefinition ) ) {
       return true;
     }

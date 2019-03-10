@@ -60,6 +60,7 @@ public final class ParameterAttributeNames {
     public static final String LABEL = "label";
     public static final String LABEL_FORMULA = "label-formula";
     public static final String HIDDEN = "hidden";
+    public static final String HIDDEN_FORMULA = "hidden-formula";
     public static final String LAYOUT = "parameter-layout";
     public static final String LAYOUT_HORIZONTAL = "horizontal";
     public static final String LAYOUT_VERTICAL = "vertical";

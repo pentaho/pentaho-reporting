@@ -156,6 +156,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   FormulaEditorPanel labelFormula;
   @VisibleForTesting
   FormulaEditorPanel dataFormatFormula;
+  @VisibleForTesting
+  FormulaEditorPanel hiddenFormula;
   private JSpinner visibleItemsTextField;
   private JLabel visibleItemsLabel;
   private ComboBoxModel parameterTypeModel;
@@ -288,6 +290,10 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     dataFormatFormula = new FormulaEditorPanel();
     dataFormatFormula.setEditorDataModel( this );
     dataFormatFormula.setLimitFields( true );
+
+    hiddenFormula = new FormulaEditorPanel();
+    hiddenFormula.setEditorDataModel( this );
+    hiddenFormula.setLimitFields( true );
 
     super.init();
 
@@ -475,13 +481,30 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = GridBagConstraints.REMAINDER;
     gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.gridx = 1;
     gbc.gridy = 12;
+    detailsPanel.add( hiddenFormula, gbc );
+
+    gbc.gridwidth = 1;
+    gbc.gridy = 13;
+    gbc.fill = GridBagConstraints.NONE;
+    gbc.gridx = 0;
+    detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.HiddenFormula" ) ), gbc );
+
+    gbc.gridwidth = GridBagConstraints.REMAINDER;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.gridx = 1;
+    detailsPanel.add( hiddenFormula, gbc );
+
+    gbc.gridwidth = GridBagConstraints.REMAINDER;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.gridy = 14;
     gbc.gridx = 0;
     detailsPanel.add( createPromptPanel(), gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 13;
+    gbc.gridy = 15;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Type" ) ), gbc );
 
@@ -492,7 +515,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 14;
+    gbc.gridy = 16;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Query" ) ), gbc );
 
@@ -503,7 +526,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 15;
+    gbc.gridy = 17;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Id" ) ), gbc );
 
@@ -514,7 +537,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 16;
+    gbc.gridy = 18;
     gbc.gridx = 0;
     detailsPanel.add( displayValueLabel, gbc );
 
@@ -525,7 +548,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 17;
+    gbc.gridy = 19;
     gbc.gridx = 0;
     detailsPanel.add( displayFormulaLabel, gbc );
 
@@ -536,7 +559,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 18;
+    gbc.gridy = 20;
     gbc.gridx = 0;
     detailsPanel.add( visibleItemsLabel, gbc );
 
@@ -547,19 +570,19 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 19;
+    gbc.gridy = 21;
     gbc.gridx = 1;
     detailsPanel.add( strictValuesCheckBox, gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 20;
+    gbc.gridy = 22;
     gbc.gridx = 1;
     detailsPanel.add( reevaluateOnInvalidStrictParamCheckBox, gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 21;
+    gbc.gridy = 23;
     gbc.gridx = 1;
     detailsPanel.add( autofillSelectionCheckBox, gbc );
 
@@ -684,6 +707,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     if ( hiddenValue != null ) {
       hiddenCheckBox.setSelected( hiddenValue.equals( "true" ) );
     }
+    hiddenFormula.setFormula(  p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.HIDDEN_FORMULA, parameterContext ) );
 
     if ( p instanceof AbstractParameter ) {
       final AbstractParameter parameter = (AbstractParameter) p;
@@ -844,6 +869,13 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
         dataFormatFormula.getFormula() );
     }
 
+    if ( !StringUtils.isEmpty( hiddenFormula.getFormula() ) ) {
+      parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+        ParameterAttributeNames.Core.HIDDEN_FORMULA,
+        hiddenFormula.getFormula() );
+    }
+
+
     return parameter;
   }
 
@@ -881,6 +913,13 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     parameter.setMandatory( mandatory );
     parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
       String.valueOf( hiddenCheckBox.isSelected() ) );
+
+    if ( !StringUtils.isEmpty( hiddenFormula.getFormula() ) ) {
+      parameter
+        .setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN_FORMULA,
+          String.valueOf( hiddenFormula.getFormula() ) );
+    }
+
     if ( !StringUtils.isEmpty( dataFormat ) ) {
       parameter.setParameterAttribute(
         ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, dataFormat );

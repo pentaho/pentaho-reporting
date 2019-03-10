@@ -440,9 +440,20 @@ public class ParameterReportControllerPane extends JPanel {
     final ParameterDefinitionEntry[] entries = parameterDefinition.getParameterDefinitions();
     for ( int i = 0; i < entries.length; i++ ) {
       final ParameterDefinitionEntry entry = entries[i];
-      if ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+
+      final String hiddenFormulaString = entry.getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+        ParameterAttributeNames.Core.HIDDEN, parameterContext );
+
+      /* if the formula is not empty , only when the value is literally "true" the parameter is hidden */
+      if ( !StringUtils.isEmpty( hiddenFormulaString ) ) {
+        if ( "true".equals( hiddenFormulaString ) ) {
+          continue;
+        }
+      } else {
+        if ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
           ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) ) {
-        continue;
+          continue;
+        }
       }
       final ParameterComponent parameterComponent =
           parameterEditorFactory.create( entry, parameterContext, updateContext );
