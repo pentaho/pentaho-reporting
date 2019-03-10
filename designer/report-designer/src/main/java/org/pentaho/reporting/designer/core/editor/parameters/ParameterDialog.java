@@ -144,7 +144,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   private JComboBox displayValueComboBox;
   private JComboBox valueTypeComboBox;
   private JCheckBox mandatoryCheckBox;
-  private JCheckBox hiddenCheckBox;
+  @VisibleForTesting
+  JCheckBox hiddenCheckBox;
   private JCheckBox strictValuesCheckBox;
   private JCheckBox autofillSelectionCheckBox;
   private JCheckBox reevaluateOnInvalidStrictParamCheckBox;
