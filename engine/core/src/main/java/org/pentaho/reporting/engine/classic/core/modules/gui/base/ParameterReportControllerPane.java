@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
@@ -159,7 +159,7 @@ public class ParameterReportControllerPane extends JPanel {
 
     public void update( final MasterReport report ) throws ReportProcessingException {
 
-      if ( closed == false ) {
+      if ( !closed ) {
         close();
       }
       if ( report == null ) {
@@ -180,7 +180,7 @@ public class ParameterReportControllerPane extends JPanel {
         this.contentBase = report.getContentBase();
         final Object dataCacheEnabledRaw =
             report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
-        final boolean dataCacheEnabled = Boolean.FALSE.equals( dataCacheEnabledRaw ) == false;
+        final boolean dataCacheEnabled = !Boolean.FALSE.equals( dataCacheEnabledRaw );
         this.dataFactory = new CachingDataFactory( report.getDataFactory().derive(), dataCacheEnabled );
         this.resourceBundleFactory =
             MasterReport.computeAndInitResourceBundleFactory( report.getResourceBundleFactory(), report
@@ -298,14 +298,14 @@ public class ParameterReportControllerPane extends JPanel {
     messages =
         new Messages( Locale.getDefault(), SwingPreviewModule.BUNDLE_NAME, ObjectUtilities
             .getClassLoader( ParameterReportControllerPane.class ) );
-    changeListeners = new ArrayList<ChangeListener>();
-    internalChangeListeners = new ArrayList<ChangeListener>();
+    changeListeners = new ArrayList<>();
+    internalChangeListeners = new ArrayList<>();
 
-    parameterComponents = new ArrayList<ParameterComponent>();
+    parameterComponents = new ArrayList<>();
 
     carrierPanel = new ParameterCarrierPanel();
     parameterContext = new InternalParameterContext();
-    errorLabels = new HashMap<String, JLabel>();
+    errorLabels = new HashMap<>();
     globalErrorMessage = new JLabel();
     autoUpdateCheckbox = new JCheckBox( messages.getString( "ParameterReportControllerPane.AutoUpdate" ) );
     updateButton = new JButton( new UpdateAction() );
@@ -358,7 +358,6 @@ public class ParameterReportControllerPane extends JPanel {
   }
 
   public void setReport( final MasterReport report ) throws ReportProcessingException {
-    // final MasterReport oldReport = this.report;
     this.report = report;
     if ( !isUpdating ) {
       reinit();
@@ -393,8 +392,8 @@ public class ParameterReportControllerPane extends JPanel {
     if ( autoUpdate == null ) {
       showAutoSubmitCheckbox = true;
       autoSubmitDefault =
-          Boolean.FALSE.equals( report.getAttribute( AttributeNames.Core.NAMESPACE,
-              AttributeNames.Core.AUTO_SUBMIT_DEFAULT ) ) == false;
+        !Boolean.FALSE.equals( report.getAttribute( AttributeNames.Core.NAMESPACE,
+          AttributeNames.Core.AUTO_SUBMIT_DEFAULT ) );
     } else {
       showAutoSubmitCheckbox = false;
       autoSubmitDefault = Boolean.TRUE.equals( autoUpdate );
@@ -413,16 +412,16 @@ public class ParameterReportControllerPane extends JPanel {
 
     try {
       final ReportParameterDefinition parameters = report.getParameterDefinition();
-      final DefaultParameterContext parameterContext = new DefaultParameterContext( report );
+      final DefaultParameterContext parameterContextAux = new DefaultParameterContext( report );
 
       try {
         final ReportParameterValidator reportParameterValidator = parameters.getValidator();
         final ValidationResult validationResult =
-            reportParameterValidator.validate( new ValidationResult(), parameters, parameterContext );
+            reportParameterValidator.validate( new ValidationResult(), parameters, parameterContextAux );
         // first compute the default values ...
         this.reportParameterValues = validationResult.getParameterValues();
       } finally {
-        parameterContext.close();
+        parameterContextAux.close();
       }
     } catch ( ReportDataFactoryException e ) {
       e.printStackTrace();
@@ -430,7 +429,7 @@ public class ParameterReportControllerPane extends JPanel {
       this.reportParameterValues = new ReportParameterValues( report.getParameterValues() );
     }
 
-    parameterComponents = new ArrayList<ParameterComponent>();
+    parameterComponents = new ArrayList<>();
     // we are using a very simple model here (for now).
     parameterContext.update( report );
     parameterContext.update( this.reportParameterValues );
@@ -579,11 +578,11 @@ public class ParameterReportControllerPane extends JPanel {
     reportParameterValues.put( name, value );
     parameterContext.update( reportParameterValues );
 
-    if ( inUpdate || autoUpdate == false ) {
+    if ( inUpdate || !autoUpdate ) {
       return;
     }
 
-    if ( validateParameter() == false ) {
+    if ( !validateParameter() ) {
       return;
     }
 
@@ -605,8 +604,8 @@ public class ParameterReportControllerPane extends JPanel {
         final ValidationResult validationResult =
             validator.validate( new ValidationResult(), report.getParameterDefinition(), parameterContext );
 
-        final ValidationMessage[] messages = validationResult.getErrors();
-        globalErrorMessage.setText( formatMessages( messages ) );
+        final ValidationMessage[] messagesAux = validationResult.getErrors();
+        globalErrorMessage.setText( formatMessages( messagesAux ) );
 
         final String[] propertyNames = validationResult.getProperties();
         for ( int i = 0; i < propertyNames.length; i++ ) {

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.parameters;
@@ -187,6 +187,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     init();
   }
 
+  @Override
   protected void init() {
     provisionDataSourcePanel = new ProvisionDataSourcePanel();
     provisionDataSourcePanel.setReportDesignerContext( reportDesignerContext );
@@ -329,7 +330,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       return TimeZone.getTimeZone( "UTC" );
     }
     final TimeZone timeZone = TimeZone.getTimeZone( id );
-    if ( "GMT".equals( timeZone.getID() ) && "GMT".equals( id ) == false ) {
+    if ( "GMT".equals( timeZone.getID() ) && !"GMT".equals( id ) ) {
       // Handle timezones that are not understood by the current JVM.
       return TimeZone.getDefault();
     }
@@ -732,11 +733,9 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
         if ( typeEntry == null ) {
           continue;
         }
-        if ( typeEntry.isMultiSelection() == multiSelection ) {
-          if ( type.equals( typeEntry.getInternalName() ) ) {
-            parameterTypeModel.setSelectedItem( typeEntry );
-            break;
-          }
+        if ( ( typeEntry.isMultiSelection() == multiSelection ) && ( type.equals( typeEntry.getInternalName() ) ) ) {
+          parameterTypeModel.setSelectedItem( typeEntry );
+          break;
         }
       }
     } else {
@@ -843,7 +842,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
         dataFormatFormula.getFormula() );
     }
-    if ( queryIsOptional == false ) {
+    if ( !queryIsOptional ) {
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
         ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA,
         displayFormulaField.getFormula() );
@@ -1131,14 +1130,14 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       visibleItemsTextField.setVisible( visible );
       visibleItemsLabel.setVisible( visible );
 
-      final boolean displayFormulaVisible = ( type != null ) && type.isQueryOptional() == false;
+      final boolean displayFormulaVisible = ( type != null ) && !type.isQueryOptional();
       displayFormulaField.setVisible( displayFormulaVisible );
       displayFormulaLabel.setVisible( displayFormulaVisible );
       displayValueLabel.setVisible( displayFormulaVisible );
       displayValueComboBox.setVisible( displayFormulaVisible );
 
       final String selectedQuery = (String) queryComboBoxModel.getSelectedItem();
-      final boolean querySelected = StringUtils.isEmpty( selectedQuery, false ) == false;
+      final boolean querySelected = !StringUtils.isEmpty( selectedQuery, false );
       strictValuesCheckBox.setVisible( querySelected );
       reevaluateOnInvalidStrictParamCheckBox.setVisible( querySelected );
       autofillSelectionCheckBox.setVisible( querySelected );
@@ -1253,7 +1252,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       displayValueComboBox.setModel( new DefaultComboBoxModel( cols ) );
 
       final String selectedQuery = (String) queryComboBoxModel.getSelectedItem();
-      final boolean querySelected = StringUtils.isEmpty( selectedQuery, false ) == false;
+      final boolean querySelected = !StringUtils.isEmpty( selectedQuery, false );
       strictValuesCheckBox.setVisible( querySelected );
       reevaluateOnInvalidStrictParamCheckBox.setVisible( querySelected );
       autofillSelectionCheckBox.setVisible( querySelected );
@@ -1402,7 +1401,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
      */
     public void contentsChanged( final ListDataEvent event ) {
       final Object o = valueTypeComboBox.getSelectedItem();
-      if ( o instanceof Class == false ) {
+      if ( !( o instanceof Class ) ) {
         timeZoneLabel.setVisible( false );
         timeZoneBox.setVisible( false );
         valueEditorPanel.setValueType( String.class, null, TimeZone.getDefault() );
@@ -1412,7 +1411,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       final Class selectedClass = (Class) o;
       final ParameterType parameterType = getSelectedParameterType();
       final Class type;
-      if ( parameterType == null || parameterType.isMultiSelection() == false ) {
+      if ( parameterType == null || !parameterType.isMultiSelection() ) {
         type = selectedClass;
       } else {
         type = Array.newInstance( selectedClass, 0 ).getClass();
