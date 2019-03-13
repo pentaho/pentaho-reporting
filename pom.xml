@@ -133,7 +133,6 @@
     <ini4j.version>0.5.1</ini4j.version>
     <javadbf.version>20081125</javadbf.version>
     <scannotation.version>1.0.2</scannotation.version>
-    <slf4j.version>1.7.7</slf4j.version>
     <olap4j.version>1.2.0</olap4j.version>
     <httpclient.version>4.5.3</httpclient.version>
     <ehcache-core.version>2.5.1</ehcache-core.version>
@@ -1032,11 +1031,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>${slf4j.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.derby</groupId>
@@ -2435,16 +2429,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>${slf4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-jcl</artifactId>
-        <version>${slf4j.version}</version>
       </dependency>
       <dependency>
         <groupId>com.sun.jersey.jersey-test-framework</groupId>
