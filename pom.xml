@@ -104,7 +104,6 @@
     <xml-apis.version>1.3.04</xml-apis.version>
     <javax.mail.version>1.4.7</javax.mail.version>
     <xmlunit.version>1.3</xmlunit.version>
-    <karaf.vesrion>3.0.3</karaf.vesrion>
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <jetty.version>8.1.15.v20140411</jetty.version>
     <ehcache.version>2.5.1</ehcache.version>
@@ -134,7 +133,6 @@
     <ini4j.version>0.5.1</ini4j.version>
     <javadbf.version>20081125</javadbf.version>
     <scannotation.version>1.0.2</scannotation.version>
-    <slf4j.version>1.7.7</slf4j.version>
     <olap4j.version>1.2.0</olap4j.version>
     <httpclient.version>4.5.3</httpclient.version>
     <ehcache-core.version>2.5.1</ehcache-core.version>
@@ -978,21 +976,6 @@
         <version>${pentaho-osgi-bundles.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.karaf</groupId>
-        <artifactId>org.apache.karaf.main</artifactId>
-        <version>${karaf.vesrion}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.karaf.jaas</groupId>
-        <artifactId>org.apache.karaf.jaas.boot</artifactId>
-        <version>${karaf.vesrion}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.karaf.jaas</groupId>
-        <artifactId>org.apache.karaf.jaas.config</artifactId>
-        <version>${karaf.vesrion}</version>
-      </dependency>
-      <dependency>
         <groupId>pentaho</groupId>
         <artifactId>pentaho-karaf-assembly</artifactId>
         <version>${pentaho-karaf.version}</version>
@@ -1048,11 +1031,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>${slf4j.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.derby</groupId>
@@ -2451,16 +2429,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>${slf4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-jcl</artifactId>
-        <version>${slf4j.version}</version>
       </dependency>
       <dependency>
         <groupId>com.sun.jersey.jersey-test-framework</groupId>
