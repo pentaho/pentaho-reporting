@@ -12,11 +12,12 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.resourceloader;
 
+import org.apache.commons.vfs2.FileObject;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 import java.io.File;
@@ -127,6 +128,10 @@ public final class ResourceKey implements Serializable {
       if ( ObjectUtilities.equals( (File) identifier, (File) that.identifier ) == false ) {
         return false;
       }
+    } else if ( identifier instanceof FileObject && that.identifier instanceof FileObject ) {
+      if ( ( (FileObject) identifier ).getName().getURI().equals( ( (FileObject) that.identifier ).getName().getURI() ) == false ) {
+        return false;
+      }
     } else if ( !identifier.equals( that.identifier ) ) {
       if ( identifier instanceof byte[] && that.identifier instanceof byte[] ) {
         final byte[] me = (byte[]) identifier;
@@ -151,6 +156,8 @@ public final class ResourceKey implements Serializable {
         result = 29 * result + url.toString().hashCode();
       } else if ( identifier instanceof byte[] ) {
         result = 29 * result + Arrays.hashCode( (byte[]) identifier );
+      } else if ( identifier instanceof FileObject ) {
+        result = 29 * result + ( (FileObject) identifier ).getName().getURI().hashCode();
       } else {
         result = 29 * result + identifier.hashCode();
       }
@@ -183,6 +190,10 @@ public final class ResourceKey implements Serializable {
     if ( identifier instanceof String ) {
       return identifier.toString();
     }
+    if ( identifier instanceof FileObject ) {
+      return ( (FileObject) identifier ).getName().getURI();
+    }
+
     return null;
   }
 
@@ -199,12 +210,12 @@ public final class ResourceKey implements Serializable {
   }
 
   public String toString() {
-    return "ResourceKey{" +
-      "schema=" + schema +
-      ", identifier=" + identifier +
-      ", factoryParameters=" + factoryParameters +
-      ", parent=" + parent +
-      '}';
+
+    return String.format( "ResourceKey{schema=%s, identifier=%s, factoryParameters=%s, parent=%s}",
+            schema,
+            ( identifier instanceof FileObject ) ? ( (FileObject) identifier ).getName().getURI() : identifier,
+            factoryParameters,
+            parent );
   }
 }
 
