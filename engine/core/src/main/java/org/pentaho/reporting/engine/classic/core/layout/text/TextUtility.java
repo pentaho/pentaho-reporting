@@ -84,7 +84,7 @@ public class TextUtility {
     final long threshold = (long) ( fontSize * 1.005 );
     final long safeFontSize = (long) ( fontSize * 1.3 );
     final long totalAscentAndDescent = fontMetrics.getMaxAscent() + fontMetrics.getMaxDescent();
-    if ( fontSize <= totalAscentAndDescent  &&  totalAscentAndDescent  < threshold ) {
+    if ( fontSize < totalAscentAndDescent  &&  totalAscentAndDescent  < threshold ) {
       return new DefaultExtendedBaselineInfo( dominantBaseline, baselineInfo, 0, 0, safeFontSize,
               safeFontSize, underlinePosition, strikeThroughPosition );
     }
