@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
@@ -390,11 +390,33 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep {
         if ( lineBox.getStaticBoxLayoutProperties().isPreserveSpace() == false ) {
           addSoftBreak();
         } else {
-          addEmptyBreak();
+
+          RenderNode deepestLastChild = getDeepestLastChild( lineBox );
+          if ( deepestLastChild != null && deepestLastChild instanceof RenderableText ) {
+            RenderableText renderableText = (RenderableText) deepestLastChild;
+            int wordSize = renderableText.getGlyphs().getSize();
+            int currentOffset = renderableText.getOffset();
+            int currentLength = renderableText.getLength();
+
+            if ( wordSize == currentOffset + currentLength ) {
+              addSoftBreak();
+            } else {
+              addEmptyBreak();
+            }
+          } else {
+            addSoftBreak();
+          }
         }
       }
       lineBox = (RenderBox) lineBox.getNext();
     }
+  }
+
+  protected RenderNode getDeepestLastChild( RenderBox lineBox ) {
+    if ( lineBox.getLastChild() != null && lineBox.getLastChild() instanceof RenderBox ) {
+      return getDeepestLastChild( (RenderBox) lineBox.getLastChild() );
+    }
+    return lineBox.getLastChild();
   }
 
   protected void addEmptyBreak() {
