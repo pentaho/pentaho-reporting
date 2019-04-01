@@ -62,7 +62,6 @@
     <test.long>false</test.long>
     <sapdb.version>7.4.4</sapdb.version>
     <akka.version>2.3.3</akka.version>
-    <postgresql.version>42.1.1</postgresql.version>
     <json-simple.version>1.1</json-simple.version>
     <jface.version>3.3.0-I20070606-0010</jface.version>
     <mimepull.version>1.9.3</mimepull.version>
@@ -1134,7 +1133,6 @@
       <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
-        <version>${postgresql.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
