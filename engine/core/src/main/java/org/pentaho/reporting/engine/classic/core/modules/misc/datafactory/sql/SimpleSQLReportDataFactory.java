@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
@@ -357,7 +357,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     ParameterMetaData parameterMetaData = null;
     try {
       parameterMetaData = pstmt.getParameterMetaData();
-    } catch ( SQLException e ) {
+    } catch ( Exception e ) {
       logger.debug( "Parameter metadata fetching threw an exception:" + e.getMessage() );
     }
     for ( int i = 0; i < params.length; i++ ) {
@@ -367,7 +367,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       if ( parameterMetaData != null ) {
         try {
           typeClass = parameterMetaData.getParameterClassName( paramIndex + 1 );
-        } catch ( SQLException e ) {
+        } catch ( Exception e ) {
           logger.debug( "Parameter metadata fetching threw an exception:" + e.getMessage() );
         }
       }
