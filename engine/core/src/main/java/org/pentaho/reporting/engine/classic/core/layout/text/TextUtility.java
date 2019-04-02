@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.text;
@@ -83,7 +83,8 @@ public class TextUtility {
     final long fontSize = fontMetrics.getMaxHeight();
     final long threshold = (long) ( fontSize * 1.005 );
     final long safeFontSize = (long) ( fontSize * 1.3 );
-    if ( ( fontMetrics.getMaxAscent() + fontMetrics.getMaxDescent() ) < threshold ) {
+    final long totalAscentAndDescent = fontMetrics.getMaxAscent() + fontMetrics.getMaxDescent();
+    if ( fontSize < totalAscentAndDescent  &&  totalAscentAndDescent  < threshold ) {
       return new DefaultExtendedBaselineInfo( dominantBaseline, baselineInfo, 0, 0, safeFontSize,
               safeFontSize, underlinePosition, strikeThroughPosition );
     }
