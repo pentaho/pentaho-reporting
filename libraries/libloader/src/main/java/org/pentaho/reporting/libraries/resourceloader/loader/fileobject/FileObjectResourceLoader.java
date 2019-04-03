@@ -77,7 +77,9 @@ public class FileObjectResourceLoader implements ResourceLoader {
       } else if ( value instanceof String ) {
         //verify string value conforms to valid VFS URI
         UriParser.checkUriEncoding( String.valueOf( value ) );
-        final FileObject f = getFileObject( String.valueOf( value ) );
+        File file = new File( String.valueOf( value ) );
+
+        final FileObject f = VFS.getManager().resolveFile( file.toURI().toString() );
         if ( f.exists() && f.isFile() ) {
           return new ResourceKey( SCHEMA_NAME, f, factoryKeys );
         }
@@ -187,31 +189,4 @@ public class FileObjectResourceLoader implements ResourceLoader {
   public boolean isSupportedDeserializer( final String data ) {
     return SCHEMA_NAME.equals( ResourceKeyUtils.readSchemaFromString( data ) );
   }
-
-  private FileObject getFileObject( String vfsFilename ) throws FileSystemException {
-
-    boolean relativeFilename = true;
-    String[] schemes = VFS.getManager().getSchemes();
-    for ( int i = 0; i < schemes.length && relativeFilename; i++ ) {
-      if ( vfsFilename.startsWith( schemes[i] + ":" ) ) {
-        relativeFilename = false;
-      }
-    }
-
-    String filename;
-    if ( vfsFilename.startsWith( "\\\\" ) ) {
-      File file = new File( vfsFilename );
-      filename = file.toURI().toString();
-    } else {
-      if ( relativeFilename ) {
-        File file = new File( vfsFilename );
-        filename = file.getAbsolutePath();
-      } else {
-        filename = vfsFilename;
-      }
-    }
-
-    return VFS.getManager().resolveFile( filename );
-  }
-
 }
