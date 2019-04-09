@@ -101,7 +101,7 @@
     <bouncycastl.version>138</bouncycastl.version>
     <commons-lang.version>2.6</commons-lang.version>
     <xml-apis.version>1.3.04</xml-apis.version>
-    <javax.mail.version>1.4.7</javax.mail.version>
+    <javax.mail.version>1.6.1</javax.mail.version>
     <xmlunit.version>1.3</xmlunit.version>
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <jetty.version>8.1.15.v20140411</jetty.version>
@@ -1529,8 +1529,8 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>javax.mail</groupId>
-        <artifactId>mail</artifactId>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
         <version>${javax.mail.version}</version>
         <exclusions>
           <exclusion>
