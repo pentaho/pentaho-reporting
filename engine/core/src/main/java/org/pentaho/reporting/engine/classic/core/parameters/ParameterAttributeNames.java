@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
@@ -60,6 +60,7 @@ public final class ParameterAttributeNames {
     public static final String LABEL = "label";
     public static final String LABEL_FORMULA = "label-formula";
     public static final String HIDDEN = "hidden";
+    public static final String HIDDEN_FORMULA = "hidden-formula";
     public static final String LAYOUT = "parameter-layout";
     public static final String LAYOUT_HORIZONTAL = "horizontal";
     public static final String LAYOUT_VERTICAL = "vertical";

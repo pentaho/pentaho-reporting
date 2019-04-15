@@ -205,4 +205,75 @@ public class ParameterDialogTest {
     assertEquals( "=FOR1", labelFormula );
     assertEquals( "=FOR2", dataFormatFormula );
   }
+
+
+  @Test
+  public void testCreateDialogHidden() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "true" );
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN_FORMULA
+    ), any() ) ).thenReturn( null );
+
+    dialog.updateFromParameter( parameter );
+
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( true ) );
+    verify( dialog.hiddenFormula, times( 1 ) ).setFormula( null );
+
+  }
+
+  @Test
+  public void testCreateDialogHiddenAndFormula() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "true" );
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN_FORMULA
+    ), any() ) ).thenReturn( "=DUMMY()" );
+
+    dialog.updateFromParameter( parameter );
+
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( true ) );
+    verify( dialog.hiddenFormula, times( 1 ) ).setFormula( "=DUMMY()" );
+  }
+
+  @Test
+  public void testCreateDialogHiddenAndFormulaSame() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "=DUMMY()" );
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN_FORMULA
+    ), any() ) ).thenReturn( "=DUMMY()" );
+
+    dialog.updateFromParameter( parameter );
+
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( false ) );
+    verify( dialog.hiddenFormula, times( 1 ) ).setFormula( "=DUMMY()" );
+  }
+
+  /**
+   * Tests the usage of false value in the attribute value
+   */
+  @Test
+  public void testCreateDialogHiddenFalse() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "false" );
+    dialog.updateFromParameter( parameter );
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( false ) );
+  }
+
+  /**
+   * Tests the usage of any non "true" value in the attribute value
+   */
+  @Test
+  public void testCreateDialogHiddenAnyNonTrueValue() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "any value" );
+    dialog.updateFromParameter( parameter );
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( false ) );
+  }
 }
