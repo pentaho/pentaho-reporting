@@ -62,7 +62,6 @@
     <test.long>false</test.long>
     <sapdb.version>7.4.4</sapdb.version>
     <akka.version>2.3.3</akka.version>
-    <postgresql.version>42.1.1</postgresql.version>
     <json-simple.version>1.1</json-simple.version>
     <jface.version>3.3.0-I20070606-0010</jface.version>
     <mimepull.version>1.9.3</mimepull.version>
@@ -101,8 +100,8 @@
     <commons-codec.version>1.9</commons-codec.version>
     <bouncycastl.version>138</bouncycastl.version>
     <commons-lang.version>2.6</commons-lang.version>
-    <xml-apis-ext.version>1.3.04</xml-apis-ext.version>
-    <javax.mail.version>1.4.7</javax.mail.version>
+    <xml-apis.version>1.3.04</xml-apis.version>
+    <javax.mail.version>1.6.1</javax.mail.version>
     <xmlunit.version>1.3</xmlunit.version>
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <jetty.version>8.1.15.v20140411</jetty.version>
@@ -136,7 +135,6 @@
     <olap4j.version>1.2.0</olap4j.version>
     <httpclient.version>4.5.3</httpclient.version>
     <ehcache-core.version>2.5.1</ehcache-core.version>
-    <derby.version>10.2.1.6</derby.version>
     <equinox.version>3.3.0-v20070426</equinox.version>
     <jcommon.version>1.0.16</jcommon.version>
     <javax.ws.rs.version>1.1.1</javax.ws.rs.version>
@@ -1131,17 +1129,6 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>${postgresql.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
         <groupId>com.sap</groupId>
         <artifactId>sapdbc</artifactId>
         <version>${sapdb.version}</version>
@@ -1540,8 +1527,8 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>javax.mail</groupId>
-        <artifactId>mail</artifactId>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
         <version>${javax.mail.version}</version>
         <exclusions>
           <exclusion>

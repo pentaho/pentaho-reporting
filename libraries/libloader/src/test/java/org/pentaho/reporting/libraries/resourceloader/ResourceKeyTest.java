@@ -12,16 +12,20 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.resourceloader;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.VFS;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 
 public class ResourceKeyTest extends TestCase {
   public ResourceKeyTest() {
@@ -78,6 +82,19 @@ public class ResourceKeyTest extends TestCase {
     assertNotNull( key );
     final ResourceKey key1 = manager.deriveKey( key, f2.getName() );
     assertNotNull( key1 );
+  }
+
+  public void testFileObjectKeyCreation()
+          throws ResourceKeyCreationException, IOException {
+    final ResourceManager manager = new ResourceManager();
+    manager.registerDefaults();
+
+    final FileObject fileObject =
+            VFS.getManager().resolveFile(
+                    Paths.get( "src/test/resources/org/pentaho/reporting/libraries/resourceloader/SVG.svg" ).toAbsolutePath().toString() );
+    assertNotNull( fileObject );
+    final ResourceKey key = manager.createKey( fileObject );
+    assertNotNull( key );
   }
 
   public void testMixedKeyDerivation()
