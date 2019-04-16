@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2019 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.core.editor.parameters;
@@ -207,6 +207,9 @@ public class ParameterDialogTest {
   }
 
 
+  /**
+   * Test the usage of the hidden checkbox and that it's checked
+   */
   @Test
   public void testCreateDialogHidden() {
     when( parameter.getParameterAttribute( anyString(), eq(
@@ -223,6 +226,9 @@ public class ParameterDialogTest {
 
   }
 
+  /*
+    Test the usage of the hidden checkbox (checked) and the hidden formula
+   */
   @Test
   public void testCreateDialogHiddenAndFormula() {
     when( parameter.getParameterAttribute( anyString(), eq(
@@ -238,6 +244,9 @@ public class ParameterDialogTest {
     verify( dialog.hiddenFormula, times( 1 ) ).setFormula( "=DUMMY()" );
   }
 
+  /**
+   * Test the usage of the hidden checkbox (incorrect value = false) and the hidden formula
+   */
   @Test
   public void testCreateDialogHiddenAndFormulaSame() {
     when( parameter.getParameterAttribute( anyString(), eq(
