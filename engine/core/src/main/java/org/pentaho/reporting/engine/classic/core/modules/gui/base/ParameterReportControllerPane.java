@@ -25,6 +25,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -83,6 +84,7 @@ import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentMetaData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+import com.google.common.annotations.VisibleForTesting;
 
 public class ParameterReportControllerPane extends JPanel {
   private boolean isUpdating;
@@ -293,6 +295,10 @@ public class ParameterReportControllerPane extends JPanel {
   private ParameterUpdateContext updateContext;
   private Messages messages;
   private ArrayList<ParameterComponent> parameterComponents;
+  /**
+   * Structure to aggregate all the visual(swing) components that are associated to the parameters
+   */
+  HashMap<String, ArrayList<Component>> parametersVisualComponents;
 
   public ParameterReportControllerPane() {
     messages =
@@ -302,6 +308,7 @@ public class ParameterReportControllerPane extends JPanel {
     internalChangeListeners = new ArrayList<>();
 
     parameterComponents = new ArrayList<>();
+    parametersVisualComponents = new HashMap<>();
 
     carrierPanel = new ParameterCarrierPanel();
     parameterContext = new InternalParameterContext();
@@ -440,20 +447,20 @@ public class ParameterReportControllerPane extends JPanel {
     for ( int i = 0; i < entries.length; i++ ) {
       final ParameterDefinitionEntry entry = entries[i];
 
-      final String hiddenFormulaString = entry.getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.HIDDEN, parameterContext );
+      /* Only parameters with an empty formula and the hidden checkbox selected are excluded. All the others are included
+      *  The visibility of the parameters where formula is not empty, will be controled at validateParameter
+      */
+      final String hiddenFormulaString = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+        ParameterAttributeNames.Core.HIDDEN_FORMULA, parameterContext );
 
-      /* if the formula is not empty , only when the value is literally "true" the parameter is hidden */
-      if ( !StringUtils.isEmpty( hiddenFormulaString ) ) {
-        if ( "true".equals( hiddenFormulaString ) ) {
-          continue;
-        }
-      } else {
-        if ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-          ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) ) {
-          continue;
-        }
+      if (
+            ( StringUtils.isEmpty( hiddenFormulaString ) )
+            &&  ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+                    ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) )
+      ) {
+        continue;
       }
+
       final ParameterComponent parameterComponent =
           parameterEditorFactory.create( entry, parameterContext, updateContext );
       addToPanel( entry, 1 + i * 2, parameterComponent.getUIComponent() );
@@ -468,6 +475,9 @@ public class ParameterReportControllerPane extends JPanel {
     final JLabel errorLabel = new JLabel();
     errorLabels.put( entry.getName(), errorLabel );
 
+    //temporary list for parameter visual components
+    final ArrayList parameterVisualComponents = new ArrayList();
+
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridy = gridY;
     gbc.gridx = 0;
@@ -476,6 +486,7 @@ public class ParameterReportControllerPane extends JPanel {
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.insets = new Insets( 5, 5, 0, 5 );
     carrierPanel.add( label, gbc );
+    parameterVisualComponents.add( label );
 
     if ( entry.isMandatory() ) {
       gbc = new GridBagConstraints();
@@ -486,6 +497,7 @@ public class ParameterReportControllerPane extends JPanel {
       final JLabel mandatoryLabel = new JLabel( "*" );
       mandatoryLabel.setToolTipText( messages.getString( "ParameterReportControllerPane.MandatoryParameter" ) );
       carrierPanel.add( mandatoryLabel, gbc );
+      parameterVisualComponents.add( mandatoryLabel );
     }
 
     gbc = new GridBagConstraints();
@@ -499,6 +511,7 @@ public class ParameterReportControllerPane extends JPanel {
     gbc.ipadx = 100;
     gbc.insets = new Insets( 5, 0, 0, 0 );
     carrierPanel.add( editor, gbc );
+    parameterVisualComponents.add( editor );
 
     gbc = new GridBagConstraints();
     gbc.gridy = gridY + 1;
@@ -509,6 +522,8 @@ public class ParameterReportControllerPane extends JPanel {
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.insets = new Insets( 5, 0, 0, 0 );
     carrierPanel.add( errorLabel, gbc );
+    parameterVisualComponents.add( errorLabel );
+    parametersVisualComponents.put( entry.getName(), parameterVisualComponents );
   }
 
   String computeLabel( final ParameterDefinitionEntry entry ) {
@@ -640,6 +655,7 @@ public class ParameterReportControllerPane extends JPanel {
           // reinit the components ..
           component.initialize();
         }
+        refreshPaneParametersVisibility(report.getParameterDefinition().getParameterDefinitions());
       } catch ( Exception e ) {
         // mark the report as invalid or so ..
         ExceptionDialog.showExceptionDialog( this, messages.getString( "ParameterReportControllerPane.Error" ),
@@ -660,6 +676,81 @@ public class ParameterReportControllerPane extends JPanel {
     }
 
     return retval;
+  }
+
+  /**
+   * Check the parameter visibility status
+   * Rules to control the visibility:
+   *  - if formula is not empty and the return value is a boolean, then use formula value
+   *  - if formula is not empty and the return value is not a boolean, then use hidden input value
+   *  - if formula is empty, then use hidden input value
+   * @param entry The parameter definition
+   * @return the visibility status. If true is visible on the Panel. If false is hidden.
+   */
+  @VisibleForTesting
+  boolean checkParameterVisibility(ParameterDefinitionEntry entry){
+
+    boolean parameterVisibility = true;
+    final String hiddenFormulaStringValue = entry.getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.HIDDEN, parameterContext );
+
+    /* Rules to control the visibility:
+     *  - if formula is not empty and the return value is a boolean, then use formula value
+     *  - if formula is not empty and the return value is not a boolean, then use hidden input value
+     *  - if formula is empty, then use hidden input value
+     */
+    if ( !StringUtils.isEmpty( hiddenFormulaStringValue ) ) {
+      if ( "true".equals( hiddenFormulaStringValue ) ) {
+        parameterVisibility = false;
+      } else if ( ("false").equals( hiddenFormulaStringValue ) ) {
+        parameterVisibility = true;
+      } else {
+        parameterVisibility = !entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+          ParameterAttributeNames.Core.HIDDEN, parameterContext ).equals( "true" );
+      }
+    } else {
+      parameterVisibility = !entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+        ParameterAttributeNames.Core.HIDDEN, parameterContext ).equals( "true" );
+    }
+
+    return parameterVisibility;
+  }
+
+
+  /**
+   * Refresh pane parameters visibility. For every parameter, check the actual visibility status and propagates to the
+   * associated visual components
+   *
+   * @param entries The list of parameters to refresh the visibility
+   */
+  @VisibleForTesting
+  void refreshPaneParametersVisibility(ParameterDefinitionEntry[] entries) {
+
+    // control if the panel is changed to force the repaint+revalidate of the component
+    boolean panelChanged = false;
+    for ( int i = 0; i < entries.length; i++ ) {
+      final ParameterDefinitionEntry entry = entries[ i ];
+
+      // if the formula is not set, is already treated
+      if ( StringUtils.isEmpty( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+        ParameterAttributeNames.Core.HIDDEN_FORMULA, parameterContext ) ) ) {
+        continue;
+      }
+
+      // it there's at least one not empty formula to mark the panel changed
+      panelChanged = true;
+
+      /* As parameters have more than one component, we need to put all with the same setVisible value */
+      final boolean finalParameterVisibilty = checkParameterVisibility( entry );
+      parametersVisualComponents.get( entry.getName() ).forEach(
+        component -> component.setVisible( finalParameterVisibilty )
+      );
+    }
+
+    if ( panelChanged ) {
+      carrierPanel.repaint();
+      carrierPanel.revalidate();
+    }
   }
 
   private String formatMessages( final ValidationMessage[] validationMessages ) {

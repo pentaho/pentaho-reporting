@@ -996,6 +996,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       displayFormulaField.setReportDesignerContext( context );
       defaultValueFormulaField.setReportDesignerContext( context );
       postProcessingFormulaField.setReportDesignerContext( context );
+      hiddenFormula.setReportDesignerContext( context );
 
       availableDataSourcesModel.importFromReport( (CompoundDataFactory) masterReport.getDataFactory() );
 
@@ -1013,6 +1014,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       displayFormulaField.setReportDesignerContext( null );
       postProcessingFormulaField.setReportDesignerContext( null );
       defaultValueFormulaField.setReportDesignerContext( null );
+      hiddenFormula.setReportDesignerContext( null );
     }
   }
 
