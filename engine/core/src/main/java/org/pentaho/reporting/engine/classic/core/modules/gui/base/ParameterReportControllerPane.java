@@ -655,7 +655,7 @@ public class ParameterReportControllerPane extends JPanel {
           // reinit the components ..
           component.initialize();
         }
-        refreshPaneParametersVisibility(report.getParameterDefinition().getParameterDefinitions());
+        refreshPaneParametersVisibility( report.getParameterDefinition().getParameterDefinitions() );
       } catch ( Exception e ) {
         // mark the report as invalid or so ..
         ExceptionDialog.showExceptionDialog( this, messages.getString( "ParameterReportControllerPane.Error" ),
@@ -688,7 +688,7 @@ public class ParameterReportControllerPane extends JPanel {
    * @return the visibility status. If true is visible on the Panel. If false is hidden.
    */
   @VisibleForTesting
-  boolean checkParameterVisibility(ParameterDefinitionEntry entry){
+  boolean checkParameterVisibility( ParameterDefinitionEntry entry ) {
 
     boolean parameterVisibility = true;
     final String hiddenFormulaStringValue = entry.getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
@@ -724,7 +724,7 @@ public class ParameterReportControllerPane extends JPanel {
    * @param entries The list of parameters to refresh the visibility
    */
   @VisibleForTesting
-  void refreshPaneParametersVisibility(ParameterDefinitionEntry[] entries) {
+  void refreshPaneParametersVisibility( ParameterDefinitionEntry[] entries ) {
 
     // control if the panel is changed to force the repaint+revalidate of the component
     boolean panelChanged = false;
