@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2019 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.core.editor.parameters;
@@ -204,5 +204,85 @@ public class ParameterDialogTest {
 
     assertEquals( "=FOR1", labelFormula );
     assertEquals( "=FOR2", dataFormatFormula );
+  }
+
+
+  /**
+   * Test the usage of the hidden checkbox and that it's checked
+   */
+  @Test
+  public void testCreateDialogHidden() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "true" );
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN_FORMULA
+    ), any() ) ).thenReturn( null );
+
+    dialog.updateFromParameter( parameter );
+
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( true ) );
+    verify( dialog.hiddenFormula, times( 1 ) ).setFormula( null );
+
+  }
+
+  /*
+    Test the usage of the hidden checkbox (checked) and the hidden formula
+   */
+  @Test
+  public void testCreateDialogHiddenAndFormula() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "true" );
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN_FORMULA
+    ), any() ) ).thenReturn( "=DUMMY()" );
+
+    dialog.updateFromParameter( parameter );
+
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( true ) );
+    verify( dialog.hiddenFormula, times( 1 ) ).setFormula( "=DUMMY()" );
+  }
+
+  /**
+   * Test the usage of the hidden checkbox (incorrect value = false) and the hidden formula
+   */
+  @Test
+  public void testCreateDialogHiddenAndFormulaSame() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "=DUMMY()" );
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN_FORMULA
+    ), any() ) ).thenReturn( "=DUMMY()" );
+
+    dialog.updateFromParameter( parameter );
+
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( false ) );
+    verify( dialog.hiddenFormula, times( 1 ) ).setFormula( "=DUMMY()" );
+  }
+
+  /**
+   * Tests the usage of false value in the attribute value
+   */
+  @Test
+  public void testCreateDialogHiddenFalse() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "false" );
+    dialog.updateFromParameter( parameter );
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( false ) );
+  }
+
+  /**
+   * Tests the usage of any non "true" value in the attribute value
+   */
+  @Test
+  public void testCreateDialogHiddenAnyNonTrueValue() {
+    when( parameter.getParameterAttribute( anyString(), eq(
+      ParameterAttributeNames.Core.HIDDEN
+    ), any() ) ).thenReturn( "any value" );
+    dialog.updateFromParameter( parameter );
+    verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( false ) );
   }
 }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2019 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
@@ -42,7 +42,6 @@ import javax.swing.ScrollPaneConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
@@ -51,6 +50,7 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 /**
@@ -189,17 +189,26 @@ public class PreviewParametersDialog extends JDialog {
         final ParameterDefinitionEntry[] entries = parameterDefinition.getParameterDefinitions();
         for ( int i = 0; i < entries.length; i++ ) {
           final ParameterDefinitionEntry entry = entries[i];
-          if ( "true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-              ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) == false ) {
-            return false;
+
+          final String hiddenFormulaString = entry.getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+            ParameterAttributeNames.Core.HIDDEN, parameterContext );
+
+          /* if the formula is not empty , only when the value is literally "true" the formula controls the parameter */
+          if ( !StringUtils.isEmpty( hiddenFormulaString ) ) {
+            if ( !"true".equals( hiddenFormulaString ) ) {
+              return false;
+            }
+          } else {
+            if ( !"true".equals( entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+              ParameterAttributeNames.Core.HIDDEN, parameterContext ) ) ) {
+              return false;
+            }
           }
         }
       } finally {
         parameterContext.close();
       }
       return true;
-    } catch ( ReportDataFactoryException e ) {
-      return false;
     } catch ( ReportProcessingException e ) {
       return false;
     }
@@ -214,6 +223,7 @@ public class PreviewParametersDialog extends JDialog {
       return true;
     }
 
+    // if all parameters are hidden, then nothing to do
     if ( isAllParametersHidden( masterReport, parameterDefinition ) ) {
       return true;
     }
