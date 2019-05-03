@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.splash;
@@ -51,8 +51,8 @@ import java.util.Date;
  * @author schmm7
  */
 public class SplashScreen extends JWindow {
-  private static final int XLOC = 293;
-  private static final int YLOC = 170;
+  private static final int XLOC = 290;
+  private static final int YLOC = 158;
   private static final int TEXT_WIDTH = 320;
   private static final int LICENSE_HEIGHT = 30;
   private static final int COPYRIGHT_HEIGHT = 180;
@@ -68,7 +68,8 @@ public class SplashScreen extends JWindow {
   }
 
   private JLabel statusLabel;
-  private static final Font LICENSE_FONT = new Font( Font.SANS_SERIF, Font.PLAIN, 10 );
+  private static final Font LICENSE_FONT = new Font( Font.SANS_SERIF, Font.PLAIN, 12 );
+  private static final Font COPYRIGHT_FONT = new Font( Font.SANS_SERIF, Font.PLAIN, 10 );
 
   public SplashScreen() {
     addMouseListener( new HideOnClickHandler() );
@@ -84,7 +85,7 @@ public class SplashScreen extends JWindow {
     c.gridx = 0;
     c.gridy = 0;
     c.weightx = 0.5;
-    c.insets = new Insets( 0, XLOC, 0, 0 );
+    c.insets = new Insets( 0, XLOC, 30, 0 );
     c.anchor = GridBagConstraints.LAST_LINE_START;
     statusVersionPanel.setOpaque( false );
     statusVersionPanel.setBackground( TRANSPARENT );
@@ -117,22 +118,22 @@ public class SplashScreen extends JWindow {
       versionLabel.setText( buildString );
     }
     versionLabel.setText( Messages.getString( "SplashScreen.Version", versionLabel.getText() ) );
-    versionLabel.setFont( new Font( Font.SANS_SERIF, Font.PLAIN, 14 ) );
+    versionLabel.setFont( new Font( Font.SANS_SERIF, Font.BOLD, 14 ) );
     versionLabel.setOpaque( false );
     versionLabel.setBackground( TRANSPARENT );
     versionLabel.setForeground( DARK_GREY );
     versionLabel.setBorder( BORDER );
-    versionLabel.setBounds( XLOC, YLOC + 40, TEXT_WIDTH, versionLabel.getPreferredSize().height );
+    versionLabel.setBounds( XLOC, YLOC, TEXT_WIDTH, versionLabel.getPreferredSize().height );
 
     // Overlay the license
     final String year = new SimpleDateFormat( "yyyy" ).format( new Date() );
     final JTextArea copyrightArea = new JTextArea( Messages.getString( "SplashScreen.Copyright", year ) );
     copyrightArea.setEditable( false );
-    copyrightArea.setBounds( XLOC, YLOC + 80, TEXT_WIDTH, LICENSE_HEIGHT );
+    copyrightArea.setBounds( XLOC, YLOC + 20, TEXT_WIDTH, LICENSE_HEIGHT );
     copyrightArea.setOpaque( false );
     copyrightArea.setLineWrap( true );
     copyrightArea.setWrapStyleWord( true );
-    copyrightArea.setFont( LICENSE_FONT );
+    copyrightArea.setFont( COPYRIGHT_FONT );
     copyrightArea.setEnabled( false );
     copyrightArea.setBackground( TRANSPARENT );
     copyrightArea.setForeground( DARK_GREY );
@@ -142,7 +143,7 @@ public class SplashScreen extends JWindow {
     // Overlay the copyright
     final JTextArea licenseArea = new JTextArea( Messages.getString( "SplashScreen.License" ) );
     licenseArea.setEditable( false );
-    licenseArea.setBounds( XLOC, YLOC + 80 + LICENSE_HEIGHT, TEXT_WIDTH, COPYRIGHT_HEIGHT );
+    licenseArea.setBounds( XLOC, YLOC + 14 + LICENSE_HEIGHT, TEXT_WIDTH, COPYRIGHT_HEIGHT );
     licenseArea.setOpaque( false );
     licenseArea.setLineWrap( true );
     licenseArea.setWrapStyleWord( true );
