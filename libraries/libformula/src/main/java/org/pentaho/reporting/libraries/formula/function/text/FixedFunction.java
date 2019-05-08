@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.text;
@@ -55,7 +55,7 @@ public class FixedFunction implements Function {
     final NumberFormat currencyInstance =
       NumberFormat.getNumberInstance( context.getLocalizationContext().getLocale() );
 
-    if ( parameterCount == 2 ) {
+    if ( parameterCount >= 2 ) {
       final Type typeDecimals = parameters.getType( 1 );
       final Object valueDecimals = parameters.getValue( 1 );
       final Number resultDecimals = context.getTypeRegistry().convertToNumber( typeDecimals, valueDecimals );
@@ -66,7 +66,7 @@ public class FixedFunction implements Function {
       final Type typeDecimals = parameters.getType( 2 );
       final Object valueDecimals = parameters.getValue( 2 );
       final Boolean resultDecimals = context.getTypeRegistry().convertToLogical( typeDecimals, valueDecimals );
-      currencyInstance.setGroupingUsed( Boolean.TRUE.equals( resultDecimals ) );
+      currencyInstance.setGroupingUsed( !Boolean.TRUE.equals( resultDecimals ) );
     }
     return new TypeValuePair( TextType.TYPE, currencyInstance.format( result ) );
   }
