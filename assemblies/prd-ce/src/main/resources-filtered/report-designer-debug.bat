@@ -14,23 +14,12 @@ REM This program is distributed in the hope that it will be useful, but WITHOUT 
 REM without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 REM See the GNU Lesser General Public License for more details.
 REM
-REM Copyright (c) 2013-2018 Hitachi Vantara..  All rights reserved.
+REM Copyright (c) 2013 - ${copyright.year} Hitachi Vantara. All rights reserved.
 REM -----------------------------------------------------------------------------------------------
 
-@REM
-@REM WARNING: Pentaho Report Designer needs JDK 1.7 or newer to run.
-@REM
-setlocal
-cd /D %~dp0
+echo Pentaho Report Designer is to support you in finding unusual errors and start problems.
 
-REM Special console/debug options when called from report-designer.bat or report-designer-debug.bat
-if "%CONSOLE%"=="1" set PENTAHO_JAVA=java
-if not "%CONSOLE%"=="1" set PENTAHO_JAVA=javaw
+REM this will always output the the system console using the debug mode
+set CONSOLE=1
 
-if "%_PENTAHO_JAVA_HOME%" == "" goto callSetEnv
-set PENTAHO_JAVA_HOME=%_PENTAHO_JAVA_HOME%
-
-:callSetEnv
-call "%~dp0set-pentaho-env.bat"
-
-start "Pentaho Report Designer" "%_PENTAHO_JAVA%" -Dswing.useSystemFontSettings=false -Xms1024m -Xmx2048m -XX:MaxPermSize=256m -jar "%~dp0launcher.jar" %*
+"%~dp0report-designer.bat"
