@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2019 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.sorting;
@@ -32,7 +32,7 @@ public class SortingDataFactoryCore extends CompoundDataFactoryCore {
   public String[] getReferencedFields( final DataFactoryMetaData metaData, final DataFactory element,
       final String query, final DataRow parameter ) {
     String[] referencedFields = super.getReferencedFields( metaData, element, query, parameter );
-    if ( referencedFields == null ) {
+    if ( referencedFields == null || referencedFields.length == 0 ) {
       return null;
     }
 

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.cache;
@@ -360,7 +360,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       DataFactoryMetaData metaData = backend.getMetaData();
 
       final String[] referencedFields = metaData.getReferencedFields( backend, query, parameters );
-      if ( referencedFields != null ) {
+      if ( referencedFields != null && referencedFields.length > 0 ) {
         final Object queryHash = metaData.getQueryHash( backend, query, parameters );
         if ( queryHash == null ) {
           logger.debug( "Query hash is null, caching is disabled for query '" + query + "'." );
