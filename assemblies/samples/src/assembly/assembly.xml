@@ -22,6 +22,7 @@
     <fileSet>
       <directory>.</directory>
       <outputDirectory>.</outputDirectory>
+      <filtered>true</filtered>
       <includes>
         <include>*.sh</include>
       </includes>
@@ -30,8 +31,17 @@
     <fileSet>
       <directory>.</directory>
       <outputDirectory>.</outputDirectory>
+      <filtered>true</filtered>
+      <includes>
+        <include>*.bat</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory>.</outputDirectory>
       <excludes>
         <exclude>*.sh</exclude>
+        <exclude>*.bat</exclude>
         <exclude>/src/</exclude>
         <exclude>/target/</exclude>
       </excludes>

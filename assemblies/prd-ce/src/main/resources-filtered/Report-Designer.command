@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # -----------------------------------------------------------------------------------------------
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
@@ -14,22 +12,17 @@
 # without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Lesser General Public License for more details.
 #
-# Copyright (c) 2013-2018 Hitachi Vantara..  All rights reserved.
+# Copyright (c) 2018 - ${copyright.year} Hitachi Vantara. All rights reserved.
 # -----------------------------------------------------------------------------------------------
 
-#
-#  WARNING: Hitachi Vantara Report Designer needs JDK 1.7 or newer to run.
-#
+cd "$(dirname "$0")"
 
-DIR_REL=`dirname "$0"`
-cd $DIR_REL
-DIR=`pwd`
-
-. "$DIR/set-pentaho-env.sh"
-setPentahoEnv
-
-if [[ "$OSTYPE" == "darwin"* ]]; then 
-	"$_PENTAHO_JAVA" -Xms1024m -Xmx2048m -XX:MaxPermSize=512m -Dapple.laf.useScreenMenuBar=true -jar "$DIR/launcher.jar" $@
-else
-	"$_PENTAHO_JAVA" -Xms1024m -Xmx2048m -XX:MaxPermSize=512m -jar "$DIR/launcher.jar" $@
+# if a BASE_DIR argument has been passed to this .command, use it
+if [ -n "$1" ] && [ -d "$1" ] && [ -x "$1" ]; then
+    echo "DEBUG: Using value ($1) from calling script"
+    cd "$1"
 fi
+
+pwd
+./report-designer.sh
+exit
