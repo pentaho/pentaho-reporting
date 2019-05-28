@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2019 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.HashMap;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -251,9 +252,28 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
                 realBackground, cellStyle );
         cellStyleCache = new FastHtmlStyleCache.CellStyle( cellAttributes, cellStyle.toArray() );
       }
-      styleCache.putCellAttributes( row, col, cellStyleCache );
+      if ( shouldCacheStyle( content ) ) {
+        styleCache.putCellAttributes( row, col, cellStyleCache );
+      }
     }
     return cellStyleCache;
+  }
+
+  @VisibleForTesting
+  protected boolean shouldCacheStyle( final ReportElement content ) {
+    // If any of the cell attributes is present on the content expressions we should not cache it since it can change
+    if ( content != null ) {
+      for ( String attributeNS : content.getAttributeExpressionNamespaces() ) {
+        for ( String attributeName : content.getAttributeExpressionNames( attributeNS ) ) {
+          if ( content.getAttribute( attributeNS, attributeName ) != null ) {
+            return false;
+          }
+        }
+      }
+    }
+
+    //by default the style should be cached
+    return true;
   }
 
   private void writeAnchors( final XmlWriter xmlWriter, final ReportElement realBackground ) throws IOException {
