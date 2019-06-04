@@ -87,7 +87,7 @@
     <pentaho-karaf.version>9.0.0.0-SNAPSHOT</pentaho-karaf.version>
     <commons-configuration.version>1.9</commons-configuration.version>
     <commons-collections.version>3.2.2</commons-collections.version>
-    <joda.version>1.6</joda.version>
+    <joda.version>2.10.2</joda.version>
     <xmlgraphics-commons.version>2.2</xmlgraphics-commons.version>
     <commons-io.version>2.2</commons-io.version>
     <sassy.version>0.5</sassy.version>
