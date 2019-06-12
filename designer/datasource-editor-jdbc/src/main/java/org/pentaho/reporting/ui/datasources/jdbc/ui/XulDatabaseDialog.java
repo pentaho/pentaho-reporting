@@ -12,13 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2017 Hitachi Vantara.  All rights reserved.
+ * Copyright (c) 2017-2019 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.reporting.ui.datasources.jdbc.ui;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.di.core.database.BaseDatabaseMeta;
 import org.pentaho.di.core.database.DatabaseInterface;
 import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.di.core.database.GenericDatabaseMeta;
@@ -57,6 +58,7 @@ public class XulDatabaseDialog {
   private static final String DIALOG_DEFINITION_FILE = "org/pentaho/ui/database/databasedialog.xul"; //$NON-NLS-1$
   private static final String OVERLAY_DEFINITION_FILE =
     "org/pentaho/reporting/ui/datasources/jdbc/ui/databasedialogOverlay.xul";  //$NON-NLS-1$
+  public static final String OTHER_PREFIX = "::pentaho-reporting-other-attribute::";
   private XulDialog dialog;
   private XulDatabaseHandler handler;
   private DatabaseMeta meta;
@@ -177,8 +179,11 @@ public class XulDatabaseDialog {
         if ( "user".equals( key ) || "password".equals( key ) ) {
           continue;
         }
-        // This line makes the database dialog crash later. This seems to be a Swing/Xul issue.
-        this.meta.addExtraOption( meta.getPluginId(), key, (String) entry.getValue() );
+        if ( key.startsWith( OTHER_PREFIX ) ) {
+          this.meta.getAttributes().put( key.substring( OTHER_PREFIX.length() ), entry.getValue() );
+        } else {
+          this.meta.addExtraOption( meta.getPluginId(), key, (String) entry.getValue() );
+        }
       }
     } else if ( def instanceof JndiConnectionDefinition ) {
       final JndiConnectionDefinition jndiDef = (JndiConnectionDefinition) def;
@@ -245,6 +250,12 @@ public class XulDatabaseDialog {
           properties.put( realKey, value );
         }
       }
+
+      meta.getAttributes().keySet().stream()
+        .map( key -> ( (String) key ) )
+        .filter( key -> !key.startsWith( BaseDatabaseMeta.ATTRIBUTE_PREFIX_EXTRA_OPTION ) )
+        .forEach( key -> properties.put( OTHER_PREFIX + key, meta.getAttributes().getProperty( key ) ) );
+
 
       return new DriverConnectionDefinition(
         meta.getName(),
