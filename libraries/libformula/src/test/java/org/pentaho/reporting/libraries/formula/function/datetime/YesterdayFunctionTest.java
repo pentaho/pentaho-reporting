@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
@@ -32,7 +32,7 @@ public class YesterdayFunctionTest extends FormulaTestBase {
   }
 
   private Date createYesterdaysDate() {
-    final GregorianCalendar gcal = new GregorianCalendar( 2011, Calendar.APRIL, 6, 0, 0, 0 );
+    final GregorianCalendar gcal = new GregorianCalendar( 2011, Calendar.APRIL, 6, 15, 0, 0 );
     gcal.setTimeZone( getContext().getLocalizationContext().getTimeZone() );
     return gcal.getTime();
   }
