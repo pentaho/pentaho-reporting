@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula;
@@ -22,10 +22,12 @@ import org.junit.Assert;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formula.common.TestFormulaContext;
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
+import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 
 import java.util.Locale;
 
 public abstract class FormulaTestBase extends TestCase {
+  private static final String FORMULA_TEXT_PATTERN="%s(%s)";
   private FormulaContext context;
 
   protected FormulaTestBase() {
@@ -66,9 +68,7 @@ public abstract class FormulaTestBase extends TestCase {
   protected void performTest( final String formulaText,
                               final Object expected,
                               final FormulaContext context ) throws Exception {
-    final Formula formula = new Formula( formulaText );
-    formula.initialize( context );
-    final Object formulaResult = formula.evaluateTyped().getValue();
+    final Object formulaResult = evaluateFormula( formulaText, context ).getValue();
     if ( expected instanceof Comparable && formulaResult instanceof Comparable ) {
       final Comparable<Object> resultComparable = (Comparable<Object>) formulaResult;
       final Comparable<Object> expectedComparable = (Comparable<Object>) expected;
@@ -84,7 +84,7 @@ public abstract class FormulaTestBase extends TestCase {
       Object[] resultArray = (Object[]) formulaResult;
       Assert.assertArrayEquals( expectedArray, resultArray );
     } else {
-      assertEquals( "Failure on " + formula, expected, formulaResult );
+      assertEquals( "Failure on [" + formulaText + ']', expected, formulaResult );
     }
   }
 
@@ -97,5 +97,56 @@ public abstract class FormulaTestBase extends TestCase {
       assertFalse( StringUtils.isEmpty( functionDesc.getParameterDescription( x, Locale.ENGLISH ) ) );
       assertFalse( StringUtils.isEmpty( functionDesc.getParameterDisplayName( x, Locale.ENGLISH ) ) );
     }
+  }
+
+  /**
+   * <p>Returns a text representation of the invocation to the given function using the given parameters.</p>
+   *
+   * @param functionName    the name of the formula to be used
+   * @param parameterValues the parameters to be used (can be empty)
+   * @return text representation of the invocation to the given function using the given parameters.
+   */
+  protected String getFormulaText( Object functionName, Object[] parameterValues ) {
+
+    return String.format( FORMULA_TEXT_PATTERN, functionName, getParametersAsText( parameterValues, ';' ) );
+  }
+
+  /**
+   * <p>Returns a text representation of the invocation to the given function using the given parameters.</p>
+   *
+   * @param parameterValues the parameters to be used (can be empty)
+   * @return text representation of the invocation to the given function using the given parameters.
+   */
+  protected String getParametersAsText( Object[] parameterValues, final char separatorToUse ) {
+    StringBuilder sb = new StringBuilder();
+
+    if ( null != parameterValues ) {
+      char separator = ' ';
+      for ( Object parameterValue : parameterValues ) {
+        sb.append( separator );
+        separator = separatorToUse;
+
+        if ( parameterValue instanceof Object[] ) {
+          sb.append( '{' ).append( getParametersAsText( (Object[]) parameterValue, '|' ) ).append( '}' );
+        } else if ( parameterValue instanceof Number ) {
+          sb.append( parameterValue );
+        } else if ( parameterValue instanceof Boolean ) {
+          sb.append( parameterValue.toString().toUpperCase() ).append( "()" );
+        } else if ( parameterValue instanceof String ) {
+          sb.append( '"' ).append( parameterValue ).append( '"' );
+        } else {
+          sb.append( parameterValue );
+        }
+      }
+    }
+
+    return sb.toString();
+  }
+
+  protected TypeValuePair evaluateFormula( final String formulaText, final FormulaContext context )
+    throws Exception {
+    final Formula formula = new Formula( formulaText );
+    formula.initialize( context );
+    return formula.evaluateTyped();
   }
 }

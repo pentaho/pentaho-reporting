@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.typing;
@@ -47,6 +47,19 @@ public interface TypeRegistry {
    * @throws TypeConversionException if the type cannot be represented as number.
    */
   public Number convertToNumber( Type type1, Object value )
+    throws EvaluationException;
+
+  /**
+   * Converts the object of the given type into a number. If the object is not convertible, a NumberFormatException is
+   * thrown. (This conversion is used by the operator implementations.)
+   *
+   * @param type1
+   * @param value
+   * @param strictTypeChecks
+   * @return the value as number or ZERO if the value is unconvertible.
+   * @throws TypeConversionException if the type cannot be represented as number.
+   */
+  public Number convertToNumber( Type type1, Object value, final boolean strictTypeChecks )
     throws EvaluationException;
 
   /**

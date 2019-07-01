@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2018 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.formula.function.math;
@@ -25,11 +25,9 @@ import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 
 import java.math.BigDecimal;
 
-/**
- * @author Cedric Pronzato
- */
-public class AverageFunctionTest extends FormulaTestBase {
-  private static final String FORMULA_NAME = "AVERAGE";
+public class AverageAFunctionTest extends FormulaTestBase {
+  private static final double DELTA = 0.0000001;
+  private static final String FORMULA_NAME = "AVERAGEA";
 
   private FormulaContext context = new TestFormulaContext();
 
@@ -44,7 +42,9 @@ public class AverageFunctionTest extends FormulaTestBase {
     // Logical values
     { BigDecimal.valueOf( 3 ), new Object[] { false, true, 5, 6 } },
     // Number as a string and Logical values
-    { BigDecimal.valueOf( 3 ), new Object[] { false, true, "5", 6 } }
+    { BigDecimal.valueOf( 3 ), new Object[] { false, true, "5", 6 } },
+    // String not convertible to number
+    { BigDecimal.valueOf( 3 ), new Object[] { "xpto", 1, 5, 6 } }
   };
 
   public Object[][] createDataTest() {
@@ -57,8 +57,7 @@ public class AverageFunctionTest extends FormulaTestBase {
       BigDecimal expectedResult = (BigDecimal) testValues[ 0 ];
       Object[] parameters = (Object[]) testValues[ 1 ];
 
-      TypeValuePair res =
-        evaluateFormula( getFormulaText( FORMULA_NAME, parameters ), context );
+      TypeValuePair res = evaluateFormula( getFormulaText( FORMULA_NAME, parameters ), context );
       assertNotNull( res );
       Object resValue = res.getValue();
       assertNotNull( resValue );
@@ -82,7 +81,8 @@ public class AverageFunctionTest extends FormulaTestBase {
     assertNotNull( res );
     Object resValue = res.getValue();
     assertNotNull( resValue );
-    assertEquals( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE, resValue );
+    assertTrue( resValue instanceof BigDecimal );
+    assertEquals( BigDecimal.ZERO, resValue );
   }
 
   public void testStringParameters_Mix() throws Exception {
@@ -92,7 +92,9 @@ public class AverageFunctionTest extends FormulaTestBase {
     assertNotNull( res );
     Object resValue = res.getValue();
     assertNotNull( resValue );
-    assertEquals( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE, resValue );
+    assertTrue( resValue instanceof BigDecimal );
+    assertEquals( ( ( 0 + 100 + 2.5 + ( -1 ) + 0 + ( +200 ) + ( -1.5 ) ) / 8.0 ),
+      ( (BigDecimal) resValue ).doubleValue(), DELTA );
   }
 
   public void testLogicalParameters() throws Exception {
