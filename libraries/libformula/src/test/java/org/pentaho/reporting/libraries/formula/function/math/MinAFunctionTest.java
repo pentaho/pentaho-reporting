@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2018 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.formula.function.math;
@@ -25,11 +25,8 @@ import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 
 import java.math.BigDecimal;
 
-/**
- * @author Cedric Pronzato
- */
-public class AverageFunctionTest extends FormulaTestBase {
-  private static final String FORMULA_NAME = "AVERAGE";
+public class MinAFunctionTest extends FormulaTestBase {
+  private static final String FORMULA_NAME = "MINA";
 
   private FormulaContext context = new TestFormulaContext();
 
@@ -38,13 +35,22 @@ public class AverageFunctionTest extends FormulaTestBase {
    */
   private static final Object[][] VALID_EXAMPLES = {
     // Only numbers
-    { BigDecimal.valueOf( 3 ), new Object[] { 0, 1, 5, 6 } },
+    { BigDecimal.valueOf( -3 ), new Object[] { 0, 10, 2, -3, 1 } },
+    { BigDecimal.valueOf( -10 ), new Object[] { -5, -10, -1 } },
     // Number as a string
-    { BigDecimal.valueOf( 3 ), new Object[] { 0, 1, "5", 6 } },
+    { BigDecimal.ZERO, new Object[] { 0, 1, "2", 3, "4" } },
     // Logical values
-    { BigDecimal.valueOf( 3 ), new Object[] { false, true, 5, 6 } },
+    { BigDecimal.valueOf( -3 ), new Object[] { false, 10, 2, -3, true } },
+    { BigDecimal.valueOf( -3 ), new Object[] { false, 0, -2, -3, true } },
+    { BigDecimal.ZERO, new Object[] { 0.5, false, 10 } },
+    { BigDecimal.ONE, new Object[] { 5.5, true, 10 } },
     // Number as a string and Logical values
-    { BigDecimal.valueOf( 3 ), new Object[] { false, true, "5", 6 } }
+    { BigDecimal.valueOf( -3 ), new Object[] { false, "10", 2, -3, 1 } },
+    { BigDecimal.ZERO, new Object[] { false, "10", 2, true } },
+    { BigDecimal.valueOf( -10 ), new Object[] { false, "-10", 2, true } },
+    // String not convertible to number
+    { BigDecimal.valueOf( -3 ), new Object[] { "xpto", 10, 2, -3, 1 } },
+    { BigDecimal.ZERO, new Object[] { "xpto", 10, 2, 3, 1 } }
   };
 
   public Object[][] createDataTest() {
@@ -73,7 +79,7 @@ public class AverageFunctionTest extends FormulaTestBase {
     Object resValue = res.getValue();
     assertNotNull( resValue );
     assertTrue( resValue instanceof BigDecimal );
-    assertEquals( BigDecimal.valueOf( 33 ), resValue );
+    assertEquals( BigDecimal.valueOf( -1 ), resValue );
   }
 
   public void testStringParameters_NoNumbers() throws Exception {
@@ -82,7 +88,8 @@ public class AverageFunctionTest extends FormulaTestBase {
     assertNotNull( res );
     Object resValue = res.getValue();
     assertNotNull( resValue );
-    assertEquals( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE, resValue );
+    assertTrue( resValue instanceof BigDecimal );
+    assertEquals( BigDecimal.ZERO, resValue );
   }
 
   public void testStringParameters_Mix() throws Exception {
@@ -92,7 +99,8 @@ public class AverageFunctionTest extends FormulaTestBase {
     assertNotNull( res );
     Object resValue = res.getValue();
     assertNotNull( resValue );
-    assertEquals( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE, resValue );
+    assertTrue( resValue instanceof BigDecimal );
+    assertEquals( BigDecimal.valueOf( -1.5 ), resValue );
   }
 
   public void testLogicalParameters() throws Exception {
@@ -104,7 +112,7 @@ public class AverageFunctionTest extends FormulaTestBase {
     Object resValue = res.getValue();
     assertNotNull( resValue );
     assertTrue( resValue instanceof BigDecimal );
-    assertEquals( BigDecimal.valueOf( ( 0 + 1 + 0 + 0 ) / 4.0 ), resValue );
+    assertEquals( BigDecimal.ZERO, resValue );
   }
 
   public void testZeroParameters() throws Exception {
@@ -112,6 +120,15 @@ public class AverageFunctionTest extends FormulaTestBase {
     assertNotNull( res );
     Object resValue = res.getValue();
     assertNotNull( resValue );
-    assertEquals( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE, resValue );
+    assertTrue( resValue instanceof BigDecimal );
+    assertEquals( BigDecimal.ZERO, resValue );
+  }
+
+  public void testParameterNA() throws Exception {
+    TypeValuePair res = evaluateFormula( "MINA(NA())", context );
+    assertNotNull( res );
+    Object resValue = res.getValue();
+    assertNotNull( resValue );
+    assertEquals( LibFormulaErrorValue.ERROR_NA_VALUE, resValue );
   }
 }
