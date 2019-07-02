@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ */
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
@@ -38,7 +38,7 @@ import java.math.BigDecimal;
  * @author Cedric Pronzato
  */
 public class MaxFunction implements Function {
-  private static final BigDecimal ZERO = new BigDecimal( 0.0 );
+
   private static final long serialVersionUID = -836670420852371100L;
 
   public MaxFunction() {
@@ -50,7 +50,7 @@ public class MaxFunction implements Function {
     final int parameterCount = parameters.getParameterCount();
 
     if ( parameterCount == 0 ) {
-      return new TypeValuePair( NumberType.GENERIC_NUMBER, ZERO );
+      return new TypeValuePair( NumberType.GENERIC_NUMBER, BigDecimal.ZERO );
     }
 
     final TypeRegistry typeRegistry = context.getTypeRegistry();
@@ -68,15 +68,13 @@ public class MaxFunction implements Function {
         final TypeValuePair nextValue = rawValue.evaluate();
         final Number number = typeRegistry.convertToNumber( nextValue.getType(), nextValue.getValue() );
         final BigDecimal next = NumberUtil.getAsBigDecimal( number );
-        if ( last == null ) {
+
+        if ( last == null || last.compareTo( next ) < 0 ) {
           last = next;
-        } else {
-          if ( last.compareTo( next ) == -1 ) {
-            last = next;
-          }
         }
       }
     }
+
     if ( last == null ) {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }

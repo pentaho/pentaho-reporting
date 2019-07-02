@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ */
 
 package org.pentaho.reporting.libraries.formula.typing;
 
@@ -129,6 +129,11 @@ public class DefaultTypeRegistry implements TypeRegistry {
    */
   public Number convertToNumber( final Type sourceType, final Object value )
     throws EvaluationException {
+    return convertToNumber( sourceType, value, true );
+  }
+
+  public Number convertToNumber( final Type sourceType, final Object value, final boolean strictTypeChecks )
+    throws EvaluationException {
     final LocalizationContext localizationContext = context.getLocalizationContext();
 
     if ( value == null ) {
@@ -201,6 +206,10 @@ public class DefaultTypeRegistry implements TypeRegistry {
           return number;
         }
       }
+
+      if ( !strictTypeChecks ) {
+        return 0;
+      }
     }
 
     throw TypeConversionException.getInstance();
@@ -209,8 +218,7 @@ public class DefaultTypeRegistry implements TypeRegistry {
   private static Number parse( final NumberFormat format, final String source ) {
     final ParsePosition parsePosition = new ParsePosition( 0 );
     final Number result = format.parse( source, parsePosition );
-    if ( parsePosition.getIndex() == 0 ||
-      parsePosition.getIndex() != source.length() ) {
+    if ( parsePosition.getIndex() == 0 || parsePosition.getIndex() != source.length() ) {
       return null;
     }
     return result;
@@ -219,8 +227,7 @@ public class DefaultTypeRegistry implements TypeRegistry {
   private static Date parse( final DateFormat format, final String source ) {
     final ParsePosition parsePosition = new ParsePosition( 0 );
     final Date result = format.parse( source, parsePosition );
-    if ( parsePosition.getIndex() == 0 ||
-      parsePosition.getIndex() != source.length() ) {
+    if ( parsePosition.getIndex() == 0 || parsePosition.getIndex() != source.length() ) {
       return null;
     }
     return result;
@@ -280,8 +287,8 @@ public class DefaultTypeRegistry implements TypeRegistry {
           return format.format( d );
         } else {
           // fallback
-          return DateFormat.getDateTimeInstance
-            ( DateFormat.FULL, DateFormat.FULL, localizationContext.getLocale() ).format( d );
+          return DateFormat.getDateTimeInstance( DateFormat.FULL, DateFormat.FULL, localizationContext.getLocale() )
+            .format( d );
         }
       } else {
         try {
@@ -427,7 +434,6 @@ public class DefaultTypeRegistry implements TypeRegistry {
       } catch ( final EvaluationException e ) {
         throw TypeConversionException.getInstance();
       }
-
     }
 
     throw TypeConversionException.getInstance();
@@ -498,7 +504,7 @@ public class DefaultTypeRegistry implements TypeRegistry {
 
 
   /**
-   * A internal method that converts the given value-pair into a sequence.
+   * An internal method that converts the given value-pair into a sequence.
    *
    * @param targetType
    * @param valuePair
@@ -508,29 +514,27 @@ public class DefaultTypeRegistry implements TypeRegistry {
   private TypeValuePair convertToSequence( final Type targetType, final TypeValuePair valuePair )
     throws EvaluationException {
     if ( targetType.isFlagSet( Type.NUMERIC_SEQUENCE_TYPE ) ) {
-      return new TypeValuePair
-        ( targetType, convertToNumberSequence( valuePair.getType(), valuePair.getValue(), true ) );
+      return new TypeValuePair( targetType,
+        convertToNumberSequence( valuePair.getType(), valuePair.getValue(), true ) );
     }
 
     return new TypeValuePair( targetType, convertToSequence( valuePair.getType(), valuePair.getValue() ) );
   }
 
   public Sequence convertToSequence( final Type type, final Object value ) throws EvaluationException {
-    // sclar
+    // scalar
     if ( type.isFlagSet( Type.SCALAR_TYPE ) ) {
       return new AnySequence( new StaticValue( value, type ), context );
-    }
-    // else already a sequence
-    else if ( type.isFlagSet( Type.SEQUENCE_TYPE ) ) {
+    } else if ( type.isFlagSet( Type.SEQUENCE_TYPE ) ) {
+      // already a sequence
       if ( value instanceof Sequence ) {
         return (Sequence) value;
       } else {
         logger.warn( "Assertation failure: Type declared to be a sequence, but no sequence found inside." );
         throw TypeConversionException.getInstance();
       }
-    }
-    // else an array source
-    else if ( type.isFlagSet( Type.ARRAY_TYPE ) ) {
+    } else if ( type.isFlagSet( Type.ARRAY_TYPE ) ) {
+      // an array source
       if ( value instanceof ArrayCallback ) {
         return new AnySequence( (ArrayCallback) value, context );
       } else if ( value instanceof Object[] ) {
@@ -550,12 +554,11 @@ public class DefaultTypeRegistry implements TypeRegistry {
       if ( value instanceof DefaultNumberSequence ) {
         return (NumberSequence) value;
       } else {
-        // a empty sequence ...
+        // an empty sequence ...
         return new DefaultNumberSequence( context );
       }
-    }
-    // array
-    else if ( type.isFlagSet( Type.ARRAY_TYPE ) ) {
+    } else if ( type.isFlagSet( Type.ARRAY_TYPE ) ) {
+      // array
       if ( value instanceof ArrayCallback ) {
         if ( strict ) {
           return new DefaultNumberSequence( (ArrayCallback) value, context );
@@ -566,11 +569,10 @@ public class DefaultTypeRegistry implements TypeRegistry {
         logger.warn( "Assertation failure: Type declared to be array, but no array callback found inside." );
         throw TypeConversionException.getInstance();
       }
-    }
-    // else scalar
-    if ( type.isFlagSet( Type.SCALAR_TYPE ) || type.isFlagSet( Type.NUMERIC_TYPE ) ) {
-      return new DefaultNumberSequence
-        ( new StaticValue( convertToNumber( type, value ), NumberType.GENERIC_NUMBER ), context );
+    } else if ( type.isFlagSet( Type.SCALAR_TYPE ) || type.isFlagSet( Type.NUMERIC_TYPE ) ) {
+      // else scalar
+      return new DefaultNumberSequence(
+        new StaticValue( convertToNumber( type, value, strict ), NumberType.GENERIC_NUMBER ), context );
     } else {
       return new DefaultNumberSequence( context );
     }
@@ -578,7 +580,7 @@ public class DefaultTypeRegistry implements TypeRegistry {
 
   /**
    * Checks whether the target type would accept the specified value object and value type.<br/> This method is called
-   * for auto conversion of fonction parameters using the conversion type declared by the function metadata.
+   * for auto conversion of function parameters using the conversion type declared by the function metadata.
    *
    * @param targetType
    * @param valuePair
