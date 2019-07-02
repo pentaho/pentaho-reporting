@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ */
 
 package org.pentaho.reporting.libraries.formula.function.text;
 
@@ -37,6 +37,7 @@ public class FixedFunction implements Function {
   private static final long serialVersionUID = 3505313019941429911L;
 
   public FixedFunction() {
+    // To avoid squid:S1186
   }
 
   public TypeValuePair evaluate( final FormulaContext context,
@@ -55,18 +56,26 @@ public class FixedFunction implements Function {
     final NumberFormat currencyInstance =
       NumberFormat.getNumberInstance( context.getLocalizationContext().getLocale() );
 
-    if ( parameterCount == 2 ) {
+    if ( parameterCount >= 2 ) {
       final Type typeDecimals = parameters.getType( 1 );
       final Object valueDecimals = parameters.getValue( 1 );
       final Number resultDecimals = context.getTypeRegistry().convertToNumber( typeDecimals, valueDecimals );
+      if ( resultDecimals == null ) {
+        throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
+      }
       currencyInstance.setMaximumFractionDigits( resultDecimals.intValue() );
       currencyInstance.setMinimumFractionDigits( resultDecimals.intValue() );
     }
+
     if ( parameterCount == 3 ) {
-      final Type typeDecimals = parameters.getType( 2 );
-      final Object valueDecimals = parameters.getValue( 2 );
-      final Boolean resultDecimals = context.getTypeRegistry().convertToLogical( typeDecimals, valueDecimals );
-      currencyInstance.setGroupingUsed( Boolean.TRUE.equals( resultDecimals ) );
+      final Type typeOmitSeparators = parameters.getType( 2 );
+      final Object valueOmitSeparators = parameters.getValue( 2 );
+      final Boolean resultOmitSeparators =
+        context.getTypeRegistry().convertToLogical( typeOmitSeparators, valueOmitSeparators );
+      if ( resultOmitSeparators == null ) {
+        throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
+      }
+      currencyInstance.setGroupingUsed( !Boolean.TRUE.equals( resultOmitSeparators ) );
     }
     return new TypeValuePair( TextType.TYPE, currencyInstance.format( result ) );
   }
@@ -74,5 +83,4 @@ public class FixedFunction implements Function {
   public String getCanonicalName() {
     return "FIXED";
   }
-
 }
