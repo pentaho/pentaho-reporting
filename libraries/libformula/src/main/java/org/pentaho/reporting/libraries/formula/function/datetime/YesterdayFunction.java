@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
@@ -45,8 +45,8 @@ public class YesterdayFunction implements Function {
     throws EvaluationException {
     final Date yesterday = yesterday( context );
 
-    final Date date = DateUtil.normalizeDate( yesterday, DateTimeType.DATETIME_TYPE );
-    return new TypeValuePair( DateTimeType.DATETIME_TYPE, date );
+    final Date date = DateUtil.normalizeDate( yesterday, DateTimeType.DATE_TYPE );
+    return new TypeValuePair( DateTimeType.DATE_TYPE, date );
   }
 
   private static Date yesterday( final FormulaContext context ) {
