@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
@@ -42,7 +42,7 @@ public class TodayFunction implements Function {
     throws EvaluationException {
     final Date now = DateUtil.now( context );
 
-    final Date date = DateUtil.normalizeDate( now, DateTimeType.DATETIME_TYPE );
-    return new TypeValuePair( DateTimeType.DATETIME_TYPE, date );
+    final Date date = DateUtil.normalizeDate( now, DateTimeType.DATE_TYPE );
+    return new TypeValuePair( DateTimeType.DATE_TYPE, date );
   }
 }
