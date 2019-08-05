@@ -198,10 +198,9 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>pentaho-karaf-assembly</artifactId>
+      <groupId>org.hitachivantara.karaf.assemblies</groupId>
+      <artifactId>prd</artifactId>
       <type>zip</type>
-      <classifier>prd</classifier>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -436,12 +435,11 @@
               <configuration>
                 <artifactItems>
                   <artifactItem>
-                    <groupId>pentaho</groupId>
-                    <artifactId>pentaho-karaf-assembly</artifactId>
+                    <groupId>org.hitachivantara.karaf.assemblies</groupId>
+                    <artifactId>prd</artifactId>
                     <type>zip</type>
-                    <classifier>prd</classifier>
                     <overWrite>true</overWrite>
-                    <outputDirectory>${stage.dir}</outputDirectory>
+                    <outputDirectory>${stage.dir}/karaf</outputDirectory>
                   </artifactItem>
                 </artifactItems>
               </configuration>
@@ -511,7 +509,7 @@
                 <outputDirectory>${stage.dir.designer}/system/karaf</outputDirectory>
                 <resources>
                   <resource>
-                    <directory>${stage.dir}/pentaho-karaf-assembly/</directory>
+                    <directory>${stage.dir}/karaf/</directory>
                   </resource>
                 </resources>
               </configuration>
