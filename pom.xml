@@ -973,11 +973,10 @@
         <version>${pentaho-osgi-bundles.version}</version>
       </dependency>
       <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>pentaho-karaf-assembly</artifactId>
+        <groupId>org.hitachivantara.karaf.assemblies</groupId>
+        <artifactId>prd</artifactId>
         <version>${pentaho-karaf.version}</version>
         <type>zip</type>
-        <classifier>prd</classifier>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
