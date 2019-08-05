@@ -1,19 +1,19 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ */
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
@@ -26,7 +26,7 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
  * Describes AverageFunction function.
  *
  * @author Cedric Pronzato
- * @see AverageFunction
+ * @see AverageAFunction
  */
 public class AverageFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 1190836694344833890L;
@@ -43,6 +43,7 @@ public class AverageFunctionDescription extends AbstractFunctionDescription {
     return 0;
   }
 
+  @Override
   public boolean isInfiniteParameterCount() {
     return true;
   }
@@ -55,7 +56,7 @@ public class AverageFunctionDescription extends AbstractFunctionDescription {
    * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
    * optional parameters need not to be filled in.
    *
-   * @return
+   * @return whether the parameter at the given position is mandatory.
    */
   public boolean isParameterMandatory( final int position ) {
     return false;
