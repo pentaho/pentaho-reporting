@@ -83,7 +83,6 @@
     <swt-linux.version>4.3.2</swt-linux.version>
     <jackcess.version>1.2.6</jackcess.version>
     <swingx.version>1.6.1</swingx.version>
-    <commons-logging.version>1.2</commons-logging.version>
     <pentaho-karaf.version>9.0.0.0-SNAPSHOT</pentaho-karaf.version>
     <commons-configuration.version>1.9</commons-configuration.version>
     <commons-collections.version>3.2.2</commons-collections.version>
@@ -2190,11 +2189,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging</artifactId>
-        <version>${commons-logging.version}</version>
       </dependency>
       <dependency>
         <groupId>pentaho</groupId>
