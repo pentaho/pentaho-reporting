@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>pentaho-reporting</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.1.0.28-223</version>
   </parent>
   
   <groupId>org.pentaho.reporting.library</groupId>
