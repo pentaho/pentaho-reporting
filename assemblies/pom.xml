@@ -17,7 +17,6 @@
   <properties>
     <stage.dir.designer>${stage.dir}/report-designer</stage.dir.designer>
     <stage.dir>${project.build.directory}/stage</stage.dir>
-    <pentaho-hadoop-shims-api.version>9.0.0.0-SNAPSHOT</pentaho-hadoop-shims-api.version>
   </properties>
 
   <profiles>
