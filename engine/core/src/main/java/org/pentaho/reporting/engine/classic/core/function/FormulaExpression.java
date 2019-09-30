@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -186,8 +186,8 @@ public final class FormulaExpression extends AbstractExpression {
         if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
           if ( evaluate instanceof ErrorValue ) {
             throw new InvalidReportStateException( String.format(
-                "Failed to evaluate formula-expression with error %s", // NON-NLS
-                evaluate ) );
+                "Failed to evaluate formula-expression %s with error %s", // NON-NLS
+                getName(), evaluate ) );
           }
         }
         return evaluate;
@@ -200,14 +200,14 @@ public final class FormulaExpression extends AbstractExpression {
         final Configuration config = getReportConfiguration();
         if ( "true".equals( config
             .getConfigProperty( "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause" ) ) ) {
-          FormulaExpression.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']', e );
+          FormulaExpression.logger.debug( "Formula at " + getName() + " failed to compute the regular value [" + formulaExpression + ']', e );
         } else {
-          FormulaExpression.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']' );
+          FormulaExpression.logger.debug( "Formula at " + getName() + " failed to compute the regular value [" + formulaExpression + ']' );
         }
       }
       if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
-        throw new InvalidReportStateException( String.format( "Failed to evaluate formula-expression with error %s", // NON-NLS
-            e.getMessage() ), e );
+        throw new InvalidReportStateException( String.format( "Failed to evaluate formula-expression %s with error %s", // NON-NLS
+            getName(), e.getMessage() ), e );
       }
       return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
     }
