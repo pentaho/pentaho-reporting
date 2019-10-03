@@ -187,6 +187,7 @@
     <kafka-clients.version>0.10.2.1</kafka-clients.version>
     <paho.version>1.2.0</paho.version>
     <pentaho-metaverse.version>9.0.0.0-SNAPSHOT</pentaho-metaverse.version>
+    <geronimo-servlet_3.0_spec.version>1.0</geronimo-servlet_3.0_spec.version>
   </properties>
   <dependencyManagement>
     <dependencies>
