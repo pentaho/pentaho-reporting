@@ -182,6 +182,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.apache.karaf.diagnostic</groupId>
+      <artifactId>org.apache.karaf.diagnostic.boot</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.hitachivantara.karaf.assemblies</groupId>
       <artifactId>prd</artifactId>
       <type>zip</type>
