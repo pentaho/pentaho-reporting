@@ -182,11 +182,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.karaf.jaas</groupId>
-      <artifactId>org.apache.karaf.jaas.config</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>org.hitachivantara.karaf.assemblies</groupId>
       <artifactId>prd</artifactId>
       <type>zip</type>
