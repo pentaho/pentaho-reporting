@@ -182,8 +182,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.karaf.jaas</groupId>
-      <artifactId>org.apache.karaf.jaas.config</artifactId>
+      <groupId>org.apache.karaf.diagnostic</groupId>
+      <artifactId>org.apache.karaf.diagnostic.boot</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
