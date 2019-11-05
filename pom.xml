@@ -54,7 +54,7 @@
     <wsdl4j.version>1.6.2</wsdl4j.version>
     <infobright.version>3.4</infobright.version>
     <mstor.version>0.9.13</mstor.version>
-    <servlet3.version>3.0.1</servlet3.version>
+    <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
     <openerp.report.version>0.10.0</openerp.report.version>
     <plugin.checkstyle.version>2.17</plugin.checkstyle.version>
     <jaxrpc.version>1.1</jaxrpc.version>
@@ -187,7 +187,6 @@
     <kafka-clients.version>0.10.2.1</kafka-clients.version>
     <paho.version>1.2.0</paho.version>
     <pentaho-metaverse.version>9.0.0.0-SNAPSHOT</pentaho-metaverse.version>
-    <geronimo-servlet_3.0_spec.version>1.0</geronimo-servlet_3.0_spec.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -2490,7 +2489,7 @@
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
-        <version>${servlet3.version}</version>
+        <version>${javax.servlet-api.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
