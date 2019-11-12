@@ -15,6 +15,7 @@
                        bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
                        expert="false" hidden="false" deprecated="false" preferred="false">
       <attribute name="pattern">{0}?{1}</attribute>
+      <attribute name="patternNoAttributes">{0}</attribute>
     </drilldown-profile>
     <drilldown-profile name="local-url"
                        class="org.pentaho.reporting.engine.classic.extensions.drilldown.FormulaLinkCustomizer"
