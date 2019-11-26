@@ -87,10 +87,10 @@ public final class PhysicalPageKey implements Serializable {
 
   @Override
   public String toString() {
-    return "PhysicalPageKey{" +
-            "logicalPage=[" + logicalPage.getPosition() +
-            "], x=" + x +
-            ", y=" + y +
-            '}';
+    return "PhysicalPageKey{"
+      + "logicalPage=[" + logicalPage.getPosition()
+      + "], x=" + x
+      + ", y=" + y
+      + '}';
   }
 }

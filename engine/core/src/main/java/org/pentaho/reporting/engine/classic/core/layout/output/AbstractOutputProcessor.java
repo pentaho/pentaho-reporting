@@ -38,31 +38,31 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
     private final long footerHeight;
     private final long headerHeight;
 
-    public PageSafeGuardingInformation(long headerHeight, long footerHeight) {
+    public PageSafeGuardingInformation( long headerHeight, long footerHeight ) {
       this.footerHeight = footerHeight;
       this.headerHeight = headerHeight;
     }
 
     @Override
-    public boolean equals(Object o) {
-      if ( this == o ) return true;
-      if ( o == null || getClass() != o.getClass() ) return false;
+    public boolean equals( Object o ) {
+      if ( this == o ) {
+        return true;
+      }
+      if ( o == null || getClass() != o.getClass() ) {
+        return false;
+      }
       PageSafeGuardingInformation that = (PageSafeGuardingInformation) o;
-      return footerHeight == that.footerHeight &&
-              headerHeight == that.headerHeight;
+      return footerHeight == that.footerHeight && headerHeight == that.headerHeight;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(footerHeight, headerHeight);
+      return Objects.hash( footerHeight, headerHeight );
     }
 
     @Override
     public String toString() {
-      return "PageSafeGuardingInformation{" +
-              "headerHeight=" + headerHeight +
-              ", footerHeight=" + footerHeight +
-              '}';
+      return "PageSafeGuardingInformation{headerHeight=" + headerHeight + ", footerHeight=" + footerHeight + '}';
     }
   }
 
@@ -72,7 +72,6 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
 
   private List<LogicalPageKey> logicalPages;
   private List<PageSafeGuardingInformation> logicalPageSafeGuard;
-  private boolean collectSafeGuardingInformation;
   private int pageCursor;
   private long startTime;
 
@@ -83,8 +82,6 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
 
   public void processingStarted( final ReportDefinition report, final ProcessingContext processingContext ) {
     startTime = processingContext.getReportProcessingStartTime();
-    collectSafeGuardingInformation = "true".equals( processingContext.getConfiguration().getConfigProperty
-            ("org.pentaho.reporting.engine.classic.core.CollectSafeGuardingInformation", "false" ) );
     logPerformance( "Time to Pagination" );
   }
 
@@ -101,11 +98,7 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
       throw new IllegalStateException();
     }
 
-    try {
-      return logicalPages.get( page );
-    }catch (IndexOutOfBoundsException e){
-      throw e;
-    }
+    return logicalPages.get( page );
   }
 
   /**
@@ -193,11 +186,9 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
 
       final LogicalPageKey key = createLogicalPage( colCount, rowCount );
       logicalPages.add( key );
-      if (collectSafeGuardingInformation) {
-        logicalPageSafeGuard.add(
-                new PageSafeGuardingInformation( logicalPage.getHeaderArea().getHeight(),
-                logicalPage.getFooterArea().getHeight() ) );
-      }
+      logicalPageSafeGuard.add(
+              new PageSafeGuardingInformation( logicalPage.getHeaderArea().getHeight(),
+              logicalPage.getFooterArea().getHeight() ) );
 
       final int pageCursor = getPageCursor();
       if ( key.getPosition() != pageCursor ) {
@@ -213,20 +204,17 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
 
       final int pageCursor = getPageCursor();
       final LogicalPageKey logicalPageKey = getLogicalPage( pageCursor );
-      if (collectSafeGuardingInformation) {
-        PageSafeGuardingInformation current =
-                new PageSafeGuardingInformation( logicalPage.getHeaderArea().getHeight(),
-                logicalPage.getFooterArea().getHeight() );
-        PageSafeGuardingInformation recorded = logicalPageSafeGuard.get( pageCursor );
-        if (!current.equals( recorded )) {
-          throw new ContentProcessingException( String.format
-                  ("This reports reserved page header or footer height has changed since computing " +
-                                  "pagination information. This report will likely fail. [Expected: %s but found %s]",
-                          recorded,
-                          current ) );
-        }
-
+      PageSafeGuardingInformation current =
+              new PageSafeGuardingInformation( logicalPage.getHeaderArea().getHeight(),
+              logicalPage.getFooterArea().getHeight() );
+      PageSafeGuardingInformation recorded = logicalPageSafeGuard.get( pageCursor );
+      if ( !current.equals( recorded ) ) {
+        throw new ContentProcessingException( String.format(
+          "This reports reserved page header or footer height has changed since computing "
+            + "pagination information. This report will likely fail. [Expected: %s but found %s]",
+          recorded, current ) );
       }
+
       processPageContent( logicalPageKey, logicalPage );
       setPageCursor( pageCursor + 1 );
     }

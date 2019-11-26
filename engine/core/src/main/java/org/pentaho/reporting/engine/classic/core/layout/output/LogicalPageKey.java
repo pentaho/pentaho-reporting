@@ -91,11 +91,11 @@ public final class LogicalPageKey implements Serializable {
 
   @Override
   public String toString() {
-    return "LogicalPageKey{" +
-            "position=" + position +
-            ", width=" + width +
-            ", height=" + height +
-            ", physicalPageKeys=" + Arrays.toString(physicalPageKeys) +
-            '}';
+    return "LogicalPageKey{ position="
+      + "position=" + position
+      + ", width=" + width
+      + ", height=" + height
+      + ", physicalPageKeys=" + Arrays.toString( physicalPageKeys )
+      + '}';
   }
 }
