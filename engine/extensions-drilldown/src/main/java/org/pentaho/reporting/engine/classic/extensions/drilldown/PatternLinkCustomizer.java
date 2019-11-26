@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.drilldown;
@@ -37,7 +37,7 @@ public class PatternLinkCustomizer implements LinkCustomizer {
                         final ParameterEntry[] entries ) throws EvaluationException {
     try {
       final String parameter = computeParameter( formulaContext, entries );
-      final String pattern = computePattern( configIndicator );
+      final String pattern = computePattern( configIndicator, parameter );
       final MessageFormat messageFormat =
         new MessageFormat( pattern, formulaContext.getLocalizationContext().getLocale() );
       return messageFormat.format( new Object[] { reportPath, parameter } );
@@ -50,8 +50,8 @@ public class PatternLinkCustomizer implements LinkCustomizer {
 
   public static String computeParameter( final FormulaContext formulaContext, final ParameterEntry[] entries )
     throws UnsupportedEncodingException, BeanException {
-    final String encoding = formulaContext.getConfiguration().getConfigProperty
-      ( "org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8" );
+    final String encoding = formulaContext.getConfiguration()
+      .getConfigProperty( "org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8" );
     final StringBuilder parameter = new StringBuilder( 1000 );
     for ( int i = 0; i < entries.length; i++ ) {
       final ParameterEntry entry = entries[ i ];
@@ -82,9 +82,10 @@ public class PatternLinkCustomizer implements LinkCustomizer {
     return parameter.toString();
   }
 
-  private String computePattern( final String configIndicator ) throws EvaluationException {
+  private String computePattern( final String configIndicator, String parameter ) throws EvaluationException {
     final DrillDownProfile downProfile = DrillDownProfileMetaData.getInstance().getDrillDownProfile( configIndicator );
-    return (String) downProfile.getAttribute( "pattern" );
+    String pattern = parameter == null || parameter.isEmpty() ? "patternNoAttributes" : "pattern";
+    return downProfile.getAttribute( pattern );
   }
 
 }
