@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
@@ -97,7 +97,6 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     this.password = password;
     this.arguments = definedArgumentNames.clone();
     this.parameter = definedVariableNames.clone();
-
   }
 
   public boolean isStopOnError() {
@@ -247,22 +246,28 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
                                                    final DataFactoryContext context,
                                                    final TransMeta transMeta )
     throws EvaluationException, ParseException, KettleException, ReportDataFactoryException {
-    final Trans trans = prepareTransformation( parameters, context, transMeta );
+    TableProducer tableProducer = null;
+    Trans trans = null;
 
-    StepInterface targetStep = findTargetStep( trans );
-
-    final RowMetaInterface row = transMeta.getStepFields( getStepName() );
-    TableProducer tableProducer = new TableProducer( row, queryLimit, isStopOnError() );
-    targetStep.addRowListener( tableProducer );
-
-    currentlyRunningTransformation = trans;
     try {
+      trans = prepareTransformation( parameters, context, transMeta );
+
+      final RowMetaInterface row = transMeta.getStepFields( getStepName() );
+      tableProducer = new TableProducer( row, queryLimit, isStopOnError() );
+      StepInterface targetStep = findTargetStep( trans );
+      targetStep.addRowListener( tableProducer );
+
+      currentlyRunningTransformation = trans;
+
       trans.startThreads();
       trans.waitUntilFinished();
     } finally {
-      trans.cleanup();
+      if ( null != trans ) {
+        trans.cleanup();
+      }
       currentlyRunningTransformation = null;
     }
+
     if ( trans.getErrors() != 0 && isStopOnError() ) {
       throw new ReportDataFactoryException( String
         .format( "Transformation reported %d records with errors and stop-on-error is true. Aborting.",
@@ -289,9 +294,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
 
   private StepInterface findTargetStep( final Trans trans ) throws ReportDataFactoryException {
     final String stepName = getStepName();
-    final List<StepMetaDataCombi> stepList = trans.getSteps();
-    for ( int i = 0; i < stepList.size(); i++ ) {
-      final StepMetaDataCombi metaDataCombi = stepList.get( i );
+    for ( final StepMetaDataCombi metaDataCombi : trans.getSteps() ) {
       if ( stepName.equals( metaDataCombi.stepname ) ) {
         return metaDataCombi.step;
       }
@@ -333,9 +336,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     return params;
   }
 
-
-  private Repository connectToRepository()
-    throws ReportDataFactoryException, KettleException {
+  private Repository connectToRepository() throws KettleException {
     if ( repositoryName == null ) {
       throw new NullPointerException();
     }
@@ -357,7 +358,6 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     if ( repositoryMeta == null ) {
       // repository object is not necessary for filesystem transformations
       return null;
-      // throw new ReportDataFactoryException("The specified repository " + repositoryName + " is not defined.");
     }
 
     final Repository repository =
@@ -381,8 +381,8 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
   }
 
   public String[] getReferencedFields() throws ParseException {
-    final LinkedHashSet<String> retval = new LinkedHashSet<String>();
-    HashSet<String> args = new HashSet<String>();
+    final LinkedHashSet<String> retval = new LinkedHashSet<>();
+    HashSet<String> args = new HashSet<>();
     for ( final FormulaArgument argument : arguments ) {
       args.addAll( Arrays.asList( argument.getReferencedFields() ) );
     }
@@ -395,7 +395,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
   }
 
   protected ArrayList<Object> internalGetQueryHash() {
-    final ArrayList<Object> retval = new ArrayList<Object>();
+    final ArrayList<Object> retval = new ArrayList<>();
     retval.add( getClass().getName() );
     retval.add( getUsername() );
     retval.add( getPassword() );
