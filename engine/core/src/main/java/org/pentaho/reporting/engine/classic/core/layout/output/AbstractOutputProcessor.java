@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.output;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,16 +34,50 @@ import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
 public abstract class AbstractOutputProcessor implements OutputProcessor {
   private static final Log logger = LogFactory.getLog( AbstractOutputProcessor.class );
 
+  private static final class PageSafeGuardingInformation {
+    private final long footerHeight;
+    private final long headerHeight;
+
+    public PageSafeGuardingInformation( long headerHeight, long footerHeight ) {
+      this.footerHeight = footerHeight;
+      this.headerHeight = headerHeight;
+    }
+
+    @Override
+    public boolean equals( Object o ) {
+      if ( this == o ) {
+        return true;
+      }
+      if ( o == null || getClass() != o.getClass() ) {
+        return false;
+      }
+      PageSafeGuardingInformation that = (PageSafeGuardingInformation) o;
+      return footerHeight == that.footerHeight && headerHeight == that.headerHeight;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash( footerHeight, headerHeight );
+    }
+
+    @Override
+    public String toString() {
+      return "PageSafeGuardingInformation{headerHeight=" + headerHeight + ", footerHeight=" + footerHeight + '}';
+    }
+  }
+
   protected static final int PROCESSING_PAGES = 0;
   protected static final int PROCESSING_CONTENT = 2;
   private int processingState;
 
   private List<LogicalPageKey> logicalPages;
+  private List<PageSafeGuardingInformation> logicalPageSafeGuard;
   private int pageCursor;
   private long startTime;
 
   protected AbstractOutputProcessor() {
     logicalPages = new ArrayList<LogicalPageKey>();
+    logicalPageSafeGuard = new ArrayList<>();
   }
 
   public void processingStarted( final ReportDefinition report, final ProcessingContext processingContext ) {
@@ -151,6 +186,10 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
 
       final LogicalPageKey key = createLogicalPage( colCount, rowCount );
       logicalPages.add( key );
+      logicalPageSafeGuard.add(
+              new PageSafeGuardingInformation( logicalPage.getHeaderArea().getHeight(),
+              logicalPage.getFooterArea().getHeight() ) );
+
       final int pageCursor = getPageCursor();
       if ( key.getPosition() != pageCursor ) {
         throw new IllegalStateException( "Expected position " + pageCursor + " is not the key's position "
@@ -165,6 +204,17 @@ public abstract class AbstractOutputProcessor implements OutputProcessor {
 
       final int pageCursor = getPageCursor();
       final LogicalPageKey logicalPageKey = getLogicalPage( pageCursor );
+      PageSafeGuardingInformation current =
+              new PageSafeGuardingInformation( logicalPage.getHeaderArea().getHeight(),
+              logicalPage.getFooterArea().getHeight() );
+      PageSafeGuardingInformation recorded = logicalPageSafeGuard.get( pageCursor );
+      if ( !current.equals( recorded ) ) {
+        throw new ContentProcessingException( String.format(
+          "This reports reserved page header or footer height has changed since computing "
+            + "pagination information. This report will likely fail. [Expected: %s but found %s]",
+          recorded, current ) );
+      }
+
       processPageContent( logicalPageKey, logicalPage );
       setPageCursor( pageCursor + 1 );
     }
