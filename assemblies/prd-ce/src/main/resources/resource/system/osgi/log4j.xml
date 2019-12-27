@@ -55,6 +55,10 @@
       </layout>
    </appender>
 
+   <category name="org.pentaho.hadoop.shim.DriverManager">
+      <priority value="INFO"/>
+   </category>
+
    <!-- ================ -->
    <!-- Limit categories -->
    <!-- ================ -->
