@@ -134,6 +134,10 @@
     <priority value="INFO"/>
   </category>
 
+  <category name="org.pentaho.hadoop.shim.DriverManager">
+    <priority value="INFO"/>
+  </category>
+
   <root>
     <priority value="INFO"/>
     <appender-ref ref="CONSOLE"/>
