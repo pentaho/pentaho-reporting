@@ -12,12 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Creation-Date: 10.11.2006, 13:04:36
@@ -86,5 +87,15 @@ public final class LogicalPageKey implements Serializable {
     result = 29 * result + width;
     result = 29 * result + height;
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "LogicalPageKey{ position="
+      + "position=" + position
+      + ", width=" + width
+      + ", height=" + height
+      + ", physicalPageKeys=" + Arrays.toString( physicalPageKeys )
+      + '}';
   }
 }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
@@ -83,5 +83,14 @@ public final class PhysicalPageKey implements Serializable {
     result = 29 * result + x;
     result = 29 * result + y;
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "PhysicalPageKey{"
+      + "logicalPage=[" + logicalPage.getPosition()
+      + "], x=" + x
+      + ", y=" + y
+      + '}';
   }
 }
