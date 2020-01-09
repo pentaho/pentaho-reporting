@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2018 Hitachi Vantara.  All rights reserved.
+* Copyright (c) 2002-2020 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -275,7 +275,15 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     if ( fileDto == null ) {
       throw new FileSystemException( BI_SERVER_NULL_OBJECT );
     }
-    final Date lastModifiedDate = RepositoryFileAdapter.unmarshalDate( fileDto.getLastModifiedDate() );
+
+    final String lastModifiedDateRaw = fileDto.getLastModifiedDate();
+    if ( lastModifiedDateRaw.isEmpty() ) {
+      // Folders have an empty lastModifiedDate field
+      // Returning -1 here means that lastModifiedDate wasn't found
+      return -1;
+    }
+
+    final Date lastModifiedDate = RepositoryFileAdapter.unmarshalDate( lastModifiedDateRaw );
     if ( lastModifiedDate == null ) {
       logger.error( "Repository returned <null> for last-modified-date on file: " + file );
       return -1;
