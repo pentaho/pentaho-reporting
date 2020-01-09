@@ -340,13 +340,13 @@ public class LookAndFeelStep extends AbstractWizardStep {
         SELECTED_INDEX_PROPERTY_NAME, new BooleanToIntegerBindingConverter() );
     final Binding templatesBinding = getBindingFactory()
       .createBinding( this, TEMPLATES_PROPERTY_NAME, AVAILABLE_TEMPLATES_LB_ID, ELEMENTS_PROPERTY_NAME );
-    getBindingFactory().createBinding( this, SELECTED_TEMPLATE_PROPERTY_NAME, TEMPLATE_IMAGE_ID, SOURCE_PROPERTY_NAME,
+    final Binding imageBinding = getBindingFactory().createBinding( this, SELECTED_TEMPLATE_PROPERTY_NAME, TEMPLATE_IMAGE_ID, SOURCE_PROPERTY_NAME,
       new SelectedTemplateToImageConverter() );
 
     // update both the gui and the model
     getBindingFactory().setBindingType( Binding.Type.BI_DIRECTIONAL );
     final Binding selectedTemplateBinding = getBindingFactory()
-      .createBinding( AVAILABLE_TEMPLATES_LB_ID, SELECTED_INDEX_PROPERTY_NAME, this, SELECTED_TEMPLATE_PROPERTY_NAME );
+      .createBinding( this, SELECTED_TEMPLATE_PROPERTY_NAME, AVAILABLE_TEMPLATES_LB_ID, SELECTED_INDEX_PROPERTY_NAME );
     getBindingFactory()
       .createBinding( this, START_FROM_FILE_PROPERTY_NAME, NEW_WIZARD_FILE_RB_ID, NOT_SELECTED_PROPERTY_NAME );
     getBindingFactory().createBinding( this, FILENAME_PROPERTY_NAME, WIZARD_FILENAME_TB_ID, VALUE_PROPERTY_NAME );
@@ -354,6 +354,7 @@ public class LookAndFeelStep extends AbstractWizardStep {
       typeBinding.fireSourceChanged();
       templatesBinding.fireSourceChanged();
       selectedTemplateBinding.fireSourceChanged();
+      imageBinding.fireSourceChanged();
     } catch ( Exception e ) {
       if ( getDesignTimeContext() != null ) {
         getDesignTimeContext().error( e );
