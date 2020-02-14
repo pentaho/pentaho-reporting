@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.editor.structuretree;
@@ -168,7 +168,7 @@ public class DataReportTree extends AbstractReportTree {
 
     private void expandAfterDataSourceEdit( final ReportModelEvent event ) {
       final Object element = event.getElement();
-      if ( event.isNodeStructureChanged() == false ) {
+      if ( !event.isNodeStructureChanged() && !event.isNodeAddedEvent() ) {
         return;
       }
       if ( element instanceof AbstractReportDefinition == false ) {
