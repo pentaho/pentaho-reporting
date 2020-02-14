@@ -12,12 +12,12 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.*;
+import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -29,6 +29,8 @@ import java.util.HashMap;
 public class ColorUtility {
   private static final HashMap<Color, String> knownColorNamesByColor;
   private static final HashMap<String, Color> knownColorsByName;
+
+  public static final int BRIGHTNESS_THRESHOLD = 167;
 
   static {
     knownColorNamesByColor = new HashMap<Color, String>();
@@ -187,4 +189,17 @@ public class ColorUtility {
     return new Color( Color.HSBtoRGB( hsb[ 0 ], hsb[ 1 ], Math.min( 1, hsb[ 2 ] / 1.2f ) ) );
   }
 
+  public static int getBrightness( Color color ) {
+    if ( color == null ) {
+      return BRIGHTNESS_THRESHOLD + 1;
+    }
+    final int r = color.getRed();
+    final int g = color.getGreen();
+    final int b = color.getBlue();
+    int brightness = r > g ? r : g;
+    if ( b > brightness ) {
+      brightness = b;
+    }
+    return brightness;
+  }
 }
