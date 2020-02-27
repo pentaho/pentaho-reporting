@@ -182,7 +182,6 @@
     <jt400.version>6.1</jt400.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <test.performance>false</test.performance>
-    <kafka-clients.version>0.10.2.1</kafka-clients.version>
     <pentaho-metaverse.version>9.1.0.0-SNAPSHOT</pentaho-metaverse.version>
   </properties>
   <dependencyManagement>
