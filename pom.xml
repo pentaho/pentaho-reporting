@@ -71,7 +71,7 @@
     <luciddb.version>0.9.4</luciddb.version>
     <pdi-osgi-bridge.version>8.3.0.0-SNAPSHOT</pdi-osgi-bridge.version>
     <antlr.version>3.5.2</antlr.version>
-    <sqleonardo.version>2018.10</sqleonardo.version>
+    <sqleonardo.version>2020.02</sqleonardo.version>
     <commons-validator.version>1.3.1</commons-validator.version>
     <pentaho-metadata.version>8.3.0.0-SNAPSHOT</pentaho-metadata.version>
     <pentaho.pentaho-versionchecker.version>${project.version}</pentaho.pentaho-versionchecker.version>
