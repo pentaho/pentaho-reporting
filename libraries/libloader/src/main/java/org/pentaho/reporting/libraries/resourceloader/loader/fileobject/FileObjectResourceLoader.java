@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2006 - 2020 Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.resourceloader.loader.fileobject;
@@ -32,7 +32,10 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKeyUtils;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoader;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import java.io.File;
 
@@ -106,9 +109,31 @@ public class FileObjectResourceLoader implements ResourceLoader {
     if ( isSupportedKey( parent ) == false ) {
       throw new ResourceKeyCreationException( "Assertation: Unsupported parent key type" );
     }
-
-    //For now return the resource parent-key as is
-    return parent;
+    try {
+      final File target;
+      if ( path != null ) {
+        final File parentResource = new File( parent.getIdentifierAsString() );
+        final File parentFile = parentResource.getParentFile();
+        if ( parentFile == null ) {
+          throw new FileNotFoundException( "Parent file does not exist" );
+        }
+        target = new File( parentFile, path );
+      } else {
+        return parent;
+      }
+      final Map map;
+      if ( factoryKeys != null ) {
+        map = new HashMap();
+        map.putAll( parent.getFactoryParameters() );
+        map.putAll( factoryKeys );
+      } else {
+        map = parent.getFactoryParameters();
+      }
+      String targetIdentifier = ( (FileObject) parent.getIdentifier() ).getFileSystem() != null ? target.toString() : "solution:" + target.toString();
+      return new ResourceKey( parent.getSchema(), VFS.getManager().resolveFile( targetIdentifier ), map );
+    } catch ( IOException ioe ) {
+      throw new ResourceKeyCreationException( "Failed to create key", ioe );
+    }
   }
 
   public URL toURL( final ResourceKey key ) {
