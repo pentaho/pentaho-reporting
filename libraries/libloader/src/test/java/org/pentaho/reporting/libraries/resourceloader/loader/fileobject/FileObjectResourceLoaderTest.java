@@ -178,17 +178,18 @@ public class FileObjectResourceLoaderTest {
 
   @Test
   public void deriveKeyTest() throws Exception {
+    String parentFolder = System.getProperty( "os.name" ).startsWith( "Windows" ) ? "C:/parentFolder/parentfile.txt" : "/parentFolder/parentfile.txt";
+    String expected = System.getProperty( "os.name" ).startsWith( "Windows" ) ? "file:///C:/parentFolder/test.txt" : "file:///parentFolder/test.txt";
     FileObject identifier = mock( FileObject.class );
     FileName fileName = mock( FileName.class );
     FileSystem fileSystem = mock( FileSystem.class );
     when( identifier.getName() ).thenReturn( fileName );
-    when( fileName.getURI() ).thenReturn( "/parentFolder/parentfile.txt" );
+    when( fileName.getURI() ).thenReturn( parentFolder );
     when( identifier.getFileSystem() ).thenReturn( fileSystem );
-
     FileObjectResourceLoader fileObjectResourceLoader = new FileObjectResourceLoader();
     ResourceKey parent = new ResourceKey( FileObjectResourceLoader.SCHEMA_NAME, identifier, null );
     ResourceKey derivedKey = fileObjectResourceLoader.deriveKey( parent, "test.txt", null );
-    assertEquals( "file:///parentFolder/test.txt", derivedKey.getIdentifierAsString() );
+    assertEquals( expected, derivedKey.getIdentifierAsString() );
   }
 }
 
