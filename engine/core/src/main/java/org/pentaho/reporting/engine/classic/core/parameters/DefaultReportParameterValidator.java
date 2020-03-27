@@ -12,11 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2020 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -298,12 +299,12 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
     return null;
   }
 
-  private boolean isValueMissingForMandatoryParameterCheck( final ParameterDefinitionEntry entry,
-      final Object computedValue ) {
+  @VisibleForTesting
+  boolean isValueMissingForMandatoryParameterCheck( final ParameterDefinitionEntry entry, final Object computedValue ) {
     if ( entry.isMandatory() == false ) {
       return false;
     }
-    if ( computedValue == null || "".equals( computedValue ) ) {
+    if ( computedValue == null ) {
       return true;
     }
 
