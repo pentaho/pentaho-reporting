@@ -12,14 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2008 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2008 - 2020 Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.resourceloader.loader.fileobject;
 
-import junit.framework.TestCase;
+import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystem;
 import org.apache.commons.vfs2.VFS;
+import org.junit.Test;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.LibLoaderBoot;
@@ -31,16 +33,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.nio.file.Paths;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-public class FileObjectResourceLoaderTest extends TestCase {
+public class FileObjectResourceLoaderTest {
   private static final String STRING_SERIALIZATION_PREFIX = "resourcekey:"; //$NON-NLS-1$
   private static final String DESERIALIZE_PREFIX = STRING_SERIALIZATION_PREFIX + FileObjectResourceLoader.class.getName();
 
   public FileObjectResourceLoaderTest() {
-  }
-
-  public FileObjectResourceLoaderTest( final String string ) {
-    super( string );
   }
 
   protected void setUp() throws Exception {
@@ -50,6 +55,7 @@ public class FileObjectResourceLoaderTest extends TestCase {
   /**
    * Tests the serialization of FileObject based resource keys
    */
+  @Test
   public void testSerializer() throws Exception {
     final FileObjectResourceLoader fileObjectResourceLoader = new FileObjectResourceLoader();
     final ResourceManager manager = new ResourceManager();
@@ -57,11 +63,11 @@ public class FileObjectResourceLoaderTest extends TestCase {
 
     ResourceKey key = null;
     Map<ParameterKey, Object> factoryParameters = new HashMap<ParameterKey, Object>();
-    String serializedVersion = null;
+    String serializedVersion;
 
     // Test with null parameter
     try {
-      serializedVersion = fileObjectResourceLoader.serialize( null, key );
+      fileObjectResourceLoader.serialize( null, key );
       fail( "Serialization with a null parameter should throw a NullPointerException" ); //$NON-NLS-1$
     } catch ( NullPointerException npe ) {
       // success
@@ -70,7 +76,7 @@ public class FileObjectResourceLoaderTest extends TestCase {
     // Test with a resource key instead of a fileObject key
     try {
       key = manager.createKey( "res://org/pentaho/reporting/libraries/resourceloader/SVG.svg" ); //$NON-NLS-1$
-      serializedVersion = fileObjectResourceLoader.serialize( key, key );
+      fileObjectResourceLoader.serialize( key, key );
       fail( "The resource key should not be handled by the file object resource loader" ); //$NON-NLS-1$
     } catch ( IllegalArgumentException iae ) {
       // success
@@ -95,6 +101,7 @@ public class FileObjectResourceLoaderTest extends TestCase {
   /**
    * Tests the deserialization of FileObject based resource keys
    */
+  @Test
   public void testDeserializer() throws Exception {
     final FileObjectResourceLoader fileObjectResourceLoader = new FileObjectResourceLoader();
 
@@ -147,5 +154,41 @@ public class FileObjectResourceLoaderTest extends TestCase {
 
   }
 
+  @Test( expected = NullPointerException.class )
+  public void deriveKeyNullKeyTest() throws Exception {
+    FileObjectResourceLoader fileObjectResourceLoader = new FileObjectResourceLoader();
+    //ResourceKey parent = new ResourceKey( FileObjectResourceLoader.SCHEMA_NAME, "", null );
+    fileObjectResourceLoader.deriveKey( null, "", null );
+  }
+
+  @Test( expected = ResourceKeyCreationException.class )
+  public void deriveKeyInvalidKeyTest() throws Exception {
+    FileObjectResourceLoader fileObjectResourceLoader = new FileObjectResourceLoader();
+    ResourceKey parent = new ResourceKey( "InvalidSchema", "", null );
+    fileObjectResourceLoader.deriveKey( parent, "", null );
+  }
+
+  @Test
+  public void deriveKeyNullPathTest() throws Exception {
+    FileObjectResourceLoader fileObjectResourceLoader = new FileObjectResourceLoader();
+    ResourceKey parent = new ResourceKey( FileObjectResourceLoader.SCHEMA_NAME, "", null );
+    ResourceKey derivedKey = fileObjectResourceLoader.deriveKey( parent, null, null );
+    assertEquals( parent, derivedKey );
+  }
+
+  @Test
+  public void deriveKeyTest() throws Exception {
+    FileObject identifier = mock( FileObject.class );
+    FileName fileName = mock( FileName.class );
+    FileSystem fileSystem = mock( FileSystem.class );
+    when( identifier.getName() ).thenReturn( fileName );
+    when( fileName.getURI() ).thenReturn( "/parentFolder/parentfile.txt" );
+    when( identifier.getFileSystem() ).thenReturn( fileSystem );
+
+    FileObjectResourceLoader fileObjectResourceLoader = new FileObjectResourceLoader();
+    ResourceKey parent = new ResourceKey( FileObjectResourceLoader.SCHEMA_NAME, identifier, null );
+    ResourceKey derivedKey = fileObjectResourceLoader.deriveKey( parent, "test.txt", null );
+    assertEquals( "file:///parentFolder/test.txt", derivedKey.getIdentifierAsString() );
+  }
 }
 
