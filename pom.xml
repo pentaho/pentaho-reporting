@@ -1455,17 +1455,6 @@
       </dependency>
       <dependency>
         <groupId>bouncycastle</groupId>
-        <artifactId>bcprov-jdk14</artifactId>
-        <version>${bouncycastl.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>bouncycastle</groupId>
         <artifactId>bcmail-jdk14</artifactId>
         <version>${bouncycastl.version}</version>
         <exclusions>

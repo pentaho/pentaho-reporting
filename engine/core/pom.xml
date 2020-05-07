@@ -138,11 +138,6 @@
     </dependency>
     <dependency>
       <groupId>bouncycastle</groupId>
-      <artifactId>bcprov-jdk14</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>bouncycastle</groupId>
       <artifactId>bcmail-jdk14</artifactId>
       <scope>compile</scope>
     </dependency>
