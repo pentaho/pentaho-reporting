@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2008 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2008 - 2020 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formatting;
@@ -93,7 +93,7 @@ public class FastDecimalFormat implements FastFormat {
    * @return the number format or null, if there was an error while creating the format.
    */
   private NumberFormat createFormat( final int type, final Locale locale ) {
-    switch( type ) {
+    switch ( type ) {
       case TYPE_INTEGER: {
         return NumberFormat.getIntegerInstance( locale );
       }
@@ -117,20 +117,31 @@ public class FastDecimalFormat implements FastFormat {
    * @throws IllegalArgumentException if both date and time-style are set to -1.
    */
   public FastDecimalFormat( final int type, final Locale locale ) {
+    this( type, locale, false );
+  }
+
+  /**
+   * Creates a new date-format for the given default date and time style.
+   *
+   * @param type   the number-style, one of TYPE_INTEGER, TYPE_PERCENT, TYPE_CURRENCY or TYPE_DEFAULT.
+   * @param locale the locale.
+   * @param useFormattingFromResources always use formatting specified in resources
+   * @throws IllegalArgumentException if both date and time-style are set to -1.
+   */
+  public FastDecimalFormat( final int type, final Locale locale, final boolean useFormattingFromResources ) {
     if ( locale == null ) {
       throw new NullPointerException();
     }
 
     final NumberFormat rawFormat = createFormat( type, locale );
-    if ( rawFormat instanceof DecimalFormat ) {
+    if ( rawFormat instanceof DecimalFormat && !useFormattingFromResources ) {
       this.decimalFormat = (DecimalFormat) rawFormat;
       this.pattern = decimalFormat.toPattern();
       this.locale = locale;
     } else {
-      final ResourceBundle patterns = ResourceBundle.getBundle
-        ( "org.pentaho.reporting.libraries.formatting.format-patterns" );
+      final ResourceBundle patterns = ResourceBundle.getBundle( "org.pentaho.reporting.libraries.formatting.format-patterns" );
 
-      switch( type ) {
+      switch ( type ) {
         case TYPE_INTEGER: {
           pattern = patterns.getString( "format.integer" );
           break;
