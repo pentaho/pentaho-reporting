@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.designtime.swing;
@@ -124,19 +124,9 @@ public class ColorCellRenderer extends JLabel implements ListCellRenderer, Table
       graphics.setColor( color );
       graphics.fillRect( 0, 0, getWidth(), getHeight() );
 
-      final int r = color.getRed();
-      final int g = color.getGreen();
-      final int b = color.getBlue();
-      int brightness = ( r > g ) ? r : g;
-      if ( b > brightness ) {
-        brightness = b;
-      }
-
-      if ( brightness > 167 ) {
-        setForeground( Color.black );
-      } else {
-        setForeground( Color.white );
-      }
+      setForeground(
+        ( ColorUtility.getBrightness( color ) > ColorUtility.BRIGHTNESS_THRESHOLD ) ? Color.BLACK : Color.WHITE
+      );
     }
     super.paintComponent( graphics );
   }
