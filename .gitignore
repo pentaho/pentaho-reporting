@@ -32,3 +32,4 @@ pom.xml.releaseBackup
 *.iml
 .idea
 
+designer/report-designer-assembly/stage-winlinux/
