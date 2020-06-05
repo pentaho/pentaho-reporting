@@ -100,5 +100,10 @@
       <artifactId>hamcrest-all</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.pentaho</groupId>
+      <artifactId>pentaho-encryption-support</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
