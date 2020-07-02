@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
@@ -29,7 +29,8 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -250,8 +251,8 @@ public class PieChartExpression extends AbstractChartExpression {
       final ExpressionRuntime runtime = getRuntime();
       final Locale locale = runtime.getResourceBundleFactory().getLocale();
 
-      final FastDecimalFormat fastPercent = new FastDecimalFormat( FastDecimalFormat.TYPE_PERCENT, locale );
-      final FastDecimalFormat fastInteger = new FastDecimalFormat( FastDecimalFormat.TYPE_INTEGER, locale );
+      final FastDecimalFormat fastPercent = new FastDecimalFormat( FastDecimalFormat.TYPE_PERCENT, locale, true );
+      final FastDecimalFormat fastInteger = new FastDecimalFormat( FastDecimalFormat.TYPE_INTEGER, locale, true );
 
       final DecimalFormat numFormat = new DecimalFormat( fastInteger.getPattern(), new DecimalFormatSymbols( locale ) );
       numFormat.setRoundingMode( RoundingMode.HALF_UP );
