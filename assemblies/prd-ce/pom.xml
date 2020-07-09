@@ -19,6 +19,7 @@
     </license>
   </licenses>
   <properties>
+    <pentaho-hadoop-shims.version>9.1.0.0-SNAPSHOT</pentaho-hadoop-shims.version>
     <!-- Pentaho drivers kar file dependencies versions -->
     <pentaho-hadoop-shims-cdh61.version>9.1.0.0-SNAPSHOT</pentaho-hadoop-shims-cdh61.version>
     <pentaho-hadoop-shims-hdp30.version>9.1.0.0-SNAPSHOT</pentaho-hadoop-shims-hdp30.version>
@@ -26,6 +27,28 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.pentaho</groupId>
+      <artifactId>shim-api-core</artifactId>
+      <version>${pentaho-hadoop-shims.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.pentaho</groupId>
+      <artifactId>shim-api</artifactId>
+      <version>${pentaho-hadoop-shims.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
     <!-- START Pentaho drivers kar file dependencies -->
     <dependency>
       <groupId>org.pentaho.hadoop.shims</groupId>
