@@ -20,6 +20,6 @@
     <jdkPreference>preferJre</jdkPreference>
     <initialHeapSize>512</initialHeapSize>
     <maxHeapSize>512</maxHeapSize>
-    <opt>-XX:MaxPermSize=256m</opt>
+    <opt></opt>
   </jre>
 </launch4jConfig>
