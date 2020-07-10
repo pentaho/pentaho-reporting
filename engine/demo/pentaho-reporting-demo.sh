@@ -17,4 +17,4 @@
 # Copyright (c) 2013-2019 Hitachi Vantara. All rights reserved.
 # -----------------------------------------------------------------------------------------------
 
-java -XX:MaxPermSize=512m -jar launcher.jar
+java -jar launcher.jar
