@@ -258,7 +258,7 @@ three weeks, stick to the master-branch.
 
 Free support is available via the Pentaho Reporting forum.
 
-  https://forums.pentaho.com/forums/78-Pentaho-Reporting/
+  https://community.hitachivantara.com/s/topic/0TO1J0000017kVRWAY/reporting-analytics/
 
 Please note that questions are answered by volunteers, so there is no
 guaranteed response time or level of service.
