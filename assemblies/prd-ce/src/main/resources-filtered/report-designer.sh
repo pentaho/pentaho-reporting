@@ -29,7 +29,7 @@ DIR=`pwd`
 setPentahoEnv
 
 if [[ "$OSTYPE" == "darwin"* ]]; then 
-	"$_PENTAHO_JAVA" -Xms1024m -Xmx2048m -XX:MaxPermSize=512m -Dapple.laf.useScreenMenuBar=true -jar "$DIR/launcher.jar" $@
+	"$_PENTAHO_JAVA" -Xms1024m -Xmx2048m -Dapple.laf.useScreenMenuBar=true -jar "$DIR/launcher.jar" $@
 else
-	"$_PENTAHO_JAVA" -Xms1024m -Xmx2048m -XX:MaxPermSize=512m -jar "$DIR/launcher.jar" $@
+	"$_PENTAHO_JAVA" -Xms1024m -Xmx2048m -jar "$DIR/launcher.jar" $@
 fi

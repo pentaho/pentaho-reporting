@@ -92,7 +92,7 @@ If you get OutOfMemoryErrors pointing to a JUnitTask, or if you get OutOfMemory
 setting the MAVEN\_OPTS environment variable:
 
 ```
-$ export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
+$ export MAVEN_OPTS="-Xmx1024m"
 ```
 
 __IntelliJ__
