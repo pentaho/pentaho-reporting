@@ -92,7 +92,6 @@ public class Prd6072Test {
 
         final StreamHtmlOutputProcessor outputProcessor =
           new StreamHtmlOutputProcessor( report.getConfiguration() );
-        //outputProcessor.setFlowSelector( new SinglePageFlowSelector( 0, true ) );
 
         final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
         printer.setContentWriter( root, new DefaultNameGenerator( root, "report.html" ) );
