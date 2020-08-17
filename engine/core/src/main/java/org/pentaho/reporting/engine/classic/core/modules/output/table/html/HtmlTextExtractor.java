@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2020 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
@@ -88,6 +88,11 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
 
   public boolean performOutput( final RenderBox content, final StyleBuilder.StyleCarrier[] cellStyle )
     throws IOException {
+    return performOutput( content, cellStyle, true );
+  }
+
+  public boolean performOutput( final RenderBox content, final StyleBuilder.StyleCarrier[] cellStyle, boolean writeAttrs )
+    throws IOException {
     styleBuilder.clear();
     clearText();
     setRawResult( null );
@@ -100,7 +105,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
       if ( nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
         processInitialBox( (ParagraphRenderBox) content );
       } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
-        processRenderableContent( (RenderableReplacedContentBox) content );
+        processRenderableContent( (RenderableReplacedContentBox) content, writeAttrs );
       } else {
         processBoxChilds( content );
       }
@@ -276,12 +281,20 @@ public class HtmlTextExtractor extends DefaultTextExtractor {
   }
 
   protected void processRenderableContent( final RenderableReplacedContentBox node ) {
+    processRenderableContent( node, true );
+  }
+
+  protected void processRenderableContent( final RenderableReplacedContentBox node, boolean writeAttrs ) {
     try {
       final ReportAttributeMap map = node.getAttributes();
       final AttributeList attrs = new AttributeList();
       HtmlTagHelper.applyHtmlAttributes( map, attrs );
-      if ( attrs.isEmpty() == false ) {
-        xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attrs, XmlWriterSupport.OPEN );
+      if ( !attrs.isEmpty() ) {
+        if ( writeAttrs ) {
+          xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attrs, XmlWriterSupport.OPEN );
+        } else {
+          xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, new AttributeList(), XmlWriterSupport.OPEN );
+        }
       }
 
       textExtractorHelper.writeLocalAnchor( node.getStyleSheet() );
