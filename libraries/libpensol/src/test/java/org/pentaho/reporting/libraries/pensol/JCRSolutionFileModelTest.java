@@ -20,6 +20,7 @@ package org.pentaho.reporting.libraries.pensol;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
@@ -29,8 +30,7 @@ import javax.ws.rs.core.MediaType;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.pentaho.reporting.libraries.pensol.JCRSolutionFileModel.encodePathForRequest;
@@ -91,7 +91,26 @@ public class JCRSolutionFileModelTest {
     assertThat( dto, is( instanceOf( RepositoryFileTreeDto.class ) ) );
   }
 
+  @Test
+  public void stripsTrailingSlashFromUrl() throws Exception {
+    RepositoryFileTreeDto root = new RepositoryFileTreeDto();
+    root.setFile( new RepositoryFileDto() );
+
+    ArgumentCaptor<String> captor = ArgumentCaptor.forClass( String.class );
+    Client client = mockClient( root, captor );
+
+    JCRSolutionFileModel model = new JCRSolutionFileModel( "http://localhost:8080/", client, false );
+    model.refresh();
+
+    String path = "/api/repo/files/tree?depth=-1&filter=*&showHidden=true";
+    assertEquals( captor.getValue(), "http://localhost:8080" + path );
+  }
+
   private Client mockClient( RepositoryFileTreeDto root ) {
+    return mockClient( root, null );
+  }
+
+  private Client mockClient(RepositoryFileTreeDto root, ArgumentCaptor<String> resourceCaptor ) {
     WebResource.Builder builder = mock( WebResource.Builder.class );
     when( builder.get( RepositoryFileTreeDto.class ) ).thenReturn( root );
 
@@ -100,7 +119,11 @@ public class JCRSolutionFileModelTest {
     when( resource.accept( any( MediaType[].class ) ) ).thenReturn( builder );
 
     Client client = mock( Client.class );
-    when( client.resource( anyString() ) ).thenReturn( resource );
+    if ( resourceCaptor == null ) {
+      when( client.resource( anyString() ) ).thenReturn( resource );
+    } else {
+      when( client.resource( resourceCaptor.capture() ) ).thenReturn( resource );
+    }
     return client;
   }
 }
