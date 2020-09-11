@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2008 - 2018 Hitachi Vantara, .  All rights reserved.
+ * Copyright (c) 2008 - 2020 Hitachi Vantara, .  All rights reserved.
  */
 
 package org.pentaho.reporting.ui.datasources.jdbc.ui;
@@ -159,8 +159,9 @@ public class JdbcDataSourceDialog extends CommonDialog {
     }
   }
 
-  private class InvokeQueryDesignerAction extends AbstractAction implements PropertyChangeListener {
-    private InvokeQueryDesignerAction() {
+  protected class InvokeQueryDesignerAction extends AbstractAction implements PropertyChangeListener {
+    public static final String DEFAULT_SCHEMA = "PUBLIC";
+    protected InvokeQueryDesignerAction() {
       final URL location = ConnectionPanel.class.getResource( "/org/pentaho/reporting/ui/datasources/jdbc/resources/Edit.png" );
       if ( location != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( location ) );
@@ -257,12 +258,13 @@ public class JdbcDataSourceDialog extends CommonDialog {
       }
     }
 
-    private String performQuerySchema( final Connection conn ) {
-      String schema = null;
+    protected String performQuerySchema( final Connection conn ) {
+      String schema = DEFAULT_SCHEMA;
       try {
         final DatabaseMetaData data = conn.getMetaData();
         final boolean isHsql = ( "HSQL Database Engine".equals( data.getDatabaseProductName() ) );
         if ( data.supportsSchemasInTableDefinitions() ) {
+          schema = null;
           final LinkedMap schemas = new LinkedMap();
           final ResultSet rs = data.getSchemas();
           while ( rs.next() ) {
