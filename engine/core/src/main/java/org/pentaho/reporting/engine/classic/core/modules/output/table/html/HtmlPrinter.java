@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2020 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
@@ -234,6 +234,13 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
   public void print( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
       final TableContentProducer contentProducer, final OutputProcessorMetaData metaData, final boolean incremental )
     throws ContentProcessingException {
+    print( logicalPageKey, logicalPage, contentProducer, metaData, incremental, true );
+
+  }
+
+  public void print( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
+      final TableContentProducer contentProducer, final OutputProcessorMetaData metaData, final boolean incremental, final boolean writeAttrs )
+    throws ContentProcessingException {
     try {
       final SheetLayout sheetLayout = contentProducer.getSheetLayout();
       final int startRow = contentProducer.getFinishedRows();
@@ -345,7 +352,8 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
               AttributeNames.Html.SUPPRESS_CONTENT ) ) == false ) {
             // the style of the content-box itself is already contained in the <td> tag. So there is no need
             // to duplicate the style here
-            if ( textExtractor.performOutput( content, cellStyle.toArray() ) == false ) {
+            // already injected cellAttributes on the td tag - don't need to write Attrs again here
+            if ( !textExtractor.performOutput( content, cellStyle.toArray(), writeAttrs ) ) {
               if ( emptyCellsUseCSS == false ) {
                 xmlWriter.writeText( "&nbsp;" );
               }

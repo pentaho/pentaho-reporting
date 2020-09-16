@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2020 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
@@ -78,7 +78,7 @@ public class StreamHtmlOutputProcessor extends AbstractTableOutputProcessor impl
       return;
     }
 
-    printer.print( logicalPageKey, logicalPageBox, tableContentProducer, metaData, true );
+    printer.print( logicalPageKey, logicalPageBox, tableContentProducer, metaData, true, false );
   }
 
   protected void processingContentFinished() {
