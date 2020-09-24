@@ -21,9 +21,7 @@
 #  WARNING: Hitachi Vantara Report Designer needs JDK 1.7 or newer to run.
 #
 
-DIR_REL=`dirname "$0"`
-cd $DIR_REL
-DIR=`pwd`
+DIR=$( cd "$( dirname "$0" )" && pwd )
 
 . "$DIR/set-pentaho-env.sh"
 setPentahoEnv
