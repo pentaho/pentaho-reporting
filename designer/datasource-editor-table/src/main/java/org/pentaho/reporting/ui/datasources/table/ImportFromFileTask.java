@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.ui.datasources.table;
@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -137,14 +138,14 @@ public class ImportFromFileTask implements Runnable, CancelListener {
 
           final Object value;
           if ( cell != null ) {
-            if ( cell.getCellType() == Cell.CELL_TYPE_STRING ) {
+            if ( cell.getCellType() == CellType.STRING ) {
               final RichTextString string = cell.getRichStringCellValue();
               if ( string != null ) {
                 value = string.getString();
               } else {
                 value = null;
               }
-            } else if ( cell.getCellType() == Cell.CELL_TYPE_NUMERIC ) {
+            } else if ( cell.getCellType() == CellType.NUMERIC ) {
               final CellStyle hssfCellStyle = cell.getCellStyle();
               final short dataFormat = hssfCellStyle.getDataFormat();
               final String dataFormatString = hssfCellStyle.getDataFormatString();
@@ -153,7 +154,7 @@ public class ImportFromFileTask implements Runnable, CancelListener {
               } else {
                 value = cell.getNumericCellValue();
               }
-            } else if ( cell.getCellType() == Cell.CELL_TYPE_BOOLEAN ) {
+            } else if ( cell.getCellType() == CellType.BOOLEAN ) {
               value = cell.getBooleanCellValue();
             } else {
               value = cell.getStringCellValue();

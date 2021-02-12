@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helpe
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.PrintSetup;
@@ -196,8 +195,6 @@ public abstract class ExcelPrinterBase {
 
         return workbook;
       } catch ( IOException e ) {
-        logger.warn( "Unable to read predefined xls-data.", e );
-      } catch ( InvalidFormatException e ) {
         logger.warn( "Unable to read predefined xls-data.", e );
       }
     }
@@ -443,7 +440,7 @@ public abstract class ExcelPrinterBase {
       cell.setCellValue( rotatedTextDrawable.getText() );
     } else { // Something we can't handle.
       if ( value == null ) {
-        cell.setCellType( Cell.CELL_TYPE_BLANK );
+        cell.setCellValue( "" );
       } else {
         cell.setCellValue( String.valueOf( value ) );
       }
