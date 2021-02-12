@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2021 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -53,11 +53,11 @@ public final class StaticExcelColorSupport implements ExcelColorProducer {
   static {
     final HashMap indexMap = new HashMap();
     indexMap.putAll( HSSFColor.getIndexHash() );
-    indexMap.put( new Integer( HSSFColor.TAN.index ), new HSSFColor.TAN() );
+    indexMap.put( HSSFColor.HSSFColorPredefined.TAN.getIndex(), HSSFColor.HSSFColorPredefined.TAN.getColor() );
 
     final HashMap tripletMap = new HashMap();
     tripletMap.putAll( HSSFColor.getTripletHash() );
-    tripletMap.put( HSSFColor.TAN.hexString, new HSSFColor.TAN() );
+    tripletMap.put( HSSFColor.HSSFColorPredefined.TAN.getHexString(), HSSFColor.HSSFColorPredefined.TAN.getColor() );
 
     indexes = Collections.unmodifiableMap( indexMap );
     triplets = Collections.unmodifiableMap( tripletMap );
@@ -85,10 +85,10 @@ public final class StaticExcelColorSupport implements ExcelColorProducer {
 
     if ( triplets == null || triplets.isEmpty() ) {
       logger.warn( "Unable to get triplet hashtable" );
-      return HSSFColor.BLACK.index;
+      return HSSFColor.HSSFColorPredefined.BLACK.getIndex();
     }
 
-    short color = HSSFColor.BLACK.index;
+    short color = HSSFColor.HSSFColorPredefined.BLACK.getIndex();
     double minDiff = Double.MAX_VALUE;
 
     // get the color without the alpha chanel

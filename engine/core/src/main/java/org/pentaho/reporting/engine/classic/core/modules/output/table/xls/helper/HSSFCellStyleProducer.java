@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2021 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -159,11 +159,11 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       }
 
       this.dataStyle = 0;
-      this.color = HSSFColor.AUTOMATIC.index;
-      this.colorBottom = HSSFColor.AUTOMATIC.index;
-      this.colorLeft = HSSFColor.AUTOMATIC.index;
-      this.colorRight = HSSFColor.AUTOMATIC.index;
-      this.colorTop = HSSFColor.AUTOMATIC.index;
+      this.color = HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex();
+      this.colorBottom = HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex();
+      this.colorLeft = HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex();
+      this.colorRight = HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex();
+      this.colorTop = HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex();
 
       if ( background != null ) {
         if ( background.getBackgroundColor() != null ) {
