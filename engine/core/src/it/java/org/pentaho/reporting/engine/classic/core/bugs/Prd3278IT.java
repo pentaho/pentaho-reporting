@@ -12,13 +12,13 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
 import org.apache.poi.ss.usermodel.ClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFShape;
+import org.apache.poi.util.Units;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -171,9 +171,9 @@ public class Prd3278IT {
     Assert.assertEquals( 1, clientAnchor.getRow2() );
 
     Assert.assertEquals( 0, clientAnchor.getDx1() );
-    Assert.assertEquals( 400 * XSSFShape.EMU_PER_POINT, clientAnchor.getDx2() );
+    Assert.assertEquals( 400 * Units.EMU_PER_POINT, clientAnchor.getDx2() );
     Assert.assertEquals( 0, clientAnchor.getDy1() );
-    Assert.assertEquals( 400 * XSSFShape.EMU_PER_POINT, clientAnchor.getDy2() );
+    Assert.assertEquals( 400 * Units.EMU_PER_POINT, clientAnchor.getDy2() );
   }
 
   @Test
@@ -191,9 +191,9 @@ public class Prd3278IT {
     Assert.assertEquals( 1, clientAnchor.getRow2() );
 
     Assert.assertEquals( 0, clientAnchor.getDx1() );
-    Assert.assertEquals( 300 * XSSFShape.EMU_PER_POINT, clientAnchor.getDx2() );
+    Assert.assertEquals( 300 * Units.EMU_PER_POINT, clientAnchor.getDx2() );
     Assert.assertEquals( 0, clientAnchor.getDy1() );
-    Assert.assertEquals( 300 * XSSFShape.EMU_PER_POINT, clientAnchor.getDy2() );
+    Assert.assertEquals( 300 * Units.EMU_PER_POINT, clientAnchor.getDy2() );
   }
 
   @Test
@@ -210,10 +210,10 @@ public class Prd3278IT {
     Assert.assertEquals( 1, clientAnchor.getRow1() );
     Assert.assertEquals( 1, clientAnchor.getRow2() );
 
-    Assert.assertEquals( 100 * XSSFShape.EMU_PER_POINT, clientAnchor.getDx1() );
-    Assert.assertEquals( 300 * XSSFShape.EMU_PER_POINT, clientAnchor.getDx2() );
-    Assert.assertEquals( 100 * XSSFShape.EMU_PER_POINT, clientAnchor.getDy1() );
-    Assert.assertEquals( 300 * XSSFShape.EMU_PER_POINT, clientAnchor.getDy2() );
+    Assert.assertEquals( 100 * Units.EMU_PER_POINT, clientAnchor.getDx1() );
+    Assert.assertEquals( 300 * Units.EMU_PER_POINT, clientAnchor.getDx2() );
+    Assert.assertEquals( 100 * Units.EMU_PER_POINT, clientAnchor.getDy1() );
+    Assert.assertEquals( 300 * Units.EMU_PER_POINT, clientAnchor.getDy2() );
   }
 
 }
