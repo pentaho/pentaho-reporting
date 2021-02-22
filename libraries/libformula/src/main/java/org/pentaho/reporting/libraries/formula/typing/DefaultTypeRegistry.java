@@ -98,7 +98,7 @@ public class DefaultTypeRegistry implements TypeRegistry {
 
   private static final BigDecimal NUM_TRUE = new BigDecimal( "1" );
   private static final BigDecimal NUM_FALSE = new BigDecimal( "0" );
-  private static final BigDecimal ZERO = NUM_FALSE;
+  private static final double ZERO = 0.0;
 
   private FormulaContext context;
 
@@ -413,8 +413,7 @@ public class DefaultTypeRegistry implements TypeRegistry {
       // no need to check between different types of numeric
       if ( value instanceof Number ) {
         final Number num = (Number) value;
-        // Convert Number Type to double and then compare with ZERO to prevent comparison between BigDecimal and Number
-        if ( !( ZERO.doubleValue() == num.doubleValue() ) ) {
+        if ( ZERO != num.doubleValue() ) {
           return Boolean.TRUE;
         }
       }
