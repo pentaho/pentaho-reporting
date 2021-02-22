@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2006 - 2021 Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.formula.typing;
@@ -413,7 +413,8 @@ public class DefaultTypeRegistry implements TypeRegistry {
       // no need to check between different types of numeric
       if ( value instanceof Number ) {
         final Number num = (Number) value;
-        if ( !ZERO.equals( num ) ) {
+        // Convert Number Type to double and then compare with ZERO to prevent comparison between BigDecimal and Number
+        if ( !( ZERO.doubleValue() == num.doubleValue() ) ) {
           return Boolean.TRUE;
         }
       }
