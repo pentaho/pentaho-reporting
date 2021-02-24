@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2019 Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2006 - 2021 Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.formula.typing;
@@ -98,7 +98,7 @@ public class DefaultTypeRegistry implements TypeRegistry {
 
   private static final BigDecimal NUM_TRUE = new BigDecimal( "1" );
   private static final BigDecimal NUM_FALSE = new BigDecimal( "0" );
-  private static final BigDecimal ZERO = NUM_FALSE;
+  private static final double ZERO = 0.0;
 
   private FormulaContext context;
 
@@ -413,7 +413,7 @@ public class DefaultTypeRegistry implements TypeRegistry {
       // no need to check between different types of numeric
       if ( value instanceof Number ) {
         final Number num = (Number) value;
-        if ( !ZERO.equals( num ) ) {
+        if ( ZERO != num.doubleValue() ) {
           return Boolean.TRUE;
         }
       }
