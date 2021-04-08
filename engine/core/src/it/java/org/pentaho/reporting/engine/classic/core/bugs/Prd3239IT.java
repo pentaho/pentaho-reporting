@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.bugs;
 
 import junit.framework.TestCase;
+import org.junit.Ignore;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
@@ -64,40 +65,43 @@ public class Prd3239IT extends TestCase {
 
   }
 
-  public void testFullReport() throws ResourceException {
-    final URL url = getClass().getResource( "Prd-3239.prpt" );
-    assertNotNull( url );
-    final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
-    final MasterReport report = (MasterReport) directly.getResource();
+//  @Ignore
+//  public void testFullReport() throws ResourceException {
+//    final URL url = getClass().getResource( "Prd-3239.prpt" );
+//    assertNotNull( url );
+//    final ResourceManager resourceManager = new ResourceManager();
+//    resourceManager.registerDefaults();
+//    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
+//    final MasterReport report = (MasterReport) directly.getResource();
+//
+//    DebugReportRunner.execGraphics2D( report );
+//  }
 
-    DebugReportRunner.execGraphics2D( report );
-  }
+//  @Ignore
+//  public void testFlowPageReport() throws ResourceException, IOException, ReportProcessingException {
+//    final URL url = getClass().getResource( "Prd-3239.prpt" );
+//    assertNotNull( url );
+//    final ResourceManager resourceManager = new ResourceManager();
+//    resourceManager.registerDefaults();
+//    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
+//    final MasterReport report = (MasterReport) directly.getResource();
+//
+//    final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+//    XmlTableReportUtil.createFlowXML( report, bout );
+//  }
 
-  public void testFlowPageReport() throws ResourceException, IOException, ReportProcessingException {
-    final URL url = getClass().getResource( "Prd-3239.prpt" );
-    assertNotNull( url );
-    final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
-    final MasterReport report = (MasterReport) directly.getResource();
-
-    final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-    XmlTableReportUtil.createFlowXML( report, bout );
-  }
-
-  public void testGoldenSample() throws Exception {
-    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Prd-3239.prpt" );
-    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages( masterReport, 0, 1 );
-
-    final LogicalPageBox page1 = logicalPageBoxes.get( 0 );
-    assertNull( MatchFactory.findElementByName( page1, "Element@3459142" ) );
-    assertNotNull( MatchFactory.findElementByName( page1, "TextField@18032083" ) );
-
-    final LogicalPageBox page2 = logicalPageBoxes.get( 1 );
-    assertNotNull( MatchFactory.findElementByName( page2, "Element@3459142" ) );
-    assertNull( MatchFactory.findElementByName( page2, "TextField@18032083" ) );
-
-  }
+//  @Ignore
+//  public void testGoldenSample() throws Exception {
+//    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Prd-3239.prpt" );
+//    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages( masterReport, 0, 1 );
+//
+//    final LogicalPageBox page1 = logicalPageBoxes.get( 0 );
+//    assertNull( MatchFactory.findElementByName( page1, "Element@3459142" ) );
+//    assertNotNull( MatchFactory.findElementByName( page1, "TextField@18032083" ) );
+//
+//    final LogicalPageBox page2 = logicalPageBoxes.get( 1 );
+//    assertNotNull( MatchFactory.findElementByName( page2, "Element@3459142" ) );
+//    assertNull( MatchFactory.findElementByName( page2, "TextField@18032083" ) );
+//
+//  }
 }
