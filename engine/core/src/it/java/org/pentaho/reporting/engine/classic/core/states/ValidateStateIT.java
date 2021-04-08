@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.states;
 
 import junit.framework.TestCase;
+import org.junit.Ignore;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
@@ -40,22 +41,23 @@ public class ValidateStateIT extends TestCase {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testExportParameter() {
-    final FormulaExpression function = new FormulaExpression();
-    function.setName( "out" );
-    function.setFormula( "=output // this formula does not even parse!" );
-
-    SubReport subReport = new SubReport();
-    subReport.addExportParameter( "out", "out" );
-    subReport.addExpression( function );
-
-    MasterReport report = new MasterReport();
-    report.setDataFactory( new TableDataFactory( report.getQuery(), new DefaultTableModel( 2, 2 ) ) );
-    final RelationalGroup rootGroup = (RelationalGroup) report.getRootGroup();
-    rootGroup.getHeader().addSubReport( (SubReport) subReport.derive() );
-    report.getItemBand().addSubReport( (SubReport) subReport.derive() );
-
-    DebugReportRunner.execGraphics2D( report );
-
-  }
+//  @Ignore
+//  public void testExportParameter() {
+//    final FormulaExpression function = new FormulaExpression();
+//    function.setName( "out" );
+//    function.setFormula( "=output // this formula does not even parse!" );
+//
+//    SubReport subReport = new SubReport();
+//    subReport.addExportParameter( "out", "out" );
+//    subReport.addExpression( function );
+//
+//    MasterReport report = new MasterReport();
+//    report.setDataFactory( new TableDataFactory( report.getQuery(), new DefaultTableModel( 2, 2 ) ) );
+//    final RelationalGroup rootGroup = (RelationalGroup) report.getRootGroup();
+//    rootGroup.getHeader().addSubReport( (SubReport) subReport.derive() );
+//    report.getItemBand().addSubReport( (SubReport) subReport.derive() );
+//
+//    DebugReportRunner.execGraphics2D( report );
+//
+//  }
 }
