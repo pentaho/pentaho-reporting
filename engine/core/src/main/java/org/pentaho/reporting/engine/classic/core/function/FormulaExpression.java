@@ -62,7 +62,7 @@ public final class FormulaExpression extends AbstractExpression {
 
   private Boolean failOnError;
 
-  private Object evaluate;
+  private transient Object evaluate;
 
   /**
    * Default Constructor.
@@ -198,25 +198,30 @@ public final class FormulaExpression extends AbstractExpression {
         context.close();
       }
     } catch ( Exception e ) {
-      formulaError = e;
-      if ( FormulaExpression.logger.isDebugEnabled() ) {
-        final Configuration config = getReportConfiguration();
-        if ( "true".equals( config
-            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause" ) ) ) {
-          FormulaExpression.logger.debug( "Formula at " + getName() + " failed to compute the regular value [" + formulaExpression + ']', e );
-        } else {
-          FormulaExpression.logger.debug( "Formula at " + getName() + " failed to compute the regular value [" + formulaExpression + ']' );
-        }
-      }
-      if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
-        if ( evaluate instanceof CustomErrorValue ) {
-          return evaluate;
-        }
-        throw new InvalidReportStateException( String.format( "Failed to evaluate formula-expression %s with error %s", // NON-NLS
-            getName(), e.getMessage() ), e );
-      }
-      return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
+      return computeError( e );
     }
+  }
+
+  private Object computeError( Exception e ) {
+    formulaError = e;
+    if ( FormulaExpression.logger.isDebugEnabled() ) {
+      final Configuration config = getReportConfiguration();
+      if ( "true".equals( config
+          .getConfigProperty( "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause" ) ) ) {
+        FormulaExpression.logger.debug( "Formula at " + getName() + " failed to compute the regular value [" + formulaExpression + ']',
+          e );
+      } else {
+        FormulaExpression.logger.debug( "Formula at " + getName() + " failed to compute the regular value [" + formulaExpression + ']' );
+      }
+    }
+    if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
+      if ( evaluate instanceof CustomErrorValue ) {
+        return evaluate;
+      }
+      throw new InvalidReportStateException( String.format( "Failed to evaluate formula-expression %s with error %s", // NON-NLS
+          getName(), e.getMessage() ), e );
+    }
+    return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
   }
 
   /**
