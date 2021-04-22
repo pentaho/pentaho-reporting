@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2019 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2021 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.formula.CustomErrorValue;
 import org.pentaho.reporting.libraries.formula.ErrorValue;
 import org.pentaho.reporting.libraries.formula.Formula;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
@@ -60,6 +61,8 @@ public final class FormulaExpression extends AbstractExpression {
   private Exception formulaError;
 
   private Boolean failOnError;
+
+  private Object evaluate;
 
   /**
    * Default Constructor.
@@ -182,7 +185,7 @@ public final class FormulaExpression extends AbstractExpression {
       final ReportFormulaContext context = new ReportFormulaContext( getFormulaContext(), expressionRuntime );
       try {
         compiledFormula.initialize( context );
-        final Object evaluate = compiledFormula.evaluate();
+        evaluate = compiledFormula.evaluate();
         if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
           if ( evaluate instanceof ErrorValue ) {
             throw new InvalidReportStateException( String.format(
@@ -206,6 +209,9 @@ public final class FormulaExpression extends AbstractExpression {
         }
       }
       if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
+        if ( evaluate instanceof CustomErrorValue ) {
+          return evaluate;
+        }
         throw new InvalidReportStateException( String.format( "Failed to evaluate formula-expression %s with error %s", // NON-NLS
             getName(), e.getMessage() ), e );
       }
