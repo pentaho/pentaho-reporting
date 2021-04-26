@@ -163,7 +163,7 @@ public final class FormulaExpression extends AbstractExpression {
    */
   private Object computeRegularValue() {
     if ( formulaError != null ) {
-      if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
+      if ( getComputedFailOnError() ) {
         throw new InvalidReportStateException( String.format(
             "Previously failed to evaluate formula-expression with error %s", // NON-NLS
             formulaError ) );
@@ -186,7 +186,7 @@ public final class FormulaExpression extends AbstractExpression {
       try {
         compiledFormula.initialize( context );
         evaluate = compiledFormula.evaluate();
-        if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
+        if ( getComputedFailOnError() ) {
           if ( evaluate instanceof ErrorValue ) {
             throw new InvalidReportStateException( String.format(
                 "Failed to evaluate formula-expression %s with error %s", // NON-NLS
@@ -214,7 +214,7 @@ public final class FormulaExpression extends AbstractExpression {
         FormulaExpression.logger.debug( "Formula at " + getName() + " failed to compute the regular value [" + formulaExpression + ']' );
       }
     }
-    if ( Boolean.TRUE.equals( getComputedFailOnError() ) ) {
+    if ( getComputedFailOnError() ) {
       if ( evaluate instanceof CustomErrorValue ) {
         return evaluate;
       }
