@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2021 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.bsf;
@@ -21,6 +21,7 @@ import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
@@ -101,6 +102,16 @@ public class BSFExpression extends AbstractExpression {
    * @return the evaluated value or null.
    */
   public Object getValue() {
+    boolean allowBeanShellEval = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "false" )
+      .equalsIgnoreCase( "true" );
+
+    if ( !allowBeanShellEval ) {
+      BSFExpression.logger.error( "Scripts are prevented from running by default in order to avoid"
+        + " potential remote code execution.  The system administrator must enable this capability." );
+      return null;
+    }
+
     if ( invalid || expression == null ) {
       return null;
     }

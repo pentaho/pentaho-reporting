@@ -12,20 +12,17 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.scriptable;
-
-import java.util.LinkedHashMap;
-
-import javax.swing.table.TableModel;
 
 import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
@@ -34,6 +31,9 @@ import org.pentaho.reporting.engine.classic.core.states.LegacyDataRowWrapper;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
+import javax.swing.table.TableModel;
+import java.util.LinkedHashMap;
 
 /**
  * A datafactory that uses a bean-scripting framework script to produce a tablemodel.
@@ -141,6 +141,15 @@ public class ScriptableDataFactory extends AbstractDataFactory {
    *           if an error occurred while performing the query.
    */
   public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    boolean allowScriptEval = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "false" )
+      .equalsIgnoreCase( "true" );
+
+    if ( !allowScriptEval ) {
+      throw new ReportDataFactoryException( "Scripts are prevented from running by default in order to avoid"
+        + " potential remote code execution.  The system administrator must enable this capability." );
+    }
+
     final String queryScript = queries.get( query );
     if ( queryScript == null ) {
       throw new ReportDataFactoryException( "No such query" );
