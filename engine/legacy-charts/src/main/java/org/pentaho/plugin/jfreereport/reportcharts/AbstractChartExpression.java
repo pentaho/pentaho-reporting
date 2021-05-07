@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.plugin.jfreereport.reportcharts;
@@ -31,6 +31,7 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.general.Dataset;
 import org.jfree.ui.RectangleEdge;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.DynamicExpression;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
@@ -568,6 +569,15 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
   protected JFreeChart postProcessChart( final JFreeChart originalChart ) {
     if ( postProcessingLanguage == null || postProcessingScript == null ) {
       return originalChart;
+    }
+
+    boolean allowScriptEval = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "false" )
+      .equalsIgnoreCase( "true" );
+
+    if ( !allowScriptEval ) {
+      logger.error( "Scripts are prevented from running by default in order to avoid"
+        + " potential remote code execution.  The system administrator must enable this capability." );
     }
 
     final LegacyDataRowWrapper legacyDataRowWrapper = new LegacyDataRowWrapper();
