@@ -40,6 +40,9 @@ import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.net.URLDecoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -105,11 +108,12 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     this.url = url;
     descriptionEntries = new HashMap<FileName, String>();
 
+    CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
+
     final ClientConfig config = new DefaultClientConfig();
     config.getProperties().put( ClientConfig.PROPERTY_FOLLOW_REDIRECTS, true );
     config.getProperties().put( ClientConfig.PROPERTY_READ_TIMEOUT, timeout );
     this.client = Client.create( config );
-    this.client.addFilter( new CookiesHandlerFilter() ); // must be inserted before HTTPBasicAuthFilter
     this.client.addFilter( new HTTPBasicAuthFilter( username, password ) );
     this.majorVersion = "999";
     this.minorVersion = "999";
