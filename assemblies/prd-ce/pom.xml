@@ -467,12 +467,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>oss-licenses</artifactId>
-      <type>zip</type>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>commons-discovery</groupId>
       <artifactId>commons-discovery</artifactId>
     </dependency>
