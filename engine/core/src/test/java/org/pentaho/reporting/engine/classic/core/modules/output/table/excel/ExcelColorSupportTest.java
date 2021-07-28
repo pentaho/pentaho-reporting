@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.excel;
@@ -65,14 +65,14 @@ public class ExcelColorSupportTest extends TestCase {
     final Color c = Color.WHITE;
     final StaticExcelColorSupport colorSupport = new StaticExcelColorSupport();
     final short nearestColor = colorSupport.getNearestColor( c );
-    assertEquals( HSSFColor.WHITE.index, nearestColor );
+    assertEquals( HSSFColor.HSSFColorPredefined.WHITE.getIndex(), nearestColor );
   }
 
   public void testMappingBlack() {
     final Color c = Color.BLACK;
     final StaticExcelColorSupport colorSupport = new StaticExcelColorSupport();
     final short nearestColor = colorSupport.getNearestColor( c );
-    assertEquals( HSSFColor.BLACK.index, nearestColor );
+    assertEquals( HSSFColor.HSSFColorPredefined.BLACK.getIndex(), nearestColor );
   }
 
 }

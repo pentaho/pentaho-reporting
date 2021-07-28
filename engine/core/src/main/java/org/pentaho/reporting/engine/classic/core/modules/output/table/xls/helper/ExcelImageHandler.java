@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2018 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -29,7 +29,7 @@ import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFShape;
+import org.apache.poi.util.Units;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.LocalImageContainer;
@@ -295,14 +295,14 @@ public class ExcelImageHandler {
     final long cell2xPos = currentLayout.getXPosition( cell2x );
     final long cell2yPos = currentLayout.getYPosition( cell2y );
 
-    final int dx1 = (int) StrictGeomUtility.toExternalValue( ( cb.getX() - cell1xPos ) * XSSFShape.EMU_PER_POINT );
-    final int dy1 = (int) StrictGeomUtility.toExternalValue( ( cb.getY() - cell1yPos ) * XSSFShape.EMU_PER_POINT );
+    final int dx1 = (int) StrictGeomUtility.toExternalValue( ( cb.getX() - cell1xPos ) * Units.EMU_PER_POINT );
+    final int dy1 = (int) StrictGeomUtility.toExternalValue( ( cb.getY() - cell1yPos ) * Units.EMU_PER_POINT );
     final int dx2 =
         (int) Math.max( 0, StrictGeomUtility.toExternalValue( ( cb.getX() + cb.getWidth() - cell2xPos )
-            * XSSFShape.EMU_PER_POINT ) );
+            * Units.EMU_PER_POINT ) );
     final int dy2 =
         (int) Math.max( 0, StrictGeomUtility.toExternalValue( ( cb.getY() + cb.getHeight() - cell2yPos )
-            * XSSFShape.EMU_PER_POINT ) );
+            * Units.EMU_PER_POINT ) );
 
     final ClientAnchor anchor = printerBase.getWorkbook().getCreationHelper().createClientAnchor();
     anchor.setDx1( dx1 );
