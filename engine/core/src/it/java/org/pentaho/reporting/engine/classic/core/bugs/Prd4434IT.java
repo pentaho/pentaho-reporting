@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.bugs;
@@ -23,6 +23,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
@@ -49,10 +50,10 @@ public class Prd4434IT extends TestCase {
     final HSSFSheet sheetAt = wb.getSheetAt( 0 );
     final HSSFRow row = sheetAt.getRow( 0 );
     final HSSFCell cell0 = row.getCell( 0 );
-    assertEquals( Cell.CELL_TYPE_NUMERIC, cell0.getCellType() );
+    assertEquals( CellType.NUMERIC, cell0.getCellType() );
     assertEquals( "yyyy-MM-dd", cell0.getCellStyle().getDataFormatString() );
     final HSSFCell cell1 = row.getCell( 1 );
-    assertEquals( Cell.CELL_TYPE_NUMERIC, cell1.getCellType() );
+    assertEquals( CellType.NUMERIC, cell1.getCellType() );
     assertEquals( "#,###.00;(#,###.00)", cell1.getCellStyle().getDataFormatString() );
   }
 
