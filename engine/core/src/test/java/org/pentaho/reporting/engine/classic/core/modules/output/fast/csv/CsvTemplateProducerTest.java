@@ -35,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVTab
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -50,6 +51,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
  * @author David Griffen
  */
 @RunWith( PowerMockRunner.class )
+@PowerMockIgnore( "jdk.internal.reflect.*" )
 @PrepareForTest( { InstanceID.class, LogicalPageBox.class, NodeLayoutProperties.class, OutputProcessorMetaData.class,
   ParagraphRenderBox.class, RenderBox.class, SheetLayout.class, TableRectangle.class, TemplatingOutputProcessor.class } )
 @SuppressStaticInitializationFor( { "org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet",

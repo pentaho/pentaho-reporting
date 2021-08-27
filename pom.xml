@@ -1852,7 +1852,7 @@
           </exclusion>
           <exclusion>
             <artifactId>activation</artifactId>
-            <groupId>javax.activation</groupId>
+            <groupId>jakarta.activation</groupId>
           </exclusion>
           <exclusion>
             <artifactId>xml-apis</artifactId>

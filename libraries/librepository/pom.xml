@@ -41,5 +41,10 @@
       <artifactId>hamcrest-core</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Endorsed Standards Required for Java 11+ -->
+    <dependency>
+      <groupId>com.sun.activation</groupId>
+      <artifactId>jakarta.activation</artifactId>
+    </dependency>
   </dependencies>
 </project>
