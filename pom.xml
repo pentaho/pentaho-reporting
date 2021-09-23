@@ -154,7 +154,6 @@
     <servlet2.version>2.5</servlet2.version>
     <odfdom-java.version>0.8.6</odfdom-java.version>
     <commons-math.version>1.1</commons-math.version>
-    <gwt.version>2.5.1</gwt.version>
     <javassist.version>3.20.0-GA</javassist.version>
     <grizzly.version>1.9.45</grizzly.version>
     <saxon.version>9.1.0.8</saxon.version>
@@ -2534,7 +2533,6 @@
       <dependency>
         <groupId>com.google.gwt</groupId>
         <artifactId>gwt-servlet</artifactId>
-        <version>${gwt.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.xmlgraphics</groupId>
