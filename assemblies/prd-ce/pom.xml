@@ -28,6 +28,7 @@
     <pentaho-hadoop-shims-cdpdc71.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-cdpdc71.version>
     <pentaho-hadoop-shims-mapr61.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-mapr61.version>
     <pentaho-hadoop-shims-hdi40.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-hdi40.version>
+    <pentaho-mongo-plugin.version>9.3.0.0-SNAPSHOT</pentaho-mongo-plugin.version>
   </properties>
 
   <dependencies>
@@ -452,6 +453,13 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>com.pentaho.di.plugins</groupId>
+      <artifactId>mongodb-plugin</artifactId>
+      <version>${pentaho-mongo-plugin.version}</version>
+      <type>zip</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>pentaho</groupId>
       <artifactId>pdi-dataservice-client-plugin</artifactId>
       <scope>compile</scope>
@@ -577,7 +585,7 @@
                 <goal>unpack-dependencies</goal>
               </goals>
               <configuration>
-                <includeArtifactIds>pentaho-big-data-plugin,pentaho-cassandra-plugin,pdi-xml-plugin,kettle-json-plugin</includeArtifactIds>
+                <includeArtifactIds>pentaho-big-data-plugin,mongodb-plugin,pentaho-cassandra-plugin,pdi-xml-plugin,kettle-json-plugin</includeArtifactIds>
                 <outputDirectory>${stage.dir.designer}/plugins</outputDirectory>
               </configuration>
             </execution>
