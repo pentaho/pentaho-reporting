@@ -28,7 +28,7 @@
     <pentaho-hadoop-shims-cdpdc71.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-cdpdc71.version>
     <pentaho-hadoop-shims-mapr61.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-mapr61.version>
     <pentaho-hadoop-shims-hdi40.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-hdi40.version>
-    <pentaho-mongo-plugin.version>9.3.0.0-SNAPSHOT</pentaho-mongo-plugin.version>
+    <pentaho-mongodb-plugin.version>9.3.0.0-SNAPSHOT</pentaho-mongodb-plugin.version>
   </properties>
 
   <dependencies>
@@ -455,7 +455,7 @@
     <dependency>
       <groupId>com.pentaho.di.plugins</groupId>
       <artifactId>mongodb-plugin</artifactId>
-      <version>${pentaho-mongo-plugin.version}</version>
+      <version>${pentaho-mongodb-plugin.version}</version>
       <type>zip</type>
       <scope>compile</scope>
     </dependency>
