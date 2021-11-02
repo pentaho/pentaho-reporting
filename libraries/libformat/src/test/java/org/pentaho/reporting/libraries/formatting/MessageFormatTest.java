@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2008 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2008 - 2021 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formatting;
@@ -49,7 +49,7 @@ public class MessageFormatTest {
   public void testLocaleAndTimezoneApplied() {
     FastMessageFormat messageFormat =
       new FastMessageFormat( "{0,date,full} {1,number,#,###.##}", Locale.GERMAN, TimeZone.getTimeZone( "PST" ) );
-    Assert.assertEquals( "Sonntag, 25. November 1973 16:52 Uhr PST 1.234,57",
+    Assert.assertEquals( "Sonntag, 25. November 1973 um 16:52:03 Nordamerikanische Westküsten-Normalzeit 1.234,57",
       messageFormat.format( new Object[] { new Date( 123123123123l ), new Double( 1234.567 ) } ) );
 
   }
