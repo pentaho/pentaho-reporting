@@ -1,1 +1,3 @@
-Place any driver kar files you want to install in this directory.
+Big data drivers are not included by default. You are required to download the drivers individually from the
+support portal, if desired. The support portal is https://support.pentaho.com/hc/en-us.
+After downloading a big data driver, add it to this directory and restart the application.
