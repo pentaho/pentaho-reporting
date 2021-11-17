@@ -8,7 +8,7 @@
     <version>8.3.0.0-371</version>
   </parent>
   <artifactId>classic-extensions-scripting</artifactId>
-  <version>8.3.0.0-371</version>
+  <version>8.3.0.0-CUST-258</version>
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
@@ -20,7 +20,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-core</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-CUST-258</version>
     </dependency>
     <dependency>
       <groupId>rhino</groupId>
