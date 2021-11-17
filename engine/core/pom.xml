@@ -8,7 +8,7 @@
     <version>8.3.0.0-371</version>
   </parent>
   <artifactId>classic-core</artifactId>
-  <version>8.3.0.0-371</version>
+  <version>8.3.0.0-CUST-258</version>
   <properties>
     <powermock.version>1.6.3</powermock.version>
     <mockito-all.version>1.10.19</mockito-all.version>
