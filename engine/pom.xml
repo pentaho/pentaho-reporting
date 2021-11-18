@@ -20,67 +20,67 @@
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libswing</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libbase</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libdocbundle</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libfonts</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libformat</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libformula</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libloader</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>librepository</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libserializer</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libxml</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>flute</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libsparkline</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pentaho.reporting.library</groupId>
         <artifactId>libformula</artifactId>
-        <version>8.3.0.0-CUST-258</version>
+        <version>${project.version}</version>
         <classifier>tests</classifier>
       </dependency>
     </dependencies>
