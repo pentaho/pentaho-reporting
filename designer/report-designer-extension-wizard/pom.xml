@@ -20,12 +20,12 @@
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>report-designer</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>wizard-xul</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>jcifs</groupId>

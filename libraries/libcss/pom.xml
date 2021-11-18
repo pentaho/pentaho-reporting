@@ -22,13 +22,13 @@
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libfonts</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-CUST-259</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>flute</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-CUST-259</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

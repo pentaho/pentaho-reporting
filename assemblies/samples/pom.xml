@@ -20,13 +20,13 @@
     <dependency>
       <groupId>org.pentaho.reporting</groupId>
       <artifactId>classic-samples-war</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-758</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-core</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-758</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

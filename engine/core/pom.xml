@@ -25,46 +25,57 @@
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libbase</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libdocbundle</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libfonts</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libformat</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libformula</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libloader</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>librepository</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libserializer</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libxml</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libswing</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>flute</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>
