@@ -8,7 +8,7 @@
     <version>9.0.0.7-758</version>
   </parent>
   <artifactId>classic-core</artifactId>
-  <version>9.0.0.7-758</version>
+  <version>9.0.0.7-CUST-259</version>
   <properties>
     <powermock.version>1.6.3</powermock.version>
     <mockito-all.version>1.10.19</mockito-all.version>
