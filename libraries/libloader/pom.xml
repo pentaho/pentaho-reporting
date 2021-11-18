@@ -25,13 +25,13 @@
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libbase</artifactId>
-      <version>8.3.0.0-CUST-258</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libpixie</artifactId>
-      <version>8.3.0.0-CUST-258</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

@@ -20,27 +20,27 @@
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-core</artifactId>
-      <version>8.3.0.0-CUST-258</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-extensions-xpath</artifactId>
-      <version>8.3.0.0-CUST-258</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-extensions-mondrian</artifactId>
-      <version>8.3.0.0-CUST-258</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-extensions-pmd</artifactId>
-      <version>8.3.0.0-CUST-258</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>legacy-charts</artifactId>
-      <version>8.3.0.0-CUST-258</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>jcifs</groupId>
@@ -73,7 +73,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-core</artifactId>
-      <version>8.3.0.0-CUST-258</version>
+      <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
