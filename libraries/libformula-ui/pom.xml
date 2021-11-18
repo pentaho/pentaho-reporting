@@ -23,13 +23,13 @@
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libformula</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-CUST-258</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libswing</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-CUST-258</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
