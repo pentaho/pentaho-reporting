@@ -20,7 +20,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-core</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
     </dependency>
     <dependency>
       <groupId>pentaho</groupId>

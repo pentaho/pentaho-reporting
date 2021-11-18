@@ -23,115 +23,115 @@
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-cda</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-external</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-jdbc</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-table</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-kettle</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-mondrian</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-olap4j</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-openerp</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-pmd</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-reflection</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-scriptable</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-xpath</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-extensions-sampledata</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-extensions-kettle</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>legacy-functions</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>ext-legacy-charts</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>ext-pentaho</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>ext-wizard</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>ext-toc</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -313,7 +313,7 @@
     <dependency>
       <groupId>org.pentaho</groupId>
       <artifactId>pdi-engine-api</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
     </dependency>
     <dependency>
       <groupId>pentaho</groupId>

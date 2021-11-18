@@ -27,7 +27,7 @@
     <dependency>
       <groupId>org.pentaho.reporting</groupId>
       <artifactId>classic-samples</artifactId>
-      <version>${project.version}</version>
+      <version>8.3.0.0-371</version>
       <type>zip</type>
     </dependency>
   </dependencies>
