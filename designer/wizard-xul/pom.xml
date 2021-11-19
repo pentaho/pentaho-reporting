@@ -20,6 +20,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>wizard-core</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho</groupId>

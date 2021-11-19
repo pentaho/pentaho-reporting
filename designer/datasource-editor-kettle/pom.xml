@@ -24,6 +24,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-extensions-kettle</artifactId>
+      <version>9.0.0.7-758</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
