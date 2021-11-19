@@ -230,6 +230,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libformula</artifactId>
+      <version>9.0.0.7-758</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
