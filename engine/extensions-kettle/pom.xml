@@ -20,7 +20,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-core</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-CUST-259</version>
     </dependency>
     <dependency>
       <groupId>pentaho</groupId>
@@ -150,7 +150,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
       <artifactId>classic-core</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-CUST-259</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

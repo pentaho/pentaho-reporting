@@ -23,19 +23,19 @@
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libbase</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-CUST-259</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libloader</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-CUST-259</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libxml</artifactId>
-      <version>${project.version}</version>
+      <version>9.0.0.7-CUST-259</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
