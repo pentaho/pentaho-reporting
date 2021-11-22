@@ -8,7 +8,7 @@
     <version>9.0.0.7-758</version>
   </parent>
   <artifactId>legacy-charts</artifactId>
-  <version>9.0.0.7-758</version>
+  <version>9.0.0.7-CUST-259</version>
   <licenses>
     <license>
       <name>GNU Lesser General Public License, version 2.1</name>
