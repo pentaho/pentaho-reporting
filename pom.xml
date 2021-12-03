@@ -184,6 +184,7 @@
     <test.performance>false</test.performance>
     <pentaho-metaverse.version>9.3.0.0-SNAPSHOT</pentaho-metaverse.version>
     <encryption-support.version>9.3.0.0-SNAPSHOT</encryption-support.version>
+    <jakarta-annotation-api.version>1.3.5</jakarta-annotation-api.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -2259,6 +2260,17 @@
           <exclusion>
             <artifactId>*</artifactId>
             <groupId>*</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.annotation</groupId>
+        <artifactId>jakarta.annotation-api</artifactId>
+        <version>${jakarta-annotation-api.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
           </exclusion>
         </exclusions>
       </dependency>

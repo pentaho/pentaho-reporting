@@ -18,7 +18,7 @@ REM Copyright (c) 2013 - ${copyright.year} Hitachi Vantara. All rights reserved.
 REM -----------------------------------------------------------------------------------------------
 
 @REM
-@REM WARNING: Pentaho Report Designer needs JDK 1.7 or newer to run.
+@REM WARNING: Pentaho Report Designer needs JDK 11 or newer to run.
 @REM
 setlocal
 cd /D %~dp0
@@ -33,4 +33,26 @@ set PENTAHO_JAVA_HOME=%_PENTAHO_JAVA_HOME%
 :callSetEnv
 call "%~dp0set-pentaho-env.bat"
 
-start "Pentaho Report Designer" "%_PENTAHO_JAVA%" -Dswing.useSystemFontSettings=false -Xms1024m -Xmx2048m -jar "%~dp0launcher.jar" %*
+
+set ISJAVA11=0
+pushd "%_PENTAHO_JAVA_HOME%"
+if exist java.exe goto USEJAVAFROMPENTAHOJAVAHOME
+cd bin
+if exist java.exe goto USEJAVAFROMPENTAHOJAVAHOME
+popd
+pushd "%_PENTAHO_JAVA_HOME%\jre\bin"
+if exist java.exe goto USEJAVAFROMPATH
+goto USEJAVAFROMPATH
+:USEJAVAFROMPENTAHOJAVAHOME
+FOR /F %%a IN ('.\java.exe -version 2^>^&1^|%windir%\system32\find /C "version ""11."') DO (SET /a ISJAVA11=%%a)
+GOTO VERSIONCHECKDONE
+:USEJAVAFROMPATH
+FOR /F %%a IN ('java -version 2^>^&1^|%windir%\system32\find /C "version ""11."') DO (SET /a ISJAVA11=%%a)
+:VERSIONCHECKDONE
+
+SET JAVA_LOCALE_COMPAT=
+IF NOT %ISJAVA11% == 1 GOTO :SKIPLOCALE
+set JAVA_LOCALE_COMPAT=-Djava.locale.providers=COMPAT,SPI
+:SKIPLOCALE
+
+start "Pentaho Report Designer" "%_PENTAHO_JAVA%" -Dswing.useSystemFontSettings=false -Xms1024m -Xmx2048m %JAVA_LOCALE_COMPAT% -jar "%~dp0launcher.jar" %*
