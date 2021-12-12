@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>9.3.0.0-SNAPSHOT</version>
+    <version>9.3.0.0-9</version>
   </parent>
   <artifactId>libdocbundle</artifactId>
-  <version>9.3.0.0-SNAPSHOT</version>
+  <version>9.3.0.0-9</version>
   <name>LibDocBundle</name>
   <description>LibDocBundle is a library developed to provide a transparent
     document bundle service to applications. With LibDocBundle an

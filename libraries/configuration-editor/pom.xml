@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>9.3.0.0-SNAPSHOT</version>
+    <version>9.3.0.0-9</version>
   </parent>
   <artifactId>configuration-editor</artifactId>
-  <version>9.3.0.0-SNAPSHOT</version>
+  <version>9.3.0.0-9</version>
   <name>Config-Editor</name>
   <description>The Config-Editor is a visual editor for the configuration properties used
     in the LibBase configuration system.</description>
