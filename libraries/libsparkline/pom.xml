@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>9.3.0.0-SNAPSHOT</version>
+    <version>9.3.0.0-10</version>
   </parent>
   <artifactId>libsparkline</artifactId>
-  <version>9.3.0.0-SNAPSHOT</version>
+  <version>9.3.0.0-10</version>
   <name>LibSparkline</name>
   <description>LibSparkline is a library developed to render sparkline graphs.
     Sparklines are small-scale bar or line-charts that are inserted
