@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <RollingFile name="FILE" fileName="logs/prd.log" filePattern="prd.log.%i" append="true">
+      <PatternLayout pattern="%d %-5p [%c] %m%n"/>
+      <SizeBasedTriggeringPolicy size="500KB" />
+      <DefaultRolloverStrategy max="1" fileIndex="min"/>
+    </RollingFile>
+	<RollingFile name="FILE" fileName="logs/prd-perfStats.log" filePattern="prd-perfStats.log.%i" append="true">
+      <PatternLayout pattern="%d %-5p [%c] %m%n"/>
+      <SizeBasedTriggeringPolicy size="500KB" />
+      <DefaultRolloverStrategy max="1" fileIndex="min"/>
+    </RollingFile>
+    <Console name="CONSOLE">
+      <PatternLayout>
+        <Pattern>%d{ABSOLUTE} %-5p [%c{1}] %m%n</Pattern>
+      </PatternLayout>
+    </Console>
+  </Appenders>
+  <Loggers>
+	<Logger name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch" level="DEBUG" additivity="false">
+      <appender-ref ref="PerformanceFileAppender"/>
+    </Logger>
+    <Root level="info">
+      <AppenderRef ref="FILE"/>
+      <AppenderRef ref="CONSOLE"/>
+    </Root>
+  </Loggers>
+</Configuration>
