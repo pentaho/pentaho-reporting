@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.actions.global;
 
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
