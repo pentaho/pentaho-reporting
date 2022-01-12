@@ -2616,6 +2616,7 @@
             <org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest>${test.long}</org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest>
             <org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest>${test.performance}</org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest>
             <org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads>${test.workers}</org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads>
+            <java.locale.providers>COMPAT,SPI</java.locale.providers>
           </systemPropertyVariables>
         </configuration>
       </plugin>

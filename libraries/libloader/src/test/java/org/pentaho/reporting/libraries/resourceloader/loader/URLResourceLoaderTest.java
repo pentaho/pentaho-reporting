@@ -12,12 +12,16 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.resourceloader.loader;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.pentaho.reporting.libraries.resourceloader.FactoryParameterKey;
 import org.pentaho.reporting.libraries.resourceloader.LibLoaderBoot;
 import org.pentaho.reporting.libraries.resourceloader.ParameterKey;
@@ -26,31 +30,31 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationExcepti
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class URLResourceLoaderTest extends TestCase {
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+
+public class URLResourceLoaderTest {
   private static final String STRING_SERIALIZATION_PREFIX = "resourcekey:"; //$NON-NLS-1$
   private static final String DESERIALIZE_PREFIX = STRING_SERIALIZATION_PREFIX + URLResourceLoader.class.getName();
   private static final String URL1 = "http://www.pentaho.com/index.html";
   private static final String URL2 = "http://www.pentaho.com/images/pentaho_logo.png";
 
-  public URLResourceLoaderTest() {
-  }
 
-  public URLResourceLoaderTest( final String string ) {
-    super( string );
-  }
-
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     LibLoaderBoot.getInstance().start();
   }
 
   /**
    * Tests the serialization of File based resource keys
    */
+  @Test
   public void testSerialize() throws Exception {
     final URLResourceLoader resourceLoader = new URLResourceLoader();
     final ResourceManager manager = new ResourceManager();
@@ -112,6 +116,7 @@ public class URLResourceLoaderTest extends TestCase {
   /**
    * Tests the deserialization of File based resource keys
    */
+  @Test
   public void testDeserializer() throws Exception {
     final URLResourceLoader resourceLoader = new URLResourceLoader();
 
@@ -161,6 +166,7 @@ public class URLResourceLoaderTest extends TestCase {
    * This is a happy path "round-trip" test which should demonstrate the serializing and deserializing a resource key
    * should produce the same key
    */
+  @Test
   public void testSerializeDeserializeRoundtrip() throws Exception {
     final URLResourceLoader resourceLoader = new URLResourceLoader();
     final Map<ParameterKey, Object> factoryParams = new HashMap<ParameterKey, Object>();
@@ -175,5 +181,72 @@ public class URLResourceLoaderTest extends TestCase {
     final ResourceKey duplicateKey = resourceLoader.deserialize( null, serializedVersion );
     assertNotNull( duplicateKey );
     assertTrue( originalKey.equals( duplicateKey ) );
+  }
+
+  @Test
+  public void testCreateKeyPassingURLAsVariable() throws ResourceKeyCreationException, MalformedURLException {
+    // Test object instance
+    URLResourceLoader resourceLoader = new URLResourceLoader();
+
+    //Mock objects
+    Map factoryKeys = mock( Map.class );
+    URL value = new URL( "http://hitachivantara.com" );
+
+    ResourceKey key = resourceLoader.createKey( value, factoryKeys );
+    assertEquals( URLResourceLoader.SCHEMA_NAME, key.getSchema() );
+    assertEquals( value, key.getIdentifier() );
+  }
+
+  @Test
+  public void testCreateKeyPassingNonSupportedObject() throws ResourceKeyCreationException {
+    // Test object instance
+    URLResourceLoader resourceLoader = new URLResourceLoader();
+
+    //Mock objects
+    Map factoryKeys = mock( Map.class );
+    Object value = new Object();
+
+    ResourceKey key = resourceLoader.createKey( value, factoryKeys );
+    assertEquals( null, key );
+  }
+
+  @Test
+  public void testCreateKeyPassingStringAsVariable() throws ResourceKeyCreationException {
+    // Test object instance
+    URLResourceLoader resourceLoader = new URLResourceLoader();
+
+    //Mock objects
+    Map factoryKeys = mock( Map.class );
+    String value = "http://hitachivantara.com?param=XPTO XPTO";
+
+    ResourceKey key = resourceLoader.createKey( value, factoryKeys );
+    assertEquals( URLResourceLoader.SCHEMA_NAME, key.getSchema() );
+    assertTrue( key.getIdentifier() instanceof URL );
+    assertEquals( "http://hitachivantara.com?param=XPTO%20XPTO", key.getIdentifier().toString() );
+  }
+
+  @Test( expected = ResourceKeyCreationException.class )
+  public void testCreateKeyPassingInvalidURLStringAsVariable() throws ResourceKeyCreationException {
+    // Test object instance
+    URLResourceLoader resourceLoader = new URLResourceLoader();
+
+    //Mock objects
+    Map factoryKeys = mock( Map.class );
+    String value = "invalid://url";
+
+    resourceLoader.createKey( value, factoryKeys );
+  }
+
+  @Test
+  public void testCreateKeyPassingInvalidString() throws ResourceKeyCreationException {
+    // Test object instance
+    URLResourceLoader resourceLoader = new URLResourceLoader();
+
+    //Mock objects
+    Map factoryKeys = mock( Map.class );
+    String value = "";
+
+    ResourceKey key = resourceLoader.createKey( value, factoryKeys );
+    assertEquals( null, key );
   }
 }
