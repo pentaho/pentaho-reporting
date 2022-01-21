@@ -162,7 +162,7 @@
     <jsch.version>0.1.54</jsch.version>
     <test.workers>1</test.workers>
     <checkstyle.source.directory>${basedir}/src/main/java</checkstyle.source.directory>
-    <h2.version>1.2.131</h2.version>
+    <h2.version>2.1.210</h2.version>
     <commons-cli.version>1.2</commons-cli.version>
     <license-maven-plugin.version>3.0</license-maven-plugin.version>
     <eigenbase.version>1.3.5</eigenbase.version>
