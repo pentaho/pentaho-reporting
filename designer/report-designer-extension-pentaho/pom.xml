@@ -16,6 +16,9 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <properties>
+    <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
@@ -38,6 +41,19 @@
       <groupId>com.jcraft</groupId>
       <artifactId>jsch</artifactId>
     </dependency>
+
+    <!-- Endorsed Standards Excluded from Java 11+ -->
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>${jakarta.xml.bind-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>${jaxb-runtime.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
