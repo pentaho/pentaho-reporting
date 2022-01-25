@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
   <Appenders>
-    <RollingFile name="FILE" fileName="logs/prd.log" filePattern="logs/prd.log.%i" append="true">
+    <RollingFile name="FILE" fileName="${sys:user.home}/.pentaho/logs/prd.log" filePattern="${sys:user.home}/.pentaho/logs/prd.log.%i" append="false">
       <PatternLayout pattern="%d %-5p [%c] %m%n"/>
       <SizeBasedTriggeringPolicy size="500KB" />
       <DefaultRolloverStrategy max="1" fileIndex="min"/>
     </RollingFile>
-	<RollingFile name="FILE" fileName="logs/prd-perfStats.log" filePattern="logs/prd-perfStats.log.%i" append="true">
+    <RollingFile name="PerformanceFileAppender" fileName="${sys:user.home}/.pentaho/logs/prd-perfStats.log" filePattern="${sys:user.home}/.pentaho/logs/prd-perfStats.log.%i" append="false">
       <PatternLayout pattern="%d %-5p [%c] %m%n"/>
       <SizeBasedTriggeringPolicy size="500KB" />
       <DefaultRolloverStrategy max="1" fileIndex="min"/>
@@ -18,10 +18,30 @@
     </Console>
   </Appenders>
   <Loggers>
-	<Logger name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch" level="DEBUG" additivity="false">
+      <Logger name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch" level="DEBUG">
       <appender-ref ref="PerformanceFileAppender"/>
     </Logger>
-    <Root level="info">
+    <Logger name="org.pentaho" level="WARN"/>
+    <Logger name="org.pentaho.ui.xul" level="ERROR"/>
+    <Logger name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch.Detail" level="ERROR"/>
+    <Logger name="com.healthmarketscience.jackcess" level="WARN"/>
+    <Logger name="org.apache.commons.httpclient" level="WARN"/>
+    <Logger name="org.mortbay" level="ERROR"/>
+    <Logger name="java.net" level="ERROR"/>
+    <Logger name="org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache.EHCacheModule#CacheLog" level="WARN"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep" level="WARN"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer" level="WARN"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.layout.SlottedLayoutBuilder" level="WARN"/>
+    <Logger name="org.apache.commons.logging.simplelog.log.org.apache.http" level="WARN"/>
+    <Logger name="org.apache.commons.logging.simplelog.log.org.apache.http.auth" level="WARN"/>
+    <Logger name="org.pentaho.reporting.libraries.base.util.ResourceBundleSupport" level="WARN"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.layout" level="INFO"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableRenderer" level="INFO"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.layout.ModelPrinter" level="DEBUG"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor" level="INFO"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.states.datarow" level="INFO"/>
+    <Logger name="org.pentaho.hadoop.shim.DriverManager" level="INFO"/>
+    <Root level="INFO">
       <AppenderRef ref="FILE"/>
       <AppenderRef ref="CONSOLE"/>
     </Root>
