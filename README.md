@@ -25,7 +25,7 @@ release.
 
 #### Pre-requisites for building the project:
 * Maven, version 3+
-* Java JDK 1.8
+* Java JDK 11
 * This [settings.xml](https://github.com/pentaho/maven-parent-poms/blob/master/maven-support-files/settings.xml) in your <user-home>/.m2 directory
 
 #### Building it
@@ -145,8 +145,8 @@ process reports. Reports with more than 400 pages or about 50.000 rows of data
 may require additional memory and/or adjustments to the global configuration
 parameters of the reporting engine.
 
-The Pentaho Reporting Engine requires Java 1.8 or higher. The Pentaho Report
-Designer and Pentaho Report Design Wizard also need at least Java 1.8 or higher.
+The Pentaho Reporting Engine requires Java 11 or higher. The Pentaho Report
+Designer and Pentaho Report Design Wizard also need at least Java 11 or higher.
 
 ##### Warning:
   
