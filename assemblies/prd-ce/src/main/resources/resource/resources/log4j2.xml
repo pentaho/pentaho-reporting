@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+
   <Appenders>
-    <RollingFile name="FILE" fileName="${sys:user.home}/.pentaho/logs/prd.log" filePattern="${sys:user.home}/.pentaho/logs/prd.log.%i" append="false">
-      <PatternLayout pattern="%d %-5p [%c] %m%n"/>
-      <SizeBasedTriggeringPolicy size="500KB" />
-      <DefaultRolloverStrategy max="1" fileIndex="min"/>
+    <RollingFile name="FILE" fileName="${sys:user.home}/.pentaho/logs/prd.log" filePattern="${sys:user.home}/.pentaho/logs/prd.log.%i">
+      <PatternLayout pattern="%d [%7r] %6p - %-50c - %m%n"/>
+      <SizeBasedTriggeringPolicy size="10MB" />
+      <DefaultRolloverStrategy max="5" />
     </RollingFile>
-    <RollingFile name="PerformanceFileAppender" fileName="${sys:user.home}/.pentaho/logs/prd-perfStats.log" filePattern="${sys:user.home}/.pentaho/logs/prd-perfStats.log.%i" append="false">
-      <PatternLayout pattern="%d %-5p [%c] %m%n"/>
-      <SizeBasedTriggeringPolicy size="500KB" />
-      <DefaultRolloverStrategy max="1" fileIndex="min"/>
+    <RollingFile name="PerformanceFileAppender" fileName="${sys:user.home}/.pentaho/logs/prd-perfStats.log" filePattern="${sys:user.home}/.pentaho/logs/prd-perfStats.log.%i">
+      <PatternLayout pattern="%m%n"/>
+      <SizeBasedTriggeringPolicy size="10MB" />
+      <DefaultRolloverStrategy max="5" />
     </RollingFile>
     <Console name="CONSOLE">
       <PatternLayout>
-        <Pattern>%d{ABSOLUTE} %-5p [%c{1}] %m%n</Pattern>
+        <Pattern>%d [%7r] %6p - %-50c - %m%n</Pattern>
       </PatternLayout>
     </Console>
   </Appenders>
+
   <Loggers>
-      <Logger name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch" level="DEBUG">
+
+    <Logger name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch" level="DEBUG" additivity="false">
       <appender-ref ref="PerformanceFileAppender"/>
     </Logger>
+
     <Logger name="org.pentaho" level="WARN"/>
     <Logger name="org.pentaho.ui.xul" level="ERROR"/>
     <Logger name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch.Detail" level="ERROR"/>
     <Logger name="com.healthmarketscience.jackcess" level="WARN"/>
     <Logger name="org.apache.commons.httpclient" level="WARN"/>
     <Logger name="org.mortbay" level="ERROR"/>
-    <Logger name="java.net" level="ERROR"/>
+    <Logger name="java.net" level="OFF"/>
     <Logger name="org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache.EHCacheModule#CacheLog" level="WARN"/>
     <Logger name="org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep" level="WARN"/>
     <Logger name="org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer" level="WARN"/>
