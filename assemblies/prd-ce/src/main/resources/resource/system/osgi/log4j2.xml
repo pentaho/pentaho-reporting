@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+   <Appenders>
+      <RollingFile name="PENTAHOFILE" fileName="logs/pdi.log"
+                   filePattern="logs/pdi.%d{yyyy-MM-dd}.log">
+         <PatternLayout>
+            <Pattern>%d %-5p [%c] %m%n</Pattern>
+         </PatternLayout>
+         <Policies>
+            <TimeBasedTriggeringPolicy />
+         </Policies>
+         <DefaultRolloverStrategy />
+      </RollingFile>
+      <Console name="PENTAHOCONSOLE">
+         <PatternLayout>
+            <Pattern>%d{ABSOLUTE} %-5p [%c{1}] %m%n</Pattern>
+         </PatternLayout>
+         <ThresholdFilter level="INFO" />
+      </Console>
+   </Appenders>
+   <Loggers>
+      <Logger name="org.pentaho.hadoop.shim.DriverManager" level="INFO"/>
+      <Root level="ERROR">
+         <AppenderRef ref="PENTAHOFILE"/>
+         <AppenderRef ref="PENTAHOCONSOLE"/>
+      </Root>
+   </Loggers>
+</Configuration>
