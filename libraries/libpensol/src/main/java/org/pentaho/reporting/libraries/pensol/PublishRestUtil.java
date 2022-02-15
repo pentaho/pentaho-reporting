@@ -78,7 +78,7 @@ public class PublishRestUtil {
   /**
    * Used for REST Jersey calls
    */
-  private void initRestService() throws URISyntaxException{
+  private void initRestService() throws URISyntaxException {
     ClientConfig clientConfig = new DefaultClientConfig();
     clientConfig.getClasses().add( MultiPartWriter.class );
     clientConfig.getFeatures().put( JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE );

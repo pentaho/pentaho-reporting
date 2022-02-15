@@ -140,7 +140,7 @@ public class PublishUtil {
     }
   }
 
-  public static int publish( final byte[] data, final String path, final AuthenticationData loginData, final Properties fileProperties ) throws IOException, URISyntaxException{
+  public static int publish( final byte[] data, final String path, final AuthenticationData loginData, final Properties fileProperties ) throws IOException, URISyntaxException {
     int responseCode = HTTP_RESPONSE_FAIL;
     final String versionText = loginData.getOption( SERVER_VERSION );
     final int version = ParserUtil.parseInt( versionText, SERVER_VERSION_SUGAR );
