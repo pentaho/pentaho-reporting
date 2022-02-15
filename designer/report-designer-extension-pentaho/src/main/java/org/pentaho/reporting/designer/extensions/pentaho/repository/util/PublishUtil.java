@@ -45,6 +45,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
+import java.net.URISyntaxException;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -139,7 +140,7 @@ public class PublishUtil {
     }
   }
 
-  public static int publish( final byte[] data, final String path, final AuthenticationData loginData, final Properties fileProperties ) throws IOException {
+  public static int publish( final byte[] data, final String path, final AuthenticationData loginData, final Properties fileProperties ) throws IOException, URISyntaxException {
     int responseCode = HTTP_RESPONSE_FAIL;
     final String versionText = loginData.getOption( SERVER_VERSION );
     final int version = ParserUtil.parseInt( versionText, SERVER_VERSION_SUGAR );
@@ -175,7 +176,7 @@ public class PublishUtil {
    * @since pentaho 8.1
    */
   @Deprecated
-  public static int publish( final byte[] data, final String path, final AuthenticationData loginData ) throws IOException {
+  public static int publish( final byte[] data, final String path, final AuthenticationData loginData ) throws IOException, URISyntaxException {
     return publish( data, path, loginData, new Properties() );
   }
 
