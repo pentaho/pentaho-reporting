@@ -38,6 +38,12 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.Properties;
 
+import com.hitachivantara.security.web.impl.client.csrf.jaxrsv1.CsrfTokenFilter;
+import com.hitachivantara.security.web.impl.client.csrf.jaxrsv1.util.SessionCookiesFilter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.CookieManager;
+
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
 
@@ -53,13 +59,15 @@ public class PublishRestUtil {
 
   private static final String REPO_FILES_IMPORT_WITH_OPTIONS = "api/repo/publish/fileWithOptions";
 
+  private static final String API_CSRF_TOKEN = "api/csrf/token";
+
   private final String baseUrl;
   private final String username;
   private final String password;
 
   private Client client = null;
 
-  public PublishRestUtil( String baseUrl, String username, String password ) {
+  public PublishRestUtil( String baseUrl, String username, String password ) throws URISyntaxException {
     this.baseUrl = baseUrl.endsWith( "/" ) ? baseUrl : baseUrl + '/';
     this.username = username;
     this.password = password;
@@ -70,12 +78,14 @@ public class PublishRestUtil {
   /**
    * Used for REST Jersey calls
    */
-  private void initRestService() {
+  private void initRestService() throws URISyntaxException {
     ClientConfig clientConfig = new DefaultClientConfig();
     clientConfig.getClasses().add( MultiPartWriter.class );
     clientConfig.getFeatures().put( JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE );
     client = Client.create( clientConfig );
     client.addFilter( new HTTPBasicAuthFilter( username, password ) );
+    client.addFilter( new SessionCookiesFilter(new CookieManager() ) );
+    client.addFilter( new CsrfTokenFilter( new URI( baseUrl + API_CSRF_TOKEN ) ) );
   }
 
   /**
