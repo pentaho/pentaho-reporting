@@ -161,7 +161,7 @@ Java Developers".
 
 Technical articles and general documentation can be found in our Wiki.
 
-  http://wiki.pentaho.com/display/Reporting/
+  https://pentaho-community.atlassian.net/wiki/display/Reporting/
 
 If you intend to embed Pentaho Reporting in your own applications, the SDK
 contains a thorough step-by-step guide to the enclosed examples.
