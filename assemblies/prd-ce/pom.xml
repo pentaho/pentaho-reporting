@@ -20,14 +20,6 @@
   </licenses>
   <properties>
     <pentaho-hadoop-shims.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims.version>
-    <!-- Pentaho drivers kar file dependencies versions -->
-    <pentaho-hadoop-shims-cdh61.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-cdh61.version>
-    <pentaho-hadoop-shims-hdp30.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-hdp30.version>
-    <pentaho-hadoop-shims-emr521.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-emr521.version>
-    <pentaho-hadoop-shims-dataproc1421.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-dataproc1421.version>
-    <pentaho-hadoop-shims-cdpdc71.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-cdpdc71.version>
-    <pentaho-hadoop-shims-mapr61.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-mapr61.version>
-    <pentaho-hadoop-shims-hdi40.version>9.3.0.0-SNAPSHOT</pentaho-hadoop-shims-hdi40.version>
     <pentaho-mongodb-plugin.version>9.3.0.0-SNAPSHOT</pentaho-mongodb-plugin.version>
   </properties>
 
@@ -54,92 +46,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!-- START Pentaho drivers kar file dependencies -->
-    <dependency>
-      <groupId>org.pentaho.hadoop.shims</groupId>
-      <artifactId>pentaho-hadoop-shims-cdh61-kar</artifactId>
-      <version>${pentaho-hadoop-shims-cdh61.version}</version>
-      <type>kar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.pentaho.hadoop.shims</groupId>
-      <artifactId>pentaho-hadoop-shims-hdp30-kar</artifactId>
-      <version>${pentaho-hadoop-shims-hdp30.version}</version>
-      <type>kar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.pentaho.hadoop.shims</groupId>
-      <artifactId>pentaho-hadoop-shims-emr521-kar</artifactId>
-      <version>${pentaho-hadoop-shims-emr521.version}</version>
-      <type>kar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.pentaho.hadoop.shims</groupId>
-      <artifactId>pentaho-hadoop-shims-dataproc1421-kar</artifactId>
-      <version>${pentaho-hadoop-shims-dataproc1421.version}</version>
-      <type>kar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.pentaho.hadoop.shims</groupId>
-      <artifactId>pentaho-hadoop-shims-cdpdc71-kar</artifactId>
-      <version>${pentaho-hadoop-shims-cdpdc71.version}</version>
-      <type>kar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.pentaho.hadoop.shims</groupId>
-      <artifactId>pentaho-hadoop-shims-mapr61-kar</artifactId>
-      <version>${pentaho-hadoop-shims-mapr61.version}</version>
-      <type>kar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.pentaho.hadoop.shims</groupId>
-      <artifactId>pentaho-hadoop-shims-hdi40-kar</artifactId>
-      <version>${pentaho-hadoop-shims-hdi40.version}</version>
-      <type>kar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- END Pentaho drivers kar file dependencies -->
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-cda</artifactId>
@@ -417,12 +323,6 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>pentaho-big-data-plugin</artifactId>
-      <type>zip</type>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>commons-configuration</groupId>
       <artifactId>commons-configuration</artifactId>
       <scope>compile</scope>
@@ -594,7 +494,7 @@
                 <goal>unpack-dependencies</goal>
               </goals>
               <configuration>
-                <includeArtifactIds>pentaho-big-data-plugin,mongodb-plugin,pentaho-cassandra-plugin,pdi-xml-plugin,kettle-json-plugin</includeArtifactIds>
+                <includeArtifactIds>mongodb-plugin,pentaho-cassandra-plugin,pdi-xml-plugin,kettle-json-plugin</includeArtifactIds>
                 <outputDirectory>${stage.dir.designer}/plugins</outputDirectory>
               </configuration>
             </execution>
