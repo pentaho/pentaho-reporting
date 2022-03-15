@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import edu.stanford.ejalbert.BrowserLauncher;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.settings.ExternalToolSettings;
@@ -25,8 +24,11 @@ import org.pentaho.reporting.designer.core.settings.SettingsUtil;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -50,7 +52,13 @@ public class ExternalToolLauncher {
     final ExternalToolSettings instance = ExternalToolSettings.getInstance();
     if ( instance.isUseDefaultBrowser() ) {
       try {
-        new BrowserLauncher().openURLinBrowser( url );
+        if ( Desktop.isDesktopSupported()
+            && Desktop.getDesktop().isSupported( Action.BROWSE ) ) {
+          Desktop.getDesktop().browse( new URI( url ) );
+        } else {
+          logger.warn( UtilMessages.getInstance()
+            .getString( "ExternalToolLauncher.unableToLaunchDefaultBrowser", url ) );
+        }
       } catch ( Exception e ) {
         UncaughtExceptionsModel.getInstance().addException( e );
       }

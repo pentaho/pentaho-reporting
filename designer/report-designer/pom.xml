@@ -59,10 +59,6 @@
       <artifactId>commons-xul-swing</artifactId>
     </dependency>
     <dependency>
-      <groupId>browserlauncher2</groupId>
-      <artifactId>browserlauncher2</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.fife.ui</groupId>
       <artifactId>rsyntaxtextarea</artifactId>
     </dependency>
