@@ -95,14 +95,6 @@ public class MacOSXIntegration {
       final Method getApplicationMethod = applicationClass.getDeclaredMethod( "getApplication" );
       // If the target method returns a boolean, use that as a hint
       application = getApplicationMethod.invoke( null );
-
-      final Class applicationListenerClass = Class.forName( "com.apple.eawt.ApplicationListener" );
-      final Method addListenerMethod =
-        applicationClass.getDeclaredMethod( "addApplicationListener", applicationListenerClass );
-      final Object osxAdapterProxy = Proxy
-        .newProxyInstance( MacOSXIntegration.class.getClassLoader(), new Class[] { applicationListenerClass }, this );
-      addListenerMethod.invoke( application, osxAdapterProxy );
-
     }
 
     public Object invoke( final Object proxy, final Method method, final Object[] args ) throws Throwable {
