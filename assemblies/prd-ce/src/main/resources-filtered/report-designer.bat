@@ -51,9 +51,11 @@ FOR /F %%a IN ('java -version 2^>^&1^|%windir%\system32\find /C "version ""11."'
 :VERSIONCHECKDONE
 popd
 
+set JAVA_ADD_OPENS=
 SET JAVA_LOCALE_COMPAT=
 IF NOT %ISJAVA11% == 1 GOTO :SKIPLOCALE
+set JAVA_ADD_OPENS=--add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED
 set JAVA_LOCALE_COMPAT=-Djava.locale.providers=COMPAT,SPI
 :SKIPLOCALE
 
-start "Pentaho Report Designer" "%_PENTAHO_JAVA%" -Dswing.useSystemFontSettings=false -Xms1024m -Xmx2048m %JAVA_LOCALE_COMPAT% -jar "%~dp0launcher.jar" %*
+start "Pentaho Report Designer" "%_PENTAHO_JAVA%" %JAVA_ADD_OPENS% -Dswing.useSystemFontSettings=false -Xms1024m -Xmx2048m %JAVA_LOCALE_COMPAT% -jar "%~dp0launcher.jar" %*
