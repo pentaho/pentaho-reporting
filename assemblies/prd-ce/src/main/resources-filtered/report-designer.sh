@@ -31,7 +31,7 @@ JAVA_ADD_OPENS=
 if $($_PENTAHO_JAVA -version 2>&1 | grep "version \"11\..*" > /dev/null )
 then
   JAVA_LOCALE_COMPAT="-Djava.locale.providers=COMPAT,SPI"
-  JAVA_ADD_OPENS="--add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED"
+  JAVA_ADD_OPENS="--add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED  --add-opens java.desktop/com.apple.eawt=ALL-UNNAMED"
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then 
