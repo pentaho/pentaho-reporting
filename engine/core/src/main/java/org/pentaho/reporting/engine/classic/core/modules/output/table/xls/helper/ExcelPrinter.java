@@ -112,12 +112,14 @@ public class ExcelPrinter extends ExcelPrinterBase {
     if ( sheet == null ) {
       // make sure a new patriarch is created if needed.
       sheet = openSheet( contentProducer.getSheetName() );
-      final SheetPropertySource excelTableContentProducer = (SheetPropertySource) contentProducer;
-      configureSheetProperties( sheet, excelTableContentProducer );
       // Start a new page.
       configureSheetPaperSize( sheet, logicalPage.getPageGrid().getPage( 0, 0 ) );
       configureSheetColumnWidths( sheet, contentProducer.getSheetLayout(), contentProducer.getColumnCount() );
     }
+
+    // PRD-6134: Always update sheet properties so that header and footer are correctly handled
+    final SheetPropertySource excelTableContentProducer = (SheetPropertySource) contentProducer;
+    configureSheetProperties( sheet, excelTableContentProducer );
 
     // and finally the content ..
     final SheetLayout sheetLayout = contentProducer.getSheetLayout();
