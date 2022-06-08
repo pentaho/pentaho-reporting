@@ -88,7 +88,7 @@
     <commons-configuration.version>1.9</commons-configuration.version>
     <commons-collections.version>3.2.2</commons-collections.version>
     <joda.version>2.10.2</joda.version>
-    <xmlgraphics-commons.version>2.2</xmlgraphics-commons.version>
+    <xmlgraphics-commons.version>2.6</xmlgraphics-commons.version>
     <sassy.version>0.5</sassy.version>
     <platform.version>9.4.0.0-SNAPSHOT</platform.version>
     <rhino.version>1.7R3</rhino.version>
