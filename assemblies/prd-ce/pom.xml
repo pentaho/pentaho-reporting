@@ -21,6 +21,7 @@
   </licenses>
   <properties>
     <pentaho-mongodb-plugin.version>9.4.0.0-SNAPSHOT</pentaho-mongodb-plugin.version>
+    <pentaho-hadoop-shims.version>9.4.0.0-SNAPSHOT</pentaho-hadoop-shims.version>
     <assembly_appendId>true</assembly_appendId>
   </properties>
 
@@ -450,9 +451,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
             <id>runtime</id>
@@ -487,7 +485,6 @@
       </activation>
       <properties>
         <assembly_appendId>false</assembly_appendId>
-        <pentaho-hadoop-shims.version>9.4.0.0-SNAPSHOT</pentaho-hadoop-shims.version>
       </properties>
       <dependencies>
         <dependency>
@@ -604,11 +601,6 @@
                     </resources>
                   </configuration>
                 </execution>
-              </executions>
-            </plugin>
-            <plugin>
-              <artifactId>maven-resources-plugin</artifactId>
-              <executions>
                 <execution>
                   <id>copy-osgi-resources</id>
                   <phase>process-resources</phase>
