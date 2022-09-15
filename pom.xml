@@ -141,7 +141,7 @@
     <mondrian.version>9.4.0.0-SNAPSHOT</mondrian.version>
     <pdi-xml-plugin.version>9.4.0.0-SNAPSHOT</pdi-xml-plugin.version>
     <javacc-maven-plugin.version>2.6</javacc-maven-plugin.version>
-    <yaml.version>1.7</yaml.version>
+    <yaml.version>1.31</yaml.version>
     <wsdl4j-qname.version>1.6.1</wsdl4j-qname.version>
     <w3c.version>1.3</w3c.version>
     <rome.version>1.0</rome.version>
