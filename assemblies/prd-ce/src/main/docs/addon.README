@@ -1,2 +1,18 @@
-TODO: provide installation instructions for overlaying the addon zip and uninstallation
-which will require directory/file removal and file modification
+Pentaho Report Designer Hadoop Addon
+======================================
+
+This artifact contains additional libraries which enable hadoop features with in Pentaho Report Designer. Below is the content of this artifact.
+
+1) resources
+   -- kettle-lifecycle-listeners.xml  (Configuration files to enable OSGi in Pentaho Report Designer)
+   -- kettle-registry-extensions.xml  (Configuration files to enable OSGi in Pentaho Report Designer)
+2) drivers (place to drop the hadoop drivers)
+3) lib (OSGi libraries to enable to execution of karaf)
+6) system (contains all the OSGi features and libraries to support those features)
+
+
+How to remove the addon
+===========================
+
+Execute uninstall-hadoopaddon.sh / uninstall-hadoop-addon.bat
+Running the above command is going to move all the hadoop addon artifacts to the .uninstalled folder
