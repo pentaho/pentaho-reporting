@@ -136,7 +136,7 @@
     <oss-licenses.version>9.5.0.0-SNAPSHOT</oss-licenses.version>
     <openerp.version>1.1.0</openerp.version>
     <pdi-dataservice-client-plugin.version>9.5.0.0-SNAPSHOT</pdi-dataservice-client-plugin.version>
-    <batik.version>1.9.1</batik.version>
+    <batik.version>1.14</batik.version>
     <itext.version>2.1.7</itext.version>
     <mondrian.version>9.5.0.0-SNAPSHOT</mondrian.version>
     <pdi-xml-plugin.version>9.5.0.0-SNAPSHOT</pdi-xml-plugin.version>
