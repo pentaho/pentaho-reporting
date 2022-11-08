@@ -186,7 +186,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     } catch ( SQLTimeoutException e ) {
       throw new ReportDataFactoryQueryTimeoutException();
     } catch ( Exception e ) {
-      throw new ReportDataFactoryException( "Failed at query: " + query, e ); //$NON-NLS-1$
+      throw new ReportDataFactoryException( "Failed to execute query.", e ); //$NON-NLS-1$
     } finally {
       currentRunningStatement = null;
     }
