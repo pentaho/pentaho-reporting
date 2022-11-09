@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
@@ -435,6 +435,16 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
 
   public void initialize( final DataFactory dataFactory, final DataFactoryContext dataFactoryContext )
     throws ReportDataFactoryException {
+    boolean allowScriptEval = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+                    "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "false" )
+            .equalsIgnoreCase( "true" );
+
+    if ( !allowScriptEval ) {
+      DataFactoryScriptingSupport.logger.error( "Scripts are prevented from running by default in order to avoid"
+              + " potential remote code execution.  The system administrator must enable this capability by changing"
+              + " the value of org.pentaho.reporting.engine.classic.core.allowScriptEvaluation to true." );
+      return;
+    }
     if ( globalScriptContext != null ) {
       return;
     }
