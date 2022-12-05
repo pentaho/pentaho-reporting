@@ -119,7 +119,7 @@
     <asm.version>3.2</asm.version>
     <pdi.version>9.5.0.0-SNAPSHOT</pdi.version>
     <edtftpj.version>2.1.0</edtftpj.version>
-    <commons-net.version>1.4.1</commons-net.version>
+    <commons-net.version>3.9.0</commons-net.version>
     <eclipse.commands.version>3.3.0-I20070605-0010</eclipse.commands.version>
     <pdi-json-plugin.version>9.5.0.0-SNAPSHOT</pdi-json-plugin.version>
     <license.header.file>license/templates/licenseHeader.txt</license.header.file>
