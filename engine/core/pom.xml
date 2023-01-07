@@ -68,7 +68,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml-schemas</artifactId>
+      <artifactId>poi-ooxml-full</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>

@@ -122,7 +122,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
     /**
      * the font definition for the cell.
      */
-    private short font;
+    private int font;
 
     /**
      * the data style.
@@ -240,15 +240,15 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       this.xColorBottom = createColor( style.getBottomBorderXSSFColor() );
       this.xColorRight = createColor( style.getRightBorderXSSFColor() );
 
-      this.borderStrokeTop = style.getBorderTopEnum();
-      this.borderStrokeLeft = style.getBorderLeftEnum();
-      this.borderStrokeBottom = style.getBorderBottomEnum();
-      this.borderStrokeRight = style.getBorderRightEnum();
+      this.borderStrokeTop = style.getBorderTop();
+      this.borderStrokeLeft = style.getBorderLeft();
+      this.borderStrokeBottom = style.getBorderBottom();
+      this.borderStrokeRight = style.getBorderRight();
 
       this.dataStyle = style.getDataFormat();
       this.font = style.getFontIndex();
-      this.horizontalAlignment = style.getAlignmentEnum();
-      this.verticalAlignment = style.getVerticalAlignmentEnum();
+      this.horizontalAlignment = style.getAlignment();
+      this.verticalAlignment = style.getVerticalAlignment();
       this.wrapText = style.getWrapText();
       this.textRotation = TextRotation.getInstance( style.getRotation() );
     }
@@ -267,15 +267,15 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       this.colorLeft = style.getLeftBorderColor();
       this.colorBottom = style.getBottomBorderColor();
       this.colorRight = style.getRightBorderColor();
-      this.borderStrokeTop = style.getBorderTopEnum();
-      this.borderStrokeLeft = style.getBorderLeftEnum();
-      this.borderStrokeBottom = style.getBorderBottomEnum();
-      this.borderStrokeRight = style.getBorderRightEnum();
+      this.borderStrokeTop = style.getBorderTop();
+      this.borderStrokeLeft = style.getBorderLeft();
+      this.borderStrokeBottom = style.getBorderBottom();
+      this.borderStrokeRight = style.getBorderRight();
 
       this.dataStyle = style.getDataFormat();
       this.font = style.getFontIndex();
-      this.horizontalAlignment = style.getAlignmentEnum();
-      this.verticalAlignment = style.getVerticalAlignmentEnum();
+      this.horizontalAlignment = style.getAlignment();
+      this.verticalAlignment = style.getVerticalAlignment();
       this.wrapText = style.getWrapText();
       this.textRotation = TextRotation.getInstance( style.getRotation() );
     }
@@ -483,7 +483,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer {
       return verticalAlignment;
     }
 
-    public short getFont() {
+    public int getFont() {
       return font;
     }
 
