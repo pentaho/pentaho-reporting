@@ -55,4 +55,8 @@ public class CustomErrorValue implements ErrorValue {
 
     return errorMessage;
   }
+
+  public String toString() {
+    return getErrorCode() + "-" + getErrorMessage( Locale.getDefault() );
+  }
 }
