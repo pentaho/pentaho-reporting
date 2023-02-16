@@ -99,10 +99,6 @@
       <artifactId>odfdom-java</artifactId>
     </dependency>
     <dependency>
-      <groupId>rome</groupId>
-      <artifactId>rome</artifactId>
-    </dependency>
-    <dependency>
       <groupId>jaxen</groupId>
       <artifactId>jaxen</artifactId>
     </dependency>
@@ -150,10 +146,6 @@
     <dependency>
       <groupId>ftp4che</groupId>
       <artifactId>ftp4che</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.geonames</groupId>
-      <artifactId>georss-rome</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
