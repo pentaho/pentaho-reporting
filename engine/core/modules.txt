@@ -365,7 +365,7 @@ an simple way of adding small scripts to the xml report definitions.
 Users which define their reports using the API will be faster when
 implementing the expressions as own classes.
 
-This requires the beanshell classes (contained in "bsh-1.3.jar") to be
+This requires the beanshell classes (contained in "bsh-2.0b6.jar") to be
 present in the classpath.
 
 4.4.2 misc-referencedoc
