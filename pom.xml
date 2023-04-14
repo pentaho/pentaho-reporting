@@ -93,7 +93,6 @@
     <rhino.version>1.7R3</rhino.version>
     <bsf.version>2.4.0</bsf.version>
     <pentaho-connections.version>9.5.0.0-SNAPSHOT</pentaho-connections.version>
-    <bouncycastl.version>138</bouncycastl.version>
     <commons-lang.version>2.6</commons-lang.version>
     <xml-apis-ext.version>1.3.04</xml-apis-ext.version>
     <javax.mail.version>1.6.1</javax.mail.version>
@@ -1471,15 +1470,9 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>bouncycastle</groupId>
+        <groupId>org.bouncycastle</groupId>
         <artifactId>bcmail-jdk14</artifactId>
-        <version>${bouncycastl.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
+        <version>${bcprov-jdk14.version}</version>
       </dependency>
       <dependency>
         <groupId>barbecue</groupId>
