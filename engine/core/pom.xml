@@ -157,7 +157,7 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>bouncycastle</groupId>
+      <groupId>org.bouncycastle</groupId>
       <artifactId>bcmail-jdk14</artifactId>
       <scope>compile</scope>
     </dependency>
