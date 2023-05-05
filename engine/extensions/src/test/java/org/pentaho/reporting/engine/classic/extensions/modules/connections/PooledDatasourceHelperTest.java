@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.connections;
 
-import org.hsqldb.JDBCDriver;
+import org.hsqldb.jdbc.JDBCDriver;
 import org.junit.Test;
 import org.pentaho.database.IDatabaseDialect;
 import org.pentaho.database.dialect.AbstractDatabaseDialect;
