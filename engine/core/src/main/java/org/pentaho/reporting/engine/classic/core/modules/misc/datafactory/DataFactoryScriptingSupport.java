@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
@@ -435,6 +435,12 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
 
   public void initialize( final DataFactory dataFactory, final DataFactoryContext dataFactoryContext )
     throws ReportDataFactoryException {
+    if ( globalScriptContext != null ) {
+      return;
+    }
+    if ( StringUtils.isEmpty( globalScriptLanguage ) ) {
+      return;
+    }
     boolean allowScriptEval = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
                     "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "false" )
             .equalsIgnoreCase( "true" );
@@ -443,9 +449,6 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
       DataFactoryScriptingSupport.logger.error( "Scripts are prevented from running by default in order to avoid"
               + " potential remote code execution.  The system administrator must enable this capability by changing"
               + " the value of org.pentaho.reporting.engine.classic.core.allowScriptEvaluation to true." );
-      return;
-    }
-    if ( globalScriptContext != null ) {
       return;
     }
 
@@ -462,10 +465,6 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
     globalScriptContext.setAttribute( "resourceManager", resourceManager, ScriptContext.ENGINE_SCOPE );
     globalScriptContext.setAttribute( "contextKey", contextKey, ScriptContext.ENGINE_SCOPE );
     globalScriptContext.setAttribute( "resourceBundleFactory", resourceBundleFactory, ScriptContext.ENGINE_SCOPE );
-
-    if ( StringUtils.isEmpty( globalScriptLanguage ) ) {
-      return;
-    }
 
     globalScriptContext.setAttribute( "scriptHelper", new ScriptHelper( globalScriptContext, globalScriptLanguage,
         resourceManager, contextKey ), ScriptContext.ENGINE_SCOPE );
