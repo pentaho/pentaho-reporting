@@ -93,10 +93,6 @@
       <artifactId>odfdom-java</artifactId>
     </dependency>
     <dependency>
-      <groupId>rome</groupId>
-      <artifactId>rome</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.eobjects.sassyreader</groupId>
       <artifactId>SassyReader</artifactId>
     </dependency>
@@ -156,10 +152,6 @@
     <dependency>
       <groupId>ftp4che</groupId>
       <artifactId>ftp4che</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.geonames</groupId>
-      <artifactId>georss-rome</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
