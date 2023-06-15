@@ -162,7 +162,7 @@
     <axis.version>1.5</axis.version>
     <jsendnsca.version>2.0.1</jsendnsca.version>
     <barbecue.version>1.5-beta1</barbecue.version>
-    <snappy-java.version>1.1.0</snappy-java.version>
+    <snappy-java.version>1.1.10.1</snappy-java.version>
     <license.inception.year>2002</license.inception.year>
     <commons-lang3.version>3.0</commons-lang3.version>
     <pentaho.coding.standards.version>1.0.5</pentaho.coding.standards.version>
