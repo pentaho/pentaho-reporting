@@ -147,7 +147,6 @@
     <javassist.version>3.20.0-GA</javassist.version>
     <grizzly.version>1.9.45</grizzly.version>
     <saxon.version>9.1.0.8</saxon.version>
-    <guava.version>17.0</guava.version>
     <commons-pool.version>1.5.7</commons-pool.version>
     <jsch.version>0.1.54</jsch.version>
     <test.workers>1</test.workers>
@@ -410,12 +409,6 @@
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>${guava.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.ini4j</groupId>
