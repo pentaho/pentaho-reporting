@@ -147,7 +147,6 @@
     <grizzly.version>1.9.45</grizzly.version>
     <saxon.version>9.1.0.8</saxon.version>
     <commons-pool.version>1.5.7</commons-pool.version>
-    <jsch.version>0.1.54</jsch.version>
     <test.workers>1</test.workers>
     <checkstyle.source.directory>${basedir}/src/main/java</checkstyle.source.directory>
 
@@ -435,17 +434,6 @@
         <groupId>javadbf</groupId>
         <artifactId>javadbf</artifactId>
         <version>${javadbf.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.jcraft</groupId>
-        <artifactId>jsch</artifactId>
-        <version>${jsch.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
