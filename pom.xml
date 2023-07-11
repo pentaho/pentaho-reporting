@@ -90,7 +90,6 @@
     <xmlgraphics-commons.version>2.2</xmlgraphics-commons.version>
     <sassy.version>0.5</sassy.version>
     <platform.version>9.6.0.0-SNAPSHOT</platform.version>
-    <rhino.version>1.7R3</rhino.version>
     <bsf.version>2.4.0</bsf.version>
     <pentaho-connections.version>9.6.0.0-SNAPSHOT</pentaho-connections.version>
     <commons-lang.version>2.6</commons-lang.version>
@@ -1503,11 +1502,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>rhino</groupId>
-        <artifactId>js</artifactId>
-        <version>${rhino.version}</version>
       </dependency>
       <dependency>
         <groupId>xalan</groupId>
