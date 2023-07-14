@@ -116,10 +116,6 @@
       <artifactId>javadbf</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.jcraft</groupId>
-      <artifactId>jsch</artifactId>
-    </dependency>
-    <dependency>
       <groupId>javax.xml</groupId>
       <artifactId>jaxrpc-api</artifactId>
     </dependency>
