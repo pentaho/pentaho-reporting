@@ -105,6 +105,8 @@ public interface StyleBuilder {
         "border-top-right-radius" ), BORDER_BOTTOM_LEFT_RADIUS( "border-bottom-left-radius" ), BORDER_BOTTOM_RIGHT_RADIUS(
         "border-bottom-right-radius" ),
 
+    POSITION( "position" ), TOP( "top" ),
+
     BACKGROUND_COLOR( "background-color", true ), OVERFLOW( "overflow" ), WIDTH( "width" ), HEIGHT( "height" ),
     TRANSFORM_ORIGIN( "transform-origin" ), TRANSFORM( "transform" ), DIRECTION( "direction" );
 
