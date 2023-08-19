@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
@@ -265,9 +265,22 @@ public abstract class AbstractHtmlPrinter {
     writer.writeTag( XHTML_NAMESPACE, "meta", attrList, XmlWriterSupport.CLOSE );
   }
 
+  private void addStickyHeaderStyle(GlobalStyleManager styleManager) {
+    StyleBuilder styleBuilder = getStyleBuilder();
+    AttributeList attrs = new AttributeList();
+
+    attrs.setAttribute( HtmlPrinter.XHTML_NAMESPACE, AttributeNames.Html.STYLE_CLASS, "sticky-header" );
+    styleBuilder.append( StyleBuilder.CSSKeys.POSITION, "sticky" );
+    styleBuilder.append( StyleBuilder.CSSKeys.TOP, "0", "px" );
+
+    styleManager.updateStyleForcedStyleName( styleBuilder, attrs, "sticky-header" );
+  }
+
   protected StyleManager createStyleManager() {
     if ( isCreateBodyFragment() == false && isInlineStylesRequested() == false ) {
-      return new GlobalStyleManager();
+      GlobalStyleManager styleManager = new GlobalStyleManager();
+      addStickyHeaderStyle( styleManager );
+      return styleManager;
     }
 
     return new InlineStyleManager();

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
@@ -104,6 +104,8 @@ public interface StyleBuilder {
         "-moz-border-radius-bottomright" ), BORDER_TOP_LEFT_RADIUS( "border-top-left-radius" ), BORDER_TOP_RIGHT_RADIUS(
         "border-top-right-radius" ), BORDER_BOTTOM_LEFT_RADIUS( "border-bottom-left-radius" ), BORDER_BOTTOM_RIGHT_RADIUS(
         "border-bottom-right-radius" ),
+
+    POSITION( "position" ), TOP( "top" ),
 
     BACKGROUND_COLOR( "background-color", true ), OVERFLOW( "overflow" ), WIDTH( "width" ), HEIGHT( "height" ),
     TRANSFORM_ORIGIN( "transform-origin" ), TRANSFORM( "transform" ), DIRECTION( "direction" );

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2023 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
@@ -68,6 +68,20 @@ public class GlobalStyleManager implements StyleManager {
    * @return the modified attribute list.
    */
   public AttributeList updateStyle( final StyleBuilder styleBuilder, final AttributeList attributeList ) {
+    return updateStyleForcedStyleName( styleBuilder, attributeList, null );
+  }
+
+  /**
+   * Updates the given attribute-List according to the current style rules. ForcedStyleNames cannot be reused
+   * and will be ignored if null or empty.
+   *
+   * @param styleBuilder
+   * @param attributeList
+   * @param forcedStyleName
+   * @return the modified attribute list.
+   */
+  public AttributeList updateStyleForcedStyleName( final StyleBuilder styleBuilder, final AttributeList attributeList,
+                                                   String forcedStyleName ) {
     if ( styleBuilder.isEmpty() ) {
       return attributeList;
     }
@@ -76,13 +90,12 @@ public class GlobalStyleManager implements StyleManager {
     final String styleText = styleBuilder.toString();
     String styleName = styles.get( value );
     if ( styleName == null ) {
-      styleName = "style-" + nameCounter;
+      styleName = StringUtils.isEmpty( forcedStyleName ) ? "style-" + nameCounter++ : forcedStyleName;
       styles.put( value, styleName );
       if ( stylesText.contains( styleText ) ) {
         throw new IllegalStateException();
       }
       stylesText.add( styleText );
-      nameCounter += 1;
     }
 
     final String attribute = attributeList.getAttribute( HtmlPrinter.XHTML_NAMESPACE, "class" );
