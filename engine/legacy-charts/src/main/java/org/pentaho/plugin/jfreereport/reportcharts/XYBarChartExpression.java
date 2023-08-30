@@ -34,6 +34,8 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleInsets;
+import org.jfree.util.UnitType;
 import org.pentaho.plugin.jfreereport.reportcharts.backport.ExtTimeTableXYDataset;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 
@@ -101,11 +103,12 @@ public class XYBarChartExpression extends XYChartExpression {
                                                      final boolean urls,
                                                      final boolean stacked ) {
     final ValueAxis timeAxis = new DateAxis( timeAxisLabel );
-    timeAxis.setLowerMargin( 0.02 );  // reduce the default margins
-    timeAxis.setUpperMargin( 0.02 );
+    timeAxis.setLowerMargin( 0.025 );  // reduce the default margins
+    timeAxis.setUpperMargin( 0.025 );
     final NumberAxis valueAxis = new NumberAxis( valueAxisLabel );
     valueAxis.setAutoRangeIncludesZero( false );  // override default
     final XYPlot plot = new XYPlot( dataset, timeAxis, valueAxis, null );
+    plot.setInsets( new RectangleInsets( UnitType.ABSOLUTE, 0, 0, 0, 15 ) );
 
     XYToolTipGenerator toolTipGenerator = null;
     if ( tooltips ) {

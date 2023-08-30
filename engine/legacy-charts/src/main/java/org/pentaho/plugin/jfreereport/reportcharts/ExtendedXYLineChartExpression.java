@@ -22,6 +22,8 @@ import org.jfree.chart.renderer.xy.XYStepAreaRenderer;
 import org.jfree.chart.renderer.xy.XYStepRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.ui.RectangleInsets;
+import org.jfree.util.UnitType;
 
 public class ExtendedXYLineChartExpression extends XYLineChartExpression {
 
@@ -44,6 +46,9 @@ public class ExtendedXYLineChartExpression extends XYLineChartExpression {
       rtn =
         ChartFactory.createTimeSeriesChart( computeTitle(), getDomainTitle(), getRangeTitle(), xyDataset,
           isShowLegend(), false, false );
+      rtn.getXYPlot().getDomainAxis().setLowerMargin( 0.025 );
+      rtn.getXYPlot().getDomainAxis().setUpperMargin( 0.025 );
+      rtn.getXYPlot().setInsets( new RectangleInsets( UnitType.ABSOLUTE, 0, 0, 0, 15 ) );
     } else {
       final PlotOrientation orientation = computePlotOrientation();
       rtn = ChartFactory.createXYLineChart( computeTitle(), getDomainTitle(), getRangeTitle(),
