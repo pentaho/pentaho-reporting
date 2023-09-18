@@ -12,20 +12,22 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  * 
- * Copyright 2005 - 2017 Hitachi Vantara.  All rights reserved.
+ * Copyright 2005 - 2023 Hitachi Vantara.  All rights reserved.
  *  
  * @created Jul 07, 2008 
  * @author rmansoor
  */
 package org.pentaho.reporting.engine.classic.extensions.modules.connections;
 
-import org.apache.commons.dbcp.ConnectionFactory;
-import org.apache.commons.dbcp.DriverConnectionFactory;
-import org.apache.commons.dbcp.PoolableConnectionFactory;
-import org.apache.commons.dbcp.PoolingDataSource;
+import org.apache.commons.dbcp2.ConnectionFactory;
+import org.apache.commons.dbcp2.DriverConnectionFactory;
+import org.apache.commons.dbcp2.PoolableConnectionFactory;
+import org.apache.commons.dbcp2.PoolingDataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.pool.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.BaseObjectPoolConfig;
+import org.apache.commons.pool2.BaseObject;
+import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.pentaho.database.DatabaseDialectException;
 import org.pentaho.database.IDatabaseDialect;
 import org.pentaho.database.IDriverLocator;
@@ -40,6 +42,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 import java.sql.Driver;
+import java.time.Duration;
 import java.util.Map;
 import java.util.Properties;
 
@@ -114,22 +117,22 @@ public class PooledDatasourceHelper {
       if ( attributes.containsKey( DataBaseConnectionAttributes.QUERY_KEY ) ) {
         validQuery = attributes.get( DataBaseConnectionAttributes.QUERY_KEY );
       }
-      if ( !StringUtils.isEmpty( whenExhaustedAction ) ) {
-        whenExhaustedActionType = Byte.parseByte( whenExhaustedAction );
-      } else {
-        whenExhaustedActionType = GenericObjectPool.WHEN_EXHAUSTED_BLOCK;
-      }
+//      if ( !StringUtils.isEmpty( whenExhaustedAction ) ) {
+//        whenExhaustedActionType = Byte.parseByte( whenExhaustedAction );
+//      } else {
+//        whenExhaustedActionType = BaseObjectPoolConfig.DEFAULT_BLOCK_WHEN_EXHAUSTED;
+//      }
 
-      final PoolingDataSource poolingDataSource = new PoolingDataSource();
 
       // As the name says, this is a generic pool; it returns basic Object-class objects.
       final GenericObjectPool pool = new GenericObjectPool( null );
-      pool.setWhenExhaustedAction( whenExhaustedActionType );
+      final PoolingDataSource poolingDataSource = new PoolingDataSource( pool );
+      //pool.setWhenExhaustedAction( whenExhaustedActionType );
 
       // Tuning the connection pool
-      pool.setMaxActive( maxActiveConnection );
+      pool.setMaxTotal( maxActiveConnection );
       pool.setMaxIdle( maxIdleConnection );
-      pool.setMaxWait( waitTime );
+      pool.setMaxWait( Duration.ofMillis( waitTime ) );
       pool.setMinIdle( minIdleConnection );
       pool.setTestWhileIdle( testWhileIdle );
       pool.setTestOnReturn( testOnReturn );
@@ -151,13 +154,10 @@ public class PooledDatasourceHelper {
        */
       // This declaration is used implicitly.
       // noinspection UnusedDeclaration
-      final PoolableConnectionFactory pcf = new PoolableConnectionFactory( factory, // ConnectionFactory
-          pool, // ObjectPool
-          null, // KeyedObjectPoolFactory
-          validQuery, // String (validation query)
-          false, // boolean (default to read-only?)
-          true // boolean (default to auto-commit statements?)
-      );
+      final PoolableConnectionFactory pcf = new PoolableConnectionFactory( factory, null);// ConnectionFactory
+      pcf.setValidationQuery( validQuery );
+      pcf.setDefaultReadOnly( false );
+      pcf.setDefaultAutoCommit( true );
 
       /*
        * initialize the pool to X connections
@@ -174,7 +174,7 @@ public class PooledDatasourceHelper {
        * All of this is wrapped in a DataSource, which client code should already know how to handle (since it's the
        * same class of object they'd fetch via the container's JNDI tree
        */
-      poolingDataSource.setPool( pool );
+      //poolingDataSource.setPool( pool );
 
       // store the pool, so we can get to it later
       cacheManager.getDataSourceCache().put( databaseConnection.getName(), poolingDataSource );
