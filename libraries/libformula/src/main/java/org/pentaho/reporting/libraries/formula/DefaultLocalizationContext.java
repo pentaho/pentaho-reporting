@@ -27,6 +27,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -67,15 +68,14 @@ public class DefaultLocalizationContext implements LocalizationContext, Serializ
   }
 
   public List<DateFormat> getDateFormats( final Type type ) {
-    List<DateFormat> deepClone = new ArrayList<>();
     if ( type.isFlagSet( Type.DATE_TYPE ) ) {
-      dateFormats.forEach( dateFormat -> deepClone.add( (DateFormat) dateFormat.clone() ) );
+      return (List<DateFormat>) dateFormats.clone();
     } else if ( type.isFlagSet( Type.DATETIME_TYPE ) ) {
-      datetimeFormats.forEach( dateFormat -> deepClone.add( (DateFormat) dateFormat.clone() ) );
+      return (List<DateFormat>) datetimeFormats.clone();
     } else if ( type.isFlagSet( Type.TIME_TYPE ) ) {
-      timeFormats.forEach( dateFormat -> deepClone.add( (DateFormat) dateFormat.clone() ) );
+      return (List<DateFormat>) timeFormats.clone();
     }
-    return deepClone;
+    return Collections.emptyList();
   }
 
   public List<NumberFormat> getNumberFormats() {
