@@ -90,12 +90,6 @@
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
-      <artifactId>datasource-editor-openerp</artifactId>
-      <version>${project.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.pentaho.reporting.designer</groupId>
       <artifactId>datasource-editor-pmd</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
