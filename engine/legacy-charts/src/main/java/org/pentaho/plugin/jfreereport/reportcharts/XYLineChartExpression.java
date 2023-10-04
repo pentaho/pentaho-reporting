@@ -21,6 +21,8 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.ui.RectangleInsets;
+import org.jfree.util.UnitType;
 
 public class XYLineChartExpression extends XYChartExpression {
   private static final long serialVersionUID = 588996014868712814L;
@@ -39,6 +41,9 @@ public class XYLineChartExpression extends XYChartExpression {
     if ( xyDataset instanceof TimeSeriesCollection ) {
       chart = ChartFactory.createTimeSeriesChart( computeTitle(), getDomainTitle(), getRangeTitle(), xyDataset,
         isShowLegend(), false, false );
+      chart.getXYPlot().getDomainAxis().setLowerMargin( 0.025 );
+      chart.getXYPlot().getDomainAxis().setUpperMargin( 0.025 );
+      chart.getXYPlot().setInsets( new RectangleInsets( UnitType.ABSOLUTE, 0, 0, 0, 15 ) );
     } else {
       final PlotOrientation orientation = computePlotOrientation();
       chart = ChartFactory.createXYLineChart( computeTitle(), getDomainTitle(), getRangeTitle(),
