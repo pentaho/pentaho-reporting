@@ -26,7 +26,6 @@
     <module>datasource-editor-scriptable</module>
     <module>datasource-editor-table</module>
     <module>datasource-editor-xpath</module>
-    <module>datasource-editor-openerp</module>
     <module>report-designer-extension-legacy-charts</module>
     <module>report-designer-extension-pentaho</module>
     <module>report-designer-extension-toc</module>
@@ -92,11 +91,6 @@
       <dependency>
         <groupId>org.pentaho.reporting.engine</groupId>
         <artifactId>classic-extensions-olap4j</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.pentaho.reporting.engine</groupId>
-        <artifactId>classic-extensions-openerp</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
