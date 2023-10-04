@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
@@ -28,7 +28,6 @@ import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -74,26 +73,9 @@ public class DaysFunction implements Function {
       new GregorianCalendar( timeZone, locale );
     calandar2.setTime( date2 );
 
-    final int dayOfYear1 = calandar1.get( Calendar.DAY_OF_YEAR );
-    final int dayOfYear2 = calandar2.get( Calendar.DAY_OF_YEAR );
-    final int year1 = calandar1.get( Calendar.YEAR );
-    final int year2 = calandar2.get( Calendar.YEAR );
-
-    final GregorianCalendar workingCalandar =
-      new GregorianCalendar( timeZone, locale );
-
-    int res = dayOfYear2 - dayOfYear1;
-
-    // run through the inner years, without counting the border years
-    // Always run from the lower to the higher, so that we prevent infinite
-    // loops ..
-    final int targetYear = Math.max( year1, year2 );
-    for ( int i = Math.min( year1, year2 ); i < targetYear; i++ ) {
-      workingCalandar.set( Calendar.YEAR, i );
-      res += workingCalandar.getActualMaximum( Calendar.DAY_OF_YEAR );
-    }
-
-    //noinspection UnpredictableBigDecimalConstructorCall
+    //calculate the difference in millis and divide it with no. of millis in a day
+    //This will fetch us no of days
+    long res = (calandar2.getTimeInMillis() - calandar1.getTimeInMillis()) / (1000 * 60 * 60 * 24);
     return new TypeValuePair( NumberType.GENERIC_NUMBER, new BigDecimal( (double) res ) );
   }
 }
