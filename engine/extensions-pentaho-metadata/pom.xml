@@ -31,10 +31,6 @@
       <artifactId>jcifs</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.jcraft</groupId>
-      <artifactId>jsch</artifactId>
-    </dependency>
-    <dependency>
       <groupId>pentaho-kettle</groupId>
       <artifactId>kettle-engine</artifactId>
     </dependency>
