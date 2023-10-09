@@ -37,10 +37,6 @@
       <groupId>jcifs</groupId>
       <artifactId>jcifs</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.jcraft</groupId>
-      <artifactId>jsch</artifactId>
-    </dependency>
 
     <!-- Endorsed Standards Excluded from Java 11+ -->
     <dependency>
