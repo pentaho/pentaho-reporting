@@ -53,7 +53,7 @@ public class UnicodeFunction implements Function {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    return new TypeValuePair( NumberType.GENERIC_NUMBER, new BigDecimal( result.charAt( 0 ) ) );
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, new BigDecimal( result.codePointAt( 0 ) ) );
   }
 
   public String getCanonicalName() {
