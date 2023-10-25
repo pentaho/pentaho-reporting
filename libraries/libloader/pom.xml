@@ -137,6 +137,7 @@
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>xmlgraphics-commons</artifactId>
+      <version>${xml-graphics-common.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
