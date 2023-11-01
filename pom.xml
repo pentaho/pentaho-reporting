@@ -45,7 +45,6 @@
     <poi.version>4.1.1</poi.version>
     <commons-math3.version>3.6.1</commons-math3.version>
     <curvesapi.version>1.06</curvesapi.version>
-    <commons-beanutils.version>1.9.3</commons-beanutils.version>
     <syslo4j.version>0.9.46</syslo4j.version>
     <jersey.version>1.19.1</jersey.version>
     <commons-database.version>10.1.0.0-SNAPSHOT</commons-database.version>
