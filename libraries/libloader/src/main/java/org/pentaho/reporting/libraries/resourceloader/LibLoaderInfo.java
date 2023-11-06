@@ -51,7 +51,7 @@ public class LibLoaderInfo extends ProjectInformation {
     addOptionalLibrary( "org.pentaho.reporting.libraries.pixie.PixieInfo" );
     addOptionalLibrary( new DependencyInformation( "EHCache", "1.2rc1", "Apache Licence 2.0",
       "http://ehcache.sourceforge.net/" ) );
-    addOptionalLibrary( new DependencyInformation( "Batik", "1.6", "Apache Software License",
+    addOptionalLibrary( new DependencyInformation( "Batik", "1.17", "Apache Software License",
       "http://xml.apache.org/batik" ) );
   }
 }
