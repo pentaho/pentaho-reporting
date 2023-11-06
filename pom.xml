@@ -2477,10 +2477,6 @@
             <artifactId>servlet-api</artifactId>
             <groupId>javax.servlet</groupId>
           </exclusion>
-          <exclusion>
-            <artifactId>xml-apis</artifactId>
-            <groupId>xml-apis</groupId>
-          </exclusion>
         </exclusions>
       </dependency>
       <dependency>
