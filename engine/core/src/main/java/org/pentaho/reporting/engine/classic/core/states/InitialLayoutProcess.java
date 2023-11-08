@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2023 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.states;
@@ -203,6 +203,7 @@ public class InitialLayoutProcess extends ExpressionEventHelper implements Layou
     expression.setRuntime( runtime );
     try {
       expression.groupBodyFinished( event );
+      super.reportEvent = event;
       evaluateSingleExpression( expression );
     } catch ( InvalidReportStateException rse ) {
       throw rse;

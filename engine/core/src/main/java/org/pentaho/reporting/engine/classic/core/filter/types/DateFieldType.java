@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2023 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -151,6 +151,10 @@ public class DateFieldType extends AbstractElementType implements RawDataSource,
       formatStringRaw = "EEE MMM dd HH:mm:ss zzz yyyy";
     }
 
+    return getFormattedObject(runtime, element, retval, formatStringRaw);
+  }
+
+  public Object getFormattedObject( ExpressionRuntime runtime, ReportElement element, Object retval, Object formatStringRaw ) {
     try {
       final Locale locale = runtime.getResourceBundleFactory().getLocale();
       final TimeZone timeZone = runtime.getResourceBundleFactory().getTimeZone();
