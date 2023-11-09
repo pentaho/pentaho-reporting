@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2023 Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2023 Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.formula.function.text;
@@ -40,11 +40,12 @@ public class UnicharFunctionTest extends FormulaTestBase {
                         { "UNICHAR(198)", "Æ" },
                         { "UNICHAR(1)", "\u0001" },
 
-                        //Edge Cases
-                        //Max Value of Unicode is 1114111
+                        // Edge Cases
+                        // Max Value of Unicode is 1114111 and Min Value is 1.
                         { "UNICHAR(1114111)", "\uDBFF\uDFFF" },
-                        { "UNICHAR(-1)", new LibFormulaErrorValue(0) },
-                        { "UNICHAR(987654321)", new LibFormulaErrorValue(0) },
+                        { "UNICHAR(-1)", new LibFormulaErrorValue( 502 ) },
+                        { "UNICHAR(987654321)", new LibFormulaErrorValue( 502 ) },
+                        { "UNICHAR(0)", new LibFormulaErrorValue( 502 ) },
 
 
                 };
