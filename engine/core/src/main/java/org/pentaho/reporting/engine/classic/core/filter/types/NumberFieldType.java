@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2023 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
@@ -161,6 +161,10 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
       formatStringRaw = NumberFieldType.DECIMALFORMAT_DEFAULT_PATTERN;
     }
 
+    return getFormattedObject(runtime, element, retval, formatStringRaw);
+  }
+
+  public Object getFormattedObject( ExpressionRuntime runtime, ReportElement element, Object retval, Object formatStringRaw ) {
     try {
       final Locale locale = runtime.getResourceBundleFactory().getLocale();
       final NumberFieldTypeContext context = element.getElementContext( NumberFieldTypeContext.class );
@@ -182,4 +186,5 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
       return rotate( element, element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE ), runtime );
     }
   }
+
 }

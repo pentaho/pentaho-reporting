@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2023 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
@@ -277,6 +277,9 @@ public class ExpressionWriterUtility {
       expressionAttrList.setAttribute( namespaceUri, "formula", fe.getFormula() ); // NON-NLS
       if ( fe.getFailOnError() != null ) {
         expressionAttrList.setAttribute( namespaceUri, "failOnError", fe.getFailOnError().toString() ); // NON-NLS
+      }
+      if ( fe.getElementType() != null ) {
+        expressionAttrList.setAttribute( namespaceUri, "elementType", fe.getElementType() );
       }
       writer.writeTag( namespaceUri, expressionTag, expressionAttrList, XmlWriterSupport.CLOSE );
       return;
