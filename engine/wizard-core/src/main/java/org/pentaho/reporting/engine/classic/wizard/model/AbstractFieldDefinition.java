@@ -23,6 +23,7 @@ public abstract class AbstractFieldDefinition extends AbstractElementFormatDefin
   private String dataFormat;
   private Class aggregationFunction;
   private String field;
+  private String fieldAggregation;
   private Class fieldTypeHint;
   private Length width;
 
@@ -87,6 +88,14 @@ public abstract class AbstractFieldDefinition extends AbstractElementFormatDefin
 
   public void setWidth( final Length width ) {
     this.width = width;
+  }
+
+  public String getFieldAggregation() {
+    return fieldAggregation;
+  }
+
+  public void setFieldAggregation( String fieldAggregation ) {
+    this.fieldAggregation = fieldAggregation;
   }
 
 }
