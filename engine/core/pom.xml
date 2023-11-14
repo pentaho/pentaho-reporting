@@ -152,8 +152,9 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>com.lowagie</groupId>
-      <artifactId>itext-rtf</artifactId>
+      <groupId>com.github.librepdf</groupId>
+      <artifactId>openrtf</artifactId>
+      <version>${openrtf.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

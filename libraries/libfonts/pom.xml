@@ -30,8 +30,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>com.lowagie</groupId>
-      <artifactId>itext</artifactId>
+      <groupId>com.github.librepdf</groupId>
+      <artifactId>openpdf</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
