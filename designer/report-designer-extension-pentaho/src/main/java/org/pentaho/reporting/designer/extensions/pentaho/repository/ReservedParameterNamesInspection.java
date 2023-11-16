@@ -44,9 +44,6 @@ public class ReservedParameterNamesInspection implements Inspection {
     reservedParameterNames.add( "renderMode" );
     reservedParameterNames.add( "paginate" );
     reservedParameterNames.add( "autoSubmit" );
-    reservedParameterNames.add( "subscribe" );
-    reservedParameterNames.add( "subscription-id" );
-    reservedParameterNames.add( "subscription-name" );
     reservedParameterNames.add( "destination" );
     reservedParameterNames.add( "output-type" );
     reservedParameterNames.add( "output-target" );
