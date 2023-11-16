@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2023 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.math;
@@ -50,17 +50,17 @@ public class Atan2Function implements Function {
     if ( result == null ) {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
-    final Type type2 = parameters.getType( 0 );
-    final Object value2 = parameters.getValue( 0 );
+    final Type type2 = parameters.getType( 1 );
+    final Object value2 = parameters.getValue( 1 );
     final Number result2 = context.getTypeRegistry().convertToNumber( type2, value2 );
     if ( result2 == null ) {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
-    final double d1 = result.doubleValue();
-    final double d2 = result2.doubleValue();
-    if ( d1 == 0 || d2 == 0 ) {
+    final double x = result.doubleValue();
+    final double y = result2.doubleValue();
+    if ( x == 0 || y == 0 ) {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
-    return new TypeValuePair( NumberType.GENERIC_NUMBER, new BigDecimal( Math.atan2( d1, d2 ) ) );
+    return new TypeValuePair( NumberType.GENERIC_NUMBER,  new BigDecimal( Math.atan2( y, x  ) ) );
   }
 }
