@@ -32,6 +32,10 @@ public interface FieldDefinition extends Serializable, Cloneable {
 
   public void setField( String field );
 
+  public String getFieldAggregation();
+
+  public void setFieldAggregation( String fieldAggregation );
+
   public Class getFieldTypeHint();
 
   public void setFieldTypeHint( Class c );
