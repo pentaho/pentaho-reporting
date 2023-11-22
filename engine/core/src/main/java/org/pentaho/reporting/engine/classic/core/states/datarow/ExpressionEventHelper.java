@@ -40,6 +40,8 @@ public abstract class ExpressionEventHelper {
 
   protected ReportEvent reportEvent;
 
+  private boolean applyDataFormat;
+
   protected void fireReportEvent( final ReportEvent event ) {
     this.reportEvent = event;
     if ( ( event.getType() & ReportEvent.PAGE_STARTED ) == ReportEvent.PAGE_STARTED ) {
@@ -53,6 +55,7 @@ public abstract class ExpressionEventHelper {
     } else if ( ( event.getType() & ReportEvent.ITEMS_STARTED ) == ReportEvent.ITEMS_STARTED ) {
       fireItemsStartedEvent( event );
     } else if ( ( event.getType() & ReportEvent.GROUP_FINISHED ) == ReportEvent.GROUP_FINISHED ) {
+      this.applyDataFormat = true;
       fireGroupFinishedEvent( event );
     } else if ( ( event.getType() & ReportEvent.GROUP_STARTED ) == ReportEvent.GROUP_STARTED ) {
       fireGroupStartedEvent( event );
@@ -641,11 +644,11 @@ public abstract class ExpressionEventHelper {
   }
 
   protected void evaluateSingleExpression( final Expression expression ) {
-    if ( expression instanceof FormulaExpression ) {
-      handleCalcFieldFormat( this.reportEvent, ( FormulaExpression ) expression );
-    } else {
-      evaluateSingleExpressionFormat( expression, null, null, null );
+    if ( this.applyDataFormat && expression instanceof FormulaExpression
+            && handleCalcFieldFormat( this.reportEvent, ( FormulaExpression ) expression ) ) {
+      return;
     }
+    evaluateSingleExpressionFormat( expression, null, null, null );
   }
 
   protected void evaluateSingleExpressionFormat( final Expression expression, Element element, String format, String dataType ) {
