@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2023 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
@@ -54,7 +54,7 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
   protected void startParsing( final PropertyAttributes attrs ) throws SAXException {
     final int depLevel = ParserUtil.parseInt( attrs.getValue( getUri(), ExpressionReadHandler.DEPENCY_LEVEL_ATT ), 0 );
     final String expressionName = attrs.getValue( getUri(), "name" );
-
+    final String elementType = attrs.getValue( getUri(), "elementType" );
     final String className = attrs.getValue( getUri(), "class" );
     final String formula = attrs.getValue( getUri(), "formula" );
     final String failOnError = attrs.getValue( getUri(), "failOnError" );
@@ -67,7 +67,9 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
         this.expression = function;
         this.expression.setName( expressionName );
         this.expression.setDependencyLevel( depLevel );
-
+        if ( this.expression instanceof FormulaExpression ) {
+          ( ( FormulaExpression ) this.expression ).setElementType( elementType );
+        }
         this.originalClassName = FormulaFunction.class.getName();
         this.expressionClassName = FormulaFunction.class.getName();
       } else {
@@ -79,7 +81,9 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
         this.expression = expression;
         this.expression.setName( expressionName );
         this.expression.setDependencyLevel( depLevel );
-
+        if ( this.expression instanceof FormulaExpression ) {
+          ( ( FormulaExpression ) this.expression ).setElementType( elementType );
+        }
         this.originalClassName = FormulaExpression.class.getName();
         this.expressionClassName = FormulaExpression.class.getName();
       }
@@ -93,7 +97,9 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
       }
       expression.setName( expressionName );
       expression.setDependencyLevel( depLevel );
-
+      if ( this.expression instanceof FormulaExpression ) {
+        ( ( FormulaExpression ) this.expression ).setElementType( elementType );
+      }
       this.originalClassName = className;
       this.expressionClassName = mappedName;
     }

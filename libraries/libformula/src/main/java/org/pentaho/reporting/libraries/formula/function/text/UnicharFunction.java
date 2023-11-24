@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2023 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.text;
@@ -33,6 +33,8 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  */
 public class UnicharFunction implements Function {
   private static final long serialVersionUID = 3505313019941429911L;
+  private static final int maxUniCode = 1114111;
+  private static final int minUniCode = 1;
 
   public UnicharFunction() {
   }
@@ -51,7 +53,16 @@ public class UnicharFunction implements Function {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    return new TypeValuePair( TextType.TYPE, String.valueOf( ( (char) result.intValue() ) ) );
+    final int value = result.intValue();
+
+    // Check if the Unicode codepoint value lies between 1 and 1114111.
+    if ( value > maxUniCode || value < minUniCode ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
+    }
+
+    // To Handle Unicode codepoint even if it is larger than 65535
+    // which (char) cannot properly handle, so using toChars().
+    return new TypeValuePair( TextType.TYPE, String.valueOf( Character.toChars( result.intValue() ) ) );
   }
 
   public String getCanonicalName() {

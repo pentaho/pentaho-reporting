@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2021 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2023 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -55,6 +55,9 @@ public final class FormulaExpression extends AbstractExpression {
    * The formula as specified by the user. This is the formula and the namespace.
    */
   private String formula;
+
+  private String elementType;
+
   /**
    * A flag indicating that the formula cannot be parsed.
    */
@@ -86,6 +89,14 @@ public final class FormulaExpression extends AbstractExpression {
   private FormulaContext getFormulaContext() {
     final ProcessingContext globalContext = getRuntime().getProcessingContext();
     return globalContext.getFormulaContext();
+  }
+
+  public String getElementType() {
+    return elementType;
+  }
+
+  public void setElementType(String elementType) {
+    this.elementType = elementType;
   }
 
   /**

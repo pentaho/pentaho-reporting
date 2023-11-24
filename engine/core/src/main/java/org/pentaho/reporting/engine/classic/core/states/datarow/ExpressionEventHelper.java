@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
@@ -21,18 +21,29 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
+import org.pentaho.reporting.engine.classic.core.filter.types.DateFieldType;
+import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.function.Function;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public abstract class ExpressionEventHelper {
 
   private static final Log logger = LogFactory.getLog( ExpressionEventHelper.class );
 
+  protected ReportEvent reportEvent;
+
+  private boolean applyDataFormat;
+
   protected void fireReportEvent( final ReportEvent event ) {
+    this.reportEvent = event;
     if ( ( event.getType() & ReportEvent.PAGE_STARTED ) == ReportEvent.PAGE_STARTED ) {
       firePageStartedEvent( event );
     } else if ( ( event.getType() & ReportEvent.PAGE_FINISHED ) == ReportEvent.PAGE_FINISHED ) {
@@ -44,6 +55,7 @@ public abstract class ExpressionEventHelper {
     } else if ( ( event.getType() & ReportEvent.ITEMS_STARTED ) == ReportEvent.ITEMS_STARTED ) {
       fireItemsStartedEvent( event );
     } else if ( ( event.getType() & ReportEvent.GROUP_FINISHED ) == ReportEvent.GROUP_FINISHED ) {
+      this.applyDataFormat = true;
       fireGroupFinishedEvent( event );
     } else if ( ( event.getType() & ReportEvent.GROUP_STARTED ) == ReportEvent.GROUP_STARTED ) {
       fireGroupStartedEvent( event );
@@ -632,6 +644,14 @@ public abstract class ExpressionEventHelper {
   }
 
   protected void evaluateSingleExpression( final Expression expression ) {
+    if ( this.applyDataFormat && expression instanceof FormulaExpression
+            && handleCalcFieldFormat( this.reportEvent, ( FormulaExpression ) expression ) ) {
+      return;
+    }
+    evaluateSingleExpressionFormat( expression, null, null, null );
+  }
+
+  protected void evaluateSingleExpressionFormat( final Expression expression, Element element, String format, String dataType ) {
     final int activeLevel = getProcessingLevel();
     final String name = expression.getName();
     Object value;
@@ -647,7 +667,9 @@ public abstract class ExpressionEventHelper {
       logger.info( "Evaluation of expression '" + name + "'failed.", e );
       value = null;
     }
-
+    if ( dataType != null && format != null && element != null ) {
+      value = formatValue( value, element, dataType, format );
+    }
     if ( name != null ) {
       // DebugLog.log("Eval Expression: " + name + " " + value);
       updateMasterDataRow( name, value );
@@ -662,6 +684,32 @@ public abstract class ExpressionEventHelper {
   }
 
   protected void updateMasterDataRow( final String name, final Object value ) {
+  }
+
+  private boolean handleCalcFieldFormat( ReportEvent event, FormulaExpression expression ) {
+    if ( event != null ) {
+      for ( Element element : event.getReport().getItemBand().getElementArray() ) {
+        Object field = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD );
+        if ( field instanceof String && StringUtils.equals( String.valueOf( field ) , expression.getName() ) ) {
+          String dataType = expression.getElementType();
+          if ( StringUtils.equals( dataType, "NUMERIC" ) || StringUtils.equals( dataType, "DATE" ) ) {
+            Object format = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING );
+            evaluateSingleExpressionFormat( expression, element, String.valueOf( format ), dataType );
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  private Object formatValue(Object value, Element element, String dataType, String format ) {
+    if ( StringUtils.equals( dataType, "NUMERIC" ) ) {
+      return new NumberFieldType().getFormattedObject( getRuntime(), element, value, format );
+    } else if ( StringUtils.equals( dataType, "DATE" ) ) {
+      return new DateFieldType().getFormattedObject( getRuntime(), element, value, format );
+    }
+    return value;
   }
 
 }
