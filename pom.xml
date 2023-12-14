@@ -124,7 +124,6 @@
     <javax.ws.rs.version>1.1.1</javax.ws.rs.version>
     <oss-licenses.version>10.1.0.0-SNAPSHOT</oss-licenses.version>
     <pdi-dataservice-client-plugin.version>10.1.0.0-SNAPSHOT</pdi-dataservice-client-plugin.version>
-    <itext.version>2.1.7</itext.version>
     <mondrian.version>10.1.0.0-SNAPSHOT</mondrian.version>
     <pdi-xml-plugin.version>10.1.0.0-SNAPSHOT</pdi-xml-plugin.version>
     <javacc-maven-plugin.version>2.6</javacc-maven-plugin.version>
@@ -1430,9 +1429,9 @@
         <version>${asm.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.lowagie</groupId>
-        <artifactId>itext-rtf</artifactId>
-        <version>${itext.version}</version>
+        <groupId>com.github.librepdf</groupId>
+        <artifactId>openrtf</artifactId>
+        <version>${openrtf.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
@@ -1887,9 +1886,9 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>com.lowagie</groupId>
-        <artifactId>itext</artifactId>
-        <version>${itext.version}</version>
+        <groupId>com.github.librepdf</groupId>
+        <artifactId>openpdf</artifactId>
+        <version>${openpdf.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
