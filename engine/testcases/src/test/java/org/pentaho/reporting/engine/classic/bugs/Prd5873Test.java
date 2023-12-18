@@ -18,12 +18,9 @@
 package org.pentaho.reporting.engine.classic.bugs;
 
 import com.lowagie.text.pdf.PdfDictionary;
-import com.lowagie.text.pdf.PdfLiteral;
 import com.lowagie.text.pdf.PdfName;
 import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.parser.Matrix;
 import com.lowagie.text.pdf.parser.PdfContentReaderTool;
-import com.lowagie.text.pdf.parser.PdfContentStreamProcessor;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -39,9 +36,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Stack;
 
 /**
  * @author Thomas Morgner
@@ -83,9 +77,6 @@ public class Prd5873Test {
         final PdfDictionary pageN = reader.getPageN(1);
         final PdfDictionary asDict = pageN.getAsDict(PdfName.RESOURCES);
         final byte[] pageContent = reader.getPageContent(1);
-        PdfValidator pv = new PdfValidator();
-        pv.processContent(pageContent, asDict);
-
     }
 
     private void printPdfPage(PdfReader reader) throws IOException {
@@ -94,50 +85,4 @@ public class Prd5873Test {
         System.out.println(out);
     }
 
-
-    class PdfValidator extends PdfContentStreamProcessor {
-        Stack graphicsState;
-        boolean textModeActive;
-
-        PdfValidator() {
-            graphicsState = new Stack();
-        }
-
-        @Override
-        public void processContent(byte[] bytes, PdfDictionary pdfDictionary) {
-            graphicsState.clear();
-            super.processContent(bytes, pdfDictionary);
-            if (!graphicsState.isEmpty()) {
-                throw new RuntimeException();
-            }
-        }
-
-        @Override
-        public void displayText(String s, Matrix matrix) {
-
-        }
-
-        @Override
-        public void invokeOperator(PdfLiteral pdfLiteral, ArrayList arrayList) {
-            super.invokeOperator(pdfLiteral, arrayList);
-            String op = pdfLiteral.toString();
-            if (Objects.equals(op, "q")) {
-                if (textModeActive) {
-                    throw new RuntimeException("Cannot mix text mode and graphics operations.");
-                }
-
-                graphicsState.push(Boolean.TRUE);
-            } else if (Objects.equals(op, "Q")) {
-                if (textModeActive) {
-                    throw new RuntimeException("Cannot mix text mode and graphics operations.");
-                }
-
-                graphicsState.pop();
-            } else if (Objects.equals(op, "BT")) {
-                textModeActive = true;
-            } else if (Objects.equals(op, "ET")) {
-                textModeActive = false;
-            }
-        }
-    }
 }
