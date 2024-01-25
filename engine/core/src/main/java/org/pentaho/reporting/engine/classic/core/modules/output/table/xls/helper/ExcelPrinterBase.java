@@ -31,6 +31,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SlimSheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
@@ -50,7 +51,7 @@ import java.util.HashMap;
 
 public abstract class ExcelPrinterBase {
   private static final Log logger = LogFactory.getLog( ExcelPrinterBase.class );
-
+  public static final int EXCEL_LIMIT = 1048576;
   private final HashMap<String, Integer> sheetNamesCount;
   private Configuration config;
   private OutputProcessorMetaData metaData;
@@ -62,6 +63,7 @@ public abstract class ExcelPrinterBase {
   private CellStyleProducer cellStyleProducer;
   private ExcelImageHandler imageHandler;
   private Drawing patriarch;
+  private double maxSheetRowCount = EXCEL_LIMIT;
 
   public ExcelPrinterBase() {
     this.sheetNamesCount = new HashMap<String, Integer>();
@@ -73,6 +75,19 @@ public abstract class ExcelPrinterBase {
 
   public void setUseXlsxFormat( final boolean useXlsxFormat ) {
     this.useXlsxFormat = useXlsxFormat;
+  }
+
+  public void setMaxSheetRowCount( double rowCount ) {
+    if ( rowCount > 0 && rowCount < EXCEL_LIMIT ) {
+      maxSheetRowCount = rowCount;
+    } else {
+      // Set the row limit to the Excel limit if the configuration used falls outside the normal limits
+      maxSheetRowCount = EXCEL_LIMIT;
+    }
+  }
+
+  public double getMaxSheetRowCount() {
+    return maxSheetRowCount;
   }
 
   public boolean isInitialized() {
@@ -97,9 +112,15 @@ public abstract class ExcelPrinterBase {
       } else {
         scaleFactor = Double.parseDouble( scaleFactorText );
       }
+      getSheetRowLimitConfig( this.metaData );
     } catch ( Exception e ) {
       this.scaleFactor = 50;
     }
+  }
+
+  private void getSheetRowLimitConfig( OutputProcessorMetaData metaData ) {
+    double sheetRowLimit = metaData.getNumericFeatureValue( OutputProcessorFeature.SHEET_ROW_LIMIT );
+    setMaxSheetRowCount( sheetRowLimit );
   }
 
   public InputStream getTemplateInputStream() {

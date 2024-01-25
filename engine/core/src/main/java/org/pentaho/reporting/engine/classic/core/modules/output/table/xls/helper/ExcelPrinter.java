@@ -125,36 +125,45 @@ public class ExcelPrinter extends ExcelPrinterBase {
     final SheetLayout sheetLayout = contentProducer.getSheetLayout();
     final int colCount = sheetLayout.getColumnCount();
 
-    for ( int row = startRow; row < finishRow; row++ ) {
-      final Row hssfRow = getRowAt( row );
-      final double lastRowHeight = StrictGeomUtility.toExternalValue( sheetLayout.getRowHeight( row ) );
+    int sheetRow = startRow;
+    for ( int contentRow = startRow; contentRow < finishRow; contentRow++ ) {
+      if ( getMaxSheetRowCount() != -1 && sheetRow >= getMaxSheetRowCount() ) {
+        sheet = openSheet( contentProducer.getSheetName() );
+        // Start a new page.
+        configureSheetPaperSize( sheet, logicalPage.getPageGrid().getPage( 0, 0 ) );
+        configureSheetColumnWidths( sheet, contentProducer.getSheetLayout(), contentProducer.getColumnCount() );
+        configureSheetProperties( sheet, excelTableContentProducer );
+        sheetRow = 0;
+      }
+      final Row hssfRow = getRowAt( sheetRow );
+      final double lastRowHeight = StrictGeomUtility.toExternalValue( sheetLayout.getRowHeight( contentRow ) );
       hssfRow.setHeightInPoints( (float) ( lastRowHeight ) );
 
       for ( int col = 0; col < colCount; col++ ) {
-        final CellMarker.SectionType sectionType = contentProducer.getSectionType( row, col );
-        final RenderBox content = contentProducer.getContent( row, col );
+        final CellMarker.SectionType sectionType = contentProducer.getSectionType( contentRow, col );
+        final RenderBox content = contentProducer.getContent( contentRow, col );
 
         if ( content == null ) {
-          final RenderBox backgroundBox = contentProducer.getBackground( row, col );
+          final RenderBox backgroundBox = contentProducer.getBackground( contentRow, col );
           final CellBackground background;
           if ( backgroundBox != null ) {
             background =
-                cellBackgroundProducer.getBackgroundForBox( logicalPage, sheetLayout, col, row, 1, 1, true,
+                cellBackgroundProducer.getBackgroundForBox( logicalPage, sheetLayout, col, contentRow, 1, 1, true,
                     sectionType, backgroundBox );
           } else {
-            background = cellBackgroundProducer.getBackgroundAt( logicalPage, sheetLayout, col, row, true, sectionType );
+            background = cellBackgroundProducer.getBackgroundAt( logicalPage, sheetLayout, col, contentRow, true, sectionType );
           }
           if ( background == null ) {
-            if ( row == 0 && col == 0 ) {
+            if ( contentRow == 0 && col == 0 ) {
               // create a single cell, so that we dont run into nullpointer inside POI..
-              getCellAt( col, row );
+              getCellAt( col, contentRow );
             }
             // An empty cell .. ignore
             continue;
           }
 
           // A empty cell with a defined background ..
-          final Cell cell = getCellAt( col, row );
+          final Cell cell = getCellAt( col, sheetRow );
           final CellStyle style = getCellStyleProducer().createCellStyle( null, null, background );
           if ( style != null ) {
             cell.setCellStyle( style );
@@ -166,11 +175,11 @@ public class ExcelPrinter extends ExcelPrinterBase {
           throw new InvalidReportStateException( "Uncommited content encountered" );
         }
 
-        final long contentOffset = contentProducer.getContentOffset( row, col );
+        final long contentOffset = contentProducer.getContentOffset( contentRow, col );
         final TableRectangle rectangle =
             sheetLayout.getTableBounds( content.getX(), content.getY() + contentOffset, content.getWidth(), content
                 .getHeight(), null );
-        if ( rectangle.isOrigin( col, row ) == false ) {
+        if ( rectangle.isOrigin( col, contentRow ) == false ) {
           // A spanned cell ..
           continue;
         }
@@ -180,7 +189,7 @@ public class ExcelPrinter extends ExcelPrinterBase {
                 rectangle.getColumnSpan(), rectangle.getRowSpan(), false, sectionType, content );
         // export the cell and all content ..
 
-        final Cell cell = getCellAt( col, row );
+        final Cell cell = getCellAt( col, sheetRow );
         final CellStyle style =
             getCellStyleProducer().createCellStyle( content.getInstanceId(), content.getStyleSheet(), fastBackground );
         if ( style != null ) {
@@ -188,12 +197,12 @@ public class ExcelPrinter extends ExcelPrinterBase {
         }
 
         if ( applyCellValue( content, cell, sheetLayout, rectangle, contentOffset ) ) {
-          mergeCellRegion( rectangle, row, col, sheetLayout, logicalPage, content, contentProducer );
+          mergeCellRegion( rectangle, sheetRow, col, sheetLayout, logicalPage, content, contentProducer );
         }
 
         content.setFinishedTable( true );
       }
-
+      sheetRow++;
     }
 
     if ( incremental == false ) {

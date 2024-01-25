@@ -116,6 +116,13 @@ public class ExcelOutputProcessorMetaData extends AbstractOutputProcessorMetaDat
     if ( deviceResolution > 0 ) {
       setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution );
     }
+
+    final double sheetRowLimit =
+        extendedConfig.getIntProperty(
+            "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.SheetRowLimit", 1048576 );
+    if ( getNumericFeatureValue( OutputProcessorFeature.SHEET_ROW_LIMIT ) <= 0 && sheetRowLimit > 0 ) {
+      setNumericFeatureValue( OutputProcessorFeature.SHEET_ROW_LIMIT, sheetRowLimit );
+    }
   }
 
   /**
