@@ -51,7 +51,10 @@ import java.util.HashMap;
 
 public abstract class ExcelPrinterBase {
   private static final Log logger = LogFactory.getLog( ExcelPrinterBase.class );
-  public static final int EXCEL_LIMIT = 1048576;
+  /*
+    Default MAX number of rows that can be printed to an Excel sheet
+   */
+  public static final int SHEET_ROW_LIMIT = 1048576;
   private final HashMap<String, Integer> sheetNamesCount;
   private Configuration config;
   private OutputProcessorMetaData metaData;
@@ -63,7 +66,7 @@ public abstract class ExcelPrinterBase {
   private CellStyleProducer cellStyleProducer;
   private ExcelImageHandler imageHandler;
   private Drawing patriarch;
-  private double maxSheetRowCount = EXCEL_LIMIT;
+  private double maxSheetRowCount = SHEET_ROW_LIMIT;
 
   public ExcelPrinterBase() {
     this.sheetNamesCount = new HashMap<String, Integer>();
@@ -78,11 +81,11 @@ public abstract class ExcelPrinterBase {
   }
 
   public void setMaxSheetRowCount( double rowCount ) {
-    if ( rowCount > 0 && rowCount < EXCEL_LIMIT ) {
+    if ( rowCount > 0 && rowCount < SHEET_ROW_LIMIT ) {
       maxSheetRowCount = rowCount;
     } else {
       // Set the row limit to the Excel limit if the configuration used falls outside the normal limits
-      maxSheetRowCount = EXCEL_LIMIT;
+      maxSheetRowCount = SHEET_ROW_LIMIT;
     }
   }
 

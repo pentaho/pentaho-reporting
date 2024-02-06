@@ -65,6 +65,7 @@ public class ExcelPrinter extends ExcelPrinterBase {
   private CellBackgroundProducer cellBackgroundProducer;
   private ExcelTextExtractor textExtractor;
   private ResourceManager resourceManager;
+  private int sheetRow = 0;
 
   public ExcelPrinter( final OutputStream outputStream, final ResourceManager resourceManager ) {
     if ( outputStream == null ) {
@@ -93,6 +94,15 @@ public class ExcelPrinter extends ExcelPrinterBase {
     return sheet;
   }
 
+  private void addNewSheet( final LogicalPageBox logicalPage, final TableContentProducer contentProducer, final SheetPropertySource excelTableContentProducer ) {
+    // make sure a new patriarch is created if needed.
+    sheet = openSheet( contentProducer.getSheetName() );
+    // Start a new page.
+    configureSheetPaperSize( sheet, logicalPage.getPageGrid().getPage( 0, 0 ) );
+    configureSheetColumnWidths( sheet, contentProducer.getSheetLayout(), contentProducer.getColumnCount() );
+    configureSheetProperties( sheet, excelTableContentProducer );
+  }
+
   public void print( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage,
       final TableContentProducer contentProducer, final boolean incremental ) {
     if ( workbook == null ) {
@@ -109,30 +119,20 @@ public class ExcelPrinter extends ExcelPrinterBase {
       return;
     }
 
-    if ( sheet == null ) {
-      // make sure a new patriarch is created if needed.
-      sheet = openSheet( contentProducer.getSheetName() );
-      // Start a new page.
-      configureSheetPaperSize( sheet, logicalPage.getPageGrid().getPage( 0, 0 ) );
-      configureSheetColumnWidths( sheet, contentProducer.getSheetLayout(), contentProducer.getColumnCount() );
-    }
-
     // PRD-6134: Always update sheet properties so that header and footer are correctly handled
     final SheetPropertySource excelTableContentProducer = (SheetPropertySource) contentProducer;
-    configureSheetProperties( sheet, excelTableContentProducer );
+
+    if ( sheet == null ) {
+      addNewSheet( logicalPage, contentProducer, excelTableContentProducer );
+    }
 
     // and finally the content ..
     final SheetLayout sheetLayout = contentProducer.getSheetLayout();
     final int colCount = sheetLayout.getColumnCount();
 
-    int sheetRow = startRow;
     for ( int contentRow = startRow; contentRow < finishRow; contentRow++ ) {
       if ( getMaxSheetRowCount() != -1 && sheetRow >= getMaxSheetRowCount() ) {
-        sheet = openSheet( contentProducer.getSheetName() );
-        // Start a new page.
-        configureSheetPaperSize( sheet, logicalPage.getPageGrid().getPage( 0, 0 ) );
-        configureSheetColumnWidths( sheet, contentProducer.getSheetLayout(), contentProducer.getColumnCount() );
-        configureSheetProperties( sheet, excelTableContentProducer );
+        addNewSheet( logicalPage, contentProducer, excelTableContentProducer );
         sheetRow = 0;
       }
       final Row hssfRow = getRowAt( sheetRow );
@@ -224,7 +224,7 @@ public class ExcelPrinter extends ExcelPrinterBase {
       return;
     }
 
-    sheet.addMergedRegion( new CellRangeAddress( row, ( row + rowSpan - 1 ), col, ( col + columnSpan - 1 ) ) );
+    sheet.addMergedRegionUnsafe( new CellRangeAddress( row, ( row + rowSpan - 1 ), col, ( col + columnSpan - 1 ) ) );
     final int rectX = rectangle.getX1();
     final int rectY = rectangle.getY1();
 
