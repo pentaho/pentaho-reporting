@@ -170,6 +170,9 @@ public abstract class OutputProcessorFeature implements Serializable {
   public static final BooleanOutputProcessorFeature IGNORE_ROTATION =
     new BooleanOutputProcessorFeature( "ignore-rotation" );
 
+  public static final NumericOutputProcessorFeature SHEET_ROW_LIMIT =
+    new NumericOutputProcessorFeature( "sheet-row-limit" );
+
   private String name;
   private int hashCode;
 
