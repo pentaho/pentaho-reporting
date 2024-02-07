@@ -115,13 +115,13 @@ public abstract class ExcelPrinterBase {
       } else {
         scaleFactor = Double.parseDouble( scaleFactorText );
       }
-      getSheetRowLimitConfig( this.metaData );
+      applySheetRowLimitConfig( this.metaData );
     } catch ( Exception e ) {
       this.scaleFactor = 50;
     }
   }
 
-  private void getSheetRowLimitConfig( OutputProcessorMetaData metaData ) {
+  private void applySheetRowLimitConfig( OutputProcessorMetaData metaData ) {
     double sheetRowLimit = metaData.getNumericFeatureValue( OutputProcessorFeature.SHEET_ROW_LIMIT );
     setMaxSheetRowCount( sheetRowLimit );
   }
