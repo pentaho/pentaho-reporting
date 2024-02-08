@@ -468,6 +468,13 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     this.booleanFeatures.remove( feature );
   }
 
+  public void addNumericFeature( final OutputProcessorFeature.NumericOutputProcessorFeature feature, double val ) {
+    if ( feature == null ) {
+      throw new NullPointerException();
+    }
+    this.numericFeatures.put( feature, val );
+  }
+
   public boolean isFeatureSupported( final OutputProcessorFeature.BooleanOutputProcessorFeature feature ) {
     if ( feature == null ) {
       throw new NullPointerException();

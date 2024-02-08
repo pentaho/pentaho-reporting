@@ -202,5 +202,11 @@
       <text>false</text>
     </enum>
   </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.xls.SheetRowLimit" global="false"
+       hidden="false">
+    <description>Defines max number of rows to be printed to each sheet. Creates a new sheet once that limit is reached.
+    Max allowable limit is 1,048,576 according to Excel sheet limits.</description>
+    <text/>
+  </key>
 
 </config-description>

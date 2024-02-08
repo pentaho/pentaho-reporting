@@ -18,10 +18,12 @@
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.DisplayAllFlowSelector;
 import org.pentaho.reporting.engine.classic.core.layout.output.FlowSelector;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.AbstractTableOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
@@ -64,6 +66,13 @@ public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor {
 
   public void setUseXlsxFormat( final boolean useXlsxFormat ) {
     printer.setUseXlsxFormat( useXlsxFormat );
+  }
+
+  public void setMaxSheetRowCount( int rowCount ) {
+    if ( metaData instanceof AbstractOutputProcessorMetaData ) {
+      AbstractOutputProcessorMetaData meta = (AbstractOutputProcessorMetaData) metaData;
+      meta.addNumericFeature( OutputProcessorFeature.SHEET_ROW_LIMIT, rowCount );
+    }
   }
 
   public InputStream getTemplateInputStream() {
