@@ -131,13 +131,13 @@
     </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-      <version>${ehcache.version}</version>
+      <artifactId>ehcache-core</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>xmlgraphics-commons</artifactId>
+      <version>${xml-graphics-common.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
