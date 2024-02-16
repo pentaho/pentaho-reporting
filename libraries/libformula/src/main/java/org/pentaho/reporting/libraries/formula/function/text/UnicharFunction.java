@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+* Copyright (c) 2006 - 2024 Hitachi Vantara and Contributors.  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.formula.function.text;
@@ -51,7 +51,9 @@ public class UnicharFunction implements Function {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    return new TypeValuePair( TextType.TYPE, String.valueOf( ( (char) result.intValue() ) ) );
+    // To Handle Unicode codepoint even if it is larger than 65535
+    // which (char) cannot properly handle, so using toChars().
+    return new TypeValuePair( TextType.TYPE, String.valueOf( Character.toChars( result.intValue() ) ) );
   }
 
   public String getCanonicalName() {
