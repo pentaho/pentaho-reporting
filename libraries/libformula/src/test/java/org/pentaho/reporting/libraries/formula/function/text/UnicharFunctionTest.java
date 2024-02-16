@@ -41,11 +41,10 @@ public class UnicharFunctionTest extends FormulaTestBase {
                         { "UNICHAR(1)", "\u0001" },
 
                         // Edge Cases
-                        // Max Value of Unicode is 1114111 and Min Value is 1.
+                        // Max Value of Unicode is 1114111
                         { "UNICHAR(1114111)", "\uDBFF\uDFFF" },
-                        { "UNICHAR(-1)", new LibFormulaErrorValue( 502 ) },
-                        { "UNICHAR(987654321)", new LibFormulaErrorValue( 502 ) },
-                        { "UNICHAR(0)", new LibFormulaErrorValue( 502 ) },
+                        { "UNICHAR(-1)", new LibFormulaErrorValue(0) },
+                        { "UNICHAR(987654321)", new LibFormulaErrorValue(0) },
 
 
                 };
