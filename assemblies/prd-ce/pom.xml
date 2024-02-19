@@ -258,12 +258,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.pentaho</groupId>
-      <artifactId>pentaho-cassandra-plugin-package</artifactId>
-      <type>zip</type>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>org.pentaho.di.plugins</groupId>
       <artifactId>pdi-xml-plugin</artifactId>
       <type>zip</type>
@@ -437,7 +431,7 @@
                 <goal>unpack-dependencies</goal>
               </goals>
               <configuration>
-                <includeArtifactIds>mongodb-plugin,pentaho-cassandra-plugin,pdi-xml-plugin,kettle-json-plugin,pentaho-metastore-locator-plugin,kettle-repository-locator-plugin</includeArtifactIds>
+                <includeArtifactIds>mongodb-plugin,pdi-xml-plugin,kettle-json-plugin,pentaho-metastore-locator-plugin,kettle-repository-locator-plugin</includeArtifactIds>
                 <outputDirectory>${stage.dir.designer}/plugins</outputDirectory>
               </configuration>
             </execution>
