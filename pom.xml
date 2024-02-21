@@ -40,7 +40,6 @@
     <groovy.version>2.4.8</groovy.version>
     <mockito.version>1.10.19</mockito.version>
     <powermock.version>1.6.3</powermock.version>
-    <pentaho-cassandra-plugin.version>10.2.0.0-SNAPSHOT</pentaho-cassandra-plugin.version>
     <pentaho-osgi-bundles.version>10.2.0.0-SNAPSHOT</pentaho-osgi-bundles.version>
     <poi.version>4.1.1</poi.version>
     <commons-math3.version>3.6.1</commons-math3.version>
@@ -1190,18 +1189,6 @@
         <groupId>commons-configuration</groupId>
         <artifactId>commons-configuration</artifactId>
         <version>${commons-configuration.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.pentaho</groupId>
-        <artifactId>pentaho-cassandra-plugin-package</artifactId>
-        <version>${pentaho-cassandra-plugin.version}</version>
-        <type>zip</type>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
