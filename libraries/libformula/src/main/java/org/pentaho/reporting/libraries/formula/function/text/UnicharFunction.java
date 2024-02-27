@@ -33,6 +33,8 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  */
 public class UnicharFunction implements Function {
   private static final long serialVersionUID = 3505313019941429911L;
+  private static final int maxUniCode = 1114111;
+  private static final int minUniCode = 1;
 
   public UnicharFunction() {
   }
@@ -48,6 +50,13 @@ public class UnicharFunction implements Function {
     final Number result = context.getTypeRegistry().convertToNumber( type1, value1 );
 
     if ( result == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
+    }
+
+    final int value = result.intValue();
+
+    // Check if the Unicode codepoint value lies between 1 and 1114111.
+    if ( value > maxUniCode || value < minUniCode ) {
       throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
