@@ -35,8 +35,6 @@
                       pen:action="org.pentaho.reporting.designer.core.actions.report.export.ExportHtmlAction"/>
             <menuitem id="file.export.pdf"
                       pen:action="org.pentaho.reporting.designer.core.actions.report.export.ExportPdfAction"/>
-            <menuitem id="file.export.excel"
-                      pen:action="org.pentaho.reporting.designer.core.actions.report.export.ExportXlsAction"/>
             <menuitem id="file.export.xlsx"
                       pen:action="org.pentaho.reporting.designer.core.actions.report.export.ExportXlsxAction"/>
             <menuitem id="file.export.rtf"
@@ -54,8 +52,6 @@
                       pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewHtmlAction"/>
             <menuitem id="file.run.pdf"
                       pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewPdfAction"/>
-            <menuitem id="file.run.excel"
-                      pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewExcelAction"/>
             <menuitem id="file.run.xlsx"
                       pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewXlsxAction"/>
             <menuitem id="file.run.rtf"
@@ -472,8 +468,6 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewPdfAction"/>
       <menuitem id="popup-RunAs.html"
                 pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewHtmlAction"/>
-      <menuitem id="popup-RunAs.excel"
-                pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewExcelAction"/>
       <menuitem id="popup-RunAs.xlsx"
                 pen:action="org.pentaho.reporting.designer.core.actions.report.preview.PreviewXlsxAction"/>
       <menuitem id="popup-RunAs.rtf"
