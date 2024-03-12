@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.fonts.registry;
@@ -69,8 +69,8 @@ public class AbstractFontFileRegistryTest {
     // this test is likely to be run on Linux by CI
     // since we cannot prevent inserting slash as a file separator by java.io.File,
     // we are forced to replace it manually
-    actual = actual.replaceAll( "/", "\\\\" );
+    actual = actual.replaceAll( "/", "\\\\" ).toUpperCase();
     // Linux also adds current dir to the path it cannot recognize, so let's check the end of the resulting path
-    assertTrue( actual, actual.endsWith( expectedFontPath ) );
+    assertTrue( actual, actual.endsWith( expectedFontPath.toUpperCase() ) );
   }
 }

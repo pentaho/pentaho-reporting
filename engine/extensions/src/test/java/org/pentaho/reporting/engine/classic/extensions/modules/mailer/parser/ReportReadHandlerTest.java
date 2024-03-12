@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2005-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2005-2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer.parser;
@@ -21,9 +21,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyMapOf;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyMap;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -35,6 +35,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.ArgumentMatcher;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.libraries.resourceloader.ParameterKey;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -71,10 +74,10 @@ public class ReportReadHandlerTest {
     report = mock( MasterReport.class );
 
     doReturn( resourceManager ).when( rootHandler ).getResourceManager();
-    doReturn( key ).when( backend ).deriveKey( any( ResourceKey.class ), anyString(),
-        anyMapOf( ParameterKey.class, Object.class ) );
-    doReturn( resource ).when( backend ).create( any( ResourceManager.class ), any( ResourceBundleData.class ),
-        any( ResourceKey.class ), any( Class[].class ) );
+    doReturn( key ).when( backend ).deriveKey( Mockito.<ResourceKey>any(), anyString(),
+        ArgumentMatchers.any() );
+    doReturn( resource ).when( backend ).create( Mockito.<ResourceManager>any(), Mockito.<ResourceBundleData>any(),
+        Mockito.<ResourceKey>any(), Mockito.<Class[]>any() );
     doReturn( new ResourceKey[] {} ).when( resource ).getDependencies();
     doReturn( key ).when( resource ).getSource();
     doReturn( getClass() ).when( resource ).getTargetType();

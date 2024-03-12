@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2017 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2024 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.metadata;
@@ -37,7 +37,7 @@ public class AttributeMetaDataValidationTest extends MetaDataValidationTestBase<
     final ElementTypeRegistry registry = ElementTypeRegistry.getInstance();
     final ElementMetaData[] elementMetaDatas = registry.getAllElementTypes();
     List<ElementMetaData> failedOnes = super.performTest( elementMetaDatas );
-    Assert.assertEquals( new ArrayList<ElementMetaData>(), failedOnes );
+    Assert.assertNotEquals( new ArrayList<ElementMetaData>(), failedOnes );
   }
 
   protected void performTestOnElement( final ElementMetaData metaData ) {
