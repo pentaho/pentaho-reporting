@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2005-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2005 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml;
@@ -21,8 +21,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -56,7 +55,7 @@ public class SparklineStylesReadHandlerTest {
     assertThat( (ElementStyleSheet) handler.getObject(), is( equalTo( styleSheet ) ) );
 
     handler.startParsing( attrs );
-    verify( styleSheet, never() ).setStyleProperty( any( StyleKey.class ), anyObject() );
+    verify( styleSheet, never() ).setStyleProperty( any( StyleKey.class ), any() );
 
     doReturn( "black" ).when( attrs ).getValue( TEST_URI, "high-color" );
     doReturn( "blue" ).when( attrs ).getValue( TEST_URI, "last-color" );

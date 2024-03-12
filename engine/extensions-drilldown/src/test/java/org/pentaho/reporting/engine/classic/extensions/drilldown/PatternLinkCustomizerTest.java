@@ -12,35 +12,32 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2019 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2019 - 2024 Hitachi Vantara..  All rights reserved.
  */
 package org.pentaho.reporting.engine.classic.extensions.drilldown;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.util.reflection.Whitebox;
+import org.mockito.MockedStatic;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LocalizationContext;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.HashMap;
+import java.lang.reflect.Field;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
+import org.mockito.junit.MockitoJUnitRunner;
 
-@RunWith( PowerMockRunner.class )
-@PowerMockIgnore( "jdk.internal.reflect.*" )
-@PrepareForTest( DrillDownProfileMetaData.class )
+@RunWith( MockitoJUnitRunner.class )
 public class PatternLinkCustomizerTest {
 
   private PatternLinkCustomizer patternLinkCustomizer;
@@ -52,21 +49,22 @@ public class PatternLinkCustomizerTest {
 
 
   @Before
-  public void setup() {
-    formulaContext = mock( FormulaContext.class );
-    config = mock( Configuration.class );
-    profileMeta = mock( DrillDownProfileMetaData.class );
-    profile = mock( DrillDownProfile.class );
-    localContext = mock( LocalizationContext.class );
-    PowerMockito.mockStatic( DrillDownProfileMetaData.class );
-    when( DrillDownProfileMetaData.getInstance() ).thenReturn( profileMeta );
-    when( profileMeta.getDrillDownProfile( "generic-url" ) ).thenReturn( profile );
-    when( formulaContext.getConfiguration() ).thenReturn( config );
-    when( formulaContext.getLocalizationContext() ).thenReturn( localContext );
-    when( localContext.getLocale() ).thenReturn( Locale.ENGLISH );
-    when( config.getConfigProperty( "org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8" ) ).thenReturn( "UTF-8" );
-    Whitebox.setInternalState( profile, "attributes", getProfileAttributes() );
-    when( profile.getAttribute( anyString() ) ).thenCallRealMethod();
+  public void setup() throws IllegalAccessException, NoSuchFieldException {
+    try ( MockedStatic<DrillDownProfileMetaData> mockedStatic = mockStatic( DrillDownProfileMetaData.class ) ) {
+      formulaContext = mock(FormulaContext.class);
+      config = mock(Configuration.class);
+      profileMeta = mock(DrillDownProfileMetaData.class);
+      profile = mock(DrillDownProfile.class);
+      localContext = mock(LocalizationContext.class);
+      mockedStatic.when( () -> DrillDownProfileMetaData.getInstance() ).thenReturn(profileMeta);
+      when(formulaContext.getConfiguration()).thenReturn(config);
+      when(formulaContext.getLocalizationContext()).thenReturn(localContext);
+      when(localContext.getLocale()).thenReturn(Locale.ENGLISH);
+      when(config.getConfigProperty("org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8")).thenReturn("UTF-8");
+      Field attributes = DrillDownProfile.class.getDeclaredField("attributes");
+      attributes.setAccessible(true);
+      attributes.set(profile, getProfileAttributes());
+    }
   }
 
   @Test

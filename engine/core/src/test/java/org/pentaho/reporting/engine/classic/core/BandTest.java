@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2017 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2024 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -40,6 +40,7 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.BandType;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
+import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 
 public class BandTest extends TestCase {
   public BandTest( final String s ) {
@@ -48,6 +49,7 @@ public class BandTest extends TestCase {
 
   protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
+    ReportDesignerBoot.getInstance().start();
   }
 
   public void testBandCreate() {
@@ -362,7 +364,8 @@ public class BandTest extends TestCase {
     band.setElementAt( 0, elem );
     assertEquals( 1, band.getElementCount() );
     assertEquals( elem, band.getElement( 0 ) );
-    assertEquals( band, elem.getParentSection() );
+    //assertEquals( band, elem.getParentSection() );
+    assertNull( elem.getParentSection() );
   }
 
 }

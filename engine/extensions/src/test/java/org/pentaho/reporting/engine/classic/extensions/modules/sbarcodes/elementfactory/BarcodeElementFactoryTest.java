@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2005-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2005-2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.elementfactory;
@@ -23,8 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -62,7 +61,7 @@ public class BarcodeElementFactoryTest {
   public void testApplyStyle() {
     ElementStyleSheet style = mock( ElementStyleSheet.class );
     barcodeElemFactory.applyStyle( style );
-    verify( style, never() ).setStyleProperty( any( StyleKey.class ), anyObject() );
+    verify( style, never() ).setStyleProperty( any( StyleKey.class ), any() );
 
     barcodeElemFactory.setFontName( "Times New Roman" );
     barcodeElemFactory.setFontSize( 14 );

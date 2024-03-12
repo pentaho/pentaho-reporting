@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2019 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2019 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.csv;
@@ -35,28 +35,18 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVTab
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
 
 import static org.junit.Assert.assertEquals;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.MockitoJUnitRunner;
 
 /**
  * @author David Griffen
  */
-@RunWith( PowerMockRunner.class )
-@PowerMockIgnore( "jdk.internal.reflect.*" )
-@PrepareForTest( { InstanceID.class, LogicalPageBox.class, NodeLayoutProperties.class, OutputProcessorMetaData.class,
-  ParagraphRenderBox.class, RenderBox.class, SheetLayout.class, TableRectangle.class, TemplatingOutputProcessor.class } )
-@SuppressStaticInitializationFor( { "org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet",
-  "org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties",
-  "org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType" } )
+@RunWith( MockitoJUnitRunner.class )
 public class CsvTemplateProducerTest {
 
   private static final String COMPLETE_TEMPLATE = CSVTableModule.SEPARATOR_DEFAULT + CSVTableModule.SEPARATOR_DEFAULT
@@ -99,10 +89,6 @@ public class CsvTemplateProducerTest {
     mockStatic( TemplatingOutputProcessor.class );
     Long contentOffset = 0L;
 
-    Whitebox.setInternalState( SimpleStyleSheet.class, "EMPTY_STYLE",
-      new SimpleStyleSheet( styleSheet ) );
-    Whitebox.setInternalState( NodeLayoutProperties.class, "SIMPLE_NODE_ID", new InstanceID() );
-    Whitebox.setInternalState( AutoLayoutBoxType.class, "INSTANCE", new AutoLayoutBoxType() );
 
     when( TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData ) ).thenReturn( contentProducer );
     when( contentProducer.getColumnCount() ).thenReturn( 3 );
@@ -123,7 +109,6 @@ public class CsvTemplateProducerTest {
     // First line should be null content, to show that it will print the separators only.
     for ( int i = 0; i < 3; i++ ) {
       when( contentProducer.getContent( 0, i ) ).thenReturn( null );
-      when( contentProducer.getContentOffset( 0, i ) ).thenReturn( contentOffset );
     }
     // Second line should print content, we're mocking it with a single InstanceID, so it will print the same
     // value multiple times (3x)
