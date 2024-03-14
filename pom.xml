@@ -71,7 +71,7 @@
     <pentaho-metadata.version>10.2.0.0-SNAPSHOT</pentaho-metadata.version>
     <pentaho.pentaho-versionchecker.version>${project.version}</pentaho.pentaho-versionchecker.version>
     <jsonpath.vesrion>1.0</jsonpath.vesrion>
-    <ognl.version>2.6.9</ognl.version>
+    <ognl.version>3.0.12</ognl.version>
     <contiperf.version>2.2.0</contiperf.version>
     <feed4j.version>1.0</feed4j.version>
     <launcher.version>10.2.0.0-SNAPSHOT</launcher.version>
