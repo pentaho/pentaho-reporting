@@ -119,8 +119,9 @@
       <artifactId>saxon-dom</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.yaml</groupId>
-      <artifactId>snakeyaml</artifactId>
+      <groupId>org.hitachivantara</groupId>
+      <artifactId>safeyaml</artifactId>
+      <version>${safeyaml.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xerial.snappy</groupId>
