@@ -40,7 +40,6 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.BandType;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
-import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 
 public class BandTest extends TestCase {
   public BandTest( final String s ) {
@@ -49,7 +48,6 @@ public class BandTest extends TestCase {
 
   protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
-    ReportDesignerBoot.getInstance().start();
   }
 
   public void testBandCreate() {
