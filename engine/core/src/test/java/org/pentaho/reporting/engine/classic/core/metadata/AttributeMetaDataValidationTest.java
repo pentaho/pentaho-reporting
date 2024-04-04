@@ -37,7 +37,7 @@ public class AttributeMetaDataValidationTest extends MetaDataValidationTestBase<
     final ElementTypeRegistry registry = ElementTypeRegistry.getInstance();
     final ElementMetaData[] elementMetaDatas = registry.getAllElementTypes();
     List<ElementMetaData> failedOnes = super.performTest( elementMetaDatas );
-    Assert.assertNotEquals( new ArrayList<ElementMetaData>(), failedOnes );
+    Assert.assertEquals( new ArrayList<ElementMetaData>(), failedOnes );
   }
 
   protected void performTestOnElement( final ElementMetaData metaData ) {
