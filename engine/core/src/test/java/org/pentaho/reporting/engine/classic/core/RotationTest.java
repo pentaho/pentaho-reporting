@@ -67,14 +67,12 @@ import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 
 public class RotationTest {
 
   @Before
   public void setUp() throws IOException {
     ClassicEngineBoot.getInstance().start();
-    ReportDesignerBoot.getInstance().start();
   }
 
   @Test
