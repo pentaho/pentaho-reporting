@@ -53,7 +53,7 @@ public class AbstractFontFileRegistryTest {
     doReturn( "windows" ).when( registry ).safeSystemGetProperty( eq( "os.name" ), anyString() );
     doReturn( "\\" ).when( registry ).safeSystemGetProperty( eq( "file.separator" ), anyString() );
     doReturn( ";" ).when( registry ).safeSystemGetProperty( eq( "path.separator" ), anyString() );
-    doReturn( directories ).when( registry ).safeSystemGetProperty( eq( "java.library.path" ), anyString() );
+    doReturn( directories ).when( registry ).safeSystemGetProperty( eq( "java.library.path" ), nullable( String.class ) );
 
     doNothing().when( registry ).loadFromCache( anyString() );
     doNothing().when( registry ).storeToCache( anyString() );
