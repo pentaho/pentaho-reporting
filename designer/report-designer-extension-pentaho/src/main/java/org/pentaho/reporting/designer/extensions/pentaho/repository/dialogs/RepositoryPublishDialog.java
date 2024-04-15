@@ -285,8 +285,6 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog {
         "RepositoryPublishDialog.ExportType.CSV" ) );
     keyedComboBoxModel.add( ExcelTableModule.XLSX_FLOW_EXPORT_TYPE, Messages.getInstance().getString(
         "RepositoryPublishDialog.ExportType.XLSX" ) );
-    keyedComboBoxModel.add( ExcelTableModule.EXCEL_FLOW_EXPORT_TYPE, Messages.getInstance().getString(
-        "RepositoryPublishDialog.ExportType.XLS" ) );
     keyedComboBoxModel.add( RTFTableModule.TABLE_RTF_FLOW_EXPORT_TYPE, Messages.getInstance().getString(
         "RepositoryPublishDialog.ExportType.RTF" ) );
     keyedComboBoxModel.add( PlainTextPageableModule.PLAINTEXT_EXPORT_TYPE, Messages.getInstance().getString(
