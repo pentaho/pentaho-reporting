@@ -28,7 +28,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
@@ -223,7 +223,7 @@ public abstract class ExcelPrinterBase {
       }
     }
     if ( isUseXlsxFormat() ) {
-      return new XSSFWorkbook();
+      return new SXSSFWorkbook();
     } else {
       return new HSSFWorkbook();
     }

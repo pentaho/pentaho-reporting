@@ -26,7 +26,7 @@ public class XSSFExcelColorProducer implements ExcelColorProducer {
   }
 
   public short getNearestColor( final Color awtColor ) {
-    XSSFColor color = new XSSFColor( awtColor );
+    XSSFColor color = new XSSFColor( awtColor, null );
     return color.getIndexed();
   }
 }

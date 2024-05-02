@@ -41,7 +41,7 @@
     <mockito.version>1.10.19</mockito.version>
     <powermock.version>1.6.3</powermock.version>
     <pentaho-osgi-bundles.version>10.2.0.0-SNAPSHOT</pentaho-osgi-bundles.version>
-    <poi.version>4.1.1</poi.version>
+    <poi.version>5.2.5</poi.version>
     <commons-math3.version>3.6.1</commons-math3.version>
     <curvesapi.version>1.06</curvesapi.version>
     <syslo4j.version>0.9.46</syslo4j.version>
@@ -94,7 +94,7 @@
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <ehcache.version>2.10.6</ehcache.version>
     <trilead-ssh2.version>build213</trilead-ssh2.version>
-    <xmlbeans.version>3.1.0</xmlbeans.version>
+    <xmlbeans.version>5.2.0</xmlbeans.version>
     <jettyson.version>1.2</jettyson.version>
     <ldapjdk.version>20000524</ldapjdk.version>
     <jcifs.version>1.3.3</jcifs.version>
@@ -161,6 +161,8 @@
     <encryption-support.version>10.2.0.0-SNAPSHOT</encryption-support.version>
     <jakarta-annotation-api.version>1.3.5</jakarta-annotation-api.version>
     <safeyaml.version>1.34.1</safeyaml.version>
+    <commons-compress.version>1.26.1</commons-compress.version>
+    <commons-io.version>2.16.1</commons-io.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -1276,16 +1278,12 @@
         <artifactId>appbundler</artifactId>
         <version>1.0</version>
       </dependency>
+      <!-- apache poi 5.2.5 cannot be used together with poi-ooxml-schemas-4.1.2.jar.
+   It needs to be used with either poi-ooxml-lite-5.2.1.jar or poi-ooxml-full-5.2.1.jar. -->
       <dependency>
         <groupId>org.apache.poi</groupId>
-        <artifactId>poi-ooxml-schemas</artifactId>
+        <artifactId>poi-ooxml-full</artifactId>
         <version>${poi.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.poi</groupId>
