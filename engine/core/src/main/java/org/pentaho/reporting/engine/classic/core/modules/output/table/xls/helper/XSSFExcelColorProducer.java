@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -26,7 +26,7 @@ public class XSSFExcelColorProducer implements ExcelColorProducer {
   }
 
   public short getNearestColor( final Color awtColor ) {
-    XSSFColor color = new XSSFColor( awtColor );
+    XSSFColor color = new XSSFColor( awtColor, null );
     return color.getIndexed();
   }
 }

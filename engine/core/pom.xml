@@ -66,9 +66,12 @@
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>flute</artifactId>
     </dependency>
+    <!-- apache poi 5.2.5 cannot be used together with poi-ooxml-schemas-4.1.2.jar.
+   It needs to be used with either poi-ooxml-lite-5.2.1.jar or poi-ooxml-full-5.2.1.jar. -->
     <dependency>
       <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml-schemas</artifactId>
+      <artifactId>poi-ooxml-full</artifactId>
+      <version>${poi.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -259,6 +262,19 @@
       <groupId>org.pentaho</groupId>
       <artifactId>pentaho-encryption-support</artifactId>
       <scope>test</scope>
+    </dependency>
+    <!-- Log4j dependency we are using XSSFWorkbook, so in code we are using
+    private static final Logger LOG = LogManager.getLogger(SXSSFWorkbook.class) and since dependency is not there we
+    are getting the below exception to resolve it added below dependency-->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j.version}</version>
     </dependency>
   </dependencies>
   <build>

@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2018 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -119,22 +119,22 @@ public class ExcelCellStyleBuilder {
     final XSSFCellStyle xssfCellStyle = (XSSFCellStyle) hssfCellStyle;
     if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
       hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
-      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.BOTTOM, new XSSFColor( styleKey.getExtendedColorBottom() ) );
+      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.BOTTOM, new XSSFColor( styleKey.getExtendedColorBottom(), null ) );
     }
     if ( BorderStyle.NONE.equals( bg.getTop().getBorderStyle() ) == false ) {
       hssfCellStyle.setBorderTop( styleKey.getBorderStrokeTop() );
-      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.TOP, new XSSFColor( styleKey.getExtendedColorTop() ) );
+      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.TOP, new XSSFColor( styleKey.getExtendedColorTop(), null ) );
     }
     if ( BorderStyle.NONE.equals( bg.getLeft().getBorderStyle() ) == false ) {
       hssfCellStyle.setBorderLeft( styleKey.getBorderStrokeLeft() );
-      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.LEFT, new XSSFColor( styleKey.getExtendedColorLeft() ) );
+      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.LEFT, new XSSFColor( styleKey.getExtendedColorLeft(), null ) );
     }
     if ( BorderStyle.NONE.equals( bg.getRight().getBorderStyle() ) == false ) {
       hssfCellStyle.setBorderRight( styleKey.getBorderStrokeRight() );
-      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.RIGHT, new XSSFColor( styleKey.getExtendedColorRight() ) );
+      xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.RIGHT, new XSSFColor( styleKey.getExtendedColorRight(), null ) );
     }
     if ( bg.getBackgroundColor() != null ) {
-      xssfCellStyle.setFillForegroundColor( new XSSFColor( styleKey.getExtendedColor() ) );
+      xssfCellStyle.setFillForegroundColor( new XSSFColor( styleKey.getExtendedColor(), null ) );
       hssfCellStyle.setFillPattern( FillPatternType.SOLID_FOREGROUND );
     }
   }
