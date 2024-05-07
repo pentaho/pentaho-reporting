@@ -105,7 +105,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     if ( url == null ) {
       throw new NullPointerException();
     }
-    this.url = url;
+    this.url = stripTrailingSlash( url );
     descriptionEntries = new HashMap<FileName, String>();
 
     CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
@@ -125,10 +125,14 @@ public class JCRSolutionFileModel implements SolutionFileModel {
 
   // package-local constructor for testing purposes
   JCRSolutionFileModel( String url, Client client, boolean loadTreePartially ) {
-    this.url = url;
+    this.url = stripTrailingSlash( url );
     this.descriptionEntries = new HashMap<FileName, String>();
     this.client = client;
     this.loadTreePartially = loadTreePartially;
+  }
+
+  private String stripTrailingSlash( String url ) {
+    return url.endsWith( SLASH ) ? url.substring( 0, url.length() - 1) : url;
   }
 
   public void refresh() throws IOException {
