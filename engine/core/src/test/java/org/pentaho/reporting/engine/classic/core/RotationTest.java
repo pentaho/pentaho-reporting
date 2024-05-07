@@ -109,7 +109,7 @@ public class RotationTest {
     }
   }
 
-  //@Test
+  @Test
   public void testXLSX() throws ResourceException, IOException {
 
     URL url = getClass().getResource( "BACKLOG-6818.prpt" );
@@ -251,7 +251,7 @@ public class RotationTest {
     assertTrue( rt.rotate( reportElement, uuid, runtime ) instanceof RotatedTextDrawable );
   }
 
-  //@Test
+  @Test
   public void testHandleRotatedTextHTML() throws Exception {
     URL url = getClass().getResource( "BACKLOG-10064.prpt" );
     MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
