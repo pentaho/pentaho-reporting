@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2018 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2024 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
@@ -61,7 +61,7 @@ public class ExcelFontFactory {
     // read the fonts from the workbook ...
     // Funny one: Please note that the layout will be broken if the first
     // font is not 'Arial 10'.
-    final short numberOfFonts = this.workbook.getNumberOfFonts();
+    final int numberOfFonts = this.workbook.getNumberOfFonts();
     for ( int i = 0; i < numberOfFonts; i++ ) {
       final Font font = workbook.getFontAt( (short) i );
       this.fonts.put( new HSSFFontWrapper( font ), font );
