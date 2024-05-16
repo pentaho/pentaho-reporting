@@ -12,35 +12,28 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2019 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2019 - 2024 Hitachi Vantara..  All rights reserved.
  */
 package org.pentaho.reporting.engine.classic.extensions.drilldown;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.util.reflection.Whitebox;
+import org.mockito.MockedStatic;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LocalizationContext;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
-@RunWith( PowerMockRunner.class )
-@PowerMockIgnore( "jdk.internal.reflect.*" )
-@PrepareForTest( DrillDownProfileMetaData.class )
+@RunWith( MockitoJUnitRunner.class )
 public class PatternLinkCustomizerTest {
 
   private PatternLinkCustomizer patternLinkCustomizer;
@@ -50,46 +43,50 @@ public class PatternLinkCustomizerTest {
   private DrillDownProfile profile;
   private LocalizationContext localContext;
 
-
-  @Before
-  public void setup() {
-    formulaContext = mock( FormulaContext.class );
-    config = mock( Configuration.class );
-    profileMeta = mock( DrillDownProfileMetaData.class );
-    profile = mock( DrillDownProfile.class );
-    localContext = mock( LocalizationContext.class );
-    PowerMockito.mockStatic( DrillDownProfileMetaData.class );
-    when( DrillDownProfileMetaData.getInstance() ).thenReturn( profileMeta );
-    when( profileMeta.getDrillDownProfile( "generic-url" ) ).thenReturn( profile );
-    when( formulaContext.getConfiguration() ).thenReturn( config );
-    when( formulaContext.getLocalizationContext() ).thenReturn( localContext );
-    when( localContext.getLocale() ).thenReturn( Locale.ENGLISH );
-    when( config.getConfigProperty( "org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8" ) ).thenReturn( "UTF-8" );
-    Whitebox.setInternalState( profile, "attributes", getProfileAttributes() );
-    when( profile.getAttribute( anyString() ) ).thenCallRealMethod();
-  }
-
   @Test
   public void testFormatWithoutParams() throws EvaluationException {
-    patternLinkCustomizer = new PatternLinkCustomizer();
-    ParameterEntry[] paramEntries = {  };
-    String result = patternLinkCustomizer.format( formulaContext, "generic-url", "http://www.google.com", paramEntries );
-    assertEquals( "http://www.google.com", result );
+    try ( MockedStatic<DrillDownProfileMetaData> mockedStatic = mockStatic( DrillDownProfileMetaData.class ) ) {
+      formulaContext = mock(FormulaContext.class);
+      config = mock(Configuration.class);
+      profileMeta = mock(DrillDownProfileMetaData.class);
+      profile = mock(DrillDownProfile.class);
+      localContext = mock(LocalizationContext.class);
+      mockedStatic.when( () -> DrillDownProfileMetaData.getInstance() ).thenReturn(profileMeta);
+      when(formulaContext.getConfiguration()).thenReturn(config);
+      when(formulaContext.getLocalizationContext()).thenReturn(localContext);
+      when(localContext.getLocale()).thenReturn(Locale.ENGLISH);
+      when(config.getConfigProperty("org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8")).thenReturn("UTF-8");
+      when( profileMeta.getDrillDownProfile( anyString() ) ).thenReturn( profile );
+      when( profile.getAttribute( "patternNoAttributes" ) ).thenReturn( "{0}"  );
+      patternLinkCustomizer = new PatternLinkCustomizer();
+      ParameterEntry[] paramEntries = {  };
+      String result = patternLinkCustomizer.format( formulaContext, "generic-url", "http://www.google.com", paramEntries );
+      assertEquals( "http://www.google.com", result );
+    }
   }
 
   @Test
   public void testFormatWithParams() throws EvaluationException {
-    patternLinkCustomizer = new PatternLinkCustomizer();
-    ParameterEntry[] paramEntries = { new ParameterEntry( "param", "value" ) };
-    String result = patternLinkCustomizer.format( formulaContext, "generic-url", "http://www.google.com", paramEntries );
-    assertEquals( "http://www.google.com?param=value", result );
-  }
-
-  private Map<String, String> getProfileAttributes() {
-    Map<String, String> profileAttributes = new HashMap<>(  );
-    profileAttributes.put( "pattern", "{0}?{1}" );
-    profileAttributes.put( "patternNoAttributes", "{0}" );
-    return profileAttributes;
+    try ( MockedStatic<DrillDownProfileMetaData> mockedStatic = mockStatic( DrillDownProfileMetaData.class ) ) {
+      formulaContext = mock( FormulaContext.class );
+      config = mock( Configuration.class );
+      profileMeta = mock( DrillDownProfileMetaData.class );
+      profile = mock( DrillDownProfile.class );
+      localContext = mock( LocalizationContext.class );
+      mockedStatic.when( () -> DrillDownProfileMetaData.getInstance() ).thenReturn( profileMeta );
+      when( formulaContext.getConfiguration() ).thenReturn( config );
+      when( formulaContext.getLocalizationContext() ).thenReturn( localContext );
+      when( localContext.getLocale() ).thenReturn( Locale.ENGLISH );
+      when( config.getConfigProperty( "org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8" ) ).thenReturn(
+        "UTF-8" );
+      when( profileMeta.getDrillDownProfile( anyString() ) ).thenReturn( profile );
+      when( profile.getAttribute( "pattern" ) ).thenReturn( "{0}?{1}"  );
+      patternLinkCustomizer = new PatternLinkCustomizer();
+      ParameterEntry[] paramEntries = { new ParameterEntry( "param", "value" ) };
+      String result =
+        patternLinkCustomizer.format( formulaContext, "generic-url", "http://www.google.com", paramEntries );
+      assertEquals( "http://www.google.com?param=value", result );
+    }
   }
 
 }

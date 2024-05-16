@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
@@ -33,7 +34,7 @@ import java.awt.*;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -48,11 +49,11 @@ public class FastExcelCellStyleProducerTest implements Answer<CellStyle> {
   @Before
   public void setUp() {
     backend = mock( CellStyleProducer.class );
-    when( backend.createCellStyle( any( InstanceID.class ), any( StyleSheet.class ), any( CellBackground.class ) ) )
+    when( backend.createCellStyle( Mockito.<InstanceID>any(), Mockito.<StyleSheet>any(), Mockito.<CellBackground>any() ) )
         .thenAnswer( this );
 
     element = mock( StyleSheet.class );
-    producer = new FastExcelCellStyleProducer( backend );
+    producer = spy( new FastExcelCellStyleProducer( backend ) );
   }
 
   @Test
@@ -115,14 +116,14 @@ public class FastExcelCellStyleProducerTest implements Answer<CellStyle> {
 
   private void assertCached( final CellStyle style, final CellStyle style2 ) {
     assertTrue( style == style2 );
-    verify( backend, only() ).createCellStyle( any( InstanceID.class ), any( StyleSheet.class ),
-        any( CellBackground.class ) );
+    verify( backend, only() ).createCellStyle( Mockito.<InstanceID>any( ), Mockito.<StyleSheet>any(),
+            Mockito.<CellBackground>any() );
   }
 
   private void assertNotCached( final CellStyle style, final CellStyle style2 ) {
     assertFalse( style == style2 );
-    verify( backend, atLeast( 2 ) ).createCellStyle( any( InstanceID.class ), any( StyleSheet.class ),
-        any( CellBackground.class ) );
+    verify( backend, atLeast( 2 ) ).createCellStyle( Mockito.<InstanceID>any(), Mockito.<StyleSheet>any(),
+            Mockito.<CellBackground>any() );
   }
 
   @Override

@@ -12,12 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2017 Hitachi Vantara and Contributors.  All rights reserved.
+ * Copyright (c) 2006 - 2024 Hitachi Vantara and Contributors.  All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.formula.function.information;
 
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

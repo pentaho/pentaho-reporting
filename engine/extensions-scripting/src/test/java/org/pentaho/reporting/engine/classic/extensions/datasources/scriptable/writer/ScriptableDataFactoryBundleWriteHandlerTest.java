@@ -12,36 +12,34 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.writer;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterState;
 import org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.ScriptableDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.ScriptableDataFactoryModule;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
-import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
+
+import java.io.IOException;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ScriptableDataFactoryBundleWriteHandlerTest {
 
@@ -56,7 +54,7 @@ public class ScriptableDataFactoryBundleWriteHandlerTest {
 
     doReturn( "/" ).when( state ).getFileName();
     doReturn( xmlWriter ).when( handler )
-        .createXmlWriter( any( OutputStream.class ), any( DefaultTagDescription.class ) );
+        .createXmlWriter( Mockito.any(), Mockito.any() );
     doReturn( new String[] { "test_query_name" } ).when( dataFactory ).getQueryNames();
     doReturn( "test_query" ).when( dataFactory ).getQuery( "test_query_name" );
 

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2017 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2024 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
@@ -23,9 +23,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -144,7 +143,7 @@ public class ListParameterComponentTest {
 
     ListSelectionListener listener = list.getListSelectionListeners()[0];
     listener.valueChanged( evt );
-    verify( updateContext, never() ).setParameterValue( anyString(), anyObject() );
+    verify( updateContext, never() ).setParameterValue( anyString(), any() );
 
     doReturn( false ).when( evt ).getValueIsAdjusting();
 
@@ -196,7 +195,7 @@ public class ListParameterComponentTest {
     doReturn( true ).when( evt ).getValueIsAdjusting();
     ListSelectionListener listener = list.getListSelectionListeners()[0];
     listener.valueChanged( evt );
-    verify( updateContext, never() ).setParameterValue( anyString(), anyObject() );
+    verify( updateContext, never() ).setParameterValue( anyString(), any() );
 
     doReturn( false ).when( evt ).getValueIsAdjusting();
 

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2021 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2024 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 package org.pentaho.reporting.engine.classic.core.function;
 
@@ -30,9 +30,9 @@ import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 import org.pentaho.reporting.libraries.formula.function.FunctionRegistry;
 import org.pentaho.reporting.libraries.formula.function.logical.IfFunction;
 import org.pentaho.reporting.libraries.formula.function.logical.IfFunctionDescription;
+import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertNull;
-import static org.powermock.reflect.Whitebox.setInternalState;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -46,30 +46,54 @@ public class FormulaExpressionTest {
   }
 
   @Test
-  public void getValueWithFormulaErrorNoFailOnErrorTest() {
-    setInternalState( formulaExpression, "formulaError", new InvalidReportStateException() );
-    setInternalState( formulaExpression, "failOnError", false );
+  public void getValueWithFormulaErrorNoFailOnErrorTest() throws Exception {
+    Field formulaError = FormulaExpression.class.getDeclaredField("formulaError");
+    formulaError.setAccessible(true);
+    formulaError.set(formulaExpression, new InvalidReportStateException());
+
+    Field failOnError = FormulaExpression.class.getDeclaredField("failOnError");
+    failOnError.setAccessible(true);
+    failOnError.set(formulaExpression, false);
+
     assertEquals( LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE, formulaExpression.getValue() );
   }
 
   @Test( expected = InvalidReportStateException.class )
-  public void getValueWithFormulaErrorWithFailOnErrorTest() {
-    setInternalState( formulaExpression, "formulaError", new InvalidReportStateException() );
-    setInternalState( formulaExpression, "failOnError", true );
+  public void getValueWithFormulaErrorWithFailOnErrorTest() throws Exception {
+    Field formulaError = FormulaExpression.class.getDeclaredField("formulaError");
+    formulaError.setAccessible(true);
+    formulaError.set(formulaExpression, new InvalidReportStateException());
+
+    Field failOnError = FormulaExpression.class.getDeclaredField("failOnError");
+    failOnError.setAccessible(true);
+    failOnError.set(formulaExpression, true);
+
     formulaExpression.getValue();
   }
 
   @Test
-  public void getValueWithNullFormulaTest() {
-    setInternalState( formulaExpression, "formulaError", (String) null );
-    setInternalState( formulaExpression, "failOnError", true );
+  public void getValueWithNullFormulaTest() throws Exception {
+    Field formulaError = FormulaExpression.class.getDeclaredField("formulaError");
+    formulaError.setAccessible(true);
+    formulaError.set(formulaExpression, null);
+
+    Field failOnError = FormulaExpression.class.getDeclaredField("failOnError");
+    failOnError.setAccessible(true);
+    failOnError.set(formulaExpression, true);
+
     assertNull( formulaExpression.getValue() );
   }
 
   @Test
-  public void getValueWithFormulaTest() {
-    setInternalState( formulaExpression, "formulaExpression", "IF([SomeParam] = \"Yes\";\"Ok\";\"Not Ok\")" );
-    setInternalState( formulaExpression, "failOnError", true );
+  public void getValueWithFormulaTest() throws Exception {
+    Field formulaError = FormulaExpression.class.getDeclaredField("formulaExpression");
+    formulaError.setAccessible(true);
+    formulaError.set(formulaExpression, "IF([SomeParam] = \"Yes\";\"Ok\";\"Not Ok\")");
+
+    Field failOnError = FormulaExpression.class.getDeclaredField("failOnError");
+    failOnError.setAccessible(true);
+    failOnError.set(formulaExpression, true);
+
     ParameterExpressionRuntime parameterExpressionRuntime = mock( ParameterExpressionRuntime.class );
     DefaultProcessingContext defaultProcessingContext = mock( DefaultProcessingContext.class );
     DefaultFormulaContext defaultFormulaContext = mock( DefaultFormulaContext.class );
@@ -87,17 +111,29 @@ public class FormulaExpressionTest {
   }
 
   @Test( expected = InvalidReportStateException.class )
-  public void getValueWithWrongFormulaErrorTest() {
+  public void getValueWithWrongFormulaErrorTest() throws Exception {
     //Wrong formula (with syntax error) to force an InvalidReportStateException
-    setInternalState( formulaExpression, "formulaExpression", "IF(Wrong[SomeParam] = \"Yes\";\"Ok\";\"Not Ok\")" );
-    setInternalState( formulaExpression, "failOnError", true );
+    Field formulaError = FormulaExpression.class.getDeclaredField("formulaExpression");
+    formulaError.setAccessible(true);
+    formulaError.set(formulaExpression, "IF(Wrong[SomeParam] = \"Yes\";\"Ok\";\"Not Ok\")" );
+
+    Field failOnError = FormulaExpression.class.getDeclaredField("failOnError");
+    failOnError.setAccessible(true);
+    failOnError.set(formulaExpression, true);
+
     formulaExpression.getValue();
   }
 
   @Test( expected = InvalidReportStateException.class )
-  public void getValueWithFormulaEvaluateErrorTest() {
-    setInternalState( formulaExpression, "formulaExpression", "IF([SomeParam] = \"Yes\";\"Ok\";\"Not Ok\")" );
-    setInternalState( formulaExpression, "failOnError", true );
+  public void getValueWithFormulaEvaluateErrorTest() throws Exception {
+    Field formulaError = FormulaExpression.class.getDeclaredField("formulaExpression");
+    formulaError.setAccessible(true);
+    formulaError.set(formulaExpression, "IF(Wrong[SomeParam] = \"Yes\";\"Ok\";\"Not Ok\")" );
+
+    Field failOnError = FormulaExpression.class.getDeclaredField("failOnError");
+    failOnError.setAccessible(true);
+    failOnError.set(formulaExpression, true);
+
     ParameterExpressionRuntime parameterExpressionRuntime = mock( ParameterExpressionRuntime.class );
     DefaultProcessingContext defaultProcessingContext = mock( DefaultProcessingContext.class );
     DefaultFormulaContext defaultFormulaContext = mock( DefaultFormulaContext.class );
@@ -116,11 +152,20 @@ public class FormulaExpressionTest {
   }
 
   @Test
-  public void getValueWithFormulaEvaluateCustomErrorTest() {
-    setInternalState( formulaExpression, "formulaExpression", "IF([SomeParam] = \"Yes\";\"Ok\";\"Not Ok\")" );
-    setInternalState( formulaExpression, "failOnError", true );
+  public void getValueWithFormulaEvaluateCustomErrorTest() throws Exception {
+    Field formulaError = FormulaExpression.class.getDeclaredField("formulaExpression");
+    formulaError.setAccessible(true);
+    formulaError.set(formulaExpression, "IF([SomeParam] = \"Yes\";\"Ok\";\"Not Ok\")" );
+
+    Field failOnError = FormulaExpression.class.getDeclaredField("failOnError");
+    failOnError.setAccessible(true);
+    failOnError.set(formulaExpression, true);
+
     Formula custFormula = mock( Formula.class );
-    setInternalState( formulaExpression, "compiledFormula",  custFormula );
+    Field compiledFormula = FormulaExpression.class.getDeclaredField("compiledFormula");
+    compiledFormula.setAccessible(true);
+    compiledFormula.set(formulaExpression, custFormula);
+
     CustomErrorValue expectedCustomErrorValue = new CustomErrorValue( "Custom Error" );
     when( custFormula.evaluate() ).thenReturn( expectedCustomErrorValue );
     ParameterExpressionRuntime parameterExpressionRuntime = mock( ParameterExpressionRuntime.class );

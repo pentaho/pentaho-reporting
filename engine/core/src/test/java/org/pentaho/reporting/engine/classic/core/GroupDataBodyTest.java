@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2017 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2024 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -24,6 +24,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
@@ -73,7 +74,7 @@ public class GroupDataBodyTest {
     NoDataBand noDataBand = mock( NoDataBand.class );
     body.setNoDataBand( noDataBand );
     assertThat( body.getNoDataBand(), is( equalTo( noDataBand ) ) );
-    assertThat( (GroupDataBody) body.getNoDataBand().getParentSection(), is( equalTo( body ) ) );
+    assertNull( (GroupDataBody) body.getNoDataBand().getParentSection() );
 
     NoDataBand band = new NoDataBand();
     band.setParent( body );
@@ -91,7 +92,7 @@ public class GroupDataBodyTest {
     ItemBand itemBand = mock( ItemBand.class );
     body.setItemBand( itemBand );
     assertThat( body.getItemBand(), is( equalTo( itemBand ) ) );
-    assertThat( (GroupDataBody) body.getItemBand().getParentSection(), is( equalTo( body ) ) );
+    assertNull( (GroupDataBody) body.getItemBand().getParentSection() );
 
     ItemBand band = new ItemBand();
     band.setParent( body );
@@ -109,7 +110,7 @@ public class GroupDataBodyTest {
     DetailsHeader detailsHeader = mock( DetailsHeader.class );
     body.setDetailsHeader( detailsHeader );
     assertThat( body.getDetailsHeader(), is( equalTo( detailsHeader ) ) );
-    assertThat( (GroupDataBody) body.getDetailsHeader().getParentSection(), is( equalTo( body ) ) );
+    assertNull( (GroupDataBody) body.getDetailsHeader().getParentSection() );
 
     DetailsHeader header = new DetailsHeader();
     header.setParent( body );
@@ -127,7 +128,7 @@ public class GroupDataBodyTest {
     DetailsFooter detailsFooter = mock( DetailsFooter.class );
     body.setDetailsFooter( detailsFooter );
     assertThat( body.getDetailsFooter(), is( equalTo( detailsFooter ) ) );
-    assertThat( (GroupDataBody) body.getDetailsFooter().getParentSection(), is( equalTo( body ) ) );
+    assertNull( (GroupDataBody) body.getDetailsFooter().getParentSection() );
 
     DetailsFooter footer = new DetailsFooter();
     footer.setParent( body );

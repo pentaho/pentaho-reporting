@@ -12,13 +12,14 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.ui.datasources.kettle;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory;
@@ -29,6 +30,7 @@ public class ModuleTest extends TestCase {
 
   protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
+    ReportDesignerBoot.getInstance().start();
   }
 
   public void testModuleExists() {

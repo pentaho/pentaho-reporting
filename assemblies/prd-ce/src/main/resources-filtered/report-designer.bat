@@ -34,28 +34,28 @@ set PENTAHO_JAVA_HOME=%_PENTAHO_JAVA_HOME%
 call "%~dp0set-pentaho-env.bat"
 
 
-set ISJAVA11=0
-pushd "%_PENTAHO_JAVA_HOME%"
-if exist java.exe goto USEJAVAFROMPENTAHOJAVAHOME
-cd bin
-if exist java.exe goto USEJAVAFROMPENTAHOJAVAHOME
-popd
-pushd "%_PENTAHO_JAVA_HOME%\jre\bin"
-if exist java.exe goto USEJAVAFROMPATH
-goto USEJAVAFROMPATH
-:USEJAVAFROMPENTAHOJAVAHOME
-FOR /F %%a IN ('.\java.exe -version 2^>^&1^|%windir%\system32\find /C "version ""11."') DO (SET /a ISJAVA11=%%a)
-GOTO VERSIONCHECKDONE
-:USEJAVAFROMPATH
-FOR /F %%a IN ('java -version 2^>^&1^|%windir%\system32\find /C "version ""11."') DO (SET /a ISJAVA11=%%a)
-:VERSIONCHECKDONE
-popd
-
 set JAVA_ADD_OPENS=
 SET JAVA_LOCALE_COMPAT=
-IF NOT %ISJAVA11% == 1 GOTO :SKIPLOCALE
-set JAVA_ADD_OPENS=--add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/sun.net.www.protocol.jar=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/java.lang=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/java.lang.reflect=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/java.io=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/java.net=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/java.security=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/java.util=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/sun.net.www.protocol.file=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/sun.net.www.protocol.ftp=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/sun.net.www.protocol.http=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/sun.net.www.protocol.https=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/sun.reflect.misc=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.management/javax.management=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.management/javax.management.openmbean=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.naming/com.sun.jndi.ldap=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/java.math=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/java.lang.Object=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/sun.nio.ch=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens java.base/java.nio=ALL-UNNAMED"
 set JAVA_LOCALE_COMPAT=-Djava.locale.providers=COMPAT,SPI
-:SKIPLOCALE
+
 
 start "Pentaho Report Designer" "%_PENTAHO_JAVA%" %JAVA_ADD_OPENS% -Dswing.useSystemFontSettings=false -Xms1024m -Xmx2048m %JAVA_LOCALE_COMPAT% -jar "%~dp0launcher.jar" %*
