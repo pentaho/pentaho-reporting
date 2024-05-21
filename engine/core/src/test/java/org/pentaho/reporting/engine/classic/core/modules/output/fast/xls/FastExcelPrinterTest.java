@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 
@@ -21,12 +21,6 @@ package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.modules.testng.PowerMockTestCase;
 
 import org.junit.runner.RunWith;
 
@@ -37,30 +31,28 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
+import org.mockito.MockedStatic;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import org.mockito.junit.MockitoJUnitRunner;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 
 /**
  * @author Luis Martins
  */
-@RunWith( PowerMockRunner.class )
-@PowerMockIgnore( "jdk.internal.reflect.*" )
-@PrepareForTest( { SimpleStyleSheet.class, StyleKey.class, BandDefaultStyleSheet.class } )
-public class FastExcelPrinterTest extends PowerMockTestCase {
+@RunWith( MockitoJUnitRunner.class )
+public class FastExcelPrinterTest {
 
   private FastExcelPrinter mockFastExcelPrinter;
 
   @Before
   public void setUp() {
-    mockFastExcelPrinter = PowerMockito.mock( FastExcelPrinter.class );
+    mockFastExcelPrinter = mock( FastExcelPrinter.class );
   }
 
   @After
@@ -69,7 +61,7 @@ public class FastExcelPrinterTest extends PowerMockTestCase {
 
   @Test
   public void getValueIfVisible_NotAnElement() {
-    ReportElement mockElement = PowerMockito.mock( ReportElement.class );
+    ReportElement mockElement = mock( ReportElement.class );
 
     when( mockFastExcelPrinter.getValueIfVisible( mockElement, "X" ) ).thenCallRealMethod();
 
@@ -78,39 +70,35 @@ public class FastExcelPrinterTest extends PowerMockTestCase {
 
   @Test
   public void getValueIfVisible_True() {
-    StyleKey[] keys = new StyleKey[] { StyleKey.getStyleKey( "string", String.class ) };
-    List<StyleKey> styleKeys = Collections.unmodifiableList( Arrays.asList( keys ) );
+    try ( MockedStatic<BandDefaultStyleSheet> mockedStatic = mockStatic( BandDefaultStyleSheet.class ) ) {
+      mockedStatic.when( () -> BandDefaultStyleSheet.getBandDefaultStyle() ).thenReturn( mock( BandDefaultStyleSheet.class ) );
 
-    PowerMockito.mockStatic( BandDefaultStyleSheet.class );
-    when( BandDefaultStyleSheet.getBandDefaultStyle() ).thenReturn( PowerMockito.mock( BandDefaultStyleSheet.class ) );
+      Element mockElement = mock( Element.class );
+      SimpleStyleSheet mockSimpleStyleSheet = mock( SimpleStyleSheet.class );
 
-    Element mockElement = PowerMockito.mock( Element.class );
-    SimpleStyleSheet mockSimpleStyleSheet = PowerMockito.mock( SimpleStyleSheet.class );
+      doReturn( mockSimpleStyleSheet ).when( mockElement ).getComputedStyle();
+      doReturn( true ).when( mockSimpleStyleSheet ).getStyleProperty( ElementStyleKeys.VISIBLE, true );
 
-    doReturn( mockSimpleStyleSheet ).when( mockElement ).getComputedStyle();
-    doReturn( true ).when( mockSimpleStyleSheet ).getStyleProperty( ElementStyleKeys.VISIBLE, true );
+      when( mockFastExcelPrinter.getValueIfVisible( mockElement, "X" ) ).thenCallRealMethod();
 
-    when( mockFastExcelPrinter.getValueIfVisible( mockElement, "X" ) ).thenCallRealMethod();
-
-    assertEquals( "X", mockFastExcelPrinter.getValueIfVisible( mockElement, "X" ) );
+      assertEquals( "X", mockFastExcelPrinter.getValueIfVisible( mockElement, "X" ) );
+    }
   }
 
   @Test
   public void getValueIfVisible_False() {
-    StyleKey[] keys = new StyleKey[] { StyleKey.getStyleKey( "string", String.class ) };
-    List<StyleKey> styleKeys = Collections.unmodifiableList( Arrays.asList( keys ) );
+    try ( MockedStatic<BandDefaultStyleSheet> mockedStatic = mockStatic( BandDefaultStyleSheet.class ) ) {
+      mockedStatic.when( () -> BandDefaultStyleSheet.getBandDefaultStyle() ).thenReturn( mock(BandDefaultStyleSheet.class ) );
 
-    PowerMockito.mockStatic( BandDefaultStyleSheet.class );
-    when( BandDefaultStyleSheet.getBandDefaultStyle() ).thenReturn( PowerMockito.mock( BandDefaultStyleSheet.class ) );
+      Element mockElement = mock( Element.class );
+      SimpleStyleSheet mockSimpleStyleSheet = mock( SimpleStyleSheet.class );
 
-    Element mockElement = PowerMockito.mock( Element.class );
-    SimpleStyleSheet mockSimpleStyleSheet = PowerMockito.mock( SimpleStyleSheet.class );
+      doReturn( mockSimpleStyleSheet ).when( mockElement ).getComputedStyle();
+      doReturn( false ).when( mockSimpleStyleSheet ).getStyleProperty( ElementStyleKeys.VISIBLE, true );
 
-    doReturn( mockSimpleStyleSheet ).when( mockElement ).getComputedStyle();
-    doReturn( false ).when( mockSimpleStyleSheet ).getStyleProperty( ElementStyleKeys.VISIBLE, true );
+      when( mockFastExcelPrinter.getValueIfVisible( mockElement, "X" ) ).thenCallRealMethod();
 
-    when( mockFastExcelPrinter.getValueIfVisible( mockElement, "X" ) ).thenCallRealMethod();
-
-    assertEquals( null, mockFastExcelPrinter.getValueIfVisible( mockElement, "X" ) );
+      assertEquals( null, mockFastExcelPrinter.getValueIfVisible(mockElement, "X" ) );
+    }
   }
 }

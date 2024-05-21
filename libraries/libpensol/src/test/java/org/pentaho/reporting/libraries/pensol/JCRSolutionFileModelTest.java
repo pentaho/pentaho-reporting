@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2018 Hitachi Vantara. All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.reporting.libraries.pensol;
@@ -28,9 +28,10 @@ import javax.ws.rs.core.MediaType;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.pentaho.reporting.libraries.pensol.JCRSolutionFileModel.encodePathForRequest;

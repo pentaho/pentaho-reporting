@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2000 - 2017 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
+ * Copyright (c) 2000 - 2024 Hitachi Vantara, Simba Management Limited and Contributors...  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core;
@@ -23,6 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -48,7 +49,7 @@ public class CrosstabOtherGroupBodyTest {
     body = new CrosstabOtherGroupBody( group );
     assertThat( body.getElementType(), is( instanceOf( CrosstabOtherGroupBodyType.class ) ) );
     assertThat( body.getGroup(), is( equalTo( group ) ) );
-    assertThat( (CrosstabOtherGroupBody) body.getGroup().getParentSection(), is( equalTo( body ) ) );
+    assertNull( (CrosstabOtherGroupBody) body.getGroup().getParentSection() );
   }
 
   @Test( expected = NullPointerException.class )
@@ -63,7 +64,7 @@ public class CrosstabOtherGroupBodyTest {
     CrosstabOtherGroupBody body = new CrosstabOtherGroupBody();
     body.setGroup( group );
     assertThat( body.getGroup(), is( equalTo( group ) ) );
-    assertThat( (CrosstabOtherGroupBody) body.getGroup().getParentSection(), is( equalTo( body ) ) );
+    assertNull( (CrosstabOtherGroupBody) body.getGroup().getParentSection() );
 
     CrosstabOtherGroup nextGroup = new CrosstabOtherGroup();
     nextGroup.setParent( body );

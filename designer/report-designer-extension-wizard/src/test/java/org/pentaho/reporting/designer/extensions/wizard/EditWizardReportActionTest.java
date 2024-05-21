@@ -12,13 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.designer.extensions.wizard;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -101,8 +101,8 @@ public class EditWizardReportActionTest {
     EditWizardReportAction reportActionSpy = spy( new EditWizardReportAction() );
     doReturn( reportDesignerContext ).when( reportActionSpy ).getReportDesignerContext();
     doReturn( window ).when( reportActionSpy ).getWindowAncestor( component );
-    doReturn( dialog ).when( reportActionSpy ).createDialog( (Window) anyObject(),
-        (ReportDesignerDesignTimeContext) anyObject() );
+    doReturn( dialog ).when( reportActionSpy ).createDialog( (Window) any(),
+        (ReportDesignerDesignTimeContext) any() );
     doReturn( reportDocumentContext ).when( reportDesignerContext ).getActiveContext();
     doReturn( abstractReportDefinition ).when( reportDocumentContext ).getReportDefinition();
     doReturn( abstractReportDefinition ).when( abstractReportDefinition ).derive();
@@ -116,20 +116,20 @@ public class EditWizardReportActionTest {
     reportActionSpy.actionPerformed( null );
 
     verify( reportActionSpy, times( 1 ) ).getReportDesignerContext();
-    verify( reportActionSpy, times( 1 ) ).createDialog( (Window) anyObject(),
-        (ReportDesignerDesignTimeContext) anyObject() );
+    verify( reportActionSpy, times( 1 ) ).createDialog( (Window) any(),
+        (ReportDesignerDesignTimeContext) any() );
     verify( reportActionSpy, times( 1 ) ).getWindowAncestor( component );
     verify( reportDesignerContext, times( 2 ) ).getActiveContext();
     verify( reportDesignerContext, times( 1 ) ).getView();
     try {
-      verify( reportDesignerContext, times( 1 ) ).addMasterReport( (MasterReport) anyObject() );
+      verify( reportDesignerContext, times( 1 ) ).addMasterReport( (MasterReport) any() );
     } catch ( ReportDataFactoryException e1 ) {
       e1.printStackTrace();
     }
     verify( reportDocumentContext, times( 1 ) ).getReportDefinition();
     verify( abstractReportDefinition, times( 1 ) ).derive();
     try {
-      verify( dialog ).run( (AbstractReportDefinition) anyObject() );
+      verify( dialog ).run( (AbstractReportDefinition) any() );
     } catch ( ReportProcessingException e ) {
       e.printStackTrace();
     }
@@ -141,8 +141,8 @@ public class EditWizardReportActionTest {
     EditWizardReportAction reportActionSpy = spy( new EditWizardReportAction() );
     doReturn( reportDesignerContext ).when( reportActionSpy ).getReportDesignerContext();
     doReturn( window ).when( reportActionSpy ).getWindowAncestor( component );
-    doReturn( dialog ).when( reportActionSpy ).createDialog( (Window) anyObject(),
-        (ReportDesignerDesignTimeContext) anyObject() );
+    doReturn( dialog ).when( reportActionSpy ).createDialog( (Window) any(),
+        (ReportDesignerDesignTimeContext) any() );
     doReturn( reportDocumentContext ).when( reportDesignerContext ).getActiveContext();
     doReturn( abstractReportDefinition ).when( reportDocumentContext ).getReportDefinition();
     doReturn( abstractReportDefinition ).when( abstractReportDefinition ).derive();
@@ -160,15 +160,15 @@ public class EditWizardReportActionTest {
     reportActionSpy.actionPerformed( null );
 
     verify( reportActionSpy, times( 1 ) ).getReportDesignerContext();
-    verify( reportActionSpy, times( 1 ) ).createDialog( (Window) anyObject(),
-        (ReportDesignerDesignTimeContext) anyObject() );
+    verify( reportActionSpy, times( 1 ) ).createDialog( (Window) any(),
+        (ReportDesignerDesignTimeContext) any() );
     verify( reportActionSpy, times( 1 ) ).getWindowAncestor( component );
     verify( reportDesignerContext, times( 2 ) ).getActiveContext();
     verify( reportDesignerContext, times( 1 ) ).getView();
     verify( reportDocumentContext, times( 1 ) ).getReportDefinition();
     verify( abstractReportDefinition, times( 1 ) ).derive();
     try {
-      verify( dialog ).run( (AbstractReportDefinition) anyObject() );
+      verify( dialog ).run( (AbstractReportDefinition) any() );
     } catch ( ReportProcessingException e ) {
       e.printStackTrace();
     }
