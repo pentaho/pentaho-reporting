@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2024 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
@@ -49,6 +49,8 @@ public abstract class AbstractTableOutputProcessor extends AbstractOutputProcess
       new OutputProcessorFeature.BooleanOutputProcessorFeature( "shape-content" );
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature ROTATED_TEXT_AS_IMAGES =
     new OutputProcessorFeature.BooleanOutputProcessorFeature( "rotated-text-as-images" );
+  public static final OutputProcessorFeature.BooleanOutputProcessorFeature BASE64_IMAGES =
+    new OutputProcessorFeature.BooleanOutputProcessorFeature( "base64-images" );
 
   private ArrayList<TableLayoutProducer> sheetLayouts;
   private TableLayoutProducer currentLayout;

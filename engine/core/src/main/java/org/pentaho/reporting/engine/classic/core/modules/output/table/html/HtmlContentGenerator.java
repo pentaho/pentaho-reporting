@@ -12,13 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2024 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.DefaultHtmlContentGenerator;
+import org.pentaho.reporting.libraries.base.encoder.UnsupportedEncoderException;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
+import org.pentaho.reporting.libraries.repository.ContentItem;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -39,6 +42,11 @@ public interface HtmlContentGenerator {
 
   public String writeRaw( final ResourceKey source ) throws ContentIOException, IOException;
 
-  public String writeImage( final ImageContainer imageContainer, final String encoderType, final float quality,
-      final boolean alpha ) throws ContentIOException, IOException;
+  public ContentItem writeImage( final ImageContainer imageContainer, final String encoderType, final float quality,
+    final boolean alpha ) throws ContentIOException, IOException;
+
+  public String rewrite( final ImageContainer image, ContentItem contentItem );
+
+  public DefaultHtmlContentGenerator.ImageData getImageData( final ImageContainer image, final String encoderType,
+    final float quality, final boolean alpha ) throws IOException, UnsupportedEncoderException;
 }

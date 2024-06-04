@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
@@ -53,7 +53,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
-  private static class ImageData {
+  public static class ImageData {
     private byte[] imageData;
     private String mimeType;
     private String originalFileName;
@@ -220,8 +220,7 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
     return null;
   }
 
-  public String writeImage( final ImageContainer image, final String encoderType, final float quality,
-      final boolean alpha ) throws ContentIOException, IOException {
+  public String rewrite( final ImageContainer image, ContentItem contentItem ) {
     if ( image == null ) {
       throw new NullPointerException();
     }
@@ -249,6 +248,22 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
     }
 
     try {
+      final String contentURL = rewriterService.rewriteContentDataItem( contentItem );
+      if ( cacheKey != null ) {
+        knownImages.put( cacheKey, contentURL );
+      }
+
+      return contentURL;
+    } catch ( URLRewriteException re ) {
+      // cannot handle this ..
+      logger.warn( "Failed to write the URL: Reason given was: " + re.getMessage() );
+      return null;
+    }
+  }
+
+  public ContentItem writeImage( final ImageContainer image, final String encoderType, final float quality,
+                           final boolean alpha ) throws ContentIOException, IOException {
+    try {
       final ImageData data = getImageData( image, encoderType, quality, alpha );
       if ( data == null ) {
         return null;
@@ -257,7 +272,6 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
       final String filename = IOUtils.getInstance().stripFileExtension( data.getOriginalFileName() );
       final ContentItem dataFile =
           dataLocation.createItem( dataNameGenerator.generateName( filename, data.getMimeType() ) );
-      final String contentURL = rewriterService.rewriteContentDataItem( dataFile );
 
       // a png encoder is included in JCommon ...
       final OutputStream out = new BufferedOutputStream( dataFile.getOutputStream() );
@@ -267,18 +281,10 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
       } finally {
         out.close();
       }
-      if ( cacheKey != null ) {
-        knownImages.put( cacheKey, contentURL );
-      }
-
-      return contentURL;
+      return dataFile;
     } catch ( ContentCreationException cce ) {
       // Can't create the content
       logger.warn( "Failed to create the content image: Reason given was: " + cce.getMessage() );
-      return null;
-    } catch ( URLRewriteException re ) {
-      // cannot handle this ..
-      logger.warn( "Failed to write the URL: Reason given was: " + re.getMessage() );
       return null;
     } catch ( UnsupportedEncoderException e ) {
       logger.warn( "Failed to write the URL: Reason given was: " + e.getMessage() );
@@ -372,7 +378,7 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
     return validRawTypes.contains( mimeType );
   }
 
-  private ImageData getImageData( final ImageContainer image, final String encoderType, final float quality,
+  public ImageData getImageData( final ImageContainer image, final String encoderType, final float quality,
       final boolean alpha ) throws IOException, UnsupportedEncoderException {
     ResourceManager resourceManager = getResourceManager();
     ResourceKey url = null;

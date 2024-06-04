@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2016 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2024 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
@@ -124,6 +124,10 @@ public class HtmlOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     if ( "true".equals( configuration
       .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.RotatedTextAsImages" ) ) ) {
       addFeature( AbstractTableOutputProcessor.ROTATED_TEXT_AS_IMAGES );
+    }
+    if ( "true".equals( configuration
+      .getConfigProperty( "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Base64Images" ) ) ) {
+      addFeature( AbstractTableOutputProcessor.BASE64_IMAGES );
     }
   }
 

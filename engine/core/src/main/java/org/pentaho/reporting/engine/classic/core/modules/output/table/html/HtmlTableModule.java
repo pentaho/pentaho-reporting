@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2024 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
@@ -116,6 +116,13 @@ public class HtmlTableModule extends AbstractModule {
    * Key for specifying the Keywords in the HTML header
    */
   public static final String KEYWORDS = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Keywords";
+
+  /**
+   * Key for specifying that images should be embedded as BASE64 Objects in HTML reports (must contain the value "true"
+   * to be considered <code>true</code>
+   */
+  public static final String BASE64_IMAGES =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.Base64Images";
 
   public static final String TABLE_HTML_STREAM_EXPORT_TYPE = "table/html;page-mode=stream";
   public static final String TABLE_HTML_FLOW_EXPORT_TYPE = "table/html;page-mode=flow";
