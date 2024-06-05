@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
@@ -41,6 +41,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
+import org.pentaho.reporting.libraries.repository.ContentItem;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
@@ -49,6 +50,7 @@ import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.Base64;
 
 public class HtmlTextExtractorHelper {
   private static final String DIV_TAG = "div";
@@ -64,6 +66,7 @@ public class HtmlTextExtractorHelper {
   private static final String PT_UNIT = "pt";
   private static final String PX_UNIT = "px";
   private static final String ALT_ATTR = "alt";
+  private static final String CONTENT_ATTR = "content";
 
   private HtmlTextExtractorState processStack;
   private InstanceID firstElement;
@@ -72,6 +75,8 @@ public class HtmlTextExtractorHelper {
   private OutputProcessorMetaData metaData;
   private boolean enableInheritedLinkStyle;
   private HtmlContentGenerator contentGenerator;
+
+  public static final String HTML_IMG_CSS_BASE64_FORMAT = "url('data:%1$s;base64,%2$s')";
 
   public HtmlTextExtractorHelper( final HtmlTagHelper tagHelper, final XmlWriter xmlWriter,
       final OutputProcessorMetaData metaData, final HtmlContentGenerator contentGenerator ) {
@@ -335,8 +340,13 @@ public class HtmlTextExtractorHelper {
     }
 
     if ( rawObject instanceof DrawableWrapper ) {
+      if ( metaData.isFeatureSupported( AbstractTableOutputProcessor.BASE64_IMAGES ) ) {
+         return tryHandleDrawable( attrs, width, height, contentWidth, contentHeight, styleSheet,
+           (DrawableWrapper) rawObject, true );
+      }
+
       return tryHandleDrawable( attrs, width, height, contentWidth, contentHeight, styleSheet,
-        (DrawableWrapper) rawObject );
+        (DrawableWrapper) rawObject, false );
     }
     return false;
   }
@@ -495,8 +505,14 @@ public class HtmlTextExtractorHelper {
     return true;
   }
 
+  /**
+   * Adding new boolean param convertToBase64 from Configuration to determine if Image should be embedded as Base64
+   * object or be shown as URL ( existing feature )
+   * @param convertToBase64 boolean value to check if Image should be embedded as Base64
+   */
   private boolean tryHandleDrawable( final ReportAttributeMap attrs, final long width, final long height,
-      final long contentWidth, final long contentHeight, final StyleSheet styleSheet, final DrawableWrapper drawable )
+      final long contentWidth, final long contentHeight, final StyleSheet styleSheet, final DrawableWrapper drawable,
+      final boolean convertToBase64 )
     throws ContentIOException, IOException {
     // render it into an Buffered image and make it a PNG file.
     final StrictBounds cb = new StrictBounds( 0, 0, width, height );
@@ -509,7 +525,8 @@ public class HtmlTextExtractorHelper {
     final String type = RenderUtility.getEncoderType( attrs );
     final float quality = RenderUtility.getEncoderQuality( attrs );
 
-    final String name = contentGenerator.writeImage( image, type, quality, true );
+    final ContentItem contentItem = contentGenerator.writeImage( image, type, quality, true );
+    final String name = contentGenerator.rewrite( image, contentItem );
     if ( name == null ) {
       // xmlWriter.writeComment("Drawable content [No image written]:" + source);
       return false;
@@ -535,13 +552,53 @@ public class HtmlTextExtractorHelper {
     // BI-SERVER 11651: The extractImageMap function will fill the "attrList" parameter with the name
     // of the image map, if there is one. So we have to call this method first.
     final ImageMap imageMap = extractImageMap( attrs, drawable, width, height, name, attrList );
-
+    if( convertToBase64 ) {
+      convertImageDataToBase64( name, attrList, image, type, quality );
+    }
     writeImageTag( styleSheet, width, height, contentWidth, contentHeight, attrList );
 
     if ( imageMap != null ) {
       ImageMapWriter.writeImageMap( xmlWriter, imageMap, RenderUtility.getNormalizationScale( metaData ) );
     }
     return true;
+  }
+
+  /**
+   * Modifies the src attribute of image tag to just the name of image
+   * Gets the ImageData and converts it into HTML Image specific BASE64 format
+   * This is done to avoid images shown as URL
+   *
+   * @param url the image URL string from which image name is extracted
+   * @param attrList List of attributes
+   * @param image Image container object
+   * @param type Type of image
+   * @param quality Quanlity of image
+   */
+  private void convertImageDataToBase64( String url, AttributeList attrList, final ImageContainer image, final String type,
+    final float quality ) throws ContentIOException {
+    int indexStart = url.lastIndexOf( "picture" );
+    String imgAltText = url.substring( indexStart );
+    attrList.setAttribute( HtmlPrinter.XHTML_NAMESPACE, SRC_ATTR, imgAltText );
+    try {
+      final DefaultHtmlContentGenerator.ImageData imageData =
+        contentGenerator.getImageData( image, type, quality, true );
+
+      String urlBase64Encoding = String.format( HTML_IMG_CSS_BASE64_FORMAT,
+        imageData.getMimeType(), getBase64( imageData ) );
+      attrList.setAttribute( HtmlPrinter.XHTML_NAMESPACE, CONTENT_ATTR, urlBase64Encoding );
+    } catch ( Exception e ) {
+      throw new ContentIOException( "Conversion to Base64 failed", e );
+    }
+  }
+
+  /**
+   * Converts ImageData to Base64 string
+   *
+   * @param imageData the image data which needs to be transformed to Base64
+   * @return Transformed Base64 string
+   */
+  private String getBase64( DefaultHtmlContentGenerator.ImageData imageData ) {
+    return new String( Base64.getEncoder().encode( imageData.getImageData() ) );
   }
 
   private ImageMap extractImageMap( final ReportAttributeMap attributes, final Object rawObject, final long width,
@@ -580,7 +637,8 @@ public class HtmlTextExtractorHelper {
 
     // Make it a PNG file ..
     // xmlWriter.writeComment("Image content source:" + source);
-    final String name = contentGenerator.writeImage( rawObject, type, quality, true );
+    final ContentItem contentItem = contentGenerator.writeImage( rawObject, type, quality, true );
+    final String name = contentGenerator.rewrite( rawObject, contentItem );
     if ( name == null ) {
       return false;
     }
@@ -661,6 +719,11 @@ public class HtmlTextExtractorHelper {
       xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, IMG_TAG, attrList, XmlWriterSupport.CLOSE );
       xmlWriter.writeCloseTag();
     } else {
+      String urlBase64Encoding  = attrList.getAttribute( HtmlPrinter.XHTML_NAMESPACE, CONTENT_ATTR, null );
+      if ( urlBase64Encoding != null ) {
+        imgStyle.append( StyleBuilder.CSSKeys.CONTENT, urlBase64Encoding );
+        attrList.removeAttribute( HtmlPrinter.XHTML_NAMESPACE, CONTENT_ATTR );
+      }
       tagHelper.getStyleManager().updateStyle( imgStyle, attrList );
       xmlWriter.writeTag( HtmlPrinter.XHTML_NAMESPACE, IMG_TAG, attrList, XmlWriterSupport.CLOSE );
     }
