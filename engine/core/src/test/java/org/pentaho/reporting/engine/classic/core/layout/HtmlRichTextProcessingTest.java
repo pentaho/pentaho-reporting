@@ -286,7 +286,7 @@ public class HtmlRichTextProcessingTest extends TestCase {
   }
 
   @Test
-  public void testConvertPxToPt() {
+  public void testScenarioPRD6160() {
     ClassicEngineBoot.getInstance().start();
     testConversionPxToPt(
       "<span style=\"font-size:13px\">13px high text here.</span>",
