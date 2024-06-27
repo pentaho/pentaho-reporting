@@ -288,14 +288,14 @@ public class HtmlRichTextProcessingTest extends TestCase {
   @Test
   public void testScenarioPRD6160() {
     testConversionPxToPt(
-      "<span style=\"font-size:13px\">13px high text here.</span>",
-      "13px high text here.",
-      10
+            "<span style=\"font-size:13px\">13px high text here.</span>",
+            "13px high text here.",
+            10
     );
     testConversionPxToPt(
-      "<span style=\"font-size:26px\">this 26px text has 20pt size.</span>",
-      "this 26px text has 20pt size.",
-      20
+            "<span style=\"font-size:26px\">this 26px text has 20pt size.</span>",
+            "this 26px text has 20pt size.",
+            20
     );
   }
 
