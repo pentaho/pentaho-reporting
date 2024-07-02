@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2024 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.settings.ui;
@@ -35,15 +35,6 @@ import java.awt.event.ActionEvent;
  * User: Martin Date: 01.03.2006 Time: 18:15:58
  */
 public class GeneralSettingsPanel extends JPanel implements SettingsPlugin {
-  private class EnableVersionCheckerSelectionHandler implements ChangeListener {
-    private EnableVersionCheckerSelectionHandler() {
-    }
-
-    public void stateChanged( final ChangeEvent e ) {
-      notifyDevBuilds.setEnabled( enableVersionChecker.isSelected() );
-    }
-  }
-
   private class LookAndFeelModel extends DefaultComboBoxModel {
 
     private LookAndFeelInfo lnfs[];
@@ -123,8 +114,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin {
   private JCheckBox showDeprecatedItems;
   private JCheckBox showDebugItems;
   private JCheckBox experimentalFeatures;
-  private JCheckBox notifyDevBuilds;
-  private JCheckBox enableVersionChecker;
   private LookAndFeelModel lookAndFeelModel;
   private JTextField dateFormatField;
   private JTextField timeFormatField;
@@ -156,16 +145,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin {
     lookAndFeelModel = new LookAndFeelModel();
     lookAndFeelModel.setSelectedItem( workspaceSettings.getLNF() );
 
-    enableVersionChecker = new JCheckBox( SettingsMessages.getInstance().getString
-      ( "GeneralSettingsPanel.EnableVersionChecker" ) );
-    enableVersionChecker.setSelected( workspaceSettings.isUseVersionChecker() );
-    enableVersionChecker.addChangeListener( new EnableVersionCheckerSelectionHandler() );
-
-    notifyDevBuilds = new JCheckBox
-      ( SettingsMessages.getInstance().getString( "GeneralSettingsPanel.NotifyUnsupportedVersions" ) );
-    notifyDevBuilds.setSelected( workspaceSettings.isNotifyForAllBuilds() );
-    notifyDevBuilds.setEnabled( workspaceSettings.isUseVersionChecker() );
-
     experimentalFeatures = new JCheckBox
       ( SettingsMessages.getInstance().getString( "GeneralSettingsPanel.EnableCommunityFeatures" ) );
     experimentalFeatures.setSelected( workspaceSettings.isExperimentalFeaturesVisible() );
@@ -195,12 +174,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin {
     final GridBagConstraints c = new GridBagConstraints();
     c.gridx = 0;
     c.gridy = 0;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    contentPanel.add( createUpdatesPanel(), c );
-
-    c.gridx = 0;
-    c.gridy = 1;
     c.weightx = 1;
     c.fill = GridBagConstraints.HORIZONTAL;
     contentPanel.add( createLookandFeelPanel(), c );
@@ -237,29 +210,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin {
     c.anchor = GridBagConstraints.WEST;
     lookAndFeelPanel.add( lookAndFeels, c );
     return lookAndFeelPanel;
-  }
-
-  private JPanel createUpdatesPanel() {
-    final JPanel updatesPanel = new JPanel();
-    updatesPanel.setLayout( new GridBagLayout() );
-    updatesPanel.setBorder(
-      BorderFactory.createTitledBorder( SettingsMessages.getInstance().getString( "GeneralSettingsPanel.Updates" ) ) );
-    final GridBagConstraints c = new GridBagConstraints();
-    c.insets = new Insets( 0, 0, 0, 0 );
-    c.gridx = 0;
-    c.gridy = 0;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add( enableVersionChecker, c );
-
-    c.gridx = 0;
-    c.gridy = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-
-    updatesPanel.add( notifyDevBuilds, c );
-    return updatesPanel;
   }
 
   private JPanel createOtherSettings() {
@@ -431,8 +381,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin {
     } else {
       WorkspaceSettings.getInstance().setMaturityLevel( MaturityLevel.Production );
     }
-    WorkspaceSettings.getInstance().setNotifyForAllBuilds( notifyDevBuilds.isSelected() );
-    WorkspaceSettings.getInstance().setUseVersionChecker( enableVersionChecker.isSelected() );
     WorkspaceSettings.getInstance().setDateFormatPattern( dateFormatField.getText() );
     WorkspaceSettings.getInstance().setDatetimeFormatPattern( datetimeFormatField.getText() );
     WorkspaceSettings.getInstance().setTimeFormatPattern( timeFormatField.getText() );
@@ -458,8 +406,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin {
     experimentalFeatures.setSelected( !MaturityLevel.Limited.isMature( maturityLevel ) );
 
     lookAndFeelModel.setSelectedItem( WorkspaceSettings.getInstance().getLNF() );
-    notifyDevBuilds.setSelected( WorkspaceSettings.getInstance().isNotifyForAllBuilds() );
-    enableVersionChecker.setSelected( WorkspaceSettings.getInstance().isUseVersionChecker() );
     showIndexColumns.setSelected( WorkspaceSettings.getInstance().isShowIndexColumns() );
     showDeprecatedItems.setSelected( WorkspaceSettings.getInstance().isShowDeprecatedItems() );
     showExpertItems.setSelected( WorkspaceSettings.getInstance().isShowExpertItems() );

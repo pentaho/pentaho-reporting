@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2024 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core;
@@ -28,7 +28,6 @@ import org.pentaho.reporting.designer.core.util.exceptions.ThrowableHandler;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.firewall.FirewallingProxySelector;
 import org.pentaho.reporting.designer.core.util.firewall.FirewallingSecurityManager;
-import org.pentaho.reporting.designer.core.versionchecker.VersionCheckerUtility;
 import org.pentaho.reporting.designer.core.welcome.SamplesTreeBuilder;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
@@ -145,25 +144,6 @@ public class ReportDesigner {
     }
   }
 
-  private static class VersionCheckerTask implements Runnable {
-    private VersionCheckerTask() {
-    }
-
-    public void run() {
-      splashScreen.dispose();
-
-      // perform version checking
-      try {
-        Class.forName( "org.pentaho.versionchecker.VersionChecker" );// NON-NLS
-        VersionCheckerUtility.handlerVersionCheck( reportDesignerFrame );
-      } catch ( Throwable t ) {
-        // if we do not have the version checker, fail without any user
-        // feedback or logging
-      }
-      // end version checker
-    }
-
-  }
 
   private static class InstallAWTHandlerRunnable implements Runnable {
     private InstallAWTHandlerRunnable() {
@@ -271,7 +251,6 @@ public class ReportDesigner {
 
       SwingUtilities.invokeAndWait( new UpdateStatusTask( "Starting  .." ) );// NON-NLS
       SwingUtilities.invokeAndWait( new CreateReportDesignerFrame( files ) );
-      SwingUtilities.invokeAndWait( new VersionCheckerTask() );
 
       final ElementMetaData data = ElementTypeRegistry.getInstance().getElementType( "page-header" );// NON-NLS
       final AttributeMetaData[] datas = data.getAttributeDescriptions();
