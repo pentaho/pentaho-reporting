@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2024 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.designer.core.settings;
@@ -44,14 +44,12 @@ public class WorkspaceSettings implements LocaleSettings {
 
   private static WorkspaceSettings instance;
   private static final String GRID_DIVISIONS_KEY = "GridDivisions";
-  private static final String USE_VERSION_CHECKER_KEY = "UseVersionChecker";
   private static final String REPORT_DESIGNER_BOUNDS_KEY = "ReportDesignerBounds";
   private static final String FIELD_PALETTE_BOUNDS_KEY = "FieldPaletteBounds";
   private static final String LNF_KEY = "lnf";
   private static final String SNAP_TO_GRID_KEY = "SnapToGrid";
   private static final String SHOW_GRID_KEY = "ShowGrid";
   private static final String ALWAYS_DRAW_ELEMENT_BORDER_KEY = "AlwaysDrawElementBorder";
-  private static final String NOTIFY_FOR_ALL_BUILDS_KEY = "NotifyForAllBuilds";
   private static final String LAST_PROMPTED_VERSION_UPDATE_KEY = "LastPromptedVersionUpdate";
   private static final String GRID_SIZE_KEY = "GridSize";
   private static final String UNIT_KEY = "Unit";
@@ -246,19 +244,6 @@ public class WorkspaceSettings implements LocaleSettings {
     fireSettingsChanged();
   }
 
-  public boolean isUseVersionChecker() {
-    return properties.getBoolean( USE_VERSION_CHECKER_KEY, true );
-  }
-
-  public boolean isInitialVersionCheck() {
-    return properties.get( USE_VERSION_CHECKER_KEY, null ) == null;
-  }
-
-  public void setUseVersionChecker( final boolean useVersionChecker ) {
-    properties.putBoolean( USE_VERSION_CHECKER_KEY, useVersionChecker );
-    fireSettingsChanged();
-  }
-
   public void setBounds( final Rectangle rectangle ) {
     final String value = LibSwingUtil.rectangleToString( rectangle );
     properties.put( REPORT_DESIGNER_BOUNDS_KEY, value );
@@ -313,24 +298,6 @@ public class WorkspaceSettings implements LocaleSettings {
 
   public void setAlwaysDrawElementFrames( final boolean alwaysDrawElementFrames ) {
     properties.put( ALWAYS_DRAW_ELEMENT_BORDER_KEY, String.valueOf( alwaysDrawElementFrames ) );
-    fireSettingsChanged();
-  }
-
-  public boolean isNotifyForAllBuilds() {
-    return properties.getBoolean( NOTIFY_FOR_ALL_BUILDS_KEY, false );
-  }
-
-  public void setNotifyForAllBuilds( final boolean notifyForAllBuilds ) {
-    properties.put( NOTIFY_FOR_ALL_BUILDS_KEY, String.valueOf( notifyForAllBuilds ) );
-    fireSettingsChanged();
-  }
-
-  public String getLastPromptedVersionUpdate() {
-    return properties.get( LAST_PROMPTED_VERSION_UPDATE_KEY, null );
-  }
-
-  public void setLastPromptedVersionUpdate( final String lastPromptedVersionUpdate ) {
-    properties.put( LAST_PROMPTED_VERSION_UPDATE_KEY, lastPromptedVersionUpdate );
     fireSettingsChanged();
   }
 

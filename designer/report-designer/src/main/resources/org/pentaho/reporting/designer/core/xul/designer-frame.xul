@@ -352,8 +352,6 @@
                   pen:action="org.pentaho.reporting.designer.core.actions.global.SystemInformationAction"/>
         <menuitem id="help.sys-print-layouter-state"
                   pen:action="org.pentaho.reporting.designer.core.actions.report.LogLayouterStateAction"/>
-        <menuitem id="help.check-for-updates"
-                  pen:action="org.pentaho.reporting.designer.core.actions.global.CheckForUpdatesAction"/>
         <menuitem id="help.report-bug"
                   pen:action="org.pentaho.reporting.designer.core.actions.global.ReportABugAction"/>
         <menuitem id="help.visit-forum"
