@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>10.2.0.0-SNAPSHOT</version>
+    <version>10.3.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>libformula-ui</artifactId>
-  <version>10.2.0.0-SNAPSHOT</version>
+  <version>10.3.0.0-SNAPSHOT</version>
   <name>LibFormula-UI</name>
   <description>LibFormula-UI is a formula editor for OpenFormula expressions based on
     LibFormula.</description>

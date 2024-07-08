@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting.library</groupId>
     <artifactId>reporting-libraries</artifactId>
-    <version>10.2.0.0-SNAPSHOT</version>
+    <version>10.3.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>libxml</artifactId>
-  <version>10.2.0.0-SNAPSHOT</version>
+  <version>10.3.0.0-SNAPSHOT</version>
   <name>LibXml</name>
   <description>LibXML is a namespace aware SAX-Parser utility library. It eases the
     pain of implementing non-trivial SAX input handlers. The original
