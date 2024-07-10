@@ -48,6 +48,7 @@ JAVA_ADD_OPENS="$JAVA_ADD_OPENS --add-opens=java.base/java.math=ALL-UNNAMED"
 JAVA_ADD_OPENS="$JAVA_ADD_OPENS --add-opens=java.base/sun.nio.ch=ALL-UNNAMED"
 JAVA_ADD_OPENS="$JAVA_ADD_OPENS --add-opens=java.base/java.nio=ALL-UNNAMED"
 JAVA_ADD_OPENS="$JAVA_ADD_OPENS --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED"
+JAVA_ADD_OPENS="$JAVA_ADD_OPENS --add-opens=java.desktop/com.apple.eawt=ALL-UNNAMED"
 JAVA_LOCALE_COMPAT="-Djava.locale.providers=COMPAT,SPI"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then 
