@@ -29,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.layout.richtext.HtmlRichTextConverter;
 import org.pentaho.reporting.engine.classic.core.layout.richtext.html.RichTextHtmlStyleBuilderFactory;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
@@ -282,5 +283,33 @@ public class HtmlRichTextProcessingTest extends TestCase {
             + "text-decoration: none; text-align: center; word-spacing: 4pt; letter-spacing: 22pt; white-space: pre; background-color: blue";
 
     assertEquals( expected, codeCss );
+  }
+
+  @Test
+  public void testScenarioPRD6160() {
+    testConversionPxToPt(
+            "<span style=\"font-size:13px\">13px high text here.</span>",
+            "13px high text here.",
+            10
+    );
+    testConversionPxToPt(
+            "<span style=\"font-size:26px\">this 26px text has 20pt size.</span>",
+            "this 26px text has 20pt size.",
+            20
+    );
+  }
+
+  private void testConversionPxToPt(String aHtml, String aExpectedPlainText, double aExpectedFontSize) {
+    HtmlRichTextConverter converter = new HtmlRichTextConverter();
+    ReportElement source = new Element();
+    source.setComputedStyle(new SimpleStyleSheet(BandDefaultStyleSheet.getBandDefaultStyle()));
+    Object result = converter.convert(source, aHtml);
+    assertTrue(result instanceof Band);
+    Band band = (Band) result;
+    Element content = (Element) band.getChildElementsByName("content")[0];
+    Object elementAttributeValue = content.getAttribute("http://reporting.pentaho.org/namespaces/engine/attributes/core", "value");
+    assertEquals(aExpectedPlainText, elementAttributeValue);
+    double fontSize = content.getStyle().getDoubleStyleProperty(TextStyleKeys.FONTSIZE,0.0);
+    assertEquals(aExpectedFontSize, fontSize);
   }
 }
