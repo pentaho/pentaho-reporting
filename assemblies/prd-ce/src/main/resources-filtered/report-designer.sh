@@ -50,7 +50,8 @@ JAVA_ADD_OPENS="$JAVA_ADD_OPENS --add-opens=java.base/java.nio=ALL-UNNAMED"
 JAVA_ADD_OPENS="$JAVA_ADD_OPENS --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED"
 JAVA_LOCALE_COMPAT="-Djava.locale.providers=COMPAT,SPI"
 
-if [[ "$OSTYPE" == "darwin"* ]]; then 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	JAVA_ADD_OPENS="$JAVA_ADD_OPENS --add-opens=java.desktop/com.apple.eawt=ALL-UNNAMED"
 	"$_PENTAHO_JAVA" $JAVA_ADD_OPENS -Xms1024m -Xmx2048m -Dapple.laf.useScreenMenuBar=true $JAVA_LOCALE_COMPAT -jar "$DIR/launcher.jar" $@
 else
 	"$_PENTAHO_JAVA" $JAVA_ADD_OPENS -Xms1024m -Xmx2048m $JAVA_LOCALE_COMPAT -jar "$DIR/launcher.jar" $@
