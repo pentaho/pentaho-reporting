@@ -690,7 +690,7 @@ public class HtmlRichTextConverter implements RichTextConverter {
         return new Float( nval * 72 );
       }
       if ( "px".equals( unit ) ) {
-        return new Float( nval * 72 );
+        return Float.valueOf((float) (nval * 0.75));
       }
       if ( "pc".equals( unit ) ) {
         return new Float( nval * 12 );
