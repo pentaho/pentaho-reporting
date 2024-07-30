@@ -37,7 +37,7 @@
     <xalan.version>2.6.0</xalan.version>
     <ftp4che.version>0.7.1</ftp4che.version>
     <hibernate.version>3.6.9.Final</hibernate.version>
-    <groovy.version>2.4.8</groovy.version>
+    <groovy.version>2.4.21</groovy.version>
     <mockito.version>5.10.0</mockito.version>
     <powermock.version>1.6.3</powermock.version>
     <pentaho-osgi-bundles.version>10.3.0.0-SNAPSHOT</pentaho-osgi-bundles.version>
