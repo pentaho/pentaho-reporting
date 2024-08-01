@@ -177,16 +177,6 @@
       <artifactId>log4j-1.2-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.derby</groupId>
-      <artifactId>derby</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.derby</groupId>
-      <artifactId>derbyclient</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>compile</scope>
@@ -407,7 +397,7 @@
                 <includeTypes>jar</includeTypes>
                 <includeScope>compile</includeScope>
                 <excludeArtifactIds>
-                  derby,derbyclient,h2,jaybird,jt400,LucidDbClient-minimal,sapdbc,sqlite-jdbc,pdi-dataservice-client-plugin,pentaho-metastore-locator-core,pentaho-kettle-repository-locator-core
+                  h2,jaybird,jt400,LucidDbClient-minimal,sapdbc,sqlite-jdbc,pdi-dataservice-client-plugin,pentaho-metastore-locator-core,pentaho-kettle-repository-locator-core
                 </excludeArtifactIds>
               </configuration>
             </execution>
@@ -420,7 +410,7 @@
               <configuration>
                 <outputDirectory>${stage.dir.designer}/lib/jdbc</outputDirectory>
                 <includeArtifactIds>
-                  derby,derbyclient,h2,hsqldb,infobright-core,jaybird,jt400,LucidDbClient-minimal,monetdb-jdbc,postgresql,sapdbc,sqlite-jdbc,pdi-dataservice-client-plugin
+                  h2,hsqldb,infobright-core,jaybird,jt400,LucidDbClient-minimal,monetdb-jdbc,postgresql,sapdbc,sqlite-jdbc,pdi-dataservice-client-plugin
                 </includeArtifactIds>
               </configuration>
             </execution>

@@ -84,10 +84,6 @@
     <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.apache.derby.jdbc.EmbeddedDriver" global="true" hidden="true">
-    <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
-    <text/>
-  </key>
   <key name="org.pentaho.reporting.ui.datasources.jdbc.driver-mapping.org.firebirdsql.jdbc.FBDriver" global="true" hidden="true">
     <description>A internal configuration that maps JDBC drivers to Kettle-Datasources.</description>
     <text/>
