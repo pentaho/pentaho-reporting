@@ -90,8 +90,8 @@ public class AsynchronousDataSchemaManager implements DataSchemaManager, ReportM
     }
     Future<ContextAwareDataSchemaModel> retrieve = this.actor.retrieve( masterReport, report );
     // IntelliJ does not know how to handle this construct, thinks it is not valid.
-    retrieve.onSuccess( new SuccessHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher() );
-    retrieve.onFailure( new FailureHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher() );
+    retrieve.foreach( new SuccessHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher() );
+    retrieve.failed().foreach( new FailureHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher() );
   }
 
   public void close() {
