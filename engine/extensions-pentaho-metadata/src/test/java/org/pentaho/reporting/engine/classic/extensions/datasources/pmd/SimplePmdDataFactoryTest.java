@@ -22,6 +22,8 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 
 import static org.mockito.Mockito.mock;
@@ -36,6 +38,10 @@ public class SimplePmdDataFactoryTest extends TestCase {
     ResourceBundleFactory rsf = mock( ResourceBundleFactory.class );
     when( ctx.getContextKey() ).thenReturn( rk );
     when( ctx.getResourceBundleFactory() ).thenReturn( rsf );
+
+    HierarchicalConfiguration conf = mock ( HierarchicalConfiguration.class );
+    conf.setConfigProperty( "org.pentaho.reporting.engine.classic.extensions.modules.pmd-datafactory.UseParentIdentifier", "false" );
+    when ( ctx.getConfiguration() ).thenReturn( (Configuration) conf );
 
     spmd.initialize( ctx );
 
