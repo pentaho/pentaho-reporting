@@ -37,6 +37,7 @@ import org.pentaho.metadata.util.DatabaseMetaUtil;
 import org.pentaho.metadata.util.ThinModelConverter;
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
@@ -45,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SimpleSQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.engine.classic.core.util.TypedMetaTableModel;
+import org.pentaho.reporting.libraries.base.config.ExtendedConfigurationWrapper;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 
@@ -92,6 +94,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
   private String domainId;
   private String xmiFile;
   private IPmdConnectionProvider connectionProvider;
+  private boolean useParentIdentifier = false;
 
   private String userField;
   private String passwordField;
@@ -651,7 +654,9 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
     retval.add( translateQuery( queryName ) );
     retval.add( domainId );
     retval.add( xmiFile );
-    retval.add( getContextKeyParentIdentifier() );
+    if ( useParentIdentifier ) {
+      retval.add( getContextKeyParentIdentifier() );
+    }
     retval.add( connectionProvider.getClass() );
     return retval;
   }
@@ -665,5 +670,11 @@ public class SimplePmdDataFactory extends AbstractDataFactory {
       return bundleKey.getIdentifier();
     }
     return bundleKey;
+  }
+
+  public void initialize( final DataFactoryContext dataFactoryContext ) throws ReportDataFactoryException {
+    super.initialize( dataFactoryContext );
+    useParentIdentifier = new ExtendedConfigurationWrapper( getConfiguration() ).getBoolProperty(
+      "org.pentaho.reporting.engine.classic.extensions.modules.pmd-datafactory.UseParentIdentifier");
   }
 }
