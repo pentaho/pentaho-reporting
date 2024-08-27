@@ -146,7 +146,6 @@
     <commons-discovery.version>0.2</commons-discovery.version>
     <firebird.version>2.1.6</firebird.version>
     <commons-digester.version>1.8</commons-digester.version>
-    <axis.version>1.5</axis.version>
     <jsendnsca.version>2.0.1</jsendnsca.version>
     <barbecue.version>1.5-beta1</barbecue.version>
     <license.inception.year>2002</license.inception.year>
@@ -1577,28 +1576,6 @@
         <groupId>org.codehaus.woodstox</groupId>
         <artifactId>wstx-asl</artifactId>
         <version>${wstx.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.axis2</groupId>
-        <artifactId>axis2-adb</artifactId>
-        <version>${axis.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.pentaho.axis2</groupId>
-        <artifactId>axis2-kernel</artifactId>
-        <version>${axis.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
