@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.designer.core.model.data;
 
-import akka.actor.ActorSystem;
-import akka.actor.TypedActor;
-import akka.actor.TypedProps;
-import akka.util.Timeout;
+import org.apache.pekko.actor.ActorSystem;
+import org.apache.pekko.actor.TypedActor;
+import org.apache.pekko.actor.TypedProps;
+import org.apache.pekko.util.Timeout;
 
 import java.util.concurrent.TimeUnit;
 
