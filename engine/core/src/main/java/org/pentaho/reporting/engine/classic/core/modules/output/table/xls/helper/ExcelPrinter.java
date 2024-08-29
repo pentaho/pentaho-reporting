@@ -124,6 +124,7 @@ public class ExcelPrinter extends ExcelPrinterBase {
 
     if ( sheet == null ) {
       addNewSheet( logicalPage, contentProducer, excelTableContentProducer );
+      sheetRow = 0;
     }
 
     // and finally the content ..
