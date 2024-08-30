@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.designer.core.model.data;
 
-import akka.dispatch.OnFailure;
-import akka.dispatch.OnSuccess;
+import org.apache.pekko.dispatch.OnFailure;
+import org.apache.pekko.dispatch.OnSuccess;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;

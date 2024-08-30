@@ -18,7 +18,7 @@
 package org.pentaho.reporting.designer.core.model.data;
 
 
-import akka.dispatch.Futures;
+import org.apache.pekko.dispatch.Futures;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
