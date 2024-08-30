@@ -17,14 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.filter.types.ContentType;
+import org.pentaho.reporting.engine.classic.core.metadata.DefaultElementMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
+import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
+
+import java.util.HashMap;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ReportStructureValidatorTest {
   @Before
@@ -44,7 +54,7 @@ public class ReportStructureValidatorTest {
     report.getReportHeader().addElement( sr );
 
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertFalse( v.isValidForFastProcessing( report ) );
+    assertFalse( v.isValidForFastProcessing( report ) );
   }
 
   @Test
@@ -59,7 +69,7 @@ public class ReportStructureValidatorTest {
     report.getReportHeader().addSubReport( sr );
 
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertFalse( v.isValidForFastProcessing( report ) );
+    assertFalse( v.isValidForFastProcessing( report ) );
   }
 
   @Test
@@ -77,7 +87,7 @@ public class ReportStructureValidatorTest {
     report.getReportHeader().addSubReport( sr );
 
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertFalse( v.isValidForFastProcessing( report ) );
+    assertFalse( v.isValidForFastProcessing( report ) );
   }
 
   @Test
@@ -92,7 +102,35 @@ public class ReportStructureValidatorTest {
     report.getReportHeader().addSubReport( sr );
 
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertTrue( v.isValidForFastProcessing( report ) );
+    assertTrue( v.isValidForFastProcessing( report ) );
+  }
+
+  @Test
+  public void testBarcodeDetection() {
+    ElementMetaData em = new DefaultElementMetaData( "simple-barcodes", "simple-barcodes",
+     "simple-barcodes", "simple-barcodes", false, false, false,
+     false, null, new AttributeMap<>(), new HashMap<>(), BarcodeDummyType.class,
+     BarcodeDummyType.class, null, 1 );
+    ElementTypeRegistry.getInstance().registerElement( em );
+
+    Element e = new Element();
+    e.setElementType( new BarcodeDummyType() );
+
+    SubReport sr = new SubReport();
+    sr.getReportDefinition().getItemBand().addElement( e );
+
+    MasterReport report = new MasterReport();
+    report.getReportHeader().addSubReport( sr );
+
+    ReportStructureValidator v = new ReportStructureValidator();
+    assertFalse( v.isValidForFastProcessing( report ) );
+  }
+
+  static class BarcodeDummyType extends ContentType {
+    public BarcodeDummyType() {
+      super( "simple-barcodes" );
+    }
+
   }
 
 }
