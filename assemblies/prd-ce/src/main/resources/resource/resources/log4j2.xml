@@ -40,6 +40,7 @@
     <Logger name="org.apache.commons.logging.simplelog.log.org.apache.http.auth" level="WARN"/>
     <Logger name="org.pentaho.reporting.libraries.base.util.ResourceBundleSupport" level="WARN"/>
     <Logger name="org.pentaho.reporting.engine.classic.core.layout" level="INFO"/>
+    <Logger name="org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator" level="INFO"/>
     <Logger name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableRenderer" level="INFO"/>
     <Logger name="org.pentaho.reporting.engine.classic.core.layout.ModelPrinter" level="DEBUG"/>
     <Logger name="org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor" level="INFO"/>
