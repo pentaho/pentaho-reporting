@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.tools.configeditor.util;
 
-import org.pentaho.di.core.xml.XMLParserFactoryProducer;
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
