@@ -33,7 +33,7 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.pmd.PmdDataFa
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.di.core.xml.XMLParserFactoryProducer;
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;

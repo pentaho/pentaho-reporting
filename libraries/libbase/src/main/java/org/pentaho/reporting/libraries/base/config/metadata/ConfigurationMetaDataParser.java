@@ -20,7 +20,7 @@ package org.pentaho.reporting.libraries.base.config.metadata;
 import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
 import org.pentaho.reporting.libraries.base.boot.Module;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.di.core.xml.XMLParserFactoryProducer;
+import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
