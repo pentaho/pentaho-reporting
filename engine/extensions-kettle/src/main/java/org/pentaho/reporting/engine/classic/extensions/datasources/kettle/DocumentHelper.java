@@ -19,7 +19,7 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
 import org.pentaho.di.core.exception.KettlePluginException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
-import org.pentaho.reporting.libraries.base.util.XMLParserFactoryProducer;
+import org.pentaho.di.core.xml.XMLParserFactoryProducer;
 import org.pentaho.reporting.libraries.xmlns.parser.LoggingErrorHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParserEntityResolver;
 import org.w3c.dom.Document;
