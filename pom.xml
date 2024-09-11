@@ -94,7 +94,6 @@
     <plugin.sortpom.version>2.4.0</plugin.sortpom.version>
     <ehcache.version>2.10.6</ehcache.version>
     <trilead-ssh2.version>build213</trilead-ssh2.version>
-    <jettyson.version>1.2</jettyson.version>
     <ldapjdk.version>20000524</ldapjdk.version>
     <jcifs.version>1.3.3</jcifs.version>
     <commons-xul.version>10.3.0.0-SNAPSHOT</commons-xul.version>
@@ -800,7 +799,7 @@
       <dependency>
         <groupId>org.codehaus.jettison</groupId>
         <artifactId>jettison</artifactId>
-        <version>${jettyson.version}</version>
+        <version>${jettison.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
