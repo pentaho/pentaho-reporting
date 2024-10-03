@@ -13,13 +13,18 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.apache.commons.logging.Log;
+
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystemException;
@@ -31,10 +36,9 @@ import org.pentaho.platform.util.RepositoryPathEncoder;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -106,11 +110,11 @@ public class JCRSolutionFileModel implements SolutionFileModel {
 
     CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
 
-    final ClientConfig config = new DefaultClientConfig();
-    config.getProperties().put( ClientConfig.PROPERTY_FOLLOW_REDIRECTS, true );
-    config.getProperties().put( ClientConfig.PROPERTY_READ_TIMEOUT, timeout );
-    this.client = Client.create( config );
-    this.client.addFilter( new HTTPBasicAuthFilter( username, password ) );
+    final ClientConfig config = new ClientConfig();
+    config.property( ClientProperties.FOLLOW_REDIRECTS, true );
+    config.property( ClientProperties.READ_TIMEOUT, timeout );
+    HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic( username, password );
+    this.client = ClientBuilder.newClient( config ).register( feature );
     this.majorVersion = "999";
     this.minorVersion = "999";
     this.releaseVersion = "999";
@@ -130,12 +134,12 @@ public class JCRSolutionFileModel implements SolutionFileModel {
   public void refresh() throws IOException {
     RepositoryFileTreeDto tree;
     if ( loadTreePartially ) {
-      WebResource resource = client.resource( url + LOAD_REPOSITORY_PARTIALLY_SERVICE );
-      tree = resource.path( "" ).accept( MediaType.APPLICATION_XML_TYPE ).get( RepositoryFileTreeDto.class );
+      WebTarget target = client.target( url + LOAD_REPOSITORY_PARTIALLY_SERVICE );
+      tree = target.path( "" ).request( MediaType.APPLICATION_XML_TYPE ).get( RepositoryFileTreeDto.class );
       tree = proxyRoot( tree );
     } else {
-      WebResource resource = client.resource( url + LOAD_REPOSITORY_SERVICE );
-      tree = resource.path( "" ).accept( MediaType.APPLICATION_XML_TYPE ).get( RepositoryFileTreeDto.class );
+      WebTarget target = client.target( url + LOAD_REPOSITORY_SERVICE );
+      tree = target.path( "" ).request( MediaType.APPLICATION_XML_TYPE ).get( RepositoryFileTreeDto.class );
     }
     setRoot( tree );
   }
@@ -164,10 +168,10 @@ public class JCRSolutionFileModel implements SolutionFileModel {
         .replaceAll( "\\!", "%21" );
       final String service = MessageFormat.format( CREATE_FOLDER_SERVICE, path );
 
-      final WebResource resource = client.resource( url + service );
-      final ClientResponse response = resource.type( "text/plain" ).put( ClientResponse.class, null );
-      if ( response.getStatus() == 200 ) {
-        refresh();
+      final WebTarget target = client.target( url + service );
+      final Response response = target.request( MediaType.TEXT_PLAIN ).put( Entity.text( "" ) );
+      if ( response.getStatus() == Response.Status.OK.getStatusCode() ) {
+      refresh();
       } else {
         throw new FileSystemException( "Failed with error-code", response.getStatus() );
       }
@@ -405,7 +409,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     } //tcb
     final String service = MessageFormat.format( DOWNLOAD_SERVICE, urlPath );
 
-    return client.resource( url + service ).accept( MediaType.APPLICATION_XML_TYPE ).get( byte[].class );
+    return client.target( url + service ).request( MediaType.APPLICATION_XML_TYPE ).get( byte[].class );
   }
 
   public void setData( final FileName file, final byte[] data ) throws FileSystemException {
@@ -420,10 +424,11 @@ public class JCRSolutionFileModel implements SolutionFileModel {
 
     String service = MessageFormat.format( UPLOAD_SERVICE,
       URLEncoder.encodeUTF8( normalizePath( b.toString() ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" ) ) );
-    final WebResource resource = client.resource( url + service );
+    final WebTarget target = client.target( url + service );
     final ByteArrayInputStream stream = new ByteArrayInputStream( data );
-    final ClientResponse response = resource.put( ClientResponse.class, stream );
-    final int status = response.getStatus();
+    Entity<InputStream> entity = Entity.entity( stream, MediaType.APPLICATION_OCTET_STREAM_TYPE );
+    Response response = target.request().put( entity );
+    int status = response.getStatus();
 
     if ( status != HttpStatus.SC_OK ) {
       if ( status == HttpStatus.SC_MOVED_TEMPORARILY
@@ -533,8 +538,9 @@ public class JCRSolutionFileModel implements SolutionFileModel {
 
     try {
 
-      final WebResource resource = client.resource( url + DELETE_FILE_OR_FOLDER );
-      final ClientResponse response = resource.put( ClientResponse.class, file.getId() );
+      final WebTarget target = client.target( url + DELETE_FILE_OR_FOLDER );
+      Entity<String> entity = Entity.entity( file.getId(), MediaType.TEXT_PLAIN );
+      Response response = target.request().put( entity );
 
       if ( response != null && response.getStatus() == Response.Status.OK.getStatusCode() ) {
         refresh();
