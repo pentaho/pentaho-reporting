@@ -13,17 +13,18 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataBodyPart;
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.impl.MultiPartWriter;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -67,11 +68,10 @@ public class PublishRestUtil {
    * Used for REST Jersey calls
    */
   private void initRestService() {
-    ClientConfig clientConfig = new DefaultClientConfig();
-    clientConfig.getClasses().add( MultiPartWriter.class );
-    clientConfig.getFeatures().put( JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE );
-    client = Client.create( clientConfig );
-    client.addFilter( new HTTPBasicAuthFilter( username, password ) );
+    ClientConfig clientConfig = new ClientConfig();
+    clientConfig.register( MultiPartFeature.class );
+    HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic( username, password );
+    client = ClientBuilder.newClient( clientConfig ).register( feature );
   }
 
   /**
@@ -116,7 +116,7 @@ public class PublishRestUtil {
    */
   public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream, Properties fileProperties ) throws IOException {
     String url = baseUrl + REPO_FILES_IMPORT_WITH_OPTIONS;
-    WebResource resource = client.resource( url );
+    WebTarget target = client.target( url );
     int responseCode = 504;
     try ( ByteArrayOutputStream baos = new ByteArrayOutputStream() ) {
       FormDataMultiPart fdmp = new FormDataMultiPart();
@@ -134,11 +134,11 @@ public class PublishRestUtil {
       fdmp.field( "fileUpload", fileInputStream, MULTIPART_FORM_DATA_TYPE );
       fdmp.getField( "fileUpload" ).setContentDisposition( FormDataContentDisposition.name( "fileUpload" ).fileName( nameEncoded ).build() );
 
-      WebResource.Builder builder = resource.type( MULTIPART_FORM_DATA_TYPE );
-      ClientResponse response = builder.post( ClientResponse.class, fdmp );
+      target = ( WebTarget ) target.request( MediaType.MULTIPART_FORM_DATA );
+      Response response = target.request().post( Entity.entity( fdmp , MediaType.MULTIPART_FORM_DATA ) );
 
       if ( response != null ) {
-        String message = response.getEntity( String.class );
+        String message = response.readEntity( String.class );
         logger.info( message );
         responseCode = response.getStatus();
       }
