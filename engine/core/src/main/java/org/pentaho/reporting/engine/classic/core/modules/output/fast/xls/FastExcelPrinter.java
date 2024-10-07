@@ -298,8 +298,8 @@ public class FastExcelPrinter extends ExcelPrinterBase {
     workbook.write( outputStream );
     if(isUseXlsxFormat()) {
       SXSSFWorkbook sxssfWorkbook = (SXSSFWorkbook) workbook;
-      sxssfWorkbook.close();
       sxssfWorkbook.dispose();
+      sxssfWorkbook.close();
     }
     else {
       workbook.close();
