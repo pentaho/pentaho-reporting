@@ -1221,12 +1221,6 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>oss-licenses</artifactId>
-        <version>${oss-licenses.version}</version>
-        <type>zip</type>
-      </dependency>
-      <dependency>
         <groupId>commons-discovery</groupId>
         <artifactId>commons-discovery</artifactId>
         <version>${commons-discovery.version}</version>
