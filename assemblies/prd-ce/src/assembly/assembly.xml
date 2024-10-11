@@ -35,9 +35,6 @@
   <dependencySets>
     <dependencySet>
       <outputDirectory>.</outputDirectory>
-      <includes>
-        <include>pentaho:oss-licenses:zip</include>
-      </includes>
       <unpack>true</unpack>
       <unpackOptions>
         <includes>
