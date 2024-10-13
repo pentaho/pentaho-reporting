@@ -6,10 +6,10 @@
   <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>reporting-assemblies</artifactId>
-    <version>10.2.0.0-SNAPSHOT</version>
+    <version>10.2.0.0-222</version>
   </parent>
   <artifactId>prd-ce</artifactId>
-  <version>10.2.0.0-SNAPSHOT</version>
+  <version>10.2.0.0-222</version>
   <packaging>pom</packaging>
   <name>Pentaho Report Designer CE Assembly</name>
   <licenses>
@@ -20,8 +20,8 @@
     </license>
   </licenses>
   <properties>
-    <pentaho-mongodb-plugin.version>10.2.0.0-SNAPSHOT</pentaho-mongodb-plugin.version>
-    <pentaho-hadoop-shims.version>10.2.0.0-SNAPSHOT</pentaho-hadoop-shims.version>
+    <pentaho-mongodb-plugin.version>10.2.0.0-222</pentaho-mongodb-plugin.version>
+    <pentaho-hadoop-shims.version>10.2.0.0-222</pentaho-hadoop-shims.version>
     <assembly_appendId>false</assembly_appendId>
   </properties>
 
