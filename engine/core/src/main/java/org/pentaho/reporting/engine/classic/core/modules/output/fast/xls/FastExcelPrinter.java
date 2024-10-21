@@ -295,5 +295,13 @@ public class FastExcelPrinter extends ExcelPrinterBase {
 
   public void closeWorkbook( final OutputStream outputStream ) throws IOException {
     workbook.write( outputStream );
+    if(isUseXlsxFormat()) {
+      SXSSFWorkbook sxssfWorkbook = (SXSSFWorkbook) workbook;
+      sxssfWorkbook.dispose();
+      sxssfWorkbook.close();
+    }
+    else {
+      workbook.close();
+    }
   }
 }
