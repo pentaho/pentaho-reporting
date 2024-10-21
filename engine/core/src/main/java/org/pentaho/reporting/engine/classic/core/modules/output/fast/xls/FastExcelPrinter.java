@@ -23,6 +23,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -295,5 +296,13 @@ public class FastExcelPrinter extends ExcelPrinterBase {
 
   public void closeWorkbook( final OutputStream outputStream ) throws IOException {
     workbook.write( outputStream );
+    if(isUseXlsxFormat()) {
+      SXSSFWorkbook sxssfWorkbook = (SXSSFWorkbook) workbook;
+      sxssfWorkbook.dispose();
+      sxssfWorkbook.close();
+    }
+    else {
+      workbook.close();
+    }
   }
 }
