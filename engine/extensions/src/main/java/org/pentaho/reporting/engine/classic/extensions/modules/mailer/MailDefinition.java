@@ -27,7 +27,7 @@ import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-import javax.mail.Authenticator;
+import jakarta.mail.Authenticator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Properties;
