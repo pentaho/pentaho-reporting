@@ -13,9 +13,9 @@
 
 package org.pentaho.reporting.libraries.repository.email;
 
-import javax.activation.DataHandler;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.util.ByteArrayDataSource;
+import jakarta.activation.DataHandler;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.util.ByteArrayDataSource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

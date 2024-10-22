@@ -19,7 +19,7 @@ import org.pentaho.platform.api.engine.PentahoAccessControlException;
 import org.pentaho.platform.web.http.api.resources.RepositoryPublishResourceRevealer;
 import org.pentaho.platform.web.http.api.resources.services.RepositoryPublishService;
 
-import javax.ws.rs.Path;
+import jakarta.ws.rs.Path;
 import java.io.InputStream;
 
 import static org.mockito.Mockito.any;

@@ -13,8 +13,8 @@
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
+import jakarta.mail.Authenticator;
+import jakarta.mail.PasswordAuthentication;
 import java.util.Properties;
 
 public class DefaultAuthenticator extends Authenticator {
