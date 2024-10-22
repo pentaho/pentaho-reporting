@@ -13,13 +13,13 @@
 //
 //package org.pentaho.reporting.libraries.pensol;
 //
-//import com.sun.jersey.api.client.config.ClientConfig;
-//import com.sun.jersey.api.client.config.DefaultClientConfig;
-//import com.sun.jersey.api.json.JSONConfiguration;
-//import com.sun.jersey.multipart.impl.MultiPartWriter;
-//import com.sun.jersey.test.framework.AppDescriptor;
-//import com.sun.jersey.test.framework.JerseyTest;
-//import com.sun.jersey.test.framework.WebAppDescriptor;
+//import jakarta.ws.rs.client.Client;
+//import jakarta.ws.rs.client.ClientBuilder;
+//import org.glassfish.jersey.media.multipart.MultiPartFeature;
+//import org.glassfish.jersey.test.JerseyTest;
+//import org.glassfish.jersey.test.spi.TestContainerFactory;
+//import org.glassfish.jersey.jackson.JacksonFeature;
+//import org.glassfish.jersey.server.ResourceConfig;
 //import org.junit.Assert;
 //import org.junit.Ignore;
 //import org.junit.Test;
