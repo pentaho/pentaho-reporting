@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 
 import java.util.Properties;
 
-import javax.mail.PasswordAuthentication;
+import jakarta.mail.PasswordAuthentication;
 
 import org.junit.Test;
 
