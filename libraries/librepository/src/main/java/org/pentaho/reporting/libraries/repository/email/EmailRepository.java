@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2024 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.reporting.libraries.repository.email;
@@ -23,11 +23,11 @@ import org.pentaho.reporting.libraries.repository.DefaultMimeRegistry;
 import org.pentaho.reporting.libraries.repository.MimeRegistry;
 import org.pentaho.reporting.libraries.repository.Repository;
 
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.io.OutputStream;
 

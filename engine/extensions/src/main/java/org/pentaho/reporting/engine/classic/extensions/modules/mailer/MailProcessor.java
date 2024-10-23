@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.extensions.modules.mailer;
@@ -42,14 +42,14 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.email.EmailRepository;
 
-import javax.activation.DataHandler;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.util.ByteArrayDataSource;
+import jakarta.activation.DataHandler;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.util.ByteArrayDataSource;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
