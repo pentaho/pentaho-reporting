@@ -12,7 +12,7 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2017 Hitachi Vantara..  All rights reserved.
+ *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
@@ -74,6 +74,7 @@ public class FastExcelPrinter extends ExcelPrinterBase {
   private FastExcelTextExtractor textExtractor;
   private FastSheetLayout sheetLayout;
   private long[] cellHeights;
+  private static final int MAX_ROW_COUNT = 1048576; // Excel's limit
 
   public FastExcelPrinter( final SheetLayout sheetLayout ) {
     this.sheetLayout = new FastSheetLayout( sheetLayout );
@@ -113,6 +114,17 @@ public class FastExcelPrinter extends ExcelPrinterBase {
       configureSheetColumnWidths( sheet, sheetLayout, sheetLayout.getColumnCount() );
       configureSheetPaperSize( sheet, new PhysicalPageBox( pageDefinition.getPageFormat( 0 ), 0, 0 ) );
       configureSheetProperties( sheet, collector );
+      rowOffset = 0;
+    }
+
+    if ( this.rowOffset >= MAX_ROW_COUNT) {
+      // If so, create a new sheet
+      SheetPropertyCollector collector = new SheetPropertyCollector();
+      String sheetName = collector.compute(band);
+      sheet = openSheet(sheetName);
+      configureSheetColumnWidths(sheet, sheetLayout, sheetLayout.getColumnCount());
+      configureSheetPaperSize(sheet, new PhysicalPageBox(pageDefinition.getPageFormat(0), 0, 0));
+      configureSheetProperties(sheet, collector);
       rowOffset = 0;
     }
 
