@@ -70,7 +70,6 @@ public class FastExcelPrinter extends ExcelPrinterBase {
   private FastExcelTextExtractor textExtractor;
   private FastSheetLayout sheetLayout;
   private long[] cellHeights;
-  private static final int MAX_ROW_COUNT = 1048576; // Excel's limit
 
   public FastExcelPrinter( final SheetLayout sheetLayout ) {
     this.sheetLayout = new FastSheetLayout( sheetLayout );
@@ -112,6 +111,8 @@ public class FastExcelPrinter extends ExcelPrinterBase {
       configureSheetProperties( sheet, collector );
       rowOffset = 0;
     }
+
+    double MAX_ROW_COUNT = getMaxSheetRowCount();
 
     if ( this.rowOffset >= MAX_ROW_COUNT) {
       // If so, create a new sheet
