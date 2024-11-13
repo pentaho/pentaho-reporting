@@ -13,6 +13,9 @@
 
 package org.pentaho.reporting.designer.core.splash;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerInfo;
 import org.pentaho.reporting.designer.core.util.IconLoader;
@@ -26,6 +29,7 @@ import javax.swing.JTextArea;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,6 +39,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,11 +53,11 @@ import java.util.Date;
  * @author schmm7
  */
 public class SplashScreen extends JWindow {
-  private static final int XLOC = 290;
-  private static final int YLOC = 158;
-  private static final int TEXT_WIDTH = 320;
-  private static final int LICENSE_HEIGHT = 30;
-  private static final int COPYRIGHT_HEIGHT = 180;
+  private static final Log log = LogFactory.getLog(SplashScreen.class);
+
+  private static final int XLOC = 300;
+  private static final int YLOC = 80;
+  private static final int TEXT_WIDTH = 700;
   private static final Color TRANSPARENT = new Color( 0, 0, 0, 0 );
   private static final Color WHITE = new Color( 255, 255, 255 );
   private static final Color DARK_GREY = new Color( 65, 65, 65 );
@@ -65,7 +71,7 @@ public class SplashScreen extends JWindow {
 
   private JLabel statusLabel;
   private static final Font LICENSE_FONT = new Font( Font.SANS_SERIF, Font.PLAIN, 12 );
-  private static final Font COPYRIGHT_FONT = new Font( Font.SANS_SERIF, Font.PLAIN, 10 );
+  private static final Font COPYRIGHT_FONT = new Font( Font.SANS_SERIF, Font.PLAIN, 12 );
 
   public SplashScreen() {
     addMouseListener( new HideOnClickHandler() );
@@ -125,7 +131,7 @@ public class SplashScreen extends JWindow {
     final String year = new SimpleDateFormat( "yyyy" ).format( new Date() );
     final JTextArea copyrightArea = new JTextArea( Messages.getString( "SplashScreen.Copyright", year ) );
     copyrightArea.setEditable( false );
-    copyrightArea.setBounds( XLOC, YLOC + 20, TEXT_WIDTH, LICENSE_HEIGHT );
+    copyrightArea.setBounds( XLOC, YLOC + 25, TEXT_WIDTH, 25 );
     copyrightArea.setOpaque( false );
     copyrightArea.setLineWrap( true );
     copyrightArea.setWrapStyleWord( true );
@@ -137,13 +143,25 @@ public class SplashScreen extends JWindow {
     copyrightArea.setDisabledTextColor( copyrightArea.getForeground() );
 
     // Overlay the copyright
-    final JTextArea licenseArea = new JTextArea( Messages.getString( "SplashScreen.License" ) );
+    StringBuilder sb = new StringBuilder();
+    String line;
+    try {
+        BufferedReader reader =
+                new BufferedReader( new InputStreamReader( SplashScreen.class.getClassLoader().getResourceAsStream(
+                        "org/pentaho/reporting/designer/core/license/license.txt" ) ) );
+        while ( ( line = reader.readLine() ) != null ) {
+          sb.append( line + System.getProperty( "line.separator" ) );
+        }
+    } catch ( Exception ex ) {
+      log.error( Messages.getString( "SplashDialog.LicenseTextNotFound" ), ex );
+    }
+    final JTextArea licenseArea = new JTextArea( sb.toString() );
     licenseArea.setEditable( false );
-    licenseArea.setBounds( XLOC, YLOC + 14 + LICENSE_HEIGHT, TEXT_WIDTH, COPYRIGHT_HEIGHT );
+    licenseArea.setBounds( XLOC, YLOC + 50, TEXT_WIDTH, 800 );
     licenseArea.setOpaque( false );
     licenseArea.setLineWrap( true );
     licenseArea.setWrapStyleWord( true );
-    licenseArea.setFont( LICENSE_FONT );
+    licenseArea.setFont( new Font( "Monospaced", Font.PLAIN, 9 ) );
     licenseArea.setEnabled( false );
     licenseArea.setBackground( TRANSPARENT );
     licenseArea.setBorder( BORDER );

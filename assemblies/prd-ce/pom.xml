@@ -364,14 +364,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>oss-licenses</artifactId>
-      <version>${oss-licenses.version}</version>
-      <type>zip</type>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
       <scope>compile</scope>
@@ -394,26 +386,6 @@
         <plugin>
           <artifactId>maven-dependency-plugin</artifactId>
           <executions>
-            <execution>
-              <id>unpack-oss</id>
-              <phase>generate-resources</phase>
-              <goals>
-                <goal>unpack</goal>
-              </goals>
-              <configuration>
-                <artifactItems>
-                  <artifactItem>
-                    <groupId>pentaho</groupId>
-                    <artifactId>oss-licenses</artifactId>
-                    <type>zip</type>
-                    <overWrite>true</overWrite>
-                    <outputDirectory>${stage.dir.designer}</outputDirectory>
-                    <includes>PentahoReporting_OSS_Licenses.html</includes>
-                  </artifactItem>
-                </artifactItems>
-              </configuration>
-            </execution>
-            <!-- -->
             <execution>
               <id>libs</id>
               <phase>process-resources</phase>
