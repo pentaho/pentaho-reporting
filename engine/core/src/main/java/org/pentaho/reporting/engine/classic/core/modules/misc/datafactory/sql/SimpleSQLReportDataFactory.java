@@ -21,6 +21,10 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
+import org.pentaho.reporting.engine.classic.core.event.async.AsyncReportStatusListener;
+import org.pentaho.reporting.engine.classic.core.event.async.IAsyncReportListener;
+import org.pentaho.reporting.engine.classic.core.event.async.IReportCancelEvent;
+import org.pentaho.reporting.engine.classic.core.event.async.ReportListenerThreadHolder;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -31,6 +35,7 @@ import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -39,12 +44,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
-
+import java.util.concurrent.Callable;
 
 /**
  * @noinspection AssignmentToCollectionOrArrayFieldFromParameter
  */
-public class SimpleSQLReportDataFactory extends AbstractDataFactory {
+public class SimpleSQLReportDataFactory extends AbstractDataFactory implements IReportCancelEvent {
   private transient Connection connection;
   private ConnectionProvider connectionProvider;
   private static final Log logger = LogFactory.getLog( SimpleSQLReportDataFactory.class );
@@ -67,6 +72,11 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       this.columnNameMapping = "Name".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
               SimpleSQLReportDataFactory.COLUMN_NAME_MAPPING_KEY, "Name" ) ); //$NON-NLS-1$
     }
+
+      IAsyncReportListener reportListener =  ReportListenerThreadHolder.getListener();
+      if ( reportListener != null ) {
+        reportListener.subscribeToReportCancelEvent( this );
+      }
   }
 
   public SimpleSQLReportDataFactory( final Connection connection ) {
@@ -335,7 +345,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
   }
 
   public ResultSet performQuery( Statement statement, final String translatedQuery, final String[] preparedParameterNames )
-    throws SQLException {
+          throws SQLException {
     final ResultSet res;
     if ( preparedParameterNames.length == 0 ) {
       res = statement.executeQuery( translatedQuery );
@@ -344,6 +354,22 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
       res = pstmt.executeQuery();
     }
     return res;
+  }
+
+  private void tryCancelStatement(Statement statement) throws SQLException {
+    try {
+      if (statement != null) {
+        logger.warn("Sending CANCEL to underlying SQL Statement");
+        statement.cancel();
+        logger.warn("CANCEL to underlying SQL Statement completed");
+      }
+    } catch (SQLFeatureNotSupportedException e) {
+      logger.error("Unable to cancel the underlying SQL Statement, this Driver does not support cancel feature");
+      throw e;
+    } catch (SQLException e) {
+      logger.error("Unable to cancel the underlying SQL Statement");
+      throw e;
+    }
   }
 
   private void parametrize( final DataRow parameters, final String[] params, final PreparedStatement pstmt,
@@ -552,5 +578,13 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory {
     list.add( translateQuery( queryName ) );
     list.add( connection );
     return list;
+  }
+
+  public void onReportCancel() {
+    try {
+      tryCancelStatement(currentRunningStatement);
+    } catch (SQLException sqlException ) {
+      logger.error( sqlException.getLocalizedMessage() );
+    }
   }
 }
