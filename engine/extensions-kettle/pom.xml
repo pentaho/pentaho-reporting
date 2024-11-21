@@ -104,16 +104,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.axis2</groupId>
-      <artifactId>axis2-adb</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.pentaho.axis2</groupId>
-      <artifactId>axis2-kernel</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
       <scope>compile</scope>
