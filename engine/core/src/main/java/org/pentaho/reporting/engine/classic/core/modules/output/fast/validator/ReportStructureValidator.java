@@ -10,9 +10,6 @@
  * Change Date: 2028-08-13
  ******************************************************************************/
 
- *  Copyright (c) 2006 - 2024 Hitachi Vantara..  All rights reserved.
- */
-
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.validator;
 
 import org.apache.commons.logging.Log;
