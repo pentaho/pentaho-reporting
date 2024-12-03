@@ -40,6 +40,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -62,6 +63,8 @@ public class SplashScreen extends JWindow {
   private static final Color WHITE = new Color( 255, 255, 255 );
   private static final Color DARK_GREY = new Color( 65, 65, 65 );
   private static final EmptyBorder BORDER = new EmptyBorder( 0, 0, 0, 0 );
+
+  private static final String LICENSE_FILE_PATH = "./LICENSE.TXT";
 
   private class HideOnClickHandler extends MouseAdapter {
     public void mouseClicked( final MouseEvent e ) {
@@ -147,12 +150,12 @@ public class SplashScreen extends JWindow {
     String line;
     try {
         BufferedReader reader =
-                new BufferedReader( new InputStreamReader( SplashScreen.class.getClassLoader().getResourceAsStream(
-                        "org/pentaho/reporting/designer/core/license/license.txt" ) ) );
+          new BufferedReader( new FileReader( LICENSE_FILE_PATH ));
         while ( ( line = reader.readLine() ) != null ) {
           sb.append( line + System.getProperty( "line.separator" ) );
         }
     } catch ( Exception ex ) {
+      sb.append( String.format( "Error reading license file from product directory: \"%s\"", LICENSE_FILE_PATH ) );
       log.error( Messages.getString( "SplashDialog.LicenseTextNotFound" ), ex );
     }
     final JTextArea licenseArea = new JTextArea( sb.toString() );
