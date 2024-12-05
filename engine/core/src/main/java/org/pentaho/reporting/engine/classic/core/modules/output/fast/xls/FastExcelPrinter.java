@@ -112,6 +112,19 @@ public class FastExcelPrinter extends ExcelPrinterBase {
       rowOffset = 0;
     }
 
+    double MAX_ROW_COUNT = getMaxSheetRowCount();
+
+    if ( this.rowOffset >= MAX_ROW_COUNT) {
+      // If so, create a new sheet
+      SheetPropertyCollector collector = new SheetPropertyCollector();
+      String sheetName = collector.compute(band);
+      sheet = openSheet(sheetName);
+      configureSheetColumnWidths(sheet, sheetLayout, sheetLayout.getColumnCount());
+      configureSheetPaperSize(sheet, new PhysicalPageBox(pageDefinition.getPageFormat(0), 0, 0));
+      configureSheetProperties(sheet, collector);
+      rowOffset = 0;
+    }
+
     for ( int r = 0; r < cellHeights.length; r += 1 ) {
       getRowAt( r + rowOffset ).setHeightInPoints( (float) StrictGeomUtility.toExternalValue( cellHeights[r] ) );
     }
