@@ -31,13 +31,18 @@
         <exclude>**/*.command</exclude>
       </excludes>
     </fileSet>
+    <!-- license -->
+    <fileSet>
+      <directory>${project.basedir}/../..</directory>
+      <includes>
+        <include>LICENSE.TXT</include>
+      </includes>
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
   </fileSets>
   <dependencySets>
     <dependencySet>
       <outputDirectory>.</outputDirectory>
-      <includes>
-        <include>pentaho:oss-licenses:zip</include>
-      </includes>
       <unpack>true</unpack>
       <unpackOptions>
         <includes>

@@ -119,7 +119,6 @@
     <equinox.version>3.3.0-v20070426</equinox.version>
     <jcommon.version>1.0.16</jcommon.version>
     <javax.ws.rs.version>1.1.1</javax.ws.rs.version>
-    <oss-licenses.version>10.2.0.0-SNAPSHOT</oss-licenses.version>
     <pdi-dataservice-client-plugin.version>10.2.0.0-SNAPSHOT</pdi-dataservice-client-plugin.version>
     <mondrian.version>10.2.0.0-SNAPSHOT</mondrian.version>
     <pdi-xml-plugin.version>10.2.0.0-SNAPSHOT</pdi-xml-plugin.version>
@@ -1219,12 +1218,6 @@
             <groupId>*</groupId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>oss-licenses</artifactId>
-        <version>${oss-licenses.version}</version>
-        <type>zip</type>
       </dependency>
       <dependency>
         <groupId>commons-discovery</groupId>
