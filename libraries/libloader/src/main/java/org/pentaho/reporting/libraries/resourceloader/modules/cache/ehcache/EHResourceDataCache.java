@@ -13,9 +13,6 @@
 
 package org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheException;
-import net.sf.ehcache.Element;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
@@ -26,6 +23,8 @@ import org.pentaho.reporting.libraries.resourceloader.cache.CachingResourceData;
 import org.pentaho.reporting.libraries.resourceloader.cache.DefaultResourceDataCacheEntry;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceDataCache;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceDataCacheEntry;
+import javax.cache.Cache;
+import javax.cache.CacheException;
 
 public class EHResourceDataCache implements ResourceDataCache {
   private Cache dataCache;
@@ -49,12 +48,12 @@ public class EHResourceDataCache implements ResourceDataCache {
     }
 
     try {
-      final Element element = dataCache.get( (Object) key );
+      final Object element = dataCache.get( key );
       if ( element != null ) {
         if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
           EHCacheModule.CACHE_MONITOR.debug( "Data Cache Hit  " + key );
         }
-        return (ResourceDataCacheEntry) element.getObjectValue();
+        return (ResourceDataCacheEntry) element;
       }
       if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
         EHCacheModule.CACHE_MONITOR.debug( "Data Cache Miss " + key );
@@ -84,7 +83,7 @@ public class EHResourceDataCache implements ResourceDataCache {
     final ResourceData cdata = CachingResourceData.createCached( data );
     final Object keyObject = data.getKey();
     final Object dataCacheEntry = new DefaultResourceDataCacheEntry( cdata, caller );
-    dataCache.put( new Element( keyObject, dataCacheEntry ) );
+    dataCache.put( keyObject, dataCacheEntry );
     return cdata;
   }
 
@@ -111,7 +110,7 @@ public class EHResourceDataCache implements ResourceDataCache {
 
   public void shutdown() {
     try {
-      dataCache.getCacheManager().shutdown();
+      dataCache.getCacheManager().close();
     } catch ( Exception e ) {
       logger.debug( "Failed to shut-down cache", e );
       // ignore it ..
