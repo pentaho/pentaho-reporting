@@ -13,9 +13,8 @@
 
 package org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheException;
-import net.sf.ehcache.Element;
+import javax.cache.Cache;
+import javax.cache.CacheException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -114,13 +113,13 @@ public class EHResourceFactoryCache implements ResourceFactoryCache {
 
   private Resource getInternal( final ResourceKey key, final Class target ) {
     try {
-      final Element element = factoryCache.get( new CompoundCacheKey( key, target ) );
+      final Object element = factoryCache.get( new CompoundCacheKey( key, target ) );
       if ( element != null ) {
-        final Resource resource = (Resource) element.getObjectValue();
+        final Resource resource = (Resource) element;
         if ( resource != null ) {
           return resource;
         }
-        final Resource resource1 = (Resource) element.getValue();
+        final Resource resource1 = (Resource) element;
         if ( resource1 != null ) {
           return resource1;
         }
@@ -139,7 +138,7 @@ public class EHResourceFactoryCache implements ResourceFactoryCache {
   public void put( final Resource resource ) {
     final Object source = new CompoundCacheKey( resource.getSource(), resource.getTargetType() );
     try {
-      factoryCache.put( new Element( source, (Object) resource ) );
+      factoryCache.put( source, resource );
     } catch ( Exception e ) {
       if ( logger.isDebugEnabled() ) {
         logger.debug( "Failed to store resource for key " + source, e );
@@ -164,7 +163,7 @@ public class EHResourceFactoryCache implements ResourceFactoryCache {
 
   public void shutdown() {
     try {
-      factoryCache.getCacheManager().shutdown();
+      factoryCache.getCacheManager().close();
     } catch ( Exception e ) {
       logger.debug( "Failed to shut-down cache", e );
       // ignore it ..
