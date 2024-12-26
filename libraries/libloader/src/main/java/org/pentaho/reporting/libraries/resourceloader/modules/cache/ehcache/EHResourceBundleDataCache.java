@@ -13,9 +13,6 @@
 
 package org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheException;
-import net.sf.ehcache.Element;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceBundleData;
@@ -26,6 +23,8 @@ import org.pentaho.reporting.libraries.resourceloader.cache.CachingResourceBundl
 import org.pentaho.reporting.libraries.resourceloader.cache.DefaultResourceBundleDataCacheEntry;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceBundleDataCache;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceBundleDataCacheEntry;
+import javax.cache.Cache;
+import javax.cache.CacheException;
 
 public class EHResourceBundleDataCache implements ResourceBundleDataCache {
   private static final Log logger = LogFactory.getLog( EHResourceDataCache.class );
@@ -49,12 +48,12 @@ public class EHResourceBundleDataCache implements ResourceBundleDataCache {
     }
 
     try {
-      final Element element = dataCache.get( (Object) key );
+      final Object element = dataCache.get( key );
       if ( element != null ) {
         if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
           EHCacheModule.CACHE_MONITOR.debug( "Bund Cache Hit  " + key );
         }
-        return (ResourceBundleDataCacheEntry) element.getObjectValue();
+        return (ResourceBundleDataCacheEntry) element;
       } else {
         if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
           EHCacheModule.CACHE_MONITOR.debug( "Bund Cache Miss " + key );
@@ -79,11 +78,10 @@ public class EHResourceBundleDataCache implements ResourceBundleDataCache {
     final ResourceBundleData cdata = CachingResourceBundleData.createCached( data );
     final Object keyObject = data.getBundleKey();
     final Object valueObject = new DefaultResourceBundleDataCacheEntry( cdata, caller );
-    final Element element = new Element( keyObject, valueObject );
     if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
       EHCacheModule.CACHE_MONITOR.debug( "Storing Bundle " + keyObject );
     }
-    dataCache.put( element );
+    dataCache.put( keyObject, valueObject );
     return cdata;
   }
 
@@ -110,7 +108,7 @@ public class EHResourceBundleDataCache implements ResourceBundleDataCache {
 
   public void shutdown() {
     try {
-      dataCache.getCacheManager().shutdown();
+      dataCache.getCacheManager().close();
     } catch ( Exception e ) {
       logger.debug( "Failed to shut-down cache", e );
       // ignore it ..
