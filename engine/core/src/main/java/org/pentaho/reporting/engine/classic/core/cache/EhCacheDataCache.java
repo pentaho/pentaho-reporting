@@ -13,13 +13,19 @@
 
 package org.pentaho.reporting.engine.classic.core.cache;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.Status;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import javax.cache.Cache;
+import javax.cache.CacheManager;
+import javax.cache.Caching;
+import javax.cache.configuration.Configuration;
+import javax.cache.configuration.MutableConfiguration;
+import javax.cache.expiry.CreatedExpiryPolicy;
+import javax.cache.expiry.Duration;
+import javax.cache.spi.CachingProvider;
 
 import javax.swing.table.TableModel;
+import java.net.URI;
+import java.util.Properties;
 
 /**
  * The simplest of all caches systems. A plain map holding all elements.
@@ -47,7 +53,7 @@ public class EhCacheDataCache implements DataCache {
         if ( ClassicEngineBoot.getInstance().getExtendedConfig().getBoolProperty(
             "org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache.UseGlobalCacheManager" ) ) {
           if ( manager != null ) {
-            manager.shutdown();
+            manager.close();
           }
         }
         cache = null;
@@ -80,43 +86,34 @@ public class EhCacheDataCache implements DataCache {
   private void initializeCacheManager() {
     if ( ClassicEngineBoot.getInstance().getExtendedConfig().getBoolProperty(
         "org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache.UseGlobalCacheManager" ) ) {
-      manager = CacheManager.getInstance();
+      manager = Caching.getCachingProvider().getCacheManager();
     } else if ( manager == null ) {
-      manager = createCacheManager();
+      manager = Caching.getCachingProvider().getCacheManager();
     }
   }
 
   private synchronized void initialize() {
     if ( manager != null ) {
-      if ( manager.getStatus() != Status.STATUS_ALIVE ) {
+      if ( manager.isClosed() ) {
         initializeCacheManager();
       }
     }
 
     if ( cache != null ) {
-      if ( cache.getStatus() == Status.STATUS_ALIVE ) {
+      if ( !cache.isClosed()) {
         return;
       }
     }
 
-    if ( manager.cacheExists( CACHE_NAME ) == false ) {
-      cache = new Cache( CACHE_NAME, // cache name
-          500, // maxElementsInMemory
-          false, // overflowToDisk
-          false, // eternal
-          600, // timeToLiveSeconds
-          600, // timeToIdleSeconds
-          false, // diskPersistent
-          120 ); // diskExpiryThreadIntervalSeconds
-      manager.addCache( cache );
-    } else {
+    Cache<Object,Object> cache = manager.getCache( CACHE_NAME );
+    if ( cache == null ) {
+      MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
+      manager.createCache( CACHE_NAME, configuration );
+    }
+    else {
       cache = manager.getCache( CACHE_NAME );
     }
 
-  }
-
-  protected CacheManager createCacheManager() {
-    return new CacheManager();
   }
 
   public int getMaximumRows() {
@@ -130,17 +127,17 @@ public class EhCacheDataCache implements DataCache {
         return null;
       }
 
-      if ( cache.getStatus() != Status.STATUS_ALIVE ) {
+      if ( cache.isClosed() ) {
         this.cache = null;
         return null;
       }
     }
 
-    final Element element = cache.get( key );
+    final Object element = cache.get( key );
     if ( element == null ) {
       return null;
     }
-    return (TableModel) element.getObjectValue();
+    return (TableModel) element;
   }
 
   public TableModel put( final DataCacheKey key, final TableModel model ) {
@@ -160,7 +157,7 @@ public class EhCacheDataCache implements DataCache {
     }
 
     final TableModel cacheModel = new CachableTableModel( model );
-    cache.put( new Element( key, cacheModel ) );
+    cache.put( key, cacheModel );
     return cacheModel;
   }
 
