@@ -25,6 +25,7 @@ import javax.cache.spi.CachingProvider;
 
 import javax.swing.table.TableModel;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 /**
@@ -70,12 +71,12 @@ public class EhCacheDataCache implements DataCache {
   private volatile CacheManager manager;
   private volatile Cache cache;
 
-  public EhCacheDataCache() {
+  public EhCacheDataCache() throws URISyntaxException {
     this( ClassicEngineBoot.getInstance().getExtendedConfig().getIntProperty(
         "org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache.CachableRowLimit" ) );
   }
 
-  public EhCacheDataCache( final int maximumRows ) {
+  public EhCacheDataCache( final int maximumRows ) throws URISyntaxException {
     this.maximumRows = maximumRows;
     this.cacheManager = new GlobalCacheManager();
 
@@ -83,16 +84,17 @@ public class EhCacheDataCache implements DataCache {
     initialize();
   }
 
-  private void initializeCacheManager() {
+  private void initializeCacheManager() throws URISyntaxException {
     if ( ClassicEngineBoot.getInstance().getExtendedConfig().getBoolProperty(
         "org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache.UseGlobalCacheManager" ) ) {
       manager = Caching.getCachingProvider().getCacheManager();
     } else if ( manager == null ) {
-      manager = Caching.getCachingProvider().getCacheManager();
+      CachingProvider cachingProvider = Caching.getCachingProvider();
+      manager = cachingProvider.getCacheManager( getClass().getResource( "/ehcache.xml" ).toURI(), getClass().getClassLoader() );
     }
   }
 
-  private synchronized void initialize() {
+  private synchronized void initialize() throws URISyntaxException {
     if ( manager != null ) {
       if ( manager.isClosed() ) {
         initializeCacheManager();
@@ -152,8 +154,12 @@ public class EhCacheDataCache implements DataCache {
 
     final Cache cache;
     synchronized ( this ) {
-      initialize();
-      cache = this.cache;
+        try {
+            initialize();
+        } catch ( URISyntaxException e ) {
+            throw new RuntimeException( e );
+        }
+        cache = this.cache;
     }
 
     final TableModel cacheModel = new CachableTableModel( model );
