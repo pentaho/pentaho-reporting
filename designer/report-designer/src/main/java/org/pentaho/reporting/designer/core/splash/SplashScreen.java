@@ -41,9 +41,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * A splashscreen component that is used to show progress of the application loading.
@@ -60,7 +57,6 @@ public class SplashScreen extends JWindow {
   private static final int YLOC = 80;
   private static final int TEXT_WIDTH = 700;
   private static final Color TRANSPARENT = new Color( 0, 0, 0, 0 );
-  private static final Color WHITE = new Color( 255, 255, 255 );
   private static final Color DARK_GREY = new Color( 65, 65, 65 );
   private static final EmptyBorder BORDER = new EmptyBorder( 0, 0, 0, 0 );
 
@@ -131,21 +127,6 @@ public class SplashScreen extends JWindow {
     versionLabel.setBounds( XLOC, YLOC, TEXT_WIDTH, versionLabel.getPreferredSize().height );
 
     // Overlay the license
-    final String year = new SimpleDateFormat( "yyyy" ).format( new Date() );
-    final JTextArea copyrightArea = new JTextArea( Messages.getString( "SplashScreen.Copyright", year ) );
-    copyrightArea.setEditable( false );
-    copyrightArea.setBounds( XLOC, YLOC + 25, TEXT_WIDTH, 25 );
-    copyrightArea.setOpaque( false );
-    copyrightArea.setLineWrap( true );
-    copyrightArea.setWrapStyleWord( true );
-    copyrightArea.setFont( COPYRIGHT_FONT );
-    copyrightArea.setEnabled( false );
-    copyrightArea.setBackground( TRANSPARENT );
-    copyrightArea.setForeground( DARK_GREY );
-    copyrightArea.setBorder( BORDER );
-    copyrightArea.setDisabledTextColor( copyrightArea.getForeground() );
-
-    // Overlay the copyright
     StringBuilder sb = new StringBuilder();
     String line;
     try {
@@ -160,7 +141,7 @@ public class SplashScreen extends JWindow {
     }
     final JTextArea licenseArea = new JTextArea( sb.toString() );
     licenseArea.setEditable( false );
-    licenseArea.setBounds( XLOC, YLOC + 50, TEXT_WIDTH, 800 );
+    licenseArea.setBounds( XLOC, YLOC + 25, TEXT_WIDTH, 825 );
     licenseArea.setOpaque( false );
     licenseArea.setLineWrap( true );
     licenseArea.setWrapStyleWord( true );
@@ -168,13 +149,12 @@ public class SplashScreen extends JWindow {
     licenseArea.setEnabled( false );
     licenseArea.setBackground( TRANSPARENT );
     licenseArea.setBorder( BORDER );
-    licenseArea.setDisabledTextColor( copyrightArea.getForeground() );
+    licenseArea.setDisabledTextColor( DARK_GREY );
 
     // Add all the overlays
     final JPanel imagePanelOverlay = new JPanel( null );
     imagePanelOverlay.setOpaque( false );
     imagePanelOverlay.add( versionLabel );
-    imagePanelOverlay.add( copyrightArea );
     imagePanelOverlay.add( licenseArea );
     imagePanelOverlay.setBackground( TRANSPARENT );
 
