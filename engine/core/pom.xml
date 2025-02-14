@@ -153,7 +153,7 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>asm</groupId>
+      <groupId>org.ow2.asm</groupId>
       <artifactId>asm</artifactId>
       <scope>compile</scope>
     </dependency>
