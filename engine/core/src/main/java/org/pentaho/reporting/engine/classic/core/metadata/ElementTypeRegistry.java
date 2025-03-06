@@ -69,6 +69,10 @@ public final class ElementTypeRegistry {
     this.backend.put( metaData.getName(), new DefaultElementMetaData( metaData ) );
   }
 
+  public void removeElement( String elementKey ) {
+    this.backend.remove( elementKey );
+  }
+
   public AttributeRegistry getAttributeRegistry( final ElementType identifier ) {
     return getAttributeRegistry( identifier.getMetaData().getName() );
   }
