@@ -259,6 +259,11 @@ public class DefaultHtmlContentGenerator implements HtmlContentGenerator {
 
   public ContentItem writeImage( final ImageContainer image, final String encoderType, final float quality,
                            final boolean alpha ) throws ContentIOException, IOException {
+
+    if ( dataLocation == null ) {
+      return null;
+    }
+
     try {
       final ImageData data = getImageData( image, encoderType, quality, alpha );
       if ( data == null ) {
