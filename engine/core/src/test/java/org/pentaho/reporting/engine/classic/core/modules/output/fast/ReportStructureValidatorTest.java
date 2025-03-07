@@ -33,6 +33,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ReportStructureValidatorTest {
+
+  public static final String SIMPLE_BARCODES_TYPE = "simple-barcodes";
+
   @Before
   public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
@@ -103,30 +106,33 @@ public class ReportStructureValidatorTest {
 
   @Test
   public void testBarcodeDetection() {
-    ElementMetaData em = new DefaultElementMetaData( "simple-barcodes", "simple-barcodes",
-     "simple-barcodes", "simple-barcodes", false, false, false,
-     false, null, new AttributeMap<>(), new HashMap<>(), BarcodeDummyType.class,
-     BarcodeDummyType.class, null, 1 );
-    ElementTypeRegistry.getInstance().registerElement( em );
+    try {
+      ElementMetaData em = new DefaultElementMetaData( SIMPLE_BARCODES_TYPE, SIMPLE_BARCODES_TYPE,
+        SIMPLE_BARCODES_TYPE, SIMPLE_BARCODES_TYPE, false, false, false,
+        false, null, new AttributeMap<>(), new HashMap<>(), BarcodeDummyType.class,
+        BarcodeDummyType.class, null, 1 );
+      ElementTypeRegistry.getInstance().registerElement( em );
 
-    Element e = new Element();
-    e.setElementType( new BarcodeDummyType() );
+      Element e = new Element();
+      e.setElementType( new BarcodeDummyType() );
 
-    SubReport sr = new SubReport();
-    sr.getReportDefinition().getItemBand().addElement( e );
+      SubReport sr = new SubReport();
+      sr.getReportDefinition().getItemBand().addElement( e );
 
-    MasterReport report = new MasterReport();
-    report.getReportHeader().addSubReport( sr );
+      MasterReport report = new MasterReport();
+      report.getReportHeader().addSubReport( sr );
 
-    ReportStructureValidator v = new ReportStructureValidator();
-    assertFalse( v.isValidForFastProcessing( report ) );
+      ReportStructureValidator v = new ReportStructureValidator();
+      assertFalse( v.isValidForFastProcessing( report ) );
+    } finally {
+      ElementTypeRegistry.getInstance().removeElement( SIMPLE_BARCODES_TYPE );
+    }
   }
 
   static class BarcodeDummyType extends ContentType {
     public BarcodeDummyType() {
-      super( "simple-barcodes" );
+      super( SIMPLE_BARCODES_TYPE );
     }
-
   }
 
 }
