@@ -55,6 +55,7 @@ set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/java.math=ALL-UNNAMED
 set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/sun.nio.ch=ALL-UNNAMED"
 set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.base/java.nio=ALL-UNNAMED"
 set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED"
+set "JAVA_ADD_OPENS=%JAVA_ADD_OPENS% --add-opens=java.desktop/com.sun.beans.editors=ALL-UNNAMED"
 set JAVA_LOCALE_COMPAT=-Djava.locale.providers=COMPAT,SPI
 
 
