@@ -107,13 +107,10 @@ public class EhCacheDataCache implements DataCache {
       }
     }
 
-    Cache<Object,Object> cache = manager.getCache( CACHE_NAME );
+    cache = manager.getCache( CACHE_NAME );
     if ( cache == null ) {
       MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
-      manager.createCache( CACHE_NAME, configuration );
-    }
-    else {
-      cache = manager.getCache( CACHE_NAME );
+      cache = manager.createCache( CACHE_NAME, configuration );
     }
 
   }
