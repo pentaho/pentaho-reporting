@@ -515,6 +515,13 @@
                   <version>${jakarta.transaction-api-osgi.version}</version>
                   <type>jar</type>
                 </artifactItem>
+
+                <artifactItem>
+                  <groupId>jakarta.activation</groupId>
+                  <artifactId>jakarta.activation-api</artifactId>
+                  <version>${jakarta.activation-osgi.version}</version>
+                </artifactItem>
+
                 <artifactItem>
                   <groupId>com.sun.istack</groupId>
                   <artifactId>istack-commons-runtime</artifactId>
