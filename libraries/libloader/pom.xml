@@ -132,6 +132,7 @@
     <dependency>
       <groupId>org.ehcache</groupId>
       <artifactId>ehcache</artifactId>
+      <classifier>jakarta</classifier>
       <scope>compile</scope>
     </dependency>
     <dependency>
