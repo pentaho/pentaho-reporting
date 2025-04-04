@@ -172,6 +172,7 @@
       <groupId>org.ehcache</groupId>
       <artifactId>ehcache</artifactId>
       <scope>compile</scope>
+      <classifier>jakarta</classifier>
     </dependency>
     <dependency>
       <groupId>org.mozilla</groupId>

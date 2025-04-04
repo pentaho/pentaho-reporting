@@ -16,9 +16,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <properties>
-    <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.designer</groupId>
