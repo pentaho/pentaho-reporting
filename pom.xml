@@ -41,7 +41,7 @@
     <mockito.version>5.10.0</mockito.version>
     <powermock.version>1.6.3</powermock.version>
     <pentaho-osgi-bundles.version>10.3.0.0-SNAPSHOT</pentaho-osgi-bundles.version>
-    <poi.version>5.2.5</poi.version>
+    <poi.version>5.4.0</poi.version>
     <commons-math3.version>3.6.1</commons-math3.version>
     <curvesapi.version>1.06</curvesapi.version>
     <syslo4j.version>0.9.46</syslo4j.version>
