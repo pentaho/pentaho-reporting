@@ -22,8 +22,6 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.internal.matchers.GreaterOrEqual;
-import org.mockito.internal.matchers.LessOrEqual;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -49,6 +47,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY;
 
 /*
@@ -66,7 +65,7 @@ public class WordWrapLayoutIT {
   private static final String PARAGRAPH_NAME = "paragraph-for-picking-up";
 
   @BeforeClass
-  public static void setUp() throws Exception {
+  public static void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
@@ -224,11 +223,11 @@ public class WordWrapLayoutIT {
   private void assertTextNodesLayInsideBoxBounds( RenderBox box, List<RenderableText> texts ) {
     assertFalse( texts.isEmpty() );
 
-    GreaterOrEqual<Long> greaterThanBoxX = new GreaterOrEqual<Long>( box.getX() );
-    LessOrEqual<Long> lessThanBoxWidth = new LessOrEqual<Long>( box.getWidth() );
     for ( RenderableText text : texts ) {
-      assertThat( text.getX(), is( greaterThanBoxX ) );
-      assertThat( text.getWidth(), is( lessThanBoxWidth ) );
+      assertTrue( String.format( "Expected text.getX() >= box.getX(), actual text.getX() = %s, box.getX() = %s",
+          text.getX(), box.getX() ), text.getX() >= box.getX() );
+      assertTrue( String.format( "Expected text.getWidth() <= box.getWidth(), actual text.getWidth() = %s, box.getWidth() = %s",
+          text.getWidth(), box.getWidth() ), text.getWidth() <= box.getWidth() );
     }
   }
 
