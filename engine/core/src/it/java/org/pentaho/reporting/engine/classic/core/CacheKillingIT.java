@@ -15,12 +15,18 @@ package org.pentaho.reporting.engine.classic.core;
 
 import junit.framework.TestCase;
 import net.sf.ehcache.CacheManager;
+import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.cache.DataCacheKey;
 import org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache;
 
 import javax.swing.table.DefaultTableModel;
 
-public class CacheKillingIT extends TestCase {
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+public class CacheKillingIT {
+  @Test
   public void testKillCacheAndSurvive() {
     EhCacheDataCache dataCache = new EhCacheDataCache();
     DataCacheKey key = new DataCacheKey();
@@ -46,6 +52,7 @@ public class CacheKillingIT extends TestCase {
 
   }
 
+  @Test
   public void testKillCacheWithoutShutdownAndSurvive() {
     EhCacheDataCache dataCache = new EhCacheDataCache();
     DataCacheKey key = new DataCacheKey();

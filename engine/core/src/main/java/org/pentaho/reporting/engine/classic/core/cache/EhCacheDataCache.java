@@ -149,7 +149,7 @@ public class EhCacheDataCache implements DataCache {
     }
 
     // Only copy if safe to do so. Check for whitelist of good column types ..
-    if ( CachableTableModel.isSafeToCache( model ) == false ) {
+    if ( !CachableTableModel.isSafeToCache( model ) ) {
       return model;
     }
 

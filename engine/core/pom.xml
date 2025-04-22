@@ -267,6 +267,18 @@
       <artifactId>pentaho-encryption-support</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js</artifactId>
+      <version>24.2.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js-scriptengine</artifactId>
+      <version>24.2.1</version>
+      <scope>test</scope>
+    </dependency>
     <!-- Log4j dependency we are using XSSFWorkbook, so in code we are using
     private static final Logger LOG = LogManager.getLogger(SXSSFWorkbook.class) and since dependency is not there we
     are getting the below exception to resolve it added below dependency-->
@@ -292,6 +304,33 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <id>add-test-source</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/test/java</source>
+                <source>src/it/java</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <useSystemClassLoader>true</useSystemClassLoader>
+        </configuration>
       </plugin>
     </plugins>
   </build>
