@@ -13,6 +13,7 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -98,6 +99,12 @@ public class DataFactoryScriptSupportIT {
   @Before
   public void setUp() {
     ClassicEngineBoot.getInstance().start();
+    System.setProperty( "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "true" );
+  }
+
+  @After
+  public void tearDown() {
+    System.clearProperty( "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation" );
   }
 
   @Test

@@ -13,47 +13,45 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import junit.framework.TestCase;
-import org.junit.Ignore;
+import org.junit.Before;
+import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
-import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PrintReportProcessor;
 
 import javax.swing.table.DefaultTableModel;
 
-public class ValidateStateIT extends TestCase {
-  public ValidateStateIT() {
-  }
+import static org.junit.Assert.assertFalse;
 
-  public ValidateStateIT( final String name ) {
-    super( name );
-  }
+public class ValidateStateIT {
 
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-//  @Ignore
-//  public void testExportParameter() {
-//    final FormulaExpression function = new FormulaExpression();
-//    function.setName( "out" );
-//    function.setFormula( "=output // this formula does not even parse!" );
-//
-//    SubReport subReport = new SubReport();
-//    subReport.addExportParameter( "out", "out" );
-//    subReport.addExpression( function );
-//
-//    MasterReport report = new MasterReport();
-//    report.setDataFactory( new TableDataFactory( report.getQuery(), new DefaultTableModel( 2, 2 ) ) );
-//    final RelationalGroup rootGroup = (RelationalGroup) report.getRootGroup();
-//    rootGroup.getHeader().addSubReport( (SubReport) subReport.derive() );
-//    report.getItemBand().addSubReport( (SubReport) subReport.derive() );
-//
-//    DebugReportRunner.execGraphics2D( report );
-//
-//  }
+  @Test
+  public void testExportParameter() throws ReportProcessingException {
+    final FormulaExpression function = new FormulaExpression();
+    function.setName( "out" );
+    function.setFormula( "=output // this formula does not even parse!" );
+
+    SubReport subReport = new SubReport();
+    subReport.addExportParameter( "out", "out" );
+    subReport.addExpression( function );
+
+    MasterReport report = new MasterReport();
+    report.setDataFactory( new TableDataFactory( report.getQuery(), new DefaultTableModel( 2, 2 ) ) );
+    final RelationalGroup rootGroup = (RelationalGroup) report.getRootGroup();
+    rootGroup.getHeader().addSubReport( (SubReport) subReport.derive() );
+    report.getItemBand().addSubReport( (SubReport) subReport.derive() );
+
+    final PrintReportProcessor proc = new PrintReportProcessor( report );
+    assertFalse( proc.isError() );
+  }
 }

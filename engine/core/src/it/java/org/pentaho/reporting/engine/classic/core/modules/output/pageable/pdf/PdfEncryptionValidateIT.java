@@ -15,10 +15,10 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf;
 
 import com.lowagie.text.DocWriter;
 import com.lowagie.text.pdf.PdfReader;
-import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.Ignore;
+import org.junit.Before;
+import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -29,34 +29,36 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Checks, whether the given report is encrypted.
  *
  * @author Thomas Morgner
  */
-public class PdfEncryptionValidateIT extends TestCase {
+public class PdfEncryptionValidateIT {
   private static final Log logger = LogFactory.getLog( PdfEncryptionValidateIT.class );
 
-  public PdfEncryptionValidateIT() {
-  }
-
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-//  @Ignore
-//  public void testSaveEncrypted() throws Exception {
-//    final URL url = getClass().getResource( "pdf-encryption-validate.xml" );
-//    assertNotNull( url );
-//    final ResourceManager resourceManager = new ResourceManager();
-//    resourceManager.registerDefaults();
-//    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
-//    final MasterReport report = (MasterReport) directly.getResource();
-//
-//    final byte[] b = createPDF( report );
-//    final PdfReader reader = new PdfReader( b, DocWriter.getISOBytes( "Duck" ) );
-//    assertTrue( reader.isEncrypted() );
-//  }
+  @Test
+  public void testSaveEncrypted() throws Exception {
+    final URL url = getClass().getResource( "pdf-encryption-validate.xml" );
+    assertNotNull( url );
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
+    final MasterReport report = (MasterReport) directly.getResource();
+
+    final byte[] b = createPDF( report );
+    try ( PdfReader reader = new PdfReader( b, DocWriter.getISOBytes( "Duck" ) ) ) {
+      assertTrue( reader.isEncrypted() );
+    }
+  }
 
   /**
    * Saves a report to PDF format.
