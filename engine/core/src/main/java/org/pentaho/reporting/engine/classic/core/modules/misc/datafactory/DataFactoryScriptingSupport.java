@@ -334,8 +334,8 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
   private String globalScriptLanguage;
   private String globalScript;
   private HashMap<String, QueryCarrier> queryMappings;
+  transient ScriptContext globalScriptContext;
   private transient HashMap<String, QueryScriptContext> contextsByQuery;
-  private transient ScriptContext globalScriptContext;
   private transient Invocable globalScriptEngine;
   private transient ResourceManager resourceManager;
   private transient ResourceKey contextKey;
@@ -470,7 +470,7 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
       throw new ReportDataFactoryException( String.format(
           "DataFactoryScriptingSupport: Failed to locate scripting engine for language '%s'.", globalScriptLanguage ) );
     }
-    if ( maybeInvocableEngine instanceof Invocable == false ) {
+    if ( !( maybeInvocableEngine instanceof Invocable ) ) {
       return;
     }
     this.globalScriptEngine = (Invocable) maybeInvocableEngine;

@@ -58,7 +58,7 @@ public class FastExcelReportUtil {
                                   final ReportProgressListener listener ) throws ReportProcessingException,
     IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
-    if ( validator.isValidForFastProcessing( report ) == false ) {
+    if ( !validator.isValidForFastProcessing( report ) ) {
       ExcelReportUtil.createXLSX( report, out, listener );
       return;
     }

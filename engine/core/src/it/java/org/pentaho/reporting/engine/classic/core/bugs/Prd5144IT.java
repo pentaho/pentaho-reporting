@@ -28,6 +28,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipInputStream;
 
+import static org.junit.Assert.assertNotNull;
+
 public class Prd5144IT {
   @Before
   public void setUp() throws Exception {
@@ -59,15 +61,11 @@ public class Prd5144IT {
     assertZip( boutSlow );
   }
 
-  private void assertZip( final ByteArrayOutputStream boutSlow ) throws IOException {
-    ZipInputStream zin = new ZipInputStream( new ByteArrayInputStream( boutSlow.toByteArray() ) );
-    int entries = 0;
-    while ( zin.getNextEntry() != null ) {
-      entries += 1;
+  private void assertZip( final ByteArrayOutputStream outputStream ) throws IOException {
+    try ( ByteArrayInputStream inputStream = new ByteArrayInputStream( outputStream.toByteArray() );
+          ZipInputStream zin = new ZipInputStream( inputStream ) ) {
+      assertNotNull( "Expected at least 1 entry in the zip file", zin.getNextEntry() );
     }
-    // IntelliJ bug: Does not detect update within While loop.
-    // noinspection ConstantConditions
-    Assert.assertTrue( entries > 0 );
   }
 
 }

@@ -30,7 +30,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class ReportStructureValidatorIT {
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 

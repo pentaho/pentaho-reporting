@@ -13,9 +13,8 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import junit.framework.TestCase;
-import org.junit.Ignore;
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.junit.Before;
+import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -26,10 +25,15 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.process.ParagraphLineBreakStep;
 import org.pentaho.reporting.engine.classic.core.layout.richtext.HtmlRichTextConverter;
+import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class Prd2262IT extends TestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class Prd2262IT {
   private static final String htmlText = "<html><body><p>one<br />\n" + "    two<br /><br />\n"
       + "    three<br /></p><p>Paragraph2</p></body></html>";
   private static final String rtfText =
@@ -68,51 +72,42 @@ public class Prd2262IT extends TestCase {
           + "\\par \\pard\\plain \\ltrpar\\s1\\cf0{\\*\\hyphen2\\hyphlead2\\hyphtrail2\\hyphmax0}\\rtlch\\af4\\afs24\\lang255"
           + "\\ltrch\\dbch\\af3\\langfe255\\hich\\f0\\fs24\\lang1031\\loch\\f0\\fs24\\lang1031 \n" + "\\par }";
 
-  public Prd2262IT() {
-  }
-
-  public Prd2262IT( final String s ) {
-    super( s );
-  }
-
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-//  @Ignore
-//  public void testHtmlParsing() throws ReportProcessingException, ContentProcessingException {
-//    final Element e = new Element();
-//    e.setElementType( LabelType.INSTANCE );
-//    e.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, htmlText );
-//
-//    final HtmlRichTextConverter htmlRichTextConverter = new HtmlRichTextConverter();
-//    final Object o = htmlRichTextConverter.convert( e, htmlText );
-//    if ( o instanceof Band == false ) {
-//      fail();
-//      return;
-//    }
-//    final Band containerBand = (Band) o;
-//    assertEquals( "Container Band is block: ", "block", containerBand.getStyle()
-//        .getStyleProperty( BandStyleKeys.LAYOUT ) );
-//    assertEquals( 1, containerBand.getElementCount() );
-//
-//    final Band htmlBand = (Band) containerBand.getElement( 0 );
-//    assertEquals( "HTML Band is block: ", "block", htmlBand.getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
-//    assertEquals( 1, htmlBand.getElementCount() );
-//
-//    final Band bodyBand = (Band) htmlBand.getElement( 0 );
-//    assertEquals( "BODY Band is block: ", "block", bodyBand.getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
-//    assertEquals( 2, bodyBand.getElementCount() );
-//
-//    final Band p1Band = (Band) bodyBand.getElement( 0 );
-//    assertEquals( "P[0] Band is block: ", "block", p1Band.getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
-//    assertEquals( 1, p1Band.getElementCount() );
-//    translateToRenderableElements( p1Band );
-//
-//    final Band p2Band = (Band) bodyBand.getElement( 0 );
-//    assertEquals( "P[1] Band is block: ", "block", p2Band.getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
-//    assertEquals( 1, p2Band.getElementCount() );
-//  }
+  @Test
+  public void testHtmlParsing() throws ReportProcessingException, ContentProcessingException {
+    final Element e = new Element();
+    e.setElementType( LabelType.INSTANCE );
+    e.setComputedStyle( new SimpleStyleSheet( BandDefaultStyleSheet.getBandDefaultStyle() ) );
+
+    final HtmlRichTextConverter htmlRichTextConverter = new HtmlRichTextConverter();
+    final Object o = htmlRichTextConverter.convert( e, htmlText );
+    assertTrue( o instanceof Band );
+    final Band containerBand = (Band) o;
+    assertEquals( "Container Band is block: ", "block", containerBand.getStyle()
+        .getStyleProperty( BandStyleKeys.LAYOUT ) );
+    assertEquals( 1, containerBand.getElementCount() );
+
+    final Band htmlBand = (Band) containerBand.getElement( 0 );
+    assertEquals( "HTML Band is block: ", "block", htmlBand.getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
+    assertEquals( 1, htmlBand.getElementCount() );
+
+    final Band bodyBand = (Band) htmlBand.getElement( 0 );
+    assertEquals( "BODY Band is block: ", "block", bodyBand.getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
+    assertEquals( 2, bodyBand.getElementCount() );
+
+    final Band p1Band = (Band) bodyBand.getElement( 0 );
+    assertEquals( "P[0] Band is block: ", "block", p1Band.getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
+    assertEquals( 1, p1Band.getElementCount() );
+    translateToRenderableElements( p1Band );
+
+    final Band p2Band = (Band) bodyBand.getElement( 0 );
+    assertEquals( "P[1] Band is block: ", "block", p2Band.getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
+    assertEquals( 1, p2Band.getElementCount() );
+  }
 
   private void translateToRenderableElements( final Band b ) throws ReportProcessingException,
     ContentProcessingException {

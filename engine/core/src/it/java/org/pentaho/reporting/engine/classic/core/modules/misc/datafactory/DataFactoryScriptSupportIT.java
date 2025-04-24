@@ -13,8 +13,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DefaultResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
@@ -31,7 +33,11 @@ import javax.swing.table.TableModel;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class DataFactoryScriptSupportIT extends TestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+public class DataFactoryScriptSupportIT {
+
   private String globalScript = "var globalScopeVariable = 'global'; \n" + "function init (dataRow)  \n" + "{ \n"
       + "  if (globalScopeVariable == null) throw 'error';  \n" + "  if (resourceManager == null) throw 'error';  \n"
       + "  if (dataFactory == null) throw 'error';  \n" + "  if (configuration == null) throw 'error'; \n"
@@ -90,31 +96,44 @@ public class DataFactoryScriptSupportIT extends TestCase {
     + "      }\n"
     + "    }";
 
-
-  public DataFactoryScriptSupportIT() {
-  }
-
-  public DataFactoryScriptSupportIT( final String name ) {
-    super( name );
-  }
-
+  @Before
   public void setUp() {
     ClassicEngineBoot.getInstance().start();
+    System.setProperty( "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "true" );
   }
 
+  @After
+  public void tearDown() {
+    System.clearProperty( "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation" );
+  }
+
+  @Test
   public void testSimpleSetup() throws ReportDataFactoryException {
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
 
     final DataFactoryScriptingSupport support = new DataFactoryScriptingSupport();
+
+    assertNotNull( support );
+
     support.setGlobalScriptLanguage( "JavaScript" );
     support.setGlobalScript( globalScript );
     support.initialize( new TableDataFactory(),
         new DesignTimeDataFactoryContext( ClassicEngineBoot.getInstance().getGlobalConfig(), mgr, new ResourceKey(
             "dummy", "dummy", new HashMap() ), new DefaultResourceBundleFactory() ) );
+
+    assertNotNull( support.globalScriptContext );
+    assertNotNull( support.globalScriptContext.getAttribute( "dataFactory" ) );
+    assertNotNull( support.globalScriptContext.getAttribute( "configuration" ) );
+    assertNotNull( support.globalScriptContext.getAttribute( "resourceManager" ) );
+    assertNotNull( support.globalScriptContext.getAttribute( "contextKey" ) );
+    assertNotNull( support.globalScriptContext.getAttribute( "resourceBundleFactory" ) );
+    assertNotNull( support.globalScriptContext.getAttribute( "scriptHelper" ) );
+
     support.shutdown();
   }
 
+  @Test
   public void testQuerySetup() throws ReportDataFactoryException {
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
@@ -135,11 +154,14 @@ public class DataFactoryScriptSupportIT extends TestCase {
     support.shutdown();
   }
 
+  @Test
   public void testQueryOnly() throws ReportDataFactoryException {
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
 
     final DataFactoryScriptingSupport support = new DataFactoryScriptingSupport();
+    support.setGlobalScriptLanguage( "JavaScript" );
+    support.setGlobalScript( globalScript );
     support.initialize( new TableDataFactory(),
         new DesignTimeDataFactoryContext( ClassicEngineBoot.getInstance().getGlobalConfig(), mgr, new ResourceKey(
             "dummy", "dummy", new HashMap() ), new DefaultResourceBundleFactory() ) );
@@ -153,6 +175,7 @@ public class DataFactoryScriptSupportIT extends TestCase {
     support.shutdown();
   }
 
+  @Test
   public void testPostProcessResult() throws ReportDataFactoryException {
     final DriverConnectionProvider driverConnectionProvider = new DriverConnectionProvider();
 
@@ -172,15 +195,15 @@ public class DataFactoryScriptSupportIT extends TestCase {
     try {
       sqlReportDataFactory.initialize( new DesignTimeDataFactoryContext() );
       TableModel data = sqlReportDataFactory.queryData( "default", new StaticDataRow() );
-      Assert.assertEquals( 1, data.getColumnCount() );
-      Assert.assertEquals( 1, data.getRowCount() );
+      assertEquals( 1, data.getColumnCount() );
+      assertEquals( 1, data.getRowCount() );
       Assert.assertEquals( "row1", data.getValueAt( 0, 0 ) );
     } finally {
       sqlReportDataFactory.close();
     }
   }
 
-
+  @Test
   public void testOverrideGlobal() throws ReportDataFactoryException {
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
@@ -206,6 +229,6 @@ public class DataFactoryScriptSupportIT extends TestCase {
       return;
     }
     assertNotNull( strings );
-    assertEquals( Arrays.asList( o ), Arrays.asList( strings ) );
+    Assert.assertEquals( Arrays.asList( o ), Arrays.asList( strings ) );
   }
 }

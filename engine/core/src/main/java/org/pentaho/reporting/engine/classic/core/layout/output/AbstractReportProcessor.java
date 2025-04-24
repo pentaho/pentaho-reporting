@@ -1424,7 +1424,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
 
         fireProcessingStarted( new ReportProgressEvent( this ) );
 
-        if ( isPaginated() == false ) {
+        if ( !isPaginated() ) {
           // Processes the whole report ..
           prepareReportProcessing();
         }

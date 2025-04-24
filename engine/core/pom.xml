@@ -280,6 +280,20 @@
       <artifactId>log4j-core</artifactId>
       <version>${log4j.version}</version>
     </dependency>
+
+    <!--
+      The nashorn-core dependency is required for the integration tests in DataFactoryScriptingSupportIT,
+      since nashorn was removed in JDK 15+.
+      This functionality is still supported, but requires a workaround on the client side, as described in:
+       - https://support.pentaho.com/hc/en-us/articles/34127839105293-With-Pentaho-Report-Designer-10-2-running-on-Java-17-ECMAScript-is-not-available-for-query-scripting-language-Existing-reports-fail-with-Query-script-language-ECMAScript-is-not-usable
+    Pentaho Customer Portal
+    -->
+    <dependency>
+      <groupId>org.openjdk.nashorn</groupId>
+      <artifactId>nashorn-core</artifactId>
+      <version>15.6</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
