@@ -146,7 +146,6 @@
     <jsendnsca.version>2.0.1</jsendnsca.version>
     <barbecue.version>1.5-beta1</barbecue.version>
     <license.inception.year>2002</license.inception.year>
-    <commons-lang3.version>3.12.0</commons-lang3.version>
     <pentaho.coding.standards.version>1.0.5</pentaho.coding.standards.version>
     <runITs>false</runITs>
     <cglib.version>2.2</cglib.version>
