@@ -25,6 +25,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -141,6 +142,7 @@ public class CdaResponseParser extends DefaultHandler {
     try {
       final CdaResponseParser contentHandler = new CdaResponseParser();
       final SAXParserFactory factory = SAXParserFactory.newInstance();
+      factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true);
       final SAXParser parser = factory.newSAXParser();
       final XMLReader reader = parser.getXMLReader();
 
