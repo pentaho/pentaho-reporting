@@ -2126,26 +2126,16 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>com.sun.jersey.jersey-test-framework</groupId>
+        <groupId>org.glassfish.jersey.test-framework</groupId>
         <artifactId>jersey-test-framework-core</artifactId>
-        <version>${jersey2.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
+        <version>${jersey.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>com.sun.jersey.jersey-test-framework</groupId>
-        <artifactId>jersey-test-framework-grizzly</artifactId>
-        <version>${jersey2.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
+        <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+        <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+        <version>${jersey.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>com.sun.grizzly</groupId>

@@ -13,12 +13,13 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import junit.framework.TestCase;
-import net.sf.ehcache.CacheManager;
+import javax.cache.Cache;
+import javax.cache.CacheManager;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.cache.DataCacheKey;
 import org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache;
 
+import javax.cache.Caching;
 import javax.swing.table.DefaultTableModel;
 
 import static org.junit.Assert.assertFalse;
@@ -27,24 +28,29 @@ import static org.junit.Assert.assertNull;
 
 public class CacheKillingIT {
   @Test
-  public void testKillCacheAndSurvive() {
+  public void testKillCacheAndSurvive() throws URISyntaxException {
     EhCacheDataCache dataCache = new EhCacheDataCache();
     DataCacheKey key = new DataCacheKey();
     key.addAttribute( "Test", "test" );
     dataCache.put( key, new DefaultTableModel() );
 
-    final CacheManager cacheManager = CacheManager.getInstance();
+    final CacheManager cacheManager = Caching.getCachingProvider().getCacheManager();
     // Note: EHCacheProvider will dynamically create these
     // caches if they don't exist.
-    cacheManager.clearAll();
-    cacheManager.removalAll();
+    for ( String cacheName : cacheManager.getCacheNames() ) {
+      Cache<?, ?> cache = cacheManager.getCache( cacheName );
+      if ( cache != null ) {
+        cache.clear();
+        cacheManager.destroyCache( cacheName );
+      }
+    }
 
-    assertFalse( cacheManager.cacheExists( "libloader-bundles" ) );
-    assertFalse( cacheManager.cacheExists( "libloader-data" ) );
-    assertFalse( cacheManager.cacheExists( "libloader-factory" ) );
-    assertFalse( cacheManager.cacheExists( "report-dataset-cache" ) );
+    assertNull( cacheManager.getCache( "libloader-bundles" ) );
+    assertNull( cacheManager.getCache( "libloader-data" ) );
+    assertNull( cacheManager.getCache( "libloader-factory" ) );
+    assertNull( cacheManager.getCache( "report-dataset-cache" ) );
 
-    cacheManager.shutdown();
+    cacheManager.close();
 
     assertNull( dataCache.get( key ) );
     dataCache.put( key, new DefaultTableModel() );
@@ -53,22 +59,27 @@ public class CacheKillingIT {
   }
 
   @Test
-  public void testKillCacheWithoutShutdownAndSurvive() {
+  public void testKillCacheWithoutShutdownAndSurvive() throws URISyntaxException {
     EhCacheDataCache dataCache = new EhCacheDataCache();
     DataCacheKey key = new DataCacheKey();
     key.addAttribute( "Test", "test" );
     dataCache.put( key, new DefaultTableModel() );
 
-    final CacheManager cacheManager = CacheManager.getInstance();
+    final CacheManager cacheManager = Caching.getCachingProvider().getCacheManager();
     // Note: EHCacheProvider will dynamically create these
     // caches if they don't exist.
-    cacheManager.clearAll();
-    cacheManager.removalAll();
+    for ( String cacheName : cacheManager.getCacheNames() ) {
+      Cache<?, ?> cache = cacheManager.getCache( cacheName );
+      if ( cache != null ) {
+        cache.clear();
+        cacheManager.destroyCache( cacheName );
+      }
+    }
 
-    assertFalse( cacheManager.cacheExists( "libloader-bundles" ) );
-    assertFalse( cacheManager.cacheExists( "libloader-data" ) );
-    assertFalse( cacheManager.cacheExists( "libloader-factory" ) );
-    assertFalse( cacheManager.cacheExists( "report-dataset-cache" ) );
+    assertNull( cacheManager.getCache( "libloader-bundles" ) );
+    assertNull( cacheManager.getCache( "libloader-data" ) );
+    assertNull( cacheManager.getCache( "libloader-factory" ) );
+    assertNull( cacheManager.getCache( "report-dataset-cache" ) );
 
     assertNull( dataCache.get( key ) );
     dataCache.put( key, new DefaultTableModel() );
