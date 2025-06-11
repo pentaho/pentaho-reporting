@@ -13,7 +13,9 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import net.sf.ehcache.CacheManager;
+import javax.cache.Cache;
+import javax.cache.CacheManager;
+import javax.cache.Caching;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
@@ -42,19 +44,20 @@ public class GoldCacheLoadIT extends GoldTestBase {
     maxThreads = 2;
     threadPool = Executors.newFixedThreadPool( maxThreads );
 
-    cacheManager = CacheManager.getInstance();
-    if ( cacheManager.cacheExists( "libloader-bundles" ) == true ) {
-      // Note: EHCacheProvider will dynamically create these
-      // caches if they don't exist.
-      cacheManager.clearAll();
-      cacheManager.removalAll();
+    cacheManager = Caching.getCachingProvider().getCacheManager();
 
-      assertFalse( cacheManager.cacheExists( "libloader-bundles" ) );
-      assertFalse( cacheManager.cacheExists( "libloader-data" ) );
-      assertFalse( cacheManager.cacheExists( "libloader-factory" ) );
-      assertFalse( cacheManager.cacheExists( "report-dataset-cache" ) );
-    }
+    for ( String cacheName : cacheManager.getCacheNames() ) {
+      Cache<?, ?> cache = cacheManager.getCache( cacheName );
+      if ( cache != null ) {
+        cache.clear();
+        cacheManager.destroyCache(cacheName);
+      }
+    assertNull( cacheManager.getCache( "libloader-bundles" ) );
+    assertNull( cacheManager.getCache( "libloader-data" ) );
+    assertNull( cacheManager.getCache( "libloader-factory" ) );
+    assertNull( cacheManager.getCache( "report-dataset-cache" ) );
   }
+}
 
   protected MasterReport postProcess( final MasterReport report ) throws Exception {
     final Object dataCacheEnabledRaw =
