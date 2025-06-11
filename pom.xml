@@ -1509,6 +1509,16 @@
         </exclusions>
       </dependency>
       <dependency>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5</artifactId>
+        <version>${httpcore5.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents.client5</groupId>
+        <artifactId>httpclient5</artifactId>
+        <version>${httpclient5.version}</version>
+      </dependency>
+      <dependency>
         <groupId>commons-digester</groupId>
         <artifactId>commons-digester</artifactId>
         <version>${commons-digester.version}</version>
