@@ -206,6 +206,7 @@ public class LegacyXPathTableModel extends AbstractTableModel {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
     dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+    dbf.setAttribute( XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
     dbf.setXIncludeAware( false );
     if ( !"true".equals( configuration
             .getConfigProperty( XPATH_ENABLE_DTDS ) ) ) {
