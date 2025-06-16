@@ -213,16 +213,16 @@ public abstract class XmlSolutionFileModel implements SolutionFileModel {
   }
 
   protected FileInfo performParse( final InputStream postResult ) throws IOException {
-    ArgumentNullException.validate("postResult", postResult);
+    ArgumentNullException.validate( "postResult", postResult );
 
     try {
       final FileInfoParser contentHandler = new FileInfoParser();
       final SAXParserFactory factory = SAXParserFactory.newInstance();
-      factory.setNamespaceAware(true);
-      factory.setXIncludeAware(false);
-      factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
-      factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+      factory.setNamespaceAware( true );
+      factory.setXIncludeAware( false );
+      factory.setFeature( "http://xml.org/sax/features/external-general-entities", false );
+      factory.setFeature( "http://xml.org/sax/features/external-parameter-entities", false );
+      factory.setFeature( "http://apache.org/xml/features/nonvalidating/load-external-dtd", false );
       final SAXParser parser = factory.newSAXParser();
       final XMLReader reader = parser.getXMLReader();
 

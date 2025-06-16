@@ -202,14 +202,15 @@ public class LegacyXPathTableModel extends AbstractTableModel {
     }
   }
 
-  private DocumentBuilderFactory calculateDocumentBuilderFactory( final Configuration configuration ) throws ParserConfigurationException {
+  private DocumentBuilderFactory calculateDocumentBuilderFactory( final Configuration configuration )
+    throws ParserConfigurationException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-    dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-    dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-    dbf.setAttribute( XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+    dbf.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
+    dbf.setAttribute( XMLConstants.ACCESS_EXTERNAL_DTD, "" );
+    dbf.setAttribute( XMLConstants.ACCESS_EXTERNAL_SCHEMA, "" );
     dbf.setXIncludeAware( false );
     if ( !"true".equals( configuration
-            .getConfigProperty( XPATH_ENABLE_DTDS ) ) ) {
+      .getConfigProperty( XPATH_ENABLE_DTDS ) ) ) {
       dbf.setFeature( DISALLOW_DOCTYPE_DECL, true );
     }
     return dbf;
