@@ -63,5 +63,9 @@
       <version>2.3</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>Saxon-HE</artifactId>
+    </dependency>
   </dependencies>
 </project>
