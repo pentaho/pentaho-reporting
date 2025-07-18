@@ -16,6 +16,9 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <properties>
+    <angus-mail.version>2.0.3</angus-mail.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.pentaho.reporting.engine</groupId>
@@ -52,6 +55,12 @@
     <dependency>
       <groupId>jakarta.mail</groupId>
       <artifactId>jakarta.mail-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.angus</groupId>
+      <artifactId>angus-mail</artifactId>
+      <version>${angus-mail.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.hsqldb</groupId>

@@ -135,7 +135,7 @@ public class PublishRestUtil {
       fdmp.getField( "fileUpload" ).setContentDisposition( FormDataContentDisposition.name( "fileUpload" ).fileName( nameEncoded ).build() );
 
       target = ( WebTarget ) target.request( MediaType.MULTIPART_FORM_DATA );
-      Response response = target.request().post( Entity.entity( fdmp , MediaType.MULTIPART_FORM_DATA ) );
+      Response response = target.request().post( Entity.entity( fdmp, MediaType.MULTIPART_FORM_DATA ) );
 
       if ( response != null ) {
         String message = response.readEntity( String.class );

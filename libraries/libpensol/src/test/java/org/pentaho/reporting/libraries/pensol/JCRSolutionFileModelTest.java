@@ -96,7 +96,7 @@ public class JCRSolutionFileModelTest {
 
     WebTarget target = mock( WebTarget.class );
     when( target.path( anyString() ) ).thenReturn( target );
-    when( target.request( any( MediaType.class) ) ).thenReturn( builder );
+    when( target.request( any( MediaType.class ) ) ).thenReturn( builder );
 
     Client client = mock( Client.class );
     when( client.target( anyString() ) ).thenReturn( target );

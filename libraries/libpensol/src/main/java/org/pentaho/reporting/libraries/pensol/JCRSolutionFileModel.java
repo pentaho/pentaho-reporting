@@ -24,7 +24,6 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.apache.commons.logging.Log;
-
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystemException;
@@ -171,7 +170,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
       final WebTarget target = client.target( url + service );
       final Response response = target.request( MediaType.TEXT_PLAIN ).put( Entity.text( "" ) );
       if ( response.getStatus() == Response.Status.OK.getStatusCode() ) {
-      refresh();
+        refresh();
       } else {
         throw new FileSystemException( "Failed with error-code", response.getStatus() );
       }

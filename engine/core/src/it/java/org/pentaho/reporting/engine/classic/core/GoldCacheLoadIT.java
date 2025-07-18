@@ -50,7 +50,7 @@ public class GoldCacheLoadIT extends GoldTestBase {
       Cache<?, ?> cache = cacheManager.getCache( cacheName );
       if ( cache != null ) {
         cache.clear();
-        cacheManager.destroyCache(cacheName);
+        cacheManager.destroyCache( cacheName );
       }
     assertNull( cacheManager.getCache( "libloader-bundles" ) );
     assertNull( cacheManager.getCache( "libloader-data" ) );

@@ -132,7 +132,7 @@ public class RepositoryFileTreeDtoProxyTest {
 
   private WebTarget mockWebTarget( RepositoryFileTreeDto returned ) {
     Invocation.Builder builder = mock( Invocation.Builder.class );
-    when( builder.get( eq(RepositoryFileTreeDto.class) ) ).thenReturn( returned );
+    when( builder.get( eq( RepositoryFileTreeDto.class ) ) ).thenReturn( returned );
 
     WebTarget target = mock( WebTarget.class );
     when( target.path( anyString() ) ).thenReturn( target );
