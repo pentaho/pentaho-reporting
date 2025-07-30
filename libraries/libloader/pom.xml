@@ -130,8 +130,9 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache-core</artifactId>
+      <groupId>org.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <classifier>jakarta</classifier>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -181,6 +182,11 @@
       <artifactId>mockito-core</artifactId>
       <version>${mockito.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.cache</groupId>
+      <artifactId>cache-api</artifactId>
+      <version>${cache-api.version}</version>
     </dependency>
   </dependencies>
 </project>

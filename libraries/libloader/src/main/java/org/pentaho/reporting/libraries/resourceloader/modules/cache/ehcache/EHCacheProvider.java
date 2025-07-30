@@ -13,9 +13,6 @@
 
 package org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheException;
-import net.sf.ehcache.CacheManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceBundleDataCache;
@@ -24,6 +21,13 @@ import org.pentaho.reporting.libraries.resourceloader.cache.ResourceDataCache;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceDataCacheProvider;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceFactoryCache;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceFactoryCacheProvider;
+import javax.cache.Cache;
+import javax.cache.CacheException;
+import javax.cache.CacheManager;
+import javax.cache.Caching;
+import javax.cache.configuration.MutableConfiguration;
+import javax.cache.expiry.CreatedExpiryPolicy;
+import javax.cache.expiry.Duration;
 
 public class EHCacheProvider implements ResourceDataCacheProvider,
   ResourceFactoryCacheProvider, ResourceBundleDataCacheProvider {
@@ -37,7 +41,7 @@ public class EHCacheProvider implements ResourceDataCacheProvider,
 
   public static synchronized CacheManager getCacheManager() throws CacheException {
     if ( cacheManager == null ) {
-      cacheManager = CacheManager.getInstance();
+      cacheManager = Caching.getCachingProvider().getCacheManager();
     }
     return cacheManager;
   }
@@ -49,16 +53,10 @@ public class EHCacheProvider implements ResourceDataCacheProvider,
     try {
       final CacheManager manager = getCacheManager();
       synchronized( manager ) {
-        if ( manager.cacheExists( DATA_CACHE_NAME ) == false ) {
-          final Cache libloaderCache = new Cache( DATA_CACHE_NAME,   // cache name
-            500,         // maxElementsInMemory
-            false,       // overflowToDisk
-            false,       // eternal
-            600,         // timeToLiveSeconds
-            600,         // timeToIdleSeconds
-            false,       // diskPersistent
-            120 );        // diskExpiryThreadIntervalSeconds
-          manager.addCache( libloaderCache );
+        Cache<Object,Object> libloaderCache = manager.getCache( DATA_CACHE_NAME );
+        if ( libloaderCache == null ) {
+          MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
+          libloaderCache = manager.createCache( DATA_CACHE_NAME, configuration );
           return new EHResourceDataCache( libloaderCache );
         } else {
           return new EHResourceDataCache( manager.getCache( DATA_CACHE_NAME ) );
@@ -74,16 +72,10 @@ public class EHCacheProvider implements ResourceDataCacheProvider,
     try {
       final CacheManager manager = getCacheManager();
       synchronized( manager ) {
-        if ( manager.cacheExists( BUNDLES_CACHE_NAME ) == false ) {
-          final Cache libloaderCache = new Cache( BUNDLES_CACHE_NAME,   // cache name
-            500,         // maxElementsInMemory
-            false,       // overflowToDisk
-            false,       // eternal
-            600,         // timeToLiveSeconds
-            600,         // timeToIdleSeconds
-            false,       // diskPersistent
-            120 );        // diskExpiryThreadIntervalSeconds
-          manager.addCache( libloaderCache );
+        Cache<Object,Object> libloaderCache = manager.getCache( BUNDLES_CACHE_NAME );
+        if ( libloaderCache == null ) {
+          MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
+          libloaderCache = manager.createCache( BUNDLES_CACHE_NAME, configuration );
           return new EHResourceBundleDataCache( libloaderCache );
         } else {
           return new EHResourceBundleDataCache( manager.getCache( BUNDLES_CACHE_NAME ) );
@@ -99,16 +91,10 @@ public class EHCacheProvider implements ResourceDataCacheProvider,
     try {
       final CacheManager manager = getCacheManager();
       synchronized( manager ) {
-        if ( manager.cacheExists( FACTORY_CACHE_NAME ) == false ) {
-          final Cache libloaderCache = new Cache( FACTORY_CACHE_NAME,   // cache name
-            500,         // maxElementsInMemory
-            false,       // overflowToDisk
-            false,       // eternal
-            600,         // timeToLiveSeconds
-            600,         // timeToIdleSeconds
-            false,       // diskPersistent
-            120 );        // diskExpiryThreadIntervalSeconds
-          manager.addCache( libloaderCache );
+        Cache<Object,Object> libloaderCache = manager.getCache( FACTORY_CACHE_NAME );
+        if ( libloaderCache == null ) {
+          MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
+          libloaderCache = manager.createCache( FACTORY_CACHE_NAME, configuration );
           return new EHResourceFactoryCache( libloaderCache );
         } else {
           return new EHResourceFactoryCache( manager.getCache( FACTORY_CACHE_NAME ) );

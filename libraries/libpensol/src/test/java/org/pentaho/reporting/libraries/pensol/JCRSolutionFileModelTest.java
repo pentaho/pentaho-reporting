@@ -13,14 +13,15 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.Invocation;
+import jakarta.ws.rs.client.WebTarget;
 import org.junit.Test;
 import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -30,6 +31,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.pentaho.reporting.libraries.pensol.JCRSolutionFileModel.encodePathForRequest;
 
 /**
@@ -89,15 +91,15 @@ public class JCRSolutionFileModelTest {
   }
 
   private Client mockClient( RepositoryFileTreeDto root ) {
-    WebResource.Builder builder = mock( WebResource.Builder.class );
-    when( builder.get( RepositoryFileTreeDto.class ) ).thenReturn( root );
+    Invocation.Builder builder = mock( Invocation.Builder.class );
+    when( builder.get( eq(RepositoryFileTreeDto.class) ) ).thenReturn( root );
 
-    WebResource resource = mock( WebResource.class );
-    when( resource.path( anyString() ) ).thenReturn( resource );
-    when( resource.accept( any( MediaType[].class ) ) ).thenReturn( builder );
+    WebTarget target = mock( WebTarget.class );
+    when( target.path( anyString() ) ).thenReturn( target );
+    when( target.request( any( MediaType.class) ) ).thenReturn( builder );
 
     Client client = mock( Client.class );
-    when( client.resource( anyString() ) ).thenReturn( resource );
+    when( client.target( anyString() ) ).thenReturn( target );
     return client;
   }
 }

@@ -13,14 +13,15 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.client.Invocation;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.api.repository2.unified.webservices.RepositoryFileTreeDto;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +38,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 /**
  * @author Andrey Khayrutdinov
@@ -73,7 +75,7 @@ public class RepositoryFileTreeDtoProxyTest {
   public void doesNotLoadChildren_WhenDtoHasNonNullList() throws Exception {
     dto.setChildren( Collections.<RepositoryFileTreeDto>emptyList() );
     proxy.getChildren();
-    verify( client, never() ).resource( anyString() );
+    verify( client, never() ).target( anyString() );
   }
 
   @Test
@@ -85,8 +87,8 @@ public class RepositoryFileTreeDtoProxyTest {
 
     RepositoryFileTreeDto returned = prepareReturnedDto( child );
 
-    WebResource resource = mockWebResource( returned );
-    when( client.resource( anyString() ) ).thenReturn( resource );
+    WebTarget target = mockWebTarget( returned );
+    when( client.target( anyString() ) ).thenReturn( target );
 
     List<RepositoryFileTreeDto> children = proxy.getChildren();
     assertEquals( "Should have exactly 1 child", 1, children.size() );
@@ -97,8 +99,8 @@ public class RepositoryFileTreeDtoProxyTest {
   public void replacesNullWithEmptyList_WhenResponseHasNoChildren() throws Exception {
     RepositoryFileTreeDto returned = prepareReturnedDto( null );
 
-    WebResource resource = mockWebResource( returned );
-    when( client.resource( anyString() ) ).thenReturn( resource );
+    WebTarget target = mockWebTarget( returned );
+    when( client.target( anyString() ) ).thenReturn( target );
 
     List<RepositoryFileTreeDto> children = proxy.getChildren();
     assertTrue( children.isEmpty() );
@@ -111,8 +113,8 @@ public class RepositoryFileTreeDtoProxyTest {
 
     RepositoryFileTreeDto returned = prepareReturnedDto( child );
 
-    WebResource resource = mockWebResource( returned );
-    when( client.resource( anyString() ) ).thenReturn( resource );
+    WebTarget target = mockWebTarget( returned );
+    when( client.target( anyString() ) ).thenReturn( target );
 
     List<RepositoryFileTreeDto> children = proxy.getChildren();
     assertEquals( "Should have exactly 1 child", 1, children.size() );
@@ -128,12 +130,13 @@ public class RepositoryFileTreeDtoProxyTest {
     return returned;
   }
 
-  private WebResource mockWebResource( RepositoryFileTreeDto returned ) {
-    WebResource resource = mock( WebResource.class );
-    WebResource.Builder builder = mock( WebResource.Builder.class );
-    when( resource.path( "" ) ).thenReturn( resource );
-    when( resource.accept( any( MediaType[].class ) ) ).thenReturn( builder );
-    when( builder.get( RepositoryFileTreeDto.class ) ).thenReturn( returned );
-    return resource;
+  private WebTarget mockWebTarget( RepositoryFileTreeDto returned ) {
+    Invocation.Builder builder = mock( Invocation.Builder.class );
+    when( builder.get( eq(RepositoryFileTreeDto.class) ) ).thenReturn( returned );
+
+    WebTarget target = mock( WebTarget.class );
+    when( target.path( anyString() ) ).thenReturn( target );
+    when( target.request( any( MediaType.class ) ) ).thenReturn( builder );
+    return target;
   }
 }

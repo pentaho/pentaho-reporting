@@ -65,10 +65,6 @@
       <artifactId>jaxrpc-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-bundle</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.googlecode.jsendnsca</groupId>
       <artifactId>jsendnsca</artifactId>
     </dependency>
@@ -127,7 +123,7 @@
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-ehcache</artifactId>
+      <artifactId>hibernate-jcache</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>

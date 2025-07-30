@@ -13,7 +13,7 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import com.sun.jersey.core.header.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.FileName;
@@ -27,8 +27,8 @@ import org.pentaho.platform.web.http.api.resources.RepositoryImportResource;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileAdapter;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
