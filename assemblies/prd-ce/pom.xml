@@ -378,6 +378,11 @@
       <artifactId>jaxb-impl</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-jaxb</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
