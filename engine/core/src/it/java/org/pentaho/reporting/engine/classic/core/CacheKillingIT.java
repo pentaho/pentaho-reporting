@@ -13,16 +13,16 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import javax.cache.Cache;
-import javax.cache.CacheManager;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.cache.DataCacheKey;
 import org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache;
 
+import javax.cache.Cache;
+import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.swing.table.DefaultTableModel;
+import java.net.URISyntaxException;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
