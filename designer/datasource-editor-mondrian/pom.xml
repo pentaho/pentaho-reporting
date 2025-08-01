@@ -107,10 +107,6 @@
       <artifactId>Saxon-HE</artifactId>
     </dependency>
     <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon-dom</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
       <version>${snakeyaml.version}</version>
