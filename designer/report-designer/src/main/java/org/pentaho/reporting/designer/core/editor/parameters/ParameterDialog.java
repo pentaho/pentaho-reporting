@@ -87,6 +87,7 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.StaticListParameter;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterUtils;
 import org.pentaho.reporting.engine.classic.core.states.NoOpPerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
@@ -166,6 +167,9 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   private KeyedComboBoxModel<String, String> timeZoneModel;
   private JLabel timeZoneLabel;
   private String parameter;
+  private JCheckBox displayTimeSelectorCheckBox;
+  private boolean isTimeSelectorApplicable;
+
 
   public ParameterDialog( final ReportDesignerContext context ) {
     this.reportDesignerContext = context;
@@ -207,6 +211,9 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     dataFormatField.getDocument().addDocumentListener( typeSelectionHandler );
     nameTextField = new JTextField();
     labelTextField = new JTextField();
+
+    displayTimeSelectorCheckBox = new JCheckBox( Messages.getString( "ParameterDialog.DisplayTimeSelector" ) );
+    displayTimeSelectorCheckBox.setBorder(BorderFactory.createEmptyBorder(3, 0, 0, 0));
 
     mandatoryCheckBox = new JCheckBox( Messages.getString( "ParameterDialog.Mandatory" ) );
     mandatoryCheckBox.setBorder( BorderFactory.createEmptyBorder( 3, 0, 0, 0 ) );
@@ -306,6 +313,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     strictValuesCheckBox.setVisible( false );
     reevaluateOnInvalidStrictParamCheckBox.setVisible( false );
     autofillSelectionCheckBox.setVisible( false );
+    displayTimeSelectorCheckBox.setVisible(false);
   }
 
   protected String getDialogId() {
@@ -424,6 +432,12 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
     gbc.gridy = 6;
+    gbc.gridx = 1;
+    detailsPanel.add(displayTimeSelectorCheckBox, gbc);
+
+    gbc.gridwidth = 1;
+    gbc.fill = GridBagConstraints.NONE;
+    gbc.gridy = 7;
     gbc.gridx = 0;
     detailsPanel.add( timeZoneLabel, gbc );
 
@@ -434,7 +448,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 7;
+    gbc.gridy = 8;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.DefaultValue" ) ), gbc );
 
@@ -445,7 +459,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 8;
+    gbc.gridy = 9;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.DefaultValueFormula" ) ), gbc );
 
@@ -456,7 +470,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 9;
+    gbc.gridy = 10;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.PostProcessingFormula" ) ), gbc );
 
@@ -467,24 +481,24 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 10;
+    gbc.gridy = 11;
     gbc.gridx = 1;
     detailsPanel.add( mandatoryCheckBox, gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 11;
+    gbc.gridy = 12;
     gbc.gridx = 1;
     detailsPanel.add( hiddenCheckBox, gbc );
 
     gbc.gridwidth = GridBagConstraints.REMAINDER;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.gridx = 1;
-    gbc.gridy = 12;
+    gbc.gridy = 13;
     detailsPanel.add( hiddenFormula, gbc );
 
     gbc.gridwidth = 1;
-    gbc.gridy = 13;
+    gbc.gridy = 14;
     gbc.fill = GridBagConstraints.NONE;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.HiddenFormula" ) ), gbc );
@@ -496,13 +510,13 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = GridBagConstraints.REMAINDER;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.gridy = 14;
+    gbc.gridy = 15;
     gbc.gridx = 0;
     detailsPanel.add( createPromptPanel(), gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 15;
+    gbc.gridy = 16;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Type" ) ), gbc );
 
@@ -513,7 +527,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 16;
+    gbc.gridy = 17;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Query" ) ), gbc );
 
@@ -524,7 +538,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 17;
+    gbc.gridy = 18;
     gbc.gridx = 0;
     detailsPanel.add( new JLabel( Messages.getString( "ParameterDialog.Id" ) ), gbc );
 
@@ -535,7 +549,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 18;
+    gbc.gridy = 19;
     gbc.gridx = 0;
     detailsPanel.add( displayValueLabel, gbc );
 
@@ -546,7 +560,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 19;
+    gbc.gridy = 20;
     gbc.gridx = 0;
     detailsPanel.add( displayFormulaLabel, gbc );
 
@@ -557,7 +571,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 20;
+    gbc.gridy = 21;
     gbc.gridx = 0;
     detailsPanel.add( visibleItemsLabel, gbc );
 
@@ -568,19 +582,19 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 21;
+    gbc.gridy = 22;
     gbc.gridx = 1;
     detailsPanel.add( strictValuesCheckBox, gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 22;
+    gbc.gridy = 23;
     gbc.gridx = 1;
     detailsPanel.add( reevaluateOnInvalidStrictParamCheckBox, gbc );
 
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.NONE;
-    gbc.gridy = 23;
+    gbc.gridy = 24;
     gbc.gridx = 1;
     detailsPanel.add( autofillSelectionCheckBox, gbc );
 
@@ -612,6 +626,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       labelTextField.setText( null );
       nameTextField.setText( null );
       defaultValueTextField.setValue( null, String.class );
+      displayTimeSelectorCheckBox.setVisible(false);
+      displayTimeSelectorCheckBox.setSelected(false);
       visibleItemsTextField.setValue( 0 );
       parameterTypeModel.setSelectedItem( null );
       availableDataSources.clearSelection();
@@ -657,6 +673,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
           ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.VISIBLE_ITEMS ), 0 );
       visibleItemsTextField.setValue( visibleItems );
     } else {
+      displayTimeSelectorCheckBox.setSelected( false );
       autofillSelectionCheckBox.setSelected( false );
       reevaluateOnInvalidStrictParamCheckBox.setSelected( false );
       strictValuesCheckBox.setSelected( true );
@@ -690,6 +707,20 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       ParameterAttributeNames.Core.DATA_FORMAT_FORMULA, parameterContext );
     dataFormatField.setText( Objects.equals( dataFormatText, dataFormatFormulaText ) ? "" : dataFormatText );
     dataFormatFormula.setFormula( dataFormatFormulaText );
+
+    Class<?> valueType = p.getValueType();
+    if (valueType.isArray()) { valueType = valueType.getComponentType(); }
+    isTimeSelectorApplicable = ParameterUtils.isTimeSelectorApplicable(valueType);
+
+    if (isTimeSelectorApplicable) {
+      displayTimeSelectorCheckBox.setVisible(true);
+      displayTimeSelectorCheckBox.setSelected( "true".equals(
+              p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+              ParameterAttributeNames.Core.DISPLAY_TIME_SELECTOR, parameterContext )));
+    } else {
+      displayTimeSelectorCheckBox.setVisible(false);
+      displayTimeSelectorCheckBox.setSelected(false);
+    }
 
     mandatoryCheckBox.setSelected( p.isMandatory() );
     postProcessingFormulaField.setFormula( p.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
@@ -755,11 +786,13 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     final Object rawDefaultValue = defaultValueTextField.getValue();
     final String dataFormat = dataFormatField.getText();
     final boolean isMandatory = mandatoryCheckBox.isSelected();
+    final boolean isDisplayTimeSelectorSelected = displayTimeSelectorCheckBox.isSelected();
 
     final ParameterType type = (ParameterType) parameterTypeModel.getSelectedItem();
 
     if ( query == null ) {
-      return createQuerylessParameter( name, label, rawDefaultValue, dataFormat, isMandatory, type );
+      return createQuerylessParameter( name, label, rawDefaultValue, dataFormat,
+              isMandatory, type, isDisplayTimeSelectorSelected );
     }
 
 
@@ -839,6 +872,16 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
         dataFormatFormula.getFormula() );
     }
+
+    if ( isTimeSelectorApplicable ) {
+      parameter.setParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
+              ParameterAttributeNames.Core.DISPLAY_TIME_SELECTOR,
+              String.valueOf( displayTimeSelectorCheckBox.isSelected()));
+      parameter.setParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
+              ParameterAttributeNames.Core.TYPE,
+              ParameterAttributeNames.Core.TYPE_DATEPICKER);
+    }
+
     if ( !queryIsOptional ) {
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
         ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA,
@@ -881,7 +924,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
                                                              final Object rawDefaultValue,
                                                              final String dataFormat,
                                                              final boolean mandatory,
-                                                             final ParameterType type ) {
+                                                             final ParameterType type,
+                                                     final boolean isDisplayTimeSelectorSelected) {
     final Class selectedType = (Class) valueTypeComboBox.getSelectedItem();
     final AbstractParameter parameter;
     if ( type == null || !type.isMultiSelection() ) {
@@ -924,6 +968,13 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT,
         dataFormatFormula.getFormula() );
     }
+
+    if(isTimeSelectorApplicable) {
+      parameter.setParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
+              ParameterAttributeNames.Core.DISPLAY_TIME_SELECTOR,
+              String.valueOf(isDisplayTimeSelectorSelected));
+    }
+
     parameter.setParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA,
       defaultValueFormulaField.getFormula() );
@@ -1403,6 +1454,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       if ( !( o instanceof Class ) ) {
         timeZoneLabel.setVisible( false );
         timeZoneBox.setVisible( false );
+        displayTimeSelectorCheckBox.setVisible(false);
         valueEditorPanel.setValueType( String.class, null, TimeZone.getDefault() );
         return;
       }
@@ -1417,6 +1469,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       }
       timeZoneLabel.setVisible( Date.class.isAssignableFrom( selectedClass ) );
       timeZoneBox.setVisible( Date.class.isAssignableFrom( selectedClass ) );
+      displayTimeSelectorCheckBox.setVisible( ParameterUtils.isTimeSelectorApplicable(selectedClass) );
       valueEditorPanel.setValueType( type, dataFormatField.getText(), getSelectedTimeZone() );
     }
 
