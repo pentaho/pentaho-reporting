@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.pentaho.reporting</groupId>
@@ -307,11 +307,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>pdi-dataservice-client-plugin</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>com.googlecode.json-simple</groupId>
       <artifactId>json-simple</artifactId>
       <scope>compile</scope>
@@ -402,7 +397,7 @@
                 <includeTypes>jar</includeTypes>
                 <includeScope>compile</includeScope>
                 <excludeArtifactIds>
-                  h2,jaybird,jt400,LucidDbClient-minimal,sapdbc,sqlite-jdbc,pdi-dataservice-client-plugin,pentaho-metastore-locator-core,pentaho-kettle-repository-locator-core
+                  h2,jaybird,jt400,LucidDbClient-minimal,sapdbc,sqlite-jdbc,pentaho-metastore-locator-core,pentaho-kettle-repository-locator-core
                 </excludeArtifactIds>
               </configuration>
             </execution>
@@ -415,7 +410,7 @@
               <configuration>
                 <outputDirectory>${stage.dir.designer}/lib/jdbc</outputDirectory>
                 <includeArtifactIds>
-                  h2,hsqldb,infobright-core,jaybird,jt400,LucidDbClient-minimal,monetdb-jdbc,postgresql,sapdbc,sqlite-jdbc,pdi-dataservice-client-plugin
+                  h2,hsqldb,infobright-core,jaybird,jt400,LucidDbClient-minimal,monetdb-jdbc,postgresql,sapdbc,sqlite-jdbc
                 </includeArtifactIds>
               </configuration>
             </execution>
