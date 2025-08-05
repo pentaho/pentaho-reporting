@@ -176,6 +176,8 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
         final DataFactory dataFactory, final Configuration configuration,
         final ResourceBundleFactory resourceBundleFactory ) throws ReportDataFactoryException {
 
+      checkScriptEvaluation();
+
       this.context = new SimpleScriptContext();
 
       if ( globalContext != null ) {
@@ -437,11 +439,8 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
     if ( StringUtils.isEmpty( globalScriptLanguage ) ) {
       return;
     }
-    boolean allowScriptEval = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
-                    "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "false" )
-            .equalsIgnoreCase( "true" );
 
-    if ( !allowScriptEval ) {
+    if ( !isScriptEvaluationAllowed() ) {
       DataFactoryScriptingSupport.logger.error( "Scripts are prevented from running by default in order to avoid"
               + " potential remote code execution.  The system administrator must enable this capability by changing"
               + " the value of org.pentaho.reporting.engine.classic.core.allowScriptEvaluation to true." );
@@ -489,6 +488,8 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
       return;
     }
 
+    checkScriptEvaluation();
+
     try {
       initialized = true;
       if ( globalScriptEngine != null ) {
@@ -499,6 +500,29 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
     } catch ( NoSuchMethodException e ) {
       // ignored ..
       logger.debug( "Global script does not contain an 'init' function" );
+    }
+  }
+
+  /**
+   * Checks the configuration to see if script evaluation is allowed.
+   *
+   * @return true if script evaluation is allowed, false otherwise.
+   */
+  private static boolean isScriptEvaluationAllowed() {
+    return ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.allowScriptEvaluation", "false" )
+      .equalsIgnoreCase( "true" );
+  }
+
+  /**
+   * Checks if script evaluation is allowed, and throws an exception if it is not.
+   *
+   * @throws ReportDataFactoryException if script evaluation is not allowed.
+   */
+  private static void checkScriptEvaluation() throws ReportDataFactoryException {
+    if ( !isScriptEvaluationAllowed() ) {
+      throw new ReportDataFactoryException( "Scripts are prevented from running by default in order to avoid"
+        + " potential remote code execution.  The system administrator must enable this capability." );
     }
   }
 
