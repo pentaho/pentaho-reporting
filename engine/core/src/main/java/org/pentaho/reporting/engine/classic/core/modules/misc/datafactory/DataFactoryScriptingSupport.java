@@ -124,9 +124,7 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
         final ResourceData loadedResource = resourceManager.load( resourceKey );
         final byte[] resource = loadedResource.getResource( resourceManager );
         return eval( new String( resource, encoding ), defaultScriptLanguage );
-      } catch ( ResourceLoadingException e ) {
-        throw new ScriptException( e );
-      } catch ( UnsupportedEncodingException e ) {
+      } catch ( ResourceLoadingException | UnsupportedEncodingException e) {
         throw new ScriptException( e );
       }
     }
@@ -201,7 +199,7 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
           contextKey ), ScriptContext.ENGINE_SCOPE );
 
       this.scriptEngine = new ScriptEngineManager().getEngineByName( scriptLanguage );
-      if ( scriptEngine instanceof Invocable == false ) {
+      if ( !( scriptEngine instanceof Invocable ) ) {
         throw new ReportDataFactoryException( String.format( "Query script language '%s' is not usable.",
             scriptLanguage ) );
       }
@@ -243,7 +241,7 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
         throw new ReportDataFactoryException( "DataFactoryScriptingSupport: Failed to invoke computeQuery method.", e );
       } catch ( NoSuchMethodException e ) {
         // ignored ..
-        logger.debug( "Query script does not contain an 'computeQuery' function" );
+        logger.debug( "Query script does not contain a 'computeQuery' function" );
         return query;
       }
     }
@@ -258,7 +256,7 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
         final Object computeQuery =
             this.invocableEngine.invokeFunction( "postProcessResult", query, queryName, parameter, dataSet );
         final Object translated = convert( computeQuery );
-        if ( translated instanceof TableModel == false ) {
+        if ( !( translated instanceof TableModel ) ) {
           throw new ReportDataFactoryException(
               "DataFactoryScriptingSupport: postProcessResult method did not return a valid query." );
         }
@@ -311,14 +309,13 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
           rawArray = new Object[] { translated };
         }
 
-        final ArrayList<String> retval = new ArrayList<String>();
-        for ( int i = 0; i < rawArray.length; i++ ) {
-          final Object o = rawArray[i];
+        final ArrayList<String> retval = new ArrayList<>();
+        for ( final Object o : rawArray ) {
           if ( o != null ) {
             retval.add( String.valueOf( o ) );
           }
         }
-        return retval.toArray( new String[retval.size()] );
+        return retval.toArray( new String[ 0 ] );
       } catch ( ScriptException e ) {
         throw new ReportDataFactoryException(
             "DataFactoryScriptingSupport: Failed to invoke computeQueryFields method.", e );
@@ -348,8 +345,8 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
   private transient DataFactoryContext dataFactoryContext;
 
   public DataFactoryScriptingSupport() {
-    queryMappings = new HashMap<String, QueryCarrier>();
-    contextsByQuery = new HashMap<String, QueryScriptContext>();
+    queryMappings = new HashMap<>();
+    contextsByQuery = new HashMap<>();
   }
 
   public Object clone() {
@@ -412,7 +409,7 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
   }
 
   public String[] getQueryNames() {
-    return queryMappings.keySet().toArray( new String[queryMappings.size()] );
+    return queryMappings.keySet().toArray( new String[ 0 ] );
   }
 
   public String getGlobalScript() {
@@ -624,17 +621,15 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
     }
     synchronized ( DataFactoryScriptingSupport.class ) {
       if ( converters == null ) {
-        converters = new ArrayList<ScriptValueConverter>();
+        converters = new ArrayList<>();
         final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-        final Iterator propertyKeys =
-            globalConfig
-                .findPropertyKeys( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.script-value-converters." );
+        final Iterator<String> propertyKeys = globalConfig.findPropertyKeys(
+          "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.script-value-converters." );
         while ( propertyKeys.hasNext() ) {
-          final String key = (String) propertyKeys.next();
+          final String key = propertyKeys.next();
           final String impl = globalConfig.getConfigProperty( key );
           final ScriptValueConverter converter =
-              (ScriptValueConverter) ObjectUtilities.loadAndInstantiate( impl, ScriptValueConverter.class,
-                  ScriptValueConverter.class );
+            ObjectUtilities.loadAndInstantiate( impl, ScriptValueConverter.class, ScriptValueConverter.class );
           if ( converter != null ) {
             converters.add( converter );
           }
@@ -665,7 +660,7 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
 
   private void readObject( final ObjectInputStream stream ) throws IOException, ClassNotFoundException {
     stream.defaultReadObject();
-    contextsByQuery = new HashMap<String, QueryScriptContext>();
+    contextsByQuery = new HashMap<>();
   }
 }
 
