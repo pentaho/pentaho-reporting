@@ -177,7 +177,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
     if ( parameterDefinitionEntry instanceof ListParameter == false ) {
       if ( computedValue != null ) {
         final Class parameterType = parameterDefinitionEntry.getValueType();
-        if ( parameterType.isInstance( computedValue ) == false ) {
+        if ( !validateDateTimeType( parameterType, computedValue ) ) {
           logger.warn( "Parameter validation error: Value cannot be matched due to invalid value type '"
               + parameterDefinitionEntry.getName() + "' with value '" + computedValue + "'" );
           result.addError( parameterName, new ValidationMessage( Messages.getInstance( locale ).getString(
@@ -255,6 +255,30 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
     }
   }
 
+  private boolean validateDateTimeType( Class<?> parameterType, Object value ) {
+    if ( parameterType.isInstance( value ) ) {
+      return true;
+    }
+
+    if ( parameterType == java.sql.Time.class ) {
+      return value instanceof java.sql.Time || value instanceof java.sql.Timestamp
+              || value instanceof java.util.Date;
+    }
+    if ( parameterType == java.sql.Timestamp.class ) {
+      return value instanceof java.sql.Timestamp || value instanceof java.util.Date
+              || value instanceof java.sql.Time;
+    }
+    if ( parameterType == java.sql.Date.class ) {
+      return value instanceof java.sql.Date || value instanceof java.sql.Timestamp
+              || value instanceof java.util.Date;
+    }
+    if ( parameterType == java.util.Date.class ) {
+      return value instanceof java.util.Date || value instanceof java.sql.Date
+              || value instanceof java.sql.Time || value instanceof java.sql.Timestamp;
+    }
+    return false;
+  }
+
   private ValidationMessage computeValidListValue( final ListParameter listParameter,
       final ParameterContext parameterContext, final Class parameterType, final Object[] values, final Locale locale )
     throws ReportDataFactoryException {
@@ -263,7 +287,7 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
       if ( value != null ) {
         if ( "".equals( value ) ) {
           value = null;
-        } else if ( parameterType.isInstance( value ) == false ) {
+        } else if ( !validateDateTimeType( parameterType, value ) ) {
           logger.warn( "Parameter validation error: Value cannot be matched due to invalid value type '"
               + listParameter.getName() + "' with value '" + value + "'" );
           return new ValidationMessage( Messages.getInstance( locale ).getString(
