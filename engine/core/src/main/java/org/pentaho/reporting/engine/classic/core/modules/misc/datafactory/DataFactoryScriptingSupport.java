@@ -174,8 +174,6 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
         final DataFactory dataFactory, final Configuration configuration,
         final ResourceBundleFactory resourceBundleFactory ) throws ReportDataFactoryException {
 
-      checkScriptEvaluation();
-
       this.context = new SimpleScriptContext();
 
       if ( globalContext != null ) {
@@ -485,7 +483,6 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
       return;
     }
 
-    checkScriptEvaluation();
 
     try {
       initialized = true;
