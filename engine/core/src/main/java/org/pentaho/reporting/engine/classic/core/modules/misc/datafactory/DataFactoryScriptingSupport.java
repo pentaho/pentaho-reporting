@@ -197,6 +197,10 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
           contextKey ), ScriptContext.ENGINE_SCOPE );
 
       this.scriptEngine = new ScriptEngineManager().getEngineByName( scriptLanguage );
+
+      // Let's check if script evaluation is allowed.
+      checkScriptEvaluation();
+
       if ( !( scriptEngine instanceof Invocable ) ) {
         throw new ReportDataFactoryException( String.format( "Query script language '%s' is not usable.",
             scriptLanguage ) );
