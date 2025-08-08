@@ -14,8 +14,10 @@
 package org.pentaho.reporting.designer.core.editor.parameters;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JTextField;
-import static org.junit.Assert.assertEquals;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import static org.junit.Assert.*;
 import static org.junit.Assume.assumeFalse;
 import org.junit.Before;
 import org.junit.Test;
@@ -158,7 +160,7 @@ public class ParameterDialogTest {
     when( dialog.dataFormatFormula.getFormula() ).thenReturn( null );
 
     ParameterDefinitionEntry entry = dialog.createQuerylessParameter( "paramName", "paramLabel",
-      new Object(), "yyy", false, type );
+      new Object(), "yyy", false, type, false );
 
     final String actualDataFormat = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
@@ -183,7 +185,7 @@ public class ParameterDialogTest {
     when( dialog.dataFormatFormula.getFormula() ).thenReturn( "=FOR2" );
 
     ParameterDefinitionEntry entry = dialog.createQuerylessParameter( "paramName", "",
-      new Object(), "", false, type );
+      new Object(), "", false, type, false );
 
     final String actualDataFormat = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
@@ -281,4 +283,26 @@ public class ParameterDialogTest {
     dialog.updateFromParameter( parameter );
     verify( dialog.hiddenCheckBox, times( 1 ) ).setSelected( eq( false ) );
   }
+
+  @Test
+  public void testDisplayTimeSelectorCheckBox() {
+    // Create the check box
+    JCheckBox displayTimeSelectorCheckBox = new JCheckBox(Messages.getString("ParameterDialog.DisplayTimeSelector"));
+
+    // Test initialization
+    assertNotNull(displayTimeSelectorCheckBox);
+    assertEquals(Messages.getString("ParameterDialog.DisplayTimeSelector"), displayTimeSelectorCheckBox.getText());
+
+    // Test border properties
+    Border border = displayTimeSelectorCheckBox.getBorder();
+    assertTrue(border instanceof EmptyBorder);
+    EmptyBorder emptyBorder = (EmptyBorder) border;
+
+    // Verify border insets (top=3, left=0, bottom=0, right=0)
+    assertEquals(3, emptyBorder.getBorderInsets().top);
+    assertEquals(0, emptyBorder.getBorderInsets().left);
+    assertEquals(0, emptyBorder.getBorderInsets().bottom);
+    assertEquals(0, emptyBorder.getBorderInsets().right);
+  }
+
 }

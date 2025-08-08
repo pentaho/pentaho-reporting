@@ -74,6 +74,8 @@ public final class ParameterAttributeNames {
     public static final String VISIBLE_ITEMS = "parameter-visible-items";
     public static final String DATA_FORMAT = "data-format";
     public static final String DATA_FORMAT_FORMULA = "data-format-formula";
+    public static final String DISPLAY_TIME_SELECTOR = "display-time-selector";
+
 
     public static final String POST_PROCESSOR_FORMULA = "post-processor-formula";
     public static final String DISPLAY_VALUE_FORMULA = "display-value-formula";

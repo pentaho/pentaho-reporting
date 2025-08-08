@@ -19,6 +19,8 @@ import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 
 import java.util.Locale;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class ParameterUtils {
 
@@ -63,4 +65,21 @@ public class ParameterUtils {
     final Locale locale = environment.getLocale();
     return locale != null ? locale : Locale.getDefault();
   }
+
+   /**
+    * Determines if the time selector is applicable based on the given value type.
+    *
+    * @param valueType the class type to check
+    * @return true if the time selector is applicable, false otherwise
+    */
+   public static boolean isTimeSelectorApplicable(Class<?> valueType) {
+      if (valueType == null) {
+        return false;
+      }
+      return java.util.Date.class.isAssignableFrom(valueType) ||
+              java.sql.Date.class.isAssignableFrom(valueType) ||
+              Time.class.isAssignableFrom(valueType) ||
+              Timestamp.class.isAssignableFrom(valueType);
+  }
+
 }

@@ -20,10 +20,13 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
@@ -80,10 +83,22 @@ public class DefaultParameterComponentFactoryTest {
     assertThat( comp, is( instanceOf( TextFieldParameterComponent.class ) ) );
 
     doReturn( "datepicker" ).when( entry ).getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.TYPE, parameterContext );
-    doReturn( Date.class ).when( entry ).getValueType();
-    comp = factory.create( entry, parameterContext, updateContext );
-    assertThat( comp, is( instanceOf( DatePickerParameterComponent.class ) ) );
+            ParameterAttributeNames.Core.TYPE, parameterContext );
+    when(entry.getValueType()).thenReturn(Date.class);
+    comp = factory.create(entry, parameterContext, updateContext);
+    assertThat(comp, is(instanceOf(DatePickerParameterComponent.class)));
+
+    when(entry.getValueType()).thenReturn(Time.class);
+    comp = factory.create(entry, parameterContext, updateContext);
+    assertThat(comp, is(instanceOf(DatePickerParameterComponent.class)));
+
+    when(entry.getValueType()).thenReturn(Timestamp.class);
+    comp = factory.create(entry, parameterContext, updateContext);
+    assertThat(comp, is(instanceOf(DatePickerParameterComponent.class)));
+
+    when(entry.getValueType()).thenReturn(java.sql.Date.class);
+    comp = factory.create(entry, parameterContext, updateContext);
+    assertThat(comp, is(instanceOf(DatePickerParameterComponent.class)));
 
     doReturn( "multi-line" ).when( entry ).getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
         ParameterAttributeNames.Core.TYPE, parameterContext );

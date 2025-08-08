@@ -33,6 +33,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JComboBox;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
@@ -134,6 +138,11 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
   private ParameterUpdateContext updateContext;
   private JPopupMenu dateWindow;
   private JButton pickDateButton;
+  private JSpinner hourSpinner;
+  private JSpinner minuteSpinner;
+  private JSpinner secondSpinner;
+  private JComboBox<String> amPmComboBox;
+  private boolean displayTimeSelector;
   private Class dateType;
   private String parameterName;
   private boolean adjustingToExternalInput;
@@ -147,14 +156,14 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
    *          the update context, which resyncs parameters on changes.
    */
   public DatePickerParameterComponent( final ParameterDefinitionEntry entry, final ParameterContext parameterContext,
-      final ParameterUpdateContext updateContext ) {
+      final ParameterUpdateContext updateContext, boolean displayTimeSelector ) {
     this.parameterName = entry.getName();
     this.updateContext = updateContext;
+    this.displayTimeSelector = displayTimeSelector;
     this.dateType = entry.getValueType();
     if ( this.dateType.isArray() ) {
       this.dateType = this.dateType.getComponentType();
     }
-
     String formatString = entry.getTranslatedParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
       ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
 
@@ -189,9 +198,65 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
     final JPanel datePanel = new JPanel( new FlowLayout() );
     datePanel.add( dateField );
     datePanel.add( pickDateButton );
-    add( datePanel, BorderLayout.WEST );
+
+    // Add time selector components if `displayTimeSelector` is true
+    if (displayTimeSelector) {
+      final JPanel dateTimePanel = datePanel;
+      hourSpinner = new JSpinner(new SpinnerNumberModel(12, 1, 12, 1));
+      minuteSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+      secondSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+      // Set double-digit format for the spinners
+      hourSpinner.setEditor(new JSpinner.NumberEditor(hourSpinner, "00"));
+      minuteSpinner.setEditor(new JSpinner.NumberEditor(minuteSpinner, "00"));
+      secondSpinner.setEditor(new JSpinner.NumberEditor(secondSpinner, "00"));
+      amPmComboBox = new JComboBox<>(new String[]{"AM", "PM"});
+      // Retrieve the parameter value from the previous context
+      Object value = updateContext.getParameterValue(parameterName);
+      if (value instanceof Date) {
+        calendar.setTime((Date) value);
+        hourSpinner.setValue(calendar.get(Calendar.HOUR) == 0 ? 12 : calendar.get(Calendar.HOUR));
+        minuteSpinner.setValue(calendar.get(Calendar.MINUTE));
+        secondSpinner.setValue(calendar.get(Calendar.SECOND));
+        amPmComboBox.setSelectedIndex(calendar.get(Calendar.AM_PM));
+      }
+      dateTimePanel.add(new JLabel("HH:"));
+      dateTimePanel.add(hourSpinner);
+      dateTimePanel.add(new JLabel("MM:"));
+      dateTimePanel.add(minuteSpinner);
+      dateTimePanel.add(new JLabel("SS:"));
+      dateTimePanel.add(secondSpinner);
+      dateTimePanel.add(amPmComboBox);
+
+      // Add listeners to dynamically update the time
+      hourSpinner.addChangeListener(e -> updateTime());
+      minuteSpinner.addChangeListener(e -> updateTime());
+      secondSpinner.addChangeListener(e -> updateTime());
+      amPmComboBox.addActionListener(e -> updateTime());
+
+      dateTimePanel.setVisible(true);
+      add( dateTimePanel, BorderLayout.WEST );
+    } else {
+      add( datePanel, BorderLayout.WEST );
+    }
 
     this.updateContext.addChangeListener( new DateUpdateHandler( parameterName ) );
+  }
+  private void updateTime() {
+    Date selectedDate = dateChooserPanel.getDate();
+    if (selectedDate != null) {
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTimeZone(sdf.getTimeZone());
+      calendar.setTime(selectedDate);
+      if (displayTimeSelector) {
+        calendar.set(Calendar.HOUR, (Integer) hourSpinner.getValue() == 12 ? 0 : (Integer) hourSpinner.getValue());
+        calendar.set(Calendar.MINUTE, (Integer) minuteSpinner.getValue());
+        calendar.set(Calendar.SECOND, (Integer) secondSpinner.getValue());
+        calendar.set(Calendar.AM_PM, amPmComboBox.getSelectedIndex());
+        selectedDate = calendar.getTime();
+      }
+      dateField.setText(sdf.format(selectedDate));
+      updateContext.setParameterValue(parameterName, selectedDate);
+    }
   }
 
   DateFormat createDateFormat( final String parameterFormatString, final Locale locale, final TimeZone timeZone ) {
@@ -229,6 +294,16 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
         dateChooserPanel.setDateSelected( false );
         dateChooserPanel.setDate( date );
         dateField.setText( sdf.format( date ) );
+
+        if (displayTimeSelector) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(sdf.getTimeZone());
+        calendar.setTime(date);
+        hourSpinner.setValue(calendar.get(Calendar.HOUR) == 0 ? 12 : calendar.get(Calendar.HOUR));
+        minuteSpinner.setValue(calendar.get(Calendar.MINUTE));
+        secondSpinner.setValue(calendar.get(Calendar.SECOND));
+        amPmComboBox.setSelectedIndex(calendar.get(Calendar.AM_PM));
+        }
 
         if ( adjustingToExternalInput == false ) {
           updateContext.setParameterValue( parameterName, dateChooserPanel.getDate() );
