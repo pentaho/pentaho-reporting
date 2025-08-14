@@ -17,7 +17,6 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
-
 import java.util.Locale;
 
 public class ParameterUtils {
@@ -63,4 +62,15 @@ public class ParameterUtils {
     final Locale locale = environment.getLocale();
     return locale != null ? locale : Locale.getDefault();
   }
+
+   /**
+    * Determines if the time selector is applicable based on the given value type.
+    *
+    * @param valueType the class type to check
+    * @return true if the time selector is applicable, false otherwise
+    */
+ public static boolean isTimeSelectorApplicable(Class<?> valueType) {
+     return valueType != null && java.util.Date.class.isAssignableFrom(valueType);
+ }
+
 }

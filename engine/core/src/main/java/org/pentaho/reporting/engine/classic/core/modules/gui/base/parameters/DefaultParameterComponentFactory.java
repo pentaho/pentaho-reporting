@@ -13,14 +13,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import java.util.Date;
-
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.parameters.ListParameter;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterValues;
+import org.pentaho.reporting.engine.classic.core.parameters.*;
 import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 
 public class DefaultParameterComponentFactory implements ParameterComponentFactory {
@@ -71,9 +65,14 @@ public class DefaultParameterComponentFactory implements ParameterComponentFacto
     final String type =
         entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE,
             parameterContext );
+    final String displayTimeSelector =
+            entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+                    ParameterAttributeNames.Core.DISPLAY_TIME_SELECTOR,
+                    parameterContext );
 
-    if ( "datepicker".equals( type ) && Date.class.isAssignableFrom( entry.getValueType() ) ) { // NON-NLS
-      return new DatePickerParameterComponent( entry, parameterContext, updateContext );
+    if ( "datepicker".equals( type ) && ParameterUtils.isTimeSelectorApplicable(entry.getValueType()) ) { // NON-NLS
+      return new DatePickerParameterComponent( entry, parameterContext, updateContext,
+              Boolean.parseBoolean(displayTimeSelector) );
     }
     if ( "multi-line".equals( type ) ) { // NON-NLS
       return new TextAreaParameterComponent( entry, parameterContext, updateContext );
