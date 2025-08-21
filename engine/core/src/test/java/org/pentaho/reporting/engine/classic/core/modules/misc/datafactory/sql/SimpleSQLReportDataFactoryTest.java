@@ -31,6 +31,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -516,7 +517,7 @@ public class SimpleSQLReportDataFactoryTest {
     TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
 
     verify( statement ).clearParameters();
-    verify( statement ).setObject( anyInt(), any( Timestamp.class ) );
+    verify( statement ).setTimestamp( anyInt(), any( Timestamp.class ), any( Calendar.class ) );
     verify( statement ).executeQuery();
 
     assertThat( result, is( notNullValue() ) );
@@ -551,7 +552,7 @@ public class SimpleSQLReportDataFactoryTest {
     TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
 
     verify( statement ).clearParameters();
-    verify( statement ).setObject( anyInt(), any( Timestamp.class ) );
+    verify( statement ).setTimestamp( anyInt(), any( Timestamp.class ), any( Calendar.class ) );
     verify( statement ).executeQuery();
 
     assertThat( result, is( notNullValue() ) );

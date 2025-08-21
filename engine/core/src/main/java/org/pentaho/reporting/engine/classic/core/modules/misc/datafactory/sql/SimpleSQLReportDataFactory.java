@@ -441,43 +441,36 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
   private void setParameterValue( final PreparedStatement pstmt, final int paramIndex, final Object value, 
       final String typeClass, final TimeZone timeZone ) throws SQLException {
     if ( value instanceof java.sql.Date ) {
-      // For SQL Date, we need to consider timezone when converting from util.Date
-      if ( timeZone != null && !timeZone.equals( TimeZone.getDefault() ) ) {
-        final java.sql.Date sqlDate = (java.sql.Date) value;
+      if ( timeZone != null ) {
         final Calendar calendar = Calendar.getInstance( timeZone );
-        calendar.setTimeInMillis( sqlDate.getTime() );
-        pstmt.setObject( paramIndex, new java.sql.Date( calendar.getTimeInMillis() ) );
+        pstmt.setDate( paramIndex, (java.sql.Date) value, calendar );
       } else {
-        pstmt.setObject( paramIndex, value );
+        pstmt.setDate( paramIndex, (java.sql.Date) value );
       }
     } else if ( value instanceof java.sql.Time ) {
-      // For SQL Time, timezone handling might be relevant depending on use case
-      if ( timeZone != null && !timeZone.equals( TimeZone.getDefault() ) ) {
-        final java.sql.Time sqlTime = (java.sql.Time) value;
+      if ( timeZone != null ) {
         final Calendar calendar = Calendar.getInstance( timeZone );
-        calendar.setTimeInMillis( sqlTime.getTime() );
-        pstmt.setObject( paramIndex, new java.sql.Time( calendar.getTimeInMillis() ) );
+        pstmt.setTime( paramIndex, (java.sql.Time) value, calendar );
       } else {
-        pstmt.setObject( paramIndex, value );
+        pstmt.setTime( paramIndex, (java.sql.Time) value );
       }
     } else if ( value instanceof Timestamp ) {
-      // For SQL Timestamp, timezone is very important
-      if ( timeZone != null && !timeZone.equals( TimeZone.getDefault() ) ) {
-        final Timestamp timestamp = (Timestamp) value;
+      if ( timeZone != null ) {
         final Calendar calendar = Calendar.getInstance( timeZone );
-        calendar.setTimeInMillis( timestamp.getTime() );
-        final Timestamp adjustedTimestamp = new Timestamp( calendar.getTimeInMillis() );
-        adjustedTimestamp.setNanos( timestamp.getNanos() ); // Preserve nanoseconds
-        pstmt.setObject( paramIndex, adjustedTimestamp );
+        pstmt.setTimestamp( paramIndex, (Timestamp) value, calendar );
       } else {
-        pstmt.setObject( paramIndex, value );
+        pstmt.setTimestamp( paramIndex, (Timestamp) value );
       }
     } else if ( value instanceof Date ) {
       // Convert java.util.Date to java.sql.Timestamp with timezone consideration
       final Date d = (Date) value;
-      final Calendar calendar = Calendar.getInstance( timeZone );
-      calendar.setTime( d );
-      pstmt.setObject( paramIndex, new Timestamp( calendar.getTimeInMillis() ) );
+      final Timestamp timestamp = new Timestamp( d.getTime() );
+      if ( timeZone != null ) {
+        final Calendar calendar = Calendar.getInstance( timeZone );
+        pstmt.setTimestamp( paramIndex, timestamp, calendar );
+      } else {
+        pstmt.setTimestamp( paramIndex, timestamp );
+      }
     } else if ( typeClass != null && typeClass.equals( "java.lang.String" ) ) {
       pstmt.setObject( paramIndex, String.valueOf( value ) );
     } else {
