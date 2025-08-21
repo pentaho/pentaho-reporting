@@ -30,8 +30,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -152,12 +154,12 @@ public class SimpleSQLReportDataFactoryTest {
   public void testGetReferencedFields() throws ReportDataFactoryException, SQLException {
     DataRow parameters = mock( DataRow.class );
     String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
-    assertThat( result, arrayContainingInAnyOrder( "param", DataFactory.QUERY_LIMIT ) );
+    assertThat( result, arrayContainingInAnyOrder( "param", DataFactory.QUERY_LIMIT, DataFactory.QUERY_TIMEZONE ) );
 
     factory.setUserField( "user_field" );
     factory.setPasswordField( "password_field" );
     result = factory.getReferencedFields( QUERY + "${param}", parameters );
-    assertThat( result, arrayContainingInAnyOrder( "param", "user_field", "password_field", DataFactory.QUERY_LIMIT ) );
+    assertThat( result, arrayContainingInAnyOrder( "param", "user_field", "password_field", DataFactory.QUERY_LIMIT, DataFactory.QUERY_TIMEZONE ) );
   }
 
   @Test
@@ -484,5 +486,74 @@ public class SimpleSQLReportDataFactoryTest {
     this.connection = factory.getConnection( parameters );
     String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
     verify( factory, times( 0 ) ).close();
+  }
+
+  @Test
+  public void testParametrizeWithTimezone() throws SQLException {
+    String query = "SELECT * FROM test WHERE date_field = ?";
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] { "dateParam" };
+    Connection con = mock( Connection.class );
+    PreparedStatement statement = mock( PreparedStatement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    Date testDate = new Date();
+    doReturn( testDate ).when( parameters ).get( "dateParam" );
+    doReturn( "America/New_York" ).when( parameters ).get( DataFactory.QUERY_TIMEZONE );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
+    doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery();
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "test_column_label" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "test_column_name" ).when( rsmd ).getColumnName( 1 );
+    doReturn( true ).doReturn( false ).when( res ).next();
+    doReturn( "test_val" ).when( res ).getObject( 1 );
+
+    TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
+
+    verify( statement ).clearParameters();
+    verify( statement ).setObject( anyInt(), any( Timestamp.class ) );
+    verify( statement ).executeQuery();
+
+    assertThat( result, is( notNullValue() ) );
+  }
+
+  @Test
+  public void testParametrizeWithTimezoneObject() throws SQLException {
+    String query = "SELECT * FROM test WHERE date_field = ?";
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] { "dateParam" };
+    Connection con = mock( Connection.class );
+    PreparedStatement statement = mock( PreparedStatement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    Date testDate = new Date();
+    TimeZone customTz = TimeZone.getTimeZone( "Asia/Tokyo" );
+    doReturn( testDate ).when( parameters ).get( "dateParam" );
+    doReturn( customTz ).when( parameters ).get( DataFactory.QUERY_TIMEZONE );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
+    doReturn( statement ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery();
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "test_column_label" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "test_column_name" ).when( rsmd ).getColumnName( 1 );
+    doReturn( true ).doReturn( false ).when( res ).next();
+    doReturn( "test_val" ).when( res ).getObject( 1 );
+
+    TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
+
+    verify( statement ).clearParameters();
+    verify( statement ).setObject( anyInt(), any( Timestamp.class ) );
+    verify( statement ).executeQuery();
+
+    assertThat( result, is( notNullValue() ) );
   }
 }

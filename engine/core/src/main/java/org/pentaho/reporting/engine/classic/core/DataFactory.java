@@ -35,6 +35,10 @@ public interface DataFactory extends Serializable, Cloneable {
    * this parameter is implementation dependent.
    */
   public static final String QUERY_TIMEOUT = "::org.pentaho.reporting::query-timeout";
+  /**
+   * An internal query parameter that holds the timezone for date/time parameter handling.
+   */
+  public static final String QUERY_TIMEZONE = "::org.pentaho.reporting::query-timezone";
   public static final String QUERY_SORT = "::org.pentaho.reporting::query-sort";
 
   /**

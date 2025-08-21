@@ -25,6 +25,8 @@ import org.pentaho.reporting.engine.classic.core.event.async.AsyncReportStatusLi
 import org.pentaho.reporting.engine.classic.core.event.async.IAsyncReportListener;
 import org.pentaho.reporting.engine.classic.core.event.async.IReportCancelEvent;
 import org.pentaho.reporting.engine.classic.core.event.async.ReportListenerThreadHolder;
+import org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters.TextComponentEditHandler;
+import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -42,8 +44,10 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.TimeZone;
 import java.util.concurrent.Callable;
 
 /**
@@ -239,6 +243,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
         list.add( passwordField );
       }
       list.add( DataFactory.QUERY_LIMIT );
+      list.add( DataFactory.QUERY_TIMEZONE );
       return list.toArray( new String[ list.size() ] );
     } catch ( ReportDataFactoryException e ) {
       logger.warn( "Unable to perform cache preparation", e );
@@ -374,6 +379,17 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
 
   private void parametrize( final DataRow parameters, final String[] params, final PreparedStatement pstmt,
       final boolean expandArrays, final int parameterOffset ) throws SQLException {
+    // Extract timezone from parameters if available
+    TimeZone timeZone = TimeZone.getDefault();
+    
+    // Look for timezone parameter in the DataRow
+    final Object timezoneParam = parameters.get( DataFactory.QUERY_TIMEZONE );
+    if ( timezoneParam instanceof String ) {
+      timeZone = TextComponentEditHandler.createTimeZone( (String) timezoneParam, TimeZone.getDefault() );
+    } else if ( timezoneParam instanceof TimeZone ) {
+      timeZone = (TimeZone) timezoneParam;
+    }
+    
     pstmt.clearParameters();
     int paramIndex = parameterOffset;
     ParameterMetaData parameterMetaData = null;
@@ -405,19 +421,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
         if ( values.length > 0 ) {
           for ( int j = 0; j < values.length; j++ ) {
             final Object ivalue = values[j];
-            if ( ivalue instanceof java.sql.Date || ivalue instanceof java.sql.Time || ivalue instanceof Timestamp ) {
-              pstmt.setObject( paramIndex + 1, ivalue );
-            } else if ( ivalue instanceof Date ) {
-              // for now we're going to convert java.util.Date to java.sql.Timestamp
-              // this seems to be a better fit for most jdbc drivers/databases
-              // if problems come from this, we can create workaround them as discovered
-              final Date d = (Date) ivalue;
-              pstmt.setObject( paramIndex + 1, new Timestamp( d.getTime() ) );
-            } else if ( typeClass != null && typeClass.equals( "java.lang.String" ) ) {
-              pstmt.setObject( paramIndex + 1, String.valueOf( ivalue ) );
-            } else {
-              pstmt.setObject( paramIndex + 1, ivalue );
-            }
+            setParameterValue( pstmt, paramIndex + 1, ivalue, typeClass, timeZone );
             logger.debug( "Parametrize: Array: " + ( paramIndex + 1 ) + ": " + ivalue );
             paramIndex++;
           }
@@ -427,20 +431,57 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
           paramIndex++;
         }
       } else {
-        if ( pvalue instanceof java.sql.Date || pvalue instanceof java.sql.Time || pvalue instanceof Timestamp ) {
-          pstmt.setObject( paramIndex + 1, pvalue );
-        } else if ( pvalue instanceof Date ) {
-          // see comment above about java.util.Date/java.sql.Timestamp conversion
-          final Date d = (Date) pvalue;
-          pstmt.setObject( paramIndex + 1, new Timestamp( d.getTime() ) );
-        } else if ( typeClass != null && typeClass.equals( "java.lang.String" ) ) {
-          pstmt.setObject( paramIndex + 1, String.valueOf( pvalue ) );
-        } else {
-          pstmt.setObject( paramIndex + 1, pvalue );
-        }
+        setParameterValue( pstmt, paramIndex + 1, pvalue, typeClass, timeZone );
         logger.debug( "Parametrize: " + ( paramIndex + 1 ) + ": " + pvalue );
         paramIndex++;
       }
+    }
+  }
+  
+  private void setParameterValue( final PreparedStatement pstmt, final int paramIndex, final Object value, 
+      final String typeClass, final TimeZone timeZone ) throws SQLException {
+    if ( value instanceof java.sql.Date ) {
+      // For SQL Date, we need to consider timezone when converting from util.Date
+      if ( timeZone != null && !timeZone.equals( TimeZone.getDefault() ) ) {
+        final java.sql.Date sqlDate = (java.sql.Date) value;
+        final Calendar calendar = Calendar.getInstance( timeZone );
+        calendar.setTimeInMillis( sqlDate.getTime() );
+        pstmt.setObject( paramIndex, new java.sql.Date( calendar.getTimeInMillis() ) );
+      } else {
+        pstmt.setObject( paramIndex, value );
+      }
+    } else if ( value instanceof java.sql.Time ) {
+      // For SQL Time, timezone handling might be relevant depending on use case
+      if ( timeZone != null && !timeZone.equals( TimeZone.getDefault() ) ) {
+        final java.sql.Time sqlTime = (java.sql.Time) value;
+        final Calendar calendar = Calendar.getInstance( timeZone );
+        calendar.setTimeInMillis( sqlTime.getTime() );
+        pstmt.setObject( paramIndex, new java.sql.Time( calendar.getTimeInMillis() ) );
+      } else {
+        pstmt.setObject( paramIndex, value );
+      }
+    } else if ( value instanceof Timestamp ) {
+      // For SQL Timestamp, timezone is very important
+      if ( timeZone != null && !timeZone.equals( TimeZone.getDefault() ) ) {
+        final Timestamp timestamp = (Timestamp) value;
+        final Calendar calendar = Calendar.getInstance( timeZone );
+        calendar.setTimeInMillis( timestamp.getTime() );
+        final Timestamp adjustedTimestamp = new Timestamp( calendar.getTimeInMillis() );
+        adjustedTimestamp.setNanos( timestamp.getNanos() ); // Preserve nanoseconds
+        pstmt.setObject( paramIndex, adjustedTimestamp );
+      } else {
+        pstmt.setObject( paramIndex, value );
+      }
+    } else if ( value instanceof Date ) {
+      // Convert java.util.Date to java.sql.Timestamp with timezone consideration
+      final Date d = (Date) value;
+      final Calendar calendar = Calendar.getInstance( timeZone );
+      calendar.setTime( d );
+      pstmt.setObject( paramIndex, new Timestamp( calendar.getTimeInMillis() ) );
+    } else if ( typeClass != null && typeClass.equals( "java.lang.String" ) ) {
+      pstmt.setObject( paramIndex, String.valueOf( value ) );
+    } else {
+      pstmt.setObject( paramIndex, value );
     }
   }
 
