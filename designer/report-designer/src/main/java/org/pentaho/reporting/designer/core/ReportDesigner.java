@@ -23,7 +23,6 @@ import org.pentaho.reporting.designer.core.status.ExceptionDialog;
 import org.pentaho.reporting.designer.core.util.exceptions.ThrowableHandler;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.firewall.FirewallingProxySelector;
-import org.pentaho.reporting.designer.core.util.firewall.FirewallingSecurityManager;
 import org.pentaho.reporting.designer.core.welcome.SamplesTreeBuilder;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
@@ -158,7 +157,6 @@ public class ReportDesigner {
    */
   public static void main( final String[] args ) {
     boolean offlineMode = false;
-    boolean offlineModeSecurityManager = false;
 
     int parsePos;
     for ( parsePos = 0; parsePos < args.length; parsePos += 1 ) {
@@ -166,11 +164,6 @@ public class ReportDesigner {
       if ( "--offline".equals( arg ) || "-o".equals( arg ) ) // NON-NLS
       {
         offlineMode = true;
-        continue;
-      }
-      if ( "--with-offline-mode-security-manager".equals( arg ) )// NON-NLS
-      {
-        offlineModeSecurityManager = true;
         continue;
       }
       break;
@@ -189,14 +182,6 @@ public class ReportDesigner {
     System.setProperty( "sun.swing.enableImprovedDragGesture", "true" );// NON-NLS
 
     ProxySelector.setDefault( new FirewallingProxySelector( ProxySelector.getDefault() ) );
-    if ( offlineModeSecurityManager ) {
-      try {
-        System.setSecurityManager( new FirewallingSecurityManager() );
-      } catch ( SecurityException se ) {
-        DebugLog.log(
-          "Unable to set security manager. An other security manager prevented us from gaining control." );// NON-NLS
-      }
-    }
     if ( offlineMode ) {
       WorkspaceSettings.getInstance().setOfflineMode( true );
     }
