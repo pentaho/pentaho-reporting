@@ -149,7 +149,7 @@
     <pentaho-metaverse.version>11.0.0.0-SNAPSHOT</pentaho-metaverse.version>
     <encryption-support.version>11.0.0.0-SNAPSHOT</encryption-support.version>
     <commons-compress.version>1.26.1</commons-compress.version>
-    <commons-io.version>2.16.1</commons-io.version>
+    <commons-io.version>2.14.0</commons-io.version>
     <log4j.version>2.23.1</log4j.version>
   </properties>
   <dependencyManagement>
