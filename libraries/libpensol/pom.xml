@@ -126,48 +126,68 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.sun.grizzly</groupId>
-      <artifactId>grizzly-http</artifactId>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.sun.grizzly</groupId>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-server</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.ext</groupId>
+      <artifactId>jersey-spring6</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-grizzly2-servlet</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-grizzly2-http</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.grizzly</groupId>
+      <artifactId>grizzly-http-server</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.grizzly</groupId>
       <artifactId>grizzly-http-servlet</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.grizzly</groupId>
-      <artifactId>grizzly-lzma</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.grizzly</groupId>
-      <artifactId>grizzly-portunif</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.grizzly</groupId>
-      <artifactId>grizzly-rcm</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.grizzly</groupId>
-      <artifactId>grizzly-servlet-webserver</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.grizzly</groupId>
-      <artifactId>grizzly-utils</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

@@ -127,7 +127,7 @@
     <odfdom-java.version>0.8.6</odfdom-java.version>
     <commons-math.version>1.1</commons-math.version>
     <javassist.version>3.20.0-GA</javassist.version>
-    <grizzly.version>1.9.45</grizzly.version>
+    <grizzly.version>4.0.2</grizzly.version>
     <commons-pool2.version>2.11.1</commons-pool2.version>
     <test.workers>1</test.workers>
     <checkstyle.source.directory>${basedir}/src/main/java</checkstyle.source.directory>
@@ -2121,109 +2121,80 @@
         <scope>test</scope>
       </dependency>
       <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-server</artifactId>
+        <version>${jersey.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${fasterxml-jackson.version}</version> <!-- Use a version compatible with Jersey 3 -->
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.dom4j</groupId>
+        <artifactId>dom4j</artifactId>
+        <version>${dom4j.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.ext</groupId>
+        <artifactId>jersey-spring6</artifactId>
+        <version>${jersey.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.glassfish.jersey.test-framework.providers</groupId>
         <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
         <version>${jersey.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>com.sun.grizzly</groupId>
-        <artifactId>grizzly-framework</artifactId>
-        <version>${grizzly.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
+        <groupId>org.glassfish.jersey.inject</groupId>
+        <artifactId>jersey-hk2</artifactId>
+        <version>${jersey.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>com.sun.grizzly</groupId>
-        <artifactId>grizzly-http</artifactId>
-        <version>${grizzly.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
+        <groupId>org.glassfish.jersey.containers</groupId>
+        <artifactId>jersey-container-grizzly2-servlet</artifactId>
+        <version>${jersey.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>com.sun.grizzly</groupId>
+        <groupId>org.glassfish.jersey.containers</groupId>
+        <artifactId>jersey-container-grizzly2-http</artifactId>
+        <version>${jersey.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.containers</groupId>
+        <artifactId>jersey-container-servlet</artifactId>
+        <version>${jersey.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.grizzly</groupId>
+        <artifactId>grizzly-http-server</artifactId>
+        <version>${grizzly.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.grizzly</groupId>
         <artifactId>grizzly-http-servlet</artifactId>
         <version>${grizzly.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.grizzly</groupId>
-        <artifactId>grizzly-lzma</artifactId>
-        <version>${grizzly.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.grizzly</groupId>
-        <artifactId>grizzly-portunif</artifactId>
-        <version>${grizzly.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.grizzly</groupId>
-        <artifactId>grizzly-rcm</artifactId>
-        <version>${grizzly.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.grizzly</groupId>
-        <artifactId>grizzly-servlet-webserver</artifactId>
-        <version>${grizzly.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.grizzly</groupId>
-        <artifactId>grizzly-utils</artifactId>
-        <version>${grizzly.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>jakarta.servlet</groupId>
-        <artifactId>jakarta.servlet-api</artifactId>
-        <version>${jakarta.servlet.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.gwtproject</groupId>
