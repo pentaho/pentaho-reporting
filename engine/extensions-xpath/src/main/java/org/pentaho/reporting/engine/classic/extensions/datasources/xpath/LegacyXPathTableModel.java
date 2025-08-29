@@ -201,11 +201,13 @@ public class LegacyXPathTableModel extends AbstractTableModel {
     }
   }
 
-  private DocumentBuilderFactory calculateDocumentBuilderFactory( final Configuration configuration ) throws ParserConfigurationException {
+  @SuppressWarnings( "java:S2755" ) //Config property XPATH_ENABLE_DTDS already handles access to external entities
+  private DocumentBuilderFactory calculateDocumentBuilderFactory( final Configuration configuration )
+    throws ParserConfigurationException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     dbf.setXIncludeAware( false );
     if ( !"true".equals( configuration
-            .getConfigProperty( XPATH_ENABLE_DTDS ) ) ) {
+      .getConfigProperty( XPATH_ENABLE_DTDS ) ) ) {
       dbf.setFeature( DISALLOW_DOCTYPE_DECL, true );
     }
     return dbf;
