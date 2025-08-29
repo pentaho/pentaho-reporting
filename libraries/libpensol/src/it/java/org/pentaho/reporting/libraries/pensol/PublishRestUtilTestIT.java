@@ -13,12 +13,10 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.test.JerseyTest;
-import org.glassfish.jersey.test.spi.TestContainerFactory;
-import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -34,16 +32,11 @@ import java.net.URI;
 public class PublishRestUtilTestIT extends JerseyTest {
 
   @Override
-  protected AppDescriptor configure() {
-    ClientConfig config = new DefaultClientConfig();
-    config.getClasses().add( MultiPartWriter.class );
-    config.getClasses().add( TestRepositoryPublishResource.class );
-    config.getFeatures().put( JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE );
-
-    return new WebAppDescriptor.Builder( "org.pentaho.reporting.libraries.pensol.resources" )
-      .contextPath( "api" )
-      .clientConfig( config )
-      .build();
+  protected Application configure() {
+    return new ResourceConfig()
+            .register( MultiPartFeature.class)
+            .register( TestRepositoryPublishResource.class )
+            .property("jersey.config.server.pojo.mapping.feature", true);
   }
 
   @Test
@@ -68,13 +61,20 @@ public class PublishRestUtilTestIT extends JerseyTest {
     testPublish( TestRepositoryPublishResource.RETURN_500, 500 );
   }
 
-  private void testPublish( String filename, int expectedCode ) throws Exception {
-    URI uri = resource().getURI();
-    String baseUrl = "http://" + uri.getHost() + ":" + uri.getPort();
+  private void testPublish(String filename, int expectedCode) throws Exception {
+    String baseUrl = getBaseUri().toString();
+    if (baseUrl.endsWith("api")){
+      baseUrl = baseUrl.replace("api", "");
+    }
 
-    PublishRestUtil util = new PublishRestUtil( baseUrl, "", "" );
-    int code = util.publishFile( "", filename, new ByteArrayInputStream( new byte[ 0 ] ), true );
+    PublishRestUtil util = new PublishRestUtil(baseUrl, "", "");
+    int code = util.publishFile("", filename, new ByteArrayInputStream(new byte[0]), true);
 
-    Assert.assertEquals( expectedCode, code );
+    Assert.assertEquals(expectedCode, code);
+  }
+
+  @Override
+  protected URI getBaseUri() {
+    return UriBuilder.fromUri("http://localhost/api").port( this.getPort() ).build(new Object[0]);
   }
 }
