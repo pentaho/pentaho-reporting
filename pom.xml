@@ -2146,7 +2146,6 @@
         <groupId>org.dom4j</groupId>
         <artifactId>dom4j</artifactId>
         <version>${dom4j.version}</version>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.glassfish.jersey.ext</groupId>
