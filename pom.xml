@@ -379,15 +379,9 @@
         <version>${guava.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.ini4j</groupId>
-        <artifactId>ini4j</artifactId>
-        <version>${ini4j.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-configuration2</artifactId>
+        <version>${commons-configuration2.version}</version>
       </dependency>
       <dependency>
         <groupId>com.healthmarketscience.jackcess</groupId>
