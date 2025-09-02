@@ -601,6 +601,10 @@
           </exclusion>
           <exclusion>
             <artifactId>*</artifactId>
+            <groupId>org.gwtproject</groupId>
+          </exclusion>
+          <exclusion>
+            <artifactId>*</artifactId>
             <groupId>org.apache.poi</groupId>
           </exclusion>
           <exclusion>
@@ -2369,7 +2373,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>com.google.gwt</groupId>
+        <groupId>org.gwtproject</groupId>
         <artifactId>gwt-servlet</artifactId>
       </dependency>
       <dependency>
