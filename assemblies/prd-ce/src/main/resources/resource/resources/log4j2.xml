@@ -45,7 +45,6 @@
     <Logger name="org.pentaho.reporting.engine.classic.core.layout.ModelPrinter" level="DEBUG"/>
     <Logger name="org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor" level="INFO"/>
     <Logger name="org.pentaho.reporting.engine.classic.core.states.datarow" level="INFO"/>
-    <Logger name="org.pentaho.hadoop.shim.DriverManager" level="INFO"/>
     <Root level="INFO">
       <AppenderRef ref="FILE"/>
       <AppenderRef ref="CONSOLE"/>
