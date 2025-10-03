@@ -35,6 +35,7 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 import org.w3c.dom.Node;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -155,6 +156,9 @@ class BaseScope extends ImporterTopLevel {
       final StringWriter stringWriter = new StringWriter();
       final Result result = new StreamResult( stringWriter );
       final TransformerFactory factory = TransformerFactory.newInstance();
+      factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
+      factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_DTD, "" );
+      factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "" );
       final Transformer transformer = factory.newTransformer();
       transformer.setOutputProperty( OutputKeys.INDENT, "yes" );
       transformer.setOutputProperty( "{http://xml.apache.org/xslt}indent-amount", "2" );
