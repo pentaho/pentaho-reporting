@@ -79,6 +79,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.TransformerFactory;
@@ -907,6 +908,9 @@ public class PmdDataSourceEditor extends CommonDialog {
           list.item( 0 ).setTextContent( domainIdTextField.getText() );
 
           final TransformerFactory tfactory = TransformerFactory.newInstance();
+          factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
+          factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_DTD, "" );
+          factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "" );
           final StringWriter stringWriter = new StringWriter();
           final StreamResult result = new StreamResult();
           result.setWriter( stringWriter );
