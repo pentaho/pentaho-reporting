@@ -910,6 +910,7 @@ public class PmdDataSourceEditor extends CommonDialog {
           final TransformerFactory tfactory = TransformerFactory.newInstance();
           factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
           factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_DTD, "" );
+          factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_SCHEMA, "" );
           factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "" );
           final StringWriter stringWriter = new StringWriter();
           final StreamResult result = new StreamResult();
