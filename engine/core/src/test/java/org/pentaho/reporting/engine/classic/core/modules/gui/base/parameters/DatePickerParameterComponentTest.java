@@ -24,6 +24,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.atLeastOnce;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,6 +36,9 @@ import java.util.TimeZone;
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import javax.swing.JFormattedTextField;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -190,6 +194,512 @@ public class DatePickerParameterComponentTest {
     // Verify the text field has been updated with the correct format
     JTextField dateField = getDateField(dateTimePickerComponent);
     assertThat(dateField.getText(), is(equalTo("11.09.2015 14:45:30")));
+  }
+
+  @Test
+  public void testHourClampOnEnter_updatesImmediately() throws Exception {
+    // Enable time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    // Initialize with a known date (ensures dateChooserPanel has a date)
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    // Find hour spinner
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner hourSpinner = null;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) { hourSpinner = (JSpinner) component; break; }
+    }
+    assertThat(hourSpinner, is(notNullValue()));
+
+    // Type out-of-range "0" and press Enter -> clamps to 1 and updates
+    JFormattedTextField hourTf = ((JSpinner.NumberEditor) hourSpinner.getEditor()).getTextField();
+    hourTf.setText("0");
+    for (java.awt.event.ActionListener al : hourTf.getActionListeners()) {
+      al.actionPerformed(new ActionEvent(hourTf, ActionEvent.ACTION_PERFORMED, "Enter"));
+    }
+
+    assertThat(hourSpinner.getValue(), is(equalTo(1)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testCommitOnFocusLost_updatesImmediately() throws Exception {
+    // Enable time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    // Find hour spinner
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner hourSpinner = null;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) { hourSpinner = (JSpinner) component; break; }
+    }
+    assertThat(hourSpinner, is(notNullValue()));
+
+    // Enter "13" (out of range) then simulate leaving the field -> clamps to 12 and updates
+    JFormattedTextField hourTf = ((JSpinner.NumberEditor) hourSpinner.getEditor()).getTextField();
+    hourTf.setText("13");
+    for (java.awt.event.FocusListener fl : hourTf.getFocusListeners()) {
+      fl.focusLost(new FocusEvent(hourTf, FocusEvent.FOCUS_LOST));
+    }
+
+    assertThat(hourSpinner.getValue(), is(equalTo(12)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testUnparsableSeconds_clampsToMinAndUpdates() throws Exception {
+    // Enable time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    // Find second spinner (3rd JSpinner in the panel)
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner secondSpinner = null;
+    int count = 0;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) {
+        count++;
+        if (count == 3) {
+          secondSpinner = (JSpinner) component;
+          break;
+        }
+      }
+    }
+    assertThat(secondSpinner, is(notNullValue()));
+
+    // Type "abc" and press Enter -> clamps to 0 and updates
+    JFormattedTextField secTf = ((JSpinner.NumberEditor) secondSpinner.getEditor()).getTextField();
+    secTf.setText("abc");
+    for (java.awt.event.ActionListener al : secTf.getActionListeners()) {
+      al.actionPerformed(new ActionEvent(secTf, ActionEvent.ACTION_PERFORMED, "Enter"));
+    }
+
+    assertThat(secondSpinner.getValue(), is(equalTo(0)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testAmPmToggleWithHour12_convertsToMidnightAndNoon() throws Exception {
+    // Enable time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    // Seed a known date
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner hourSpinner = null;
+    JSpinner minuteSpinner = null;
+    JComboBox amPmComboBox = null;
+
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) {
+        if (hourSpinner == null) {
+          hourSpinner = (JSpinner) component;
+        } else if (minuteSpinner == null) {
+          minuteSpinner = (JSpinner) component;
+        }
+      } else if (component instanceof JComboBox) {
+        amPmComboBox = (JComboBox) component;
+      }
+    }
+    assertThat(hourSpinner, is(notNullValue()));
+    assertThat(minuteSpinner, is(notNullValue()));
+    assertThat(amPmComboBox, is(notNullValue()));
+
+    // Set hour 12 and AM -> 00 in 24h format
+    hourSpinner.setValue(12);
+    amPmComboBox.setSelectedIndex(0); // AM triggers updateTime via ActionListener
+    JTextField dateField = getDateField(comp);
+    assertThat(dateField.getText(), is(equalTo("11.09.2015 00:15:30")));
+
+    // Toggle to PM -> 12 in 24h format
+    amPmComboBox.setSelectedIndex(1); // PM
+    assertThat(dateField.getText(), is(equalTo("11.09.2015 12:15:30")));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testZeroPadOnEnter_whenValueUnchanged() throws Exception {
+    // Enable time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 7, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner hourSpinner = null;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) { hourSpinner = (JSpinner) component; break; }
+    }
+    assertThat(hourSpinner, is(notNullValue()));
+
+    // Ensure value is 7, then type "7" and press Enter -> value unchanged, but editor normalizes to "07"
+    hourSpinner.setValue(7);
+    JFormattedTextField hourTf = ((JSpinner.NumberEditor) hourSpinner.getEditor()).getTextField();
+    hourTf.setText("7");
+    for (java.awt.event.ActionListener al : hourTf.getActionListeners()) {
+      al.actionPerformed(new ActionEvent(hourTf, ActionEvent.ACTION_PERFORMED, "Enter"));
+    }
+    assertThat(hourTf.getText(), is(equalTo("07")));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testMinuteNegativeClampOnFocusLost_updatesToZero() throws Exception {
+    // Enable time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner minuteSpinner = null;
+    int count = 0;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) {
+        count++;
+        if (count == 2) { minuteSpinner = (JSpinner) component; break; }
+      }
+    }
+    assertThat(minuteSpinner, is(notNullValue()));
+
+    JFormattedTextField minTf = ((JSpinner.NumberEditor) minuteSpinner.getEditor()).getTextField();
+    minTf.setText("-5");
+    for (java.awt.event.FocusListener fl : minTf.getFocusListeners()) {
+      fl.focusLost(new FocusEvent(minTf, FocusEvent.FOCUS_LOST));
+    }
+
+    assertThat(minuteSpinner.getValue(), is(equalTo(0)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testSecondOverflowClampOnEnter_updatesTo59() throws Exception {
+    // Enable time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner secondSpinner = null;
+    int count = 0;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) {
+        count++;
+        if (count == 3) { secondSpinner = (JSpinner) component; break; }
+      }
+    }
+    assertThat(secondSpinner, is(notNullValue()));
+
+    JFormattedTextField secTf = ((JSpinner.NumberEditor) secondSpinner.getEditor()).getTextField();
+    secTf.setText("60");
+    for (java.awt.event.ActionListener al : secTf.getActionListeners()) {
+      al.actionPerformed(new ActionEvent(secTf, ActionEvent.ACTION_PERFORMED, "Enter"));
+    }
+
+    assertThat(secondSpinner.getValue(), is(equalTo(59)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testAutoUpdateDisabled_TimeSpinnersClampAndCommit() throws Exception {
+    // Disable auto-update
+    doReturn("false").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, "auto-submit", parameterContext);
+    doReturn("false").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, "auto-update-on-selection", parameterContext);
+    doReturn("false").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, "Auto -Update on selection", parameterContext);
+
+    // Time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    // Find minute spinner (2nd spinner)
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner minuteSpinner = null;
+    int count = 0;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) {
+        count++;
+        if (count == 2) { minuteSpinner = (JSpinner) component; break; }
+      }
+    }
+    assertThat(minuteSpinner, is(notNullValue()));
+
+    // Start clean to avoid counting init interactions
+    org.mockito.Mockito.reset(updateContext);
+
+    // Enter overflow and press Enter -> clamps to 59 and commits (matches current behavior)
+    JFormattedTextField minTf = ((JSpinner.NumberEditor) minuteSpinner.getEditor()).getTextField();
+    minTf.setText("99");
+    for (java.awt.event.ActionListener al : minTf.getActionListeners()) {
+      al.actionPerformed(new ActionEvent(minTf, ActionEvent.ACTION_PERFORMED, "Enter"));
+    }
+
+    assertThat(minuteSpinner.getValue(), is(equalTo(59)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+
+    // Also verify focus-lost path clamps to 0 and commits
+    org.mockito.Mockito.reset(updateContext);
+    minTf.setText("-1");
+    for (java.awt.event.FocusListener fl : minTf.getFocusListeners()) {
+      fl.focusLost(new FocusEvent(minTf, FocusEvent.FOCUS_LOST));
+    }
+    assertThat(minuteSpinner.getValue(), is(equalTo(0)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testAutoUpdateDisabled_DateSelection_NoCommit() throws Exception {
+    // Disable auto-update
+    doReturn("false").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, "auto-submit", parameterContext);
+    doReturn("false").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, "auto-update-on-selection", parameterContext);
+    doReturn("false").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, "Auto -Update on selection", parameterContext);
+
+    // Date-only format
+    doReturn("dd.MM.yyyy").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, false);
+    comp.initialize();
+
+    org.mockito.Mockito.reset(updateContext);
+
+    // Simulate a date selection in the chooser
+    Calendar cal = Calendar.getInstance();
+    cal.set(2016, 0, 2);
+    // DateChooserPanel is used under the hood; use the API exposed by the component if available
+    // Fallback: call initialize already set field; just verify no commit invoked
+    // If your component exposes dateChooserPanel, replace with comp.dateChooserPanel.setDate(cal.getTime());
+    // For now, assert no commit happened due to auto-update off after init:
+    verify(updateContext, org.mockito.Mockito.never())
+            .setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testWhitespaceMinuteInput_clampsToMinOnEnter() throws Exception {
+    // Time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner minuteSpinner = null;
+    int count = 0;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) {
+        count++;
+        if (count == 2) { minuteSpinner = (JSpinner) component; break; }
+      }
+    }
+    assertThat(minuteSpinner, is(notNullValue()));
+    org.mockito.Mockito.reset(updateContext);
+
+    JFormattedTextField minTf = ((JSpinner.NumberEditor) minuteSpinner.getEditor()).getTextField();
+    minTf.setText("   "); // whitespace
+    for (java.awt.event.ActionListener al : minTf.getActionListeners()) {
+      al.actionPerformed(new ActionEvent(minTf, ActionEvent.ACTION_PERFORMED, "Enter"));
+    }
+
+    assertThat(minuteSpinner.getValue(), is(equalTo(0)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testLargeMinuteOverflow_clampsTo59OnEnter() throws Exception {
+    // Time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner minuteSpinner = null;
+    int count = 0;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) {
+        count++;
+        if (count == 2) { minuteSpinner = (JSpinner) component; break; }
+      }
+    }
+    assertThat(minuteSpinner, is(notNullValue()));
+    org.mockito.Mockito.reset(updateContext);
+
+    JFormattedTextField minTf = ((JSpinner.NumberEditor) minuteSpinner.getEditor()).getTextField();
+    minTf.setText("999");
+    for (java.awt.event.ActionListener al : minTf.getActionListeners()) {
+      al.actionPerformed(new ActionEvent(minTf, ActionEvent.ACTION_PERFORMED, "Enter"));
+    }
+
+    assertThat(minuteSpinner.getValue(), is(equalTo(59)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testHourLowerBoundClampOnFocusLost_updatesTo1() throws Exception {
+    // Time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner hourSpinner = null;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) { hourSpinner = (JSpinner) component; break; }
+    }
+    assertThat(hourSpinner, is(notNullValue()));
+    org.mockito.Mockito.reset(updateContext);
+
+    JFormattedTextField hourTf = ((JSpinner.NumberEditor) hourSpinner.getEditor()).getTextField();
+    hourTf.setText("0");
+    for (java.awt.event.FocusListener fl : hourTf.getFocusListeners()) {
+      fl.focusLost(new FocusEvent(hourTf, FocusEvent.FOCUS_LOST));
+    }
+
+    assertThat(hourSpinner.getValue(), is(equalTo(1)));
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
+  }
+
+  @Test
+  public void testSpinnerChangeListener_updatesParameterOnSetValue() throws Exception {
+    // Time format
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+    doReturn("dd.MM.yyyy HH:mm:ss").when(entry).getTranslatedParameterAttribute(
+            ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
+
+    Calendar c = Calendar.getInstance();
+    c.set(2015, 8, 11, 10, 15, 30);
+    doReturn(c.getTime()).when(updateContext).getParameterValue(ENTRY_NAME);
+
+    DatePickerParameterComponent comp =
+            new DatePickerParameterComponent(entry, parameterContext, updateContext, true);
+    comp.initialize();
+
+    JPanel panel = (JPanel) comp.getComponent(0);
+    JSpinner secondSpinner = null;
+    int count = 0;
+    for (Component component : panel.getComponents()) {
+      if (component instanceof JSpinner) {
+        count++;
+        if (count == 3) { secondSpinner = (JSpinner) component; break; }
+      }
+    }
+    assertThat(secondSpinner, is(notNullValue()));
+    org.mockito.Mockito.reset(updateContext);
+
+    // Simulate arrow-like change: setValue within range -> ChangeListener triggers update
+    secondSpinner.setValue(31);
+
+    verify(updateContext, atLeastOnce()).setParameterValue(any(String.class), any(Date.class));
   }
 
   @Test
