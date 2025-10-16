@@ -41,6 +41,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.NumberFormatter;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.ActionListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -122,7 +127,19 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
       if ( date == null ) {
         dateField.setText( null );
       } else {
-        dateField.setText( sdf.format( date ) );
+        if (displayTimeSelector) {
+          Calendar calendar = Calendar.getInstance(sdf.getTimeZone());
+          calendar.setTime(date);
+          dateField.setText(sdf.format(date));
+          // Update time spinners
+          int hour = calendar.get(Calendar.HOUR);
+          hourSpinner.setValue(hour == 0 ? 12 : hour);
+          minuteSpinner.setValue(calendar.get(Calendar.MINUTE));
+          secondSpinner.setValue(calendar.get(Calendar.SECOND));
+          amPmComboBox.setSelectedIndex(calendar.get(Calendar.AM_PM));
+          } else {
+          dateField.setText( sdf.format( date ) );
+        }
       }
       if ( dateChooserPanel.isDateSelected() ) {
         dateWindow.setVisible( false );
@@ -209,6 +226,12 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
       hourSpinner.setEditor(new JSpinner.NumberEditor(hourSpinner, "00"));
       minuteSpinner.setEditor(new JSpinner.NumberEditor(minuteSpinner, "00"));
       secondSpinner.setEditor(new JSpinner.NumberEditor(secondSpinner, "00"));
+
+      // Configure spinners to allow direct text input while enforcing valid ranges
+      timeSpinnerValidation(hourSpinner, 1, 12);
+      timeSpinnerValidation(minuteSpinner, 0, 59);
+      timeSpinnerValidation(secondSpinner, 0, 59);
+
       amPmComboBox = new JComboBox<>(new String[]{"AM", "PM"});
       // Retrieve the parameter value from the previous context
       Object value = updateContext.getParameterValue(parameterName);
@@ -256,6 +279,67 @@ public class DatePickerParameterComponent extends JPanel implements ParameterCom
       }
       dateField.setText(sdf.format(selectedDate));
       updateContext.setParameterValue(parameterName, selectedDate);
+    }
+  }
+
+  /**
+   * Configures a JSpinner to allow text input while maintaining valid [min, max] range
+   * - Auto-refresh the date/time display after normalization
+   *
+   * @param spinner The JSpinner to configure
+   * @param min The minimum allowed value (inclusive)
+   * @param max The maximum allowed value (inclusive)
+   */
+  private void timeSpinnerValidation(JSpinner spinner, int min, int max) {
+    if (!(spinner.getEditor() instanceof JSpinner.NumberEditor)) {
+      return;
+    }
+    JSpinner.NumberEditor editor = (JSpinner.NumberEditor) spinner.getEditor();
+    JFormattedTextField tf = editor.getTextField();
+
+    // Allow user to type any value
+    tf.setFocusLostBehavior(JFormattedTextField.PERSIST);
+    if (tf.getFormatter() instanceof NumberFormatter) {
+      NumberFormatter nf = (NumberFormatter) tf.getFormatter();
+      nf.setAllowsInvalid(true);
+
+      nf.setMinimum(null);
+      nf.setMaximum(null);
+      nf.setCommitsOnValidEdit(false);
+    }
+
+    // Update input values
+    tf.addFocusListener(new FocusAdapter() {
+      @Override
+      public void focusLost(FocusEvent e) {
+        normalizeSpinnerInputValue(spinner, tf, min, max);
+        updateTime();
+      }
+    });
+
+    // Update and refresh on Enter
+    tf.addActionListener((ActionListener) evt -> {
+      normalizeSpinnerInputValue(spinner, tf, min, max);
+      updateTime();
+    });
+  }
+
+  private void normalizeSpinnerInputValue(JSpinner spinner, JFormattedTextField tf, int min, int max) {
+    int value;
+    try {
+      Object parsed = tf.getFormatter() != null
+              ? tf.getFormatter().stringToValue(tf.getText())
+              : Integer.parseInt(tf.getText().trim());
+      value = (parsed instanceof Number) ? ((Number) parsed).intValue() : min;
+    } catch (Exception ex) {
+      value = min; // default to min for unparsable input
+    }
+    int clamped = Math.max(min, Math.min(max, value));
+    if (!Integer.valueOf(clamped).equals(spinner.getValue())) {
+      spinner.setValue(clamped);
+    } else {
+      // ensure editor shows normalized text even if value unchanged
+      tf.setText(String.format("%02d", clamped));
     }
   }
 
