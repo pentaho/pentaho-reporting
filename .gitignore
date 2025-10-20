@@ -31,5 +31,6 @@ release.properties
 pom.xml.releaseBackup
 *.iml
 .idea
+.vscode
 
 designer/report-designer-assembly/stage-winlinux/
