@@ -20,6 +20,7 @@ import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator.Attribute;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -124,6 +125,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
   }
 
   private static final float ITALIC_ANGLE = 0.21256f;
+  private static final String UNICODE_SPACES_REGEX = "[\\u00A0\\u202F\\u2000-\\u200B]";
+  private static final Pattern UNICODE_SPACES_PATTERN = Pattern.compile( UNICODE_SPACES_REGEX );
 
   private PdfWriter writer;
   private float globalHeight;
@@ -402,7 +405,10 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
     if ( metaData.isFeatureSupported( OutputProcessorFeature.FAST_FONTRENDERING )
         && isNormalTextSpacing( renderableText ) ) {
       final int maxLength = renderableText.computeMaximumTextSize( contentX2 );
-      final String text = gs.getText( renderableText.getOffset(), maxLength, codePointBuffer );
+      String text = gs.getText( renderableText.getOffset(), maxLength, codePointBuffer );
+
+      // Replace unsupported spaces (PRD-6224)
+      text = UNICODE_SPACES_PATTERN.matcher( text ).replaceAll( " " );
 
       cb.showText( text );
     } else {
@@ -425,8 +431,11 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable {
         final String text = gs.getGlyphAsString( i, codePointBuffer );
         buffer.append( text );
       }
-      if ( buffer.length() > 0 ) {
-        textArray.add( buffer.toString() );
+      if ( !buffer.isEmpty() ) {
+        String finalText = buffer.toString();
+        // Replace unsupported spaces (PRD-6224)
+        finalText = UNICODE_SPACES_PATTERN.matcher( finalText ).replaceAll( " " );
+        textArray.add( finalText );
       }
       cb.showText( textArray );
     }
