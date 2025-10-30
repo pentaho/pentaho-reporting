@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>reporting-assemblies</artifactId>
-    <version>11.0.0.0-196</version>
+    <version>11.0.0.0-latest</version>
   </parent>
   <artifactId>classic-samples-war</artifactId>
-  <version>11.0.0.0-196</version>
+  <version>11.0.0.0-latest</version>
   <packaging>war</packaging>
   <licenses>
     <license>

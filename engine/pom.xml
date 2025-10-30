@@ -20,11 +20,11 @@
     <parent>
     <groupId>org.pentaho.reporting</groupId>
     <artifactId>pentaho-reporting</artifactId>
-    <version>11.0.0.0-196</version>
+    <version>11.0.0.0-latest</version>
   </parent>
   <groupId>org.pentaho.reporting.engine</groupId>
   <artifactId>reporting-engine</artifactId>
-  <version>11.0.0.0-196</version>
+  <version>11.0.0.0-latest</version>
   <packaging>pom</packaging>
   <name>Pentaho Reporting Engine Modules</name>
   <properties>
