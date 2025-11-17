@@ -22,6 +22,7 @@
   <properties>
     <pentaho-mongodb-plugin.version>10.2.0.0-SNAPSHOT</pentaho-mongodb-plugin.version>
     <pentaho-hadoop-shims.version>10.2.0.0-SNAPSHOT</pentaho-hadoop-shims.version>
+    <mongo-java-driver.version>3.12.10</mongo-java-driver.version>
     <assembly_appendId>false</assembly_appendId>
   </properties>
 
@@ -274,6 +275,16 @@
       <version>${pentaho-mongodb-plugin.version}</version>
       <type>zip</type>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>pentaho</groupId>
+      <artifactId>pentaho-mongo-utils</artifactId>
+      <version>${pentaho-mongodb-plugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>${mongo-java-driver.version}</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.di.plugins</groupId>
