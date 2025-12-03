@@ -165,10 +165,6 @@
       <artifactId>syslog4j</artifactId>
     </dependency>
     <dependency>
-      <groupId>trilead-ssh2</groupId>
-      <artifactId>trilead-ssh2</artifactId>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>

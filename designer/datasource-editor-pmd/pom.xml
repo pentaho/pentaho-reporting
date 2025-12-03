@@ -139,10 +139,6 @@
       <artifactId>syslog4j</artifactId>
     </dependency>
     <dependency>
-      <groupId>trilead-ssh2</groupId>
-      <artifactId>trilead-ssh2</artifactId>
-    </dependency>
-    <dependency>
       <groupId>feed4j</groupId>
       <artifactId>feed4j</artifactId>
     </dependency>
