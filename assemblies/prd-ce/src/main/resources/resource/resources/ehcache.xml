@@ -3,20 +3,20 @@
         xmlns="http://www.ehcache.org/v3"
         xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
 
-    <!-- Sets the path to the directory where cache .data files are created.
+  <!-- Sets the path to the directory where cache .data files are created.
 
-         If the path is a Java System Property it is replaced by
-         its value in the running VM.
+       If the path is a Java System Property it is replaced by
+       its value in the running VM.
 
-         The following properties are translated:
-         user.home - User's home directory
-         user.dir - User's current working directory
-         java.io.tmpdir - Default temp file path -->
+       The following properties are translated:
+       user.home - User's home directory
+       user.dir - User's current working directory
+       java.io.tmpdir - Default temp file path -->
   <persistence directory="java.io.tmpdir"/>
 
   <cache alias="defaultCache">
-    <key-type>java.lang.Object</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
@@ -27,8 +27,8 @@
 
   <!-- Defines the caches used by libloader. This cache holds the raw binary data loaded via libloader.  -->
   <cache alias="libloader-data">
-    <key-type>java.lang.String</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
@@ -39,8 +39,8 @@
 
   <!-- Defines the caches used by libloader. This cache holds the raw binary bundle-file data loaded via libloader.  -->
   <cache alias="libloader-bundles">
-    <key-type>java.lang.String</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
@@ -51,8 +51,8 @@
 
   <!-- Defines a cache used by libloader. This cache holds the parsed object loaded via libloader. -->
   <cache alias="libloader-factory">
-    <key-type>java.lang.String</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
@@ -63,13 +63,13 @@
 
   <!-- Defines a cache used by libloader. This cache holds the parsed object loaded via libloader. -->
   <cache alias="report-dataset-cache">
-    <key-type>java.lang.String</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
     <resources>
-      <heap unit="entries">500</heap>
+      <heap unit="entries">50</heap>
     </resources>
   </cache>
 </config>
