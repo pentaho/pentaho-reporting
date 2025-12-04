@@ -14,19 +14,15 @@
 package org.pentaho.reporting.engine.classic.core.cache;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache.PentahoCacheUtil;
+
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
-import javax.cache.configuration.Configuration;
-import javax.cache.configuration.MutableConfiguration;
-import javax.cache.expiry.CreatedExpiryPolicy;
-import javax.cache.expiry.Duration;
 import javax.cache.spi.CachingProvider;
 
 import javax.swing.table.TableModel;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Properties;
 
 /**
  * The simplest of all caches systems. A plain map holding all elements.
@@ -87,10 +83,14 @@ public class EhCacheDataCache implements DataCache {
   private void initializeCacheManager() throws URISyntaxException {
     if ( ClassicEngineBoot.getInstance().getExtendedConfig().getBoolProperty(
         "org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache.UseGlobalCacheManager" ) ) {
-      manager = Caching.getCachingProvider().getCacheManager();
+      CachingProvider provider = Caching.getCachingProvider();
+      try {
+        manager = provider.getCacheManager( EhCacheDataCache.class.getResource( "/ehcache.xml" ).toURI(), provider.getDefaultClassLoader() );
+      } catch (URISyntaxException e) {
+        throw new IllegalStateException("Cannot find the global cache config file", e);
+      }
     } else if ( manager == null ) {
-      CachingProvider cachingProvider = Caching.getCachingProvider();
-      manager = cachingProvider.getCacheManager( getClass().getResource( "/ehcache.xml" ).toURI(), getClass().getClassLoader() );
+      manager = Caching.getCachingProvider().getCacheManager();
     }
   }
 
@@ -109,8 +109,8 @@ public class EhCacheDataCache implements DataCache {
 
     cache = manager.getCache( CACHE_NAME );
     if ( cache == null ) {
-      MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
-      cache = manager.createCache( CACHE_NAME, configuration );
+      cache = manager.createCache( CACHE_NAME,
+              PentahoCacheUtil.getDefaultCacheConfiguration( CACHE_NAME, EhCacheDataCache.class.getClassLoader().getResource( "ehcache.xml" ) ) );
     }
 
   }
