@@ -25,12 +25,12 @@ import javax.cache.Cache;
 import javax.cache.CacheException;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
-import javax.cache.configuration.MutableConfiguration;
-import javax.cache.expiry.CreatedExpiryPolicy;
-import javax.cache.expiry.Duration;
+import javax.cache.spi.CachingProvider;
+import java.net.URISyntaxException;
 
 public class EHCacheProvider implements ResourceDataCacheProvider,
   ResourceFactoryCacheProvider, ResourceBundleDataCacheProvider {
+  public static final String EHCACHE_CONFIG_XML = "ehcache.xml";
   private static CacheManager cacheManager;
 
   private static final String DATA_CACHE_NAME = "libloader-data";
@@ -41,7 +41,12 @@ public class EHCacheProvider implements ResourceDataCacheProvider,
 
   public static synchronized CacheManager getCacheManager() throws CacheException {
     if ( cacheManager == null ) {
-      cacheManager = Caching.getCachingProvider().getCacheManager();
+      CachingProvider provider = Caching.getCachingProvider();
+      try {
+        cacheManager = provider.getCacheManager( EHCacheProvider.class.getResource(EHCACHE_CONFIG_XML).toURI(), provider.getDefaultClassLoader() );
+      } catch (URISyntaxException e) {
+        throw new IllegalStateException("Cannot find the global cache config file", e);
+      }
     }
     return cacheManager;
   }
@@ -55,8 +60,8 @@ public class EHCacheProvider implements ResourceDataCacheProvider,
       synchronized( manager ) {
         Cache<Object,Object> libloaderCache = manager.getCache( DATA_CACHE_NAME );
         if ( libloaderCache == null ) {
-          MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
-          libloaderCache = manager.createCache( DATA_CACHE_NAME, configuration );
+          libloaderCache = manager.createCache( DATA_CACHE_NAME,
+                  PentahoCacheUtil.getDefaultCacheConfiguration( DATA_CACHE_NAME, EHCacheProvider.class.getClassLoader().getResource(EHCACHE_CONFIG_XML) ) );
           return new EHResourceDataCache( libloaderCache );
         } else {
           return new EHResourceDataCache( manager.getCache( DATA_CACHE_NAME ) );
@@ -74,8 +79,8 @@ public class EHCacheProvider implements ResourceDataCacheProvider,
       synchronized( manager ) {
         Cache<Object,Object> libloaderCache = manager.getCache( BUNDLES_CACHE_NAME );
         if ( libloaderCache == null ) {
-          MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
-          libloaderCache = manager.createCache( BUNDLES_CACHE_NAME, configuration );
+          libloaderCache = manager.createCache( BUNDLES_CACHE_NAME,
+                  PentahoCacheUtil.getDefaultCacheConfiguration( BUNDLES_CACHE_NAME, EHCacheProvider.class.getClassLoader().getResource(EHCACHE_CONFIG_XML) ) );
           return new EHResourceBundleDataCache( libloaderCache );
         } else {
           return new EHResourceBundleDataCache( manager.getCache( BUNDLES_CACHE_NAME ) );
@@ -93,8 +98,8 @@ public class EHCacheProvider implements ResourceDataCacheProvider,
       synchronized( manager ) {
         Cache<Object,Object> libloaderCache = manager.getCache( FACTORY_CACHE_NAME );
         if ( libloaderCache == null ) {
-          MutableConfiguration<Object,Object> configuration = new MutableConfiguration<>().setStoreByValue( false );
-          libloaderCache = manager.createCache( FACTORY_CACHE_NAME, configuration );
+          libloaderCache = manager.createCache( FACTORY_CACHE_NAME,
+                  PentahoCacheUtil.getDefaultCacheConfiguration( FACTORY_CACHE_NAME, EHCacheProvider.class.getClassLoader().getResource(EHCACHE_CONFIG_XML) ) );
           return new EHResourceFactoryCache( libloaderCache );
         } else {
           return new EHResourceFactoryCache( manager.getCache( FACTORY_CACHE_NAME ) );

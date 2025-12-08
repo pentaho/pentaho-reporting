@@ -4,8 +4,8 @@
         xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
 
   <cache alias="defaultCache">
-    <key-type>java.lang.Object</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
@@ -14,8 +14,8 @@
     </resources>
   </cache>
   <cache alias="libloader-data">
-    <key-type>java.lang.String</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
@@ -25,8 +25,8 @@
   </cache>
 
   <cache alias="libloader-bundles">
-    <key-type>java.lang.String</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
@@ -36,8 +36,8 @@
   </cache>
 
   <cache alias="libloader-factory">
-    <key-type>java.lang.String</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
@@ -47,8 +47,8 @@
   </cache>
 
   <cache alias="report-dataset-cache">
-    <key-type>java.lang.String</key-type>
-    <value-type>java.lang.Object</value-type>
+    <key-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</key-type>
+    <value-type copier="org.ehcache.impl.copy.IdentityCopier">java.lang.Object</value-type>
     <expiry>
       <ttl unit="seconds">600</ttl>
     </expiry>
