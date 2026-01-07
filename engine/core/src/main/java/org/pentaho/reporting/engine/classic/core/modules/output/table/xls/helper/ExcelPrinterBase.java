@@ -16,6 +16,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helpe
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ooxml.POIXMLException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.PrintSetup;
@@ -214,7 +215,7 @@ public abstract class ExcelPrinterBase {
         }
 
         return workbook;
-      } catch ( IOException e ) {
+      } catch (IOException | POIXMLException e ) {
         logger.warn( "Unable to read predefined xls-data.", e );
       }
     }
