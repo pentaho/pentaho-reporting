@@ -20,7 +20,6 @@ import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.xml.sax.SAXParseException;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.text.JTextComponent;
 
@@ -71,10 +70,10 @@ public class CreateMqlEditorTask implements Runnable {
         // Give the user more information on what can be wrong with the query definition
         errorMessage = exc.getCause().getMessage();
       }
-      JOptionPane.showMessageDialog( new JFrame(), errorMessage, "Error", JOptionPane.ERROR_MESSAGE );
+      JOptionPane.showMessageDialog( context.getParentWindow(), errorMessage, "Error", JOptionPane.ERROR_MESSAGE );
       context.error( exc );
     } catch ( Exception exc ) {
-      JOptionPane.showMessageDialog( new JFrame(), "An error occurred while opening the Query Editor", "Error",
+      JOptionPane.showMessageDialog( context.getParentWindow(), "An error occurred while opening the Query Editor", "Error",
         JOptionPane.ERROR_MESSAGE );
       context.error( exc );
     }
