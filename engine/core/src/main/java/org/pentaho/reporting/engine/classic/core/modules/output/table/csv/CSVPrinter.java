@@ -1,19 +1,15 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
+/*! ******************************************************************************
  *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * Pentaho
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
+ * Copyright (C) 2024 by Hitachi Vantara, LLC : http://www.pentaho.com
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
- */
+ * Use of this software is governed by the Business Source License included
+ * in the LICENSE.TXT file.
+ *
+ * Change Date: 2028-08-13
+ ******************************************************************************/
+
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.csv;
 
@@ -107,8 +103,18 @@ public class CSVPrinter {
         if ( separator.length() == 0 ) {
           throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
         }
+        
+        final String quoteChar =
+            metaData.getConfiguration().getConfigProperty( CSVTableModule.QUOTE_CHAR, CSVTableModule.QUOTE_CHAR_DEFAULT );
+        if ( quoteChar.length() == 0 ) {
+          throw new IllegalArgumentException( "CSV quote char cannot be an empty string." );
+        }
 
-        quoter = new CSVQuoter( separator.charAt( 0 ) );
+        final boolean forceQuoting = 
+            "true".equals(metaData.getConfiguration().getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT ).toLowerCase());
+
+                
+        quoter = new CSVQuoter(separator.charAt( 0 ), quoteChar.charAt(0), forceQuoting );
       }
 
       if ( documentContentItem == null ) {
@@ -138,7 +144,14 @@ public class CSVPrinter {
         for ( short col = 0; col < columnCount; col++ ) {
           final RenderBox content = contentProducer.getContent( row, col );
           if ( content == null ) {
-            writer.print( quoter.getSeparator() );
+            // Handle empty cells based on forceQuoting setting
+            if ( quoter.isForceQuote() ) {
+              quoter.doQuoting( "", writer );
+            }
+            // If not forceQuoting, write nothing (as before) - just handle separator
+            if ( col < lastColumn ) {
+              writer.print( quoter.getSeparator() );
+            }
             continue;
           }
 
@@ -150,8 +163,14 @@ public class CSVPrinter {
           final long colPos = sheetLayout.getXPosition( col );
           final long rowPos = sheetLayout.getYPosition( row );
           if ( content.getX() != colPos || ( content.getY() + contentOffset ) != rowPos ) {
-            // A spanned cell ..
-            writer.print( quoter.getSeparator() );
+            // A spanned cell - handle based on forceQuoting setting
+            if ( quoter.isForceQuote() ) {
+              quoter.doQuoting( "", writer );
+            }
+            // If not forceQuoting, write nothing (as before) - just handle separator
+            if ( col < lastColumn ) {
+              writer.print( quoter.getSeparator() );
+            }
             continue;
           }
 

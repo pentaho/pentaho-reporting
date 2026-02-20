@@ -1,19 +1,15 @@
-/*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
-*/
+/*! ******************************************************************************
+ *
+ * Pentaho
+ *
+ * Copyright (C) 2024 by Hitachi Vantara, LLC : http://www.pentaho.com
+ *
+ * Use of this software is governed by the Business Source License included
+ * in the LICENSE.TXT file.
+ *
+ * Change Date: 2028-08-13
+ ******************************************************************************/
+
 
 package org.pentaho.reporting.libraries.base.util;
 
@@ -29,17 +25,17 @@ public final class CSVQuoter {
   /**
    * The separator used in the CSV file.
    */
-  private char separator;
+  private final char separator;
   /**
    * The quoting character or a single quote.
    */
-  private char quate;
+  private final char quate;
   /**
    * The double quote. This is a string containing the quate two times.
    */
-  private String doubleQuate;
+  private final String doubleQuate;
 
-  private boolean forceQuote;
+  private final boolean forceQuote;
 
   /**
    * Creates a new CSVQuoter, which uses a comma as the default separator.
@@ -83,8 +79,8 @@ public final class CSVQuoter {
    * @return The quoted string
    */
   public String doQuoting( final String original ) {
-    if ( forceQuote || isQuotingNeeded( original ) ) {
-      final StringBuffer retval = new StringBuffer( original.length() + 5 ); // a safe guess most of the time.
+    if (isQuotingNeeded( original )) {
+      final StringBuilder retval = new StringBuilder( original.length() * 2 + 2 ); // Better size estimation
       retval.append( quate );
       applyQuote( retval, original );
       retval.append( quate );
@@ -120,25 +116,34 @@ public final class CSVQuoter {
    * @return The unquoted string.
    */
   public String undoQuoting( final String nativeString ) {
-    if ( isQuotingNeeded( nativeString ) ) {
-      final StringBuilder b = new StringBuilder( nativeString.length() );
-      final int length = nativeString.length() - 1;
-      int start = 1;
-
-      int pos = start;
-      while ( pos != -1 ) {
-        pos = nativeString.indexOf( doubleQuate, start );
-        if ( pos == -1 ) {
-          b.append( nativeString.substring( start, length ) );
-        } else {
-          b.append( nativeString.substring( start, pos ) );
-          start = pos + 1;
-        }
-      }
-      return b.toString();
-    } else {
+    // Quick check for empty or single character strings
+    if (nativeString == null || nativeString.length() < 2) {
       return nativeString;
     }
+    
+    final int stringLength = nativeString.length(); // Cache length for better JIT optimization
+    
+    // Check if string is actually quoted
+    if (nativeString.charAt(0) != quate || nativeString.charAt(stringLength - 1) != quate) {
+      return nativeString;
+    }
+    
+    final StringBuilder b = new StringBuilder( stringLength );
+    final int length = stringLength - 1;
+    int start = 1;
+
+    int pos = start;
+    while ( pos != -1 ) {
+      pos = nativeString.indexOf( doubleQuate, start );
+      if ( pos == -1 ) {
+        b.append( nativeString.substring( start, length ) );
+      } else {
+        b.append( nativeString.substring( start, pos ) );
+        b.append( quate ); // Add single quote instead of double
+        start = pos + 2; // Skip both quote characters
+      }
+    }
+    return b.toString();
   }
 
   /**
@@ -149,16 +154,17 @@ public final class CSVQuoter {
    * @return true, if quoting needs to be applied, false otherwise.
    */
   private boolean isQuotingNeeded( final String str ) {
-    final int length = str.length();
+    if (forceQuote) return true;
+    
+    // Use toCharArray() for better memory access patterns and JIT optimization
+    final char[] chars = str.toCharArray();
+    final int length = chars.length;
+    
+    // Help JIT with better branch prediction by checking most common cases first
     for ( int i = 0; i < length; i++ ) {
-      final char c = str.charAt( i );
-      if ( c == separator ) {
-        return true;
-      }
-      if ( c == '\n' ) {
-        return true;
-      }
-      if ( c == quate ) {
+      final char c = chars[i];
+      // Order checks by frequency: separator first, then quote, then newline
+      if ( c == separator || c == quate || c == '\n' || c == '\r' ) {
         return true;
       }
     }
@@ -166,46 +172,70 @@ public final class CSVQuoter {
   }
 
   /**
-   * Applies the quoting to a given string, and stores the result in the StringBuffer <code>b</code>.
+   * Applies the quoting to a given string, and stores the result in the StringBuilder <code>b</code>.
    *
    * @param b        the result buffer
    * @param original the string, that should be quoted.
    */
-  private void applyQuote( final StringBuffer b, final String original ) {
-    // This solution needs improvements. Copy blocks instead of single
-    // characters.
-    final int length = original.length();
-
+  private void applyQuote( final StringBuilder b, final String original ) {
+    // Use char array for better memory access patterns
+    final char[] chars = original.toCharArray();
+    final int length = chars.length;
+    
+    // Process in blocks to reduce individual append calls
+    int lastCopied = 0;
+    
     for ( int i = 0; i < length; i++ ) {
-      final char c = original.charAt( i );
+      final char c = chars[i];
       if ( c == quate ) {
+        // Copy the block before the quote character
+        if (i > lastCopied) {
+          b.append( chars, lastCopied, i - lastCopied );
+        }
+        // Append the escaped quote
         b.append( doubleQuate );
-      } else {
-        b.append( c );
+        lastCopied = i + 1;
       }
+    }
+    
+    // Copy any remaining characters
+    if (lastCopied < length) {
+      b.append( chars, lastCopied, length - lastCopied );
     }
   }
 
 
   /**
-   * Applies the quoting to a given string, and stores the result in the StringBuffer <code>b</code>.
+   * Applies the quoting to a given string, and writes the result to the Writer <code>b</code>.
    *
-   * @param b        the result buffer
+   * @param writer   the result writer
    * @param original the string, that should be quoted.
    * @throws IOException if an IO-Error occured.
    */
-  private void applyQuote( final Writer b, final String original ) throws IOException {
-    // This solution needs improvements. Copy blocks instead of single
-    // characters.
-    final int length = original.length();
-
+  private void applyQuote( final Writer writer, final String original ) throws IOException {
+    // Use char array for better memory access patterns
+    final char[] chars = original.toCharArray();
+    final int length = chars.length;
+    
+    // Process in blocks to reduce individual write calls
+    int lastCopied = 0;
+    
     for ( int i = 0; i < length; i++ ) {
-      final char c = original.charAt( i );
+      final char c = chars[i];
       if ( c == quate ) {
-        b.write( doubleQuate );
-      } else {
-        b.write( c );
+        // Write the block before the quote character
+        if (i > lastCopied) {
+          writer.write( chars, lastCopied, i - lastCopied );
+        }
+        // Write the escaped quote
+        writer.write( doubleQuate );
+        lastCopied = i + 1;
       }
+    }
+    
+    // Write any remaining characters
+    if (lastCopied < length) {
+      writer.write( chars, lastCopied, length - lastCopied );
     }
   }
 
@@ -225,5 +255,58 @@ public final class CSVQuoter {
    */
   public char getQuate() {
     return quate;
+  }
+
+  /**
+   * Returns whether force quoting is enabled.
+   *
+   * @return true if all strings are force quoted, false otherwise.
+   */
+  public boolean isForceQuote() {
+    return forceQuote;
+  }
+
+  /**
+   * Efficiently quotes multiple strings in a single operation.
+   * This method is optimized for bulk operations and better JIT performance.
+   *
+   * @param values the array of strings to quote
+   * @param separator the separator to use between quoted values
+   * @return a single string with all values quoted and separated
+   */
+  public String doQuotingBulk( final String[] values, final String separator ) {
+    if (values == null || values.length == 0) {
+      return "";
+    }
+    
+    // Estimate total size to avoid StringBuilder resizing
+    int estimatedSize = 0;
+    for (final String value : values) {
+      if (value != null) {
+        estimatedSize += value.length() + 4; // +4 for potential quotes and separator
+      }
+    }
+    
+    final StringBuilder result = new StringBuilder(estimatedSize);
+    final int valuesLength = values.length; // Cache array length for better JIT optimization
+    
+    for (int i = 0; i < valuesLength; i++) {
+      if (i > 0) {
+        result.append(separator);
+      }
+      
+      final String value = values[i];
+      if (value != null) {
+        if (isQuotingNeeded(value)) {
+          result.append(quate);
+          applyQuote(result, value);
+          result.append(quate);
+        } else {
+          result.append(value);
+        }
+      }
+    }
+    
+    return result.toString();
   }
 }

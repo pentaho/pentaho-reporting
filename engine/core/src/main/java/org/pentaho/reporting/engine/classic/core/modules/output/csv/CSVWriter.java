@@ -1,24 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
+/*! ******************************************************************************
  *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * Pentaho
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
+ * Copyright (C) 2024 by Hitachi Vantara, LLC : http://www.pentaho.com
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
- */
+ * Use of this software is governed by the Business Source License included
+ * in the LICENSE.TXT file.
+ *
+ * Change Date: 2025-07-29
+ ******************************************************************************/
+
 
 package org.pentaho.reporting.engine.classic.core.modules.output.csv;
 
 import org.pentaho.reporting.engine.classic.core.Band;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Group;
@@ -36,7 +31,6 @@ import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcess
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * The CSV Writer is the content creation function used to create the CSV content. This implementation does no
@@ -72,10 +66,24 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
      * @param quoter
      *          a utility class for quoting CSV strings.
      */
-    protected CSVRow( final CSVQuoter quoter ) {
-      data = new ArrayList<Object>();
+    protected CSVRow( final CSVQuoter quoter, final String lineSeparator) {
+      this(quoter, lineSeparator, 20); // Default capacity
+    }
+    
+    /**
+     * Creates a new CSVQuoter with specified initial capacity.
+     *
+     * @param quoter
+     *          a utility class for quoting CSV strings.
+     * @param lineSeparator
+     *          the line separator to use
+     * @param initialCapacity
+     *          initial capacity for the data list
+     */
+    protected CSVRow( final CSVQuoter quoter, final String lineSeparator, final int initialCapacity) {
+      data = new ArrayList<Object>(initialCapacity);
       this.quoter = quoter;
-      lineSeparator = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty( "line.separator", "\n" );
+      this.lineSeparator = lineSeparator; 
     }
 
     /**
@@ -107,10 +115,10 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
      *           if an I/O error occurred.
      */
     public void write( final Writer w ) throws IOException {
-      final Iterator it = data.iterator();
-      while ( it.hasNext() ) {
-        w.write( quoter.doQuoting( String.valueOf( it.next() ) ) );
-        if ( it.hasNext() ) {
+      final int size = data.size();
+      for ( int i = 0; i < size; i++ ) {
+        w.write( quoter.doQuoting( String.valueOf( data.get(i) ) ) );
+        if ( i < size - 1 ) {
           w.write( quoter.getSeparator() );
         }
       }
@@ -131,7 +139,10 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * the CSVQuoter used to encode the column values.
    */
-  private final CSVQuoter quoter;
+  private CSVQuoter quoter;
+  private String separator=",";
+  private boolean alwaysDoQuotes=false;
+  private String lineSeparator="\n";
 
   /**
    * a flag indicating whether to writer data row names as column header.
@@ -145,14 +156,17 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   private boolean enableItemband;
 
   private ArrayList<InlineSubreportMarker> inlineSubreports;
+  
+  // Cache for column count to optimize ArrayList allocation
+  private int estimatedColumnCount = 20;
 
   /**
    * DefaulConstructor. Creates a CSVWriter with a dependency level of -1 and a default CSVQuoter.
    */
   public CSVWriter() {
     setDependencyLevel( LayoutProcess.LEVEL_PAGINATE );
-    quoter = new CSVQuoter();
     this.inlineSubreports = new ArrayList<InlineSubreportMarker>();
+    initializeQuoter();
   }
 
   /**
@@ -258,7 +272,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     if ( separator.length() == 0 ) {
       throw new IllegalArgumentException( "Separator must not be an empty string" );
     }
-    this.quoter.setSeparator( separator );
+    this.separator=separator;
+    initializeQuoter();
   }
 
   /**
@@ -267,8 +282,24 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
    * @return the separator, never null.
    */
   public String getSeparator() {
-    return quoter.getSeparator();
+    return this.separator;
   }
+  
+  
+  public void setAlwaysDoQuotes( final boolean alwaysDoQuotes ) {
+    this.alwaysDoQuotes=alwaysDoQuotes;
+    initializeQuoter();
+  }
+
+  public boolean getAlwaysDoQuotes() {
+    return this.alwaysDoQuotes;
+  }
+  
+  private void initializeQuoter() {
+	    this.quoter = new CSVQuoter(this.separator, this.alwaysDoQuotes);
+	  
+  }
+  
 
   /**
    * Writes the contents of the dataRow into the CSVRow.
@@ -281,6 +312,12 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   private void writeDataRow( final DataRow dr, final CSVRow row ) {
     final String[] names = dr.getColumnNames();
     final int length = names.length;
+    
+    // Update estimated column count for future allocations
+    if (length > estimatedColumnCount) {
+      estimatedColumnCount = length;
+    }
+    
     for ( int i = 0; i < length; i++ ) {
       final Object o = dr.get( names[i] );
       row.append( o );
@@ -298,6 +335,12 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
   private void writeDataRowNames( final DataRow dr, final CSVRow row ) {
     final String[] names = dr.getColumnNames();
     final int length = names.length;
+    
+    // Update estimated column count for future allocations
+    if (length > estimatedColumnCount) {
+      estimatedColumnCount = length;
+    }
+    
     for ( int i = 0; i < length; i++ ) {
       final String columnName = names[i];
       row.append( columnName );
@@ -318,7 +361,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
 
     try {
       if ( isWriteDataRowNames() ) {
-        final CSVRow names = new CSVRow( quoter );
+        final CSVRow names = new CSVRow( quoter, this.lineSeparator, estimatedColumnCount + (isWriteStateColumns() ? 2 : 0) );
         if ( isWriteStateColumns() ) {
           names.append( "report.currentgroup" );
           names.append( "report.eventtype" );
@@ -331,7 +374,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
         return;
       }
 
-      final CSVRow row = new CSVRow( quoter );
+      final CSVRow row = new CSVRow( quoter, this.lineSeparator, estimatedColumnCount + (isWriteStateColumns() ? 2 : 0) );
       if ( isWriteStateColumns() ) {
         row.append( -1 );
         row.append( "reportheader" );
@@ -363,7 +406,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     }
 
     try {
-      final CSVRow row = new CSVRow( quoter );
+      final CSVRow row = new CSVRow( quoter, this.lineSeparator, estimatedColumnCount + (isWriteStateColumns() ? 2 : 0) );
       if ( isWriteStateColumns() ) {
         row.append( -1 );
         row.append( "reportfooter" );
@@ -394,7 +437,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     try {
       final int currentIndex = event.getState().getCurrentGroupIndex();
 
-      final CSVRow row = new CSVRow( quoter );
+      final CSVRow row = new CSVRow( quoter, this.lineSeparator, estimatedColumnCount + (isWriteStateColumns() ? 2 : 0) );
       if ( isWriteStateColumns() ) {
         row.append( currentIndex );
         final Group g = event.getReport().getGroup( currentIndex );
@@ -429,7 +472,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     try {
       final int currentIndex = event.getState().getCurrentGroupIndex();
 
-      final CSVRow row = new CSVRow( quoter );
+      final CSVRow row = new CSVRow( quoter, this.lineSeparator, estimatedColumnCount + (isWriteStateColumns() ? 2 : 0) );
       if ( isWriteStateColumns() ) {
         row.append( currentIndex );
         final Group g = event.getReport().getGroup( currentIndex );
@@ -487,7 +530,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     }
 
     try {
-      final CSVRow row = new CSVRow( quoter );
+      final CSVRow row = new CSVRow( quoter, this.lineSeparator, estimatedColumnCount + (isWriteStateColumns() ? 2 : 0) );
       if ( isWriteStateColumns() ) {
         row.append( event.getState().getCurrentGroupIndex() );
         row.append( "itemband" );

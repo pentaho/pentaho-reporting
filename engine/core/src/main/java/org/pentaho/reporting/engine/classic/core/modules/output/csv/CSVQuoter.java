@@ -27,12 +27,13 @@ public class CSVQuoter {
    * The separator used in the CSV file.
    */
   private String separator;
+  private final boolean alwaysDoQuotes;
 
   /**
    * Creates a new CSVQuoter, which uses a comma as the default separator.
    */
   public CSVQuoter() {
-    this( "," );
+    this( ",", false);
   }
 
   /**
@@ -43,8 +44,9 @@ public class CSVQuoter {
    * @throws NullPointerException
    *           if the given separator is <code>null</code>.
    */
-  public CSVQuoter( final String separator ) {
+  public CSVQuoter( final String separator, final boolean alwaysDoQuotes) {
     setSeparator( separator );
+    this.alwaysDoQuotes=alwaysDoQuotes;
   }
 
   /**
@@ -57,7 +59,7 @@ public class CSVQuoter {
    */
   public String doQuoting( final String original ) {
     if ( isQuotingNeeded( original ) ) {
-      final StringBuffer retval = new StringBuffer( original.length() + 10 );
+      final StringBuilder retval = new StringBuilder( original.length() + 10 );
       retval.append( '\"' );
       applyQuote( retval, original );
       retval.append( '\"' );
@@ -77,7 +79,7 @@ public class CSVQuoter {
    */
   public String undoQuoting( final String nativeString ) {
     if ( isQuotingNeeded( nativeString ) ) {
-      final StringBuffer b = new StringBuffer( nativeString.length() );
+      final StringBuilder b = new StringBuilder( nativeString.length() );
       final int length = nativeString.length() - 1;
       int start = 1;
 
@@ -105,17 +107,20 @@ public class CSVQuoter {
    *          the string that should be tested.
    * @return true, if quoting needs to be applied, false otherwise.
    */
-  private boolean isQuotingNeeded( final String str ) {
-    if ( str.indexOf( separator ) != -1 ) {
-      return true;
+  protected boolean isQuotingNeeded( final String str ) {
+    if (this.alwaysDoQuotes) return true;
+    
+    // Single pass through string checking for any problematic characters
+    final int length = str.length();
+    for (int i = 0; i < length; i++) {
+      final char c = str.charAt(i);
+      if (c == '"' || c == '\n') {
+        return true;
+      }
     }
-    if ( str.indexOf( '\n' ) != -1 ) {
-      return true;
-    }
-    if ( str.indexOf( '\"', 1 ) != -1 ) {
-      return true;
-    }
-    return false;
+    
+    // Check for separator (more expensive, do last)
+    return str.indexOf( separator ) != -1;
   }
 
   /**
@@ -126,18 +131,26 @@ public class CSVQuoter {
    * @param original
    *          the string, that should be quoted.
    */
-  private void applyQuote( final StringBuffer b, final String original ) {
-    // This solution needs improvements. Copy blocks instead of single
-    // characters.
+  private void applyQuote( final StringBuilder b, final String original ) {
+    // Optimized block copy approach instead of character-by-character
     final int length = original.length();
-
+    int start = 0;
+    
     for ( int i = 0; i < length; i++ ) {
-      final char c = original.charAt( i );
-      if ( c == '"' ) {
+      if ( original.charAt( i ) == '"' ) {
+        // Copy the block before the quote
+        if ( i > start ) {
+          b.append( original, start, i );
+        }
+        // Add escaped quote
         b.append( "\"\"" );
-      } else {
-        b.append( c );
+        start = i + 1;
       }
+    }
+    
+    // Copy remaining characters
+    if ( start < length ) {
+      b.append( original, start, length );
     }
   }
 
