@@ -1,19 +1,15 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
+/*! ******************************************************************************
  *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * Pentaho
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
+ * Copyright (C) 2024 by Hitachi Vantara, LLC : http://www.pentaho.com
  *
- * Copyright (c) 2001 - 2013 Object Refinery Ltd, Hitachi Vantara and Contributors..  All rights reserved.
- */
+ * Use of this software is governed by the Business Source License included
+ * in the LICENSE.TXT file.
+ *
+ * Change Date: 2028-08-13
+ ******************************************************************************/
+
 
 package org.pentaho.reporting.engine.classic.core.modules.output.csv;
 
@@ -61,6 +57,7 @@ public class CSVProcessor extends AbstractReportProcessor {
   protected static final int MIN_ROWS_PER_EVENT = 200;
 
   public static final String CSV_SEPARATOR = "org.pentaho.reporting.engine.classic.core.modules.output.csv.Separator";
+  public static final String CSV_ENCLOSURE_FORCED =  "org.pentaho.reporting.engine.classic.core.modules.output.csv.enclosure_forced";
 
   public static final String CSV_ENCODING = "org.pentaho.reporting.engine.classic.core.modules.output.csv.Encoding";
   public static final String CSV_DATAROWNAME =
@@ -85,8 +82,8 @@ public class CSVProcessor extends AbstractReportProcessor {
   private Writer writer;
 
   private static final String EXPORT_DESCRIPTOR = "data/csv";
-  private String separator;
-  private boolean writeDataRowNames;
+  private final String separator;
+  private final boolean writeDataRowNames;
 
   /**
    * Creates a new <code>CSVProcessor</code>. The processor will use a comma (",") to separate the column values, unless
@@ -164,12 +161,13 @@ public class CSVProcessor extends AbstractReportProcessor {
   }
 
   protected OutputFunction createLayoutManager() {
+	final Configuration config = getReport().getReportConfiguration();
     final CSVWriter lm = new CSVWriter();
     lm.setSeparator( separator );
     lm.setWriteDataRowNames( writeDataRowNames );
     lm.setWriter( getWriter() );
 
-    final Configuration config = getReport().getReportConfiguration();
+    lm.setAlwaysDoQuotes( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENCLOSURE_FORCED ) );
     lm.setWriteStateColumns( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_WRITE_STATECOLUMNS ) );
     lm.setEnableReportHeader( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_REPORTHEADER ) );
     lm.setEnableReportFooter( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_REPORTFOOTER ) );
