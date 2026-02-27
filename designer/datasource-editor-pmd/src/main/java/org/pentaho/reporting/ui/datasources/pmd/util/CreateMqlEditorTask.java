@@ -15,9 +15,12 @@ package org.pentaho.reporting.ui.datasources.pmd.util;
 
 import org.pentaho.commons.metadata.mqleditor.editor.SwingMqlEditor;
 import org.pentaho.metadata.repository.IMetadataDomainRepository;
+import org.pentaho.pms.core.exception.PentahoMetadataException;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.xml.sax.SAXParseException;
 
+import javax.swing.JOptionPane;
 import javax.swing.text.JTextComponent;
 
 public class CreateMqlEditorTask implements Runnable {
@@ -48,7 +51,7 @@ public class CreateMqlEditorTask implements Runnable {
     try {
       final SwingMqlEditor mqlEditor = new SwingMqlEditor( repository );
       final String queryXml = selectedQuery.getQuery();
-      if ( StringUtils.isEmpty( queryXml ) == false ) {
+      if ( !StringUtils.isEmpty( queryXml ) ) {
         mqlEditor.setQuery( queryXml );
       }
       mqlEditor.hidePreview();
@@ -61,7 +64,17 @@ public class CreateMqlEditorTask implements Runnable {
           queryTextArea.setText( theQuery );
         }
       }
+    } catch ( PentahoMetadataException exc ) {
+      String errorMessage = "An error occurred while opening the Query Editor";
+      if ( exc.getCause() instanceof SAXParseException ) {
+        // Give the user more information on what can be wrong with the query definition
+        errorMessage = exc.getCause().getMessage();
+      }
+      JOptionPane.showMessageDialog( context.getParentWindow(), errorMessage, "Error", JOptionPane.ERROR_MESSAGE );
+      context.error( exc );
     } catch ( Exception exc ) {
+      JOptionPane.showMessageDialog( context.getParentWindow(), "An error occurred while opening the Query Editor", "Error",
+        JOptionPane.ERROR_MESSAGE );
       context.error( exc );
     }
 
