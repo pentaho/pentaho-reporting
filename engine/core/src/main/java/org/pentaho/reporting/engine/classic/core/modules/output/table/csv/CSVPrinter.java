@@ -145,14 +145,7 @@ public class CSVPrinter {
         for ( short col = 0; col < columnCount; col++ ) {
           final RenderBox content = contentProducer.getContent( row, col );
           if ( content == null ) {
-            if ( forceQuoting ) {
-              quoter.doQuoting( "", writer );
-              if ( col < lastColumn ) {
-                writer.print( quoter.getSeparator() );
-              }
-            } else {
-              writer.print( quoter.getSeparator() );
-            }
+            writeEmptyCell( col, lastColumn );
             continue;
           }
 
@@ -164,14 +157,7 @@ public class CSVPrinter {
           final long colPos = sheetLayout.getXPosition( col );
           final long rowPos = sheetLayout.getYPosition( row );
           if ( content.getX() != colPos || ( content.getY() + contentOffset ) != rowPos ) {
-            if ( forceQuoting ) {
-              quoter.doQuoting( "", writer );
-              if ( col < lastColumn ) {
-                writer.print( quoter.getSeparator() );
-              }
-            } else {
-              writer.print( quoter.getSeparator() );
-            }
+            writeEmptyCell( col, lastColumn );
             continue;
           }
 
@@ -216,5 +202,16 @@ public class CSVPrinter {
 
   public void close() {
 
+  }
+
+  private void writeEmptyCell( final short col, final int lastColumn ) throws IOException {
+    if ( forceQuoting ) {
+      quoter.doQuoting( "", writer );
+      if ( col < lastColumn ) {
+        writer.print( quoter.getSeparator() );
+      }
+    } else {
+      writer.print( quoter.getSeparator() );
+    }
   }
 }

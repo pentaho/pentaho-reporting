@@ -31,14 +31,14 @@ public class CSVProcessorTest extends TestCase {
 
     final TestableCSVProcessor processor = new TestableCSVProcessor( report );
 
-    assertTrue( processor.createCsvWriter().isAlwaysDoQuotes() );
+    assertTrue( processor.isAlwaysDoQuotesOnLayoutManager() );
   }
 
   public void testCreateLayoutManagerDefaultForcedEnclosureIsFalse() throws Exception {
     final MasterReport report = new MasterReport();
     final TestableCSVProcessor processor = new TestableCSVProcessor( report );
 
-    assertFalse( processor.createCsvWriter().isAlwaysDoQuotes() );
+    assertFalse( processor.isAlwaysDoQuotesOnLayoutManager() );
   }
 
   private static class TestableCSVProcessor extends CSVProcessor {
@@ -46,8 +46,9 @@ public class CSVProcessorTest extends TestCase {
       super( report );
     }
 
-    private CSVWriter createCsvWriter() {
-      return (CSVWriter) createLayoutManager();
+    private boolean isAlwaysDoQuotesOnLayoutManager() throws Exception {
+      final CSVWriter layoutManager = (CSVWriter) createLayoutManager();
+      return layoutManager.isAlwaysDoQuotes();
     }
   }
 }
