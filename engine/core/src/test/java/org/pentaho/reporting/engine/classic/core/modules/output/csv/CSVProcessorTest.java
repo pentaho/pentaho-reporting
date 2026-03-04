@@ -46,7 +46,7 @@ public class CSVProcessorTest extends TestCase {
       super( report );
     }
 
-    private boolean isAlwaysDoQuotesOnLayoutManager() throws Exception {
+    private boolean isAlwaysDoQuotesOnLayoutManager() {
       final CSVWriter layoutManager = (CSVWriter) createLayoutManager();
       return layoutManager.isAlwaysDoQuotes();
     }
