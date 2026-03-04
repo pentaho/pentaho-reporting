@@ -32,7 +32,6 @@ import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.spy;
@@ -89,8 +88,8 @@ public class CsvTemplateProducerTest {
 
     final CsvTemplateProducer producer = new CsvTemplateProducer( metaData, sheetLayout, null );
 
-    assertEquals( '\'', producer.getQuoter().getQuate() );
-    assertTrue( producer.getQuoter().isForceQuote() );
+    assertEquals( '\'', producer.getQuoter().getQuote() );
+    assertEquals( "'Classic Cars'", producer.getQuoter().doQuoting( "Classic Cars" ) );
   }
 
   /**

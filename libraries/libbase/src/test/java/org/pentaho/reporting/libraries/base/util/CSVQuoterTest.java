@@ -52,4 +52,16 @@ public class CSVQuoterTest extends TestCase {
 
     assertEquals( "\"Classic \"\"Cars\"\"\"", writer.toString() );
   }
+
+  public void testUndoQuotingQuotedInput() {
+    final CSVQuoter quoter = new CSVQuoter( ',', '"', false );
+
+    assertEquals( "Classic, Cars", quoter.undoQuoting( "\"Classic, Cars\"" ) );
+  }
+
+  public void testUndoQuotingUnquotedInputContainingSeparator() {
+    final CSVQuoter quoter = new CSVQuoter( ',', '"', false );
+
+    assertEquals( "Classic, Cars", quoter.undoQuoting( "Classic, Cars" ) );
+  }
 }

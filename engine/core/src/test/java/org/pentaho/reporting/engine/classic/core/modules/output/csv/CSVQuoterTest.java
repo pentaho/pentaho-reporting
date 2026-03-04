@@ -48,4 +48,10 @@ public class CSVQuoterTest extends TestCase {
 
     assertEquals( CLASSIC_CARS, quoter.undoQuoting( CLASSIC_CARS ) );
   }
+
+  public void testUndoQuotingUnquotedInputContainingSeparator() {
+    final CSVQuoter quoter = new CSVQuoter( "," );
+
+    assertEquals( "Classic, Cars", quoter.undoQuoting( "Classic, Cars" ) );
+  }
 }

@@ -47,21 +47,21 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
     this.encoding = encoding;
-    this.idMapping = new HashMap<InstanceID, String>();
+    this.idMapping = new HashMap<>();
 
     final String separator =
         metaData.getConfiguration().getConfigProperty( CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT );
-    if ( separator.length() == 0 ) {
+    if ( separator.isEmpty() ) {
       throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
     }
 
     final boolean forceQuoting =
-        "true".equals( metaData.getConfiguration()
-            .getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT ).toLowerCase() );
+        Boolean.parseBoolean( metaData.getConfiguration()
+            .getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT ) );
     final String quoteChar =
         metaData.getConfiguration().getConfigProperty( CSVTableModule.QUOTE_CHAR, CSVTableModule.QUOTE_CHAR_DEFAULT );
-    if ( quoteChar.length() == 0 ) {
-      throw new IllegalArgumentException( "CSV quote char cannot be an empty string." );
+    if ( quoteChar.length() != 1 ) {
+      throw new IllegalArgumentException( "CSV quote char must be a single character." );
     }
 
     if ( this.encoding == null ) {

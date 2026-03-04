@@ -48,6 +48,7 @@ public class CSVPrinter {
   private PrintWriter writer;
   private DefaultTextExtractor textExtractor;
   private CSVQuoter quoter;
+  private boolean forceQuoting;
 
   public CSVPrinter() {
   }
@@ -106,13 +107,13 @@ public class CSVPrinter {
 
         final String quoteChar =
             metaData.getConfiguration().getConfigProperty( CSVTableModule.QUOTE_CHAR, CSVTableModule.QUOTE_CHAR_DEFAULT );
-        if ( quoteChar.length() == 0 ) {
-          throw new IllegalArgumentException( "CSV quote char cannot be an empty string." );
+        if ( quoteChar.length() != 1 ) {
+          throw new IllegalArgumentException( "CSV quote char must be a single character." );
         }
 
-        final boolean forceQuoting =
-            "true".equals( metaData.getConfiguration()
-                .getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT ).toLowerCase() );
+        final String forceQuotingConfig =
+            metaData.getConfiguration().getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT );
+        forceQuoting = Boolean.parseBoolean( forceQuotingConfig );
 
         quoter = new CSVQuoter( separator.charAt( 0 ), quoteChar.charAt( 0 ), forceQuoting );
       }
@@ -144,12 +145,12 @@ public class CSVPrinter {
         for ( short col = 0; col < columnCount; col++ ) {
           final RenderBox content = contentProducer.getContent( row, col );
           if ( content == null ) {
-            // Handle empty cells based on forceQuoting setting
-            if ( quoter.isForceQuote() ) {
+            if ( forceQuoting ) {
               quoter.doQuoting( "", writer );
-            }
-            // If not forceQuoting, write nothing (as before) - just handle separator
-            if ( col < lastColumn ) {
+              if ( col < lastColumn ) {
+                writer.print( quoter.getSeparator() );
+              }
+            } else {
               writer.print( quoter.getSeparator() );
             }
             continue;
@@ -163,12 +164,12 @@ public class CSVPrinter {
           final long colPos = sheetLayout.getXPosition( col );
           final long rowPos = sheetLayout.getYPosition( row );
           if ( content.getX() != colPos || ( content.getY() + contentOffset ) != rowPos ) {
-            // A spanned cell - handle based on forceQuoting setting
-            if ( quoter.isForceQuote() ) {
+            if ( forceQuoting ) {
               quoter.doQuoting( "", writer );
-            }
-            // If not forceQuoting, write nothing (as before) - just handle separator
-            if ( col < lastColumn ) {
+              if ( col < lastColumn ) {
+                writer.print( quoter.getSeparator() );
+              }
+            } else {
               writer.print( quoter.getSeparator() );
             }
             continue;

@@ -20,10 +20,10 @@ public class CSVWriterTest extends TestCase {
   public void testAlwaysDoQuotesProperty() {
     final CSVWriter writer = new CSVWriter();
 
-    assertFalse( writer.getAlwaysDoQuotes() );
+    assertFalse( writer.isAlwaysDoQuotes() );
 
     writer.setAlwaysDoQuotes( true );
 
-    assertTrue( writer.getAlwaysDoQuotes() );
+    assertTrue( writer.isAlwaysDoQuotes() );
   }
 }

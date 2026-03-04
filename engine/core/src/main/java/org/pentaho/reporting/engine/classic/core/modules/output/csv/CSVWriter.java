@@ -270,7 +270,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     this.quoter.setAlwaysDoQuotes( alwaysDoQuotes );
   }
 
-  public boolean getAlwaysDoQuotes() {
+  public boolean isAlwaysDoQuotes() {
     return quoter.isAlwaysDoQuotes();
   }
 
