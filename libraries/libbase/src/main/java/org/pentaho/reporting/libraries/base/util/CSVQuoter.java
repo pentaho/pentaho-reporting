@@ -129,7 +129,8 @@ public final class CSVQuoter {
           b.append( nativeString.substring( start, length ) );
         } else {
           b.append( nativeString.substring( start, pos ) );
-          start = pos + 1;
+          b.append( quote );
+          start = pos + 2;
         }
       }
       return b.toString();
