@@ -97,7 +97,6 @@ public class CSVPrinterTest {
     final CSVPrinter printer = new CSVPrinter();
     setField( printer, "writer", new PrintWriter( output ) );
     setField( printer, "quoter", new CSVQuoter( ',', '"', forceQuoting ) );
-    setField( printer, "forceQuoting", forceQuoting );
     setField( printer, "textExtractor", mock( DefaultTextExtractor.class ) );
     setField( printer, "documentContentItem", mock( ContentItem.class ) );
     return printer;

@@ -52,7 +52,7 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
     final String separator =
         metaData.getConfiguration().getConfigProperty( CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT );
     if ( separator.isEmpty() ) {
-      throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
+      throw new IllegalArgumentException( "CSV separator cannot be an empty string." );
     }
 
     final boolean forceQuoting =
@@ -91,7 +91,7 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
       for ( short col = 0; col < columnCount; col++ ) {
         final RenderBox content = contentProducer.getContent( row, col );
         if ( content == null ) {
-          writer.print( quoter.getSeparator() );
+          writeEmptyCell( writer, col, lastColumn );
           continue;
         }
 
@@ -109,7 +109,7 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
              so that we can accurately set the cells (this was previously a copy from the Excel Template producer, but
              they handle spanned cells differently.
           */
-          writer.print( quoter.getSeparator() );
+          writeEmptyCell( writer, col, lastColumn );
           continue;
         }
 
@@ -149,5 +149,16 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
     messageFormatSupport.setFormatString( getTemplate() );
     messageFormatSupport.setNullString( "" );
     return new CsvFormattedDataBuilder( idMapping, messageFormatSupport, getQuoter(), encoding );
+  }
+
+  private void writeEmptyCell( final PrintWriter writer, final short col, final int lastColumn ) {
+    if ( quoter.isForceQuote() ) {
+      writer.write( quoter.doQuoting( "" ) );
+      if ( col < lastColumn ) {
+        writer.print( quoter.getSeparator() );
+      }
+    } else {
+      writer.print( quoter.getSeparator() );
+    }
   }
 }

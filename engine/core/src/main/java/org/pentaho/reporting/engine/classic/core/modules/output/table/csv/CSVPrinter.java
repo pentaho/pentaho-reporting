@@ -48,7 +48,6 @@ public class CSVPrinter {
   private PrintWriter writer;
   private DefaultTextExtractor textExtractor;
   private CSVQuoter quoter;
-  private boolean forceQuoting;
 
   public CSVPrinter() {
   }
@@ -101,8 +100,8 @@ public class CSVPrinter {
 
         final String separator =
             metaData.getConfiguration().getConfigProperty( CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT );
-        if ( separator.length() == 0 ) {
-          throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
+        if ( separator.isEmpty() ) {
+          throw new IllegalArgumentException( "CSV separator cannot be an empty string." );
         }
 
         final String quoteChar =
@@ -112,8 +111,8 @@ public class CSVPrinter {
         }
 
         final String forceQuotingConfig =
-            metaData.getConfiguration().getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT );
-        forceQuoting = Boolean.parseBoolean( forceQuotingConfig );
+          metaData.getConfiguration().getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT );
+        final boolean forceQuoting = Boolean.parseBoolean( forceQuotingConfig );
 
         quoter = new CSVQuoter( separator.charAt( 0 ), quoteChar.charAt( 0 ), forceQuoting );
       }
@@ -205,7 +204,7 @@ public class CSVPrinter {
   }
 
   private void writeEmptyCell( final short col, final int lastColumn ) throws IOException {
-    if ( forceQuoting ) {
+    if ( quoter.isForceQuote() ) {
       quoter.doQuoting( "", writer );
       if ( col < lastColumn ) {
         writer.print( quoter.getSeparator() );
