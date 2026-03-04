@@ -266,6 +266,14 @@ public class CSVWriter extends AbstractFunction implements OutputFunction {
     return quoter.getSeparator();
   }
 
+  public void setAlwaysDoQuotes( final boolean alwaysDoQuotes ) {
+    this.quoter.setAlwaysDoQuotes( alwaysDoQuotes );
+  }
+
+  public boolean isAlwaysDoQuotes() {
+    return quoter.isAlwaysDoQuotes();
+  }
+
   /**
    * Writes the contents of the dataRow into the CSVRow.
    *
