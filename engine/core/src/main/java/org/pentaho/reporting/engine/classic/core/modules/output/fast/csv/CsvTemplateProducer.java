@@ -55,6 +55,15 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
       throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
     }
 
+    final boolean forceQuoting =
+        "true".equals( metaData.getConfiguration()
+            .getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT ).toLowerCase() );
+    final String quoteChar =
+        metaData.getConfiguration().getConfigProperty( CSVTableModule.QUOTE_CHAR, CSVTableModule.QUOTE_CHAR_DEFAULT );
+    if ( quoteChar.length() == 0 ) {
+      throw new IllegalArgumentException( "CSV quote char cannot be an empty string." );
+    }
+
     if ( this.encoding == null ) {
       this.encoding =
           metaData.getConfiguration().getConfigProperty(
@@ -62,7 +71,7 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
               EncodingRegistry.getPlatformDefaultEncoding() );
     }
 
-    quoter = new CSVQuoter( separator.charAt( 0 ) );
+    quoter = new CSVQuoter( separator.charAt( 0 ), quoteChar.charAt( 0 ), forceQuoting );
   }
 
   public void produceTemplate( final LogicalPageBox pageBox ) {

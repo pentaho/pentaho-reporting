@@ -19,10 +19,13 @@ package org.pentaho.reporting.engine.classic.core.modules.output.csv;
  * @author Thomas Morgner.
  */
 public class CSVQuoter {
+  private static final int QUOTE_SEARCH_START_INDEX = 1;
+
   /**
    * The separator used in the CSV file.
    */
   private String separator;
+  private boolean alwaysDoQuotes;
 
   /**
    * Creates a new CSVQuoter, which uses a comma as the default separator.
@@ -40,7 +43,12 @@ public class CSVQuoter {
    *           if the given separator is <code>null</code>.
    */
   public CSVQuoter( final String separator ) {
+    this( separator, false );
+  }
+
+  public CSVQuoter( final String separator, final boolean alwaysDoQuotes ) {
     setSeparator( separator );
+    setAlwaysDoQuotes( alwaysDoQuotes );
   }
 
   /**
@@ -52,8 +60,8 @@ public class CSVQuoter {
    * @return The quoted string
    */
   public String doQuoting( final String original ) {
-    if ( isQuotingNeeded( original ) ) {
-      final StringBuffer retval = new StringBuffer( original.length() + 10 );
+    if ( alwaysDoQuotes || requiresQuoting( original ) ) {
+      final StringBuilder retval = new StringBuilder( original.length() + 10 );
       retval.append( '\"' );
       applyQuote( retval, original );
       retval.append( '\"' );
@@ -72,8 +80,8 @@ public class CSVQuoter {
    * @return The unquoted string.
    */
   public String undoQuoting( final String nativeString ) {
-    if ( isQuotingNeeded( nativeString ) ) {
-      final StringBuffer b = new StringBuffer( nativeString.length() );
+    if ( requiresQuoting( nativeString ) ) {
+      final StringBuilder b = new StringBuilder( nativeString.length() );
       final int length = nativeString.length() - 1;
       int start = 1;
 
@@ -101,17 +109,12 @@ public class CSVQuoter {
    *          the string that should be tested.
    * @return true, if quoting needs to be applied, false otherwise.
    */
-  private boolean isQuotingNeeded( final String str ) {
-    if ( str.indexOf( separator ) != -1 ) {
-      return true;
-    }
-    if ( str.indexOf( '\n' ) != -1 ) {
-      return true;
-    }
-    if ( str.indexOf( '\"', 1 ) != -1 ) {
-      return true;
-    }
-    return false;
+  private boolean requiresQuoting( final String str ) {
+    final boolean containsSeparator = str.indexOf( separator ) != -1;
+    final boolean containsNewline = str.indexOf( '\n' ) != -1;
+    final boolean containsQuote = str.indexOf( '\"', QUOTE_SEARCH_START_INDEX ) != -1;
+
+    return containsSeparator || containsNewline || containsQuote;
   }
 
   /**
@@ -122,18 +125,26 @@ public class CSVQuoter {
    * @param original
    *          the string, that should be quoted.
    */
-  private void applyQuote( final StringBuffer b, final String original ) {
-    // This solution needs improvements. Copy blocks instead of single
-    // characters.
+  private void applyQuote( final StringBuilder b, final String original ) {
     final int length = original.length();
+    int blockStart = 0;
 
     for ( int i = 0; i < length; i++ ) {
-      final char c = original.charAt( i );
-      if ( c == '"' ) {
+      if ( original.charAt( i ) == '"' ) {
+        // Copy the block before the quote character
+        if ( i > blockStart ) {
+          b.append( original, blockStart, i );
+        }
+
+        // Append the escaped quote
         b.append( "\"\"" );
-      } else {
-        b.append( c );
+        blockStart = i + 1;
       }
+    }
+
+    // Copy any remaining characters
+    if ( blockStart < length ) {
+      b.append( original, blockStart, length );
     }
   }
 
@@ -158,5 +169,13 @@ public class CSVQuoter {
       throw new NullPointerException();
     }
     this.separator = separator;
+  }
+
+  public void setAlwaysDoQuotes( final boolean alwaysDoQuotes ) {
+    this.alwaysDoQuotes = alwaysDoQuotes;
+  }
+
+  public boolean isAlwaysDoQuotes() {
+    return alwaysDoQuotes;
   }
 }

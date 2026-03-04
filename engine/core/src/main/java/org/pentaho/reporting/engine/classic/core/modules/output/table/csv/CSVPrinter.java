@@ -104,7 +104,17 @@ public class CSVPrinter {
           throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
         }
 
-        quoter = new CSVQuoter( separator.charAt( 0 ) );
+        final String quoteChar =
+            metaData.getConfiguration().getConfigProperty( CSVTableModule.QUOTE_CHAR, CSVTableModule.QUOTE_CHAR_DEFAULT );
+        if ( quoteChar.length() == 0 ) {
+          throw new IllegalArgumentException( "CSV quote char cannot be an empty string." );
+        }
+
+        final boolean forceQuoting =
+            "true".equals( metaData.getConfiguration()
+                .getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT ).toLowerCase() );
+
+        quoter = new CSVQuoter( separator.charAt( 0 ), quoteChar.charAt( 0 ), forceQuoting );
       }
 
       if ( documentContentItem == null ) {
@@ -134,7 +144,14 @@ public class CSVPrinter {
         for ( short col = 0; col < columnCount; col++ ) {
           final RenderBox content = contentProducer.getContent( row, col );
           if ( content == null ) {
-            writer.print( quoter.getSeparator() );
+            // Handle empty cells based on forceQuoting setting
+            if ( quoter.isForceQuote() ) {
+              quoter.doQuoting( "", writer );
+            }
+            // If not forceQuoting, write nothing (as before) - just handle separator
+            if ( col < lastColumn ) {
+              writer.print( quoter.getSeparator() );
+            }
             continue;
           }
 
@@ -146,8 +163,14 @@ public class CSVPrinter {
           final long colPos = sheetLayout.getXPosition( col );
           final long rowPos = sheetLayout.getYPosition( row );
           if ( content.getX() != colPos || ( content.getY() + contentOffset ) != rowPos ) {
-            // A spanned cell ..
-            writer.print( quoter.getSeparator() );
+            // A spanned cell - handle based on forceQuoting setting
+            if ( quoter.isForceQuote() ) {
+              quoter.doQuoting( "", writer );
+            }
+            // If not forceQuoting, write nothing (as before) - just handle separator
+            if ( col < lastColumn ) {
+              writer.print( quoter.getSeparator() );
+            }
             continue;
           }
 

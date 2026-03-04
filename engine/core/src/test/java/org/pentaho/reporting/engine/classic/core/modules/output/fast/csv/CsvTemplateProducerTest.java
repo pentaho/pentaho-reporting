@@ -16,23 +16,23 @@ package org.pentaho.reporting.engine.classic.core.modules.output.fast.csv;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.TemplatingOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVTableModule;
-import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
+import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.spy;
@@ -50,7 +50,6 @@ public class CsvTemplateProducerTest {
     + "$(0)" + CSVTableModule.SEPARATOR_DEFAULT + "$(0)" + System.lineSeparator() + CSVTableModule.SEPARATOR_DEFAULT
     + CSVTableModule.SEPARATOR_DEFAULT + CSVTableModule.SEPARATOR_DEFAULT + System.lineSeparator();
 
-  private StyleSheet styleSheet;
   private SheetLayout sheetLayout;
   private NodeLayoutProperties nodeLayoutProperties;
   private OutputProcessorMetaData metaData;
@@ -59,7 +58,7 @@ public class CsvTemplateProducerTest {
 
   @Before
   public void setUp() throws Exception {
-    styleSheet = mock( StyleSheet.class );
+    ClassicEngineBoot.getInstance().start();
     sheetLayout = mock( SheetLayout.class );
     metaData = mock( OutputProcessorMetaData.class );
     nodeLayoutProperties = mock( NodeLayoutProperties.class );
@@ -67,8 +66,31 @@ public class CsvTemplateProducerTest {
     when( metaData.getConfiguration() ).thenReturn( configuration );
     when( configuration.getConfigProperty( CSVTableModule.SEPARATOR,
       CSVTableModule.SEPARATOR_DEFAULT ) ).thenReturn( CSVTableModule.SEPARATOR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.QUOTE_CHAR,
+      CSVTableModule.QUOTE_CHAR_DEFAULT ) ).thenReturn( CSVTableModule.QUOTE_CHAR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.FORCE_QUOTING,
+      CSVTableModule.FORCE_QUOTING_DEFAULT ) ).thenReturn( CSVTableModule.FORCE_QUOTING_DEFAULT );
     contentProducer = spy( new TableContentProducer( sheetLayout, metaData ) );
     csvTemplateProducer = new CsvTemplateProducer( metaData, sheetLayout, null );
+  }
+
+  @Test
+  public void testConstructorUsesQuoteCharAndForceQuotingConfig() {
+    final HierarchicalConfiguration configuration = mock( HierarchicalConfiguration.class );
+    when( metaData.getConfiguration() ).thenReturn( configuration );
+    when( configuration.getConfigProperty( CSVTableModule.SEPARATOR,
+      CSVTableModule.SEPARATOR_DEFAULT ) ).thenReturn( CSVTableModule.SEPARATOR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.QUOTE_CHAR,
+      CSVTableModule.QUOTE_CHAR_DEFAULT ) ).thenReturn( "'" );
+    when( configuration.getConfigProperty( CSVTableModule.FORCE_QUOTING,
+      CSVTableModule.FORCE_QUOTING_DEFAULT ) ).thenReturn( "true" );
+    when( configuration.getConfigProperty( CSVTableModule.ENCODING,
+      EncodingRegistry.getPlatformDefaultEncoding() ) ).thenReturn( EncodingRegistry.getPlatformDefaultEncoding() );
+
+    final CsvTemplateProducer producer = new CsvTemplateProducer( metaData, sheetLayout, null );
+
+    assertEquals( '\'', producer.getQuoter().getQuate() );
+    assertTrue( producer.getQuoter().isForceQuote() );
   }
 
   /**
