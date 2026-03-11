@@ -148,7 +148,18 @@ public class PublishUtil {
       //Force overwrite flag here so that the server does not fail with an error in case the report already exists in the JCR
       fileProperties.setProperty( PublishRestUtil.OVERWRITE_FILE_KEY, Boolean.TRUE.toString() );
 
-      PublishRestUtil publishRestUtil = new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
+      PublishRestUtil publishRestUtil;
+      
+      // Check for browser-based (SSO) authentication — use session cookie instead
+      // of BasicAuth which would send an empty password and lock the account.
+      final String publishSessionId = loginData.getOption( "sessionId" );
+      final boolean isPublishBrowserAuth = "true".equals( loginData.getOption( "browserAuth" ) );
+      
+      if ( isPublishBrowserAuth && publishSessionId != null && !publishSessionId.isEmpty() ) {
+        publishRestUtil = PublishRestUtil.withSessionAuth( loginData.getUrl(), publishSessionId );
+      } else {
+        publishRestUtil = new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
+      }
       responseCode = publishRestUtil.publishFile( path, data, propertiesForPublish );
     } else {
       final FileObject connection = createVFSConnection( loginData );
@@ -207,8 +218,36 @@ public class PublishUtil {
     final FileSystemOptions fileSystemOptions = new FileSystemOptions();
     final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
     configBuilder.setTimeOut( fileSystemOptions, getTimeout( loginData ) * 1000 );
-    configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl, loginData
-        .getUsername(), loginData.getPassword() ) );
+    
+    // Check if this is browser-based authentication (session-based)
+    final String sessionId = loginData.getOption( "sessionId" );
+    final boolean isBrowserAuth = "true".equals( loginData.getOption( "browserAuth" ) );
+    
+    if ( isBrowserAuth && sessionId != null && !sessionId.isEmpty() ) {
+      // Browser authentication - store session ID in file system options
+      configBuilder.setSessionId( fileSystemOptions, sessionId );
+      // Still need authenticator for username (but password can be empty)
+      configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl, 
+          loginData.getUsername(), "" ) );
+
+      // Close any cached VFS file system for this URL so that VFS creates a
+      // fresh one with the new session ID.  Without this, VFS returns the
+      // cached file system whose JCRSolutionFileModel still carries the OLD
+      // (expired) session, causing authentication failures on re-login.
+      try {
+        final FileObject existing = fileSystemManager.resolveFile( normalizedUrl, fileSystemOptions );
+        if ( existing != null && existing.getFileSystem() != null ) {
+          fileSystemManager.closeFileSystem( existing.getFileSystem() );
+        }
+      } catch ( Exception e ) {
+        // Ignore - file system may not exist yet or is already closed
+      }
+    } else {
+      // Traditional username/password authentication
+      configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl, loginData
+          .getUsername(), loginData.getPassword() ) );
+    }
+    
     return fileSystemManager.resolveFile( normalizedUrl, fileSystemOptions );
   }
 
@@ -248,7 +287,7 @@ public class PublishUtil {
         throw new IllegalArgumentException( "Not a expected URL" );
       }
     }
-    return prefix.append( url2 ).toString();
+    return prefix.append( url2 ).append( "!" ).toString();
   }
 
   private static Pattern makePattern( String reservedChars ) {

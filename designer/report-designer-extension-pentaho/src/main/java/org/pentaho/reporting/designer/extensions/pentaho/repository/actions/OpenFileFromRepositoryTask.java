@@ -14,12 +14,14 @@
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
 import java.awt.Component;
+import javax.swing.JOptionPane;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.AuthenticationHelper;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 
@@ -54,9 +56,10 @@ public class OpenFileFromRepositoryTask implements AuthenticatedServerTask {
    * @see Thread#run()
    */
   public void run() {
+    String selectedReport = null;
     try {
       final String oldName = loginData.getOption( "lastFilename" );
-      final String selectedReport = selectFileFromRepositoryTask.selectFile( loginData, oldName );
+      selectedReport = selectFileFromRepositoryTask.selectFile( loginData, oldName );
       if ( selectedReport == null ) {
         return;
       }
@@ -73,12 +76,40 @@ public class OpenFileFromRepositoryTask implements AuthenticatedServerTask {
 
       designerContext.getView().setWelcomeVisible( false );
     } catch ( Exception exception ) {
-      // ignore .. repeat whole process as we assume it is an authentication error
-      ExceptionDialog.showExceptionDialog( uiContext,
-        Messages.getInstance().getString( "LoadReportFromRepositoryAction.Error.Title" ),
-        Messages.getInstance().formatMessage( "LoadReportFromRepositoryAction.Error.Message",
-          exception.getMessage() ), exception );
-      UncaughtExceptionsModel.getInstance().addException( exception );
+      if ( AuthenticationHelper.isAuthenticationError( exception ) && AuthenticationHelper.isBrowserAuth( loginData ) ) {
+        handleBrowserAuthError( selectedReport, exception );
+      } else {
+        showOpenError( selectedReport, exception );
+      }
     }
+  }
+
+  private void handleBrowserAuthError( final String selectedReport, final Exception exception ) {
+    String errorMessage = Messages.getInstance().formatMessage( "LoadReportFromRepositoryAction.Error.Message",
+      selectedReport != null ? selectedReport : "Unknown" );
+    errorMessage += "\n\n" + Messages.getInstance().formatMessage(
+      "LoadReportFromRepositoryAction.SessionExpired.Message", exception.getMessage() );
+
+    final String[] options = { "Login Again", "Cancel" };
+    final int result = JOptionPane.showOptionDialog( uiContext, errorMessage,
+      Messages.getInstance().getString( "LoadReportFromRepositoryAction.SessionExpired.Title" ),
+      JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0] );
+
+    if ( result == JOptionPane.YES_OPTION ) {
+      final LoginTask loginTask = new LoginTask( designerContext, uiContext, null, this.loginData, false, true );
+      loginTask.run();
+      if ( loginTask.getLoginData() != null ) {
+        this.loginData = loginTask.getLoginData();
+        this.run();
+      }
+    }
+  }
+
+  private void showOpenError( final String selectedReport, final Exception exception ) {
+    ExceptionDialog.showExceptionDialog( uiContext,
+      Messages.getInstance().getString( "LoadReportFromRepositoryAction.Error.Title" ),
+      Messages.getInstance().formatMessage( "LoadReportFromRepositoryAction.Error.Message",
+        selectedReport != null ? selectedReport : exception.getMessage() ), exception );
+    UncaughtExceptionsModel.getInstance().addException( exception );
   }
 }

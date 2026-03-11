@@ -142,6 +142,9 @@ public class LocalFileModel extends XmlSolutionFileModel {
     clientBuilder.setMaxRedirects( 10 );
     clientBuilder.allowCircularRedirects();
     clientBuilder.allowRelativeRedirect();
+    
+    // Build the HttpClient from the configured builder
+    this.client = clientBuilder.build();
   }
 
   public void refresh() throws IOException {

@@ -33,6 +33,8 @@ import org.pentaho.reporting.engine.classic.core.util.HttpClientManager;
 import org.pentaho.reporting.libraries.pensol.vfs.LocalFileModel;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -100,7 +102,7 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
   }
 
   private FileSystem createJCRFileSystem( final LayeredFileName genericRootName,
-                                          final FileSystemOptions fileSystemOptions ) {
+                                          final FileSystemOptions fileSystemOptions ) throws FileSystemException {
     UserAuthenticationData authData = null;
     try {
       authData = UserAuthenticatorUtils.authenticate( fileSystemOptions, AUTHENTICATOR_TYPES );
@@ -114,6 +116,18 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
       final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
       final int timeOut = configBuilder.getTimeOut( fileSystemOptions );
 
+      // Check for session-based authentication (browser login)
+      final String sessionId = configBuilder.getSessionId( fileSystemOptions );
+      
+      if ( sessionId != null && !sessionId.isEmpty() ) {
+        logger.debug( "Using session-based authentication with JCR file system" );
+        
+        final String hostname = extractHostFromURI( outerName.getURI() );
+        final JCRSolutionFileModel model = new JCRSolutionFileModel( outerName.getURI(), timeOut, hostname, sessionId );
+        return new JCRSolutionFileSystem( genericRootName, fileSystemOptions, model );
+      }
+      
+      // Traditional JCR file system with username/password
       final JCRSolutionFileModel model = new JCRSolutionFileModel( outerName.getURI(), username, password, timeOut );
       return new JCRSolutionFileSystem( genericRootName, fileSystemOptions, model );
     } finally {
@@ -134,16 +148,58 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
     if ( !StringUtil.isEmpty( hostName ) ) {
       clientBuilder.setProxy( hostName, port, scheme );
     }
+    
+    // Check for session-based authentication
+    final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
+    final String sessionId = configBuilder.getSessionId( fileSystemOptions );
+    
+    if ( sessionId != null && !sessionId.isEmpty() ) {
+      logger.debug( "Using session-based authentication for WebSolutionFileSystem" );
+      
+      // Use raw Cookie header instead of cookie store to bypass domain validation
+      // that rejects cookies for IP-address hosts.
+      clientBuilder.setSessionCookie( "JSESSIONID", sessionId );
+      // Do NOT set BasicAuth credentials — the session cookie handles authentication.
+      // Setting credentials with an empty password (from SSO) would cause failed
+      // basic-auth attempts on the server and trigger account lockout.
+      
+      final int timeOut = configBuilder.getTimeOut( fileSystemOptions );
+      clientBuilder.setSocketTimeout( Math.max( 0, timeOut ) );
+
+      // Pass null for username, password, and hostName so that LocalFileModel
+      // does not set up preemptive BasicAuth or send credential query parameters.
+      return new WebSolutionFileSystem( genericRootName, fileSystemOptions,
+        new LocalFileModel( outerName.getURI(), clientBuilder, null, null, null, port )
+      );
+    }
+    
     if ( !StringUtil.isEmpty( userName ) ) {
       clientBuilder.setCredentials( userName, password );
     }
-    final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
+    
     final int timeOut = configBuilder.getTimeOut( fileSystemOptions );
     clientBuilder.setSocketTimeout( Math.max( 0, timeOut ) );
 
     return new WebSolutionFileSystem( genericRootName, fileSystemOptions,
       new LocalFileModel( outerName.getURI(), clientBuilder, userName, password, hostName, port )
     );
+  }
+
+  /**
+   * Extract hostname from a URI string for use as cookie domain.
+   */
+  private String extractHostFromURI( String uriString ) {
+    try {
+      URI uri = new URI( uriString );
+      String host = uri.getHost();
+      if ( host != null && !host.isEmpty() ) {
+        return host;
+      }
+    } catch ( URISyntaxException e ) {
+      logger.warn( "Failed to parse URI for cookie domain: " + uriString, e );
+    }
+    // Fallback to localhost
+    return "localhost";
   }
 
   /**

@@ -191,8 +191,22 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
   public static HttpClient createHttpClient( final AuthenticationData loginData ) {
     HttpClientManager.HttpClientBuilderFacade clientBuilder = HttpClientManager.getInstance().createBuilder();
 
-    HttpClient client = clientBuilder.setSocketTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 )
-      .setCredentials( loginData.getUsername(), loginData.getPassword() ).setCookieSpec( CookieSpecs.DEFAULT ).build();
+    // Check for session-based authentication (browser/SSO login)
+    final String sessionId = loginData.getOption( "sessionId" );
+    final boolean isBrowserAuth = "true".equals( loginData.getOption( "browserAuth" ) );
+
+    if ( isBrowserAuth && sessionId != null && !sessionId.isEmpty() ) {
+      // Browser authentication - use session cookie via raw header
+      // (bypasses cookie-spec domain validation that rejects IP addresses)
+      clientBuilder.setSessionCookie( "JSESSIONID", sessionId );
+    } else {
+      clientBuilder.setCredentials( loginData.getUsername(), loginData.getPassword() );
+    }
+
+    HttpClient client = clientBuilder
+      .setSocketTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 )
+      .setCookieSpec( CookieSpecs.DEFAULT )
+      .build();
 
     return client;
   }
@@ -288,6 +302,12 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
 
       if ( target == null || auth == null || StringUtils.isEmpty( auth.getUsername() ) ) {
         return null; // nothing to do here; if no credentials were passed, there's no need to create a preemptive auth Context
+      }
+
+      // Skip preemptive basic auth for browser/SSO sessions — authentication is handled
+      // by the JSESSIONID cookie set in createHttpClient()
+      if ( "true".equals( auth.getOption( "browserAuth" ) ) ) {
+        return null;
       }
 
       HttpHost targetHost = URIUtils.extractHost( target );

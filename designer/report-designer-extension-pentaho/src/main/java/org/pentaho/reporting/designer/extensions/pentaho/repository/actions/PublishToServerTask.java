@@ -28,6 +28,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.AuthenticationHelper;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -102,28 +103,30 @@ public class PublishToServerTask implements AuthenticatedServerTask {
           glassPane.setCursor( new Cursor( Cursor.DEFAULT_CURSOR ) );
         }
         if ( JOptionPane.showConfirmDialog( uiContext, Messages.getInstance().getString(
-            "PublishToServerAction.Successful.LaunchNow" ), Messages.getInstance().getString(
-            "PublishToServerAction.Successful.LaunchTitle" ), JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION ) {
+          "PublishToServerAction.Successful.LaunchNow" ), Messages.getInstance().getString(
+          "PublishToServerAction.Successful.LaunchTitle" ), JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION ) {
           PublishUtil.launchReportOnServer( loginData.getUrl(), selectedReport );
         }
-      } else if ( responseCode == 403 ) {
+      } else if ( responseCode == 403 || responseCode == 401 ) {
         logger.error( "Publish failed. Server responded with status-code " + responseCode );
-        JOptionPane.showMessageDialog( uiContext, Messages.getInstance().getString(
-            "PublishToServerAction.FailedAccess" ), Messages.getInstance().getString(
-            "PublishToServerAction.FailedAccessTitle" ), JOptionPane.ERROR_MESSAGE );
+        handlePublishAuthError( "Server responded with status code " + responseCode );
       } else {
         logger.error( "Publish failed. Server responded with status-code " + responseCode );
         showErrorMessage();
       }
     } catch ( Exception exception ) {
       logger.error( "Publish failed. Unexpected error:", exception );
-      showErrorMessage();
+      if ( AuthenticationHelper.isAuthenticationError( exception ) ) {
+        handlePublishAuthError( exception.getMessage() );
+      } else {
+        showErrorMessage();
+      }
     }
   }
 
   private String extractLastFileName( final MasterReport report ) {
     final Object lastFilenameAttr =
-        report.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME );
+      report.getAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME );
     final String oldName;
     if ( lastFilenameAttr != null ) {
       oldName = (String) lastFilenameAttr;
@@ -134,19 +137,19 @@ public class PublishToServerTask implements AuthenticatedServerTask {
   }
 
   private void readBundleMetaData( final MasterReport report, final DocumentMetaData metaData,
-      final SelectFileForPublishTask selectFileForPublishTask ) {
+                                   final SelectFileForPublishTask selectFileForPublishTask ) {
     final String oldDescription =
-        (String) metaData.getBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
-            ODFMetaAttributeNames.DublinCore.DESCRIPTION );
+      (String) metaData.getBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
+        ODFMetaAttributeNames.DublinCore.DESCRIPTION );
     final String oldTitle =
-        (String) metaData.getBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
-            ODFMetaAttributeNames.DublinCore.TITLE );
+      (String) metaData.getBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
+        ODFMetaAttributeNames.DublinCore.TITLE );
 
     final boolean oldLockOutput =
-        Boolean.TRUE.equals( report.getAttribute( AttributeNames.Core.NAMESPACE,
-            AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE ) );
+      Boolean.TRUE.equals( report.getAttribute( AttributeNames.Core.NAMESPACE,
+        AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE ) );
     final String oldExportType =
-        (String) report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE );
+      (String) report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE );
 
     selectFileForPublishTask.setDescription( oldDescription );
     selectFileForPublishTask.setReportTitle( oldTitle );
@@ -155,26 +158,55 @@ public class PublishToServerTask implements AuthenticatedServerTask {
   }
 
   private void storeBundleMetaData( final MasterReport report, final String selectedReport,
-      final SelectFileForPublishTask selectFileForPublishTask ) {
+                                    final SelectFileForPublishTask selectFileForPublishTask ) {
     final DocumentMetaData metaData = report.getBundle().getMetaData();
     report.setAttribute( ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.LAST_FILENAME, selectedReport );
 
     if ( metaData instanceof WriteableDocumentMetaData ) {
       final WriteableDocumentMetaData writeableDocumentMetaData = (WriteableDocumentMetaData) metaData;
       writeableDocumentMetaData.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
-          ODFMetaAttributeNames.DublinCore.DESCRIPTION, selectFileForPublishTask.getDescription() );
+        ODFMetaAttributeNames.DublinCore.DESCRIPTION, selectFileForPublishTask.getDescription() );
       writeableDocumentMetaData.setBundleAttribute( ODFMetaAttributeNames.DublinCore.NAMESPACE,
-          ODFMetaAttributeNames.DublinCore.TITLE, selectFileForPublishTask.getReportTitle() );
+        ODFMetaAttributeNames.DublinCore.TITLE, selectFileForPublishTask.getReportTitle() );
     }
 
     report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.LOCK_PREFERRED_OUTPUT_TYPE, Boolean
-        .valueOf( selectFileForPublishTask.isLockOutputType() ) );
+      .valueOf( selectFileForPublishTask.isLockOutputType() ) );
     report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PREFERRED_OUTPUT_TYPE,
-        selectFileForPublishTask.getExportType() );
+      selectFileForPublishTask.getExportType() );
   }
 
   private void showErrorMessage() {
     JOptionPane.showMessageDialog( uiContext, Messages.getInstance().getString( "PublishToServerAction.Failed" ),
-        Messages.getInstance().getString( "PublishToServerAction.FailedTitle" ), JOptionPane.ERROR_MESSAGE );
+      Messages.getInstance().getString( "PublishToServerAction.FailedTitle" ), JOptionPane.ERROR_MESSAGE );
+  }
+
+  private void handlePublishAuthError( final String detail ) {
+    if ( !AuthenticationHelper.isBrowserAuth( loginData ) ) {
+      showErrorMessage();
+      return;
+    }
+
+    String errorMessage = Messages.getInstance().formatMessage( "PublishToServerAction.Error.Message", detail );
+    errorMessage += "\n\n" + Messages.getInstance().getString( "PublishToServerAction.SessionExpired.Message" );
+
+    final String[] options = { "Login Again", "Cancel" };
+    final int result = JOptionPane.showOptionDialog( uiContext, errorMessage,
+      Messages.getInstance().getString( "PublishToServerAction.SessionExpired.Title" ),
+      JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0] );
+
+    if ( result == JOptionPane.YES_OPTION ) {
+      triggerReLogin();
+    }
+  }
+
+  private void triggerReLogin() {
+    final LoginTask loginTask = new LoginTask( reportDesignerContext, uiContext, null, this.loginData, true, true );
+    loginTask.run();
+    if ( loginTask.getLoginData() != null ) {
+      this.loginData = loginTask.getLoginData();
+      this.storeUpdates = true;
+      this.run();
+    }
   }
 }
