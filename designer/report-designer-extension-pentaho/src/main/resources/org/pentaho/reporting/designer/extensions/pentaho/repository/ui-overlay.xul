@@ -11,6 +11,17 @@
               pen:action="org.pentaho.reporting.designer.extensions.pentaho.repository.actions.LoadReportFromRepositoryAction"/>
   </menupopup>
 
+  <menubar id="main-menubar">
+    <menu id="repository-menu" label="Repository" insertafter="data-menu">
+      <menupopup id="repository-popup">
+        <menuitem id="repository.connect"
+                  pen:action="org.pentaho.reporting.designer.extensions.pentaho.repository.actions.ConnectToRepositoryAction"/>
+        <menuitem id="repository.disconnect"
+                  pen:action="org.pentaho.reporting.designer.extensions.pentaho.repository.actions.DisconnectFromRepositoryAction"/>
+      </menupopup>
+    </menu>
+  </menubar>
+
   <hbox id="main-toolbar">
     <button id="toolbar.publish" insertafter="toolbar.save"
             pen:action="org.pentaho.reporting.designer.extensions.pentaho.repository.actions.PublishToServerAction"/>

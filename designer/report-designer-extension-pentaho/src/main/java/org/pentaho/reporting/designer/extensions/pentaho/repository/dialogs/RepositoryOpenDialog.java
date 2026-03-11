@@ -20,17 +20,28 @@ import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileType;
 import org.apache.commons.vfs2.VFS;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.RepositorySessionManager;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.AuthenticationHelper;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.BrowserLoginHandler;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.OAuthProvider;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.SessionAuthenticationUtil;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
+import org.pentaho.reporting.libraries.designtime.swing.background.BackgroundCancellableProcessHelper;
+import org.pentaho.reporting.libraries.designtime.swing.background.GenericCancelHandler;
 import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
 import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
+import org.pentaho.reporting.libraries.pensol.JCRSolutionFileSystem;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 
 import javax.swing.AbstractAction;
@@ -69,6 +80,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 public class RepositoryOpenDialog extends CommonDialog {
 
@@ -338,6 +351,15 @@ public class RepositoryOpenDialog extends CommonDialog {
   private JComboBox locationCombo;
   private FileObject fileSystemRoot;
   private FileObject selectedView;
+  private AuthenticationData currentLoginData;
+  private boolean sessionCheckInProgress;
+
+  /** Listener notified when a re-login completes so the caller can update its own loginData reference. */
+  public interface ReLoginListener {
+    void onReLoginSuccess( AuthenticationData newLoginData );
+  }
+
+  private ReLoginListener reLoginListener;
 
   public RepositoryOpenDialog() {
     init();
@@ -402,6 +424,9 @@ public class RepositoryOpenDialog extends CommonDialog {
       final ComboBoxModel comboBoxModel = createLocationModel( selectedView );
       this.locationCombo.setModel( comboBoxModel );
       this.table.setSelectedPath( (FileObject) comboBoxModel.getSelectedItem() );
+
+      // After the table loads, if it is empty check whether the session expired
+      checkForExpiredSession();
     } else {
       this.fileNameTextField.setText( null );
       this.table.setSelectedPath( null );
@@ -442,25 +467,14 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
   }
 
+  public void setReLoginListener( final ReLoginListener listener ) {
+    this.reLoginListener = listener;
+  }
+
   public String performOpen( final AuthenticationData loginData, final String previousSelection )
     throws FileSystemException, UnsupportedEncodingException {
-    fileSystemRoot = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
-    if ( previousSelection == null ) {
-      setSelectedView( fileSystemRoot );
-    } else {
-      final FileObject view = fileSystemRoot.resolveFile( previousSelection );
-      if ( view == null ) {
-        setSelectedView( fileSystemRoot );
-      } else {
-        if ( view.exists() == false ) {
-          setSelectedView( fileSystemRoot );
-        } else if ( view.getType() == FileType.FOLDER ) {
-          setSelectedView( view );
-        } else {
-          setSelectedView( view.getParent() );
-        }
-      }
-    }
+    this.currentLoginData = loginData;
+    connectAndNavigate( loginData, previousSelection );
 
     if ( StringUtils.isEmpty( fileNameTextField.getText(), true ) && previousSelection != null ) {
       final String fileName = IOUtils.getInstance().getFileName( previousSelection );
@@ -474,6 +488,257 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
 
     return getSelectedFile();
+  }
+
+  /**
+   * Establishes the VFS connection and navigates to the given path.
+   */
+  protected void connectAndNavigate( final AuthenticationData loginData, final String previousSelection )
+    throws FileSystemException {
+    fileSystemRoot = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
+
+    // Always refresh to get latest files from server
+    try {
+      if ( fileSystemRoot.getFileSystem() instanceof JCRSolutionFileSystem ) {
+        final JCRSolutionFileSystem fileSystem = (JCRSolutionFileSystem) fileSystemRoot.getFileSystem();
+        fileSystem.getLocalFileModel().refresh();
+      } else if ( fileSystemRoot.getFileSystem() instanceof WebSolutionFileSystem ) {
+        final WebSolutionFileSystem fileSystem = (WebSolutionFileSystem) fileSystemRoot.getFileSystem();
+        fileSystem.getLocalFileModel().refresh();
+      }
+      fileSystemRoot.refresh();
+    } catch ( Exception e ) {
+      logger.debug( "Failed to refresh file system", e );
+      // Re-throw authentication errors only for SSO sessions so the caller
+      // can offer re-login.  For username/password sessions a 401 simply
+      // means wrong credentials — let the table stay empty.
+      if ( AuthenticationHelper.isAuthenticationError( e )
+          && AuthenticationHelper.isBrowserAuth( loginData ) ) {
+        throw new FileSystemException( "vfs.provider/connect.error", e );
+      }
+    }
+
+    if ( previousSelection == null ) {
+      setSelectedView( fileSystemRoot );
+    } else {
+      try {
+        final FileObject view = fileSystemRoot.resolveFile( previousSelection );
+        if ( view == null || !view.exists() ) {
+          setSelectedView( fileSystemRoot );
+        } else if ( view.getType() == FileType.FOLDER ) {
+          setSelectedView( view );
+        } else {
+          setSelectedView( view.getParent() );
+        }
+      } catch ( FileSystemException e ) {
+        logger.debug( "Could not resolve previous selection, falling back to root", e );
+        setSelectedView( fileSystemRoot );
+      }
+    }
+  }
+
+  /**
+   * Called after folder navigation when the table is empty.
+   * Performs a lightweight HTTP check to see if the session expired.
+   * Only triggers re-login when the server confirms 401/403.
+   * <p>
+   * When the table has rows, the connection was successful and no check is
+   * needed.  The primary expired-session detection for cached VFS data lives
+   * in {@link #connectAndNavigate}, which re-throws authentication errors
+   * for SSO sessions so that the caller can offer re-login.
+   */
+  private void checkForExpiredSession() {
+    // Session-expiry detection is only relevant for SSO (browser-auth) sessions.
+    // Username/password sessions use per-request Basic Auth and have no
+    // expiring token, so the HTTP check would falsely return 401.
+    if ( !AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+      return;
+    }
+    if ( sessionCheckInProgress || currentLoginData == null || table.getRowCount() > 0 ) {
+      return;
+    }
+    sessionCheckInProgress = true;
+    try {
+      if ( !isSessionStillActive() ) {
+        handleSessionExpired();
+      }
+    } finally {
+      sessionCheckInProgress = false;
+    }
+  }
+
+  /**
+   * Checks whether the server session is still valid by making a direct
+   * HTTP request.  Returns {@code true} unless the server responds with
+   * 401 or 403.  Connection errors are treated as "still valid" to
+   * avoid false positives.
+   */
+  private boolean isSessionStillActive() {
+    if ( currentLoginData == null || currentLoginData.getUrl() == null ) {
+      return true;
+    }
+    try {
+      final HttpClient client = SessionAuthenticationUtil.createSessionAuthenticatedClient(
+          currentLoginData, currentLoginData.getUrl(), 5000 );
+      String checkUrl = currentLoginData.getUrl();
+      if ( checkUrl.endsWith( "/" ) ) {
+        checkUrl = checkUrl.substring( 0, checkUrl.length() - 1 );
+      }
+      checkUrl += "/api/repo/files/tree?depth=0";
+      final HttpGet request = new HttpGet( checkUrl );
+      final HttpResponse response = client.execute( request );
+      final int status = response.getStatusLine().getStatusCode();
+      return status != 401 && status != 403;
+    } catch ( Exception e ) {
+      logger.debug( "Session validation request failed — assuming still active", e );
+      return true;
+    }
+  }
+
+  /**
+   * Shows the session-expired dialog and, on success, reconnects the VFS
+   * and navigates back to the path where the user left off.
+   */
+  protected void handleSessionExpired() {
+    final String currentPath = getCurrentPath();
+
+    final String[] options = {
+        Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.LoginAgain" ),
+        Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Cancel" )
+    };
+    final int choice = JOptionPane.showOptionDialog( this,
+        Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Message" ),
+        Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Title" ),
+        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0] );
+
+    if ( choice != JOptionPane.YES_OPTION ) {
+      return;
+    }
+
+    final AuthenticationData newLoginData = showReLoginDialog();
+    if ( newLoginData == null ) {
+      return;
+    }
+
+    this.currentLoginData = newLoginData;
+
+    // Keep the global session cache in sync so subsequent operations use the refreshed credentials.
+    RepositorySessionManager.getInstance().setSession( newLoginData, newLoginData.getUsername() );
+
+    if ( reLoginListener != null ) {
+      reLoginListener.onReLoginSuccess( newLoginData );
+    }
+
+    try {
+      connectAndNavigate( newLoginData, currentPath );
+      table.refresh();
+    } catch ( Exception ex ) {
+      logger.error( "Failed to reconnect after re-login", ex );
+      UncaughtExceptionsModel.getInstance().addException( ex );
+    }
+  }
+
+  /**
+   * Returns the decoded path of the currently selected view, or {@code null}.
+   */
+  protected String getCurrentPath() {
+    if ( selectedView == null ) {
+      return null;
+    }
+    try {
+      return selectedView.getName().getPathDecoded();
+    } catch ( FileSystemException e ) {
+      logger.debug( "Unable to decode current path", e );
+      return null;
+    }
+  }
+
+  /**
+   * Shows the standard Pentaho login dialog for re-authentication.
+   * If the user selects SSO, the browser login flow is triggered
+   * (identical to the initial login in {@code LoginTask}).
+   *
+   * @return new {@link AuthenticationData} on success, or {@code null} if cancelled
+   */
+  protected AuthenticationData showReLoginDialog() {
+    final RepositoryLoginDialog loginDialog;
+    if ( getOwner() instanceof Frame ) {
+      loginDialog = new RepositoryLoginDialog( (Frame) getOwner(), false );
+    } else if ( getOwner() instanceof Dialog ) {
+      loginDialog = new RepositoryLoginDialog( (Dialog) getOwner(), false );
+    } else {
+      loginDialog = new RepositoryLoginDialog( false );
+    }
+
+    // Show SSO-only re-login when the expired session was SSO,
+    // otherwise show the classic username/password dialog.
+    if ( AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+      loginDialog.setDialogMode( RepositoryLoginDialog.DialogMode.SSO_ONLY );
+    } else {
+      loginDialog.setDialogMode( RepositoryLoginDialog.DialogMode.CREDENTIALS_ONLY );
+    }
+
+    final AuthenticationData basicData = loginDialog.performReLogin( currentLoginData );
+    if ( basicData == null ) {
+      return null;
+    }
+    if ( loginDialog.getLoginMethod() == RepositoryLoginDialog.LoginMethod.SSO ) {
+      return performBrowserReLogin( basicData.getUrl(), loginDialog.getSelectedOAuthProvider() );
+    }
+    return basicData;
+  }
+
+  /**
+   * Performs the SSO browser-based login flow during re-authentication.
+   * Opens the system browser, waits for the authentication callback,
+   * and returns credentials that include a valid session ID.
+   *
+   * @param serverUrl     the Pentaho server URL
+   * @param oauthProvider the selected OAuth provider, or {@code null}
+   * @return authenticated {@link AuthenticationData} or {@code null} if cancelled/failed
+   */
+  private AuthenticationData performBrowserReLogin( final String serverUrl, final OAuthProvider oauthProvider ) {
+    while ( true ) {
+      final AuthenticationData[] result = new AuthenticationData[1];
+      final Thread browserLoginThread = new Thread( () -> {
+        final BrowserLoginHandler handler = new BrowserLoginHandler();
+        if ( oauthProvider != null ) {
+          handler.setOAuthProvider( oauthProvider );
+        }
+        result[0] = handler.startBrowserLogin( serverUrl );
+      } );
+      browserLoginThread.setDaemon( true );
+      browserLoginThread.setName( "BrowserReLoginThread" );
+
+      final GenericCancelHandler cancelHandler = new GenericCancelHandler( browserLoginThread );
+      BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(
+          browserLoginThread, cancelHandler, this,
+          Messages.getInstance().getString( "LoginTask.BrowserLogin.WaitingMessage" ) );
+
+      if ( cancelHandler.isCancelled() ) {
+        return null;
+      }
+      if ( result[0] != null ) {
+        return result[0];
+      }
+
+      final int choice = JOptionPane.showOptionDialog( this,
+          Messages.getInstance().getString( "LoginTask.BrowserLogin.Failed.Message" ),
+          Messages.getInstance().getString( "LoginTask.BrowserLogin.Error.Title" ),
+          JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null,
+          new String[] {
+              Messages.getInstance().getString( "LoginTask.BrowserLogin.Retry" ),
+              Messages.getInstance().getString( "LoginTask.BrowserLogin.Cancel" )
+          },
+          Messages.getInstance().getString( "LoginTask.BrowserLogin.Retry" ) );
+      if ( choice != JOptionPane.YES_OPTION ) {
+        return null;
+      }
+    }
+  }
+
+  protected AuthenticationData getCurrentLoginData() {
+    return currentLoginData;
   }
 
   protected String getSelectedFile() throws FileSystemException, UnsupportedEncodingException {
@@ -585,6 +850,13 @@ public class RepositoryOpenDialog extends CommonDialog {
 
   protected boolean validateInputs( final boolean onConfirm ) {
     if ( StringUtils.isEmpty( fileNameTextField.getText() ) ) {
+      return false;
+    }
+    // When the user clicks OK, verify that an SSO session is still valid.
+    // If the session expired while the dialog was open, trigger re-login
+    // and keep the dialog open so the user can retry.
+    if ( onConfirm && AuthenticationHelper.isBrowserAuth( currentLoginData ) && !isSessionStillActive() ) {
+      handleSessionExpired();
       return false;
     }
     return true;

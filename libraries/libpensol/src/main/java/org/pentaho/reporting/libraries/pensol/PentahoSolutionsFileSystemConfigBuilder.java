@@ -18,6 +18,7 @@ import org.apache.commons.vfs2.impl.DefaultFileSystemConfigBuilder;
 
 public class PentahoSolutionsFileSystemConfigBuilder extends DefaultFileSystemConfigBuilder {
   private static final String TIMEOUT_KEY = "timeout";
+  private static final String SESSION_ID_KEY = "sessionId";
 
   public PentahoSolutionsFileSystemConfigBuilder() {
   }
@@ -32,5 +33,13 @@ public class PentahoSolutionsFileSystemConfigBuilder extends DefaultFileSystemCo
       return param;
     }
     return 0;
+  }
+
+  public void setSessionId( final FileSystemOptions opts, final String sessionId ) {
+    setParam( opts, SESSION_ID_KEY, sessionId );
+  }
+
+  public String getSessionId( final FileSystemOptions opts ) {
+    return (String) getParam( opts, SESSION_ID_KEY );
   }
 }

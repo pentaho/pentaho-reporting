@@ -16,8 +16,10 @@ package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.report.SaveReportAction;
+import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.RepositorySessionManager;
 
 import java.awt.event.ActionEvent;
 import java.net.URL;
@@ -74,11 +76,17 @@ public class PublishToServerAction extends AbstractReportContextAction {
 
     final PublishToServerTask publishToServerTask =
         new PublishToServerTask( reportDesignerContext, reportDesignerContext.getView().getParent() );
-    final LoginTask loginTask =
-        new LoginTask( reportDesignerContext, reportDesignerContext.getView().getParent(), publishToServerTask, null,
-            true );
 
-    SwingUtilities.invokeLater( loginTask );
+    final AuthenticationData cachedSession = RepositorySessionManager.getInstance().getSession();
+    if ( cachedSession != null ) {
+      publishToServerTask.setLoginData( cachedSession, true );
+      SwingUtilities.invokeLater( publishToServerTask );
+    } else {
+      final LoginTask loginTask =
+          new LoginTask( reportDesignerContext, reportDesignerContext.getView().getParent(), publishToServerTask,
+              null, true );
+      SwingUtilities.invokeLater( loginTask );
+    }
 
   }
 

@@ -15,8 +15,10 @@ package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
+import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.RepositorySessionManager;
 
 import java.awt.event.ActionEvent;
 
@@ -39,9 +41,16 @@ public final class LoadReportFromRepositoryAction extends AbstractDesignerContex
     final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
     final OpenFileFromRepositoryTask openFileFromRepositoryTask =
         new OpenFileFromRepositoryTask( reportDesignerContext, reportDesignerContext.getView().getParent() );
-    final LoginTask loginTask =
-        new LoginTask( reportDesignerContext, reportDesignerContext.getView().getParent(), openFileFromRepositoryTask );
 
-    SwingUtilities.invokeLater( loginTask );
+    final AuthenticationData cachedSession = RepositorySessionManager.getInstance().getSession();
+    if ( cachedSession != null ) {
+      openFileFromRepositoryTask.setLoginData( cachedSession, true );
+      SwingUtilities.invokeLater( openFileFromRepositoryTask );
+    } else {
+      final LoginTask loginTask =
+          new LoginTask( reportDesignerContext, reportDesignerContext.getView().getParent(),
+              openFileFromRepositoryTask );
+      SwingUtilities.invokeLater( loginTask );
+    }
   }
 }
